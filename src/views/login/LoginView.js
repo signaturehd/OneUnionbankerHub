@@ -7,7 +7,6 @@ import BaseMVPView from '../common/base/BaseMVPView'
 
 import { GenericButton } from '../../ub-components/UButton/'
 import { GenericTextBox } from '../../ub-components/TextBox/'
-import { GenericCard } from '../../ub-components/Cards/'
 
 import './presenter/login.css'
 
