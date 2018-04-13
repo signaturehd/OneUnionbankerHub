@@ -6,7 +6,7 @@ export default function ServiceErrorOperator() {
   return function ServiceErrorOperatorImpl(source) {
     return Observable.create(subscriber => {
       var subscription = source.subscribe(data => {
-        let code = data.response.statusCode
+        let code = data.response.statusCode;
         if (code === 200) {
           subscriber.next(data.response.body)
         } else if (code === 400) {
@@ -18,7 +18,7 @@ export default function ServiceErrorOperator() {
         }
       },
       err => subscriber.error(new ServerError('It seems that \'ve encountered a problem. Error: 2')),
-      () => subscriber.complete())
+      () => subscriber.complete());
 
       return subscription
    });

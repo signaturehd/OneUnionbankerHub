@@ -12,12 +12,12 @@ export default class LoginPresenter {
   }
 
   login(username, password) {
-    this.view.showLoading()
+    this.view.showLoading();
 
     this.loginInteractor.execute(LoginParam(username, password))
       .subscribe(
         data => {
-          this.view.hideLoading()
+          this.view.hideLoading();
           this.view.onLoginSuccess()
         },
         error => {

@@ -12,18 +12,18 @@ import { EventActions } from '../actions'
 
 const mapStateToProps = state => ({
   events: state.events,
-})
+});
 
 class App extends Component {
 
   constructor (props) {
-    super(props)
+    super(props);
 
     this.state = {
       isLogin: false,
-    }
+    };
 
-    this.presenter = new Presenter(this.props.container)
+    this.presenter = new Presenter(this.props.container);
     this.presenter.setView(this)
   }
 

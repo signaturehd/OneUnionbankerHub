@@ -12,9 +12,9 @@ import Presenter from './presenter/DrawerPresenter'
 
 
 import { GenericCard } from '../../ub-components/Cards/'
-import SnackBar, { Snackbar } from '../../ub-components/Snackbar/SnackBar';
-import StarRating from '../../ub-components/Starrating/StarRating';
-import FaqsView from "../faqs/FaqsView";
+import SnackBar, { Snackbar } from '../../ub-components/Snackbar/SnackBar'
+import StarRating from '../../ub-components/Starrating/StarRating'
+import FaqsView from '../faqs/FaqsView'
 
 class DrawerView extends BaseMVPView {
   constructor (props) {
@@ -22,32 +22,30 @@ class DrawerView extends BaseMVPView {
   }
 
   render () {
-    //TODO render tru react router each partial page, (profile, settings, benefits, etc)
+    // TODO render tru react router each partial page, (profile, settings, benefits, etc)
     return (
       <div>
         TODO sidebar here lol
         <button onClick={ () => this.presenter.logout() }>Logout</button>
         <Switch>
-          <Route path = '/benefits' render={(props) => {
-            return <BenefitsPartial parent = { this } />
-          }} />
-          <Route path = '/library' render={(props) => {
+          <Route path = '/benefits' render={props => <BenefitsPartial parent = { this } />} />
+          <Route path = '/library' render={props => {
             console.log('showing library')
             return <LibraryView parent = { this } />
           }} />
-            <Route path = '/news' render={(props) => {
+            <Route path = '/news' render={props => {
             console.log('showing news')
             return <NewsView parent = { this } />
           }} />
-          <Route path = '/snack' render={(props) => {
+          <Route path = '/snack' render={props => {
             console.log('showing SNacks')
             return <SnackBar parent = { this } />
           }} />
-           <Route path = '/star' render={(props) => {
+           <Route path = '/star' render={props => {
             console.log('showing stars')
             return <StarRating parent = { this } />
           }} />
-            <Route path = '/faqs' render={(props) => {
+            <Route path = '/faqs' render={props => {
                 console.log('showing faqs')
                 return <FaqsView parent = { this } />
             }} />

@@ -23,5 +23,5 @@ ReactDOM.render(
     <BrowserRouter history={ browserHistory }>
       <App container={ AppModule(new Container()) } />
     </BrowserRouter>
-  </Provider>, document.getElementById('root'))
+  </Provider>, document.getElementById('root'));
 

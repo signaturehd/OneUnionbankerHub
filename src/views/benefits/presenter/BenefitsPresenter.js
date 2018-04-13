@@ -5,7 +5,7 @@ export default class BenefitsPresenter {
 
   constructor(container) {
     this.validateAccountNumberInteractor =
-      new ValidateAccountNumberInteractor(container.get('HRBenefitsClient'))
+      new ValidateAccountNumberInteractor(container.get('HRBenefitsClient'));
 
     this.getReleasingCentersInteractor =
       new GetReleasingCentersInteractor(container.get('HRBenefitsClient'))
@@ -16,11 +16,11 @@ export default class BenefitsPresenter {
   }
 
   getReleasingCenters () {
-    this.view.showLoading()
+    this.view.showLoading();
 
     this.getReleasingCentersInteractor.execute()
       .subscribe(releasingCenters => {
-        this.view.hideLoading()
+        this.view.hideLoading();
         this.view.showReleasingCenters(releasingCenters)
       }, e => {
         this.view.hideLoading()
@@ -29,11 +29,11 @@ export default class BenefitsPresenter {
   }
 
   validateAccountNumber (accountNumber) {
-    this.view.showLoading()
+    this.view.showLoading();
 
     this.validateAccountNumberInteractor.execute(accountNumber)
       .subscribe(resp => {
-        this.view.hideLoading()
+        this.view.hideLoading();
         this.view.onValidAccountNumber()
       }, error => {
         this.view.hideLoading()

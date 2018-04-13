@@ -7,7 +7,7 @@ export default function ConnectPartial (View, Presenter) {
     }
 
     render () {
-      const presenter = new Presenter(this.props.parent.props.container)
+      const presenter = new Presenter(this.props.parent.props.container);
 
       return <View presenter = { presenter } { ...this.props } />
     }

@@ -7,7 +7,7 @@ import ConnectPartial from '../../utils/ConnectPartial'
 
 class BenefitsPartial extends BaseMVPView {
   constructor (props) {
-    super(props)
+    super(props);
 
     this.state = {
       accountNumber: '',
@@ -23,7 +23,7 @@ class BenefitsPartial extends BaseMVPView {
   }
 
   render () {
-    const { accountNumber } = this.state
+    const { accountNumber } = this.state;
     return (
       <div>
         Benefits Partial

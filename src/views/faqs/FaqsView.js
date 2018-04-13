@@ -15,7 +15,7 @@ import { GenericCard } from '../../ub-components/Cards'
 
 class FaqsView extends BaseMVPView {
     constructor (props) {
-        super(props)
+        super(props);
         this.state = {
             showFaqs: []
         }

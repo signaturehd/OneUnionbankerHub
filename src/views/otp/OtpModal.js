@@ -7,7 +7,7 @@ import Presenter from './presenter/OtpPresenter'
 class OtpModal extends BaseMVPView {
 
   constructor (props) {
-    super(props)
+    super(props);
 
     this.state = {
       otp: '',
@@ -20,8 +20,8 @@ class OtpModal extends BaseMVPView {
   }
 
   render () {
-    const { transactionType, username } = this.props
-    const { otp } = this.state
+    const { transactionType, username } = this.props;
+    const { otp } = this.state;
     return (
       <div>
         <input onChange={ e => this.setState({ otp: e.target.value }) } text='OTP' />

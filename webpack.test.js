@@ -1,8 +1,8 @@
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const common = require('./webpack.common.js')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const project = require('./project.config')
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const common = require('./webpack.common.js');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const project = require('./project.config');
 
 module.exports = merge(common, {
   devtool: 'inline-source-map',
@@ -21,4 +21,4 @@ module.exports = merge(common, {
       DEBUG: true,
     }, project.testGlobals)),
   ],
-})
+});

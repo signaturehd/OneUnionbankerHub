@@ -1,9 +1,9 @@
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const common = require('./webpack.common.js')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const project = require('./project.config')
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const common = require('./webpack.common.js');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const project = require('./project.config');
 
 module.exports = merge(common, {
   plugins: [
@@ -16,4 +16,4 @@ module.exports = merge(common, {
       'process.env.NODE_ENV': JSON.stringify('production'),
     }, project.prodGlobals)),
   ],
-})
+});

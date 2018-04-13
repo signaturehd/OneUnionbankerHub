@@ -15,7 +15,7 @@ import './css/styles.css'
 
 class LibraryView extends BaseMVPView {
   constructor (props) {
-    super(props)
+    super(props);
     this.state= {
         showBooks: []
     }
@@ -31,7 +31,7 @@ class LibraryView extends BaseMVPView {
     this.setState({showBooks:books})}
 
   render () {
-    const { showBooks } = this.state
+    const { showBooks } = this.state;
 
     return (
       <div className = {'library-container'}>

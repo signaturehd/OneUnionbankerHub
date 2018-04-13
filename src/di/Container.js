@@ -1,7 +1,7 @@
 class Container {
 
     constructor() {
-        this._services = new Map()
+        this._services = new Map();
         this._singletons = new Map()
     }
 
@@ -14,17 +14,17 @@ class Container {
     }
 
     get(name) {
-        const c = this._services.get(name)
+        const c = this._services.get(name);
 
         if(this._isClass(c.definition)) {
 
             if(c.singleton) {
-                const singletonInstance = this._singletons.get(name)
+                const singletonInstance = this._singletons.get(name);
                 if(singletonInstance) {
                     return singletonInstance
                 } else {
-                    const newSingletonInstance = this._createInstance(c)
-                    this._singletons.set(name, newSingletonInstance)
+                    const newSingletonInstance = this._createInstance(c);
+                    this._singletons.set(name, newSingletonInstance);
                     return newSingletonInstance
                 }
             }
@@ -37,7 +37,7 @@ class Container {
     }
 
     _getResolvedDependencies(service) {
-        let classDependencies = []
+        let classDependencies = [];
         if(service.dependencies) {
             classDependencies = service.dependencies.map((dep) => {
                 return this.get(dep)

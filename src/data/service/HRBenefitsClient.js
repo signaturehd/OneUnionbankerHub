@@ -3,7 +3,6 @@ import store from '../../store'
 import { EventActions } from '../../actions'
 
 export default class HRBenefitsClient {
-
   constructor (service, sessionProvider) {
     this.service = service
     this.sessionProvider = sessionProvider

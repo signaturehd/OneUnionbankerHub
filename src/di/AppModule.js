@@ -5,7 +5,7 @@ import HRBenefitsClient from '../data/service/HRBenefitsClient'
 import SessionProvider from '../data/provider/SessionProvider'
 
 export default container => {
-  container.singleton('SessionProvider', SessionProvider)
+  container.singleton('SessionProvider', SessionProvider);
 
   container.singleton('ApiClient',
     RxHR.defaults({
@@ -16,7 +16,7 @@ export default container => {
         'token': container.get('SessionProvider').getToken(),
       }
     })
-  )
+  );
 
   container.singleton('AccountClient',
     RxHR.defaults({
@@ -27,10 +27,10 @@ export default container => {
         'token': container.get('SessionProvider').getAccountToken(),
       }
     })
-  )
+  );
 
-  container.singleton('HRBenefitsService', HRBenefitsService, ['ApiClient', 'AccountClient'])
-  container.singleton('HRBenefitsClient', HRBenefitsClient, ['HRBenefitsService', 'SessionProvider'])
+  container.singleton('HRBenefitsService', HRBenefitsService, ['ApiClient', 'AccountClient']);
+  container.singleton('HRBenefitsClient', HRBenefitsClient, ['HRBenefitsService', 'SessionProvider']);
 
   return container
 }

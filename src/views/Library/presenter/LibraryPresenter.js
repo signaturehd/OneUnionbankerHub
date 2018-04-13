@@ -11,11 +11,11 @@ export default class LibraryPresenter {
   }
 
   getBooks() {
-    this.view.showLoading()
+    this.view.showLoading();
 
     this.getbooksInteractor.execute()
     .subscribe(books => {
-        this.view.hideLoading()
+        this.view.hideLoading();
         this.view.showBooks(books)
       }, e => {
         this.view.hideLoading()

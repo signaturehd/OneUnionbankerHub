@@ -9,11 +9,11 @@ export default class NewsPresenter {
     }
   
     getNews () {
-      this.view.showLoading()
+      this.view.showLoading();
   
       this.getnewsInteractor.execute()
       .subscribe(news => {
-          this.view.hideLoading()
+          this.view.hideLoading();
           this.view.showNews(news)
         }, e => {
           this.view.hideLoading()

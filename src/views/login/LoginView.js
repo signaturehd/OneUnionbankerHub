@@ -15,13 +15,13 @@ import OtpModal from '../otp/OtpModal'
 class LoginView extends BaseMVPView {
 
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       username: '',
       password: '',
       showOtpModal: false,
-    }
+    };
 
     this.onLoginSuccess = this.onLoginSuccess.bind(this)
   }
@@ -31,7 +31,7 @@ class LoginView extends BaseMVPView {
   }
 
   render () {
-    const { showOtpModal, username } = this.state
+    const { showOtpModal, username } = this.state;
 
     return (
       <div>

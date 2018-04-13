@@ -9,11 +9,11 @@ export default class NewsPresenter {
     }
 
     getFaqs () {
-        this.view.showLoading()
+        this.view.showLoading();
 
         this.getFaqsInteractor.execute()
             .subscribe(faq => {
-                this.view.hideLoading()
+                this.view.hideLoading();
                 this.view.showFaqs(faq)
             }, e => {
                 this.view.hideLoading()

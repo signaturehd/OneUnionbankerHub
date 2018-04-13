@@ -1,6 +1,6 @@
-const TOKEN = 'TOKEN'
-const ACCOUNT_TOKEN = 'ACCOUNT_TOKEN'
-const ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
+const TOKEN = 'TOKEN';
+const ACCOUNT_TOKEN = 'ACCOUNT_TOKEN';
+const ACCOUNT_NUMBER = 'ACCOUNT_NUMBER';
 
 export default class SessionProvider {
 
@@ -25,7 +25,7 @@ export default class SessionProvider {
   }
 
   setAccountNumber (accountNumber = '') {
-    console.log('setting account number: ' + accountNumber)
+    console.log('setting account number: ' + accountNumber);
     this.storage.setItem(ACCOUNT_NUMBER, accountNumber)
   }
 
