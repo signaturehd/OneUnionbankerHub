@@ -53,4 +53,9 @@ export default class HRBenefitsService {
             json: true,
         })
     }
+    getTransactions () {
+        return this.apiClient.get('v1/transactions', {
+            json: true,
+        })
+    }
 }

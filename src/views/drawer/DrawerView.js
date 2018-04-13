@@ -9,7 +9,7 @@ import LibraryView from '../Library/LibraryView'
 import NewsView from '../news/NewsView'
 import Presenter from './presenter/DrawerPresenter'
 
-
+import TransactionsView from '../transactions/TransactionsView'
 
 import { GenericCard } from '../../ub-components/Cards/'
 import SnackBar, { Snackbar } from '../../ub-components/Snackbar/SnackBar'
@@ -48,6 +48,10 @@ class DrawerView extends BaseMVPView {
             <Route path = '/faqs' render={props => {
                 console.log('showing faqs')
                 return <FaqsView parent = { this } />
+            }} />
+            <Route path = '/transactions' render={props => {
+                console.log('showing transactions')
+                return <TransactionsView parent = { this } />
             }} />
 
         </Switch>
