@@ -6,8 +6,8 @@ import ConnectView from '../../utils/ConnectView'
 import NewsInteractor from '../../domain/interactor/news/NewsInteractor'
 
 import Presenter from './presenter/NewsPresenter'
-import BaseMVPView from '../common/base/BaseMVPView';
-import ConnectPartial from '../../utils/ConnectPartial';
+import BaseMVPView from '../common/base/BaseMVPView'
+import ConnectPartial from '../../utils/ConnectPartial'
 
 import { GenericCard } from '../../ub-components/Cards'
 
@@ -16,7 +16,7 @@ import { GenericCard } from '../../ub-components/Cards'
 class NewsView extends BaseMVPView {
   constructor (props) {
     super(props)
-    this.state= {
+    this.state = {
         showNews: []
     }
   }
@@ -25,7 +25,9 @@ class NewsView extends BaseMVPView {
       this.presenter.getNews()
   }
 
-  showNews (news) {this.setState({showNews:news})}
+  showNews (news) {
+this.setState({ showNews:news })
+}
 
   render () {
     const { showNews } = this.state
@@ -33,14 +35,12 @@ class NewsView extends BaseMVPView {
     return (
       <div className = {'library-container'}>
         {
-          showNews.map((news, key) => {
-            return (
+          showNews.map((news, key) => (
               <GenericCard
                 title = { news.title }
                 description = { news.Author }
               />
-            )
-          })
+            ))
         }
       </div>
     )

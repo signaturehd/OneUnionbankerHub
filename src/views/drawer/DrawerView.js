@@ -9,6 +9,13 @@ import LibraryView from '../Library/LibraryView'
 import NewsView from '../news/NewsView'
 import Presenter from './presenter/DrawerPresenter'
 
+
+
+import { GenericCard } from '../../ub-components/Cards/'
+import SnackBar, { Snackbar } from '../../ub-components/Snackbar/SnackBar';
+import StarRating from '../../ub-components/Starrating/StarRating';
+import FaqsView from "../faqs/FaqsView";
+
 class DrawerView extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -32,6 +39,19 @@ class DrawerView extends BaseMVPView {
             console.log('showing news')
             return <NewsView parent = { this } />
           }} />
+          <Route path = '/snack' render={(props) => {
+            console.log('showing SNacks')
+            return <SnackBar parent = { this } />
+          }} />
+           <Route path = '/star' render={(props) => {
+            console.log('showing stars')
+            return <StarRating parent = { this } />
+          }} />
+            <Route path = '/faqs' render={(props) => {
+                console.log('showing faqs')
+                return <FaqsView parent = { this } />
+            }} />
+
         </Switch>
         
       </div>

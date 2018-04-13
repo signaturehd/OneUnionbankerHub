@@ -4,11 +4,11 @@ export default class NewsPresenter {
       this.getnewsInteractor = new NewsInteractor(container.get('HRBenefitsClient'))
     }
   
-    setView(view) {
+    setView (view) {
       this.view = view
     }
   
-    getNews() {
+    getNews () {
       this.view.showLoading()
   
       this.getnewsInteractor.execute()
@@ -17,7 +17,7 @@ export default class NewsPresenter {
           this.view.showNews(news)
         }, e => {
           this.view.hideLoading()
-          //TODO prompt generic error
+          // TODO prompt generic error
         })
     }
   }

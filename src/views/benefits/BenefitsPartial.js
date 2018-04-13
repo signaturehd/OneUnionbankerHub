@@ -6,7 +6,6 @@ import Presenter from './presenter/BenefitsPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 
 class BenefitsPartial extends BaseMVPView {
-
   constructor (props) {
     super(props)
 
@@ -16,11 +15,11 @@ class BenefitsPartial extends BaseMVPView {
   }
 
   showReleasingCenters (releasingCenters) {
-    //TODO show to generic multilist dialog
+    // TODO show to generic multilist dialog
   }
 
   onValidAccountNumber () {
-    //TODO dismiss account number dialog
+    // TODO dismiss account number dialog
   }
 
   render () {
@@ -28,16 +27,16 @@ class BenefitsPartial extends BaseMVPView {
     return (
       <div>
         Benefits Partial
-        <input onChange={ (e) => this.setState({ accountNumber: e.target.value }) } />
+        <input onChange={ e => this.setState({ accountNumber: e.target.value }) } />
         {
-          //TODO make this button prompt validate account number dialog
+          // TODO make this button prompt validate account number dialog
         }
         <button onClick={ () =>
           this.presenter.validateAccountNumber(accountNumber) }>
           Validate Account Number
         </button>
         {
-          //TODO move to FAB
+          // TODO move to FAB
         }
         <button onClick={ () =>
           this.presenter.getReleasingCenters()

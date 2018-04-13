@@ -74,4 +74,9 @@ export default class HRBenefitsService {
       json: true,
     })
   }
+    getFaqs () {
+        return this.apiClient.get('v1/faqs', {
+            json: true,
+        })
+    }
 }
