@@ -1,31 +1,36 @@
 import { Observable } from 'rxjs'
+
 export default class HRBenefitsService {
-  constructor (apiClient, accountClient) {
+
+  constructor(apiClient, accountClient) {
     this.apiClient = apiClient
     this.accountClient = accountClient
   }
 
   /* user */
-  login (loginParam) {
-    return this.apiClient.post('v1/login', {
-      body: loginParam,
-      json: true,
+  login(loginParam) {
+    return this.apiClient.post('v1/login', loginParam, {
+      headers: {
+        'X-IBM-Client-Id': CLIENT_ID,
+        'X-IBM-Client-Secret': CLIENT_SECRET,
+      },
     })
   }
 
-  otp (otpParam) {
-    return this.apiClient.post('v1/otp', {
-      body: otpParam,
-      json: true,
+  otp(otpParam) {
+    return this.apiClient.post('v1/otp', otpParam, {
+      headers: {
+        'X-IBM-Client-Id': CLIENT_ID,
+        'X-IBM-Client-Secret': CLIENT_SECRET,
+      },
     })
   }
 
   /* account */
   validateAccountNumber (accountNumber) {
-    return this.accountClient.get(`accounts/v1/${  accountNumber}`, {
+    return this.accountClient.get('accounts/v1/' + accountNumber, {
       headers: {
-        referenceid: Math.random().toString(36)
-.substring(7)
+        referenceid: Math.random().toString(36).substring(7)
       },
       json: true,
     })
@@ -37,25 +42,4 @@ export default class HRBenefitsService {
       json: true,
     })
   }
-   /* Library */
-    getBooks () {
-        return this.apiClient.get('v1/books', {
-            json: true,
-        })
-    }
-  getNews () {
-    return this.apiClient.get('v1/news', {
-      json: true,
-    })
-  }
-    getFaqs () {
-        return this.apiClient.get('v1/faqs', {
-            json: true,
-        })
-    }
-    getTransactions () {
-        return this.apiClient.get('v1/transactions', {
-            json: true,
-        })
-    }
 }

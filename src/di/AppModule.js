@@ -1,4 +1,4 @@
-import { RxHR } from '@akanass/rx-http-request'
+import { Rxios } from 'rxios'
 
 import HRBenefitsService from '../data/service/HRBenefitsService'
 import HRBenefitsClient from '../data/service/HRBenefitsClient'
@@ -8,24 +8,14 @@ export default container => {
   container.singleton('SessionProvider', SessionProvider);
 
   container.singleton('ApiClient',
-    RxHR.defaults({
-      baseUrl: BASE_URL,
-      headers: {
-        'X-IBM-Client-Id': CLIENT_ID,
-        'X-IBM-Client-Secret': CLIENT_SECRET,
-        'token': container.get('SessionProvider').getToken(),
-      }
+    new Rxios({
+      baseURL: BASE_URL,
     })
   );
 
   container.singleton('AccountClient',
-    RxHR.defaults({
-      baseUrl: BASE_URL,
-      headers: {
-        'X-IBM-Client-Id': CLIENT_ID,
-        'X-IBM-Client-Secret': CLIENT_SECRET,
-        'token': container.get('SessionProvider').getAccountToken(),
-      }
+    new Rxios({
+      baseURL: BASE_URL,
     })
   );
 
