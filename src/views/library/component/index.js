@@ -1,4 +1,4 @@
-import BookCardComponent from './cards/BookCardComponent'
-import BookTabsComponent from './tabs/BookTabsComponent'
+import BookCardComponent from './BookCardComponent/BookCardComponent'
+import BookTabsComponent from './BookTabsComponent/BookTabsComponent'
 
 export { BookCardComponent, BookTabsComponent }

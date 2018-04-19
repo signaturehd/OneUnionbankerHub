@@ -9,6 +9,8 @@ import LibraryView from '../Library/LibraryView'
 
 import Presenter from './presenter/DrawerPresenter'
 
+import Uploader from '../../ub-components/FileUploader/Uploader';
+
 class DrawerView extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -25,6 +27,9 @@ class DrawerView extends BaseMVPView {
           <Route path = '/library' render={props => 
              <LibraryView parent = { this } />
           } />
+            <Route path = '/optical' render={props =>
+                <Uploader parent = { this } />
+            } />
         </Switch>
 
       </div>

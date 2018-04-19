@@ -9,7 +9,7 @@ import Presenter from './presenter/LibraryPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectPartial from '../../utils/ConnectPartial'
 
-import { BookCardComponent } from './components'
+import { BookCardComponent } from './component'
 
 
 import './css/styles.css'
