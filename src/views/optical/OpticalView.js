@@ -1,15 +1,20 @@
 import React from 'react'
 import BaseMVPView from '../common/base/BaseMVPView'
-import ConnectPartial from '../../utils/ConnectPartial'
-
+import { GenericTextBox } from '../../ub-components/TextBox/'
 
 
 class OpticalView extends BaseMVPView {
     render () {
         return (
-            <div className={'Uploader'}> </div>
+
+            <div>
+                <GenericTextBox
+                placeholder = { 'Amount' }
+                type = { 'text' }/>
+            </div>
+
 
         )
 }
 }
-export default ConnectPartial(OpticalView)
+export default (OpticalView)
