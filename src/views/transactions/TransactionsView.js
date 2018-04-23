@@ -9,7 +9,7 @@ class TransactionsView extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-      showTransactions: []
+      transactions: []
     }
   }
 
@@ -18,13 +18,15 @@ class TransactionsView extends BaseMVPView {
   }
 
   showTransactions (transactions) {
-    this.setState({ showTransactions:transactions })
+    this.setState({ transactions })
   }
 
   render () {
-  const { showTransactions } = this.state
+  const { transactions } = this.state
+  console.log('rendering')
 
   return (
+
     <div>
       <h4>Transactions</h4>
     </div>

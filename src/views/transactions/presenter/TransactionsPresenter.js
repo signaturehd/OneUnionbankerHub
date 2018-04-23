@@ -1,23 +1,22 @@
 import TransactionsInteractor from '../../../domain/interactor/transactions/TransactionsInteractor'
 export default class TransactionsPresenter {
-    constructor (container) {
-        this.TransactionsInteractor = new TransactionsInteractor(container.get('HRBenefitsClient'))
-    }
+  constructor (container) {
+    this.TransactionsInteractor = new TransactionsInteractor(container.get('HRBenefitsClient'))
+  }
 
-    setView (view) {
-        this.view = view
-    }
+  setView (view) {
+    this.view = view
+  }
 
-    getTransactions () {
-        this.view.showLoading()
-
-        this.TransactionsInteractor.execute()
-            .subscribe(transactions => {
-                this.view.hideLoading()
-                this.view.showTransactions(transactions)
-            }, e => {
-                this.view.hideLoading()
-                // TODO prompt generic error
-            })
-    }
+  getTransactions () {
+    this.view.showLoading()
+    this.TransactionsInteractor.execute()
+      .subscribe(transactions => {
+          this.view.hideLoading()
+          this.view.showTransactions(transactions)
+      }, e => {
+          this.view.hideLoading()
+          // TODO prompt generic error
+      })
+  }
 }

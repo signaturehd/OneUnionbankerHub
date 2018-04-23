@@ -4,6 +4,6 @@ export default class TransactionsInteractor {
     }
 
     execute () {
-        return this.client.getTransactions()
+        return this.client.getTransactions(this.client.getToken())
     }
 }
