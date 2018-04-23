@@ -2,8 +2,7 @@ import ValidateAccountNumberInteractor from '../../../domain/interactor/account/
 import GetReleasingCentersInteractor from '../../../domain/interactor/rds/GetReleasingCentersInteractor'
 
 export default class BenefitsPresenter {
-
-  constructor(container) {
+  constructor (container) {
     this.validateAccountNumberInteractor =
       new ValidateAccountNumberInteractor(container.get('HRBenefitsClient'));
 
@@ -11,7 +10,7 @@ export default class BenefitsPresenter {
       new GetReleasingCentersInteractor(container.get('HRBenefitsClient'))
   }
 
-  setView(view) {
+  setView (view) {
     this.view = view
   }
 
@@ -24,7 +23,7 @@ export default class BenefitsPresenter {
         this.view.showReleasingCenters(releasingCenters)
       }, e => {
         this.view.hideLoading()
-        //TODO prompt generic error
+        // TODO prompt generic error
       })
   }
 
@@ -37,7 +36,7 @@ export default class BenefitsPresenter {
         this.view.onValidAccountNumber()
       }, error => {
         this.view.hideLoading()
-        //TODO prompt generic error
+        // TODO prompt generic error
       })
   }
 }

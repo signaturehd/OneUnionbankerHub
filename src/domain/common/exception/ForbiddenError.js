@@ -1,4 +1,4 @@
-function ForbiddenError() {
+function ForbiddenError () {
   this.name = 'ForbiddenError'
 }
 

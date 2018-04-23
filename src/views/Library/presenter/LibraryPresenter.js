@@ -6,12 +6,12 @@ export default class LibraryPresenter {
     this.getbooksInteractor = new GetbooksInteractor(container.get('HRBenefitsClient'))
   }
 
-  setView(view) {
+  setView (view) {
     this.view = view
   }
 
-  getBooks() {
-    this.view.showLoading();
+  getBooks () {
+    this.view.showLoading()
 
     this.getbooksInteractor.execute()
     .subscribe(books => {
@@ -19,7 +19,7 @@ export default class LibraryPresenter {
         this.view.showBooks(books)
       }, e => {
         this.view.hideLoading()
-        //TODO prompt generic error
+        // TODO prompt generic error
       })
   }
 }

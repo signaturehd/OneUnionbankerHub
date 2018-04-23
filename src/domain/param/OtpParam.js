@@ -1,7 +1,5 @@
-export default (username, otp, transactionType) => {
-  return {
+export default (username, otp, transactionType) => ({
     username,
     otp,
     transactionType,
-  }
-}
+  })

@@ -1,0 +1,58 @@
+
+.grid-1 {
+  display: grid;
+      width: 100%;
+      margin: 0 auto;
+      height: auto;
+      grid-template-columns: repeat(1, 0fr);
+      grid-template-rows: 50px auto auto;
+      grid-template-areas: "header header"
+                           "sidebar main";
+}
+.grid-1 div {
+  font-size: 20px;
+  }
+._drawer-header {
+  grid-area: header;
+  position: fixed;
+}
+
+._drawer-default-header {
+  grid-area: def;
+}
+._drawer-main{
+  grid-area: main;
+  width: 100%;
+  grid-template-rows: 20px auto auto;
+  grid-template-areas: "page-header"
+                       "drawer-components";
+}
+  ._default-page-header {
+    grid-area: page-header;
+  }
+  ._dynamic-component {
+    grid-area: drawer-components;
+    padding: 1%;
+    height: 20px;
+  }
+._drawer-sidebar {
+  grid-area: sidebar;
+}
+.header {
+  grid-area: header;
+  background-color: #FF8A00;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+}
+._img-ub-logo {
+  width: auto;
+  height: 20px;
+  float: left;
+  margin-left: 2%;
+  width: auto;
+}

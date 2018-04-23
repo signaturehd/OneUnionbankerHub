@@ -1,5 +1,5 @@
-function GenericError(errorResp) {
-  this.name = 'GenericError';
+function GenericError (errorResp) {
+  this.name = 'GenericError'
   this.errorResp = errorResp
 }
 

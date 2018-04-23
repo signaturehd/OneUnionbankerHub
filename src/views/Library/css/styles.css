@@ -1,4 +1,6 @@
 .library-container {
   display:  grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  column-count: 2;
+  grid-column-gap: 20px;
 }

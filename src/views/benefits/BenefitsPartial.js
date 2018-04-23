@@ -2,8 +2,9 @@ import React from 'react'
 import BaseMVPView from '../common/base/BaseMVPView'
 
 import Presenter from './presenter/BenefitsPresenter'
-
+import './styles/benefits.css'
 import ConnectPartial from '../../utils/ConnectPartial'
+import { GenericCard } from '../../ub-components/Cards'
 
 class BenefitsPartial extends BaseMVPView {
   constructor (props) {
@@ -25,22 +26,10 @@ class BenefitsPartial extends BaseMVPView {
   render () {
     const { accountNumber } = this.state;
     return (
-      <div>
-        Benefits Partial
-        <input onChange={ e => this.setState({ accountNumber: e.target.value }) } />
-        {
-          // TODO make this button prompt validate account number dialog
-        }
-        <button onClick={ () =>
-          this.presenter.validateAccountNumber(accountNumber) }>
-          Validate Account Number
-        </button>
-        {
-          // TODO move to FAB
-        }
-        <button onClick={ () =>
-          this.presenter.getReleasingCenters()
-        }>Get Releasing Centers</button>
+      <div className = { '_benefits-container' }>
+          <GenericCard className = { '_option-1' } ></GenericCard>
+          <GenericCard className = { '_option-1' } ></GenericCard>
+          <GenericCard className = { '_option-1' } ></GenericCard>
       </div>
     )
   }

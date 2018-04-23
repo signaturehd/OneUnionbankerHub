@@ -1,5 +1,5 @@
-import { SAMPLE_ACTION, } from '../utils/actionUtil'
+import { SAMPLE_ACTION } from '../utils/actionUtil'
 
 export function changeSampleState (sampleState) {
-  return { type: SAMPLE_ACTION, sampleState, }
+  return { type: SAMPLE_ACTION, sampleState }
 }

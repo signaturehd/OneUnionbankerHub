@@ -12,7 +12,7 @@ module.exports = merge(common, {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
-    new ExtractTextPlugin({ disable: true, }), // disable extracting of css on dev to fasten compilation time
+    new ExtractTextPlugin({ disable: true }), // disable extracting of css on dev to fasten compilation time
     new webpack.DefinePlugin(Object.assign({}, {
       'process.env.NODE_ENV': JSON.stringify('development'),
       DEBUG: true,

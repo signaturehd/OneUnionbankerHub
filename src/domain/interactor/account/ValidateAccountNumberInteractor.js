@@ -1,13 +1,12 @@
 export default class ValidateAccountNumberInteractor {
-
-  constructor(client) {
+  constructor (client) {
     this.client = client
   }
 
-  execute(accountNumber) {
+  execute (accountNumber) {
     return this.client.validateAccountNumber(accountNumber)
       .do(resp => {
-        //when valid, set it to session
+        // when valid, set it to session
         this.client.setAccountNumber(accountNumber)
       })
   }

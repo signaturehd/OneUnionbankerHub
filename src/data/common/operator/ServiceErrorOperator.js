@@ -2,15 +2,16 @@ import GenericError from '../../../domain/common/exception/GenericError'
 import ForbiddenError from '../../../domain/common/exception/ForbiddenError'
 import { Observable } from 'rxjs'
 
-export default function ServiceErrorOperator() {
-  return function ServiceErrorOperatorImpl(source) {
+export default function ServiceErrorOperator () {
+  return function ServiceErrorOperatorImpl (source) {
     return Observable.create(subscriber => {
-      var subscription = source.subscribe(data => {
-        let code = data.response.statusCode;
+      const subscription = source.subscribe(data => {
+        const code = data.status
+        const body = data.data
         if (code === 200) {
-          subscriber.next(data.response.body)
+          subscriber.next(body)
         } else if (code === 400) {
-          subscriber.error(new GenericError(data.response.body))
+          subscriber.error(new GenericError(body))
         } else if (code === 401) {
           subscriber.error(new ForbiddenError())
         } else {
@@ -21,6 +22,6 @@ export default function ServiceErrorOperator() {
       () => subscriber.complete());
 
       return subscription
-   });
+   })
   }
 }

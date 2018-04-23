@@ -7,11 +7,13 @@
   "author": "Tenten Ponce, Carlo Cuevas",
   "license": "MIT",
   "dependencies": {
+    "@akanass/rx-http-request": "^2.7.1",
     "axios": "^0.17.1",
     "clean-webpack-plugin": "^0.1.18",
     "html-webpack-plugin": "^2.30.1",
     "material-ui": "^0.20.0",
     "material-ui-next": "^1.0.0-beta.32",
+    "material-ui-responsive-drawer": "^1.19.4",
     "path": "^0.12.7",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

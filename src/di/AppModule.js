@@ -10,12 +10,20 @@ export default container => {
   container.singleton('ApiClient',
     new Rxios({
       baseURL: BASE_URL,
+      headers: {
+        'X-IBM-Client-Id': CLIENT_ID,
+        'X-IBM-Client-Secret': CLIENT_SECRET,
+      },
     })
   );
 
   container.singleton('AccountClient',
     new Rxios({
       baseURL: BASE_URL,
+      headers: {
+        'X-IBM-Client-Id': CLIENT_ID,
+        'X-IBM-Client-Secret': CLIENT_SECRET,
+      }
     })
   );
 

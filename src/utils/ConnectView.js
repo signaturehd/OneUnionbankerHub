@@ -7,8 +7,7 @@ export default function ConnectView (View, Presenter) {
     }
 
     render () {
-      const presenter = new Presenter(this.props.container);
-
+      const presenter = new Presenter(this.props.container)
       return <View presenter = { presenter } { ...this.props } />
     }
   }

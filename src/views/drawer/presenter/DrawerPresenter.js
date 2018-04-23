@@ -1,7 +1,6 @@
 import LogoutInteractor from '../../../domain/interactor/user/LogoutInteractor'
 
 export default class DrawerPresenter {
-
   constructor (container) {
     this.logoutInteractor = new LogoutInteractor(container.get('HRBenefitsClient'))
   }
@@ -12,6 +11,6 @@ export default class DrawerPresenter {
 
   logout () {
     this.logoutInteractor.execute()
-    //TODO make reactive when logout API call is integrated
+    // TODO make reactive when logout API call is integrated
   }
 }

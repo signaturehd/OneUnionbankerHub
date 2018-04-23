@@ -1,4 +1,4 @@
-import { SAMPLE_ACTION, } from '../utils/actionUtil'
+import { SAMPLE_ACTION } from '../utils/actionUtil'
 import initialState from './initialState'
 
 export default function reducer (state, action) {

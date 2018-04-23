@@ -4,8 +4,11 @@ import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/OtpPresenter'
 
-class OtpModal extends BaseMVPView {
+import { GenericTextBox } from '../../ub-components/TextBox/'
+import { GenericButton } from '../../ub-components/UButton/'
+import { Modal } from '../../ub-components/Modal/'
 
+class OtpModal extends BaseMVPView {
   constructor (props) {
     super(props);
 
@@ -15,22 +18,26 @@ class OtpModal extends BaseMVPView {
   }
 
   onOtpSuccess () {
-    //TODO redirect to login
-    console.log('otp success')
+    // TODO redirect to login
   }
 
   render () {
-    const { transactionType, username } = this.props;
-    const { otp } = this.state;
+    const { transactionType, username, onClose } = this.props
+    const { otp } = this.state
     return (
-      <div>
-        <input onChange={ e => this.setState({ otp: e.target.value }) } text='OTP' />
-        <button onClick={ () => this.presenter.verifyOtp(username, otp, transactionType) }>Submit</button>
-      </div>
-    )
+
+      <Modal
+          onClose = {onClose}
+        >
+        <GenericTextBox text= "OTP"
+          placeholder = "OTP"
+          type = ""
+          onChange={ e => this.setState({ otp: e.target.value }) }  />
+        <GenericButton text= "Submit" onClick={ () => this.presenter.verifyOtp(username, otp, transactionType) } />
+      </Modal>
+      )
   }
 }
-
-//TODO setup props that is required
+// TODO setup props that is required
 
 export default ConnectPartial(OtpModal, Presenter)

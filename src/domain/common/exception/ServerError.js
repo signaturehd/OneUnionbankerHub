@@ -1,5 +1,5 @@
-function ServerError(message = '') {
-  this.name = 'ServerError';
+function ServerError (message = '') {
+  this.name = 'ServerError'
   this.message = message
 }
 
