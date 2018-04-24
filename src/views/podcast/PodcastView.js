@@ -30,6 +30,7 @@ class PodCastView extends BaseMVPView{
       <div>
       { super.render() }
         <div>
+        <div><h1>Hello</h1></div>
           <div className = { 'page-header-buttons' }>
           </div>
         </div>

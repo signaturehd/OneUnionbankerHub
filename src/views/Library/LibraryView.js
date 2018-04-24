@@ -5,10 +5,7 @@ import Presenter from './presenter/LibraryPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectPartial from '../../utils/ConnectPartial'
 
-import {
-    BookCardComponent,
-    BookTabsComponent
-  } from './components'
+
 
 import { GenericButton } from '../../ub-components/UButton'
 
