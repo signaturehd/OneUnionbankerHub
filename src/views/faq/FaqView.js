@@ -4,8 +4,8 @@ import { Switch, Route } from 'react-router-dom'
 
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/FaqPresenter'
-import BaseMVPView from '../common/base/BaseMVPView';
-import ConnectPartial from '../../utils/ConnectPartial';
+import BaseMVPView from '../common/base/BaseMVPView'
+import ConnectPartial from '../../utils/ConnectPartial'
 
 import FaqCardComponent from '../common/components/FaqCardComponent/FaqCardComponent'
 import FaqModalComponent from '../faqview/FaqModalComponent'
@@ -15,7 +15,7 @@ import './css/styles.css'
 class FaqView extends BaseMVPView {
   constructor (props) {
     super(props)
-    this.state= {
+    this.state = {
         faqs: [],
         show : false,
     }
@@ -37,7 +37,9 @@ class FaqView extends BaseMVPView {
         <h2>Faqs</h2>
         <div className = {'card-container'}>
         {
-          faqs.map((faqs, i) => <FaqCardComponent key = {i} faqs = { faqs } onClick = { details => {this.setState({details, show: true})} } /> )
+          faqs.map((faqs, i) => <FaqCardComponent key = {i} faqs = { faqs } onClick = { details => {
+this.setState({ details, show: true })
+} } />)
         }
         </div>
         {

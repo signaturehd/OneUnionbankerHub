@@ -4,11 +4,11 @@ export default class FaqPresenter {
       this.getFaqInteractor = new GetFaqInteractor(container.get('HRBenefitsClient'))
     }
 
-    setView(view) {
+    setView (view) {
       this.view = view
     }
 
-    getFaqs() {
+    getFaqs () {
       this.view.showLoading()
 
       this.getFaqInteractor.execute()
@@ -17,7 +17,7 @@ export default class FaqPresenter {
           this.view.faqs(faqs)
         }, e => {
           this.view.hideLoading()
-          //TODO prompt generic error
+          // TODO prompt generic error
         })
     }
   }
