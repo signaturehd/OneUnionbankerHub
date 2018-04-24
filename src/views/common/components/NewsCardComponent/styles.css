@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .card-container {
   display:grid;
   grid-column-gap: 1%;
@@ -7,3 +8,14 @@
 .card-body {
   padding : 50px;
 }
+=======
+.card-container {
+  display:grid;
+  grid-column-gap: 1%;
+  grid-template-columns : repeat(250px);
+}
+
+.card-body {
+  padding : 50px;
+}
+>>>>>>> 7cf23bbb6f50fd66d0c4f86515a65c2bf03bddc0

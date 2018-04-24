@@ -74,6 +74,7 @@ export default class HRBenefitsClient {
     return this.service.getOptical(token)
       .pipe(ServiceErrorOperator())
   }
+<<<<<<< HEAD
   getPodcast (token) {
     return this.service.getPodcast(token)
       .pipe(ServiceErrorOperator())
@@ -81,4 +82,11 @@ export default class HRBenefitsClient {
   /* dental reimbursement */
 
   /* dental loa */
+=======
+  /* News */
+  getNews (token) {
+    return this.service.getNews(token)
+      .pipe(ServiceErrorOperator())
+  }
+>>>>>>> 7cf23bbb6f50fd66d0c4f86515a65c2bf03bddc0
 }
