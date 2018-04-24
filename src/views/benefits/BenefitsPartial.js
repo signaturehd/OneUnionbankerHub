@@ -37,45 +37,30 @@ class BenefitsPartial extends BaseMVPView {
       { id: 2 , title: 'Option 3', path: '/benefits/option3' }
     ]
     const { accountNumber } = this.state
-    const style = {
-          _pageheader : {
-            height: 'auto',
-            color: 'black',
-            width: 'auto',
-            padding: '1%',
-            background: '#fefefe',
-            boxShadow: '0 0 4px 0 rgba(0,0,0,0.20)',
-          }
-        }
 
     return (
       <div>
-        <div style = { style._pageheader }>
-          <div className = { 'page-header-buttons' }>
-          </div>
-        </div>
         <h1> Benefits</h1>
         <div className = { '_benefits-container' }>
           {
-            benefitsOptions.map( ( value, idx ) => (
+            benefitsOptions.map((value, idx) => (
               <GenericCards className = { 'options-1' } >
                 <div
                   className = { 'option-cards' }
                   text = { value.title }
                   key = { idx }
-                  onClick = { () => onOptionsLink( history.push(value.path) ) } >
+                  onClick = { () => onOptionsLink(history.push(value.path)) } >
                   <span> { value.title } </span></div>
               </GenericCards>
             ))
           }
-          </div>
-          <div className = { '_benefits-container' }>
+
             <Switch>
               <Route path = '/benefits/option1' render = { props => <Option1 parent = { this } />}/>
               <Route path = '/benefits/option2' render = { props => <Option2 parent = { this } />}/>
               <Route path = '/benefits/option3' render = { props => <Option3 parent = { this } />}/>
            </Switch>
-         </div>
+          </div>
       </div>
     )
   }
