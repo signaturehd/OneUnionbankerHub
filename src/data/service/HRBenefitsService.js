@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs'
 
 export default class HRBenefitsService {
+
   constructor (apiClient, accountClient) {
     this.apiClient = apiClient
     this.accountClient = accountClient
@@ -61,8 +62,7 @@ export default class HRBenefitsService {
 
   /* account */
   validateAccountNumber (accountNumber) {
-    return this.accountClient.get(
-    `accounts/v1/${  accountNumber}`, {
+    return this.accountClient.get(`accounts/v1/${accountNumber}`, {
       headers: {
         referenceId : Math.random().toString(36)
           .substring(7)
@@ -76,6 +76,7 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
   /* library */
   getBooks (token) {
     return this.apiClient.get('v1/books', {
@@ -83,9 +84,20 @@ export default class HRBenefitsService {
     })
   }
 
+
   addRating (token, bookParam) {
     return this.apiClient.post('v1/books/rate', bookParam, {
       headers : { token }
+    })
+  }
+
+
+  // news
+  getNews (token) {
+    return this.apiClient.get('v1/news', {
+      headers: {
+        token
+      }
     })
   }
 }
