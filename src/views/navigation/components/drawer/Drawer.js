@@ -5,6 +5,7 @@ import './styles/drawer.css'
 import Presenter from './presenter/ComponentsPresenter'
 import BenefitsPartial from '../../../benefits/BenefitsPartial'
 import LibraryView from '../../../library/LibraryView'
+import PodCastView from '../../../podcast/PodCastView'
 class Drawer extends Component {
   constructor (props) {
     super (props)

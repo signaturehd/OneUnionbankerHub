@@ -74,7 +74,10 @@ export default class HRBenefitsClient {
     return this.service.getOptical(token)
       .pipe(ServiceErrorOperator())
   }
-
+  getPodcast (token) {
+    return this.service.getPodcast(token)
+      .pipe(ServiceErrorOperator())
+  }
   /* dental reimbursement */
 
   /* dental loa */
