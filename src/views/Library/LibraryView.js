@@ -1,25 +1,25 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-
-import ConnectView from '../../utils/ConnectView'
-import Interactor from '../../domain/interactor/library/GetbooksInteractor'
-
 import Presenter from './presenter/LibraryPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectPartial from '../../utils/ConnectPartial'
 
-import { BookCardComponent , BookTabsComponent} from './components'
+import {
+    BookCardComponent,
+    BookTabsComponent
+  } from './components'
 
 import { GenericButton } from '../../ub-components/UButton'
 
-import './css/styles.css'
 
 class LibraryView extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-        books : []
+      books : [],
+      showRating : false,
+      showBook : false
     }
   }
 
@@ -31,29 +31,19 @@ class LibraryView extends BaseMVPView {
     this.setState({ books })
   }
 
+
   render () {
     const { books, tabs } = this.state
-    const style = {
-          _pageheader : {
-            height: 'auto',
-            color: 'black',
-            width: 'auto',
-            padding: '1%',
-            background: '#fefefe',
-            boxShadow: '0 0 4px 0 rgba(0,0,0,0.20)'
-          }
-        }
     return (
       <div>
-        <div style = { style._pageheader }>
+      { super.render() }
+        <div>
           <div className = { 'page-header-buttons' }>
           </div>
         </div>
         <h1>Library</h1>
         <div className = { 'tabs-container' }>
-          <BookTabsComponent books={ books } />
-        </div>
-        <div className = {'library-container'}>
+          <BookTabsComponent  books={ books } />
         </div>
       </div>
     )

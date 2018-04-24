@@ -7,10 +7,10 @@ import Presenter from './presenter/BenefitsPresenter'
 import './styles/benefits.css'
 import ConnectPartial from '../../utils/ConnectPartial'
 import { GenericButton } from '../../ub-components/UButton'
-import { GenericCards } from '../../ub-components/Cards'
-import Option1 from './fragments/option1/Option1'
-import Option2 from './fragments/option2/Option2'
-import Option3 from './fragments/option3/Option3'
+import { GenericCards } from '../../ub-components'
+import EducationView from './fragments/education/EducationView'
+import LoansView from './fragments/loans/LoansView'
+import MedicalView from './fragments/medical/MedicalView'
 
 class BenefitsPartial extends BaseMVPView {
   constructor (props) {
@@ -32,9 +32,9 @@ class BenefitsPartial extends BaseMVPView {
     const { onClick, text, path, icon, onOptionsLink, history } = this.props
     const benefitsOptions =
     [
-      { id: 0 , title: 'Option 1', path: '/benefits/option1' },
-      { id: 1 , title: 'Option 2', path: '/benefits/option2' },
-      { id: 2 , title: 'Option 3', path: '/benefits/option3' }
+      { id: 0 , title: 'education', path: '/benefits/education' },
+      { id: 1 , title: 'medical', path: '/benefits/medical' },
+      { id: 2 , title: 'loans', path: '/benefits/loans' }
     ]
     const { accountNumber } = this.state
 
@@ -44,9 +44,9 @@ class BenefitsPartial extends BaseMVPView {
         <div className = { '_benefits-container' }>
           {
             benefitsOptions.map((value, idx) => (
-              <GenericCards className = { 'options-1' } >
+              <GenericGenericCards className = { 'options-1' } >
                 <div
-                  className = { 'option-cards' }
+                  className = { 'option-GenericCards' }
                   text = { value.title }
                   key = { idx }
                   onClick = { () => onOptionsLink(history.push(value.path)) } >
@@ -56,9 +56,9 @@ class BenefitsPartial extends BaseMVPView {
           }
 
             <Switch>
-              <Route path = '/benefits/option1' render = { props => <Option1 parent = { this } />}/>
-              <Route path = '/benefits/option2' render = { props => <Option2 parent = { this } />}/>
-              <Route path = '/benefits/option3' render = { props => <Option3 parent = { this } />}/>
+              <Route path = '/benefits/education' render = { props => <EducationView parent = { this } />}/>
+              <Route path = '/benefits/medical' render = { props => <MedicalView parent = { this } />}/>
+              <Route path = '/benefits/loans' render = { props => <LoansView parent = { this } />}/>
            </Switch>
           </div>
       </div>

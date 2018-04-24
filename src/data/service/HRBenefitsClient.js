@@ -58,12 +58,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-    /* books */
-    getBooks (token) {
-        return this.service.getBooks(token)
-            .pipe(ServiceErrorOperator())
-    }
+  /* books */
+  getBooks (token) {
+    return this.service.getBooks(token)
+      .pipe(ServiceErrorOperator())
+  }
 
+  addRating (token, bookParam) {
+    return this.service.addRating(token, bookParam)
+      .pipe(ServiceErrorOperator())
+  }
 
   /* optical */
   getOptical (token) {
@@ -71,7 +75,15 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  /* dental reimbursement */
+  /* News */
+  getNews (token) {
+    return this.service.getNews(token)
+      .pipe(ServiceErrorOperator())
+  }
 
-  /* dental loa */
+  /* News */
+  getFaqs (token) {
+    return this.service.getFaqs(token)
+      .pipe(ServiceErrorOperator())
+  }
 }
