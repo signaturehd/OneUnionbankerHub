@@ -21,7 +21,6 @@ import AppModule from './di/AppModule'
 ReactDOM.render(
   <Provider store={ store }>
     <BrowserRouter history={ browserHistory }>
-      <App container={ AppModule(new Container()) } />
+      <App />
     </BrowserRouter>
   </Provider>, document.getElementById('root'))
-

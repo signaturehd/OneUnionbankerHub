@@ -1,0 +1,91 @@
+.library-container {
+  display:  grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  column-count: 2;
+  grid-column-gap: 20px;
+}
+.page-header-buttons {
+  padding: 0 4% 0 4%;
+}
+
+h1 {
+  font-weight: 350;
+  text-align: left;
+  padding-left: 4%;
+}
+
+p {
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+main {
+  min-width: 320px;
+  max-width: auto;
+  padding: 45px;
+  margin: 0 auto;
+}
+
+section {
+  display: none;
+  padding: 20px 0 0;
+  border-top: 1px solid #ddd;
+}
+
+.input-tab {
+  display: none !important;
+}
+
+label {
+  display: inline-block;
+      margin: 0 0 -1px;
+      padding: 15px 25px;
+      font-weight: 150;
+      text-align: center;
+      font-family: 'Roboto';
+      border: 1px solid transparent;
+}
+
+label:before {
+  font-family: 'Roboto';
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+label[htmlFor*='1']:before { content: '\f1cb'; }
+label[htmlFor*='2']:before { content: '\f17d'; }
+label[htmlFor*='3']:before { content: '\f16b'; }
+
+label:hover {
+  color: #888;
+  cursor: pointer;
+}
+
+.input-tab:checked + label {
+  color: #555;
+  border-bottom: 4px solid #ffa800;
+}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3{
+  display: block;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+@media screen and (max-width: 650px) {
+  label {
+    font-size: 0;
+  }
+  label:before {
+    margin: 0;
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  label {
+    padding: 15px;
+  }
+}

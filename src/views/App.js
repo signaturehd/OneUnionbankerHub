@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, withRouter } from 'react-router-dom'
 
 import LoginView from './login/LoginView'
-import DrawerView from './drawer/DrawerView'
-
+import NavigationView from './navigation/NavigationView'
 import Presenter from './AppPresenter'
+
+import ConnectView from '../utils/ConnectView'
+import BaseMVPView from './common/base/BaseMVPView'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -14,24 +16,17 @@ const mapStateToProps = state => ({
   events: state.events,
 })
 
-class App extends Component {
+class App extends BaseMVPView {
   constructor (props) {
     super(props)
 
     this.state = {
       isLogin: false,
     }
-
-    this.presenter = new Presenter(this.props.container)
-    this.presenter.setView(this)
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.events.token) {
-      this.setState({ isLogin: true })
-    } else {
-      this.setState({ isLogin: false })
-    }
+    this.presenter.checkLogin()
   }
 
   componentWillMount () {
@@ -48,9 +43,9 @@ class App extends Component {
         <Switch>
           <Route path = '/' render={props => {
             if (this.state.isLogin) {
-              return <DrawerView container = { this.props.container } />
-            } 
-              return <LoginView container = { this.props.container } />
+              return <NavigationView  { ...props } />
+            }
+              return <LoginView { ...props } />
           }} />
         </Switch>
       </div>
@@ -58,4 +53,4 @@ class App extends Component {
   }
 }
 
-export default connect(mapStateToProps)(App)
+export default withRouter(ConnectView(connect(mapStateToProps)(App), Presenter))

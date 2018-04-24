@@ -1,4 +1,4 @@
-export default class GetbooksInteractor {
+export default class GetBooksInteractor {
   constructor (client) {
     this.client = client
   }

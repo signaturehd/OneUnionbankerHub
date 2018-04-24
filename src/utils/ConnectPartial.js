@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import Container from '../di/Container'
+import AppModule from '../di/AppModule'
 
 export default function ConnectPartial (View, Presenter) {
   class ConnectPartial extends Component {
@@ -7,7 +9,7 @@ export default function ConnectPartial (View, Presenter) {
     }
 
     render () {
-      const presenter = new Presenter(this.props.parent.props.container)
+      const presenter = new Presenter(AppModule(new Container()))
 
       return <View presenter = { presenter } { ...this.props } />
     }

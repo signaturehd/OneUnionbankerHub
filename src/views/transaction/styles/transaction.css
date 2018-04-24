@@ -1,0 +1,29 @@
+._transaction-container {
+      display: grid;
+      grid-column-gap: 1%;
+      padding: 1%;
+      margin: auto;
+      position: relative;
+      margin:0 auto;
+      text-align: center;
+      grid-template-rows: auto auto;
+      grid-template-areas: "cards cards cards";
+}
+._benefis-components {
+
+}
+
+@media only screen and (max-width: 479px){
+  ._transaction-container { width: 90%; }
+}
+
+._option-1 {
+  grid-area: cards;
+}
+.page-header-buttons {
+  text-align : right;
+}
+.option-cards {
+  padding: 1% 0 1% 0;
+  cursor: pointer;
+}

@@ -61,7 +61,8 @@ class LoginView extends BaseMVPView {
                   placeholder = { 'Password' }
                   type = { 'password' }/>
                 <br/>
-                <GenericButton text="Login"
+                <GenericButton
+                  text="Login"
                   onClick = { () => this.presenter.login(this.state.username, this.state.password)}/>
               </div>
             </div>

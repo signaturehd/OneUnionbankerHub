@@ -1,27 +1,41 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import Rating from 'react-rating'
+
 import './styles.css'
 
 class BookCardComponent extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      rating : 0
+    }
   }
 
   render () {
-    const { } = this.props
+    const { detail, onClick, rateBook } = this.props
+    const { rating } = this.state
+
 
     return (
-      <div className = {'card'} onClick = { onClick } >
+      <div className = {'card'} >
         <div className = {'card-header'} >
         </div>
         <div className = {'card-body'}>
-          <h5>{ title }</h5>
-          <h6>{ author }</h6>
-          <p>{ description }</p>
+          <h5>{ detail.title }</h5>
         </div>
         <div className = {'card-footer'}>
-          <small>{ author }</small>
+          <center>
+            <Rating
+              onChange = { e => {
+ rateBook(detail.id, e), this.setState({ rating : e }) 
+}}
+              fractions = { 2 }
+              initialRating = { rating ? rating : detail.rating }
+            />
+            <button onClick = { () => onClick(detail, true) }>Read More</button>
+          </center>
         </div>
       </div>
     )
@@ -29,12 +43,10 @@ class BookCardComponent extends Component {
 }
 
 BookCardComponent.propTypes = {
+  detail : PropTypes.object,
   onClick : PropTypes.func,
-  title : PropTypes.string,
+  rateBook : PropTypes.func,
   description : PropTypes.string,
-  image : PropTypes.string,
-  author : PropTypes.string,
-  rating : PropTypes.number,
   id : PropTypes.string
 }
 

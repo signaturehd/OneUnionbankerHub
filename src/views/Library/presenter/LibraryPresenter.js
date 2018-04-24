@@ -1,9 +1,9 @@
-import GetbooksInteractor from '../../../domain/interactor/library/GetbooksInteractor'
+import GetBooksInteractor from '../../../domain/interactor/library/GetBooksInteractor'
 
 
 export default class LibraryPresenter {
   constructor (container) {
-    this.getbooksInteractor = new GetbooksInteractor(container.get('HRBenefitsClient'))
+    this.getBooksInteractor = new GetBooksInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -12,8 +12,7 @@ export default class LibraryPresenter {
 
   getBooks () {
     this.view.showLoading()
-
-    this.getbooksInteractor.execute()
+    this.getBooksInteractor.execute()
     .subscribe(books => {
         this.view.hideLoading()
         this.view.showBooks(books)
