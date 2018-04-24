@@ -19,7 +19,7 @@ class NewsView extends BaseMVPView {
     super(props)
     this.state= {
         news: [],
-        show : false
+        show : false,
     }
   }
 
@@ -27,7 +27,9 @@ class NewsView extends BaseMVPView {
       this.presenter.getNews()
   }
 
-  news (news) {this.setState({news})}
+  news (news) {
+      this.setState({ news })
+  }
 
   render () {
     const { news, show, details } = this.state
