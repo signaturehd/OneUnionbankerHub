@@ -74,9 +74,16 @@ export default class HRBenefitsClient {
     return this.service.getOptical(token)
       .pipe(ServiceErrorOperator())
   }
+
   /* News */
   getNews (token) {
     return this.service.getNews(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* News */
+  getFaqs (token) {
+    return this.service.getFaqs(token)
       .pipe(ServiceErrorOperator())
   }
 }

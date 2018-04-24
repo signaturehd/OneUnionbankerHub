@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs'
 
 export default class HRBenefitsService {
-
   constructor (apiClient, accountClient) {
     this.apiClient = apiClient
     this.accountClient = accountClient
@@ -98,6 +97,13 @@ export default class HRBenefitsService {
       headers: {
         token
       }
+    })
+  }
+
+  // faqs
+  getFaqs (token) {
+    return this.apiClient.get('v1/faqs', {
+      headers: { token }
     })
   }
 }
