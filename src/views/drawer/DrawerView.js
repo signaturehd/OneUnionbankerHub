@@ -14,19 +14,47 @@ import './styles/drawerview.css'
 class DrawerView extends BaseMVPView {
   constructor (props) {
     super (props)
+    this.setDisplay = this.setDisplay.bind(this)
+  }
+  setDisplay (sideBar, topBar) {
+    this.setState ( { displayShow : sideBar } )
+    this.setState( { displayNavIcon : topBar } )
+  }
+  componentWillMount() {
+    const mediaQuery = window.matchMedia('(min-width: 768px)')
+          if( mediaQuery.matches) {
+            this.setDisplay('block', 'none')
+          }
+          else {
+            this.setDisplay('none', 'block')
+          }
+          mediaQuery.addListener((mq) => {
+          if (mq.matches) {
+            this.setDisplay('block', 'none')
+          }
+          else {
+            this.setDisplay( 'none', 'block')
+          }
+      })
   }
   render () {
-    const displayShow = 'isActive'
-    const display = { display : 'block' }
-      return (
-        <div className = { 'grid-1' }>
-          <div className = { '_drawer-header'}>
-            <AppBar></AppBar>
+    const { displayShow, displayNavIcon } = this.state
+    const style = {
+      show: {
+          display : displayShow
+      }
+    }
+    return (
+        <div  className = { 'grid-1' }>
+            <span> </span>
+          <div className = { '_drawer-header'} >
+            <AppBar displayNavIcon = { displayNavIcon } displayShow = { displayShow } ></AppBar>
           </div>
-          <div className = { '_drawer-sidebar' }
-               style = { display }>
+          <div
+            style = { style.show }
+            className = { '_drawer-sidebar' }>
             <SideBar
-              onNavigaionClick = { path => this.props.history.push(path) } ></SideBar>
+               onNavigaionClick = { path => this.props.history.push(path) } ></SideBar>
           </div>
           <div className = { '_drawer-main' }>
             { super.render() }
