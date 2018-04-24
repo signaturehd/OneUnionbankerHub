@@ -5,35 +5,34 @@ import { Cards } from '../../../../ub-components/'
 
 import './styles.css'
 
-class NewsCardComponent extends Component {
+class FaqCardComponent extends Component {
   constructor (props) {
     super(props)
   }
 
   render () {
-    const { news, onClick } = this.props
+    const { faqs, onClick } = this.props
     return (
         <Cards>
           <div></div>
           <div className = {'card-body'}>
-            <h3>{news.title}</h3>
+            <h3>{faqs.title}</h3>
           </div>
           <div className = {'card-footer'}>
-            <small><a href = {news.linkUrl}>See More</a></small>
-            <small><a onClick = { () => onClick(news) }>Read More</a></small>
+            <small><a onClick = { () => onClick(faqs) }>Read More</a></small>
           </div>
         </Cards>
     )
   }
 }
 
-NewsCardComponent.propTypes = {
-  news : PropTypes.object,
+FaqCardComponent.propTypes = {
+  faqs : PropTypes.object,
   onClick : PropTypes.func
 }
 
-NewsCardComponent.defaultProps = {
+FaqCardComponent.defaultProps = {
 
 }
 
-export default NewsCardComponent
+export default FaqCardComponent

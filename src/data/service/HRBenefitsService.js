@@ -100,4 +100,11 @@ export default class HRBenefitsService {
       }
     })
   }
+
+  // faqs
+  getFaqs (token) {
+    return this.apiClient.get('v1/faqs', {
+      headers: {token}
+    })
+  }
 }
