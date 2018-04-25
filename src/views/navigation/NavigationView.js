@@ -5,6 +5,7 @@ import ConnectView from '../../utils/ConnectView'
 import LibraryView from '../library/LibraryView'
 import BenefitsPartial from '../benefits/BenefitsPartial'
 import NewsView from '../news/NewsView'
+import FaqView from '../faq/FaqView'
 import Presenter from './presenter/DrawerPresenter'
 import { AppBar } from './components/appbar/AppBar'
 import { SideBar } from './components/sidebar/SideBar'
@@ -36,7 +37,7 @@ class NavigationView extends BaseMVPView {
                     <Route path = '/benefits' render = { props => <BenefitsPartial { ...props } />}/>
                      <Route path = '/news' render = { props => <NewsView { ...props } />} />
                      <Route path = '/transactions' render = { props => <TransactionView { ...props } />} />
-                     <Route path = '/faqs' render = { props => <Faqs { ...props } />} />
+                     <Route path = '/faqs' render = { props => <FaqView { ...props } />} />
                      <Route path = '/settings' render = { props => <Settings { ...props } />} />
                      <Route path = '/books' render = { props => <LibraryView { ...props } />} />
                  </Switch>
