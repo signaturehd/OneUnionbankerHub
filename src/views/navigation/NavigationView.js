@@ -11,6 +11,7 @@ import { AppBar } from './components/appbar/AppBar'
 import { SideBar } from './components/sidebar/SideBar'
 import { Drawer } from './components/drawer/Drawer'
 import './styles/drawerview.css'
+import PodcastView from '../podcast/PodcastView'
 
 class NavigationView extends BaseMVPView {
   constructor (props) {
@@ -40,6 +41,7 @@ class NavigationView extends BaseMVPView {
                      <Route path = '/faqs' render = { props => <FaqView { ...props } />} />
                      <Route path = '/settings' render = { props => <Settings { ...props } />} />
                      <Route path = '/books' render = { props => <LibraryView { ...props } />} />
+                     <Route path = '/podcast' render = { props => <PodcastView { ...props } />} />
                  </Switch>
                 </Drawer>
             </div>

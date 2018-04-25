@@ -6,6 +6,4 @@ export default class NewsInteractor {
   execute () {
     return this.client.getNews(this.client.getToken())
   }
-
-    return this.client.getNews(this.client.getToken())
-  }
+}
