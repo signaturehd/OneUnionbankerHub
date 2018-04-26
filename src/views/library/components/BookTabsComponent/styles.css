@@ -36,12 +36,10 @@ label {
       padding: 15px 25px;
       font-weight: 150;
       text-align: center;
-      font-family: 'Roboto';
       border: 1px solid transparent;
 }
 
 label:before {
-  font-family: 'Roboto';
   font-weight: normal;
   margin-right: 10px;
 }

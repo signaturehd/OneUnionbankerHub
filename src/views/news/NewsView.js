@@ -1,7 +1,5 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-
-
 import ConnectView from '../../utils/ConnectView'
 import NewsInteractor from '../../domain/interactor/news/NewsInteractor'
 
@@ -36,7 +34,7 @@ class NewsView extends BaseMVPView {
     return (
       <div className = {'container'}>
         { super.render() }
-        <h2>News Feed</h2>
+        <h1>News Feed</h1>
         <div className = {'card-container'}>
         {
           news.map((news, i) => <NewsCardComponent news = { news } onClick = { details => {
