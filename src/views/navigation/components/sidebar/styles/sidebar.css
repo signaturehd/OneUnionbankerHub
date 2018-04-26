@@ -1,10 +1,9 @@
 ._sidebar-overlay {
   background: #414D56;
-  height: 100VH;
+  height: 100%;
   top: 0;
-  width: 230px;
+  width: auto;
   box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
-  display: block;
 }
 ._text-link {
   font-family: 'Roboto';
@@ -43,4 +42,5 @@ ul {
   outline:0;
   margin:0;
   padding:0;
+  height: 100%;
 }

@@ -11,8 +11,8 @@ class SideBar extends Component {
     const { textlink, icon , onClick, text, path, onNavigaionClick } = this.props
     const modules =
     [
-      { id: 0 , title: 'Benefits', path: '/benefits' },
-      { id: 1 , title: 'News', path: '/news' },
+      { id: 0 , title: 'News', path: '/' },
+      { id: 1 , title: 'Benefits', path: '/benefits' },
       { id: 2 , title: 'Transactions', path: '/transactions' },
       { id: 4 , title: 'Faqs', path: '/faqs' },
       { id: 5 , title: 'Settings', path: '/settings' },

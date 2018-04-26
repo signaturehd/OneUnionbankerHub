@@ -12,11 +12,9 @@ class Drawer extends Component {
   render () {
     return (
       <div className = { '_main-content' }>
-        <div className = { '_option-components' }>
           {
             this.props.children
           }
-        </div>
       </div>
     )
   }
