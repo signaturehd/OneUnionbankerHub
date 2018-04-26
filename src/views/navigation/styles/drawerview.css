@@ -8,6 +8,18 @@ h1, h2, h3, h4, h5, h6, p{
   font: inherit;
   vertical-align: baseline; }
 
+  h1 {
+    font-weight: 350;
+    text-align: left;
+    padding-left: 2%;
+  }
+
+  p {
+    margin: 0 0 20px;
+    line-height: 1.5;
+  }
+
+
 .body-div {
   color: black;
   background-color: transparent;
