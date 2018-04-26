@@ -20,6 +20,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  profile (token) {
+    return this.service.profile(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
@@ -44,6 +49,14 @@ export default class HRBenefitsClient {
 
   getAccountNumber () {
     return this.sessionProvider.getAccountNumber()
+  }
+
+  setProfile (profile) {
+    this.sessionProvider.setProfile(profile)
+  }
+
+  getProfile () {
+    return this.sessionProvider.getProfile()
   }
 
   /* accounts */

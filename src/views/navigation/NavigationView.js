@@ -6,7 +6,7 @@ import LibraryView from '../library/LibraryView'
 import BenefitsPartial from '../benefits/BenefitsPartial'
 import NewsView from '../news/NewsView'
 import FaqView from '../faq/FaqView'
-import Presenter from './presenter/DrawerPresenter'
+import Presenter from './presenter/NavigationPresenter'
 import { AppBar } from './components/appbar/AppBar'
 import { SideBar } from './components/sidebar/SideBar'
 import { Drawer } from './components/drawer/Drawer'
@@ -16,6 +16,11 @@ class NavigationView extends BaseMVPView {
   constructor (props) {
     super (props)
   }
+
+  componentWillMount () {
+    this.presenter.getLibraries()
+  }
+
   render () {
     const displayShow = 'isActive'
     const display = { display : 'block' }

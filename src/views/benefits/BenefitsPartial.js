@@ -11,6 +11,8 @@ import { Cards } from '../../ub-components'
 import EducationView from './fragments/education/EducationView'
 import LoansView from './fragments/loans/LoansView'
 import MedicalView from './fragments/medical/MedicalView'
+import AccountNumberModal from '../accountnumbersubmit/AccountNumberModal'
+
 
 class BenefitsPartial extends BaseMVPView {
   constructor (props) {
@@ -19,6 +21,10 @@ class BenefitsPartial extends BaseMVPView {
     this.state = {
       accountNumber: '',
     }
+  }
+
+  componentWillMount () {
+    // TODO check managers check here
   }
 
   showReleasingCenters (releasingCenters) {
@@ -30,13 +36,13 @@ class BenefitsPartial extends BaseMVPView {
   }
   render () {
     const { onClick, text, path, icon, onOptionsLink, history } = this.props
+    const { accountNumber } = this.state
     const benefitsOptions =
     [
       { id: 0 , title: 'education', path: '/benefits/education' },
       { id: 1 , title: 'medical', path: '/benefits/medical' },
       { id: 2 , title: 'loans', path: '/benefits/loans' }
     ]
-    const { accountNumber } = this.state
     const style = {
           _pageheader : {
             height: 'auto',
@@ -50,6 +56,7 @@ class BenefitsPartial extends BaseMVPView {
 
     return (
       <div>
+        { super.render() }
         <div style = { style._pageheader }>
           <div className = { 'page-header-buttons' }>
           </div>
@@ -76,6 +83,9 @@ class BenefitsPartial extends BaseMVPView {
               <Route path = '/benefits/loans' render = { props => <LoansView parent = { this } />}/>
            </Switch>
          </div>
+         {
+
+         }
       </div>
     )
   }

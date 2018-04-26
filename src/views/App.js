@@ -38,6 +38,9 @@ class App extends BaseMVPView {
   }
 
   render () {
+
+    console.log(this.state.isLogin)
+
     return (
       <div>
         <Switch>

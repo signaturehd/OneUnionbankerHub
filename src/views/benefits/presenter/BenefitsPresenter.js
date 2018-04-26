@@ -29,7 +29,6 @@ export default class BenefitsPresenter {
 
   validateAccountNumber (accountNumber) {
     this.view.showLoading()
-
     this.validateAccountNumberInteractor.execute(accountNumber)
       .subscribe(resp => {
         this.view.hideLoading()

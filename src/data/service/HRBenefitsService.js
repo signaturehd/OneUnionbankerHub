@@ -12,9 +12,24 @@ export default class HRBenefitsService {
   }
 
   otp (otpParam) {
+    // return Observable.create(observer => {
+    //   observer.next({
+    //     status: 200,
+    //     data: {
+    //       token: '368d2384c4867ca569d50b461a65436de852a71402e290bccd41b020fc3ef2aa0620c603e7c9c8221934e6a6ee92353c4b2f755020fafe7e0e271ce924f2d666'
+    //     }
+    //   })
+    //
+    //   observer.complete()
+    // })
     return this.apiClient.post('v1/otp', otpParam)
   }
 
+  profile (token) {
+    return this.apiClient.get('v1/profile', {
+      headers : { token }
+    })
+  }
   /* dental loa */
   validateDentalLoa (token) {
     return this.apiClient.get('v1/issuances/dental/loa/validate?type=1', {
