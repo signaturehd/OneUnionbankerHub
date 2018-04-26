@@ -37,10 +37,6 @@ class LibraryView extends BaseMVPView {
     return (
       <div>
       { super.render() }
-        <div>
-          <div className = { 'page-header-buttons' }>
-          </div>
-        </div>
         <h1>Library</h1>
         <div className = { 'tabs-container' }>
           <BookTabsComponent  books={ books } />
