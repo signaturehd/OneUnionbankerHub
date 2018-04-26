@@ -15,7 +15,7 @@ class NewsCardComponent extends Component {
     return (
         <Cards>
           <div></div>
-          <div className = {'card-body'}>
+          <div className = {'news-body'}>
             <h3>{news.title}</h3>
           </div>
           <div className = {'card-footer'}>
