@@ -19,7 +19,7 @@ class BookCardComponent extends Component {
 
 
     return (
-      <div className = {'card'} >
+      <div className = {'book-card'} >
         <div className = {'card-header'} >
         </div>
         <div className = {'card-body'}>
@@ -29,7 +29,7 @@ class BookCardComponent extends Component {
           <center>
             <Rating
               onChange = { e => {
- rateBook(detail.id, e), this.setState({ rating : e }) 
+ rateBook(detail.id, e), this.setState({ rating : e })
 }}
               fractions = { 2 }
               initialRating = { rating ? rating : detail.rating }
