@@ -38,19 +38,16 @@ class BenefitsPartial extends BaseMVPView {
       styleName: 'option-cards-1',
       title: 'EDUCATION',
       path: '/benefits/education',
-      images: '../images/education_bg.jpg',
     }, {
       id: 1 ,
       styleName: 'option-cards-2',
       title: 'MEDICAL',
       path: '/benefits/medical',
-      images: '../images/medical_bg.jpg',
     }, {
       id: 2,
       styleName: 'option-cards-3',
       title: 'LOANS',
       path: '/benefits/loans',
-      images: '../images/mpl_bg.jpg',
     }]
     const { accountNumber } = this.state
     const Benefits = () => (

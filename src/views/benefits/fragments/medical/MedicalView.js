@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import BenefitsPartial from '../../BenefitsPartial'
-import '../../styles/benefits.css'
+import { Cards, GenericButton } from '../../../../ub-components'
+import Medical01 from '../medicalFragments/medical01/Medical01'
+import './styles/medical.css'
 
 class MedicalView extends Component {
   constructor (props) {
@@ -12,23 +14,54 @@ class MedicalView extends Component {
       this.props.history.push('/benefits')
   }
   render () {
-    const { title, author, description, text, history } = this.props
+    const { title, author, description, text, onOptionsLink, history , } = this.props
+    const benefitsOptions = [{
+      id: 0 ,
+      styleName: 'medical-cards-1',
+      title: 'MEDICAL01',
+      path: '/benefits/medical/medical01',
+    }, {
+      id: 1 ,
+      styleName: 'medical-cards-2',
+      title: 'MEDICAL02',
+      path: '/benefits/medical/medical02',
+    }, {
+      id: 2,
+      styleName: 'medical-cards-3',
+      title: 'MEDICAL03',
+      path: '/benefits/medical/medical03',
+    }]
     const style = {
       styles : {
         height : '10px !important'
       }
     }
-    const BenefitsHome = () => (
-        <div className = { 'container-option1' }  >
+    const MedicalHome = () => (
+        <div className = { 'benefits-container' }  >
           <span className = { 'back-button' } onClick = { this.navigate.bind(this) }>{'<'}</span>
           <h1> Medical </h1>
+            <div className = { 'card-container' }>
+              {
+              benefitsOptions.map((value, idx) => (
+                <Cards key={ idx }>
+                  <div
+                    className = { value.styleName}
+                    text = { value.title }
+                    onClick = { () => onOptionsLink(history.push(value.path)) } >
+                    <p className = { 'benefits-option-cards' }> { value.title } </p></div>
+                </Cards>
+              ))
+              }
+            </div>
         </div>
     )
     return (
       <div>
-        <Switch>
-          <Route exact path = '/benefits/medical' render = { BenefitsHome } />
-          <Route path = '/benefits' render = { <BenefitsPartial/> } />
+         <Switch>
+         <Route exact path = '/benefits/medical'  render = { MedicalHome } />
+         <Route path = '/benefits/medical/medical01' render = { props => <Medical01 history = { history } parent = { this } />}/>
+         <Route path = '/benefits/medical/medical02' render = { props => <Medical02  history = { history }  parent = { this } />}/>
+         <Route path = '/benefits/medical/medical03' render = { props => <Medical03  history = { history }  parent = { this } />}/>
         </Switch>
       </div>
     )
@@ -36,22 +69,11 @@ class MedicalView extends Component {
 }
 
 MedicalView.propTypes = {
+  text : PropTypes.string,
+  icon : PropTypes.string,
+  path : PropTypes.string,
   onClick : PropTypes.func,
-  title : PropTypes.string,
-  description : PropTypes.string,
-  image : PropTypes.string,
-  author : PropTypes.string,
-  rating : PropTypes.number,
-  id : PropTypes.string,
+  onOptionsLink : PropTypes.func,
+  medical : PropTypes.string
 }
-
-MedicalView.defaultProps = {
-  title : 'title',
-  description : 'description',
-  author : 'author',
-  image : 'image',
-  rating : 0,
-}
-
-
 export default MedicalView
