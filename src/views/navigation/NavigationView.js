@@ -18,10 +18,12 @@ class NavigationView extends BaseMVPView {
     super (props)
     this.setDisplay = this.setDisplay.bind(this)
   }
+
   setDisplay (sideBar, topBar) {
     this.setState ({ displayShow : sideBar })
     this.setState({ displayNavIcon : topBar })
   }
+
   componentWillMount () {
     const mediaQuery = window.matchMedia('(min-width: 768px)')
       if (mediaQuery.matches) {
@@ -37,6 +39,7 @@ class NavigationView extends BaseMVPView {
       }
     })
   }
+  
   render () {
     const { displayShow, displayNavIcon, displayNavIconState } = this.state
 
