@@ -19,13 +19,13 @@ h1, h2, h3, h4, h5, h6, p{
     display: inline-flex;
     overflow: hidden;
     position: absolute;
-    top: 45px;
+    top: 57px;
     bottom: 0; }
   .panels .panel {
     overflow: auto; }
   .page-boundary {
     position: absolute;
-    height: 45px;
+    height: 57px;
     display: flex;
     justify-content: center;
     align-content: center;

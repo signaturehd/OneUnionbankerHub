@@ -8,13 +8,10 @@ class AppBar extends Component {
     super(props)
     this.onToggleShow = this.onToggleShow.bind(this)
   }
-  onToggleShow() {
-    if(this.props.displayShow == 'none')
-    {
+  onToggleShow () {
+    if (this.props.displayShow === 'none') {
       this.props.hide()
-    }
-    else if(this.props.displayShow == 'block')
-    {
+    } else if (this.props.displayShow === 'block') {
       this.props.show()
     }
   }

@@ -19,27 +19,23 @@ class NavigationView extends BaseMVPView {
     this.setDisplay = this.setDisplay.bind(this)
   }
   setDisplay (sideBar, topBar) {
-    this.setState ( { displayShow : sideBar } )
-    this.setState( { displayNavIcon : topBar } )
+    this.setState ({ displayShow : sideBar })
+    this.setState({ displayNavIcon : topBar })
   }
-  componentWillMount() {
+  componentWillMount () {
     const mediaQuery = window.matchMedia('(min-width: 768px)')
-          if( mediaQuery.matches)
-          {
-            this.setDisplay('block', 'none')
-          }
-          else {
-            this.setDisplay('none', 'block')
-          }
-          mediaQuery.addListener((mq) => {
-          if (mq.matches)
-          {
-            this.setDisplay('block', 'none')
-          }
-          else {
-            this.setDisplay( 'none', 'block')
-          }
-      })
+      if (mediaQuery.matches) {
+        this.setDisplay('block', 'none')
+      } else {
+        this.setDisplay('none', 'block')
+      }
+        mediaQuery.addListener(mq => {
+      if (mq.matches) {
+        this.setDisplay('block', 'none')
+      } else {
+        this.setDisplay('none', 'block')
+      }
+    })
   }
   render () {
     const { displayShow, displayNavIcon, displayNavIconState } = this.state
@@ -54,8 +50,8 @@ class NavigationView extends BaseMVPView {
           <header className = { 'page-boundary page-boundary--fixed-top' }>
             <AppBar
               displayNavIcon = { displayNavIcon } displayShow = { displayShow }
-              hide = { () => this.setState( { displayShow : 'block' } )}
-              show = { () => this.setState( { displayShow : 'none' } )}>
+              hide = { () => this.setState({ displayShow : 'block' })}
+              show = { () => this.setState({ displayShow : 'none' })}>
             </AppBar>
           </header>
           <div className="panels">
