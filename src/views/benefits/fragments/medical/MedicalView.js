@@ -12,7 +12,7 @@ class MedicalView extends Component {
       this.props.history.push('/benefits')
   }
   render () {
-    const { title, author, description, text, history} = this.props
+    const { title, author, description, text, history } = this.props
     const style = {
       styles : {
         height : '10px !important'

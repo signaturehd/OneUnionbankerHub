@@ -1,17 +1,24 @@
+
 ._benefits-container {
-      display: grid;
-      grid-column-gap: 1%;
-      padding: 1%;
-      margin: auto;
-      position: relative;
-      margin:0 auto;
-      text-align: center;
-      color: #fafafa;
-      font-family: 'Roboto';
-      grid-template-areas: "cards cards cards";
+  display:grid;
+  grid-column-gap: 1%;
+  text-align: center;
+  font-weight: lighter;
+  grid-template-columns : repeat(300px);
+
 }
+
+.card-container {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  margin-bottom: 10px;
+}
+
+.card-body {
+  padding : 50px;
+}
+
 @media only screen and (max-width: 768px){
-  ._benefits-container { width: 100%; }
 }
 .back-button {
   height: 10px !important;
@@ -20,30 +27,35 @@
 .page-header-buttons {
   text-align : right;
 }
+.benefits-option-cards {
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  padding: 10px 0 10px 0;
+}
 .option-cards-1 {
-  padding: 20% 0 20% 0;
-  cursor: pointer;
+  padding: 20% 0 20% 0 !important;
+  cursor: pointer !important;
   background-image: url('../images/education_bg.jpg') !important;
-  background-repeat: round;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
-  border-radius: 5px;
-  grid-area: card;
+  background-repeat: no-repeat !important;
+  border-radius: 5px !important;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3) !important;
+  grid-area: card!important;
 }
 .option-cards-2 {
-  padding: 20% 0 20% 0;
-  cursor: pointer;
+  padding: 20% 0 20% 0 !important;
+  cursor: pointer !important;
   background-image: url('../images/medical_bg.jpg') !important;
-  background-repeat: round;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
-  border-radius: 5px;
-  grid-area: card;
+  background-repeat: no-repeat !important;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3) !important;
+  border-radius: 5px !important;
+  grid-area: card !important;
 }
 .option-cards-3 {
-  padding: 20% 0 20% 0;
-  cursor: pointer;
+  padding: 20% 0 20% 0 !important;
+  cursor: pointer !important;
   background-image: url('../images/mpl_bg.jpg') !important;
-  background-repeat: round;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
-  border-radius: 5px;
-  grid-area: card;
+  background-repeat: no-repeat !important;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3) !important;
+  border-radius: 5px !important;
+  grid-area: card !important;
 }
