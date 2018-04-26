@@ -37,7 +37,7 @@ class FaqView extends BaseMVPView {
         <h2>Faqs</h2>
         <div className = {'card-container'}>
         {
-          faqs.map((faqs, i) => <FaqCardComponent key = {i} faqs = { faqs } onClick = { details => {
+        faqs.map((faqs, i) => <FaqCardComponent key = {i} faqs = { faqs } onClick = { details => {
 this.setState({ details, show: true })
 } } />)
         }
