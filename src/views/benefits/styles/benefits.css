@@ -6,24 +6,44 @@
       position: relative;
       margin:0 auto;
       text-align: center;
-      grid-template-rows: auto auto;
+      color: #fafafa;
+      font-family: 'Roboto';
       grid-template-areas: "cards cards cards";
 }
-._benefis-components {
-
+@media only screen and (max-width: 768px){
+  ._benefits-container { width: 100%; }
 }
-
-@media only screen and (max-width: 479px){
-  ._benefits-container { width: 90%; }
-}
-
-._option-1 {
-  grid-area: cards;
+.back-button {
+  height: 10px !important;
+  cursor: pointer;
 }
 .page-header-buttons {
   text-align : right;
 }
-.option-cards {
-  padding: 1% 0 1% 0;
+.option-cards-1 {
+  padding: 20% 0 20% 0;
   cursor: pointer;
+  background-image: url('../images/education_bg.jpg') !important;
+  background-repeat: round;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  grid-area: card;
+}
+.option-cards-2 {
+  padding: 20% 0 20% 0;
+  cursor: pointer;
+  background-image: url('../images/medical_bg.jpg') !important;
+  background-repeat: round;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  grid-area: card;
+}
+.option-cards-3 {
+  padding: 20% 0 20% 0;
+  cursor: pointer;
+  background-image: url('../images/mpl_bg.jpg') !important;
+  background-repeat: round;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  grid-area: card;
 }
