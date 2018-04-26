@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { render } from "react-dom";
+import { render } from 'react-dom';
 import './table.css'
 
 // Import React Table
-import ReactTable from "react-table";
-import "react-table/react-table.css";
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
 
 class Table extends Component {
   constructor() {
@@ -21,33 +21,34 @@ class Table extends Component {
           data={data}
           columns={[
             {
-              Header: "Title",
+              Header: 'Title',
               columns: [
                 {
-                  Header: "Title",
-                  accessor: "title"
+                  Header: 'Title',
+                  accessor: 'title'
                 },
                 {
-                  Header: "Description",
-                  id: "description",
+                  Header: 'Description',
+                  id: 'description',
                   accessor: d => d.description
                 }
               ]
             },
             {
-              Header: "Link",
+              Header: 'Link',
               columns: [
                 {
-                  Header: "Play Podcast",
-                  accessor: "link"
+                  Header: 'Play Podcast',
+                  accessor: 'link'
                 },
 
               ]
             },
 
           ]}
+          filterable
           defaultPageSize={10}
-          className="-striped -highlight"
+          className='-striped -highlight'
         />
         <br />
 

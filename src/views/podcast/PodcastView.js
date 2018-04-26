@@ -2,7 +2,6 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import BaseMVPView from '../common/base/BaseMVPView'
-
 import Presenter from './presenter/PodcastPresenter'
 import './styles/styles.css'
 import ConnectPartial from '../../utils/ConnectPartial'
@@ -14,10 +13,7 @@ import PodcastPlaylist from './fragments/playlist/PodcastPlaylist'
 class PodcastView extends BaseMVPView {
   constructor (props) {
     super(props)
-
-
     }
-
   render () {
     const { onClick, text, path, icon, onOptionsLink, history } = this.props
     const podcastOptions =
