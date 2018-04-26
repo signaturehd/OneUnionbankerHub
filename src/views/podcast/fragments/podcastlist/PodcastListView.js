@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Table from '../table/Table'
+import Application from '../accordion/Accordion'
+
+
 class PodcastListView extends Component {
   constructor (props) {
     super(props)
@@ -12,8 +15,8 @@ class PodcastListView extends Component {
     return (
       <div className = { 'container-option1' }  >
         <h1> Podcasts </h1>
-        <div className={'container-option1'}> <Table/> </div> 
-
+        <div className={'container-option1'}> <Application/> </div> 
+      
 
 
       </div>
