@@ -18,7 +18,7 @@ class PodcastView extends BaseMVPView {
     const { onClick, text, path, icon, onOptionsLink, history } = this.props
     const podcastOptions =
     [
-      { id: 0 , title: 'Play List', path: '/podcast/playlist' },
+      { id: 0 , title: 'My PlayList', path: '/podcast/playlist' },
       { id: 1 , title: 'Podcasts', path: '/podcast/podcastlist' },
 
     ]
