@@ -7,27 +7,26 @@ import GenericButton from '../../ub-components/UButton/GenericButton'
 import HRBenefitsService from '../data/service/HRBenefitsService'
 
 class OpticalView extends BaseView {
- //constructor (props) {
+ // constructor (props) {
  // super(props)
-  //this.state = {
-   //showOptical: []
+  // this.state = {
+   // showOptical: []
  // }
 // }
- //componentDidMount () {
-  //this.presenter.addOptical()
- //}
+ // componentDidMount () {
+  // this.presenter.addOptical()
+ // }
 
- //showOptical (optical) {
-  //this.setState({ showOptical:optical })
- //}
- constructor(props) {
-  super(props);
-  this.handleSubmit = this.handleSubmit.bind(this);
+ // showOptical (optical) {
+  // this.setState({ showOptical:optical })
+ // }
+ constructor (props) {
+  super(props)
+  this.handleSubmit = this.handleSubmit.bind(this)
  }
 
  handleSubmit (event) {
   event.preventDefault()
-
  }
 
     render () {
@@ -35,7 +34,7 @@ class OpticalView extends BaseView {
         return (
          <form onSubmit={this.handleSubmit}>
             <div>
-             <GenericTextBox type="text" ref={(input) => this.input = input}
+             <GenericTextBox type="text" ref={input => this.input = input}
               placeholder = { 'Amount' } />
              <Uploader/>
              <Uploader/>

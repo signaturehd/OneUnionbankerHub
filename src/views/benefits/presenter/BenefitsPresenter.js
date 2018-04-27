@@ -27,7 +27,7 @@ export default class BenefitsPresenter {
       })
   }
 
-  checkManagersCheck() {
+  checkManagersCheck () {
     
   }
 

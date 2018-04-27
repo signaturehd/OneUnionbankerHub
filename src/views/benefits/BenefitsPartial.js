@@ -79,7 +79,7 @@ class BenefitsPartial extends BaseMVPView {
           </div>
           {
             // showAccountNumber &&
-            <AccountNumberModal onClose = { () => this.setState({showAccountNumber : false}) } />
+            <AccountNumberModal onClose = { () => this.setState({ showAccountNumber : false }) } />
           }
           <div className = { '_benefits-container' }>
             <Switch>

@@ -23,7 +23,6 @@ export default class OtpPresenter {
           this.view.onOtpSuccess()
         },
         error => {
-          console.log(error)
           this.view.hideLoading()
         }
       )

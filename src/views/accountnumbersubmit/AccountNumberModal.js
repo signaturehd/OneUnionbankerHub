@@ -15,7 +15,6 @@ class AccountNumberModal extends BaseMVPView {
     this.state = {
       accountNumber : ''
     }
-
   }
 
   render () {
@@ -26,9 +25,11 @@ class AccountNumberModal extends BaseMVPView {
       <InputModal
         onClose = { onClose }
         onChange = { e => this.setState({ accountNumber: e.target.value }) }
-        placeholder = { "Account Number" }
-        type = { "text" }
-        onSubmit = { (e) => { e.preventDefault() , this.presenter.validateAccountNumber(accountNumber)} }
+        placeholder = { 'Account Number' }
+        type = { 'text' }
+        onSubmit = { e => {
+ e.preventDefault() , this.presenter.validateAccountNumber(accountNumber)
+} }
       >
       { super.render() }
       </InputModal>
