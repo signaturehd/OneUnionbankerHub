@@ -15,61 +15,61 @@ import MedicalView from './fragments/medical/MedicalView'
 import './styles/benefits.css'
 
 class BenefitsPartial extends BaseMVPView {
-  constructor (props) {
-    super(props)
+constructor (props) {
+  super(props)
 
-    this.state = {
-      accountNumber: '',
-    }
+  this.state = {
+    accountNumber: '',
   }
+}
 
-  showReleasingCenters (releasingCenters) {
-  // TODO show to generic multilist dialog
-  }
+showReleasingCenters (releasingCenters) {
+// TODO show to generic multilist dialog
+}
 
-  onValidAccountNumber () {
-  // TODO dismiss account number dialog
-  }
+onValidAccountNumber () {
+// TODO dismiss account number dialog
+}
 
-  render () {
-    const { onClick, text, path, icon, onOptionsLink, history, benefitsShow, backgroundImage } = this.props
-    const benefitsOptions = [{
-      id: 0 ,
-      styleName: 'option-cards-1',
-      title: 'EDUCATION',
-      path: '/benefits/education',
-      images: '../images/education_bg.jpg',
-    }, {
-      id: 1 ,
-      styleName: 'option-cards-2',
-      title: 'MEDICAL',
-      path: '/benefits/medical',
-      images: '../images/medical_bg.jpg',
-    }, {
-      id: 2,
-      styleName: 'option-cards-3',
-      title: 'LOANS',
-      path: '/benefits/loans',
-      images: '../images/mpl_bg.jpg',
-    }]
-    const { accountNumber } = this.state
-    const Benefits = () => (
-      <div className = { '_benefits-container' }>
-        <h1> Benefits</h1>
-        <div className = { 'card-container' }>
-          {
-          benefitsOptions.map((value, idx) => (
-            <Cards key={ idx }>
-              <div
-                className = { value.styleName}
-                text = { value.title }
-                onClick = { () => onOptionsLink(history.push(value.path)) } >
-                <p className = { 'benefits-option-cards' }> { value.title } </p></div>
-            </Cards>
-          ))
-          }
-        </div>
-      </div>)
+render () {
+  const { onClick, text, path, icon, onOptionsLink, history, benefitsShow, backgroundImage } = this.props
+  const benefitsOptions = [{
+    id: 0 ,
+    styleName: 'option-cards-1',
+    title: 'EDUCATION',
+    path: '/benefits/education',
+  }, {
+    id: 1 ,
+    styleName: 'option-cards-2',
+    title: 'MEDICAL',
+    path: '/benefits/medical',
+  }, {
+    id: 2,
+    styleName: 'option-cards-3',
+    title: 'LOANS',
+    path: '/benefits/loans',
+  }]
+  const { accountNumber } = this.state
+  const Benefits = () => (
+    <div className = { '_benefits-container' }>
+      <h1> Benefits</h1>
+      <div className = { 'adjustment' }>
+      <div className = { 'card-container' }>
+        {
+        benefitsOptions.map((value, idx) => (
+          <Cards key={ idx }>
+            <div
+              className = { value.styleName}
+              text = { value.title }
+              onClick = { () => onOptionsLink(history.push(value.path)) } >
+              <p className = { 'benefits-option-cards' }> { value.title } </p>
+            </div>
+          </Cards>
+        ))
+        }
+      </div>
+    </div>
+  </div>)
 
     return (
     <div>

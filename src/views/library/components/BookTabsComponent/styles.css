@@ -8,18 +8,6 @@
   padding: 0 4% 0 4%;
 }
 
-h1 {
-  font-weight: 350;
-  text-align: left;
-  padding-left: 4%;
-}
-
-p {
-  margin: 0 0 20px;
-  line-height: 1.5;
-}
-
-
 section {
   display: none;
   padding: 20px 0 0;
@@ -32,11 +20,12 @@ section {
 
 label {
   display: inline-block;
-      margin: 0 0 -1px;
-      padding: 15px 25px;
-      font-weight: 150;
-      text-align: center;
-      border: 1px solid transparent;
+  margin: 0 0 -1px;
+  padding: 15px 25px;
+  font-weight: 150;
+  text-align: center;
+  border: 1px solid transparent;
+  color: #555;
 }
 
 label:before {
@@ -49,12 +38,12 @@ label[htmlFor*='2']:before { content: '\f17d'; }
 label[htmlFor*='3']:before { content: '\f16b'; }
 
 label:hover {
-  color: #888;
+  color: #555;
   cursor: pointer;
 }
 
 .input-tab:checked + label {
-  color: #555;
+  color: #000;
   border-bottom: 4px solid #ffa800;
 }
 

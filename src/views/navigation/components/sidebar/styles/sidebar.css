@@ -7,11 +7,10 @@
 }
 ._text-link {
  border-radius: 5px;
- font-size: 16px;
+ font-size: 18px;
  text-align: justify;
- background-color: #38576f;
  padding: 20px;
- color: #000000b5;
+ color: #00000087;
  border-radius: 5px;
  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
  cursor: pointer;
@@ -21,7 +20,7 @@
  font-weight: 200;
 }
 ._text-link:hover {
-  color: #FFFFFF;
+  color: black;
 }
 ._icon {
   position: relative;
