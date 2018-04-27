@@ -1,0 +1,14 @@
+.optical-button {
+  border-radius: 20px;
+  height: 40px;
+  margin: 10px auto auto auto;
+  min-width: 120px;
+  outline: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  cursor: pointer;
+  border: none;
+  text-transform: uppercase;
+  background: #ff8a00;
+  color: #fff;
+}
