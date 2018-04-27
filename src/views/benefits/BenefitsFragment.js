@@ -3,13 +3,13 @@ import { Switch, Route, createBrowserHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import BaseMVPView from '../common/base/BaseMVPView'
-import ConnectPartial from '../../utils/ConnectPartial'
+import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/BenefitsPresenter'
 
 import { Cards, GenericButton } from '../../ub-components'
 
-import EducationView from './fragments/education/EducationView'
-import LoansView from './fragments/loans/LoansView'
+import EducationFragment from './fragments/education/EducationFragment'
+import LoansFragment from './fragments/loans/LoansFragment'
 import MedicalFragment from './fragments/medical/MedicalFragment'
 
 import './styles/benefits.css'
@@ -75,9 +75,9 @@ class BenefitsFragment extends BaseMVPView {
     <div>
        <Switch>
        <Route exact path = '/benefits' render = { Benefits } />
-       <Route path = '/benefits/education' render = { props => <EducationView { ...props } />}/>
+       <Route path = '/benefits/education' render = { props => <EducationFragment { ...props } />}/>
        <Route path = '/benefits/medical' render = { props => <MedicalFragment { ...props } />}/>
-       <Route path = '/benefits/loans' render = { props => <LoansView  { ...props } />}/>
+       <Route path = '/benefits/loans' render = { props => <LoansFragment  { ...props } />}/>
       </Switch>
     </div>)
   }
@@ -90,4 +90,4 @@ BenefitsFragment.propTypes = {
   onClick : PropTypes.func,
 }
 
-export default ConnectPartial(BenefitsFragment, Presenter)
+export default ConnectView(BenefitsFragment, Presenter)

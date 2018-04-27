@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import '../../styles/benefits.css'
 
-class EducationView extends Component {
+class EducationFragment extends Component {
 
   constructor (props) {
     super(props)
@@ -34,4 +34,4 @@ class EducationView extends Component {
   }
 }
 
-export default EducationView
+export default EducationFragment
