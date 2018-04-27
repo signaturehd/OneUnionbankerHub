@@ -20,7 +20,10 @@
  font-weight: 200;
 }
 ._text-link:hover {
-  color: black;
+  color: #ff8a00;
+}
+.active {
+  color: #ff8a00;
 }
 ._icon {
   position: relative;

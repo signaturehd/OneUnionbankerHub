@@ -39,7 +39,7 @@ class NavigationView extends BaseMVPView {
       }
     })
   }
-  
+
   render () {
     const { displayShow, displayNavIcon, displayNavIconState } = this.state
 
