@@ -46,7 +46,7 @@ class Application extends Component {
   }
   
   render() {
-    const accordionList = [{ title: 'Title of Podcast' }, { title: 'Title of Podcast' }, { title: 'Title of Podcast' }];
+    const accordionList = [{ title: 'Title of Podcast' }, { title: 'Title of Podcast' }, { title: 'Title of Podcast' }]; /* podcast api mapping goes here */
     
     return <div className="container">
       
