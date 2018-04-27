@@ -18,17 +18,17 @@ class MedicalView extends Component {
     const benefitsOptions = [{
       id: 0 ,
       styleName: 'medical-cards-1',
-      title: 'MEDICAL01',
+      title: 'DENTAL LOA',
       path: '/benefits/medical/medical01',
     }, {
       id: 1 ,
       styleName: 'medical-cards-2',
-      title: 'MEDICAL02',
+      title: 'DENTAL REIMBURSEMENT',
       path: '/benefits/medical/medical02',
     }, {
       id: 2,
       styleName: 'medical-cards-3',
-      title: 'MEDICAL03',
+      title: 'OPTICAL',
       path: '/benefits/medical/medical03',
     }]
     const style = {
@@ -38,8 +38,9 @@ class MedicalView extends Component {
     }
     const MedicalHome = () => (
         <div className = { 'benefits-container' }  >
-          <span className = { 'back-button' } onClick = { this.navigate.bind(this) }>{'<'}</span>
+          <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
           <h1> Medical </h1>
+            <div className = { 'adjustment' }>
             <div className = { 'card-container' }>
               {
               benefitsOptions.map((value, idx) => (
@@ -53,6 +54,7 @@ class MedicalView extends Component {
               ))
               }
             </div>
+          </div>
         </div>
     )
     return (

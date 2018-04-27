@@ -12,9 +12,17 @@
   text-align: center;
 }
 
-.back-button {
-  height: 10px !important;
+i {
   cursor: pointer;
+  border: solid black;
+  border-width: 0 7px 7px 0;
+  display: -webkit-inline-box;
+  padding: 7px;
+  top: 0;
+}
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
 }
 .page-header-buttons {
   text-align : right;
@@ -22,10 +30,14 @@
 .benefits-option-cards {
   background: rgba(0,0,0,0.5);
   color: #fff;
+  margin-top: 5%;
   padding: 12px 0 12px 0;
 }
+.adjustment {
+  margin-top: 4%;
+}
 .option-cards-1 {
-  padding: 25% 0 25% 0 !important;
+  padding: 21% 0 20% 0 !important;
   cursor: pointer !important;
   background-image: url('../images/education_bg.jpg') !important;
   background-repeat: round !important;
@@ -34,7 +46,7 @@
   grid-area: card!important;
 }
 .option-cards-2 {
-  padding: 25% 0 25% 0 !important;
+  padding: 21% 0 20% 0 !important;
   cursor: pointer !important;
   background-image: url('../images/medical_bg.jpg') !important;
   background-repeat: round !important;
@@ -43,7 +55,7 @@
   grid-area: card !important;
 }
 .option-cards-3 {
-  padding: 25% 0 25% 0 !important;
+  padding: 21% 0 20% 0 !important;
   cursor: pointer !important;
   background-image: url('../images/mpl_bg.jpg') !important;
   background-repeat: round !important;

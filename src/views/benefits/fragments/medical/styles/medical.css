@@ -1,8 +1,11 @@
 /* benefits */
 /* medical */
 
+.adjustment {
+  margin-top: 4%;
+}
 .medical-cards-1 {
-  padding: 25% 0 25% 0 !important;
+  padding: 21% 0 20% 0 !important;
   cursor: pointer !important;
   background-image: url('../../images/dental_ub.jpg') !important;
   background-repeat: round !important;
@@ -11,7 +14,7 @@
   grid-area: card!important;
 }
 .medical-cards-2 {
-  padding: 25% 0 25% 0 !important;
+  padding: 21% 0 20% 0 !important;
   cursor: pointer !important;
   background-image: url('../../images/dental02_ub.jpg') !important;
   background-repeat: round !important;
@@ -20,7 +23,7 @@
   grid-area: card !important;
 }
 .medical-cards-3 {
-  padding: 25% 0 25% 0 !important;
+  padding: 21% 0 20% 0 !important;
   cursor: pointer !important;
   background-image: url('../../images/eye_ub.jpg') !important;
   background-repeat: round !important;
