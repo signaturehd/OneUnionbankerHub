@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal } from '../../ub-components/'
+import { InputModal } from '../../ub-components/Modal'
 import { GenericTextBox } from '../../ub-components/TextBox/'
 import { GenericButton } from '../../ub-components/UButton/'
 
@@ -22,17 +22,16 @@ class AccountNumberModal extends BaseMVPView {
     const { onClose, details } = this.props
     const { accountNumber } = this.state
     return (
-      <Modal
+
+      <InputModal
         onClose = { onClose }
+        onChange = { e => this.setState({ accountNumber: e.target.value }) }
+        placeholder = { "Account Number" }
+        type = { "text" }
+        onSubmit = { (e) => { e.preventDefault() , this.presenter.validateAccountNumber(accountNumber)} }
       >
       { super.render() }
-        <GenericTextBox
-          placeholder = "Account Number"
-          type = ""
-          onChange={ e => this.setState({ accountNumber: e.target.value }) }  />
-          <br/>
-        <GenericButton text= "Submit" onClick={ () => this.presenter.validateAccountNumber(accountNumber) } />
-      </Modal>
+      </InputModal>
     )
   }
 }

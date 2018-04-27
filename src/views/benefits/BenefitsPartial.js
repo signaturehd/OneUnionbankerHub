@@ -24,7 +24,6 @@ class BenefitsPartial extends BaseMVPView {
   }
 
   componentWillMount () {
-    this.presenter.checkMnagaersCheck()
     // TODO check managers check here
   }
 
@@ -79,7 +78,7 @@ class BenefitsPartial extends BaseMVPView {
           }
           </div>
           {
-            showAccountNumber &&
+            // showAccountNumber &&
             <AccountNumberModal onClose = { () => this.setState({showAccountNumber : false}) } />
           }
           <div className = { '_benefits-container' }>
