@@ -36,6 +36,7 @@ class BenefitsFragment extends BaseMVPView {
   }
 
   render () {
+    const { history } = this.props
     const benefitsOptions = [{
       id: 0 ,
       styleName: 'option-cards-1',
