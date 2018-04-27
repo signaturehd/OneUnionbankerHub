@@ -4,10 +4,12 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import './styles/appbar.css'
 
 class AppBar extends Component {
+
   constructor (props) {
     super(props)
     this.onToggleShow = this.onToggleShow.bind(this)
   }
+
   onToggleShow () {
     if (this.props.displayShow === 'none') {
       this.props.hide()
@@ -15,6 +17,7 @@ class AppBar extends Component {
       this.props.show()
     }
   }
+
   render () {
     const { onClick, displayNavIcon, onToggleShow, displayShow } = this.props
     const style = {
@@ -22,6 +25,7 @@ class AppBar extends Component {
         display : displayNavIcon
       }
     }
+    
     return (
         <div className={'header'}>
           <div className = {'icon-header'}>
@@ -41,4 +45,4 @@ class AppBar extends Component {
   }
 }
 
-export { AppBar }
+export default AppBar

@@ -7,6 +7,7 @@ class SideBar extends Component {
   constructor (props) {
     super(props)
   }
+  
   render () {
     const { textlink, icon , onClick, text, path, onNavigaionClick } = this.props
     const modules =
@@ -18,18 +19,19 @@ class SideBar extends Component {
       { id: 5 , title: 'Settings', path: '/settings' },
       { id: 6 , title: 'Books', path: '/books' },
     ]
+
     return (
       <div className = { '_sidebar-overlay' }>
       <ul className = { '_link-list' }>
-          {
-            modules.map((d, idx) => (
-              <li
-                  className = { '_text-link' }
-                  key = { idx }
-                  onClick = { () => onNavigaionClick(d.path) }>
-                  { d.title }
-              </li>
-              ))
+        {
+          modules.map((d, idx) => (
+            <li
+                className = { '_text-link' }
+                key = { idx }
+                onClick = { () => onNavigaionClick(d.path) }>
+                { d.title }
+            </li>
+            ))
          }
       </ul>
       </div>
@@ -42,8 +44,10 @@ SideBar.propTypes = {
   path : PropTypes.string,
   onClick : PropTypes.func,
 }
+
 SideBar.defaultProps = {
   text : 'title',
   icon : 'image',
 }
-export { SideBar }
+
+export default SideBar

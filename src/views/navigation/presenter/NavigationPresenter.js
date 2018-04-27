@@ -1,6 +1,6 @@
-import LogoutInteractor from '../../../../../domain/interactor/user/LogoutInteractor'
+import LogoutInteractor from '../../../domain/interactor/user/LogoutInteractor'
 
-export default class DrawerPresenter {
+export default class NavigationPresenter {
   constructor (container) {
     this.logoutInteractor = new LogoutInteractor(container.get('HRBenefitsClient'))
   }
