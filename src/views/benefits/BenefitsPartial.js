@@ -24,6 +24,7 @@ class BenefitsPartial extends BaseMVPView {
   }
 
   componentWillMount () {
+    this.presenter.checkMnagaersCheck()
     // TODO check managers check here
   }
 
@@ -32,11 +33,12 @@ class BenefitsPartial extends BaseMVPView {
   }
 
   onValidAccountNumber () {
+    this.setState({ showAccountNumber : false })
     // TODO dismiss account number dialog
   }
   render () {
     const { onClick, text, path, icon, onOptionsLink, history } = this.props
-    const { accountNumber } = this.state
+    const { accountNumber, showAccountNumber } = this.state
     const benefitsOptions =
     [
       { id: 0 , title: 'education', path: '/benefits/education' },
@@ -76,6 +78,10 @@ class BenefitsPartial extends BaseMVPView {
             ))
           }
           </div>
+          {
+            showAccountNumber &&
+            <AccountNumberModal onClose = { () => this.setState({showAccountNumber : false}) } />
+          }
           <div className = { '_benefits-container' }>
             <Switch>
               <Route path = '/benefits/education' render = { props => <EducationView parent = { this } />}/>

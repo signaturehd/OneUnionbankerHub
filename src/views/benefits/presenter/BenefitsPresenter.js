@@ -27,6 +27,10 @@ export default class BenefitsPresenter {
       })
   }
 
+  checkManagersCheck() {
+    
+  }
+
   validateAccountNumber (accountNumber) {
     this.view.showLoading()
     this.validateAccountNumberInteractor.execute(accountNumber)
