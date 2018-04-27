@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Cards } from '../../../../ub-components/'
 
-import './styles.css'
+import './faq-card-component.css'
 
 class FaqCardComponent extends Component {
   constructor (props) {

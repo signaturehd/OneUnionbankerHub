@@ -4,10 +4,16 @@ import PropTypes from 'prop-types'
 import BaseMVPView from '../common/base/BaseMVPView'
 import './styles/transaction.css'
 
-class TransactionView extends Component {
+class TransactionFragment extends Component {
+
   constructor (props) {
     super(props)
   }
+
+  componentDidMount () {
+    this.props.setSelectedNavigation(2)
+  }
+
   render () {
     const { onClick, text, path, icon } = this.props
 
@@ -25,4 +31,8 @@ class TransactionView extends Component {
   }
 }
 
-export default TransactionView
+TransactionFragment.propTypes = {
+  setSelectedNavigation: PropTypes.func,
+}
+
+export default TransactionFragment

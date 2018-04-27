@@ -23,6 +23,10 @@ class BenefitsFragment extends BaseMVPView {
     }
   }
 
+  componentDidMount () {
+    this.props.setSelectedNavigation(1)
+  }
+
   showReleasingCenters (releasingCenters) {
   // TODO show to generic multilist dialog
   }
@@ -32,7 +36,6 @@ class BenefitsFragment extends BaseMVPView {
   }
 
   render () {
-    const { onClick, text, path, icon, history, benefitsShow } = this.props
     const benefitsOptions = [{
       id: 0 ,
       styleName: 'option-cards-1',
@@ -84,10 +87,7 @@ class BenefitsFragment extends BaseMVPView {
 }
 
 BenefitsFragment.propTypes = {
-  text : PropTypes.string,
-  icon : PropTypes.string,
-  path : PropTypes.string,
-  onClick : PropTypes.func,
+  setSelectedNavigation: PropTypes.func,
 }
 
 export default ConnectView(BenefitsFragment, Presenter)

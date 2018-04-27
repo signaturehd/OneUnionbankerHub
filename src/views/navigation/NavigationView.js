@@ -2,12 +2,15 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
-import LibraryView from '../library/LibraryView'
-import BenefitsFragment from '../benefits/BenefitsFragment'
-import TransactionView from '../transaction/TransactionView'
-import NewsView from '../news/NewsView'
-import FaqView from '../faq/FaqView'
 import Presenter from './presenter/NavigationPresenter'
+
+import LibraryFragment from '../library/LibraryFragment'
+import BenefitsFragment from '../benefits/BenefitsFragment'
+import TransactionFragment from '../transaction/TransactionFragment'
+import NewsFragment from '../news/NewsFragment'
+import FaqFragment from '../faq/FaqFragment'
+import SettingsFragment from '../settings/SettingsFragment'
+
 import AppBar from './components/appbar/AppBar'
 import SideBar from './components/sidebar/SideBar'
 import Drawer from './components/drawer/Drawer'
@@ -15,9 +18,16 @@ import Drawer from './components/drawer/Drawer'
 import './styles/drawerview.css'
 
 class NavigationView extends BaseMVPView {
+
   constructor (props) {
     super (props)
+
+    this.state = {
+      selected: 0,
+    }
+
     this.setDisplay = this.setDisplay.bind(this)
+    this.setSelectedNavigation = this.setSelectedNavigation.bind(this)
   }
 
   setDisplay (sideBar, topBar) {
@@ -41,8 +51,12 @@ class NavigationView extends BaseMVPView {
     })
   }
 
+  setSelectedNavigation (id) {
+    this.setState({ selected: id })
+  }
+
   render () {
-    const { displayShow, displayNavIcon, displayNavIconState } = this.state
+    const { displayShow, displayNavIcon, displayNavIconState, selected } = this.state
 
     const style = {
       show: {
@@ -62,12 +76,24 @@ class NavigationView extends BaseMVPView {
               <main className ="panel main-content " role="main">
                   <Drawer>
                       <Switch>
-                        <Route exact path = '/' render = { props => <NewsView { ...props } />}/>
-                         <Route path = '/benefits' render = { props => <BenefitsFragment { ...props } />} />
-                         <Route path = '/transactions' render = { props => <TransactionView { ...props } />} />
-                         <Route path = '/faqs' render = { props => <FaqView { ...props } />} />
-                         <Route path = '/settings' render = { props => <Settings { ...props } />} />
-                         <Route path = '/books' render = { props => <LibraryView { ...props } />} />
+                        <Route exact path = '/' render = {props =>
+                          <NewsFragment { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } /> }/>
+                        <Route path = '/benefits' render = { props =>
+                          <BenefitsFragment { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                        <Route path = '/transactions' render = { props =>
+                          <TransactionFragment { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                        <Route path = '/faqs' render = { props =>
+                          <FaqFragment { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                        <Route path = '/settings' render = { props =>
+                          <SettingsFragment { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                        <Route path = '/books' render = { props =>
+                            <LibraryFragment { ...props }
+                              setSelectedNavigation = { this.setSelectedNavigation } /> } />
                      </Switch>
                     </Drawer>
               </main>
@@ -75,7 +101,8 @@ class NavigationView extends BaseMVPView {
                 className ="left-side panel"
                 style = { style.show }>
                 <SideBar
-                   onNavigaionClick = { path => this.props.history.push(path) } >
+                  selected={ selected }
+                  onNavigationClick = { path => this.props.history.push(path) } >
                  </SideBar>
               </aside>
           </div>

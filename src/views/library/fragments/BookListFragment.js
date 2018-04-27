@@ -1,15 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import BookCardComponent from '../components/BookCardComponent/BookCardComponent'
+import BookViewModal from '../modals/BookViewModal'
 
-import BookCardComponent from '../common/components/BookCardComponent/BookCardComponent'
-import BookViewModal from '../bookview/BookViewModal'
+class BookListFragment extends Component {
 
-import Presenter from './presenter/BookListPresenter'
-import BaseMVPView from '../common/base/BaseMVPView'
-import ConnectPartial from '../../utils/ConnectPartial'
-
-class BookListFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
@@ -20,15 +16,13 @@ class BookListFragment extends BaseMVPView {
   }
 
   addRating (id, rating) {
-    this.presenter.rateBook(id, rating)
+    this.props.presenter.rateBook(id, rating)
   }
 
   render () {
     const { books, detail } = this.props
     const { details } = this.state
     return (
-      <div>
-      { super.render() }
       <div className = {'library-container'}>
         {
           books.map((book, key) =>
@@ -44,9 +38,8 @@ class BookListFragment extends BaseMVPView {
           <BookViewModal details = { details } onClose = { () => this.setState({ view : false }) }/>
         }
       </div>
-      </div>
     )
   }
 }
 
-export default ConnectPartial(BookListFragment, Presenter)
+export default BookListFragment

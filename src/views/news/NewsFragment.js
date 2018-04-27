@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ConnectView from '../../utils/ConnectView'
 import NewsInteractor from '../../domain/interactor/news/NewsInteractor'
 
@@ -11,7 +12,7 @@ import NewsModalComponent from './modals/NewsModalComponent'
 
 import './css/styles.css'
 
-class NewsView extends BaseMVPView {
+class NewsFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
@@ -22,6 +23,7 @@ class NewsView extends BaseMVPView {
 
   componentDidMount () {
       this.presenter.getNews()
+      this.props.setSelectedNavigation(0)
   }
 
   news (news) {
@@ -52,4 +54,8 @@ class NewsView extends BaseMVPView {
   }
 }
 
-export default ConnectPartial(NewsView, Presenter)
+NewsFragment.propTypes = {
+  setSelectedNavigation: PropTypes.func,
+}
+
+export default ConnectPartial(NewsFragment, Presenter)

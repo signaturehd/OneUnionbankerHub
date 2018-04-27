@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal } from '../../ub-components/'
+import { Modal } from '../../../ub-components/'
 
-
-
-class FaqModalComponent extends Component {
+class FaqModal extends Component {
   constructor (props) {
     super(props)
   }
 
   render () {
-    const { onClose, title, image, description, link, details } = this.props
+    const { details } = this.props
     return (
       <Modal
         onClose = { onClose }
@@ -26,12 +24,4 @@ class FaqModalComponent extends Component {
 /* Fetch datas on Click display details */
 /* Close modal set elements to null */
 
-FaqModalComponent.propTypes = {
-
-}
-
-FaqModalComponent.defaultProps = {
-
-}
-
-export default FaqModalComponent
+export default FaqModal

@@ -6,8 +6,10 @@ import Rating from 'react-rating'
 import './styles.css'
 
 class BookCardComponent extends Component {
+  
   constructor (props) {
     super(props)
+
     this.state = {
       rating : 0
     }
@@ -16,7 +18,6 @@ class BookCardComponent extends Component {
   render () {
     const { detail, onClick, rateBook } = this.props
     const { rating } = this.state
-
 
     return (
       <div className = {'book-card'} >
@@ -29,8 +30,9 @@ class BookCardComponent extends Component {
           <center>
             <Rating
               onChange = { e => {
- rateBook(detail.id, e), this.setState({ rating : e })
-}}
+                rateBook(detail.id, e)
+                this.setState({ rating : e })
+              }}
               fractions = { 2 }
               initialRating = { rating ? rating : detail.rating }
             />
@@ -46,17 +48,6 @@ BookCardComponent.propTypes = {
   detail : PropTypes.object,
   onClick : PropTypes.func,
   rateBook : PropTypes.func,
-  description : PropTypes.string,
-  id : PropTypes.string
 }
-
-BookCardComponent.defaultProps = {
-  title : 'title',
-  description : 'description',
-  author : 'author',
-  image : 'image',
-  rating : 0,
-}
-
 
 export default BookCardComponent
