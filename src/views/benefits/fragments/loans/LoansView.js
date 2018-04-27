@@ -18,16 +18,21 @@ class LoansView extends Component {
         height : '10px !important'
       }
     }
-    const BenefitsHome = () => (
+    const LoansHome = () => (
         <div className = { 'container-option1' }  >
-          <span className = { 'back-button' } onClick = { this.navigate.bind(this) }>{'<'}</span>
+          <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
           <h1> Loans </h1>
+          <div className = { 'adjustment' }>
+            <div className = { 'card-container' }>
+
+            </div>
+          </div>
         </div>
     )
     return (
       <div>
         <Switch>
-          <Route exact path = '/benefits/loans' render = { BenefitsHome } />
+          <Route exact path = '/benefits/loans' render = { LoansHome } />
           <Route path = '/benefits' render = { <BenefitsPartial/> } />
         </Switch>
       </div>

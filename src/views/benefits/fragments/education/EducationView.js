@@ -18,16 +18,21 @@ class EducationView extends Component {
         height : '10px !important'
       }
     }
-    const BenefitsHome = () => (
+    const EducationHome = () => (
         <div className = { 'container-option1' }  >
-          <span className = { 'back-button' } onClick = { this.navigate.bind(this) }>{'<'}</span>
+          <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
           <h1> Education </h1>
+          <div className = { 'adjustment' }>
+            <div className = { 'card-container' }>
+
+            </div>
+          </div>
         </div>
     )
     return (
       <div>
         <Switch>
-          <Route exact path = '/benefits/education' render = { BenefitsHome } />
+          <Route exact path = '/benefits/education' render = { EducationHome } />
           <Route path = '/benefits' render = { <BenefitsPartial/> } />
         </Switch>
       </div>
