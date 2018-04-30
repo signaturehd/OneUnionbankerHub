@@ -3,8 +3,7 @@ import React, { Component } from 'react'
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/OpticalPresenter'
 import ConnectView from '../../utils/ConnectView'
-
-import OpticalCard from './components/optical-card/'
+import Card from './components/OpticalCard'
 import './styles/optical.css'
 
 class OpticalFragment extends BaseMVPView {
@@ -19,11 +18,10 @@ class OpticalFragment extends BaseMVPView {
       <div  className = { 'benefits-container' }>
         <div className={ 'breadcrumbs-container' }>
           <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
-          <h1>Optical Fragment</h1>
-
+          <h1>Optical Reimbursement</h1>
         </div>
           <div className = { 'optical-container' }>
-            <OpticalCard/>
+            <Card/>
           </div>
       </div>
     )

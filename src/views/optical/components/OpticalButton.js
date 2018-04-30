@@ -1,26 +1,35 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './optical-button.css'
+import './styles.css'
 
 class OpticalButton extends Component {
   constructor (props) {
     super(props)
+    this.proceedModal = this.proceedModal.bind(this)
   }
+
+  proceedModal () {
+      this.props.show()
+  }
+
   render () {
-    const { text, onClick } = this.props
+    const { text, onClick, showModal, showConfirmation} = this.props
     return (
       <button
         className = { 'optical-button' }
-        onClick = { onClick }
-      >{ text }</button>
+        onClick = { this.proceedModal }>
+        { text }
+      </button>
     )
   }
 }
+
 OpticalButton.propTypes = {
   text : PropTypes.string,
   onClick : PropTypes.func,
+  proceedModal : PropTypes.func,
 }
 OpticalButton.defaultProps ={
-  text : 'submit'
+  text : 'continue',
 }
 export default OpticalButton

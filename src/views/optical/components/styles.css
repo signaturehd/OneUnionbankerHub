@@ -1,0 +1,145 @@
+.optical-card {
+  background: #ffffff;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.45);
+  border-radius: 1px;
+  padding-top: 20px;
+  height: 400px;
+  width: 400px;
+  margin: auto;
+}
+.optical-header {
+  color: #737373;
+  margin-right: 2px;
+  padding: 10px 100px 10px 20px;
+}
+.optical-body {}
+
+.optical-text {margin-left: 15px; z-index: 1;}
+.optical-footer {align-items: center;text-align: center;float: right;}
+
+
+.optical-texbox-container {
+  padding:0px 15px 0px 15px;
+}
+
+.upload-group {
+  position:relative;
+  width:100%;
+  margin-top:45px;
+}
+.text-icon {
+  font-size:16px;
+  padding:10px 10px 10px 10px;
+  display:block;
+  width:100%;
+  border:none;
+  border-bottom:1px solid #ff8a00;
+  background: url('../../../images/uploadicon-orange.jpg') no-repeat center center;
+  background-size: 20px;
+  background-position: right;
+  cursor: pointer;
+}
+.text-icon {
+   position: relative;
+   filter:alpha(opacity: 0);
+	   z-index: 2;
+ }
+
+.text-icon:focus { outline:none; }
+
+/* .text-label ======================================= */
+.optical-text-label {
+  color:#999;
+  font-size:16px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:10px;
+  background: transparent;
+  transition:0.2s ease all;
+  -moz-transition:0.2s ease all;
+  -webkit-transition:0.2s ease all;
+}
+
+/* active state */
+.text-icon:focus ~ .optical-text-label, .text-icon:valid ~ .optical-text-label 		{
+  top:-20px;
+  font-size:14px;
+  color:#ff8a00;
+}
+
+/* BOTTOM BARS ================================= */
+.optical-text-bar 	{ position:relative; display:block; width:100%; }
+.optical-text-bar:before, .optical-text-bar:after 	{
+  content:'';
+  height:2px;
+  width:0;
+  bottom:0;
+  position:absolute;
+  background:#ff8a00;
+  transition:0.2s ease all;
+  -moz-transition:0.2s ease all;
+  -webkit-transition:0.2s ease all;
+}
+.optical-text-bar:before {
+  left:50%;
+}
+.optical-text-bar:after {
+  right:50%;
+}
+
+/* active state */
+.text-icon:focus ~ .optical-text-optical-text-bar:before, .text-icon:focus ~ .optical-text-bar:after {
+  width:50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position:absolute;
+  height:60%;
+  width:100px;
+  top:25%;
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+/* active state */
+.text-icon:focus ~ .highlight {
+  -webkit-animation:.textHighlighter 0.3s ease;
+  -moz-animation:.textHighlighter 0.3s ease;
+  animation:.textHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes .textHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes .textHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@keyframes .textHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+
+/* optica;-button */
+.optical-button {
+  height: 40px;
+  border-radius: 3px;
+  margin: 10px auto auto auto;
+  min-width: 95px;
+  transition: box-shadow .28s cubic-bezier(0.4,0.0,0.2,1);
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  cursor: pointer;
+  text-transform: uppercase;
+  background: #ff8a00;
+  color: #ffffff;
+  font-weight: 550;
+  position: relative;
+  right: -130px;
+  margin-right: auto;
+  border: 0;
+}
