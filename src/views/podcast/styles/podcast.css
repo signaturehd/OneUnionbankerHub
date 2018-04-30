@@ -2,12 +2,12 @@
   display:grid;
   grid-column-gap: 5px;
   font-weight: lighter;
-  grid-template-columns : repeat(100px);
+  grid-template-columns : repeat(218px);
 }
 
 .cardo-container {
   display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px , 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px , 1fr));
   margin-bottom: 5px;
   text-align: center;
 }

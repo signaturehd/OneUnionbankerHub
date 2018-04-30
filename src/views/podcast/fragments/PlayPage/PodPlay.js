@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PodCardComponent from '../../../common/components/PodCardComponent/PodCardComponent'
 import CommentForm from '../comments/CommentForm'
 import Player from '../player/Player'
+import Rating from 'react-rating'
 
 class PodPlay extends Component {
   constructor (props) {
@@ -22,6 +23,14 @@ class PodPlay extends Component {
        <div className = { 'container-option1' }  >
          <h1> Playing Podcast /* Dynamic Title */ </h1>
          <div className={'container-option1'}>  <Player/> </div>
+         <Rating
+              onChange = { e => {
+                rateBook(detail.id, e)
+                this.setState({ rating : e })
+              }}
+              fractions = { 2 }
+              initialRating = { rating ? rating : detail.rating }
+            />
          <div className={'container-option1'}> <CommentForm/> </div>
        </div>
        </div>

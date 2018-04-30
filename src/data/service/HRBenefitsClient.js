@@ -68,6 +68,10 @@ export default class HRBenefitsClient {
     return this.service.addRating(token, bookParam)
       .pipe(ServiceErrorOperator())
   }
+    paddRating (token, bookParam) {
+    return this.service.paddRating(token, bookParam)
+      .pipe(ServiceErrorOperator())
+  }
 
   /* optical */
   getOptical (token) {

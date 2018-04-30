@@ -10,13 +10,20 @@ import './styles/podcast.css'
 import PodCardComponent from '../common/components/PodCardComponent/PodCardComponent'
 import PodcastInteractor from '../../domain/interactor/podcast/PodcastInteractor'
 
+
 class PodcastView extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
         news: [],
         show : false,
+        showRating : false,
+        rating : false,
+      details : null
     }
+  }
+   addRating (id, rating) {
+    this.props.presenter.rateBook(id, rating)
   }
 
   componentDidMount () {
@@ -41,6 +48,8 @@ class PodcastView extends BaseMVPView {
         {
           news.map((news, i) =>
             <PodCardComponent
+             rateBook = { (id, rating) => this.addRating(id, rating) }
+             
               key={ i }
               news = { news }
               onClick = { details => this.setState({ details, show: true }) } />)
