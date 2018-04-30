@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs'
 
 export default class HRBenefitsService {
 
@@ -83,6 +82,11 @@ export default class HRBenefitsService {
         headers: { token }
     })
   }
+   getNews (token) {
+    return this.apiClient.get('v1/news', {
+        headers: { token }
+    })
+  }
 
 
   addRating (token, bookParam) {
@@ -91,7 +95,7 @@ export default class HRBenefitsService {
     })
   }
   getPodcast(token){
-    return this.apiClient.get('v1/podcast', {
+    return this.apiClient.get('v1/news', {
       headers: {token}
     }) /*mock api */
   }

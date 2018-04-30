@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import Application from '../accordion/Accordion'
 import PodCardComponent from '../../../common/components/PodCardComponent/PodCardComponent'
 import CommentForm from '../comments/CommentForm'
 import Player from '../player/Player'
 
-class PodcastListView extends Component {
+class PodPlay extends Component {
   constructor (props) {
     super(props)
    
@@ -22,9 +21,8 @@ class PodcastListView extends Component {
       <div className = {'container'}>
        <div className = { 'container-option1' }  >
          <h1> Playing Podcast /* Dynamic Title */ </h1>
-
-
-       <div className={'container-option1'}> <CommentForm/> </div>
+         <div className={'container-option1'}>  <Player/> </div>
+         <div className={'container-option1'}> <CommentForm/> </div>
        </div>
        </div>
      )
@@ -41,4 +39,4 @@ class PodcastListView extends Component {
 
  
 
- export default PodcastListView
+ export default PodPlay

@@ -7,67 +7,45 @@ import './styles/styles.css'
 import ConnectPartial from '../../utils/ConnectPartial'
 import { GenericButton } from '../../ub-components/UButton'
 import { Cards } from '../../ub-components'
-import PodcastListView from './fragments/podcastlist/PodcastListView'
+import PodcastListView from './fragments/PlayPage/PodPlay'
 
 class PodcastView extends BaseMVPView {
   constructor (props) {
     super(props)
+    this.state = {
+        podcast: [],
+        show : false,
     }
+  }
+
+  componentDidMount () {
+      this.presenter.getPodcast()
+      this.props.setSelectedNavigation(0)
+  }
+
+  podcast (podcast) {
+      this.setState({ podcast })
+  }
+
   render () {
-    const { onClick, text, path, icon, onOptionsLink, history } = this.props
-    const podcastOptions =
-    [
-      { id: 0 , title: 'Podcasts', path: '/podcast/podcastlist' },
-
-    ]
-    const style = {
-          _pageheader : {
-            height: 'auto',
-            color: 'black',
-            width: 'auto',
-            padding: '1%',
-            background: '#fefefe',
-            boxShadow: '0 0 4px 0 rgba(0,0,0,0.20)',
-          }
-        }
-
-
+    const { podcast, show, details } = this.state
     return (
-      <div>
-        <div style = { style._pageheader }>
-          <div className = { 'page-header-buttons' }>
-          </div>
+      <div className = 'container'>
+        { super.render() }
+        <h1>Podcast Feed</h1>
+        <div className = 'card-container'>
+        {
+          podcast.map((podcast, i) =>
+            <PodCardComponent
+              key={ i }
+              podcast = { podcast }
+              onClick = { details => this.setState({ details, show: true }) } />)
+        }
         </div>
-        <h1> Podcasts</h1>
-        <div className = { '_podcast-container' }>
-          {
-            podcastOptions.map((value, idx) => (
-              <Cards className = { 'options-1' } >
-                <div
-                  className = { 'option-cards' }
-                  text = { value.title }
-                  key = { idx }
-                  onClick = { () => onOptionsLink(history.push(value.path)) } >
-                  <span> { value.title } </span></div>
-              </Cards>
-            ))
-          }
-          </div>
-          <div className = { '_podcast-container' }>
-            <Switch>
-              <Route path = '/podcast/podcastlist' render = { props => <PodcastListView parent = { this } />}/>
-
-           </Switch>
-         </div>
       </div>
     )
   }
 }
-PodcastView.propTypes = {
-  text : PropTypes.string,
-  icon : PropTypes.string,
-  path : PropTypes.string,
-  onClick : PropTypes.func,
-}
+
 
 export default ConnectPartial(PodcastView, Presenter)
