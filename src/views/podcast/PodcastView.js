@@ -8,7 +8,6 @@ import ConnectPartial from '../../utils/ConnectPartial'
 import { GenericButton } from '../../ub-components/UButton'
 import { Cards } from '../../ub-components'
 import PodcastListView from './fragments/podcastlist/PodcastListView'
-import PodcastPlaylist from './fragments/playlist/PodcastPlaylist'
 
 class PodcastView extends BaseMVPView {
   constructor (props) {
@@ -18,8 +17,7 @@ class PodcastView extends BaseMVPView {
     const { onClick, text, path, icon, onOptionsLink, history } = this.props
     const podcastOptions =
     [
-      { id: 0 , title: 'My PlayList', path: '/podcast/playlist' },
-      { id: 1 , title: 'Podcasts', path: '/podcast/podcastlist' },
+      { id: 0 , title: 'Podcasts', path: '/podcast/podcastlist' },
 
     ]
     const style = {
@@ -57,7 +55,6 @@ class PodcastView extends BaseMVPView {
           </div>
           <div className = { '_podcast-container' }>
             <Switch>
-              <Route path = '/podcast/playlist' render = { props => <PodcastPlaylist parent = { this } />}/>
               <Route path = '/podcast/podcastlist' render = { props => <PodcastListView parent = { this } />}/>
 
            </Switch>
