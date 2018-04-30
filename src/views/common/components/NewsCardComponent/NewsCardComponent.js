@@ -4,10 +4,9 @@ import PropTypes from 'prop-types'
 import { Cards } from '../../../../ub-components/'
 
 import './styles.css'
-import GenericButton  from './PlayButton'
 
 
-class PodCardComponent extends Component {
+class NewsCardComponent extends Component {
   constructor (props) {
     super(props)
   }
@@ -17,11 +16,12 @@ class PodCardComponent extends Component {
     return (
         <Cards>
           <div></div>
-          <div className = {'news-body'}>
-            <h3>{news.title}</h3>
+          <div className = {'card-body'}>
+            <h3>{news.Title}</h3>
+            <h5 dangerouslySetInnerHTML= {{__html : news.details.replace(/\r\n/g, '<br/>') }} ></h5>
           </div>
           <div className = {'card-footer'}>
-            <small><a href = {news.linkUrl}><GenericButton text =""/> </a></small> {/*.linkurl for mapping for playing mp3 */} 
+            <small><a href = {news.linkUrl}>See More</a></small>
             <small><a onClick = { () => onClick(news) }>Read More</a></small>
           </div>
         </Cards>
@@ -29,13 +29,11 @@ class PodCardComponent extends Component {
   }
 }
 
-PodCardComponent.propTypes = {
-  news : PropTypes.object,
+NewsCardComponent.propTypes = {
+  news : PropTypes.array.isRequired,
   onClick : PropTypes.func
 }
 
-PodCardComponent.defaultProps = {
-
+NewsCardComponent.defaultProps = {
+  news : []
 }
-
-export default PodCardComponent
