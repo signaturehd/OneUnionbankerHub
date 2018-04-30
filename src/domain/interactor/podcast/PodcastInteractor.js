@@ -5,6 +5,6 @@ export default class PodcastInteractor
   }
 
   execute () {
-    return this.client.getPodcast()
+    return this.client.getNews(this.client.getToken())
   }
 }

@@ -94,9 +94,10 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
-  getPodcast(token){
-    return this.apiClient.get('v1/news', {
-      headers: {token}
-    }) /*mock api */
-  }
+  
+  getPodcast (token) {
+      return this.apiClient.get('v1/news', {
+          headers: { token }
+      })
+    }
 }

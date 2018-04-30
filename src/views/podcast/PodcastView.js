@@ -3,49 +3,60 @@ import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/PodcastPresenter'
-import './styles/styles.css'
+
 import ConnectPartial from '../../utils/ConnectPartial'
-import { GenericButton } from '../../ub-components/UButton'
-import { Cards } from '../../ub-components'
-import PodcastListView from './fragments/PlayPage/PodPlay'
+
+import './styles/podcast.css'
+import PodCardComponent from '../common/components/PodCardComponent/PodCardComponent'
+import PodcastInteractor from '../../domain/interactor/podcast/PodcastInteractor'
 
 class PodcastView extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-        podcast: [],
+        news: [],
         show : false,
     }
   }
 
   componentDidMount () {
-      this.presenter.getPodcast()
+      this.presenter.getNews()
       this.props.setSelectedNavigation(0)
   }
 
-  podcast (podcast) {
-      this.setState({ podcast })
+  news (news) {
+      this.setState({ news })
   }
 
   render () {
-    const { podcast, show, details } = this.state
+    const { news, show, details } = this.state
     return (
       <div className = 'container'>
         { super.render() }
-        <h1>Podcast Feed</h1>
-        <div className = 'card-container'>
+          <div className = { '_podcast-container' }>
+        <h1>PODCASTS</h1>
+        <div className = { 'adjustment' }>
+     
+        <div className = 'cardo-container'>
         {
-          podcast.map((podcast, i) =>
+          news.map((news, i) =>
             <PodCardComponent
               key={ i }
-              podcast = { podcast }
+              news = { news }
               onClick = { details => this.setState({ details, show: true }) } />)
         }
         </div>
+      </div>
+      </div>
       </div>
     )
   }
 }
 
+PodcastView.propTypes = {
+  setSelectedNavigation: PropTypes.func,
+}
 
 export default ConnectPartial(PodcastView, Presenter)
+
+

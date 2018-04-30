@@ -5,6 +5,7 @@ import { Cards } from '../../../../ub-components/'
 
 import './styles.css'
 
+
 class NewsCardComponent extends Component {
   constructor (props) {
     super(props)
