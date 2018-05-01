@@ -71,7 +71,6 @@ import Modal from '../modal/OpticalReviewModal'
                 <div>
                      <input type="file" onChange={this._handleImageChange} />
                      <input type="file" onChange={this._handleImageChange2} />
-                     <button type="submit" onClick={this._handleSubmit}>Upload Image</button>
               </div>
             </div>
         </div>
