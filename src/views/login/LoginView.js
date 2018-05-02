@@ -8,13 +8,12 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import { GenericButton } from '../../ub-components/UButton/'
 import { GenericTextBox } from '../../ub-components/TextBox/'
 
-import './presenter/login.css'
+import './css/login.css'
 
 import OtpModal from '../otp/OtpModal'
 
 class LoginView extends BaseMVPView {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -37,14 +36,16 @@ class LoginView extends BaseMVPView {
       <div>
         { super.render() }
         {
-          //TODO properly show otp modal as 'modal', not by just swapping views lol
-          showOtpModal ?
+          // TODO properly show otp modal as 'modal', not by just swapping views lol
+          showOtpModal &&
           <OtpModal
+            show = { this.state.showOtpModal }
+            onClose = { () => this.setState({ showOtpModal : false }) }
             parent = { this }
             username = { username }
-            transactionType = { 2 } /> //TODO, move this static '2' to proper file on domain
-          :
-          <div>
+            transactionType = { 2 } /> // TODO, move this static '2' to proper file on domain
+        }
+          <div className = {'_box-form'}>
             <div className = { '_login-grid' }>
               <div className = { '_benefit-frame' }>
                 <div className = { '_banner-logo' }></div>
@@ -53,19 +54,19 @@ class LoginView extends BaseMVPView {
                 <div className = {'_image-logo'}></div>
                 <GenericTextBox
                   onChange = { e => this.setState({ username: e.target.value }) }
-                  placeholder = { 'Employee Id' }
+                  placeholder = { 'Employee ID' }
                   type = { 'text' }/>
                 <GenericTextBox
                   onChange = { e => this.setState({ password: e.target.value }) }
                   placeholder = { 'Password' }
                   type = { 'password' }/>
                 <br/>
-                <GenericButton text="Login"
-                  onClick = { () => this.presenter.login(this.state.username, this.state.password) }/>
+                <GenericButton
+                  text="Login"
+                  onClick = { () => this.presenter.login(this.state.username, this.state.password)}/>
               </div>
             </div>
           </div>
-        }
       </div>
     )
   }

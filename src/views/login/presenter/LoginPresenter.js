@@ -2,18 +2,16 @@ import LoginInteractor from '../../../domain/interactor/user/LoginInteractor'
 import LoginParam from '../../../domain/param/LoginParam'
 
 export default class LoginPresenter {
-
-  constructor(container) {
+  constructor (container) {
     this.loginInteractor = new LoginInteractor(container.get('HRBenefitsClient'))
   }
 
-  setView(view) {
+  setView (view) {
     this.view = view
   }
 
-  login(username, password) {
-    this.view.showLoading();
-
+  login (username, password) {
+    this.view.showLoading()
     this.loginInteractor.execute(LoginParam(username, password))
       .subscribe(
         data => {
@@ -22,7 +20,7 @@ export default class LoginPresenter {
         },
         error => {
           this.view.hideLoading()
-          //TODO generic error handling
+          // TODO generic error handling
         }
       )
   }

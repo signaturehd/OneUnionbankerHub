@@ -51,7 +51,7 @@ class DrawerView extends BaseMVPView {
             }} />
 
         </Switch>
-        
+
       </div>
     )
   }

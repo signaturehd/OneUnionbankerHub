@@ -2,18 +2,16 @@ import VerifyOtpInteractor from '../../../domain/interactor/user/VerifyOtpIntera
 import OtpParam from '../../../domain/param/OtpParam'
 
 export default class OtpPresenter {
-
-  constructor(container) {
+  constructor (container) {
     this.verifyOtpInteractor = new VerifyOtpInteractor(container.get('HRBenefitsClient'))
   }
 
-  setView(view) {
+  setView (view) {
     this.view = view
   }
 
-  verifyOtp(username, otp, transactionType) {
-    this.view.showLoading();
-
+  verifyOtp (username, otp, transactionType) {
+    this.view.showLoading()
     this.verifyOtpInteractor.execute(OtpParam(username, otp, transactionType))
       .subscribe(
         data => {

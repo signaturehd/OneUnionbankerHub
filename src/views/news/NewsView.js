@@ -48,5 +48,3 @@ this.setState({ showNews:news })
 }
 
 export default ConnectPartial(NewsView, Presenter)
-
-

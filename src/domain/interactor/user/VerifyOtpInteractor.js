@@ -1,10 +1,9 @@
 export default class VerifyOtpInteractor {
-
-  constructor(client) {
+  constructor (client) {
     this.client = client
   }
 
-  execute(otpParam) {
+  execute (otpParam) {
     return this.client.otp(otpParam)
       .do(authResp => {
         if (authResp) {

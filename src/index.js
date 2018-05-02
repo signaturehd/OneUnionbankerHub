@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import LibraryView from './views/library/LibraryView'
+
 
 /* redux */
 import { Provider } from 'react-redux'
@@ -21,7 +21,6 @@ import AppModule from './di/AppModule'
 ReactDOM.render(
   <Provider store={ store }>
     <BrowserRouter history={ browserHistory }>
-      <App container={ AppModule(new Container()) } />
+      <App />
     </BrowserRouter>
-  </Provider>, document.getElementById('root'));
-
+  </Provider>, document.getElementById('root'))

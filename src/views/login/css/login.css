@@ -1,0 +1,52 @@
+._login-grid {
+    display: grid;
+    grid-template-columns: 68% 32%;
+}
+
+._benefit-frame {
+  background: url('../../../images/ubp-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+._box-form {
+  text-align: center;
+}
+._banner-logo {
+  background: url('../../../images/ublogo.png');
+  background-size:30vh;
+  background-position: center;
+  width: auto;
+  align-items: center;
+  background-repeat: no-repeat;
+  height: 50px;
+  padding: 8vh;
+  display: none;
+}
+
+._image-logo {
+  background: url('../../../images/profile-picture.png');
+  background-size: 18vh;
+  background-repeat: no-repeat;
+  width: auto;
+  background-position: center;
+  height: 150px;
+}
+
+@media (max-width : 768px) {
+  ._login-grid {
+    grid-template-columns: 100%;
+  }
+
+  ._image-logo {
+    margin-top: -12vh;
+  }
+
+  ._benefit-frame {
+    height: 30vh;
+  }
+
+  ._banner-logo {
+    display: block;
+  }
+}
