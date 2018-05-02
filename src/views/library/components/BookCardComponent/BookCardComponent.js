@@ -16,7 +16,7 @@ class BookCardComponent extends Component {
   }
 
   render () {
-    const { detail, onClick, rateBook } = this.props
+    const { detail, onClick, rateBook,  } = this.props
     const { rating } = this.state
 
     return (

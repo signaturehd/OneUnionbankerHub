@@ -17,6 +17,7 @@ class PodcastView extends BaseMVPView {
     this.state = {
         news: [],
         show : false,
+        rating: false,
         showRating : false,
         rating : false,
       details : null
@@ -36,7 +37,7 @@ class PodcastView extends BaseMVPView {
   }
 
   render () {
-    const { news, show, details } = this.state
+    const { news, show, details, detail } = this.state
     return (
       <div className = 'container'>
         { super.render() }
@@ -49,7 +50,7 @@ class PodcastView extends BaseMVPView {
           news.map((news, i) =>
             <PodCardComponent
              rateBook = { (id, rating) => this.addRating(id, rating) }
-             
+            
               key={ i }
               news = { news }
               onClick = { details => this.setState({ details, show: true }) } />)

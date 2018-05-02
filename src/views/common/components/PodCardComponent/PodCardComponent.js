@@ -9,32 +9,41 @@ import GenericButton  from './PlayButton'
 import Rating from 'react-rating'
 
 class PodCardComponent extends Component {
+
   constructor (props) {
     super(props)
      this.state = {
       rating : 0
     }
   }
+  addRating (id, rating) {
+    this.props.presenter.rateBook(id, rating)
+  }
+ 
 
   render () {
-    const { detail,news, onClick } = this.props
-      const { rating } = this.state
+    const { detail, news, onClick, rateBook } = this.props
+    const { rating } = this.state
+
     return (
         <Cards>
-          <div></div>
+       
           <div className = {'news-body'}>
             <h2> {news.imageUrl} </h2>
             <h3>{news.title}</h3>
           </div>
           <div className = {'card-footer'}>
-          <Rating
+          <center>
+           <Rating
               onChange = { e => {
-                rateBook(detail.id, e)
+                rateBook(news.id, e)
                 this.setState({ rating : e })
               }}
               fractions = { 2 }
-              initialRating = { rating ? rating : detail.rating }
+              initialRating = { rating ? rating : news.rating }
             />
+         
+            </center>
             <small><a href = {news.linkUrl}><GenericButton text =""/> </a></small> {/*.linkurl for mapping for playing mp3 */} 
             <small><a onClick = { () => onClick(news) }>Read More</a></small>
           </div>
@@ -45,7 +54,9 @@ class PodCardComponent extends Component {
 
 PodCardComponent.propTypes = {
   news : PropTypes.object,
-  onClick : PropTypes.func
+  onClick : PropTypes.func,
+  rateBook : PropTypes.func,
+
 }
 
 PodCardComponent.defaultProps = {
