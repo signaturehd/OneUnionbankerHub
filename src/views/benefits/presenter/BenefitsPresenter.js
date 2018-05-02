@@ -1,5 +1,6 @@
 import ValidateAccountNumberInteractor from '../../../domain/interactor/account/ValidateAccountNumberInteractor'
 import GetReleasingCentersInteractor from '../../../domain/interactor/rds/GetReleasingCentersInteractor'
+import ValidateManagersCheckInteractor from '../../../domain/interactor/user/ValidateManagersCheckInteractor'
 
 export default class BenefitsPresenter {
   constructor (container) {
@@ -8,6 +9,9 @@ export default class BenefitsPresenter {
 
     this.getReleasingCentersInteractor =
       new GetReleasingCentersInteractor(container.get('HRBenefitsClient'))
+
+    this.validateManagersCheckInteractor =
+      new ValidateManagersCheckInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -16,7 +20,6 @@ export default class BenefitsPresenter {
 
   getReleasingCenters () {
     this.view.showLoading()
-
     this.getReleasingCentersInteractor.execute()
       .subscribe(releasingCenters => {
         this.view.hideLoading()
@@ -27,8 +30,8 @@ export default class BenefitsPresenter {
       })
   }
 
-  checkManagersCheck () {
-    
+  validateManagersCheck () {
+    this.view.validateManagersCheck(this.validateManagersCheckInteractor.execute())
   }
 
   validateAccountNumber (accountNumber) {

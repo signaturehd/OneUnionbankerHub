@@ -28,7 +28,9 @@ class OtpModal extends BaseMVPView {
 
       <Modal
           onClose = {onClose}
+          isDismisable = {false}
         >
+        { super.render() }
         <GenericTextBox text= "OTP"
           placeholder = "OTP"
           type = ""

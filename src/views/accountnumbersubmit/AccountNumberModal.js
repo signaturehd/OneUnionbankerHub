@@ -23,13 +23,15 @@ class AccountNumberModal extends BaseMVPView {
     return (
 
       <InputModal
+        isDismisable = { true }
         onClose = { onClose }
         onChange = { e => this.setState({ accountNumber: e.target.value }) }
         placeholder = { 'Account Number' }
         type = { 'text' }
         onSubmit = { e => {
- e.preventDefault() , this.presenter.validateAccountNumber(accountNumber)
-} }
+            e.preventDefault() , this.presenter.validateAccountNumber(accountNumber)
+          }
+        }
       >
       { super.render() }
       </InputModal>
@@ -43,7 +45,6 @@ AccountNumberModal.propTypes = {
 }
 
 AccountNumberModal.defaultProps = {
-
 }
 
 export default ConnectPartial(AccountNumberModal, Presenter)

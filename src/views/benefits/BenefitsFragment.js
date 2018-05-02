@@ -14,6 +14,8 @@ import MedicalFragment from './fragments/medical/MedicalFragment'
 
 import './styles/benefits.css'
 
+import AccountNumberModal from '../accountnumbersubmit/AccountNumberModal'
+
 class BenefitsFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -24,6 +26,7 @@ class BenefitsFragment extends BaseMVPView {
   }
 
   componentDidMount () {
+    this.presenter.validateManagersCheck()
     this.props.setSelectedNavigation(1)
   }
 
@@ -35,8 +38,13 @@ class BenefitsFragment extends BaseMVPView {
   // TODO dismiss account number dialog
   }
 
+  validateManagersCheck (managersCheck) {
+    this.setState({ showAccountNumber : managersCheck.employee.allowManagersCheck })
+  }
+
   render () {
     const { history } = this.props
+    const { accountNumber, showAccountNumber } = this.state
     const benefitsOptions = [{
       id: 0 ,
       styleName: 'option-cards-1',
@@ -53,10 +61,15 @@ class BenefitsFragment extends BaseMVPView {
       title: 'LOANS',
       path: '/benefits/loans',
     }]
-    const { accountNumber } = this.state
     const Benefits = () => (
       <div className = { '_benefits-container' }>
         <h1>Benefits</h1>
+        {
+          !showAccountNumber &&
+          <AccountNumberModal
+            onClose = { () => this.setState({ showAccountNumber : true }) }
+          />
+        }
         <div className = { 'adjustment' }>
         <div className = { 'card-container' }>
           {
