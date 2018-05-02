@@ -86,8 +86,4 @@ export default class HRBenefitsClient {
     return this.service.getFaqs(token)
       .pipe(ServiceErrorOperator())
   }
-    getFaqs () {
-        return this.service.getFaqs()
-            .pipe(ServiceErrorOperator())
-    }
 }
