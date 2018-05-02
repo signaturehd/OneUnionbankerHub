@@ -1,0 +1,31 @@
+.optical-modal-review {
+  margin: auto !important;
+  display: inline-block;
+  grid-auto-columns: auto;
+  height: auto;
+  column-count: 2;
+  width: auto;
+}
+.optical-modal-footer {
+  display: unset;
+  margin: 10px 10px 15px 0
+}
+.optical-modal-button {
+  margin: 5px;
+}
+.optical-image-view {
+  position: relative;
+  background-size: 250px;
+  height: 200px;
+  width: 225px;
+  border-radius: 20px;
+}
+.optical-image-layer {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  border-radius: 5px;
+}

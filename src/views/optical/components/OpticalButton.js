@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './styles.css'
 
+import  GenericButton  from  '../../../ub-components/UButton/GenericButton'
+
 class OpticalButton extends Component {
   constructor (props) {
     super(props)
@@ -15,11 +17,11 @@ class OpticalButton extends Component {
   render () {
     const { text, onClick, showModal, showConfirmation} = this.props
     return (
-      <button
+      <GenericButton
+        text = { text }
         className = { 'optical-button' }
         onClick = { this.proceedModal }>
-        { text }
-      </button>
+      </GenericButton>
     )
   }
 }
@@ -30,6 +32,6 @@ OpticalButton.propTypes = {
   proceedModal : PropTypes.func,
 }
 OpticalButton.defaultProps ={
-  text : 'continue',
+  text : 'Submit',
 }
 export default OpticalButton
