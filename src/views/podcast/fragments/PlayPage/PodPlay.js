@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PodCardComponent from '../../../common/components/PodCardComponent/PodCardComponent'
 import CommentForm from '../comments/CommentBox'
-import Player from '../player/Player'
+import MedPlayer from '../../components/player/MedPlayer'
 import Rating from 'react-rating'
 import PropTypes from 'prop-types'
 
@@ -26,20 +26,13 @@ class PodPlay extends Component {
       <div className = {'container'}>
        <div className = { 'container-option1' }  >
          
-         <div className={'container-option1'}>  <Player/> </div>
+         <div className={'container-option1'}>  <MedPlayer/> </div>
          <h1> Playing Podcast /* Dynamic Title */ </h1>
          <div></div>
          <div><h4> Author of Podcast </h4> </div>
 
          <center>
-           <Rating
-              onChange = { e => {
-                rateBook(news.id, e)
-                this.setState({ rating : e })
-              }}
-              fractions = { 2 }
-              initialRating = { rating ? rating : news.rating }
-            />
+           
          </center>
          <div className={'container-option1'}> <CommentForm/> </div>
        </div>
