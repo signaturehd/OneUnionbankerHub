@@ -12,12 +12,12 @@ class SideBar extends Component {
     const { textlink, icon , onClick, text, path, onNavigationClick, selected } = this.props
     const modules =
     [
-      { id: 0 , title: 'News', path: '/' },
-      { id: 1 , title: 'Benefits', path: '/benefits' },
-      { id: 2 , title: 'Transactions', path: '/transactions' },
-      { id: 3 , title: 'Faqs', path: '/faqs' },
-      { id: 4 , title: 'Settings', path: '/settings' },
-      { id: 5 , title: 'Books', path: '/books' },
+      { id: 0 , title: 'News', path: '/', className: 'newsfeed-icon' },
+      { id: 1 , title: 'Benefits', path: '/benefits', className: 'benefits-icon'},
+      { id: 2 , title: 'Transactions', path: '/transactions', className: 'transaction-icon' },
+      { id: 3 , title: 'Faqs', path: '/faqs', className: 'faqs-icon' },
+      { id: 4 , title: 'Settings', path: '/settings', className: 'settings-icon' },
+      { id: 5 , title: 'Books', path: '/books', className: 'books-icon' },
     ]
 
   return (
@@ -30,7 +30,7 @@ class SideBar extends Component {
               key = { idx }
               onClick = { () => onNavigationClick(d.path) }>
               <a key = { idx }
-                 className = {`sidebar-icon ${selected === d.id && 'sidebar-active'}`}/>
+                 className = {`sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
                { d.title }
           </li>
         })

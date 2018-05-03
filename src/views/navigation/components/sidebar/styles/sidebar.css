@@ -6,6 +6,8 @@
   box-shadow: 0 1px 4px 0 rgba(255, 255, 255, 0.5);
 }
 ._text-link {
+  display: flex;
+  align-items: center;
  border-radius: 5px;
  font-size: 18px;
  text-align: justify;
@@ -25,7 +27,16 @@
 .active {
   color: #ff8a00;
 }
-.sidebar-active {
+
+.sidebar-icon {
+  -webkit-mask-size: auto 100%;
+  -webkit-mask-repeat: no-repeat;
+  background-color: #00000087;
+  background-position: 0 .4em;
+  padding: 10% 10% 5% 10%;
+}
+
+.sidebar-icon.active {
   background-color: #ff8a00;
 }
 ._icon {
@@ -48,12 +59,27 @@ ul {
   height: 100%;
 }
 
-.sidebar-icon {
+.newsfeed-icon {
   -webkit-mask-image: url('../../../../../images/drawer/newsfeed.png');
-  -webkit-mask-size: auto 100%;
-  -webkit-mask-repeat: no-repeat;
   mask-image: url('../../../../../images/drawer/newsfeed.png');
-  background-color: #00000087;
-  background-position: 0 .4em;
-  padding: 1% 10% 2% 10%;
+  }
+.benefits-icon {
+  -webkit-mask-image: url('../../../../../images/drawer/benefits.png');
+  mask-image: url('../../../../../images/drawer/benefits.png');
+  }
+.transaction-icon {
+  -webkit-mask-image: url('../../../../../images/drawer/MyTransaction.png');
+  mask-image: url('../../../../../images/drawer/MyTransaction.png');
+  }
+.faqs-icon {
+  -webkit-mask-image: url('../../../../../images/drawer/faqs.png');
+  mask-image: url('../../../../../images/drawer/faqs.png');
+  }
+.settings-icon {
+  -webkit-mask-image: url('../../../../../images/drawer/Profile.png');
+  mask-image: url('../../../../../images/drawer/Profile.png');
+  }
+.books-icon {
+  -webkit-mask-image: url('../../../../../images/drawer/faqs.png');
+  mask-image: url('../../../../../images/drawer/faqs.png');
   }
