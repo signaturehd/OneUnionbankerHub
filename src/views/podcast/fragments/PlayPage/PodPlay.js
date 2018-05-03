@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PodCardComponent from '../../../common/components/PodCardComponent/PodCardComponent'
-import CommentForm from '../comments/CommentBox'
 import MedPlayer from '../../components/player/MedPlayer'
 import Rating from 'react-rating'
 import PropTypes from 'prop-types'
+import CommentForm from '../../components/comments/CommentBox'
 
 class PodPlay extends Component {
   constructor (props) {
