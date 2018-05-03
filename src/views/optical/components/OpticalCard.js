@@ -21,7 +21,7 @@ import Modal from '../modal/OpticalReviewModal'
   }
   _handleSubmit(e) {
       e.preventDefault()
-      if(this.state.file === '') {
+      if(this.state.file === '' || this.state.file2 === '') {
 
           console.log("fail")
       }
