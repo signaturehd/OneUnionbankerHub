@@ -1,115 +1,69 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './styles.css'
-import TextBox from './OpticalTextBox'
-import Button from './OpticalButton'
+import Button from './DentalLoaButton'
+import GenericTextBox from '../../../ub-components/TextBox/GenericTextBox'
 
- class DentalLoaCard extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      showConfirmation: false,
-      file: '',
-      file2: '',.
-      imagePreviewUrl: '',
-      imagePreviewUrl2: ''
-    }
-    this._handleImageChange = this._handleImageChange.bind(this)
-    this._handleImageChange2 = this._handleImageChange2.bind(this)
-    this._handleSubmit = this._handleSubmit.bind(this)
-  }
-  _handleSubmit(e) {
-      e.preventDefault()
-      if(this.state.file === '') {
-
-          console.log("fail")
-      }
-      else{
-      console.log(this.state.file)
-      console.log(this.state.file2)
-      }
-      // TODO: do something with -> this.state.file
-    }
-
-    _handleImageChange(e) {
-      e.preventDefault()
-
-      let reader = new FileReader()
-      let file = e.target.files[0]
-
-      reader.onloadend = () => {
-        this.setState({
-          file: file,
-          imagePreviewUrl: reader.result
-        })
-      }
-
-      reader.readAsDataURL(file)
-    }
-    _handleImageChange2(e1) {
-      e1.preventDefault()
-      let reader2 = new FileReader()
-      let file2 = e1.target.files[0]
-
-      reader2.onloadend = () => {
-        this.setState({
-          file2: file2,
-          imagePreviewUrl2: reader2.result
-        })
-      }
-      reader2.readAsDataURL(file2)
-    }
-
-  render () {
-    const { proceedModal } = this.props
-    const { showConfirmation, showModal, confirm, cancel } = this.state
-    let {imagePreviewUrl, imagePreviewUrl2} = this.state;
-    let $imagePreview = null;
-    let $imagePreview2 = null;
-      $imagePreview = (<img className = {'optical-image-view'} src={imagePreviewUrl} />);
-      $imagePreview2 = (<img className = {'optical-image-view'} src={imagePreviewUrl2} />);
-    return (
-
-      <div className = { 'optical-card' } >
-        <form onSubmit={this._handleSubmit}>
-          <div className = {'optical-header'} >
-            <h5 >Form Attachments</h5>
-              <div className = {'optical-body'}>
-                <div>
-                     <input type="file" onChange={this._handleImageChange} />
-                     <input type="file" onChange={this._handleImageChange2} />
-              </div>
-            </div>
-        </div>
-          <div className = {'optical-footer-left'}>
-            <div className = { 'optical-modal-review' }>
-              <div className = { 'optical-image-view' }>
-                  {$imagePreview}
-                <div className = { 'optical-image-layer' }>
-                </div>
-              </div>
-              <div className = { 'optical-image-view' }>
-                  {$imagePreview2}
-                <div className = {  'optical-image-layer' }></div>
-              </div>
-            </div>
-            <div className = { 'optical-button-submit' }>
-              <Button onClick={this._handleSubmit} />
-            </div>
-          </div>
-        </form>
-    </div>
-    )
-  }
+class DentalLoaCard extends Component {
+constructor (props) {
+super(props)
+this.state = {
+  showConfirmation: false
 }
-OpticalCard.propTypes = {
+this._showModal = this._showModal.bind(this)
+}
+_handleSubmit(e) {
+  e.preventDefault()
+  // TODO: do something with -> this.state.file
+}
+
+_showModal(e) {
+
+}
+
+render () {
+const { proceedModal , text1, text2, text3} = this.props
+
+return (
+  <div className = { 'dentalloa-card' } >
+  <form onSubmit={this._handleSubmit}>
+    <div className = {'dentalloa-header'} >
+      <h5 > LOA Details </h5>
+        <div className = {'dentalloa-body'}>
+        <i className = { 'dentalloa-icon text1-icon' }/>
+         <GenericTextBox
+           type = { 'text' }
+           placeholder = { text1 }
+           onChange = { this._showModal }></GenericTextBox>
+        <i className = { 'dentalloa-icon text2-icon' }/>
+         <GenericTextBox placeholder = { text2 }></GenericTextBox>
+        <i className = { 'dentalloa-icon text3-icon' }/>
+        <input className = { 'dentalloa-datepicker' } type = {'date'} />
+      </div>
+    </div>
+    <div className = {'dentalloa-footer-left'}>
+        <input type = {'button'} className = {'dentalloa-procedure' } value = { 'Procedures' } />
+      <div className = { 'dentalloa-button-submit' }>
+        <Button onClick={this._handleSubmit} />
+      </div>
+    </div>
+    </form>
+</div>
+)
+}
+}
+DentalLoaCard.propTypes = {
   onClose : PropTypes.func,
   details : PropTypes.func,
   confirm : PropTypes.string,
-  cancel : PropTypes.string,
+  text1: PropTypes.string,
+  text2: PropTypes.string,
+  text3: PropTypes.string
 }
-OpticalCard.defaultProps = {
-  confirm : 'Submit',
-  cancel : 'Cancel',
+DentalLoaCard.defaultProps = {
+  confirm : 'continue',
+  text1 : 'Recipient',
+  text2 : 'Healthway Branch',
+  text3 : 'Preferred Schedule'
 }
-export default OpticalCard
+export default DentalLoaCard

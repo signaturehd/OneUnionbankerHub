@@ -35,7 +35,9 @@
   background-position: 0 .4em;
   padding: 10% 10% 5% 10%;
 }
-
+.sidebar-icon:hover {
+  background-color: #ff8a00;
+}
 .sidebar-icon.active {
   background-color: #ff8a00;
 }

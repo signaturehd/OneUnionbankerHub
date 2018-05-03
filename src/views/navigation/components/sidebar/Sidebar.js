@@ -29,8 +29,7 @@ class SideBar extends Component {
               className = { `_text-link ${selected === d.id && 'active'}` }
               key = { idx }
               onClick = { () => onNavigationClick(d.path) }>
-              <a key = { idx }
-                 className = {`sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+              <a className = {`sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
                { d.title }
           </li>
         })
