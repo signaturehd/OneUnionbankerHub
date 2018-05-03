@@ -21,6 +21,14 @@ import Modal from '../modal/OpticalReviewModal'
   }
   _handleSubmit(e) {
       e.preventDefault()
+      if(this.state.file === '') {
+
+          console.log("fail")
+      }
+      else{
+      console.log(this.state.file)
+      console.log(this.state.file2)
+      }
       // TODO: do something with -> this.state.file
     }
 

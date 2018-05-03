@@ -7,20 +7,15 @@ import  GenericButton  from  '../../../ub-components/UButton/GenericButton'
 class OpticalButton extends Component {
   constructor (props) {
     super(props)
-    this.proceedModal = this.proceedModal.bind(this)
   }
 
-  proceedModal () {
-      this.props.show()
-  }
 
   render () {
-    const { text, onClick, showModal, showConfirmation} = this.props
+    const { text, showModal, showConfirmation} = this.props
     return (
       <GenericButton
         text = { text }
-        className = { 'optical-button' }
-        onClick = { this.proceedModal }>
+        className = { 'optical-button' }>
       </GenericButton>
     )
   }
