@@ -20,23 +20,25 @@ class SideBar extends Component {
       { id: 5 , title: 'Books', path: '/books' },
     ]
 
-    return (
-      <div className = { '_sidebar-overlay' }>
-      <ul className = { '_link-list' }>
-        {
-          modules.map((d, idx) => {
-            return <li
-                className = { `_text-link ${selected === d.id && 'active'}` }
-                key = { idx }
-                onClick = { () => onNavigationClick(d.path) }>
-                { d.title }
-            </li>
-          })
-         }
-      </ul>
-      </div>
-    )
-  }
+  return (
+    <div className = { '_sidebar-overlay' }>
+    <ul className = { '_link-list ul' }>
+      {
+        modules.map((d, idx) => {
+          return <li
+              className = { `_text-link ${selected === d.id && 'active'}` }
+              key = { idx }
+              onClick = { () => onNavigationClick(d.path) }>
+              <a key = { idx }
+                 className = {`sidebar-icon ${selected === d.id && 'sidebar-active'}`}/>
+               { d.title }
+          </li>
+        })
+       }
+    </ul>
+    </div>
+  )
+}
 }
 
 SideBar.propTypes = {
