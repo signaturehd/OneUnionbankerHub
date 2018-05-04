@@ -20,6 +20,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  resend (resendOtpParam) {
+    return this.service.resend(resendOtpParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   profile (token) {
     return this.service.profile(token)
       .pipe(ServiceErrorOperator())

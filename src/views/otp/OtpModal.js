@@ -28,14 +28,15 @@ class OtpModal extends BaseMVPView {
 
       <Modal
           onClose = {onClose}
-          isDismisable = {false}
         >
         { super.render() }
         <GenericTextBox text= "OTP"
           placeholder = "OTP"
           type = ""
           onChange={ e => this.setState({ otp: e.target.value }) }  />
-        <GenericButton text= "Submit" onClick={ () => this.presenter.verifyOtp(username, otp, transactionType) } />
+          <br/>
+          <GenericButton text= "Submit" onClick={ () => this.presenter.verifyOtp(username, otp, transactionType) } />
+          <GenericButton text= "Resend OTP" onClick={ () => this.presenter.resendOtp(username, transactionType) } />
       </Modal>
       )
   }

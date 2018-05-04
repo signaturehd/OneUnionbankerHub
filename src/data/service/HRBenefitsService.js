@@ -25,6 +25,10 @@ export default class HRBenefitsService {
     return this.apiClient.post('v1/otp', otpParam)
   }
 
+  resend (resendOtpParam) {
+    return this.apiClient.post('v1/otp/resend', resendOtpParam)
+  }
+
   profile (token) {
     return this.apiClient.get('v1/profile', {
       headers : { token }
