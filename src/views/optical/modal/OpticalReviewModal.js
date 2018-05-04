@@ -8,6 +8,9 @@ import './optical-modal.css'
 class OpticalModal extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      showOpticalModal : false,
+    }
   }
 
   render () {
@@ -21,10 +24,6 @@ class OpticalModal extends Component {
           </div>
           <div className = { 'optical-modal-review' }>
             <div className = { 'optical-image-view' }>
-              <div className = { 'optical-image-layer' }></div>
-            </div>
-            <div className = { 'optical-image-view' }>
-              <div className = {  'optical-image-layer' }></div>
             </div>
           </div>
           <div className = { 'optical-modal-footer' }>
@@ -44,7 +43,7 @@ OpticalModal.propTypes = {
   cancel : PropTypes.string,
 }
 OpticalModal.defaultProps = {
-  confirm : 'Submit',
-  cancel : 'Cancel',
+  confirm : 'Agree',
+  cancel : 'Disagree',
 }
 export default OpticalModal
