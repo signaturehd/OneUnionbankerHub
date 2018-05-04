@@ -18,7 +18,7 @@ _handleSubmit(e) {
 }
 
 _showModal(e) {
-
+  console.log("clicked")
 }
 
 render () {
@@ -32,11 +32,13 @@ return (
         <div className = {'dentalloa-body'}>
         <i className = { 'dentalloa-icon text1-icon' }/>
          <GenericTextBox
-           type = { 'text' }
+           type = { 'button' }
            placeholder = { text1 }
-           onChange = { this._showModal }></GenericTextBox>
+           onMouseDown = {this._showModal()}></GenericTextBox>
         <i className = { 'dentalloa-icon text2-icon' }/>
-         <GenericTextBox placeholder = { text2 }></GenericTextBox>
+         <GenericTextBox
+           type = { 'button' }
+           placeholder = { text2 }></GenericTextBox>
         <i className = { 'dentalloa-icon text3-icon' }/>
         <input className = { 'dentalloa-datepicker' } type = {'date'} />
       </div>
@@ -44,7 +46,7 @@ return (
     <div className = {'dentalloa-footer-left'}>
         <input type = {'button'} className = {'dentalloa-procedure' } value = { 'Procedures' } />
       <div className = { 'dentalloa-button-submit' }>
-        <Button onClick={this._handleSubmit} />
+        <Button onClick={ this._handleSubmit } />
       </div>
     </div>
     </form>
