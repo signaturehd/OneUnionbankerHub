@@ -65,8 +65,8 @@ export default class HRBenefitsClient {
   }
 
   /* accounts */
-  validateAccountNumber (accountNumber) {
-    return this.service.validateAccountNumber(accountNumber)
+  validateAccountNumber (token, accountNumber) {
+    return this.service.validateAccountNumber(token, accountNumber)
       .pipe(ServiceErrorOperator())
   }
 

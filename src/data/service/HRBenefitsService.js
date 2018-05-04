@@ -69,11 +69,12 @@ export default class HRBenefitsService {
   }
 
   /* account */
-  validateAccountNumber (accountNumber) {
+  validateAccountNumber (token, accountNumber) {
     return this.accountClient.get(`accounts/v1/${accountNumber}`, {
       headers: {
+        token,
         referenceId : Math.random().toString(36)
-          .substring(7)
+          .substring(7),
       }
     })
   }
