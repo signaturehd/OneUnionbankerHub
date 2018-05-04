@@ -12,9 +12,9 @@ import EducationFragment from './fragments/education/EducationFragment'
 import LoansFragment from './fragments/loans/LoansFragment'
 import MedicalFragment from './fragments/medical/MedicalFragment'
 
-import './styles/benefits.css'
+import { InputModal } from '../../ub-components/Modal'
 
-import AccountNumberModal from '../accountnumbersubmit/AccountNumberModal'
+import './styles/benefits.css'
 
 class BenefitsFragment extends BaseMVPView {
   constructor (props) {
@@ -66,9 +66,17 @@ class BenefitsFragment extends BaseMVPView {
         <h1>Benefits</h1>
         {
           !showAccountNumber &&
-          <AccountNumberModal
-            onClose = { () => this.setState({ showAccountNumber : true }) }
-          />
+            <InputModal
+              isDismisable = { true }
+              onClose = { () => this.setState({showAccountNumber : false}) }
+              onChange = { e => this.setState({ accountNumber: e.target.value }) }
+              placeholder = { 'Account Number' }
+              type = { 'text' }
+              onSubmit = { e => {
+                  e.preventDefault() , this.presenter.validateAccountNumber(accountNumber)
+                }
+              }
+            />
         }
         <div className = { 'adjustment' }>
         <div className = { 'card-container' }>
@@ -91,10 +99,10 @@ class BenefitsFragment extends BaseMVPView {
     return (
     <div>
        <Switch>
-       <Route exact path = '/benefits' render = { Benefits } />
-       <Route path = '/benefits/education' render = { props => <EducationFragment { ...props } />}/>
-       <Route path = '/benefits/medical' render = { props => <MedicalFragment { ...props } />}/>
-       <Route path = '/benefits/loans' render = { props => <LoansFragment  { ...props } />}/>
+         <Route exact path = '/benefits' render = { Benefits } />
+         <Route path = '/benefits/education' render = { props => <EducationFragment { ...props } />}/>
+         <Route path = '/benefits/medical' render = { props => <MedicalFragment { ...props } />}/>
+         <Route path = '/benefits/loans' render = { props => <LoansFragment  { ...props } />}/>
       </Switch>
     </div>)
   }
