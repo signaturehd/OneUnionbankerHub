@@ -15,7 +15,7 @@ this._showModal = this._showModal.bind(this)
 }
 _handleSubmit(e) {
   e.preventDefault()
-  // TODO: do something with -> this.state.file
+  console.log("dawd")
 }
 
 _showModal(e) {
@@ -24,7 +24,6 @@ _showModal(e) {
 _showModal1(e) {
   console.log("clicked")
 }
-
 render () {
 const { proceedModal , text1, text2, text3, onFocus, onBlur} = this.props
 
@@ -51,7 +50,7 @@ return (
     <div className = {'dentalloa-footer-left'}>
         <input onClick = { this._showModal } type = {'button'} className = {'dentalloa-procedure' } value = { 'Procedures' } />
       <div className = { 'dentalloa-button-submit' }>
-        <Button />
+        <Button onClick = { this._handleSubmit }/>
       </div>
     </div>
     </form>
