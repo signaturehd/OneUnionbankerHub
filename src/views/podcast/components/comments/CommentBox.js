@@ -1,8 +1,9 @@
-
 import React, { Component } from 'react'
-import { ReactDOM } from 'react-router-dom'
+import { ReactDOM } from 'react-dom'
+import './styles.css'
+import './marked.js'
 
-class CommentForm extends Component {
+class CommentForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -29,7 +30,6 @@ class CommentForm extends Component {
         const author = this.state.author.trim();
         const txt = this.state.txt.trim();
         if(!txt || !author) return;
-        
         this.props.onCommentSubmit({author: author, txt: txt});
         this.setState({author: "", txt: ""});
     }
@@ -55,7 +55,7 @@ class CommentForm extends Component {
     }
 }
 
-class CommentList extends Component {
+class CommentList extends React.Component {
     render() {
         const CommentNodes = this.props.data.map((comment)=>{
             return (
@@ -72,9 +72,27 @@ class CommentList extends Component {
     }
 }
 
+class Comment extends React.Component {
+    rawMarkup() {
+        var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
+        return { __html: rawMarkup };
+    }
+    
+    render() {
 
+        return (
+            <div className='comment'>
+                <h3 className='commentAuthor'>
+                    {this.props.author}
+                </h3>
+                
+                <span dangerouslySetInnerHTML={this.rawMarkup()} className='commentBody'/>
+            </div>
+        );
+    }
+}
 
-class CommentBox extends Component {
+class CommentBox extends React.Component {
     constructor(props) {
         super(props);
         
@@ -103,8 +121,7 @@ class CommentBox extends Component {
                         newData.author = author;
                         newData.txt = txt;
                         newData.key = key;
-                        console.log(newData);
-                        console.log(this);
+                      
                         
                         this.setState({data: this.state.data.concat(newData)});
                     });
@@ -130,6 +147,9 @@ class CommentBox extends Component {
     }
 }
 
-const database = new Firebase('https://react-69c2f.firebaseio.com/');
+const database = new Firebase("https://react-69c2f.firebaseio.com/");
 
-export default (CommentForm,CommentBox,CommentList)
+
+
+
+export default (CommentForm)

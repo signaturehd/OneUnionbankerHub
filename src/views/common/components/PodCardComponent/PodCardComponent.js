@@ -34,6 +34,7 @@ class PodCardComponent extends Component {
           </div>
           <div className = {'card-footer'}>
           <center>
+          rateBook = { (id, rating) => this.addRating(id, rating) }
            <Rating
               onChange = { e => {
                 rateBook(news.id, e)

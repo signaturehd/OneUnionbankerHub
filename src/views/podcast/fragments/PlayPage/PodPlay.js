@@ -3,7 +3,7 @@ import PodCardComponent from '../../../common/components/PodCardComponent/PodCar
 import MedPlayer from '../../components/player/MedPlayer'
 import Rating from 'react-rating'
 import PropTypes from 'prop-types'
-import CommentForm from '../../components/comments/CommentBox'
+import CommentBox from '../../components/comments/CommentBox'
 
 class PodPlay extends Component {
   constructor (props) {
@@ -34,7 +34,8 @@ class PodPlay extends Component {
          <center>
            
          </center>
-         <div className={'container-option1'}> <CommentForm/> </div>
+        <CommentBox/>
+        
        </div>
        </div>
      )
