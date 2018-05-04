@@ -11,26 +11,30 @@ class OpticalModal extends Component {
     this.state = {
       showOpticalModal : false,
     }
+
+    this.submitForm = this.submitForm.bind(this)
+  }
+  submitForm ()
+  {
+    console.log(this.props.fileReceived)
+    console.log(this.props.fileReceived2)
   }
 
   render () {
-    const { details, onClose, confirm, cancel } = this.props
+    const { details, onClose, confirm, cancel, fileReceived, fileReceived2 } = this.props
     return (
-
         <Modal
           onClose = { onClose }>
           <div className = { 'optical-description' }>
               <h2>Description</h2>
           </div>
-          <div className = { 'optical-modal-review' }>
-            <div className = { 'optical-image-view' }>
-            </div>
+          <div className = { 'optical-modal-footer' }>
+            <Button onClick = { () => this.submitForm() }
+                    className = { 'optical-footer-left' }
+                    text = { confirm } />
           </div>
           <div className = { 'optical-modal-footer' }>
-            <Button className = { 'optical-footer-left' } text = { confirm }></Button>
-          </div>
-          <div className = { 'optical-modal-footer' }>
-            <Button className = { 'optical-footer-right' } text = { cancel } ></Button>
+            <Button className = { 'optical-footer-right' } text = { cancel } />
           </div>
         </Modal>
       )

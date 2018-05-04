@@ -8,13 +8,12 @@ class OpticalButton extends Component {
   constructor (props) {
     super(props)
   }
-
-
   render () {
-    const { text, showModal, showConfirmation} = this.props
+    const { text, showModal, showConfirmation, onClick} = this.props
     return (
       <GenericButton
         text = { text }
+        onClick = { onClick }
         className = { 'optical-button' }>
       </GenericButton>
     )

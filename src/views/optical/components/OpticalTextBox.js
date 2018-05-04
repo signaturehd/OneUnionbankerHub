@@ -8,12 +8,12 @@ class OpticalTextBox extends Component {
     super(props)
   }
   render () {
-    const {  onChange, type } = this.props
+    const {  onChange, type, _handleImageChange } = this.props
 
     return (
       <div className = {'optical-textbox-container'}>
         <div className ="upload-group">
-          <FileUploader/>
+          <FileUploader onChange={this._handleImageChange.show()}/>
           <span className = { 'optical-text-label' }></span>
           <span className ={ 'optical-text-bar' }></span>
         </div>
