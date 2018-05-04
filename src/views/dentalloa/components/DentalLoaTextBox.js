@@ -8,24 +8,28 @@ class DentalLoaTextBox extends Component {
     super(props)
   }
   render () {
-    const {  onChange, type } = this.props
+    const {  onChange, type, onClick, placeholder } = this.props
 
     return (
       <div className = {'dentalloa-textbox-container'}>
-        <div >
-          <FileUploader/>
+        <div className = { 'group' }>
+          <input className = {'text'}
+            onClick = { onClick }
+            type = { type }
+            placeholder = { placeholder }/>
           <span className = { 'dentalloa-text-label' }></span>
           <span className ={ 'dentalloa-text-bar' }></span>
-        </div>
+      </div>
       </div>
     )
   }
 }
 DentalLoaTextBox.propTypes = {
-  type : PropTypes.string
+  type : PropTypes.string,
+  onClick : PropTypes.func,
+  placeholder : PropTypes.string,
 }
-
 DentalLoaTextBox.defaultProps = {
-  type : 'text',
+  type : 'button'
 }
 export default DentalLoaTextBox

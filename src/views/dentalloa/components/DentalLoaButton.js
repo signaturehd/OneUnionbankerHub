@@ -11,10 +11,11 @@ class DentalLoaButton extends Component {
 
 
   render () {
-    const { text, showModal, showConfirmation} = this.props
+    const { text, showModal, showConfirmation, onClick} = this.props
     return (
       <GenericButton
         text = { text }
+        onClick = { onClick }
         className = { 'dentalloa-button' }>
       </GenericButton>
     )

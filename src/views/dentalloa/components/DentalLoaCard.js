@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './styles.css'
 import Button from './DentalLoaButton'
+import TextBox from './DentalLoaTextBox'
 import GenericTextBox from '../../../ub-components/TextBox/GenericTextBox'
 
 class DentalLoaCard extends Component {
@@ -20,33 +21,37 @@ _handleSubmit(e) {
 _showModal(e) {
   console.log("clicked")
 }
+_showModal1(e) {
+  console.log("clicked")
+}
 
 render () {
-const { proceedModal , text1, text2, text3} = this.props
+const { proceedModal , text1, text2, text3, onFocus, onBlur} = this.props
 
 return (
   <div className = { 'dentalloa-card' } >
-  <form onSubmit={this._handleSubmit}>
+  <form>
     <div className = {'dentalloa-header'} >
       <h5 > LOA Details </h5>
         <div className = {'dentalloa-body'}>
         <i className = { 'dentalloa-icon text1-icon' }/>
          <GenericTextBox
+           onFocus = { this._showModal }
            type = { 'button' }
-           placeholder = { text1 }
-           onMouseDown = {this._showModal()}></GenericTextBox>
+           placeholder = { text1 }/>
         <i className = { 'dentalloa-icon text2-icon' }/>
          <GenericTextBox
            type = { 'button' }
-           placeholder = { text2 }></GenericTextBox>
+           onFocus = { this._showModal }
+           placeholder = { text2 }/>
         <i className = { 'dentalloa-icon text3-icon' }/>
         <input className = { 'dentalloa-datepicker' } type = {'date'} />
       </div>
     </div>
     <div className = {'dentalloa-footer-left'}>
-        <input type = {'button'} className = {'dentalloa-procedure' } value = { 'Procedures' } />
+        <input onClick = { this._showModal } type = {'button'} className = {'dentalloa-procedure' } value = { 'Procedures' } />
       <div className = { 'dentalloa-button-submit' }>
-        <Button onClick={ this._handleSubmit } />
+        <Button />
       </div>
     </div>
     </form>
@@ -60,7 +65,9 @@ DentalLoaCard.propTypes = {
   confirm : PropTypes.string,
   text1: PropTypes.string,
   text2: PropTypes.string,
-  text3: PropTypes.string
+  text3: PropTypes.string,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
 }
 DentalLoaCard.defaultProps = {
   confirm : 'continue',
