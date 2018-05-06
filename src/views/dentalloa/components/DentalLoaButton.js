@@ -11,7 +11,7 @@ class DentalLoaButton extends Component {
 
 
   render () {
-    const { text, showModal, showConfirmation, onClick} = this.props
+    const { text, showModal, showConfirmation, onClick } = this.props
     return (
       <GenericButton
         text = { text }
@@ -27,7 +27,7 @@ DentalLoaButton.propTypes = {
   onClick : PropTypes.func,
   proceedModal : PropTypes.func,
 }
-DentalLoaButton.defaultProps ={
+DentalLoaButton.defaultProps = {
   text : 'Submit',
 }
 export default DentalLoaButton

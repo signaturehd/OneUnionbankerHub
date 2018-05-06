@@ -7,7 +7,7 @@ import Card from './components/DentalLoaCard'
 import './styles/dentalloa.css'
 
 class DentalLoaFragment extends BaseMVPView {
-  constructor(props) {
+  constructor (props) {
     super(props)
   }
   navigate () {

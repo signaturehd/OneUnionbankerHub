@@ -10,14 +10,13 @@ class DentalLoaModal extends Component {
 
     this.submitForm = this.submitForm.bind(this)
   }
-  submitForm ()
-  {
+  submitForm () {
   }
 
   render () {
-    const { details, onClose, confirm, cancel, showRecipientModal, showHealthwayBranchModal, showProcedureModal } = this.props
+  const { details, onClose, confirm, cancel, showRecipientModal, showHealthwayBranchModal, showProcedureModal } = this.props
 
-  let Recipients = (
+  const Recipients = (
         <div>
           <div className = { 'optical-description' }>
             <h2>Recipients</h2>
@@ -27,7 +26,7 @@ class DentalLoaModal extends Component {
       </div>
   )
 
-  let HealthWayBranch = (
+  const HealthWayBranch = (
         <div>
         <div className = { 'optical-description' }>
             <h2>Health Way Branch</h2>
@@ -37,7 +36,7 @@ class DentalLoaModal extends Component {
         </div>
   )
 
-  let Procedure = (
+  const Procedure = (
       <div>
       <div className = { 'optical-description' }>
           <h2>Procedures</h2>

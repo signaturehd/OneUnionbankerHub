@@ -18,19 +18,16 @@ super(props)
   this.showModal = this.showModal.bind(this)
   this.handleSubmit = this.handleSubmit.bind(this)
   }
-  handleSubmit(e) {
+  handleSubmit (e) {
     e.preventDefault()
-
   }
 
-  showModal(e) {
+  showModal (e) {
     if (e === 'recipient') {
       this.setState({ showRecipientModal : true })
-    }
-    else if (e === 'branch') {
+    } else if (e === 'branch') {
       this.setState({ showHealthwayBranchModal : true })
-    }
-    else if ( e === 'procedure'){
+    } else if (e === 'procedure') {
       this.setState({ showProcedureModal : true })
   }
 }
@@ -84,7 +81,7 @@ return (
       </div>
     </div>
     <div className = {'dentalloa-footer-left'}>
-        <input onClick = { () => this.showModal( 'procedure' ) }
+        <input onClick = { () => this.showModal('procedure') }
                type = {'button'}
                className = {'dentalloa-procedure' }
                value = { 'Procedures' } />
