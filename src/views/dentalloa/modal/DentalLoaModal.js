@@ -2,15 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Modal } from '../../../ub-components/Modal/'
-import Button from '../components/OpticalButton'
-import './optical-modal.css'
+import Button from '../components/DentalLoaButton'
 
 class DentalLoaModal extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      showOpticalModal : false,
-    }
 
     this.submitForm = this.submitForm.bind(this)
   }
@@ -19,62 +15,53 @@ class DentalLoaModal extends Component {
   }
 
   render () {
-    const { details, onClose, confirm, cancel } = this.props
+    const { details, onClose, confirm, cancel, showRecipientModal, showHealthwayBranchModal, showProcedureModal } = this.props
 
-    const Recipients = () => (
-      <Modal
-        onClose = { onClose }>
-        <div className = { 'optical-description' }>
-            <h2>Description</h2>
+  let Recipients = (
+        <div>
+          <div className = { 'optical-description' }>
+            <h2>Recipients</h2>
         </div>
         <div className = { 'optical-modal-footer' }>
-          <Button onClick = { () => this.submitForm() }
-                  className = { 'optical-footer-left' }
-                  text = { confirm } />
         </div>
-        <div className = { 'optical-modal-footer' }>
-          <Button className = { 'optical-footer-right' } text = { cancel } />
-        </div>
-      </Modal>
+      </div>
   )
 
-  const HealthWayBranch = () => (
-      <Modal
-        onClose = { onClose }>
+  let HealthWayBranch = (
+        <div>
         <div className = { 'optical-description' }>
-            <h2>Description</h2>
+            <h2>Health Way Branch</h2>
         </div>
         <div className = { 'optical-modal-footer' }>
-          <Button onClick = { () => this.submitForm() }
-                  className = { 'optical-footer-left' }
-                  text = { confirm } />
         </div>
-        <div className = { 'optical-modal-footer' }>
-          <Button className = { 'optical-footer-right' } text = { cancel } />
         </div>
-      </Modal>
   )
 
-  const Procedure = () => (
-    <Modal
-      onClose = { onClose }>
+  let Procedure = (
+      <div>
       <div className = { 'optical-description' }>
-          <h2>Description</h2>
+          <h2>Procedures</h2>
       </div>
       <div className = { 'optical-modal-footer' }>
-        <Button onClick = { () => this.submitForm() }
-                className = { 'optical-footer-left' }
-                text = { confirm } />
       </div>
-      <div className = { 'optical-modal-footer' }>
-        <Button className = { 'optical-footer-right' } text = { cancel } />
       </div>
-    </Modal>
 )
 
     return (
-        <div render = {Procedure}>
-        </div>
+      <Modal onClose = { onClose }>
+        {
+          showRecipientModal &&
+            Recipients
+        }
+        {
+          showHealthwayBranchModal &&
+            HealthWayBranch
+        }
+        {
+          showProcedureModal &&
+            Procedure
+        }
+      </Modal>
       )
   }
 }
