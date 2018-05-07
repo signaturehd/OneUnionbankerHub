@@ -24,27 +24,25 @@ class OpticalCard extends Component {
     this._handleSubmit = this._handleSubmit.bind(this)
   }
 
-  _handleSubmit(e) {
+  _handleSubmit (e) {
     e.preventDefault()
-    if(this.state.file === '' || this.state.file2 === '') {
-      this.setState({warning : 'Please Uploaded the needed'})
-    }
-    else
-    {
-    this.setState({showConfirmation : true})
-    this.setState({warning : ''})
+    if (this.state.file === '' || this.state.file2 === '') {
+      this.setState({ warning : 'Please Uploaded the needed' })
+    } else {
+    this.setState({ showConfirmation : true })
+    this.setState({ warning : '' })
     }
   }
 
-  _handleImageChange(e) {
+  _handleImageChange (e) {
     e.preventDefault()
 
-    let reader = new FileReader()
-    let file = e.target.files[0]
+    const reader = new FileReader()
+    const file = e.target.files[0]
 
     reader.onloadend = () => {
       this.setState({
-        file: file,
+        file,
         imagePreviewUrl: reader.result
       })
     }
@@ -52,14 +50,14 @@ class OpticalCard extends Component {
     reader.readAsDataURL(file)
   }
 
-  _handleImageChange2(e1) {
+  _handleImageChange2 (e1) {
     e1.preventDefault()
-    let reader2 = new FileReader()
-    let file2 = e1.target.files[0]
+    const reader2 = new FileReader()
+    const file2 = e1.target.files[0]
 
     reader2.onloadend = () => {
       this.setState({
-        file2: file2,
+        file2,
         imagePreviewUrl2: reader2.result
       })
     }
@@ -67,13 +65,13 @@ class OpticalCard extends Component {
   }
 
   render () {
-    const { proceedModal, props, fileReceived, fileReceived2} = this.props
+    const { proceedModal, props, fileReceived, fileReceived2 } = this.props
     const { showConfirmation, confirm, cancel, warning } = this.state
-    let {imagePreviewUrl, imagePreviewUrl2} = this.state;
-    let $imagePreview = null;
-    let $imagePreview2 = null;
-      $imagePreview = (<img className = {'optical-image-view'} src={imagePreviewUrl} />);
-      $imagePreview2 = (<img className = {'optical-image-view'} src={imagePreviewUrl2} />);
+    const { imagePreviewUrl, imagePreviewUrl2 } = this.state
+    let $imagePreview = null
+    let $imagePreview2 = null
+      $imagePreview = (<img className = {'optical-image-view'} src={imagePreviewUrl} />)
+      $imagePreview2 = (<img className = {'optical-image-view'} src={imagePreviewUrl2} />)
     return (
         <div className = { 'optical-card' } >
           {

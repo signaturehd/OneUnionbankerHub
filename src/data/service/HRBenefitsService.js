@@ -72,19 +72,17 @@ export default class HRBenefitsService {
   }
 
   addDentalLoa (token, accountNumber, opticalParam) {
+    // TODO to be fixed
     const formData = new FormData()
-    console.log('submiting')
     formData.append('uuid', 1)
     formData.append('med', opticalParam.medCert)
     formData.append('opt', opticalParam.optCert)
     formData.append('accountNumber', '111')
     formData.append('releasingCenter', 'UBP')
     formData.append('amount', opticalParam.amount)
-    console.log(formData)
     return this.apiClient.post('v1/issuances/dental/loa/submit', formData, {
       headers : { token }
     })
-
   }
 
   /* account */

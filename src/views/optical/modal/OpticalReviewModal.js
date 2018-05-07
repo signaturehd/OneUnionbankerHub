@@ -19,8 +19,7 @@ class OpticalModal extends BaseMVPView {
     this.submitForm = this.submitForm.bind(this)
   }
   submitForm () {
-    const {fileReceived, fileReceived2 } = this.props
-    console.log(fileReceived2)
+    const { fileReceived, fileReceived2 } = this.props
     this.presenter.addOptical(1000, fileReceived, fileReceived2)
   }
 

@@ -18,7 +18,6 @@ import Drawer from './components/drawer/Drawer'
 import './styles/drawerview.css'
 
 class NavigationView extends BaseMVPView {
-
   constructor (props) {
     super (props)
 

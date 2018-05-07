@@ -6,7 +6,6 @@ import Rating from 'react-rating'
 import './styles.css'
 
 class BookCardComponent extends Component {
-  
   constructor (props) {
     super(props)
 
