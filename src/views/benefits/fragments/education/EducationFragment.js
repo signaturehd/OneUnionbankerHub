@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import '../../styles/benefits.css'
 
 class EducationFragment extends Component {
-
   constructor (props) {
     super(props)
   }

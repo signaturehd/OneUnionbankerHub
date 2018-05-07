@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import './styles/appbar.css'
 
 class AppBar extends Component {
-
   constructor (props) {
     super(props)
     this.onToggleShow = this.onToggleShow.bind(this)

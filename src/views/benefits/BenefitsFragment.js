@@ -12,6 +12,8 @@ import EducationFragment from './fragments/education/EducationFragment'
 import LoansFragment from './fragments/loans/LoansFragment'
 import MedicalFragment from './fragments/medical/MedicalFragment'
 
+import { InputModal } from '../../ub-components/Modal'
+
 import './styles/benefits.css'
 
 class BenefitsFragment extends BaseMVPView {
@@ -19,12 +21,14 @@ class BenefitsFragment extends BaseMVPView {
     super(props)
 
     this.state = {
-      accountNumber: '',
+      showAccountNumberModal: false,
+      accountNumber: '', // this is only used to handle onChange of input modal
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
+    this.presenter.validateFabToShow()
   }
 
   showReleasingCenters (releasingCenters) {
@@ -32,11 +36,16 @@ class BenefitsFragment extends BaseMVPView {
   }
 
   onValidAccountNumber () {
-  // TODO dismiss account number dialog
+    this.setState({ showAccountNumberModal: false })
+  }
+
+  showAccountNumberModal () {
+    this.setState({ showAccountNumberModal: true })
   }
 
   render () {
     const { history } = this.props
+    const { accountNumber, showAccountNumberModal } = this.state
     const benefitsOptions = [{
       id: 0 ,
       styleName: 'option-cards-1',
@@ -53,10 +62,24 @@ class BenefitsFragment extends BaseMVPView {
       title: 'LOANS',
       path: '/benefits/loans',
     }]
-    const { accountNumber } = this.state
     const Benefits = () => (
       <div className = { '_benefits-container' }>
         <h1>Benefits</h1>
+        {
+          showAccountNumberModal &&
+            <InputModal
+              isDismisable = { true }
+              onClose = { () => this.setState({ showAccountNumberModal : false }) }
+              onChange = { e => this.setState({ accountNumber: e.target.value }) }
+              placeholder = { 'Account Number' }
+              type = { 'text' }
+              onSubmit = { e => {
+                  e.preventDefault()
+                  this.presenter.validateAccountNumber(accountNumber)
+                }
+              }
+            />
+        }
         <div className = { 'adjustment' }>
         <div className = { 'card-container' }>
           {
@@ -78,10 +101,10 @@ class BenefitsFragment extends BaseMVPView {
     return (
     <div>
        <Switch>
-       <Route exact path = '/benefits' render = { Benefits } />
-       <Route path = '/benefits/education' render = { props => <EducationFragment { ...props } />}/>
-       <Route path = '/benefits/medical' render = { props => <MedicalFragment { ...props } />}/>
-       <Route path = '/benefits/loans' render = { props => <LoansFragment  { ...props } />}/>
+         <Route exact path = '/benefits' render = { Benefits } />
+         <Route path = '/benefits/education' render = { props => <EducationFragment { ...props } />}/>
+         <Route path = '/benefits/medical' render = { props => <MedicalFragment { ...props } />}/>
+         <Route path = '/benefits/loans' render = { props => <LoansFragment  { ...props } />}/>
       </Switch>
     </div>)
   }

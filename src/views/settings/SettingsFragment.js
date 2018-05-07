@@ -6,7 +6,6 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/SettingsPresenter'
 
 class SettingsFragment extends BaseMVPView {
-
   componentDidMount () {
     this.props.setSelectedNavigation(4)
   }
