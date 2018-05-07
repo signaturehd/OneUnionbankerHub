@@ -6,7 +6,6 @@ import OpticalFragment from '../../../optical/OpticalFragment'
 import './styles/medical.css'
 
 class MedicalFragment extends Component {
-
   constructor (props) {
     super(props)
   }
