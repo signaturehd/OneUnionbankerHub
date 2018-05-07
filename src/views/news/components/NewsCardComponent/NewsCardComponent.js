@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Cards } from '../../../../ub-components/'
 
-import './styles/NewsCardStyles.css'
+import './styles.css'
 
 class NewsCardComponent extends Component {
   constructor (props) {
@@ -13,7 +13,7 @@ class NewsCardComponent extends Component {
   render () {
     const { news, onClick } = this.props
     return (
-        <Cards className = {'news-card'}>
+        <Cards>
           <div></div>
           <div className = {'news-body'}>
             <h3>{news.title}</h3>
