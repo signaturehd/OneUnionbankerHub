@@ -1,4 +1,4 @@
-import AddDentalReimbursementInteractor from '../../../domain/interactor/optical/AddDentalReimbursementInteractor'
+import AddDentalReimbursementInteractor from '../../../domain/interactor/dentalreimbursement/AddDentalReimbursementInteractor'
 
 
 export default class DentalReimbursementPresenter {

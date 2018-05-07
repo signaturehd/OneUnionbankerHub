@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Cards, GenericButton } from '../../../../ub-components'
 import OpticalFragment from '../../../optical/OpticalFragment'
+import DentalReimbursementFragment from '../../../dentalreimbursement/DentalReimbursementFragment'
 import './styles/medical.css'
 
 class MedicalFragment extends Component {
@@ -61,6 +62,7 @@ class MedicalFragment extends Component {
         <Switch>
           <Route exact path = '/benefits/medical'  render = { MedicalHome } />
           <Route path = '/benefits/medical/optical' render = { props => <OpticalFragment { ...props } />}/>
+          <Route path = '/benefits/medical/dentalreimbursement' render = { props => <DentalReimbursementFragment { ...props } />}/>
         </Switch>
       </div>
     )

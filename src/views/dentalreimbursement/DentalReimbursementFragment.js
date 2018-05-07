@@ -4,9 +4,9 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/DentalReimbursementPresenter'
 import ConnectView from '../../utils/ConnectView'
 import Card from './components/DentalReimbursementCard'
-import './styles/optical.css'
+import './styles/dentalreimbursement.css'
 
-class DentalReimbursementragment extends BaseMVPView {
+class DentalReimbursementFragment extends BaseMVPView {
   constructor(props) {
     super(props)
   }
