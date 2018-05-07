@@ -1,7 +1,7 @@
 import ValidateAccountNumberInteractor from '../../../domain/interactor/account/ValidateAccountNumberInteractor'
 import GetAccountNumberInteractor from '../../../domain/interactor/account/GetAccountNumberInteractor'
 import GetReleasingCentersInteractor from '../../../domain/interactor/rds/GetReleasingCentersInteractor'
-import ValidateManagersCheckInteractor from '../../../domain/interactor/user/ValidateManagersCheckInteractor'
+import GetManagersCheckInteractor from '../../../domain/interactor/user/GetManagersCheckInteractor'
 
 export default class BenefitsPresenter {
   constructor (container) {
@@ -14,8 +14,8 @@ export default class BenefitsPresenter {
     this.getReleasingCentersInteractor =
       new GetReleasingCentersInteractor(container.get('HRBenefitsClient'))
 
-    this.validateManagersCheckInteractor =
-      new ValidateManagersCheckInteractor(container.get('HRBenefitsClient'))
+    this.getManagersCheckInteractor =
+      new GetManagersCheckInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -35,9 +35,9 @@ export default class BenefitsPresenter {
   }
 
   validateFabToShow () {
-    const user = this.validateManagersCheckInteractor.execute()
+    const isManagersCheck = this.getManagersCheckInteractor.execute()
 
-    if (user && user.employee && user.employee.allowManagersCheck) {
+    if (isManagersCheck) {
       // TODO get chosen releasing center then;
       // TODO show releasing centers if there's no releasing center chosen
     } else {
