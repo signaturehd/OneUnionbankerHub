@@ -3,7 +3,7 @@ import PodCardComponent from '../../../common/components/PodCardComponent/PodCar
 import MedPlayer from '../../components/player/MedPlayer'
 import Rating from 'react-rating'
 import PropTypes from 'prop-types'
-import CommentForm from '../../components/comments/CommentForm'
+import Board from '../../components/comments/CommentForm'
 
 class PodPlay extends Component {
   constructor (props) {
@@ -48,7 +48,7 @@ addRating (id, rating) {
          
         
           <center>
-            <CommentForm/>
+            <Board/>
           </center>
         </div>
       </div>

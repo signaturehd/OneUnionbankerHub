@@ -4,157 +4,136 @@ import './styles.css'
 import './marked.js'
 
 
-class CommentForm extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            author: '',
-            txt: ''
-        }
 
-        this.handleAuthorChange = this.handleAuthorChange.bind(this)
-        this.handleTextChange = this.handleTextChange.bind(this)
-        this.handleFormSubmit = this.handleFormSubmit.bind(this)
+class Comment extends React.Component  {
+
+   constructor(props) {
+      super(props);
+      this.edit = this.edit.bind(this);
+      this.save = this.save.bind(this);
+      this.remove = this.remove.bind(this);
+      this.state = {editing: false};
     }
-
-    handleAuthorChange(e) {
-        this.setState({author: e.target.value});
-    }
-
-    handleTextChange(e) {
-        console.log(e.target.value);
-        this.setState({txt: e.target.value});
-    }
-
-    handleFormSubmit(e) {
-        e.preventDefault();
-        const author = this.state.author.trim();
-        const txt = this.state.txt.trim();
-        if(!txt || !author) return;
-
-        this.props.onCommentSubmit({author: author, txt: txt});
-        this.setState({author: "", txt: ""});
-    }
-
-    render() {
-        return (
-            <form className='commentForm' onSubmit={this.handleFormSubmit}>
-                <div className="group">
-                    <input type='text' className='input' value={this.state.author} onChange={this.handleAuthorChange}/>
-                    <span className="bar"></span>
-                    <label className={this.state.author.length > 0? "active": null}>Name</label>
-                </div>
-
-                <div className="group">
-                    <input type='text' className='input' value={this.state.txt} onChange={this.handleTextChange}/>
-                    <span className="bar"></span>
-                    <label className={this.state.txt.length > 0? "active": null}>Comment</label>
-                </div>
-
-                <input type='submit' value='Post'/>
-            </form>
-        );
-    }
+  
+  edit(){
+    this.setState({ editing:true })
+  }
+  
+  save(){
+    console.log( this.newText.value);
+    var newText = this.newText.value;
+    this.props.updateCommentFromBoard(newText ,this.props.index);
+    this.setState({ editing:false })
+  }
+  
+  remove(){
+   this.props.removeCommentFromBoard(this.props.index);  
+  }
+  
+  renderNormalMode(){
+    return(
+      <div className="commentContainer">
+        <div className="commentText">{this.props.children}</div>       
+       <button onClick={this.edit} className="btn btn-comment">
+          <span className="fa fa-pencil fa-2x"></span>
+         </button>
+        <button onClick={this.remove} className="btn btn-comment">
+          <span className="fa fa-trash fa-2x"></span>
+         </button>
+      </div>
+    );
+  }
+  
+  renderEditingMode(){
+    return(
+      <div className="commentContainer">
+        <div className="commentText">
+          <textarea 
+            ref={ (input) => { this.newText = input; } } 
+                  onChange={this.handleChange}        
+                  defaultValue={this.props.children}> 
+          </textarea>
+        </div>
+                      
+       <button onClick={this.save} className="btn-comment">
+          <span className="fa fa-floppy-o fa-2x"></span>
+         </button>
+      </div>
+    );
+    
+  }
+  
+  render(){ 
+     if(this.state.editing){ 
+       return this.renderEditingMode();
+     }else{
+       return this.renderNormalMode();
+     }
+  }
+ 
 }
 
-class CommentList extends React.Component {
-    render() {
-        const CommentNodes = this.props.data.map((comment)=>{
-            return (
-                <Comment author={comment.author} key={comment.id}>{comment.txt}
-                </Comment>
-            );
-        });
-        return (
-            <div className='commentList'>
-                <h2>Comments:</h2>
-                {CommentNodes}
-            </div>
-        );
+
+class Board extends React.Component  {
+  
+   constructor(props) {
+     super(props);
+     this.displayComments = this.displayComments.bind(this);
+     this.updateComment = this.updateComment.bind(this);
+     this.removeComment = this.removeComment.bind(this);
+     this.addNewComment = this.addNewComment.bind(this);
+     this.state = {comments:[]};
     }
-}
-
-class Comment extends React.Component {
-    //Workaround from React protection from XRR attack.
-    rawMarkup() {
-        var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
-        return { __html: rawMarkup };
+  
+  removeComment(idx){
+    var arr = this.state.comments;
+    arr.splice(idx,1)
+    this.setState({comments: arr});
+  }
+  
+  updateComment(newText,idx){
+    var arr = this.state.comments;
+    arr[idx] = newText;
+    this.setState({comments: arr})
+  }
+  
+  addNewComment(){
+    var newText = $('#shareCommentText').val();
+    if(newText !== ""){
+      var arr = this.state.comments;
+      arr.push(newText);
+      this.setState({comments: arr})
     }
-
-    render() {
-        return (
-            <div className='comment'>
-                <h3 className='commentAuthor'>
-                    {this.props.author}
-                </h3>
-
-                <span dangerouslySetInnerHTML={this.rawMarkup()} className='commentBody'/>
-            </div>
-        );
-    }
-}
-
-class CommentBox extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            data: []
-        };
-
-        this.__loadComments = this.__loadComments.bind(this);
-    }
-
-    componentDidMount() {
-        this.__loadComments();
-        setInterval(this.__loadComments, this.props.longpoll);
-    }
-
-    __loadComments(){
-        this.setState({data: []});
-        const comments = this.props.database.child('comments');
-        comments.once('value')
-                .then((s) => {
-                    s.forEach((c) => {
-                        var author = c.val().author;
-                        var txt = c.val().txt;
-                        var key = c.key();
-                        const newData = {};
-                        newData.author = author;
-                        newData.txt = txt;
-                        newData.key = key;
-                       
-                        this.setState({data: this.state.data.concat(newData)});
-                    });
-                });
-    }
-
-    _handleCommentSubmit(comment) {
-        this.props.database.child('comments').push({
-            author: comment.author,
-            txt: comment.txt
-        });
-        comment.key = Math.random();
-        this.setState({data: this.state.data.concat(comment)});
-    }
-
-    render() {
-        return (
-            <div className='commentBox'>
-                <CommentForm onCommentSubmit={this._handleCommentSubmit.bind(this)}></CommentForm>
-                <CommentList data= {this.state.data}></CommentList>
-            </div>
-        );
-    }
+    else alert("Please write a comment to share!")
+    
+  }
+  
+    displayComments(text,i){
+    return(
+      <Comment
+        key={i} 
+        index={i} 
+        removeCommentFromBoard ={this.removeComment} 
+        updateCommentFromBoard ={this.updateComment}
+        >{text}</Comment>
+     );
+  }
+  render(){
+    return(
+      <div className="board">
+        <div className="shareCommentContainer">
+          <textarea id="shareCommentText" placeholder="Write a comment.."></textarea> 
+          <button onClick={this.addNewComment} className="btn btn-success"> Share</button>
+        </div>
+        
+        {this.state.comments.map(this.displayComments)}
+      </div>
+    );
+  }
+  
 }
 
 
 
 
-
-
-const database = new Firebase("https://react-69c2f.firebaseio.com/");
-
-
-
-export default (CommentForm)
+export default (Board)
