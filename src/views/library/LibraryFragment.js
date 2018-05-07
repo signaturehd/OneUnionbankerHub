@@ -19,6 +19,8 @@ class LibraryFragment extends BaseMVPView {
     super(props)
     this.state = {
       books : [],
+      recommended : [],
+      borrowed : [],
       showRating : false,
       showBook : false
     }
@@ -26,6 +28,8 @@ class LibraryFragment extends BaseMVPView {
 
   componentDidMount () {
       this.presenter.getBooks()
+      this.presenter.getBooksRecommendation()
+      this.presenter.getBooksBorrowed()
       this.props.setSelectedNavigation(5)
   }
 
@@ -33,8 +37,18 @@ class LibraryFragment extends BaseMVPView {
     this.setState({ books })
   }
 
+  showRecommendation (recommended) {
+    this.setState({ recommended })
+  }
+
+  showBorrowed (borrowed) {
+    this.setState({ borrowed })
+  }
+
+
+
   render () {
-    const { books, tabs } = this.state
+    const { books, tabs, recommended, borrowed } = this.state
     return (
       <div>
       { super.render() }
@@ -59,13 +73,13 @@ class LibraryFragment extends BaseMVPView {
           <label htmlFor = 'tab3' >Borrowed</label>
 
           <section id='content1'>
-            <BookListFragment presenter={ this.presenter } books={ books } />
+            <BookListFragment presenter={ this.presenter } books = { books } />
           </section>
           <section id='content2'>
-            <BookRecommendationFragment />
+            <BookRecommendationFragment presenter = { this.presenter } recommended = { recommended } />
           </section>
           <section  id='content3'>
-            <BookBorrowedFragment />
+            <BookBorrowedFragment presenter = { this.presenter } borrowed = { borrowed } />
           </section>
         </div>
       </div>

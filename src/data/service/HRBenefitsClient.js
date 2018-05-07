@@ -81,8 +81,14 @@ export default class HRBenefitsClient {
     return this.service.getBooks(token)
       .pipe(ServiceErrorOperator())
   }
-   getRecommendations (token) {
-    return this.service.getRecommendations(token)
+
+  getBooksRecommendation (token) {
+    return this.service.getBooksRecommendation(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getBooksBorrowed (token) {
+    return this.service.getBooksBorrowed(token)
       .pipe(ServiceErrorOperator())
   }
 

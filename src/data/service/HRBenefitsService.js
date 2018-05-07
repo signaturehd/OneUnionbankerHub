@@ -92,8 +92,16 @@ export default class HRBenefitsService {
         headers: { token }
     })
   }
-    getRecommendations (token) {
-    return this.apiClient.get('v1/books', {
+
+  getBooksRecommendation (token) {
+    return this.apiClient.get('v1/books/history', {
+        headers: { token }
+    })
+  }
+
+
+  getBooksBorrowed (token) {
+    return this.apiClient.get('v1/books/history', {
         headers: { token }
     })
   }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
 import BookCardComponent from '../components/BookCardComponent/BookCardComponent'
 import BookViewModal from '../modals/BookViewModal'
 
@@ -10,7 +9,7 @@ class BookRecommendationFragment extends Component {
     this.state = {
       rating : false,
       view : false,
-      details : null
+      details : null,
     }
   }
 
@@ -19,13 +18,12 @@ class BookRecommendationFragment extends Component {
   }
 
   render () {
-    const { books, detail } = this.props
+    const { detail, recommended } = this.props
     const { details } = this.state
     return (
-       <div className={ 'container-option1' }>
-      <h1>Books Recommended </h1>
-       {
-          books.map((book, key) =>
+      <div className = {'library-container'}>
+        {
+          recommended.map((book, key) =>
             <BookCardComponent
               rateBook = { (id, rating) => this.addRating(id, rating) }
               detail = { book } key = { key }
@@ -38,10 +36,6 @@ class BookRecommendationFragment extends Component {
           <BookViewModal details = { details } onClose = { () => this.setState({ view : false }) }/>
         }
       </div>
-
-     
-       
-
     )
   }
 }
