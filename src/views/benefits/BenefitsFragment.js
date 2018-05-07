@@ -69,7 +69,7 @@ class BenefitsFragment extends BaseMVPView {
           showAccountNumberModal &&
             <InputModal
               isDismisable = { true }
-              onClose = { () => this.setState({showAccountNumberModal : false}) }
+              onClose = { () => this.setState({ showAccountNumberModal : false }) }
               onChange = { e => this.setState({ accountNumber: e.target.value }) }
               placeholder = { 'Account Number' }
               type = { 'text' }
