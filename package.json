@@ -1,10 +1,10 @@
 {
-  "name": "react-boilerplate",
+  "name": "hr-benefits-web-v2",
   "version": "1.0.0",
-  "description": "React Boilerplate",
+  "description": "1UHub",
   "main": "index.js",
   "repository": "https://github.com/carlomnop/react-boilerplate.git",
-  "author": "Tenten Ponce, Carlo Cuevas",
+  "author": "ITSG Mobility",
   "license": "MIT",
   "dependencies": {
     "@akanass/rx-http-request": "^2.7.1",
@@ -28,8 +28,8 @@
     "webpack-dev-server": "^2.11.1"
   },
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
+    "start": "webpack-dev-server --open --config webpack/webpack.dev.js",
+    "build": "webpack --config webpack/webpack.prod.js",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
   },

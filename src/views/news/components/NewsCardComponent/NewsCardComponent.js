@@ -15,9 +15,8 @@ class NewsCardComponent extends Component {
     return (
         <Cards className = {'news-card'}>
           <div></div>
-          <div className = {'card-body'}>
-            <h3>{news.Title}</h3>
-            <h5 dangerouslySetInnerHTML= {{__html : news.details.replace(/\r\n/g, '<br/>') }} ></h5>
+          <div className = {'news-body'}>
+            <h3>{news.title}</h3>
           </div>
           <div className = {'card-footer'}>
             <small><a href = {news.linkUrl}>See More</a></small>
@@ -29,12 +28,12 @@ class NewsCardComponent extends Component {
 }
 
 NewsCardComponent.propTypes = {
-  news : PropTypes.array.isRequired,
+  news : PropTypes.object,
   onClick : PropTypes.func
 }
 
 NewsCardComponent.defaultProps = {
-  news : []
+
 }
 
 export default NewsCardComponent
