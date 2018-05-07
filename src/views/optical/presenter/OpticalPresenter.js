@@ -1,5 +1,5 @@
 import AddOpticalInteractor from '../../../domain/interactor/optical/AddOpticalInteractor'
-
+import OpticalParam from '../../../domain/param/OpticalParam'
 
 export default class OpticalPresenter {
  constructor (container) {
@@ -10,13 +10,12 @@ export default class OpticalPresenter {
   this.view = view
  }
 
- addOptical () {
+ addOptical (amount, form1, form2) {
   this.view.showLoading()
-
-  this.AddOpticalInteractior.execute()
+  this.AddOpticalInteractior.execute(OpticalParam(amount, form1, form2))
    .subscribe(optical => {
     this.view.hideLoading()
-    this.view.showOptical(optical)
+    // this.view.showOptical(optical)
    }, e => {
     this.view.hideLoading()
     // TODO prompt generic error
