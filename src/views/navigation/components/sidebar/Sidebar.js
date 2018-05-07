@@ -13,7 +13,7 @@ class SideBar extends Component {
     const modules =
     [
       { id: 0 , title: 'News', path: '/', className: 'newsfeed-icon' },
-      { id: 1 , title: 'Benefits', path: '/benefits', className: 'benefits-icon'},
+      { id: 1 , title: 'Benefits', path: '/benefits', className: 'benefits-icon' },
       { id: 2 , title: 'Transactions', path: '/transactions', className: 'transaction-icon' },
       { id: 3 , title: 'Faqs', path: '/faqs', className: 'faqs-icon' },
       { id: 4 , title: 'Settings', path: '/settings', className: 'settings-icon' },
@@ -24,16 +24,14 @@ class SideBar extends Component {
     <div className = { '_sidebar-overlay' }>
     <ul className = { '_link-list ul' }>
       {
-        modules.map((d, idx) => {
-          return <li
+        modules.map((d, idx) => <li
               className = { `_text-link ${selected === d.id && 'active'}` }
               key = { idx }
               onClick = { () => onNavigationClick(d.path) }>
               <a key = { idx }
                  className = {`sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
                { d.title }
-          </li>
-        })
+          </li>)
        }
     </ul>
     </div>
