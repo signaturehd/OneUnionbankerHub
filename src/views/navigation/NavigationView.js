@@ -19,7 +19,6 @@ import Drawer from './components/drawer/Drawer'
 import './styles/drawerview.css'
 
 class NavigationView extends BaseMVPView {
-
   constructor (props) {
     super (props)
 
@@ -52,13 +51,16 @@ class NavigationView extends BaseMVPView {
     })
   }
 
+  componentDidMount () {
+    this.presenter.getLibraries()
+  }
+
   setSelectedNavigation (id) {
     this.setState({ selected: id })
   }
 
   render () {
     const { displayShow, displayNavIcon, displayNavIconState, selected } = this.state
-
     const style = {
       show: {
           display : displayShow

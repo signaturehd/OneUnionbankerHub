@@ -6,7 +6,6 @@ import Presenter from './presenter/OpticalPresenter'
 import ConnectView from '../../utils/ConnectView'
 
 class OpticalFragment extends BaseMVPView {
-
   render () {
     return (
       <div>
