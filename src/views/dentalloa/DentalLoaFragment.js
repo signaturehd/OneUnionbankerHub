@@ -9,15 +9,6 @@ import './styles/dentalloa.css'
 class DentalLoaFragment extends BaseMVPView {
   constructor (props) {
     super(props)
-    this.state = {
-        dentalloa: [],
-    }
-  }
-  componentDidMount () {
-    this.presenter.addDentalLoa()
-  }
-  dentalloa ( dentalloa ) {
-    this.setState({ dentalloa })
   }
   navigate () {
       this.props.history.push('/benefits/medical')
@@ -32,13 +23,6 @@ class DentalLoaFragment extends BaseMVPView {
         </div>
           <div className = { 'dentalloa-container' }>
             <Card/>
-          </div>
-          <div className = {'card-container'}>
-          {
-          dentalloa.map((dentalloa, i) =>
-              {console.log(dentalloa)}
-            )
-          }
           </div>
       </div>
     )
