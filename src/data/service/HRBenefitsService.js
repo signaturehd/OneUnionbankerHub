@@ -31,8 +31,15 @@ export default class HRBenefitsService {
     })
   }
 
-  addDentalLoa (token, dentalLoaParam) {
-    const formData = DentalLoaParam
+  addDentalLoa (token, accountNumber, dentalLoaParam) {
+    const formData = new FormData()
+
+    formData.append('uuid', 1)
+    formData.append('med-cert', dentalLoaParam.medCert)
+    formData.append('opt-cert', dentalLoaParam.optCert)
+    formData.append('accountNumber', accountNumber)
+    formData.append('releasingCenter', 'unionBank')
+    formData.append('amount', opticalParam)
     return this.apiClient.post('v1/issuances/dental/loa/submit', formData, {
       headers : { token }
     })
@@ -60,10 +67,29 @@ export default class HRBenefitsService {
     })
   }
 
-  addOptical (token, opticalParam) {
+  addOptical (token, accountNumber, opticalParam) {
     const formData = new FormData()
-
+    formData.append('uuid', 1)
+    formData.append('med', opticalParam.medCert)
+    formData.append('opt', opticalParam.optCert)
+    formData.append('accountNumber', '111')
+    formData.append('releasingCenter', 'UBP')
+    formData.append('amount', opticalParam.amount)
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
+      headers : { token }
+    })
+  }
+
+  addDentalLoa (token, accountNumber, opticalParam) {
+    // TODO to be fixed
+    const formData = new FormData()
+    formData.append('uuid', 1)
+    formData.append('med', opticalParam.medCert)
+    formData.append('opt', opticalParam.optCert)
+    formData.append('accountNumber', '111')
+    formData.append('releasingCenter', 'UBP')
+    formData.append('amount', opticalParam.amount)
+    return this.apiClient.post('v1/issuances/dental/loa/submit', formData, {
       headers : { token }
     })
   }

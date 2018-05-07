@@ -5,7 +5,11 @@ import { Modal } from '../../../ub-components/Modal/'
 import Button from '../components/OpticalButton'
 import './optical-modal.css'
 
-class OpticalModal extends Component {
+import ConnectView from '../../../utils/ConnectView'
+import Presenter from '../presenter/OpticalPresenter'
+import BaseMVPView from '../../common/base/BaseMVPView'
+
+class OpticalModal extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
@@ -14,10 +18,9 @@ class OpticalModal extends Component {
 
     this.submitForm = this.submitForm.bind(this)
   }
-  submitForm ()
-  {
-    console.log(this.props.fileReceived)
-    console.log(this.props.fileReceived2)
+  submitForm () {
+    const { fileReceived, fileReceived2 } = this.props
+    this.presenter.addOptical(1000, fileReceived, fileReceived2)
   }
 
   render () {
@@ -50,4 +53,4 @@ OpticalModal.defaultProps = {
   confirm : 'Agree',
   cancel : 'Disagree',
 }
-export default OpticalModal
+export default ConnectView(OpticalModal, Presenter)

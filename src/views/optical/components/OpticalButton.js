@@ -9,7 +9,7 @@ class OpticalButton extends Component {
     super(props)
   }
   render () {
-    const { text, showModal, showConfirmation, onClick} = this.props
+    const { text, showModal, showConfirmation, onClick } = this.props
     return (
       <GenericButton
         text = { text }
@@ -25,7 +25,7 @@ OpticalButton.propTypes = {
   onClick : PropTypes.func,
   proceedModal : PropTypes.func,
 }
-OpticalButton.defaultProps ={
+OpticalButton.defaultProps = {
   text : 'Submit',
 }
 export default OpticalButton

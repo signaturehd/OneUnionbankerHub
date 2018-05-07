@@ -7,7 +7,7 @@ import Card from './components/OpticalCard'
 import './styles/optical.css'
 
 class OpticalFragment extends BaseMVPView {
-  
+
   constructor(props) {
     super(props)
   }

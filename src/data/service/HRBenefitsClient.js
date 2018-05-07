@@ -93,6 +93,10 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  addOptical (token, accountNumber, opticalParam) {
+    return this.service.addOptical(token, accountNumber, opticalParam)
+  }
+
   /* News */
   getNews (token) {
     return this.service.getNews(token)
