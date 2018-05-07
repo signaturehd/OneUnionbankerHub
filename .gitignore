@@ -1,6 +1,5 @@
 # dependencies
 /node_modules
-./.gitmodules
 
 # production
 /dist
