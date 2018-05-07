@@ -1,9 +1,13 @@
 import ValidateAccountNumberInteractor from '../../../domain/interactor/account/ValidateAccountNumberInteractor'
+import GetAccountNumberInteractor from '../../../domain/interactor/account/GetAccountNumberInteractor'
 import GetReleasingCentersInteractor from '../../../domain/interactor/rds/GetReleasingCentersInteractor'
 import ValidateManagersCheckInteractor from '../../../domain/interactor/user/ValidateManagersCheckInteractor'
 
 export default class BenefitsPresenter {
   constructor (container) {
+    this.getAccountNumberInteractor =
+      new GetAccountNumberInteractor(container.get('HRBenefitsClient'))
+
     this.validateAccountNumberInteractor =
       new ValidateAccountNumberInteractor(container.get('HRBenefitsClient'))
 
@@ -30,8 +34,19 @@ export default class BenefitsPresenter {
       })
   }
 
-  validateManagersCheck () {
-    this.view.validateManagersCheck(this.validateManagersCheckInteractor.execute())
+  validateFabToShow () {
+    const user = this.validateManagersCheckInteractor.execute()
+
+    if (user && user.employee && user.employee.allowManagersCheck) {
+      // TODO get chosen releasing center then;
+      // TODO show releasing centers if there's no releasing center chosen
+    } else {
+      const accountNumber = this.getAccountNumberInteractor.execute()
+
+      if (!accountNumber) {
+        this.view.showAccountNumberModal()
+      }
+    }
   }
 
   validateAccountNumber (accountNumber) {

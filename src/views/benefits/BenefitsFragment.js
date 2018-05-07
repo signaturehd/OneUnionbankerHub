@@ -21,13 +21,14 @@ class BenefitsFragment extends BaseMVPView {
     super(props)
 
     this.state = {
-      accountNumber: '',
+      showAccountNumberModal: false,
+      accountNumber: '', // this is only used to handle onChange of input modal
     }
   }
 
   componentDidMount () {
-    this.presenter.validateManagersCheck()
     this.props.setSelectedNavigation(1)
+    this.presenter.validateFabToShow()
   }
 
   showReleasingCenters (releasingCenters) {
@@ -35,16 +36,16 @@ class BenefitsFragment extends BaseMVPView {
   }
 
   onValidAccountNumber () {
-  // TODO dismiss account number dialog
+    this.setState({ showAccountNumberModal: false })
   }
 
-  validateManagersCheck (managersCheck) {
-    this.setState({ showAccountNumber : managersCheck.employee.allowManagersCheck })
+  showAccountNumberModal () {
+    this.setState({ showAccountNumberModal: true })
   }
 
   render () {
     const { history } = this.props
-    const { accountNumber, showAccountNumber } = this.state
+    const { accountNumber, showAccountNumberModal } = this.state
     const benefitsOptions = [{
       id: 0 ,
       styleName: 'option-cards-1',
@@ -65,15 +66,16 @@ class BenefitsFragment extends BaseMVPView {
       <div className = { '_benefits-container' }>
         <h1>Benefits</h1>
         {
-          !showAccountNumber &&
+          showAccountNumberModal &&
             <InputModal
               isDismisable = { true }
-              onClose = { () => this.setState({showAccountNumber : false}) }
+              onClose = { () => this.setState({showAccountNumberModal : false}) }
               onChange = { e => this.setState({ accountNumber: e.target.value }) }
               placeholder = { 'Account Number' }
               type = { 'text' }
               onSubmit = { e => {
-                  e.preventDefault() , this.presenter.validateAccountNumber(accountNumber)
+                  e.preventDefault()
+                  this.presenter.validateAccountNumber(accountNumber)
                 }
               }
             />
