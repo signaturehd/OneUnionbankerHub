@@ -1,0 +1,24 @@
+.podplay-header{
+	width:100%;
+	height:50px;
+	text-align: left;
+}
+
+.podplay-main{
+	float:left;
+	width:70%;
+}
+.podplay-sidebar-right{
+	float:left;
+	width:30%;
+	left: 0;
+}
+.podplay-footer{
+	clear:both;
+	width: 100%;
+	text-align: center;
+	bottom : 0;
+}
+ .podplay-main, .podplay-sidebar-right{
+	min-height: 600px				
+}
