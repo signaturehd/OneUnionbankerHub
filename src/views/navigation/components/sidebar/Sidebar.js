@@ -24,14 +24,12 @@ class SideBar extends Component {
       <div className = { '_sidebar-overlay' }>
       <ul className = { '_link-list' }>
         {
-          modules.map((d, idx) => {
-            return <li
+          modules.map((d, idx) => <li
                 className = { `_text-link ${selected === d.id && 'active'}` }
                 key = { idx }
                 onClick = { () => onNavigationClick(d.path) }>
                 { d.title }
-            </li>
-          })
+            </li>)
          }
       </ul>
       </div>
