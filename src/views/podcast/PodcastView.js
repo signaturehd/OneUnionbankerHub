@@ -19,7 +19,6 @@ class PodcastView extends BaseMVPView {
         show : false,
         rating: false,
         showRating : false,
-        rating : false,
       details : null
     }
   }

@@ -34,8 +34,9 @@ class PodCardComponent extends Component {
           </div>
           <div className = {'card-footer'}>
           <center>
-          rateBook = { (id, rating) => this.addRating(id, rating) }
            <Rating
+          rateBook = { (id, rating) => this.addRating(id, rating) }
+           
               onChange = { e => {
                 rateBook(news.id, e)
                 this.setState({ rating : e })
@@ -54,7 +55,7 @@ class PodCardComponent extends Component {
 }
 
 PodCardComponent.propTypes = {
-  news : PropTypes.object,
+  
   onClick : PropTypes.func,
   rateBook : PropTypes.func,
 
