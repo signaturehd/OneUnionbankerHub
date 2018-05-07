@@ -20,6 +20,7 @@ super(props)
   }
   handleSubmit (e) {
     e.preventDefault()
+
   }
 
   showModal (e) {
@@ -61,7 +62,7 @@ return (
         onClose = { () => this.setState({ showProcedureModal : false }) }>
       </Modal>
     }
-  <form>
+  <form onSubmit = { this.handleSubmit }>
     <div className = {'dentalloa-header'} >
       <h5 > LOA Details </h5>
         <div className = {'dentalloa-body'}>
@@ -86,7 +87,7 @@ return (
                className = {'dentalloa-procedure' }
                value = { 'Procedures' } />
       <div className = { 'dentalloa-button-submit' }>
-        <Button onClick = { this.handleSubmit }/>
+        <Button/>
       </div>
     </div>
     </form>
