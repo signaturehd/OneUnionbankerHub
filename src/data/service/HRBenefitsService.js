@@ -92,6 +92,12 @@ export default class HRBenefitsService {
         headers: { token }
     })
   }
+    getRecommendations (token) {
+    return this.apiClient.get('v1/books', {
+        headers: { token }
+    })
+  }
+
 
 
   addRating (token, bookParam) {

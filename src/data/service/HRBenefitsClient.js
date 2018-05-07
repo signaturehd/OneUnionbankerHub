@@ -81,6 +81,10 @@ export default class HRBenefitsClient {
     return this.service.getBooks(token)
       .pipe(ServiceErrorOperator())
   }
+   getRecommendations (token) {
+    return this.service.getRecommendations(token)
+      .pipe(ServiceErrorOperator())
+  }
 
   addRating (token, bookParam) {
     return this.service.addRating(token, bookParam)
