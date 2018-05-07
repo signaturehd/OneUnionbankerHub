@@ -18,7 +18,7 @@ class FaqFragment extends BaseMVPView {
     this.state = {
         faqs: [],
         show : false,
-        searchString : "Search Faqs"
+        searchString : ''
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
@@ -53,6 +53,7 @@ class FaqFragment extends BaseMVPView {
           <input type = 'text'
                  className = 'newsSearchBar'
                  ref="search"
+                 placeholder = {'Search Faqs'}
                  value = { this.state.searchString }
                  onChange = { this.updateSearch } />
 
