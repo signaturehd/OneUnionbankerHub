@@ -27,7 +27,6 @@ class PodCardComponent extends Component {
 
     return (
         <Cards>
-       
           <div className = {'news-body'}>
             <h2> {news.imageUrl} </h2>
             <h3>{news.title}</h3>

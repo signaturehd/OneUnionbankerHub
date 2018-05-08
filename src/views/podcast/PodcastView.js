@@ -68,7 +68,11 @@ class PodcastView extends BaseMVPView {
         name='tabs' />
       <label htmlFor='tab2'>Recommended</label>
 
-      <input className = { 'input-tab' } id='tab3'  type='radio' name='tabs' />
+      <input 
+        className = { 'input-tab' } 
+        id='tab3'  
+        type='radio' 
+        name='tabs' />
       <label htmlFor = 'tab3' >Viewed</label>
 
       <section id='content1'>
