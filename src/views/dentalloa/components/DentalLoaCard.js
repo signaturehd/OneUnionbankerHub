@@ -25,6 +25,7 @@ super(props)
 
   showModal (e) {
     if (e === 'recipient') {
+      console.log('awdawd')
       this.setState({ showRecipientModal : true })
     } else if (e === 'branch') {
       this.setState({ showHealthwayBranchModal : true })
