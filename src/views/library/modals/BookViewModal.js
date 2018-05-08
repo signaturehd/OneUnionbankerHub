@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Modal } from '../../../ub-components/'
 
+import './styles.css'
 
 class BookViewModal extends Component {
   constructor (props) {
@@ -11,11 +12,27 @@ class BookViewModal extends Component {
 
   render () {
     const { onClose, details } = this.props
+    console.log(details)
+
+    const style = {
+      background : `url(${details.imageUrl}) rgba(0,0,0,0.5)`,
+      backgroundSize : 'cover',
+      backgroundPosition : 'center',
+    }
+
     return (
       <Modal
+        isDismisable = { true }
         onClose = { onClose }
       >
-        <h1>{ details.title }</h1>
+        <div className = { 'library-view-container' }>
+          <div style = {style}>
+          </div>
+          <div className = { '' } >
+          </div>
+          <div className = { '' } >
+          </div>
+        </div>
       </Modal>
     )
   }
