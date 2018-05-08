@@ -6,11 +6,12 @@
 
 .podplay-main{
 	float:left;
-	width:70%;
+	width:60%;
 }
 .podplay-sidebar-right{
 	float:left;
-	width:30%;
+	width:40%;
+	padding-left: 24px;
 	left: 0;
 }
 .podplay-footer{
@@ -21,4 +22,9 @@
 }
  .podplay-main, .podplay-sidebar-right{
 	min-height: 600px				
+}
+
+#document {
+	height: 70%;
+	width: 40%;
 }
