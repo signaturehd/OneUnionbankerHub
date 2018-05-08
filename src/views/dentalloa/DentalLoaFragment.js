@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/DentalLoaPresenter'
 import ConnectView from '../../utils/ConnectView'
-import Card from './components/DentalLoaCard'
+import DentalLoaCard from './components/DentalLoaCard'
 import './styles/dentalloa.css'
 
 class DentalLoaFragment extends BaseMVPView {
@@ -22,7 +22,7 @@ class DentalLoaFragment extends BaseMVPView {
           <h1>Dental Loa Issuance</h1>
         </div>
           <div className = { 'dentalloa-container' }>
-            <Card/>
+            <DentalLoaCard />
           </div>
       </div>
     )
