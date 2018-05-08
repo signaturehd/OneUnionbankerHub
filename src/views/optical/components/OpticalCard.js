@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './styles.css'
-import TextBox from './OpticalTextBox'
 import Button from './OpticalButton'
 import Modal from '../modal/OpticalReviewModal'
 import ConnectView from '../../../utils/ConnectView'
 import Presenter from '../presenter/OpticalPresenter'
-
+import  FileUploader  from  '../../../ub-components/FileUploader/Uploader'
+import  GenericTextBox  from  '../../../ub-components/TextBox/GenericTextBox'
 
 class OpticalCard extends Component {
   constructor (props) {
@@ -27,7 +27,7 @@ class OpticalCard extends Component {
   _handleSubmit (e) {
     e.preventDefault()
     if (this.state.file === '' || this.state.file2 === '') {
-      this.setState({ warning : 'Please Uploaded the needed' })
+      this.setState({ warning : 'Please complete the attached forms' })
     } else {
     this.setState({ showConfirmation : true })
     this.setState({ warning : '' })
@@ -66,12 +66,12 @@ class OpticalCard extends Component {
 
   render () {
     const { proceedModal, props, fileReceived, fileReceived2 } = this.props
-    const { showConfirmation, confirm, cancel, warning } = this.state
+    const { showConfirmation, confirm, cancel, warning, amount } = this.state
     const { imagePreviewUrl, imagePreviewUrl2 } = this.state
     let $imagePreview = null
     let $imagePreview2 = null
-      $imagePreview = (<img className = {'optical-image-view'} src={imagePreviewUrl} />)
-      $imagePreview2 = (<img className = {'optical-image-view'} src={imagePreviewUrl2} />)
+      $imagePreview = (<img className = {'optical-image'} src={imagePreviewUrl} />)
+      $imagePreview2 = (<img className = {'optical-image'} src={imagePreviewUrl2} />)
     return (
         <div className = { 'optical-card' } >
           {
@@ -85,11 +85,12 @@ class OpticalCard extends Component {
           <form onSubmit={this._handleSubmit}>
             <div className = {'optical-header'} >
               <h5 >Form Attachments</h5>
+              <div className = { 'optical-amount-field' }> 
+              <GenericTextBox type = { 'text' } placeholder = { 'Amount' } value = {amount}/>
+              </div>
                 <div className = {'optical-body'}>
-                  <div>
-                       <input type="file" onChange={this._handleImageChange} />
-                       <input type="file" onChange={this._handleImageChange2} />
-                </div>
+                       <FileUploader className = { 'optical-file-left' } onChange={this._handleImageChange} />
+                       <FileUploader className = { 'optical-file-right' } onChange={this._handleImageChange2} />
               </div>
               <div className = { 'optical-button-submit' }>
                 <Button />
