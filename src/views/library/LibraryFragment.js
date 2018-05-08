@@ -9,7 +9,7 @@ import BookListFragment from './fragments/BookListFragment'
 import BookBorrowedFragment from './fragments/BookBorrowedFragment'
 import BookRecommendationFragment from './fragments/BookRecommendationFragment'
 
-import { GenericButton } from '../../ub-components/UButton'
+import { GenericButton } from '../../ub-components'
 
 import './styles/library-fragment.css'
 

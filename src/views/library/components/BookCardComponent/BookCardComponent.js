@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 
+import { Card } from '../../../../ub-components'
+
 import Rating from 'react-rating'
 
 import './styles.css'
@@ -21,7 +23,7 @@ class BookCardComponent extends Component {
     const { rating } = this.state
 
     return (
-      <div className = {'book-card'} >
+      <Card>
         <div className = {'card-header'} >
         </div>
         <div className = {'card-body'}>
@@ -42,7 +44,7 @@ class BookCardComponent extends Component {
             <button onClick = { () => onClick(detail, true) }>Read More</button>
           </center>
         </div>
-      </div>
+      </Card>
     )
   }
 }

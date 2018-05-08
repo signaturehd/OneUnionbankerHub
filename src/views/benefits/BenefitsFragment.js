@@ -6,13 +6,11 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/BenefitsPresenter'
 
-import { Cards, GenericButton } from '../../ub-components'
-
 import EducationFragment from './fragments/education/EducationFragment'
 import LoansFragment from './fragments/loans/LoansFragment'
 import MedicalFragment from './fragments/medical/MedicalFragment'
 
-import { InputModal } from '../../ub-components/Modal'
+import { InputModal, Card, GenericButton } from '../../ub-components'
 
 import './styles/benefits.css'
 
@@ -84,14 +82,14 @@ class BenefitsFragment extends BaseMVPView {
         <div className = { 'card-container' }>
           {
           benefitsOptions.map((value, idx) => (
-            <Cards key={ idx }>
+            <Card key={ idx }>
               <div
                 className = { value.styleName }
                 text = { value.title }
                 onClick = { () => history.push(value.path) } >
                 <p className = { 'benefits-option-cards' }> { value.title } </p>
               </div>
-            </Cards>
+            </Card>
           ))
           }
         </div>

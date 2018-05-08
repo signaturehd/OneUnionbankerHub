@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import Loader from '../../../ub-components/Loader'
+import { HorizontalLoader } from '../../../ub-components'
 
 class BaseView extends Component {
   constructor (props) {
@@ -23,7 +23,7 @@ class BaseView extends Component {
   render () {
     return (
       <div>
-        <Loader show = { this.state.loader }/>
+        <HorizontalLoader show = { this.state.loader }/>
       </div>
     )
   }
