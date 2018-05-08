@@ -3,6 +3,8 @@ import GetBooksRecommendationInteractor from '../../../domain/interactor/library
 import AddBookRatingInteractor from '../../../domain/interactor/library/AddBookRatingInteractor'
 import GetBooksBorrowedInteractor from '../../../domain/interactor/library/GetBooksBorrowedInteractor'
 import BookRateParam from '../../../domain/param/BookRateParam'
+import { Observable } from 'rxjs'
+import { filter } from 'rxjs/operators'
 
 export default class LibraryPresenter {
   constructor (container) {
@@ -20,20 +22,13 @@ export default class LibraryPresenter {
   getBooks () {
     this.view.showLoading()
     this.getBooksInteractor.execute()
-    .subscribe(books => {
+      .do(books => this.view.showBooks(books))
+      .concatMap(books => Observable.from(books))
+      .pipe(filter(book => book.isEditorsPick))
+      .toArray()
+      .subscribe(books => {
         this.view.hideLoading()
-        this.view.showBooks(books)
-      }, e => {
-        this.view.hideLoading()
-      })
-  }
-
-  getBooksRecommendation () {
-    this.view.showLoading()
-    this.getBooksRecommendationInteractor.execute()
-    .subscribe(recommended => {
-        this.view.hideLoading()
-        this.view.showRecommendation(recommended)
+        this.view.showRecommendation(books)
       }, e => {
         this.view.hideLoading()
       })

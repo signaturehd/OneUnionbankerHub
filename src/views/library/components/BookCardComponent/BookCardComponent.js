@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { MdStarOutline, MdStar } from 'react-icons/lib/md';
+import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 
 import Rating from 'react-rating'
 
@@ -30,8 +30,8 @@ class BookCardComponent extends Component {
         <div className = {'card-footer'}>
           <center>
             <Rating
-              emptySymbol = {<MdStarOutline style={{fontSize: 40, color : "#c65e11"}} />}
-              fullSymbol = {<MdStar style={{fontSize: 40,  color : "#c65e11"}} />}
+              emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
+              fullSymbol = {<MdStar style={{ fontSize: 40,  color : '#c65e11' }} />}
               onChange = { e => {
                 rateBook(detail.id, e)
                 this.setState({ rating : e })
