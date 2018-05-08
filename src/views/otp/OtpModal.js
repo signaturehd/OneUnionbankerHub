@@ -4,9 +4,7 @@ import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/OtpPresenter'
 
-import { GenericTextBox } from '../../ub-components/TextBox/'
-import { GenericButton } from '../../ub-components/UButton/'
-import { Modal } from '../../ub-components/Modal/'
+import { GenericTextBox, GenericButton, Modal } from '../../ub-components'
 
 class OtpModal extends BaseMVPView {
   constructor (props) {

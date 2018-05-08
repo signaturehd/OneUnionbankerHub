@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
 import BookCardComponent from '../components/BookCardComponent/BookCardComponent'
 import BookViewModal from '../modals/BookViewModal'
 
