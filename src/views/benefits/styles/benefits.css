@@ -15,8 +15,8 @@
 
 i {
   cursor: pointer;
-  border: solid black;
-  border-width: 0 3px 3px 0;
+  border: solid #ff8a00;
+  border-width: 0 10px 10px 0;
   display: -webkit-inline-box;
   padding: 7px;
   margin-right: 10px;
