@@ -18,6 +18,7 @@ class OpticalCard extends Component {
       imagePreviewUrl: '',
       imagePreviewUrl2: '',
       warning: '',
+      amount : 0
     }
     this._handleImageChange = this._handleImageChange.bind(this)
     this._handleImageChange2 = this._handleImageChange2.bind(this)
