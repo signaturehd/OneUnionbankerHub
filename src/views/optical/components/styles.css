@@ -9,14 +9,29 @@
   width: 480px;
   min-height:170px;
 }
-.optical-body {}
-
+.optical-body {
+  display: inline-flex;
+  margin: auto;
+  width: 100%;
+  margin: auto auto auto -8px;
+}
+.text-icon {
+  width: 100% !important;
+}
 .optical-image-view {
 position: relative;
 background-size: 250px;
 width: 225px;
 height: 240px;
+object-fit: cover;
 border-radius: 20px;
+}
+.optical-image {
+  background: url('../../../images/uploadicon-orange.jpg')  no-repeat center center;
+  width: 225px;
+  height: 240px;
+  object-fit: cover;
+  background-size: 85%;
 }
 .optical-image-layer {
 background-color: rgba(0, 0, 0, 0.5);
