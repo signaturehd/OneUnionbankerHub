@@ -29,11 +29,12 @@
 }
 
 .sidebar-icon {
+  height: 24px;
+  width: 30px;
   -webkit-mask-size: auto 100%;
   -webkit-mask-repeat: no-repeat;
   background-color: #00000087;
-  background-position: 0 .4em;
-  padding: 10% 10% 5% 10%;
+  margin-right: 10px;
 }
 .sidebar-icon:hover {
   background-color: #ff8a00;

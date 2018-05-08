@@ -7,7 +7,6 @@ import DentalLoaFragment from '../../../dentalloa/DentalLoaFragment'
 import './styles/medical.css'
 
 class MedicalFragment extends Component {
-
   constructor (props) {
     super(props)
   }
