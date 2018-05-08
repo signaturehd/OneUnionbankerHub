@@ -17,7 +17,8 @@ class OpticalCard extends Component {
       file2: '',
       imagePreviewUrl: '',
       imagePreviewUrl2: '',
-      warning: ''
+      warning: '',
+      amount: 0.0,
     }
     this._handleImageChange = this._handleImageChange.bind(this)
     this._handleImageChange2 = this._handleImageChange2.bind(this)
@@ -32,6 +33,10 @@ class OpticalCard extends Component {
     this.setState({ showConfirmation : true })
     this.setState({ warning : '' })
     }
+  }
+  amount ()
+  {
+    this.setState({ amount : this.state.amount })
   }
 
   _handleImageChange (e) {
@@ -66,8 +71,7 @@ class OpticalCard extends Component {
 
   render () {
     const { proceedModal, props, fileReceived, fileReceived2 } = this.props
-    const { showConfirmation, confirm, cancel, warning, amount } = this.state
-    const { imagePreviewUrl, imagePreviewUrl2 } = this.state
+    const { showConfirmation, confirm, cancel, warning, amount, imagePreviewUrl, imagePreviewUrl2  } = this.state
     let $imagePreview = null
     let $imagePreview2 = null
       $imagePreview = (<img className = {'optical-image'} src={imagePreviewUrl} />)
@@ -85,8 +89,8 @@ class OpticalCard extends Component {
           <form onSubmit={this._handleSubmit}>
             <div className = {'optical-header'} >
               <h5 >Form Attachments</h5>
-              <div className = { 'optical-amount-field' }> 
-              <GenericTextBox type = { 'text' } placeholder = { 'Amount' } value = {amount}/>
+              <div className = { 'optical-amount-field' }>
+              <GenericTextBox placeholder = { 'Enter Amount' }/>
               </div>
                 <div className = {'optical-body'}>
                        <FileUploader className = { 'optical-file-left' } onChange={this._handleImageChange} />
