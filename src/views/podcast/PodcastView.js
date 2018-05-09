@@ -9,7 +9,11 @@ import ConnectPartial from '../../utils/ConnectPartial'
 import './styles/podcast.css'
 import PodCardComponent from '../common/components/PodCardComponent/PodCardComponent'
 import PodcastInteractor from '../../domain/interactor/podcast/PodcastInteractor'
+
 import PodPlay from './fragments/PlayPage/PodPlay'
+import PodCastsRecommendationFragment from './fragments/PodCastsTab/PodCastsRecommendationFragment'
+import PodCastsListFragment from './fragments/PodCastsTab/PodCastsListFragment'
+import PodCastsViewedFragment from './fragments/PodCastsTab/PodCastsViewedFragment'
 
 class PodcastView extends BaseMVPView {
   constructor (props) {
@@ -35,23 +39,21 @@ class PodcastView extends BaseMVPView {
   updateSearch () {
       this.setState({ searchString: this.refs.search.value.substr( 0 , 20) })
   }
-
   news (news, details) {
       this.setState({ news })
   }
-
   render () {
-    const { news, show, details, detail } = this.state
+    const { news, show, details, detail, searchBar } = this.state
     const PodCast = () => (
     <div>
-        { super.render() }
-        <h1>PODCASTS</h1>
-        <input type = 'text'
-             className = 'podcastsSearchBar'
-             ref="search"
-             placeholder = {'Search Podcasts'}
-             value = { this.state.searchString }
-             onChange = { this.updateSearch } />
+    { super.render() }
+    <h1>PODCASTS</h1>
+    <input className = 'podcastsSearchBar'
+           ref="search"
+           type = { 'text' }
+           placeholder = { 'Search Podcasts' }
+           value = { searchBar } 
+           onChange = { this.updateSearch } />
     <div className = { 'tabs-container' }>
       <input
         className = { 'input-tab' }
@@ -76,43 +78,33 @@ class PodcastView extends BaseMVPView {
       <label htmlFor = 'tab3' >Viewed</label>
 
       <section id='content1'>
-      <div className = {'podcasts-container'}>
-      {
-          _news.map((news, i) =>
-            <PodCardComponent
-             rateBook = { (id, rating) => this.addRating(id, rating) }
-            
-              key={ i }
-              news = { news }
-              onClick = { details => this.setState({ details, show: true })  } />
-            )
-        }
-      </div>
+        <PodCastsListFragment  presenter = { this.presenter } news = { news } _news = { _news } />
       </section>
       <section id='content2'>
-        <div />
+        <PodCastsRecommendationFragment presenter = { this.presenter } news = { news } _news = { _news }  />
       </section>
       <section  id='content3'>
-        <div />
+        <PodCastsViewedFragment  presenter = { this.presenter } news = { news } _news = { _news} />
       </section>
     </div>
   </div> 
-      )
-    let _news = this.state.news
-    let search = this.state.searchString.trim().toLowerCase()
-    if (search.length > 0) {
-      _news = _news.filter(function( news ) {
-        return news.title.toLowerCase().match(search)
-      })
-    }
-    return (
-    <div>
-       <Switch>
-         <Route exact path = '/podcast' render = { PodCast } />
-      </Switch>
-    </div>
-    )
+  )
+
+  let _news = this.state.news
+  let search = this.state.searchString.trim().toLowerCase()
+  if (search.length > 0) {
+    _news = _news.filter(function( news ) {
+      return news.title.toLowerCase().match(search)
+    })
   }
+  return (
+  <div>
+     <Switch>
+       <Route exact path = '/podcast' render = { PodCast } />
+    </Switch>
+  </div>
+  )
+}
 }
 
 PodcastView.propTypes = {

@@ -1,29 +1,38 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Media, Player, controls } from 'react-media-player'
+import { Media, Player, withMediaProps, withKeyboardControls, controls } from 'react-media-player'
 
-const { PlayPause, MuteUnmute, CurrentTime, Duration, Fullscreen,  SeekBar, Volume } = controls
- 
+const { CurrentTime, Progress, SeekBar, Duration, Volume, PlayPause, Fullscreen, MuteUnmute } = controls
+
 class MedPlayer extends Component {
   render() {
     return (
       <div>
-      <Media className= {'player'}>
-        <div className="media">
-          <div className="media-player">
-            <Player src="https://www.youtube.com/watch?v=IxD2NbXzgpQ"/>
-          </div>
+       <Media>
+      {({ isFullscreen, playPause }) =>
+        <div
+          className={'media-player' + (isFullscreen ? ' media-player--fullscreen' : '')}
+          tabIndex="0"
+        >
+          <Player
+            src={"https://videocdn.bodybuilding.com/video/mp4/62000/62792m.mp4"}
+            onClick={() => playPause()}
+          />
           <div className="media-controls">
-            <PlayPause className={'plays-button'}/>
-            <CurrentTime/>
-            <Duration/>
-            <SeekBar/> 
-            <MuteUnmute/>   
-            <Volume/>
-            <Fullscreen/>
+            <PlayPause className="media-control media-control--play-pause" />
+            <CurrentTime className="media-control media-control--current-time" />
+            <div className="media-control-group media-control-group--seek">
+              <Progress className="media-control media-control--progress" />
+              <SeekBar className="media-control media-control--seekbar" />
+            </div>
+            <Duration className="media-control media-control--duration" />
+            <MuteUnmute className="media-control media-control--mute-unmute" />
+            <Volume className="media-control media-control--volume" />
+            <Fullscreen className="media-control media-control--fullscreen" />
           </div>
         </div>
-      </Media>
+      }
+    </Media>
       </div>
     )
   }
