@@ -6,13 +6,17 @@
 
 .podplay-main{
 	float:left;
-	width:60%;
+	width:70%;
 }
 .podplay-sidebar-right{
 	float:left;
-	width:40%;
+	width:30%;
 	padding-left: 24px;
 	left: 0;
+}
+.podcast-details {
+  margin: auto;
+  width: 80%;
 }
 .podplay-footer{
 	clear:both;
@@ -21,7 +25,7 @@
 	bottom : 0;
 }
  .podplay-main, .podplay-sidebar-right{
-	min-height: 600px
+	min-height: 420px;
 }
 
 #document {

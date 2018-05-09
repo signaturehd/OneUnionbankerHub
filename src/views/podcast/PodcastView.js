@@ -10,7 +10,7 @@ import './styles/podcast.css'
 import PodCardComponent from '../common/components/PodCardComponent/PodCardComponent'
 import PodcastInteractor from '../../domain/interactor/podcast/PodcastInteractor'
 
-import PodPlay from './fragments/PlayPage/PodPlay'
+import PodcastPlayerFragment from './fragments/PodcastPlayerPage/PodcastPlayerFragment'
 import PodCastsRecommendationFragment from './fragments/PodCastsTab/PodCastsRecommendationFragment'
 import PodCastsListFragment from './fragments/PodCastsTab/PodCastsListFragment'
 import PodCastsViewedFragment from './fragments/PodCastsTab/PodCastsViewedFragment'
@@ -44,6 +44,13 @@ class PodcastView extends BaseMVPView {
   }
   render () {
     const { news, show, details, detail, searchBar } = this.state
+    const { history } = this.props
+    const PodcastPlayer = () => (
+        <PodcastPlayerFragment 
+            presenter = { this.presenter }
+            news = { news }
+            _news = { _news }/>
+    )
     const PodCast = () => (
     <div>
     { super.render() }
@@ -78,18 +85,27 @@ class PodcastView extends BaseMVPView {
       <label htmlFor = 'tab3' >Viewed</label>
 
       <section id='content1'>
-        <PodCastsListFragment  presenter = { this.presenter } news = { news } _news = { _news } />
+        <PodCastsListFragment
+          presenter = { this.presenter }
+          news = { news }
+          _news = { _news } 
+          history = { history } />
       </section>
       <section id='content2'>
-        <PodCastsRecommendationFragment presenter = { this.presenter } news = { news } _news = { _news }  />
+        <PodCastsRecommendationFragment 
+          presenter = { this.presenter } 
+          news = { news }
+          _news = { _news } />
       </section>
       <section  id='content3'>
-        <PodCastsViewedFragment  presenter = { this.presenter } news = { news } _news = { _news} />
+        <PodCastsViewedFragment  
+          presenter = { this.presenter } 
+          news = { news } 
+          _news = { _news} />
       </section>
     </div>
   </div>
   )
-
   let _news = this.state.news
   let search = this.state.searchString.trim().toLowerCase()
   if (search.length > 0) {
@@ -101,6 +117,7 @@ class PodcastView extends BaseMVPView {
   <div>
      <Switch>
        <Route exact path = '/podcast' render = { PodCast } />
+       <Route path = '/podcast/player' render = { PodcastPlayer } />
     </Switch>
   </div>
   )

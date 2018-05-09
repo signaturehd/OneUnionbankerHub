@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import PodCardComponent from '../../../common/components/PodCardComponent/PodCardComponent'
 
-class PodCastsListFragment extends Component {
+import { MdStarOutline, MdStar } from 'react-icons/lib/md'
+
+class PodcastsPlayerDetailsFragment extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -18,7 +20,7 @@ class PodCastsListFragment extends Component {
   render () {
     const { news, _news } = this.props
     return (
-  <div className = {'podcasts-container'}>
+      <div className = { 'podcast-details' }>
     {
       _news.map((news, i) =>
         <PodCardComponent
@@ -35,4 +37,4 @@ class PodCastsListFragment extends Component {
     )}
   }
 
-export default PodCastsListFragment
+export default PodcastsPlayerDetailsFragment
