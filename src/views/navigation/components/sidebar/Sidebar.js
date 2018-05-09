@@ -12,15 +12,21 @@ class SideBar extends Component {
     const { textlink, icon , onClick, text, path, onNavigationClick, selected } = this.props
     const modules =
     [
+<<<<<<< HEAD
 
+=======
+>>>>>>> b31d5f42fccc4dd936c4027db3479da55962af7f
       { id: 0 , title: 'News', path: '/', className: 'newsfeed-icon' },
       { id: 1 , title: 'Benefits', path: '/benefits', className: 'benefits-icon' },
       { id: 2 , title: 'Transactions', path: '/transactions', className: 'transaction-icon' },
       { id: 3 , title: 'Faqs', path: '/faqs', className: 'faqs-icon' },
       { id: 4 , title: 'Settings', path: '/settings', className: 'settings-icon' },
       { id: 5 , title: 'Books', path: '/books', className: 'books-icon' },
+<<<<<<< HEAD
       { id: 6 , title: 'Podcasts', path: '/podcast' },
       { id: 7 , title: 'Player', path: '/player' },
+=======
+>>>>>>> b31d5f42fccc4dd936c4027db3479da55962af7f
     ]
 
   return (
