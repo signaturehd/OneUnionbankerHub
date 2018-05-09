@@ -10,9 +10,8 @@ import TransactionFragment from '../transaction/TransactionFragment'
 import NewsFragment from '../news/NewsFragment'
 import FaqFragment from '../faq/FaqFragment'
 import SettingsFragment from '../settings/SettingsFragment'
-import PodcastView from '../podcast/PodcastView'
-import PodcastPlayer from '../podcast/fragments/PlayPage/PodPlay'
-import AppBar from './components/appbar/AppBar'
+
+import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
 import Drawer from './components/drawer/Drawer'
 
@@ -69,11 +68,10 @@ class NavigationView extends BaseMVPView {
     return (
         <div className = { 'body-div' }>
           <header className = { 'page-boundary page-boundary--fixed-top' }>
-            <AppBar
+            <DrawerAppBar
               displayNavIcon = { displayNavIcon } displayShow = { displayShow }
               hide = { () => this.setState({ displayShow : 'block' })}
-              show = { () => this.setState({ displayShow : 'none' })}>
-            </AppBar>
+              show = { () => this.setState({ displayShow : 'none' })} />
           </header>
           <div className="panels">
               <main className ="panel main-content " role="main">

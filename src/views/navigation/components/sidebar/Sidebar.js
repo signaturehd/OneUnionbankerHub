@@ -12,31 +12,31 @@ class SideBar extends Component {
     const { textlink, icon , onClick, text, path, onNavigationClick, selected } = this.props
     const modules =
     [
-      { id: 0 , title: 'News', path: '/' },
-      { id: 1 , title: 'Benefits', path: '/benefits' },
-      { id: 2 , title: 'Transactions', path: '/transactions' },
-      { id: 3 , title: 'Faqs', path: '/faqs' },
-      { id: 4 , title: 'Settings', path: '/settings' },
-      { id: 5 , title: 'Books', path: '/books' },
-      { id: 6 , title: 'Podcasts', path: '/podcast' },
-      { id: 7 , title: 'Player', path: '/player' },
+      { id: 0 , title: 'News', path: '/', className: 'newsfeed-icon' },
+      { id: 1 , title: 'Benefits', path: '/benefits', className: 'benefits-icon' },
+      { id: 2 , title: 'Transactions', path: '/transactions', className: 'transaction-icon' },
+      { id: 3 , title: 'Faqs', path: '/faqs', className: 'faqs-icon' },
+      { id: 4 , title: 'Settings', path: '/settings', className: 'settings-icon' },
+      { id: 5 , title: 'Books', path: '/books', className: 'books-icon' },
     ]
 
-    return (
-      <div className = { '_sidebar-overlay' }>
-      <ul className = { '_link-list' }>
-        {
-          modules.map((d, idx) => <li
-                className = { `_text-link ${selected === d.id && 'active'}` }
-                key = { idx }
-                onClick = { () => onNavigationClick(d.path) }>
-                { d.title }
-            </li>)
-         }
-      </ul>
-      </div>
-    )
-  }
+  return (
+    <div className = { '_sidebar-overlay' }>
+    <ul className = { '_link-list ul' }>
+      {
+        modules.map((d, idx) => <li
+              className = { `_text-link ${selected === d.id && 'active'}` }
+              key = { idx }
+              onClick = { () => onNavigationClick(d.path) }>
+              <a key = { idx }
+                 className = {`sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+               { d.title }
+          </li>)
+       }
+    </ul>
+    </div>
+  )
+}
 }
 
 SideBar.propTypes = {

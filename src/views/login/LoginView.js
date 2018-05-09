@@ -5,8 +5,7 @@ import LoginPresenter from './presenter/LoginPresenter'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { GenericButton } from '../../ub-components/UButton/'
-import { GenericTextBox } from '../../ub-components/TextBox/'
+import { GenericButton, GenericTextBox } from '../../ub-components'
 
 import './css/login.css'
 
