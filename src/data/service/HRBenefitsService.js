@@ -16,6 +16,15 @@ export default class HRBenefitsService {
     return this.apiClient.post('v1/otp', otpParam)
   }
 
+  resend (resendOtpParam) {
+    return this.apiClient.post('v1/otp/resend', resendOtpParam)
+  }
+
+  profile (token) {
+    return this.apiClient.get('v1/profile', {
+      headers : { token }
+    })
+  }
   /* dental loa */
   validateDentalLoa (token) {
     return this.apiClient.get('v1/issuances/dental/loa/validate?type=1', {
@@ -61,11 +70,12 @@ export default class HRBenefitsService {
   }
 
   /* account */
-  validateAccountNumber (accountNumber) {
+  validateAccountNumber (token, accountNumber) {
     return this.accountClient.get(`accounts/v1/${accountNumber}`, {
       headers: {
+        token,
         referenceId : Math.random().toString(36)
-          .substring(7)
+          .substring(7),
       }
     })
   }
@@ -83,6 +93,13 @@ export default class HRBenefitsService {
         headers: { token }
     })
   }
+
+  getBooksBorrowed (token) {
+    return this.apiClient.get('v1/books/history', {
+        headers: { token }
+    })
+  }
+
 
 
   addRating (token, bookParam) {

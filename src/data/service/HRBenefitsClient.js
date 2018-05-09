@@ -20,6 +20,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  resend (resendOtpParam) {
+    return this.service.resend(resendOtpParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  profile (token) {
+    return this.service.profile(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
@@ -46,9 +56,17 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getAccountNumber()
   }
 
+  setProfile (profile) {
+    this.sessionProvider.setProfile(profile)
+  }
+
+  getProfile () {
+    return this.sessionProvider.getProfile()
+  }
+
   /* accounts */
-  validateAccountNumber (accountNumber) {
-    return this.service.validateAccountNumber(accountNumber)
+  validateAccountNumber (token, accountNumber) {
+    return this.service.validateAccountNumber(token, accountNumber)
       .pipe(ServiceErrorOperator())
   }
 
@@ -61,6 +79,11 @@ export default class HRBenefitsClient {
   /* books */
   getBooks (token) {
     return this.service.getBooks(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getBooksBorrowed (token) {
+    return this.service.getBooksBorrowed(token)
       .pipe(ServiceErrorOperator())
   }
 

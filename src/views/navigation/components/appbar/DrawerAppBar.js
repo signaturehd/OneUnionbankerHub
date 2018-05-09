@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { AppBar } from '../../../../ub-components'
+
 import './styles/appbar.css'
 
-class AppBar extends Component {
-
+class DrawerAppBar extends Component {
   constructor (props) {
     super(props)
     this.onToggleShow = this.onToggleShow.bind(this)
@@ -25,9 +26,10 @@ class AppBar extends Component {
         display : displayNavIcon
       }
     }
-    
+
     return (
-        <div className={'header'}>
+      <AppBar>
+        <div id={ 'drawer-header' }>
           <div className = {'icon-header'}>
             <img
               src={ require('../../../../images/union-logo.png') }
@@ -41,8 +43,9 @@ class AppBar extends Component {
               onClick = { this.onToggleShow }/ >
           </div>
         </div>
+      </AppBar>
     )
   }
 }
 
-export default AppBar
+export default DrawerAppBar

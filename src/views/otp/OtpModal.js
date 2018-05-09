@@ -4,9 +4,7 @@ import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/OtpPresenter'
 
-import { GenericTextBox } from '../../ub-components/TextBox/'
-import { GenericButton } from '../../ub-components/UButton/'
-import { Modal } from '../../ub-components/Modal/'
+import { GenericTextBox, GenericButton, Modal } from '../../ub-components'
 
 class OtpModal extends BaseMVPView {
   constructor (props) {
@@ -29,11 +27,14 @@ class OtpModal extends BaseMVPView {
       <Modal
           onClose = {onClose}
         >
+        { super.render() }
         <GenericTextBox text= "OTP"
           placeholder = "OTP"
           type = ""
           onChange={ e => this.setState({ otp: e.target.value }) }  />
-        <GenericButton text= "Submit" onClick={ () => this.presenter.verifyOtp(username, otp, transactionType) } />
+          <br/>
+          <GenericButton text= "Submit" onClick={ () => this.presenter.verifyOtp(username, otp, transactionType) } />
+          <GenericButton text= "Resend OTP" onClick={ () => this.presenter.resendOtp(username, transactionType) } />
       </Modal>
       )
   }

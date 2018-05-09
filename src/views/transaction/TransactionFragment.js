@@ -5,7 +5,6 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import './styles/transaction.css'
 
 class TransactionFragment extends Component {
-
   constructor (props) {
     super(props)
   }

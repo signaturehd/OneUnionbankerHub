@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Cards, GenericButton } from '../../../../ub-components'
+import { Card, GenericButton } from '../../../../ub-components'
 import OpticalFragment from '../../../optical/OpticalFragment'
 import './styles/medical.css'
 
 class MedicalFragment extends Component {
-
   constructor (props) {
     super(props)
   }
@@ -42,13 +41,13 @@ class MedicalFragment extends Component {
             <div className = { 'card-container' }>
               {
               benefitsOptions.map((value, idx) => (
-                <Cards key={ idx }>
+                <Card key={ idx }>
                   <div
                     className = { value.styleName}
                     text = { value.title }
                     onClick = { () => history.push(value.path) } >
                     <p className = { 'benefits-option-cards' }> { value.title } </p></div>
-                </Cards>
+                </Card>
               ))
               }
             </div>

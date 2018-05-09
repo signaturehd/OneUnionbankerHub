@@ -1,9 +1,8 @@
 export default class SettingsPresenter {
-
-  constructor(container) {
+  constructor (container) {
   }
 
-  setView(view) {
+  setView (view) {
     this.view = view
   }
 }

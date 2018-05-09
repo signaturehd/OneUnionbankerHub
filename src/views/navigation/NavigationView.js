@@ -11,14 +11,13 @@ import NewsFragment from '../news/NewsFragment'
 import FaqFragment from '../faq/FaqFragment'
 import SettingsFragment from '../settings/SettingsFragment'
 
-import AppBar from './components/appbar/AppBar'
+import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
 import Drawer from './components/drawer/Drawer'
 
 import './styles/drawerview.css'
 
 class NavigationView extends BaseMVPView {
-
   constructor (props) {
     super (props)
 
@@ -51,13 +50,16 @@ class NavigationView extends BaseMVPView {
     })
   }
 
+  componentDidMount () {
+    this.presenter.getLibraries()
+  }
+
   setSelectedNavigation (id) {
     this.setState({ selected: id })
   }
 
   render () {
     const { displayShow, displayNavIcon, displayNavIconState, selected } = this.state
-
     const style = {
       show: {
           display : displayShow
@@ -66,11 +68,10 @@ class NavigationView extends BaseMVPView {
     return (
         <div className = { 'body-div' }>
           <header className = { 'page-boundary page-boundary--fixed-top' }>
-            <AppBar
+            <DrawerAppBar
               displayNavIcon = { displayNavIcon } displayShow = { displayShow }
               hide = { () => this.setState({ displayShow : 'block' })}
-              show = { () => this.setState({ displayShow : 'none' })}>
-            </AppBar>
+              show = { () => this.setState({ displayShow : 'none' })} />
           </header>
           <div className="panels">
               <main className ="panel main-content " role="main">
