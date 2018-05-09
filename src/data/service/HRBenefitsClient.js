@@ -91,6 +91,10 @@ export default class HRBenefitsClient {
     return this.service.addRating(token, bookParam)
       .pipe(ServiceErrorOperator())
   }
+  postBooksReservation(token){
+    return this.service.postBooksReservation(token)
+    .pipe(ServiceErrorOperator())
+  }
 
   /* optical */
   getOptical (token) {

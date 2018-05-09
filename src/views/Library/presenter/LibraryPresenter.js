@@ -2,7 +2,10 @@ import GetBooksInteractor from '../../../domain/interactor/library/GetBooksInter
 import GetBooksRecommendationInteractor from '../../../domain/interactor/library/GetBooksRecommendationInteractor'
 import AddBookRatingInteractor from '../../../domain/interactor/library/AddBookRatingInteractor'
 import GetBooksBorrowedInteractor from '../../../domain/interactor/library/GetBooksBorrowedInteractor'
+import postBooksReservationInteractor from '../../../domain/interactor/library/postBooksReservationInteractor'
 import BookRateParam from '../../../domain/param/BookRateParam'
+import BookReserveParam from '../../../domain/param/BookReserveParam'
+
 import { Observable } from 'rxjs'
 import { filter } from 'rxjs/operators'
 
@@ -12,6 +15,7 @@ export default class LibraryPresenter {
     this.getBooksInteractor = new GetBooksInteractor(container.get('HRBenefitsClient'))
     this.addBookInteractor = new AddBookRatingInteractor(container.get('HRBenefitsClient'))
     this.getBooksBorrowedInteractor = new GetBooksBorrowedInteractor(container.get('HRBenefitsClient'))
+    this.postBooksReservationInteractor = new postBooksReservationInteractor(container.get('HRBenefitsClient'))
   }
 
 
@@ -48,6 +52,18 @@ export default class LibraryPresenter {
   rateBook (id, rating) {
     this.view.showLoading()
     this.addBookInteractor.execute(BookRateParam(id, rating))
+    .subscribe(
+      data => {
+        this.view.hideLoading()
+      },
+      error => {
+        this.view.hideLoading()
+      }
+    )
+  }
+    postBooksReservation(id, quantity) {
+    this.view.showLoading()
+    this.postBooksReservationInteractor.execute(BookReserveParam(id,quantity))
     .subscribe(
       data => {
         this.view.hideLoading()
