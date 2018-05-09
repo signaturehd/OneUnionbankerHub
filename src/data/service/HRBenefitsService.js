@@ -111,7 +111,15 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
-  
+
+
+
+  addRating (token, bookParam) {
+    return this.apiClient.post('v1/books/rate', bookParam, {
+      headers : { token }
+    })
+  }
+
   getPodcast (token) {
       return this.apiClient.get('v1/news', {
           headers: { token }

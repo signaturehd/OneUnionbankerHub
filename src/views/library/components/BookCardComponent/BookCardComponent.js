@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 
-<<<<<<< HEAD
+import { Card } from '../../../../ub-components'
+
 =======
 import { Card } from '../../../../ub-components'
 
->>>>>>> b31d5f42fccc4dd936c4027db3479da55962af7f
+>>>>>>> fdcab8efb40810ae6cadef325417db69836ae004
 import Rating from 'react-rating'
 
 import './styles.css'
@@ -35,20 +36,16 @@ class BookCardComponent extends Component {
         <div className = {'card-footer'}>
           <center>
             <Rating
-<<<<<<< HEAD
-
               emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
               fullSymbol = {<MdStar style={{ fontSize: 40,  color : '#c65e11' }} />}
               onChange = { e => {
                 rateBook(detail.id, e)
                 this.setState({ rating : e })
-=======
               emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
               fullSymbol = {<MdStar style={{ fontSize: 40,  color : '#c65e11' }} />}
               onChange = { e => {
                 rateBook(detail.id, e)
                 this.setState({ rating : e })
->>>>>>> b31d5f42fccc4dd936c4027db3479da55962af7f
               }}
               fractions = { 2 }
               initialRating = { rating ? rating : detail.rating }
