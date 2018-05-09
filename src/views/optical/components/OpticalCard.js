@@ -5,8 +5,7 @@ import Button from './OpticalButton'
 import Modal from '../modal/OpticalReviewModal'
 import ConnectView from '../../../utils/ConnectView'
 import Presenter from '../presenter/OpticalPresenter'
-import  FileUploader  from  '../../../ub-components/FileUploader/Uploader'
-import  GenericTextBox  from  '../../../ub-components/TextBox/GenericTextBox'
+import { GenericTextBox } from  '../../../ub-components/'
 
 class OpticalCard extends Component {
   constructor (props) {
@@ -66,15 +65,15 @@ class OpticalCard extends Component {
 
   render () {
     const { proceedModal, props, fileReceived, fileReceived2 } = this.props
-    const { 
-      showConfirmation, 
-      confirm, 
-      cancel, 
-      warning, 
-      amount, 
-      imagePreviewUrl, 
-      imagePreviewUrl2, 
-      acceptNumber, 
+    const {
+      showConfirmation,
+      confirm,
+      cancel,
+      warning,
+      amount,
+      imagePreviewUrl,
+      imagePreviewUrl2,
+      acceptNumber,
     } = this.state
     let $imagePreview = null
     let $imagePreview2 = null
@@ -94,13 +93,20 @@ class OpticalCard extends Component {
             <div className = {'optical-header'} >
               <h5 >Form Attachments</h5>
               <div className = { 'optical-amount-field' }>
-              <GenericTextBox value = { amount } 
-                              placeholder = { 'Enter Amount' } 
-                              onChange = { (e) => this.setState({ amount: parseInt(e.target.value) || 0 }) }/>
+                <GenericTextBox
+                  value = { amount }
+                  placeholder = { 'Enter Amount' }
+                  onChange = { (e) => this.setState({ amount: parseInt(e.target.value) || 0 }) }
+                />
               </div>
-                <div className = {'optical-body'}>
-                       <FileUploader className = { 'optical-file-left' } onChange={this._handleImageChange} />
-                       <FileUploader className = { 'optical-file-right' } onChange={this._handleImageChange2} />
+              <div className = {'optical-body'}>
+                <br/>
+                <GenericTextBox
+                  type = { 'file' }
+                  placeholder = { 'Enter Amount' }
+                  onChange = { (e) => this.setState({ amount: parseInt(e.target.value) || 0 }) }
+                />
+
               </div>
               <div className = { 'optical-button-submit' }>
                 <Button />

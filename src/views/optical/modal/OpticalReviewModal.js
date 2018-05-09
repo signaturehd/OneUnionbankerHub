@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal } from '../../../ub-components/Modal/'
+import { Modal } from '../../../ub-components/'
 import Button from '../components/OpticalButton'
 import './optical-modal.css'
 

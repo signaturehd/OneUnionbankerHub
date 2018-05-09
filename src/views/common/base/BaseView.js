@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
-import { Loader } from '../../../ub-components/'
-import { Notify } from '../../../ub-components/'
+import { Loader, Notify } from '../../../ub-components/'
 
 class BaseView extends Component {
   constructor (props) {
