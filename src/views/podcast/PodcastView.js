@@ -52,7 +52,7 @@ class PodcastView extends BaseMVPView {
            ref="search"
            type = { 'text' }
            placeholder = { 'Search Podcasts' }
-           value = { searchBar } 
+           value = { searchBar }
            onChange = { this.updateSearch } />
     <div className = { 'tabs-container' }>
       <input
@@ -70,10 +70,10 @@ class PodcastView extends BaseMVPView {
         name='tabs' />
       <label htmlFor='tab2'>Recommended</label>
 
-      <input 
-        className = { 'input-tab' } 
-        id='tab3'  
-        type='radio' 
+      <input
+        className = { 'input-tab' }
+        id='tab3'
+        type='radio'
         name='tabs' />
       <label htmlFor = 'tab3' >Viewed</label>
 
@@ -87,7 +87,7 @@ class PodcastView extends BaseMVPView {
         <PodCastsViewedFragment  presenter = { this.presenter } news = { news } _news = { _news} />
       </section>
     </div>
-  </div> 
+  </div>
   )
 
   let _news = this.state.news
@@ -112,5 +112,3 @@ PodcastView.propTypes = {
 }
 
 export default ConnectPartial(PodcastView, Presenter)
-
-

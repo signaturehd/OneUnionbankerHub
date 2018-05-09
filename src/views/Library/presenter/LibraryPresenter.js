@@ -74,28 +74,3 @@ export default class LibraryPresenter {
     )
   }
 }
-
-  getBooksBorrowed () {
-    this.view.showLoading()
-    this.getBooksBorrowedInteractor.execute()
-    .subscribe(borrowed => {
-        this.view.hideLoading()
-        this.view.showBorrowed(borrowed)
-      }, e => {
-        this.view.hideLoading()
-      })
-  }
-
-  rateBook (id, rating) {
-    this.view.showLoading()
-    this.addBookInteractor.execute(BookRateParam(id, rating))
-    .subscribe(
-      data => {
-        this.view.hideLoading()
-      },
-      error => {
-        this.view.hideLoading()
-      }
-    )
-  }
-}

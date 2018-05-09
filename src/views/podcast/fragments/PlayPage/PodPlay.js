@@ -11,14 +11,14 @@ class PodPlay extends Component {
   super(props)
     this.state = {
       rating : 0
-   
+
    }
    }
-  
+
 addRating (id, rating) {
     this.props.presenter.rateBook(id, rating)
   }
- 
+
   podcasts (podcasts) {
       this.setState({ podcasts })
   }
@@ -31,8 +31,8 @@ addRating (id, rating) {
     <div className = { 'podplay-header' }>
       <h1>Playing Podcast</h1>
     </div>
-    
-    <div className = { 'podplay-main' }>  
+
+    <div className = { 'podplay-main' }>
       <div><MedPlayer/></div>
       <h5>Author of podcast</h5>
       <Rating rateBook = { (id, rating) => this.addRating(id, rating) }
@@ -41,7 +41,7 @@ addRating (id, rating) {
             this.setState({ rating : e })
           }}
           fractions = { 2 }
-          initialRating = { news ?  news.rating :0  }      
+          initialRating = { news ?  news.rating :0  }
         />
         <Board/>
     </div>
@@ -52,10 +52,10 @@ addRating (id, rating) {
      )
    }
  }
- 
+
 
 PodPlay.propTypes = {
-  
+
   onClick : PropTypes.func,
   rateBook : PropTypes.func,
 

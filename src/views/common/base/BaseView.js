@@ -23,7 +23,7 @@ class BaseView extends Component {
   render () {
     return (
       <div>
-        <HorizontalLoader show = { this.state.loader }/>
+        <Loader show = { this.state.loader }/>
       </div>
     )
   }

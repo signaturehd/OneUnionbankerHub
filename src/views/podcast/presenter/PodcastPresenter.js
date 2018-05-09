@@ -25,7 +25,7 @@ export default class PodcastPresenter {
           this.view.hideLoading()
           // TODO prompt generic error
         })
-    }  
+    }
     rateBook (id, rating) {
       this.view.showLoading()
       this.addBookInteractor.execute(BookRateParam(id, rating))

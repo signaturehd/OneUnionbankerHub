@@ -10,6 +10,8 @@ import TransactionFragment from '../transaction/TransactionFragment'
 import NewsFragment from '../news/NewsFragment'
 import FaqFragment from '../faq/FaqFragment'
 import SettingsFragment from '../settings/SettingsFragment'
+import PodcastView from '../podcast/PodcastView'
+import PodcastPlayer from '../podcast/fragments/PlayPage/PodPlay'
 
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
