@@ -18,8 +18,7 @@ class SideBar extends Component {
       { id: 3 , title: 'Faqs', path: '/faqs', className: 'faqs-icon' },
       { id: 4 , title: 'Settings', path: '/settings', className: 'settings-icon' },
       { id: 5 , title: 'Books', path: '/books', className: 'books-icon' },
-      { id: 6 , title: 'Podcasts', path: '/podcast' },
-      { id: 7 , title: 'Player', path: '/player' },
+      { id: 6 , title: 'Podcasts', path: '/podcast', className: 'books-icon' },
     ]
 
   return (

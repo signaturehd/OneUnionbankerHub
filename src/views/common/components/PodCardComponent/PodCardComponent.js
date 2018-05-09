@@ -22,7 +22,7 @@ class PodCardComponent extends Component {
 
 
   render () {
-    const { detail, news, onClick, rateBook } = this.props
+    const { detail, news, onClick, rateBook, history } = this.props
     const { rating } = this.state
 
     return (
@@ -45,8 +45,12 @@ class PodCardComponent extends Component {
             />
 
             </center>
-            <small><a href = {news.linkUrl}><GenericButton text =""/> </a></small> {/*.linkurl for mapping for playing mp3 */}
-            <small><a onClick = { () => onClick(news) }>Read More</a></small>
+            <small>
+            <GenericButton 
+              text ="awdaw" 
+              onClick = { () => this.props.history.push('/podcast/player') }/>
+            </small> 
+            <small><a>Read More</a></small>
           </div>
         </Card>
     )

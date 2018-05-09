@@ -11,7 +11,6 @@ import NewsFragment from '../news/NewsFragment'
 import FaqFragment from '../faq/FaqFragment'
 import SettingsFragment from '../settings/SettingsFragment'
 import PodcastView from '../podcast/PodcastView'
-import PodcastPlayer from '../podcast/fragments/PlayPage/PodPlay'
 
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
@@ -99,9 +98,6 @@ class NavigationView extends BaseMVPView {
                               setSelectedNavigation = { this.setSelectedNavigation } /> } />
                               <Route path = '/podcast' render = { props =>
                           <PodcastView { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                             <Route path = '/player' render = { props =>
-                          <PodcastPlayer { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> } />
                      </Switch>
                     </Drawer>
