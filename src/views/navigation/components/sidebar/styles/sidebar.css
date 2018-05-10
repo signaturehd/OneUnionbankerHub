@@ -61,26 +61,30 @@ ul {
 }
 
 .newsfeed-icon {
-  -webkit-mask-image: url('../../../../../images/drawer/newsfeed.png');
-  mask-image: url('../../../../../images/drawer/newsfeed.png');
+  -webkit-mask-image: url('../../../../../images/drawer/News.png');
+  mask-image: url('../../../../../images/drawer/News.png');
   }
 .benefits-icon {
-  -webkit-mask-image: url('../../../../../images/drawer/benefits.png');
-  mask-image: url('../../../../../images/drawer/benefits.png');
+  -webkit-mask-image: url('../../../../../images/drawer/Benefit.png');
+  mask-image: url('../../../../../images/drawer/Benefit.png');
   }
 .transaction-icon {
-  -webkit-mask-image: url('../../../../../images/drawer/MyTransaction.png');
-  mask-image: url('../../../../../images/drawer/MyTransaction.png');
+  -webkit-mask-image: url('../../../../../images/drawer/Transaction.png');
+  mask-image: url('../../../../../images/drawer/Transaction.png');
   }
 .faqs-icon {
   -webkit-mask-image: url('../../../../../images/drawer/faqs.png');
   mask-image: url('../../../../../images/drawer/faqs.png');
   }
 .settings-icon {
-  -webkit-mask-image: url('../../../../../images/drawer/Profile.png');
-  mask-image: url('../../../../../images/drawer/Profile.png');
+  -webkit-mask-image: url('../../../../../images/drawer/Settings.png');
+  mask-image: url('../../../../../images/drawer/Settings.png');
   }
 .books-icon {
-  -webkit-mask-image: url('../../../../../images/drawer/faqs.png');
-  mask-image: url('../../../../../images/drawer/faqs.png');
+  -webkit-mask-image: url('../../../../../images/drawer/Books-Unionbank library.png');
+  mask-image: url('../../../../../images/drawer/Books-Unionbank library.png');
+  }
+  .podcast-icon {
+  -webkit-mask-image: url('../../../../../images/drawer/PODCAST.png');
+  mask-image: url('../../../../../images/drawer/PODCAST.png');
   }
