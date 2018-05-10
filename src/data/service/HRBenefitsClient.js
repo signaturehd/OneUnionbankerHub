@@ -102,8 +102,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getPodcast (token) {
-    return this.service.getPodcast(token)
+  getPodcasts (token) {
+    return this.service.getPodcasts(token)
       .pipe(ServiceErrorOperator())
   }
   /* dental reimbursement */

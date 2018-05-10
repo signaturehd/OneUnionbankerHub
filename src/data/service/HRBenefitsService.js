@@ -120,8 +120,8 @@ export default class HRBenefitsService {
     })
   }
 
-  getPodcast (token) {
-      return this.apiClient.get('v1/news', {
+  getPodcasts (token) {
+      return this.apiClient.get('v1/podcasts', {
           headers: { token }
       })
     }
