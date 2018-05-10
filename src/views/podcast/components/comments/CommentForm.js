@@ -46,15 +46,15 @@ class Comment extends Component  {
       <div className="commentContainer">
         <div className="commentText">
           <textarea
-            ref={ (input) => { this.newText = input; } }
-                  onChange={this.handleChange}
-                  defaultValue={this.props.children}>
+            ref={ (input) => { this.newText = input } }
+                  onChange = { this.handleChange }
+                  defaultValue = {this.props.children}>
           </textarea>
         </div>
 
        <button onClick={this.save} className="btn-comment">
           <span className="fa fa-floppy-o fa-2x"></span>
-         </button>
+       </button>
       </div>
     )
 
@@ -67,10 +67,7 @@ class Comment extends Component  {
        return this.renderNormalMode()
      }
   }
-
 }
-
-
 class Board extends React.Component  {
 
    constructor(props) {
@@ -79,7 +76,24 @@ class Board extends React.Component  {
      this.updateComment = this.updateComment.bind(this)
      this.removeComment = this.removeComment.bind(this)
      this.addNewComment = this.addNewComment.bind(this)
-     this.state = {comments:[]}
+     this.state = {comments:[
+        {
+          id : 0,
+          comment : 'Nice'
+        },
+        {
+          id : 1,
+          comment : 'Wow, Thanks for the info.'
+        },
+        {
+          id : 1,
+          comment : 'This video is shit'
+        },
+        {
+          id : 1,
+          comment : 'Awesome!!!!!!!!!!!!!!!!!!!!! :D'
+        }
+      ]}
     }
 
   removeComment(idx){
@@ -93,7 +107,6 @@ class Board extends React.Component  {
     arr[idx] = newText
     this.setState({comments: arr})
   }
-
   addNewComment(){
     var newText = $('#shareCommentText').val()
     if(newText !== ""){
@@ -102,23 +115,20 @@ class Board extends React.Component  {
       this.setState({comments: arr})
     }
     else alert("Please write a comment to share!")
-
   }
-
     displayComments(text,i){
     return(
       <Comment
         key={i}
-        index={i}
         removeCommentFromBoard ={this.removeComment}
         updateCommentFromBoard ={this.updateComment}
-        >{text}</Comment>
+        >{text.comment}</Comment>
      )
   }
   render(){
     return(
       <div className="board">
-        <div> User Feedback </div>
+        <div className = { 'feedback-title' } > User Feedback </div>
           <div className="shareCommentContainer">
             <textarea id="shareCommentText" placeholder="Write a comment.."></textarea>
             <GenericButton 
@@ -131,10 +141,6 @@ class Board extends React.Component  {
       </div>
     )
   }
-
 }
-
-
-
 
 export default Board

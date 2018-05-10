@@ -24,14 +24,14 @@ class PodcastView extends BaseMVPView {
         rating: false,
         showRating : false,
         details : null,
-        searchString : ''
+        searchString : '',
+        selectedPodcast: null,
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
-   addRating (id, rating) {
+  addRating (id, rating) {
     this.props.presenter.rateBook(id, rating)
   }
-
   componentDidMount () {
       this.presenter.getPodcasts()
       this.props.setSelectedNavigation(0)
@@ -43,13 +43,15 @@ class PodcastView extends BaseMVPView {
       this.setState({ podcasts })  
   }
   render () {
-    const { podcasts,  show, details, detail, searchBar } = this.state
+    const { podcasts,  show, details, detail, searchBar, selectedPodcast } = this.state
     const { history } = this.props
     const PodcastPlayer = () => (
         <PodcastPlayerFragment 
+            selectedPodcast = { selectedPodcast }
             presenter = { this.presenter }
             podcasts = { podcasts }
-            _podcasts = { _podcasts }/>
+            _podcasts = { _podcasts }
+            history = { history }/>
     )
     const PodCast = () => (
     <div>
@@ -86,9 +88,11 @@ class PodcastView extends BaseMVPView {
 
       <section id='content1'>
         <PodCastsListFragment
+          changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
           presenter = { this.presenter }
           podcasts = { podcasts }
           _podcasts = { _podcasts } 
+          details = { details }
           history = { history } />
       </section>
       <section id='content2'>

@@ -18,9 +18,9 @@ export default class PodcastPresenter {
       this.view.showLoading()
 
       this.getPodcastInteractor.execute()
-      .subscribe(podcast => {
+      .subscribe(podcasts => {
           this.view.hideLoading()
-          this.view.news(podcast)
+          this.view.podcasts(podcasts)
         }, e => {
           this.view.hideLoading()
           // TODO prompt generic error

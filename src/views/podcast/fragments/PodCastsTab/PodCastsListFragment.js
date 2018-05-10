@@ -12,23 +12,21 @@ class PodCastsListFragment extends Component {
     }
   }
 
-  addRating (id, rating) {
-    this.props.presenter.rateBook(id, rating)
-  }
   render () {
-    const { podcasts, _podcasts } = this.props
+    const { podcasts, _podcasts, changeSelectedPodcast } = this.props
     return (
   <div className = {'podcasts-container'}>
     {
-      _podcasts.map((podcasts, i) =>
+      _podcasts.map((podcast, i) =>
         <PodCardComponent
           history = { this.props.history }
-          rateBook = { (id, rating) => this.addRating(id, rating) }
+          rateBook = { (id, rating) => this.getPodcasts(id, rating) }
           key={ i }
-          podcasts = { podcasts }
-          onClick = { details => {
-            this.setState({ details, show: true })
-          }} />
+          podcast = { podcast }
+          onClick={ () => {
+            this.props.history.push('/podcast/player')
+            changeSelectedPodcast(podcast)
+          }}/>
         )
       }
       </div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import PodCardComponent from '../../../common/components/PodCardComponent/PodCardComponent'
-
+import PodcastCardDetailsComponent from '../../../common/components/PodCardComponent/PodcastCardDetailsComponent'
+import ContentLoader, { Facebook } from 'react-content-loader'
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 
 class PodcastsPlayerDetailsFragment extends Component {
@@ -13,28 +13,65 @@ class PodcastsPlayerDetailsFragment extends Component {
       details : null
     }
   }
-
   addRating (id, rating) {
     this.props.presenter.rateBook(id, rating)
   }
+  
   render () {
-    const { podcasts, _podcasts } = this.props
+
+    const { selectedPodcast, podcasts, _podcasts, changeSelected } = this.props
+    const {  } = this.state
+
+    const ContentLoaderView = () => {
+      <ContentLoader
+        height={1600}
+        width={400}
+        speed={2}
+        primaryColor = "#f3f3f3"
+        secondaryColor="#ecebeb">
+        <rect x="5.00" y="5.00" rx="0" ry="0" width="500" height="250" /> 
+        <rect x="5.00" y="265.00" rx="0" ry="0" width="500" height="25" /> 
+        <rect x="5.00" y="300.00" rx="0" ry="0" width="500" height="25" /> 
+        <rect x="5.00" y="380" rx="0" ry="0" width="500" height="250" /> 
+        <rect x="5.00" y="640.00" rx="0" ry="0" width="500" height="25" /> 
+        <rect x="5.00" y="675.00" rx="0" ry="0" width="500" height="25" /> 
+      </ContentLoader>
+    }
+    const ContentView = () => {
+      {
+        _podcasts.map((podcasts, i) =>
+          <PodCardComponent
+            history = { this.props.history }
+            rateBook = { (id, rating) => this.addRating(id, rating) }
+            key={ i }
+            podcasts = { podcasts.speaker }
+            onClick = { details => {
+              this.setState({ details, show: true })
+            }} />
+          )
+        }
+    }
     return (
-      <div className = { 'podcast-details' }>
-    {
-      _podcasts.map((podcasts, i) =>
-        <PodCardComponent
-          history = { this.props.history }
-          rateBook = { (id, rating) => this.addRating(id, rating) }
-          key={ i }
-          podcasts = { podcasts }
-          onClick = { details => {
-            this.setState({ details, show: true })
+    <div className = { 'podcast-details' }>
+     {
+        _podcasts.map((podcast, i) =>
+          <PodcastCardDetailsComponent
+            history = { this.props.history }
+            rateBook = { (id, rating) => this.addRating(id, rating) }
+            key={ i }
+            podcasts = { podcast }
+            onClick = { details => {
+              this.setState({ details, show: true })
           }} />
         )
       }
-      </div>
-    )}
+    </div>
+    )
   }
+ }
 
+PodcastsPlayerDetailsFragment.propTypes = {
+  selectedPodcast: PropTypes.object,
+
+}
 export default PodcastsPlayerDetailsFragment

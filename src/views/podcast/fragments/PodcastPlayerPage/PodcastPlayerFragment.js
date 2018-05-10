@@ -26,44 +26,46 @@ class PodcastPlayerFragment extends Component {
   }
  render () {
 
-   const { title, author, description, detail, rateBook } = this.props
-   const {rating} = this.state
-   return (
+   const { title, author, description, detail, rateBook, selectedPodcast, podcast } = this.props
+   const { rating } = this.state
+   return ( 
     <div>
     <div className={ 'podplay-header' }>
       <i className = { 'left' } onClick = { () => this.props.history.push('/podcast') }></i>
-      <h1>Title</h1>
+      <h1>UTube</h1>
     </div>
     <div className = { 'podplay-main' }>
-      <div><MedPlayer/></div>
-      <h5>Author of podcast</h5>
-      <h5>Details</h5>
+      <div><MedPlayer selectedPodcast = { selectedPodcast.url }/></div>
       <Rating 
-              rateBook = { (id, rating) => this.addRating(id, rating) }
-              emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
-              fullSymbol = {<MdStar style={{ fontSize: 40,  color : '#c65e11' }} />}
-              onChange = { e => {
-                rateBook(detail.id, e)
-                this.setState({ rating : e })
-              }}
-              fractions = { 2 }
-              initialRating = { rating ? rating : 0 } />
-        <Board/>
+          rateBook = { (id, rating) => this.addRating(id, rating) }
+          emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
+          fullSymbol = {<MdStar style={{ fontSize: 40,  color : '#c65e11' }} />}
+          onChange = { e => {
+            rateBook(detail.id, e)
+            this.setState({ rating : e })
+          }}
+          fractions = { 2 }
+          initialRating = { selectedPodcast ? selectedPodcast.rating : 0 } />
+    <div className = { 'podcasts-player-details' }>
+      <h2>{ selectedPodcast.speaker }</h2>
+      <h5>Details</h5>
+    </div>
+    <Board selectedPodcast = { selectedPodcast }/>
     </div>
       <div className = { 'podplay-sidebar-right' }>
         <PodcastPlayerDetailsFragment 
           presenter = { this.presenter } 
           podcasts = { this.props.podcasts } 
-          _podcasts = { this.props._podcasts }/>
+          _podcasts = { this.props._podcasts }
+          selectedPodcast = { selectedPodcast }/>
       </div>
     </div>
      )
    }
  }
 
-
 PodcastPlayerFragment.propTypes = {
-
+  selectedPodcast: PropTypes.object,
   onClick : PropTypes.func,
   rateBook : PropTypes.func,
 

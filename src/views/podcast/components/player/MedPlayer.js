@@ -6,16 +6,17 @@ const { CurrentTime, Progress, SeekBar, Duration, Volume, PlayPause, Fullscreen,
 
 class MedPlayer extends Component {
   render() {
-    return (
+    const { newSelectedPodcast } = this.props
+   return (
       <div>
-       <Media>
+      <Media>
       {({ isFullscreen, playPause }) =>
         <div
           className={'media-player' + (isFullscreen ? ' media-player--fullscreen' : '')}
           tabIndex="0"
         >
           <Player
-            src={"https://videocdn.bodybuilding.com/video/mp4/62000/62792m.mp4"}
+            src={ newSelectedPodcast.url }
             onClick={() => playPause()}
           />
           <div className="media-controls">
@@ -37,5 +38,9 @@ class MedPlayer extends Component {
     )
   }
 }
+MedPlayer.propTypes = {
+  selectedPodcast: PropTypes.object,
 
-export default (MedPlayer)
+}
+
+export default MedPlayer
