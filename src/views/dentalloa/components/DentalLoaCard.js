@@ -3,8 +3,11 @@ import PropTypes from 'prop-types'
 import './styles.css'
 import Button from './DentalLoaButton'
 import TextBox from './DentalLoaTextBox'
-import Modal from '../modal/DentalLoaModal'
-import { GenericTextBox, Card } from '../../../ub-components'
+import DentalLoaBranchModal from '../modal/DentalLoaBranchModal'
+import DentalLoaDependentModal from '../modal/DentalLoaDependentModal'
+import DentalLoaProcedureModal from '../modal/DentalLoaProcedureModal'
+import { GenericTextBox, Card, Datepicker } from '../../../ub-components'
+
 
 class DentalLoaCard extends Component {
 
@@ -36,33 +39,37 @@ class DentalLoaCard extends Component {
   }
 
   render () {
-    const { proceedModal , text1, text2, text3, onFocus } = this.props
+    const { proceedModal , text1, text2, text3, onFocus, details } = this.props
+    console.log(details)
     const { showRecipientModal, showHealthwayBranchModal, showProcedureModal } = this.state
     return (
       <Card className={ 'dentalloa-card' }>
       {
         showRecipientModal &&
-        <Modal
+        <DentalLoaBranchModal
           showRecipientModal = { showRecipientModal }
           show = { this.state.showRecipientModal}
+          details = { details.dependents }
           onClose = { () => this.setState({ showRecipientModal : false }) }>
-        </Modal>
+        </DentalLoaBranchModal>
       }
       {
         showHealthwayBranchModal &&
-        <Modal
+        <DentalLoaBranchModal
           showHealthwayBranchModal = { showHealthwayBranchModal }
           show = { this.state.showHealthwayBranchModal}
+          details = { details.branches }
           onClose = { () => this.setState({ showHealthwayBranchModal : false }) }>
-        </Modal>
+        </DentalLoaBranchModal>
       }
       {
         showProcedureModal &&
-        <Modal
+        <DentalLoaProcedureModal
           showProcedureModal = { showProcedureModal }
           show = { this.state.showProcedureModal}
+          details = { details.procedures }
           onClose = { () => this.setState({ showProcedureModal : false }) }>
-        </Modal>
+        </DentalLoaProcedureModal>
       }
       <form onSubmit = { this.handleSubmit }>
         <div className = {'dentalloa-header'} >
@@ -79,8 +86,9 @@ class DentalLoaCard extends Component {
                onClick = { () => this.showModal('branch') }
                placeholder = { text2 }/>
             <i className = { 'dentalloa-icon text3-icon' }/>
-            <input className = { 'dentalloa-datepicker' }
-                   type = {'date'} />
+            <Datepicker
+              label = { 'Expected date' }
+            />
           </div>
         </div>
         <div className = {'dentalloa-footer-left'}>
@@ -100,7 +108,7 @@ class DentalLoaCard extends Component {
 
 DentalLoaCard.propTypes = {
   onClose : PropTypes.func,
-  details : PropTypes.func,
+  details : PropTypes.object,
   confirm : PropTypes.string,
   text1   : PropTypes.string,
   text2   : PropTypes.string,

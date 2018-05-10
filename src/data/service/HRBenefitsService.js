@@ -25,18 +25,33 @@ export default class HRBenefitsService {
     })
   }
   /* dental loa */
-  validateDentalLoa (token) {
+
+  getDentalLoa (token) {
     return this.apiClient.get('v1/issuances/dental/loa/validate?type=1', {
       headers: { token }
     })
   }
 
   addDentalLoa (token, dentalLoaParam) {
-    const formData = DentalLoaParam
-    return this.apiClient.post('v1/issuances/dental/loa/submit', formData, {
+    return this.apiClient.post('v1/issuances/dental/loa/submit', dentalLoaParam, {
       headers : { token }
     })
   }
+
+
+  // addDentalLoa (token, accountNumber, opticalParam) {
+  //   // TODO to be fixed
+  //   const formData = new FormData()
+  //   formData.append('uuid', 1)
+  //   formData.append('med', opticalParam.medCert)
+  //   formData.append('opt', opticalParam.optCert)
+  //   formData.append('accountNumber', '111')
+  //   formData.append('releasingCenter', 'UBP')
+  //   formData.append('amount', opticalParam.amount)
+  //   return this.apiClient.post('v1/issuances/dental/loa/submit', formData, {
+  //     headers : { token }
+  //   })
+  // }
 
   /* dental reimbursements */
 

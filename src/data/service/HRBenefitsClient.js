@@ -92,9 +92,15 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  /* optical */
-  getOptical (token) {
-    return this.service.getOptical(token)
+  /* Dental Loa */
+
+  getDentalLoa (token) {
+    return this.service.getDentalLoa(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addDentalLoa (token, dentalLoaParam) {
+    return this.service.addDentalLoa(token, dentalLoaParam)
       .pipe(ServiceErrorOperator())
   }
 

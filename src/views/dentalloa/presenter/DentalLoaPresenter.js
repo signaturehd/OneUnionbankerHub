@@ -1,19 +1,32 @@
 import AddDentalLoaInteractor from '../../../domain/interactor/dentalLoa/AddDentalLoaInteractor'
+import GetDentalLoaInteractor from '../../../domain/interactor/dentalLoa/GetDentalLoaInteractor'
 
 
 export default class DentalLoaPresenter {
  constructor (container) {
-  this.AddDentalLoaInteractor = new AddDentalLoaInteractor(container.get('HRBenefitsClient'))
+   this.addDentalLoaInteractor = new AddDentalLoaInteractor(container.get('HRBenefitsClient'))
+   this.getDentalLoaInteractor = new GetDentalLoaInteractor(container.get('HRBenefitsClient'))
  }
 
  setView (view) {
   this.view = view
  }
 
+ getDentalLoa () {
+   this.view.showLoading()
+   this.getDentalLoaInteractor.execute()
+    .subscribe(response => {
+      this.view.hideLoading()
+      this.view.getDentalLoa(response)
+    }, e => {
+      this.view.hideLoading()
+    })
+ }
+
+
  addDentalLoa () {
   this.view.showLoading()
-
-  this.AddDentalLoalInteractor.execute()
+  this.addDentalLoaInteractor.execute()
    .subscribe(dentalloa => {
     this.view.hideLoading()
     this.view.showDentalLoa(dentalloa)
