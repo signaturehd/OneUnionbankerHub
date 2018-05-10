@@ -105,28 +105,30 @@ export default class HRBenefitsService {
   }
 
 
-
   addRating (token, bookParam) {
     return this.apiClient.post('v1/books/rate', bookParam, {
       headers : { token }
     })
   }
 
-
-
-  addRating (token, bookParam) {
-    return this.apiClient.post('v1/books/rate', bookParam, {
-      headers : { token }
-    })
-  }
 
   getPodcasts (token) {
       return this.apiClient.get('v1/podcasts', {
           headers: { token }
       })
     }
+  getPodcastsRecommendations (token) {
+      return this.apiClient.get('v1/podcasts', {
+          headers: { token }
+      })
+    }  
+  getPodcastsViewed (token) {
+      return this.apiClient.get('v1/podcasts', {
+          headers: { token }
+      })
+    }
   paddRating (token, bookParam) {
-    return this.apiClient.post('v1/books/rate', bookParam, {
+    return this.apiClient.post('v1/books/podcasts', bookParam, {
       headers : { token }
     })
   }

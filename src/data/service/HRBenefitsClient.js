@@ -106,6 +106,14 @@ export default class HRBenefitsClient {
     return this.service.getPodcasts(token)
       .pipe(ServiceErrorOperator())
   }
+  getPodcastsRecommendations(token) {
+    return this.service.getPodcastsRecommendations(token)
+      .pipe(ServiceErrorOperator())
+  }
+  getPodcastsViewed(token) {
+    return this.service.getPodcastsViewed(token)
+      .pipe(ServiceErrorOperator())
+  }
   /* dental reimbursement */
 
   /* dental loa */
