@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 import { ReactDOM } from 'react-dom'
 import './styles.css'
-import './marked.js'
+import { GenericButton } from '../../../../ub-components/'
 
 
 
-class Comment extends React.Component  {
+class Comment extends Component  {
 
    constructor(props) {
-      super(props);
-      this.edit = this.edit.bind(this);
-      this.save = this.save.bind(this);
-      this.remove = this.remove.bind(this);
-      this.state = {editing: false};
+      super(props)
+      this.edit = this.edit.bind(this)
+      this.save = this.save.bind(this)
+      this.remove = this.remove.bind(this)
+      this.state = {editing: false}
     }
 
   edit(){
@@ -20,14 +20,11 @@ class Comment extends React.Component  {
   }
 
   save(){
-    console.log( this.newText.value);
-    var newText = this.newText.value;
-    this.props.updateCommentFromBoard(newText ,this.props.index);
-    this.setState({ editing:false })
+  
   }
 
   remove(){
-   this.props.removeCommentFromBoard(this.props.index);
+   this.props.removeCommentFromBoard(this.props.index)
   }
 
   renderNormalMode(){
@@ -41,7 +38,7 @@ class Comment extends React.Component  {
           <span className="fa fa-trash fa-2x"></span>
          </button>
       </div>
-    );
+    )
   }
 
   renderEditingMode(){
@@ -59,15 +56,15 @@ class Comment extends React.Component  {
           <span className="fa fa-floppy-o fa-2x"></span>
          </button>
       </div>
-    );
+    )
 
   }
 
   render(){
      if(this.state.editing){
-       return this.renderEditingMode();
+       return this.renderEditingMode()
      }else{
-       return this.renderNormalMode();
+       return this.renderNormalMode()
      }
   }
 
@@ -77,31 +74,31 @@ class Comment extends React.Component  {
 class Board extends React.Component  {
 
    constructor(props) {
-     super(props);
-     this.displayComments = this.displayComments.bind(this);
-     this.updateComment = this.updateComment.bind(this);
-     this.removeComment = this.removeComment.bind(this);
-     this.addNewComment = this.addNewComment.bind(this);
-     this.state = {comments:[]};
+     super(props)
+     this.displayComments = this.displayComments.bind(this)
+     this.updateComment = this.updateComment.bind(this)
+     this.removeComment = this.removeComment.bind(this)
+     this.addNewComment = this.addNewComment.bind(this)
+     this.state = {comments:[]}
     }
 
   removeComment(idx){
-    var arr = this.state.comments;
+    var arr = this.state.comments
     arr.splice(idx,1)
-    this.setState({comments: arr});
+    this.setState({comments: arr})
   }
 
   updateComment(newText,idx){
-    var arr = this.state.comments;
-    arr[idx] = newText;
+    var arr = this.state.comments
+    arr[idx] = newText
     this.setState({comments: arr})
   }
 
   addNewComment(){
-    var newText = $('#shareCommentText').val();
+    var newText = $('#shareCommentText').val()
     if(newText !== ""){
-      var arr = this.state.comments;
-      arr.push(newText);
+      var arr = this.state.comments
+      arr.push(newText)
       this.setState({comments: arr})
     }
     else alert("Please write a comment to share!")
@@ -116,19 +113,23 @@ class Board extends React.Component  {
         removeCommentFromBoard ={this.removeComment}
         updateCommentFromBoard ={this.updateComment}
         >{text}</Comment>
-     );
+     )
   }
   render(){
     return(
       <div className="board">
-        <div className="shareCommentContainer">
-          <textarea id="shareCommentText" placeholder="Write a comment.."></textarea>
-          <button onClick={this.addNewComment} className="btn btn-success"> Share</button>
-        </div>
+        <div> User Feedback </div>
+          <div className="shareCommentContainer">
+            <textarea id="shareCommentText" placeholder="Write a comment.."></textarea>
+            <GenericButton 
+                text = { 'Share' }  
+                onClick={this.addNewComment} 
+                className="btn btn-success" /> 
+          </div>
 
         {this.state.comments.map(this.displayComments)}
       </div>
-    );
+    )
   }
 
 }
@@ -136,4 +137,4 @@ class Board extends React.Component  {
 
 
 
-export default (Board)
+export default Board

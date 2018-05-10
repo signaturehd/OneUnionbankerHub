@@ -49,13 +49,12 @@ class PodcastPlayerFragment extends Component {
               fractions = { 2 }
               initialRating = { rating ? rating : 0 } />
         <Board/>
-        <div> User Feedback </div>
     </div>
       <div className = { 'podplay-sidebar-right' }>
         <PodcastPlayerDetailsFragment 
           presenter = { this.presenter } 
-          news = { this.props.news } 
-          _news = { this.props._news }/>
+          podcasts = { this.props.podcasts } 
+          _podcasts = { this.props._podcasts }/>
       </div>
     </div>
      )

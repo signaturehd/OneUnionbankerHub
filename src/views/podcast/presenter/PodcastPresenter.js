@@ -1,4 +1,4 @@
-import NewsInteractor from '../../../domain/interactor/news/NewsInteractor'
+import PodcastInteractor from '../../../domain/interactor/podcast/PodcastInteractor'
 import AddBookRatingInteractor from '../../../domain/interactor/library/AddBookRatingInteractor'
 import BookRateParam from '../../../domain/param/BookRateParam'
 
@@ -6,7 +6,7 @@ import BookRateParam from '../../../domain/param/BookRateParam'
 
 export default class PodcastPresenter {
     constructor (container) {
-      this.getNewsInteractor = new NewsInteractor(container.get('HRBenefitsClient'))
+      this.getPodcastInteractor = new PodcastInteractor(container.get('HRBenefitsClient'))
       this.addBookInteractor = new AddBookRatingInteractor(container.get('HRBenefitsClient'))
     }
 
@@ -14,13 +14,13 @@ export default class PodcastPresenter {
       this.view = view
     }
 
-    getNews () {
+    getPodcasts () {
       this.view.showLoading()
 
-      this.getNewsInteractor.execute()
-      .subscribe(news => {
+      this.getPodcastInteractor.execute()
+      .subscribe(podcast => {
           this.view.hideLoading()
-          this.view.news(news)
+          this.view.news(podcast)
         }, e => {
           this.view.hideLoading()
           // TODO prompt generic error

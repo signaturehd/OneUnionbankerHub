@@ -19,7 +19,7 @@ class PodcastView extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-        news: [],
+        podcasts: [],
         show : false,
         rating: false,
         showRating : false,
@@ -33,23 +33,23 @@ class PodcastView extends BaseMVPView {
   }
 
   componentDidMount () {
-      this.presenter.getNews()
+      this.presenter.getPodcasts()
       this.props.setSelectedNavigation(0)
   }
   updateSearch () {
       this.setState({ searchString: this.refs.search.value.substr( 0 , 20) })
   }
-  news (news, details) {
-      this.setState({ news })
+  podcasts ( podcasts ) {
+      this.setState({ podcasts })  
   }
   render () {
-    const { news, show, details, detail, searchBar } = this.state
+    const { podcasts,  show, details, detail, searchBar } = this.state
     const { history } = this.props
     const PodcastPlayer = () => (
         <PodcastPlayerFragment 
             presenter = { this.presenter }
-            news = { news }
-            _news = { _news }/>
+            podcasts = { podcasts }
+            _podcasts = { _podcasts }/>
     )
     const PodCast = () => (
     <div>
@@ -87,30 +87,32 @@ class PodcastView extends BaseMVPView {
       <section id='content1'>
         <PodCastsListFragment
           presenter = { this.presenter }
-          news = { news }
-          _news = { _news } 
+          podcasts = { podcasts }
+          _podcasts = { _podcasts } 
           history = { history } />
       </section>
       <section id='content2'>
         <PodCastsRecommendationFragment 
-          presenter = { this.presenter } 
-          news = { news }
-          _news = { _news } />
+          presenter = { this.presenter }
+          podcasts = { podcasts }
+          _podcasts = { _podcasts } 
+          history = { history } />
       </section>
       <section  id='content3'>
         <PodCastsViewedFragment  
-          presenter = { this.presenter } 
-          news = { news } 
-          _news = { _news} />
+          presenter = { this.presenter }
+          podcasts = { podcasts }
+          _podcasts = { _podcasts } 
+          history = { history }  />
       </section>
     </div>
   </div>
   )
-  let _news = this.state.news
+  let _podcasts = this.state.podcasts
   let search = this.state.searchString.trim().toLowerCase()
   if (search.length > 0) {
-    _news = _news.filter(function( news ) {
-      return news.title.toLowerCase().match(search)
+    _podcasts = _podcasts.filter(function( podcasts ) {
+      return podcasts.title.toLowerCase().match(search)
     })
   }
   return (

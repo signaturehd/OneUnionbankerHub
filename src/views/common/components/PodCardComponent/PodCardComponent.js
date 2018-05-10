@@ -20,7 +20,6 @@ class PodCardComponent extends Component {
     this.props.presenter.rateBook(id, rating)
   }
 
-
   render () {
     const { detail, news, onClick, rateBook, history } = this.props
     const { rating } = this.state

@@ -15,18 +15,17 @@ textarea{
   font-size: inherit;
 }
 
-
-
 .shareCommentContainer{
   background: none repeat scroll 0 0 #f5f5f5;
-   margin: 20px 10px;
+  opacity: 0.2%;
+   margin: 20px 0px 50px 0px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
   width: 640px;
-  min-width: 640px
+  min-width: 640px;
 }
 
 .shareCommentContainer textarea {
@@ -41,6 +40,14 @@ textarea{
   -o-border-radius: 4px 4px 0 0;
   border-radius: 4px 4px 0 0;
 
+}
+
+._generic-button {
+  margin-top: 10px;
+  margin-bottom: 50px;
+  min-width : 100px !important;
+  height: 40px !important;
+  float:  right !important;
 }
 
 .shareCommentContainer .btn-success{
@@ -62,7 +69,6 @@ textarea{
 
 .shareCommentContainer button:hover{
   cursor: pointer;
-  background-color: #008000;
 }
 
 
@@ -72,13 +78,13 @@ textarea{
 
 .commentContainer {
   position: relative;
-  max-width:  60%;
+  max-width: 60%;
   height: auto;
   margin: 20px 10px;
   padding: 10px;
   border: 1px solid #f5f5f5;
-  box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
-  border-radius: 4px;
+  box-shadow: #e1e1e1 5px 5px 6px;
+  border-radius: 1px;
 }
 
 .commentText {
