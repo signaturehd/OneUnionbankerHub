@@ -61,7 +61,7 @@ export default class HRBenefitsService {
   }
 
   /* Optical */
-  validateOptical (token) {
+  getOptical (token) {
     return this.apiClient.get('v1/reimbursements/optical/validate', {
       headers : { token }
     })
@@ -69,12 +69,16 @@ export default class HRBenefitsService {
 
   addOptical (token, accountNumber, opticalParam) {
     const formData = new FormData()
-    formData.append('uuid', 1)
+    const opticalObject = {
+      "accountNumber": accountNumber,
+      "amount": "200",
+      "releasingCenter": "UBP",
+      "distributor": "distributorTest"
+    }
+    formData.append('uuid', 123345)
     formData.append('med', opticalParam.medCert)
     formData.append('opt', opticalParam.optCert)
-    formData.append('accountNumber', '111')
-    formData.append('releasingCenter', 'UBP')
-    formData.append('amount', opticalParam.amount)
+    formData.append('body', JSON.stringify(opticalObject))
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
       headers : { token }
     })

@@ -7,7 +7,7 @@ class BaseView extends Component {
     super(props)
     this.state = {
       loader : false,
-      showNotif : true,
+      showNotif : false,
       title : null,
       message : null,
       type : null,

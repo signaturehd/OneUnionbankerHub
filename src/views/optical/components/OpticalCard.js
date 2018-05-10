@@ -5,7 +5,7 @@ import Button from './OpticalButton'
 import Modal from '../modal/OpticalReviewModal'
 import ConnectView from '../../../utils/ConnectView'
 import Presenter from '../presenter/OpticalPresenter'
-import { GenericTextBox } from  '../../../ub-components/'
+import { GenericTextBox, FileUploader } from  '../../../ub-components/'
 
 class OpticalCard extends Component {
   constructor (props) {
@@ -75,6 +75,7 @@ class OpticalCard extends Component {
       imagePreviewUrl2,
       acceptNumber,
     } = this.state
+    console.log(amount.name)
     let $imagePreview = null
     let $imagePreview2 = null
       $imagePreview = (<img className = {'optical-image'} src={imagePreviewUrl} />)
@@ -101,12 +102,16 @@ class OpticalCard extends Component {
               </div>
               <div className = {'optical-body'}>
                 <br/>
-                <GenericTextBox
-                  type = { 'file' }
-                  placeholder = { 'Enter Amount' }
-                  onChange = { (e) => this.setState({ amount: parseInt(e.target.value) || 0 }) }
+                <FileUploader
+                  onChange = { this._handleImageChange }
+                  placeholder = 'Optical Certificate'
+                  value = { this.state.file.name }
                 />
-
+                <FileUploader
+                  onChange = { this._handleImageChange2 }
+                  placeholder = 'Medical Certificate'
+                  value = { this.state.file2.name }
+                />
               </div>
               <div className = { 'optical-button-submit' }>
                 <Button />

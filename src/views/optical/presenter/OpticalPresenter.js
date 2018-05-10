@@ -1,9 +1,11 @@
 import AddOpticalInteractor from '../../../domain/interactor/optical/AddOpticalInteractor'
+import GetOpticalInteractor from '../../../domain/interactor/optical/GetOpticalInteractor'
 import OpticalParam from '../../../domain/param/OpticalParam'
 
 export default class OpticalPresenter {
  constructor (container) {
-  this.AddOpticalInteractior = new AddOpticalInteractor(container.get('HRBenefitsClient'))
+   this.AddOpticalInteractior = new AddOpticalInteractor(container.get('HRBenefitsClient'))
+   this.GetOpticalInteractor = new GetOpticalInteractor(container.get('HRBenefitsClient'))
  }
 
  setView (view) {
@@ -21,4 +23,16 @@ export default class OpticalPresenter {
     // TODO prompt generic error
    })
  }
+
+ getOptical () {
+   this.view.showLoading()
+   this.GetOpticalInteractor.execute()
+    .subscribe(response => {
+      this.view.hideLoading()
+      this.view.isEligible(response)
+    }, e => {
+      this.view.hideLoading()
+    })
+ }
+
 }

@@ -12,13 +12,25 @@ class OpticalFragment extends BaseMVPView {
     super(props)
   }
 
-  navigate () {
+  componentWillMount () {
+    this.presenter.getOptical()
+  }
+
+  isEligible (resp) {
+    // check if eligible
+    if (!respo.isvalid) {
       this.props.history.push('/benefits/medical')
+    }
+  }
+
+  navigate () {
+    this.props.history.push('/benefits/medical')
   }
 
   render () {
     return (
       <div  className = { 'benefits-container' }>
+        { super.render() }
         <div className={ 'breadcrumbs-container' }>
           <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
           <h1>Optical Reimbursement</h1>
