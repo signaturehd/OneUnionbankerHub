@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './styles.css'
 import Button from './OpticalButton'
-import Modal from '../modal/OpticalReviewModal'
+
 import ConnectView from '../../../utils/ConnectView'
 import Presenter from '../presenter/OpticalPresenter'
 import { GenericTextBox, FileUploader } from  '../../../ub-components/'
@@ -11,7 +11,6 @@ class OpticalCard extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      showConfirmation: false,
       file: '',
       file2: '',
       imagePreviewUrl: '',
@@ -29,10 +28,11 @@ class OpticalCard extends Component {
     if (this.state.file === '' || this.state.file2 === '') {
       this.setState({ warning : 'Please complete the attached forms' })
     } else {
-    this.setState({ showConfirmation : true })
-    this.setState({ warning : '' })
+      this.setState({ showConfirmation : true })
+      this.setState({ warning : '' })
     }
   }
+
   _handleImageChange (e) {
     e.preventDefault()
 
@@ -64,32 +64,24 @@ class OpticalCard extends Component {
   }
 
   render () {
-    const { proceedModal, props, fileReceived, fileReceived2 } = this.props
+    const { proceedModal, props, fileReceived, fileReceived2, onClick } = this.props
     const {
-      showConfirmation,
       confirm,
       cancel,
       warning,
       amount,
+      file2,
+      file,
       imagePreviewUrl,
       imagePreviewUrl2,
       acceptNumber,
     } = this.state
-    console.log(amount.name)
     let $imagePreview = null
     let $imagePreview2 = null
       $imagePreview = (<img className = {'optical-image'} src={imagePreviewUrl} />)
       $imagePreview2 = (<img className = {'optical-image'} src={imagePreviewUrl2} />)
     return (
         <div className = { 'optical-card' } >
-          {
-            showConfirmation &&
-            <Modal
-              fileReceived = { this.state.file }
-              fileReceived2 = { this.state.file2 }
-              onClose = { () => this.setState({ showConfirmation : false }) }>
-            </Modal>
-          }
           <form onSubmit={this._handleSubmit}>
             <div className = {'optical-header'} >
               <h5 >Form Attachments</h5>
@@ -114,9 +106,9 @@ class OpticalCard extends Component {
                 />
               </div>
               <div className = { 'optical-button-submit' }>
-                <Button />
+                <Button onClick = { () => onClick(true, file, file2, amount)}/>
               </div>
-          </div>
+            </div>
             <div className = {'optical-footer-left'}>
               <h2 className = { 'optical-warning-display' }>{warning}</h2>
               <div className = { 'optical-modal-review' }>
@@ -148,4 +140,4 @@ class OpticalCard extends Component {
     confirm : 'Submit',
     cancel : 'Cancel',
   }
-export default ConnectView(OpticalCard, Presenter)
+export default OpticalCard

@@ -12,7 +12,7 @@ export default class HRBenefitsService {
   }
 
   otp (otpParam) {
-    return this.apiClient.post('v1/otp', otpParam)
+    return this.apiClient.post('v2/otp', otpParam)
   }
 
   resend (resendOtpParam) {
@@ -24,6 +24,7 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
   /* dental loa */
   validateDentalLoa (token) {
     return this.apiClient.get('v1/issuances/dental/loa/validate?type=1', {
@@ -141,4 +142,13 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  /* notice of undertaking */
+
+  updateNotice (token, noticeParam) {
+    return this.apiClient.put('v1/agreements', noticeParam, {
+      headers: { token }
+    })
+  }
+
 }

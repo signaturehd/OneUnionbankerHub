@@ -13,7 +13,8 @@ export default class SessionProvider {
   }
 
   getToken () {
-    return this.storage.getItem(TOKEN) || ''
+    // return this.storage.getItem(TOKEN) || ''
+    return '298251b7b68347171b7c6fe3fff14d536ef48c1145f2349ac8c99763ae6878d64933f7d111cea9208479f64bd1e09f438a6396b981ec42ca31405b4b37738933'
   }
 
   setAccountToken (accountToken = '') {
@@ -21,7 +22,8 @@ export default class SessionProvider {
   }
 
   getAccountToken () {
-    return this.storage.getItem(ACCOUNT_TOKEN) || ''
+    // return this.storage.getItem(ACCOUNT_TOKEN) || ''
+    return 'rY5CFD9ja3as2I/pjQFkeX+3enBOl5dgzJVfagDynKEoqHatj+eQi+8tErIoKssbnZogU9x35PcmpPpicxPIhkVWbWfBWl1HT3eYhfmn+Kvk+zZqThk5Ygc9TuowaHAYaRxKlIlm+VVF7GbyMDA9+wEJdu2k4VM='
   }
 
   setAccountNumber (accountNumber = '') {

@@ -30,6 +30,10 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  notice (token, noticeParam) {
+    return this.service.notice(token, noticeParam)
+      .pipe(ServiceErrorOperator())
+  }
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
@@ -100,6 +104,7 @@ export default class HRBenefitsClient {
 
   addOptical (token, accountNumber, opticalParam) {
     return this.service.addOptical(token, accountNumber, opticalParam)
+      .pipe(ServiceErrorOperator())
   }
 
   /* News */
@@ -113,4 +118,12 @@ export default class HRBenefitsClient {
     return this.service.getFaqs(token)
       .pipe(ServiceErrorOperator())
   }
+
+  /* Notice of Undertaking */
+  updateNotice (token, noticeParam) {
+    return this.service.updateNotice(token, noticeParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+
 }

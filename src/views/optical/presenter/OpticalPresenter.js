@@ -4,8 +4,8 @@ import OpticalParam from '../../../domain/param/OpticalParam'
 
 export default class OpticalPresenter {
  constructor (container) {
-   this.AddOpticalInteractior = new AddOpticalInteractor(container.get('HRBenefitsClient'))
-   this.GetOpticalInteractor = new GetOpticalInteractor(container.get('HRBenefitsClient'))
+   this.addOpticalInteractior = new AddOpticalInteractor(container.get('HRBenefitsClient'))
+   this.getOpticalInteractor = new GetOpticalInteractor(container.get('HRBenefitsClient'))
  }
 
  setView (view) {
@@ -14,19 +14,23 @@ export default class OpticalPresenter {
 
  addOptical (amount, form1, form2) {
   this.view.showLoading()
-  this.AddOpticalInteractior.execute(OpticalParam(amount, form1, form2))
+  this.addOpticalInteractior.execute(OpticalParam(amount, form1, form2))
    .subscribe(optical => {
     this.view.hideLoading()
+    console.log(optical)
+    console.log(this.view)
+    this.view.noticeOfUndertaking(optical)
     // this.view.showOptical(optical)
    }, e => {
     this.view.hideLoading()
+    this.view.noticeResponse(e)
     // TODO prompt generic error
    })
  }
 
  getOptical () {
    this.view.showLoading()
-   this.GetOpticalInteractor.execute()
+   this.getOpticalInteractor.execute()
     .subscribe(response => {
       this.view.hideLoading()
       this.view.isEligible(response)
