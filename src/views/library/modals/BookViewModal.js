@@ -4,20 +4,25 @@ import { GenericButton } from '../../../ub-components'
 import { Modal } from '../../../ub-components/'
 import ConnectView from '../../../utils/ConnectView'
 import Presenter from '../presenter/LibraryPresenter'
+import BaseMVPView from '../../common/base/BaseMVPView'
 
 import './styles.css'
 
-class BookViewModal extends Component {
+class BookViewModal extends BaseMVPView {
   constructor (props) {
     super(props)
-    this.submitForm = this.submitForm.bind(this)
+
   }
- submitForm () {
-    const { id, quantity } = this.props
-    this.presenter.postBooksReservation(id, quantity)
+  ReserveBook(id,quantity){
+  this.props.presenter.ReserveBook(id,quantity)
+    }
+
+ submitForm (id, quantity) {
+    this.presenter.ReserveBook(id, quantity)
   }
+
   render () {
-    const { onClose, details } = this.props
+    const { onClose, details} = this.props
     console.log(details)
 
     const style = {
@@ -35,9 +40,11 @@ class BookViewModal extends Component {
           <div style = {style}>
           </div>
           <div className = { '' } >
-         <GenericButton onClick = { () => this.submitForm() }
+         <GenericButton onClick = { () => this.submitForm(details.id, 1) }
+
                     
                     text = { "Reserve" } />
+                  
           </div>
           <div className = { '' } >
 
@@ -53,4 +60,4 @@ BookViewModal.propTypes = {
   detail: PropTypes.object,
 }
 
-export default BookViewModal
+export default ConnectView (BookViewModal, Presenter)

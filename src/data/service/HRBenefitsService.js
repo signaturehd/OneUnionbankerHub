@@ -99,9 +99,12 @@ export default class HRBenefitsService {
     })
   }
 
- postBooksReservation (token,BookReserveParam){
-  return this.apiClient.post('v1/books/reservation',{
-    headers: {token}
+ ReserveBook (token, ReserveParam){
+  return this.apiClient.post('v1/books/reservation', {
+    books: ReserveParam
+  }, {
+    headers: {token} 
+
   })
  }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import BookCardComponent from '../components/BookCardComponent/BookCardComponent'
+import BookCardComponent from '../components/BookCardComponent/BookBorrowedCard'
 import BookViewModal from '../modals/BookViewModal'
 
 class BookListFragment extends Component {
@@ -10,6 +10,7 @@ class BookListFragment extends Component {
       rating : false,
       view : false,
       details : null
+
     }
   }
 

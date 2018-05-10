@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import BookCardComponent from '../components/BookCardComponent/BookCardComponent'
-import BookViewModal from '../modals/BookViewModal'
+import BookBorrowedCard from '../components/BookCardComponent/BookBorrowedCard'
+import BookBorrowModal from '../modals/BookBorrowModal'
 
 class BookBorrowedFragment extends Component {
   constructor (props) {
@@ -9,7 +9,7 @@ class BookBorrowedFragment extends Component {
     this.state = {
       rating : false,
       view : false,
-      details : null,
+      bookRequest : null,
     }
   }
 
@@ -19,22 +19,22 @@ class BookBorrowedFragment extends Component {
 
   render () {
     const { detail, borrowed } = this.props
-    const { details } = this.state
+    const { bookRequest } = this.state
     return (
       <div className = {'library-container'}>
         {
-          borrowed  && borrowed.requests && borrowed.requests.map((book, key) =>
-            <BookCardComponent
+          borrowed  && borrowed.requests && borrowed.requests.map((bookRequest, key) =>
+            <BookBorrowedCard
               
               rateBook = { (id, rating) => this.addRating(id, rating) }
-              detail = { book } key = { key }
-              onClick = { (details, view) => this.setState({ details, view }) }
+              detail = { bookRequest.book } key = { key }
+              onClick = { (details, view) => this.setState({ bookRequest, view }) }
             />
           )
         }
         {
           this.state.view &&
-          <BookViewModal details = { details } onClose = { () => this.setState({ view : false }) }/>
+          <BookBorrowModal detail = { bookRequest } onClose = { () => this.setState({ view : false }) }/>
         }
       </div>
     )
