@@ -1,0 +1,66 @@
+html, body, div, span
+h1, h2, h3, h4, h5, h6, p{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  width: -webkit-fill-available;
+  font: inherit;
+  vertical-align: baseline; }
+
+  h1 {
+    font-weight: 350;
+    text-align: -webkit-auto;
+    display: inline-block;
+    margin: 0;
+  }
+
+  p {
+    margin: 0 0 20px;
+    line-height: 1.5;
+  }
+
+.body-div {
+  color: black;
+  background-color: transparent;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  line-height: 1.21em; }
+
+  .panels {
+    display: inline-flex;
+    overflow: hidden;
+    position: absolute;
+    top: 57px;
+    bottom: 0; }
+  .panels .panel {
+    overflow: auto; }
+  .page-boundary {
+    position: absolute;
+    height: 57px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%; }
+  .page-boundary--fixed-top {
+    top: 0; }
+  .page-boundary--fixed-bottom {
+    bottom: 0; }
+
+.main-content {
+  order: 2;
+  flex: 5;
+  padding: 2%;
+  width: -webkit-fill-available;
+}
+
+.left-side, .right-side {
+  flex: 1; }
+
+.page-title {
+  text-align: center; }
+
+
+.img-responsive {
+  max-width: 100%; }

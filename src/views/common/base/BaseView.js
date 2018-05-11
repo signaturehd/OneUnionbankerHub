@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import Loader from '../../../ub-components/Loader'
+import { Loader } from '../../../ub-components/'
 
 class BaseView extends Component {
   constructor (props) {

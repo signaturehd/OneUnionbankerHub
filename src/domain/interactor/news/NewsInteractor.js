@@ -1,10 +1,9 @@
-export default class NewsInteractor
-{
+export default class NewsInteractor {
   constructor (client) {
     this.client = client
   }
 
   execute () {
-    return this.client.getNews()
+    return this.client.getNews(this.client.getToken())
   }
 }

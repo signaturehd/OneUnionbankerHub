@@ -1,0 +1,26 @@
+#drawer-header {
+  display: grid;
+  grid-template-areas: "header-logo header-nav";
+  grid-column: span 2;
+}
+.icon-header {
+  grid-area: header-logo;
+  text-align: left;
+}
+.burger-icon {
+grid-area: header-nav;
+text-align: -webkit-right;
+}
+._img-ub-logo {
+  width: auto;
+  height: 20px;
+  margin-top: 2%;
+  margin-left: 30px;
+  width: auto;
+}
+._img-ub-profile {
+  width: auto;
+  height: 20px;
+  width: auto;
+  margin-top: 2%;
+}

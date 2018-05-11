@@ -20,6 +20,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  resend (resendOtpParam) {
+    return this.service.resend(resendOtpParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  profile (token) {
+    return this.service.profile(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
@@ -46,9 +56,17 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getAccountNumber()
   }
 
+  setProfile (profile) {
+    this.sessionProvider.setProfile(profile)
+  }
+
+  getProfile () {
+    return this.sessionProvider.getProfile()
+  }
+
   /* accounts */
-  validateAccountNumber (accountNumber) {
-    return this.service.validateAccountNumber(accountNumber)
+  validateAccountNumber (token, accountNumber) {
+    return this.service.validateAccountNumber(token, accountNumber)
       .pipe(ServiceErrorOperator())
   }
 
@@ -58,12 +76,21 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-    /* books */
-    getBooks (token) {
-        return this.service.getBooks(token)
-            .pipe(ServiceErrorOperator())
-    }
+  /* books */
+  getBooks (token) {
+    return this.service.getBooks(token)
+      .pipe(ServiceErrorOperator())
+  }
 
+  getBooksBorrowed (token) {
+    return this.service.getBooksBorrowed(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addRating (token, bookParam) {
+    return this.service.addRating(token, bookParam)
+      .pipe(ServiceErrorOperator())
+  }
 
   /* optical */
   getOptical (token) {
@@ -72,11 +99,12 @@ export default class HRBenefitsClient {
   }
 
   /* News */
-  getNews () {
-    return this.service.getNews()
+  getNews (token) {
+    return this.service.getNews(token)
       .pipe(ServiceErrorOperator())
   }
 
+<<<<<<< HEAD
   /* Faqs */
   getFaqs () {
       return this.service.getFaqs()
@@ -87,5 +115,11 @@ export default class HRBenefitsClient {
   getTransactions (token) {
       return this.service.getTransactions(token)
           .pipe(ServiceErrorOperator())
+=======
+  /* News */
+  getFaqs (token) {
+    return this.service.getFaqs(token)
+      .pipe(ServiceErrorOperator())
+>>>>>>> 9d654ca014c24741db7894624526fd3f40cf4be2
   }
 }
