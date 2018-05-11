@@ -32,7 +32,12 @@
 	height: 70%;
 	width: 40%;
 }
-
+.player-content {
+  height: 360px;
+  width: 640px;
+  bottom: 0;
+  display: -webkit-box;
+}
 .media-control-group--seek {
   flex: 1;
 }
@@ -80,12 +85,11 @@
 }
 
 .media-player {
-  width: 100%;
-  max-width: 640px;
-  position: relative;
-  background-color: #f9f9f9;
-  max-height: 400px;
-  height: 100%;
+ width: 640px;
+position: relative;
+background-color: #f9f9f9;
+height: 100%;
+
   video::-webkit-media-controls {
     display: none !important;
   }
@@ -115,14 +119,16 @@
 }
 
 .media-controls {
-  display: inline-flex;
-  align-items: center;
-  padding: 12px;
-  min-width: 420px;
-  border-radius: 2px;
-  margin-top: 350px;
-  background-color: #282F31;
-  color: #fff;
+   display: inline-flex;
+    align-items: center;
+    padding: 10px;
+    min-width: 420px;
+    border-radius: 2px;
+    /* margin-top: 250px; */
+    /* top: 0; */
+    margin: auto;
+    background-color: #282F31;
+    color: #fff;
   svg, path, polygon {
     transform-origin: 50% 50%;
   }

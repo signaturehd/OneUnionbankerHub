@@ -29,7 +29,6 @@ class PodcastPlayerFragment extends Component {
 
    const { title, author, description, detail, rateBook, selectedPodcast, podcasts, changeSelectedPodcast } = this.props
    const { rating } = this.state
-   console.log(selectedPodcast.url)
    return ( 
     <div>
     <div className={ 'podplay-header' }>
@@ -37,7 +36,7 @@ class PodcastPlayerFragment extends Component {
       <h1>UTube</h1>
     </div>
     <div className = { 'podplay-main' }>
-      <div><MedPlayer selectedPodcast = { selectedPodcast.url } /></div>
+      <div><MedPlayer selectedPodcast = { 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' } /></div>
       <Rating 
           rateBook = { (id, rating) => this.addRating(id, rating) }
           emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
@@ -53,7 +52,7 @@ class PodcastPlayerFragment extends Component {
       <h2>{ selectedPodcast.speaker }</h2>
       <h5>Details</h5>
     </div>
-    <Board selectedPodcast = { selectedPodcast }/>
+    <Board selectedPodcast = { selectedPodcast.review }/>
     </div>
       <div className = { 'podplay-sidebar-right' }>
         <PodcastPlayerDetailsFragment

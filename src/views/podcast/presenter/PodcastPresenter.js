@@ -3,8 +3,6 @@ import PodcastRecommendationInteractor from '../../../domain/interactor/podcast/
 import AddBookRatingInteractor from '../../../domain/interactor/library/AddBookRatingInteractor'
 import BookRateParam from '../../../domain/param/BookRateParam'
 
-
-
 export default class PodcastPresenter {
     constructor (container) {
       this.getPodcastInteractor = new PodcastInteractor(container.get('HRBenefitsClient'))

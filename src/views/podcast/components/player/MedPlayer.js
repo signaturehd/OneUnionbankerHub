@@ -7,17 +7,16 @@ const { CurrentTime, Progress, SeekBar, Duration, Volume, PlayPause, Fullscreen,
 class MedPlayer extends Component {
   render() {
     const { selectedPodcast } = this.props
-    console.log(selectedPodcast)
    return (
-      <div>
+    <div className = { 'media-player-content' }>
       <Media>
       {({ isFullscreen, playPause }) =>
         <div
           className={'media-player' + (isFullscreen ? ' media-player--fullscreen' : '')}
-          tabIndex="0"
-        >
+          tabIndex="0">
           <Player
-            src={ selectedPodcast }
+            className = {'player-content'}
+            src={ 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' }
             onClick={() => playPause()}
           />
           <div className="media-controls">
@@ -35,7 +34,7 @@ class MedPlayer extends Component {
         </div>
       }
     </Media>
-      </div>
+  </div>
     )
   }
 }
