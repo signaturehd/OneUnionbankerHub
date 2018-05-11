@@ -14,11 +14,10 @@ export default class OpticalPresenter {
 
  addOptical (amount, form1, form2) {
   this.view.showLoading()
+  console.log(this.view)
   this.addOpticalInteractior.execute(OpticalParam(amount, form1, form2))
    .subscribe(optical => {
     this.view.hideLoading()
-    console.log(optical)
-    console.log(this.view)
     this.view.noticeOfUndertaking(optical)
     // this.view.showOptical(optical)
    }, e => {

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal } from '../../../ub-components/'
+import { Modal, GenericButton } from '../../../ub-components/'
 import Button from '../components/OpticalButton'
+import BaseMVPView from '../../common/base/BaseMVPView'
+
 import './optical-modal.css'
 
 class OpticalModal extends Component {
@@ -15,25 +17,52 @@ class OpticalModal extends Component {
 
 
   render () {
-    const { details, onClose, confirm, cancel, fileReceived, fileReceived2, amount, submitForm } = this.props
+    const {
+      details,
+      onClose,
+      fileReceived,
+      fileReceived2,
+      amount,
+      submitForm,
+      imagePreviewUrl,
+      imagePreviewUrl2,
+    } = this.props
+
+    const styles = {
+      image1 : {
+        backgroundImage: `url('${imagePreviewUrl}')`,
+        width : 'auto',
+        height : '150px',
+        backgroundSize : 'cover',
+        backgroundRepeat : 'no-repeat',
+      },
+      image2 : {
+        backgroundImage: `url('${imagePreviewUrl2}')`,
+        width : 'auto',
+        height : '150px',
+        backgroundSize : 'cover',
+        backgroundRepeat : 'no-repeat',
+      }
+    }
     return (
         <Modal
           isDismisable = { true }
-          onClose = { onClose }>
-          <div className = { 'optical-description' }>
-              <h2>Description</h2>
-
-          </div>
-          <div className = { 'optical-modal-footer' } >
-            <Button
+          onClose = { onClose }
+        >
+            <h2>Optical Reimbursement Description</h2>
+            <br/>
+            <h4>Amount : { amount }</h4>
+            <br/>
+            <div className = { 'optical-image-display' }>
+              <div style = {styles.image1}></div>
+              <div style = {styles.image2}></div>
+            </div>
+            <br/>
+            <GenericButton
               onClick = { () => submitForm(fileReceived, fileReceived2, amount) }
-              className = { 'optical-footer-left' }
-              text = { confirm }
+              text = { 'confirm' }
             />
-          </div>
-          <div className = { 'optical-modal-footer' }>
-            <Button className = { 'optical-footer-right' } text = { cancel } onClick = { () => onClose } />
-          </div>
+            <GenericButton text = { 'cancel' } onClick = { onClose } />
         </Modal>
       )
   }

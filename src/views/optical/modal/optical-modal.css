@@ -1,9 +1,7 @@
 .optical-modal-review {
-  margin: auto !important;
-  display: list-item;
-  grid-auto-columns: auto;
+  display: grid;
+  grid-template-columns: 50% 50%;
   height: auto;
-  column-count: 2;
   width: auto;
 }
 .optical-modal-footer {
@@ -16,4 +14,10 @@
 .modal {
   width: 30% !important;
   overflow-y: hidden !important;
+}
+
+.optical-image-display {
+  display:grid;
+  grid-column-gap: 5px;
+  grid-template-columns: 50% 50%;
 }

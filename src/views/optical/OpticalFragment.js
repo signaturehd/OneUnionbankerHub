@@ -6,6 +6,7 @@ import ConnectView from '../../utils/ConnectView'
 import Card from './components/OpticalCard'
 import ConfirmationModal from './modal/OpticalReviewModal'
 import NoticeModal from '../notice/Notice'
+import ResponseModal from '../notice/NoticeResponseModal'
 import './styles/optical.css'
 
 class OpticalFragment extends BaseMVPView {
@@ -16,12 +17,13 @@ class OpticalFragment extends BaseMVPView {
       showNoticeModal : false,
       showConfirmation : false,
       noticeResponse : null,
+      showNoticeResponseModal : false,
     }
 
     // this.noticeOfUndertaking = this.noticeOfUndertaking.bind(this)
   }
 
-  componentWillMount () {
+  componentDidMount () {
     this.presenter.getOptical()
   }
 
@@ -41,20 +43,36 @@ class OpticalFragment extends BaseMVPView {
     this.props.history.push('/benefits/medical')
   }
 
+  submitForm (amount, finalFile1, finalFile2) {
+     this.presenter.addOptical(amount, finalFile1, finalFile2)
+  }
+
   render () {
-    const { showConfirmation, showNoticeModal, noticeResponse, file1, file2, amount } = this.state
+    const {
+      showConfirmation,
+      showNoticeModal,
+      showNoticeResponseModal,
+      noticeResponse,
+      file1,
+      file2,
+      amount,
+      response,
+      imagePreviewUrl,
+      imagePreviewUrl2,
+    } = this.state
+    console.log(this.state)
     return (
       <div  className = { 'benefits-container' }>
         { super.render() }
-
         {
           showConfirmation &&
           <ConfirmationModal
             fileReceived = { file1 }
             fileReceived2 = { file2 }
+            imagePreviewUrl = { imagePreviewUrl }
+            imagePreviewUrl2 = { imagePreviewUrl2 }
             amount = { amount }
-            presenter = { this.presenter }
-            submitForm = { (finalFile1, finalFile2, amount) => this.presenter.addOptical(amount, finalFile1, finalFile2) }
+            submitForm = { (finalFile1, finalFile2, amount) => this.submitForm(amount, finalFile1, finalFile2) }
             onClose = { () => this.setState({ showConfirmation : false }) }
           />
         }
@@ -64,7 +82,20 @@ class OpticalFragment extends BaseMVPView {
           <NoticeModal
             onClose = { () => this.setState({showNotice : false})}
             noticeResponse = { noticeResponse }
+            benefitId = { '8' }
+            onDismiss = { (showNoticeModal, response) => this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
+        }
+
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose = { () => { this.setState({showNoticeResponseModal : false}), this.props.history.push('/benefits/medical')}}
+            noticeResponse = { response }
+            benefitId = { '8' }
+            onDismiss = { (showNoticeModal, response) => this.setState({ showNoticeModal, response })  }
+          />
+
         }
 
         <div className={ 'breadcrumbs-container' }>
@@ -72,7 +103,7 @@ class OpticalFragment extends BaseMVPView {
           <h1>Optical Reimbursement</h1>
         </div>
           <div className = { 'optical-container' }>
-            <Card onClick = { (showConfirmation, file1, file2, amount) => this.setState({ showConfirmation, file1, file2, amount })  }/>
+            <Card onClick = { (showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2 ) => this.setState({ showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2 })  }/>
           </div>
       </div>
     )

@@ -7,14 +7,16 @@ import ConnectView from '../../../utils/ConnectView'
 import Presenter from '../presenter/OpticalPresenter'
 import { GenericTextBox, FileUploader } from  '../../../ub-components/'
 
+import staticImage from '../../../images/uploadicon-orange.jpg'
+
 class OpticalCard extends Component {
   constructor (props) {
     super(props)
     this.state = {
       file: '',
       file2: '',
-      imagePreviewUrl: '',
-      imagePreviewUrl2: '',
+      imagePreviewUrl: `${staticImage}`,
+      imagePreviewUrl2: `${staticImage}`,
       warning: '',
       amount : 0
     }
@@ -76,10 +78,28 @@ class OpticalCard extends Component {
       imagePreviewUrl2,
       acceptNumber,
     } = this.state
+
+    const styles = {
+      image1 : {
+        backgroundImage: `url('${imagePreviewUrl}')`,
+        width : '225px',
+        height : '240px',
+        backgroundSize : 'cover',
+        backgroundRepeat : 'no-repeat',
+      },
+      image2 : {
+        backgroundImage: `url('${imagePreviewUrl2}')`,
+        width : '225px',
+        height : '240px',
+        backgroundSize : 'cover',
+        backgroundRepeat : 'no-repeat',
+      }
+    }
+
     let $imagePreview = null
     let $imagePreview2 = null
-      $imagePreview = (<img className = {'optical-image'} src={imagePreviewUrl} />)
-      $imagePreview2 = (<img className = {'optical-image'} src={imagePreviewUrl2} />)
+      $imagePreview = (<div style = {styles.image1}></div>)
+      $imagePreview2 = (<div style = {styles.image2}></div>)
     return (
         <div className = { 'optical-card' } >
           <form onSubmit={this._handleSubmit}>
@@ -106,19 +126,19 @@ class OpticalCard extends Component {
                 />
               </div>
               <div className = { 'optical-button-submit' }>
-                <Button onClick = { () => onClick(true, file, file2, amount)}/>
+                <Button onClick = { () => onClick(
+                  true, file, file2, amount, imagePreviewUrl, imagePreviewUrl2)}/>
               </div>
             </div>
             <div className = {'optical-footer-left'}>
               <h2 className = { 'optical-warning-display' }>{warning}</h2>
-              <div className = { 'optical-modal-review' }>
+              <div className = { 'optical-grid' }>
                 <div className = { 'optical-image-view' }>
-                    {$imagePreview}
-                  <div className = { 'optical-image-layer' }>
-                  </div>
+                  {$imagePreview}
+                  <div className = { 'optical-image-layer' }></div>
                 </div>
                 <div className = { 'optical-image-view' }>
-                    {$imagePreview2}
+                  {$imagePreview2}
                   <div className = {  'optical-image-layer' }></div>
                 </div>
               </div>

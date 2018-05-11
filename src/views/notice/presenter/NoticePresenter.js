@@ -15,7 +15,7 @@ export default class NoticePresenter {
     this.updateNoticeInteractor.execute(NoticeParam(transactionId, isAgree, benefitId))
      .subscribe(response => {
       this.view.hideLoading()
-      // this.view.showOptical(optical)
+      this.view.onSuccess(response)
      }, e => {
       this.view.hideLoading()
       // TODO prompt generic error
