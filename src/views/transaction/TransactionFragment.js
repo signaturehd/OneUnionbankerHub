@@ -34,6 +34,7 @@ class TransactionFragment extends BaseMVPView {
 
     return (
       <div>
+        { super.render() }
         <div>
           <div className = { 'page-header-buttons' }>
           </div>
@@ -52,7 +53,7 @@ class TransactionFragment extends BaseMVPView {
           this.state.view &&
           <TransactionModal details = { details } onClose = { () => this.setState({ view : false }) }/>
         }
-     
+
         </div>
       </div>
     )
