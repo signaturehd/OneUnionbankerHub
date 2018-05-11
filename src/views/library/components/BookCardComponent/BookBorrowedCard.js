@@ -24,7 +24,7 @@ class BookBorrowedCard extends Component {
 
     const  styles = {
       cardHeader : {
-        backgroundImage : `url(${detail.imageUrl})`,
+        backgroundImage : "url("+'../../images/profile-picture.png'+")",
         backgroundSize : 'cover',
         backgroundRepeat : 'no-repeat'
       }
@@ -40,16 +40,19 @@ class BookBorrowedCard extends Component {
         <div className = {'card-footer'}>
           <center>
             <Rating
-              emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
-              fullSymbol = {<MdStar style={{ fontSize: 40,  color : '#c65e11' }} />}
+              emptySymbol = {<MdStarOutline style={{ fontSize: 30, color : '#c65e11' }} />}
+              fullSymbol = {<MdStar style={{ fontSize: 30,  color : '#c65e11' }} />}
               onChange = { e => {
                 rateBook(detail.id, e)
                 this.setState({ rating : e })
               }}
               fractions = { 2 }
               initialRating = { rating ? rating : detail.rating }
+              readonly
             />
-            <GenericButton onClick = { () => onClick(detail, true) } text = { 'Read More' } />
+          <GenericButton
+            onClick = { () => onClick(detail, true) }
+            text = { 'Read More' } />
           </center>
         </div>
       </Card>
