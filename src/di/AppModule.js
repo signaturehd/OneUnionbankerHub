@@ -5,7 +5,7 @@ import HRBenefitsClient from '../data/service/HRBenefitsClient'
 import SessionProvider from '../data/provider/SessionProvider'
 
 export default container => {
-  container.singleton('SessionProvider', SessionProvider)
+  container.singleton('SessionProvider', SessionProvider);
 
   container.singleton('ApiClient',
     new Rxios({
@@ -15,7 +15,7 @@ export default container => {
         'X-IBM-Client-Secret': CLIENT_SECRET,
       },
     })
-  )
+  );
 
   container.singleton('AccountClient',
     new Rxios({
@@ -25,10 +25,10 @@ export default container => {
         'X-IBM-Client-Secret': CLIENT_SECRET,
       }
     })
-  )
+  );
 
-  container.singleton('HRBenefitsService', HRBenefitsService, ['ApiClient', 'AccountClient'])
-  container.singleton('HRBenefitsClient', HRBenefitsClient, ['HRBenefitsService', 'SessionProvider'])
+  container.singleton('HRBenefitsService', HRBenefitsService, ['ApiClient', 'AccountClient']);
+  container.singleton('HRBenefitsClient', HRBenefitsClient, ['HRBenefitsService', 'SessionProvider']);
 
   return container
 }

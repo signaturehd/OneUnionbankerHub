@@ -18,4 +18,4 @@ module.exports = merge(common, {
       DEBUG: true,
     }, project.devGlobals)),
   ],
-})
+});

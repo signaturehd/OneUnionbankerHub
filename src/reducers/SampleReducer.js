@@ -10,7 +10,7 @@ export default function reducer (state, action) {
     case SAMPLE_ACTION:
       return Object.assign({}, state, {
         sampleState: action.sampleState,
-      })
+      });
 
     default:
       return state

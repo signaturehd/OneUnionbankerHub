@@ -25,4 +25,4 @@ module.exports = {
     CLIENT_ID: JSON.stringify('5a52c99a-1303-42f5-9871-9e3844f1fd9f'),
     CLIENT_SECRET: JSON.stringify('sJ2sU2mJ4eE2oI6wM7rY3mG6jT1mS2eT1wY3pR8qP7jL2uC5iT'),
   },
-}
+};

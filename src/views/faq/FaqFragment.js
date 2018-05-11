@@ -18,7 +18,14 @@ class FaqFragment extends BaseMVPView {
     this.state = {
         faqs: [],
         show : false,
+        searchString : ''
     }
+    this.updateSearch = this.updateSearch.bind(this)
+  }
+
+  updateSearch ()
+  {
+    this.setState({ searchString: this.refs.search.value.substr( 0 , 20) })
   }
 
   componentDidMount () {
@@ -32,13 +39,27 @@ class FaqFragment extends BaseMVPView {
 
   render () {
     const { faqs, show, details } = this.state
+    let _faqs = this.state.faqs
+    let search = this.state.searchString.trim().toLowerCase()
+    if (search.length > 0) {
+      _faqs = _faqs.filter(function(faqs) {
+        return faqs.title.toLowerCase().match(search)
+      })
+    }
     return (
       <div className = {'container'}>
         { super.render() }
         <h1>Faqs</h1>
+          <input type = 'text'
+                 className = 'newsSearchBar'
+                 ref="search"
+                 placeholder = {'Search Faqs'}
+                 value = { this.state.searchString }
+                 onChange = { this.updateSearch } />
+
         <div className = {'card-container'}>
         {
-        faqs.map((faqs, i) =>
+        _faqs.map((faqs, i) =>
           <FaqCardComponent
             key = {i}
             faqs = { faqs }

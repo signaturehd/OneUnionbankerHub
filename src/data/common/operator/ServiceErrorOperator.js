@@ -24,7 +24,7 @@ export default function ServiceErrorOperator () {
         }
       },
       err => subscriber.error(new ServerError('It seems that \'ve encountered a problem. Error: 2')),
-      () => subscriber.complete())
+      () => subscriber.complete());
 
       return subscription
    })

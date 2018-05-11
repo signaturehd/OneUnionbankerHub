@@ -6,7 +6,7 @@ class BaseMVPView extends BaseView {
   constructor (props) {
     super(props)
 
-    this.presenter = props.presenter
+    this.presenter = props.presenter;
     this.presenter.setView(this)
   }
 }

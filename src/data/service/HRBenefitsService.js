@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs'
 
 export default class HRBenefitsService {
-  constructor (apiClient, accountClient) {
+
+  constructor(apiClient, accountClient) {
     this.apiClient = apiClient
     this.accountClient = accountClient
   }

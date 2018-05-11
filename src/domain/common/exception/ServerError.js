@@ -3,6 +3,6 @@ function ServerError (message = '') {
   this.message = message
 }
 
-ServerError.prototype = Error.prototype
+ServerError.prototype = Error.prototype;
 
 export default ServerError
