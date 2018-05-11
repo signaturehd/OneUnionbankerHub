@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
 import BookCardComponent from '../components/BookCardComponent/BookCardComponent'
 import BookViewModal from '../modals/BookViewModal'
 
 class BookListFragment extends Component {
-
   constructor (props) {
     super(props)
     this.state = {
