@@ -16,6 +16,7 @@ class NewsModalComponent extends Component {
       <Modal
         onClose = { onClose }
       >
+ 
       </Modal>
     )
   }

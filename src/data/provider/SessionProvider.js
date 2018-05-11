@@ -1,7 +1,6 @@
 const TOKEN = 'TOKEN'
 const ACCOUNT_TOKEN = 'ACCOUNT_TOKEN'
 const ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
-const PROFILE = 'PROFILE'
 
 export default class SessionProvider {
   constructor () {
@@ -13,7 +12,8 @@ export default class SessionProvider {
   }
 
   getToken () {
-    return this.storage.getItem(TOKEN) || ''
+    // return this.storage.getItem(TOKEN) || ''
+    return '524fa2a492bef9fddcbf0c438a053ed2077bca086b6dc9d7663420954add51ac07075264a18bc50e12153433a333f93e4fbf2a0375d819c21af41e9be7519b15'
   }
 
   setAccountToken (accountToken = '') {
@@ -30,13 +30,5 @@ export default class SessionProvider {
 
   getAccountNumber () {
     return this.storage.getItem(ACCOUNT_NUMBER) || ''
-  }
-
-  setProfile (profile) {
-    this.storage.setItem(PROFILE, JSON.stringify(profile))
-  }
-
-  getProfile () {
-    return JSON.parse(this.storage.getItem(PROFILE)) || {}
   }
 }

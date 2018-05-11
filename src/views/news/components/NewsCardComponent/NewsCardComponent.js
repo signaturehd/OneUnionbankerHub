@@ -11,11 +11,26 @@ class NewsCardComponent extends Component {
   }
 
   render () {
-    const { news, onClick } = this.props
-    return (
+    const { news, onClick , imageUrl} = this.props
+
+    const style = {
+        newsBackground: 
+        {
+          background : "url(" + news.imageUrl + ") rgb(0,0,0,0.7)",
+          backgroundSize : "40px no-repeat ",
+          height : "50px",
+          width: "auto",
+          backgroundBlendMode: "color",
+          color : "white",
+          fontWeight : "bold"
+        }
+    }
+
+
+      return (
         <Card>
           <div></div>
-          <div className = {'news-body'}>
+          <div style = { style.newsBackground } className = {'news-body'}>
             <h3>{news.title}</h3>
           </div>
           <div className = {'card-footer'}>
