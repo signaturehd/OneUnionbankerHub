@@ -16,7 +16,6 @@ class NewsModalComponent extends Component {
       <Modal
         onClose = { onClose }
       >
- 
       </Modal>
     )
   }
@@ -26,7 +25,7 @@ class NewsModalComponent extends Component {
 /* Close modal set elements to null */
 
 NewsModalComponent.propTypes = {
-
+  onClose : PropTypes.func,
 }
 
 NewsModalComponent.defaultProps = {

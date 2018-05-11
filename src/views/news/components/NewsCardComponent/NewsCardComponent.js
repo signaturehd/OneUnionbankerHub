@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Card } from '../../../../ub-components/'
 
+import { FaEye } from 'react-icons/lib/fa/'
 import './styles.css'
 
 class NewsCardComponent extends Component {
@@ -34,7 +35,10 @@ class NewsCardComponent extends Component {
             <h3>{news.title}</h3>
           </div>
           <div className = {'card-footer'}>
-            <small><a href = {news.linkUrl}>See More</a></small>
+            <a href = {news.linkUrl}>
+            <FaEye 
+              className = { 'fa-see-more' } />
+            </a>
             <small><a onClick = { () => onClick(news) }>Read More</a></small>
           </div>
         </Card>

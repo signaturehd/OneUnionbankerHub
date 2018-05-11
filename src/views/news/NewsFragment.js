@@ -55,7 +55,7 @@ class NewsFragment extends BaseMVPView {
         <input type = 'text'
              className = 'newsSearchBar'
              ref="search"
-             placeholder = {'Search Faqs'}
+             placeholder = {'Search News'}
              value = { this.state.searchString }
              onChange = { this.updateSearch } />
         <div className = 'card-container'>

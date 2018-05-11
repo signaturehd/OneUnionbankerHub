@@ -8,3 +8,8 @@
 .news-body {
   padding : 50px;
 }
+.fa-see-more {
+  font-size : 25px;
+  cursor: pointer;
+  color: #ff8a00;
+}
