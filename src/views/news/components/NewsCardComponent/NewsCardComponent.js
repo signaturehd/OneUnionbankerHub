@@ -15,11 +15,11 @@ class NewsCardComponent extends Component {
     const { news, onClick , imageUrl} = this.props
 
     const style = {
-        newsBackground: 
+        newsBackground:
         {
           background : "url(" + news.imageUrl + ") rgb(0,0,0,0.7)",
-          backgroundSize : "40px no-repeat ",
-          height : "50px",
+          backgroundRepeat : "no-repeat ",
+          height : '100px',
           width: "auto",
           backgroundBlendMode: "color",
           color : "white",
@@ -30,16 +30,11 @@ class NewsCardComponent extends Component {
 
       return (
         <Card>
-          <div></div>
           <div style = { style.newsBackground } className = {'news-body'}>
+            <FaEye
+              className = { 'fa-see-more' } onClick = { () => onClick(news) }  />
             <h3>{news.title}</h3>
-          </div>
-          <div className = {'card-footer'}>
-            <a href = {news.linkUrl}>
-            <FaEye 
-              className = { 'fa-see-more' } />
-            </a>
-            <small><a onClick = { () => onClick(news) }>Read More</a></small>
+
           </div>
         </Card>
     )
