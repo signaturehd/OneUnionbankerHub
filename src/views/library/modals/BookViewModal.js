@@ -40,13 +40,9 @@ class BookViewModal extends BaseMVPView {
           </div>
           <div className = { '' } >
          <GenericButton onClick = { () => this.submitForm(details.id, 1) }
-
-
-                    text = { "Reserve" } />
-
+           text = { "Reserve" } />
           </div>
           <div className = { '' } >
-
           </div>
         </div>
       </Modal>
