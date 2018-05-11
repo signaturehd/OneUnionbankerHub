@@ -106,7 +106,7 @@ export default class HRBenefitsClient {
     return this.service.getPodcasts(token)
       .pipe(ServiceErrorOperator())
   }
-  getPodcastsRecommendations(token) {
+  getPodcastsRecommendations (token) {
     return this.service.getPodcastsRecommendations(token)
       .pipe(ServiceErrorOperator())
   }

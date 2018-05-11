@@ -118,12 +118,12 @@ export default class HRBenefitsService {
       })
     }
   getPodcastsRecommendations (token) {
-      return this.apiClient.get('v1/podcasts', {
+      return this.apiClient.get('v1/podcasts/recommendations', {
           headers: { token }
       })
     }  
   getPodcastsViewed (token) {
-      return this.apiClient.get('v1/podcasts', {
+      return this.apiClient.get('v1/podcasts/history/members', {
           headers: { token }
       })
     }
