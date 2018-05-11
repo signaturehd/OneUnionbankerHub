@@ -12,18 +12,18 @@ class NewsCardComponent extends Component {
   }
 
   render () {
-    const { news, onClick , imageUrl} = this.props
+    const { news, onClick , imageUrl } = this.props
 
     const style = {
         newsBackground:
         {
-          background : "url(" + news.imageUrl + ") rgb(0,0,0,0.7)",
-          backgroundRepeat : "no-repeat ",
+          background : `url(${news.imageUrl}) rgba(0,0,0,0.7)`,
+          backgroundRepeat : 'no-repeat ',
           height : '100px',
-          width: "auto",
-          backgroundBlendMode: "color",
-          color : "white",
-          fontWeight : "bold"
+          width: 'auto',
+          backgroundBlendMode: 'color',
+          color : 'white',
+          fontWeight : 'bold'
         }
     }
 

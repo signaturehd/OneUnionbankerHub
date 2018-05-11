@@ -1,4 +1,4 @@
-import React from 'react'
+  import React from 'react'
 import PropTypes from 'prop-types'
 import ConnectView from '../../utils/ConnectView'
 import NewsInteractor from '../../domain/interactor/news/NewsInteractor'
@@ -54,7 +54,7 @@ class NewsFragment extends BaseMVPView {
         <h1>News Feed</h1>
         <input type = 'text'
              className = 'newsSearchBar'
-             ref="search"
+             ref='search'
              placeholder = {'Search News'}
              value = { this.state.searchString }
              onChange = { this.updateSearch } />

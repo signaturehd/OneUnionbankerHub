@@ -21,13 +21,13 @@ class NewsModalComponent extends Component {
     const style = {
         newsBackground:
         {
-          background : "url(" + details.imageUrl + ") rgb(0,0,0,0.7)",
-          backgroundRepeat : "no-repeat",
+          background : `url(${details.imageUrl}) rgba(0,0,0,0.7)`,
+          backgroundRepeat : 'no-repeat',
           height : '250px',
-          width: "auto",
+          width: 'auto',
           backgroundSize : 'cover',
-          color : "white",
-          fontWeight : "bold"
+          color : 'white',
+          fontWeight : 'bold'
         }
     }
 
