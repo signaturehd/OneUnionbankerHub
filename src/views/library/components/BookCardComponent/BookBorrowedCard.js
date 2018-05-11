@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 
-import { Card } from '../../../../ub-components'
+import { Card, GenericButton } from '../../../../ub-components'
 
 import Rating from 'react-rating'
 
@@ -22,12 +22,20 @@ class BookBorrowedCard extends Component {
     const { detail, onClick, rateBook } = this.props
     const { rating } = this.state
 
+    const  styles = {
+      cardHeader : {
+        backgroundImage : `url(${detail.imageUrl})`,
+        backgroundSize : 'cover',
+        backgroundRepeat : 'no-repeat'
+      }
+    }
+
     return (
-      <Card>
-        <div className = {'card-header'} >
+      <Card className = {'book-card'}>
+        <div style = {styles.cardHeader} >
         </div>
         <div className = {'card-body'}>
-          <h5>{ detail.title }</h5>
+          <span>{ detail.title }</span>
         </div>
         <div className = {'card-footer'}>
           <center>
@@ -41,7 +49,7 @@ class BookBorrowedCard extends Component {
               fractions = { 2 }
               initialRating = { rating ? rating : detail.rating }
             />
-            <button onClick = { () => onClick(detail, true) }>Read More</button>
+            <GenericButton onClick = { () => onClick(detail, true) } text = { 'Read More' } />
           </center>
         </div>
       </Card>

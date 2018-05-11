@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { GenericButton } from '../../../ub-components' 
+import { GenericButton } from '../../../ub-components'
 import { Modal } from '../../../ub-components/'
 import ConnectView from '../../../utils/ConnectView'
 import Presenter from '../presenter/LibraryPresenter'
@@ -26,9 +26,8 @@ class BookViewModal extends BaseMVPView {
     console.log(details)
 
     const style = {
-      background : `url(${details.imageUrl}) rgba(0,0,0,0.5)`,
+      background : `rgba(0,0,0,0.5) url(${details.imageUrl})`,
       backgroundSize : 'cover',
-      backgroundPosition : 'center',
     }
 
     return (
@@ -42,9 +41,9 @@ class BookViewModal extends BaseMVPView {
           <div className = { '' } >
          <GenericButton onClick = { () => this.submitForm(details.id, 1) }
 
-                    
+
                     text = { "Reserve" } />
-                  
+
           </div>
           <div className = { '' } >
 
