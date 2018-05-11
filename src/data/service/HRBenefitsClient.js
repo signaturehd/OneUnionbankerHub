@@ -82,10 +82,20 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getBooksBorrowed (token) {
+    return this.service.getBooksBorrowed(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   addRating (token, bookParam) {
     return this.service.addRating(token, bookParam)
       .pipe(ServiceErrorOperator())
   }
+ReserveBook(token, BookReserveParam){
+  console.log(BookReserveParam)
+  return this.service.ReserveBook(token, BookReserveParam)
+      .pipe(ServiceErrorOperator())
+}
 
   /* optical */
   getOptical (token) {

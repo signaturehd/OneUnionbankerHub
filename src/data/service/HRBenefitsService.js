@@ -93,6 +93,21 @@ export default class HRBenefitsService {
     })
   }
 
+  getBooksBorrowed (token) {
+    return this.apiClient.get('v1/books/history', {
+        headers: { token }
+    })
+  }
+
+ ReserveBook (token, ReserveParam){
+  return this.apiClient.post('v1/books/reservation', {
+    books: ReserveParam
+  }, {
+    headers: {token} 
+
+  })
+ }
+
 
   addRating (token, bookParam) {
     return this.apiClient.post('v1/books/rate', bookParam, {

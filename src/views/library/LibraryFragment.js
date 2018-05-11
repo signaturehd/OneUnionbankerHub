@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router-dom'
-
 import Presenter from './presenter/LibraryPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectPartial from '../../utils/ConnectPartial'
@@ -10,7 +9,7 @@ import BookListFragment from './fragments/BookListFragment'
 import BookBorrowedFragment from './fragments/BookBorrowedFragment'
 import BookRecommendationFragment from './fragments/BookRecommendationFragment'
 
-import { GenericButton } from '../../ub-components/UButton'
+import { GenericButton } from '../../ub-components'
 
 import './styles/library-fragment.css'
 
@@ -19,22 +18,38 @@ class LibraryFragment extends BaseMVPView {
     super(props)
     this.state = {
       books : [],
+      recommended : [],
+      borrowed : [],
+      reserve: [],
       showRating : false,
       showBook : false
+
     }
   }
 
   componentDidMount () {
       this.presenter.getBooks()
+      this.presenter.getBooksBorrowed()
       this.props.setSelectedNavigation(5)
+
   }
 
   showBooks (books) {
     this.setState({ books })
   }
 
+  showRecommendation (recommended) {
+    this.setState({ recommended })
+  }
+
+  showBorrowed (borrowed) {
+    this.setState({ borrowed })
+  }
+
+
+
   render () {
-    const { books, tabs } = this.state
+    const { books, tabs, recommended, borrowed, reserve } = this.state
     return (
       <div>
       { super.render() }
@@ -59,13 +74,13 @@ class LibraryFragment extends BaseMVPView {
           <label htmlFor = 'tab3' >Borrowed</label>
 
           <section id='content1'>
-            <BookListFragment presenter={ this.presenter } books={ books } />
+            <BookListFragment presenter={ this.presenter } books = { books } />
           </section>
           <section id='content2'>
-            <BookRecommendationFragment />
+            <BookRecommendationFragment presenter = { this.presenter } recommended = { recommended } />
           </section>
           <section  id='content3'>
-            <BookBorrowedFragment />
+            <BookBorrowedFragment presenter = { this.presenter } borrowed = { borrowed } />
           </section>
         </div>
       </div>

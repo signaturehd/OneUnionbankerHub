@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Cards } from '../../../../ub-components/'
+import { Card } from '../../../../ub-components/'
 
 import './faq-card-component.css'
 
@@ -13,7 +13,7 @@ class FaqCardComponent extends Component {
   render () {
     const { faqs, onClick } = this.props
     return (
-        <Cards>
+        <Card>
           <div></div>
           <div className = {'card-body'}>
             <h3>{faqs.title}</h3>
@@ -21,14 +21,14 @@ class FaqCardComponent extends Component {
           <div className = {'card-footer'}>
             <small><a onClick = { () => onClick(faqs) }>Read More</a></small>
           </div>
-        </Cards>
+        </Card>
     )
   }
 }
 
 FaqCardComponent.propTypes = {
   faqs : PropTypes.object,
-  onClick : PropTypes.func
+  onClick : PropTypes.func,
 }
 
 FaqCardComponent.defaultProps = {
