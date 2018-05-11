@@ -64,7 +64,7 @@ class PodcastCardDetailsComponent extends Component {
                 rateBook(detail.id, e)
                 this.setState({ rating : e })
               }}
-
+              readonly
               fractions = { 2 }
               initialRating = { rating ? rating : podcasts.rating } />
             </center> 
