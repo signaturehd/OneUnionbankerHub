@@ -19,8 +19,7 @@ class PodcastsPlayerDetailsFragment extends Component {
   
   render () {
 
-    const { selectedPodcast, podcasts, _podcasts, changeSelected } = this.props
-    const {  } = this.state
+    const { selectedPodcast, podcasts, _podcasts, changeSelectedPodcast } = this.props
 
     const ContentLoaderView = () => {
       <ContentLoader
@@ -39,7 +38,7 @@ class PodcastsPlayerDetailsFragment extends Component {
     }
     const ContentView = () => {
       {
-        _podcasts.map((podcasts, i) =>
+        podcast.map((podcasts, i) =>
           <PodCardComponent
             history = { this.props.history }
             rateBook = { (id, rating) => this.addRating(id, rating) }
@@ -54,15 +53,13 @@ class PodcastsPlayerDetailsFragment extends Component {
     return (
     <div className = { 'podcast-details' }>
      {
-        _podcasts.map((podcast, i) =>
+        podcasts.map((podcast, i) =>
           <PodcastCardDetailsComponent
             history = { this.props.history }
             rateBook = { (id, rating) => this.addRating(id, rating) }
             key={ i }
             podcasts = { podcast }
-            onClick = { details => {
-              this.setState({ details, show: true })
-          }} />
+            onClick = { () => changeSelectedPodcast(podcast)}/>
         )
       }
     </div>

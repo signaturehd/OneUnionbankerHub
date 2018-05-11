@@ -9,6 +9,7 @@ import ConnectPartial from '../../utils/ConnectPartial'
 import './styles/podcast.css'
 import PodCardComponent from '../common/components/PodCardComponent/PodCardComponent'
 import PodcastInteractor from '../../domain/interactor/podcast/PodcastInteractor'
+import PodcastRecommendationsInteractor from '../../domain/interactor/podcast/PodcastRecommendationInteractor'
 
 import PodcastPlayerFragment from './fragments/PodcastPlayerPage/PodcastPlayerFragment'
 import PodCastsRecommendationFragment from './fragments/PodCastsTab/PodCastsRecommendationFragment'
@@ -20,6 +21,7 @@ class PodcastView extends BaseMVPView {
     super(props)
     this.state = {
         podcasts: [],
+        podcastsRecommendation : [],
         show : false,
         rating: false,
         showRating : false,
@@ -34,6 +36,7 @@ class PodcastView extends BaseMVPView {
   }
   componentDidMount () {
       this.presenter.getPodcasts()
+      this.presenter.getPodcastsRecommendations()
       this.props.setSelectedNavigation(0)
   }
   updateSearch () {
@@ -42,15 +45,18 @@ class PodcastView extends BaseMVPView {
   podcasts ( podcasts ) {
       this.setState({ podcasts })  
   }
+  podcastsRecommendation ( podcastsRecommendation ) {
+      this.setState({ podcastsRecommendation })  
+  }
   render () {
-    const { podcasts,  show, details, detail, searchBar, selectedPodcast } = this.state
+    const { podcasts, podcastsRecommendation,  show, details, detail, searchBar, selectedPodcast } = this.state
     const { history } = this.props
     const PodcastPlayer = () => (
         <PodcastPlayerFragment 
+            changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
             selectedPodcast = { selectedPodcast }
             presenter = { this.presenter }
             podcasts = { podcasts }
-            _podcasts = { _podcasts }
             history = { history }/>
     )
     const PodCast = () => (
@@ -90,21 +96,21 @@ class PodcastView extends BaseMVPView {
         <PodCastsListFragment
           changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
           presenter = { this.presenter }
-          podcasts = { podcasts }
-          _podcasts = { _podcasts } 
+          podcasts = { podcasts } 
           details = { details }
           history = { history } />
       </section>
       <section id='content2'>
         <PodCastsRecommendationFragment 
           presenter = { this.presenter }
-          podcasts = { podcasts }
-          _podcasts = { _podcasts } 
+          changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
+          podcastsRecommendation = { podcastsRecommendation }
           history = { history } />
       </section>
       <section  id='content3'>
         <PodCastsViewedFragment  
           presenter = { this.presenter }
+          changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
           podcasts = { podcasts }
           _podcasts = { _podcasts } 
           history = { history }  />

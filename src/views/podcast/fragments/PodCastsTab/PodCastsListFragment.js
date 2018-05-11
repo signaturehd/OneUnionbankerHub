@@ -13,13 +13,13 @@ class PodCastsListFragment extends Component {
   }
 
   render () {
-    const { podcasts, _podcasts, changeSelectedPodcast } = this.props
+    const { podcasts, changeSelectedPodcast, history } = this.props
     return (
   <div className = {'podcasts-container'}>
     {
-      _podcasts.map((podcast, i) =>
+      podcasts.map((podcast, i) =>
         <PodCardComponent
-          history = { this.props.history }
+          history = { history }
           rateBook = { (id, rating) => this.getPodcasts(id, rating) }
           key={ i }
           podcast = { podcast }

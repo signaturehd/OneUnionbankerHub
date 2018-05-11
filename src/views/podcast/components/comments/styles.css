@@ -77,14 +77,12 @@ textarea{
 /*********************************/
 
 .commentContainer {
-  position: relative;
-  max-width: 60%;
-  height: auto;
-  margin: 20px 10px;
-  padding: 10px;
-  border: 1px solid #f5f5f5;
-  box-shadow: #e1e1e1 5px 5px 6px;
-  border-radius: 1px;
+  background: #fff;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  border: 0px transparent;
 }
 
 .commentText {

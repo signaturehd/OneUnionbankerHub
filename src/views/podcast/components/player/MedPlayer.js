@@ -6,7 +6,8 @@ const { CurrentTime, Progress, SeekBar, Duration, Volume, PlayPause, Fullscreen,
 
 class MedPlayer extends Component {
   render() {
-    const { newSelectedPodcast } = this.props
+    const { selectedPodcast } = this.props
+    console.log(selectedPodcast)
    return (
       <div>
       <Media>
@@ -16,7 +17,7 @@ class MedPlayer extends Component {
           tabIndex="0"
         >
           <Player
-            src={ newSelectedPodcast.url }
+            src={ selectedPodcast }
             onClick={() => playPause()}
           />
           <div className="media-controls">
@@ -37,10 +38,6 @@ class MedPlayer extends Component {
       </div>
     )
   }
-}
-MedPlayer.propTypes = {
-  selectedPodcast: PropTypes.object,
-
 }
 
 export default MedPlayer

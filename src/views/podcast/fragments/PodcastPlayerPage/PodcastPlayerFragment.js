@@ -14,6 +14,7 @@ class PodcastPlayerFragment extends Component {
   super(props)
     this.state = {
       rating : 0,
+      changeSelected : null,
     }
    }
 
@@ -26,8 +27,9 @@ class PodcastPlayerFragment extends Component {
   }
  render () {
 
-   const { title, author, description, detail, rateBook, selectedPodcast, podcast } = this.props
+   const { title, author, description, detail, rateBook, selectedPodcast, podcasts, changeSelectedPodcast } = this.props
    const { rating } = this.state
+   console.log(selectedPodcast.url)
    return ( 
     <div>
     <div className={ 'podplay-header' }>
@@ -35,7 +37,7 @@ class PodcastPlayerFragment extends Component {
       <h1>UTube</h1>
     </div>
     <div className = { 'podplay-main' }>
-      <div><MedPlayer selectedPodcast = { selectedPodcast.url }/></div>
+      <div><MedPlayer selectedPodcast = { selectedPodcast.url } /></div>
       <Rating 
           rateBook = { (id, rating) => this.addRating(id, rating) }
           emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
@@ -45,7 +47,8 @@ class PodcastPlayerFragment extends Component {
             this.setState({ rating : e })
           }}
           fractions = { 2 }
-          initialRating = { selectedPodcast ? selectedPodcast.rating : 0 } />
+          initialRating = { selectedPodcast ? selectedPodcast.rating : 0 }
+         />
     <div className = { 'podcasts-player-details' }>
       <h2>{ selectedPodcast.speaker }</h2>
       <h5>Details</h5>
@@ -53,11 +56,11 @@ class PodcastPlayerFragment extends Component {
     <Board selectedPodcast = { selectedPodcast }/>
     </div>
       <div className = { 'podplay-sidebar-right' }>
-        <PodcastPlayerDetailsFragment 
+        <PodcastPlayerDetailsFragment
+          changeSelectedPodcast={ changeSelectedPodcast }
           presenter = { this.presenter } 
-          podcasts = { this.props.podcasts } 
-          _podcasts = { this.props._podcasts }
-          selectedPodcast = { selectedPodcast }/>
+          podcasts = { podcasts }
+          selectedPodcast = { selectedPodcast }  />
       </div>
     </div>
      )

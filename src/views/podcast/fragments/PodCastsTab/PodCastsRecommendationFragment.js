@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import PodCardComponent from '../../../common/components/PodCardComponent/PodCardComponent'
+import PodcastCardRecommendedComponent from '../../../common/components/PodCardComponent/PodcastCardRecommendedComponent'
 
 class PodCastsRecommendationFragment extends Component {
   constructor (props) {
@@ -16,15 +16,15 @@ class PodCastsRecommendationFragment extends Component {
     this.props.presenter.rateBook(id, rating)
   }
   render () {
-      const { podcasts, _podcasts } = this.props
+      const { podcastsRecommendation, _podcasts } = this.props
     return (
       <div className = {'podcasts-container'}>
         {
-          _podcasts.map((podcast, i) =>
-            <PodCardComponent
+          podcastsRecommendation.map((podcast, i) =>
+            <PodcastCardRecommendedComponent
              rateBook = { (id, rating) => this.addRating(id, rating) }
               key={ i }
-              podcasts = { podcasts }
+              podcast = { podcast }
               onClick = { details => this.setState({ details, show: true })  } />
             )
       }
