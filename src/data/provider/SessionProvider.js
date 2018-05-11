@@ -1,13 +1,7 @@
-<<<<<<< HEAD
 const TOKEN = 'TOKEN';
 const ACCOUNT_TOKEN = 'ACCOUNT_TOKEN';
 const ACCOUNT_NUMBER = 'ACCOUNT_NUMBER';
-=======
-const TOKEN = 'TOKEN'
-const ACCOUNT_TOKEN = 'ACCOUNT_TOKEN'
-const ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
 const PROFILE = 'PROFILE'
->>>>>>> 9d654ca014c24741db7894624526fd3f40cf4be2
 
 export default class SessionProvider {
   constructor () {
@@ -19,7 +13,8 @@ export default class SessionProvider {
   }
 
   getToken () {
-    return this.storage.getItem(TOKEN) || ''
+    //return this.storage.getItem(TOKEN) || ''
+    return ('a03391e97068eb573573920814ad99eb8afdca911a8dee9b73cca0697120753a7588931b4623a54cd6314a5d2e490f8a840949578703517b4f233e5d289369f7')
   }
 
   setAccountToken (accountToken = '') {

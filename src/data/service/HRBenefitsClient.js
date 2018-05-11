@@ -104,7 +104,6 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-<<<<<<< HEAD
   /* Faqs */
   getFaqs () {
       return this.service.getFaqs()
@@ -115,11 +114,15 @@ export default class HRBenefitsClient {
   getTransactions (token) {
       return this.service.getTransactions(token)
           .pipe(ServiceErrorOperator())
-=======
+        }
+        getTransactionId(token){
+          return this.service.getTransactionId(token)
+          .pipe(ServiceErrorOperator())
+        }
+        
   /* News */
   getFaqs (token) {
     return this.service.getFaqs(token)
       .pipe(ServiceErrorOperator())
->>>>>>> 9d654ca014c24741db7894624526fd3f40cf4be2
   }
 }

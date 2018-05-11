@@ -3,7 +3,7 @@ import TransactionsInteractor from '../../domain/interactor/transactions/Transac
 import Presenter from './presenter/TransactionsPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectPartial from '../../utils/ConnectPartial'
-import { GenericCard } from '../../ub-components/Cards'
+import {Card} from '../../ub-components/'
 
 class TransactionsView extends BaseMVPView {
   constructor (props) {

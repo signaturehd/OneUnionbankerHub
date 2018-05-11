@@ -23,12 +23,9 @@ export default class BenefitsPresenter {
   }
 
   getReleasingCenters () {
-<<<<<<< HEAD
     this.view.showLoading();
 
-=======
     this.view.showLoading()
->>>>>>> 9d654ca014c24741db7894624526fd3f40cf4be2
     this.getReleasingCentersInteractor.execute()
       .subscribe(releasingCenters => {
         this.view.hideLoading();
@@ -55,12 +52,9 @@ export default class BenefitsPresenter {
   }
 
   validateAccountNumber (accountNumber) {
-<<<<<<< HEAD
     this.view.showLoading();
 
-=======
     this.view.showLoading()
->>>>>>> 9d654ca014c24741db7894624526fd3f40cf4be2
     this.validateAccountNumberInteractor.execute(accountNumber)
       .subscribe(resp => {
         this.view.hideLoading();

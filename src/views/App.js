@@ -14,22 +14,15 @@ import { EventActions } from '../actions'
 
 const mapStateToProps = state => ({
   events: state.events,
-});
+})
 
 class App extends BaseMVPView {
   constructor (props) {
-    super(props);
+    super(props)
 
     this.state = {
       isLogin: false,
-<<<<<<< HEAD
-    };
-
-    this.presenter = new Presenter(this.props.container);
-    this.presenter.setView(this)
-=======
     }
->>>>>>> 9d654ca014c24741db7894624526fd3f40cf4be2
   }
 
   componentWillReceiveProps (nextProps) {

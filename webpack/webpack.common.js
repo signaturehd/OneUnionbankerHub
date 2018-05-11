@@ -1,21 +1,12 @@
-<<<<<<< HEAD:webpack.common.js
-const path = require('path');
-const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const project = require('./project.config');
-=======
 const path = require('path')
 const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const project = require('../project.config')
->>>>>>> 9d654ca014c24741db7894624526fd3f40cf4be2:webpack/webpack.common.js
 
-const inProject = path.resolve.bind(path, project.basePath);
-const inProjectSrc = file => inProject(project.srcDir, file);
+const inProject = path.resolve.bind(path, project.basePath)
+const inProjectSrc = file => inProject(project.srcDir, file)
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: inProjectSrc('index.html'),
@@ -23,7 +14,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   minify: {
     collapseWhitespace: true,
   },
-});
+})
 
 module.exports = {
   target: 'web',
@@ -71,4 +62,4 @@ module.exports = {
     new CleanWebpackPlugin(['dist']),
     new webpack.DefinePlugin(project.commonGlobals),
   ],
-};
+}

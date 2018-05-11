@@ -23,9 +23,6 @@ ReactDOM.render(
     <BrowserRouter history={ browserHistory }>
       <App />
     </BrowserRouter>
-<<<<<<< HEAD
   </Provider>, document.getElementById('root'));
 
-=======
-  </Provider>, document.getElementById('root'))
->>>>>>> 9d654ca014c24741db7894624526fd3f40cf4be2
+

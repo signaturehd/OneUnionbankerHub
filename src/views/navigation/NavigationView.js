@@ -4,7 +4,6 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/NavigationPresenter'
 
-import LibraryFragment from '../library/LibraryFragment'
 import BenefitsFragment from '../benefits/BenefitsFragment'
 import TransactionFragment from '../transaction/TransactionFragment'
 import NewsFragment from '../news/NewsFragment'

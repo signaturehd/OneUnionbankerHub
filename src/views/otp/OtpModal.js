@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react'
 import ConnectPartial from '../../utils/ConnectPartial'
 
@@ -8,7 +9,7 @@ import { GenericTextBox, GenericButton, Modal } from '../../ub-components'
 
 class OtpModal extends BaseMVPView {
   constructor (props) {
-    super(props);
+    super(props)
 
     this.state = {
       otp: '',

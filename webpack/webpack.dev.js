@@ -1,16 +1,8 @@
-<<<<<<< HEAD:webpack.dev.js
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
-const project = require('./project.config');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-=======
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const common = require('./webpack.common.js')
 const project = require('../project.config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
->>>>>>> 9d654ca014c24741db7894624526fd3f40cf4be2:webpack/webpack.dev.js
 
 module.exports = merge(common, {
   devtool: 'eval',
@@ -26,4 +18,4 @@ module.exports = merge(common, {
       DEBUG: true,
     }, project.devGlobals)),
   ],
-});
+})

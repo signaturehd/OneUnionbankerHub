@@ -70,26 +70,12 @@ export default class HRBenefitsService {
   }
 
   /* account */
-<<<<<<< HEAD
-  validateAccountNumber (accountNumber) {
-    return this.accountClient.get(
-    `accounts/v1/${accountNumber}`, {
-=======
   validateAccountNumber (token, accountNumber) {
-    return this.accountClient.get(`accounts/v1/${accountNumber}`, {
->>>>>>> 9d654ca014c24741db7894624526fd3f40cf4be2
-      headers: {
-        token,
-        referenceId : Math.random().toString(36)
-<<<<<<< HEAD
-        .substring(7)
-=======
-          .substring(7),
->>>>>>> 9d654ca014c24741db7894624526fd3f40cf4be2
-      }
-    })
-  }
-
+     return this.accountClient.get(`accounts/v1/${accountNumber}`, {
+       headers: {token, referenceId : Math.random().toString(36).substring(7),
+       }
+     })
+   }
   /* rds */
   getReleasingCenters (token) {
     return this.apiClient.get('v1/rds/centers', {
@@ -100,22 +86,22 @@ export default class HRBenefitsService {
   /* library */
   getBooks (token) {
     return this.apiClient.get('v1/books', {
-<<<<<<< HEAD
       headers: { token }
     })
   }
 
-  /* library */
   getTransactions (token) {
     return this.apiClient.get('v1/transactions', {
         headers: { token }
     })
   }
 
-=======
-        headers: { token }
+  getTransactionId(token){
+    return this.apiClient.get('v1/transactions/TransactionId', {
+      headers: {token}
     })
   }
+
 
   getBooksBorrowed (token) {
     return this.apiClient.get('v1/books/history', {
@@ -147,5 +133,5 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
->>>>>>> 9d654ca014c24741db7894624526fd3f40cf4be2
 }
+
