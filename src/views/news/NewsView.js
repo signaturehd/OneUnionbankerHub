@@ -15,7 +15,7 @@ import { GenericCard } from '../../ub-components/Cards'
 
 class NewsView extends BaseMVPView {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
         showNews: []
     }
@@ -30,7 +30,7 @@ this.setState({ showNews:news })
 }
 
   render () {
-    const { showNews } = this.state;
+    const { showNews } = this.state
 
     return (
       <div className = {'library-container'}>

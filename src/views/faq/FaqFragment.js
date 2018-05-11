@@ -23,9 +23,8 @@ class FaqFragment extends BaseMVPView {
     this.updateSearch = this.updateSearch.bind(this)
   }
 
-  updateSearch ()
-  {
-    this.setState({ searchString: this.refs.search.value.substr( 0 , 20) })
+  updateSearch () {
+    this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
   }
 
   componentDidMount () {
@@ -40,11 +39,9 @@ class FaqFragment extends BaseMVPView {
   render () {
     const { faqs, show, details } = this.state
     let _faqs = this.state.faqs
-    let search = this.state.searchString.trim().toLowerCase()
+    const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
-      _faqs = _faqs.filter(function(faqs) {
-        return faqs.title.toLowerCase().match(search)
-      })
+      _faqs = _faqs.filter(faqs => faqs.title.toLowerCase().match(search))
     }
     return (
       <div className = {'container'}>

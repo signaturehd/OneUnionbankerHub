@@ -15,7 +15,7 @@ export default class LoginPresenter {
     this.loginInteractor.execute(LoginParam(username, password))
       .subscribe(
         data => {
-          this.view.hideLoading();
+          this.view.hideLoading()
           this.view.onLoginSuccess()
         },
         error => {
