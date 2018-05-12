@@ -13,6 +13,7 @@ export default class NavigationPresenter {
 
   logout () {
     this.logoutInteractor.execute()
+    console.log("success")
     // TODO make reactive when logout API call is integrated
   }
 
