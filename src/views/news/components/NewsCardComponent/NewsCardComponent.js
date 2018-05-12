@@ -22,6 +22,7 @@ class NewsCardComponent extends Component {
           height : '100px',
           width: 'auto',
           backgroundBlendMode: 'color',
+          backgroundSize: 'cover',
           color : 'white',
           fontWeight : 'bold'
         }
