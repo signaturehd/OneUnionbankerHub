@@ -13,17 +13,18 @@ export default class SessionProvider {
   }
 
   getToken () {
-    // return this.storage.getItem(TOKEN) || ''
-    return 'a6bce60109756a19ef3bc264a9cf2ffbb1fc201576f6c1e46446cf4b89838b780f8b9803e5f4c008af4682511589da21d8138b2e5896080b2d46b4cf6adb0f85'
+    return this.storage.getItem(TOKEN) || ''
+
   }
 
   setAccountToken (accountToken = '') {
     this.storage.setItem(ACCOUNT_TOKEN, accountToken)
+
   }
 
   getAccountToken () {
-    // return this.storage.getItem(ACCOUNT_TOKEN) || ''
-    return 'rY5CFD9ja3as2I/pjQFkeX+3enBOl5dgzJVfagDynKEoqHatj+eQi+8tErIoKssbnZogU9x35PcmpPpicxPIhkVWbWfBWl1HT3eYhfmn+Kvk+zZqThk5Ygc9TuowaHAYaRxKlIlm+VVF7GbyMDA9+wEJdu2k4VM='
+    return this.storage.getItem(ACCOUNT_TOKEN) || ''
+
   }
 
   setAccountNumber (accountNumber = '') {
