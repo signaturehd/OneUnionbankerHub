@@ -16,7 +16,7 @@ class SideBar extends Component {
       { id: 1 , title: 'Benefits', path: '/benefits', className: 'benefits-icon' },
       { id: 2 , title: 'Transactions', path: '/transactions', className: 'transaction-icon' },
       { id: 3 , title: 'FAQS', path: '/faqs', className: 'faqs-icon' },
-      { id: 4 , title: 'Settings', path: '/settings', className: 'settings-icon' },
+      { id: 4 , title: 'Profile', path: '/settings', className: 'settings-icon' },
       { id: 5 , title: 'Books', path: '/books', className: 'books-icon' },
       { id: 6 , title: 'Podcasts', path: '/podcast', className: 'podcast-icon' },
     ]
