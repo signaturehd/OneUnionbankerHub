@@ -7,7 +7,7 @@ import ConnectView from '../../../utils/ConnectView'
 import Presenter from '../presenter/OpticalPresenter'
 import { GenericTextBox, FileUploader } from  '../../../ub-components/'
 
-import staticImage from '../../../images/uploadicon-orange.jpg'
+import staticImage from '../../../images/uploadicon-grey.jpg'
 
 class OpticalCard extends Component {
   constructor (props) {
@@ -15,8 +15,8 @@ class OpticalCard extends Component {
     this.state = {
       file: '',
       file2: '',
-      imagePreviewUrl: `${staticImage}`,
-      imagePreviewUrl2: `${staticImage}`,
+      imagePreviewUrl: ``,
+      imagePreviewUrl2: ``,
       warning: '',
       amount : 0
     }

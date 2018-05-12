@@ -27,7 +27,7 @@ class OpticalModal extends Component {
       imagePreviewUrl,
       imagePreviewUrl2,
     } = this.props
-
+    const {disabled} = this.state
     const styles = {
       image1 : {
         backgroundImage: `url('${imagePreviewUrl}')`,
@@ -59,8 +59,11 @@ class OpticalModal extends Component {
             </div>
             <br/>
             <GenericButton
-              onClick = { () => submitForm(fileReceived, fileReceived2, amount) }
+              onClick = { () => {
+                this.setState({disabled : true})
+                submitForm(fileReceived, fileReceived2, amount)} }
               text = { 'confirm' }
+              disabled = {this.state.disabled}
             />
             <GenericButton text = { 'cancel' } onClick = { onClose } />
         </Modal>
