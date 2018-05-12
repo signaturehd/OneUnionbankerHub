@@ -11,7 +11,7 @@ class FaqCardComponent extends Component {
   }
 
   render () {
-    const { faqs, onClick } = this.props
+    const { faqs, onClick, faqsCategory } = this.props
     return (
         <Card>
           <div></div>

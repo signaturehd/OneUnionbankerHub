@@ -17,6 +17,7 @@ class FaqFragment extends BaseMVPView {
     super(props)
     this.state = {
         faqs: [],
+        faqsCategory: [],
         show : false,
         searchString : ''
     }
@@ -29,15 +30,19 @@ class FaqFragment extends BaseMVPView {
 
   componentDidMount () {
     this.presenter.getFaqs()
+    this.presenter.getFaqsCategories()
     this.props.setSelectedNavigation(3)
   }
 
   faqs (faqs) {
     this.setState({ faqs })
   }
+  faqsCategory (faqsCategory) {
+    this.setState({ faqsCategory })
+  }
 
   render () {
-    const { faqs, show, details } = this.state
+    const { faqs, faqsCategory, show, details } = this.state
     let _faqs = this.state.faqs
     const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
