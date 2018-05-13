@@ -43,16 +43,16 @@ class PodcastView extends BaseMVPView {
       this.setState({ searchString: this.refs.search.value.substr( 0 , 20) })
   }
   podcasts ( podcasts ) {
-      this.setState({ podcasts })  
+      this.setState({ podcasts })
   }
   podcastsRecommendation ( podcastsRecommendation ) {
-      this.setState({ podcastsRecommendation })  
+      this.setState({ podcastsRecommendation })
   }
   render () {
     const { podcasts, podcastsRecommendation,  show, details, detail, searchBar, selectedPodcast } = this.state
     const { history } = this.props
     const PodcastPlayer = () => (
-        <PodcastPlayerFragment 
+        <PodcastPlayerFragment
             changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
             selectedPodcast = { selectedPodcast }
             presenter = { this.presenter }
@@ -96,23 +96,23 @@ class PodcastView extends BaseMVPView {
         <PodCastsListFragment
           changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
           presenter = { this.presenter }
-          podcasts = { podcasts } 
+          podcasts = { podcasts }
           details = { details }
           history = { history } />
       </section>
       <section id='content2'>
-        <PodCastsRecommendationFragment 
+        <PodCastsRecommendationFragment
           presenter = { this.presenter }
           changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
           podcastsRecommendation = { podcastsRecommendation }
           history = { history } />
       </section>
       <section  id='content3'>
-        <PodCastsViewedFragment  
+        <PodCastsViewedFragment
           presenter = { this.presenter }
           changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
           podcasts = { podcasts }
-          _podcasts = { _podcasts } 
+          _podcasts = { _podcasts }
           history = { history }  />
       </section>
     </div>
