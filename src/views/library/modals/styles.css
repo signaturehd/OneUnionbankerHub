@@ -1,6 +1,6 @@
-.library-view-container {
+.library-modal-container {
   display:grid;
-  grid-template-rows: 40% 60%;
+  grid-template-rows: 1fr 1fr;
   min-height:500px;
 }
 .title .books-details,
@@ -16,4 +16,41 @@
 }
 .center {
   text-align: center;
+}
+
+.library-modal-body-title{
+  line-height: normal;
+  font-weight: lighter;
+  padding: 15px 0px 0px 15px
+}
+
+.library-modal-body-title-main {
+  font-size: 18px;
+  width:100%;
+  margin:0px;
+}
+
+.library-modal-body-title-author {
+  color : #a1a1a1;
+  margin:0px;
+  width:100%;
+}
+
+.library-modal-body-commands {
+
+}
+
+.library-modal-body-description {
+  line-height: normal;
+  font-weight: lighter;
+  padding: 15px 0px 0px 15px
+}
+
+.library-modal-body {
+  display: grid;
+  grid-template-rows: 20% 60% 20%
+}
+
+.library-modal-footer-container {
+  float:right
 }
