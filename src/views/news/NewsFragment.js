@@ -51,7 +51,7 @@ class NewsFragment extends BaseMVPView {
           show &&
           <NewsModalComponent onClose = { () => this.setState({ show: false })} details = { details } />
         }
-        <h1>News Feed</h1>
+        <h1 className = { 'title-view' }>News Feed</h1>
         <input type = 'text'
              className = 'newsSearchBar'
              ref='search'
