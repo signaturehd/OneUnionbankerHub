@@ -3,3 +3,17 @@
   grid-template-rows: 40% 60%;
   min-height:500px;
 }
+.title .books-details,
+   .title .books-details-content {
+     display: inline;
+}
+.books-details {
+  font-weight: bold;
+}
+.library-details {
+  margin: auto;
+  text-align: justify;
+}
+.center {
+  text-align: center;
+}

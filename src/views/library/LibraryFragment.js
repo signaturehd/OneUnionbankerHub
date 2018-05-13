@@ -53,7 +53,7 @@ class LibraryFragment extends BaseMVPView {
     return (
       <div>
       { super.render() }
-        <h1>Library</h1>
+        <h1 className = {'title-view' }>Library</h1>
         <div className = { 'tabs-container' }>
           <input
             className = { 'input-tab' }
@@ -61,17 +61,17 @@ class LibraryFragment extends BaseMVPView {
             type='radio'
             name='tabs'
             defaultChecked />
-          <label htmlFor = 'tab1'>All Books</label>
+          <label  className = { 'mobile-icon' } htmlFor = 'tab1'>All Books</label>
 
           <input
             className = { 'input-tab' }
             id='tab2'
             type='radio'
             name='tabs' />
-          <label htmlFor='tab2'>Recommended</label>
+          <label className = { 'mobile-icon' } htmlFor='tab2'>Recommended</label>
 
           <input className = { 'input-tab' } id='tab3'  type='radio' name='tabs' />
-          <label htmlFor = 'tab3' >Borrowed</label>
+          <label className = { 'mobile-icon' } htmlFor = 'tab3' >Borrowed</label>
 
           <section id='content1'>
             <BookListFragment presenter={ this.presenter } books = { books } />

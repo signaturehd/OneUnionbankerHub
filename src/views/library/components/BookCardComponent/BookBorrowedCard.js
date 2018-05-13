@@ -7,6 +7,7 @@ import { Card, GenericButton } from '../../../../ub-components'
 
 import Rating from 'react-rating'
 
+import staticImage from '../../../../images/education_bg.jpg'
 import './styles.css'
 
 class BookBorrowedCard extends Component {
@@ -24,7 +25,7 @@ class BookBorrowedCard extends Component {
 
     const  styles = {
       cardHeader : {
-        backgroundImage : "url("+'../../images/profile-picture.png'+")",
+        backgroundImage :`rgba(0,0,0,0.5) url(${staticImage}) no-repeat center center`,
         backgroundSize : 'cover',
         backgroundRepeat : 'no-repeat'
       }
@@ -48,7 +49,6 @@ class BookBorrowedCard extends Component {
               }}
               fractions = { 2 }
               initialRating = { rating ? rating : detail.rating }
-              readonly
             />
           <GenericButton
             onClick = { () => onClick(detail, true) }

@@ -15,6 +15,7 @@ class BookBorrowedFragment extends Component {
 
   addRating (id, rating) {
     this.props.presenter.rateBook(id, rating)
+    console.log(borrowed)
   }
 
   render () {
@@ -25,7 +26,7 @@ class BookBorrowedFragment extends Component {
         {
           borrowed  && borrowed.requests && borrowed.requests.map((bookRequest, key) =>
             <BookBorrowedCard
-              
+
               rateBook = { (id, rating) => this.addRating(id, rating) }
               detail = { bookRequest.book } key = { key }
               onClick = { (details, view) => this.setState({ bookRequest, view }) }

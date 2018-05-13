@@ -7,6 +7,7 @@ import Presenter from '../presenter/LibraryPresenter'
 import BaseMVPView from '../../common/base/BaseMVPView'
 
 import './styles.css'
+import staticImage from '../../../images/education_bg.jpg'
 
 class BookViewModal extends BaseMVPView {
   constructor (props) {
@@ -26,8 +27,9 @@ class BookViewModal extends BaseMVPView {
     console.log(details)
 
     const style = {
-      background : `rgba(0,0,0,0.5) url(${details.imageUrl})`,
-      backgroundSize : 'cover',
+      background : `rgba(0,0,0,0.5) url(${staticImage}) no-repeat center center`,
+      backgroundSize : '450px 200px',
+      width: '-webkit-fill-available',
     }
 
     return (
@@ -36,13 +38,20 @@ class BookViewModal extends BaseMVPView {
         onClose = { onClose }
       >
         <div className = { 'library-view-container' }>
-          <div style = {style}>
-          </div>
-          <div className = { '' } >
+          <div style = {style} />
+        <div className = { 'library-details' }>
+          <div className ="title">
+            <h4>Title: {details.title}</h4>
+            <h4>Description: {details.descriptions}</h4>
+            <h4>ISBN #: {details.isbnNumber}</h4>
+            <h4>Author: {details.author}</h4>
+            <h4>Publisher: {details.publisher}</h4>
+            <h4>Available Copies: {details.availableCopies}</h4>
+        </div>
+        </div>
+        <div className = { 'center' } >
          <GenericButton onClick = { () => this.submitForm(details.id, 1) }
            text = { "Reserve" } />
-          </div>
-          <div className = { '' } >
           </div>
         </div>
       </Modal>

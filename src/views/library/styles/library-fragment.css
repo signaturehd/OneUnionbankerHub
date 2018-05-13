@@ -7,7 +7,9 @@
 .page-header-buttons {
   padding: 0 4% 0 4%;
 }
-
+.title-view {
+  margin : 25px auto;
+}
 section {
   display: none;
   padding: 20px 0 0;
@@ -62,6 +64,13 @@ label:hover {
   label:before {
     margin: 0;
     font-size: 18px;
+  }
+  .mobile-icon {
+    background: url('../../../images/profile-picture.png') no-repeat center center;
+    background-size: contain;
+    height: fit-content;
+    width: fit-content;
+    margin: auto;
   }
 }
 
