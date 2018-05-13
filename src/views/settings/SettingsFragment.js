@@ -17,49 +17,41 @@ class SettingsFragment extends BaseMVPView {
     super(props)
 
     this.state = {
-     profile: new Array(),
+     profile: [],
+     profileInfo: [],
+     rank: [],
+     linemanager: [],
+     showProfile : false,
+     showRank : false,
+     showEmployeeProfile : false,
+     showLineManager : false,
     }
   }
   componentDidMount () {
     this.presenter.getProfile()
     this.props.setSelectedNavigation(4)
   }
-  profile ( profile ) {
+  showProfile ( profile ) {
     this.setState({ profile })
+
+  }
+  showEmployeeProfile ( profileInfo ) {
+    this.setState({ profileInfo })
+  } 
+  showRank ( rank ) {
+    this.setState({ rank })
+  } 
+  showLineManager ( linemanager ) {
+    this.setState({ linemanager })
   }
   render () {
-    const { profile, details, className } = this.state
+    const { linemanager, profileInfo, profile, details, className, rank } = this.state
 
     return (
       <div className = { 'profile-container' }>
         { super.render() }
-        <h1>Profile</h1>
-        <Card className = { 'profile-card' }>
-          <img src = { require('../../images/profile-picture.png') } className = { 'image-profile' }/>
-             <h1>John Doe</h1>
-             <p className="title">CEO & Founder, Example</p>
-             <p>Harvard University</p>
-
-             <div className = 'profile-main-info'>
-               <a className = { 'a' } href="#"><i className="fa fa-dribbble"></i></a>
-               <a className = { 'a' } href="#"><i className="fa fa-twitter"></i></a>
-               <a className = { 'a' } href="#"><i className="fa fa-linkedin"></i></a>
-               <a className = { 'a' } href="#"><i className="fa fa-facebook"></i></a>
-            </div>
-            <p><button className = { 'contact' }>Contact</button></p>
-        </Card>
-        <Card className = { 'profile-info-secondary' }>
-          <h2>Other Info</h2>
-            <div className = 'card-container'>
-            {
-              profile.map((n, i) =>
-                <SettingsFragment
-                  key={ i }
-                  profile = { n }
-                  onClick = { details => this.setState({ details, show: true }) } />)
-            }
-            </div>
-        </Card>
+        <h1 className = { 'title-view' }>Profile</h1>
+        <SettingsCardComponent profile = { profile } linemanager = { linemanager } rank = { rank } presenter = { this.presenter }/>
       </div>
     )
   }

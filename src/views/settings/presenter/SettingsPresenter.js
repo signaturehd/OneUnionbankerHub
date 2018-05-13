@@ -2,7 +2,7 @@ import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInte
 
 export default class SettingsPresenter {
   constructor (container) {
-    this.GetProfileInteractor = new GetProfileInteractor( container.get('HRBenefitsClient'))
+    this.getProfileInteractor = new GetProfileInteractor( container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -12,10 +12,13 @@ export default class SettingsPresenter {
    getProfile () {
     this.view.showLoading()
 
-    this.GetProfileInteractor.execute()
+    this.getProfileInteractor.execute()
+     .do(profile => this.view.showProfile(profile.employee))
+     .do(profile => this.view.showRank(profile.employee.rank))
+     .do(profile => this.view.showLineManager(profile.employee.lineManager))
      .subscribe(profile => {
       this.view.hideLoading()
-      this.view.profile(profile)
+      this.view.showEmployeeProfile(profile.dependent)
      }, e => {
       this.view.hideLoading()
       // TODO prompt generic error
