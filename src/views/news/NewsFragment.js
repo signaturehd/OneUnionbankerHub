@@ -58,7 +58,7 @@ class NewsFragment extends BaseMVPView {
              placeholder = {'Search News'}
              value = { this.state.searchString }
              onChange = { this.updateSearch } />
-        <div className = 'card-container'>
+        <div className = 'news-card-container'>
         {
           _news.map((news, i) =>
             <NewsCardComponent

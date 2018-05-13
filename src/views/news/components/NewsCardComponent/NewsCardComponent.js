@@ -18,8 +18,7 @@ class NewsCardComponent extends Component {
         newsBackground:
         {
           background : `url(${news.imageUrl}) rgba(0,0,0,0.7)`,
-          backgroundRepeat : 'no-repeat ',
-          height : '100px',
+          backgroundRepeat : 'no-repeat',
           width: 'auto',
           backgroundBlendMode: 'color',
           backgroundSize: 'cover',

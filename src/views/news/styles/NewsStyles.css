@@ -15,3 +15,14 @@
   outline: none;
   border-bottom-color: #ff8a00;
 }
+
+.news-card-container {
+  column-gap: 10px;
+  column-count: 3;
+}
+
+@media (max-width : 786px) {
+  .news-card-container {
+    column-count : 2;
+  }
+}
