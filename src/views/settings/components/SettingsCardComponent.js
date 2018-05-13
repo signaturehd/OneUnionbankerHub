@@ -13,10 +13,10 @@ class SettingsCardComponent extends Component {
   render () {
     const { profile, onClick } = this.props
     return (
-        <Card>
-          <div>awdawda</div>
-          <div className = {'news-body'}>
-            <h3>{profile.fullName}</h3>
+        <Card className = { 'profile-info-secondary' }>
+          <div>{ profile.id }</div>
+          <div className = {'profile-body'}>
+            <h3>{ profile.id }</h3>
           </div>
           <div className = {'card-footer'}>
           </div>
@@ -26,12 +26,7 @@ class SettingsCardComponent extends Component {
 }
 
 SettingsCardComponent.propTypes = {
-  profile : PropTypes.array,
   onClick : PropTypes.func
-}
-
-SettingsCardComponent.defaultProps = {
-
 }
 
 export default SettingsCardComponent
