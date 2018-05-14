@@ -49,6 +49,7 @@ class BookBorrowedCard extends Component {
               }}
               fractions = { 2 }
               initialRating = { rating ? rating : detail.rating }
+              readonly
             />
           <GenericButton
             onClick = { () => onClick(detail, true) }
