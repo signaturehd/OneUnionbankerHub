@@ -6,6 +6,7 @@
 .icon-header {
   grid-area: header-logo;
   text-align: left;
+  margin: auto;
 }
 .burger-icon {
 grid-area: header-nav;
@@ -13,14 +14,18 @@ text-align: -webkit-right;
 }
 ._img-ub-logo {
   width: auto;
-  height: 20px;
+  height: 20px;30px
   margin-top: 2%;
   margin-left: 30px;
   width: auto;
 }
 ._img-ub-profile {
   width: auto;
+  display: flex;
   height: 20px;
   width: auto;
   margin-top: 2%;
+}
+.logout {
+  float: right;
 }
