@@ -62,7 +62,7 @@ class PodcastView extends BaseMVPView {
     const PodCast = () => (
     <div>
     { super.render() }
-    <h1>PODCASTS</h1>
+    <h1 className = { 'title-view' } >PODCASTS</h1>
     <input className = 'podcastsSearchBar'
            ref="search"
            type = { 'text' }
