@@ -73,6 +73,9 @@
     box-shadow: none !important;
   }
 
+  .login-logo {
+    margin-top: 0px;
+  }
 }
 
 
