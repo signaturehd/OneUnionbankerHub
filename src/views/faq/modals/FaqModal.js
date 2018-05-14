@@ -9,7 +9,7 @@ class FaqModal extends Component {
   }
 
   render () {
-    const { details } = this.props
+    const { details, onClose } = this.props
     return (
       <Modal
         onClose = { onClose }
