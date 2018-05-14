@@ -63,6 +63,18 @@
   }
 }
 
+@media screen and (max-width : 768px) {
+  .icon-1 {
+    padding:2% !important;
+    width:20px !important;
+  }
+
+  .login-form {
+    box-shadow: none !important;
+  }
+
+}
+
 
 .login-layer-icons {
   width: 380px;
@@ -77,9 +89,8 @@
 }
 .icon-1 {
   width: 30px;
-  margin: 50px 5px;
-  box-shadow: 0 5px 10px -7px #333333;
-  border-radius: 50%;
+  margin-top: 50px;
+  padding:3%;
   background: #fff;
   margin-bottom: 10px;
   border: 0px #e2d3d300;
