@@ -9,25 +9,24 @@ class FaqCardComponent extends Component {
   constructor (props) {
     super(props)
   }
-
   render () {
-    const { faqs, onClick, faqsCategory } = this.props
-    return (
-        <Card>
-          <div></div>
-          <div className = {'card-body'}>
-            <h3>{faqs.title}</h3>
-          </div>
-          <div className = {'card-footer'}>
-            <small><a onClick = { () => onClick(faqs) }>Read More</a></small>
-          </div>
-        </Card>
+    const { categorize, onClick, faqsCategory } = this.props
+    const newCategory = categorize.category
+ return (
+      <Card>
+        <div className = {'card-body'}>
+        <h2>{newCategory.category}</h2>
+        </div>
+        <div className = {'card-footer'}>
+          <small><a onClick = { onClick }>Read More</a></small>
+        </div>
+      </Card>
     )
+
   }
 }
 
 FaqCardComponent.propTypes = {
-  faqs : PropTypes.object,
   onClick : PropTypes.func,
 }
 

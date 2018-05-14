@@ -14,7 +14,7 @@ export default class FaqPresenter {
       this.getFaqInteractor.execute()
       .subscribe(faqs => {
           this.view.hideLoading()
-          this.view.faqs(faqs)
+          this.view.showFaqs(faqs)
         }, e => {
           this.view.hideLoading()
           // TODO prompt generic error

@@ -12,8 +12,9 @@ class FaqModal extends Component {
     const { details, onClose } = this.props
     return (
       <Modal
-        onClose = { onClose }
-      >
+        isDismisable = { true }
+        onClose = { onClose }>
+        
         <h4>{details.title}</h4>
         <span>{details.description}</span>
       </Modal>
