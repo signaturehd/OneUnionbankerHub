@@ -21,10 +21,16 @@ class LibraryFragment extends BaseMVPView {
       recommended : [],
       borrowed : [],
       reserve: [],
+      filteredBook: [],
       showRating : false,
-      showBook : false
+      showBook : false,
+      showBorrowed : false,
+      showRecommendation : false,
+      showBorrowedFiltered : false,
+      searchString : '',
 
     }
+    this.updateSearch = this.updateSearch.bind(this)
   }
 
   componentDidMount () {
@@ -46,14 +52,36 @@ class LibraryFragment extends BaseMVPView {
     this.setState({ borrowed })
   }
 
-
+  updateSearch () {
+      this.setState({ searchString: this.refs.search.value.substr( 0 , 20) })
+  }
+  showBorrowedFiltered (filteredBook) {
+    this.setState({ filteredBook })
+  }
 
   render () {
-    const { books, tabs, recommended, borrowed, reserve } = this.state
+    const { filteredBook, books, tabs, recommended, borrowed, reserve } = this.state
+
+    console.log(filteredBook)
+    console.log(borrowed)
+    let _books = this.state.books
+    let _borrowed = this.state.borrowed
+    let search = this.state.searchString.trim().toLowerCase()
+    if (search.length > 0) {
+      _books = _books.filter(function(books) {
+        return books.title.toLowerCase().match(search)
+      })  
+    }
     return (
       <div>
       { super.render() }
         <h1 className = {'title-view' }>Library</h1>
+        <input type = 'text'
+             className = {'booksSearchBar'}
+             ref='search'
+             placeholder = {'Search Books'}
+             value = { this.state.searchString }
+             onChange = { this.updateSearch } />
         <div className = { 'tabs-container' }>
           <input
             className = { 'input-tab' }
@@ -74,7 +102,7 @@ class LibraryFragment extends BaseMVPView {
           <label className = { 'mobile-icon' } htmlFor = 'tab3' >Borrowed</label>
 
           <section id='content1'>
-            <BookListFragment presenter={ this.presenter } books = { books } />
+            <BookListFragment presenter={ this.presenter } _books = { _books } />
           </section>
           <section id='content2'>
             <BookRecommendationFragment presenter = { this.presenter } recommended = { recommended } />

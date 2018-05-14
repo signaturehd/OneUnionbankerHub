@@ -41,6 +41,7 @@ export default class LibraryPresenter {
   getBooksBorrowed () {
     this.view.showLoading()
     this.getBooksBorrowedInteractor.execute()
+    .do(borrowed => this.view.showBorrowedFiltered(borrowed.requests))
     .subscribe(borrowed => {
         this.view.hideLoading()
         this.view.showBorrowed(borrowed)
