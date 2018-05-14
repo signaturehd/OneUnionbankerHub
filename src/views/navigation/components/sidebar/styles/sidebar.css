@@ -110,7 +110,7 @@ ul {
   }
   ._sidebar-overlay {
       z-index: 3;
-      width: 190px;
+      width: 220px;
   }
   .main-content {
       order: 2;

@@ -63,7 +63,9 @@ class NavigationView extends BaseMVPView {
     const { displayShow, displayNavIcon, displayNavIconState, selected } = this.state
     const style = {
       show: {
-          display : displayShow
+          display : displayShow,
+          transitionDelay: '4s',
+
       }
     }
     return (
