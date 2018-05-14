@@ -36,7 +36,7 @@ class NavigationView extends BaseMVPView {
   }
 
   componentWillMount () {
-    const mediaQuery = window.matchMedia('(min-width: 768px)')
+    const mediaQuery = window.matchMedia('(min-width: 1201px)')
       if (mediaQuery.matches) {
         this.setDisplay('block', 'none')
       } else {
