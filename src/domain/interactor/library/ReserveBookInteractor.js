@@ -3,8 +3,7 @@ export default class ReserveBookInteractor {
     this.client = client
   }
 
-    execute (ReserveParam) {
-    	console.log(ReserveParam)
-    return this.client.ReserveBook(this.client.getToken(), ReserveParam)
+  execute (ReserveParam) {
+    return this.client.reserveBook(this.client.getToken(), ReserveParam)
   }
 }

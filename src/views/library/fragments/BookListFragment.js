@@ -33,7 +33,9 @@ class BookListFragment extends Component {
         }
         {
           this.state.view &&
-          <BookViewModal rateBook = { (id, rating) => this.addRating(id, rating) } details = { details } onClose = { () => this.setState({ view : false }) }/>
+          <BookViewModal rateBook = { (id, rating) => this.addRating(id, rating) }
+           details = { details }
+           onClose = { () => this.setState({ view : false }) }/>
         }
       </div>
     )

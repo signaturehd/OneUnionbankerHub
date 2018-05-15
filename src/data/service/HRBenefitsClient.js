@@ -91,11 +91,11 @@ export default class HRBenefitsClient {
     return this.service.addRating(token, bookParam)
       .pipe(ServiceErrorOperator())
   }
-ReserveBook(token, BookReserveParam){
-  console.log(BookReserveParam)
-  return this.service.ReserveBook(token, BookReserveParam)
-      .pipe(ServiceErrorOperator())
-}
+
+  reserveBook (token, BookReserveParam) {
+    return this.service.ReserveBook(token, BookReserveParam)
+        .pipe(ServiceErrorOperator())
+  }
 
   /* optical */
   getOptical (token) {

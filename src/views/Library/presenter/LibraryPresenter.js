@@ -15,7 +15,7 @@ export default class LibraryPresenter {
     this.getBooksInteractor = new GetBooksInteractor(container.get('HRBenefitsClient'))
     this.addBookInteractor = new AddBookRatingInteractor(container.get('HRBenefitsClient'))
     this.getBooksBorrowedInteractor = new GetBooksBorrowedInteractor(container.get('HRBenefitsClient'))
-    this.ReserveBookInteractor = new ReserveBookInteractor(container.get('HRBenefitsClient'))
+    this.reserveBookInteractor = new ReserveBookInteractor(container.get('HRBenefitsClient'))
   }
 
 
@@ -62,9 +62,10 @@ export default class LibraryPresenter {
       }
     )
   }
-    ReserveBook(id, quantity) {
+
+  reserveBook (id, quantity) {
     this.view.showLoading()
-    this.ReserveBookInteractor.execute(ReserveParam(id,quantity))
+    this.reserveBookInteractor.execute(ReserveParam(id,quantity))
     .subscribe(
       data => {
         this.view.hideLoading()

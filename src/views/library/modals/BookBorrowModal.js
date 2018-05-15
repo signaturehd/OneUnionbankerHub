@@ -10,9 +10,8 @@ import './styles.css'
 class BookBorrowModal extends BaseMVPView {
   constructor (props) {
     super(props)
-
   }
-  ReserveBook(id,quantity){
+  ReserveBook (id,quantity) {
   this.props.presenter.ReserveBook(id,quantity)
     }
 
@@ -21,10 +20,7 @@ class BookBorrowModal extends BaseMVPView {
   }
 
   render () {
-    const { onClose, details, borrowed,detail} = this.props
-    console.log(details)
-
-
+    const { onClose, details, borrowed,detail } = this.props
 
     return (
       <Modal
@@ -36,7 +32,7 @@ class BookBorrowModal extends BaseMVPView {
           <h4>ISBN #: {detail && detail.book && detail.book.isbnNumber}</h4>
           <h4>Application Date: {detail && detail.date && detail.date.application}</h4>
           <h4>Status: {detail && detail.status && detail.status}</h4>
-          <h4>Reference #: {detail && detail.status && detail.referencenumber}</h4>      
+          <h4>Reference #: {detail && detail.status && detail.referencenumber}</h4>
         </div>
       </Modal>
     )

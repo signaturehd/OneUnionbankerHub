@@ -15,7 +15,6 @@ class BookBorrowedFragment extends Component {
 
   addRating (id, rating) {
     this.props.presenter.rateBook(id, rating)
-    console.log(borrowed)
   }
 
   render () {

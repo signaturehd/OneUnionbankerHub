@@ -17,8 +17,8 @@ class BookViewModal extends BaseMVPView {
       rating : 0
     }
   }
-  ReserveBook(id,quantity){
-  this.props.presenter.ReserveBook(id,quantity)
+ reserveBook (id,quantity) {
+  this.props.presenter.reserveBook(id,quantity)
     }
 
  submitForm (id, quantity) {
@@ -68,7 +68,7 @@ class BookViewModal extends BaseMVPView {
           </div>
           <div className = { 'library-momdal-footer' } >
             <div className = {'library-modal-footer-container'} >
-              <GenericButton onClick = { () => this.submitForm(details.id, 1) } text = { "Reserve" } />
+              <GenericButton onClick = { () => this.submitForm(details.id, 1) } text = { 'Reserve' } />
             </div>
           </div>
         </div>

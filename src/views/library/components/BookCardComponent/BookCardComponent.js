@@ -24,12 +24,12 @@ class BookCardComponent extends Component {
 
     const  styles = {
       cardHeader : {
-        backgroundImage : "url("+$(detail.imageUrl)+")",
+        backgroundImage : `url(${$(detail.imageUrl)  })`,
         backgroundSize : 'cover',
         backgroundRepeat : 'no-repeat'
       },
       authorStyle : {
-        fontSize : "2px",
+        fontSize : '2px',
       }
     }
 
