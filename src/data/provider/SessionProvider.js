@@ -32,10 +32,6 @@ export default class SessionProvider {
     return this.storage.getItem(ACCOUNT_NUMBER) || ''
   }
 
-  setProfile (profile) {
-    this.storage.setItem(PROFILE, JSON.stringify(profile))
-  }
-
   getProfile () {
     return JSON.parse(this.storage.getItem(PROFILE)) || {}
   }
