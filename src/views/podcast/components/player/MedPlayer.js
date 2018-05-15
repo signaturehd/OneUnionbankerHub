@@ -6,7 +6,10 @@ const { CurrentTime, Progress, SeekBar, Duration, Volume, PlayPause, Fullscreen,
 
 class MedPlayer extends Component {
   render() {
-    const { selectedPodcast } = this.props
+    const { selectedPodcast, history } = this.props
+    let url = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+    const newUrl = url
+
    return (
     <div className = { 'media-player-content' }>
       <Media>
@@ -16,7 +19,7 @@ class MedPlayer extends Component {
           tabIndex="0">
           <Player
             className = {'player-content'}
-            src={ 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' }
+            src={ newUrl }
             onClick={() => playPause()}
           />
           <div className="media-controls">

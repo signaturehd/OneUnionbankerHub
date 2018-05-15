@@ -1,13 +1,15 @@
 import PodcastInteractor from '../../../domain/interactor/podcast/PodcastInteractor'
 import PodcastRecommendationInteractor from '../../../domain/interactor/podcast/PodcastRecommendationInteractor'
-import AddBookRatingInteractor from '../../../domain/interactor/library/AddBookRatingInteractor'
-import BookRateParam from '../../../domain/param/BookRateParam'
+import PodcastViewedInteractor from '../../../domain/interactor/podcast/PodcastViewedInteractor'
+import AddPodcastRatingInteractor from '../../../domain/interactor/podcast/AddPodcastRatingInteractor'
+import PodcastRateParam from '../../../domain/param/PodcastRateParam'
 
 export default class PodcastPresenter {
     constructor (container) {
       this.getPodcastInteractor = new PodcastInteractor(container.get('HRBenefitsClient'))
       this.getPodcastRecommendationInteractor = new PodcastRecommendationInteractor(container.get('HRBenefitsClient'))
-      this.addBookInteractor = new AddBookRatingInteractor(container.get('HRBenefitsClient'))
+      this.addPodcastRatingInteractor = new AddPodcastRatingInteractor(container.get('HRBenefitsClient'))
+      this.getPodcastViewedInteractor = new PodcastViewedInteractor(container.get('HRBenefitsClient'))
     }
 
     setView (view) {
@@ -30,21 +32,32 @@ export default class PodcastPresenter {
       this.getPodcastRecommendationInteractor.execute()
       .subscribe( podcasts => {
         this.view.hideLoading()
-        this.view.podcasts(podcasts)
+        this.view.podcastsRecommendation(podcasts)
       }, e=> {
         this.view.hideLoading()
       })
     }
-    rateBook (id, rating) {
+    ratePodcasts (id, rating) {
       this.view.showLoading()
-      this.addBookInteractor.execute(BookRateParam(id, rating))
+      this.addPodcastRatingInteractor.execute(PodcastRateParam(id, rating))
       .subscribe(
         data => {
+          console.log(data)
           this.view.hideLoading()
         },
         error => {
           this.view.hideLoading()
         }
       )
+  }
+  getPodcastsViewed () {
+    this.view.showLoading()
+    this.getPodcastViewedInteractor.execute()
+    .subscribe(podcasts => {
+        this.view.hideLoading()
+      }, e => {
+        this.view.hideLoading()
+        // TODO prompt generic error
+      })
   }
 }

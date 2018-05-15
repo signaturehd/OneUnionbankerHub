@@ -12,19 +12,19 @@ class PodCastsViewedFragment extends Component {
     }
   }
 
-  addRating (id, rating) {
-    this.props.presenter.rateBook(id, rating)
+  paddRating (id, rating) {
+    this.props.presenter.ratePodcast(id, rating)
   }
   render () {
-       const { podcasts, _podcasts } = this.props
+       const { podcastViewed, searchPodcast } = this.props
     return (
       <div className = {'podcasts-container'}>
         {
-          _podcasts.map((podcasts, i) =>
+          podcastViewed.map((podcasts, i) =>
             <PodCardComponent
              rateBook = { (id, rating) => this.addRating(id, rating) }
               key={ i }
-              podcasts = { podcasts }
+              podcastViewed = { podcasts }
               onClick = { details => this.setState({ details, show: true })  } />
             )
       }

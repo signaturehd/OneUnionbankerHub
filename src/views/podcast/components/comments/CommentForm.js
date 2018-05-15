@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ReactDOM } from 'react-dom'
 import PropTypes from 'prop-types'
-import './styles.css'
+import './comment.css'
 import { GenericButton } from '../../../../ub-components/'
 
 
@@ -21,7 +21,7 @@ class Comment extends Component  {
   }
 
   save(){
-  
+
   }
 
   remove(){
@@ -108,17 +108,17 @@ class Board extends React.Component  {
         <div className = { 'feedback-title' } > User Feedback </div>
           <div className="shareCommentContainer">
             <textarea id="shareCommentText" placeholder="Write a comment.."></textarea>
-            
-            <GenericButton 
-                text = { 'COMMENT' }  
-                onClick={this.addNewComment} 
+
+            <GenericButton
+                text = { 'COMMENT' }
+                onClick={this.addNewComment}
                 className="btn btn-success" />
-            <GenericButton 
-                text = { 'CANCEL' }  
-                onClick={this.addNewComment} 
-                className="btn btn-success" />  
+            <GenericButton
+                text = { 'CANCEL' }
+                onClick={this.addNewComment}
+                className="btn btn-success" />
           </div>
-        {selectedPodcast.map((comment, i) => 
+        {selectedPodcast && selectedPodcast.map((comment, i) =>
           <Comment
             key={i}
             removeCommentFromBoard ={this.removeComment}
@@ -131,6 +131,6 @@ class Board extends React.Component  {
 }
 Board.propTypes = {
   selectedPodcast : PropTypes.array
-} 
+}
 
 export default Board

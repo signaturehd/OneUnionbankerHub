@@ -15,11 +15,14 @@ class PodcastPlayerFragment extends Component {
     this.state = {
       rating : 0,
       changeSelected : null,
+      paddRating : false,
     }
    }
-
-  addRating (id, rating) {
-    this.props.presenter.rateBook(id, rating)
+  componentDidMount() {
+    !this.props.selectedPodcast && this.props.history.push('/podcast')
+  }
+  paddRating (id, rating) {
+    this.props.presenter.ratePodcasts(id, rating)
   }
 
   podcasts (podcasts) {
@@ -27,8 +30,9 @@ class PodcastPlayerFragment extends Component {
   }
  render () {
 
-   const { title, author, description, detail, rateBook, selectedPodcast, podcasts, changeSelectedPodcast } = this.props
+   const { title, author, description, detail, rateBook, selectedPodcast, podcasts, changeSelectedPodcast, history } = this.props
    const { rating } = this.state
+
    return (
     <div>
     <div className={ 'podplay-header' }>
@@ -36,23 +40,23 @@ class PodcastPlayerFragment extends Component {
       <h1>UTube</h1>
     </div>
     <div className = { 'podplay-main' }>
-      <div><MedPlayer selectedPodcast = { 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' } /></div>
+      <div><MedPlayer history = { history } selectedPodcast = { selectedPodcast } /></div>
       <Rating
-          rateBook = { (id, rating) => this.addRating(id, rating) }
+          rateBook = { (id, rating) => this.paddRating(id, rating) }
           emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
           fullSymbol = {<MdStar style={{ fontSize: 40,  color : '#c65e11' }} />}
           onChange = { e => {
-            rateBook(detail.id, e)
+            ratePodcasts(detail.id, e)
             this.setState({ rating : e })
           }}
           fractions = { 2 }
           initialRating = { selectedPodcast ? selectedPodcast.rating : 0 }
          />
     <div className = { 'podcasts-player-details' }>
-      <h2>{ selectedPodcast.speaker }</h2>
+      <h2>{ selectedPodcast && selectedPodcast.speaker }</h2>
       <h5>Details</h5>
     </div>
-    <Board selectedPodcast = { selectedPodcast.review }/>
+    <Board selectedPodcast = { selectedPodcast && selectedPodcast.review }/>
     </div>
       <div className = { 'podplay-sidebar-right' }>
         <PodcastPlayerDetailsFragment

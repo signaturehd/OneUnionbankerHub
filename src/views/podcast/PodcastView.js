@@ -22,21 +22,24 @@ class PodcastView extends BaseMVPView {
     this.state = {
         podcasts: [],
         podcastsRecommendation : [],
+        podcastViewed : [],
         show : false,
         rating: false,
         showRating : false,
+        paddRating : false,
         details : null,
         searchString : '',
         selectedPodcast: null,
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
-  addRating (id, rating) {
-    this.props.presenter.rateBook(id, rating)
+  paddRating (id, rating) {
+      this.props.presenter.ratePodcasts(id, rating)
   }
   componentDidMount () {
       this.presenter.getPodcasts()
       this.presenter.getPodcastsRecommendations()
+      this.presenter.getPodcastsViewed()
       this.props.setSelectedNavigation(0)
   }
   updateSearch () {
@@ -48,9 +51,20 @@ class PodcastView extends BaseMVPView {
   podcastsRecommendation ( podcastsRecommendation ) {
       this.setState({ podcastsRecommendation })
   }
+  podcastsRecommendation ( podcastsRecommendation ) {
+      this.setState({ podcastsRecommendation })
+  }
+  podcastViewed ( podcastViewed ) {
+    this.setState({ podcastViewed })
+  }
   render () {
-    const { podcasts, podcastsRecommendation,  show, details, detail, searchBar, selectedPodcast } = this.state
+    const { podcasts, podcastViewed, podcastsRecommendation, paddRating,  show, details, detail, selectedPodcast } = this.state
     const { history } = this.props
+    let searchPodcast = this.state.podcasts
+    const search = this.state.searchString.trim().toLowerCase()
+    if (search.length > 0) {
+        searchPodcast = searchPodcast.filter(podcast => podcast.author.toLowerCase().match(search))
+    }
     const PodcastPlayer = () => (
         <PodcastPlayerFragment
             changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
@@ -59,16 +73,17 @@ class PodcastView extends BaseMVPView {
             podcasts = { podcasts }
             history = { history }/>
     )
+
     const PodCast = () => (
     <div>
     { super.render() }
     <h1 className = { 'title-view' } >PODCASTS</h1>
-    <input className = 'podcastsSearchBar'
-           ref="search"
-           type = { 'text' }
-           placeholder = { 'Search Podcasts' }
-           value = { searchBar }
-           onChange = { this.updateSearch } />
+      <input type = 'text'
+               className = {'podcastsSearchBar'}
+               ref='search'
+               placeholder = {'Search Podcasts'}
+               value = { this.state.searchString }
+               onChange = { this.updateSearch } />
     <div className = { 'tabs-container' }>
       <input
         className = { 'input-tab' }
@@ -96,13 +111,14 @@ class PodcastView extends BaseMVPView {
         <PodCastsListFragment
           changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
           presenter = { this.presenter }
-          podcasts = { podcasts }
+          searchPodcast = { searchPodcast }
           details = { details }
           history = { history } />
       </section>
       <section id='content2'>
         <PodCastsRecommendationFragment
           presenter = { this.presenter }
+          searchPodcast = { searchPodcast }
           changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
           podcastsRecommendation = { podcastsRecommendation }
           history = { history } />
@@ -111,20 +127,12 @@ class PodcastView extends BaseMVPView {
         <PodCastsViewedFragment
           presenter = { this.presenter }
           changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
-          podcasts = { podcasts }
-          _podcasts = { _podcasts }
+          podcastViewed = { podcastViewed }
           history = { history }  />
       </section>
     </div>
   </div>
   )
-  let _podcasts = this.state.podcasts
-  let search = this.state.searchString.trim().toLowerCase()
-  if (search.length > 0) {
-    _podcasts = _podcasts.filter(function( podcasts ) {
-      return podcasts.title.toLowerCase().match(search)
-    })
-  }
   return (
   <div>
      <Switch>

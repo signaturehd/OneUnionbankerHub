@@ -16,10 +16,10 @@ class PodcastsPlayerDetailsFragment extends Component {
   addRating (id, rating) {
     this.props.presenter.rateBook(id, rating)
   }
-  
+
   render () {
 
-    const { selectedPodcast, podcasts, _podcasts, changeSelectedPodcast } = this.props
+    const { selectedPodcast, podcasts, searchPodcast, changeSelectedPodcast } = this.props
 
     const ContentLoaderView = () => {
       <ContentLoader
@@ -28,22 +28,22 @@ class PodcastsPlayerDetailsFragment extends Component {
         speed={2}
         primaryColor = "#f3f3f3"
         secondaryColor="#ecebeb">
-        <rect x="5.00" y="5.00" rx="0" ry="0" width="500" height="250" /> 
-        <rect x="5.00" y="265.00" rx="0" ry="0" width="500" height="25" /> 
-        <rect x="5.00" y="300.00" rx="0" ry="0" width="500" height="25" /> 
-        <rect x="5.00" y="380" rx="0" ry="0" width="500" height="250" /> 
-        <rect x="5.00" y="640.00" rx="0" ry="0" width="500" height="25" /> 
-        <rect x="5.00" y="675.00" rx="0" ry="0" width="500" height="25" /> 
+        <rect x="5.00" y="5.00" rx="0" ry="0" width="500" height="250" />
+        <rect x="5.00" y="265.00" rx="0" ry="0" width="500" height="25" />
+        <rect x="5.00" y="300.00" rx="0" ry="0" width="500" height="25" />
+        <rect x="5.00" y="380" rx="0" ry="0" width="500" height="250" />
+        <rect x="5.00" y="640.00" rx="0" ry="0" width="500" height="25" />
+        <rect x="5.00" y="675.00" rx="0" ry="0" width="500" height="25" />
       </ContentLoader>
     }
     const ContentView = () => {
       {
-        podcast.map((podcasts, i) =>
+        searchPodcast.map((podcasts, i) =>
           <PodCardComponent
             history = { this.props.history }
             rateBook = { (id, rating) => this.addRating(id, rating) }
             key={ i }
-            podcasts = { podcasts.speaker }
+            searchPodcast = { podcasts.speaker }
             onClick = { details => {
               this.setState({ details, show: true })
             }} />
