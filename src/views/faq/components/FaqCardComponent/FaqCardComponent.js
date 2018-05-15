@@ -22,7 +22,6 @@ class FaqCardComponent extends Component {
         </div>
       </Card>
     )
-
   }
 }
 

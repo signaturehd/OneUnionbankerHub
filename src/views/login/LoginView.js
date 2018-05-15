@@ -24,10 +24,10 @@ class LoginView extends BaseMVPView {
 
     this.onLoginSuccess = this.onLoginSuccess.bind(this)
   }
-  disabledButton() {
+  disabledButton () {
     this.setState({ disabled : true })
   }
-  enabledButton() {
+  enabledButton () {
     this.setState({ disabled : false })
   }
   onLoginSuccess () {

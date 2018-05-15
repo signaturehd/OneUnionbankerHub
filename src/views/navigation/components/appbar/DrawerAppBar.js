@@ -11,7 +11,7 @@ class DrawerAppBar extends Component {
     this.onToggleShow = this.onToggleShow.bind(this)
     this.callLogout = this.callLogout.bind(this)
   }
-  callLogout() {
+  callLogout () {
     this.props.logout()
   }
   onToggleShow () {
