@@ -5,7 +5,7 @@ import ConnectView from '../../../utils/ConnectView'
 import Presenter from '../presenter/LibraryPresenter'
 import BaseMVPView from '../../common/base/BaseMVPView'
 
-import './styles.css'
+import './styles/book-modal.css'
 
 class BookBorrowModal extends BaseMVPView {
   constructor (props) {

@@ -7,7 +7,7 @@ import Presenter from '../presenter/LibraryPresenter'
 import BaseMVPView from '../../common/base/BaseMVPView'
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import Rating from 'react-rating'
-import './styles.css'
+import './styles/book-modal.css'
 import staticImage from '../../../images/education_bg.jpg'
 
 class BookViewModal extends BaseMVPView {
