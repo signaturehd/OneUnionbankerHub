@@ -15,22 +15,31 @@ class TransactionFragment extends BaseMVPView {
     this.state={
       view : false,
       details : null,
-      transactions:[]
+      transactions:[],
+      transactionId : [],
+      tranID : null
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(2)
     this.presenter.getTransactions()
+    this.presenter.getTransactionId()
+
   }
   showTransactions(transactions){
     this.setState({transactions})
   }
 
+getTransactionId(){
+  this.setState({transactionId})
+}
 
   render () {
-    const {transactions, detail,details}=this.state
-    const { onClick, text, path, icon } = this.props
+    const {transactions, detail,details,transactionId}=this.state
+    const { onClick, text, path, icon,tranID } = this.props
+   console.log(details)
+
 
     return (
       <div>
@@ -42,13 +51,15 @@ class TransactionFragment extends BaseMVPView {
         <h1> Transactions </h1>
         <div className = { '_transaction-container' }>
         {
-          transactions.map((transaction, key) =>
+
+          transactions && transactions && transactions.map((transaction, key) =>
             <TransactionCardComponent
               detail = { transaction } key = { key }
               onClick = { (details, view) => this.setState({ details, view }) }
             />
           )
         }
+        
         {
           this.state.view &&
           <TransactionModal details = { details } onClose = { () => this.setState({ view : false }) }/>

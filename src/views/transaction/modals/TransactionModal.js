@@ -10,13 +10,32 @@ import './styles.css'
 class TransactionModal extends BaseMVPView {
   constructor (props) {
     super(props)
+    this.state={
+    transactionId : [],
+    transactions: []
 
   }
+}
+
+ componentDidMount () {
+    this.presenter.getTransactionId()
+     
+  }
+   showTransactions(transactions){
+    this.setState({transactions})
+  }
+
+    getTransactionId(id){
+  this.props.presenter.getTransactionId(id)
+    }
+
+
+  
 
 
   render () {
-    const { onClose, details, detail,transactions} = this.props
-    console.log(details)
+    const { onClose, details, detail, transactions,transactionId} = this.props
+    console.log(transactions)
 
    
 
@@ -28,7 +47,9 @@ class TransactionModal extends BaseMVPView {
       <div>
           </div>
           <div>
-              <h4>Title: {transactions && detail.transactions && detail.transactions.id}</h4>
+           
+              <h4>Title: {detail && detail.transactions && transactions.id}</h4>
+
              
 
                     

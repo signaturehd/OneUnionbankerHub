@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
-
+import Presenter from '../../presenter/TransactionPresenter'
+import BaseMVPView from '../../../common/base/BaseMVPView'
 import { Card } from '../../../../ub-components'
 
 
@@ -11,6 +11,11 @@ class TransactionCardComponent extends Component {
   constructor (props) {
     super(props)
   }
+    getTransactionId(id){
+  this.props.presenter.getTransactionId(id)
+    }
+
+
 
   render () {
     const { detail, onClick } = this.props
@@ -27,7 +32,8 @@ class TransactionCardComponent extends Component {
         <div className = {'card-footer'}>
           <center>
             
-            <button onClick = { () => onClick(detail, true) }>Read More</button>
+            <button onClick = { () => onClick(detail.id, true) }>Read More</button>
+
           </center>
         </div>
       </Card>

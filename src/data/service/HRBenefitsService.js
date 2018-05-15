@@ -96,8 +96,8 @@ export default class HRBenefitsService {
     })
   }
 
-  getTransactionId(token){
-    return this.apiClient.get('v1/transactions/TransactionId', {
+  getTransactionId(token,GetTransactionParam){
+    return this.apiClient.get('v1/transactions/' + GetTransactionParam, {
       headers: {token}
     })
   }

@@ -115,11 +115,11 @@ export default class HRBenefitsClient {
       return this.service.getTransactions(token)
           .pipe(ServiceErrorOperator())
         }
-        getTransactionId(token){
-          return this.service.getTransactionId(token)
+  getTransactionId(token, GetTransactionParam){
+          return this.service.getTransactionId(token, GetTransactionParam)
           .pipe(ServiceErrorOperator())
         }
-        
+
   /* News */
   getFaqs (token) {
     return this.service.getFaqs(token)
