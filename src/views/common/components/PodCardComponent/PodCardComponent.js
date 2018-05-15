@@ -23,12 +23,12 @@ class PodCardComponent extends Component {
   }
 
   render () {
-    const { detail, podcast, onClick, rateBook, history } = this.props
+    const { detail, searchPodcast, onClick, rateBook, history } = this.props
     const { rating } = this.state
 
     const style = {
       styles : {
-        background: `url(${podcast && podcast.image}) rgba(0,0,0,0.7)`,
+        background: `url(${searchPodcast && searchPodcast.image}) rgba(0,0,0,0.7)`,
         backgroundSize: 'cover',
         backgroundBlendMode: 'color',
       },
@@ -41,17 +41,17 @@ class PodCardComponent extends Component {
         fontSize : '12px',
         float : 'right',
       }
-    } 
+    }
     return (
         <Card >
-          <div style = {style.styles} 
+          <div style = {style.styles}
                className = {'news-body'}>
             <h2 style = { style.titleStyle }> {'Title'} </h2>
-            <h2 style = { style.authorStyle }> -{ podcast && podcast.speaker } </h2>
+            <h2 style = { style.authorStyle }> -{ searchPodcast && searchPodcast.speaker } </h2>
           </div>
           <div className = {'card-footer'}>
           <center>
-           <Rating 
+           <Rating
               rateBook = { (id, rating) => this.addRating(id, rating) }
               emptySymbol = {<MdStarOutline style={{ fontSize: 35, color : '#c65e11' }} />}
               fullSymbol = {<MdStar style={{ fontSize: 35,  color : '#c65e11' }} />}
@@ -60,16 +60,16 @@ class PodCardComponent extends Component {
                 this.setState({ rating : e })
               }}
               fractions = { 2 }
-              initialRating = { podcast && podcast.rating || 0 } 
+              initialRating = { searchPodcast && searchPodcast.rating || 0 }
               readonly
             />
 
             </center>
             <small>
-            <FaPlayCircleO                  
+            <FaPlayCircleO
               className = { 'fa-play-button' }
               onClick = { onClick }/>
-            </small> 
+            </small>
           </div>
         </Card>
     )
