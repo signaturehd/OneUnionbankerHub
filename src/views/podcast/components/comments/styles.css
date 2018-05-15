@@ -41,15 +41,6 @@ textarea{
   border-radius: 4px 4px 0 0;
 
 }
-
-._generic-button {
-  margin-top: 10px;
-  margin-bottom: 50px;
-  min-width : 100px !important;
-  height: 40px !important;
-  float:  right !important;
-}
-
 .shareCommentContainer .btn-success{
   padding: 6px 15px;
   margin-top: 9px;
