@@ -104,7 +104,13 @@ export default class HRBenefitsService {
     })
   }
 
-
+ reserveBook (token, ReserveParam) {
+    return this.apiClient.post('v1/books/reservation', {
+      books: ReserveParam
+    }, {
+      headers: { token }
+    })
+  }
   addRating (token, bookParam) {
     return this.apiClient.post('v1/books/rate', bookParam, {
       headers : { token }
@@ -127,9 +133,21 @@ export default class HRBenefitsService {
           headers: { token }
       })
     }
-  paddRating (token, podcastParam) {
-    return this.apiClient.post('v1/podcasts/rate', podcastParam, {
+  paddRating (token, bookParam) {
+    return this.apiClient.post('v1/books/podcasts', bookParam, {
       headers : { token }
+    })
+  }
+
+  getFaqs (token) {
+    return this.apiClient.get('v1/faqs', {
+      headers: { token }
+    })
+  }
+
+  getFaqsCategories (token) {
+    return this.apiClient.get('v1/faqs/categories', {
+      headers: { token }
     })
   }
 }

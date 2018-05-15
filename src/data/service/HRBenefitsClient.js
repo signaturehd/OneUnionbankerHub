@@ -96,6 +96,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  reserveBook (token, BookReserveParam) {
+    return this.service.ReserveBook(token, BookReserveParam)
+        .pipe(ServiceErrorOperator())
+  }
+
   /* optical */
   getOptical (token) {
     return this.service.getOptical(token)
@@ -110,7 +115,7 @@ export default class HRBenefitsClient {
     return this.service.getPodcastsRecommendations(token)
       .pipe(ServiceErrorOperator())
   }
-  getPodcastsViewed(token) {
+  getPodcastsViewed (token) {
     return this.service.getPodcastsViewed(token)
       .pipe(ServiceErrorOperator())
   }
@@ -124,11 +129,13 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-
-  /* News */
+  /* Faqs */
   getFaqs (token) {
     return this.service.getFaqs(token)
       .pipe(ServiceErrorOperator())
   }
-
+  getFaqsCategories (token) {
+    return this.service.getFaqsCategories(token)
+      .pipe(ServiceErrorOperator())
+  }
 }
