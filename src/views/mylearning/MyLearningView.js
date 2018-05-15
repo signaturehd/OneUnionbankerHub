@@ -17,23 +17,47 @@ class MyLearningView extends BaseMVPView {
   constructor (props) {
     super(props)
   }
+  componentDidMount () {
+    this.props.setSelectedNavigation(6)
+  }
 
   render () {
     const { history } = this.props
+    const { accountNumber, showAccountNumberModal } = this.state
     const benefitsOptions = [{
       id: 0 ,
       styleName: 'option-cards-1',
-      title: 'PODCASTS',
-      path: '/mylearning/podcast',
+      title: 'EDUCATION',
+      path: '/benefits/education',
     }, {
       id: 1 ,
       styleName: 'option-cards-2',
-      title: 'LIBRARY',
-      path: '/mylearning/book',
+      title: 'MEDICAL',
+      path: '/benefits/medical',
+    }, {
+      id: 2,
+      styleName: 'option-cards-3',
+      title: 'LOANS',
+      path: '/benefits/loans',
     }]
-    const Learning = () => (
+    const Benefits = () => (
       <div className = { '_benefits-container' }>
-        <h1>My Learning</h1>
+        <h1>Benefits</h1>
+        {
+          showAccountNumberModal &&
+            <InputModal
+              isDismisable = { true }
+              onClose = { () => this.setState({ showAccountNumberModal : false }) }
+              onChange = { e => this.setState({ accountNumber: e.target.value }) }
+              placeholder = { 'Account Number' }
+              type = { 'text' }
+              onSubmit = { e => {
+                  e.preventDefault()
+                  this.presenter.validateAccountNumber(accountNumber)
+                }
+              }
+            />
+        }
         <div className = { 'adjustment' }>
         <div className = { 'card-container' }>
           {
@@ -51,17 +75,20 @@ class MyLearningView extends BaseMVPView {
         </div>
       </div>
     </div>)
-    
 
     return (
     <div>
        <Switch>
-         <Route exact path = '/mylearning' render = { Learning } />
-         <Route path = '/mylearning/podcast' render = { props => <PodcastView />}/>
-         <Route path = '/mylearning/book' render = { props => <Library />}/>
+         <Route exact path = '/benefits' render = { Benefits } />
+         <Route path = '/benefits/education' render = { props => <EducationFragment { ...props } />}/>
+         <Route path = '/benefits/medical' render = { props => <MedicalFragment { ...props } />}/>
+         <Route path = '/benefits/loans' render = { props => <LoansFragment  { ...props } />}/>
       </Switch>
     </div>)
   }
 }
 
+MyLearningView.propTypes = {
+  setSelectedNavigation: PropTypes.func,
+}
 export default ConnectView(MyLearningView, Presenter)
