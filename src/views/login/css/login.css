@@ -30,15 +30,14 @@
   margin: 20px auto 20px auto;
 }
 
-._generic-button {
+.login-button {
   border-radius: 100px;
   border: none;
   padding: 10px;
   color: #FFFFFF;
-  margin-top: 50px;
   box-shadow: 0 2px 10px -3px #719BE6;
   display: block;
-  margin: 55px auto 10px auto;
+  margin: 25px auto 10px auto;
 }
 
 @media screen and (max-width: 580px) {
