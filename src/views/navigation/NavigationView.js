@@ -98,7 +98,10 @@ class NavigationView extends BaseMVPView {
                         <Route path = '/books' render = { props =>
                             <LibraryFragment { ...props }
                               setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                              <Route path = '/podcast' render = { props =>
+                        <Route path = '/podcast' render = { props =>
+                          <PodcastView { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                        <Route path = '/podcast' render = { props =>
                           <PodcastView { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> } />
                      </Switch>
