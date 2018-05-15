@@ -18,8 +18,12 @@ class PodcastsPlayerDetailsFragment extends Component {
   }
 
   render () {
-
-    const { selectedPodcast, podcasts, searchPodcast, changeSelectedPodcast } = this.props
+    const {
+      selectedPodcast,
+      podcasts,
+      searchPodcast,
+      changeSelectedPodcast
+    } = this.props
 
     const ContentLoaderView = () => {
       <ContentLoader

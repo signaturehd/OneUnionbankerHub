@@ -16,7 +16,7 @@ class PodCastsRecommendationFragment extends Component {
     this.props.presenter.rateBook(id, rating)
   }
   render () {
-      const { podcastsRecommendation, searchPodcast } = this.props
+    const { podcastsRecommendation, searchPodcast } = this.props
     return (
       <div className = {'podcasts-container'}>
         {

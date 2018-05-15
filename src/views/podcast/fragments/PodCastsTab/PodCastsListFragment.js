@@ -13,7 +13,11 @@ class PodCastsListFragment extends Component {
   }
 
   render () {
-    const { searchPodcast, changeSelectedPodcast, history } = this.props
+    const {
+      searchPodcast,
+      changeSelectedPodcast,
+      history
+    } = this.props
     return (
   <div className = {'podcasts-container'}>
     {
@@ -30,7 +34,8 @@ class PodCastsListFragment extends Component {
         )
       }
       </div>
-    )}
+    )
+}
   }
 
 export default PodCastsListFragment

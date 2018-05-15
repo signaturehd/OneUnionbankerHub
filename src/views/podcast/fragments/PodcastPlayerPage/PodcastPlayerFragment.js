@@ -18,7 +18,7 @@ class PodcastPlayerFragment extends Component {
       paddRating : false,
     }
    }
-  componentDidMount() {
+  componentDidMount () {
     !this.props.selectedPodcast && this.props.history.push('/podcast')
   }
   paddRating (id, rating) {
@@ -29,8 +29,17 @@ class PodcastPlayerFragment extends Component {
       this.setState({ podcasts })
   }
  render () {
-
-   const { title, author, description, detail, rateBook, selectedPodcast, podcasts, changeSelectedPodcast, history } = this.props
+   const {
+     title,
+     author,
+     description,
+     detail,
+     rateBook,
+     selectedPodcast,
+     podcasts,
+     changeSelectedPodcast,
+     history
+   } = this.props
    const { rating } = this.state
 
    return (

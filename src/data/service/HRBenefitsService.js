@@ -1,6 +1,5 @@
 
 export default class HRBenefitsService {
-
   constructor (apiClient, accountClient) {
     this.apiClient = apiClient
     this.accountClient = accountClient
@@ -62,7 +61,6 @@ export default class HRBenefitsService {
 
   addOptical (token, opticalParam) {
     const formData = new FormData()
-
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
       headers : { token }
     })

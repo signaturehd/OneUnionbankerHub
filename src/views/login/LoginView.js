@@ -74,8 +74,7 @@ class LoginView extends BaseMVPView {
               <center>
                 <br/>
                 <CircularLoader show = { true }/>
-              </center>
-              :
+              </center>              :
               <div>
                 <br/>
                   <GenericButton

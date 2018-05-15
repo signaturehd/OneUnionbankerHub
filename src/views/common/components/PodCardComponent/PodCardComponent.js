@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card } from '../../../../ub-components/'
-
 import './styles.css'
-import { GenericButton }  from '../../../../ub-components/'
+import { GenericButton, Card }  from '../../../../ub-components/'
 
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import { FaPlayCircleO } from 'react-icons/lib/fa/'
 import Rating from 'react-rating'
 
 class PodCardComponent extends Component {
-
   constructor (props) {
     super(props)
      this.state = {

@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card } from '../../../../ub-components/'
-
 import './styles.css'
-import { GenericButton }  from '../../../../ub-components/'
+import { GenericButton, Card }  from '../../../../ub-components/'
 
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import { FaPlayCircleO } from 'react-icons/lib/fa/'
 import Rating from 'react-rating'
 
 class PodcastCardRecommendedComponent extends Component {
-
   constructor (props) {
     super(props)
      this.state = {
@@ -41,17 +38,17 @@ class PodcastCardRecommendedComponent extends Component {
         fontSize : '12px',
         float : 'right',
       }
-    } 
+    }
     return (
         <Card >
-          <div style = {style.styles} 
+          <div style = {style.styles}
                className = {'news-body'}>
             <h2 style = { style.titleStyle }> {'Title'} </h2>
             <h2 style = { style.authorStyle }> -{ podcast && podcast.speaker } </h2>
           </div>
           <div className = {'card-footer'}>
           <center>
-           <Rating 
+           <Rating
               rateBook = { (id, rating) => this.addRating(id, rating) }
               emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
               fullSymbol = {<MdStar style={{ fontSize: 40,  color : '#c65e11' }} />}
@@ -63,10 +60,10 @@ class PodcastCardRecommendedComponent extends Component {
               initialRating = { podcast && podcast.rating || 0 } />
             </center>
             <small>
-            <FaPlayCircleO                  
+            <FaPlayCircleO
               className = { 'fa-play-button' }
               onClick = { onClick }/>
-            </small> 
+            </small>
           </div>
         </Card>
     )

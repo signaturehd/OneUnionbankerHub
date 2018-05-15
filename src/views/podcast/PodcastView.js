@@ -43,22 +43,31 @@ class PodcastView extends BaseMVPView {
       this.props.setSelectedNavigation(0)
   }
   updateSearch () {
-      this.setState({ searchString: this.refs.search.value.substr( 0 , 20) })
+      this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
   }
-  podcasts ( podcasts ) {
+  podcasts (podcasts) {
       this.setState({ podcasts })
   }
-  podcastsRecommendation ( podcastsRecommendation ) {
+  podcastsRecommendation (podcastsRecommendation) {
       this.setState({ podcastsRecommendation })
   }
-  podcastsRecommendation ( podcastsRecommendation ) {
+  podcastsRecommendation (podcastsRecommendation) {
       this.setState({ podcastsRecommendation })
   }
-  podcastViewed ( podcastViewed ) {
+  podcastViewed (podcastViewed) {
     this.setState({ podcastViewed })
   }
   render () {
-    const { podcasts, podcastViewed, podcastsRecommendation, paddRating,  show, details, detail, selectedPodcast } = this.state
+    const {
+      podcasts,
+      podcastViewed,
+      podcastsRecommendation,
+      paddRating,
+      show,
+      details,
+      detail,
+      selectedPodcast
+    } = this.state
     const { history } = this.props
     let searchPodcast = this.state.podcasts
     const search = this.state.searchString.trim().toLowerCase()

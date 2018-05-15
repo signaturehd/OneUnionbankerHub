@@ -6,5 +6,4 @@ export default class MyLearningPresenter {
   setView (view) {
     this.view = view
   }
-
 }
