@@ -61,7 +61,7 @@ class NewsFragment extends BaseMVPView {
           _news.map((news, i) =>
             <NewsCardComponent
               key={ i }
-              news = { n }
+              news = { news }
               onClick = { details => this.setState({ details, show: true }) } />)
         }
         </div>
