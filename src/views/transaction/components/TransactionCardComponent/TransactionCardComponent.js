@@ -18,7 +18,7 @@ class TransactionCardComponent extends Component {
 
 
   render () {
-    const { detail, onClick } = this.props
+    const { detail, onClick,details } = this.props
   
 
     return (
@@ -28,11 +28,13 @@ class TransactionCardComponent extends Component {
         <div className = {'card-body'}>
           <h5>{ detail.benefit }</h5>
           <h3>{detail.status}</h3>
+          <h4>{detail.applicationDate}</h4>
         </div>
         <div className = {'card-footer'}>
           <center>
             
             <button onClick = { () => onClick(detail.id, true) }>Read More</button>
+
 
           </center>
         </div>

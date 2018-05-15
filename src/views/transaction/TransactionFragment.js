@@ -8,6 +8,7 @@ import Presenter from './presenter/TransactionPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 import TransactionCardComponent from './components/TransactionCardComponent/TransactionCardComponent'
 import TransactionModal from './modals/TransactionModal'
+import GetTransactionParam from '../../domain/param/GetTransactionParam'
 
 class TransactionFragment extends BaseMVPView {
   constructor (props) {
@@ -24,7 +25,6 @@ class TransactionFragment extends BaseMVPView {
   componentDidMount () {
     this.props.setSelectedNavigation(2)
     this.presenter.getTransactions()
-    this.presenter.getTransactionId()
 
   }
   showTransactions(transactions){
@@ -38,7 +38,7 @@ getTransactionId(){
   render () {
     const {transactions, detail,details,transactionId}=this.state
     const { onClick, text, path, icon,tranID } = this.props
-   console.log(details)
+
 
 
     return (
@@ -56,6 +56,7 @@ getTransactionId(){
             <TransactionCardComponent
               detail = { transaction } key = { key }
               onClick = { (details, view) => this.setState({ details, view }) }
+              
             />
           )
         }

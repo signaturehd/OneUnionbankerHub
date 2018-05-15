@@ -5,6 +5,8 @@ export default class TransactionsIdInteractor {
 
     execute (GetTransactionParam) {
     	console.log(GetTransactionParam)
+
         return this.client.getTransactionId(this.client.getToken(),GetTransactionParam)
+
     }
 }

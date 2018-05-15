@@ -1,5 +1,4 @@
-export default (id) => {
-	id
-}
+export default (id) => id
+
   
 

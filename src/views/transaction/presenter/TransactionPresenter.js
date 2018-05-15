@@ -6,6 +6,8 @@ export default class TransactionPresenter {
   constructor (container) {
     this.TransactionsInteractor = new TransactionsInteractor(container.get('HRBenefitsClient'))
     this.TransactionIdInteractor= new TransactionIdInteractor(container.get('HRBenefitsClient'))
+    this.GetTransactionParam=new GetTransactionParam(container.get('HRBenefitsClient'))
+
  
   }
 
@@ -21,19 +23,18 @@ export default class TransactionPresenter {
           this.view.showTransactions(transactions)
       }, e => {
           this.view.hideLoading()
-          // TODO prompt generic error
       })
   }
 
 getTransactionId(id) {
+
     this.view.showLoading()
     this.TransactionIdInteractor.execute(GetTransactionParam(id))
       .subscribe(transactionId => {
           this.view.hideLoading()
-          this.view.showTransactionId(transactionId)
+          this.view.showTransactionId(GetTransactionParam())
       }, e => {
           this.view.hideLoading()
-          // TODO prompt generic error
       })
   }
 
