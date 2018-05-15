@@ -1,5 +1,7 @@
 
-
+.title-view {
+  margin: 25px auto;
+}
 .newsSearchBar {
   width: 40%;
   border-left: 0;
