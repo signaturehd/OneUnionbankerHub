@@ -1,52 +1,100 @@
-._login-grid {
-    display: grid;
-    grid-template-columns: 68% 32%;
+
+.login-logo {
+  display: block;
+  width: 80px;
+  margin: 30px auto;
+  box-shadow: 0 5px 10px -7px #333333;
+  border-radius: 50%;
 }
 
-._benefit-frame {
-  background: url('../../../images/ubp-bg.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 100vh;
-}
-._box-form {
+.login-form {
+  background-color: #ffffff;
+  width: 380px;
+  padding: 30px 20px 30px 20px;
+  margin: 100px auto auto auto;
+  height: auto;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px -3px #333;
   text-align: center;
 }
-._banner-logo {
-  background: url('../../../images/ublogo.png');
-  background-size:30vh;
-  background-position: center;
-  width: auto;
-  align-items: center;
-  background-repeat: no-repeat;
-  height: 50px;
-  padding: 8vh;
-  display: none;
+
+.login-input {
+  border-radius: 100px;
+  padding: 10px 15px;
+  width: 50%;
+  border: 1px solid #D9D9D9;
+  outline: none;
+  display: block;
+  font-size: 14px;
+  margin: 20px auto 20px auto;
 }
 
-._image-logo {
-  background: url('../../../images/profile-picture.png');
-  background-size: 18vh;
-  background-repeat: no-repeat;
-  width: auto;
-  background-position: center;
-  height: 150px;
+._generic-button {
+  border-radius: 100px;
+  border: none;
+  padding: 10px;
+  color: #FFFFFF;
+  margin-top: 50px;
+  box-shadow: 0 2px 10px -3px #719BE6;
+  display: block;
+  margin: 55px auto 10px auto;
 }
 
-@media (max-width : 768px) {
-  ._login-grid {
-    grid-template-columns: 100%;
+@media screen and (max-width: 580px) {
+  .login-form {
+    height: auto;
+    width: auto;
+    padding: 0 20px 20px 20px;
+    margin: 100px 20px 50px 20px;
+  }
+  .login-input {
+    font-size: 8px;
+  }
+  .layer-icons {
+    width: auto;
+    margin: 100px 20px 50px 20px;
+  }
+}
+@media screen and (max-height: 550px) {
+  .login-form {
+    height: auto;
+    margin-bottom: 100px;
+  }
+}
+
+@media screen and (max-width : 768px) {
+  .icon-1 {
+    padding:2% !important;
+    width:45px !important;
   }
 
-  ._image-logo {
-    margin-top: -12vh;
+  .login-form {
+    box-shadow: none !important;
   }
 
-  ._benefit-frame {
-    height: 30vh;
+  .login-logo {
+    margin-top: 0px;
   }
+}
 
-  ._banner-logo {
-    display: block;
-  }
+
+.login-layer-icons {
+  width: 380px;
+  margin-top: 200px;
+  text-align: center;
+  display: contents;
+  position: absolute;
+  padding: 20px;
+  top: -213;
+  text-align: center;
+
+}
+.icon-1 {
+  width: 45px;
+  margin-top: 10px;
+  padding:3%;
+  background: #fff;
+  margin-bottom: 10px;
+  border: 0px #e2d3d300;
 }

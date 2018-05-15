@@ -5,7 +5,7 @@ import LoginPresenter from './presenter/LoginPresenter'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { GenericButton, GenericTextBox } from '../../ub-components'
+import { GenericButton, GenericTextBox, Card } from '../../ub-components'
 
 import './css/login.css'
 
@@ -44,28 +44,47 @@ class LoginView extends BaseMVPView {
             username = { username }
             transactionType = { 2 } /> // TODO, move this static '2' to proper file on domain
         }
-          <div className = {'_box-form'}>
-            <div className = { '_login-grid' }>
-              <div className = { '_benefit-frame' }>
-                <div className = { '_banner-logo' }></div>
-              </div>
-              <div className = { '._login-form-grid' }>
-                <div className = {'_image-logo'}></div>
-                <GenericTextBox
-                  onChange = { e => this.setState({ username: e.target.value }) }
-                  placeholder = { 'Employee ID' }
-                  type = { 'text' }/>
-                <GenericTextBox
-                  onChange = { e => this.setState({ password: e.target.value }) }
-                  placeholder = { 'Password' }
-                  type = { 'password' }/>
-                <br/>
-                <GenericButton
-                  text="Login"
-                  onClick = { () => this.presenter.login(this.state.username, this.state.password)}/>
-              </div>
+        <Card className = {'login-form'}>
+          <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
+            <GenericTextBox
+              clasName = { 'login-input' }
+              onChange = { e => this.setState({ username: e.target.value }) }
+              placeholder = { 'Employee ID' }
+              type = { 'text' }/>
+            <GenericTextBox
+              className = { 'login-input' }
+              onChange = { e => this.setState({ password: e.target.value }) }
+              placeholder = { 'Password' }
+              type = { 'password' }/>
+            <GenericButton
+              disabled = {this.state.disabled}
+              className = { 'login-button' }
+              text="Login"
+              onClick = { () => this.presenter.login(this.state.username, this.state.password)}/>
+            <div className = { 'login-layer-icons' }>
+                  <img
+                    src = { require('../../images/icons/PAGIBIG.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/PHIC.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/sssOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/PremiumBadgeOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/RankOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/taxOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/DesignationOrange.png') }
+                    className = { 'icon-1' } />
             </div>
-          </div>
+        </Card>
       </div>
     )
   }
