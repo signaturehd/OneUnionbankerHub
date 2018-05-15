@@ -19,7 +19,6 @@ class SideBar extends Component {
       { id: 4 , title: 'Profile', path: '/settings', className: 'settings-icon mobile-icon' },
       { id: 5 , title: 'Books', path: '/books', className: 'books-icon mobile-icon' },
       { id: 6 , title: 'Podcasts', path: '/podcast', className: 'podcast-icon mobile-icon' },
-      { id: 6 , title: 'MyLearning', path: '/mylearning', className: 'mylearning-icon mobile-icon' },
     ]
 
   return (

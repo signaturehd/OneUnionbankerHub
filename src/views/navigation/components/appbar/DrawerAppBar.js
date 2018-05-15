@@ -9,11 +9,8 @@ class DrawerAppBar extends Component {
   constructor (props) {
     super(props)
     this.onToggleShow = this.onToggleShow.bind(this)
-    this.callLogout = this.callLogout.bind(this)
   }
-  callLogout() {
-    this.props.logout()
-  }
+
   onToggleShow () {
     if (this.props.displayShow === 'none') {
       this.props.hide()
@@ -39,16 +36,16 @@ class DrawerAppBar extends Component {
               className= {'_img-ub-logo'}/>
           </div>
           <div className = { 'burger-icon' }>
-            <label className = {'logout'} onClick = { this.callLogout }>Logout</label>
             <img
               style = { style.show }
               src = { require('../../../../images/profile-picture.png')}
               className = {'_img-ub-profile'}
-              onClick = { () => this.onToggleShow }/ >
+              onClick = { this.onToggleShow }/ >
           </div>
         </div>
       </AppBar>
     )
   }
 }
+
 export default DrawerAppBar

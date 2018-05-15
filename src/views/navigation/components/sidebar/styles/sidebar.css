@@ -87,14 +87,9 @@ ul {
   .podcast-icon {
   -webkit-mask-image: url('../../../../../images/drawer/PODCAST.png');
   mask-image: url('../../../../../images/drawer/PODCAST.png');
-  }  
-  .mylearning-icon {
-  -webkit-mask-image: url('../../../../../images/My ELearning.png');
-  margin-left: -5px;
-  mask-image: url('../../../../../images/My ELearning.png');
   }
 @media screen and (max-width: 3000px) and (max-height: 2000px) {
-  ._sidebar-overlay { 
+  ._sidebar-overlay {
     width: 250px;
   }
   .main-content {
@@ -115,7 +110,7 @@ ul {
   }
   ._sidebar-overlay {
       z-index: 3;
-      width: 220px;
+      width: 200px;
   }
   .main-content {
       order: 2;
@@ -136,7 +131,7 @@ ul {
   ._sidebar-overlay {
       position: absolute;
       z-index: 3;
-      width: 180px;
+      width: 190px;
   }
   .main-content {
       order: 2;

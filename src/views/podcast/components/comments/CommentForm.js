@@ -4,32 +4,31 @@ import PropTypes from 'prop-types'
 import './styles.css'
 import { GenericButton } from '../../../../ub-components/'
 
+
+
 class Comment extends Component  {
+
    constructor(props) {
-    super(props)
-    this.state = {
-      editing: false
+      super(props)
+      this.edit = this.edit.bind(this)
+      this.save = this.save.bind(this)
+      this.remove = this.remove.bind(this)
+      this.state = {editing: false}
     }
 
-    this.edit = this.edit.bind(this)
-    this.save = this.save.bind(this)
-    this.remove = this.remove.bind(this)
-
-  }
-
-  edit () {
+  edit(){
     this.setState({ editing:true })
   }
 
-  save () {
-
+  save(){
+  
   }
 
-  remove () {
+  remove(){
    this.props.removeCommentFromBoard(this.props.index)
   }
 
-  renderNormalMode () {
+  renderNormalMode(){
     const { selectedPodcast } = this.props
     return(
       <div className="commentContainer">
@@ -44,7 +43,7 @@ class Comment extends Component  {
     )
   }
 
-  renderEditingMode () {
+  renderEditingMode(){
     return(
       <div className="commentContainer">
         <div className="commentText">
@@ -63,10 +62,10 @@ class Comment extends Component  {
 
   }
 
-  render () {
-     if (this.state.editing) {
+  render(){
+     if(this.state.editing){
        return this.renderEditingMode()
-     } else {
+     }else{
        return this.renderNormalMode()
      }
   }
@@ -109,17 +108,17 @@ class Board extends React.Component  {
         <div className = { 'feedback-title' } > User Feedback </div>
           <div className="shareCommentContainer">
             <textarea id="shareCommentText" placeholder="Write a comment.."></textarea>
-
-            <GenericButton
-                text = { 'COMMENT' }
-                onClick={this.addNewComment}
+            
+            <GenericButton 
+                text = { 'COMMENT' }  
+                onClick={this.addNewComment} 
                 className="btn btn-success" />
-            <GenericButton
-                text = { 'CANCEL' }
-                onClick={this.addNewComment}
-                className="btn btn-success" />
+            <GenericButton 
+                text = { 'CANCEL' }  
+                onClick={this.addNewComment} 
+                className="btn btn-success" />  
           </div>
-        {selectedPodcast.map((comment, i) =>
+        {selectedPodcast.map((comment, i) => 
           <Comment
             key={i}
             removeCommentFromBoard ={this.removeComment}
@@ -132,6 +131,6 @@ class Board extends React.Component  {
 }
 Board.propTypes = {
   selectedPodcast : PropTypes.array
-}
+} 
 
 export default Board

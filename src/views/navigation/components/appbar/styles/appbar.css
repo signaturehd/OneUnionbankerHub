@@ -6,14 +6,12 @@
 .icon-header {
   grid-area: header-logo;
   text-align: left;
-  margin: auto;
 }
 .burger-icon {
 grid-area: header-nav;
 text-align: -webkit-right;
 }
 ._img-ub-logo {
-  width: auto;
   height: 20px;
   margin-top: 2%;
   margin-left: 30px;
@@ -30,8 +28,8 @@ text-align: -webkit-right;
     height: 40px;
     position: sticky;
     margin: 2% 5% 0 0;
-  }
-  ._img-ub-logo {
+  } 
+  ._img-ub-logo { 
     margin: 4% 0 0 5%;
   }
 
@@ -40,7 +38,7 @@ text-align: -webkit-right;
   ._img-ub-profile {
     margin: 5% 5% 0 0;
   }
-  ._img-ub-logo {
+  ._img-ub-logo { 
     margin: 5% 0 0 5%;
   }
 }
@@ -48,7 +46,7 @@ text-align: -webkit-right;
   ._img-ub-profile {
     margin: 7% 5% 0 0;
   }
-._img-ub-logo {
+._img-ub-logo { 
     margin: 7% 0 0 5%;
     width: 155px;
     height: 19px;
@@ -58,7 +56,7 @@ text-align: -webkit-right;
     margin: 8% 5% 0 0;
   }
 
-  ._img-ub-logo {
+  ._img-ub-logo { 
     margin: 9% 0 0 5%;
     width: 140px;
     height: 18px;
@@ -69,7 +67,7 @@ text-align: -webkit-right;
   ._img-ub-profile {
     margin: 9% 5% 0 0;
   }
-  ._img-ub-logo {
+  ._img-ub-logo { 
     margin: 11% 0 0 5%;
     width: 140px;
     height: 18px;
@@ -79,7 +77,7 @@ text-align: -webkit-right;
   ._img-ub-profile {
     margin: 12% 5% 0 0;
   }
-  ._img-ub-logo {
+  ._img-ub-logo { 
     margin: 13% 0 0 5%;
     width: 125px;
     height: 18px;
@@ -89,7 +87,7 @@ text-align: -webkit-right;
   ._img-ub-profile {
     margin: 12% 5% 0 0;
   }
-  ._img-ub-logo {
+  ._img-ub-logo { 
     margin: 16% 0 0 5%;
     width: 110px;
     height: 15px;
