@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Card } from '../../../../ub-components/'
 
 import { FaEye } from 'react-icons/lib/fa/'
-import './styles.css'
+import './styles/news-card-component.css'
 
 class NewsCardComponent extends Component {
   constructor (props) {
@@ -15,8 +15,7 @@ class NewsCardComponent extends Component {
     const { news, onClick , imageUrl } = this.props
 
     const style = {
-        newsBackground:
-        {
+        newsBackground: {
           background : `url(${news.imageUrl}) rgba(0,0,0,0.7)`,
           backgroundRepeat : 'no-repeat',
           width: 'auto',
