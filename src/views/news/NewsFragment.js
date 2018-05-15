@@ -10,7 +10,7 @@ import ConnectPartial from '../../utils/ConnectPartial'
 import NewsCardComponent from './components/NewsCardComponent/NewsCardComponent'
 import NewsModalComponent from './modals/NewsModalComponent'
 
-import './styles/NewsStyles.css'
+import './styles/news-styles.css'
 
 class NewsFragment extends BaseMVPView {
   constructor (props) {
