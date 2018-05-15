@@ -12,11 +12,19 @@ class OtpModal extends BaseMVPView {
 
     this.state = {
       otp: '',
+      disableSubmit : false,
+      disableResend : false
     }
+
+    this.onResendSuccess = this.onResendSuccess.bind(this)
   }
 
   onOtpSuccess () {
     // TODO redirect to login
+  }
+
+  onResendSuccess () {
+    this.setState({ disabledResend : false })
   }
 
   render () {
@@ -33,8 +41,18 @@ class OtpModal extends BaseMVPView {
           type = ""
           onChange={ e => this.setState({ otp: e.target.value }) }  />
           <br/>
-          <GenericButton text= "Submit" onClick={ () => this.presenter.verifyOtp(username, otp, transactionType) } />
-          <GenericButton text= "Resend OTP" onClick={ () => this.presenter.resendOtp(username, transactionType) } />
+          <GenericButton text= "Submit"
+            onClick={ () => {
+this.presenter.verifyOtp(username, otp, transactionType), this.setState({ disabled : true })
+} }
+            disabled = {this.state.disableSubmit}
+           />
+          <GenericButton text= "Resend OTP"
+            onClick={ () => {
+this.presenter.resendOtp(username, transactionType), this.setState({ disableResend: true })
+} }
+            disabled = {this.state.disableResend}
+          />
       </Modal>
       )
   }

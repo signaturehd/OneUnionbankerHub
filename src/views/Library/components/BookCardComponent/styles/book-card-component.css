@@ -1,0 +1,18 @@
+.book-card {
+  display:grid;
+  grid-template-rows: 40% 30% 30%;
+  height: 350px;
+}
+
+.card-header {
+  height:auto;
+  width:auto;
+}
+
+.card-body {
+  padding:10px !important;
+}
+
+.card-footer {
+  padding: 5px;
+}

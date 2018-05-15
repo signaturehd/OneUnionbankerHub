@@ -5,7 +5,7 @@ import LoginPresenter from './presenter/LoginPresenter'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { GenericButton, GenericTextBox, Card } from '../../ub-components'
+import { GenericButton, GenericTextBox, Card, CircularLoader } from '../../ub-components'
 
 import './css/login.css'
 
@@ -24,14 +24,21 @@ class LoginView extends BaseMVPView {
 
     this.onLoginSuccess = this.onLoginSuccess.bind(this)
   }
+
   disabledButton () {
     this.setState({ disabled : true })
   }
+
   enabledButton () {
     this.setState({ disabled : false })
   }
+
   onLoginSuccess () {
     this.setState({ showOtpModal: true })
+  }
+
+  onLoginError (response) {
+    this.setState({ disabled : false })
   }
 
   render () {
@@ -39,7 +46,6 @@ class LoginView extends BaseMVPView {
 
     return (
       <div>
-        { super.render() }
         {
           // TODO properly show otp modal as 'modal', not by just swapping views lol
           showOtpModal &&
@@ -62,11 +68,21 @@ class LoginView extends BaseMVPView {
               onChange = { e => this.setState({ password: e.target.value }) }
               placeholder = { 'Password' }
               type = { 'password' }/>
-            <GenericButton
-              disabled = {this.state.disabled}
-              className = { 'login-button' }
-              text="Login"
-              onClick = { () => this.presenter.login(this.state.username, this.state.password)}/>
+              <br/>
+            {
+              this.state.disabled ?
+              <center>
+                <br/>
+                <CircularLoader show = { true }/>
+              </center>
+              :
+              <GenericButton
+                disabled = {this.state.disabled}
+                className = { 'login-button' }
+                text="Login"
+                onClick = { () => this.presenter.login(this.state.username, this.state.password)}/>
+
+            }
             <div className = { 'login-layer-icons' }>
                   <img
                     src = { require('../../images/icons/PAGIBIG.png') }
