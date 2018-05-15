@@ -11,13 +11,14 @@ class TransactionModal extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state={
-    transactionId : [],
     transactions: [],
+
   }
 }
 
  componentDidMount () {
     this.presenter.getTransactionId(this.props.details)
+
 
   }
    showTransactions(transactions){
@@ -28,14 +29,15 @@ class TransactionModal extends BaseMVPView {
   this.props.presenter.getTransactionId(id)
     }
 
-
+   showTransactionId(transactionID){
+      this.setState({transactionID})
+    }
   
 
 
   render () {
-    const { onClose, details, detail, transactions} = this.props
-
-   
+    const { onClose, details, detail, transactions,transactionResponse,transactionID} = this.props
+   console.log(transactionID)
 
     return (
       <Modal
@@ -46,7 +48,7 @@ class TransactionModal extends BaseMVPView {
           </div>
           <div>
            
-              <h4>Title: {details && details.details && details.dateFiled}</h4>
+              <h4>Title: {detail && detail.detail && detail.dateFiled}</h4>
 
              
 

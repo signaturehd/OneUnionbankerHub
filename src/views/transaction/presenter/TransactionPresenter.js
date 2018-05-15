@@ -29,10 +29,14 @@ export default class TransactionPresenter {
 getTransactionId(id) {
 
     this.view.showLoading()
+    console.log(this.view)
     this.TransactionIdInteractor.execute(GetTransactionParam(id))
+
       .subscribe(transactionId => {
+    console.log(transactionID)
+        
           this.view.hideLoading()
-          this.view.showTransactionId(GetTransactionParam())
+          this.view.showTransactionId(transactionID)
       }, e => {
           this.view.hideLoading()
       })
