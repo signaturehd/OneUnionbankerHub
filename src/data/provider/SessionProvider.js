@@ -13,7 +13,8 @@ export default class SessionProvider {
   }
 
   getToken () {
-    return this.storage.getItem(TOKEN) || ''
+    // return this.storage.getItem(TOKEN) || ''
+    return '7acb343e9928ee9dbc167cd48ab8f11c379275f82b1e6a3e2c774490caf4a8c69c4d771a45db17bf6b7b0527ddef1df49d6963c3d7b05554d32e86aceeeb9b93'
   }
 
   setAccountToken (accountToken = '') {
