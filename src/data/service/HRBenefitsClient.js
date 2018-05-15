@@ -95,7 +95,8 @@ export default class HRBenefitsClient {
     return this.service.addRating(token, bookParam)
       .pipe(ServiceErrorOperator())
   }
-    paddRating (token, bookParam) {
+
+  paddRating (token, bookParam) {
     return this.service.paddRating(token, bookParam)
       .pipe(ServiceErrorOperator())
   }
@@ -111,11 +112,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addOptical (token, accountNumber, opticalParam) {
-    return this.service.addOptical(token, accountNumber, opticalParam)
+  addOptical (token, accountToken, accountNumber, opticalParam) {
+    return this.service.addOptical(token, accountToken, accountNumber, opticalParam)
       .pipe(ServiceErrorOperator())
   }
-  
+
   getPodcasts (token) {
     return this.service.getPodcasts(token)
       .pipe(ServiceErrorOperator())
