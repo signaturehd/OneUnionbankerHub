@@ -110,7 +110,7 @@ export default class HRBenefitsClient {
     return this.service.getPodcastsRecommendations(token)
       .pipe(ServiceErrorOperator())
   }
-  getPodcastsViewed(token) {
+  getPodcastsViewed (token) {
     return this.service.getPodcastsViewed(token)
       .pipe(ServiceErrorOperator())
   }
@@ -130,5 +130,4 @@ export default class HRBenefitsClient {
     return this.service.getFaqs(token)
       .pipe(ServiceErrorOperator())
   }
-
 }

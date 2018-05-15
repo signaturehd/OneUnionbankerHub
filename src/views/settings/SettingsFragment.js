@@ -13,7 +13,7 @@ import { Card } from '../../ub-components/'
 import './styles/profile.css'
 
 class SettingsFragment extends BaseMVPView {
-  constructor ( props ) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -31,17 +31,16 @@ class SettingsFragment extends BaseMVPView {
     this.presenter.getProfile()
     this.props.setSelectedNavigation(4)
   }
-  showProfile ( profile ) {
+  showProfile (profile) {
     this.setState({ profile })
-
   }
-  showEmployeeProfile ( profileInfo ) {
+  showEmployeeProfile (profileInfo) {
     this.setState({ profileInfo })
-  } 
-  showRank ( rank ) {
+  }
+  showRank (rank) {
     this.setState({ rank })
-  } 
-  showLineManager ( linemanager ) {
+  }
+  showLineManager (linemanager) {
     this.setState({ linemanager })
   }
   render () {
@@ -51,7 +50,9 @@ class SettingsFragment extends BaseMVPView {
       <div className = { 'profile-container' }>
         { super.render() }
         <h1 className = { 'title-view' }>Profile</h1>
-        <SettingsCardComponent profile = { profile } linemanager = { linemanager } rank = { rank } presenter = { this.presenter }/>
+        <SettingsCardComponent profile = { profile }
+         linemanager = { linemanager }
+         rank = { rank } presenter = { this.presenter }/>
       </div>
     )
   }

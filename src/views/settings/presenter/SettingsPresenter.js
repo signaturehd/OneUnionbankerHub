@@ -2,7 +2,7 @@ import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInte
 
 export default class SettingsPresenter {
   constructor (container) {
-    this.getProfileInteractor = new GetProfileInteractor( container.get('HRBenefitsClient'))
+    this.getProfileInteractor = new GetProfileInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {

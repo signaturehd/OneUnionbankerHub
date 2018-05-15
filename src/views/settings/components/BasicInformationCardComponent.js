@@ -13,8 +13,11 @@ class BasicInformationCardComponent extends Component {
   render () {
     const { profile, onClick } = this.props
     let genderPartial 
-    if(profile.gender === 'M') { genderPartial = 'Male'}
-    else { genderPartial = 'Female' }
+    if (profile.gender === 'M') {
+ genderPartial = 'Male'
+} else {
+ genderPartial = 'Female' 
+}
     return (
          <div className = 'card-container'>
 

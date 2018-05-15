@@ -11,7 +11,7 @@ class CompanyInformationCardComponent extends Component {
   }
 
   render () {
-    const { profile, onClick, rank , linemanager} = this.props
+    const { profile, onClick, rank , linemanager } = this.props
     return (
          <div className = 'card-container'>
             <h5 className = "title">{ rank.rank}</h5>
