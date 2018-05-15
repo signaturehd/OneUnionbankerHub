@@ -104,9 +104,13 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  /* News */
+  /* Faqs */
   getFaqs (token) {
     return this.service.getFaqs(token)
+      .pipe(ServiceErrorOperator())
+  }
+  getFaqsCategories (token) {
+    return this.service.getFaqsCategories(token)
       .pipe(ServiceErrorOperator())
   }
 }
