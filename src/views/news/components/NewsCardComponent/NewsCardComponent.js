@@ -21,7 +21,7 @@ class NewsCardComponent extends Component {
           backgroundRepeat : 'no-repeat',
           width: 'auto',
           backgroundBlendMode: 'color',
-          backgroundSize: 'cover',
+          backgroundSize: '100% auto',
           color : 'white',
           fontWeight : 'bold'
         }

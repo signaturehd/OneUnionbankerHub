@@ -28,7 +28,7 @@ class NewsFragment extends BaseMVPView {
       this.props.setSelectedNavigation(0)
   }
   updateSearch () {
-      this.setState({ searchString: this.refs.search.value.substr( 0 , 20) })
+      this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
   }
 
   news (news) {
@@ -38,11 +38,9 @@ class NewsFragment extends BaseMVPView {
   render () {
     const { news, show, details } = this.state
     let _news = this.state.news
-    let search = this.state.searchString.trim().toLowerCase()
+    const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
-      _news = _news.filter(function(news) {
-        return news.title.toLowerCase().match(search)
-      })
+      _news = _news.filter(news => news.title.toLowerCase().match(search))
     }
     return (
       <div className = 'container'>
