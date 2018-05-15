@@ -33,6 +33,6 @@ export default class SessionProvider {
   }
 
   getProfile () {
-    return JSON.stringify(this.storage.getItem(PROFILE)) || {}
+    return JSON.parse(this.storage.getItem(PROFILE)) || {}
   }
 }
