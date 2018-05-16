@@ -9,20 +9,18 @@ class FaqModal extends Component {
   }
 
   render () {
-    const { details, onClose } = this.props
+    const { details, onClose, arrayListPush} = this.props
+    console.log(arrayListPush)
     return (
       <Modal
         isDismisable = { true }
         onClose = { onClose }>
-        
-        <h4>{details.title}</h4>
-        <span>{details.description}</span>
+
+        <h4>{details && details.title}</h4>
+        <span>{details && details.description}</span>
       </Modal>
     )
   }
 }
-// TODO
-/* Fetch datas on Click display details */
-/* Close modal set elements to null */
 
 export default FaqModal
