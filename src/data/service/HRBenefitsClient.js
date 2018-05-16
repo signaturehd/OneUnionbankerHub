@@ -91,12 +91,37 @@ export default class HRBenefitsClient {
     return this.service.addRating(token, bookParam)
       .pipe(ServiceErrorOperator())
   }
+    paddRating (token, bookParam) {
+    return this.service.paddRating(token, bookParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  reserveBook (token, BookReserveParam) {
+    return this.service.ReserveBook(token, BookReserveParam)
+        .pipe(ServiceErrorOperator())
+  }
 
   /* optical */
   getOptical (token) {
     return this.service.getOptical(token)
       .pipe(ServiceErrorOperator())
   }
+
+  getPodcasts (token) {
+    return this.service.getPodcasts(token)
+      .pipe(ServiceErrorOperator())
+  }
+  getPodcastsRecommendations (token) {
+    return this.service.getPodcastsRecommendations(token)
+      .pipe(ServiceErrorOperator())
+  }
+  getPodcastsViewed (token) {
+    return this.service.getPodcastsViewed(token)
+      .pipe(ServiceErrorOperator())
+  }
+  /* dental reimbursement */
+
+  /* dental loa */
 
   /* News */
   getNews (token) {
@@ -105,6 +130,7 @@ export default class HRBenefitsClient {
   }
 
   /* Faqs */
+<<<<<<< HEAD
   getFaqs () {
       return this.service.getFaqs()
           .pipe(ServiceErrorOperator())
@@ -121,8 +147,17 @@ export default class HRBenefitsClient {
         }
 
   /* News */
+=======
+>>>>>>> 6b47ac09d1ab95001702aa83872525b296fd8f5e
   getFaqs (token) {
     return this.service.getFaqs(token)
       .pipe(ServiceErrorOperator())
   }
+<<<<<<< HEAD
+=======
+  getFaqsCategories (token) {
+    return this.service.getFaqsCategories(token)
+      .pipe(ServiceErrorOperator())
+  }
+>>>>>>> 6b47ac09d1ab95001702aa83872525b296fd8f5e
 }

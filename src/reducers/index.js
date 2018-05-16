@@ -6,6 +6,6 @@ import events from './EventReducer'
 const rootReducer = combineReducers({
   samples,
   events,
-});
+})
 
 export default rootReducer

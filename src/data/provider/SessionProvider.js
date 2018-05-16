@@ -1,6 +1,6 @@
-const TOKEN = 'TOKEN';
-const ACCOUNT_TOKEN = 'ACCOUNT_TOKEN';
-const ACCOUNT_NUMBER = 'ACCOUNT_NUMBER';
+const TOKEN = 'TOKEN'
+const ACCOUNT_TOKEN = 'ACCOUNT_TOKEN'
+const ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
 const PROFILE = 'PROFILE'
 
 export default class SessionProvider {

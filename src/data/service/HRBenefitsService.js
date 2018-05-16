@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs'
 
 export default class HRBenefitsService {
 
@@ -95,6 +94,11 @@ export default class HRBenefitsService {
         headers: { token }
     })
   }
+   getNews (token) {
+    return this.apiClient.get('v1/news', {
+        headers: { token }
+    })
+  }
 
   getTransactionId(token, GetTransactionParam){
     return this.apiClient.get('v1/transactions/' + GetTransactionParam, {
@@ -109,7 +113,14 @@ export default class HRBenefitsService {
     })
   }
 
+ reserveBook (token, ReserveParam) {
+    return this.apiClient.post('v1/books/reservation', {
+      books: ReserveParam
+    }, {
+      headers: { token }
 
+    })
+ }
 
   addRating (token, bookParam) {
     return this.apiClient.post('v1/books/rate', bookParam, {
@@ -124,14 +135,36 @@ export default class HRBenefitsService {
       headers: {
         token
       }
+  getPodcasts (token) {
+      return this.apiClient.get('v1/podcasts', {
+          headers: { token }
+      })
+    }
+  getPodcastsRecommendations (token) {
+      return this.apiClient.get('v1/podcasts/recommendations', {
+          headers: { token }
+      })
+    }
+  getPodcastsViewed (token) {
+      return this.apiClient.get('v1/podcasts/history/members', {
+          headers: { token }
+      })
+    }
+  paddRating (token, bookParam) {
+    return this.apiClient.post('v1/books/podcasts', bookParam, {
+      headers : { token }
     })
   }
 
-  // faqs
   getFaqs (token) {
     return this.apiClient.get('v1/faqs', {
       headers: { token }
     })
   }
-}
 
+  getFaqsCategories (token) {
+    return this.apiClient.get('v1/faqs/categories', {
+      headers: { token }
+    })
+  }
+}

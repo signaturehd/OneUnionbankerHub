@@ -6,7 +6,7 @@ export default function reducer (state = initialState, action) {
     case CHANGE_TOKEN_EVENT:
       return Object.assign({}, state, {
         token: action.token
-      });
+      })
 
     default:
       return state

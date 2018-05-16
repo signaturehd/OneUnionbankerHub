@@ -1,0 +1,21 @@
+.card-container {
+  display:grid;
+  grid-column-gap: 1%;
+  grid-template-columns : repeat(250px);
+  margin-top: 20px;
+}
+
+.news-body {
+  padding : 50px;
+  text-align:center
+}
+
+.fa-see-more {
+  font-size : 25px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.card {
+  break-inside: avoid-column;
+}
