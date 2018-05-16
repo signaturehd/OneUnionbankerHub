@@ -32,11 +32,11 @@ getTransactionId(id) {
     console.log(this.view)
     this.TransactionIdInteractor.execute(GetTransactionParam(id))
 
-      .subscribe(transactionId => {
-    console.log(transactionID)
+      .subscribe(transactionsID => {
+    console.log(transactionsID)
         
           this.view.hideLoading()
-          this.view.showTransactionId(transactionID)
+          this.view.showTransactionId(transactionsID)
       }, e => {
           this.view.hideLoading()
       })

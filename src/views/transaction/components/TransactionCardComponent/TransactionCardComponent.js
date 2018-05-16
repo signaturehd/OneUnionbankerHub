@@ -14,11 +14,13 @@ class TransactionCardComponent extends Component {
     getTransactionId(id){
   this.props.presenter.getTransactionId(id)
     }
-
+ showTransactionId(transactionID){
+      this.setState({transactionID})
+    }
 
 
   render () {
-    const { detail, onClick,details } = this.props
+    const { detail, onClick,details, transactionID } = this.props
   
 
     return (

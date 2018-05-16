@@ -17,8 +17,7 @@ class TransactionFragment extends BaseMVPView {
       view : false,
       details : null,
       transactions:[],
-      transactionID : [],
-      tranID : null
+      transactionID: null
     }
   }
 
@@ -32,20 +31,20 @@ class TransactionFragment extends BaseMVPView {
     this.setState({transactions})
   }
 
-getTransactionId(){
-  this.setState({transactionId})
+getTransactionId(transactionID){
+  this.setState({transactionID})
 }
  getTransactionId(id){
   this.props.presenter.getTransactionId(id)
     }
 
-    showTransactionId(transactionID){
-      this.setState({transactionID})
+    showTransactionId(transactionsID){
+      this.setState({transactionsID})
     }
   render () {
-    const {transactions, detail,details,transactionID}=this.state
-    const { onClick, text, path, icon,tranID } = this.props
-
+    const {transactions, detail,details,transactionsID,transID}=this.state
+    const { onClick, text, path, icon } = this.props
+console.log(transactionsID)
 
     return (
       <div>
@@ -57,7 +56,7 @@ getTransactionId(){
         <h1> Transactions </h1>
         <div className = { '_transaction-container' }>
         {
-
+          
           transactions && transactions && transactions.map((transaction, key) =>
             <TransactionCardComponent
               detail = { transaction } key = { key }
@@ -69,7 +68,10 @@ getTransactionId(){
         
         {
           this.state.view &&
-          <TransactionModal details = { details } detail = {transactionID} onClose = { () => this.setState({ view : false }) }/>
+           transactionsID && transactionsID && transactionsID.map((transactionsid, key) =>
+          <TransactionModal
+           details = { details } 
+           detail = {transactionsid} onClose = { () => this.setState({ view : false }) }/>
         }
 
         </div>
