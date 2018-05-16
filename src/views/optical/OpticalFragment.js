@@ -60,7 +60,7 @@ class OpticalFragment extends BaseMVPView {
       imagePreviewUrl,
       imagePreviewUrl2,
     } = this.state
-    console.log(this.state)
+
     return (
       <div  className = { 'benefits-container' }>
         { super.render() }

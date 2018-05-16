@@ -1,2 +1,3 @@
 export const SAMPLE_ACTION = 'SAMPLE_ACTION'
+export const ADD_NOTIFY = 'ADD_NOTIFY'
 export const CHANGE_TOKEN_EVENT = 'CHANGE_TOKEN_EVENT'

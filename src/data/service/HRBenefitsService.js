@@ -67,7 +67,7 @@ export default class HRBenefitsService {
     })
   }
 
-  addOptical (token, accounToken, accountNumber, opticalParam) {
+  addOptical (token, accountToken, accountNumber, opticalParam) {
     const formData = new FormData()
     const opticalObject = {
       "accountNumber": accountNumber,
@@ -80,7 +80,7 @@ export default class HRBenefitsService {
     formData.append('opt', opticalParam.optCert)
     formData.append('body', JSON.stringify(opticalObject))
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
-      headers : { token, accounToken }
+      headers : { token, accountToken }
     })
   }
 

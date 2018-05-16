@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal, GenericButton } from '../../../ub-components/'
+import { Modal, GenericButton, CircularLoader } from '../../../ub-components/'
 import Button from '../components/OpticalButton'
 import BaseMVPView from '../../common/base/BaseMVPView'
 
@@ -12,6 +12,8 @@ class OpticalModal extends Component {
     super(props)
     this.state = {
       showOpticalModal : false,
+      disableSubmit : false,
+      isDismisable : true
     }
   }
 
@@ -27,7 +29,7 @@ class OpticalModal extends Component {
       imagePreviewUrl,
       imagePreviewUrl2,
     } = this.props
-    const {disabled} = this.state
+    const { disableSubmit, isDismisable } = this.state
     const styles = {
       image1 : {
         backgroundImage: `url('${imagePreviewUrl}')`,
@@ -46,26 +48,39 @@ class OpticalModal extends Component {
     }
     return (
         <Modal
-          isDismisable = { true }
+          isDismisable = { isDismisable }
           onClose = { onClose }
         >
-            <h2>Optical Reimbursement Description</h2>
-            <br/>
-            <h4>Amount : { amount }</h4>
-            <br/>
-            <div className = { 'optical-image-display' }>
-              <div style = {styles.image1}></div>
-              <div style = {styles.image2}></div>
-            </div>
-            <br/>
-            <GenericButton
-              onClick = { () => {
-                this.setState({disabled : true})
-                submitForm(fileReceived, fileReceived2, amount)} }
-              text = { 'confirm' }
-              disabled = {this.state.disabled}
-            />
-            <GenericButton text = { 'cancel' } onClick = { onClose } />
+            {
+              disableSubmit ?
+              <center>
+                <h3>Please wait while we&#39;re sending your application</h3>
+                <br/>
+                <br/>
+                <CircularLoader show={true}/>
+              </center>
+              :
+              <div>
+                <h2>Optical Reimbursement Description</h2>
+                <br/>
+                <h4>Amount : { amount }</h4>
+                <br/>
+                <div className = { 'optical-image-display' }>
+                  <div style = {styles.image1}></div>
+                  <div style = {styles.image2}></div>
+                </div>
+                <br/>
+                <GenericButton
+                  onClick = { () => {
+                    this.setState({disableSubmit : true, isDismisable: false})
+                    submitForm(fileReceived, fileReceived2, amount)} }
+                  text = { 'confirm' }
+                  disabled = {this.state.disabled}
+                />
+                <GenericButton text = { 'cancel' } onClick = { onClose } />
+              </div>
+            }
+
         </Modal>
       )
   }
