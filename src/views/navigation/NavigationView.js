@@ -8,7 +8,7 @@ import LibraryFragment from '../library/LibraryFragment'
 import BenefitsFragment from '../benefits/BenefitsFragment'
 import TransactionFragment from '../transaction/TransactionFragment'
 import NewsFragment from '../news/NewsFragment'
-import FaqFragment from '../faq/FaqFragment'
+import FaqView from '../faq/FaqView'
 import SettingsFragment from '../settings/SettingsFragment'
 
 import DrawerAppBar from './components/appbar/DrawerAppBar'
@@ -87,7 +87,7 @@ class NavigationView extends BaseMVPView {
                           <TransactionFragment { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> } />
                         <Route path = '/faqs' render = { props =>
-                          <FaqFragment { ...props }
+                          <FaqView { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> } />
                         <Route path = '/settings' render = { props =>
                           <SettingsFragment { ...props }
