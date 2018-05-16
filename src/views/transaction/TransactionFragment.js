@@ -38,7 +38,7 @@ class TransactionFragment extends BaseMVPView {
     const {
       transactions,
       view,
-      transactionId,
+      transaction,
       transactionResponse
     } = this.state
 
@@ -59,7 +59,7 @@ class TransactionFragment extends BaseMVPView {
           transactions.map((transaction, key) =>
             <TransactionCardComponent
               detail = { transaction } key = { key }
-              onClick = { (transactionId, view) => this.setState({ transactionId, view }) }
+              onClick = { (transaction, view) => this.setState({ transaction, view }) }
             />
           )
         }
@@ -68,7 +68,8 @@ class TransactionFragment extends BaseMVPView {
           view &&
           <TransactionModal
             transactionResponse = { transactionResponse }
-            presenter = { () => this.presenter.getTransactionById(transactionId) }
+            transaction = { transaction.benefitId }
+            presenter = { () => this.presenter.getTransactionById(transaction.id) }
             onClose = { () => this.setState({view : false})}
           />
         }

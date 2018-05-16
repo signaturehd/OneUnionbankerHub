@@ -11,16 +11,9 @@ class TransactionCardComponent extends Component {
   constructor (props) {
     super(props)
   }
-    getTransactionId(id){
-  this.props.presenter.getTransactionId(id)
-    }
- showTransactionId(transactionID){
-      this.setState({transactionID})
-    }
-
 
   render () {
-    const { detail, onClick,details, transactionID } = this.props
+    const { detail, onClick } = this.props
 
 
     return (
@@ -34,10 +27,7 @@ class TransactionCardComponent extends Component {
         </div>
         <div className = {'card-footer'}>
           <center>
-
-            <button onClick = { () => onClick(detail.id, true) }>Read More</button>
-
-
+            <button onClick = { () => onClick(detail, true) }>Read More</button>
           </center>
         </div>
       </Card>
