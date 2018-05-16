@@ -57,22 +57,7 @@ class TransactionModal extends Component {
             <h3> Please wait while we are getting your transaction </h3>
             <CircularLoader show = {true} />
           </center>
-
         }
-
-
-        <div>
-
-         <h4> DateFiled : {transactionResponse && transactionResponse.dateFiled}</h4>
-        <h4> Status: {transactionResponse && transactionResponse.status.name}</h4>
-        <h4> Account No: {transactionResponse && transactionResponse.details.AccountNo}</h4>
-        <h4> Reference No: {transactionResponse && transactionResponse.details.ReferenceNumber} </h4>
-
-
-
-
-
-        </div>
       </Modal>
     )
   }
