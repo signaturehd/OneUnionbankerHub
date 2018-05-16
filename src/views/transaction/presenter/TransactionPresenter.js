@@ -1,14 +1,11 @@
-import TransactionsInteractor from '../../../domain/interactor/transactions/TransactionsInteractor'
-import TransactionIdInteractor from '../../../domain/interactor/transactions/TransactionIdInteractor'
+import GetTransactionInteractor from '../../../domain/interactor/transactions/GetTransactionInteractor'
+import GetTransactionByIdInteractor from '../../../domain/interactor/transactions/GetTransactionByIdInteractor'
 import GetTransactionParam from '../../../domain/param/GetTransactionParam'
 
 export default class TransactionPresenter {
   constructor (container) {
-    this.TransactionsInteractor = new TransactionsInteractor(container.get('HRBenefitsClient'))
-    this.TransactionIdInteractor= new TransactionIdInteractor(container.get('HRBenefitsClient'))
-    this.GetTransactionParam=new GetTransactionParam(container.get('HRBenefitsClient'))
-
- 
+    this.getTransactionInteractor = new GetTransactionInteractor(container.get('HRBenefitsClient'))
+    this.getTransactionByIdInteractor = new GetTransactionByIdInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -17,27 +14,23 @@ export default class TransactionPresenter {
 
   getTransactions () {
     this.view.showLoading()
-    this.TransactionsInteractor.execute()
+    this.getTransactionInteractor.execute()
       .subscribe(transactions => {
           this.view.hideLoading()
-          this.view.showTransactions(transactions)
-      }, e => {
+          this.view.transactions(transactions)
+        }, e => {
           this.view.hideLoading()
       })
   }
 
-getTransactionId(id) {
-
+  getTransactionById (id) {
     this.view.showLoading()
-    console.log(this.view)
-    this.TransactionIdInteractor.execute(GetTransactionParam(id))
-
-      .subscribe(transactionsID => {
-    console.log(transactionsID)
-        
+    this.getTransactionByIdInteractor.execute(GetTransactionParam(id))
+      .subscribe(transactionResponse => {
           this.view.hideLoading()
-          this.view.showTransactionId(transactionsID)
-      }, e => {
+          this.view.transacitonDetails(transactionResponse)
+          console.log(transactionResponse)
+        }, e => {
           this.view.hideLoading()
       })
   }

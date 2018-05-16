@@ -5,7 +5,7 @@ import BaseMVPView from '../../../common/base/BaseMVPView'
 import { Card } from '../../../../ub-components'
 
 
-import './styles.css'
+import './styles/transaction-card-component.css'
 
 class TransactionCardComponent extends Component {
   constructor (props) {
@@ -21,7 +21,7 @@ class TransactionCardComponent extends Component {
 
   render () {
     const { detail, onClick,details, transactionID } = this.props
-  
+
 
     return (
       <Card>
@@ -34,7 +34,7 @@ class TransactionCardComponent extends Component {
         </div>
         <div className = {'card-footer'}>
           <center>
-            
+
             <button onClick = { () => onClick(detail.id, true) }>Read More</button>
 
 
