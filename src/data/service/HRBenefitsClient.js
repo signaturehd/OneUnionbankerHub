@@ -130,34 +130,30 @@ export default class HRBenefitsClient {
   }
 
   /* Faqs */
-<<<<<<< HEAD
   getFaqs () {
-      return this.service.getFaqs()
-          .pipe(ServiceErrorOperator())
+    return this.service.getFaqs()
+      .pipe(ServiceErrorOperator())
   }
-  
+
   /* Transactions */
   getTransactions (token) {
-      return this.service.getTransactions(token)
-          .pipe(ServiceErrorOperator())
-        }
-  getTransactionId(token, GetTransactionParam){
-          return this.service.getTransactionId(token, GetTransactionParam)
-          .pipe(ServiceErrorOperator())
-        }
+    return this.service.getTransactions(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getTransactionById(token, GetTransactionParam){
+    return this.service.getTransactionById(token, GetTransactionParam)
+      .pipe(ServiceErrorOperator())
+  }
 
   /* News */
-=======
->>>>>>> 6b47ac09d1ab95001702aa83872525b296fd8f5e
   getFaqs (token) {
     return this.service.getFaqs(token)
       .pipe(ServiceErrorOperator())
   }
-<<<<<<< HEAD
-=======
+
   getFaqsCategories (token) {
     return this.service.getFaqsCategories(token)
       .pipe(ServiceErrorOperator())
   }
->>>>>>> 6b47ac09d1ab95001702aa83872525b296fd8f5e
 }

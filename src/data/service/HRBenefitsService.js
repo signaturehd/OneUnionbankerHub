@@ -89,18 +89,19 @@ export default class HRBenefitsService {
     })
   }
 
-  getTransactions (token) {
-    return this.apiClient.get('v1/transactions', {
-        headers: { token }
-    })
-  }
-   getNews (token) {
-    return this.apiClient.get('v1/news', {
+ getNews (token) {
+   return this.apiClient.get('v1/news', {
         headers: { token }
     })
   }
 
-  getTransactionId(token, GetTransactionParam){
+  getTransactions (token) {
+    return this.apiClient.get('v1/transactions', {
+      headers: { token }
+    })
+  }
+
+  getTransactionById (token, GetTransactionParam ){
     return this.apiClient.get('v1/transactions/' + GetTransactionParam, {
       headers: {token}
     })
@@ -132,24 +133,28 @@ export default class HRBenefitsService {
   // news
   getNews (token) {
     return this.apiClient.get('v1/news', {
-      headers: {
-        token
-      }
+      headers: { token }
+    })
+  }
+
   getPodcasts (token) {
-      return this.apiClient.get('v1/podcasts', {
-          headers: { token }
-      })
-    }
+    return this.apiClient.get('v1/podcasts', {
+        headers: { token }
+    })
+  }
+
   getPodcastsRecommendations (token) {
-      return this.apiClient.get('v1/podcasts/recommendations', {
-          headers: { token }
-      })
-    }
+    return this.apiClient.get('v1/podcasts/recommendations', {
+        headers: { token }
+    })
+  }
+
   getPodcastsViewed (token) {
-      return this.apiClient.get('v1/podcasts/history/members', {
-          headers: { token }
-      })
-    }
+    return this.apiClient.get('v1/podcasts/history/members', {
+        headers: { token }
+    })
+  }
+
   paddRating (token, bookParam) {
     return this.apiClient.post('v1/books/podcasts', bookParam, {
       headers : { token }
