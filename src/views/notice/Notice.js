@@ -30,7 +30,7 @@ class Notice extends BaseMVPView {
 
   render () {
     const { noticeResponse, onClose, back, benefitId, onDismiss } = this.props
-    const { isDismissable } = this.state
+    const { isDismissable, disableSubmit } = this.state
     return (
       <Modal
         isDismissable = { isDismissable }
@@ -45,27 +45,31 @@ class Notice extends BaseMVPView {
             </div>
           )
         }
+        {
           disableSubmit || isDismissable ?
           <center>
-            <h3>{ text }</h3>
-            <br/>
-            <br/>
             <CircularLoader show={true}/>
           </center>
-          <GenericButton text = {'Agree'}
-            onClick = { () => {
-                this.isAgree(noticeResponse.transactionId, 1, benefitId),
-                this.setState({isDimissable : true})
+          :
+          <div>
+            <GenericButton text = {'Agree'}
+              onClick = { () => {
+                  this.isAgree(noticeResponse.transactionId, 1, benefitId),
+                  this.setState({isDimissable : true, disableSubmit: true})
+                }
               }
-            }
-          />
-          <GenericButton text = {'Disagree'}
-            onClick = { () => {
-                this.isAgree(noticeResponse.transactionId, 2, benefitId),
-                this.setState({isDimissable : true})
+            />
+            <GenericButton text = {'Disagree'}
+              onClick = { () => {
+                  this.isAgree(noticeResponse.transactionId, 0, benefitId),
+                  this.setState({isDimissable : true, disableSubmit: true})
+                }
               }
-            }
-          />
+            />
+          </div>
+        }
+
+
       </Modal>
     )
   }
