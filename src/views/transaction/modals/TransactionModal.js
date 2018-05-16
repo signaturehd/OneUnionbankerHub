@@ -12,7 +12,19 @@ function  TransactionDetails ( props )  {
   } else if (transactionId == '7') {
      return <h1>Dental Loa</h1> // Dental Loa Fragment
   } else if (transactionId == '8') {
-    return <h1>{ transactionDetails.dateFiled }</h1> // Optical Fragment Fragment
+    return <h1>Optical Reimbursement</h1> // Optical Fragment Fragment
+  } else if (transactionId == '11') {
+    return <h1>Educational Reimbursement Personal</h1> // Educational Reimbursement Personal
+  } else if (transactionId == '12') {
+    return <h1>Educational Reimbursement Dependent</h1> // Educational Reimbursement Dependent
+  } else if (transactionId == '13') {
+    return <h1>Educational Grant Personal</h1> // Educational Grant Personal
+  } else if (transactionId == '32') {
+    return <h1>Educational Grant Dependent</h1> // Educational Grant Dependent
+  } else if (transactionId == '1') {
+    return <h1>MPL</h1> // Loans
+  } else {
+    return <h1>No Transaction Occured please reload</h1> // No  Transaction
   }
  }
 
