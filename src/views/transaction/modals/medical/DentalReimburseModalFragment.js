@@ -1,24 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Modal, CircularLoader } from '../../../ub-components/'
+import { Modal } from '../../../ub-components/'
 
-import './styles/transaction-modal.css'
+import '../styles/transaction-modal.css'
 
-function  TransactionDetails ( props )  {
-  const transactionId = props.details.benefitType.id
-  const transactionDetails = props.details
-  if (transactionId == '6') {
-     return <h1>Dental Reimubrsemments</h1> // Dental Reimbursement Fragment
-  } else if (transactionId == '7') {
-     return <h1>Dental Loa</h1> // Dental Loa Fragment
-  } else if (transactionId == '8') {
-    return <h1>{ transactionDetails.dateFiled }</h1> // Optical Fragment Fragment
-  }
- }
-
-class TransactionModal extends Component {
+class DentalReimburseModalFragment extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      transactionID: []
+    }
   }
 
  componentDidMount () {
@@ -39,7 +30,7 @@ class TransactionModal extends Component {
       >
         {
           transactionResponse ?
-          <TransactionDetails details = { transactionResponse }  />
+          <h1>Transaction Details</h1>
           :
           <center>
             <h3> Please wait while we are getting your transaction </h3>
@@ -47,16 +38,17 @@ class TransactionModal extends Component {
           </center>
 
         }
+       
 
-
-        <div>
-
-         <h4> DateFiled : {transactionResponse && transactionResponse.dateFiled}</h4>
+       <div>
+        <h4> DateFiled : {transactionResponse && transactionResponse.dateFiled}</h4>
         <h4> Status: {transactionResponse && transactionResponse.status.name}</h4>
         <h4> Account No: {transactionResponse && transactionResponse.details.AccountNo}</h4>
-        <h4> Reference No: {transactionResponse && transactionResponse.details.ReferenceNumber} </h4>
-
-
+        <h4> Reference No: {transactionResponse && transactionResponse.details.ReferenceNumber} </h4> 
+        <h4> Form Attachments: {transactionResponse && transactionResponse.details.Attachments.FileName}</h4>
+        <h4> Procedures: {transactionResponse && transactionResponse.Procedures.Name}</h4>
+        <h4> Amount: {transactionResponse && transactionResponse.Procedures.Amount}</h4>
+        <h4> Form Agreemen t: {transactionResponse && transactionResponse.FormAgreements}</h4>
 
 
 
@@ -70,4 +62,4 @@ TransactionModal.propTypes = {
   onClose: PropTypes.func,
 }
 
-export default TransactionModal
+export default DentalReimburseModalFragment

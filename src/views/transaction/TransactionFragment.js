@@ -56,6 +56,7 @@ class TransactionFragment extends BaseMVPView {
         <h1> Transactions </h1>
         <div className = { '_transaction-container' }>
         {
+          
           transactions &&
           transactions.map((transaction, key) =>
             <TransactionCardComponent
