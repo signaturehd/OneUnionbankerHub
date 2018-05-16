@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import PodcastCardRecommendedComponent from '../../../common/components/PodCardComponent/PodcastCardRecommendedComponent'
+import PodcastCardRecommendedComponent from '../../components/Cards/PodcastCardRecommendedComponent'
 
 class PodCastsRecommendationFragment extends Component {
   constructor (props) {

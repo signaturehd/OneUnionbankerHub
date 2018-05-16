@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import PodCardComponent from '../../../common/components/PodCardComponent/PodCardComponent'
+import PodcastCardComponent from '../../components/Cards/PodcastCardComponent'
 
 class PodCastsListFragment extends Component {
   constructor (props) {
@@ -22,7 +22,7 @@ class PodCastsListFragment extends Component {
   <div className = {'podcasts-container'}>
     {
       searchPodcast.map((podcast, i) =>
-        <PodCardComponent
+        <PodcastCardComponent
           history = { history }
           rateBook = { (id, rating) => this.getPodcasts(id, rating) }
           key={ i }

@@ -7,7 +7,6 @@ import Presenter from './presenter/PodcastPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 
 import './styles/podcast.css'
-import PodCardComponent from '../common/components/PodCardComponent/PodCardComponent'
 import PodcastInteractor from '../../domain/interactor/podcast/PodcastInteractor'
 import PodcastRecommendationsInteractor from '../../domain/interactor/podcast/PodcastRecommendationInteractor'
 
@@ -33,6 +32,7 @@ class PodcastView extends BaseMVPView {
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
+
   paddRating (id, rating) {
       this.props.presenter.ratePodcasts(id, rating)
   }
@@ -40,7 +40,7 @@ class PodcastView extends BaseMVPView {
       this.presenter.getPodcasts()
       this.presenter.getPodcastsRecommendations()
       this.presenter.getPodcastsViewed()
-      this.props.setSelectedNavigation(0)
+      this.props.setSelectedNavigation(6)
   }
   updateSearch () {
       this.setState({ searchString: this.refs.search.value.substr(0 , 20) })

@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './styles.css'
-import { GenericButton, Card }  from '../../../../ub-components/'
+
+import './styles/podcast-card-component.css'
+import { Card }  from '../../../../ub-components/'
 
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import { FaPlayCircleO } from 'react-icons/lib/fa/'
 import Rating from 'react-rating'
 
-class PodcastCardRecommendedComponent extends Component {
+class PodcastCardDetailsComponent extends Component {
   constructor (props) {
     super(props)
      this.state = {
       rating : 0,
+      imageUrl : ''
     }
   }
   addRating (id, rating) {
@@ -20,12 +22,11 @@ class PodcastCardRecommendedComponent extends Component {
   }
 
   render () {
-    const { detail, podcast, onClick, rateBook, history } = this.props
-    const { rating } = this.state
-
+    const { detail, podcasts, onClick, rateBook, history } = this.props
+    const { rating  } = this.state
     const style = {
       styles : {
-        background: `url(${podcast && podcast.image}) rgba(0,0,0,0.7)`,
+        background: `url(${podcasts.image}) rgba(0,0,0,0.7)`,
         backgroundSize: 'cover',
         backgroundBlendMode: 'color',
       },
@@ -42,43 +43,44 @@ class PodcastCardRecommendedComponent extends Component {
     return (
         <Card >
           <div style = {style.styles}
-               className = {'news-body'}>
-            <h2 style = { style.titleStyle }> {'Title'} </h2>
-            <h2 style = { style.authorStyle }> -{ podcast && podcast.speaker } </h2>
+               className = {'podcasts-details-side-right'}>
+              <h2 style = { style.titleStyle }> {'Title'} </h2>
+              <h2 style = { style.authorStyle }> -{podcasts.speaker} </h2>
+          <center>
+            <FaPlayCircleO
+              className = { 'fa-play-button-details' }
+              onClick = { onClick }/>
+          </center>
           </div>
           <div className = {'card-footer'}>
           <center>
            <Rating
               rateBook = { (id, rating) => this.addRating(id, rating) }
-              emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
-              fullSymbol = {<MdStar style={{ fontSize: 40,  color : '#c65e11' }} />}
+              emptySymbol = {<MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} />}
+              fullSymbol = {<MdStar style={{ fontSize: 25,  color : '#c65e11' }} />}
               onChange = { e => {
                 rateBook(detail.id, e)
                 this.setState({ rating : e })
               }}
+              readonly
               fractions = { 2 }
-              initialRating = { podcast && podcast.rating || 0 } />
+              initialRating = { rating ? rating : podcasts.rating } />
             </center>
-            <small>
-            <FaPlayCircleO
-              className = { 'fa-play-button' }
-              onClick = { onClick }/>
-            </small>
           </div>
         </Card>
     )
   }
 }
 
-PodcastCardRecommendedComponent.propTypes = {
+PodcastCardDetailsComponent.propTypes = {
 
   onClick : PropTypes.func,
   rateBook : PropTypes.func,
 
 }
 
-PodcastCardRecommendedComponent.defaultProps = {
+PodcastCardDetailsComponent.defaultProps = {
 
 }
 
-export default PodcastCardRecommendedComponent
+export default PodcastCardDetailsComponent

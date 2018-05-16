@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PodCardComponent from '../../../common/components/PodCardComponent/PodCardComponent'
+import PodCardComponent from '../../components/Cards/PodcastCardComponent'
 import MedPlayer from '../../components/player/MedPlayer'
 import Rating from 'react-rating'
 import PropTypes from 'prop-types'
@@ -18,9 +18,7 @@ class PodcastPlayerFragment extends Component {
       paddRating : false,
     }
    }
-  componentDidMount () {
-    !this.props.selectedPodcast && this.props.history.push('/podcast')
-  }
+
   paddRating (id, rating) {
     this.props.presenter.ratePodcasts(id, rating)
   }

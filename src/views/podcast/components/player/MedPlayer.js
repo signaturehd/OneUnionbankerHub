@@ -1,8 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Media, Player, withMediaProps, withKeyboardControls, controls } from 'react-media-player'
+import {
+  Media,
+  Player,
+  withMediaProps,
+  withKeyboardControls,
+  controls
+} from 'react-media-player'
 
-const { CurrentTime, Progress, SeekBar, Duration, Volume, PlayPause, Fullscreen, MuteUnmute } = controls
+const {
+  CurrentTime,
+  Progress,
+  SeekBar,
+  Duration,
+  Volume,
+  PlayPause,
+  Fullscreen,
+  MuteUnmute
+} = controls
 
 class MedPlayer extends Component {
   render () {
