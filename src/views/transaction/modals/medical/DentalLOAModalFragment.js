@@ -4,7 +4,7 @@ import { Modal } from '../../../ub-components/'
 
 import '../styles/transaction-modal.css'
 
-class DentalReimburseModalFragment extends Component {
+class DentalLOAModalFragment extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -17,23 +17,37 @@ class DentalReimburseModalFragment extends Component {
  }
 
  render () {
-    const { onClose, transactionResponse } = this.props
+    const {
+      onClose,
+      transactionResponse,
+      transaction
+    } = this.props
     // TODO map the transaction details here
-    console.log(transactionResponse)
     return (
       <Modal
         isDismisable = { true }
-        onClose = { onClose }>
+        onClose = { onClose }
+      >
+        {
+          transactionResponse ?
+          <h1>Transaction Details</h1>
+          :
+          <center>
+            <h3> Please wait while we are getting your transaction </h3>
+            <CircularLoader show = {true} />
+          </center>
 
-        <div>
+        }
+       
+
+  <div>
         <h4> DateFiled : {transactionResponse && transactionResponse.dateFiled}</h4>
-        <h4> Status: {transactionResponse && transactionResponse.status.name}</h4>
+        <h4> Transaction Status: {transactionResponse && transactionResponse.status.name}</h4>
         <h4> Account No: {transactionResponse && transactionResponse.details.AccountNo}</h4>
         <h4> Reference No: {transactionResponse && transactionResponse.details.ReferenceNumber} </h4> 
-        <h4> Form Attachments: {transactionResponse && transactionResponse.details.Attachments.FileName}</h4>
-        <h4> Procedures: {transactionResponse && transactionResponse.Procedures.Name}</h4>
-        <h4> Amount: {transactionResponse && transactionResponse.Procedures.Amount}</h4>
-        <h4> Form Agreemen t: {transactionResponse && transactionResponse.FormAgreements}</h4>
+        <h4> Procedures: {transactionResponse && transactionResponse.Procedures.Name} </h4>
+        <h4> Agreement: {transactionResponse && transactionResponse.FormAgreements}</h4>
+
 
 
 
@@ -47,4 +61,4 @@ TransactionModal.propTypes = {
   onClose: PropTypes.func,
 }
 
-export default DentalReimburseModalFragment
+export default DentalLOAModalFragment

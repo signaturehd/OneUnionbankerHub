@@ -17,15 +17,31 @@ class OpticalModalFragment extends Component {
  }
 
  render () {
-    const { onClose, transactionResponse } = this.props
+    const {
+      onClose,
+      transactionResponse,
+      transaction
+    } = this.props
     // TODO map the transaction details here
-    console.log(transactionResponse)
     return (
       <Modal
         isDismisable = { true }
-        onClose = { onClose }>
+        onClose = { onClose }
+      >
+        {
+          transactionResponse ?
+          <h1>Transaction Details</h1>
+          :
+          <center>
+            <h3> Please wait while we are getting your transaction </h3>
+            <CircularLoader show = {true} />
+          </center>
+
+        }
+       
 
         <div>
+         
         <h4> DateFiled : {transactionResponse && transactionResponse.dateFiled}</h4>
         <h4> Transaction Status: {transactionResponse && transactionResponse.status.name}</h4>
         <h4> Account No: {transactionResponse && transactionResponse.details.AccountNo}</h4>
@@ -33,12 +49,17 @@ class OpticalModalFragment extends Component {
         <h4> Amount: {transactionResponse && transactionResponse.details.Amount}</h4>
         <h4> {transactionResponse && transactionResponse.details.Attachments.FileName}> </h4>
         <h4> {transactionResponse && transactionResponse.FormAgreements}</h4>
+       
+        
+
+
 
         </div>
       </Modal>
     )
   }
 }
+
 
 TransactionModal.propTypes = {
   onClose: PropTypes.func,
