@@ -5,7 +5,7 @@ import { Modal, GenericButton } from '../../../ub-components/'
 import Button from '../components/OpticalButton'
 import BaseMVPView from '../../common/base/BaseMVPView'
 
-import './optical-modal.css'
+import './styles/optical-modal.css'
 
 class OpticalModal extends Component {
   constructor (props) {

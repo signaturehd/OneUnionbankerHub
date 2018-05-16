@@ -26,7 +26,7 @@
 }
 .optical-image-view {
 position: relative;
-background: url('../../../images/uploadicon-grey.jpg') no-repeat center center;
+background: url('../../../../images/uploadicon-grey.jpg') no-repeat center center;
 background-size: 50px;
 width: 225px;
 height: 240px;
@@ -34,7 +34,7 @@ object-fit: cover;
 border-radius: 20px;
 }
 .optical-image {
-  background: url('../../../images/uploadicon-grey.jpg')  no-repeat center center;
+  background: url('../../../../images/uploadicon-grey.jpg')  no-repeat center center;
   width: 225px;
   height: 240px;
   object-fit: cover;
@@ -92,7 +92,7 @@ border-radius: 5px;
   width:100%;
   border:none;
   border-bottom:1px solid #ff8a00;
-  background: url('../../../images/uploadicon-grey.jpg') no-repeat center center;
+  background: url('../../../../images/uploadicon-grey.jpg') no-repeat center center;
   background-size: 25px;
   background-position: right;
   cursor: pointer;
