@@ -16,7 +16,8 @@ class TransactionFragment extends BaseMVPView {
       view : false,
       transactionId : null,
       transactions: [],
-      transactionResponse : null
+      transactionResponse : null,
+      transaction: null
     }
   }
 
@@ -70,7 +71,7 @@ class TransactionFragment extends BaseMVPView {
             transactionResponse = { transactionResponse }
             transaction = { transaction.benefitId }
             presenter = { () => this.presenter.getTransactionById(transaction.id) }
-            onClose = { () => this.setState({view : false})}
+            onClose = { () => this.setState({view : false, transactionResponse: null, transaction: null })}
           />
         }
 

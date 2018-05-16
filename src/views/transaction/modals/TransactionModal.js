@@ -4,6 +4,18 @@ import { Modal, CircularLoader } from '../../../ub-components/'
 
 import './styles/transaction-modal.css'
 
+function  TransactionDetails ( props )  {
+  const transactionId = props.details.benefitType.id
+  const transactionDetails = props.details
+  if (transactionId == '6') {
+     return <h1>Dental Reimubrsemments</h1> // Dental Reimbursement Fragment
+  } else if (transactionId == '7') {
+     return <h1>Dental Loa</h1> // Dental Loa Fragment
+  } else if (transactionId == '8') {
+    return <h1>{ transactionDetails.dateFiled }</h1> // Optical Fragment Fragment
+  }
+ }
+
 class TransactionModal extends Component {
   constructor (props) {
     super(props)
@@ -12,7 +24,6 @@ class TransactionModal extends Component {
  componentDidMount () {
     this.props.presenter()
  }
-
 
  render () {
     const {
@@ -28,7 +39,7 @@ class TransactionModal extends Component {
       >
         {
           transactionResponse ?
-          <h1>hello world</h1>
+          <TransactionDetails details = { transactionResponse }  />
           :
           <center>
             <h3> Please wait while we are getting your transaction </h3>

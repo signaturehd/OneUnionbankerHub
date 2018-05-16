@@ -29,7 +29,6 @@ export default class TransactionPresenter {
       .subscribe(transactionResponse => {
           this.view.hideLoading()
           this.view.transacitonDetails(transactionResponse)
-          console.log(transactionResponse)
         }, e => {
           this.view.hideLoading()
       })
