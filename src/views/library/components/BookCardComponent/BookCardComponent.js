@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 
-import { Card } from '../../../../ub-components'
+import { Card, GenericButton } from '../../../../ub-components'
 
 import Rating from 'react-rating'
 
-import './styles.css'
+import './styles/book-card-component.css'
 
 class BookCardComponent extends Component {
   constructor (props) {
@@ -19,29 +19,42 @@ class BookCardComponent extends Component {
   }
 
   render () {
-    const { detail, onClick, rateBook } = this.props
+    const { detail, onClick, rateBook  } = this.props
     const { rating } = this.state
 
+    const  styles = {
+      cardHeader : {
+        backgroundImage : `url(${$(detail.imageUrl)  })`,
+        backgroundSize : 'cover',
+        backgroundRepeat : 'no-repeat'
+      },
+      authorStyle : {
+        fontSize : '2px',
+      }
+    }
+
     return (
-      <Card>
-        <div className = {'card-header'} >
+      <Card className = {'book-card'}>
+        <div style = {styles.cardHeader} >
         </div>
         <div className = {'card-body'}>
-          <h5>{ detail.title }</h5>
+          <span>{ detail.title }</span>
+          <h2 style = { styles.authorStyle }>-{ detail.author }</h2>
         </div>
         <div className = {'card-footer'}>
           <center>
             <Rating
-              emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
-              fullSymbol = {<MdStar style={{ fontSize: 40,  color : '#c65e11' }} />}
+              emptySymbol = {<MdStarOutline style={{ fontSize: 30, color : '#c65e11' }} />}
+              fullSymbol = {<MdStar style={{ fontSize: 30,  color : '#c65e11' }} />}
               onChange = { e => {
                 rateBook(detail.id, e)
                 this.setState({ rating : e })
               }}
               fractions = { 2 }
               initialRating = { rating ? rating : detail.rating }
+              readonly
             />
-            <button onClick = { () => onClick(detail, true) }>Read More</button>
+            <GenericButton onClick = { () => onClick(detail, true) } text = { 'Read More' } />
           </center>
         </div>
       </Card>

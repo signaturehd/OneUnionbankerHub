@@ -7,7 +7,9 @@
 .page-header-buttons {
   padding: 0 4% 0 4%;
 }
-
+.title-view {
+  margin : 25px auto;
+}
 section {
   display: none;
   padding: 20px 0 0;
@@ -63,10 +65,32 @@ label:hover {
     margin: 0;
     font-size: 18px;
   }
+  .mobile-icon {
+    background: url('../../../images/profile-picture.png') no-repeat center center;
+    background-size: contain;
+    height: fit-content;
+    width: fit-content;
+    margin: auto;
+  }
 }
 
 @media screen and (max-width: 400px) {
   label {
     padding: 15px;
   }
+}
+.booksSearchBar {
+  width: 40%;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  background: transparent;
+  height: 30px;
+  display: inline-block;
+  transition: all 0.05s ease-in-out;
+  -webkit-appearance: searchfield;
+  float: right;
+  opacity: 0.7;
+  outline: none;
+  border-bottom-color: #ff8a00;
 }

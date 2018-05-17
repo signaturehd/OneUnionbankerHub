@@ -30,15 +30,14 @@
   margin: 20px auto 20px auto;
 }
 
-._generic-button {
+.login-button {
   border-radius: 100px;
   border: none;
   padding: 10px;
   color: #FFFFFF;
-  margin-top: 50px;
   box-shadow: 0 2px 10px -3px #719BE6;
   display: block;
-  margin: 55px auto 10px auto;
+  margin: 25px auto 10px auto;
 }
 
 @media screen and (max-width: 580px) {
@@ -65,8 +64,7 @@
 
 @media screen and (max-width : 768px) {
   .icon-1 {
-    padding:2% !important;
-    width:20px !important;
+    padding:1% !important;
   }
 
   .login-form {
@@ -93,7 +91,7 @@
 .icon-1 {
   width: 30px;
   margin-top: 50px;
-  padding:3%;
+  margin:2%;
   background: #fff;
   margin-bottom: 10px;
   border: 0px #e2d3d300;
