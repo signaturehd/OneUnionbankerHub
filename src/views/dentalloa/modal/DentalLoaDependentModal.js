@@ -1,30 +1,40 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal } from '../../../ub-components/'
-import Button from '../components/DentalLoaButton'
+import { Modal, GenericButton } from '../../../ub-components/'
 
 class DentalLoaDependentModal extends Component {
   constructor (props) {
     super(props)
-
-    this.submitForm = this.submitForm.bind(this)
+      this.state = {
+        chosenDependent : []
+      }
+    this.submitData = this.submitData.bind(this)
   }
-  submitForm () {
+  submitData ( value ) {
+    this.setState({ chosenDependent : value })
+    console.log(value)
   }
-
   render () {
-  const { details, onClose, confirm, cancel, showDependentModal } = this.props
+  const { details, onClose, showDependentModal, isDismisable } = this.props
 
   return (
     <Modal
      onClose = { onClose }
-     isDismissable = { true }
+     isDismisable = { true }
    >
       <div className = { 'optical-description' }>
         <h2>Dependent</h2>
       </div>
-      <div className = { 'optical-modal-footer' }>
+      <div className = { 'optical-modal-footer' }>    {
+            details.map((dependent, key ) =>
+              <GenericButton
+                  key = { key }
+                  className = { 'dentalloa-modal-option-button' }
+                  details = {dependent.name}
+                  onClick = { () => this.submitData( dependent) }/>
+            )
+          }
       </div>
     </Modal>
     )
@@ -33,11 +43,7 @@ class DentalLoaDependentModal extends Component {
 DentalLoaDependentModal.propTypes = {
   onClose : PropTypes.func,
   details : PropTypes.array,
-  confirm : PropTypes.string,
-  cancel : PropTypes.string,
 }
 DentalLoaDependentModal.defaultProps = {
-  confirm : 'Agree',
-  cancel : 'Disagree',
 }
 export default DentalLoaDependentModal

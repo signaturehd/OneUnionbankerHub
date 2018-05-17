@@ -1,43 +1,52 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal } from '../../../ub-components/'
-import Button from '../components/DentalLoaButton'
+import { Modal , GenericButton} from '../../../ub-components/'
 
-class DentalLoaModal extends Component {
+class DentalLoaBranchModal extends Component {
   constructor (props) {
     super(props)
-
-    this.submitForm = this.submitForm.bind(this)
+      this.state = {
+        chosenBranch : []
+      }
+    this.submitData = this.submitData.bind(this)
   }
-  submitForm () {
+  submitData ( value ) {
+    this.setState({ chosenBranch : value })
+    console.log(value)
   }
 
   render () {
-  const { details, onClose, confirm, cancel, showHealthwayBranchModal } = this.props
-
+  const { details, onClose, showHealthwayBranchModal, text, isDismisable } = this.props
+  const { chosenBranch } = this.state
   return (
     <Modal
       onClose = { onClose }
-      isDismissable = { true }
-    >
+      isDismisable = { true }
+      chosenBranch = { chosenBranch } >
       <div className = { 'optical-description' }>
         <h2>Recipients</h2>
       </div>
       <div className = { 'optical-modal-footer' }>
+        {
+          details.map((branch, key ) =>
+          <GenericButton
+              key = { key }
+              details = {branch}
+              className = { 'dentalloa-modal-option-button' }
+              text = { branch.name}
+              onClick = { () => this.submitData( branch) }/>
+          )
+        }
       </div>
     </Modal>
     )
   }
 }
-DentalLoaModal.propTypes = {
+DentalLoaBranchModal.propTypes = {
   onClose : PropTypes.func,
   details : PropTypes.array,
-  confirm : PropTypes.string,
-  cancel : PropTypes.string,
 }
-DentalLoaModal.defaultProps = {
-  confirm : 'Agree',
-  cancel : 'Disagree',
+DentalLoaBranchModal.defaultProps = {
 }
-export default DentalLoaModal
+export default DentalLoaBranchModal

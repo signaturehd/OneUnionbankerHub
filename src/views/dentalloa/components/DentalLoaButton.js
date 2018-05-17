@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './styles.css'
+import './dentalloa-component-style.css'
 
 import  GenericButton  from  '../../../ub-components/UButton/GenericButton'
 
@@ -16,8 +16,7 @@ class DentalLoaButton extends Component {
       <GenericButton
         text = { text }
         onClick = { onClick }
-        className = { 'dentalloa-button' }>
-      </GenericButton>
+        className = { 'dentalloa-button' } />
     )
   }
 }

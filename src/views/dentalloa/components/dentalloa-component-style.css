@@ -1,38 +1,94 @@
 .dentalloa-card {
-  padding : 5% 5% 0% 5%;
+  padding : 5% 2% 0% 2%;
 }
-.dentalloa-header {
-  min-height:170px;
+.dentalloa-loader {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20%;
+  vertical-align: middle;
 }
+.react-date-picker__button__input__input:invalid {
+  background: 0 !important;
+}
+.react-date-picker__button {
+  border : 0 !important;
+  outline: none !important;
+  margin-bottom: -70px !important;
+}
+.react-date-picker__calendar--above-label {
+  bottom: 0 !important;
+  position: absolute !important;
+  top: 100% !important;
+}
+.react-date-picker__calendar {
+  width : 265px !important;
+}
+.dentalloa-col {
+  display: -webkit-box;
+  float: left;
+  margin: auto;
+}
+
 .dentalloa-body {
-  display: inline-flex;
+  padding: 2px;
+}
+
+@media only screen and (min-width: 641px){
+  .dentalloa-body  {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media only screen and (min-width: 1025px){
+  .dentalloa-body  {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.dentalloa-body {
+  clear: both;
+  padding: 0px;
+  margin: 0px;
+}
+.dentalloa-body-group:before,
+.dentalloa-body-group:after {
+	content:"";
+	display:table;
+}
+.dentalloa-body-group:after {
+	clear:both;
+}
+.dentalloa-body-group {
+    zoom:1; /* For IE 6/7 */
 }
 .dentalloa-datepicker {
   height: 20px;
   width: 100%;
   margin-top: 55px;
 }
-input.dentalloa-procedure {
-  width: -webkit-fill-available;
+.dentalloa-procedure {
+  background: #ff8a00 url('../../../images/drawer/logout.png') no-repeat right;
   border-radius: 5px;
   outline: none;
-  height: 32px;
-  padding-right: 10px;
-  background: #e1e1e1 url('../../../images/drawer/logout.png') no-repeat 0 0;
+  display: flex;
+  margin: auto;
+  width: 200px;
   cursor: pointer;
-  background-size:  26px;
+  background-size: 30px;
+  height: 50px;
 }
 .dentalloa-text {margin-left: 15px; z-index: 1;}
-.group {
+.dentalloa-body-group {
   position:relative;
-  width:100%;
+  width:50%;
   margin-top:45px;
 }
 .dentalloa-footer-left {
   background-color: white;
-  overflow:hidden;
-  margin: auto;
-  width: 50%;
+  overflow: hidden;
+  margin: 50px auto auto auto;
+  width: 100%;
  }
  @media screen and (max-width: 720px) {
     .dentalloa-header {
@@ -40,7 +96,6 @@ input.dentalloa-procedure {
      margin-right:0;
      width:auto;
      border:0;
-     border-bottom:2px solid #000;
    }
  }
 .dentalloa-button-submit {
@@ -165,26 +220,47 @@ input.dentalloa-procedure {
 /* optica;-button */
 .dentalloa-button {
   height: 40px;
+  float: right;
   border-radius: 3px;
-  margin: 10px auto auto auto;
+  margin: auto 0 auto auto;
   min-width: 95px;
   transition: box-shadow .28s cubic-bezier(0.4,0.0,0.2,1);
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
   cursor: pointer;
   text-transform: uppercase;
   background: #ff8a00;
-  color: #ffffff;
+  color: #ffffff;50%
+
   font-weight: 550;
   position: relative;
   border: 0;
 }
-
+/* / option list for branch, dependent and procedure */
+.dentalloa-modal-option-button {
+  height: 40px;
+  display: list-item;
+  /* float: none; */
+  border-radius: 3px;
+  margin: 10px auto;
+  width: -webkit-fill-available;
+  transition: box-shadow .28s cubic-bezier(0.4,0.0,0.2,1);
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  cursor: pointer;
+  text-transform: uppercase;
+  background: #fefefe;
+  color: #ff8a00;
+  position: relative;
+  text-align: center;
+  border: 0;
+  font-weight: 550;
+  border: 0;
+}
 
 .container {
   padding:0px 15px 0px 15px;
 }
 
-.group {
+.dentalloa-body-group {
   position:relative;
   width:100%;
   margin-top:45px;

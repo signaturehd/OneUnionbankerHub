@@ -13,10 +13,11 @@ export default class DentalLoaPresenter {
  }
 
  getDentalLoa () {
-   this.view.showLoading()
+   this.view.showCircularLoader()
    this.getDentalLoaInteractor.execute()
+
     .subscribe(response => {
-      this.view.hideLoading()
+      this.view.hideCircularLoader()
       this.view.getDentalLoa(response)
     }, e => {
       this.view.hideLoading()

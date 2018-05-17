@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './styles.css'
+import './dentalloa-component-style.css'
 import PropTypes from 'prop-types'
 
 class DentalLoaTextBox extends Component {

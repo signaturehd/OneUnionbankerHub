@@ -1,29 +1,41 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal } from '../../../ub-components/'
-import Button from '../components/DentalLoaButton'
+import { Modal , GenericButton} from '../../../ub-components/'
 
 class DentalLoaProcedureModal extends Component {
   constructor (props) {
     super(props)
-
-    this.submitForm = this.submitForm.bind(this)
+    this.state = {
+    chosenProcedure : []
   }
-  submitForm () {
-  }
-
-  render () {
-  const { details, onClose, confirm, cancel, showProcedureModal } = this.props
-  return (
-    <Modal
-      onClose = { onClose }
-      isDismissable = { true }
-    >
-      <div className = { 'optical-description' }>
-        <h2>Procedures</h2>
-      </div>
-      <div className = { 'optical-modal-footer' }>
+this.submitData = this.submitData.bind(this)
+}
+submitData ( value ) {
+  this.setState({ chosenProcedure : value })
+  console.log(value)
+}
+render () {
+  const { details, onClose, showProcedureModal, text, isDismisable } = this.props
+return (
+  <Modal
+    onClose = { onClose }
+    isDismisable = { true }
+  >
+    <div className = { 'optical-description' }>
+      <h2>Procedures</h2>
+    </div>
+    <div className = { 'optical-modal-footer' }>
+      {
+        details.map((procedure, key ) =>
+        <GenericButton
+            className = { 'dentalloa-modal-option-button' }
+            key = { key }
+            details = {procedure}
+            text = { procedure.name}
+            onClick = { () => this.submitData( procedure )}/>
+          )
+        }
       </div>
     </Modal>
     )
@@ -32,11 +44,7 @@ class DentalLoaProcedureModal extends Component {
 DentalLoaProcedureModal.propTypes = {
   onClose : PropTypes.func,
   details : PropTypes.array,
-  confirm : PropTypes.string,
-  cancel : PropTypes.string,
 }
 DentalLoaProcedureModal.defaultProps = {
-  confirm : 'Agree',
-  cancel : 'Disagree',
 }
 export default DentalLoaProcedureModal
