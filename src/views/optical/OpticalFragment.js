@@ -9,6 +9,8 @@ import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import './styles/optical.css'
 
+import { CircularLoader } from '../../ub-components'
+
 class OpticalFragment extends BaseMVPView {
 
   constructor(props) {
@@ -18,6 +20,7 @@ class OpticalFragment extends BaseMVPView {
       showConfirmation : false,
       noticeResponse : null,
       showNoticeResponseModal : false,
+      isVisible : false
     }
 
     // this.noticeOfUndertaking = this.noticeOfUndertaking.bind(this)
@@ -29,8 +32,8 @@ class OpticalFragment extends BaseMVPView {
 
   isEligible (resp) {
     // check if eligible
-    if (!respo.isvalid) {
-      this.props.history.push('/benefits/medical')
+    if (resp) {
+      this.setState({ isVisible : true })
     }
   }
 
@@ -59,6 +62,7 @@ class OpticalFragment extends BaseMVPView {
       response,
       imagePreviewUrl,
       imagePreviewUrl2,
+      isVisible,
     } = this.state
 
     return (
@@ -102,9 +106,16 @@ class OpticalFragment extends BaseMVPView {
           <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
           <h1>Optical Reimbursement</h1>
         </div>
+        {
+          isVisible ?
           <div className = { 'optical-container' }>
             <Card onClick = { (showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2 ) => this.setState({ showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2 })  }/>
           </div>
+          :
+          <div className = { 'optical-loader' }>
+            <center><CircularLoader show = {true} /></center>
+          </div>
+        }
       </div>
     )
   }

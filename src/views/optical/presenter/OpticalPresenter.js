@@ -13,27 +13,22 @@ export default class OpticalPresenter {
  }
 
  addOptical (amount, form1, form2) {
-  this.view.showLoading()
   this.addOpticalInteractior.execute(OpticalParam(amount, form1, form2))
    .subscribe(optical => {
-    this.view.hideLoading()
     this.view.noticeOfUndertaking(optical)
     // this.view.showOptical(optical)
    }, e => {
-    this.view.hideLoading()
     this.view.noticeResponse(e)
     // TODO prompt generic error
    })
  }
 
  getOptical () {
-   this.view.showLoading()
    this.getOpticalInteractor.execute()
     .subscribe(response => {
-      this.view.hideLoading()
       this.view.isEligible(response)
     }, e => {
-      this.view.hideLoading()
+      // TODO notify
     })
  }
 
