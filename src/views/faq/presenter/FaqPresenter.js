@@ -14,7 +14,19 @@ export default class FaqPresenter {
       this.getFaqInteractor.execute()
       .subscribe(faqs => {
           this.view.hideLoading()
-          this.view.faqs(faqs)
+          this.view.showFaqs(faqs)
+        }, e => {
+          this.view.hideLoading()
+          // TODO prompt generic error
+        })
+    }
+    getFaqsCategories () {
+      this.view.showLoading()
+
+      this.getFaqInteractor.execute()
+      .subscribe(faqsCategories => {
+          this.view.hideLoading()
+          this.view.faqsCategories(faqsCategories)
         }, e => {
           this.view.hideLoading()
           // TODO prompt generic error

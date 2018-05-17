@@ -17,8 +17,6 @@ export default function ServiceErrorOperator () {
           subscriber.error(new GenericError(body))
         } else if (code === 401) {
           subscriber.error(new ForbiddenError())
-          new SessionProvider().setToken('')
-          new SessionProvider().setAccountToken('')
         } else {
           subscriber.error(new ServerError('It seems that we\'ve encountered a problem. Error: 1'))
         }
