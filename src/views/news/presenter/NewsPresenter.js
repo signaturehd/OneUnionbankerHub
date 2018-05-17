@@ -1,4 +1,5 @@
 import NewsInteractor from '../../../domain/interactor/news/NewsInteractor'
+
 export default class NewsPresenter {
     constructor (container) {
       this.getNewsInteractor = new NewsInteractor(container.get('HRBenefitsClient'))

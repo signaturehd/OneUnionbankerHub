@@ -11,6 +11,7 @@ import TransactionFragment from '../transaction/TransactionFragment'
 import NewsFragment from '../news/NewsFragment'
 import FaqFragment from '../faq/FaqFragment'
 import SettingsFragment from '../settings/SettingsFragment'
+import PodcastView from '../podcast/PodcastView'
 
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
@@ -37,7 +38,7 @@ class NavigationView extends BaseMVPView {
   }
 
   componentWillMount () {
-    const mediaQuery = window.matchMedia('(min-width: 768px)')
+    const mediaQuery = window.matchMedia('(min-width: 1201px)')
       if (mediaQuery.matches) {
         this.setDisplay('block', 'none')
       } else {
@@ -100,6 +101,9 @@ class NavigationView extends BaseMVPView {
                         <Route path = '/books' render = { props =>
                             <LibraryFragment { ...props }
                               setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                              <Route path = '/podcast' render = { props =>
+                          <PodcastView { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
                      </Switch>
                     </Drawer>
               </main>

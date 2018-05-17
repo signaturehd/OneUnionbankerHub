@@ -74,13 +74,16 @@ class LoginView extends BaseMVPView {
               <center>
                 <br/>
                 <CircularLoader show = { true }/>
-              </center>
-              :
-              <GenericButton
-                disabled = {this.state.disabled}
-                className = { 'login-button' }
-                text="Login"
-                onClick = { () => this.presenter.login(this.state.username, this.state.password)}/>
+              </center>              :
+              <div>
+                <br/>
+                  <GenericButton
+                    disabled = {this.state.disabled}
+                    className = { 'login-button' }
+                    text="Login"
+                    onClick = { () => this.presenter.login(this.state.username, this.state.password)}/>
+                <br/>
+              </div>
 
             }
             <div className = { 'login-layer-icons' }>

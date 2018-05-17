@@ -61,7 +61,6 @@ export default class HRBenefitsService {
 
   addOptical (token, opticalParam) {
     const formData = new FormData()
-
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
       headers : { token }
     })
@@ -108,10 +107,8 @@ export default class HRBenefitsService {
       books: ReserveParam
     }, {
       headers: { token }
-
     })
- }
-
+  }
   addRating (token, bookParam) {
     return this.apiClient.post('v1/books/rate', bookParam, {
       headers : { token }
