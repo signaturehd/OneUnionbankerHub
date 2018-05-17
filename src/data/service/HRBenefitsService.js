@@ -127,10 +127,8 @@ export default class HRBenefitsService {
       books: ReserveParam
     }, {
       headers: { token }
-
     })
- }
-
+  }
   addRating (token, bookParam) {
     return this.apiClient.post('v1/books/rate', bookParam, {
       headers : { token }
