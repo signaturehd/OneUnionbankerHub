@@ -63,7 +63,7 @@ class FaqFragment extends BaseMVPView {
     const Faq = () => (
         <div className = {'container'}>
           { super.render() }
-          <h1 className = { 'title-view' }>FAQ's</h1>
+          <h1 className = { 'title-view' }>FAQ&#39;s</h1>
             <input type = 'text'
                    className = 'faqsSearchBar'
                    ref="search"
@@ -86,13 +86,14 @@ class FaqFragment extends BaseMVPView {
         return (
         <div className = {'container'}>
           { super.render() }
-          <h1 className = { 'title-view' }>FAQ's</h1>
+          <h1 className = { 'title-view' }>FAQ&#39;s</h1>
             <input type = 'text'
                    className = 'faqsSearchBar'
                    placeholder = {'Search FAQs'}
                    value = { this.state.searchString }
                    onChange = { this.updateSearch } />
           <div className = {'card-container'}>
+
           </div>
         </div>
       )
