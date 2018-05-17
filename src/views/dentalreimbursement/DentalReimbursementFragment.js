@@ -10,9 +10,15 @@ class DentalReimbursementFragment extends BaseMVPView {
   constructor(props) {
     super(props)
   }
+
   navigate () {
       this.props.history.push('/benefits/medical')
   }
+
+  getDentalReimbursement (dentalreimbrsement) {
+    console.log(dentalreimbursement)
+  }
+
   render () {
     return (
       <div  className = { 'benefits-container' }>

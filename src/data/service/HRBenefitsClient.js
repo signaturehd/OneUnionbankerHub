@@ -91,7 +91,8 @@ export default class HRBenefitsClient {
     return this.service.addRating(token, bookParam)
       .pipe(ServiceErrorOperator())
   }
-    paddRating (token, bookParam) {
+
+  paddRating (token, bookParam) {
     return this.service.paddRating(token, bookParam)
       .pipe(ServiceErrorOperator())
   }
@@ -107,19 +108,28 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Podcasts */
+
   getPodcasts (token) {
     return this.service.getPodcasts(token)
       .pipe(ServiceErrorOperator())
   }
+
   getPodcastsRecommendations (token) {
     return this.service.getPodcastsRecommendations(token)
       .pipe(ServiceErrorOperator())
   }
+
   getPodcastsViewed (token) {
     return this.service.getPodcastsViewed(token)
       .pipe(ServiceErrorOperator())
   }
   /* dental reimbursement */
+
+  getDentalReimbursement (token) {
+    return this.service.getDentalReimbursement(token)
+      .pipe(ServiceErrorOperator)
+  }
 
   /* dental loa */
 
