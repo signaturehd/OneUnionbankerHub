@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs'
 import GetFaqInteractor from '../../../domain/interactor/faq/GetFaqInteractor'
 export default class FaqPresenter {
     constructor (container) {
@@ -8,28 +9,25 @@ export default class FaqPresenter {
       this.view = view
     }
 
-    getFaqs () {
+    getFaqs ( faq ) {
       this.view.showLoading()
-
       this.getFaqInteractor.execute()
-      .subscribe(faqs => {
-          this.view.hideLoading()
-          this.view.showFaqs(faqs)
-        }, e => {
-          this.view.hideLoading()
-          // TODO prompt generic error
-        })
-    }
-    getFaqsCategories () {
-      this.view.showLoading()
+      .do(console.log(faq))
 
-      this.getFaqInteractor.execute()
-      .subscribe(faqsCategories => {
-          this.view.hideLoading()
-          this.view.faqsCategories(faqsCategories)
-        }, e => {
-          this.view.hideLoading()
-          // TODO prompt generic error
-        })
+      .flatMap( listResponse => Observable.from(listResponse) )
+      .toArray()
+      .do(littleResponse => this.view.showFaqsList(littleResponse, faq))
+
+      .map( faqResponse => faqResponse )
+      .do( faqResponse => this.view.showFaqs(faqResponse) )
+
+      .flatMap(resp => Observable.from(resp))
+      .map(resp => resp && resp.category && resp.category.category)
+      .distinct()
+      .toArray()
+      .do(resp => this.view.showFaqsCategories(resp))
+      .do(resp => this.view.hideLoading(),
+          e => this.view.hideLoading())
+      .subscribe()
     }
   }
