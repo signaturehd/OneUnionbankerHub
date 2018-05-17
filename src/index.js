@@ -1,7 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
-
 /* redux */
 import { Provider } from 'react-redux'
 
@@ -16,6 +14,8 @@ import store from './store'
 
 import Container from './di/Container'
 import AppModule from './di/AppModule'
+
+
 
 
 ReactDOM.render(

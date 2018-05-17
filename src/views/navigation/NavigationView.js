@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router-dom'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
@@ -11,15 +12,14 @@ import NewsFragment from '../news/NewsFragment'
 import FaqFragment from '../faq/FaqFragment'
 import SettingsFragment from '../settings/SettingsFragment'
 import PodcastView from '../podcast/PodcastView'
-import PodcastPlayer from '../podcast/fragments/PlayPage/PodPlay'
-import AppBar from './components/appbar/AppBar'
+
+import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
 import Drawer from './components/drawer/Drawer'
 
 import './styles/drawerview.css'
 
 class NavigationView extends BaseMVPView {
-
   constructor (props) {
     super (props)
 
@@ -29,6 +29,7 @@ class NavigationView extends BaseMVPView {
 
     this.setDisplay = this.setDisplay.bind(this)
     this.setSelectedNavigation = this.setSelectedNavigation.bind(this)
+    this.callLogout = this.callLogout.bind(this)
   }
 
   setDisplay (sideBar, topBar) {
@@ -37,7 +38,7 @@ class NavigationView extends BaseMVPView {
   }
 
   componentWillMount () {
-    const mediaQuery = window.matchMedia('(min-width: 768px)')
+    const mediaQuery = window.matchMedia('(min-width: 1201px)')
       if (mediaQuery.matches) {
         this.setDisplay('block', 'none')
       } else {
@@ -52,13 +53,18 @@ class NavigationView extends BaseMVPView {
     })
   }
 
+  componentDidMount () {
+    this.presenter.getLibraries()
+  }
+
   setSelectedNavigation (id) {
     this.setState({ selected: id })
   }
-
+  callLogout () {
+    this.presenter.logout()
+  }
   render () {
     const { displayShow, displayNavIcon, displayNavIconState, selected } = this.state
-
     const style = {
       show: {
           display : displayShow
@@ -67,15 +73,15 @@ class NavigationView extends BaseMVPView {
     return (
         <div className = { 'body-div' }>
           <header className = { 'page-boundary page-boundary--fixed-top' }>
-            <AppBar
+            <DrawerAppBar
+              logout = { this.callLogout }
               displayNavIcon = { displayNavIcon } displayShow = { displayShow }
               hide = { () => this.setState({ displayShow : 'block' })}
-              show = { () => this.setState({ displayShow : 'none' })}>
-            </AppBar>
+              show = { () => this.setState({ displayShow : 'none' })} />
           </header>
           <div className="panels">
               <main className ="panel main-content " role="main">
-                  <Drawer>
+                  <Drawer >
                       <Switch>
                         <Route exact path = '/' render = {props =>
                           <NewsFragment { ...props }
@@ -98,9 +104,6 @@ class NavigationView extends BaseMVPView {
                               <Route path = '/podcast' render = { props =>
                           <PodcastView { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                             <Route path = '/player' render = { props =>
-                          <PodcastPlayer { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
                      </Switch>
                     </Drawer>
               </main>
@@ -118,4 +121,7 @@ class NavigationView extends BaseMVPView {
   }
 }
 
+NavigationView.propTypes = {
+  onClick : PropTypes.func,
+}
 export default ConnectView(NavigationView, Presenter)

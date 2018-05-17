@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Cards } from '../../../../ub-components/'
+import { Card } from '../../../../ub-components/'
 
-import './styles.css'
-
+import { FaEye } from 'react-icons/lib/fa/'
+import './styles/news-card-component.css'
 
 class NewsCardComponent extends Component {
   constructor (props) {
@@ -12,18 +12,30 @@ class NewsCardComponent extends Component {
   }
 
   render () {
-    const { news, onClick } = this.props
-    return (
-        <Cards>
-          <div></div>
-          <div className = {'news-body'}>
+    const { news, onClick , imageUrl } = this.props
+
+    const style = {
+        newsBackground: {
+          background : `url(${news.imageUrl}) rgba(0,0,0,0.7)`,
+          backgroundRepeat : 'no-repeat',
+          width: 'auto',
+          backgroundBlendMode: 'color',
+          backgroundSize: '100% auto',
+          color : 'white',
+          fontWeight : 'bold'
+        }
+    }
+
+
+      return (
+        <Card>
+          <div style = { style.newsBackground } className = {'news-body'}>
+            <FaEye
+              className = { 'fa-see-more' } onClick = { () => onClick(news) }  />
             <h3>{news.title}</h3>
+
           </div>
-          <div className = {'card-footer'}>
-            <small><a href = {news.linkUrl}>See More</a></small>
-            <small><a onClick = { () => onClick(news) }>Read More</a></small>
-          </div>
-        </Cards>
+        </Card>
     )
   }
 }

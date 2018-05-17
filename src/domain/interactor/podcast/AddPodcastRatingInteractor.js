@@ -3,7 +3,7 @@ export default class AddPodcastRatingInteractor {
     this.client = client
   }
 
-  execute (BookParam) {
-    return this.client.addRating(this.client.getToken(), BookParam)
+  execute (PodcastParam) {
+    return this.client.paddRating(this.client.getToken(), PodcastParam)
   }
 }

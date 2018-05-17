@@ -1,6 +1,5 @@
 
 export default class HRBenefitsService {
-
   constructor (apiClient, accountClient) {
     this.apiClient = apiClient
     this.accountClient = accountClient
@@ -15,6 +14,15 @@ export default class HRBenefitsService {
     return this.apiClient.post('v1/otp', otpParam)
   }
 
+  resend (resendOtpParam) {
+    return this.apiClient.post('v1/otp/resend', resendOtpParam)
+  }
+
+  profile (token) {
+    return this.apiClient.get('v1/profile', {
+      headers : { token }
+    })
+  }
   /* dental loa */
   validateDentalLoa (token) {
     return this.apiClient.get('v1/issuances/dental/loa/validate?type=1', {
@@ -53,18 +61,18 @@ export default class HRBenefitsService {
 
   addOptical (token, opticalParam) {
     const formData = new FormData()
-
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
       headers : { token }
     })
   }
 
   /* account */
-  validateAccountNumber (accountNumber) {
+  validateAccountNumber (token, accountNumber) {
     return this.accountClient.get(`accounts/v1/${accountNumber}`, {
       headers: {
+        token,
         referenceId : Math.random().toString(36)
-          .substring(7)
+          .substring(7),
       }
     })
   }
@@ -88,21 +96,56 @@ export default class HRBenefitsService {
     })
   }
 
+  getBooksBorrowed (token) {
+    return this.apiClient.get('v1/books/history', {
+        headers: { token }
+    })
+  }
 
+ reserveBook (token, ReserveParam) {
+    return this.apiClient.post('v1/books/reservation', {
+      books: ReserveParam
+    }, {
+      headers: { token }
+    })
+  }
   addRating (token, bookParam) {
     return this.apiClient.post('v1/books/rate', bookParam, {
       headers : { token }
     })
   }
-  
-  getPodcast (token) {
-      return this.apiClient.get('v1/news', {
+
+
+  getPodcasts (token) {
+      return this.apiClient.get('v1/podcasts', {
+          headers: { token }
+      })
+    }
+  getPodcastsRecommendations (token) {
+      return this.apiClient.get('v1/podcasts/recommendations', {
+          headers: { token }
+      })
+    }
+  getPodcastsViewed (token) {
+      return this.apiClient.get('v1/podcasts/history/members', {
           headers: { token }
       })
     }
   paddRating (token, bookParam) {
-    return this.apiClient.post('v1/books/rate', bookParam, {
+    return this.apiClient.post('v1/books/podcasts', bookParam, {
       headers : { token }
+    })
+  }
+
+  getFaqs (token) {
+    return this.apiClient.get('v1/faqs', {
+      headers: { token }
+    })
+  }
+
+  getFaqsCategories (token) {
+    return this.apiClient.get('v1/faqs/categories', {
+      headers: { token }
     })
   }
 }

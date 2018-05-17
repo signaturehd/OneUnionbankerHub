@@ -4,9 +4,7 @@ import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/OtpPresenter'
 
-import { GenericTextBox } from '../../ub-components/TextBox/'
-import { GenericButton } from '../../ub-components/UButton/'
-import { Modal } from '../../ub-components/Modal/'
+import { GenericTextBox, GenericButton, Modal } from '../../ub-components'
 
 class OtpModal extends BaseMVPView {
   constructor (props) {
@@ -14,11 +12,19 @@ class OtpModal extends BaseMVPView {
 
     this.state = {
       otp: '',
+      disableSubmit : false,
+      disableResend : false
     }
+
+    this.onResendSuccess = this.onResendSuccess.bind(this)
   }
 
   onOtpSuccess () {
     // TODO redirect to login
+  }
+
+  onResendSuccess () {
+    this.setState({ disabledResend : false })
   }
 
   render () {
@@ -29,11 +35,24 @@ class OtpModal extends BaseMVPView {
       <Modal
           onClose = {onClose}
         >
+        { super.render() }
         <GenericTextBox text= "OTP"
           placeholder = "OTP"
           type = ""
           onChange={ e => this.setState({ otp: e.target.value }) }  />
-        <GenericButton text= "Submit" onClick={ () => this.presenter.verifyOtp(username, otp, transactionType) } />
+          <br/>
+          <GenericButton text= "Submit"
+            onClick={ () => {
+this.presenter.verifyOtp(username, otp, transactionType), this.setState({ disabled : true })
+} }
+            disabled = {this.state.disableSubmit}
+           />
+          <GenericButton text= "Resend OTP"
+            onClick={ () => {
+this.presenter.resendOtp(username, transactionType), this.setState({ disableResend: true })
+} }
+            disabled = {this.state.disableResend}
+          />
       </Modal>
       )
   }

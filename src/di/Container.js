@@ -20,14 +20,14 @@ class Container {
                 const singletonInstance = this._singletons.get(name)
                 if (singletonInstance) {
                     return singletonInstance
-                } 
+                }
                     const newSingletonInstance = this._createInstance(c)
                     this._singletons.set(name, newSingletonInstance)
                     return newSingletonInstance
             }
 
             return this._createInstance(c)
-        } 
+        }
             return c.definition
     }
 

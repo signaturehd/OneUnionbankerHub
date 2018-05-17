@@ -1,6 +1,9 @@
 import GenericError from '../../../domain/common/exception/GenericError'
 import ForbiddenError from '../../../domain/common/exception/ForbiddenError'
+import ServerError from '../../../domain/common/exception/ServerError'
 import { Observable } from 'rxjs'
+
+import SessionProvider from '../../provider/SessionProvider'
 
 export default function ServiceErrorOperator () {
   return function ServiceErrorOperatorImpl (source) {

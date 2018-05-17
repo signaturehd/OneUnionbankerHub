@@ -17,6 +17,8 @@
     "path": "^0.12.7",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-icons": "^2.2.7",
+    "react-media-player": "^0.7.1",
     "react-rating": "^1.1.2",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
@@ -31,6 +33,7 @@
   "scripts": {
     "start": "webpack-dev-server --open --config webpack/webpack.dev.js",
     "build": "webpack --config webpack/webpack.prod.js",
+    "test": "webpack --config webpack/webpack.test.js",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
   },

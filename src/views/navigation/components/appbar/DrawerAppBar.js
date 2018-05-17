@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { AppBar } from '../../../../ub-components'
+
 import './styles/appbar.css'
 
-class AppBar extends Component {
-
+class DrawerAppBar extends Component {
   constructor (props) {
     super(props)
     this.onToggleShow = this.onToggleShow.bind(this)
+    this.callLogout = this.callLogout.bind(this)
   }
-
+  callLogout () {
+    this.props.logout()
+  }
   onToggleShow () {
     if (this.props.displayShow === 'none') {
       this.props.hide()
@@ -25,24 +29,26 @@ class AppBar extends Component {
         display : displayNavIcon
       }
     }
-    
+
     return (
-        <div className={'header'}>
+      <AppBar>
+        <div id={ 'drawer-header' }>
           <div className = {'icon-header'}>
             <img
               src={ require('../../../../images/union-logo.png') }
               className= {'_img-ub-logo'}/>
           </div>
           <div className = { 'burger-icon' }>
+            <label className = {'logout'} onClick = { this.callLogout }>Logout</label>
             <img
               style = { style.show }
               src = { require('../../../../images/profile-picture.png')}
               className = {'_img-ub-profile'}
-              onClick = { this.onToggleShow }/ >
+              onClick = { () => this.onToggleShow }/ >
           </div>
         </div>
+      </AppBar>
     )
   }
 }
-
-export default AppBar
+export default DrawerAppBar

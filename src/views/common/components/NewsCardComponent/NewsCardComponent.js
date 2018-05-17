@@ -18,7 +18,7 @@ class NewsCardComponent extends Component {
           <div></div>
           <div className = {'card-body'}>
             <h3>{news.Title}</h3>
-            <h5 dangerouslySetInnerHTML= {{__html : news.details.replace(/\r\n/g, '<br/>') }} ></h5>
+            <h5 dangerouslySetInnerHTML= {{ __html : news.details.replace(/\r\n/g, '<br/>') }} ></h5>
           </div>
           <div className = {'card-footer'}>
             <small><a href = {news.linkUrl}>See More</a></small>

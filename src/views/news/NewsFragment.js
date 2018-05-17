@@ -1,4 +1,4 @@
-import React from 'react'
+  import React from 'react'
 import PropTypes from 'prop-types'
 import ConnectView from '../../utils/ConnectView'
 import NewsInteractor from '../../domain/interactor/news/NewsInteractor'
@@ -10,7 +10,7 @@ import ConnectPartial from '../../utils/ConnectPartial'
 import NewsCardComponent from './components/NewsCardComponent/NewsCardComponent'
 import NewsModalComponent from './modals/NewsModalComponent'
 
-import './css/styles.css'
+import './styles/news-styles.css'
 
 class NewsFragment extends BaseMVPView {
   constructor (props) {
@@ -18,12 +18,17 @@ class NewsFragment extends BaseMVPView {
     this.state = {
         news: [],
         show : false,
+        searchString : '',
     }
+    this.updateSearch = this.updateSearch.bind(this)
   }
 
   componentDidMount () {
       this.presenter.getNews()
       this.props.setSelectedNavigation(0)
+  }
+  updateSearch () {
+      this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
   }
 
   news (news) {
@@ -32,6 +37,11 @@ class NewsFragment extends BaseMVPView {
 
   render () {
     const { news, show, details } = this.state
+    let _news = this.state.news
+    const search = this.state.searchString.trim().toLowerCase()
+    if (search.length > 0) {
+      _news = _news.filter(news => news.title.toLowerCase().match(search))
+    }
     return (
       <div className = 'container'>
         { super.render() }
@@ -39,10 +49,16 @@ class NewsFragment extends BaseMVPView {
           show &&
           <NewsModalComponent onClose = { () => this.setState({ show: false })} details = { details } />
         }
-        <h1>News Feed</h1>
-        <div className = 'card-container'>
+        <h1 className = { 'title-view' }>News Feed</h1>
+        <input type = 'text'
+             className = 'newsSearchBar'
+             ref='search'
+             placeholder = {'Search News'}
+             value = { this.state.searchString }
+             onChange = { this.updateSearch } />
+        <div className = 'news-card-container'>
         {
-          news.map((news, i) =>
+          _news.map((news, i) =>
             <NewsCardComponent
               key={ i }
               news = { news }

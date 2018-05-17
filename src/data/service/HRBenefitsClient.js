@@ -20,6 +20,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  resend (resendOtpParam) {
+    return this.service.resend(resendOtpParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  profile (token) {
+    return this.service.profile(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
@@ -46,9 +56,17 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getAccountNumber()
   }
 
+  setProfile (profile) {
+    this.sessionProvider.setProfile(profile)
+  }
+
+  getProfile () {
+    return this.sessionProvider.getProfile()
+  }
+
   /* accounts */
-  validateAccountNumber (accountNumber) {
-    return this.service.validateAccountNumber(accountNumber)
+  validateAccountNumber (token, accountNumber) {
+    return this.service.validateAccountNumber(token, accountNumber)
       .pipe(ServiceErrorOperator())
   }
 
@@ -64,6 +82,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getBooksBorrowed (token) {
+    return this.service.getBooksBorrowed(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   addRating (token, bookParam) {
     return this.service.addRating(token, bookParam)
       .pipe(ServiceErrorOperator())
@@ -73,14 +96,27 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  reserveBook (token, BookReserveParam) {
+    return this.service.ReserveBook(token, BookReserveParam)
+        .pipe(ServiceErrorOperator())
+  }
+
   /* optical */
   getOptical (token) {
     return this.service.getOptical(token)
       .pipe(ServiceErrorOperator())
   }
 
-  getPodcast (token) {
-    return this.service.getPodcast(token)
+  getPodcasts (token) {
+    return this.service.getPodcasts(token)
+      .pipe(ServiceErrorOperator())
+  }
+  getPodcastsRecommendations (token) {
+    return this.service.getPodcastsRecommendations(token)
+      .pipe(ServiceErrorOperator())
+  }
+  getPodcastsViewed (token) {
+    return this.service.getPodcastsViewed(token)
       .pipe(ServiceErrorOperator())
   }
   /* dental reimbursement */
@@ -93,11 +129,13 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-
-  /* News */
+  /* Faqs */
   getFaqs (token) {
     return this.service.getFaqs(token)
       .pipe(ServiceErrorOperator())
   }
-
+  getFaqsCategories (token) {
+    return this.service.getFaqsCategories(token)
+      .pipe(ServiceErrorOperator())
+  }
 }
