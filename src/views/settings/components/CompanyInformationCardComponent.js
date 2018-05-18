@@ -20,13 +20,13 @@ class CompanyInformationCardComponent extends Component {
             <h5 className = "title">{ profile.status}</h5>
            <h4 className = { 'text-title-profile' }> STATUS </h4>
 
-           <h5 className = "title"> { profile.dateHired } </h5> 
+           <h5 className = "title"> { profile.dateHired } </h5>
             <h4 className = { 'text-title-profile' }> DATE HIRED </h4>
 
            <h5 className = "title">{ profile.regularizationDate }</h5>
-            <h4 className = { 'text-title-profile' }> REGULARIZATION DATE </h4> 
+            <h4 className = { 'text-title-profile' }> REGULARIZATION DATE </h4>
 
-            <h5 className = "title"> { profile.unitAssessement }</h5>
+            <h5 className = "title"> { profile.unitAssessment }</h5>
             <h4 className = { 'text-title-profile' }> UNIT ASSESSMENT </h4>
 
             <h5 className = "title">{ profile.designation }</h5>
