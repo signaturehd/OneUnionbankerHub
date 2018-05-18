@@ -3,6 +3,7 @@ import PodcastRecommendationInteractor from '../../../domain/interactor/podcast/
 import PodcastViewedInteractor from '../../../domain/interactor/podcast/PodcastViewedInteractor'
 import AddPodcastRatingInteractor from '../../../domain/interactor/podcast/AddPodcastRatingInteractor'
 import PodcastRateParam from '../../../domain/param/PodcastRateParam'
+import PodcastReviewInteractor from '../../../domain/interactor/podcast/PodcastReviewInteractor'
 
 export default class PodcastPresenter {
     constructor (container) {
@@ -10,6 +11,7 @@ export default class PodcastPresenter {
       this.getPodcastRecommendationInteractor = new PodcastRecommendationInteractor(container.get('HRBenefitsClient'))
       this.addPodcastRatingInteractor = new AddPodcastRatingInteractor(container.get('HRBenefitsClient'))
       this.getPodcastViewedInteractor = new PodcastViewedInteractor(container.get('HRBenefitsClient'))
+      this.getPodcastsReviewsInteractor = new PodcastReviewInteractor(container.get('HRBenefitsClient'))
     }
 
     setView (view) {
@@ -22,6 +24,19 @@ export default class PodcastPresenter {
       .subscribe(podcasts => {
           this.view.hideLoading()
           this.view.podcasts(podcasts)
+        }, e => {
+          this.view.hideLoading()
+          // TODO prompt generic error
+        })
+    }
+
+    getPodcastsReviews () {
+      this.view.showLoading()
+      this.getPodcastsReviewsInteractor.execute()
+      .do( podcasts => console.log(podcasts) )
+      .subscribe(podcasts => {
+          this.view.hideLoading()
+          this.view.podcastsreviews(podcasts)
         }, e => {
           this.view.hideLoading()
           // TODO prompt generic error
@@ -42,7 +57,6 @@ export default class PodcastPresenter {
       this.addPodcastRatingInteractor.execute(PodcastRateParam(id, rating))
       .subscribe(
         data => {
-          console.log(data)
           this.view.hideLoading()
         },
         error => {

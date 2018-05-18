@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PodCardComponent from '../../../common/components/PodCardComponent/PodCardComponent'
 import MedPlayer from '../../components/player/MedPlayer'
 import Rating from 'react-rating'
 import PropTypes from 'prop-types'
@@ -7,7 +6,7 @@ import Board from '../../components/comments/CommentForm'
 import './podplay.css'
 import Presenter from '../../presenter/PodcastPresenter'
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
-import PodcastPlayerDetailsFragment from '../PodcastPlayerList/PodcastPlayerDetailsFragment'
+import PodcastPlayerDetailsFragment from '../podcastplayerlist/PodcastPlayerDetailsFragment'
 
 class PodcastPlayerFragment extends Component {
   constructor (props) {
@@ -36,7 +35,7 @@ class PodcastPlayerFragment extends Component {
    return (
     <div>
     <div className={ 'podplay-header' }>
-      <i className = { 'left' } onClick = { () => this.props.history.push('/podcast') }></i>
+      <i className = { 'left' } onClick = { () => this.props.history.push('/mylearning/podcast') }></i>
       <h1>UTube</h1>
     </div>
     <div className = { 'podplay-main' }>

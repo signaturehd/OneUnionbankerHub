@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import PodcastCardRecommendedComponent from '../../../common/components/PodCardComponent/PodcastCardRecommendedComponent'
+import PodcastCardRecommendedComponent from '../../components/cards/PodcastCardRecommendedComponent'
 
-class PodCastsRecommendationFragment extends Component {
+class PodcastsRecommendationFragment extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -33,4 +33,4 @@ class PodCastsRecommendationFragment extends Component {
   }
 }
 
-export default PodCastsRecommendationFragment
+export default PodcastsRecommendationFragment

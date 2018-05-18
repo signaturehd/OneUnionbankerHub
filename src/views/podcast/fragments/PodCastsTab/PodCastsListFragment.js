@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import PodCardComponent from '../../../common/components/PodCardComponent/PodCardComponent'
+import PodcastCardComponent from '../../components/cards/PodcastCardComponent'
 
-class PodCastsListFragment extends Component {
+class PodcastListFragment extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -18,13 +18,13 @@ class PodCastsListFragment extends Component {
   <div className = {'podcasts-container'}>
     {
       searchPodcast.map((podcast, i) =>
-        <PodCardComponent
+        <PodcastCardComponent
           history = { history }
           rateBook = { (id, rating) => this.getPodcasts(id, rating) }
           key={ i }
           searchPodcast = { podcast }
           onClick={ () => {
-            this.props.history.push('/podcast/player')
+            this.props.history.push('/mylearning/podcast/player')
             changeSelectedPodcast(podcast)
           }}/>
         )
@@ -33,4 +33,4 @@ class PodCastsListFragment extends Component {
     )}
   }
 
-export default PodCastsListFragment
+export default PodcastListFragment

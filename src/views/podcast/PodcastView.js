@@ -7,14 +7,14 @@ import Presenter from './presenter/PodcastPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 
 import './styles/podcast.css'
-import PodCardComponent from '../common/components/PodCardComponent/PodCardComponent'
+import PodcastCardComponent from './components/cards/PodcastCardComponent'
 import PodcastInteractor from '../../domain/interactor/podcast/PodcastInteractor'
 import PodcastRecommendationsInteractor from '../../domain/interactor/podcast/PodcastRecommendationInteractor'
 
-import PodcastPlayerFragment from './fragments/PodcastPlayerPage/PodcastPlayerFragment'
-import PodCastsRecommendationFragment from './fragments/PodCastsTab/PodCastsRecommendationFragment'
-import PodCastsListFragment from './fragments/PodCastsTab/PodCastsListFragment'
-import PodCastsViewedFragment from './fragments/PodCastsTab/PodCastsViewedFragment'
+import PodcastPlayerFragment from './fragments/podcastplayerpage/PodcastPlayerFragment'
+import PodcastsRecommendationFragment from './fragments/podcaststab/PodcastsRecommendationFragment'
+import PodcastsListFragment from './fragments/podcaststab/PodcastsListFragment'
+import PodcastsViewedFragment from './fragments/podcaststab/PodcastsViewedFragment'
 
 class PodcastView extends BaseMVPView {
   constructor (props) {
@@ -23,6 +23,7 @@ class PodcastView extends BaseMVPView {
         podcasts: [],
         podcastsRecommendation : [],
         podcastViewed : [],
+        reviewRates: [],
         show : false,
         rating: false,
         showRating : false,
@@ -40,7 +41,6 @@ class PodcastView extends BaseMVPView {
       this.presenter.getPodcasts()
       this.presenter.getPodcastsRecommendations()
       this.presenter.getPodcastsViewed()
-      this.props.setSelectedNavigation(0)
   }
   updateSearch () {
       this.setState({ searchString: this.refs.search.value.substr( 0 , 20) })
@@ -56,6 +56,9 @@ class PodcastView extends BaseMVPView {
   }
   podcastViewed ( podcastViewed ) {
     this.setState({ podcastViewed })
+  }
+  navigate () {
+    this.history.push ('/mylearning')
   }
   render () {
     const { podcasts, podcastViewed, podcastsRecommendation, paddRating,  show, details, detail, selectedPodcast } = this.state
@@ -77,7 +80,10 @@ class PodcastView extends BaseMVPView {
     const PodCast = () => (
     <div>
     { super.render() }
-    <h1 className = { 'title-view' } >PODCASTS</h1>
+    <div className={ 'mylearning-crumps-container' }>
+      <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) }></i>
+      <h2 className = { 'header-margin-default' }>PODCAST</h2>
+    </div>
       <input type = 'text'
                className = {'podcastsSearchBar'}
                ref='search'
@@ -108,7 +114,7 @@ class PodcastView extends BaseMVPView {
       <label htmlFor = 'tab3' >Viewed</label>
 
       <section id='content1'>
-        <PodCastsListFragment
+        <PodcastsListFragment
           changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
           presenter = { this.presenter }
           searchPodcast = { searchPodcast }
@@ -116,7 +122,7 @@ class PodcastView extends BaseMVPView {
           history = { history } />
       </section>
       <section id='content2'>
-        <PodCastsRecommendationFragment
+        <PodcastsRecommendationFragment
           presenter = { this.presenter }
           searchPodcast = { searchPodcast }
           changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
@@ -124,7 +130,7 @@ class PodcastView extends BaseMVPView {
           history = { history } />
       </section>
       <section  id='content3'>
-        <PodCastsViewedFragment
+        <PodcastsViewedFragment
           presenter = { this.presenter }
           changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
           podcastViewed = { podcastViewed }
@@ -136,8 +142,8 @@ class PodcastView extends BaseMVPView {
   return (
   <div>
      <Switch>
-       <Route exact path = '/podcast' render = { PodCast } />
-       <Route path = '/podcast/player' render = { PodcastPlayer } />
+       <Route exact path = '/mylearning/podcast' render = { PodCast } />
+       <Route path = '/mylearning/podcast/player' render = { PodcastPlayer } />
     </Switch>
   </div>
   )
