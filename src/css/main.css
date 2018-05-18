@@ -1,3 +1,22 @@
 body {
   background: url('../images/ub_pattern_bg.png');
 }
+i {
+  cursor: pointer;
+  border: solid #ff8a00;
+  border-width: 0 7px 7px 0;
+  display: -webkit-inline-box;
+  padding: 9px;
+  margin-right: 10px;
+}
+
+.back-arrow {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+.header-margin-default {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  font-size: 35px;
+}
