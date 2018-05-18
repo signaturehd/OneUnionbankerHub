@@ -1,6 +1,8 @@
 import AddOpticalInteractor from '../../../domain/interactor/optical/AddOpticalInteractor'
 import GetOpticalInteractor from '../../../domain/interactor/optical/GetOpticalInteractor'
 import OpticalParam from '../../../domain/param/OpticalParam'
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
 
 export default class OpticalPresenter {
  constructor (container) {
@@ -28,6 +30,13 @@ export default class OpticalPresenter {
     .subscribe(response => {
       this.view.isEligible(response)
     }, e => {
+      store.dispatch(NotifyActions.addNotify({
+          title : e.name,
+          message : e.message,
+          type : 'danger',
+          duration : 2000
+        })
+      )
       // TODO notify
     })
  }

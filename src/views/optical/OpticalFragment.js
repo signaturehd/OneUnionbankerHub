@@ -11,6 +11,8 @@ import './styles/optical.css'
 
 import { CircularLoader } from '../../ub-components'
 
+import { connect } from 'react-redux'
+
 class OpticalFragment extends BaseMVPView {
 
   constructor(props) {
@@ -64,7 +66,7 @@ class OpticalFragment extends BaseMVPView {
       imagePreviewUrl2,
       isVisible,
     } = this.state
-
+    console.log(this.props)
     return (
       <div  className = { 'benefits-container' }>
         { super.render() }
@@ -121,4 +123,8 @@ class OpticalFragment extends BaseMVPView {
   }
 }
 
-export default ConnectView(OpticalFragment, Presenter)
+const mapStateToProps = state => ({
+  notify: state.notify
+})
+
+export default ConnectView(connect(mapStateToProps)(OpticalFragment), Presenter)
