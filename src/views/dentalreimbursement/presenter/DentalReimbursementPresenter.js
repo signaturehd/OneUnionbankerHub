@@ -1,11 +1,11 @@
-import AddDentalReimbursementInteractor from '../../../domain/interactor/dentalreimbursement/AddDentalReimbursementInteractor'
-import GetDentalReimbursementInteractor from '../../../domain/interactor/dentalreimbursement/GetDentalReimbursementInteractor'
-
+import AddDentalReimbursementInteractor from '../../../domain/interactor/dentalReimbursement/AddDentalReimbursementInteractor'
+import GetDentalReimbursementInteractor from '../../../domain/interactor/dentalReimbursement/GetDentalReimbursementInteractor'
+import { Observable } from 'rxjs'
 
 export default class DentalReimbursementPresenter {
  constructor (container) {
    this.AddDentalReimbursementInteractor = new AddDentalReimbursementInteractor(container.get('HRBenefitsClient'))
-   this.GetDentalReimbursementInteractor = new GetDentalReimbursementInteractor(container.get('HRBenefitsClient'))
+   this.getDentalReimbursementInteractor = new GetDentalReimbursementInteractor(container.get('HRBenefitsClient'))
  }
 
  setView (view) {
@@ -13,28 +13,23 @@ export default class DentalReimbursementPresenter {
  }
 
  getDentalReimbursement () {
-   this.view.showLoading()
+   this.view.showCircularLoader()
 
    this.getDentalReimbursementInteractor.execute()
-    .subscribe(dentalreimbursement => {
-      this.view.hideLoading()
-      this.view.dentalReimbursement(dentalreimbursement)
-    }, e => {
-      this.view.hideLoading()
-    })
 
+   .map(dentalreimbursement => this.view.getDentalReimbursement(dentalreimbursement))
+   .toArray()
+   .do(dentalreimbursement => this.view.hideCircularLoader(),
+           dentalreimbursement => this.view.hideCircularLoader())
+   .subscribe()
  }
-
  addDentalReimbursement () {
-  this.view.showLoading()
+  this.view.showCircularLoader()
 
   this.AddDentalReimbursementInteractor.execute()
-   .subscribe(dentalreimbursement => {
-    this.view.hideLoading()
-    this.view.showDentalReimbursement(dentalreimbursement)
-   }, e => {
-    this.view.hideLoading()
-    // TODO prompt generic error
-   })
+  .do(adddentalreimbursement => this.view.addDentalReimbursement(adddentalreimbursement))
+  .do(adddentalreimbursement => this.view.hideCircularLoader(),
+          e => this.view.hideCircularLoader())
+  .subscribe()
  }
 }

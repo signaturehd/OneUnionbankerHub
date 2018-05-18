@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal } from '../../../ub-components/Modal/'
-import Button from '../components/DentalReimbursementButton'
+import { Modal, GenericButton } from '../../../ub-components/'
 import './dentalreimbursement-modal.css'
 
 class DentalReimbursementModal extends Component {
@@ -29,12 +28,12 @@ class DentalReimbursementModal extends Component {
               <h2>Description</h2>
           </div>
           <div className = { 'dentalreimbursement-modal-footer' }>
-            <Button onClick = { () => this.submitForm() }
+            <GenericButton onClick = { () => this.submitForm() }
                     className = { 'dentalreimbursement-footer-left' }
                     text = { confirm } />
           </div>
           <div className = { 'dentalreimbursement-modal-footer' }>
-            <Button className = { 'dentalreimbursement-footer-right' } text = { cancel } />
+            <GenericButton className = { 'dentalreimbursement-footer-right' } text = { cancel } />
           </div>
         </Modal>
       )
