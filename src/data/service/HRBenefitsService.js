@@ -11,7 +11,7 @@ export default class HRBenefitsService {
   }
 
   otp (otpParam) {
-    return this.apiClient.post('v1/otp', otpParam)
+    return this.apiClient.post('v2/otp', otpParam)
   }
 
   resend (resendOtpParam) {
@@ -23,6 +23,7 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
   /* dental loa */
 
   getDentalLoa (token) {
@@ -31,8 +32,16 @@ export default class HRBenefitsService {
     })
   }
 
-  addDentalLoa (token, dentalLoaParam) {
-    return this.apiClient.post('v1/issuances/dental/loa/submit', dentalLoaParam, {
+  addDentalLoa (token, accountNumber, dentalLoaParam) {
+    const formData = new FormData()
+
+    formData.append('uuid', 1)
+    formData.append('med-cert', dentalLoaParam.medCert)
+    formData.append('opt-cert', dentalLoaParam.optCert)
+    formData.append('accountNumber', accountNumber)
+    formData.append('releasingCenter', 'unionBank')
+    formData.append('amount', opticalParam)
+    return this.apiClient.post('v1/issuances/dental/loa/submit', formData, {
       headers : { token }
     })
   }
@@ -68,18 +77,30 @@ export default class HRBenefitsService {
   }
 
   /* Optical */
-  validateOptical (token) {
+  getOptical (token) {
     return this.apiClient.get('v1/reimbursements/optical/validate', {
       headers : { token }
     })
   }
 
-  addOptical (token, opticalParam) {
+  addOptical (token, accountToken, accountNumber, opticalParam) {
     const formData = new FormData()
+    const opticalObject = {
+      "accountNumber": accountNumber,
+      "amount": "200",
+      "releasingCenter": "UBP",
+      "distributor": "distributorTest"
+    }
+    formData.append('uuid', 123345)
+    formData.append('med', opticalParam.medCert)
+    formData.append('opt', opticalParam.optCert)
+    formData.append('body', JSON.stringify(opticalObject))
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
-      headers : { token }
+      headers : { token, accountToken }
     })
   }
+
+
 
   /* account */
   validateAccountNumber (token, accountNumber) {
@@ -154,6 +175,13 @@ export default class HRBenefitsService {
 
   getFaqs (token) {
     return this.apiClient.get('v1/faqs', {
+      headers: { token }
+    })
+  }
+  /* notice of undertaking */
+
+  updateNotice (token, noticeParam) {
+    return this.apiClient.put('v1/agreements', noticeParam, {
       headers: { token }
     })
   }
