@@ -2,6 +2,7 @@
   display:grid;
   grid-template-rows: 40% 30% 30%;
   height: 350px;
+  margin-bottom:10px;
 }
 
 .card-header {
