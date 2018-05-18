@@ -16,9 +16,9 @@
 i {
   cursor: pointer;
   border: solid #ff8a00;
-  border-width: 0 10px 10px 0;
+  border-width: 0 7px 7px 0;
   display: -webkit-inline-box;
-  padding: 7px;
+  padding: 4px;
   margin-right: 10px;
 }
 
