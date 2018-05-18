@@ -96,12 +96,14 @@ class DentalLoaCard extends Component {
                <GenericTextBox
                  onClick = { () => this.showModal('recipient') }
                  type = { 'button' }
+                 className = { 'fileUploader' }
                  placeholder = { text1 }/>
           </div>
           <div className = { 'dentalloa-col span_1_of_3' }>
             <i className = { 'dentalloa-icon text2-icon' }/>
                <GenericTextBox
                  type = { 'button' }
+                 className = { 'fileUploader' }
                  onClick = { () => this.showModal('branch') }
                  placeholder = { text2 }/>
           </div>
