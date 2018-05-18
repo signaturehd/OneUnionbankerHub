@@ -17,8 +17,9 @@ class SideBar extends Component {
       { id: 2 , title: 'Transactions', path: '/transactions', className: 'transaction-icon mobile-icon' },
       { id: 3 , title: 'FAQS', path: '/faqs', className: 'faqs-icon mobile-icon' },
       { id: 4 , title: 'Profile', path: '/settings', className: 'settings-icon mobile-icon' },
-      { id: 5 , title: 'Books', path: '/books', className: 'books-icon mobile-icon' },
-      { id: 6 , title: 'Podcasts', path: '/podcast', className: 'podcast-icon mobile-icon' },
+      { id: 5 , title: 'Books', path: '/mylearning/books', className: 'books-icon mobile-icon' },
+      { id: 6 , title: 'Podcasts', path: '/mylearning/podcast', className: 'podcast-icon mobile-icon' },
+      { id: 7 , title: 'MyLearning', path: '/mylearning', className: 'mylearning-icon mobile-icon' },
     ]
 
   return (
