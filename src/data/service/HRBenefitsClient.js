@@ -128,7 +128,7 @@ export default class HRBenefitsClient {
 
   getDentalReimbursement (token) {
     return this.service.getDentalReimbursement(token)
-      .pipe(ServiceErrorOperator)
+      .pipe(ServiceErrorOperator())
   }
 
   /* dental loa */
