@@ -10,7 +10,8 @@ export default class LoginPresenter {
     this.view = view
   }
 
-  login (username, password) {
+  login (username, password, disabled) {
+    this.view.disabledButton()
     this.view.showLoading()
     this.loginInteractor.execute(LoginParam(username, password))
       .subscribe(
@@ -19,6 +20,7 @@ export default class LoginPresenter {
           this.view.onLoginSuccess()
         },
         error => {
+          this.view.onLoginError(error)
           this.view.hideLoading()
           // TODO generic error handling
         }

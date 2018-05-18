@@ -1,0 +1,33 @@
+.card-container {
+  display:grid;
+  grid-column-gap: 1%;
+  grid-template-columns : repeat(250px);
+}
+.podcasts-details-side-right {
+  padding: 25px;
+}
+.news-body {
+  padding : 50px;
+}
+.fa-play-button {
+  font-size : 50px;
+  cursor: pointer;
+  color: #ff8a00;
+}
+
+._button-lg {
+  width: 100%;
+}
+.podcasts-image {
+  height: 50px;
+  width: 50px;
+}
+.podcasts-player-details {
+  border-top : 1px;
+  border-bottom : 1px;
+}
+.fa-play-button-details {
+  font-size : 25px;
+  cursor: pointer;
+  color: #ff8a00;
+}

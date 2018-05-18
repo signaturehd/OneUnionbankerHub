@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5, h6, p{
 
   .panels {
     display: inline-flex;
-    overflow: hidden;
+    overflow: auto;
     position: absolute;
     top: 57px;
     bottom: 0; }
@@ -54,7 +54,12 @@ h1, h2, h3, h4, h5, h6, p{
   padding: 2%;
   width: -webkit-fill-available;
 }
-
+@media screen and (min-width: 1900px) and (min-height: 1600px) {
+  .main-content {
+    
+     flex: 9;
+  }
+}
 .left-side, .right-side {
   flex: 1; }
 

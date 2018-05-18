@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
 
-import { Loader } from '../../../ub-components/'
+import { Loader, Notify } from '../../../ub-components/'
+
+import './styles/base.css'
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
 
 class BaseView extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      loader : false
+      loader : false,
     }
     this.showLoading = this.showLoading.bind(this)
     this.hideLoading = this.hideLoading.bind(this)
@@ -20,10 +24,31 @@ class BaseView extends Component {
     this.setState({ loader : false })
   }
 
+  showNotify (title, message, type) {
+    this.setState({ showNotif : true, title, message, type })
+  }
+
+
   render () {
+    const { loader } = this.state
+    const { notify } = this.props
     return (
       <div>
-        <Loader show = { this.state.loader }/>
+        <Loader show = { loader }/>
+        <div className = { 'notify-container' }>
+        {
+          notify &&
+          notify.map((notify, i) => (
+            <Notify
+              onClick = { () => store.dispatch(NotifyActions.removeNotify(i))}
+              key = { i }
+              title = { notify.title }
+              message = { notify.message }
+              type = { notify.type }
+            />
+          ))
+        }
+        </div>
       </div>
     )
   }

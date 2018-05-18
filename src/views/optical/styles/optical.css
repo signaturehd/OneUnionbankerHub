@@ -1,0 +1,13 @@
+
+ .optical-container {
+   height: auto;
+   display: inline-flex;
+   margin-top: 5%;
+}
+
+.optical-loader {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20%;
+  vertical-align: middle;
+}
