@@ -7,7 +7,8 @@
 
 .news-body {
   padding : 50px;
-  text-align:center
+  text-align:center;
+  cursor:pointer;
 }
 
 .fa-see-more {
@@ -16,6 +17,7 @@
   color: #fff;
 }
 
-.card {
+.news-card {
+  margin-bottom: 10px;
   break-inside: avoid-column;
 }

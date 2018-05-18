@@ -23,7 +23,7 @@
 
 @media (max-width : 786px) {
   .news-card-container {
-    column-count : 2;
+    column-count : 1;
   }
 }
 .title-view {
