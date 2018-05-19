@@ -1,4 +1,4 @@
-  import React from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import ConnectView from '../../utils/ConnectView'
 import NewsInteractor from '../../domain/interactor/news/NewsInteractor'
@@ -44,7 +44,6 @@ class NewsFragment extends BaseMVPView {
     }
     return (
       <div className = 'container'>
-        { super.render() }
         {
           show &&
           <NewsModalComponent onClose = { () => this.setState({ show: false })} details = { details } />
