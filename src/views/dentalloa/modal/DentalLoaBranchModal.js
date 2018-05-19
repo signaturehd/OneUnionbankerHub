@@ -19,6 +19,7 @@ class DentalLoaBranchModal extends Component {
   render () {
   const { details, onClose, showHealthwayBranchModal, text, isDismisable } = this.props
   const { chosenBranch } = this.state
+  console.log(this.props)
   return (
     <Modal
       onClose = { onClose }

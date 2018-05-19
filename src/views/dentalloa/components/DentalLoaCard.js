@@ -22,7 +22,6 @@ class DentalLoaCard extends Component {
       date: new Date(),
     }
 
-    this.showModal = this.showModal.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
   }
@@ -31,19 +30,10 @@ class DentalLoaCard extends Component {
     e.preventDefault()
   }
 
-  showModal (e) {
-    if (e === 'recipient') {
-      this.setState({ showRecipientModal : true })
-    } else if (e === 'branch') {
-      this.setState({ showHealthwayBranchModal : true })
-    } else if (e === 'procedure') {
-      this.setState({ showProcedureModal : true })
-    }
-  }
-
   onChange (date) {
     this.setState({ date })
   }
+
   render () {
     const {
       proceedModal,
@@ -56,37 +46,11 @@ class DentalLoaCard extends Component {
       onClose,
       submit,
       presenter,
-      onClick } = this.props
+      onClick
+    } = this.props
     const { showRecipientModal, showHealthwayBranchModal, showProcedureModal } = this.state
     return (
       <Card className={ 'dentalloa-card' }>
-      {
-        showRecipientModal &&
-        <DentalLoaDependentModal
-          showRecipientModal = { showRecipientModal }
-          show = { this.state.showRecipientModal}
-          presenter = { this.presenter }
-          details = { details.dependents }
-          onClose = { () => this.setState({ showRecipientModal : false }) } />
-      }
-      {
-        showHealthwayBranchModal &&
-        <DentalLoaBranchModal
-          showHealthwayBranchModal = { showHealthwayBranchModal }
-          show = { this.state.showHealthwayBranchModal}
-          presenter = { this.presenter }
-          details = { details.branches }
-          onClose = { () => this.setState({ showHealthwayBranchModal : false }) } />
-      }
-      {
-        showProcedureModal &&
-        <DentalLoaProcedureModal
-          showProcedureModal = { showProcedureModal }
-          show = { this.state.showProcedureModal}
-          details = { details.procedures }
-          presenter = { this.presenter }
-          onClose = { () => this.setState({ showProcedureModal : false }) } />
-      }
       <form onSubmit = { this.handleSubmit }>
         <div className = {'dentalloa-header'} >
           <h5 > LOA Details </h5>
@@ -94,18 +58,18 @@ class DentalLoaCard extends Component {
             <div className = { 'dentalloa-col span_1_of_3' }>
               <i className = { 'dentalloa-icon text1-icon' }/>
                <GenericTextBox
-                 onClick = { () => this.showModal('recipient') }
+                 onClick = { () => onClick(true, false, false)}
                  type = { 'button' }
                  className = { 'fileUploader' }
-                 placeholder = { text1 }/>
+                 placeholder = { text1 } />
           </div>
           <div className = { 'dentalloa-col span_1_of_3' }>
             <i className = { 'dentalloa-icon text2-icon' }/>
                <GenericTextBox
                  type = { 'button' }
                  className = { 'fileUploader' }
-                 onClick = { () => this.showModal('branch') }
-                 placeholder = { text2 }/>
+                 onClick = { () => onClick(false, true, false)}
+                 placeholder = { text2 } />
           </div>
           <div className = { 'dentalloa-col span_1_of_3' }>
             <i className = { 'dentalloa-icon text3-icon' }/>
@@ -121,7 +85,8 @@ class DentalLoaCard extends Component {
           </div>
         </div>
         <div className = {'dentalloa-footer-left'}>
-          <GenericButton onClick = { () => this.showModal('procedure') }
+          <GenericButton
+            onClick = { () => onClick(false, false, true)}
             type = {'button'}
             text = { text4 }
             className = {'dentalloa-procedure' }

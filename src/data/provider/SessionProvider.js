@@ -13,8 +13,8 @@ export default class SessionProvider {
   }
 
   getToken () {
-    // return this.storage.getItem(TOKEN) || ''
-    return '52b6ba34d0363b4cb41b1a9dce7076184c1d140b440a7a0ae78f6f2f34a8718712a6e7824d030087e426cfcbc15ec085ca5de40b81626eaa1336816bf12c5af5'
+    return this.storage.getItem(TOKEN) || ''
+    // return '52b6ba34d0363b4cb41b1a9dce7076184c1d140b440a7a0ae78f6f2f34a8718712a6e7824d030087e426cfcbc15ec085ca5de40b81626eaa1336816bf12c5af5'
   }
 
   setAccountToken (accountToken = '') {

@@ -37,6 +37,14 @@ export default function ServiceErrorOperator () {
           )
           subscriber.error(new ForbiddenError())
         } else {
+          console.log(body)
+          store.dispatch(NotifyActions.addNotify({
+              title : 'Server Error',
+              message : 'There is a problem with the server',
+              type : 'danger',
+              duration : 2000
+            })
+          )
           subscriber.error(new ServerError('It seems that we\'ve encountered a problem. Error: 1'))
         }
       },

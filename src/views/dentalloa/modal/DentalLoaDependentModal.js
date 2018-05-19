@@ -26,7 +26,12 @@ class DentalLoaDependentModal extends Component {
       <div className = { 'optical-description' }>
         <h2>Dependent</h2>
       </div>
-      <div className = { 'optical-modal-footer' }>    {
+      <div className = { 'optical-modal-footer' }>
+          <GenericButton
+              className = { 'dentalloa-modal-option-button' }
+              text = {'Me'}
+              onClick = { () => this.submitData('personal') }/>
+          {
             details.map((dependent, key ) =>
               <GenericButton
                   key = { key }

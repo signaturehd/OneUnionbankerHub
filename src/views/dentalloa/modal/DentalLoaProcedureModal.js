@@ -17,6 +17,7 @@ submitData ( value ) {
 }
 render () {
   const { details, onClose, showProcedureModal, text, isDismisable } = this.props
+  console.log(this.props)
 return (
   <Modal
     onClose = { onClose }
