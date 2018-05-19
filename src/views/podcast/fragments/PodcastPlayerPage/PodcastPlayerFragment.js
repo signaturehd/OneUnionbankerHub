@@ -17,9 +17,7 @@ class PodcastPlayerFragment extends Component {
       paddRating : false,
     }
    }
-  componentDidMount() {
-    !this.props.selectedPodcast && this.props.history.push('/podcast')
-  }
+
   paddRating (id, rating) {
     this.props.presenter.ratePodcasts(id, rating)
   }
@@ -28,18 +26,28 @@ class PodcastPlayerFragment extends Component {
       this.setState({ podcasts })
   }
  render () {
-
-   const { title, author, description, detail, rateBook, selectedPodcast, podcasts, changeSelectedPodcast, history } = this.props
+   const {
+     title,
+     author,
+     description,
+     detail,
+     rateBook,
+     selectedPodcast,
+     podcasts,
+     changeSelectedPodcast,
+     history
+   } = this.props
    const { rating } = this.state
 
    return (
     <div>
     <div className={ 'podplay-header' }>
       <i className = { 'left' } onClick = { () => this.props.history.push('/mylearning/podcast') }></i>
-      <h1>UTube</h1>
+      <h2 className = { 'header-margin-default' }>UTube</h2>
     </div>
     <div className = { 'podplay-main' }>
       <div><MedPlayer history = { history } selectedPodcast = { selectedPodcast } /></div>
+      <div className = { 'podcast-player-rating-right' } >Ratings :
       <Rating
           rateBook = { (id, rating) => this.paddRating(id, rating) }
           emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
@@ -51,10 +59,13 @@ class PodcastPlayerFragment extends Component {
           fractions = { 2 }
           initialRating = { selectedPodcast ? selectedPodcast.rating : 0 }
          />
+     </div>
     <div className = { 'podcasts-player-details' }>
-      <h2>{ selectedPodcast && selectedPodcast.speaker }</h2>
-      <h5>Details</h5>
+      <h2 className = { 'title-podcast' }> <bold> Title : { selectedPodcast && selectedPodcast.title }</bold> </h2>
+      <h4 className = { 'author-podcast' }> Author : { selectedPodcast && selectedPodcast.speaker }</h4>
+      <h4 className = { 'author-podcast' }> Details : { 'Description' }</h4>
     </div>
+    <br/>
     <Board selectedPodcast = { selectedPodcast && selectedPodcast.review }/>
     </div>
       <div className = { 'podplay-sidebar-right' }>

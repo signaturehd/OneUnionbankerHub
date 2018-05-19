@@ -34,6 +34,7 @@ class PodcastView extends BaseMVPView {
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
+
   paddRating (id, rating) {
       this.props.presenter.ratePodcasts(id, rating)
   }
@@ -41,33 +42,45 @@ class PodcastView extends BaseMVPView {
       this.presenter.getPodcasts()
       this.presenter.getPodcastsRecommendations()
       this.presenter.getPodcastsViewed()
+      this.presenter.getPodcastsReviews()
+      this.presenter.paddRating()
       this.props.setSelectedNavigation(5)
+      this.props.history.push('/mylearning/podcast')
   }
   updateSearch () {
-      this.setState({ searchString: this.refs.search.value.substr( 0 , 20) })
+      this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
   }
-  podcasts ( podcasts ) {
+  podcasts (podcasts) {
       this.setState({ podcasts })
   }
-  podcastsRecommendation ( podcastsRecommendation ) {
+  podcastsRecommendation (podcastsRecommendation) {
       this.setState({ podcastsRecommendation })
   }
-  podcastsRecommendation ( podcastsRecommendation ) {
+  podcastsRecommendation (podcastsRecommendation) {
       this.setState({ podcastsRecommendation })
   }
-  podcastViewed ( podcastViewed ) {
+  podcastViewed (podcastViewed) {
     this.setState({ podcastViewed })
   }
   navigate () {
     this.props.history.push ('/mylearning')
   }
   render () {
-    const { podcasts, podcastViewed, podcastsRecommendation, paddRating,  show, details, detail, selectedPodcast } = this.state
+    const {
+      podcasts,
+      podcastViewed,
+      podcastsRecommendation,
+      paddRating,
+      show,
+      details,
+      detail,
+      selectedPodcast
+    } = this.state
     const { history } = this.props
     let searchPodcast = this.state.podcasts
     const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
-        searchPodcast = searchPodcast.filter(podcast => podcast.author.toLowerCase().match(search))
+        searchPodcast = searchPodcast.filter(podcast => podcast.title.toLowerCase().match(search))
     }
     const PodcastPlayer = () => (
         <PodcastPlayerFragment
@@ -85,12 +98,12 @@ class PodcastView extends BaseMVPView {
       <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) }></i>
       <h2 className = { 'header-margin-default' }>PODCAST</h2>
     </div>
-      <input type = 'text'
-               className = {'podcastsSearchBar'}
-               ref='search'
-               placeholder = {'Search Podcasts'}
-               value = { this.state.searchString }
-               onChange = { this.updateSearch } />
+    <input type = 'text'
+             className = {'podcastsSearchBar'}
+             ref='search'
+             placeholder = {'Search Podcasts'}
+             value = { this.state.searchString }
+             onChange = { this.updateSearch } />
     <div className = { 'tabs-container' }>
       <input
         className = { 'input-tab' }
@@ -107,19 +120,13 @@ class PodcastView extends BaseMVPView {
         name='tabs' />
       <label htmlFor='tab2'>Recommended</label>
 
-      <input
-        className = { 'input-tab' }
-        id='tab3'
-        type='radio'
-        name='tabs' />
-      <label htmlFor = 'tab3' >Viewed</label>
-
       <section id='content1'>
         <PodcastsListFragment
           changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
           presenter = { this.presenter }
           searchPodcast = { searchPodcast }
           details = { details }
+
           history = { history } />
       </section>
       <section id='content2'>
@@ -129,13 +136,6 @@ class PodcastView extends BaseMVPView {
           changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
           podcastsRecommendation = { podcastsRecommendation }
           history = { history } />
-      </section>
-      <section  id='content3'>
-        <PodcastsViewedFragment
-          presenter = { this.presenter }
-          changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
-          podcastViewed = { podcastViewed }
-          history = { history }  />
       </section>
     </div>
   </div>

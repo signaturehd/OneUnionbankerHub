@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import PodcastCardRecommendedComponent from '../../components/cards/PodcastCardRecommendedComponent'
+import PodcastCardRecommendedComponent from '../../components/Cards/PodcastCardRecommendedComponent'
 
 class PodcastsRecommendationFragment extends Component {
   constructor (props) {
@@ -16,7 +16,7 @@ class PodcastsRecommendationFragment extends Component {
     this.props.presenter.rateBook(id, rating)
   }
   render () {
-      const { podcastsRecommendation, searchPodcast } = this.props
+    const { podcastsRecommendation, searchPodcast } = this.props
     return (
       <div className = {'podcasts-container'}>
         {

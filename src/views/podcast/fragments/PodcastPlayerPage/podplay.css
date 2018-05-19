@@ -1,9 +1,20 @@
+.title-podcast {
+	padding: 20px 0;
+	text-align: justify;
+}
+.author-podcast {
+	padding: 10px 0;
+	text-align: justify;
+}
 .podplay-header{
 	width:100%;
 	height:50px;
 	text-align: left;
 }
-
+.podcast-player-rating-right {
+	float : right;
+	right : 0;
+}
 .podplay-main{
 	float:left;
 	width:70%;
@@ -351,59 +362,86 @@ input[type="range"] {
 	}
 	@media screen and (max-width: 950px){
 	.media-controls {
-    display: inline-flex;
-    align-items: center;
-    padding: 5px 0px 5px 0px;
-    /* margin-top: 20px; */
-    min-width: 420px;
-    border-radius: 2px;
-    /* margin-top: 250px; */
-    /* top: 0; */
-    margin: 0 0 0 0;
-    background-color: #282F31;
-    color: #fff;
+		padding: 5px 0px 5px 0px;
+		min-width: 0;
 	}
-	.media-player {
-		width: 600px;
+.media-player {
+    width: 720px;
     position: relative;
     background-color: #f9f9f9;
     height: 100%;
-
-	}
-	.player-content {
-		height: 340px;
-    width: 600px;
-    bottom: 0;
-    display: -webkit-box;
+}
+.player-content {
+	height: 404px;
+	width: 720px;
+	bottom: 0;
+	display: -webkit-box;
+}
+	.podplay-sidebar-right {
+    	width: 100%;
+    margin: auto;
+    padding-left: 24px;
 	}
 }
-	@media screen and (max-width: 750px){
-	.media-controls {
-    display: inline-flex;
-    align-items: center;
-    padding: 5px 0px 5px 0px;
-    /* margin-top: 20px; */
-    min-width: 420px;
-    border-radius: 2px;
-    /* margin-top: 250px; */
-    /* top: 0; */
-    margin: 0 0 0 0;
-    background-color: #282F31;
-    color: #fff;
+	@media screen and (max-width: 500px){
+	.media-control {
+	    margin: 0;
 	}
 	.media-player {
-		width: 500px;
-		position: relative;
-		background-color: #f9f9f9;
-		height: 100%;
-
+	    width: 360px;
+	    position: relative;
+	    background-color: #f9f9f9;
+	    height: 100%;
+	}
+	.podplay-sidebar-right {
+	    width: 90%;
 	}
 	.player-content {
-		height: 290px;
-	    width: 500px;
+	    height: 210px;
+	    width: 360px;
 	    bottom: 0;
 	    display: -webkit-box;
 	}
+	.shareCommentContainer {
+		width: auto;
+		min-width: auto;
+	}
+
+
+	.podplay-main {
+	    float: left;
+	    width: 100%;
+	}
+}
+@media screen and (max-width: 375px){
+.media-control {
+		margin: 0;
+}
+.media-player {
+		width: 360px;
+		position: relative;
+		background-color: #f9f9f9;
+		height: 100%;
+}
+.podplay-sidebar-right {
+		width: 90%;
+}
+.player-content {
+		height: 210px;
+		width: 360px;
+		bottom: 0;
+		display: -webkit-box;
+}
+.shareCommentContainer {
+	width: auto;
+	min-width: auto;
+}
+
+
+.podplay-main {
+		float: left;
+		width: 100%;
+}
 }
 
 

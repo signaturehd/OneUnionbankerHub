@@ -1,5 +1,4 @@
-export default class PodcastViewedInteractor
-{
+export default class PodcastViewedInteractor {
   constructor (client) {
     this.client = client
   }

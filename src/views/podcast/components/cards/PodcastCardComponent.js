@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card } from '../../../../ub-components/'
+import { Card }  from '../../../../ub-components/'
 
-import './styles.css'
-import { GenericButton }  from '../../../../ub-components/'
-
+import './styles/podcast-component.css'
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import { FaPlayCircleO } from 'react-icons/lib/fa/'
 import Rating from 'react-rating'
 
-class PodCardComponent extends Component {
-
+class PodcastCardComponent extends Component {
   constructor (props) {
     super(props)
      this.state = {
@@ -31,22 +28,26 @@ class PodCardComponent extends Component {
         background: `url(${searchPodcast && searchPodcast.image}) rgba(0,0,0,0.7)`,
         backgroundSize: 'cover',
         backgroundBlendMode: 'color',
+        height: '117px',
+        margin: 'auto',
       },
       titleStyle : {
         color : '#ffffff',
-        fontWeight: 'bold,'
+        fontWeight: 'bold',
+        margin: 'auto',
       },
       authorStyle : {
         color : '#ffffff',
         fontSize : '12px',
         float : 'right',
+        margin : 'auto',
       }
     }
     return (
-        <Card >
+        <Card className = { 'podcast-card-container' } >
           <div style = {style.styles}
-               className = {'news-body'}>
-            <h2 style = { style.titleStyle }> {'Title'} </h2>
+               className = {'podcast-component-body'}>
+            <h2 style = { style.titleStyle }> { searchPodcast && searchPodcast.title } </h2>
             <h2 style = { style.authorStyle }> -{ searchPodcast && searchPodcast.speaker } </h2>
           </div>
           <div className = {'card-footer'}>
@@ -76,15 +77,13 @@ class PodCardComponent extends Component {
   }
 }
 
-PodCardComponent.propTypes = {
-
+PodcastCardComponent.propTypes = {
   onClick : PropTypes.func,
   rateBook : PropTypes.func,
+}
+
+PodcastCardComponent.defaultProps = {
 
 }
 
-PodCardComponent.defaultProps = {
-
-}
-
-export default PodCardComponent
+export default PodcastCardComponent

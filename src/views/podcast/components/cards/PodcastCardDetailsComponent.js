@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
-import { Card } from '../../../../ub-components/'
-
-import './styles.css'
-import { GenericButton }  from '../../../../ub-components/'
+import { Card }  from '../../../../ub-components/'
 
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import { FaPlayCircleO } from 'react-icons/lib/fa/'
 import Rating from 'react-rating'
+import './styles/podcast-component.css'
 
 class PodcastCardDetailsComponent extends Component {
-
   constructor (props) {
     super(props)
      this.state = {
@@ -25,28 +21,32 @@ class PodcastCardDetailsComponent extends Component {
 
   render () {
     const { detail, podcasts, onClick, rateBook, history } = this.props
-    const { rating,  } = this.state
+    const { rating  } = this.state
     const style = {
       styles : {
         background: `url(${podcasts.image}) rgba(0,0,0,0.7)`,
         backgroundSize: 'cover',
         backgroundBlendMode: 'color',
+        height: '117px',
+        margin: 'auto',
       },
       titleStyle : {
         color : '#ffffff',
-        fontWeight: 'bold,'
+        fontWeight: 'bold',
+        margin: 'auto',
       },
       authorStyle : {
         color : '#ffffff',
         fontSize : '12px',
         float : 'right',
+        margin : 'auto',
       }
     }
     return (
-        <Card >
+        <Card className = { 'podcast-card-container' } >
           <div style = {style.styles}
                className = {'podcasts-details-side-right'}>
-              <h2 style = { style.titleStyle }> {'Title'} </h2>
+              <h2 style = { style.titleStyle }> { podcasts.title } </h2>
               <h2 style = { style.authorStyle }> -{podcasts.speaker} </h2>
           <center>
             <FaPlayCircleO

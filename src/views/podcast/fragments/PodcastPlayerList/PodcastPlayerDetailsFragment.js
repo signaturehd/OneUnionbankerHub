@@ -17,24 +17,13 @@ class PodcastsPlayerDetailsFragment extends Component {
   }
 
   render () {
+    const {
+      selectedPodcast,
+      podcasts,
+      searchPodcast,
+      changeSelectedPodcast
+    } = this.props
 
-    const { selectedPodcast, podcasts, searchPodcast, changeSelectedPodcast } = this.props
-
-
-    const ContentView = () => {
-      {
-        searchPodcast.map((podcasts, i) =>
-          <PodCardComponent
-            history = { this.props.history }
-            rateBook = { (id, rating) => this.addRating(id, rating) }
-            key={ i }
-            searchPodcast = { podcasts.speaker }
-            onClick = { details => {
-              this.setState({ details, show: true })
-            }} />
-          )
-        }
-    }
     return (
     <div className = { 'podcast-details' }>
      {

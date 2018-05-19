@@ -18,22 +18,21 @@ export default class PodcastPresenter {
       this.view = view
     }
 
-    getPodcasts () {
-      this.view.showLoading()
-      this.getPodcastInteractor.execute()
-      .subscribe(podcasts => {
-          this.view.hideLoading()
-          this.view.podcasts(podcasts)
-        }, e => {
-          this.view.hideLoading()
-          // TODO prompt generic error
-        })
-    }
+  getPodcasts () {
+    this.view.showLoading()
+    this.getPodcastInteractor.execute()
+    .subscribe(podcasts => {
+        this.view.hideLoading()
+        this.view.podcasts(podcasts)
+      }, e => {
+        this.view.hideLoading()
+        // TODO prompt generic error
+    })
+  }
 
     getPodcastsReviews () {
       this.view.showLoading()
       this.getPodcastsReviewsInteractor.execute()
-      .do( podcasts => console.log(podcasts) )
       .subscribe(podcasts => {
           this.view.hideLoading()
           this.view.podcastsreviews(podcasts)
@@ -47,12 +46,11 @@ export default class PodcastPresenter {
       this.getPodcastRecommendationInteractor.execute()
       .subscribe( podcasts => {
         this.view.hideLoading()
-        this.view.podcastsRecommendation(podcasts)
-      }, e=> {
+      }, e => {
         this.view.hideLoading()
       })
     }
-    ratePodcasts (id, rating) {
+    paddRating (id, rating) {
       this.view.showLoading()
       this.addPodcastRatingInteractor.execute(PodcastRateParam(id, rating))
       .subscribe(
@@ -72,6 +70,6 @@ export default class PodcastPresenter {
       }, e => {
         this.view.hideLoading()
         // TODO prompt generic error
-      })
+    })
   }
 }

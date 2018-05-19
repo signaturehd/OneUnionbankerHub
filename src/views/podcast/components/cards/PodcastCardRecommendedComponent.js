@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
-import { Card } from '../../../../ub-components/'
-
-import './styles.css'
-import { GenericButton }  from '../../../../ub-components/'
+import { Card }  from '../../../../ub-components/'
 
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import { FaPlayCircleO } from 'react-icons/lib/fa/'
 import Rating from 'react-rating'
+import './styles/podcast-component.css'
 
 class PodcastCardRecommendedComponent extends Component {
-
   constructor (props) {
     super(props)
      this.state = {
@@ -45,8 +41,8 @@ class PodcastCardRecommendedComponent extends Component {
     return (
         <Card >
           <div style = {style.styles}
-               className = {'news-body'}>
-            <h2 style = { style.titleStyle }> {'Title'} </h2>
+               className = {'podcast-component-body'}>
+            <h2 style = { style.titleStyle }> { searchPodcast && searchPodcast.title } </h2>
             <h2 style = { style.authorStyle }> -{ podcast && podcast.speaker } </h2>
           </div>
           <div className = {'card-footer'}>

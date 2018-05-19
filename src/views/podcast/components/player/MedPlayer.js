@@ -1,13 +1,28 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Media, Player, withMediaProps, withKeyboardControls, controls } from 'react-media-player'
+import {
+  Media,
+  Player,
+  withMediaProps,
+  withKeyboardControls,
+  controls
+} from 'react-media-player'
 
-const { CurrentTime, Progress, SeekBar, Duration, Volume, PlayPause, Fullscreen, MuteUnmute } = controls
+const {
+  CurrentTime,
+  Progress,
+  SeekBar,
+  Duration,
+  Volume,
+  PlayPause,
+  Fullscreen,
+  MuteUnmute
+} = controls
 
 class MedPlayer extends Component {
-  render() {
+  render () {
     const { selectedPodcast, history } = this.props
-    let url = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+    const url = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
     const newUrl = url
 
    return (
@@ -15,7 +30,7 @@ class MedPlayer extends Component {
       <Media>
       {({ isFullscreen, playPause }) =>
         <div
-          className={'media-player' + (isFullscreen ? ' media-player--fullscreen' : '')}
+          className={`media-player${  isFullscreen ? ' media-player--fullscreen' : ''}`}
           tabIndex="0">
           <Player
             className = {'player-content'}
