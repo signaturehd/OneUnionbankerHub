@@ -40,12 +40,11 @@ class DrawerAppBar extends Component {
               style = { style.show }
               src = { require('../../../../images/profile-picture.png')}
               className = {'_img-ub-profile'}
-              onClick = { this.onToggleShow }/ >
+              onClick = { () => this.onToggleShow }/ >
           </div>
         </div>
       </AppBar>
     )
   }
 }
-
 export default DrawerAppBar

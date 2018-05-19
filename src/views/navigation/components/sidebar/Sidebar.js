@@ -6,17 +6,20 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 class SideBar extends Component {
   constructor (props) {
     super(props)
+    this.callLogout = this.callLogout.bind(this)
   }
-
+  callLogout () {
+    this.props.logout()
+  }
   render () {
     const { textlink, icon , onClick, text, path, onNavigationClick, selected } = this.props
     const modules =
     [
-      { id: 0 , title: 'News', path: '/', className: 'newsfeed-icon mobile-icon' },
-      { id: 1 , title: 'Benefits', path: '/benefits', className: 'benefits-icon mobile-icon' },
+      { id: 0 , title: 'News', path: '/news', className: 'newsfeed-icon mobile-icon' },
+      { id: 1 , title: 'My Benefits', path: '/benefits', className: 'benefits-icon mobile-icon' },
       { id: 2 , title: 'Transactions', path: '/transactions', className: 'transaction-icon mobile-icon' },
       { id: 3 , title: 'FAQS', path: '/faqs', className: 'faqs-icon mobile-icon' },
-      { id: 4 , title: 'Profile', path: '/settings', className: 'settings-icon mobile-icon' },
+      { id: 4 , title: 'My Profile', path: '/settings', className: 'settings-icon mobile-icon' },
       { id: 5 , title: 'MyLearning', path: '/mylearning', className: 'mylearning-icon mobile-icon' },
       { id: 6 , title: 'Logout', path: '/', className: 'logout-icon mobile-icon' },
     ]

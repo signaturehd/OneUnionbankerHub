@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router-dom'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
@@ -29,6 +30,7 @@ class NavigationView extends BaseMVPView {
 
     this.setDisplay = this.setDisplay.bind(this)
     this.setSelectedNavigation = this.setSelectedNavigation.bind(this)
+    this.callLogout = this.callLogout.bind(this)
   }
 
   setDisplay (sideBar, topBar) {
@@ -59,7 +61,9 @@ class NavigationView extends BaseMVPView {
   setSelectedNavigation (id) {
     this.setState({ selected: id })
   }
-
+  callLogout () {
+    this.presenter.logout()
+  }
   render () {
     const { displayShow, displayNavIcon, displayNavIconState, selected } = this.state
     const style = {
@@ -77,9 +81,9 @@ class NavigationView extends BaseMVPView {
           </header>
           <div className="panels">
               <main className ="panel main-content " role="main">
-                  <Drawer>
+                  <Drawer >
                       <Switch>
-                        <Route exact path = '/' render = {props =>
+                        <Route exact path = '/news' render = {props =>
                           <NewsFragment { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> }/>
                         <Route path = '/benefits' render = { props =>
@@ -110,6 +114,7 @@ class NavigationView extends BaseMVPView {
                 className ="left-side panel"
                 style = { style.show }>
                 <SideBar
+                  logout = { this.callLogout }
                   selected={ selected }
                   onNavigationClick = { path => this.props.history.push(path) } >
                  </SideBar>
@@ -120,4 +125,7 @@ class NavigationView extends BaseMVPView {
   }
 }
 
+NavigationView.propTypes = {
+  onClick : PropTypes.func,
+}
 export default ConnectView(NavigationView, Presenter)
