@@ -41,6 +41,7 @@ class PodcastView extends BaseMVPView {
       this.presenter.getPodcasts()
       this.presenter.getPodcastsRecommendations()
       this.presenter.getPodcastsViewed()
+      this.props.setSelectedNavigation(5)
   }
   updateSearch () {
       this.setState({ searchString: this.refs.search.value.substr( 0 , 20) })
@@ -58,7 +59,7 @@ class PodcastView extends BaseMVPView {
     this.setState({ podcastViewed })
   }
   navigate () {
-    this.history.push ('/mylearning')
+    this.props.history.push ('/mylearning')
   }
   render () {
     const { podcasts, podcastViewed, podcastsRecommendation, paddRating,  show, details, detail, selectedPodcast } = this.state
@@ -80,7 +81,7 @@ class PodcastView extends BaseMVPView {
     const PodCast = () => (
     <div>
     { super.render() }
-    <div className={ 'mylearning-crumps-container' }>
+    <div className={ 'header-margin-container' }>
       <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) }></i>
       <h2 className = { 'header-margin-default' }>PODCAST</h2>
     </div>

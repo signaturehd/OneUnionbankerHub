@@ -43,14 +43,19 @@ class LibraryFragment extends BaseMVPView {
     this.setState({ borrowed })
   }
 
-
+  navigate () {
+    this.props.history.push ('/mylearning')
+  }
 
   render () {
     const { books, tabs, recommended, borrowed } = this.state
     return (
       <div>
       { super.render() }
-        <h1>Library</h1>
+      <div className={ 'header-margin-container' }>
+        <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) }></i>
+        <h2 className = { 'header-margin-default' }>LIBRARY</h2>
+      </div>
         <div className = { 'tabs-container' }>
           <input
             className = { 'input-tab' }

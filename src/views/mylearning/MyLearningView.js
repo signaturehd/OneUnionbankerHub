@@ -18,7 +18,7 @@ class MyLearningView extends BaseMVPView {
     super(props)
   }
   componentDidMount () {
-    this.props.setSelectedNavigation(7)
+    this.props.setSelectedNavigation(5)
   }
 
   render () {
@@ -37,7 +37,7 @@ class MyLearningView extends BaseMVPView {
     }]
     const MyLearning = () => (
       <div className = { 'mylearning-container' }>
-        <h2 className = { 'header-margin-default ' }>My Learning</h2>
+        <h2 className = { 'header-margin-default ' }>MY LEARNING</h2>
         {
           showAccountNumberModal &&
             <InputModal
@@ -51,7 +51,7 @@ class MyLearningView extends BaseMVPView {
                   this.presenter.validateAccountNumber(accountNumber)
                 }
               }
-            />
+          />
         }
         <div className = { 'mylearning-adjustment' }>
         <div className = { 'mylearning-card-container' }>

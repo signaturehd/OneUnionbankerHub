@@ -6,7 +6,8 @@ i {
   border: solid #ff8a00;
   border-width: 0 7px 7px 0;
   display: -webkit-inline-box;
-  padding: 9px;
+  padding: 7px;
+  position: fixed;
   margin-right: 10px;
 }
 
@@ -19,4 +20,5 @@ i {
   align-items: center;
   margin-bottom: 40px;
   font-size: 35px;
+  margin-left: 30px;
 }
