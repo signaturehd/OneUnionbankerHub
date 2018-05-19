@@ -17,7 +17,11 @@ class DentalLoaView extends BaseMVPView {
       disabled : false,
       showProcedureModal : false,
       showRecipientModal : false,
-      showHealthwayBranchModal : false
+      showHealthwayBranchModal : false,
+      receipient : null,
+      procedures : null,
+      branch : null,
+      date : null,
     }
     this.getDentalLoa = this.getDentalLoa.bind(this)
   }
@@ -50,7 +54,10 @@ class DentalLoaView extends BaseMVPView {
       disabled,
       showHealthwayBranchModal,
       showRecipientModal,
-      showProcedureModal
+      showProcedureModal,
+      receipient,
+      dependent,
+      procedure,
     } = this.state
 
     return(
@@ -59,6 +66,7 @@ class DentalLoaView extends BaseMVPView {
           showRecipientModal &&
           <DentalLoaDependentModal
             details = { dentalloa.dependents }
+            onChange = { (receipient, procedure) => this.setState({ receipient, procedure }) }
             onClose = { () => this.setState({ showRecipientModal : false }) } />
         }
 
@@ -67,6 +75,7 @@ class DentalLoaView extends BaseMVPView {
           <DentalLoaBranchModal
             showHealthwayBranchModal = { showHealthwayBranchModal }
             details = { dentalloa.branches }
+            onChange = { (branch) => this.setState({ branch }) }
             onClose = { () => this.setState({ showHealthwayBranchModal : false }) } />
         }
 
@@ -75,6 +84,7 @@ class DentalLoaView extends BaseMVPView {
           <DentalLoaProcedureModal
             showProcedureModal = { showProcedureModal }
             details = { dentalloa.procedures }
+            onChange = { (procedure) => this.setState({ procedure }) }
             onClose = { () => this.setState({ showProcedureModal : false }) } />
         }
 
@@ -87,11 +97,13 @@ class DentalLoaView extends BaseMVPView {
               disabled ?
               <center className = { 'dentalloa-loader' }>
                 <CircularLoader show = {this.state.disabled}/>
-                </center>
+              </center>
              :
               <DentalLoaCard
                 details = { dentalloa }
                 presenter = { this.presenter }
+                receipient = { receipient }
+                procedure = { procedure }
                 onClick = {
                   (showRecipientModal, showHealthwayBranchModal, showProcedureModal) =>
                   this.setState({ showRecipientModal, showHealthwayBranchModal, showProcedureModal })

@@ -106,18 +106,6 @@ export default class HRBenefitsClient {
         .pipe(ServiceErrorOperator())
   }
 
-  /* Dental Loa */
-
-  getDentalLoa (token) {
-    return this.service.getDentalLoa(token)
-      .pipe(ServiceErrorOperator())
-  }
-
-  addDentalLoa (token, dentalLoaParam) {
-    return this.service.addDentalLoa(token, dentalLoaParam)
-      .pipe(ServiceErrorOperator())
-  }
-
   addOptical (token, accountToken, accountNumber, opticalParam) {
     return this.service.addOptical(token, accountToken, accountNumber, opticalParam)
       .pipe(ServiceErrorOperator())
@@ -138,6 +126,16 @@ export default class HRBenefitsClient {
   /* dental reimbursement */
 
   /* dental loa */
+
+  getDentalLoa (token) {
+    return this.service.getDentalLoa(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addDentalLoa (token, dentalLoaParam) {
+    return this.service.addDentalLoa(token, dentalLoaParam)
+      .pipe(ServiceErrorOperator())
+  }
 
   /* News */
   getNews (token) {

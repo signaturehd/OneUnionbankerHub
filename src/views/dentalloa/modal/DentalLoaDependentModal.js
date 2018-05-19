@@ -11,10 +11,13 @@ class DentalLoaDependentModal extends Component {
       }
     this.submitData = this.submitData.bind(this)
   }
+
   submitData ( value ) {
+    const { onChange, details } = this.props
+    this.props.onChange()
     this.setState({ chosenDependent : value })
-    console.log(value)
   }
+
   render () {
   const { details, onClose, showDependentModal, isDismisable } = this.props
 
@@ -32,12 +35,13 @@ class DentalLoaDependentModal extends Component {
               text = {'Me'}
               onClick = { () => this.submitData('personal') }/>
           {
-            details.map((dependent, key ) =>
+            details.dependent &&
+            details.dependent.map((dependent, key ) =>
               <GenericButton
                   key = { key }
                   className = { 'dentalloa-modal-option-button' }
                   details = {dependent.name}
-                  onClick = { () => this.submitData( dependent) }/>
+                  onClick = { () => this.submitData(dependent) }/>
             )
           }
       </div>

@@ -33,15 +33,7 @@ export default class HRBenefitsService {
   }
 
   addDentalLoa (token, accountNumber, dentalLoaParam) {
-    const formData = new FormData()
-
-    formData.append('uuid', 1)
-    formData.append('med-cert', dentalLoaParam.medCert)
-    formData.append('opt-cert', dentalLoaParam.optCert)
-    formData.append('accountNumber', accountNumber)
-    formData.append('releasingCenter', 'unionBank')
-    formData.append('amount', opticalParam)
-    return this.apiClient.post('v1/issuances/dental/loa/submit', formData, {
+    return this.apiClient.post('v1/issuances/dental/loa/submit', dentalLoaParam, {
       headers : { token }
     })
   }
