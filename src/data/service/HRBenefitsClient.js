@@ -30,6 +30,10 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  notice (token, noticeParam) {
+    return this.service.notice(token, noticeParam)
+      .pipe(ServiceErrorOperator())
+  }
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
@@ -91,9 +95,15 @@ export default class HRBenefitsClient {
     return this.service.addRating(token, bookParam)
       .pipe(ServiceErrorOperator())
   }
-    paddRating (token, bookParam) {
-    return this.service.paddRating(token, bookParam)
+
+  paddRating (token, podcastParam) {
+    return this.service.paddRating(token, podcastParam)
       .pipe(ServiceErrorOperator())
+  }
+
+  reserveBook (token, BookReserveParam) {
+    return this.service.ReserveBook(token, BookReserveParam)
+        .pipe(ServiceErrorOperator())
   }
 
   /* optical */
@@ -115,7 +125,7 @@ export default class HRBenefitsClient {
     return this.service.getPodcastsRecommendations(token)
       .pipe(ServiceErrorOperator())
   }
-  getPodcastsViewed(token) {
+  getPodcastsViewed (token) {
     return this.service.getPodcastsViewed(token)
       .pipe(ServiceErrorOperator())
   }
@@ -129,11 +139,20 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-
-  /* News */
+  /* Faqs */
   getFaqs (token) {
     return this.service.getFaqs(token)
       .pipe(ServiceErrorOperator())
   }
+  /* Notice of Undertaking */
+  updateNotice (token, noticeParam) {
+    return this.service.updateNotice(token, noticeParam)
+      .pipe(ServiceErrorOperator())
+  }
 
+
+  getFaqsCategories (token) {
+    return this.service.getFaqsCategories(token)
+      .pipe(ServiceErrorOperator())
+  }
 }
