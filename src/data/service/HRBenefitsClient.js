@@ -30,6 +30,10 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  notice (token, noticeParam) {
+    return this.service.notice(token, noticeParam)
+      .pipe(ServiceErrorOperator())
+  }
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
@@ -92,11 +96,42 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  paddRating (token, bookParam) {
+    return this.service.paddRating(token, bookParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  reserveBook (token, BookReserveParam) {
+    return this.service.ReserveBook(token, BookReserveParam)
+        .pipe(ServiceErrorOperator())
+  }
+
   /* optical */
   getOptical (token) {
     return this.service.getOptical(token)
       .pipe(ServiceErrorOperator())
   }
+
+  addOptical (token, accountToken, accountNumber, opticalParam) {
+    return this.service.addOptical(token, accountToken, accountNumber, opticalParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPodcasts (token) {
+    return this.service.getPodcasts(token)
+      .pipe(ServiceErrorOperator())
+  }
+  getPodcastsRecommendations (token) {
+    return this.service.getPodcastsRecommendations(token)
+      .pipe(ServiceErrorOperator())
+  }
+  getPodcastsViewed (token) {
+    return this.service.getPodcastsViewed(token)
+      .pipe(ServiceErrorOperator())
+  }
+  /* dental reimbursement */
+
+  /* dental loa */
 
   /* News */
   getNews (token) {
@@ -104,9 +139,20 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  /* News */
+  /* Faqs */
   getFaqs (token) {
     return this.service.getFaqs(token)
+      .pipe(ServiceErrorOperator())
+  }
+  /* Notice of Undertaking */
+  updateNotice (token, noticeParam) {
+    return this.service.updateNotice(token, noticeParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+
+  getFaqsCategories (token) {
+    return this.service.getFaqsCategories(token)
       .pipe(ServiceErrorOperator())
   }
 }

@@ -1,4 +1,4 @@
-  import React from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import ConnectView from '../../utils/ConnectView'
 import NewsInteractor from '../../domain/interactor/news/NewsInteractor'
@@ -10,7 +10,7 @@ import ConnectPartial from '../../utils/ConnectPartial'
 import NewsCardComponent from './components/NewsCardComponent/NewsCardComponent'
 import NewsModalComponent from './modals/NewsModalComponent'
 
-import './styles/NewsStyles.css'
+import './styles/news-styles.css'
 
 class NewsFragment extends BaseMVPView {
   constructor (props) {
@@ -28,7 +28,7 @@ class NewsFragment extends BaseMVPView {
       this.props.setSelectedNavigation(0)
   }
   updateSearch () {
-      this.setState({ searchString: this.refs.search.value.substr( 0 , 20) })
+      this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
   }
 
   news (news) {
@@ -38,15 +38,12 @@ class NewsFragment extends BaseMVPView {
   render () {
     const { news, show, details } = this.state
     let _news = this.state.news
-    let search = this.state.searchString.trim().toLowerCase()
+    const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
-      _news = _news.filter(function(news) {
-        return news.title.toLowerCase().match(search)
-      })
+      _news = _news.filter(news => news.title.toLowerCase().match(search))
     }
     return (
       <div className = 'container'>
-        { super.render() }
         {
           show &&
           <NewsModalComponent onClose = { () => this.setState({ show: false })} details = { details } />

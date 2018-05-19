@@ -14,11 +14,11 @@ export default class SessionProvider {
 
   getToken () {
     return this.storage.getItem(TOKEN) || ''
-    
   }
 
   setAccountToken (accountToken = '') {
     this.storage.setItem(ACCOUNT_TOKEN, accountToken)
+
   }
 
   getAccountToken () {
@@ -33,7 +33,11 @@ export default class SessionProvider {
     return this.storage.getItem(ACCOUNT_NUMBER) || ''
   }
 
+  setProfile (profile) {
+    this.storage.setItem(PROFILE, JSON.stringify(profile))
+  }
+
   getProfile () {
-    return JSON.stringify(this.storage.getItem(PROFILE)) || {}
+    return JSON.parse(this.storage.getItem(PROFILE)) || {}
   }
 }

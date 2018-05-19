@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Modal } from '../../../ub-components/'
 
-import './styles/styles.css'
+import './styles/news-modal.css'
 
 class NewsModalComponent extends Component {
   constructor (props) {

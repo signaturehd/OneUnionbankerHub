@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router-dom'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
@@ -10,12 +11,15 @@ import TransactionFragment from '../transaction/TransactionFragment'
 import NewsFragment from '../news/NewsFragment'
 import FaqFragment from '../faq/FaqFragment'
 import SettingsFragment from '../settings/SettingsFragment'
+import PodcastView from '../podcast/PodcastView'
 
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
 import Drawer from './components/drawer/Drawer'
 
 import './styles/drawerview.css'
+
+import { connect } from 'react-redux'
 
 class NavigationView extends BaseMVPView {
   constructor (props) {
@@ -27,6 +31,7 @@ class NavigationView extends BaseMVPView {
 
     this.setDisplay = this.setDisplay.bind(this)
     this.setSelectedNavigation = this.setSelectedNavigation.bind(this)
+    this.callLogout = this.callLogout.bind(this)
   }
 
   setDisplay (sideBar, topBar) {
@@ -35,7 +40,7 @@ class NavigationView extends BaseMVPView {
   }
 
   componentWillMount () {
-    const mediaQuery = window.matchMedia('(min-width: 768px)')
+    const mediaQuery = window.matchMedia('(min-width: 1201px)')
       if (mediaQuery.matches) {
         this.setDisplay('block', 'none')
       } else {
@@ -57,7 +62,9 @@ class NavigationView extends BaseMVPView {
   setSelectedNavigation (id) {
     this.setState({ selected: id })
   }
-
+  callLogout () {
+    this.presenter.logout()
+  }
   render () {
     const { displayShow, displayNavIcon, displayNavIconState, selected } = this.state
     const style = {
@@ -69,13 +76,15 @@ class NavigationView extends BaseMVPView {
         <div className = { 'body-div' }>
           <header className = { 'page-boundary page-boundary--fixed-top' }>
             <DrawerAppBar
+              logout = { this.callLogout }
               displayNavIcon = { displayNavIcon } displayShow = { displayShow }
               hide = { () => this.setState({ displayShow : 'block' })}
               show = { () => this.setState({ displayShow : 'none' })} />
           </header>
           <div className="panels">
               <main className ="panel main-content " role="main">
-                  <Drawer>
+              { super.render() }
+                  <Drawer >
                       <Switch>
                         <Route exact path = '/' render = {props =>
                           <NewsFragment { ...props }
@@ -95,6 +104,9 @@ class NavigationView extends BaseMVPView {
                         <Route path = '/books' render = { props =>
                             <LibraryFragment { ...props }
                               setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                              <Route path = '/podcast' render = { props =>
+                          <PodcastView { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
                      </Switch>
                     </Drawer>
               </main>
@@ -112,4 +124,13 @@ class NavigationView extends BaseMVPView {
   }
 }
 
-export default ConnectView(NavigationView, Presenter)
+NavigationView.propTypes = {
+  onClick : PropTypes.func,
+}
+
+const mapStateToProps = state => ({
+  notify : state.notify
+})
+
+
+export default ConnectView(connect(mapStateToProps)(NavigationView), Presenter)
