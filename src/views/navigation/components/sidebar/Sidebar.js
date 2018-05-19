@@ -13,12 +13,11 @@ class SideBar extends Component {
     const modules =
     [
       { id: 0 , title: 'News', path: '/', className: 'newsfeed-icon mobile-icon' },
-      { id: 1 , title: 'My Benefits', path: '/benefits', className: 'benefits-icon mobile-icon' },
-      { id: 2 , title: 'Transactions', path: '/transactions', className: 'transaction-icon mobile-icon' },
-      { id: 3 , title: 'FAQS', path: '/faqs', className: 'faqs-icon mobile-icon' },
-      { id: 4 , title: 'Profile', path: '/settings', className: 'settings-icon mobile-icon' },
-      { id: 5 , title: 'Books', path: '/books', className: 'books-icon mobile-icon' },
-      { id: 6 , title: 'Podcasts', path: '/podcast', className: 'podcast-icon mobile-icon' },
+      { id: 1 , title: 'My Benefits', path: '/mybenefits/benefits', className: 'benefits-icon mobile-icon' },
+      { id: 2 , title: 'FAQS', path: '/faqs', className: 'faqs-icon mobile-icon' },
+      { id: 3 , title: 'Profile', path: '/settings', className: 'settings-icon mobile-icon' },
+      { id: 4 , title: 'Books', path: '/books', className: 'books-icon mobile-icon' },
+      { id: 5 , title: 'Podcasts', path: '/podcast', className: 'podcast-icon mobile-icon' },
     ]
 
   return (
