@@ -22,7 +22,6 @@ class TransactionFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.setSelectedNavigation(2)
     this.presenter.getTransactions()
   }
 
@@ -47,16 +46,16 @@ class TransactionFragment extends BaseMVPView {
       onClick,
       text,
       path,
-      icon
+      icon,
+      history
     } = this.props
 
     return (
       <div>
-        { super.render() }
         <h1> Transactions </h1>
         <div className = { '_transaction-container' }>
         {
-          
+
           transactions &&
           transactions.map((transaction, key) =>
             <TransactionCardComponent
@@ -83,8 +82,5 @@ class TransactionFragment extends BaseMVPView {
   }
 }
 
-TransactionFragment.propTypes = {
-  setSelectedNavigation: PropTypes.func,
-}
 
 export default ConnectPartial (TransactionFragment, Presenter)
