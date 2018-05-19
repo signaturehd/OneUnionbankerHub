@@ -13,7 +13,7 @@ class SideBar extends Component {
     const modules =
     [
       { id: 0 , title: 'News', path: '/', className: 'newsfeed-icon mobile-icon' },
-      { id: 1 , title: 'Benefits', path: '/benefits', className: 'benefits-icon mobile-icon' },
+      { id: 1 , title: 'My Benefits', path: '/benefits', className: 'benefits-icon mobile-icon' },
       { id: 2 , title: 'Transactions', path: '/transactions', className: 'transaction-icon mobile-icon' },
       { id: 3 , title: 'FAQS', path: '/faqs', className: 'faqs-icon mobile-icon' },
       { id: 4 , title: 'Profile', path: '/settings', className: 'settings-icon mobile-icon' },
