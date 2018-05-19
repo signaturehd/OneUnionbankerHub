@@ -11,7 +11,7 @@ class MedicalFragment extends Component {
   }
 
   navigate () {
-      this.props.history.push('/benefits')
+      this.props.history.push('/mybenefits/benefits')
   }
 
   render () {
@@ -20,15 +20,15 @@ class MedicalFragment extends Component {
     const benefitsOptions = [{
       styleName: 'medical-cards-1',
       title: 'DENTAL LOA',
-      path: '/benefits/medical/dentalloa',
+      path: '/mybenefits/benefits/medical/dentalloa',
     }, {
       styleName: 'medical-cards-2',
       title: 'DENTAL REIMBURSEMENT',
-      path: '/benefits/medical/dentalreimbursement',
+      path: '/mybenefits/benefits/medical/dentalreimbursement',
     }, {
       styleName: 'medical-cards-3',
       title: 'OPTICAL',
-      path: '/benefits/medical/optical',
+      path: '/mybenefits/benefits/medical/optical',
     }]
 
     const MedicalHome = () => (
@@ -58,8 +58,10 @@ class MedicalFragment extends Component {
     return (
       <div>
         <Switch>
-          <Route exact path = '/benefits/medical'  render = { MedicalHome } />
-          <Route path = '/benefits/medical/optical' render = { props => <OpticalFragment { ...props } />}/>
+          <Route exact path = '/mybenefits/benefits/medical'  render = { MedicalHome } />
+          <Route path = '/mybenefits/benefits/medical/optical' render = { props => <OpticalFragment { ...props } />}/>
+          <Route path = '/mybenefits/benefits/medical/dentalloa' render = { props => <DentalLoaView { ...props } />}/>
+          <Route path = '/mybenefits/benefits/medical/dentalreimbursement' render = { props => <OpticalFragment { ...props } />}/>
         </Switch>
       </div>
     )
