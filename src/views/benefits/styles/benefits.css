@@ -1,4 +1,18 @@
 /* benefits */
+.app-countdown {
+  min-height: 200px;
+  font-size: 50px;
+}
+.background {
+background-image: url('../../../images/UBBldg.jpg') !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;}
+.app{
+color: #fff;
+text-shadow: #969696 1px 3px 0, #aba8a8 1px 13px 5px;
+}
+
 ._benefits-container {
   display:grid;
   grid-column-gap: 5px;
@@ -45,6 +59,7 @@ i {
 
 .adjustment {
   margin-top: 4%;
+  
 }
 
 .option-cards-1 {
