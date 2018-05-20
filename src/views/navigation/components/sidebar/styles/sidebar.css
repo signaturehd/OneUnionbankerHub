@@ -142,18 +142,19 @@ ul {
       width: 190px;
   }
   .main-content {
-      order: 2;
-      flex: 5;
-      z-index: 2;
-      padding: 2%;
-      width: -webkit-fill-available;
-      position: absolute;
+    order: 2;
+    flex: 5;
+    z-index: 2;
+    padding: 2%;
+    width: -webkit-fill-available;
+    position: absolute;
+    height: 100%;
   }
 }
 /*IPHONE 6,7,8*/
 
  /*IPHONE X*/
-@media screen and (max-width: 768) and (max-height: 850px){
+@media screen and (max-width: 768){
   .panels {
       display: inline-flex;
       overflow: hidden;
