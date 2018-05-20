@@ -55,7 +55,7 @@ class FaqFragment extends BaseMVPView {
   }
 
   showSelected (selected) {
-    this.setState({ faqsList : selected.question })
+    this.setState({ faqsList : selected })
     this.props.history.push('/faqs/' + selected.category)
   }
 
@@ -109,7 +109,8 @@ class FaqFragment extends BaseMVPView {
       const FaqListFragment = props => {
         return (
         <div className = {'container'}>
-          <h1 className = { 'title-view' }>FAQ&#39;s</h1>
+          <i className = { 'left' } onClick = { () => history.push('/faqs') }></i>
+          <h1 className = { 'title-view' }>{faqsList && faqsList.category }</h1>
             <input type = 'text'
                    className = 'faqsSearchBar'
                    placeholder = {'Search FAQs'}
@@ -117,11 +118,12 @@ class FaqFragment extends BaseMVPView {
                    onChange = { this.updateSearch } />
           <div className = {'card-container'}>
           {
-          faqsList.map((faq, i) =>
-            <FaqCardComponent
-              key = {i}
-              searchCategory = { faq }
-              onClick = { () => this.getFaqDetails(faq.id, faq.title) } />
+            faqsList &&
+            faqsList.question.map((faq, i) =>
+              <FaqCardComponent
+                key = {i}
+                searchCategory = { faq }
+                onClick = { () => this.getFaqDetails(faq.id, faq.title) } />
             )
           }
           </div>
