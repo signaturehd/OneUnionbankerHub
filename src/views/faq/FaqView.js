@@ -19,6 +19,7 @@ class FaqFragment extends BaseMVPView {
         faqs: [],
         faqsCategory: [],
         faqsList: [],
+        showFaqModal : false,
         show : false,
         showFaqs : false,
         showFaqsCategories : false,
@@ -26,9 +27,12 @@ class FaqFragment extends BaseMVPView {
         showListFragment : false,
         searchString : '',
         faqSelected :  '',
-        key : ''
+        key : '',
+        faqTitle : null
     }
+
     this.updateSearch = this.updateSearch.bind(this)
+    this.getFaqDetails = this.getFaqDetails.bind(this)
     this.showSelected = this.showSelected.bind(this)
   }
 
@@ -45,20 +49,41 @@ class FaqFragment extends BaseMVPView {
   showFaqs ( faqs ) {
     this.setState({ faqs })
   }
+
   showFaqsCategories (faqsCategory) {
     this.setState({ faqsCategory })
   }
+
   showSelected (selected) {
-    this.setState({ faqsList : selected })
-    this.props.history.push('/faqs/' + selected)
+    this.setState({ faqsList : selected.question })
+    this.props.history.push('/faqs/' + selected.category)
   }
+
   showFaqsList ( faqsList ) {
     this.setState({ faqsList })
   }
 
+  getFaqDetails (id, faqTitle) {
+    this.setState({ showFaqModal : true, faqTitle })
+    this.presenter.getFaqDetails(id)
+  }
+
+  showFaqDetails (details) {
+    this.setState({ details })
+  }
+
   render () {
     const { history } = this.props
-    const { faqsList, faqs, faqsCategory, show, detail, key } = this.state
+    const {
+      faqsList,
+      faqs,
+      faqsCategory,
+      show,
+      details,
+      key,
+      showFaqModal,
+      faqTitle
+    } = this.state
     let searchCategory = faqs
     const Faq = () => (
         <div className = {'container'}>
@@ -91,6 +116,14 @@ class FaqFragment extends BaseMVPView {
                    value = { this.state.searchString }
                    onChange = { this.updateSearch } />
           <div className = {'card-container'}>
+          {
+          faqsList.map((faq, i) =>
+            <FaqCardComponent
+              key = {i}
+              searchCategory = { faq }
+              onClick = { () => this.getFaqDetails(faq.id, faq.title) } />
+            )
+          }
           </div>
         </div>
       )
@@ -101,6 +134,14 @@ class FaqFragment extends BaseMVPView {
            <Route path = '/faqs/:id' render = { props => <FaqListFragment { ...props } /> }/>
            <Route exact path = '/faqs' render = { Faq } />
         </Switch>
+
+        {
+          showFaqModal &&
+          <FaqModal
+            faqTitle = { faqTitle }
+            details = { details }
+            onClose = { () => this.setState({ showFaqModal : false, details: null, faqTitle: null })} />
+        }
       </div>
     )
   }

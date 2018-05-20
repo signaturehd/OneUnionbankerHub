@@ -28,7 +28,7 @@ class FaqCardComponent extends Component {
         className = { 'faqs-container' }
         onClick = { onClick }>
         <div style = {style.iconFaqs} className = { 'faqs-body' }>
-        <h2>{searchCategory.category}</h2>
+        <h2>{searchCategory.category || searchCategory.title }</h2>
         </div>
       </Card>
     )

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal } from '../../../ub-components/'
+import { Modal, CircularLoader } from '../../../ub-components/'
 
 class FaqModal extends Component {
   constructor (props) {
@@ -9,15 +9,24 @@ class FaqModal extends Component {
   }
 
   render () {
-    const { details, onClose, arrayListPush} = this.props
-    console.log(arrayListPush)
+    const { details, onClose, arrayListPush, faqTitle} = this.props
     return (
       <Modal
         isDismisable = { true }
-        onClose = { onClose }>
-
-        <h4>{details && details.title}</h4>
-        <span>{details && details.description}</span>
+        onClose = { onClose }
+      >
+        {
+          details ?
+            <div>
+              <h4>{faqTitle && faqTitle}</h4>
+              <div dangerouslySetInnerHTML = {{__html: details && details.details}}/>
+            </div>
+          :
+            <center>
+              <h3>Please wait...</h3>
+              <CircularLoader show = {true} />
+            </center>
+        }
       </Modal>
     )
   }
