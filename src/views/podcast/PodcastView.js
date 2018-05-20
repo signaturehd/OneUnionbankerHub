@@ -80,7 +80,6 @@ class PodcastView extends BaseMVPView {
     const { history } = this.props
     let searchPodcast = this.state.podcasts
     const search = searchString.trim().toLowerCase()
-    console.log(search)
 
     if (search.length > 0) {
         searchPodcast = searchPodcast.filter(podcasts => podcasts.title.toLowerCase().match(search))
@@ -129,8 +128,7 @@ class PodcastView extends BaseMVPView {
           <center className = {'circular-loader-center'}>
             <br/>
             <CircularLoader show = { true }/>
-          </center>
-          :
+          </center>          :
           <PodcastsListFragment
             disabled = {this.state.disabled}
             changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }

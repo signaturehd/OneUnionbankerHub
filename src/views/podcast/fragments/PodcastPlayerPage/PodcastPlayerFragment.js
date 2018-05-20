@@ -19,7 +19,6 @@ class PodcastPlayerFragment extends Component {
    }
   getRatings (e, e1) {
 
-    console.log(e, e)
   }
   podcasts (podcasts) {
       this.setState({ podcasts })
@@ -53,10 +52,10 @@ class PodcastPlayerFragment extends Component {
           emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
           fullSymbol = {<MdStar style={{ fontSize: 40,  color : '#c65e11' }} />}
           onChange = { e => {
-            this.getRatings( selectedPodcast && selectedPodcast.rating, e )
+            this.getRatings(selectedPodcast && selectedPodcast.rating, e)
           }}
           fractions = { 2 }
-          initialRating = { selectedPodcast ? selectedPodcast.rating : 0 }
+          initialRating = { selectedPodcast.rating || 0 }
          />
      </div>
     <div className = { 'podcasts-player-details' }>

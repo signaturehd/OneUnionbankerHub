@@ -44,7 +44,7 @@ export default class PodcastPresenter {
     getPodcastsRecommendations (disabled) {
       this.view.showLoader()
       this.getPodcastRecommendationInteractor.execute()
-      .subscribe( podcasts => {
+      .subscribe(podcasts => {
         this.view.hideLoader()
         this.view.podcastsRecommendation(podcasts)
       }, e => {
@@ -63,5 +63,4 @@ export default class PodcastPresenter {
         }
       )
   }
-
 }
