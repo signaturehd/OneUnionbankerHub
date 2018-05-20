@@ -90,17 +90,17 @@ class LibraryFragment extends BaseMVPView {
             type='radio'
             name='tabs'
             defaultChecked />
-          <label  className = { 'mobile-icon' } htmlFor = 'tab1'>All Books</label>
+          <label  htmlFor = 'tab1'>All Books</label>
 
           <input
             className = { 'input-tab' }
             id='tab2'
             type='radio'
             name='tabs' />
-          <label className = { 'mobile-icon' } htmlFor='tab2'>Recommended</label>
+          <label  htmlFor='tab2'>Recommended</label>
 
           <input className = { 'input-tab' } id='tab3'  type='radio' name='tabs' />
-          <label className = { 'mobile-icon' } htmlFor = 'tab3' >Borrowed</label>
+          <label  htmlFor = 'tab3' >Borrowed</label>
 
           <section id='content1'>
             <BookListFragment presenter={ this.presenter } _books = { _books } />
