@@ -21,5 +21,4 @@ export default class NoticePresenter {
       // TODO prompt generic error
      })
   }
-
 }
