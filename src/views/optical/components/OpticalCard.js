@@ -15,17 +15,17 @@ class OpticalCard extends Component {
     this.state = {
       file: '',
       file2: '',
-      imagePreviewUrl: ``,
-      imagePreviewUrl2: ``,
+      imagePreviewUrl: '',
+      imagePreviewUrl2: '',
       warning: '',
       amount : 0
     }
-    this._handleImageChange = this._handleImageChange.bind(this)
-    this._handleImageChange2 = this._handleImageChange2.bind(this)
-    this._handleSubmit = this._handleSubmit.bind(this)
+    this.handleImageChange = this.handleImageChange.bind(this)
+    this.handleImageChange2 = this.handleImageChange2.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  _handleSubmit (e) {
+  handleSubmit (e) {
     e.preventDefault()
     if (this.state.file === '' || this.state.file2 === '') {
       this.setState({ warning : 'Please complete the attached forms' })
@@ -35,7 +35,7 @@ class OpticalCard extends Component {
     }
   }
 
-  _handleImageChange (e) {
+  handleImageChange (e) {
     e.preventDefault()
 
     const reader = new FileReader()
@@ -51,7 +51,7 @@ class OpticalCard extends Component {
     reader.readAsDataURL(file)
   }
 
-  _handleImageChange2 (e1) {
+  handleImageChange2 (e1) {
     e1.preventDefault()
     const reader2 = new FileReader()
     const file2 = e1.target.files[0]
@@ -102,25 +102,25 @@ class OpticalCard extends Component {
       $imagePreview2 = (<div style = {styles.image2}></div>)
     return (
         <div className = { 'optical-card' } >
-          <form onSubmit={this._handleSubmit}>
+          <form onSubmit={this.handleSubmit}>
             <div className = {'optical-header'} >
               <h5 >Form Attachments</h5>
               <div className = { 'optical-amount-field' }>
                 <GenericTextBox
                   value = { amount }
                   placeholder = { 'Enter Amount' }
-                  onChange = { (e) => this.setState({ amount: parseInt(e.target.value) || 0 }) }
+                  onChange = { e => this.setState({ amount: parseInt(e.target.value, 10) || 0 }) }
                 />
               </div>
               <div className = {'optical-body'}>
                 <br/>
                 <FileUploader
-                  onChange = { this._handleImageChange }
+                  onChange = { this.handleImageChange }
                   placeholder = 'Optical Certificate'
                   value = { this.state.file.name }
                 />
                 <FileUploader
-                  onChange = { this._handleImageChange2 }
+                  onChange = { this.handleImageChange2 }
                   placeholder = 'Medical Certificate'
                   value = { this.state.file2.name }
                 />
