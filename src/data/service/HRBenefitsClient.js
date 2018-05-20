@@ -96,10 +96,6 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  paddRating (token, podcastParam) {
-    return this.service.paddRating(token, podcastParam)
-      .pipe(ServiceErrorOperator())
-  }
 
   reserveBook (token, BookReserveParam) {
     return this.service.ReserveBook(token, BookReserveParam)
@@ -127,6 +123,10 @@ export default class HRBenefitsClient {
   }
   getPodcastsViewed (token) {
     return this.service.getPodcastsViewed(token)
+      .pipe(ServiceErrorOperator())
+  }
+  paddRating (token, podcastParam) {
+    return this.service.paddRating(token, podcastParam)
       .pipe(ServiceErrorOperator())
   }
   /* dental reimbursement */

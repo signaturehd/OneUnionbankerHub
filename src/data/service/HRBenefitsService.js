@@ -152,13 +152,8 @@ export default class HRBenefitsService {
       })
     }
 
-  getPodcastsViewed (token) {
-      return this.apiClient.get('v1/podcasts/history/members', {
-          headers: { token }
-      })
-    }
   paddRating (token, podcastParam) {
-    return this.apiClient.post('v1/podcasts/rate', podcastParam, {
+    return this.apiClient.post('v1/podcasts/reviews', podcastParam, {
       headers : { token }
     })
   }
