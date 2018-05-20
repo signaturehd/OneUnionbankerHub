@@ -18,58 +18,50 @@ export default class PodcastPresenter {
       this.view = view
     }
 
-  getPodcasts () {
-    this.view.showLoading()
+  getPodcasts (disabled) {
+    this.view.showLoader()
     this.getPodcastInteractor.execute()
     .subscribe(podcasts => {
-        this.view.hideLoading()
+        this.view.hideLoader()
         this.view.podcasts(podcasts)
       }, e => {
-        this.view.hideLoading()
+        this.view.hideLoader()
         // TODO prompt generic error
     })
   }
 
     getPodcastsReviews () {
-      this.view.showLoading()
+      this.view.showLoader()
       this.getPodcastsReviewsInteractor.execute()
       .subscribe(podcasts => {
-          this.view.hideLoading()
+          this.view.hideLoader()
           this.view.podcastsreviews(podcasts)
         }, e => {
-          this.view.hideLoading()
+          this.view.hideLoader()
           // TODO prompt generic error
         })
     }
-    getPodcastsRecommendations () {
-      this.view.showLoading()
+    getPodcastsRecommendations (disabled) {
+      this.view.showLoader()
       this.getPodcastRecommendationInteractor.execute()
       .subscribe( podcasts => {
-        this.view.hideLoading()
+        this.view.hideLoader()
+        this.view.podcastsRecommendation(podcasts)
       }, e => {
-        this.view.hideLoading()
+        this.view.hideLoader()
       })
     }
     paddRating (id, rating) {
-      this.view.showLoading()
+      this.view.showLoader()
       this.addPodcastRatingInteractor.execute(PodcastRateParam(id, rating))
       .subscribe(
         data => {
-          this.view.hideLoading()
+          this.view.hideLoader()
         },
         error => {
-          this.view.hideLoading()
+          this.view.hideLoader()
         }
       )
   }
-  getPodcastsViewed () {
-    this.view.showLoading()
-    this.getPodcastViewedInteractor.execute()
-    .subscribe(podcasts => {
-        this.view.hideLoading()
-      }, e => {
-        this.view.hideLoading()
-        // TODO prompt generic error
-    })
-  }
+
 }

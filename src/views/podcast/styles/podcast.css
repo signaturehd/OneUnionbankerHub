@@ -76,113 +76,13 @@ label:hover {
   padding-left: 30px;
   padding-right: 30px;
 }
-@media screen and (max-width: 1200px) {
-  label {
-    font-size: 18.5px;
-    padding: 16px;
-    font-weight: normal;
-  }
-  label:before {
-    margin: 0;
-    font-size: 18.5px;
-  }
-  .title-view {
-     width: 100%;
-    margin-top: 20px;
-    font-size: 24px;
-  }
-  .podcastsSearchBar {
-     width: 50%;
-    margin-top: -55px;
-    font-size: 16px;
-  }
-}
-@media screen and (max-width: 650px) {
-  label {
-    font-size: 16px;
-    padding: 10px;
-    font-weight: normal;
-  }
-  label:before {
-    margin: 0;
-    font-size: 14px;
-  }
-  .title-view {
-     width: 100%;
-    margin-top: 20px;
-    font-size: 20px;
-    text-align: center;
-  }
-  .podcastsSearchBar {
-     width: 100%;
-    margin-top: -10px;
-    font-size: 14px;
-  }
-}
-@media screen and (max-width: 350px) {
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
   label {
     font-size: 14px;
-    padding: 10px;
-    font-weight: normal;
-  }
-  label:before {
-    margin: 0;
-    font-size: 10px;
-  }
-  .title-view {
-     width: 100%;
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-  }
-  .podcastsSearchBar {
-     width: 100%;
-    margin-top: -10px;
-    font-size: 12px;
-  }
-}
-@media screen and (max-width: 310px) {
-  label {
-    font-size: 12px;
-    padding: 9px;
-    font-weight: normal;
-  }
-  .title-view {
-     width: 100%;
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-  }
-  .podcastsSearchBar {
-     width: 100%;
-    margin-top: -10px;
-    font-size: 12px;
-  }
-}
-@media screen and (max-width: 270px) {
-  label {
-    font-size: 10px;
-    padding: 4px;
-    font-weight: normal;
-  }
-  .title-view {
-     width: 100%;
-    margin-top: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-  }
-  .podcastsSearchBar {
-     width: 100%;
-    margin-top: -10px;
-    font-size: 10px;
-  }
-}
-@media screen and (max-width: 200px) {
-  label {
-    font-size: 8px;
     padding: 3px;
     font-weight: normal;
   }
@@ -190,15 +90,242 @@ label:hover {
     margin: 0;
     font-size: 14px;
   }
-  .title-view {
-     width: 100%;
-    margin-top: 5px;
-    font-size: 9px;
-    text-align: center;
+  .header-margin-default {
+    margin: auto auto 25px auto !important;
+    text-align: center !important;
+    display: block !important;
   }
   .podcastsSearchBar {
-     width: 100%;
-    margin-top: -25px;
-    font-size: 9px;
+    font-size: 12px;
+  }
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen
+and (min-width : 321px) {
+  label {
+    font-size: 14px;
+    padding: 3px;
+    font-weight: normal;
+  }
+  label:before {
+    margin: 0;
+    font-size: 14px;
+  }
+  .header-margin-default {
+    margin: auto auto 25px auto !important;
+    text-align: center !important;
+    display: block !important;
+  }
+  .podcastsSearchBar {
+    font-size: 12px;
+  }
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen
+and (max-width : 320px) {
+  label {
+    font-size: 14px;
+    padding: 3px;
+    font-weight: normal;
+  }
+  label:before {
+    margin: 0;
+    font-size: 16px;
+  }
+  .header-margin-default {
+    margin: auto auto 25px auto !important;
+    text-align: center !important;
+    display: block !important;
+  }
+  .podcastsSearchBar {
+    font-size: 12px;
+  }
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px) {
+  label {
+    font-size: 20px;
+    padding: 10px;
+    font-weight: normal;
+  }
+  label:before {
+    margin: 0;
+    font-size: 20px;
+  }
+  .header-margin-default {
+    margin: auto auto 30px auto !important;
+    text-align: center !important;
+    display: block !important;
+  }
+  .podcastsSearchBar {
+    font-size: 16px;
+  }
+}
+
+/* iPads (landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) {
+  label {
+    font-size: 20px;
+    padding: 10px;
+    font-weight: normal;
+  }
+  label:before {
+    margin: 0;
+    font-size: 20px;
+  }
+  .header-margin-default {
+    margin: auto auto 30px auto !important;
+    text-align: center !important;
+    display: block !important;
+  }
+  .podcastsSearchBar {
+    font-size: 16px;
+  }
+}
+
+/* iPads (portrait) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+  label {
+    font-size: 20px;
+    padding: 10px;
+    font-weight: normal;
+  }
+  label:before {
+    margin: 0;
+    font-size: 20px;
+  }
+  .header-margin-default {
+    margin: auto auto 30px auto !important;
+    text-align: center !important;
+    display: block !important;
+  }
+  .podcastsSearchBar {
+    font-size: 16px;
+  }
+}
+
+/* Desktops and laptops ----------- */
+@media only screen
+and (min-width : 1224px) {
+  label {
+    font-size: 18px;
+    padding: 10px 10px 10px 30px;
+    font-weight: normal;
+  }
+  label:before {
+    margin: 0;
+    font-size: 18px;
+  }
+  .header-margin-default {
+    margin: auto auto 30px auto !important;
+    text-align: center !important;
+    display: block !important;
+  }
+  .podcastsSearchBar {
+    font-size: 14px;
+  }
+}
+
+/* Large screens ----------- */
+@media only screen
+and (min-width : 1824px) {
+  label {
+    font-size: 20px;
+    padding: 15px 10px 10px 50px;
+    font-weight: normal;
+  }
+  label:before {
+    margin: 0;
+    font-size: 20px;
+  }
+  .header-margin-default {
+    margin: auto auto 30px auto !important;
+    text-align: center !important;
+    display: block !important;
+  }
+  .podcastsSearchBar {
+    font-size: 18px;
+  }
+}
+
+/* iPhone 5 (portrait &amp; landscape)----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px) {
+  label {
+    font-size: 14px;
+    padding: 3px;
+    font-weight: normal;
+  }
+  label:before {
+    margin: 0;
+    font-size: 14px;
+  }
+  .header-margin-default {
+    margin: auto auto 25px auto !important;
+    text-align: center !important;
+    display: block !important;
+  }
+  .podcastsSearchBar {
+    font-size: 12px;
+  }
+}
+
+/* iPhone 5 (landscape)----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : landscape) {
+  label {
+    font-size: 14px;
+    padding: 3px;
+    font-weight: normal;
+  }
+  label:before {
+    margin: 0;
+    font-size: 14px;
+  }
+  .header-margin-default {
+    margin: auto auto 25px auto !important;
+    text-align: center !important;
+    display: block !important;
+  }
+  .podcastsSearchBar {
+    font-size: 12px;
+  }
+}
+
+/* iPhone 5 (portrait)----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : portrait) {
+  label {
+    font-size: 12px;
+    padding: 3px;
+    font-weight: normal;
+  }
+  label:before {
+    margin: 0;
+    font-size: 12px;
+  }
+  .header-margin-default {
+    margin: auto auto 20px auto !important;
+    text-align: center !important;
+    display: block !important;
+  }
+  .podcastsSearchBar {
+    font-size: 10px;
   }
 }

@@ -16,39 +16,41 @@ import PodcastsRecommendationFragment from './fragments/podcaststab/PodcastsReco
 import PodcastsListFragment from './fragments/podcaststab/PodcastsListFragment'
 import PodcastsViewedFragment from './fragments/podcaststab/PodcastsViewedFragment'
 
+import { CircularLoader } from '../../ub-components'
+
 class PodcastView extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
         podcasts: [],
         podcastsRecommendation : [],
-        podcastViewed : [],
         reviewRates: [],
+        podcastreview: [],
         show : false,
-        rating: false,
         showRating : false,
-        paddRating : false,
         details : null,
         searchString : '',
         selectedPodcast: null,
+        disabled : false,
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
 
-  paddRating (id, rating) {
-      this.props.presenter.ratePodcasts(id, rating)
-  }
   componentDidMount () {
       this.presenter.getPodcasts()
       this.presenter.getPodcastsRecommendations()
-      this.presenter.getPodcastsViewed()
-      this.presenter.getPodcastsReviews()
-      this.presenter.paddRating()
       this.props.setSelectedNavigation(5)
       this.props.history.push('/mylearning/podcast')
   }
-  updateSearch () {
-      this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
+  showLoader () {
+    this.setState({ disabled : true })
+  }
+
+  hideLoader () {
+    this.setState({ disabled : false })
+  }
+  updateSearch (e) {
+      this.setState({ searchString: e.target.value })
   }
   podcasts (podcasts) {
       this.setState({ podcasts })
@@ -56,31 +58,32 @@ class PodcastView extends BaseMVPView {
   podcastsRecommendation (podcastsRecommendation) {
       this.setState({ podcastsRecommendation })
   }
-  podcastsRecommendation (podcastsRecommendation) {
-      this.setState({ podcastsRecommendation })
+  podcastsreviews (podcastreview) {
+      this.setState({ podcastreview })
   }
-  podcastViewed (podcastViewed) {
-    this.setState({ podcastViewed })
-  }
+
   navigate () {
     this.props.history.push ('/mylearning')
   }
   render () {
     const {
       podcasts,
-      podcastViewed,
       podcastsRecommendation,
-      paddRating,
+      paddRating,podcastreview,
       show,
       details,
+      disabled,
       detail,
+      searchString,
       selectedPodcast
     } = this.state
     const { history } = this.props
     let searchPodcast = this.state.podcasts
-    const search = this.state.searchString.trim().toLowerCase()
+    const search = searchString.trim().toLowerCase()
+    console.log(search)
+
     if (search.length > 0) {
-        searchPodcast = searchPodcast.filter(podcast => podcast.title.toLowerCase().match(search))
+        searchPodcast = searchPodcast.filter(podcasts => podcasts.title.toLowerCase().match(search))
     }
     const PodcastPlayer = () => (
         <PodcastPlayerFragment
@@ -88,6 +91,7 @@ class PodcastView extends BaseMVPView {
             selectedPodcast = { selectedPodcast }
             presenter = { this.presenter }
             podcasts = { podcasts }
+            podcastreview = { podcastreview }
             history = { history }/>
     )
 
@@ -100,9 +104,8 @@ class PodcastView extends BaseMVPView {
     </div>
     <input type = 'text'
              className = {'podcastsSearchBar'}
-             ref='search'
              placeholder = {'Search Podcasts'}
-             value = { this.state.searchString }
+             value = { searchString }
              onChange = { this.updateSearch } />
     <div className = { 'tabs-container' }>
       <input
@@ -121,21 +124,30 @@ class PodcastView extends BaseMVPView {
       <label htmlFor='tab2'>Recommended</label>
 
       <section id='content1'>
-        <PodcastsListFragment
-          changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
-          presenter = { this.presenter }
-          searchPodcast = { searchPodcast }
-          details = { details }
-
-          history = { history } />
+        {
+          this.state.disabled ?
+          <center className = {'circular-loader-center'}>
+            <br/>
+            <CircularLoader show = { true }/>
+          </center>
+          :
+          <PodcastsListFragment
+            disabled = {this.state.disabled}
+            changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
+            presenter = { this.presenter }
+            searchPodcast = { searchPodcast }
+            details = { details }
+            history = { history } />
+        }
       </section>
       <section id='content2'>
-        <PodcastsRecommendationFragment
-          presenter = { this.presenter }
-          searchPodcast = { searchPodcast }
-          changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
-          podcastsRecommendation = { podcastsRecommendation }
-          history = { history } />
+          <PodcastsRecommendationFragment
+            disabled = {this.state.disabled}
+            presenter = { this.presenter }
+            searchPodcast = { searchPodcast }
+            changeSelectedPodcast={ podcast => this.setState({ selectedPodcast: podcast }) }
+            podcastsRecommendation = { podcastsRecommendation }
+            history = { history } />
       </section>
     </div>
   </div>

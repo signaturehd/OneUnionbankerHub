@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import AudioImage from '../../../../images/podcast.jpg'
 import {
   Media,
   Player,
@@ -23,20 +24,20 @@ class MedPlayer extends Component {
   render () {
     const { selectedPodcast, history } = this.props
     const url = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
-    const newUrl = url
 
    return (
     <div className = { 'media-player-content' }>
       <Media>
       {({ isFullscreen, playPause }) =>
-        <div
-          className={`media-player${  isFullscreen ? ' media-player--fullscreen' : ''}`}
-          tabIndex="0">
-          <Player
-            className = {'player-content'}
-            src={ newUrl }
-            onClick={() => playPause()}
-          />
+      <div
+        className={`media-player${  isFullscreen ? ' media-player--fullscreen' : ''}`}
+        tabIndex="0">
+          <div className = {'default-podcast-background'}>
+            <Player
+              className = { 'player-content' }
+              src = {selectedPodcast && selectedPodcast.url}
+              onClick = { () => playPause()}/>
+          </div>
           <div className="media-controls">
             <PlayPause className="media-control media-control--play-pause" />
             <CurrentTime className="media-control media-control--current-time" />
@@ -50,9 +51,9 @@ class MedPlayer extends Component {
             <Fullscreen className="media-control media-control--fullscreen" />
           </div>
         </div>
-      }
-    </Media>
-  </div>
+        }
+      </Media>
+      </div>
     )
   }
 }

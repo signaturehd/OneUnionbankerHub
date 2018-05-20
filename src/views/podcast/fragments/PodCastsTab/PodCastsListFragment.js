@@ -36,7 +36,7 @@ class PodcastListFragment extends Component {
       }
       </div>
     )
-}
   }
+}
 
 export default PodcastListFragment

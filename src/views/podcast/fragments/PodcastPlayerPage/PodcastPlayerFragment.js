@@ -14,17 +14,17 @@ class PodcastPlayerFragment extends Component {
     this.state = {
       rating : 0,
       changeSelected : null,
-      paddRating : false,
     }
+    this.getRatings = this.getRatings.bind(this)
    }
+  getRatings (e, e1) {
 
-  paddRating (id, rating) {
-    this.props.presenter.ratePodcasts(id, rating)
+    console.log(e, e)
   }
-
   podcasts (podcasts) {
       this.setState({ podcasts })
   }
+
  render () {
    const {
      title,
@@ -34,11 +34,11 @@ class PodcastPlayerFragment extends Component {
      rateBook,
      selectedPodcast,
      podcasts,
+     podcastreview,
      changeSelectedPodcast,
      history
    } = this.props
    const { rating } = this.state
-
    return (
     <div>
     <div className={ 'podplay-header' }>
@@ -53,20 +53,21 @@ class PodcastPlayerFragment extends Component {
           emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
           fullSymbol = {<MdStar style={{ fontSize: 40,  color : '#c65e11' }} />}
           onChange = { e => {
-            ratePodcasts(detail.id, e)
-            this.setState({ rating : e })
+            this.getRatings( selectedPodcast && selectedPodcast.rating, e )
           }}
           fractions = { 2 }
           initialRating = { selectedPodcast ? selectedPodcast.rating : 0 }
          />
      </div>
     <div className = { 'podcasts-player-details' }>
-      <h2 className = { 'title-podcast' }> <bold> Title : { selectedPodcast && selectedPodcast.title }</bold> </h2>
+      <h2 className = { 'title-podcast' }> Title : { selectedPodcast && selectedPodcast.title } </h2>
       <h4 className = { 'author-podcast' }> Author : { selectedPodcast && selectedPodcast.speaker }</h4>
       <h4 className = { 'author-podcast' }> Details : { 'Description' }</h4>
     </div>
     <br/>
-    <Board selectedPodcast = { selectedPodcast && selectedPodcast.review }/>
+    <Board
+      podcastreview = { podcastreview }
+      selectedPodcast = { selectedPodcast && selectedPodcast.review }/>
     </div>
       <div className = { 'podplay-sidebar-right' }>
         <PodcastPlayerDetailsFragment

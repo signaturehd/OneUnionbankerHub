@@ -34,7 +34,8 @@ class Board extends Component  {
   }
 
   render () {
-    const { selectedPodcast } = this.props
+    const { selectedPodcast, podcastreview } = this.props
+
     return (
       <div className="board">
         <div className = { 'feedback-title' } > User Feedback </div>
@@ -50,13 +51,7 @@ class Board extends Component  {
                 onClick={this.addNewComment}
                 className="btn btn-success" />
           </div>
-        {selectedPodcast && selectedPodcast.map((comment, i) =>
-          <Comment
-            key={i}
-            removeCommentFromBoard ={this.removeComment}
-            updateCommentFromBoard ={this.updateComment}
-            >{comment}</Comment>
-        )}
+
       </div>
     )
   }
@@ -64,5 +59,11 @@ class Board extends Component  {
 Board.propTypes = {
   selectedPodcast : PropTypes.array
 }
-
+// {selectedPodcast && selectedPodcast.map((comment, i) =>
+//   <Comment
+//     key={i}
+//     removeCommentFromBoard ={this.removeComment}
+//     updateCommentFromBoard ={this.updateComment}
+//     >{comment}</Comment>
+// )}
 export default Board
