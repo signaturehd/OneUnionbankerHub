@@ -22,3 +22,6 @@ i {
   font-size: 35px;
   margin-left: 30px;
 }
+.circular-loader-center {
+  margin: 200px auto auto auto;
+}
