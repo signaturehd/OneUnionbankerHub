@@ -64,11 +64,11 @@ class LibraryFragment extends BaseMVPView {
   render () {
     const { filteredBook, books, tabs, recommended, borrowed, reserve } = this.state
     const { history } = this.props
-    let _books = this.state.books
-    const _borrowed = this.state.borrowed
+    let searchBooks = this.state.books
+    const searchBorrowed = this.state.borrowed
     const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
-      _books = _books.filter(books => books.title.toLowerCase().match(search))
+      searchBooks = searchBooks.filter(books => books.title.toLowerCase().match(search))
     }
     return (
       <div>
@@ -103,7 +103,7 @@ class LibraryFragment extends BaseMVPView {
           <label  htmlFor = 'tab3' >Borrowed</label>
 
           <section id='content1'>
-            <BookListFragment presenter={ this.presenter } _books = { _books } />
+            <BookListFragment presenter={ this.presenter } searchBooks = { searchBooks } />
           </section>
           <section id='content2'>
             <BookRecommendationFragment presenter = { this.presenter } recommended = { recommended } />

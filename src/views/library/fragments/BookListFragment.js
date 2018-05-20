@@ -19,12 +19,12 @@ class BookListFragment extends Component {
   }
 
   render () {
-    const { _books, detail } = this.props
+    const { searchBooks, detail } = this.props
     const { details } = this.state
     return (
       <div className = {'library-container'}>
         {
-          _books.map((book, key) =>
+          searchBooks.map((book, key) =>
             <BookCardComponent
               detail = { book } key = { key }
               onClick = { (details, view) => this.setState({ details, view }) }
