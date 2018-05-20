@@ -3,14 +3,21 @@
   min-height: 200px;
   font-size: 50px;
 }
-.background {
-background-image: url('../../../images/UBBldg.jpg') !important;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;}
+.benefits-loader {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20%;
+  vertical-align: middle;
+}
+
+
 .app{
-color: #fff;
-text-shadow: #969696 1px 3px 0, #aba8a8 1px 13px 5px;
+font-weight: lighter;
+margin-top:200px;
+margin-right:200px;
+margin-left: 200px;
+margin-bottom: 100px;
+color: #000000;
 }
 
 ._benefits-container {
