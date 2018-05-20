@@ -21,8 +21,6 @@ class FaqFragment extends BaseMVPView {
         faqsList: [],
         showFaqModal : false,
         show : false,
-        showFaqs : false,
-        showFaqsCategories : false,
         showSelected: false,
         showListFragment : false,
         searchString : '',
@@ -36,8 +34,8 @@ class FaqFragment extends BaseMVPView {
     this.showSelected = this.showSelected.bind(this)
   }
 
-  updateSearch () {
-    this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
+  updateSearch (e) {
+      this.setState({ searchString: e.target.value })
   }
 
   componentDidMount () {
@@ -82,15 +80,19 @@ class FaqFragment extends BaseMVPView {
       details,
       key,
       showFaqModal,
-      faqTitle
+      faqTitle,
+      searchString
     } = this.state
     let searchCategory = faqs
+    const search = searchString.trim().toLowerCase()
+    if (search.length > 0) {
+        searchCategory = searchCategory.filter(faq => faq.category.toLowerCase().match(search))
+    }
     const Faq = () => (
         <div className = {'container'}>
           <h1 className = { 'title-view' }>FAQ&#39;s</h1>
             <input type = 'text'
                    className = 'faqsSearchBar'
-                   ref="search"
                    placeholder = {'Search FAQs'}
                    value = { this.state.searchString }
                    onChange = { this.updateSearch } />

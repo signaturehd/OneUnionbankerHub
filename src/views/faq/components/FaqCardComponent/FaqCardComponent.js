@@ -8,10 +8,10 @@ import './faq-card-component.css'
 class FaqCardComponent extends Component {
   constructor (props) {
     super(props)
-}
+    }
+
   render () {
-  const { searchCategory, onClick, faqs } = this.props
-  console.log(faqs)
+  const { searchCategory, onClick, faqs, history } = this.props
   const style = {
       iconFaqs : {
         background : `url('${searchCategory && searchCategory.icon}') rgb(0,0,0,0.7)`,

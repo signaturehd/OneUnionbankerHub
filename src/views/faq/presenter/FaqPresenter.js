@@ -19,7 +19,6 @@ export default class FaqPresenter {
           this.view.hideLoading()
           this.view.showFaqs(resp)
         }, e => {
-          console.log(e)
       })
     }
 
@@ -29,7 +28,6 @@ export default class FaqPresenter {
         .subscribe(resp => {
           this.view.showFaqDetails(resp)
         }, e => {
-          console.log(e)
         })
     }
   }
