@@ -11,9 +11,10 @@ class FaqCardComponent extends Component {
 }
   render () {
   const { searchCategory, onClick, faqs } = this.props
+  console.log(faqs)
   const style = {
       iconFaqs : {
-        background : `url('${faqs && faqs}') rgb(0,0,0,0.7)`,
+        background : `url('${searchCategory && searchCategory.icon}') rgb(0,0,0,0.7)`,
         backgroundSize : '125px',
         backgroundRepeat : 'no-repeat',
         height: '100% auto',
@@ -27,7 +28,7 @@ class FaqCardComponent extends Component {
         className = { 'faqs-container' }
         onClick = { onClick }>
         <div style = {style.iconFaqs} className = { 'faqs-body' }>
-        <h2>{searchCategory}</h2>
+        <h2>{searchCategory.category}</h2>
         </div>
       </Card>
     )

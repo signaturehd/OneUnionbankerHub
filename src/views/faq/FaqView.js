@@ -59,10 +59,9 @@ class FaqFragment extends BaseMVPView {
   render () {
     const { history } = this.props
     const { faqsList, faqs, faqsCategory, show, detail, key } = this.state
-    let searchCategory = this.state.faqsCategory
+    let searchCategory = faqs
     const Faq = () => (
         <div className = {'container'}>
-          { super.render() }
           <h1 className = { 'title-view' }>FAQ&#39;s</h1>
             <input type = 'text'
                    className = 'faqsSearchBar'
@@ -85,7 +84,6 @@ class FaqFragment extends BaseMVPView {
       const FaqListFragment = props => {
         return (
         <div className = {'container'}>
-          { super.render() }
           <h1 className = { 'title-view' }>FAQ&#39;s</h1>
             <input type = 'text'
                    className = 'faqsSearchBar'
@@ -93,7 +91,6 @@ class FaqFragment extends BaseMVPView {
                    value = { this.state.searchString }
                    onChange = { this.updateSearch } />
           <div className = {'card-container'}>
-
           </div>
         </div>
       )

@@ -9,25 +9,14 @@ export default class FaqPresenter {
       this.view = view
     }
 
-    getFaqs ( faq ) {
+    getFaqs () {
       this.view.showLoading()
       this.getFaqInteractor.execute()
-      .do(console.log(faq))
-
-      .flatMap( listResponse => Observable.from(listResponse) )
-      .toArray()
-      .do(littleResponse => this.view.showFaqsList(littleResponse, faq))
-
-      .map( faqResponse => faqResponse )
-      .do( faqResponse => this.view.showFaqs(faqResponse) )
-
-      .flatMap(resp => Observable.from(resp))
-      .map(resp => resp && resp.category && resp.category.category)
-      .distinct()
-      .toArray()
-      .do(resp => this.view.showFaqsCategories(resp))
-      .do(resp => this.view.hideLoading(),
-          e => this.view.hideLoading())
-      .subscribe()
+      .subscribe(resp => {
+          this.view.hideLoading()
+          this.view.showFaqs(resp)
+        }, e => {
+          console.log(e)
+      })
     }
   }
