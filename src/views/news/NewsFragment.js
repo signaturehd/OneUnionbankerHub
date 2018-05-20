@@ -38,10 +38,10 @@ class NewsFragment extends BaseMVPView {
   render () {
     const { news, show, details } = this.state
     const { history } = this.props
-    let _news = this.state.news
+    let searchNews = this.state.news
     const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
-      _news = _news.filter(news => news.title.toLowerCase().match(search))
+      searchNews = searchNews.filter(news => news.title.toLowerCase().match(search))
   }
     return (
       <div className = 'container'>
@@ -59,7 +59,7 @@ class NewsFragment extends BaseMVPView {
              onChange = { this.updateSearch } />
         <div className = 'news-card-container'>
         {
-          _news.map((news, i) =>
+          searchNews.map((news, i) =>
             <NewsCardComponent
               key={ i }
               news = { news }
