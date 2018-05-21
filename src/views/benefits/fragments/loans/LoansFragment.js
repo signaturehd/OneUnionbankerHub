@@ -15,7 +15,7 @@ class LoansFragment extends Component {
   }
 
   componentDidMount () {
-    setTimeout(() => this.setState({showLoader : false}), 3000)
+    setTimeout(() => this.setState({ showLoader : false }), 3000)
   }
 
   render () {
@@ -33,8 +33,7 @@ class LoansFragment extends Component {
                 showLoader ?
                 <center>
                   <CircularLoader show = {true} />
-                </center>
-                :
+                </center>                :
                 <center>
                   <h1> This module will launch on July 9, 2018</h1>
                   <br/>
