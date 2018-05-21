@@ -6,13 +6,17 @@ import PodcastRateParam from '../../../domain/param/PodcastRateParam'
 import PodcastReviewInteractor from '../../../domain/interactor/podcast/PodcastReviewInteractor'
 
 export default class PodcastPresenter {
-    constructor (container) {
-      this.getPodcastInteractor = new PodcastInteractor(container.get('HRBenefitsClient'))
-      this.getPodcastRecommendationInteractor = new PodcastRecommendationInteractor(container.get('HRBenefitsClient'))
-      this.addPodcastRatingInteractor = new AddPodcastRatingInteractor(container.get('HRBenefitsClient'))
-      this.getPodcastViewedInteractor = new PodcastViewedInteractor(container.get('HRBenefitsClient'))
-      this.getPodcastsReviewsInteractor = new PodcastReviewInteractor(container.get('HRBenefitsClient'))
-    }
+  constructor (container) {
+    this.getPodcastInteractor = new PodcastInteractor(container.get('HRBenefitsClient'))
+    this.getPodcastRecommendationInteractor = new PodcastRecommendationInteractor(container.get('HRBenefitsClient'))
+    this.addPodcastRatingInteractor = new AddPodcastRatingInteractor(container.get('HRBenefitsClient'))
+    this.getPodcastViewedInteractor = new PodcastViewedInteractor(container.get('HRBenefitsClient'))
+    this.getPodcastsReviewsInteractor = new PodcastReviewInteractor(container.get('HRBenefitsClient'))
+  }
+
+  setView (view) {
+    this.view = view
+  }
 
   getPodcasts () {
     this.view.showLoading()
