@@ -153,6 +153,12 @@ export default class HRBenefitsClient {
     return this.service.getFaqs(token)
       .pipe(ServiceErrorOperator())
   }
+
+  getFaqDetails (token, faqParam) {
+    return this.service.getFaqDetails(token, faqParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Notice of Undertaking */
   updateNotice (token, noticeParam) {
     return this.service.updateNotice(token, noticeParam)

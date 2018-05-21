@@ -163,6 +163,12 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  getFaqDetails (token, faqParam) {
+    return this.apiClient.get('v1/faqs/' + faqParam, {
+      headers: { token }
+    })
+  }
   /* notice of undertaking */
 
   updateNotice (token, noticeParam) {
