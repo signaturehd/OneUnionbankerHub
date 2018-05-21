@@ -14,7 +14,7 @@ export default class SessionProvider {
   }
 
   getToken () {
-   return this.storage.getItem(TOKEN) || ''
+    return this.storage.getItem(TOKEN) || ''
   }
 
   setAccountToken (accountToken = '') {
@@ -22,7 +22,7 @@ export default class SessionProvider {
   }
 
   getAccountToken () {
-   return this.storage.getItem(ACCOUNT_TOKEN) || ''
+    return this.storage.getItem(ACCOUNT_TOKEN) || ''
   }
 
   setAccountNumber (accountNumber = '') {
