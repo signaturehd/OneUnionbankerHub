@@ -26,7 +26,7 @@ class NewsFragment extends BaseMVPView {
   componentDidMount () {
       this.presenter.getNews()
       this.props.setSelectedNavigation(0)
-      this.props.history.push('/news')
+      this.props.history.push('/')
   }
   updateSearch () {
       this.setState({ searchString: this.refs.search.value.substr(0 , 20) })

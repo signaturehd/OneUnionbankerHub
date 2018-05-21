@@ -83,7 +83,7 @@ class NavigationView extends BaseMVPView {
               <main className ="panel main-content " role="main">
                   <Drawer >
                       <Switch>
-                        <Route exact path = '/news' render = {props =>
+                        <Route exact path = '/' render = {props =>
                           <NewsFragment { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> }/>
                         <Route path = '/benefits' render = { props =>
@@ -116,7 +116,7 @@ class NavigationView extends BaseMVPView {
                 <SideBar
                   logout = { this.callLogout }
                   selected={ selected }
-                  onNavigationClick = { path => this.props.history.push(path) } >
+                  history = { this.props.history } >
                  </SideBar>
               </aside>
           </div>
