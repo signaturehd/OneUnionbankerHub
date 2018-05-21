@@ -63,21 +63,19 @@ class NewsFragment extends BaseMVPView {
              value = { this.state.searchString }
              onChange = { this.updateSearch } />
               {
-          
                 showLoader ?
                 <center>
-                  <CircularLoader show = {true} />
+                <CircularLoader show = {true} />
                 </center>                :
         <div className = 'news-card-container'>
-        {
+          {
           _news.map((news, i) =>
             <NewsCardComponent
               key={ i }
               news = { news }
               onClick = { details => this.setState({ details, show: true }) } />)
-            }
-        }
-        
+            
+          }
         </div>
       }
       </div>
