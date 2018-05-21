@@ -58,8 +58,7 @@ class OpticalModal extends Component {
                 <br/>
                 <br/>
                 <CircularLoader show={true}/>
-              </center>
-              :
+              </center>              :
               <div>
                 <h2>Optical Reimbursement Description</h2>
                 <br/>
@@ -72,8 +71,9 @@ class OpticalModal extends Component {
                 <br/>
                 <GenericButton
                   onClick = { () => {
-                    this.setState({disableSubmit : true, isDismisable: false})
-                    submitForm(fileReceived, fileReceived2, amount)} }
+                    this.setState({ disableSubmit : true, isDismisable: false })
+                    submitForm(fileReceived, fileReceived2, amount)
+} }
                   text = { 'confirm' }
                   disabled = {this.state.disabled}
                 />
