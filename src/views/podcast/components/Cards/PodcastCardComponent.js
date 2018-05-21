@@ -40,35 +40,35 @@ class PodcastCardComponent extends Component {
       }
     }
     return (
-        <Card >
-          <div style = {style.styles}
-               className = {'news-body'}>
-            <h2 style = { style.titleStyle }> {'Title'} </h2>
-            <h2 style = { style.authorStyle }> -{ searchPodcast && searchPodcast.speaker } </h2>
-          </div>
-          <div className = {'card-footer'}>
-          <center>
-           <Rating
-              rateBook = { (id, rating) => this.addRating(id, rating) }
-              emptySymbol = {<MdStarOutline style={{ fontSize: 35, color : '#c65e11' }} />}
-              fullSymbol = {<MdStar style={{ fontSize: 35,  color : '#c65e11' }} />}
-              onChange = { e => {
-                rateBook(detail.id, e)
-                this.setState({ rating : e })
-              }}
-              fractions = { 2 }
-              initialRating = { searchPodcast && searchPodcast.rating || 0 }
-              readonly
-            />
+      <Card>
+        <div style = { style.styles }
+             className = {'news-body'}>
+          <h2 style = { style.titleStyle }> {'Title'} </h2>
+          <h2 style = { style.authorStyle }> -{ searchPodcast && searchPodcast.speaker } </h2>
+        </div>
+        <div className = {'card-footer'}>
+        <center>
+         <Rating
+            rateBook = { (id, rating) => this.addRating(id, rating) }
+            emptySymbol = {<MdStarOutline style={{ fontSize: 35, color : '#c65e11' }} />}
+            fullSymbol = {<MdStar style={{ fontSize: 35,  color : '#c65e11' }} />}
+            onChange = { e => {
+              rateBook(detail.id, e)
+              this.setState({ rating : e })
+            }}
+            fractions = { 2 }
+            initialRating = { (searchPodcast && searchPodcast.rating) || 0 }
+            readonly
+          />
 
-            </center>
-            <small>
-            <FaPlayCircleO
-              className = { 'fa-play-button' }
-              onClick = { onClick }/>
-            </small>
-          </div>
-        </Card>
+          </center>
+          <small>
+          <FaPlayCircleO
+            className = { 'fa-play-button' }
+            onClick = { onClick }/>
+          </small>
+        </div>
+      </Card>
     )
   }
 }
