@@ -11,7 +11,7 @@ import './css/login.css'
 
 import OtpModal from '../otp/OtpModal'
 
-import '../../../store'
+import { connect } from 'react-redux'
 
 class LoginView extends BaseMVPView {
   constructor (props) {
