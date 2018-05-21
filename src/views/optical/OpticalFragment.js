@@ -65,6 +65,7 @@ class OpticalFragment extends BaseMVPView {
       imagePreviewUrl2,
       isVisible,
     } = this.state
+
     return (
       <div  className = { 'benefits-container' }>
         { super.render() }
@@ -78,8 +79,7 @@ class OpticalFragment extends BaseMVPView {
             amount = { amount }
             submitForm = { (finalFile1, finalFile2, amount) =>
               this.submitForm(amount, finalFile1, finalFile2) }
-            onClose = { () =>
-              this.setState({ showConfirmation : false }) }
+            onClose = { () => this.setState({ showConfirmation : false }) }
           />
         }
 
@@ -89,8 +89,7 @@ class OpticalFragment extends BaseMVPView {
             onClose = { () => this.setState({ showNotice : false })}
             noticeResponse = { noticeResponse }
             benefitId = { '8' }
-            onDismiss = {
-              (showNoticeModal, response) =>
+            onDismiss = { (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
         }
@@ -99,7 +98,7 @@ class OpticalFragment extends BaseMVPView {
           showNoticeResponseModal &&
           <ResponseModal
             onClose = { () => {
-              this.setState({ showNoticeResponseModal : false }),
+              this.setState({ showNoticeResponseModal : false })
               this.props.history.push('/benefits/medical')
             }}
             noticeResponse = { response }

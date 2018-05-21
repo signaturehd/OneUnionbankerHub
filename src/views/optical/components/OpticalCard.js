@@ -20,6 +20,7 @@ class OpticalCard extends Component {
       warning: '',
       amount : 0
     }
+
     this.handleImageChange = this.handleImageChange.bind(this)
     this.handleImageChange2 = this.handleImageChange2.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -39,7 +40,7 @@ class OpticalCard extends Component {
     e.preventDefault()
 
     const reader = new FileReader()
-    const file = e.target.files[0]
+    const [file] = e.target.files
 
     reader.onloadend = () => {
       this.setState({
@@ -54,7 +55,7 @@ class OpticalCard extends Component {
   handleImageChange2 (e1) {
     e1.preventDefault()
     const reader2 = new FileReader()
-    const file2 = e1.target.files[0]
+    const [file2] = e1.target.files
 
     reader2.onloadend = () => {
       this.setState({
@@ -109,7 +110,7 @@ class OpticalCard extends Component {
       $imagePreview2 = (<div style = {styles.image2}></div>)
     return (
         <div className = { 'optical-card' } >
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={ this.handleSubmit }>
             <div className = {'optical-header'} >
               <h5 >Form Attachments</h5>
               <div className = { 'optical-amount-field' }>

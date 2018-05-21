@@ -7,6 +7,7 @@ export default class AddOpticalInteractor {
     return this.client.addOptical(
     this.client.getToken(),
     this.client.getAccountToken(),
-    this.client.getAccountNumber(), opticalParam)
+    this.client.getAccountNumber(),
+    opticalParam)
   }
 }

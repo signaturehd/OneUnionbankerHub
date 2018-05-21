@@ -6,7 +6,6 @@ import { Card } from '../../../../ub-components/'
 import './faq-card-component.css'
 
 class FaqCardComponent extends Component {
-
   constructor (props) {
     super(props)
   }

@@ -41,6 +41,7 @@ class PodcastView extends BaseMVPView {
       this.props.setSelectedNavigation(5)
       this.props.history.push('/mylearning/podcast')
   }
+
   showLoader () {
     this.setState({ disabled : true })
   }
@@ -48,15 +49,19 @@ class PodcastView extends BaseMVPView {
   hideLoader () {
     this.setState({ disabled : false })
   }
+
   updateSearch (e) {
       this.setState({ searchString: e.target.value })
   }
+
   podcasts (podcasts) {
       this.setState({ podcasts })
   }
+
   podcastsRecommendation (podcastsRecommendation) {
       this.setState({ podcastsRecommendation })
   }
+
   podcastsreviews (podcastreview) {
       this.setState({ podcastreview })
   }
@@ -64,6 +69,7 @@ class PodcastView extends BaseMVPView {
   navigate () {
     this.props.history.push ('/mylearning')
   }
+  
   render () {
     const {
       podcasts,

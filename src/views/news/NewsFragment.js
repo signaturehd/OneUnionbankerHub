@@ -24,25 +24,27 @@ class NewsFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-      this.presenter.getNews()
-      this.props.setSelectedNavigation(0)
-      this.props.history.push('/')
+    this.presenter.getNews()
+    this.props.setSelectedNavigation(0)
   }
+
   updateSearch () {
-      this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
+    this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
   }
   news (news) {
-      this.setState({ news })
+    this.setState({ news })
   }
 
   render () {
     const { news, show, details } = this.state
-    const { history } = this.props
-    let searchNews = this.state.news
     const search = this.state.searchString.trim().toLowerCase()
+
+    let filteredNews = news
+
     if (search.length > 0) {
-      searchNews = searchNews.filter(news => news.title.toLowerCase().match(search))
-  }
+      filteredNews = news.filter(news => news.title.toLowerCase().match(search))
+    }
+
     return (
       <div className = 'container'>
         {
@@ -58,7 +60,7 @@ class NewsFragment extends BaseMVPView {
              onChange = { this.updateSearch } />
         <div className = 'news-card-container'>
         {
-          searchNews.map((news, i) =>
+          filteredNews && filteredNews.map((news, i) =>
             <NewsCardComponent
               key={ i }
               news = { news }

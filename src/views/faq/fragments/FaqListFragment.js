@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import FaqCardComponent from '../components/FaqCardComponent'
 
 class FaqListFragment extends Component {
-
   constructor (props) {
     super(props)
 
