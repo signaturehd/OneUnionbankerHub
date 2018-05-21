@@ -36,6 +36,14 @@ class LoginView extends BaseMVPView {
     this.setState({ disabled : false })
   }
 
+  disabledButton () {
+    this.setState({ disabled : true })
+  }
+
+  enabledButton () {
+    this.setState({ disabled : false })
+  }
+
   onLoginSuccess () {
     this.setState({ showOtpModal: true })
   }

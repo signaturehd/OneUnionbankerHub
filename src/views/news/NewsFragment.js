@@ -45,7 +45,6 @@ class NewsFragment extends BaseMVPView {
   }
     return (
       <div className = 'container'>
-        { super.render() }
         {
           show &&
           <NewsModalComponent onClose = { () => this.setState({ show: false })} details = { details } />

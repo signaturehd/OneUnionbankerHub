@@ -56,14 +56,9 @@ class Board extends Component  {
     )
   }
 }
+
 Board.propTypes = {
   selectedPodcast : PropTypes.array
 }
-// {selectedPodcast && selectedPodcast.map((comment, i) =>
-//   <Comment
-//     key={i}
-//     removeCommentFromBoard ={this.removeComment}
-//     updateCommentFromBoard ={this.updateComment}
-//     >{comment}</Comment>
-// )}
+
 export default Board

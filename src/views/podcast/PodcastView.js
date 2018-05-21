@@ -7,7 +7,6 @@ import Presenter from './presenter/PodcastPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 
 import './styles/podcast.css'
-import PodcastCardComponent from './components/cards/PodcastCardComponent'
 import PodcastInteractor from '../../domain/interactor/podcast/PodcastInteractor'
 import PodcastRecommendationsInteractor from '../../domain/interactor/podcast/PodcastRecommendationInteractor'
 
@@ -69,7 +68,8 @@ class PodcastView extends BaseMVPView {
     const {
       podcasts,
       podcastsRecommendation,
-      paddRating,podcastreview,
+      paddRating,
+      podcastreview,
       show,
       details,
       disabled,

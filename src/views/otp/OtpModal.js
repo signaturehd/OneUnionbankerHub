@@ -43,7 +43,8 @@ class OtpModal extends BaseMVPView {
             <br/>
             <br/>
             <CircularLoader show={true}/>
-          </center>          :
+          </center>
+          :
           <div>
             <GenericTextBox text= "OTP"
               placeholder = "OTP"

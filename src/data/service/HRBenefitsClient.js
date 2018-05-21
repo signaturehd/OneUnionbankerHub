@@ -102,13 +102,22 @@ export default class HRBenefitsClient {
         .pipe(ServiceErrorOperator())
   }
 
+  reserveBook (token, BookReserveParam) {
+    return this.service.ReserveBook(token, BookReserveParam)
+        .pipe(ServiceErrorOperator())
+  }
+
   /* optical */
   getOptical (token) {
     return this.service.getOptical(token)
       .pipe(ServiceErrorOperator())
   }
 
-  /* Podcast */
+  addOptical (token, accountToken, accountNumber, opticalParam) {
+    return this.service.addOptical(token, accountToken, accountNumber, opticalParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   getPodcasts (token) {
     return this.service.getPodcasts(token)
       .pipe(ServiceErrorOperator())

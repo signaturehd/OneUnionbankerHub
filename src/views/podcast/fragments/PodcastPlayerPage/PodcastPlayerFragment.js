@@ -17,6 +17,7 @@ class PodcastPlayerFragment extends Component {
     }
     this.getRatings = this.getRatings.bind(this)
    }
+   
   getRatings (e, e1) {
 
   }

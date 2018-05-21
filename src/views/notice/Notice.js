@@ -39,9 +39,9 @@ class Notice extends BaseMVPView {
       { super.render() }
         {
           noticeResponse.forms &&
-          noticeResponse.forms.map((form, key) =>
+          noticeResponse.forms.map((form, key)=>
             <div key = { key }>
-              <div dangerouslySetInnerHTML = {{ __html : form.form }}></div>
+              <div dangerouslySetInnerHTML = {{__html : form.form}}></div>
             </div>
           )
         }
@@ -49,19 +49,20 @@ class Notice extends BaseMVPView {
           disableSubmit || isDismissable ?
           <center>
             <CircularLoader show={true}/>
-          </center>          :
+          </center>
+          :
           <div>
             <GenericButton text = {'Agree'}
               onClick = { () => {
                   this.isAgree(noticeResponse.transactionId, 1, benefitId),
-                  this.setState({ isDimissable : true, disableSubmit: true })
+                  this.setState({isDimissable : true, disableSubmit: true})
                 }
               }
             />
             <GenericButton text = {'Disagree'}
               onClick = { () => {
                   this.isAgree(noticeResponse.transactionId, 0, benefitId),
-                  this.setState({ isDimissable : true, disableSubmit: true })
+                  this.setState({isDimissable : true, disableSubmit: true})
                 }
               }
             />

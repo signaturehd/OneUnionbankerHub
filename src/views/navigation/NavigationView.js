@@ -20,6 +20,8 @@ import Drawer from './components/drawer/Drawer'
 
 import './styles/drawerview.css'
 
+import { connect } from 'react-redux'
+
 class NavigationView extends BaseMVPView {
   constructor (props) {
     super (props)
@@ -75,12 +77,14 @@ class NavigationView extends BaseMVPView {
         <div className = { 'body-div' }>
           <header className = { 'page-boundary page-boundary--fixed-top' }>
             <DrawerAppBar
+              logout = { this.callLogout }
               displayNavIcon = { displayNavIcon } displayShow = { displayShow }
               hide = { () => this.setState({ displayShow : 'block' })}
               show = { () => this.setState({ displayShow : 'none' })} />
           </header>
           <div className="panels">
               <main className ="panel main-content " role="main">
+              { super.render() }
                   <Drawer >
                       <Switch>
                         <Route exact path = '/' render = {props =>
@@ -128,4 +132,10 @@ class NavigationView extends BaseMVPView {
 NavigationView.propTypes = {
   onClick : PropTypes.func,
 }
-export default ConnectView(NavigationView, Presenter)
+
+const mapStateToProps = state => ({
+  notify : state.notify
+})
+
+
+export default ConnectView(connect(mapStateToProps)(NavigationView), Presenter)

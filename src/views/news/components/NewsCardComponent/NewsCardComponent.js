@@ -12,12 +12,12 @@ class NewsCardComponent extends Component {
   }
 
   render () {
-    const { searchNews, onClick , imageUrl } = this.props
+    const { news, onClick , imageUrl } = this.props
 
     const style = {
         newsBackground: {
           backgroundImage : `url(${news.imageUrl})`,
-          backgroundColor : 'rgba(0,0,0,0.7)',
+          backgroundColor : `rgba(0,0,0,0.7)`,
           backgroundRepeat : 'no-repeat',
           width: 'auto',
           backgroundBlendMode: 'color',
@@ -30,8 +30,8 @@ class NewsCardComponent extends Component {
 
       return (
         <Card className = { 'news-card' }>
-          <div onClick = { () => onClick(searchNews) } style = { style.newsBackground } className = {'news-body'}>
-            <h3>{searchNews.title}</h3>
+          <div onClick = { () => onClick(news) } style = { style.newsBackground } className = {'news-body'}>
+            <h3>{news.title}</h3>
           </div>
         </Card>
     )

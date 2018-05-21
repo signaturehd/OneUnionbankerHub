@@ -30,14 +30,9 @@ export default class OpticalPresenter {
     .subscribe(response => {
       this.view.isEligible(response)
     }, e => {
-      store.dispatch(NotifyActions.addNotify({
-          title : e.name,
-          message : e.message,
-          type : 'danger',
-          duration : 2000
-        })
-      )
+
       // TODO notify
     })
  }
+
 }

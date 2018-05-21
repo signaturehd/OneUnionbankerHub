@@ -14,9 +14,17 @@ export default class PodcastPresenter {
       this.getPodcastsReviewsInteractor = new PodcastReviewInteractor(container.get('HRBenefitsClient'))
     }
 
-    setView (view) {
-      this.view = view
-    }
+  getPodcasts () {
+    this.view.showLoading()
+    this.getPodcastInteractor.execute()
+    .subscribe(podcasts => {
+        this.view.hideLoading()
+        this.view.podcasts(podcasts)
+      }, e => {
+        this.view.hideLoading()
+        // TODO prompt generic error
+    })
+  }
 
   getPodcasts (disabled) {
     this.view.showLoader()

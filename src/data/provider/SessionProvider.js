@@ -14,11 +14,11 @@ export default class SessionProvider {
 
   getToken () {
     return this.storage.getItem(TOKEN) || ''
-
   }
 
   setAccountToken (accountToken = '') {
     this.storage.setItem(ACCOUNT_TOKEN, accountToken)
+
   }
 
   getAccountToken () {

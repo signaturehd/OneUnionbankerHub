@@ -101,7 +101,7 @@ class OpticalFragment extends BaseMVPView {
             onClose = { () => {
               this.setState({ showNoticeResponseModal : false }),
               this.props.history.push('/benefits/medical')
-}}
+            }}
             noticeResponse = { response }
             benefitId = { '8' }
             onDismiss = { (showNoticeModal, response) =>

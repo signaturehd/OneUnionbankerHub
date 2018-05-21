@@ -6,7 +6,6 @@
 
 # misc
 .DS_Store
-.gitmodules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
