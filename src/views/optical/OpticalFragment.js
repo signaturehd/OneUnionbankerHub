@@ -123,8 +123,4 @@ class OpticalFragment extends BaseMVPView {
   }
 }
 
-const mapStateToProps = state => ({
-  notify: state.notify
-})
-
-export default ConnectView(connect(mapStateToProps)(OpticalFragment), Presenter)
+export default ConnectView(OpticalFragment, Presenter)

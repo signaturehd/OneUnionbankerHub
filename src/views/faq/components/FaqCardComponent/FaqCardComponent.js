@@ -6,19 +6,31 @@ import { Card } from '../../../../ub-components/'
 import './faq-card-component.css'
 
 class FaqCardComponent extends Component {
+
   constructor (props) {
     super(props)
   }
+
   render () {
-    const { categorize, onClick, faqsCategory } = this.props
-    const newCategory = categorize.category
- return (
-      <Card>
-        <div className = {'card-body'}>
-        <h2>{newCategory.category}</h2>
-        </div>
-        <div className = {'card-footer'}>
-          <small><a onClick = { onClick }>Read More</a></small>
+  const { onClick, title, icon } = this.props
+  const style = {
+    iconFaqs : {
+      background : `url('${icon}') rgb(0,0,0,0.7)`,
+      backgroundSize : '125px',
+      backgroundRepeat : 'no-repeat',
+      height: '100% auto',
+      color: 'white',
+      backgroundBlendMode : 'color',
+      fontWeight : 'bold',
+    }
+  }
+
+  return (
+      <Card
+        className = { 'faqs-container' }
+        onClick = { onClick }>
+        <div style = { style.iconFaqs } className = { 'faqs-body' }>
+        <h2>{ title }</h2>
         </div>
       </Card>
     )
@@ -27,10 +39,8 @@ class FaqCardComponent extends Component {
 
 FaqCardComponent.propTypes = {
   onClick : PropTypes.func,
-}
-
-FaqCardComponent.defaultProps = {
-
+  icon: PropTypes.string,
+  title: PropTypes.string,
 }
 
 export default FaqCardComponent
