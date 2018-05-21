@@ -5,38 +5,53 @@ import '../../styles/benefits.css'
 import Countdown from '../../../common/components/Countdown/Countdown'
 import staticImage from '../../../../images/UBBldg.jpg'
 
+import { CircularLoader } from '../../../../ub-components'
 
 class EducationFragment extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      showLoader : true
+    }
+  }
+
+  componentDidMount () {
+    setTimeout(() => (
+      this.setState({showLoader : false})
+    ).bind(this), 3000)
   }
 
   render () {
     const { history } = this.props
-      
-    
+
+    const { showLoader } = this.state
 
     const EducationHome = () => (
-        <div className={'background'}>
+      <div className={'background'}>
         <div className = { 'container-option1' }>
           <i className = { 'left' } onClick = { () => history.push('/benefits') }></i>
           <h1>Education</h1>
-          
-          <div className = { 'app' }>
-          <center>
-          <h1> Launching soon This July 9</h1>
-          <br/>
-          <div className={'app-countdown'}>
-          <br/>
-          <Countdown dateTo={{ year: 2018, month: 7, date: 9 }}  />,
-          </div>
-          </center>
+            <div className = { 'app' }>
+              {
+                showLoader ?
+                <center>
+                  <CircularLoader show = {true} />
+                </center>
+                :
+                <center>
+                  <h1> This module will launch on July 9, 2018</h1>
+                  <br/>
+                  <div className={'app-countdown'}>
+                    <br/>
+                    <Countdown dateTo={{ year: 2018, month: 7, date: 9 }}  />
+                    </div>
+                </center>
+              }
             <div className = { 'card-container' }>
-              </div>
             </div>
           </div>
         </div>
-
+      </div>
     )
 
     return (
