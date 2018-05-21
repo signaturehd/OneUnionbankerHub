@@ -70,10 +70,10 @@ export default class HRBenefitsService {
   addOptical (token, accountToken, accountNumber, opticalParam) {
     const formData = new FormData()
     const opticalObject = {
-      "accountNumber": accountNumber,
-      "amount": "200",
-      "releasingCenter": "UBP",
-      "distributor": "distributorTest"
+      accountNumber,
+      amount: '200',
+      releasingCenter: 'UBP',
+      distributor: 'distributorTest'
     }
     formData.append('uuid', 123345)
     formData.append('med', opticalParam.medCert)
@@ -164,7 +164,7 @@ export default class HRBenefitsService {
   }
 
   getFaqDetails (token, faqParam) {
-    return this.apiClient.get('v1/faqs/' + faqParam, {
+    return this.apiClient.get(`v1/faqs/${  faqParam}`, {
       headers: { token }
     })
   }
