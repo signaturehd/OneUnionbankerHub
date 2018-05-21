@@ -10,6 +10,9 @@ import ConnectPartial from '../../utils/ConnectPartial'
 import NewsCardComponent from './components/NewsCardComponent/NewsCardComponent'
 import NewsModalComponent from './modals/NewsModalComponent'
 
+import { CircularLoader } from '../../ub-components'
+
+
 import './styles/news-styles.css'
 
 class NewsFragment extends BaseMVPView {
@@ -19,6 +22,7 @@ class NewsFragment extends BaseMVPView {
         news: [],
         show : false,
         searchString : '',
+        showLoader: true
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
@@ -26,6 +30,8 @@ class NewsFragment extends BaseMVPView {
   componentDidMount () {
       this.presenter.getNews()
       this.props.setSelectedNavigation(0)
+    setTimeout(() => this.setState({ showLoader : false }), 3000)
+
   }
   updateSearch () {
       this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
@@ -36,7 +42,8 @@ class NewsFragment extends BaseMVPView {
   }
 
   render () {
-    const { news, show, details } = this.state
+    const { news, show, details, showLoader } = this.state
+    console.log(showLoader)
     let _news = this.state.news
     const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
@@ -55,6 +62,12 @@ class NewsFragment extends BaseMVPView {
              placeholder = {'Search News'}
              value = { this.state.searchString }
              onChange = { this.updateSearch } />
+              {
+          
+                showLoader ?
+                <center>
+                  <CircularLoader show = {true} />
+                </center>                :
         <div className = 'news-card-container'>
         {
           _news.map((news, i) =>
@@ -62,8 +75,11 @@ class NewsFragment extends BaseMVPView {
               key={ i }
               news = { news }
               onClick = { details => this.setState({ details, show: true }) } />)
+            }
         }
+        
         </div>
+      }
       </div>
     )
   }
