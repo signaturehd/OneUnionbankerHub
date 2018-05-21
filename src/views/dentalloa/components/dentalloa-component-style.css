@@ -7,22 +7,6 @@
   margin-top: 20%;
   vertical-align: middle;
 }
-.react-date-picker__button__input__input:invalid {
-  background: 0 !important;
-}
-.react-date-picker__button {
-  border : 0 !important;
-  outline: none !important;
-  margin-bottom: -140px  !important;
-}
-.react-date-picker__calendar--above-label {
-  bottom: 0 !important;
-  position: absolute !important;
-  top: 100% !important;
-}
-.react-date-picker__calendar {
-  width : 265px !important;
-}
 .dentalloa-col {
   display: -webkit-box;
   float: left;
@@ -31,6 +15,18 @@
 
 .dentalloa-body {
   padding: 2px;
+}
+
+.calendar {
+  border-bottom: 1px solid #ff8A00;
+  border-top: 0px;
+  border-left:0px;
+  outline:none;
+  border-right :0px;
+}
+
+.react-datepicker-popper {
+  width:250px;
 }
 
 @media only screen and (min-width: 641px){

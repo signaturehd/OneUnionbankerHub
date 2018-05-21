@@ -32,7 +32,7 @@ export default class HRBenefitsService {
     })
   }
 
-  addDentalLoa (token, accountNumber, dentalLoaParam) {
+  addDentalLoa (token, dentalLoaParam) {
     return this.apiClient.post('v1/issuances/dental/loa/submit', dentalLoaParam, {
       headers : { token }
     })
@@ -60,7 +60,7 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
-
+x
   addDentalReimbursement (token, dentalLoaParam) {
     const formData = new FormData()
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {

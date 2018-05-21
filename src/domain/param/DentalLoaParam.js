@@ -1,5 +1,6 @@
-export default (username, otp, transactionType) => ({
-    username,
-    otp,
-    transactionType,
+export default (dependentId, branchId, procedures, preferedDate) => ({
+    dependentId,
+    branchId,
+    procedures,
+    preferedDate
   })

@@ -13,8 +13,8 @@ export default class SessionProvider {
   }
 
   getToken () {
-    // return this.storage.getItem(TOKEN) || ''
-    return '35c69141cbbaf08141d47482df6f01e534260958f2d9b84a371d7a742231738e07d36c1be22934b6c3c3eb95c82e364a1846dfd4c7cfedaf8ecf57c129e7710b'
+    return this.storage.getItem(TOKEN) || ''
+    // return '35c69141cbbaf08141d47482df6f01e534260958f2d9b84a371d7a742231738e07d36c1be22934b6c3c3eb95c82e364a1846dfd4c7cfedaf8ecf57c129e7710b'
   }
 
   setAccountToken (accountToken = '') {
@@ -23,8 +23,8 @@ export default class SessionProvider {
   }
 
   getAccountToken () {
-    // return this.storage.getItem(ACCOUNT_TOKEN) || ''
-    return 'rY5CFD9ja3as2I/pjQFnd1GfI7LspWwh8OyptKFIuCRkoO0S/wdKVn8K88TWmGcrcpAbz6nLbb1+tJxQe8XGa2R+6ld5qLrKsy1jk+sYgrH1wwnSnaw155ujDUERe4Hel10/Z1pz3SlYe/5NDubJxtGUyyWFeaE='
+    return this.storage.getItem(ACCOUNT_TOKEN) || ''
+    // return 'rY5CFD9ja3as2I/pjQFnd1GfI7LspWwh8OyptKFIuCRkoO0S/wdKVn8K88TWmGcrcpAbz6nLbb1+tJxQe8XGa2R+6ld5qLrKsy1jk+sYgrH1wwnSnaw155ujDUERe4Hel10/Z1pz3SlYe/5NDubJxtGUyyWFeaE='
   }
 
   setAccountNumber (accountNumber = '') {

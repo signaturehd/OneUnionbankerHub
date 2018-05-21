@@ -5,7 +5,8 @@ import TextBox from './DentalLoaTextBox'
 import DentalLoaBranchModal from '../modal/DentalLoaBranchModal'
 import DentalLoaDependentModal from '../modal/DentalLoaDependentModal'
 import DentalLoaProcedureModal from '../modal/DentalLoaProcedureModal'
-import Datepicker from 'react-date-picker'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
 import { GenericTextBox, GenericButton, Card } from '../../../ub-components'
 import '../../../../node_modules/react-datepicker/dist/react-datepicker.css'
 
@@ -31,7 +32,7 @@ class DentalLoaCard extends Component {
   }
 
   onChange (date) {
-    this.setState({ date })
+    this.props.preferedDate(data)
   }
 
   render () {
@@ -45,10 +46,14 @@ class DentalLoaCard extends Component {
       details,
       onClose,
       submit,
-      presenter,
-      onClick
+      receipient,
+      branch,
+      onClick,
+      submitForm
     } = this.props
+
     const { showRecipientModal, showHealthwayBranchModal, showProcedureModal } = this.state
+
     return (
       <Card className={ 'dentalloa-card' }>
       <form onSubmit = { this.handleSubmit }>
@@ -59,28 +64,29 @@ class DentalLoaCard extends Component {
               <i className = { 'dentalloa-icon text1-icon' }/>
                <GenericTextBox
                  onClick = { () => onClick(true, false, false)}
-                 type = { 'button' }
-                 className = { 'fileUploader' }
+                 value = { receipient && receipient }
+                 readOnly
                  placeholder = { text1 } />
           </div>
           <div className = { 'dentalloa-col span_1_of_3' }>
             <i className = { 'dentalloa-icon text2-icon' }/>
                <GenericTextBox
-                 type = { 'button' }
-                 className = { 'fileUploader' }
+                 value = { branch && branch }
+                 readOnly
                  onClick = { () => onClick(false, true, false)}
                  placeholder = { text2 } />
           </div>
           <div className = { 'dentalloa-col span_1_of_3' }>
             <i className = { 'dentalloa-icon text3-icon' }/>
-              <Datepicker
-                placeholder = { 'Enter Present Date' }
+              <DatePicker
+                dateFormat = { 'LL' }
                 showMonthDrowdown
                 showYearDrowdown
                 onChange={this.onChange}
                 value={this.state.date}
                 dropdownMode = "select"
-                calendarName = {"calendarClass"}/>
+                className = {'calendar'}
+                calendarClassName = {"calendarClass"}/>
           </div>
           </div>
         </div>
@@ -94,8 +100,8 @@ class DentalLoaCard extends Component {
           <div className = { 'dentalloa-button-submit' }>
             <GenericButton
                className = { 'dentalloa-button' }
-               onClick = { onClick }
-              text = { submit }/>
+               onClick = { submitForm }
+               text = { submit }/>
           </div>
         </div>
       </form>

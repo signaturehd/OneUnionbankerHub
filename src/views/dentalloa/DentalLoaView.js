@@ -42,6 +42,16 @@ class DentalLoaView extends BaseMVPView {
     this.setState({ disabled : true})
   }
 
+  submitForm (receipientId, branchId, preferedDate, procedures) {
+    const procedure = [{
+        "id": 4
+      },
+      {
+        "id": 10
+    }]
+    this.presenter.addDentalLoa(receipientId, branchId, preferedDate, procedures)
+  }
+
   navigate () {
       this.props.history.push('/benefits/medical')
   }
@@ -55,18 +65,19 @@ class DentalLoaView extends BaseMVPView {
       showHealthwayBranchModal,
       showRecipientModal,
       showProcedureModal,
-      receipient,
-      dependent,
+      receipientId,
+      receipientText,
+      branchId,
+      branchText,
       procedure,
     } = this.state
-
     return(
       <div  className = { 'benefits-container' }>
         {
           showRecipientModal &&
           <DentalLoaDependentModal
             details = { dentalloa.dependents }
-            onChange = { (receipient, procedure) => this.setState({ receipient, procedure }) }
+            chosenDependent = { (receipientId, receipientText, procedure, showReceipientModal) => this.setState({receipientId, receipientText, procedure, showReceipientModal}) }
             onClose = { () => this.setState({ showRecipientModal : false }) } />
         }
 
@@ -75,7 +86,8 @@ class DentalLoaView extends BaseMVPView {
           <DentalLoaBranchModal
             showHealthwayBranchModal = { showHealthwayBranchModal }
             details = { dentalloa.branches }
-            onChange = { (branch) => this.setState({ branch }) }
+            chosenBranch = { (branchId, branchText, showHealthwayBranchModal) => this.setState({branchId, branchText, showHealthwayBranchModal}) }
+            onChange = { (branchId, branchText) => this.setState({ branchId, branchText }) }
             onClose = { () => this.setState({ showHealthwayBranchModal : false }) } />
         }
 
@@ -101,9 +113,10 @@ class DentalLoaView extends BaseMVPView {
              :
               <DentalLoaCard
                 details = { dentalloa }
-                presenter = { this.presenter }
-                receipient = { receipient }
+                receipient = { receipientText }
                 procedure = { procedure }
+                branch = { branchText }
+                submitForm = { () => this.submitForm(receipientId, branchId, preferedDate) }
                 onClick = {
                   (showRecipientModal, showHealthwayBranchModal, showProcedureModal) =>
                   this.setState({ showRecipientModal, showHealthwayBranchModal, showProcedureModal })

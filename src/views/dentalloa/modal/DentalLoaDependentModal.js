@@ -6,21 +6,15 @@ import { Modal, GenericButton } from '../../../ub-components/'
 class DentalLoaDependentModal extends Component {
   constructor (props) {
     super(props)
-      this.state = {
-        chosenDependent : []
-      }
-    this.submitData = this.submitData.bind(this)
   }
 
-  submitData ( value ) {
-    const { onChange, details } = this.props
-    this.props.onChange()
-    this.setState({ chosenDependent : value })
+  sendDependents (receipientId, receipientText, procedure) {
+    this.props.chosenDependent(receipientId, receipientText, procedure, false)
+    this.props.onClose()
   }
 
   render () {
   const { details, onClose, showDependentModal, isDismisable } = this.props
-
   return (
     <Modal
      onClose = { onClose }
@@ -33,7 +27,8 @@ class DentalLoaDependentModal extends Component {
           <GenericButton
               className = { 'dentalloa-modal-option-button' }
               text = {'Me'}
-              onClick = { () => this.submitData('personal') }/>
+              onClick = { () => this.sendDependents( 0, 'Personal', null) }
+          />
           {
             details.dependent &&
             details.dependent.map((dependent, key ) =>
@@ -41,7 +36,8 @@ class DentalLoaDependentModal extends Component {
                   key = { key }
                   className = { 'dentalloa-modal-option-button' }
                   details = {dependent.name}
-                  onClick = { () => this.submitData(dependent) }/>
+                  onClick = { () =>  (onClick(dependent.id, dependent.name, dependent.procedures), onClose) }
+              />
             )
           }
       </div>
@@ -51,6 +47,7 @@ class DentalLoaDependentModal extends Component {
 }
 DentalLoaDependentModal.propTypes = {
   onClose : PropTypes.func,
+  onClick : PropTypes.func,
   details : PropTypes.array,
 }
 DentalLoaDependentModal.defaultProps = {
