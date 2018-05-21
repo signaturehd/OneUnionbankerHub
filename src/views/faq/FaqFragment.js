@@ -41,7 +41,7 @@ class FaqFragment extends BaseMVPView {
   */
   setSelectedFaqCategory (selectedFaqCategory) {
     this.setState({ selectedFaqCategory })
-    this.props.history.push('/faqs/' + selectedFaqCategory.category)
+    this.props.history.push(`/faqs/${  selectedFaqCategory.category}`)
   }
 
   /**
@@ -59,7 +59,7 @@ class FaqFragment extends BaseMVPView {
     this.setState({ faqDetail })
   }
 
-  showFaqs ( faqs ) {
+  showFaqs (faqs) {
     this.setState({ faqs })
   }
 

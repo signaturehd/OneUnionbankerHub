@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { Modal, CircularLoader } from '../../../ub-components/'
 
 class FaqModal extends Component {
-
   constructor (props) {
     super(props)
   }
@@ -19,9 +18,8 @@ class FaqModal extends Component {
           details ?
             <div>
               <h4>{ title }</h4>
-              <div dangerouslySetInnerHTML = {{__html: details }}/>
-            </div>
-          :
+              <div dangerouslySetInnerHTML = {{ __html: details }}/>
+            </div>          :
             <center>
               <h3>Please wait...</h3>
               <CircularLoader show = { true } />
