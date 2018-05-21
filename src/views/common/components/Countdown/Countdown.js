@@ -4,8 +4,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 
 class Countdown extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       now: moment(),
@@ -19,15 +18,15 @@ class Countdown extends Component {
     this.timer = this.timer.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.countdown = setInterval(this.timer, 1000)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     clearInterval(this.countdown)
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate (prevProps, prevState) {
     if (prevProps.dateTo !== this.props.dateTo) {
       this.setState({
          dateTo: moment(this.props.dateTo)
@@ -35,33 +34,32 @@ class Countdown extends Component {
     }
   }
 
-  timer() {
-    var now = moment()
-    var sec = this.state.dateTo.diff(now, 'seconds') % 60
-    var min = this.state.dateTo.diff(now, 'minutes') % 60
-    var hour = this.state.dateTo.diff(now, 'hours') % 24
-    var day = this.state.dateTo.diff(now, 'days')
+  timer () {
+    const now = moment()
+    const sec = this.state.dateTo.diff(now, 'seconds') % 60
+    const min = this.state.dateTo.diff(now, 'minutes') % 60
+    const hour = this.state.dateTo.diff(now, 'hours') % 24
+    const day = this.state.dateTo.diff(now, 'days')
 
     this.setState({
-      now: now,
-      day: day < 10 ? '0' + day : day,
-      hour: hour < 10 ? '0' + hour : hour,
-      min: min < 10 ? '0' + min : min,
-      sec: sec < 10 ? '0' + sec : sec,
+      now,
+      day: day < 10 ? `0${  day}` : day,
+      hour: hour < 10 ? `0${  hour}` : hour,
+      min: min < 10 ? `0${  min}` : min,
+      sec: sec < 10 ? `0${  sec}` : sec,
     })
   }
 
-  renderDays() {
+  renderDays () {
     if (this.state.day > 1) {
-      return this.state.day + ' days ';
+      return `${this.state.day  } days `
     } else if (this.state.day === 1) {
-      return this.state.day + ' day ';
-    } else {
-      return '';
-    }
+      return `${this.state.day  } day `
+    } 
+      return ''
   }
 
-  render() {
+  render () {
     const { hour, min, sec } = this.state
 
     return (

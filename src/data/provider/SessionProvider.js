@@ -4,7 +4,6 @@ const ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
 const PROFILE = 'PROFILE'
 
 export default class SessionProvider {
-
   constructor () {
     this.storage = window.localStorage
   }
