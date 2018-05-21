@@ -15,9 +15,7 @@ class LoansFragment extends Component {
   }
 
   componentDidMount () {
-    setTimeout(() => (
-      this.setState({showLoader : false})
-    ).bind(this), 3000)
+    setTimeout(() => this.setState({showLoader : false}), 3000)
   }
 
   render () {
