@@ -67,7 +67,7 @@ class NavigationView extends BaseMVPView {
     this.presenter.logout()
   }
   render () {
-    const { displayShow, displayNavIcon, displayNavIconState, selected } = this.state
+    const { displayShow, displayNavIcon, displayNavIconState, selected, onClick } = this.state
     const style = {
       show: {
           display : displayShow
@@ -77,7 +77,7 @@ class NavigationView extends BaseMVPView {
         <div className = { 'body-div' }>
           <header className = { 'page-boundary page-boundary--fixed-top' }>
             <DrawerAppBar
-              logout = { this.callLogout }
+              onClick = { onClick }
               displayNavIcon = { displayNavIcon } displayShow = { displayShow }
               hide = { () => this.setState({ displayShow : 'block' })}
               show = { () => this.setState({ displayShow : 'none' })} />
