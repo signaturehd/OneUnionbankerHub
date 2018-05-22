@@ -24,6 +24,10 @@ class OtpModal extends BaseMVPView {
     // TODO redirect to login
   }
 
+  onOtpError () {
+    this.setState({disableSubmit: false})
+  }
+
   onResendSuccess () {
     this.setState({ disabledResend : false, text : '' })
   }
