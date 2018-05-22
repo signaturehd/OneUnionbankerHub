@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 
 import FaqCardComponent from '../components/FaqCardComponent'
 
+import { CircularLoader } from '../../../ub-components'
+
+import './styles/faqs-fragment.css'
+
 class FaqCategoryFragment extends Component {
   constructor (props) {
     super(props)
@@ -17,7 +21,18 @@ class FaqCategoryFragment extends Component {
   }
 
   render () {
-    const { faqCategories, setSelectedFaqCategory } = this.props
+    const { searchString } = this.state
+
+    const {
+      faqCategories,
+      setSelectedFaqCategory
+    } = this.props
+
+    let searchCategories = faqCategories
+    const search = this.state.searchString.trim().toLowerCase()
+    if (search.length > 0) {
+        searchCategories = faqCategories.filter(faqCategories => faqCategories.category.toLowerCase().match(search))
+    }
 
     return (
       <div className = { 'container' }>
@@ -27,17 +42,24 @@ class FaqCategoryFragment extends Component {
                  placeholder = 'Search FAQs'
                  value = { this.state.searchString }
                  onChange = { e => this.search(e.target.value) } />
-        <div className = { 'card-container' }>
         {
-        faqCategories && faqCategories.map((faq, i) =>
-          <FaqCardComponent
-            key = { i }
-            icon = { faq.icon }
-            title = { faq.category }
-            onClick = { () => setSelectedFaqCategory(faq) } />
-          )
+          searchCategories.length > 0 ?
+            <div className = { 'card-container' }>
+              {
+                searchCategories.map((faq, i) =>
+                  <FaqCardComponent
+                    key = { i }
+                    icon = { faq.icon }
+                    title = { faq.category }
+                    onClick = { () => setSelectedFaqCategory(faq) } />
+                  )
+              }
+            </div>
+          :
+            <div className = { 'faqs-loader' }>
+              <center><CircularLoader show = {true} /></center>
+            </div>
         }
-        </div>
       </div>
     )
   }
