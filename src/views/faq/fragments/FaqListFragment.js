@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import FaqCardComponent from '../components/FaqCardComponent'
+import './styles/faqs-fragment.css'
 
 class FaqListFragment extends Component {
   constructor (props) {
@@ -18,8 +19,17 @@ class FaqListFragment extends Component {
 
   render () {
     const { searchString } = this.state
-    const { selectedFaqCategory, setSelectedFaqQuestion, history } = this.props
-
+    const {
+      selectedFaqCategory,
+      setSelectedFaqQuestion,
+      history
+    } = this.props
+    const setSelectedFaqsCategory  = selectedFaqCategory && selectedFaqCategory.question
+    let searchQuestions = setSelectedFaqsCategory
+    const search = this.state.searchString.trim().toLowerCase()
+    if (search.length > 0) {
+        searchQuestions = setSelectedFaqsCategory.filter(setSelectedFaqsCategory => setSelectedFaqsCategory.title.toLowerCase().match(search))
+    }
     return (
       <div className = {'container'}>
         <i className = { 'left' } onClick = { () => history.push('/faqs') }></i>
@@ -28,17 +38,20 @@ class FaqListFragment extends Component {
           className = 'faqsSearchBar'
           placeholder = 'Search FAQs'
           value = { this.state.searchString }
-          onChange = { () => this.search(e.target.value) } />
+          onChange = { e => this.search(e.target.value) } />
         <div className = {'card-container'}>
         {
-          selectedFaqCategory &&
-          selectedFaqCategory.question &&
-          selectedFaqCategory.question.map((qtn, i) =>
-            <FaqCardComponent
-              key = { i }
-              title = { qtn && qtn.title }
-              onClick = { () => setSelectedFaqQuestion(qtn) } />
-          )
+          searchQuestions ?
+            searchQuestions.map((qtn, i) =>
+              <FaqCardComponent
+                key = { i }
+                title = { qtn && qtn.title }
+                onClick = { () => setSelectedFaqQuestion(qtn) } />
+            )
+          :
+            <div className = { 'faqs-loader' }>
+              <center><h1>No Category Found</h1></center>
+            </div>
         }
         </div>
       </div>
