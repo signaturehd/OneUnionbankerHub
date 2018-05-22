@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import FaqCardComponent from '../components/FaqCardComponent'
+import './styles/faqs-fragment.css'
 
 class FaqListFragment extends Component {
   constructor (props) {
@@ -24,7 +25,6 @@ class FaqListFragment extends Component {
       history
     } = this.props
     const setSelectedFaqsCategory  = selectedFaqCategory && selectedFaqCategory.question
-    console.log(setSelectedFaqsCategory)
     let searchQuestions = setSelectedFaqsCategory
     const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
@@ -41,13 +41,17 @@ class FaqListFragment extends Component {
           onChange = { e => this.search(e.target.value) } />
         <div className = {'card-container'}>
         {
-          searchQuestions &&
-          searchQuestions.map((qtn, i) =>
-            <FaqCardComponent
-              key = { i }
-              title = { qtn && qtn.title }
-              onClick = { () => setSelectedFaqQuestion(qtn) } />
-          )
+          searchQuestions ?
+            searchQuestions.map((qtn, i) =>
+              <FaqCardComponent
+                key = { i }
+                title = { qtn && qtn.title }
+                onClick = { () => setSelectedFaqQuestion(qtn) } />
+            )
+          :
+            <div className = { 'faqs-loader' }>
+              <center><h1>No Category Found</h1></center>
+            </div>
         }
         </div>
       </div>

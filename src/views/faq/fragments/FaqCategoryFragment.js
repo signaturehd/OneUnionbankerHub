@@ -25,15 +25,14 @@ class FaqCategoryFragment extends Component {
 
     const {
       faqCategories,
-      setSelectedFaqCategory
+      setSelectedFaqCategory,
+      isLoading
     } = this.props
-
     let searchCategories = faqCategories
     const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
         searchCategories = faqCategories.filter(faqCategories => faqCategories.category.toLowerCase().match(search))
     }
-
     return (
       <div className = { 'container' }>
         <h1 className = { 'title-view' }>FAQ&#39;s</h1>
@@ -42,20 +41,26 @@ class FaqCategoryFragment extends Component {
                  placeholder = 'Search FAQs'
                  value = { this.state.searchString }
                  onChange = { e => this.search(e.target.value) } />
-        {
-          searchCategories.length > 0 ?
-            <div className = { 'card-container' }>
-              {
-                searchCategories.map((faq, i) =>
-                  <FaqCardComponent
-                    key = { i }
-                    icon = { faq.icon }
-                    title = { faq.category }
-                    onClick = { () => setSelectedFaqCategory(faq) } />
-                  )
-              }
-            </div>
-          :
+         {
+           isLoading ?
+              searchCategories ?
+                <div className = { 'card-container' }>
+                  {
+                    searchCategories.map((faq, i) =>
+                      <FaqCardComponent
+                        key = { i }
+                        icon = { faq.icon }
+                        title = { faq.category }
+                        onClick = { () => setSelectedFaqCategory(faq) } />
+                      )
+                  }
+                </div>
+              :
+              <div className = { 'faqs-loader' }>
+                <center><h1>No Category Found</h1></center>
+              </div>
+            :
+
             <div className = { 'faqs-loader' }>
               <center><CircularLoader show = {true} /></center>
             </div>
