@@ -58,7 +58,7 @@ class BookViewModal extends Component {
           </div>
           <div className = { 'library-momdal-footer' } >
             <div className = {'library-modal-footer-container'} >
-              <GenericButton onClick = { () => reserveBook(details.id, 1) } text = { 'Reserve' } />
+              <GenericButton onClick = { () => reserveBook(details.id, 1) } text = { 'Borrow' } />
             </div>
           </div>
         </div>

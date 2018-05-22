@@ -17,12 +17,10 @@ class BookListFragment extends Component {
       bookRating : null,
       bookQuantity : null,
       title : null,
-
     }
   }
 
   addRating (id, rating) {
-    console.log(rating)
     this.props.presenter.rateBook(id, rating)
   }
 
@@ -30,12 +28,6 @@ class BookListFragment extends Component {
     this.props.presenter.reserveBook(id, quantity)
   }
 
-  componentWillReceiveProps (nextProps) {
-    console.log(nextProps)
-    if (nextProps.notify) {
-      this.setState({showConfirmationReserveModal: false, showConfirmationRateModal: false})
-    }
-  }
 
   render () {
     const {
@@ -75,7 +67,7 @@ class BookListFragment extends Component {
         {
           showConfirmationReserveModal &&
           <BookConfirmationModal
-            onYes = { () => this.addReserve(bookId, bookQuantity) }
+            onYes = { () => {this.addReserve(bookId, bookQuantity), this.setState({showConfirmationReserveModal : false })} }
             title = { title }
             onClose = { () => this.setState({ showConfirmationReserveModal : false }) }
           />
@@ -84,7 +76,7 @@ class BookListFragment extends Component {
         {
           showConfirmationRateModal &&
           <BookConfirmationModal
-            onYes = { () => this.addRating(bookId, bookRating) }
+            onYes = { () => {this.addRating(bookId, bookRating), this.setState({showConfirmationRateModal : false})} }
             title = { title }
             onClose = { () => this.setState({ showConfirmationRateModal : false }) }
           />
