@@ -11,6 +11,8 @@ import './css/login.css'
 
 import OtpModal from '../otp/OtpModal'
 
+import { connect } from 'react-redux'
+
 class LoginView extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -46,6 +48,7 @@ class LoginView extends BaseMVPView {
 
     return (
       <div>
+        { super.render() }
         {
           // TODO properly show otp modal as 'modal', not by just swapping views lol
           showOtpModal &&
@@ -115,4 +118,8 @@ class LoginView extends BaseMVPView {
   }
 }
 
-export default ConnectView(LoginView, LoginPresenter)
+const mapStateToProps = state => ({
+  notify : state.notify
+})
+
+export default ConnectView(connect(mapStateToProps)(LoginView), LoginPresenter)
