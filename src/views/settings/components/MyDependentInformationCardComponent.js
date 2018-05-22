@@ -15,21 +15,12 @@ class MyDependentInformationCardComponent extends Component {
     return (
          <div className = 'card-container'>
             {
-                profile.dependent &&
-                profile.dependent.map((dependents, i) => ((
-                
-
-              <h5 className = "title"> DEPENDENTS: { dependents.dependent }</h5>
-
-
+               profile.dependent &&
+                profile.dependent.map((dependents, i) => (
+                <h5> Dependents: {dependents.dependent}</h5>
                 ))
-              
-            
-
-}
-
-  
-        
+            }
+            <h4 className = {'text-title-profile'}> DEPENDENTS : </h4>
           </div>
     )
   }
