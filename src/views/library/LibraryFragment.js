@@ -103,7 +103,7 @@ class LibraryFragment extends BaseMVPView {
           <label  htmlFor = 'tab3' >Borrowed</label>
 
           <section id='content1'>
-            <BookListFragment presenter={ this.presenter } _books = { filteredBooks } />
+            <BookListFragment presenter={ this.presenter } books = { filteredBooks } />
           </section>
           <section id='content2'>
             <BookRecommendationFragment presenter = { this.presenter } recommended = { recommended } />

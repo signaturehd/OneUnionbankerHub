@@ -20,7 +20,6 @@ export default class LoginPresenter {
         },
         error => {
           this.view.onLoginError(error)
-          this.view.hideLoading()
           // TODO generic error handling
         }
       )

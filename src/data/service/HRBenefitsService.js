@@ -47,7 +47,7 @@ export default class HRBenefitsService {
 
   /* dental reimbursements */
 
-  validateDentalReimbursement (token) {
+  getDentalReimbursement (token) {
     return this.apiClient.get('v1/reimbursements/dental/validate?type=1', {
       headers: { token }
     })
@@ -110,11 +110,6 @@ export default class HRBenefitsService {
         headers: { token }
     })
   }
-   getNews (token) {
-    return this.apiClient.get('v1/news', {
-        headers: { token }
-    })
-  }
 
   getBooksBorrowed (token) {
     return this.apiClient.get('v1/books/history', {
@@ -136,7 +131,16 @@ export default class HRBenefitsService {
     })
   }
 
-  /* podcasts */
+  /* News */
+
+  getNews (token) {
+    return this.apiClient.get('v1/news', {
+        headers: { token }
+    })
+  }
+
+
+ /* Podcasts */
 
   getPodcasts (token) {
     return this.apiClient.get('v1/podcasts', {
@@ -167,6 +171,8 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* FAQ's */
 
   getFaqs (token) {
     return this.apiClient.get('v1/faqs', {

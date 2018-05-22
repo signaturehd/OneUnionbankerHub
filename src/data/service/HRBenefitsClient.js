@@ -103,7 +103,7 @@ export default class HRBenefitsClient {
   }
 
   reserveBook (token, BookReserveParam) {
-    return this.service.ReserveBook(token, BookReserveParam)
+    return this.service.reserveBook(token, BookReserveParam)
         .pipe(ServiceErrorOperator())
   }
 
@@ -158,6 +158,11 @@ export default class HRBenefitsClient {
   }
 
   /* dental reimbursement */
+
+  getDentalReimbursement (token) {
+    return this.service.getDentalReimbursement(token)
+      .pipe(ServiceErrorOperator())
+  }
 
   /* dental loa */
 
