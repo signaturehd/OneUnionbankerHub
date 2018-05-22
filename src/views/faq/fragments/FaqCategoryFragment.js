@@ -26,13 +26,16 @@ class FaqCategoryFragment extends Component {
     const {
       faqCategories,
       setSelectedFaqCategory,
-      isLoading
+      isLoading,
     } = this.props
+
     let searchCategories = faqCategories
     const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
-        searchCategories = faqCategories.filter(faqCategories => faqCategories.category.toLowerCase().match(search))
+        searchCategories = faqCategories.filter(faqCategories =>
+          faqCategories.category.toLowerCase().match(search))
     }
+
     return (
       <div className = { 'container' }>
         <h1 className = { 'title-view' }>FAQ&#39;s</h1>
@@ -42,8 +45,8 @@ class FaqCategoryFragment extends Component {
                  value = { this.state.searchString }
                  onChange = { e => this.search(e.target.value) } />
          {
-           isLoading ?
-              searchCategories ?
+           !isLoading ?
+              searchCategories && searchCategories.length > 0 ?
                 <div className = { 'card-container' }>
                   {
                     searchCategories.map((faq, i) =>
@@ -56,11 +59,10 @@ class FaqCategoryFragment extends Component {
                   }
                 </div>
               :
-              <div className = { 'faqs-loader' }>
+              <div>
                 <center><h1>No Category Found</h1></center>
               </div>
             :
-
             <div className = { 'faqs-loader' }>
               <center><CircularLoader show = {true} /></center>
             </div>
@@ -73,6 +75,7 @@ class FaqCategoryFragment extends Component {
 FaqCategoryFragment.propTypes = {
   faqCategories: PropTypes.array,
   setSelectedFaqCategory: PropTypes.func,
+  isLoading: PropTypes.bool,
 }
 
 export default FaqCategoryFragment
