@@ -2,31 +2,21 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { GenericButton } from '../../../ub-components'
 import { Modal } from '../../../ub-components/'
-import ConnectView from '../../../utils/ConnectView'
-import Presenter from '../presenter/LibraryPresenter'
-import BaseMVPView from '../../common/base/BaseMVPView'
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import Rating from 'react-rating'
 import './styles/book-modal.css'
 import staticImage from '../../../images/education_bg.jpg'
 
-class BookViewModal extends BaseMVPView {
+class BookViewModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
       rating : 0
     }
-  }
- reserveBook (id,quantity) {
-  this.props.presenter.reserveBook(id,quantity)
-    }
-
- submitForm (id, quantity) {
-    this.presenter.ReserveBook(id, quantity)
-  }
+ }
 
   render () {
-    const { onClose, details, rateBook } = this.props
+    const { onClose, details, rateBook, reserveBook } = this.props
     const { rating } = this.state
     const style = {
       background : `rgba(0,0,0,0.5) url(${staticImage}) no-repeat center center`,
@@ -68,7 +58,7 @@ class BookViewModal extends BaseMVPView {
           </div>
           <div className = { 'library-momdal-footer' } >
             <div className = {'library-modal-footer-container'} >
-              <GenericButton onClick = { () => this.submitForm(details.id, 1) } text = { 'Reserve' } />
+              <GenericButton onClick = { () => reserveBook(details.id, 1) } text = { 'Borrow' } />
             </div>
           </div>
         </div>
@@ -82,4 +72,4 @@ BookViewModal.propTypes = {
   detail: PropTypes.object,
 }
 
-export default ConnectView (BookViewModal, Presenter)
+export default BookViewModal

@@ -9,6 +9,9 @@ import ReserveParam from '../../../domain/param/ReserveParam'
 import { Observable } from 'rxjs'
 import { filter } from 'rxjs/operators'
 
+import { NotifyActions } from '../../../actions'
+import store from '../../../store'
+
 export default class LibraryPresenter {
   constructor (container) {
     this.getBooksRecommendationInteractor = new GetBooksRecommendationInteractor(container.get('HRBenefitsClient'))
@@ -55,6 +58,13 @@ export default class LibraryPresenter {
     .subscribe(
       data => {
         this.view.hideLoading()
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Book Rating',
+            message : data.message,
+            type : 'success',
+            duration : 2000
+          })
+        )
       },
       error => {
         this.view.hideLoading()
@@ -67,6 +77,13 @@ export default class LibraryPresenter {
     this.reserveBookInteractor.execute(ReserveParam(id,quantity))
     .subscribe(
       data => {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Book Reservation',
+            message : data.message,
+            type : 'success',
+            duration : 2000
+          })
+        )
         this.view.hideLoading()
       },
       error => {
