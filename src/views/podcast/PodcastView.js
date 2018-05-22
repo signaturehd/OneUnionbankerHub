@@ -39,7 +39,6 @@ class PodcastView extends BaseMVPView {
   componentDidMount () {
       this.presenter.getPodcasts()
       this.presenter.getPodcastsRecommendations()
-      this.presenter.getPodcastsViewed()
       this.props.setSelectedNavigation(6)
   }
   updateSearch () {

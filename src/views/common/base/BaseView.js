@@ -40,7 +40,9 @@ class BaseView extends Component {
           notify &&
           notify.map((notify, i) => (
             <Notify
-              onClick = { () => store.dispatch(NotifyActions.removeNotify(i))}
+              onClick = { () => {
+                store.dispatch(NotifyActions.removeNotify(i))
+              }}
               key = { i }
               title = { notify.title }
               message = { notify.message }

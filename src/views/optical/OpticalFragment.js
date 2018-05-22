@@ -14,8 +14,7 @@ import { CircularLoader } from '../../ub-components'
 import { connect } from 'react-redux'
 
 class OpticalFragment extends BaseMVPView {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       showNoticeModal : false,
@@ -66,7 +65,7 @@ class OpticalFragment extends BaseMVPView {
       imagePreviewUrl2,
       isVisible,
     } = this.state
-    console.log(this.props)
+
     return (
       <div  className = { 'benefits-container' }>
         { super.render() }
@@ -78,7 +77,8 @@ class OpticalFragment extends BaseMVPView {
             imagePreviewUrl = { imagePreviewUrl }
             imagePreviewUrl2 = { imagePreviewUrl2 }
             amount = { amount }
-            submitForm = { (finalFile1, finalFile2, amount) => this.submitForm(amount, finalFile1, finalFile2) }
+            submitForm = { (finalFile1, finalFile2, amount) =>
+              this.submitForm(amount, finalFile1, finalFile2) }
             onClose = { () => this.setState({ showConfirmation : false }) }
           />
         }
@@ -86,17 +86,21 @@ class OpticalFragment extends BaseMVPView {
         {
           showNoticeModal &&
           <NoticeModal
-            onClose = { () => this.setState({showNotice : false})}
+            onClose = { () => this.setState({ showNotice : false })}
             noticeResponse = { noticeResponse }
             benefitId = { '8' }
-            onDismiss = { (showNoticeModal, response) => this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
+            onDismiss = { (showNoticeModal, response) =>
+              this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
         }
 
         {
           showNoticeResponseModal &&
           <ResponseModal
-            onClose = { () => { this.setState({showNoticeResponseModal : false}), this.props.history.push('/benefits/medical')}}
+            onClose = { () => {
+              this.setState({ showNoticeResponseModal : false })
+              this.props.history.push('/benefits/medical')
+            }}
             noticeResponse = { response }
             benefitId = { '8' }
             onDismiss = { (showNoticeModal, response) => this.setState({ showNoticeModal, response })  }
@@ -111,9 +115,9 @@ class OpticalFragment extends BaseMVPView {
         {
           isVisible ?
           <div className = { 'optical-container' }>
-            <Card onClick = { (showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2 ) => this.setState({ showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2 })  }/>
-          </div>
-          :
+            <Card onClick = { (showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2) =>
+              this.setState({ showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2 })  }/>
+          </div>          :
           <div className = { 'optical-loader' }>
             <center><CircularLoader show = {true} /></center>
           </div>
@@ -123,8 +127,4 @@ class OpticalFragment extends BaseMVPView {
   }
 }
 
-const mapStateToProps = state => ({
-  notify: state.notify
-})
-
-export default ConnectView(connect(mapStateToProps)(OpticalFragment), Presenter)
+export default ConnectView(OpticalFragment, Presenter)

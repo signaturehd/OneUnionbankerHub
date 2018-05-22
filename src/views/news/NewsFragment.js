@@ -1,4 +1,4 @@
-  import React from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import ConnectView from '../../utils/ConnectView'
 import NewsInteractor from '../../domain/interactor/news/NewsInteractor'
@@ -24,27 +24,30 @@ class NewsFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-      this.presenter.getNews()
-      this.props.setSelectedNavigation(0)
+    this.presenter.getNews()
+    this.props.setSelectedNavigation(0)
   }
+
   updateSearch () {
-      this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
+    this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
   }
 
   news (news) {
-      this.setState({ news })
+    this.setState({ news })
   }
 
   render () {
     const { news, show, details } = this.state
-    let _news = this.state.news
     const search = this.state.searchString.trim().toLowerCase()
+
+    let filteredNews = news
+
     if (search.length > 0) {
-      _news = _news.filter(news => news.title.toLowerCase().match(search))
+      filteredNews = news.filter(news => news.title.toLowerCase().match(search))
     }
+
     return (
       <div className = 'container'>
-        { super.render() }
         {
           show &&
           <NewsModalComponent onClose = { () => this.setState({ show: false })} details = { details } />
@@ -58,7 +61,7 @@ class NewsFragment extends BaseMVPView {
              onChange = { this.updateSearch } />
         <div className = 'news-card-container'>
         {
-          _news.map((news, i) =>
+          filteredNews && filteredNews.map((news, i) =>
             <NewsCardComponent
               key={ i }
               news = { news }
