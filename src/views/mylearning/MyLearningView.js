@@ -6,7 +6,8 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/MyLearningPresenter'
 
-import PodcastView from '../podcast/PodcastView'
+import PodcastFragment from '../podcast/PodcastFragment'
+import PodcastPlayerFragment from '../podcastplayer/PodcastPlayerFragment'
 import LibraryView from '../library/LibraryFragment'
 
 import { InputModal, Card, GenericButton } from '../../ub-components'
@@ -17,6 +18,7 @@ class MyLearningView extends BaseMVPView {
   constructor (props) {
     super(props)
   }
+
   componentDidMount () {
     this.props.setSelectedNavigation(5)
   }
@@ -33,7 +35,7 @@ class MyLearningView extends BaseMVPView {
       id: 1 ,
       styleName: 'mylearning-cards-1',
       title: 'PODCASTS',
-      path: '/mylearning/podcast',
+      path: '/mylearning/podcasts',
     }]
     const MyLearning = () => (
       <div className = { 'mylearning-container' }>
@@ -62,7 +64,7 @@ class MyLearningView extends BaseMVPView {
               <div
                 className = { value.styleName }
                 text = { value.title }
-                onClick = { () => history.push(value.path) } >
+                onClick = { () => history.push(value.path) }>
                 <p className = { 'mylearning-option-cards' }> { value.title } </p>
               </div>
             </Card>
@@ -73,13 +75,17 @@ class MyLearningView extends BaseMVPView {
     </div>)
 
     return (
-    <div>
-       <Switch>
-         <Route exact path = '/mylearning' render = { MyLearning } />
-         <Route path = '/mylearning/podcast' render = { PodcastView } />
-         <Route path = '/mylearning/books' render = { LibraryView } />
-      </Switch>
-    </div>)
+      <div>
+        <Switch>
+          <Route exact path = '/mylearning' render = { MyLearning } />
+          <Route exact path = '/mylearning/podcasts' render = { props =>
+            <PodcastFragment { ...props } /> } />
+          <Route exact path = '/mylearning/podcasts/:id' render = { props =>
+            <PodcastPlayerFragment { ...props } /> } />
+          <Route exact path = '/mylearning/books' render = { LibraryView } />
+        </Switch>
+      </div>
+    )
   }
 }
 

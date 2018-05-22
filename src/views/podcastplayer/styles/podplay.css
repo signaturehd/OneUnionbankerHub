@@ -71,7 +71,7 @@
 }
 .default-podcast-background {
 	height: 360px;
-	background-image: url('../../../../images/podcast.jpg');
+	background-image: url('../../../images/podcast.jpg');
 	width: 640px;
 	background-repeat: no-repeat;
 	background-origin: content-box;

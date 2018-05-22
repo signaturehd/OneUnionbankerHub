@@ -1,10 +1,18 @@
-.podcast-card-container {
-    margin: 5px;
+.podcast-title {
+  color: #ffffff;
+  font-weight: bold;
 }
+
+.podcast-author {
+  color : #ffffff;
+  font-size: 12px;
+  float: right;
+}
+
 .podcasts-details-side-right {
   padding: 25px;
 }
-.podcast-component-body {
+.news-body {
   padding : 50px;
 }
 .fa-play-button {

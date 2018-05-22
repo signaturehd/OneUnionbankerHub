@@ -1,17 +1,14 @@
-import PodcastInteractor from '../../../domain/interactor/podcast/PodcastInteractor'
+import GetPodcastsInteractor from '../../../domain/interactor/podcast/GetPodcastsInteractor'
 import PodcastRecommendationInteractor from '../../../domain/interactor/podcast/PodcastRecommendationInteractor'
-import PodcastViewedInteractor from '../../../domain/interactor/podcast/PodcastViewedInteractor'
 import AddPodcastRatingInteractor from '../../../domain/interactor/podcast/AddPodcastRatingInteractor'
+
 import PodcastRateParam from '../../../domain/param/PodcastRateParam'
-import PodcastReviewInteractor from '../../../domain/interactor/podcast/PodcastReviewInteractor'
 
 export default class PodcastPresenter {
   constructor (container) {
-    this.getPodcastInteractor = new PodcastInteractor(container.get('HRBenefitsClient'))
+    this.getPodcastsInteractor = new GetPodcastsInteractor(container.get('HRBenefitsClient'))
     this.getPodcastRecommendationInteractor = new PodcastRecommendationInteractor(container.get('HRBenefitsClient'))
     this.addPodcastRatingInteractor = new AddPodcastRatingInteractor(container.get('HRBenefitsClient'))
-    this.getPodcastViewedInteractor = new PodcastViewedInteractor(container.get('HRBenefitsClient'))
-    this.getPodcastsReviewsInteractor = new PodcastReviewInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -20,59 +17,39 @@ export default class PodcastPresenter {
 
   getPodcasts () {
     this.view.showLoading()
-    this.getPodcastInteractor.execute()
-    .subscribe(podcasts => {
-        this.view.hideLoading()
-        this.view.podcasts(podcasts)
-      }, e => {
-        this.view.hideLoading()
-        // TODO prompt generic error
-    })
-  }
 
-  getPodcasts (disabled) {
-    this.view.showLoader()
-    this.getPodcastInteractor.execute()
-    .subscribe(podcasts => {
-        this.view.hideLoader()
-        this.view.podcasts(podcasts)
-      }, e => {
-        this.view.hideLoader()
-        // TODO prompt generic error
-    })
-  }
-
-    getPodcastsReviews () {
-      this.view.showLoader()
-      this.getPodcastsReviewsInteractor.execute()
+    this.getPodcastsInteractor.execute()
       .subscribe(podcasts => {
-          this.view.hideLoader()
-          this.view.podcastsreviews(podcasts)
+          this.view.hideLoading()
+          this.view.podcasts(podcasts)
         }, e => {
-          this.view.hideLoader()
+          this.view.hideLoading()
           // TODO prompt generic error
-        })
-    }
-    getPodcastsRecommendations (disabled) {
-      this.view.showLoader()
-      this.getPodcastRecommendationInteractor.execute()
+      })
+  }
+
+  getPodcastsRecommendations (disabled) {
+    this.view.showLoading()
+
+    this.getPodcastRecommendationInteractor.execute()
       .subscribe(podcasts => {
-        this.view.hideLoader()
+        this.view.hideLoading()
         this.view.podcastsRecommendation(podcasts)
       }, e => {
-        this.view.hideLoader()
+        this.view.hideLoading()
+        // TODO prompt generic error
       })
-    }
-    paddRating (id, rating) {
-      this.view.showLoader()
-      this.addPodcastRatingInteractor.execute(PodcastRateParam(id, rating))
-      .subscribe(
-        data => {
-          this.view.hideLoader()
-        },
-        error => {
-          this.view.hideLoader()
-        }
-      )
+  }
+
+  paddRating (id, rating) {
+    this.view.showLoader()
+    this.addPodcastRatingInteractor.execute(PodcastRateParam(id, rating))
+      .subscribe(data => {
+        this.view.hideLoader()
+      },
+      error => {
+        this.view.hideLoader()
+        // TODO prompt generic error
+      })
   }
 }
