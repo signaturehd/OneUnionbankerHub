@@ -12,16 +12,13 @@ export default class LoginPresenter {
 
   login (username, password, disabled) {
     this.view.disabledButton()
-    this.view.showLoading()
     this.loginInteractor.execute(LoginParam(username, password))
       .subscribe(
         data => {
-          this.view.hideLoading()
           this.view.onLoginSuccess()
         },
         error => {
           this.view.onLoginError(error)
-          this.view.hideLoading()
           // TODO generic error handling
         }
       )

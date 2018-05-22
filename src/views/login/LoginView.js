@@ -5,15 +5,19 @@ import LoginPresenter from './presenter/LoginPresenter'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { GenericButton, GenericTextBox, Card, CircularLoader } from '../../ub-components'
+import {
+  GenericButton,
+  GenericTextBox,
+  Card,
+  CircularLoader,
+  Notify
+} from '../../ub-components'
 
 import './css/login.css'
 
 import OtpModal from '../otp/OtpModal'
 
 import { connect } from 'react-redux'
-
-import { Loader, Notify } from '../../ub-components/'
 
 import store from '../../store'
 import { NotifyActions } from '../../actions'
@@ -54,6 +58,7 @@ class LoginView extends BaseMVPView {
 
     return (
       <div>
+        { super.render() }
         {
           // TODO properly show otp modal as 'modal', not by just swapping views lol
           showOtpModal &&
