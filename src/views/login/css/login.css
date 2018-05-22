@@ -6,7 +6,9 @@
   box-shadow: 0 5px 10px -7px #333333;
   border-radius: 50%;
 }
-
+.text {
+  width: 100%;
+}
 .login-form {
   background-color: #ffffff;
   width: 380px;

@@ -6,19 +6,67 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 class SideBar extends Component {
   constructor (props) {
     super(props)
+    this.callLogout = this.callLogout.bind(this)
   }
-
+  callLogout () {
+    this.props.logout()
+  }
   render () {
-    const { textlink, icon , onClick, text, path, onNavigationClick, selected } = this.props
+    const {
+      textlink,
+      icon,
+      onClick,
+      text,
+      path,
+      onNavigationClick,
+      selected,
+      history,
+      logout
+    } = this.props
+
     const modules =
     [
-      { id: 0 , title: 'News', path: '/', className: 'newsfeed-icon mobile-icon' },
-      { id: 1 , title: 'Benefits', path: '/benefits', className: 'benefits-icon mobile-icon' },
-      { id: 2 , title: 'Transactions', path: '/transactions', className: 'transaction-icon mobile-icon' },
-      { id: 3 , title: 'FAQS', path: '/faqs', className: 'faqs-icon mobile-icon' },
-      { id: 4 , title: 'Profile', path: '/settings', className: 'settings-icon mobile-icon' },
-      { id: 5 , title: 'Books', path: '/books', className: 'books-icon mobile-icon' },
-      { id: 6 , title: 'Podcasts', path: '/podcast', className: 'podcast-icon mobile-icon' },
+      {
+        id: 0 ,
+        title: 'News',
+        action: () => history.push('/'),
+        className: 'newsfeed-icon mobile-icon'
+      },
+      {
+        id: 1 ,
+        title: 'My Benefits',
+        action: () => history.push('/benefits'),
+        className: 'benefits-icon mobile-icon'
+      },
+      {
+        id: 2 ,
+        title: 'Transactions',
+        action: () => history.push('/transactions'),
+        className: 'transaction-icon mobile-icon' },
+      {
+        id: 3 ,
+        title: 'FAQS',
+        action: () => history.push('/faqs'),
+        className: 'faqs-icon mobile-icon'
+      },
+      {
+        id: 4 ,
+        title: 'My Profile',
+        action: () => history.push('/settings'),
+        className: 'settings-icon mobile-icon'
+      },
+      {
+        id: 5 ,
+        title: 'MyLearning',
+        action: () => history.push('/mylearning'),
+        className: 'mylearning-icon mobile-icon'
+      },
+      {
+        id: 6 ,
+        title: 'Logout',
+        action: logout,
+        className: 'logout-icon mobile-icon'
+      },
     ]
 
   return (
@@ -28,7 +76,7 @@ class SideBar extends Component {
         modules.map((d, idx) => <li
               className = { `_text-link ${selected === d.id && 'active'}` }
               key = { idx }
-              onClick = { () => onNavigationClick(d.path) }>
+              onClick = { d.action }>
               <a key = { idx }
                  className = { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
                { d.title }

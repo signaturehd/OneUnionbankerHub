@@ -67,7 +67,14 @@ class OpticalCard extends Component {
   }
 
   render () {
-    const { proceedModal, props, fileReceived, fileReceived2, onClick } = this.props
+    const {
+      proceedModal,
+      props,
+      fileReceived,
+      fileReceived2,
+      onClick
+    } = this.props
+
     const {
       confirm,
       cancel,

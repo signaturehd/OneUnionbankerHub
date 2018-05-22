@@ -15,6 +15,7 @@ export default class LoginPresenter {
     this.loginInteractor.execute(LoginParam(username, password))
       .subscribe(
         data => {
+          this.view.enabledButton()
           this.view.onLoginSuccess()
         },
         error => {
