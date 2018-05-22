@@ -103,5 +103,6 @@
   right: 10px;
   bottom: 10px;
   display: grid;
+  z-index: 99;
   grid-row-gap: 10px;
 }
