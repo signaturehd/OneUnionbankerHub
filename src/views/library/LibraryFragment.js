@@ -59,13 +59,13 @@ class LibraryFragment extends BaseMVPView {
   }
 
   render () {
-    const { filteredBook, books, tabs, recommended, borrowed, reserve } = this.state
+    const { filteredBook, books, tabs, recommended, borrowed, reserve, searchString } = this.state
 
-    let _books = this.state.books
-    const _borrowed = this.state.borrowed
-    const search = this.state.searchString.trim().toLowerCase()
+    let filteredBooks = books
+    const search = searchString.trim().toLowerCase()
+
     if (search.length > 0) {
-      _books = _books.filter(books => books.title.toLowerCase().match(search))
+      filteredBooks = books.filter(books => books.title.toLowerCase().match(search))
     }
     return (
       <div>
@@ -97,7 +97,7 @@ class LibraryFragment extends BaseMVPView {
           <label className = { 'mobile-icon' } htmlFor = 'tab3' >Borrowed</label>
 
           <section id='content1'>
-            <BookListFragment presenter={ this.presenter } _books = { _books } />
+            <BookListFragment presenter={ this.presenter } _books = { filteredBooks } />
           </section>
           <section id='content2'>
             <BookRecommendationFragment presenter = { this.presenter } recommended = { recommended } />
