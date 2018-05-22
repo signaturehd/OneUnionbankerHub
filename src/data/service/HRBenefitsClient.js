@@ -102,7 +102,7 @@ export default class HRBenefitsClient {
   }
 
   reserveBook (token, BookReserveParam) {
-    return this.service.ReserveBook(token, BookReserveParam)
+    return this.service.reserveBook(token, BookReserveParam)
         .pipe(ServiceErrorOperator())
   }
 
