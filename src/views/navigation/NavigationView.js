@@ -21,6 +21,9 @@ import './styles/drawerview.css'
 
 import { connect } from 'react-redux'
 
+import store from '../../store'
+import { NotifyActions } from '../../actions'
+
 class NavigationView extends BaseMVPView {
   constructor (props) {
     super (props)
@@ -39,7 +42,7 @@ class NavigationView extends BaseMVPView {
     this.setState({ displayNavIcon : topBar })
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const mediaQuery = window.matchMedia('(min-width: 1201px)')
       if (mediaQuery.matches) {
         this.setDisplay('block', 'none')
@@ -53,9 +56,7 @@ class NavigationView extends BaseMVPView {
         this.setDisplay('none', 'block')
       }
     })
-  }
-
-  componentDidMount () {
+    store.dispatch(NotifyActions.resetNotify())
     this.presenter.getLibraries()
   }
 
