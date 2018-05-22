@@ -101,7 +101,7 @@ section {
 .label-tab {
   display: inline-block;
   margin: 0 0 -1px;
-  padding: 15px 25px;
+  padding: 5px 5px;
   font-weight: 150;
   text-align: center;
   border: 1px solid transparent;
@@ -115,6 +115,7 @@ section {
 
 .label-tab[htmlFor*='1']:before { content: '\f1cb'; }
 .label-tab[htmlFor*='2']:before { content: '\f17d'; }
+.label-tab[htmlFor*='3']:before { content: '\f17d'; }
 
 .label-tab:hover {
   color: #555;
@@ -127,7 +128,8 @@ section {
 }
 
 #tab1:checked ~ #content1,
-#tab2:checked ~ #content2 {
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3 {
   display: block;
   padding-left: 50px;
   padding-right: 50px;

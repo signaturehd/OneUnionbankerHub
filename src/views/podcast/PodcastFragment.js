@@ -1,0 +1,135 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+import BaseMVPView from '../common/base/BaseMVPView'
+import Presenter from './presenter/PodcastPresenter'
+import ConnectView from '../../utils/ConnectView'
+
+import PodcastCardComponent from './components/PodcastCardComponent'
+import { CircularLoader } from '../../ub-components'
+
+import './styles/podcast.css'
+
+class PodcastFragment extends BaseMVPView {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      searchString: '',
+      showLoader: false,
+      podcasts: [],
+      podcastRecommendations: [],
+    }
+
+    this.updateSearch = this.updateSearch.bind(this)
+  }
+
+  componentDidMount () {
+    this.presenter.getPodcasts()
+    this.presenter.getPodcastsRecommendations()
+  }
+
+  /* implementations */
+
+  podcasts (podcasts) {
+      this.setState({ podcasts })
+  }
+
+  podcastsRecommendation (podcastRecommendations) {
+      this.setState({ podcastRecommendations })
+  }
+
+  /* private methods */
+
+  showLoader () {
+    this.setState({ showLoader: true })
+  }
+
+  hideLoader () {
+    this.setState({ showLoader: false })
+  }
+
+  /**
+  * search podcast, filter for all tabs
+  */
+  updateSearch (searchString) {
+    this.setState({ searchString })
+  }
+
+  /* renders */
+
+  /**
+  * generic function for all podcast types. (recommended, all)
+  */
+  renderPodcasts (podcasts) {
+    return podcasts ?
+    podcasts.map((podcast, key) => {
+      return (
+        <PodcastCardComponent
+          key={ key }
+          onClick={ () => this.props.history.push(`/mylearning/podcasts/${podcast.id}`) }
+          podcast={ podcast }
+        />
+      )
+    })
+    :
+    <div></div>
+  }
+
+  render () {
+    const { searchString, showLoader, podcasts, podcastRecommendations } = this.state
+    const { history } = this.props
+
+    return (
+      <div>
+        { super.render() }
+        <div className={ 'header-margin-container' }>
+          <i className = { 'back-arrow' } onClick = { () => history.push('/mylearning') }></i>
+          <h2 className = { 'header-margin-default' }>PODCAST</h2>
+        </div>
+        <input type = 'text'
+          className = { 'podcastsSearchBar' }
+          placeholder = { 'Search Podcasts' }
+          value = { searchString }
+          onChange = { e => this.updateSearch(e.target.value) } />
+        <div className = { 'tabs-container' }>
+          <input
+            className = { 'input-tab' }
+            id='tab1'
+            type='radio'
+            name='tabs'
+            defaultChecked />
+          <label htmlFor = 'tab1'>All Podcasts</label>
+
+          <input
+            className = { 'input-tab' }
+            id='tab2'
+            type='radio'
+            name='tabs' />
+          <label htmlFor='tab2'>Recommended</label>
+
+          <section id='content1'>
+            {
+              showLoader ?
+              <center className = {'circular-loader-center'}>
+                <br/>
+                <CircularLoader show = { true }/>
+              </center> :
+              <div className = { 'podcasts-container' }>
+                { this.renderPodcasts(podcasts) }
+              </div>
+            }
+          </section>
+          <section id='content2'>
+            { this.renderPodcasts(podcastRecommendations) }
+          </section>
+        </div>
+      </div>
+    )
+  }
+}
+
+PodcastFragment.propTypes = {
+}
+
+export default ConnectView(PodcastFragment, Presenter)

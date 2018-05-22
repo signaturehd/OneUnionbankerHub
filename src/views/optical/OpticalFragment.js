@@ -103,20 +103,34 @@ class OpticalFragment extends BaseMVPView {
             }}
             noticeResponse = { response }
             benefitId = { '8' }
-            onDismiss = { (showNoticeModal, response) => this.setState({ showNoticeModal, response })  }
+            onDismiss = { (showNoticeModal, response) =>
+              this.setState({ showNoticeModal, response })  }
           />
 
         }
 
         <div className={ 'breadcrumbs-container' }>
-          <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
+          <i className = { 'left' } onClick = {
+              this.navigate.bind(this) }></i>
           <h1>Optical Reimbursement</h1>
         </div>
         {
           isVisible ?
           <div className = { 'optical-container' }>
-            <Card onClick = { (showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2) =>
-              this.setState({ showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2 })  }/>
+            <Card onClick = {
+                (showConfirmation,
+                  file1,
+                  file2,
+                  amount,
+                  imagePreviewUrl,
+                  imagePreviewUrl2) =>
+            this.setState({
+                  showConfirmation,
+                  file1,
+                  file2,
+                  amount,
+                  imagePreviewUrl,
+                  imagePreviewUrl2 })  }/>
           </div>          :
           <div className = { 'optical-loader' }>
             <center><CircularLoader show = {true} /></center>
@@ -127,4 +141,8 @@ class OpticalFragment extends BaseMVPView {
   }
 }
 
-export default ConnectView(OpticalFragment, Presenter)
+const mapStateToProps = state => ({
+  notify: state.notify
+})
+
+export default ConnectView(connect(mapStateToProps)(OpticalFragment), Presenter)

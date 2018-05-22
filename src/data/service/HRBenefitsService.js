@@ -124,6 +124,7 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
   addRating (token, bookParam) {
     return this.apiClient.post('v1/books/rate', bookParam, {
       headers : { token }
@@ -142,22 +143,31 @@ export default class HRBenefitsService {
  /* Podcasts */
 
   getPodcasts (token) {
-      return this.apiClient.get('v1/podcasts', {
-          headers: { token }
-      })
-    }
+    return this.apiClient.get('v1/podcasts', {
+        headers: { token }
+    })
+  }
+
+  getPodcast (token) {
+    return this.apiClient.get('v1/podcasts', {
+      headers: { token }
+    })
+  }
+
+  getPodcastsReviews (token) {
+    return this.apiClient.get('v1/podcasts/reviews', {
+        headers: { token }
+    })
+  }
+
   getPodcastsRecommendations (token) {
-      return this.apiClient.get('v1/podcasts/recommendations', {
-          headers: { token }
-      })
-    }
-  getPodcastsViewed (token) {
-      return this.apiClient.get('v1/podcasts/history/members', {
-          headers: { token }
-      })
-    }
-  paddRating (token, bookParam) {
-    return this.apiClient.post('v1/books/podcasts', bookParam, {
+    return this.apiClient.get('v1/podcasts/recommendations', {
+        headers: { token }
+    })
+  }
+
+  paddRating (token, podcastParam) {
+    return this.apiClient.post('v1/podcasts/reviews', podcastParam, {
       headers : { token }
     })
   }
