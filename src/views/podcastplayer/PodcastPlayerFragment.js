@@ -60,12 +60,13 @@ class PodcastPlayerFragment extends BaseMVPView {
 
   render () {
     const { rating, podcast, podcasts } = this.state
+    const { history } = this.props
 
     return (
       <div>
         { super.render() }
         <div className={ 'podplay-header' }>
-          <i className = { 'left' } onClick = { () => this.props.history.push('/mylearning/podcast') }></i>
+          <i className = { 'left' } onClick = { () => history.push('/mylearning/podcasts') }></i>
           <h2 className = { 'header-margin-default' }>UTube</h2>
         </div>
         <div className = { 'podplay-main' }>
