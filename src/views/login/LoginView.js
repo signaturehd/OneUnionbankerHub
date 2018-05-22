@@ -5,13 +5,22 @@ import LoginPresenter from './presenter/LoginPresenter'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { GenericButton, GenericTextBox, Card, CircularLoader } from '../../ub-components'
+import {
+  GenericButton,
+  GenericTextBox,
+  Card,
+  CircularLoader,
+  Notify
+} from '../../ub-components'
 
 import './css/login.css'
 
 import OtpModal from '../otp/OtpModal'
 
 import { connect } from 'react-redux'
+
+import store from '../../store'
+import { NotifyActions } from '../../actions'
 
 class LoginView extends BaseMVPView {
   constructor (props) {
@@ -45,6 +54,7 @@ class LoginView extends BaseMVPView {
 
   render () {
     const { showOtpModal, username } = this.state
+    const { notify } = this.props
 
     return (
       <div>
@@ -113,11 +123,27 @@ class LoginView extends BaseMVPView {
                     className = { 'icon-1' } />
             </div>
         </Card>
+
+          <div className = { 'notify-container' }>
+          {
+            notify &&
+            notify.map((notify, i) => (
+              <Notify
+                onClick = { () => {
+                  store.dispatch(NotifyActions.removeNotify(i))
+                }}
+                key = { i }
+                title = { notify.title }
+                message = { notify.message }
+                type = { notify.type }
+              />
+            ))
+          }
+          </div>
       </div>
     )
   }
 }
-
 const mapStateToProps = state => ({
   notify : state.notify
 })
