@@ -131,7 +131,6 @@ export default class HRBenefitsService {
   }
 
   addRating (token, bookParam) {
-    console.log(bookParam)
     return this.apiClient.post('v1/books/rate', bookParam, {
       headers : { token }
     })
