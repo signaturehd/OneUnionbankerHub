@@ -1,8 +1,14 @@
-.card-container {
-  display:grid;
-  grid-column-gap: 1%;
-  grid-template-columns : repeat(250px);
+.podcast-title {
+  color: #ffffff;
+  font-weight: bold;
 }
+
+.podcast-author {
+  color : #ffffff;
+  font-size: 12px;
+  float: right;
+}
+
 .podcasts-details-side-right {
   padding: 25px;
 }
