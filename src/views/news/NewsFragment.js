@@ -1,4 +1,4 @@
-import React from 'react'
+  import React from 'react'
 import PropTypes from 'prop-types'
 import ConnectView from '../../utils/ConnectView'
 import NewsInteractor from '../../domain/interactor/news/NewsInteractor'
@@ -30,15 +30,15 @@ class NewsFragment extends BaseMVPView {
   componentDidMount () {
       this.presenter.getNews()
       this.props.setSelectedNavigation(0)
-    setTimeout(() => this.setState({ showLoader : false }), 3000)
+      setTimeout(() => this.setState({ showLoader : false }), 3000)
 
   }
+
   updateSearch () {
-      this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
+    this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
   }
-
   news (news) {
-      this.setState({ news })
+    this.setState({ news })
   }
 
   render () {
@@ -50,9 +50,13 @@ class NewsFragment extends BaseMVPView {
     } = this.state
     let newsList = this.state.news
     const search = this.state.searchString.trim().toLowerCase()
+
+    let filteredNews = news
+
     if (search.length > 0) {
       newsList = news.filter(newsList => news.title.toLowerCase().match(search))
     }
+
     return (
       <div className = 'container'>
         {

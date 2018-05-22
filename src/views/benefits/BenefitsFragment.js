@@ -27,6 +27,7 @@ class BenefitsFragment extends BaseMVPView {
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateFabToShow()
+    this.props.history.push('/benefits')
   }
 
   showReleasingCenters (releasingCenters) {

@@ -24,6 +24,10 @@ class OtpModal extends BaseMVPView {
     // TODO redirect to login
   }
 
+  onOtpError () {
+    this.setState({disableSubmit: false})
+  }
+
   onResendSuccess () {
     this.setState({ disabledResend : false, text : '' })
   }
@@ -43,8 +47,7 @@ class OtpModal extends BaseMVPView {
             <br/>
             <br/>
             <CircularLoader show={true}/>
-          </center>
-          :
+          </center>          :
           <div>
             <GenericTextBox text= "OTP"
               placeholder = "OTP"

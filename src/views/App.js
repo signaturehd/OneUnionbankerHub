@@ -39,8 +39,6 @@ class App extends BaseMVPView {
   }
 
   render () {
-
-
     return (
       <div>
         <Switch>
