@@ -96,3 +96,12 @@
   margin-bottom: 10px;
   border: 0px #e2d3d300;
 }
+
+.notify-container {
+  position: fixed;
+  width: 20%;
+  right: 10px;
+  bottom: 10px;
+  display: grid;
+  grid-row-gap: 10px;
+}
