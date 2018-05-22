@@ -24,11 +24,9 @@ class BasicInformationCardComponent extends Component {
           
             <h5 className = "title">{ profile.workClass }</h5>
             <h4 className = { 'text-title-profile' }> CLASS </h4>
-
             
             <h5 className = "title">{ rank.rank}</h5>
            <h4 className = { 'text-title-profile' }> RANK </h4>
-            
 
            <h5 className = "title"> { profile.unitAssessment }</h5>
             <h4 className = { 'text-title-profile' }> UNIT ASSESSMENT </h4>
@@ -41,8 +39,6 @@ class BasicInformationCardComponent extends Component {
 
             <h5 className = "title">{ profile.regularizationDate }</h5>
             <h4 className = { 'text-title-profile' }> REGULARIZATION DATE </h4>
-
-
 
             <h5 className = "title">{ linemanager.fullName }</h5>
             <h4 className = { 'text-title-profile' }> LINE MANAGER </h4>

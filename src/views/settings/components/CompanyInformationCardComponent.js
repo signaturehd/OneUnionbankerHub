@@ -14,8 +14,6 @@ class CompanyInformationCardComponent extends Component {
     const { profile, onClick, rank , linemanager } = this.props
     return (
          <div className = 'card-container'>
-            
-
           
            <h5 className = "title">{ profile.TIN }</h5>
             <h4 className = { 'text-title-profile' }> TIN </h4>
@@ -28,14 +26,6 @@ class CompanyInformationCardComponent extends Component {
             
             <h5 className = "title">{ profile.PhilHealth }</h5>
             <h4 className = { 'text-title-profile' }> PhilHealth </h4>
-           
-           
-
-            
-
-          
-
-            
             
           </div>
     )
