@@ -42,42 +42,53 @@ class NewsFragment extends BaseMVPView {
   }
 
   render () {
-    const { news, show, details, showLoader } = this.state
-    console.log(showLoader)
-    let _news = this.state.news
+    const {
+      news,
+      show,
+      details,
+      showLoader
+    } = this.state
+    let newsList = this.state.news
     const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
-      _news = _news.filter(news => news.title.toLowerCase().match(search))
+      newsList = news.filter(newsList => news.title.toLowerCase().match(search))
     }
     return (
       <div className = 'container'>
         {
           show &&
-          <NewsModalComponent onClose = { () => this.setState({ show: false })} details = { details } />
+          <NewsModalComponent
+            onClose = { () => this.setState({ show: false })}
+            details = { details }
+           />
         }
         <h1 className = { 'title-view' }>News Feed</h1>
         <input type = 'text'
-             className = 'newsSearchBar'
-             ref='search'
-             placeholder = {'Search News'}
-             value = { this.state.searchString }
-             onChange = { this.updateSearch } />
-              {
-                showLoader ?
-                <center>
+          className = 'newsSearchBar'
+          ref='search'
+          placeholder = {'Search News'}
+          value = { this.state.searchString }
+          onChange = { this.updateSearch } />
+        {
+          showLoader ?
+            <div className = {'news-loader'} >
+              <center>
                 <CircularLoader show = {true} />
-                </center>                :
-        <div className = 'news-card-container'>
-          {
-          _news.map((news, i) =>
-            <NewsCardComponent
-              key={ i }
-              news = { news }
-              onClick = { details => this.setState({ details, show: true }) } />)
-            
-          }
-        </div>
-      }
+              </center>
+            </div>
+
+          :
+            <div className = 'news-card-container'>
+            {
+              newsList &&
+              newsList.map((news, i) =>
+                <NewsCardComponent
+                  key={ i }
+                  news = { news }
+                  onClick = { details => this.setState({ details, show: true }) } />)
+            }
+            </div>
+        }
       </div>
     )
   }
