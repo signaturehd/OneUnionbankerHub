@@ -36,7 +36,6 @@ class LibraryFragment extends BaseMVPView {
   componentDidMount () {
       this.presenter.getBooks()
       this.presenter.getBooksBorrowed()
-      this.props.history.push('/mylearning/books')
   }
 
   showBooks (books) {
@@ -54,12 +53,15 @@ class LibraryFragment extends BaseMVPView {
   navigate () {
     this.props.history.push ('/mylearning')
   }
+  
   updateSearch () {
     this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
   }
+  
   showBorrowedFiltered (filteredBook) {
     this.setState({ filteredBook })
   }
+  
   render () {
     const {
       filteredBook,
@@ -68,7 +70,7 @@ class LibraryFragment extends BaseMVPView {
       recommended,
       borrowed,
       reserve,
-      searchString
+      searchString,
     } = this.state
 
     let filteredBooks = books
