@@ -1,8 +1,9 @@
 
 export default class HRBenefitsService {
-  constructor (apiClient, accountClient) {
+  constructor (apiClient, accountClient, imageClient) {
     this.apiClient = apiClient
     this.accountClient = accountClient
+    this.imageClient = imageClient
   }
 
   /* user */
@@ -198,4 +199,24 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  getBookImage (accountToken, ImageParam) {
+    return this.imageClient.get('v1/files?folder=faqs', {
+      headers : {
+        accountToken,
+        file : ImageParam
+      }
+    })
+  }
+
+  getFaqsImage (accountToken, ImageParam) {
+    return this.imageClient.get('v1/files?folder=faqs', {
+      headers : {
+        accountToken,
+        file : ImageParam
+      }
+    })
+  }
+
+
 }

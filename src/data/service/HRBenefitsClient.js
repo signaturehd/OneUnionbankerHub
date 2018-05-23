@@ -192,6 +192,17 @@ export default class HRBenefitsClient {
 
   getFaqsCategories (token) {
     return this.service.getFaqsCategories(token)
-      .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator())
   }
+
+  getBookImage (accountToken, ImageParam) {
+    return this.service.getBookImage(accountToken, ImageParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getFaqsImage (accountToken, ImageParam) {
+    return this.service.getFaqsImage(accountToken, ImageParam)
+    .pipe(ServiceErrorOperator())
+  }
+
 }
