@@ -11,8 +11,6 @@ import './styles/optical.css'
 
 import { CircularLoader } from '../../ub-components'
 
-import { connect } from 'react-redux'
-
 class OpticalFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -141,8 +139,4 @@ class OpticalFragment extends BaseMVPView {
   }
 }
 
-const mapStateToProps = state => ({
-  notify: state.notify
-})
-
-export default ConnectView(connect(mapStateToProps)(OpticalFragment), Presenter)
+export default ConnectView(OpticalFragment, Presenter)
