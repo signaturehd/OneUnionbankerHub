@@ -28,15 +28,23 @@ return (
     </div>
     <div className = { 'optical-modal-footer' }>
       {
-        details.map((procedure, key ) =>
-        <GenericButton
-            className = { 'dentalloa-modal-option-button' }
-            key = { key }
-            details = {procedure}
-            text = { procedure.name}
-            onClick = { () => this.submitData( procedure )}/>
-          )
-        }
+        details ?
+          details.map((procedure, key ) =>
+            procedure.id !== 3 &&
+            procedure.id !== 4 &&
+            procedure.id !== 5 &&
+            procedure.id !== 6 ?
+              <GenericButton
+                className = { 'dentalloa-modal-option-button' }
+                key = { key }
+                details = {procedure}
+                text = { procedure.name}
+                onClick = { () => this.submitData( procedure )}/>
+              : <h3>{ procedure.name }</h3>
+            )
+          :
+          <center><h3>Please pick your Receipient</h3></center>
+      }
       </div>
     </Modal>
     )

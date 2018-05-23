@@ -20,6 +20,7 @@ class DentalLoaView extends BaseMVPView {
       showHealthwayBranchModal : false,
       receipient : null,
       procedures : null,
+      procedure : null,
       branch : null,
       date : null,
     }
@@ -70,14 +71,15 @@ class DentalLoaView extends BaseMVPView {
       branchId,
       branchText,
       procedure,
+      procedures,
     } = this.state
     return(
       <div  className = { 'benefits-container' }>
         {
           showRecipientModal &&
           <DentalLoaDependentModal
-            details = { dentalloa.dependents }
-            chosenDependent = { (receipientId, receipientText, procedure, showReceipientModal) => this.setState({receipientId, receipientText, procedure, showReceipientModal}) }
+            details = { dentalloa }
+            chosenDependent = { (receipientId, receipientText, procedures, showReceipientModal) => this.setState({receipientId, receipientText, procedures, showReceipientModal}) }
             onClose = { () => this.setState({ showRecipientModal : false }) } />
         }
 
@@ -95,7 +97,7 @@ class DentalLoaView extends BaseMVPView {
           showProcedureModal &&
           <DentalLoaProcedureModal
             showProcedureModal = { showProcedureModal }
-            details = { dentalloa.procedures }
+            details = { procedures }
             onChange = { (procedure) => this.setState({ procedure }) }
             onClose = { () => this.setState({ showProcedureModal : false }) } />
         }

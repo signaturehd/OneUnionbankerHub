@@ -15,6 +15,8 @@ class DentalLoaDependentModal extends Component {
 
   render () {
   const { details, onClose, showDependentModal, isDismisable } = this.props
+
+  console.log(details)
   return (
     <Modal
      onClose = { onClose }
@@ -27,7 +29,7 @@ class DentalLoaDependentModal extends Component {
           <GenericButton
               className = { 'dentalloa-modal-option-button' }
               text = {'Me'}
-              onClick = { () => this.sendDependents( 0, 'Personal', null) }
+              onClick = { () => this.sendDependents( 0, 'Personal', details.procedures) }
           />
           {
             details.dependent &&
