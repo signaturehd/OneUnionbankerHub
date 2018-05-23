@@ -13,11 +13,11 @@ this.submitData = this.submitData.bind(this)
 }
 submitData ( value ) {
   this.setState({ chosenProcedure : value })
-  console.log(value)
+  this.props.onClose()
 }
 render () {
   const { details, onClose, showProcedureModal, text, isDismisable } = this.props
-  console.log(this.props)
+
 return (
   <Modal
     onClose = { onClose }

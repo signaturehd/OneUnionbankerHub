@@ -20,7 +20,7 @@ class DentalLoaCard extends Component {
       showHealthwayBranchModal : false,
       showProcedureModal : false,
       datePicker : '',
-      date: new Date(),
+      date: moment(),
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -31,8 +31,9 @@ class DentalLoaCard extends Component {
     e.preventDefault()
   }
 
-  onChange (date) {
-    this.props.preferedDate(data)
+  onChange (data) {
+    this.setState({ date : data })
+    this.props.preferedDate(date)
   }
 
   render () {
@@ -52,7 +53,7 @@ class DentalLoaCard extends Component {
       submitForm
     } = this.props
 
-    const { showRecipientModal, showHealthwayBranchModal, showProcedureModal } = this.state
+    const { date, showRecipientModal, showHealthwayBranchModal, showProcedureModal } = this.state
 
     return (
       <Card className={ 'dentalloa-card' }>
@@ -79,12 +80,10 @@ class DentalLoaCard extends Component {
           <div className = { 'dentalloa-col span_1_of_3' }>
             <i className = { 'dentalloa-icon text3-icon' }/>
               <DatePicker
-                dateFormat = { 'LL' }
-                showMonthDrowdown
-                showYearDrowdown
+                dateFormat="LL"
+                readOnly
+                selected={this.state.date}
                 onChange={this.onChange}
-                value={this.state.date}
-                dropdownMode = "select"
                 className = {'calendar'}
                 calendarClassName = {"calendarClass"}/>
           </div>

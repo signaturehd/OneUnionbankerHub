@@ -16,7 +16,6 @@ class DentalLoaDependentModal extends Component {
   render () {
   const { details, onClose, showDependentModal, isDismisable } = this.props
 
-  console.log(details)
   return (
     <Modal
      onClose = { onClose }
@@ -26,11 +25,17 @@ class DentalLoaDependentModal extends Component {
         <h2>Dependent</h2>
       </div>
       <div className = { 'optical-modal-footer' }>
-          <GenericButton
-              className = { 'dentalloa-modal-option-button' }
-              text = {'Me'}
-              onClick = { () => this.sendDependents( 0, 'Personal', details.procedures) }
-          />
+
+          {
+            details.dependents &&
+            details.dependents.map((dependent, key ) =>
+            <GenericButton
+                className = { 'dentalloa-modal-option-button' }
+                text = {dependent.name}
+                onClick = { () => this.sendDependents( 0, dependent.name, dependent.procedures) }
+            />
+            )
+          }
           {
             details.dependent &&
             details.dependent.map((dependent, key ) =>

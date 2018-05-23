@@ -32,7 +32,7 @@ class DentalLoaBranchModal extends Component {
           details.map((branch, key ) =>
           <GenericButton
               key = { key }
-              details = {branch}
+              details = { branch }
               className = { 'dentalloa-modal-option-button' }
               text = { branch.name}
               onClick = { () => this.submitData(branch.id, branch.name) }/>

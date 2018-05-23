@@ -51,6 +51,8 @@ class DentalLoaView extends BaseMVPView {
         "id": 10
     }]
     this.presenter.addDentalLoa(receipientId, branchId, preferedDate, procedures)
+    console.log(procedure)
+
   }
 
   navigate () {
@@ -73,6 +75,7 @@ class DentalLoaView extends BaseMVPView {
       procedure,
       procedures,
     } = this.state
+
     return(
       <div  className = { 'benefits-container' }>
         {
