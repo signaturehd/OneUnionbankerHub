@@ -145,18 +145,18 @@ return (
     onClick = { () => this.props.history.push('/mybenefits/benefits/forapproval') } />
 <label className = { 'mobile-icon' } htmlFor = 'tab3' >For Approval</label>
 
-<section id='content1'>
+  <section id='content1'>
     <Switch>
-     <Route exact path = '/mybenefits/benefits'
-             render = { Benefits } />
-     <Route path = '/mybenefits/benefits/transaction'
-             render = { props => <TransactionFragment { ...props } /> }/>
-     <Route path = '/mybenefits/benefits/education'
-             render = { props => <EducationFragment { ...props } />}/>
-     <Route  path = '/mybenefits/benefits/medical'
-             render = { props => <MedicalFragment { ...props } />}/>
-     <Route  path = '/mybenefits/benefits/forapproval'
-             render = { props => <div>For Aprroval</div>}/>
+      <Route path = '/mybenefits/benefits/transaction'
+        render = { props => <TransactionFragment { ...props } /> }/>
+      <Route path = '/mybenefits/benefits/education'
+        render = { props => <EducationFragment { ...props } />}/>
+      <Route  path = '/mybenefits/benefits/medical'
+        render = { props => <MedicalFragment { ...props } />}/>
+      <Route  path = '/mybenefits/benefits/forapproval'
+        render = { props => <div>For Aprroval</div>}/>
+      <Route exact path = '/mybenefits/benefits'
+        render = { Benefits } />
    </Switch>
   </section>
   </div>

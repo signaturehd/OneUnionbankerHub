@@ -27,6 +27,7 @@ class OpticalFragment extends BaseMVPView {
 
   componentDidMount () {
     this.presenter.getOptical()
+    this.props.setSelectedNavigation(1)
   }
 
   isEligible (resp) {
@@ -42,7 +43,7 @@ class OpticalFragment extends BaseMVPView {
   }
 
   navigate () {
-    this.props.history.push('/benefits/medical')
+    this.props.history.push('/mybenefits/benefits/medical')
   }
 
   submitForm (amount, finalFile1, finalFile2) {

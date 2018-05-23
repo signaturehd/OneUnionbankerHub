@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Card, GenericButton } from '../../../../ub-components'
-import OpticalFragment from '../../../optical/OpticalFragment'
-import DentalReimbursementView from '../../../dentalreimbursement/DentalReimbursementView'
 import './styles/medical.css'
 
 class MedicalFragment extends Component {
@@ -21,11 +19,11 @@ class MedicalFragment extends Component {
     const benefitsOptions = [{
       styleName: 'medical-cards-1',
       title: 'DENTAL LOA',
-      path: '/mybenefits/benefits/medical/dentalloa',
+      path: '/mybenefits/benefits/medical/loa/dental',
     }, {
       styleName: 'medical-cards-2',
       title: 'DENTAL REIMBURSEMENT',
-      path: '/mybenefits/benefits/medical/dentalreimbursement',
+      path: '/mybenefits/benefits/medical/reimbursement/dental',
     }, {
       styleName: 'medical-cards-3',
       title: 'OPTICAL',
@@ -60,9 +58,6 @@ class MedicalFragment extends Component {
       <div>
         <Switch>
           <Route exact path = '/mybenefits/benefits/medical'  render = { MedicalHome } />
-          <Route path = '/mybenefits/benefits/medical/optical' render = { props => <OpticalFragment { ...props } />}/>
-          <Route path = '/mybenefits/benefits/medical/dentalloa' render = { props => <DentalLoaView { ...props } />}/>
-          <Route path = '/mybenefits/benefits/medical/dentalreimbursement' render = { props => <OpticalFragment { ...props } />}/>
         </Switch>
       </div>
     )
