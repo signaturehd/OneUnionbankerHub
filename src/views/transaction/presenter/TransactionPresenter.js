@@ -1,7 +1,7 @@
 import GetTransactionInteractor from '../../../domain/interactor/transactions/GetTransactionInteractor'
 import GetTransactionByIdInteractor from '../../../domain/interactor/transactions/GetTransactionByIdInteractor'
 import GetTransactionParam from '../../../domain/param/GetTransactionParam'
-
+import { Observable } from 'rxjs'
 export default class TransactionPresenter {
   constructor (container) {
     this.getTransactionInteractor = new GetTransactionInteractor(container.get('HRBenefitsClient'))

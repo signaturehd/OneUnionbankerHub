@@ -17,12 +17,13 @@ class TransactionFragment extends BaseMVPView {
       transactionId : null,
       transactions: [],
       transactionResponse : null,
-      transaction: null
+      transaction: null,
     }
   }
 
   componentDidMount () {
     this.presenter.getTransactions()
+
   }
 
   transactions (transactions) {
@@ -39,48 +40,46 @@ class TransactionFragment extends BaseMVPView {
       transactions,
       view,
       transaction,
-      transactionResponse
+      transactionResponse,
     } = this.state
 
     const {
       onClick,
       text,
       path,
-      icon,
-      history
+      icon
     } = this.props
-
-    return (
-      <div>
-        <h1> Transactions </h1>
-        <div className = { '_transaction-container' }>
-        {
-
+      const Transactions = () =>
+      (
+        <div className = { 'transaction-container' }>
+          {
           transactions &&
           transactions.map((transaction, key) =>
             <TransactionCardComponent
               detail = { transaction } key = { key }
-              onClick = { (transaction, view) => this.setState({ transaction, view }) }
+              onClick = { (transaction, view) => this.setState({ transaction, view })}
             />
           )
         }
+        </div>
+    )
 
+    return (
+      <div>
         {
           view &&
           <TransactionModal
             transactionResponse = { transactionResponse }
+            history = { history }
             transaction = { transaction.benefitId }
             presenter = { () => this.presenter.getTransactionById(transaction.id) }
-            onClose = { () => this.setState({view : false, transactionResponse: null, transaction: null })}
-          />
+            onClose = { () =>  this.setState({ view : false })}/>
         }
-
-
-        </div>
-      </div>
+        <Switch>
+          <Route exact path = '/mybenefits/benefits/transaction' render = {Transactions} />
+        </Switch>
+    </div>
     )
   }
 }
-
-
 export default ConnectPartial (TransactionFragment, Presenter)
