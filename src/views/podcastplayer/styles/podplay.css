@@ -411,7 +411,7 @@ input[type="range"] {
 		background-size: cover;
 	}
 	.media-player {
-		width: 700px;
+		width: 640px;
 	}
 	.media-controls {
 			min-width: 100%;
@@ -460,7 +460,7 @@ input[type="range"] {
 			padding: 5px;
 	}
 	.media-player {
-		width: 700px;
+		width: 660px;
 	}
 	.fa-play-button-detail {
 		font-size : 45px !important;
@@ -485,7 +485,7 @@ and (max-width: 767px) {
 		background-size: cover;
 	}
 	.media-player {
-		width: 700px;
+		width: 660px;
 	}
 	.fa-play-button-detail {
 		font-size : 45px !important;

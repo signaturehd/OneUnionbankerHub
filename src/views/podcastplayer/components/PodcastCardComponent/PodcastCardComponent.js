@@ -9,7 +9,7 @@ import { FaPlayCircleO } from 'react-icons/lib/fa/'
 import Rating from 'react-rating'
 
 class PodcastCardComponent extends Component {
-  
+
   render () {
     const { podcast, onClick } = this.props
 
@@ -22,10 +22,10 @@ class PodcastCardComponent extends Component {
     }
 
     return (
-      <Card onClick={ onClick }>
+      <Card onClick={ onClick } className = { 'podcast-card' }>
         <div style = { style.styles }
-             className = { 'news-body' }>
-          <h2 className = { 'podcast-title' }>Title</h2>
+             className = { 'podcast-body' }>
+          <h2 className = { 'podcast-title' }>{ podcast && podcast.title}</h2>
           <h2 className={ 'podcast-author' }>-{ podcast && podcast.speaker }</h2>
         </div>
         <div className = { 'card-footer' }>
