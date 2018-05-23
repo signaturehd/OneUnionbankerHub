@@ -5,7 +5,7 @@ import TextBox from './DentalReimbursementTextBox'
 import { Modal } from '../modal/DentalReimbursementReviewModal'
 import DentalReimbursementProcedureModal from '../modal/DentalReimbursementProcedureModal'
 import DentalReimbursementReviewModal from '../modal/DentalReimbursementReviewModal'
-import { Card, GenericButton, FileUploader } from '../../../ub-components/'
+import { Card, GenericButton, FileUploader, Checkbox } from '../../../ub-components/'
 
 class DentalReimbursementCard extends Component {
   constructor (props) {
@@ -74,7 +74,7 @@ handleImageChange2(e1) {
 }
 
 render () {
-    const { details, fileReceived, fileReceived2, onClick} = this.props
+    const { details, fileReceived, fileReceived2, onClick, dependents } = this.props
     const { attachmentsSubmission, showConfirmation, warning, proceedModal, procedure,showResults } = this.state
     let {imagePreviewUrl, imagePreviewUrl2} = this.state
     let $imagePreview = null
@@ -103,17 +103,6 @@ render () {
 
 return (
   <div className = { 'dentalreimbursement-container' }>
-    {
-      proceedModal &&
-      <DentalReimbursementProcedureModal
-        show = { this.state.proceedModal }
-        presenter = { this.presenter }
-        details = { details && details.procedures }
-        showResults = { (procedureName, procedureAmount, proceedModal) => this.setState({ procedureName, procedureAmount, proceedModal }) }
-        onChange = { (procedureName, procedureAmount) => this.setState({ procedureName, procedureAmount }) }
-        onClose = { () => this.setState({ proceedModal : false }) } />
-    }
-   
     <form onSubmit = { this.handleSubmit }>
       <Card className = { 'dentalreimbursement-card' }>
          <h4>Form Attachments</h4>
@@ -160,15 +149,17 @@ return (
   }
 }
 DentalReimbursementCard.propTypes = {
-onClose : PropTypes.func,
-onClick : PropTypes.func,
-procedure : PropTypes.string,
-warning : PropTypes.string,
-attachmentsSubmission : PropTypes.array,
+  onClose : PropTypes.func,
+  onClick : PropTypes.func,
+  procedure : PropTypes.string,
+  warning : PropTypes.string,
+  attachmentsSubmission : PropTypes.array,
+  dependents: PropTypes.array,
 }
 DentalReimbursementCard.defaultProps = {
-procedure : 'PROCEDURE',
-warning : '',
-text: 'procedure'
+  procedure : 'PROCEDURE',
+  warning : '',
+  text: 'procedure'
 }
+
 export default DentalReimbursementCard

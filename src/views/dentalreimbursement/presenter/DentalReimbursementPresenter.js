@@ -15,7 +15,7 @@ export default class DentalReimbursementPresenter {
  getDentalReimbursement () {
    this.view.showCircularLoader()
    this.getDentalReimbursementInteractor.execute()
-   .map(dentalreimbursement => this.view.getDentalReimbursement(dentalreimbursement))
+   .map(dentalreimbursement => this.view.showDentalReimbursementValidate(dentalreimbursement))
    .toArray()
    .do(dentalreimbursement => this.view.hideCircularLoader(),
            dentalreimbursement => this.view.hideCircularLoader())

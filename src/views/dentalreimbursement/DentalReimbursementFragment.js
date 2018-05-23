@@ -1,0 +1,133 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
+import ConnectView from '../../utils/ConnectView'
+import Presenter from './presenter/DentalReimbursementPresenter'
+import BaseMVPView from '../common/base/BaseMVPView'
+import ConnectPartial from '../../utils/ConnectPartial'
+import DentalReimbursementReviewModal from './modal/DentalReimbursementReviewModal'
+import DentalReimbursementProcedureModal from './modal/DentalReimbursementProcedureModal'
+
+import DentalReimbursementCard from './components/DentalReimbursementCard'
+import './styles/dental-reimbursement.css'
+
+import { CircularLoader, Checkbox } from '../../ub-components/'
+
+class DentalReimbursementFragment extends BaseMVPView {
+  constructor(props) {
+    super(props)
+    this.state = {
+      disabled: false,
+      procedureModal: false,
+      reviewModal: false,
+      disabled: false, // this is for circular loader
+      dependents: [],
+      selectedDependent: null,
+      selectedProcedures: [],
+    }
+  }
+
+  componentDidMount () {
+    this.presenter.getDentalReimbursement()
+  }
+
+  hideCircularLoader ( disabled ) {
+    this.setState({ disabled : false })
+  }
+
+  showCircularLoader ( disabled ) {
+    this.setState({ disabled : true })
+  }
+
+  navigate () {
+    this.props.history.push('/benefits/medical')
+  }
+
+  showDentalReimbursementValidate ( validateDentalReimbursementResp ) {
+    this.setState({
+      dependents: validateDentalReimbursementResp.dependents,
+    })
+  }
+
+  render () {
+    const {
+      showCircularLoader,
+      procedureModal,
+      reviewModal,
+      disabled,
+      dependents,
+      selectedDependent,
+      selectedProcedures,
+    } = this.state
+
+    return (
+      <div  className = { 'benefits-container' }>
+        { super.render() }
+        {
+          procedureModal &&
+          <DentalReimbursementProcedureModal
+            onSubmit = { procedure => {
+              const updatedProcedures = [...selectedProcedures]
+
+              updatedProcedures.push(procedure)
+
+              this.setState({ selectedProcedures: updatedProcedures })
+            }}
+            procedures = { selectedDependent ? selectedDependent.procedures : [] }
+            onClose = { () => this.setState({ procedureModal : false }) } />
+        }
+        <div className={ 'breadcrumbs-container' }>
+          <i className = { 'left' } onClick = { () => this.navigate() }></i>
+          <h4>Dental Reimbursement</h4>
+        </div>
+          <div className = { 'dentalreimbursement-container' }>
+            {
+              disabled ?
+               <center className = { 'dentalloa-loader' }>
+                  <CircularLoader show = {this.state.disabled}/>
+               </center>
+               :
+               <div>
+                <button
+                  onClick={ () => this.setState({ procedureModal: true }) }>
+                  Open Procedures
+                </button>
+               {
+                 dependents && dependents.map((dependent, key) => {
+                   const selectedDependentId = selectedDependent && selectedDependent.id
+                   return (
+                     <Checkbox
+                      label={ dependent.name }
+                      key={ key }
+                      value={ dependent.id }
+                      checked={ dependent.id == selectedDependentId }
+                      onChange={ e => this.setState({ selectedDependent: dependent }) } />
+                   )
+                 })
+               }
+               {
+                 selectedProcedures && selectedProcedures.map((procedure, key) => {
+                    return (
+                      <div key={ key }>
+                        <input
+                          value={ procedure.amount }
+                          onChange={ e => {
+                            const updatedProcedures = [...selectedProcedures]
+                            updatedProcedures[key].amount = e.target.value
+
+                            this.setState({ selectedProcedures: updatedProcedures })
+                          }}
+                          placeholder={ `${procedure.name} (${procedure.limit})` } />
+                      </div>
+                    )
+                  })
+               }
+               </div>
+            }
+          </div>
+      </div>
+    )
+  }
+}
+
+export default ConnectView(DentalReimbursementFragment, Presenter)
