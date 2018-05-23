@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal , GenericButton} from '../../../ub-components/'
+import { Modal , GenericButton } from '../../../ub-components/'
 
 class DentalReimbursementProcedureModal extends Component {
   constructor (props) {
@@ -29,7 +29,7 @@ return (
         <GenericButton
             className = { 'dentalloa-modal-option-button' }
             key = { key }
-            details = {proecedure && procedure.name}
+            details = { procedure && procedure.name }
             text = { procedure && procedure.name}
             onClick = { () => this.submitData( procedure )}/>
           )
