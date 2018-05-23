@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Card, GenericButton } from '../../../../ub-components'
 import OpticalFragment from '../../../optical/OpticalFragment'
+import DentalReimbursementView from '../../../dentalreimbursement/DentalReimbursementView'
 import './styles/medical.css'
 
 class MedicalFragment extends Component {

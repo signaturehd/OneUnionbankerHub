@@ -26,7 +26,6 @@ class SideBar extends Component {
 
     const modules =
     [
-
       {
         id: 0 ,
         title: 'News',
@@ -42,7 +41,7 @@ class SideBar extends Component {
       {
         id: 2 ,
         title: 'Transactions',
-        action: () => history.push('/transaction'),
+        action: () => history.push('/transactions'),
         className: 'transaction-icon mobile-icon' },
       {
         id: 3 ,

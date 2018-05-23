@@ -12,6 +12,7 @@ import FaqModal from './modals/FaqModal'
 import FaqListFragment from './fragments/FaqListFragment'
 import FaqCategoryFragment from './fragments/FaqCategoryFragment'
 
+import './styles/faq.css'
 
 class FaqFragment extends BaseMVPView {
   constructor (props) {
