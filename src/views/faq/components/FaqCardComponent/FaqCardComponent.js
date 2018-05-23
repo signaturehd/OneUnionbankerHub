@@ -5,6 +5,8 @@ import { Card } from '../../../../ub-components/'
 
 import './faq-card-component.css'
 
+import ImageLoader from 'react-image-file'
+
 class FaqCardComponent extends Component {
   constructor (props) {
     super(props)
@@ -29,6 +31,7 @@ class FaqCardComponent extends Component {
       <Card
         className = { 'faqs-container' }
         onClick = { onClick }>
+        <ImageLoader file={imageResponse} alt='some text'/>
         <div style = { style.iconFaqs } className = { 'faqs-body' }>
         <h2>{ title }</h2>
         </div>

@@ -38,8 +38,7 @@ class FaqFragment extends BaseMVPView {
   }
 
   componentWillReceiveProps (nextProps, nextState) {
-    const { faqs } = this.state
-    faqs.map((faq, key) => this.presenter.getFaqsImage(faq.icon))
+
   }
 
   /**
@@ -64,11 +63,12 @@ class FaqFragment extends BaseMVPView {
 
   showFaqDetails (faqDetail) {
     this.setState({ faqDetail })
+
   }
 
   showFaqs (faqs) {
+    faqs.map((faq, key) => this.presenter.getFaqsImage(faq.icon))
     this.setState({ faqs, isCategoryLoading: false })
-    this.showFaqsImage(faqs)
   }
 
   showedImage (imageResponse) {
