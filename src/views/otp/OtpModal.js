@@ -49,7 +49,9 @@ class OtpModal extends BaseMVPView {
             <CircularLoader show={true}/>
           </center>          :
           <div>
-            <GenericTextBox text= "OTP"
+            <GenericTextBox
+            inputClassName = 'otp-text'
+            text= "OTP"
               placeholder = "OTP"
               type = ""
               onChange={ e => this.setState({ otp: e.target.value }) }
