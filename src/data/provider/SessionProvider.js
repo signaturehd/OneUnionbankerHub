@@ -14,7 +14,7 @@ export default class SessionProvider {
 
   getToken () {
     //eturn this.storage.getItem(TOKEN) || ''
-    return 'b993606d8dd8780d4e536d56a6d20113975893063da2db804f8aa5529ed8d3d310b21b80a277dc733abbf1a42693371fddf488b94026bfbc51269b6c41b648f9'
+    return '58d557193e52858e5ffd598fb4d0a0cf96705f0434cc4c6fc64922a296e4474c0cf8a6c2a58e85ab4c42e7971bb878b85c10c52358e4ce4b5b02882cd8edd6a7'
 
   }
 
@@ -24,7 +24,7 @@ export default class SessionProvider {
 
   getAccountToken () {
     //return this.storage.getItem(ACCOUNT_TOKEN) || ''
-    return 'rY5CFD9ja3as2I/pjQFmcIFUOUgK5PiCEnh+xQbcBDdWn1DJjXGPjAhZGQhKTLRNF8yt49VHX5ZeQHOmj5mmIgNX8mLGYAX6t9si89oV6aYydvKYYLEFS6wYb6g91nLF39h4dY9SuAcW+O0wdOMFYornhW9m6Ps='
+    return 'rY5CFD9ja3as2I/pjQFmcIFZOE8P5PiCEnh+xQbcBDdvrWLTbeslRIRj0FLWA97aDvLos+M5mL6Q7HJb0H2EYXCFpVtWEjpkiShED8aly5M6tEMmTz69e7Y23WPPARozoJJJoqtO7pJwNMuBZuS/D3qIxY5IPcs='
 
 
   }
