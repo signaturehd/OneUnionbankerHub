@@ -54,11 +54,7 @@ class NewsFragment extends BaseMVPView {
     let filteredNews = news
 
     if (search.length > 0) {
-<<<<<<< HEAD
-      newsList = news.filter(newsList => news.title.toLowerCase().match(search))
-=======
       newsList = news.filter(news => news.title.toLowerCase().match(search))
->>>>>>> b031d169e593bd09dbb8b69c6a705aa71b20aa35
     }
 
     return (
