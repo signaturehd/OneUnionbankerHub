@@ -19,7 +19,7 @@ this.state = {
   proceedModal : false,
   submit: '',
   warning: '',
-  procedure: 'PROCEDURE',
+  procedure: '',
   attachmentsSubmission : [],
 }
   this.handleImageChange = this.handleImageChange.bind(this)
@@ -75,7 +75,7 @@ handleImageChange2(e1) {
 
 render () {
     const { details, fileReceived, fileReceived2, onClick} = this.props
-    const { attachmentsSubmission, showConfirmation, warning, proceedModal, procedure } = this.state
+    const { attachmentsSubmission, showConfirmation, warning, proceedModal, procedure,showResults } = this.state
     let {imagePreviewUrl, imagePreviewUrl2} = this.state
     let $imagePreview = null
     let $imagePreview2 = null
@@ -109,16 +109,11 @@ return (
         show = { this.state.proceedModal }
         presenter = { this.presenter }
         details = { details && details.procedures }
+        showResults = { (procedureName, procedureAmount, proceedModal) => this.setState({ procedureName, procedureAmount, proceedModal }) }
+        onChange = { (procedureName, procedureAmount) => this.setState({ procedureName, procedureAmount }) }
         onClose = { () => this.setState({ proceedModal : false }) } />
     }
-    {
-      proceedModal &&
-      <DentalReimbursementProcedureModal
-        show = { this.state.proceedModal }
-        presenter = { this.presenter }
-        details = { details && details.procedures }
-        onClose = { () => this.setState({ proceedModal : false }) } />
-    }
+   
     <form onSubmit = { this.handleSubmit }>
       <Card className = { 'dentalreimbursement-card' }>
          <h4>Form Attachments</h4>
@@ -135,8 +130,9 @@ return (
         <div className = {'dentalreimbursement-footer-left'}>
          <GenericButton onClick = { () => this.showModal() }
            type = { 'button' }
-           text = { this.state.procedure }
-           className = {'dentalreimbursement-procedure' } />
+           value = { this.state.procedure }
+           className = {'dentalreimbursement-procedure' }
+          />
        </div>
       </Card>
       <Card className = { 'dentalreimbursement-secondary' }>
@@ -173,5 +169,6 @@ attachmentsSubmission : PropTypes.array,
 DentalReimbursementCard.defaultProps = {
 procedure : 'PROCEDURE',
 warning : '',
+text: 'procedure'
 }
 export default DentalReimbursementCard
