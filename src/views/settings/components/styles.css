@@ -5,7 +5,7 @@
 
 .profile-card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 30%;
+  max-width: 32%;
   float : left;
   padding: 20px 5px 20px 5px;
   margin: 20px 0 auto 0;
@@ -106,6 +106,9 @@ section {
   text-align: center;
   border: 1px solid transparent;
   color: #555;
+  color: #000;
+  font-size: 16px;
+  padding: 0 10px;
 }
 
 .label-tab:before {

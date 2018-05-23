@@ -18,7 +18,7 @@ export default class SettingsPresenter {
      .do(profile => this.view.showLineManager(profile.employee.lineManager))
      .subscribe(profile => {
       this.view.hideLoading()
-      this.view.showEmployeeProfile(profile.dependent)
+      this.view.showProfileDependent(profile.dependent)
      }, e => {
       this.view.hideLoading()
       // TODO prompt generic error
