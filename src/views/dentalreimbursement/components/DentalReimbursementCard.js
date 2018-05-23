@@ -29,6 +29,10 @@ class DentalReimbursementCard extends Component {
     this.handleImageChange = this.handleImageChange.bind(this)
     this.handleImageChange2 = this.handleImageChange2.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.showModal = this.showModal.bind(this)
+  }
+  showModal(){
+  this.setState({ proceedModal : true })
   }
 
   handleSubmit (e) {

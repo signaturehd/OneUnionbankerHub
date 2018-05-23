@@ -14,7 +14,7 @@ submitData (showResults) {
   console.log(showResults)
 }
 render () {
-  const { details, onClose, proceedModal, isDismisable } = this.props
+  const { details, onClose, proceedModal, isDismisable, procedure } = this.props
 
 return (
   <Modal
