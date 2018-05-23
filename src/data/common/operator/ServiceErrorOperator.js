@@ -21,7 +21,7 @@ export default function ServiceErrorOperator () {
             store.dispatch(NotifyActions.addNotify({
                 title : 'My Benefits',
                 message : error.message,
-                type : 'danger',
+                type : 'warning',
                 duration : 2000
               })
             )
@@ -37,10 +37,9 @@ export default function ServiceErrorOperator () {
           )
           subscriber.error(new ForbiddenError())
         } else {
-          console.log(body)
           store.dispatch(NotifyActions.addNotify({
-              title : 'Server Error',
-              message : 'There is a problem with the server',
+              title : 'Internal Server Error',
+              message : 'It seems that we\'ve encountered a problem.',
               type : 'danger',
               duration : 2000
             })

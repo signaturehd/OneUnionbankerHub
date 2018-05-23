@@ -5,4 +5,12 @@
   bottom: 10px;
   display: grid;
   grid-row-gap: 10px;
+  z-index:9;
+}
+
+@media (max-width : 768px) {
+  .notify-container {
+    width : 100%;
+    margin: auto;
+  }
 }

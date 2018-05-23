@@ -30,8 +30,7 @@ class App extends BaseMVPView {
   }
 
   componentWillMount () {
-    console.log('%cStop!', 'color: red; font-size: 40px; font-weight: bold;')
-    console.log('%cYou are using UnionBank Benefits portal', 'color: #ff8a00;')
+  
     this.presenter.checkLogin()
   }
 
@@ -40,8 +39,6 @@ class App extends BaseMVPView {
   }
 
   render () {
-
-
     return (
       <div>
         <Switch>

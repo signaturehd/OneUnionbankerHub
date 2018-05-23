@@ -79,8 +79,8 @@ ul {
   mask-image: url('../../../../../images/drawer/faqs.png');
   }
 .settings-icon {
-  -webkit-mask-image: url('../../../../../images/drawer/Settings.png');
-  mask-image: url('../../../../../images/drawer/Settings.png');
+  -webkit-mask-image: url('../../../../../images/My Profile.png');
+  mask-image: url('../../../../../images/My Profile.png');
   }
 .books-icon {
   -webkit-mask-image: url('../../../../../images/drawer/Books-Unionbank library.png');
@@ -89,6 +89,14 @@ ul {
   .podcast-icon {
   -webkit-mask-image: url('../../../../../images/drawer/PODCAST.png');
   mask-image: url('../../../../../images/drawer/PODCAST.png');
+  }
+  .mylearning-icon {
+  -webkit-mask-image: url('../../../../../images/My ELearning.png');
+  mask-image: url('../../../../../images/My ELearning.png');
+  }
+  .logout-icon {
+  -webkit-mask-image: url('../../../../../images/LOGOUT.png');
+  mask-image: url('../../../../../images/LOGOUT.png');
   }
 @media screen and (max-width: 3000px) and (max-height: 2000px) {
   ._sidebar-overlay {
@@ -136,28 +144,27 @@ ul {
       width: 190px;
   }
   .main-content {
-      order: 2;
-      flex: 5;
-      z-index: 2;
-      padding: 2%;
-      width: -webkit-fill-available;
-      position: absolute;
+    order: 2;
+    flex: 5;
+    z-index: 2;
+    padding: 2%;
+    width: -webkit-fill-available;
+    position: absolute;
+    height: 100%;
   }
 }
 /*IPHONE 6,7,8*/
 
  /*IPHONE X*/
-@media screen and (max-width: 768) and (max-height: 850px){
+@media screen and (max-width: 768){
   .panels {
       display: inline-flex;
       overflow: hidden;
-      position: absolute;
       z-index: 0;
       top: 57px;
       bottom: 0;
   }
   ._sidebar-overlay {
-      position: absolute;
       z-index: 3;
       width: 180px;
   }
@@ -167,7 +174,6 @@ ul {
       z-index: 2;
       padding: 2%;
       width: -webkit-fill-available;
-      position: absolute;
   }
 }
 @media screen and (max-height: 500px){

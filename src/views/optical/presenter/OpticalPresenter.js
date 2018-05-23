@@ -30,8 +30,8 @@ export default class OpticalPresenter {
     .subscribe(response => {
       this.view.isEligible(response)
     }, e => {
+
       // TODO notify
     })
  }
-
 }

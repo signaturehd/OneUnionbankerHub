@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Card, GenericButton } from '../../../../ub-components'
 import OpticalFragment from '../../../optical/OpticalFragment'
 import DentalLoaView from '../../../dentalloa/DentalLoaView'
+import DentalReimbursementView from '../../../dentalreimbursement/DentalReimbursementView'
 import './styles/medical.css'
 
 class MedicalFragment extends Component {
@@ -62,6 +63,7 @@ class MedicalFragment extends Component {
           <Route exact path = '/benefits/medical'  render = { MedicalHome } />
           <Route path = '/benefits/medical/optical' render = { props => <OpticalFragment { ...props } />}/>
           <Route path = '/benefits/medical/dentalloa' render = { props => <DentalLoaView { ...props } />}/>
+          <Route path = '/benefits/medical/dentalreimbursement' render = { props => <DentalReimbursementView { ...props } />}/>
         </Switch>
       </div>
     )
