@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal } from '../../../ub-components/'
+import { Modal, CircularLoader } from '../../../ub-components/'
 
 class FaqModal extends Component {
   constructor (props) {
@@ -9,20 +9,31 @@ class FaqModal extends Component {
   }
 
   render () {
-    const { details, onClose } = this.props
+    const { details, onClose, title } = this.props
     return (
       <Modal
         isDismisable = { true }
         onClose = { onClose }>
-        
-        <h4>{details.title}</h4>
-        <span>{details.description}</span>
+        {
+          details ?
+            <div>
+              <h4>{ title }</h4>
+              <div dangerouslySetInnerHTML = {{ __html: details }}/>
+            </div>          :
+            <center>
+              <h3>Please wait...</h3>
+              <CircularLoader show = { true } />
+            </center>
+        }
       </Modal>
     )
   }
 }
-// TODO
-/* Fetch datas on Click display details */
-/* Close modal set elements to null */
+
+FaqModal.propTypes = {
+  title: PropTypes.string,
+  details: PropTypes.string,
+  onClose: PropTypes.func,
+}
 
 export default FaqModal

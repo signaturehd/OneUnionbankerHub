@@ -30,6 +30,7 @@ class App extends BaseMVPView {
   }
 
   componentWillMount () {
+  
     this.presenter.checkLogin()
   }
 

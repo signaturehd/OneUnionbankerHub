@@ -10,14 +10,10 @@ export default class NewsPresenter {
     }
 
     getNews () {
-      this.view.showLoading()
-
       this.getNewsInteractor.execute()
       .subscribe(news => {
-          this.view.hideLoading()
           this.view.news(news)
         }, e => {
-          this.view.hideLoading()
           // TODO prompt generic error
         })
     }

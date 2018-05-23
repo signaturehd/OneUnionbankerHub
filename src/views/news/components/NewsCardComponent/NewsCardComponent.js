@@ -16,7 +16,8 @@ class NewsCardComponent extends Component {
 
     const style = {
         newsBackground: {
-          background : `url(${news.imageUrl}) rgba(0,0,0,0.7)`,
+          backgroundImage : `url(${news.imageUrl})`,
+          backgroundColor : 'rgba(0,0,0,0.7)',
           backgroundRepeat : 'no-repeat',
           width: 'auto',
           backgroundBlendMode: 'color',
@@ -28,12 +29,9 @@ class NewsCardComponent extends Component {
 
 
       return (
-        <Card>
-          <div style = { style.newsBackground } className = {'news-body'}>
-            <FaEye
-              className = { 'fa-see-more' } onClick = { () => onClick(news) }  />
+        <Card className = { 'news-card' }>
+          <div onClick = { () => onClick(news) } style = { style.newsBackground } className = {'news-body'}>
             <h3>{news.title}</h3>
-
           </div>
         </Card>
     )

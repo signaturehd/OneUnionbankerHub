@@ -11,6 +11,7 @@ import LoansFragment from './fragments/loans/LoansFragment'
 import MedicalFragment from './fragments/medical/MedicalFragment'
 
 import TransactionFragment from '../transaction/TransactionFragment'
+import OpticalFragment from '../optical/OpticalFragment'
 
 import { InputModal, Card, GenericButton } from '../../ub-components'
 
@@ -29,6 +30,7 @@ class BenefitsFragment extends BaseMVPView {
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateFabToShow()
+    this.props.history.push('/mybenefits/benefits')
   }
 
   showReleasingCenters (releasingCenters) {
@@ -133,7 +135,7 @@ return (
   id='tab2'
     type='radio'
     name='tabs'
-    onClick = { () => this.props.history.push('/mybenefits/benefits/transactions') } />
+    onClick = { () => this.props.history.push('/mybenefits/benefits/transaction') } />
  <label className = { 'mobile-icon' } htmlFor='tab2'>My Transactions</label>
 
  <input
@@ -147,13 +149,13 @@ return (
     <Switch>
      <Route exact path = '/mybenefits/benefits'
              render = { Benefits } />
-     <Route path = '/mybenefits/benefits/transactions'
+     <Route path = '/mybenefits/benefits/transaction'
              render = { props => <TransactionFragment { ...props } /> }/>
      <Route path = '/mybenefits/benefits/education'
              render = { props => <EducationFragment { ...props } />}/>
      <Route  path = '/mybenefits/benefits/medical'
              render = { props => <MedicalFragment { ...props } />}/>
-           <Route  path = '/mybenefits/benefits/forapproval'
+     <Route  path = '/mybenefits/benefits/forapproval'
              render = { props => <div>For Aprroval</div>}/>
    </Switch>
   </section>
