@@ -23,6 +23,7 @@ class FaqFragment extends BaseMVPView {
         selectedQuestion: null,
         showFaqModal : false,
         faqDetail: null,
+        imageResponse: null,
         isCategoryLoading : true,
     }
 
@@ -34,6 +35,11 @@ class FaqFragment extends BaseMVPView {
     this.props.history.push('/faqs')
     this.presenter.getFaqs(this.state.faqsList)
     this.props.setSelectedNavigation(3)
+  }
+
+  componentWillReceiveProps (nextProps, nextState) {
+    const { faqs } = this.state
+    faqs.map((faq, key) => this.presenter.getFaqsImage(faq.icon))
   }
 
   /**
@@ -62,6 +68,11 @@ class FaqFragment extends BaseMVPView {
 
   showFaqs (faqs) {
     this.setState({ faqs, isCategoryLoading: false })
+    this.showFaqsImage(faqs)
+  }
+
+  showedImage (imageResponse) {
+    this.setState({imageResponse})
   }
 
   render () {
@@ -73,7 +84,9 @@ class FaqFragment extends BaseMVPView {
       showFaqModal,
       faqDetail,
       isCategoryLoading,
+      imageResponse
     } = this.state
+
 
     return (
       <div>
@@ -87,6 +100,7 @@ class FaqFragment extends BaseMVPView {
             <FaqCategoryFragment
               setSelectedFaqCategory={ this.setSelectedFaqCategory }
               faqCategories = { faqs }
+              imageResponse={ imageResponse }
               isLoading = { isCategoryLoading }
               { ...props } /> } />
         </Switch>

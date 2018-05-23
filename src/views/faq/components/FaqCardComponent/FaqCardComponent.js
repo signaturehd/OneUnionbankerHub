@@ -11,10 +11,11 @@ class FaqCardComponent extends Component {
   }
 
   render () {
-  const { onClick, title, icon } = this.props
+  const { onClick, title, icon, imageResponse } = this.props
+  console.log(imageResponse)
   const style = {
     iconFaqs : {
-      background : `url('${icon}') rgb(0,0,0,0.7)`,
+      background : `url('${imageResponse}') rgb(0,0,0,0.7)`,
       backgroundSize : '125px',
       backgroundRepeat : 'no-repeat',
       height: '100% auto',
