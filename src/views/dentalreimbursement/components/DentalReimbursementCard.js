@@ -16,8 +16,7 @@ this.state = {
   file2: '',
   imagePreviewUrl: '',
   imagePreviewUrl2: '',
-
-  procedureModal : false,
+  procedureModal : false, // display procedure modal
   dependents: [],
   selectedDependent: null,
   selectedProcedures: [],
@@ -33,6 +32,9 @@ this.state = {
   this.handleImageChange2 = this.handleImageChange2.bind(this)
   this.handleSubmit = this.handleSubmit.bind(this)
 }
+/*
+Form Submission
+*/
 handleSubmit(e) {
   e.preventDefault()
   if(this.state.file === '' || this.state.file2 === '') {
@@ -44,7 +46,9 @@ handleSubmit(e) {
   this.setState({warning : ''})
   }
 }
-
+/*
+Optical Certificate Atachments
+*/
 handleImageChange(e) {
   e.preventDefault()
 
@@ -60,6 +64,9 @@ handleImageChange(e) {
 
   reader.readAsDataURL(file)
 }
+/*
+Medical Certificate Atachments
+*/
 handleImageChange2(e1) {
   e1.preventDefault()
   let reader2 = new FileReader()
@@ -117,6 +124,7 @@ return (
               placeholder = 'Medical Certificate'
               value = { this.state.file2.name } />
       </div>
+
         <div className = {'dentalreimbursement-footer-left'}>
           {
             procedureModal &&
@@ -131,6 +139,7 @@ return (
               procedures = { selectedDependent ? selectedDependent.procedures : [] }
               onClose = { () => this.setState({ procedureModal : false }) } />
           }
+
          <GenericButton
            onClick={ () => this.setState({ procedureModal: true }) }
            className = {'dentalreimbursement-procedure' }
@@ -149,6 +158,7 @@ return (
              })
            }
        </div>
+
        {
          selectedProcedures && selectedProcedures.map((procedure, key) => {
             return (
@@ -168,6 +178,7 @@ return (
           })
        }
       </Card>
+
       <Card className = { 'dentalreimbursement-secondary' }>
         <h2>Uploaded Files</h2>
           <div className = 'dentalreimbursement-main'>
