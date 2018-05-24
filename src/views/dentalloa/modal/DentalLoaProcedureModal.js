@@ -11,18 +11,23 @@ class DentalLoaProcedureModal extends Component {
   }
 this.submitData = this.submitData.bind(this)
 }
+
+/*
+  Get Chosen Procedure
+*/
 submitData ( value ) {
   this.setState({ chosenProcedure : value })
   this.props.onClose()
 }
+
 render () {
   const { details, onClose, showProcedureModal, text, isDismisable } = this.props
 
 return (
   <Modal
     onClose = { onClose }
-    isDismisable = { true }
-  >
+    isDismisable = { true }>
+
     <div className = { 'optical-description' }>
       <h2>Procedures</h2>
     </div>
@@ -37,6 +42,7 @@ return (
               <GenericButton
                 className = { 'dentalloa-modal-option-button' }
                 key = { key }
+                disabled = { status }
                 details = {procedure}
                 text = { procedure.name}
                 onClick = { () => this.submitData( procedure )}/>

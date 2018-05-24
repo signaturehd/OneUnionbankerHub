@@ -29,8 +29,14 @@ class DentalLoaView extends BaseMVPView {
 
   componentWillMount () {
     this.presenter.getDentalLoa()
+    /*
+    temp
+    */
+    this.presenter.addDentalLoa()
   }
-
+  /*
+    Get Data from DentalLOA
+  */
   getDentalLoa (dentalloa) {
       this.setState({ dentalloa })
   }
@@ -42,7 +48,9 @@ class DentalLoaView extends BaseMVPView {
   showCircularLoader ( disabled ) {
     this.setState({ disabled : true})
   }
-
+  /*
+    Submission of DentalLOA Form
+  */
   submitForm (receipientId, branchId, preferedDate, procedures) {
     const procedure = [{
         "id": 4
@@ -51,15 +59,13 @@ class DentalLoaView extends BaseMVPView {
         "id": 10
     }]
     this.presenter.addDentalLoa(receipientId, branchId, preferedDate, procedures)
-    console.log(procedure)
-
   }
 
   navigate () {
       this.props.history.push('/benefits/medical')
   }
   render () {
-    const { details } = this.props
+    const { details, chosenBranch } = this.props
 
     const {
       dentalloa,
@@ -74,6 +80,7 @@ class DentalLoaView extends BaseMVPView {
       branchText,
       procedure,
       procedures,
+      preferedDate,
     } = this.state
 
     return(
@@ -107,7 +114,7 @@ class DentalLoaView extends BaseMVPView {
 
         <div className={ 'breadcrumbs-container' }>
           <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
-          <h1>Dental Loa Issuance</h1>
+          <h2 classNmae = { 'header-margin-default' }>Dental Loa Issuance</h2>
         </div>
           <div className = { 'dentalloa-container' }>
             {
@@ -121,7 +128,7 @@ class DentalLoaView extends BaseMVPView {
                 receipient = { receipientText }
                 procedure = { procedure }
                 branch = { branchText }
-                submitForm = { () => this.submitForm(receipientId, branchId, preferedDate) }
+                submitForm = { () => this.submitForm(receipientId, branchId, preferedDate, procedures) }
                 onClick = {
                   (showRecipientModal, showHealthwayBranchModal, showProcedureModal) =>
                   this.setState({ showRecipientModal, showHealthwayBranchModal, showProcedureModal })

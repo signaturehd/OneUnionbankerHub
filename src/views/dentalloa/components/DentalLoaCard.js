@@ -31,6 +31,7 @@ class DentalLoaCard extends Component {
     e.preventDefault()
   }
 
+
   onChange (data) {
     this.setState({ date : data })
     this.props.preferedDate(date)
@@ -50,14 +51,13 @@ class DentalLoaCard extends Component {
       receipient,
       branch,
       onClick,
-      submitForm
+      submitForm,
     } = this.props
 
     const { date, showRecipientModal, showHealthwayBranchModal, showProcedureModal } = this.state
 
     return (
       <Card className={ 'dentalloa-card' }>
-      <form onSubmit = { this.handleSubmit }>
         <div className = {'dentalloa-header'} >
           <h5 > LOA Details </h5>
           <div className = {'dentalloa-body '}>
@@ -103,7 +103,6 @@ class DentalLoaCard extends Component {
                text = { submit }/>
           </div>
         </div>
-      </form>
     </Card>
     )
   }

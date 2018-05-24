@@ -11,6 +11,11 @@ class DentalLoaBranchModal extends Component {
       }
     this.submitData = this.submitData.bind(this)
   }
+
+  /*
+    Get Chosen Branch
+  */
+
   submitData (branchId, branchName) {
     this.props.chosenBranch(branchId, branchName)
     this.props.onClose()

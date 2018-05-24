@@ -30,7 +30,7 @@ export default class DentalLoaPresenter {
   this.addDentalLoaInteractor.execute()
    .subscribe(dentalloa => {
     this.view.hideLoading()
-    this.view.showDentalLoa(dentalloa)
+    this.view.addDentalLoa(dentalloa)
    }, e => {
     this.view.hideLoading()
     // TODO prompt generic error
