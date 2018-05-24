@@ -192,6 +192,11 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+   getFeedback (token,FeedbackParam) {
+    return this.apiClient.get('v1/feedback', FeedbackParam, {
+      headers: { token }
+    })
+  }
 
   getFaqsCategories (token) {
     return this.apiClient.get('v1/faqs/categories', {

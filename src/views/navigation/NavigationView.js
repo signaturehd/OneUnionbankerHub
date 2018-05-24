@@ -12,6 +12,7 @@ import NewsFragment from '../news/NewsFragment'
 import FaqFragment from '../faq/FaqFragment'
 import SettingsFragment from '../settings/SettingsFragment'
 import MyLearningView from '../mylearning/MyLearningView'
+import FeedbackView from '../Feedback/FeedbackView'
 
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
@@ -105,6 +106,10 @@ class NavigationView extends BaseMVPView {
                         <Route path = '/mylearning' render = { props =>
                           <MyLearningView { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                        <Route path = '/feedback' render = { props =>
+                          <FeedbackView { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
+
                      </Switch>
                     </Drawer>
               </main>

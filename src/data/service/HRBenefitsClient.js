@@ -188,7 +188,11 @@ export default class HRBenefitsClient {
     return this.service.updateNotice(token, noticeParam)
       .pipe(ServiceErrorOperator())
   }
-
+  
+  getFeedback (token, FeedbackParam) {
+    return this.service.getFeedback(token, FeedbackParam)
+      .pipe(ServiceErrorOperator())
+  }
 
   getFaqsCategories (token) {
     return this.service.getFaqsCategories(token)
