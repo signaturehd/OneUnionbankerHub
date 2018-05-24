@@ -49,7 +49,7 @@ class FeedbackView extends BaseMVPView {
           showCategoryModal &&
           <FeedbackCategoryModal
             showCategoryModal = { showCategoryModal }
-            details = { details.feedbackCategory }
+            details = { feedback.feedbackCategory }
             chosenCategory = { (id, feedbackCategory, showCategoryModal) => this.setState({id, feedbackCategory, showCategoryModal}) }
             onChange = { (id, feedbackCategory) => this.setState({ id, feedbackCategory }) }
             onClose = { () => this.setState({ showCategoryModal : false }) } />
