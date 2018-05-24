@@ -5,7 +5,7 @@ import TextBox from './DentalReimbursementTextBox'
 import { Modal } from '../modal/DentalReimbursementReviewModal'
 import DentalReimbursementProcedureModal from '../modal/DentalReimbursementProcedureModal'
 import DentalReimbursementReviewModal from '../modal/DentalReimbursementReviewModal'
-import { Card, GenericButton, FileUploader, Checkbox } from '../../../ub-components/'
+import { Card, GenericButton, FileUploader, Checkbox, GenericTextBox } from '../../../ub-components/'
 
 class DentalReimbursementCard extends Component {
   constructor (props) {
@@ -16,7 +16,14 @@ this.state = {
   file2: '',
   imagePreviewUrl: '',
   imagePreviewUrl2: '',
-  proceedModal : false,
+
+  procedureModal : false,
+  dependents: [],
+  selectedDependent: null,
+  selectedProcedures: [],
+  procedureModal: false,
+  reviewModal: false,
+
   submit: '',
   warning: '',
   procedure: '',
@@ -25,10 +32,6 @@ this.state = {
   this.handleImageChange = this.handleImageChange.bind(this)
   this.handleImageChange2 = this.handleImageChange2.bind(this)
   this.handleSubmit = this.handleSubmit.bind(this)
-  this.showModal = this.showModal.bind(this)
-}
-showModal () {
-  this.setState({ proceedModal : true })
 }
 handleSubmit(e) {
   e.preventDefault()
@@ -56,7 +59,6 @@ handleImageChange(e) {
   }
 
   reader.readAsDataURL(file)
-console.log("file 1:  " + reader)
 }
 handleImageChange2(e1) {
   e1.preventDefault()
@@ -70,12 +72,11 @@ handleImageChange2(e1) {
     })
   }
   reader2.readAsDataURL(file2)
-  console.log("file 1:  " + reader)
 }
 
 render () {
     const { details, fileReceived, fileReceived2, onClick, dependents } = this.props
-    const { attachmentsSubmission, showConfirmation, warning, proceedModal, procedure,showResults } = this.state
+    const { reviewModal, selectedDependent, selectedProcedures, procedureModal, attachmentsSubmission, showConfirmation, warning, procedure, showResults } = this.state
     let {imagePreviewUrl, imagePreviewUrl2} = this.state
     let $imagePreview = null
     let $imagePreview2 = null
@@ -117,12 +118,55 @@ return (
               value = { this.state.file2.name } />
       </div>
         <div className = {'dentalreimbursement-footer-left'}>
-         <GenericButton onClick = { () => this.showModal() }
-           type = { 'button' }
-           value = { this.state.procedure }
+          {
+            procedureModal &&
+            <DentalReimbursementProcedureModal
+              onSubmit = { procedure => {
+                const updatedProcedures = [...selectedProcedures]
+
+                updatedProcedures.push(procedure)
+
+                this.setState({ selectedProcedures: updatedProcedures })
+              }}
+              procedures = { selectedDependent ? selectedDependent.procedures : [] }
+              onClose = { () => this.setState({ procedureModal : false }) } />
+          }
+         <GenericButton
+           onClick={ () => this.setState({ procedureModal: true }) }
            className = {'dentalreimbursement-procedure' }
-          />
+           text = { 'Open Procedures' } />
+           {
+             dependents && dependents.map((dependent, key) => {
+               const selectedDependentId = selectedDependent && selectedDependent.id
+               return (
+                 <Checkbox
+                  label={ dependent.name }
+                  key={ key }
+                  value={ dependent.id }
+                  checked={ dependent.id == selectedDependentId }
+                  onChange={ e => this.setState({ selectedDependent: dependent }) } />
+               )
+             })
+           }
        </div>
+       {
+         selectedProcedures && selectedProcedures.map((procedure, key) => {
+            return (
+              <div key={ key } className = { 'dentalreimbursement-selected-procedure' }>
+                <GenericTextBox
+                  type = { 'button' }
+                  value={ procedure.amount }
+                  onChange={ e => {
+                    const updatedProcedures = [...selectedProcedures]
+                    updatedProcedures[key].amount = e.target.value
+
+                    this.setState({ selectedProcedures: updatedProcedures })
+                  }}
+                  placeholder={ `${procedure.name} (${procedure.limit})` } />
+              </div>
+            )
+          })
+       }
       </Card>
       <Card className = { 'dentalreimbursement-secondary' }>
         <h2>Uploaded Files</h2>

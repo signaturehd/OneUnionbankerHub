@@ -21,9 +21,7 @@ class DentalReimbursementFragment extends BaseMVPView {
       procedureModal: false,
       reviewModal: false,
       disabled: false, // this is for circular loader
-      dependents: [],
-      selectedDependent: null,
-      selectedProcedures: [],
+
     }
   }
 
@@ -51,7 +49,6 @@ class DentalReimbursementFragment extends BaseMVPView {
 
   render () {
     const {
-      showCircularLoader,
       procedureModal,
       reviewModal,
       disabled,
@@ -63,19 +60,6 @@ class DentalReimbursementFragment extends BaseMVPView {
     return (
       <div  className = { 'benefits-container' }>
         { super.render() }
-        {
-          procedureModal &&
-          <DentalReimbursementProcedureModal
-            onSubmit = { procedure => {
-              const updatedProcedures = [...selectedProcedures]
-
-              updatedProcedures.push(procedure)
-
-              this.setState({ selectedProcedures: updatedProcedures })
-            }}
-            procedures = { selectedDependent ? selectedDependent.procedures : [] }
-            onClose = { () => this.setState({ procedureModal : false }) } />
-        }
         <div className={ 'breadcrumbs-container' }>
           <i className = { 'left' } onClick = { () => this.navigate() }></i>
           <h4>Dental Reimbursement</h4>
@@ -87,42 +71,8 @@ class DentalReimbursementFragment extends BaseMVPView {
                   <CircularLoader show = {this.state.disabled}/>
                </center>
                :
-               <div>
-                <button
-                  onClick={ () => this.setState({ procedureModal: true }) }>
-                  Open Procedures
-                </button>
-               {
-                 dependents && dependents.map((dependent, key) => {
-                   const selectedDependentId = selectedDependent && selectedDependent.id
-                   return (
-                     <Checkbox
-                      label={ dependent.name }
-                      key={ key }
-                      value={ dependent.id }
-                      checked={ dependent.id == selectedDependentId }
-                      onChange={ e => this.setState({ selectedDependent: dependent }) } />
-                   )
-                 })
-               }
-               {
-                 selectedProcedures && selectedProcedures.map((procedure, key) => {
-                    return (
-                      <div key={ key }>
-                        <input
-                          value={ procedure.amount }
-                          onChange={ e => {
-                            const updatedProcedures = [...selectedProcedures]
-                            updatedProcedures[key].amount = e.target.value
-
-                            this.setState({ selectedProcedures: updatedProcedures })
-                          }}
-                          placeholder={ `${procedure.name} (${procedure.limit})` } />
-                      </div>
-                    )
-                  })
-               }
-               </div>
+              <DentalReimbursementCard
+                dependents = { dependents }/>
             }
           </div>
       </div>

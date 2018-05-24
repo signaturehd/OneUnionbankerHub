@@ -4,6 +4,11 @@
   position: absolute;
   margin: auto;
 }
+.dentalreimbursement-selected-procedure{
+  position: relative !important;
+  width: 100% !important;
+  margin-top: -45px !important;
+}
 .dentalreimbursement-image-view {
   position: relative;
   background: url('../../../images/uploadicon-grey.jpg') no-repeat center center;
