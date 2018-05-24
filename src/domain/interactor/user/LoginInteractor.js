@@ -1,10 +1,9 @@
 export default class LoginInteractor {
-
-  constructor(client) {
+  constructor (client) {
     this.client = client
   }
 
-  execute(loginParam) {
+  execute (loginParam) {
     return this.client.login(loginParam)
   }
 }

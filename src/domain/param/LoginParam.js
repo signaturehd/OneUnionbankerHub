@@ -1,6 +1,4 @@
-export default (username, password) => {
-  return {
+export default (username, password) => ({
     username,
     password,
-  }
-}
+  })

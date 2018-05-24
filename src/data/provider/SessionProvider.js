@@ -1,9 +1,9 @@
 const TOKEN = 'TOKEN'
 const ACCOUNT_TOKEN = 'ACCOUNT_TOKEN'
 const ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
+const PROFILE = 'PROFILE'
 
 export default class SessionProvider {
-
   constructor () {
     this.storage = window.localStorage
   }
@@ -25,11 +25,18 @@ export default class SessionProvider {
   }
 
   setAccountNumber (accountNumber = '') {
-    console.log('setting account number: ' + accountNumber)
     this.storage.setItem(ACCOUNT_NUMBER, accountNumber)
   }
 
   getAccountNumber () {
     return this.storage.getItem(ACCOUNT_NUMBER) || ''
+  }
+
+  setProfile (profile) {
+    this.storage.setItem(PROFILE, JSON.stringify(profile))
+  }
+
+  getProfile () {
+    return JSON.parse(this.storage.getItem(PROFILE)) || {}
   }
 }

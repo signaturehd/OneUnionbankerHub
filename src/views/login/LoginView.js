@@ -5,70 +5,158 @@ import LoginPresenter from './presenter/LoginPresenter'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { GenericButton } from '../../ub-components/UButton/'
-import { GenericTextBox } from '../../ub-components/TextBox/'
+import {
+  GenericButton,
+  GenericTextBox,
+  Card,
+  CircularLoader,
+  Notify
+} from '../../ub-components'
 
-import './presenter/login.css'
+import './css/login.css'
 
 import OtpModal from '../otp/OtpModal'
 
-class LoginView extends BaseMVPView {
+import { connect } from 'react-redux'
 
-  constructor(props) {
+import store from '../../store'
+import { NotifyActions } from '../../actions'
+
+class LoginView extends BaseMVPView {
+  constructor (props) {
     super(props)
 
     this.state = {
       username: '',
       password: '',
       showOtpModal: false,
+      disabled : false
     }
 
     this.onLoginSuccess = this.onLoginSuccess.bind(this)
+  }
+  componentDidMount () {
+    store.dispatch(NotifyActions.resetNotify())
+  }
+
+  disabledButton () {
+    this.setState({ disabled : true })
+  }
+
+  enabledButton () {
+    this.setState({ disabled : false })
+  }
+
+  disabledButton () {
+    this.setState({ disabled : true })
+  }
+
+  enabledButton () {
+    this.setState({ disabled : false })
   }
 
   onLoginSuccess () {
     this.setState({ showOtpModal: true })
   }
 
+  onLoginError (response) {
+    this.setState({ disabled : false })
+  }
+
   render () {
     const { showOtpModal, username } = this.state
+    const { notify } = this.props
 
     return (
       <div>
         { super.render() }
         {
-          //TODO properly show otp modal as 'modal', not by just swapping views lol
-          showOtpModal ?
+          // TODO properly show otp modal as 'modal', not by just swapping views lol
+          showOtpModal &&
           <OtpModal
+            show = { this.state.showOtpModal }
+            onClose = { () => this.setState({ showOtpModal : false }) }
             parent = { this }
             username = { username }
-            transactionType = { 2 } /> //TODO, move this static '2' to proper file on domain
-          :
-          <div>
-            <div className = { '_login-grid' }>
-              <div className = { '_benefit-frame' }>
-                <div className = { '_banner-logo' }></div>
-              </div>
-              <div className = { '._login-form-grid' }>
-                <div className = {'_image-logo'}></div>
-                <GenericTextBox
-                  onChange = { e => this.setState({ username: e.target.value }) }
-                  placeholder = { 'Employee Id' }
-                  type = { 'text' }/>
-                <GenericTextBox
-                  onChange = { e => this.setState({ password: e.target.value }) }
-                  placeholder = { 'Password' }
-                  type = { 'password' }/>
-                <br/>
-                <GenericButton text="Login"
-                  onClick = { () => this.presenter.login(this.state.username, this.state.password) }/>
-              </div>
-            </div>
-          </div>
+            transactionType = { 2 } /> // TODO, move this static '2' to proper file on domain
         }
+        <Card className = {'login-form'}>
+          <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
+            <GenericTextBox
+              clasName = { 'login-input' }
+              onChange = { e => this.setState({ username: e.target.value }) }
+              placeholder = { 'Employee ID' }
+              type = { 'text' }/>
+            <GenericTextBox
+              className = { 'login-input' }
+              onChange = { e => this.setState({ password: e.target.value }) }
+              placeholder = { 'Password' }
+              type = { 'password' }/>
+              <br/>
+            {
+              this.state.disabled ?
+              <center>
+                <br/>
+                <CircularLoader show = { true }/>
+              </center>              :
+              <div>
+                <br/>
+                  <GenericButton
+                    disabled = {this.state.disabled}
+                    className = { 'login-button' }
+                    text="Login"
+                    onClick = { () => this.presenter.login(this.state.username, this.state.password)}/>
+                <br/>
+              </div>
+
+            }
+            <div className = { 'login-layer-icons' }>
+                  <img
+                    src = { require('../../images/icons/PAGIBIG.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/PHIC.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/sssOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/PremiumBadgeOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/RankOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/taxOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/DesignationOrange.png') }
+                    className = { 'icon-1' } />
+            </div>
+        </Card>
+
+          <div className = { 'notify-container' }>
+          {
+            notify &&
+            notify.map((notify, i) => (
+              <Notify
+                onClick = { () => {
+                  store.dispatch(NotifyActions.removeNotify(i))
+                }}
+                key = { i }
+                title = { notify.title }
+                message = { notify.message }
+                type = { notify.type }
+              />
+            ))
+          }
+          </div>
       </div>
     )
   }
 }
+const mapStateToProps = state => ({
+  notify : state.notify
+})
 
-export default ConnectView(LoginView, LoginPresenter)
+export default ConnectView(connect(mapStateToProps)(LoginView), LoginPresenter)

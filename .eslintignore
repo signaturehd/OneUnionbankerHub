@@ -1,4 +1,7 @@
 coverage/**
 node_modules/**
 dist/**
+src/ub-components/build.js
 src/index.html
+src/di/Container.js
+src/ub-components/main.js

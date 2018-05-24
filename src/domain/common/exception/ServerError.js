@@ -1,4 +1,4 @@
-function ServerError(message = '') {
+function ServerError (message = '') {
   this.name = 'ServerError'
   this.message = message
 }
