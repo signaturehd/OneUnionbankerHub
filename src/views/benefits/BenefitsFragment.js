@@ -10,7 +10,7 @@ import EducationFragment from './fragments/education/EducationFragment'
 import LoansFragment from './fragments/loans/LoansFragment'
 import MedicalFragment from './fragments/medical/MedicalFragment'
 
-import { InputModal, Card, GenericButton } from '../../ub-components'
+import { InputModal, Card, GenericButton, FloatingActionButton } from '../../ub-components'
 
 import './styles/benefits.css'
 
@@ -95,7 +95,14 @@ class BenefitsFragment extends BaseMVPView {
           }
         </div>
       </div>
-    </div>)
+      {
+        <FloatingActionButton
+          text = "+"
+          onClick = { () => this.setState({ showAccountNumberModal : true }) }
+        />
+      }
+    </div>
+  )
 
     return (
     <div>
