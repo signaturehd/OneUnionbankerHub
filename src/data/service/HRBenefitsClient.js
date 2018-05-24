@@ -180,8 +180,8 @@ export default class HRBenefitsClient {
   }
 
   /* Transaction Details */
-  getTransactionDetails (token, GetTransactionParam){
-    return this.service.getTransactionById(token, GetTransactionParam)
+  getTransactionsDetails (token, GetTransactionParam){
+    return this.service.getTransactionsDetails(token, GetTransactionParam)
       .pipe(ServiceErrorOperator())
   }
 

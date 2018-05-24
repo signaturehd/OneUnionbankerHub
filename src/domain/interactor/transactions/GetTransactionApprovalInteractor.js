@@ -4,6 +4,6 @@ export default class GetTransactionApprovalInteractor {
   }
 
   execute () {
-    return this.client.getTransactionApproval(this.client.getToken())
+    return this.client.getTransactionsApproval(this.client.getToken())
   }
 }

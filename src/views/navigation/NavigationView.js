@@ -22,7 +22,10 @@ import { connect } from 'react-redux'
 
 import store from '../../store'
 import { NotifyActions } from '../../actions'
+
 import OpticalFragment from '../optical/OpticalFragment'
+import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
+import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
 
 class NavigationView extends BaseMVPView {
   constructor (props) {
@@ -90,6 +93,12 @@ class NavigationView extends BaseMVPView {
                         <Route exact path = '/' render = {props =>
                           <NewsFragment { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> }/>
+                        <Route path = '/mybenefits/transactions/personal/:id' render = { props =>
+                          <TransactionPersonalDetailFragment { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                        <Route path = '/mybenefits/transactions/approval/:id' render = { props =>
+                          <TransactionApprovalDetailFragment { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation }/>}/>
                         <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
                           <OpticalFragment { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } />}/>

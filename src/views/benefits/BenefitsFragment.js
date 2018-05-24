@@ -126,7 +126,7 @@ return (
     id='tab1'
     type='radio'
     name='tabs'
-    defaultChecked
+    defaultChecked = {true}
     onClick = { () => this.props.history.push('/mybenefits/benefits') }/>
     <label  className = { 'mobile-icon' } htmlFor = 'tab1'>Benefits</label>
 
@@ -135,22 +135,22 @@ return (
     id='tab2'
     type='radio'
     name='tabs'
-    onClick = { () => this.props.history.push('/mybenefits/transaction/personal') } />
+    onClick = { () => this.props.history.push('/mybenefits/transactions/personal') } />
     <label className = { 'mobile-icon' } htmlFor='tab2'>My Transactions</label>
 
  <input
     className = { 'input-tab' }
     id='tab3'  type='radio'
     name='tabs'
-    onClick = { () => this.props.history.push('/mybenefits/transaction/approval') } />
+    onClick = { () => this.props.history.push('/mybenefits/transactions/approval') } />
     <label className = { 'mobile-icon' } htmlFor = 'tab3' >For Approval</label>
 
   <section id='content1'>
     <Switch>
-      <Route path = '/mybenefits/transaction/personal'
-        render = { props => <TransactionPersonalFragment { ...props } /> }/>
-      <Route path = '/mybenefits/transaction/approval'
-        render = { props => <TransactionApprovalFragment { ...props }/>}/>
+      <Route path = '/mybenefits/transactions/personal'
+        render = { props => <TransactionPersonalFragment { ...props } /> } />
+      <Route path = '/mybenefits/transactions/approval'
+        render = { props => <TransactionApprovalFragment { ...props }/> } />
       <Route path = '/mybenefits/benefits/education'
         render = { props => <EducationFragment { ...props } />}/>
       <Route exact path = '/mybenefits/benefits/medical'

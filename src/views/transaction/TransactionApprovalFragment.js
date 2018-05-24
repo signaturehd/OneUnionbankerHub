@@ -15,14 +15,14 @@ class TransactionApprovalFragment extends BaseMVPView {
     this.state={
       view : false,
       transactionId : null,
-      transactions: [],
+      transactions: null,
       transactionResponse : null,
       transaction: null,
     }
   }
 
   componentDidMount () {
-    this.presenter.getTransactions()
+    this.presenter.getTransactionsApproval()
 
   }
 
@@ -50,37 +50,29 @@ class TransactionApprovalFragment extends BaseMVPView {
       icon
     } = this.props
 
-
-    const TransactionApproval = () => (
-      <div className = { 'transaction-container' }>
-        {
-          transactions &&
-          transactions.map((transaction, key) =>
-            <TransactionCardComponent
-              detail = { transaction } key = { key }
-              onClick = { (transaction, view) => this.setState({ transaction, view })}
-            />
-          )
-        }
-      </div>
-    )
-
     return (
       <div>
-        {
-          view &&
-          <TransactionModal
-            transactionResponse = { transactionResponse }
-            history = { history }
-            transaction = { transaction.benefitId }
-            presenter = { () => this.presenter.getTransactionById(transaction.id) }
-            onClose = { () =>  this.setState({ view : false })}/>
-        }
-
-        <Switch>
-          <Route path = '/mybenefits/benefits/transaction/approval' render = { TransactionApproval } />
-        </Switch>
-    </div>
+      {
+        transactions ?
+        <div className = { 'transaction-container' }>
+          {
+            transactions.map((transaction, key) => (
+              <TransactionCardComponent
+                detail = { transaction } key = { key }
+                onClick = { (transaction) =>
+                  this.props.history.push(`/mybenefits/transactions/approval/${transaction.id}`) }
+              />
+            ))
+          }
+        </div>
+        :
+        <div className = {'transactions-loader'}>
+          <center>
+            <CircularLoader show = {true} />
+          </center>
+        </div>
+      }
+      </div>
     )
   }
 }

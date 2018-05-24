@@ -16,7 +16,6 @@ class DentalReimbursementModalFragment extends Component {
     const { transactionDetails } = this.props
 
     return (
-
     <div className = { 'transaction-container' }>
       <div>
       <TransactionDetailCardComponent transactionDetails={ transactionDetails } />

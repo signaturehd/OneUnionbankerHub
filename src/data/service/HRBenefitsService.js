@@ -214,7 +214,7 @@ export default class HRBenefitsService {
   }
 
   /* Transactions Details */
-  getTransactionDetails (token, GetTransactionParam ){
+  getTransactionsDetails (token, GetTransactionParam ){
     return this.apiClient.get('v1/transactions/' + GetTransactionParam, {
       headers: {token}
     })
