@@ -9,6 +9,7 @@ import Presenter from './presenter/BenefitsPresenter'
 import EducationFragment from './fragments/education/EducationFragment'
 import LoansFragment from './fragments/loans/LoansFragment'
 import MedicalFragment from './fragments/medical/MedicalFragment'
+import ReleasingCenterModal from './modal/ReleasingCenterModal'
 
 import { InputModal, Card, GenericButton, FloatingActionButton } from '../../ub-components'
 
@@ -20,7 +21,9 @@ class BenefitsFragment extends BaseMVPView {
 
     this.state = {
       showAccountNumberModal: false,
+      showReleasingCenterModal: false,
       accountNumber: '', // this is only used to handle onChange of input modal
+      releasingCenters: [],
     }
   }
 
@@ -30,8 +33,9 @@ class BenefitsFragment extends BaseMVPView {
     this.props.history.push('/benefits')
   }
 
-  showReleasingCenters (releasingCenters) {
-  // TODO show to generic multilist dialog
+  showReleasingCenters(releasingCenters) {
+    this.setState({releasingCenters})
+    this.setState({ showReleasingCenterModal: true })
   }
 
   onValidAccountNumber () {
@@ -44,7 +48,7 @@ class BenefitsFragment extends BaseMVPView {
 
   render () {
     const { history } = this.props
-    const { accountNumber, showAccountNumberModal } = this.state
+    const { accountNumber, showAccountNumberModal, showReleasingCenterModal, releasingCenters } = this.state
     const benefitsOptions = [{
       id: 0 ,
       styleName: 'option-cards-1',
@@ -79,6 +83,15 @@ class BenefitsFragment extends BaseMVPView {
               }
             />
         }
+        {
+          showReleasingCenterModal &&
+            <ReleasingCenterModal
+              isDismisable = { true }
+              releasingCenters = { releasingCenters }
+              onClose = {() => this.setState({ showReleasingCenterModal: false })}
+              type = { 'text' }
+            />
+        }
         <div className = { 'adjustment' }>
         <div className = { 'card-container' }>
           {
@@ -98,7 +111,7 @@ class BenefitsFragment extends BaseMVPView {
       {
         <FloatingActionButton
           text = "+"
-          onClick = { () => this.setState({ showAccountNumberModal : true }) }
+          onClick = { () => this.presenter.getReleasingCenters() }
         />
       }
     </div>
