@@ -36,7 +36,7 @@ class LoginView extends BaseMVPView {
     this.onLoginSuccess = this.onLoginSuccess.bind(this)
   }
   componentDidMount () {
-    this.props.history.push('/')
+    store.dispatch(NotifyActions.resetNotify())
   }
 
   disabledButton () {
