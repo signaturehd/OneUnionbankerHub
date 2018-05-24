@@ -135,27 +135,27 @@ return (
     id='tab2'
     type='radio'
     name='tabs'
-    onClick = { () => this.props.history.push('/mybenefits/benefits/transaction/personal') } />
+    onClick = { () => this.props.history.push('/mybenefits/transaction/personal') } />
     <label className = { 'mobile-icon' } htmlFor='tab2'>My Transactions</label>
 
  <input
     className = { 'input-tab' }
     id='tab3'  type='radio'
     name='tabs'
-    onClick = { () => this.props.history.push('/mybenefits/benefits/transaction/approval') } />
+    onClick = { () => this.props.history.push('/mybenefits/transaction/approval') } />
     <label className = { 'mobile-icon' } htmlFor = 'tab3' >For Approval</label>
 
   <section id='content1'>
     <Switch>
-      <Route path = '/mybenefits/benefits/transaction/personal'
+      <Route path = '/mybenefits/transaction/personal'
         render = { props => <TransactionPersonalFragment { ...props } /> }/>
-      <Route path = '/mybenefits/benefits/transaction/approval'
+      <Route path = '/mybenefits/transaction/approval'
         render = { props => <TransactionApprovalFragment { ...props }/>}/>
       <Route path = '/mybenefits/benefits/education'
         render = { props => <EducationFragment { ...props } />}/>
       <Route exact path = '/mybenefits/benefits/medical'
         render = { props => <MedicalFragment { ...props } />}/>
-      <Route path = '/mybenefits/benefits'
+      <Route path = '/mybenefits'
         render = { Benefits } />
    </Switch>
   </section>

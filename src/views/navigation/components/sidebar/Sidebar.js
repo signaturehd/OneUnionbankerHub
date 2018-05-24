@@ -35,7 +35,7 @@ class SideBar extends Component {
       {
         id: 1 ,
         title: 'My Benefits',
-        action: () => history.push('/mybenefits/benefits'),
+        action: () => history.push('/mybenefits'),
         className: 'benefits-icon mobile-icon'
       },
       {
