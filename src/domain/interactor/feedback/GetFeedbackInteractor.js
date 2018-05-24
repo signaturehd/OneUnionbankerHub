@@ -5,6 +5,5 @@ export default class GetFeedbackInteractor {
 
   execute (FeedbackParam) {
     return this.client.getFeedback(this.client.getToken(), FeedbackParam)
-    console.log(FeedbackParam)
   }
 }

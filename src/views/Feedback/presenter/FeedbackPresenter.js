@@ -1,4 +1,6 @@
 import GetFeedbackInteractor from '../../../domain/interactor/feedback/GetFeedbackInteractor'
+import FeedbackParam from '../../../domain/param/FeedbackParam'
+
 
 export default class FeedbackPresenter {
     constructor (container) {
@@ -10,9 +12,11 @@ export default class FeedbackPresenter {
     }
 
     getFeedback () {
-        this.getFeedbackInteractor.execute()
+        this.view.showLoading()
+        this.getFeedbackInteractor.execute(FeedbackParam(id, feedbackCategory))
           .subscribe(feedback => {
-            this.view.feedback(feedback)
+        console.log(feedback)
+            this.view.showFeedback(feedback)
               }, e => {
             })
           }
