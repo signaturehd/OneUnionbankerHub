@@ -34,6 +34,7 @@ export default class HRBenefitsClient {
     return this.service.notice(token, noticeParam)
       .pipe(ServiceErrorOperator())
   }
+
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
@@ -102,11 +103,6 @@ export default class HRBenefitsClient {
         .pipe(ServiceErrorOperator())
   }
 
-  reserveBook (token, BookReserveParam) {
-    return this.service.reserveBook(token, BookReserveParam)
-        .pipe(ServiceErrorOperator())
-  }
-
   /* optical */
   getOptical (token) {
     return this.service.getOptical(token)
@@ -158,7 +154,6 @@ export default class HRBenefitsClient {
   }
 
   /* dental reimbursement */
-
   getDentalReimbursement (token) {
     return this.service.getDentalReimbursement(token)
       .pipe(ServiceErrorOperator())
@@ -172,24 +167,25 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  /* Faqs */
-  getFaqs () {
-    return this.service.getFaqs()
+  /* Transactions Personal */
+  getTransactionsPersonal (token) {
+    return this.service.getTransactionsPersonal(token)
       .pipe(ServiceErrorOperator())
   }
 
-  /* Transactions */
-  getTransactions (token) {
-    return this.service.getTransactions(token)
+  /* Transactions Approval */
+  getTransactionsApproval (token) {
+    return this.service.getTransactionsApproval(token)
       .pipe(ServiceErrorOperator())
   }
 
-  getTransactionById(token, GetTransactionParam){
+  /* Transaction Details */
+  getTransactionDetails (token, GetTransactionParam){
     return this.service.getTransactionById(token, GetTransactionParam)
       .pipe(ServiceErrorOperator())
   }
 
-  /* News */
+  /* Faqs */
   getFaqs (token) {
     return this.service.getFaqs(token)
       .pipe(ServiceErrorOperator())

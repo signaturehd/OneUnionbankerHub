@@ -108,19 +108,6 @@ export default class HRBenefitsService {
     })
   }
 
-  getTransactions (token) {
-    return this.apiClient.get('v1/transactions', {
-      headers: { token }
-    })
-  }
-
-  getTransactionById (token, GetTransactionParam ){
-    return this.apiClient.get('v1/transactions/' + GetTransactionParam, {
-      headers: {token}
-    })
-  }
-
-
   getBooksBorrowed (token) {
     return this.apiClient.get('v1/books/history', {
         headers: { token }
@@ -142,7 +129,6 @@ export default class HRBenefitsService {
   }
 
   /* News */
-
   getNews (token) {
     return this.apiClient.get('v1/news', {
         headers: { token }
@@ -151,7 +137,6 @@ export default class HRBenefitsService {
 
 
  /* Podcasts */
-
   getPodcasts (token) {
     return this.apiClient.get('v1/podcasts', {
         headers: { token }
@@ -189,7 +174,6 @@ export default class HRBenefitsService {
   }
 
   /* FAQ's */
-
   getFaqs (token) {
     return this.apiClient.get('v1/faqs', {
       headers: { token }
@@ -214,4 +198,27 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  /* Transactions Personal */
+  getTransactionsPersonal (token) {
+    return this.apiClient.get('v1/transactions?type=1', {
+      headers: { token }
+    })
+  }
+
+  /* Transactions Approval */
+  getTransactionsApproval (token) {
+    return this.apiClient.get('v1/transactions?type=2&status=2', {
+      headers: { token }
+    })
+  }
+
+  /* Transactions Details */
+  getTransactionDetails (token, GetTransactionParam ){
+    return this.apiClient.get('v1/transactions/' + GetTransactionParam, {
+      headers: {token}
+    })
+  }
+
+
 }

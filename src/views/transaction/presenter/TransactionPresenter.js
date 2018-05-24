@@ -1,33 +1,41 @@
-import GetTransactionInteractor from '../../../domain/interactor/transactions/GetTransactionInteractor'
-import GetTransactionByIdInteractor from '../../../domain/interactor/transactions/GetTransactionByIdInteractor'
+import GetTransactionApprovalInteractor from '../../../domain/interactor/transactions/GetTransactionApprovalInteractor'
+import GetTransactionPersonalInteractor from '../../../domain/interactor/transactions/GetTransactionPersonalInteractor'
+import GetTransactionDetailsInteractor from '../../../domain/interactor/transactions/GetTransactionDetailsInteractor'
+
 import GetTransactionParam from '../../../domain/param/GetTransactionParam'
-import { Observable } from 'rxjs'
+
 export default class TransactionPresenter {
   constructor (container) {
-    this.getTransactionInteractor = new GetTransactionInteractor(container.get('HRBenefitsClient'))
-    this.getTransactionByIdInteractor = new GetTransactionByIdInteractor(container.get('HRBenefitsClient'))
+    this.getTransactionApprovalInteractor = new GetTransactionApprovalInteractor(container.get('HRBenefitsClient'))
+    this.getTransactionPersonalInteractor = new GetTransactionPersonalInteractor(container.get('HRBenefitsClient'))
+    this.getTransactionDetailsInteractor = new GetTransactionDetailsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
   }
 
-  getTransactions () {
-    this.view.showLoading()
-    this.getTransactionInteractor.execute()
+  getTransactionsPersonal () {
+    this.getTransactionPersonalInteractor.execute()
       .subscribe(transactions => {
-          this.view.hideLoading()
           this.view.transactions(transactions)
         }, e => {
           this.view.hideLoading()
       })
   }
 
-  getTransactionById (id) {
-    this.view.showLoading()
-    this.getTransactionByIdInteractor.execute(GetTransactionParam(id))
-      .subscribe(transactionResponse => {
+  getTransactionsApproval () {
+    this.getTransactionApprovalInteractor.execute()
+      .subscribe(transactions => {
+          this.view.transactions(transactions)
+        }, e => {
           this.view.hideLoading()
+      })
+  }
+
+  getTransactionDetails (id) {
+    this.getTransactionDetailsInteractor.execute(GetTransactionParam(id))
+      .subscribe(transactionResponse => {
           this.view.transacitonDetails(transactionResponse)
         }, e => {
           this.view.hideLoading()
