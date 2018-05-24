@@ -16,7 +16,7 @@ class TransactionCardComponent extends Component {
     const { detail, onClick } = this.props
 
     return (
-      <Card className = {  'transaction-card' }>
+      <Card className = { 'transaction-card'}>
         <div className = {'transaction-header'} >
         </div>
         <div className = {'transaction-body'}>
@@ -27,7 +27,7 @@ class TransactionCardComponent extends Component {
         <div className = {'transaction-footer'}>
           <center>
             <GenericButton
-              text = { 'Read More' }
+              text = {'Read More'}
               onClick = { () => onClick(detail, true) }/>
           </center>
         </div>

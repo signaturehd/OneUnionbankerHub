@@ -5,6 +5,8 @@ import TransactionDetailCardComponent from '../../components/TransactionDetailCo
 import TransactionFileCardComponent from '../../components/TransactionDetailComponent/TransactionFileCardComponent'
 import TransactionFormAgreementCardComponent from '../../components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
 
+import './dental-reimbursement.css'
+
 class DentalReimbursementModalFragment extends Component {
   constructor(props) {
     super(props)
@@ -18,15 +20,10 @@ class DentalReimbursementModalFragment extends Component {
     <div className = { 'transaction-container' }>
       <div>
       <TransactionDetailCardComponent transactionDetails={ transactionDetails } />
-
       <TransactionFileCardComponent transactionDetails = { transactionDetails.details } />
-
     </div>
-
     <div className = { 'transaction-container' }>
-
       <TransactionFormAgreementCardComponent transactionDetails = { transactionDetails.details } />
-
     </div>
   </div>
     )

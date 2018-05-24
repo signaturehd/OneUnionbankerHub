@@ -3,13 +3,13 @@ import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import BaseMVPView from '../common/base/BaseMVPView'
 import './styles/transaction.css'
-import { Card } from '../../ub-components/'
+import { Card, CircularLoader } from '../../ub-components/'
 import Presenter from './presenter/TransactionPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 import TransactionCardComponent from './components/TransactionCardComponent/TransactionCardComponent'
 import TransactionModal from './modals/TransactionModal'
 
-class TransactionFragment extends BaseMVPView {
+class TransactionPersonalFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state={
@@ -49,10 +49,10 @@ class TransactionFragment extends BaseMVPView {
       path,
       icon
     } = this.props
-      const Transactions = () =>
-      (
-        <div className = { 'transaction-container' }>
-          {
+
+    const TransactionPersonal = () => (
+      <div className = { 'transaction-container' }>
+        {
           transactions &&
           transactions.map((transaction, key) =>
             <TransactionCardComponent
@@ -61,8 +61,9 @@ class TransactionFragment extends BaseMVPView {
             />
           )
         }
-        </div>
+      </div>
     )
+
 
     return (
       <div>
@@ -75,11 +76,13 @@ class TransactionFragment extends BaseMVPView {
             presenter = { () => this.presenter.getTransactionById(transaction.id) }
             onClose = { () =>  this.setState({ view : false })}/>
         }
+
+
         <Switch>
-          <Route exact path = '/mybenefits/benefits/transaction' render = {Transactions} />
+          <Route path = '/mybenefits/benefits/transaction/personal' render = { TransactionPersonal } />
         </Switch>
     </div>
     )
   }
 }
-export default ConnectPartial (TransactionFragment, Presenter)
+export default ConnectPartial (TransactionPersonalFragment, Presenter)

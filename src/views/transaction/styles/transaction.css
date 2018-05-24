@@ -13,6 +13,14 @@
   text-align: justify;
 }
 
+.transactions-loader {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20%;
+  vertical-align: middle;
+}
+
+
 @media only screen and (max-width: 479px){
   ._transaction-container { width: 90%; }
 }

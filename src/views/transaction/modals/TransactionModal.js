@@ -60,6 +60,7 @@ class TransactionModal extends Component {
     return (
     <Modal
       isDismisable = { true }
+      width = {70}
       onClose = { onClose }>
 
       <div>

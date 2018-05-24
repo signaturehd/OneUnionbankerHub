@@ -10,7 +10,8 @@ import EducationFragment from './fragments/education/EducationFragment'
 import LoansFragment from './fragments/loans/LoansFragment'
 import MedicalFragment from './fragments/medical/MedicalFragment'
 
-import TransactionFragment from '../transaction/TransactionFragment'
+import TransactionPersonalFragment from '../transaction/TransactionPersonalFragment'
+import TransactionApprovalFragment from '../transaction/TransactionApprovalFragment'
 import OpticalFragment from '../optical/OpticalFragment'
 
 import { InputModal, Card, GenericButton } from '../../ub-components'
@@ -30,7 +31,6 @@ class BenefitsFragment extends BaseMVPView {
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateFabToShow()
-    this.props.history.push('/mybenefits/benefits')
   }
 
   showReleasingCenters (releasingCenters) {
@@ -128,34 +128,34 @@ return (
     name='tabs'
     defaultChecked
     onClick = { () => this.props.history.push('/mybenefits/benefits') }/>
-  <label  className = { 'mobile-icon' } htmlFor = 'tab1'>Benefits</label>
+    <label  className = { 'mobile-icon' } htmlFor = 'tab1'>Benefits</label>
 
  <input
-  className = { 'input-tab' }
-  id='tab2'
+    className = { 'input-tab' }
+    id='tab2'
     type='radio'
     name='tabs'
-    onClick = { () => this.props.history.push('/mybenefits/benefits/transaction') } />
- <label className = { 'mobile-icon' } htmlFor='tab2'>My Transactions</label>
+    onClick = { () => this.props.history.push('/mybenefits/benefits/transaction/personal') } />
+    <label className = { 'mobile-icon' } htmlFor='tab2'>My Transactions</label>
 
  <input
     className = { 'input-tab' }
     id='tab3'  type='radio'
     name='tabs'
-    onClick = { () => this.props.history.push('/mybenefits/benefits/forapproval') } />
-<label className = { 'mobile-icon' } htmlFor = 'tab3' >For Approval</label>
+    onClick = { () => this.props.history.push('/mybenefits/benefits/transaction/approval') } />
+    <label className = { 'mobile-icon' } htmlFor = 'tab3' >For Approval</label>
 
   <section id='content1'>
     <Switch>
-      <Route path = '/mybenefits/benefits/transaction'
-        render = { props => <TransactionFragment { ...props } /> }/>
+      <Route path = '/mybenefits/benefits/transaction/personal'
+        render = { props => <TransactionPersonalFragment { ...props } /> }/>
+      <Route path = '/mybenefits/benefits/transaction/approval'
+        render = { props => <TransactionApprovalFragment { ...props }/>}/>
       <Route path = '/mybenefits/benefits/education'
         render = { props => <EducationFragment { ...props } />}/>
-      <Route  path = '/mybenefits/benefits/medical'
+      <Route exact path = '/mybenefits/benefits/medical'
         render = { props => <MedicalFragment { ...props } />}/>
-      <Route  path = '/mybenefits/benefits/forapproval'
-        render = { props => <div>For Aprroval</div>}/>
-      <Route exact path = '/mybenefits/benefits'
+      <Route path = '/mybenefits/benefits'
         render = { Benefits } />
    </Switch>
   </section>
