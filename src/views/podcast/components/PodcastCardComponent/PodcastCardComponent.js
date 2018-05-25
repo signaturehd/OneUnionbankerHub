@@ -18,6 +18,8 @@ class PodcastCardComponent extends Component {
         background: `url(${podcast && podcast.image}) rgba(0,0,0,0.7)`,
         backgroundSize: 'cover',
         backgroundBlendMode: 'color',
+        margin: 'auto',
+        height: 'fit-content',
       },
     }
 
