@@ -16,10 +16,12 @@ class PodcastCardComponent extends Component {
     const style = {
       styles : {
         background: `url(${podcast && podcast.image}) rgba(0,0,0,0.7)`,
-        backgroundSize: 'cover',
         backgroundBlendMode: 'color',
-        margin: 'auto',
-        height: 'fit-content',
+        backgroundSize: 'contain',
+        objectFit: 'cover',
+        height: 'max-content',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
       },
     }
 
