@@ -6,7 +6,7 @@ import { Card } from '../../../ub-components'
 
 import './styles/details-fragment.css'
 
-class EducGroupPlanDetailsFragment extends Component {
+class LoansDEtailsFragment extends Component {
   constructor (props) {
     super(props)
   }
@@ -24,8 +24,8 @@ class EducGroupPlanDetailsFragment extends Component {
   }
 }
 
-EducGroupPlanDetailsFragment.propTypes = {
+LoansDEtailsFragment.propTypes = {
   details : PropTypes.object
 }
 
-export default EducGroupPlanDetailsFragment
+export default LoansDEtailsFragment

@@ -1,13 +1,13 @@
 .transaction-container {
-      display: grid;
-      grid-column-gap: 1%;
-      padding: 1%;
-      margin: auto;
-      position: relative;
-      margin:0 auto;
-      text-align: center;
-      grid-template-rows: auto auto;
-      grid-template-areas: "cards cards cards";
+  display: grid;
+  grid-column-gap: 1%;
+  padding: 1%;
+  margin: auto;
+  position: relative;
+  margin:0 auto;
+  text-align: center;
+  grid-template-rows: auto auto;
+  grid-template-areas: "cards cards cards";
 }
 .transaction-modal {
   text-align: justify;

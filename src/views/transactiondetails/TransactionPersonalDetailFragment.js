@@ -9,33 +9,38 @@ import { CircularLoader } from '../../ub-components'
 
 import './styles/transaction-details.css'
 
+import DentalLoaDetailsFragment from './fragments/DentalLoaDetailsFragment'
+import DentalRDetailsFragment from './fragments/DentalRDetailsFragment'
+import EducAidDetailsFragment from './fragments/EducAidDetailsFragment'
+import EducGrantAidDetailsFragment from './fragments/EducGrantAidDetailsFragment'
+import EducGrantPlanDetailsFragment from './fragments/EducGrantPlanDetailsFragment'
+import EducGroupPlanDetailsFragment from './fragments/EducGroupPlanDetailsFragment'
+import LoansDetailsFragment from './fragments/LoansDetailsFragment'
+import OpticalDetailsFragment from './fragments/OpticalDetailsFragment'
+
 function  TransactionDetails ( props )  {
-  console.log(props)
   const transactionId = props.details.benefitType.id
   const transactionDetails = props.details
   if (transactionId == 6) {
-      return <h1>Dental R</h1>
-     // return <DentalReimbursementModalFragment  transactionDetails = { transactionDetails } /> // Dental Reimbursement Fragment
+    return <DentalRDetailsFragment details = { transactionDetails } />
   } else if (transactionId == 7) {
-    return <h1>Dental LOA</h1>
-     // return <DentalLOAModalFragment  transactionDetails = { transactionDetails } /> // Dental Loa Fragment
+    return <DentalLoaDetailsFragment details = { transactionDetails } />
   } else if (transactionId == 8) {
-    return <h1>Optical</h1>
-    // return <OpticalModalFragment  transactionDetails = { transactionDetails } />  // Optical Fragment Fragment
+    return <OpticalDetailsFragment details = { transactionDetails } />
   } else if (transactionId == 11) {
-    return  <h2></h2> // Educational Reimbursement Personal
+    return <EducGrantAidDetailsFragment details = { transactionDetails } />
   } else if (transactionId == 12) {
-    return <h2></h2> // Educational Reimbursement Dependent
+    return <DentalRDetailsFragment details = { transactionDetails } />
   } else if (transactionId == 13) {
-    return  <h2></h2> // Educational Grant Personal
+    return <DentalRDetailsFragment details = { transactionDetails } />
   } else if (transactionId == 32) {
-    return  <h2></h2> // Educational Grant Dependent
+    return <DentalRDetailsFragment details = { transactionDetails } />
   } else if (transactionId == 1) {
-    return <h1>MPL</h1> // Loans
+    return <LoansDetailsFragment details = { transactionDetails } />
   } else {
     return <h1>No Transaction Occured please reload</h1> // No  Transaction
   }
- }
+}
 
 class TransactionPersonalDetailsFragment extends BaseMVPView {
   constructor (props) {
@@ -61,13 +66,11 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
 
   render () {
     const { details } = this.state
-    console.log(details)
-
     return (
       <div  className = {'container'}>
         <i className = { 'left' } onClick = {
             this.navigate.bind(this) }></i>
-          <h1>Transaction for Personal</h1>
+            <h1>{ details ? details.benefitType.name : 'Transaction' }</h1>
         {
           details ?
             <div className = {'transaction-detail-container'}>

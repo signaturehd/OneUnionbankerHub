@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
 
 import { Card } from '../../../ub-components'
 
 import './styles/details-fragment.css'
 
-class OpticalDetailFragment extends Component {
+class OpticalDetailsFragment extends Component {
   constructor (props) {
     super(props)
   }
 
   render () {
+    const { details } = this.props
+    console.log(details)
     return (
       <div className = {'optical-details-container'}>
         <Card>Transaction Information</Card>
@@ -19,3 +23,9 @@ class OpticalDetailFragment extends Component {
     )
   }
 }
+
+OpticalDetailsFragment.propTypes = {
+  details : PropTypes.object
+}
+
+export default OpticalDetailsFragment
