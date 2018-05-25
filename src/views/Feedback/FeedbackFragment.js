@@ -42,10 +42,8 @@ class FeedbackView extends BaseMVPView {
       feedbackCategory,
     } = this.state
 
-    const {
-      details
-    }=this.props
-    console.log(feedback )
+    const { details } = this.props
+
     return (
       <div  className = { 'feedback-container' }>
         {
@@ -64,7 +62,7 @@ class FeedbackView extends BaseMVPView {
               <FeedbackCard
                 details={feedback}
                 category={feedbackCategory}
-                submitForm = { () => this.submitForm(id) }
+                submitForm = { () => this.submitForm(id, feedbackCategory, value) }
                 onClick = {
                   (showCategoryModal) =>
                   this.setState({ showCategoryModal })

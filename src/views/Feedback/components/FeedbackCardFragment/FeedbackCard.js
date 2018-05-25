@@ -2,26 +2,31 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './feedback-styles.css'
 import { GenericTextBox, GenericButton, Card } from '../../../../ub-components'
-import TextArea from '../../components/TextArea/TextArea'
 import FeedbackCategoryModal from '../../modals/FeedbackCategoryModal'
+import staticImage from '../../../../images/feedback.jpg'
 
 
-class FeedbackCard extends Component {
+
+class FeedbackCard extends Component{
 
   constructor (props) {
     super(props)
     this.state = {
       showCategoryModal : false,
+      value:'',
     }
-
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   handleSubmit (e) {
     e.preventDefault()
   }
 
-  
+  handleChange (event) {
+    this.setState({ value: event.target.value })
+  }
+
   render () {
     const {
       text,
@@ -29,42 +34,49 @@ class FeedbackCard extends Component {
       feedback,
       onClose,
       submit,
-      receipient,
-      branch,
       onClick,
-      submitForm,
       details,
       category
     } = this.props
 
     const {  showCategoryModal } = this.state
-    console.log(details)
+
+    const styleImage = {
+        image1 : {
+          backgroundImage: `url('${staticImage}')`,
+          width : '90px',
+          height : '90px',
+          backgroundSize : 'cover',
+          backgroundRepeat : 'no-repeat',
+        }
+      }
     return (
       <Card className={ 'feedback-card' }>
       <form onSubmit = { this.handleSubmit }>
         <div className = {'feedback-header'} >
           <h1 > Feedback </h1>
-          <div className = {'feedback-body '}>
-            
-          <div className = { 'feedback-col span_1_of_3' }>
           <center>
+          <div style = {styleImage.image1}> </div>
+          </center>
+        </div>
+          <div className = {'feedback-body '}>
                <GenericTextBox
                  value = { category && category }
                  readOnly
-                 onClick = { () => onClick( true)}
+                 onClick = { () => onClick(true)}
                  placeholder = { text } />
-                 <TextArea/>
-          </center>
+                  
+                <textarea name="textarea" id="textarea" className ={'textArea'} value= {this.state.value} placeholder ={'We would like to hear from you.'} onChange={this.handleChange} cols={40} rows={10} />
+                <br/>
+                <p> Send us any comment, suggestions, feedback or problems you've<br/> 
+                encountered within the site so we can fix it right away.</p>
           </div>
-         
-          </div>
-        </div>
         <div className = {'feedback-footer-left'}>
           <GenericButton
             onClick = { () => onClick(false, false, true)}
             type = {'button'}
             text = { submit }
-            className = {'feedback-procedure' }
+            className = {'feedback-category' }
             value = { 'Categories' } />
         </div>
       </form>
@@ -83,7 +95,7 @@ FeedbackCard.propTypes = {
 }
 
 FeedbackCard.defaultProps = {
-  text   : 'Categories',
+  text   : 'What was it About?',
   submit : 'Submit'
 }
 

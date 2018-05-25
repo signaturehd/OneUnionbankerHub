@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
+import './feedback-modal.css'
 import { Modal , GenericButton} from '../../../ub-components/'
 
 class FeedbackCategoryModal extends Component {
@@ -25,7 +25,7 @@ class FeedbackCategoryModal extends Component {
       onClose = { onClose }
       isDismisable = { true }
       chosenCategory = { chosenCategory } >
-      <div className = { 'optical-description' }>
+      <div className = { 'feedback-description' }>
         <h2>Categories</h2>
       </div>
       <div className = { 'feedback-modal-footer' }>
