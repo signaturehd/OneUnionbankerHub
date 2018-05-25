@@ -10,18 +10,18 @@ class TransactionOpticalFileComponent extends Component {
   }
 
   render() {
-    const { transactionDetails } = this.props
+    const { details } = this.props
     return (
-      <Card>
-        <h5 className = 'text-title-detail'> FORM ATTACHMENTS </h5>
-        {
-          transactionDetails &&
-          transactionDetails.Attachments.map((file, key) =>
-            <div>
-              <h6 key = { key } className = 'title' > { file.DocumentType }:  { file && file.FileName } </h6>
-            </div>
-          )
-        }
+      <Card className = { 'transaction-card-details' }>
+        <center><h4> Attachments </h4></center>
+          <div className = { 'transaction-attachments-container' }>
+            <img
+              className = { 'transaction-attachments _img-ub-logo' }
+              src={ require('../../../../images/union-logo.png') }/>
+            <img
+              className = { 'transaction-attachments _img-ub-logo' }
+              src={ require('../../../../images/union-logo.png') }/>
+          </div>
       </Card>
     )
   }

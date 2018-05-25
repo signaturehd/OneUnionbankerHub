@@ -57,7 +57,8 @@ class TransactionPersonalFragment extends BaseMVPView {
           {
             transactions.map((transaction, key) => (
               <TransactionCardComponent
-                detail = { transaction } key = { key }
+                detail = { transaction }
+                key = { key }
                 onClick = { (transaction) =>
                   this.props.history.push(`/mybenefits/transactions/personal/${transaction.id}`) }
               />

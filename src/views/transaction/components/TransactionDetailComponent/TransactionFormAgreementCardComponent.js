@@ -11,13 +11,15 @@ class TransactionFormAgreementCardComponent extends Component {
   }
 
   render() {
-    const { transactionDetails } = this.props
+    const { details } = this.props
     return (
-      <Card >
+      <Card className = { 'transaction-card-details' }>
+        <h4>Form Agreements</h4>
         {
-          transactionDetails &&
-          transactionDetails.FormAgreements.map((form, key) =>
-            <div className = { 'transaction-form-agreement' } key = { key } dangerouslySetInnerHTML = {{ __html : form }}></div>
+          details && details.details.FormAgreements.map ((formAgreement, key) =>
+          <center key = { key }>
+              <div dangerouslySetInnerHTML = {{ __html : formAgreement }}></div>
+          </center>
           )
         }
       </Card>

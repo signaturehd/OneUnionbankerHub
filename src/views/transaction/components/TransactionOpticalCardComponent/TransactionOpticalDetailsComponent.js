@@ -4,33 +4,32 @@ import PropTypes from 'prop-types'
 import { Card } from '../../../../ub-components/'
 import './styles/transaction-optical-details-component.css'
 
-class TransactionDetailCardComponent extends Component {
+class TransactionOpticalDetailCardComponent extends Component {
     constructor(props) {
       super(props)
     }
 
     render() {
-    const { transactionDetails } = this.props
+    const { details } = this.props
     return (
-      <Card>
-        <h5 className = "title" > { transactionDetails && transactionDetails.dateFiled } </h5>
-        <h6 className = { 'text-title-detail' }> DATE FILED </h6>
-
-        <h5 className = "title"> { transactionDetails && transactionDetails.status.name } </h5>
-        <h6 className = { 'text-title-detail' }> TRANSACTION STATUS </h6>
-
-        <h5 className = "title"> { transactionDetails && transactionDetails.details.AccountNo } </h5>
-        <h6 className = { 'text-title-detail' }> ACCOUNT NUMBER </h6>
-
-        <h5 className = "title"> { transactionDetails && transactionDetails.details.ReferenceNumber } </h5>
-        <h6 className = { 'text-title-detail' }> REFERENCE NUMBER </h6>
-
-        <h5 className = "title"> { transactionDetails && transactionDetails.details.Amount } </h5>
-        <h6 className = { 'text-title-detail' }> AMOUNT </h6>
-
+      <Card className = { 'transaction-card-details-form' }>
+        <div>
+          <h2 className = { 'transaction-detail' }> Date Filed: </h2>
+          <h2 className = { 'transaction-detail' }> Reference Number: </h2>
+          <h2 className = { 'transaction-detail' }> Transaction Status: </h2>
+          <h2 className = { 'transaction-detail' }> Account Number: </h2>
+          <h2 className = { 'transaction-detail' }> Patient Name: </h2>
+        </div>
+        <div>
+          <h2 className = { 'transaction-detail' }> { details && details.dateFiled } </h2>
+          <h2 className = { 'transaction-detail' }> { details && details.details.ReferenceNumber }</h2>
+          <h2 className = { 'transaction-detail' }> { details && details.status.name } </h2>
+          <h2 className = { 'transaction-detail' }> { details && details.AccountNo } </h2>
+          <h2 className = { 'transaction-detail' }> Name of Patient </h2>
+        </div>
       </Card>
     )
   }
 }
 
-export default TransactionDetailCardComponent
+export default TransactionOpticalDetailCardComponent
