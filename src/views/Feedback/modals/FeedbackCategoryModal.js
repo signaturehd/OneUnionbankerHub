@@ -19,7 +19,6 @@ class FeedbackCategoryModal extends Component {
   render () {
   const {  details, feedback, onClose, showCategoryModal, text, isDismisable } = this.props
   const { chosenCategory } = this.state
-  console.log (feedback)
   return (
     <Modal
       onClose = { onClose }
