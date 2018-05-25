@@ -6,6 +6,8 @@ import { GenericButton, GenericTextBox } from '../../../ub-components'
 
 import Modal from '../../../ub-components/Modal/Modal'
 
+import './modal-style.css'
+
 class ReleasingCenterModal extends Component {
   constructor (props) {
     super(props)
@@ -16,6 +18,7 @@ class ReleasingCenterModal extends Component {
     releasingCenters.map((releasingCenter, key) => {
       return (
         <GenericButton
+          className = { 'dentalloa-modal-option-button' }
           key = { key }
           text = { releasingCenter.unit }
         />
