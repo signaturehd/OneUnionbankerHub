@@ -23,13 +23,15 @@ class FeedbackView extends BaseMVPView {
     this.showFeedback = this.showFeedback.bind(this)
   }
 
-    
+
   componentWillMount () {
     this.presenter.getFeedback()
+
   }
 
   showFeedback (feedback) {
-      this.setState({ feedback })
+    this.props.setSelectedNavigation(6)
+    this.setState({ feedback })
   }
 
 
@@ -75,5 +77,7 @@ class FeedbackView extends BaseMVPView {
     )
   }
 }
-
+FeedbackView.propTypes = {
+  setSelectedNavigation: PropTypes.func,
+}
 export default ConnectView(FeedbackView, Presenter)

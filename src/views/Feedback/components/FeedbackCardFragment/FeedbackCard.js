@@ -54,7 +54,7 @@ class FeedbackCard extends Component{
       <Card className={ 'feedback-card' }>
       <form onSubmit = { this.handleSubmit }>
         <div className = {'feedback-header'} >
-          <h1 > Feedback </h1>
+          <h2 className = { 'header-default-margin' }> Feedback </h2>
           <center>
           <div style = {styleImage.image1}> </div>
           </center>
@@ -63,12 +63,13 @@ class FeedbackCard extends Component{
                <GenericTextBox
                  value = { category && category }
                  readOnly
+                 type = { 'button' }
                  onClick = { () => onClick(true)}
                  placeholder = { text } />
-                  
+
                 <textarea name="textarea" id="textarea" className ={'textArea'} value= {this.state.value} placeholder ={'We would like to hear from you.'} onChange={this.handleChange} cols={40} rows={10} />
                 <br/>
-                <p> Send us any comment, suggestions, feedback or problems you've<br/> 
+                <p> Send us any comment, suggestions, feedback or problems you've<br/>
                 encountered within the site so we can fix it right away.</p>
           </div>
         <div className = {'feedback-footer-left'}>
