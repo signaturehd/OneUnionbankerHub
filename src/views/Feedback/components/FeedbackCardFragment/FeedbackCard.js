@@ -26,17 +26,19 @@ class FeedbackCard extends Component {
     const {
       text,
       onFocus,
-      details,
+      feedback,
       onClose,
       submit,
       receipient,
       branch,
       onClick,
-      submitForm
+      submitForm,
+      details,
+      category
     } = this.props
 
     const {  showCategoryModal } = this.state
-
+    console.log(details)
     return (
       <Card className={ 'feedback-card' }>
       <form onSubmit = { this.handleSubmit }>
@@ -47,9 +49,9 @@ class FeedbackCard extends Component {
           <div className = { 'feedback-col span_1_of_3' }>
           <center>
                <GenericTextBox
-                 value = { details && details }
+                 value = { category && category }
                  readOnly
-                 onClick = { () => onClick(true)}
+                 onClick = { () => onClick( true)}
                  placeholder = { text } />
                  <TextArea/>
           </center>
@@ -63,7 +65,7 @@ class FeedbackCard extends Component {
             type = {'button'}
             text = { submit }
             className = {'feedback-procedure' }
-            value = { 'Procedures' } />
+            value = { 'Categories' } />
         </div>
       </form>
     </Card>
@@ -74,7 +76,8 @@ class FeedbackCard extends Component {
 FeedbackCard.propTypes = {
   onClose : PropTypes.func,
   onClick : PropTypes.func,
-  details : PropTypes.object,
+  details: PropTypes.array,
+  feedback : PropTypes.array,
   text   : PropTypes.string,
   onFocus : PropTypes.func,
   submit  : PropTypes.string,

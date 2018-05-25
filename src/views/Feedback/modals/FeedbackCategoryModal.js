@@ -17,26 +17,26 @@ class FeedbackCategoryModal extends Component {
   }
 
   render () {
-  const { details, onClose, showCategoryModal, text, isDismisable } = this.props
+  const {  details, feedback, onClose, showCategoryModal, text, isDismisable } = this.props
   const { chosenCategory } = this.state
-  console.log(details)
+  console.log (feedback)
   return (
     <Modal
       onClose = { onClose }
       isDismisable = { true }
       chosenCategory = { chosenCategory } >
       <div className = { 'optical-description' }>
-        <h2>Recipients</h2>
+        <h2>Categories</h2>
       </div>
       <div className = { 'feedback-modal-footer' }>
         {
-          details.map((details, key ) =>
+          feedback && feedback.map((category, key ) =>
           <GenericButton
               key = { key }
-              details = { details }
+              feedback = { category }
               className = { 'feedback-modal-option-button' }
-              text = { details.feedbackCategory}
-              onClick = { () => this.submitData(details.id, details.feedbackCategory) }/>
+              text = { category.feedbackCategory}
+              onClick = { () => this.submitData(category.id, category.feedbackCategory) }/>
           )
         }
       </div>
@@ -46,8 +46,7 @@ class FeedbackCategoryModal extends Component {
 }
 FeedbackCategoryModal.propTypes = {
   onClose : PropTypes.func,
-  details : PropTypes.array,
-
+  feedback : PropTypes.array,
 }
 FeedbackCategoryModal.defaultProps = {
 }

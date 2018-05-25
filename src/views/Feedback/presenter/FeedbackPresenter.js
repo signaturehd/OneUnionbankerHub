@@ -11,7 +11,7 @@ export default class FeedbackPresenter {
       this.view = view
     }
 
-    getFeedback () {
+    getFeedback (id, feedbackCategory) {
         this.view.showLoading()
         this.getFeedbackInteractor.execute(FeedbackParam(id, feedbackCategory))
           .subscribe(feedback => {
