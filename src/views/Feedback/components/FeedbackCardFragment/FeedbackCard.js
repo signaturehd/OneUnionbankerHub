@@ -79,7 +79,6 @@ FeedbackCard.propTypes = {
   details: PropTypes.array,
   feedback : PropTypes.array,
   text   : PropTypes.string,
-  onFocus : PropTypes.func,
   submit  : PropTypes.string,
 }
 
