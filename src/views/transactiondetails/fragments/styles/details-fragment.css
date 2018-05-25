@@ -1,4 +1,24 @@
 .optical-details-container {
   display: grid;
-  padding:3%;  
+  padding:3%;
+}
+.transaction-card-details {
+  padding : 10px;
+}
+.transaction-card-details-form {
+  padding : 10px 50px;
+  grid-template-columns: 1fr 1fr;
+  display: grid;
+}
+.transaction-detail {
+  margin-bottom: 10px;
+}
+.transaction-attachments-container {
+  display: grid;
+  column-gap: 2%;
+  text-align: center;
+  grid-template-columns: 1fr 1fr;
+}
+.transaction-attachments {
+  margin: auto;
 }
