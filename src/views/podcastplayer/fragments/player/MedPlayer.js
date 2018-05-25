@@ -23,7 +23,7 @@ const {
 class MedPlayer extends Component {
   render () {
     const { selectedPodcast } = this.props
-
+    console.log(selectedPodcast)
     return (
       <div className = { 'media-player-content' }>
         <Media>

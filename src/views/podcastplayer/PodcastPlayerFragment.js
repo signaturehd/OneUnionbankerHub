@@ -70,7 +70,7 @@ class PodcastPlayerFragment extends BaseMVPView {
           <h2 className = { 'header-margin-default' }>UTube</h2>
         </div>
         <div className = { 'podplay-main' }>
-          <div><MedPlayer history = { history } selectedPodcast = { podcast } /></div>
+          <div><MedPlayer history = { history } selectedPodcast = { podcast.url } /></div>
           <div className = { 'podcast-player-rating-right' } >Ratings :
             <Rating
               rateBook = { (id, rating) => this.paddRating(id, rating) }

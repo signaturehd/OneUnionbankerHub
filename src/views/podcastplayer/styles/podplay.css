@@ -59,7 +59,7 @@
 .player-content {
   display: -webkit-box;
 	height: 360px;
-	width: 640px;
+  width: 100%;
 	background-repeat: no-repeat;
 	background-origin: content-box;
 	background-size: cover;
@@ -390,7 +390,7 @@ input[type="range"] {
 		background-size: cover;
 	}
 	.media-player {
-		width: 770px;
+		width: 700px;
 	}
 	.media-controls {
 			min-width: 100%;
