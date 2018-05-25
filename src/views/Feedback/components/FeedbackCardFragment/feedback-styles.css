@@ -1,9 +1,7 @@
 .feedback-card {
   padding : 5% 2% 0% 2%;
 }
-.p{
-  text-decoration-color: Grey;
-}
+
 .textArea {
   align-items: flex-start;
   margin-top: 10px;
@@ -70,6 +68,7 @@
   overflow: hidden;
   margin: 50px auto auto auto;
   width: 100%;
+  margin-bottom: 10px;
  }
  @media screen and (max-width: 720px) {
     .feedback-header {
