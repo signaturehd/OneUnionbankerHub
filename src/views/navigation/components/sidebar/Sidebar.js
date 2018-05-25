@@ -61,8 +61,14 @@ class SideBar extends Component {
         action: () => history.push('/mylearning'),
         className: 'mylearning-icon mobile-icon'
       },
-      {
+       {
         id: 6 ,
+        title: 'Feedback',
+        action: () => history.push('/feedback'),
+        className: 'feedback-icon mobile-icon'
+      },
+      {
+        id: 7 ,
         title: 'Logout',
         action: logout,
         className: 'logout-icon mobile-icon'
