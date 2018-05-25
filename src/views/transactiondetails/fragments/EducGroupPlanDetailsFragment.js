@@ -6,12 +6,12 @@ import { Card } from '../../../ub-components'
 
 import './styles/details-fragment.css'
 /*
-Transaction Optical Details, Form Agreement
+Transaction Education Details,, & File Attacment
 */
 import OpticalDetailsComponent from '../../transaction/components/TransactionOpticalCardComponent/TransactionOpticalDetailsComponent'
 import OpticalFileComponent from '../../transaction/components/TransactionOpticalCardComponent/TransactionOpticalFileComponent'
 /*
-Transaction Medical Details, Form Agreement, & File Attacment
+Transaction Education Form Agreement
 */
 import TransactionFormAgreementCardCOmponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardCOmponent'
 

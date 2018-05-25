@@ -5,7 +5,7 @@ import Presenter from './presenter/TransactionDetailsPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { CircularLoader } from '../../ub-components'
+import { CircularLoader, GenericButton } from '../../ub-components'
 
 import './styles/transaction-details.css'
 
@@ -75,7 +75,15 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
         </div>
         {
           details ?
-            <div className = {'transaction-details-container'}></div>
+            <div className = {'transaction-details-container'}>
+              <TransactionDetails
+               details = { details }
+              />
+            <center className = { 'transaction-card-details-form' }>
+                <GenericButton text = { 'Approve' }/>
+                <GenericButton text = { 'Decline' }/>
+              </center>
+            </div>
             :
             <div className = {'transaction-details-loader'}>
               <center>
@@ -83,6 +91,7 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
               </center>
             </div>
         }
+
       </div>
     )
   }

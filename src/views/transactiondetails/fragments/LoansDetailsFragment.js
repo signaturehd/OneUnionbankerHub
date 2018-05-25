@@ -11,9 +11,9 @@ Transaction Optical Details, Form Agreement
 import OpticalDetailsComponent from '../../transaction/components/TransactionOpticalCardComponent/TransactionOpticalDetailsComponent'
 import OpticalFileComponent from '../../transaction/components/TransactionOpticalCardComponent/TransactionOpticalFileComponent'
 /*
-Transaction Medical Details, Form Agreement, & File Attacment
+Transaction Multi Purpose Loan, Form Agreement, & File Attacment
 */
-import TransactionFormAgreementCardCOmponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardCOmponent'
+import MPLFormAgreement from '../../transaction/components/TransactionMPLCardComponent/TransactionMPLFormAgreementComponent'
 
 class LoansDEtailsFragment extends Component {
   constructor (props) {
@@ -30,7 +30,7 @@ class LoansDEtailsFragment extends Component {
         <br/>
         <OpticalFileComponent details = { details } />
         <br/>
-        <TransactionFormAgreementCardCOmponent details = { details } />
+        <MPLFormAgreement details = { details.details } />
       </div>
     )
   }
