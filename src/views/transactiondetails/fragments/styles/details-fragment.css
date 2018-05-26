@@ -1,4 +1,4 @@
-.optical-details-container {
+.details-container {
   display: grid;
   padding:3%;
 }
@@ -21,4 +21,8 @@
 }
 .transaction-attachments {
   margin: auto;
+  background-size: contain;
+  object-fit: contain;
+  height: 150px;
+  width: fit-content;
 }
