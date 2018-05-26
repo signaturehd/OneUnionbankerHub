@@ -66,6 +66,8 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
 
   render () {
     const { details } = this.state
+    console.log(details)
+
     return (
       <div  className = {'container'}>
         <i className = { 'left' } onClick = {

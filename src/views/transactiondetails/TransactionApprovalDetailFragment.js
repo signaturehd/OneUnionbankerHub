@@ -65,7 +65,7 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
   }
 
   render () {
-    const { details } = this.state
+    const { details, onClick } = this.state
     return (
       <div  className = {'container'}>
         <div className={ 'breadcrumbs-container' }>
@@ -79,9 +79,16 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
               <TransactionDetails
                details = { details }
               />
+            <center>
+              <p>By approving, you guarantee the accuracy and the authenticity of the original documents attached herewith</p>
+            </center>
             <center className = { 'transaction-card-details-form' }>
-                <GenericButton text = { 'Approve' }/>
-                <GenericButton text = { 'Decline' }/>
+                <GenericButton
+                  text = { 'Approve' }
+                  onClick = { onClick }/>
+                <GenericButton
+                  text = { 'Disaprove' }
+                  onClick = { onClick }/>
               </center>
             </div>
             :
