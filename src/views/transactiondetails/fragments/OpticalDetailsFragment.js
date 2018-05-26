@@ -6,14 +6,11 @@ import { Card } from '../../../ub-components'
 
 import './styles/details-fragment.css'
 /*
-Transaction Optical Details, Form Agreement
+Transaction Optical Form Agreement, Form Agreement, & File Attacment
 */
-import OpticalDetailsComponent from '../../transaction/components/TransactionOpticalCardComponent/TransactionOpticalDetailsComponent'
-import OpticalFileComponent from '../../transaction/components/TransactionOpticalCardComponent/TransactionOpticalFileComponent'
-/*
-Transaction Medical Details, Form Agreement, & File Attacment
-*/
-import TransactionFormAgreementCardCOmponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardCOmponent'
+import OpticalDetailsComponent from '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
+import OpticalFileComponent from '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
+import OpticalAgreementComponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
 
 class OpticalDetailsFragment extends Component {
   constructor (props) {
@@ -23,14 +20,22 @@ class OpticalDetailsFragment extends Component {
   render () {
     const { details } = this.props
     return (
-      <div className = {'optical-details-container'}>
+      <div className = {'details-container'}>
         <center><h2 className = { 'transaction-detail' }>Transaction Information</h2></center>
         <br/>
         <OpticalDetailsComponent details = { details } />
         <br/>
         <OpticalFileComponent details = { details } />
         <br/>
-        <TransactionFormAgreementCardCOmponent details = { details } />
+        <Card>
+          <center>
+            <h2>Amount</h2>
+              <br/>
+            <h2>Php { details && details.details.Amount }</h2>
+          </center>
+        </Card>
+        <br/>
+        <OpticalAgreementComponent details = { details } />
       </div>
     )
   }
