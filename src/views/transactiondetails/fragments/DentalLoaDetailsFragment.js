@@ -6,14 +6,11 @@ import { Card } from '../../../ub-components'
 
 import './styles/details-fragment.css'
 /*
-Transaction Optical Details, Form Agreement
+Transaction DentalLOA Form Agreement, Form Agreement, & File Attacment
 */
-import OpticalDetailsComponent from '../../transaction/components/TransactionOpticalCardComponent/TransactionOpticalDetailsComponent'
-import OpticalFileComponent from '../../transaction/components/TransactionOpticalCardComponent/TransactionOpticalFileComponent'
-/*
-Transaction Medical Details, Form Agreement, & File Attacment
-*/
-import TransactionFormAgreementCardCOmponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardCOmponent'
+import DentalLOADetailsComponent from '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
+import DentalLOAFileComponent from '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
+import DentalLOAAgreementComponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardCOmponent'
 
 class DentalLoaDetailsFragment extends Component {
   constructor (props) {
@@ -23,14 +20,27 @@ class DentalLoaDetailsFragment extends Component {
   render () {
     const { details } = this.props
     return (
-      <div className = {'optical-details-container'}>
+      <div className = {'details-container'}>
         <center><h2 className = { 'transaction-detail' }>Transaction Information</h2></center>
         <br/>
-        <OpticalDetailsComponent details = { details } />
+        <DentalLOADetailsComponent details = { details } />
         <br/>
-        <OpticalFileComponent details = { details } />
+        <DentalLOAFileComponent details = { details } />
         <br/>
-        <TransactionFormAgreementCardCOmponent details = { details } />
+          <Card>
+            <center><h2>Procedures</h2></center>
+            <br/>
+            {
+              details && details.details.Procedures.map((procedure, key) =>
+                <center key>
+                  <h2>{ procedure.Name }</h2>
+                  <h2>{ procedure.Amount }</h2>
+                </center>
+              )
+            }
+          </Card>
+          <br/>
+        <DentalLOAAgreementComponent details = { details } />
       </div>
     )
   }
