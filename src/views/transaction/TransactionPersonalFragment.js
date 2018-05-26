@@ -7,7 +7,6 @@ import { Card, CircularLoader } from '../../ub-components/'
 import Presenter from './presenter/TransactionPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 import TransactionCardComponent from './components/TransactionCardComponent/TransactionCardComponent'
-import TransactionModal from './modals/TransactionModal'
 
 class TransactionPersonalFragment extends BaseMVPView {
   constructor (props) {
@@ -49,6 +48,7 @@ class TransactionPersonalFragment extends BaseMVPView {
       path,
       icon
     } = this.props
+
     return (
       <div>
       {

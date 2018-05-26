@@ -7,7 +7,6 @@ import { Card, CircularLoader } from '../../ub-components/'
 import Presenter from './presenter/TransactionPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 import TransactionCardComponent from './components/TransactionCardComponent/TransactionCardComponent'
-import TransactionModal from './modals/TransactionModal'
 
 class TransactionApprovalFragment extends BaseMVPView {
   constructor (props) {
