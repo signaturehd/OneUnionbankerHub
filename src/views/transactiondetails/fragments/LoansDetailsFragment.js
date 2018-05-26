@@ -6,14 +6,11 @@ import { Card } from '../../../ub-components'
 
 import './styles/details-fragment.css'
 /*
-Transaction Optical Details, Form Agreement
+Transaction MPL Form Agreement, Form Agreement, & File Attacment
 */
-import OpticalDetailsComponent from '../../transaction/components/TransactionOpticalCardComponent/TransactionOpticalDetailsComponent'
-import OpticalFileComponent from '../../transaction/components/TransactionOpticalCardComponent/TransactionOpticalFileComponent'
-/*
-Transaction Multi Purpose Loan, Form Agreement, & File Attacment
-*/
-import MPLFormAgreement from '../../transaction/components/TransactionMPLCardComponent/TransactionMPLFormAgreementComponent'
+import MPLDetailsComponent from '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
+import MPLFileComponent from '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
+import MPLAgreementComponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
 
 class LoansDEtailsFragment extends Component {
   constructor (props) {
@@ -26,11 +23,11 @@ class LoansDEtailsFragment extends Component {
       <div className = {'optical-details-container'}>
         <center><h2 className = { 'transaction-detail' }>Transaction Information</h2></center>
         <br/>
-        <OpticalDetailsComponent details = { details } />
+        <MPLDetailsComponent details = { details } />
         <br/>
-        <OpticalFileComponent details = { details } />
+        <MPLFileComponent details = { details } />
         <br/>
-        <MPLFormAgreement details = { details.details } />
+        <MPLAgreementComponent details = { details.details } />
       </div>
     )
   }
