@@ -21,22 +21,39 @@ import OpticalDetailsFragment from './fragments/OpticalDetailsFragment'
 function  TransactionDetails ( props )  {
   const transactionId = props.details.benefitType.id
   const transactionDetails = props.details
+  const transactionsPerson = props.transactions
   if (transactionId == 6) {
-    return <DentalRDetailsFragment details = { transactionDetails } />
+    return <DentalRDetailsFragment
+      details = { transactionDetails }
+      transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 7) {
-    return <DentalLoaDetailsFragment details = { transactionDetails } />
+    return <DentalLoaDetailsFragment
+      details = { transactionDetails }
+      transactionsPerson = { transactionsPerson } />
   } else if (transactionId == 8) {
-    return <OpticalDetailsFragment details = { transactionDetails } />
+    return <OpticalDetailsFragment
+      details = { transactionDetails }
+      transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 11) {
-    return <EducGrantAidDetailsFragment details = { transactionDetails } />
+    return <EducGrantAidDetailsFragment
+      details = { transactionDetails }
+      transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 12) {
-    return <DentalRDetailsFragment details = { transactionDetails } />
+    return <DentalRDetailsFragment
+      details = { transactionDetails }
+      transactionsPerson = { transactionsPerson } />
   } else if (transactionId == 13) {
-    return <DentalRDetailsFragment details = { transactionDetails } />
+    return <DentalRDetailsFragment
+      details = { transactionDetails }
+      transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 32) {
-    return <DentalRDetailsFragment details = { transactionDetails } />
+    return <DentalRDetailsFragment
+      details = { transactionDetails }
+      transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 1) {
-    return <LoansDetailsFragment details = { transactionDetails } />
+    return <LoansDetailsFragment
+      transactionsPerson = { transactionsPerson }
+      details = { transactionDetails } />
   } else {
     return <h1>No Transaction Occured please reload</h1> // No  Transaction
   }
@@ -46,7 +63,8 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-      details : null
+      details : null,
+      transactions : null,
     }
   }
 
@@ -58,6 +76,12 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     this.props.setSelectedNavigation(1)
     const id = this.props.match.params.id
     this.presenter.getTransactionDetails(id)
+    this.presenter.getTransactionsPersonal()
+
+  }
+
+  transactions ( transactions ) {
+    this.setState({ transactions })
   }
 
   getTransactionDetails (details) {
@@ -65,8 +89,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
   }
 
   render () {
-    const { details } = this.state
-    console.log(details)
+    const { details, transactions } = this.state
 
     return (
       <div  className = {'container'}>
@@ -78,6 +101,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
             <div className = {'transaction-detail-container'}>
               <TransactionDetails
                details = { details }
+               transactions = { transactions }
               />
             </div>
             :
