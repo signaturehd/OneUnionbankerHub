@@ -10,7 +10,7 @@ Transaction DentalR Form Agreement, Form Agreement, & File Attacment
 */
 import DentalRDetailsComponent from '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
 import DentalRFileComponent from '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
-import DentalRAgreementComponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardCOmponent'
+import DentalRAgreementComponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
 
 class DentalRDetailsFragment extends Component {
   constructor (props) {

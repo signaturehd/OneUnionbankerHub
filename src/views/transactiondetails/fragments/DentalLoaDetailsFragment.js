@@ -10,7 +10,7 @@ Transaction DentalLOA Form Agreement, Form Agreement, & File Attacment
 */
 import DentalLOADetailsComponent from '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
 import DentalLOAFileComponent from '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
-import DentalLOAAgreementComponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardCOmponent'
+import DentalLOAgreementComponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
 
 class DentalLoaDetailsFragment extends Component {
   constructor (props) {
@@ -40,7 +40,7 @@ class DentalLoaDetailsFragment extends Component {
             }
           </Card>
           <br/>
-        <DentalLOAAgreementComponent details = { details } />
+        <DentalLOAgreementComponent details = { details } />
       </div>
     )
   }
