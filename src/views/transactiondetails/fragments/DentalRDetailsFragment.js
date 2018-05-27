@@ -18,17 +18,19 @@ class DentalRDetailsFragment extends Component {
   }
 
   render () {
-    const { details } = this.props
+    const { details, transactionsPerson } = this.props
     return (
       <div className = {'details-container'}>
-        <center><h2 className = { 'transaction-detail' }>Transaction Information</h2></center>
+        <center><h2 className = { 'transaction-detail details-bold' }>Transaction Information</h2></center>
         <br/>
-        <DentalRDetailsComponent details = { details } />
+        <DentalRDetailsComponent
+          transactionsPerson = { transactionsPerson }
+          details = { details } />
         <br/>
         <DentalRFileComponent details = { details } />
         <br/>
           <Card>
-            <center><h2>Procedures</h2></center>
+            <center><h2 className = { 'details-bold' }>Procedures</h2></center>
             <br/>
             {
               details && details.details.Procedures.map((procedure, key) =>
