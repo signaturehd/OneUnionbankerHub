@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
 import { Card } from '../../../../ub-components/'
-import './styles/transaction-details-component.css'
 
 class TransactionFileCardComponent extends Component {
   constructor(props) {
@@ -13,7 +12,7 @@ class TransactionFileCardComponent extends Component {
     const { details } = this.props
     return (
       <Card className = { 'transaction-card-details' }>
-        <center><h4> Attachments </h4></center>
+        <center><h4 className = { 'details-bold' }> Attachments </h4></center>
           <div className = { 'transaction-attachments-container' }>
             <img
               className = { 'transaction-attachments _img-ub-logo' }

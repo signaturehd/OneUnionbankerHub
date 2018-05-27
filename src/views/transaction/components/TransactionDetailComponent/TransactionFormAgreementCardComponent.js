@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import { Card } from '../../../../ub-components/'
 
-import './styles/transaction-details-component.css'
-
 class TransactionFormAgreementCardComponent extends Component {
   constructor(props) {
     super(props)
@@ -14,7 +12,7 @@ class TransactionFormAgreementCardComponent extends Component {
     const { details } = this.props
     return (
       <Card className = { 'transaction-card-details' }>
-        <h4>Form Agreements</h4>
+        <h4 className = { 'details-bold' }>Form Agreements</h4>
         {
           details && details.details.FormAgreements.map ((formAgreement, key) =>
           <center key = { key }>
