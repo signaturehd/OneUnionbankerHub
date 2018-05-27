@@ -3,7 +3,7 @@
   padding:3%;
 }
 .transaction-card-details {
-  padding : 10px;
+  padding : 20px 40px;
 }
 .transaction-card-details-form {
   padding : 10px 50px;
@@ -25,4 +25,7 @@
   object-fit: contain;
   height: 150px;
   width: fit-content;
+}
+.details-bold {
+  font-weight: bold;
 }
