@@ -1,40 +1,50 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import './styles/details-fragment.css'
 
 import { Card } from '../../../ub-components'
-
-import './styles/details-fragment.css'
 /*
 Transaction MPL Form Agreement, Form Agreement, & File Attacment
+content - TransactionMPLDetailComponent
 */
-import MPLDetailsComponent from '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
-import MPLFileComponent from '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
-import MPLAgreementComponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
+import MPLDetailsComponent
+from '../../transaction/components/TransactionMPLDetailComponent/TransactionMPLDetailsComponent'
+import MPLFileComponent
+from '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
+import MPLAgreementComponent
+from '../../transaction/components/TransactionMPLDetailComponent/TransactionMPLFormAgreementComponent'
+import MPLPurposeComponent
+from '../../transaction/components/TransactionMPLDetailComponent/TransactionMPLPurposeComponent'
 
-class LoansDEtailsFragment extends Component {
+class LoansDetailsFragment extends Component {
   constructor (props) {
     super(props)
   }
 
   render () {
-    const { details } = this.props
+    const { details, transactionsPerson } = this.props
     return (
       <div className = {'optical-details-container'}>
-        <center><h2 className = { 'transaction-detail' }>Transaction Information</h2></center>
+        <center><h2 className = { 'transaction-detail details-bold' }>Transaction Information</h2></center>
         <br/>
-        <MPLDetailsComponent details = { details } />
+        <MPLDetailsComponent
+          transactionsPerson = { transactionsPerson }
+          details = { details } />
         <br/>
         <MPLFileComponent details = { details } />
         <br/>
-        <MPLAgreementComponent details = { details.details } />
+        <MPLPurposeComponent details = { details } />
+        <br/>
+        <MPLAgreementComponent details = { details } />
       </div>
     )
   }
 }
 
-LoansDEtailsFragment.propTypes = {
-  details : PropTypes.object
+LoansDetailsFragment.propTypes = {
+  details : PropTypes.object,
+  transactionsPerson : PropTypes.array,
 }
 
-export default LoansDEtailsFragment
+export default LoansDetailsFragment
