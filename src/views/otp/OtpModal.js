@@ -35,6 +35,11 @@ class OtpModal extends BaseMVPView {
   render () {
     const { transactionType, username, onClose } = this.props
     const { otp, text, disableSubmit, disableResend } = this.state
+    const styles = {
+      centerOpt : {
+        textAlign: 'center',
+      }
+    }
     return (
 
       <Modal
@@ -48,8 +53,9 @@ class OtpModal extends BaseMVPView {
             <br/>
             <CircularLoader show={true}/>
           </center>          :
-          <div>
-            <GenericTextBox text= "OTP"
+          <div style = { styles.centerOpt }>
+            <GenericTextBox
+            text= "OTP"
               placeholder = "OTP"
               type = ""
               onChange={ e => this.setState({ otp: e.target.value }) }
