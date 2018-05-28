@@ -45,6 +45,7 @@ class OpticalDetailsFragment extends Component {
 
 OpticalDetailsFragment.propTypes = {
   details: PropTypes.object,
+  transactionsPerson : PropTypes.array
 }
 
 export default OpticalDetailsFragment

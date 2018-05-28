@@ -29,7 +29,7 @@ class DentalLoaDetailsFragment extends Component {
         <br/>
         <DentalLOAFileComponent details = { details } />
         <br/>
-          <Card>
+          <Card className = { 'transaction-card-details' }>
             <center><h2 className = { 'details-bold' }>Procedures</h2></center>
             <br/>
             {
@@ -48,7 +48,8 @@ class DentalLoaDetailsFragment extends Component {
   }
 }
 DentalLoaDetailsFragment.propTypes = {
-  details : PropTypes.object
+  details : PropTypes.object,
+  transactionsPerson : PropTypes.array
 }
 
 export default DentalLoaDetailsFragment

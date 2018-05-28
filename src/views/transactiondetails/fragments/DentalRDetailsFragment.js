@@ -29,7 +29,7 @@ class DentalRDetailsFragment extends Component {
         <br/>
         <DentalRFileComponent details = { details } />
         <br/>
-          <Card>
+          <Card className = { 'transaction-card-details' }>
             <center><h2 className = { 'details-bold' }>Procedures</h2></center>
             <br/>
             {
@@ -42,14 +42,15 @@ class DentalRDetailsFragment extends Component {
             }
           </Card>
           <br/>
-        <TransactionFormAgreementCardCOmponent details = { details } />
+        <DentalRAgreementComponent details = { details } />
       </div>
     )
   }
 }
 
 DentalRDetailsFragment.propTypes = {
-  details : PropTypes.object
+  details : PropTypes.object,
+  transactionsPerson : PropTypes.array
 }
 
 export default DentalRDetailsFragment
