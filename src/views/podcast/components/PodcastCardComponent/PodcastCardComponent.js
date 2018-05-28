@@ -19,9 +19,9 @@ class PodcastCardComponent extends Component {
         backgroundBlendMode: 'color',
         backgroundSize: 'contain',
         objectFit: 'cover',
-        height: 'max-content',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
+        cursor: 'pointer',
       },
     }
 
