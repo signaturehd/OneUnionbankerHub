@@ -18,6 +18,9 @@ import EducGroupPlanDetailsFragment from './fragments/EducGroupPlanDetailsFragme
 import LoansDetailsFragment from './fragments/LoansDetailsFragment'
 import OpticalDetailsFragment from './fragments/OpticalDetailsFragment'
 
+import ConfirmationModal from './modals/ConfirmationModal'
+import DisapproveModal from './modals/DisapproveModal'
+
 function  TransactionDetails ( props )  {
   const transactionId = props.details.benefitType.id
   const transactionDetails = props.details
@@ -65,7 +68,23 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
     this.state = {
       details : null,
       transactions : null,
+      showConfirmationModal : false,
+      showDisapproveModal : false,
+
     }
+  }
+  showModal1 () {
+  this.setState({ showConfirmationModal : true })
+  }
+  showModal2 () {
+  this.setState({ showDisapproveModal : true })
+  }
+   approve (approve, remarks) {
+    this.props.presenter.getTransactionsApproval(true, remarks)
+  }
+
+  disapprove (approve, remarks) {
+    this.props.presenter.getTransactionsApproval()
   }
 
   navigate () {
@@ -89,7 +108,7 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
   }
 
   render () {
-    const { details, onClick, transactions } = this.state
+    const { details, onClick, transactions, showConfirmationModal, showDisapproveModal } = this.state
     return (
       <div  className = {'container'}>
         <div className={ 'breadcrumbs-container' }>
@@ -97,6 +116,20 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
               this.navigate.bind(this) }></i>
           <h1>{ details ? details.benefitType.name : 'Transaction' }</h1>
         </div>
+        {
+          showConfirmationModal &&
+          <BookConfirmationModal
+            onYes = { () => {this.approve(approve, remarks), this.setState({showConfirmationModal : false })} }
+            onClose = { () => this.setState({ showConfirmationModal : false }) }
+          />
+        }
+        {
+          showDisapproveModal &&
+          <BookConfirmationModal
+            onNo = { () => {this.disapprove(approve, remarks), this.setState({showDisapproveModal : false })} }
+            onClose = { () => this.setState({ showDisapproveModal : false }) }
+          />
+        }
         {
           details ?
             <div className = {'transaction-details-container'}>
@@ -110,10 +143,10 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
             <center className = { 'transaction-card-details-form' }>
                 <GenericButton
                   text = { 'Approve' }
-                  onClick = { onClick }/>
+                  onClick = { () => this.showModal1() }/>
                 <GenericButton
                   text = { 'Disaprove' }
-                  onClick = { onClick }/>
+                  onClick = { () => this.showModal2() }/>
               </center>
             </div>
             :
