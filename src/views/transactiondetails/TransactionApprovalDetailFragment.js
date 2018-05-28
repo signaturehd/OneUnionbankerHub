@@ -89,7 +89,7 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
   }
 
   render () {
-    const { details, onClick } = this.state
+    const { details, onClick, transactions } = this.state
     return (
       <div  className = {'container'}>
         <div className={ 'breadcrumbs-container' }>
