@@ -21,67 +21,55 @@ class FeedbackCard extends Component {
     e.preventDefault()
   }
 
-  
+
   render () {
     const {
-      text,
-      onFocus,
-      details,
-      onClose,
-      submit,
-      receipient,
-      branch,
       onClick,
-      submitForm
+      submit,
+      feedback
     } = this.props
-
+    console.log(feedback)
     const {  showCategoryModal } = this.state
 
     return (
       <Card className={ 'feedback-card' }>
-      <form onSubmit = { this.handleSubmit }>
         <div className = {'feedback-header'} >
           <h1 > Feedback </h1>
           <div className = {'feedback-body '}>
-            
           <div className = { 'feedback-col span_1_of_3' }>
           <center>
                <GenericTextBox
-                 value = { details && details }
-                 readOnly
-                 onClick = { () => onClick(true)}
-                 placeholder = { text } />
+                   value = { feedback && feedback }
+                   readOnly
+                   onClick = { () => onClick(true)}
+                   placeholder = { 'Feedback Title' }
+                   readOnly
+                 />
                  <TextArea/>
           </center>
           </div>
-         
+
           </div>
         </div>
         <div className = {'feedback-footer-left'}>
           <GenericButton
-            onClick = { () => onClick(false, false, true)}
+            onClick = { () => onClick(true)}
             type = {'button'}
             text = { submit }
             className = {'feedback-procedure' }
             value = { 'Procedures' } />
         </div>
-      </form>
     </Card>
     )
   }
 }
 
 FeedbackCard.propTypes = {
-  onClose : PropTypes.func,
   onClick : PropTypes.func,
-  details : PropTypes.object,
-  text   : PropTypes.string,
-  onFocus : PropTypes.func,
   submit  : PropTypes.string,
 }
 
 FeedbackCard.defaultProps = {
-  text   : 'Categories',
   submit : 'Submit'
 }
 

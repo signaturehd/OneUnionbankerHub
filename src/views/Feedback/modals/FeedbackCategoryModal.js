@@ -11,15 +11,25 @@ class FeedbackCategoryModal extends Component {
       }
     this.submitData = this.submitData.bind(this)
   }
+
   submitData (id, feedbackCategory) {
-    this.props.chosenCategory(id, feedbackCategory)
+    this.props.onChange(id, feedbackCategory)
     this.props.onClose()
   }
 
   render () {
-  const { details, onClose, showCategoryModal, text, isDismisable } = this.props
-  const { chosenCategory } = this.state
-  console.log(details)
+  const {
+    details,
+    onClose,
+    showCategoryModal,
+    text,
+    isDismisable
+  } = this.props
+
+  const {
+    chosenCategory
+  } = this.state
+
   return (
     <Modal
       onClose = { onClose }
@@ -35,7 +45,7 @@ class FeedbackCategoryModal extends Component {
               key = { key }
               details = { details }
               className = { 'feedback-modal-option-button' }
-              text = { details.feedbackCategory}
+              text = { details.feedbackCategory }
               onClick = { () => this.submitData(details.id, details.feedbackCategory) }/>
           )
         }

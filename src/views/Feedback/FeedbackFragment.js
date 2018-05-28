@@ -22,36 +22,38 @@ class FeedbackView extends BaseMVPView {
     }
   }
 
-    
+
   componentDidMount () {
-    this.presenter.getFeedback
-    this.props.setSelectedNavigation(2)
+    this.presenter.getFeedback()
+    this.props.setSelectedNavigation(6)
   }
 
-    showFeedback (feedback) {
-      this.setState({ feedback })
+  showFeedback (feedback) {
+    this.setState({ feedback })
+  }
+
+  submitForm (reason, message) {
+    this.presenter.addFeedback(reason, message)
   }
 
 
   render () {
-    const { details, feedback } = this.props
-    console.log(feedback)
-    
-
     const {
       showCategoryModal,
-      Category,
+      feedback,
+      feedbackValue,
     } = this.state
 
+    console.log
+
     return (
-      <div  className = { 'feedback-container' }>
+      <div className = { 'feedback-container' }>
         {
           showCategoryModal &&
           <FeedbackCategoryModal
             showCategoryModal = { showCategoryModal }
-            details = { feedback.feedbackCategory }
-            chosenCategory = { (id, feedbackCategory, showCategoryModal) => this.setState({id, feedbackCategory, showCategoryModal}) }
-            onChange = { (id, feedbackCategory) => this.setState({ id, feedbackCategory }) }
+            details = { feedback }
+            onChange = { (id, feedbackValue) => this.setState({ id, feedbackValue }) }
             onClose = { () => this.setState({ showCategoryModal : false }) } />
         }
         <div className={ 'breadcrumbs-container' }>
@@ -59,7 +61,7 @@ class FeedbackView extends BaseMVPView {
           <div className = { 'feedback-container' }>
             {
               <FeedbackCard
-                details = { feedback }
+                feedback = { feedbackValue }
                 submitForm = { () => this.submitForm(id) }
                 onClick = {
                   (showCategoryModal) =>

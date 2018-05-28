@@ -3,7 +3,7 @@ export default class GetFeedbackInteractor {
     this.client = client
   }
 
-  execute (FeedbackParam) {
-    return this.client.getFeedback(this.client.getToken(), FeedbackParam)
+  execute () {
+    return this.client.getFeedback(this.client.getToken())
   }
 }
