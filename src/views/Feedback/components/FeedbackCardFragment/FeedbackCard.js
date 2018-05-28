@@ -55,11 +55,11 @@ class FeedbackCard extends Component{
       <Card className={ 'feedback-card' }>
       <form onSubmit = { this.handleSubmit }>
         <div className = {'feedback-header'} >
-          <h2 className = { 'header-default-margin' }> Feedback </h2>
-          <center>
-          <div style = {styleImage.image1}> </div>
-          </center>
+          <h1> Feedback </h1>
         </div>
+          <center>
+          <div style = {styleImage.image1} className = {'image'}> </div>
+          </center>
           <div className = {'feedback-body '}>
                <GenericTextBox
                  value = { category && category }
