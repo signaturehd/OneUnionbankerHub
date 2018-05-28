@@ -51,6 +51,11 @@
 .media-control--duration {
 	font-size: 10px;
 }
+.podcast-review-button {
+	width: -webkit-fill-available;
+  border-radius: 2px
+}
+
 /* / */
 #document {
 	height: 70%;
@@ -68,20 +73,6 @@
 	background-prsition: center;
 	background-repeat: no-repeat;
 	background-origin: border-box;
-}
-.default-podcast-background {
-	height: 360px;
-	background-image: url('../../../images/podcast.jpg');
-	width: 640px;
-	background-repeat: no-repeat;
-	background-origin: content-box;
-	background-size: cover;
-	object-fit: cover;
-	bottom: 0px;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-origin: border-box;
-  display: -webkit-box;
 }
 
 .media-control-group--seek {
@@ -247,7 +238,7 @@ height: 100%;
 
 .media-control--seekbar {
   position: relative;
-  z-index: 5;
+  z-index: 1;
 
   @include -range-track(webkit, moz, ms) {
     background-color: transparent !important;

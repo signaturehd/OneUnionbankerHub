@@ -20,10 +20,28 @@ const {
   MuteUnmute,
 } = controls
 
+
+
 class MedPlayer extends Component {
   render () {
     const { selectedPodcast } = this.props
-    console.log(selectedPodcast)
+
+    const style = {
+      defaultBackground : {
+        backgroundImage : `url(${selectedPodcast && selectedPodcast.image })`,
+        height: '360px',
+      	width: '-webkit-fill-available',
+      	backgroundRepeat: 'no-repeat',
+      	backgroundOrigin: 'content-box',
+      	backgroundSize: 'contain',
+      	objectFit: 'cover',
+        backgroundColor: 'black',
+      	bottom: '0px',
+      	backgroundPosition: 'center',
+        display: '-webkit-box',
+      }
+    }
+
     return (
       <div className = { 'media-player-content' }>
         <Media>
@@ -31,7 +49,7 @@ class MedPlayer extends Component {
           <div
             className={`media-player${  isFullscreen ? ' media-player--fullscreen' : ''}`}
             tabIndex="0">
-            <div className = {'default-podcast-background'}>
+            <div style = { style.defaultBackground }>
               <Player
                 className = { 'player-content' }
                 src = {selectedPodcast && selectedPodcast.url}
@@ -57,6 +75,10 @@ class MedPlayer extends Component {
       </div>
     )
   }
+}
+
+MedPlayer.propTypes = {
+  selectedPodcast : PropTypes.object,
 }
 
 export default MedPlayer
