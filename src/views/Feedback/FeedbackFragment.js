@@ -36,12 +36,12 @@ class FeedbackView extends BaseMVPView {
     this.setState({ feedback })
   }
 
-  sendFeedback (addfeedbk) {
+  addFeedback ( addfeedbk ) {
     this.setState({ addfeedbk })
   }
 
-  submitForm (id, feedbackCategory, value) {
-     this.presenter.addFeedback(id, feedbackCategory, value)
+  submitForm (id, feedbackCategory, feedback) {
+     this.presenter.addFeedback(id, feedbackCategory, feedback)
    }
 
   render () {
@@ -74,7 +74,7 @@ class FeedbackView extends BaseMVPView {
               <FeedbackCard
                 details={feedback}
                 category={feedbackCategory}
-                submitForm = { () => this.submitForm(id, feedbackCategory, value) }
+                submitForm = { () => this.submitForm(id, feedbackCategory, feedback) }
                 onClick = {
                   (showCategoryModal) =>
                   this.setState({ showCategoryModal })

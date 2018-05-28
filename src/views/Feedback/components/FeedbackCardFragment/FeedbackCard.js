@@ -13,7 +13,7 @@ class FeedbackCard extends Component{
     super(props)
     this.state = {
       showCategoryModal : false,
-      value:'',
+      feedback:'',
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -24,14 +24,13 @@ class FeedbackCard extends Component{
   }
 
   handleChange (event) {
-    this.setState({ value: event.target.value })
+    this.setState({ feedback: event.target.feedback })
   }
 
   render () {
     const {
       text,
       onFocus,
-      feedback,
       onClose,
       submit,
       onClick,
@@ -40,7 +39,9 @@ class FeedbackCard extends Component{
       submitForm
     } = this.props
 
-    const {  showCategoryModal, value } = this.state
+    const {  showCategoryModal, feedback } = this.state
+    console.log(feedback)
+
 
     const styleImage = {
         image1 : {
@@ -68,14 +69,13 @@ class FeedbackCard extends Component{
                  onClick = { () => onClick(true)}
                  placeholder = { text } />
 
-                <textarea name="textarea" id="textarea" className ={'textArea'} value= {this.state.value} placeholder ={'We would like to hear from you.'} onChange={this.handleChange} cols={40} rows={10} />
+                <textarea name="textarea" id="textarea" className ={'textArea'} feedback= {this.state.feedback} placeholder ={'We would like to hear from you.'} onChange={this.handleChange} cols={40} rows={10} />
                 <br/>
                 <p> Send us any comment, suggestions, feedback or problems you've<br/>
                 encountered within the site so we can fix it right away.</p>
           </div>
         <div className = {'feedback-footer-left'}>
           <GenericButton
-            onClick = { () => onClick(false, false, true)}
             type = {'button'}
             className = { 'feedback-button' }
             onClick = { submitForm }
@@ -91,7 +91,6 @@ FeedbackCard.propTypes = {
   onClose : PropTypes.func,
   onClick : PropTypes.func,
   details: PropTypes.array,
-  feedback : PropTypes.array,
   text   : PropTypes.string,
   submit  : PropTypes.string,
 }

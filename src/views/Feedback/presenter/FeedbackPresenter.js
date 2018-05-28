@@ -2,6 +2,8 @@ import GetFeedbackInteractor from '../../../domain/interactor/feedback/GetFeedba
 import FeedbackParam from '../../../domain/param/FeedbackParam'
 import AddFeedbackInteractor from '../../../domain/interactor/feedback/AddFeedbackInteractor'
 import addFeedbackParam from '../../../domain/param/addFeedbackParam'
+import { NotifyActions } from '../../../actions'
+
 
 
 export default class FeedbackPresenter {
@@ -23,14 +25,24 @@ export default class FeedbackPresenter {
             })
           }
 
-    addFeedback (feedbackCategory, feedback) {
-        this.view.showLoading()
-        this.addFeedbackInteractor.execute(addFeedbackParam(feedbackCategory,feedback))
-        .subscribe(addfeedbk => {
-          this.view.hideLoading()
-          this.view.sendFeedback(addfeedbk)
-        }, e => {
-          this.view.hideLoading()
-        })
-      }
+   addFeedback (categoryId, feedback) {
+       this.view.showLoading()
+       this.addFeedbackInteractor.execute(addFeedbackParam(categoryId, feedback))
+       .subscribe(
+         addfeedbk => {
+           store.dispatch(NotifyActions.addNotify({
+               title : 'Feedback',
+               message : addfeedbk.message,
+               type : 'success',
+               duration : 3000
+             })
+           )
+           this.view.hideLoading()
+         },
+         error => {
+           this.view.hideLoading()
+         }
+       )
+     }
     }
+
