@@ -26,39 +26,40 @@ class FeedbackCard extends Component {
     const {
       onClick,
       submit,
-      feedback
+      feedback,
+      submitForm
     } = this.props
-    console.log(feedback)
-    const {  showCategoryModal } = this.state
+
+    const {
+      showCategoryModal
+    } = this.state
 
     return (
       <Card className={ 'feedback-card' }>
         <div className = {'feedback-header'} >
           <h1 > Feedback </h1>
-          <div className = {'feedback-body '}>
-          <div className = { 'feedback-col span_1_of_3' }>
-          <center>
-               <GenericTextBox
+            <div className = {'feedback-body '}>
+              <div className = { 'feedback-col span_1_of_3' }>
+                <center>
+                 <GenericTextBox
                    value = { feedback && feedback }
                    readOnly
                    onClick = { () => onClick(true)}
                    placeholder = { 'Feedback Title' }
-                   readOnly
                  />
-                 <TextArea/>
-          </center>
-          </div>
-
-          </div>
-        </div>
-        <div className = {'feedback-footer-left'}>
-          <GenericButton
-            onClick = { () => onClick(true)}
-            type = {'button'}
-            text = { submit }
-            className = {'feedback-procedure' }
-            value = { 'Procedures' } />
-        </div>
+                  <TextArea/>
+                </center>
+                </div>
+              </div>
+            </div>
+            <div className = {'feedback-footer-left'}>
+              <GenericButton
+                onClick = { () => submitForm() }
+                type = {'button'}
+                text = { submit }
+                className = {'feedback-procedure' }
+                value = { 'Procedures' } />
+            </div>
     </Card>
     )
   }

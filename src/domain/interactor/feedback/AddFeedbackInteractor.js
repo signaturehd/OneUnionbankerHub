@@ -4,6 +4,6 @@ export default class AddFeedbackInteractor {
   }
 
   execute (FeedbackParam) {
-    return this.client.addFeedback(this.client.getToken())
+    return this.client.addFeedback(this.client.getToken(), FeedbackParam)
   }
 }

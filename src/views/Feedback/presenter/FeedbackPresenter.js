@@ -22,9 +22,9 @@ export default class FeedbackPresenter {
       })
   }
 
-  addFeedback () {
+  addFeedback (feedbackId, feedback) {
     this.view.showLoading()
-    this.addFeedbackInteractor.execute(FeedbackParam(id, feedbackCategory))
+    this.addFeedbackInteractor.execute(FeedbackParam(feedbackId, feedback))
       .subscribe(feedback => {
           this.view.showFeedback(feedback)
         }, e => {

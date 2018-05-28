@@ -19,6 +19,8 @@ class FeedbackView extends BaseMVPView {
       showCategoryModal : false,
       category : null,
       feedback : [],
+      feedbackId : null,
+      feedbackValue : null,
     }
   }
 
@@ -32,8 +34,8 @@ class FeedbackView extends BaseMVPView {
     this.setState({ feedback })
   }
 
-  submitForm (reason, message) {
-    this.presenter.addFeedback(reason, message)
+  submitForm (feedbackId, feedback) {
+    this.presenter.addFeedback(feedbackId, feedback)
   }
 
 
@@ -42,9 +44,8 @@ class FeedbackView extends BaseMVPView {
       showCategoryModal,
       feedback,
       feedbackValue,
+      feedbackId,
     } = this.state
-
-    console.log
 
     return (
       <div className = { 'feedback-container' }>
@@ -53,7 +54,7 @@ class FeedbackView extends BaseMVPView {
           <FeedbackCategoryModal
             showCategoryModal = { showCategoryModal }
             details = { feedback }
-            onChange = { (id, feedbackValue) => this.setState({ id, feedbackValue }) }
+            onChange = { (feedbackId, feedbackValue) => this.setState({ feedbackId, feedbackValue }) }
             onClose = { () => this.setState({ showCategoryModal : false }) } />
         }
         <div className={ 'breadcrumbs-container' }>
@@ -62,7 +63,7 @@ class FeedbackView extends BaseMVPView {
             {
               <FeedbackCard
                 feedback = { feedbackValue }
-                submitForm = { () => this.submitForm(id) }
+                submitForm = { () => this.submitForm(feedbackId, feedbackValue) }
                 onClick = {
                   (showCategoryModal) =>
                   this.setState({ showCategoryModal })
