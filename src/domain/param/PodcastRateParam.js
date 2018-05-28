@@ -1,4 +1,5 @@
-export default (id, rate) => ({
-    id,
+export default (id, rate, comments) => ({
+    episode: id,
     rate,
+    comments,
   })
