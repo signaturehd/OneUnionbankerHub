@@ -36,10 +36,11 @@ class FeedbackCard extends Component{
       submit,
       onClick,
       details,
-      category
+      category,
+      submitForm
     } = this.props
 
-    const {  showCategoryModal } = this.state
+    const {  showCategoryModal, value } = this.state
 
     const styleImage = {
         image1 : {
@@ -76,9 +77,9 @@ class FeedbackCard extends Component{
           <GenericButton
             onClick = { () => onClick(false, false, true)}
             type = {'button'}
-            text = { submit }
-            className = {'feedback-category' }
-            value = { 'Categories' } />
+            className = { 'feedback-button' }
+            onClick = { submitForm }
+            text = { submit }/>
         </div>
       </form>
     </Card>

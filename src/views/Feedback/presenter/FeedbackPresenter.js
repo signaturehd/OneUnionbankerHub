@@ -1,10 +1,13 @@
 import GetFeedbackInteractor from '../../../domain/interactor/feedback/GetFeedbackInteractor'
 import FeedbackParam from '../../../domain/param/FeedbackParam'
+import AddFeedbackInteractor from '../../../domain/interactor/feedback/AddFeedbackInteractor'
+import addFeedbackParam from '../../../domain/param/addFeedbackParam'
 
 
 export default class FeedbackPresenter {
     constructor (container) {
       this.getFeedbackInteractor = new GetFeedbackInteractor(container.get('HRBenefitsClient'))
+      this.addFeedbackInteractor = new AddFeedbackInteractor(container.get('HRBenefitsClient'))
     }
 
     setView (view) {
@@ -19,4 +22,15 @@ export default class FeedbackPresenter {
               }, e => {
             })
           }
+
+    addFeedback (feedbackCategory, feedback) {
+        this.view.showLoading()
+        this.addFeedbackInteractor.execute(addFeedbackParam(feedbackCategory,feedback))
+        .subscribe(addfeedbk => {
+          this.view.hideLoading()
+          this.view.sendFeedback(addfeedbk)
+        }, e => {
+          this.view.hideLoading()
+        })
       }
+    }
