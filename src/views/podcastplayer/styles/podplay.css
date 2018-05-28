@@ -51,6 +51,11 @@
 .media-control--duration {
 	font-size: 10px;
 }
+.podcast-review-button {
+	width: -webkit-fill-available;
+  border-radius: 2px
+}
+
 /* / */
 #document {
 	height: 70%;
@@ -59,7 +64,7 @@
 .player-content {
   display: -webkit-box;
 	height: 360px;
-	width: 640px;
+  width: 100%;
 	background-repeat: no-repeat;
 	background-origin: content-box;
 	background-size: cover;
@@ -68,20 +73,6 @@
 	background-prsition: center;
 	background-repeat: no-repeat;
 	background-origin: border-box;
-}
-.default-podcast-background {
-	height: 360px;
-	background-image: url('../../../images/podcast.jpg');
-	width: 640px;
-	background-repeat: no-repeat;
-	background-origin: content-box;
-	background-size: cover;
-	object-fit: cover;
-	bottom: 0px;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-origin: border-box;
-  display: -webkit-box;
 }
 
 .media-control-group--seek {
@@ -247,7 +238,7 @@ height: 100%;
 
 .media-control--seekbar {
   position: relative;
-  z-index: 5;
+  z-index: 1;
 
   @include -range-track(webkit, moz, ms) {
     background-color: transparent !important;
@@ -390,7 +381,7 @@ input[type="range"] {
 		background-size: cover;
 	}
 	.media-player {
-		width: 770px;
+		width: 700px;
 	}
 	.media-controls {
 			min-width: 100%;
@@ -411,7 +402,7 @@ input[type="range"] {
 		background-size: cover;
 	}
 	.media-player {
-		width: 700px;
+		width: 640px;
 	}
 	.media-controls {
 			min-width: 100%;
@@ -460,7 +451,7 @@ input[type="range"] {
 			padding: 5px;
 	}
 	.media-player {
-		width: 700px;
+		width: 660px;
 	}
 	.fa-play-button-detail {
 		font-size : 45px !important;
@@ -485,7 +476,7 @@ and (max-width: 767px) {
 		background-size: cover;
 	}
 	.media-player {
-		width: 700px;
+		width: 660px;
 	}
 	.fa-play-button-detail {
 		font-size : 45px !important;
