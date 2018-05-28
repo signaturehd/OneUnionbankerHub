@@ -43,6 +43,10 @@ handleSubmit(e) {
   else
   {
   this.setState({showConfirmation : true})
+  console.log(this.state.selectedProcedures)
+  console.log(this.state.selectedDependent)
+  console.log(this.state.imagePreviewUrl)
+  console.log(this.state.imagePreviewUrl2)
   this.setState({warning : ''})
   }
 }
