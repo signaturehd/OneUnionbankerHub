@@ -22,6 +22,7 @@ class FeedbackView extends BaseMVPView {
       feedbackId : null,
       feedbackValue : null,
     }
+    this.showFeedback = this.showFeedback.bind(this)
   }
 
 
@@ -38,6 +39,9 @@ class FeedbackView extends BaseMVPView {
     this.presenter.addFeedback(feedbackId, feedback)
   }
 
+  submitForm (id, feedbackCategory, feedback) {
+     this.presenter.addFeedback(id, feedbackCategory, feedback)
+   }
 
   render () {
     const {
@@ -46,6 +50,8 @@ class FeedbackView extends BaseMVPView {
       feedbackValue,
       feedbackId,
     } = this.state
+
+    const { details, chosenCategory } = this.props
 
     return (
       <div className = { 'feedback-container' }>
@@ -76,5 +82,7 @@ class FeedbackView extends BaseMVPView {
     )
   }
 }
-
+FeedbackView.propTypes = {
+  setSelectedNavigation: PropTypes.func,
+}
 export default ConnectView(FeedbackView, Presenter)
