@@ -113,6 +113,11 @@ export default class HRBenefitsService {
         headers: { token }
     })
   }
+  getBooksRecommendation (token) {
+    return this.apiClient.get('v1/books/recommended', {
+        headers: { token }
+    })
+  }
 
  reserveBook (token, ReserveParam) {
     return this.apiClient.post('v1/books/reservation', {

@@ -92,6 +92,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getBooksRecommendation (token) {
+    return this.service.getBooksRecommendation(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   addRating (token, bookParam) {
     return this.service.addRating(token, bookParam)
       .pipe(ServiceErrorOperator())
@@ -99,7 +104,7 @@ export default class HRBenefitsClient {
 
 
   reserveBook (token, BookReserveParam) {
-    return this.service.ReserveBook(token, BookReserveParam)
+    return this.service.reserveBook(token, BookReserveParam)
         .pipe(ServiceErrorOperator())
   }
 
