@@ -127,7 +127,7 @@ export default class HRBenefitsClient {
     return this.service.getPodcast(token)
       .pipe(ServiceErrorOperator())
       .map(resp => {
-        for (var i in resp) {
+        for (const i in resp) {
           if (resp[i].id == id) {
             return resp[i]
           }
