@@ -228,8 +228,14 @@ export default class HRBenefitsService {
     })
   }
 
-  updateRemarks (token, remarksParam) {
-
+  updateRemarks (token, updateTransactionParam) {
+    const transactionDetails = {
+      approve : updateTransactionParam.approve,
+      remarks : updateTransactionParam.remarks,
+    }
+    return this.apiClient.put('v1/transactions/' + updateTransactionParam.transactionId, transactionDetails, {
+      headers : {token}
+    })
   }
 
 }

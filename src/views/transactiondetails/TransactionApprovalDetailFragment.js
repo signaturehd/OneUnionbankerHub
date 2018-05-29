@@ -129,6 +129,7 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
         {
           showConfirmationModal &&
           <ConfirmationModal
+            transactionId = { details && details.transactionId }
             onClose = { () => this.setState({ showConfirmationModal : false })}
           />
         }
@@ -136,6 +137,7 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
           showDisapproveModal &&
           <DisapproveModal
             remarksDetails = { remarks }
+            transactionId = { details && details.transactionId }
             benefitId = { details && details.benefitType.id }
             onClose = { () => this.setState({ showDisapproveModal : false })}
           />

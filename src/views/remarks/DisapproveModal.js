@@ -5,6 +5,7 @@ import Presenter from './presenter/RemarksPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
 
+import './styles/remarks.css'
 
 import { Modal, CircularLoader, GenericButton } from '../../ub-components/'
 
@@ -16,7 +17,6 @@ class DisapproveModal extends BaseMVPView {
       approve : false,
       remarks : null
     }
-    this.onNo = this.onNo.bind(this)
   }
 
   componentDidMount () {
@@ -24,13 +24,14 @@ class DisapproveModal extends BaseMVPView {
     this.presenter.getRemarks(this.props.benefitId)
   }
 
-  getRemarks (remarks) {
-    this.setState({remarks})
+  onDisapprove (remarks) {
+    this.presenter.updateRemarks(this.props.transactionId , false, remarks)
+    this.props.onClose()
+    // TODO show loading here
   }
 
-  onNo () {
-    this.setState({showCircular : true})
-    this.props.onNo()
+  getRemarks (remarks) {
+    this.setState({remarks})
   }
 
   render () {
@@ -51,13 +52,21 @@ class DisapproveModal extends BaseMVPView {
       >
         {
           remarks ?
-            <div>Rendered</div>
-              :
+            remarks.map((remark, key) => (
+              <div>
+                <GenericButton
+                    key = { key }
+                    className = { 'remarks-button' }
+                    text = {remark.remarks}
+                    onClick = { () => this.onDisapprove(remark.remarks)}
+                />
+              </div>
+            ))
+            :
             <center>
               <h3>Please wait a moment</h3>
               <CircularLoader show = {true} />
             </center>
-
         }
 
       </Modal>

@@ -2,7 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Modal, CircularLoader, GenericButton } from '../../ub-components/'
 
-class ConfirmationModal extends Component {
+import Presenter from './presenter/RemarksPresenter'
+import ConnectPartial from '../../utils/ConnectPartial'
+import BaseMVPView from '../common/base/BaseMVPView'
+
+
+class ConfirmationModal extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
@@ -10,14 +15,19 @@ class ConfirmationModal extends Component {
       approve: true,
       remarks: " ",
     }
-
-    this.onYes = this.onYes.bind(this)
-
   }
 
-  onYes () {
-    this.setState({showCircular : true})
-    this.props.onYes()
+  onApprove () {
+    this.presenter.updateRemarks(this.props.transactionId , true, ' ')
+    this.setState({ showCircular : true })
+  }
+
+  onSuccess () {
+    this.props.onClose()
+  }
+
+  onFailed () {
+    this.setState({ showCircular : true })
   }
 
   render () {
@@ -45,7 +55,7 @@ class ConfirmationModal extends Component {
           <div>
             <h3>Are you sure you want to approve this request?</h3>
             <GenericButton
-              onClick = { () => this.onYes()  }
+              onClick = { () => this.onApprove() }
               text = { 'Yes' } />
             <GenericButton
               onClick = { onClose }
@@ -67,4 +77,4 @@ ConfirmationModal.defaultProps = {
 
 }
 
-export default ConfirmationModal
+export default ConnectPartial(ConfirmationModal, Presenter)

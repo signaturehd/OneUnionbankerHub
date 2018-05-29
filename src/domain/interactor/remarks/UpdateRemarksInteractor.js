@@ -3,7 +3,7 @@ export default class UpdateRemarksInteractor {
       this.client = client
   }
 
-  execute (RemarksParam) {
-    return this.client.updateTransactionRemarks(this.client.getToken(), RemarksParam)
+  execute (UpdateTransacitonParam) {
+    return this.client.updateRemarks(this.client.getToken(), UpdateTransacitonParam)
   }
 }
