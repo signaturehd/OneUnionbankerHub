@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Card, GenericButton } from '../../../../ub-components'
-import OpticalFragment from '../../../optical/OpticalFragment'
-import DentalLoaView from '../../../dentalloa/DentalLoaView'
-import DentalReimbursementView from '../../../dentalreimbursement/DentalReimbursementView'
 import './styles/medical.css'
 
 class MedicalFragment extends Component {
@@ -13,7 +10,7 @@ class MedicalFragment extends Component {
   }
 
   navigate () {
-      this.props.history.push('/benefits')
+      this.props.history.push('/mybenefits/benefits')
   }
 
   render () {
@@ -22,15 +19,15 @@ class MedicalFragment extends Component {
     const benefitsOptions = [{
       styleName: 'medical-cards-1',
       title: 'DENTAL LOA',
-      path: '/benefits/medical/dentalloa',
+      path: '/mybenefits/benefits/medical/loa/dental',
     }, {
       styleName: 'medical-cards-2',
       title: 'DENTAL REIMBURSEMENT',
-      path: '/benefits/medical/dentalreimbursement',
+      path: '/mybenefits/benefits/medical/reimbursement/dental',
     }, {
       styleName: 'medical-cards-3',
       title: 'OPTICAL',
-      path: '/benefits/medical/optical',
+      path: '/mybenefits/benefits/medical/optical',
     }]
 
     const MedicalHome = () => (
@@ -60,10 +57,7 @@ class MedicalFragment extends Component {
     return (
       <div>
         <Switch>
-          <Route exact path = '/benefits/medical'  render = { MedicalHome } />
-          <Route path = '/benefits/medical/optical' render = { props => <OpticalFragment { ...props } />}/>
-          <Route path = '/benefits/medical/dentalloa' render = { props => <DentalLoaView { ...props } />}/>
-          <Route path = '/benefits/medical/dentalreimbursement' render = { props => <DentalReimbursementView { ...props } />}/>
+          <Route exact path = '/mybenefits/benefits/medical'  render = { MedicalHome } />
         </Switch>
       </div>
     )
