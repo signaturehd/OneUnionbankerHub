@@ -5,12 +5,12 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/NavigationPresenter'
 
-import LibraryFragment from '../library/LibraryFragment'
 import BenefitsFragment from '../benefits/BenefitsFragment'
-import TransactionFragment from '../transaction/TransactionFragment'
 import NewsFragment from '../news/NewsFragment'
 import FaqFragment from '../faq/FaqFragment'
 import SettingsFragment from '../settings/SettingsFragment'
+import PodcastFragment from '../podcast/PodcastFragment'
+import LibraryFragment from '../library/LibraryFragment'
 import MyLearningView from '../mylearning/MyLearningView'
 import FeedbackFragment from '../Feedback/FeedbackFragment'
 
@@ -24,6 +24,10 @@ import { connect } from 'react-redux'
 
 import store from '../../store'
 import { NotifyActions } from '../../actions'
+
+import OpticalFragment from '../optical/OpticalFragment'
+import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
+import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
 
 class NavigationView extends BaseMVPView {
   constructor (props) {
@@ -91,11 +95,23 @@ class NavigationView extends BaseMVPView {
                         <Route exact path = '/' render = {props =>
                           <NewsFragment { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> }/>
-                        <Route path = '/benefits' render = { props =>
+                        <Route path = '/mybenefits/transactions/personal/:id' render = { props =>
+                          <TransactionPersonalDetailFragment { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                        <Route path = '/mybenefits/transactions/approval/:id' render = { props =>
+                          <TransactionApprovalDetailFragment { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                        <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
+                          <OpticalFragment { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                        <Route path = '/mybenefits/benefits/medical/reimbursement/dental' render = { props =>
+                          <DentalReimbursement { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                        <Route path = '/mybenefits/benefits/medical/loa/dental' render = { props =>
+                          <DentalLoa { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                        <Route path = '/mybenefits' render = { props =>
                           <BenefitsFragment { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                        <Route path = '/transactions' render = { props =>
-                          <TransactionFragment { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> } />
                         <Route path = '/faqs' render = { props =>
                           <FaqFragment { ...props }
@@ -109,7 +125,7 @@ class NavigationView extends BaseMVPView {
                         <Route path = '/feedback' render = { props =>
                           <FeedbackFragment { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                        
+
                      </Switch>
                     </Drawer>
               </main>
