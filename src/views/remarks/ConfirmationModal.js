@@ -24,6 +24,7 @@ class ConfirmationModal extends BaseMVPView {
 
   onSuccess () {
     this.props.onClose()
+    this.props.history.push('/mybenefits/transactions/approval')
   }
 
   onFailed () {
@@ -48,7 +49,7 @@ class ConfirmationModal extends BaseMVPView {
         {
           showCircular ?
           <center>
-            <h3>Submitting Your Response</h3>
+            <h3>Submitting Your Remarks</h3>
             <CircularLoader show = {true}/>
           </center>
           :

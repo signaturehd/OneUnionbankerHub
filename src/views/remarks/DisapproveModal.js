@@ -7,7 +7,7 @@ import BaseMVPView from '../common/base/BaseMVPView'
 
 import './styles/remarks.css'
 
-import { Modal, CircularLoader, GenericButton } from '../../ub-components/'
+import { Modal, CircularLoader, GenericButton, GenericTextBox } from '../../ub-components/'
 
 class DisapproveModal extends BaseMVPView {
   constructor (props) {
@@ -15,19 +15,28 @@ class DisapproveModal extends BaseMVPView {
     this.state = {
       showCircular : false,
       approve : false,
-      remarks : null
+      showOthers : false,
+      remarks : null,
+      remarksText : null
     }
   }
 
   componentDidMount () {
-    // console.log(this.presenter)
     this.presenter.getRemarks(this.props.benefitId)
   }
 
   onDisapprove (remarks) {
     this.presenter.updateRemarks(this.props.transactionId , false, remarks)
+    this.setState({ showCircular : true })
+  }
+
+  onSuccess () {
+    this.props.history.push('/mybenefits/transactions/approval')
     this.props.onClose()
-    // TODO show loading here
+  }
+
+  onFailed () {
+    this.setState({ showCircular : true })
   }
 
   getRemarks (remarks) {
@@ -42,8 +51,11 @@ class DisapproveModal extends BaseMVPView {
 
     const {
       showCircular,
-      remarks
+      remarks,
+      showOthers,
+      remarksText
     } = this.state
+
 
     return (
       <Modal
@@ -51,23 +63,58 @@ class DisapproveModal extends BaseMVPView {
         onClose = { onClose }
       >
         {
-          remarks ?
-            remarks.map((remark, key) => (
-              <div>
+          showCircular ?
+          <center>
+            <h3>Submitting Your Remarks</h3>
+            <CircularLoader show = {true} />
+          </center>
+          :
+            showOthers ?
+            <div>
+              <GenericTextBox
+                onChange = { (e) => this.setState({ remarksText : e.target.value }) }
+              />
+              <div className = {'remarks-button-grid'}>
                 <GenericButton
-                    key = { key }
-                    className = { 'remarks-button' }
-                    text = {remark.remarks}
-                    onClick = { () => this.onDisapprove(remark.remarks)}
+                  className = { 'remarks-button' }
+                  text = { 'Back' }
+                  onClick = { () => this.setState({ showOthers : false })}
+                />
+                <GenericButton
+                  className = { 'remarks-button' }
+                  text = { 'Submit' }
+                  onClick = { () => this.onDisapprove(remarksText)}
                 />
               </div>
-            ))
+            </div>
             :
-            <center>
-              <h3>Please wait a moment</h3>
-              <CircularLoader show = {true} />
-            </center>
+              remarks ?
+                remarks.map((remark, key) => (
+                  <div>
+                    { remark.id !== 9 ?
+                      <GenericButton
+                        key = { key }
+                        className = { 'remarks-button' }
+                        text = {remark.remarks}
+                        onClick = { () => this.onDisapprove(remark.remarks)}
+                      />
+                      :
+                      <GenericButton
+                          key = { key }
+                          className = { 'remarks-button' }
+                          text = { 'Otheres (Please Specify)' }
+                          onClick = { () => this.setState({showOthers : true})}
+                      />
+                    }
+                  </div>
+                ))
+                :
+                <center>
+                  <h3>Please wait a moment</h3>
+                  <CircularLoader show = {true} />
+                </center>
         }
+
 
       </Modal>
     )
