@@ -1,6 +1,7 @@
 
 export default class HRBenefitsService {
-  constructor (apiClient, accountClient) {
+
+  constructor(apiClient, accountClient) {
     this.apiClient = apiClient
     this.accountClient = accountClient
   }
@@ -88,15 +89,11 @@ export default class HRBenefitsService {
 
   /* account */
   validateAccountNumber (token, accountNumber) {
-    return this.accountClient.get(`accounts/v1/${accountNumber}`, {
-      headers: {
-        token,
-        referenceId : Math.random().toString(36)
-          .substring(7),
-      }
-    })
-  }
-
+     return this.accountClient.get(`accounts/v1/${accountNumber}`, {
+       headers: {token, referenceId : Math.random().toString(36).substring(7),
+       }
+     })
+   }
   /* rds */
   getReleasingCenters (token) {
     return this.apiClient.get('v1/rds/centers', {
@@ -107,7 +104,7 @@ export default class HRBenefitsService {
   /* library */
   getBooks (token) {
     return this.apiClient.get('v1/books', {
-        headers: { token }
+      headers: { token }
     })
   }
 
@@ -132,7 +129,6 @@ export default class HRBenefitsService {
   }
 
   /* News */
-
   getNews (token) {
     return this.apiClient.get('v1/news', {
         headers: { token }
@@ -141,7 +137,6 @@ export default class HRBenefitsService {
 
 
  /* Podcasts */
-
   getPodcasts (token) {
     return this.apiClient.get('v1/podcasts', {
         headers: { token }
@@ -166,14 +161,19 @@ export default class HRBenefitsService {
     })
   }
 
-  paddRating (token, podcastParam) {
-    return this.apiClient.post('v1/podcasts/rate', podcastParam, {
+  getPodcastsViewed (token) {
+    return this.apiClient.get('v1/podcasts/history/members', {
+        headers: { token }
+    })
+  }
+
+  paddRating (token, bookParam) {
+    return this.apiClient.post('v1/books/podcasts', bookParam, {
       headers : { token }
     })
   }
 
   /* FAQ's */
-
   getFaqs (token) {
     return this.apiClient.get('v1/faqs', {
       headers: { token }
@@ -198,4 +198,44 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  /* Transactions Personal */
+  getTransactionsPersonal (token) {
+    return this.apiClient.get('v1/transactions?type=1', {
+      headers: { token }
+    })
+  }
+
+  /* Transactions Approval */
+  getTransactionsApproval (token) {
+    return this.apiClient.get('v1/transactions?type=2&status=2', {
+      headers: { token }
+    })
+  }
+
+  /* Transactions Details */
+  getTransactionsDetails (token, GetTransactionParam) {
+    return this.apiClient.get('v1/transactions/' + GetTransactionParam, {
+      headers: {token}
+    })
+  }
+
+  /* Remarks */
+
+  getRemarks (token, remarksParam) {
+    return this.apiClient.get('v1/transactions/matrix/remarks?benefitId=' + remarksParam, {
+      headers: {token}
+    })
+  }
+
+  updateRemarks (token, updateTransactionParam) {
+    const transactionDetails = {
+      approve : updateTransactionParam.approve,
+      remarks : updateTransactionParam.remarks,
+    }
+    return this.apiClient.put('v1/transactions/' + updateTransactionParam.transactionId, transactionDetails, {
+      headers : {token}
+    })
+  }
+
 }
