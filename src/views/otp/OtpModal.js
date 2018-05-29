@@ -5,7 +5,14 @@ import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/OtpPresenter'
 
-import { GenericTextBox, GenericButton, Modal, CircularLoader } from '../../ub-components'
+import {
+  GenericTextBox,
+  GenericButton,
+  Modal,
+  CircularLoader
+} from '../../ub-components'
+
+import './styles/otp.css'
 
 class OtpModal extends BaseMVPView {
   constructor (props) {
@@ -34,13 +41,19 @@ class OtpModal extends BaseMVPView {
   }
 
   render () {
-    const { transactionType, username, onClose } = this.props
-    const { otp, text, disableSubmit, disableResend } = this.state
-    const styles = {
-      centerOpt : {
-        textAlign: 'center',
-      }
-    }
+    const {
+      transactionType,
+      username,
+      onClose
+    } = this.props
+
+    const {
+      otp,
+      text,
+      disableSubmit,
+      disableResend
+    } = this.state
+
     return (
 
       <Modal
@@ -54,11 +67,13 @@ class OtpModal extends BaseMVPView {
             <br/>
             <CircularLoader show={true}/>
           </center>          :
-          <div style = { styles.centerOpt }>
+          <div>
             <GenericTextBox
-            text= "OTP"
+              text= "OTP"
               placeholder = "OTP"
               type = ""
+              className = {'center-text'}
+              maxLength = {6}
               onChange={ e => this.setState({ otp: e.target.value }) }
             />
             <br/>
