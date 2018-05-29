@@ -38,9 +38,8 @@ class Board extends Component  {
 
     return (
       <div className="board">
-        <div className = { 'feedback-title' } > User Feedback </div>
+        <div className = { 'feedback-title' } > User Reviews </div>
           <div className="shareCommentContainer">
-            <GenericTextBox id="shareCommentText" placeholder="Write a comment.." />
 
             <GenericButton
                 text = { 'COMMENT' }
