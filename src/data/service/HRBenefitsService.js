@@ -201,7 +201,7 @@ export default class HRBenefitsService {
   }
 
   getBookImage (accountToken, ImageParam) {
-    return this.imageClient.get('v1/files?folder=faqs', {
+    return this.imageClient.get('v1/uploads?folder=faqs', {
       headers : {
         accountToken,
         file : ImageParam
@@ -210,7 +210,7 @@ export default class HRBenefitsService {
   }
 
   getFaqsImage (accountToken, ImageParam) {
-    return this.imageClient.get('v1/files?folder=faqs', {
+    return this.imageClient.get('v1/uploads?folder=faqs', {
       headers : {
         accountToken,
         file : ImageParam

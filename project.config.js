@@ -21,13 +21,13 @@ module.exports = {
 
   },
   testGlobals: {
-    IMAGE_URL: JSON.stringify('https://api-uat.unionbankph.com/ubp/uat/uploads/'),
+    IMAGE_URL: JSON.stringify('https://api-uat.unionbankph.com/ubp/uat/hr/files/'),
     BASE_URL: JSON.stringify('https://api-uat.unionbankph.com/ubp/uat/hr/benefits/'),
     CLIENT_ID: JSON.stringify('e409ff0a-4695-4a13-b67f-bf5fdf6b2590'),
     CLIENT_SECRET: JSON.stringify('U6aT1pP4dY5jA6tQ0pR7gF0aS3tK7rK8kD8aJ7yX4mN1yY7sU6'),
   },
   devGlobals: {
-    IMAGE_URL: JSON.stringify('https://api-uat.unionbankph.com/ubp/uat/uploads/'),
+    IMAGE_URL: JSON.stringify('https://api-uat.unionbankph.com/ubp/uat/hr/files/'),
     BASE_URL: JSON.stringify('https://api-uat.unionbankph.com/ubp/uat/hr/benefits/'),
     CLIENT_ID: JSON.stringify('e409ff0a-4695-4a13-b67f-bf5fdf6b2590'),
     CLIENT_SECRET: JSON.stringify('U6aT1pP4dY5jA6tQ0pR7gF0aS3tK7rK8kD8aJ7yX4mN1yY7sU6'),
