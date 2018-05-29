@@ -11,7 +11,6 @@ import FeedbackCard from './components/FeedbackCardFragment/FeedbackCard'
 
 import './styles/feedback-styles.css'
 
-
 class FeedbackView extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -25,7 +24,6 @@ class FeedbackView extends BaseMVPView {
     this.showFeedback = this.showFeedback.bind(this)
   }
 
-
   componentDidMount () {
     this.presenter.getFeedback()
     this.props.setSelectedNavigation(6)
@@ -35,13 +33,9 @@ class FeedbackView extends BaseMVPView {
     this.setState({ feedback })
   }
 
-  submitForm (feedbackId, feedback) {
-    this.presenter.addFeedback(feedbackId, feedback)
+  submitForm (feedbackId, feedbackValue) {
+    this.presenter.addFeedback(feedbackId, feedbackValue)
   }
-
-  submitForm (id, feedbackCategory, feedback) {
-     this.presenter.addFeedback(id, feedbackCategory, feedback)
-   }
 
   render () {
     const {
@@ -51,7 +45,7 @@ class FeedbackView extends BaseMVPView {
       feedbackId,
     } = this.state
 
-   const { details, chosenCategory } = this.props
+   const { details, chosenCategory, feedbackTextareaValue } = this.props
 
    return (
       <div className = { 'feedback-container' }>
@@ -71,12 +65,11 @@ class FeedbackView extends BaseMVPView {
                 feedbackCategory = { feedbackValue }
                 submitForm = { () => this.submitForm(feedbackId, feedbackValue) }
                 onClick = {
-                  showCategoryModal =>
+                  (showCategoryModal) =>
                   this.setState({ showCategoryModal })
                 }
               />
             }
-
          </div>
       </div>
     )

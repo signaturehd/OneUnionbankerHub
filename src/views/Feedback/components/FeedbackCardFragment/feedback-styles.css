@@ -1,5 +1,6 @@
 .feedback-card {
   padding : 10% 15% 10% 15%;
+  width: auto;
 }
 
 .feedback-textarea {
@@ -7,7 +8,7 @@
   align-items: flex-start;
   margin: 10px auto;
   resize: none;
-  width: -webkit-fill-available;
+  width: -webkit-fill-available !important;
   outline-color: #FF8A00;
   border-radius: 5px;
   font-size: 14px;

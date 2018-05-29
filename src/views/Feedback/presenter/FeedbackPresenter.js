@@ -1,7 +1,6 @@
 import GetFeedbackInteractor from '../../../domain/interactor/feedback/GetFeedbackInteractor'
 import AddFeedbackInteractor from '../../../domain/interactor/feedback/AddFeedbackInteractor'
 import FeedbackParam from '../../../domain/param/FeedbackParam'
-import addFeedbackParam from '../../../domain/param/addFeedbackParam'
 import { NotifyActions } from '../../../actions'
 
 import store from '../../../actions'
@@ -24,14 +23,14 @@ export default class FeedbackPresenter {
         }, e => {
       })
   }
-
+  
   addFeedback (feedbackId, feedback) {
     this.view.showLoading()
     this.addFeedbackInteractor.execute(FeedbackParam(feedbackId, feedback))
       .subscribe(
         data => {
           store.dispatch(NotifyActions.addNotify({
-              title : 'Podcast Rating',
+              title : 'Feedback',
               message : data.message,
               type : 'success',
               duration : 2000
