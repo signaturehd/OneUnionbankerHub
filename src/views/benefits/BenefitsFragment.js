@@ -67,46 +67,9 @@ class BenefitsFragment extends BaseMVPView {
     }]
 
   const Benefits = () => (
-  <div className = { '_benefits-container' }>
-    {
-      showAccountNumberModal &&
-      <InputModal
-        isDismisable = { true }
-        onClose = { () => this.setState({ showAccountNumberModal : false }) }
-        onChange = { e => this.setState({ accountNumber: e.target.value }) }
-        placeholder = { 'Account Number' }
-        type = { 'text' }
-        onSubmit = { e => {
-        e.preventDefault()
-        this.presenter.validateAccountNumber(accountNumber)
-            }
-          }
-        />
-    }
-    <div className = { 'adjustment' }>
-      <div className = { 'card-container' }>
-        {
-        benefitsOptions.map((value, idx) => (
-          <Card key={ idx }>
-            <div
-              className = { value.styleName }
-              text = { value.title }
-              onClick = { () => history.push(value.path) } >
-              <p className = { 'benefits-option-cards' }> { value.title } </p>
-            </div>
-          </Card>
-        ))
-        }
-      </div>
-    </div>
-  </div>)
-
-return (
-  <div>
-    { super.render() }
-      <h1 className = {'title-view' }>My Benefits</h1>
-    {
-      showAccountNumberModal &&
+    <div className = { '_benefits-container' }>
+      {
+        showAccountNumberModal &&
         <InputModal
           isDismisable = { true }
           onClose = { () => this.setState({ showAccountNumberModal : false }) }
@@ -114,53 +77,90 @@ return (
           placeholder = { 'Account Number' }
           type = { 'text' }
           onSubmit = { e => {
-              e.preventDefault()
-              this.presenter.validateAccountNumber(accountNumber)
+          e.preventDefault()
+          this.presenter.validateAccountNumber(accountNumber)
+              }
             }
-          }
-        />
-    }
-<div className = { 'tabs-container' }>
-  <input
-    className = { 'input-tab' }
-    id='tab1'
-    type='radio'
-    name='tabs'
-    defaultChecked = {true}
-    onClick = { () => this.props.history.push('/mybenefits/benefits') }/>
-    <label  className = { 'mobile-icon' } htmlFor = 'tab1'>Benefits</label>
+          />
+      }
+        <div className = { 'adjustment' }>
+          <div className = { 'card-container' }>
+            {
+            benefitsOptions.map((value, idx) => (
+              <Card key={ idx }>
+                <div
+                  className = { value.styleName }
+                  text = { value.title }
+                  onClick = { () => history.push(value.path) } >
+                  <p className = { 'benefits-option-cards' }> { value.title } </p>
+                </div>
+              </Card>
+            ))
+            }
+        </div>
+      </div>
+    </div>)
 
- <input
-    className = { 'input-tab' }
-    id='tab2'
-    type='radio'
-    name='tabs'
-    onClick = { () => this.props.history.push('/mybenefits/transactions/personal') } />
-    <label className = { 'mobile-icon' } htmlFor='tab2'>My Transactions</label>
+  return (
+    <div>
+      { super.render() }
+        <h1 className = {'title-view' }>My Benefits</h1>
+        {
+          showAccountNumberModal &&
+            <InputModal
+              isDismisable = { true }
+              onClose = { () => this.setState({ showAccountNumberModal : false }) }
+              onChange = { e => this.setState({ accountNumber: e.target.value }) }
+              placeholder = { 'Account Number' }
+              type = { 'text' }
+              onSubmit = { e => {
+                  e.preventDefault()
+                  this.presenter.validateAccountNumber(accountNumber)
+                }
+              }
+            />
+        }
+        <div className = { 'tabs-container' }>
+          <input
+            className = { 'input-tab' }
+            id='tab1'
+            type='radio'
+            name='tabs'
+            defaultChecked = {true}
+            onClick = { () => this.props.history.push('/mybenefits/benefits') }/>
+            <label  className = { 'mobile-icon' } htmlFor = 'tab1'>Benefits</label>
 
- <input
-    className = { 'input-tab' }
-    id='tab3'  type='radio'
-    name='tabs'
-    onClick = { () => this.props.history.push('/mybenefits/transactions/approval') } />
-    <label className = { 'mobile-icon' } htmlFor = 'tab3' >For Approval</label>
+           <input
+              className = { 'input-tab' }
+              id='tab2'
+              type='radio'
+              name='tabs'
+              onClick = { () => this.props.history.push('/mybenefits/transactions/personal') } />
+              <label className = { 'mobile-icon' } htmlFor='tab2'>My Transactions</label>
 
-  <section id='content1'>
-    <Switch>
-      <Route path = '/mybenefits/transactions/personal'
-        render = { props => <TransactionPersonalFragment { ...props } /> } />
-      <Route path = '/mybenefits/transactions/approval'
-        render = { props => <TransactionApprovalFragment { ...props }/> } />
-      <Route path = '/mybenefits/benefits/education'
-        render = { props => <EducationFragment { ...props } />}/>
-      <Route exact path = '/mybenefits/benefits/medical'
-        render = { props => <MedicalFragment { ...props } />}/>
-      <Route path = '/mybenefits'
-        render = { Benefits } />
-   </Switch>
-  </section>
-  </div>
-</div>
+           <input
+              className = { 'input-tab' }
+              id='tab3'  type='radio'
+              name='tabs'
+              onClick = { () => this.props.history.push('/mybenefits/transactions/approval') } />
+              <label className = { 'mobile-icon' } htmlFor = 'tab3' >For Approval</label>
+
+          <section id='content1'>
+              <Switch>
+                <Route path = '/mybenefits/transactions/personal'
+                  render = { props => <TransactionPersonalFragment { ...props } /> } />
+                <Route path = '/mybenefits/transactions/approval'
+                  render = { props => <TransactionApprovalFragment { ...props }/> } />
+                <Route path = '/mybenefits/benefits/education'
+                  render = { props => <EducationFragment { ...props } />}/>
+                <Route exact path = '/mybenefits/benefits/medical'
+                  render = { props => <MedicalFragment { ...props } />}/>
+                <Route path = '/mybenefits'
+                  render = { Benefits } />
+             </Switch>
+          </section>
+        </div>
+      </div>
     )
   }
 }
