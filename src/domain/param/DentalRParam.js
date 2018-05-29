@@ -1,8 +1,7 @@
-export default ( releasingCenter, accountNo, type, dentalProcedure, preferredDate, dentalClinicId, dependentId ) => ({
+export default ( releasingCenter, file1, file2, dependentId, procedure) => ({
     releasingCenter,
-    accountNo,
-    type,
-    dentalProcedure,
-    dentalClinicId,
-    dependentId
+    file1,
+    file2,
+    dependentId,
+    procedure
   })
