@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Modal, CircularLoader, GenericButton } from '../../../ub-components/'
+import { Modal, CircularLoader, GenericButton } from '../../ub-components/'
 
 class ConfirmationModal extends Component {
   constructor (props) {

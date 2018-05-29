@@ -1,4 +1,4 @@
-export default class UpdateTransactionRemarks {
+export default class UpdateRemarksInteractor {
   constructor (client) {
       this.client = client
   }

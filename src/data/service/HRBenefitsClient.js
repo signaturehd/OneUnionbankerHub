@@ -196,15 +196,26 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getFaqsCategories (token) {
+    return this.service.getFaqsCategories(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Notice of Undertaking */
   updateNotice (token, noticeParam) {
     return this.service.updateNotice(token, noticeParam)
       .pipe(ServiceErrorOperator())
   }
 
-
-  getFaqsCategories (token) {
-    return this.service.getFaqsCategories(token)
+  /* Remarks */
+  getRemarks (token, remarksParam) {
+    return this.service.getRemarks(token, remarksParam)
       .pipe(ServiceErrorOperator())
   }
+
+  updateRemarks (token, remarksParam) {
+    return this.service.updateRemarks(token, remarksParam)
+      .pipe(ServiceErrorOperator())
+  }
+
 }

@@ -1,18 +1,26 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Modal, CircularLoader, GenericButton, Generic } from '../../../ub-components/'
+
+import Presenter from './presenter/RemarksPresenter'
+import ConnectPartial from '../../utils/ConnectPartial'
+
+
+import { Modal, CircularLoader, GenericButton } from '../../ub-components/'
 
 class DisapproveModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
       showCircular : false,
-      approve: false
+      approve : false,
     }
-
     this.onNo = this.onNo.bind(this)
-
   }
+
+  componentDidMount () {
+    this.presenter.getRemarks(this.props.benefitId)
+  }
+
 
   onNo () {
     this.setState({showCircular : true})
@@ -23,6 +31,7 @@ class DisapproveModal extends Component {
     const {
       onClose,
       onNo,
+      details,
     } = this.props
 
     const {
@@ -38,7 +47,7 @@ class DisapproveModal extends Component {
           showCircular ?
           <center>
             <h3>Submitting Your Response</h3>
-            <CircularLoader show = {true}/>
+            <CircularLoader show = {true} />
           </center>
           :
           <div>
@@ -66,4 +75,4 @@ DisapproveModal.defaultProps = {
 
 }
 
-export default DisapproveModal
+export default ConnectPartial(DisapproveModal, Presenter)

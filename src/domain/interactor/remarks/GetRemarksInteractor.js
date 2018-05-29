@@ -3,7 +3,7 @@ export default class GetRemarksInteractor {
       this.client = client
   }
 
-  execute (GetRemarksParam) {
-    return this.client.getTransactionsPersonal(this.client.getToken(), GetRemarksParam)
+  execute (RemarksParam) {
+    return this.client.getRemarks(this.client.getToken(), RemarksParam)
   }
 }

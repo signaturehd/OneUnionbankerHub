@@ -214,11 +214,22 @@ export default class HRBenefitsService {
   }
 
   /* Transactions Details */
-  getTransactionsDetails (token, GetTransactionParam ){
+  getTransactionsDetails (token, GetTransactionParam) {
     return this.apiClient.get('v1/transactions/' + GetTransactionParam, {
       headers: {token}
     })
   }
 
+  /* Remarks */
+
+  getRemarks (token, remarksParam) {
+    return this.apiClient.get('v1/remarks?benefitId=' + remarksParam, {
+      headers: {token}
+    })
+  }
+
+  updateRemarks (token, remarksParam) {
+
+  }
 
 }
