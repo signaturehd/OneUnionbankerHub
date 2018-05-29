@@ -1,4 +1,4 @@
-export default (categoryId, feedback) => [{
+export default (categoryId, feedback) => ({
     categoryId,
     feedback,
-}]
+})

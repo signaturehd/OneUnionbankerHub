@@ -214,7 +214,7 @@ export default class HRBenefitsClient {
   }
 
   addFeedback (token, addFeedbackParam) {
-    return this.service.getFeedback(token, addFeedbackParam)
+    return this.service.addFeedback(token, addFeedbackParam)
     .pipe(ServiceErrorOperator())
   }
   /* Remarks */

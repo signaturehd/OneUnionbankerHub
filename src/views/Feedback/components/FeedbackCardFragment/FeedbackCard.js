@@ -24,11 +24,6 @@ class FeedbackCard extends Component {
     e.preventDefault()
   }
   /*initital*/
-  submitForm (feedbackTextareaValue) {
-    this.props.onChange(feedbackTextareaValue)
-    this.props.onClose()
-  }
-
   render () {
     const {
       onClick,
