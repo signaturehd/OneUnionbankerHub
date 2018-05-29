@@ -20,12 +20,12 @@
 }
 
 .podcasts-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
-    text-align: center;
-    grid-column-gap: 10px;
-    grid-template-rows: 230px 1fr;
-    grid-row-gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+  text-align: center;
+  grid-column-gap: 10px;
+  grid-template-rows: 1fr 1fr;
+  grid-row-gap: 10px;
 }
 
 .page-header-buttons {
