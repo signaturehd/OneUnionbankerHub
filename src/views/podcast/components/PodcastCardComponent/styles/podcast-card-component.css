@@ -12,8 +12,8 @@
 .podcasts-details-side-right {
   padding: 25px;
 }
-.news-body {
-  padding : 50px;
+.podcast-body {
+  padding : 0 50px 50px 50px;
 }
 .fa-play-button {
   font-size : 50px;

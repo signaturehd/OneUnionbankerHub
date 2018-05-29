@@ -62,6 +62,7 @@ class PodcastFragment extends BaseMVPView {
   * generic function for all podcast types. (recommended, all)
   */
   renderPodcasts (podcasts) {
+
     return podcasts ?
     podcasts.map((podcast, key) => {
       return (
@@ -80,6 +81,13 @@ class PodcastFragment extends BaseMVPView {
     const { searchString, showLoader, podcasts, podcastRecommendations } = this.state
     const { history } = this.props
 
+    let searchPodcast = podcasts
+    let searchPodcastRecommendation = podcastRecommendations
+    const search = this.state.searchString.trim().toLowerCase()
+    if (search.length > 0) {
+        searchPodcast = podcasts.filter(podcast => podcast.title.toLowerCase().match(search))
+        searchPodcastRecommendation = podcastRecommendations.filter(recommendation => recommendation.title.toLowerCase().match(search))
+    }
     return (
       <div>
         { super.render() }
@@ -116,12 +124,12 @@ class PodcastFragment extends BaseMVPView {
                 <CircularLoader show = { true }/>
               </center> :
               <div className = { 'podcasts-container' }>
-                { this.renderPodcasts(podcasts) }
+                { this.renderPodcasts(searchPodcast) }
               </div>
             }
           </section>
           <section id='content2'>
-            { this.renderPodcasts(podcastRecommendations) }
+            { this.renderPodcasts(searchPodcastRecommendation) }
           </section>
         </div>
       </div>
