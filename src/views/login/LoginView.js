@@ -13,7 +13,7 @@ import {
   Notify
 } from '../../ub-components'
 
-import './css/login.css'
+import './styles/login.css'
 
 import OtpModal from '../otp/OtpModal'
 
@@ -83,12 +83,10 @@ class LoginView extends BaseMVPView {
         <Card className = {'login-form'}>
           <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
             <GenericTextBox
-              clasName = { 'login-input' }
               onChange = { e => this.setState({ username: e.target.value }) }
               placeholder = { 'Employee ID' }
               type = { 'text' }/>
             <GenericTextBox
-              className = { 'login-input' }
               onChange = { e => this.setState({ password: e.target.value }) }
               placeholder = { 'Password' }
               type = { 'password' }/>
