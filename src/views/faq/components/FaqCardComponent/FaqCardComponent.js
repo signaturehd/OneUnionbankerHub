@@ -5,7 +5,6 @@ import { Card } from '../../../../ub-components/'
 
 import './faq-card-component.css'
 
-import ImageLoader from 'react-image-file'
 
 class FaqCardComponent extends Component {
   constructor (props) {
