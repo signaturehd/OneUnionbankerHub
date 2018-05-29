@@ -9,23 +9,27 @@ import { FaPlayCircleO } from 'react-icons/lib/fa/'
 import Rating from 'react-rating'
 
 class PodcastCardComponent extends Component {
-  
+
   render () {
     const { podcast, onClick } = this.props
 
     const style = {
       styles : {
         background: `url(${podcast && podcast.image}) rgba(0,0,0,0.7)`,
-        backgroundSize: 'cover',
         backgroundBlendMode: 'color',
+        backgroundSize: 'contain',
+        objectFit: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        cursor: 'pointer',
       },
     }
 
     return (
       <Card onClick={ onClick }>
         <div style = { style.styles }
-             className = { 'news-body' }>
-          <h2 className = { 'podcast-title' }>Title</h2>
+             className = { 'podcast-body' }>
+          <h2 className = { 'podcast-title' }>{ podcast && podcast.title }</h2>
           <h2 className={ 'podcast-author' }>-{ podcast && podcast.speaker }</h2>
         </div>
         <div className = { 'card-footer' }>

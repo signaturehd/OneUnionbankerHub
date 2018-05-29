@@ -27,7 +27,7 @@ class EducationFragment extends Component {
     const EducationHome = () => (
       <div className={'background'}>
         <div className = { 'container-option1' }>
-          <i className = { 'left' } onClick = { () => history.push('/benefits') }></i>
+          <i className = { 'left' } onClick = { () => history.push('/mybenefits/benefits') }></i>
           <h1>Education</h1>
             <div className = { 'app' }>
               {
@@ -54,7 +54,7 @@ class EducationFragment extends Component {
     return (
       <div>
         <Switch>
-          <Route exact path = '/benefits/education' render = { EducationHome } />
+          <Route exact path = '/mybenefits/benefits/education' render = { EducationHome } />
         </Switch>
       </div>
     )
