@@ -223,7 +223,7 @@ export default class HRBenefitsService {
   /* Remarks */
 
   getRemarks (token, remarksParam) {
-    return this.apiClient.get('v1/remarks?benefitId=' + remarksParam, {
+    return this.apiClient.get('v1/transactions/matrix/remarks?benefitId=' + remarksParam, {
       headers: {token}
     })
   }

@@ -2,7 +2,6 @@ import GetTransactionDetailsInteractor from '../../../domain/interactor/transact
 import GetTransactionPersonalInteractor from '../../../domain/interactor/transactions/GetTransactionPersonalInteractor'
 
 import GetTransactionParam from '../../../domain/param/GetTransactionParam'
-import GetTransactionRemarksParam from '../../../domain/param/GetTransactionRemarksParam'
 
 export default class TransactionPresenter {
   constructor (container) {

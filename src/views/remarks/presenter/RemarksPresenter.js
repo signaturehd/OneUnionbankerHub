@@ -1,7 +1,7 @@
 import GetRemarksInteractor from '../../../domain/interactor/remarks/GetRemarksInteractor'
 import UpdateRemarksInteractor from '../../../domain/interactor/remarks/UpdateRemarksInteractor'
 
-import GetTransactionRemarksParam from '../../../domain/param/GetTransactionRemarksParam'
+import GetRemarksParam from '../../../domain/param/GetRemarksParam'
 
 export default class RemarksPresenter {
   constructor (container) {
@@ -17,9 +17,10 @@ export default class RemarksPresenter {
   }
 
   getRemarks (benefitId) {
-    this.getRemarksInteractor.execute(GetTransactionParam(id))
-      .subscribe(transactionResponse => {
-          this.view.getTransactionDetails(transactionResponse)
+    this.getRemarksInteractor.execute(GetRemarksParam(benefitId))
+      .subscribe(remarks => {
+        console.log(remarks)
+          this.view.getRemarks(remarks)
         }, e => {
           this.view.hideLoading()
       })

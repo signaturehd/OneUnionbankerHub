@@ -3,24 +3,30 @@ import PropTypes from 'prop-types'
 
 import Presenter from './presenter/RemarksPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
+import BaseMVPView from '../common/base/BaseMVPView'
 
 
 import { Modal, CircularLoader, GenericButton } from '../../ub-components/'
 
-class DisapproveModal extends Component {
+class DisapproveModal extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
       showCircular : false,
       approve : false,
+      remarks : null
     }
     this.onNo = this.onNo.bind(this)
   }
 
   componentDidMount () {
+    // console.log(this.presenter)
     this.presenter.getRemarks(this.props.benefitId)
   }
 
+  getRemarks (remarks) {
+    this.setState({remarks})
+  }
 
   onNo () {
     this.setState({showCircular : true})
@@ -31,11 +37,11 @@ class DisapproveModal extends Component {
     const {
       onClose,
       onNo,
-      details,
     } = this.props
 
     const {
-      showCircular
+      showCircular,
+      remarks
     } = this.state
 
     return (
@@ -44,21 +50,14 @@ class DisapproveModal extends Component {
         onClose = { onClose }
       >
         {
-          showCircular ?
-          <center>
-            <h3>Submitting Your Response</h3>
-            <CircularLoader show = {true} />
-          </center>
-          :
-          <div>
-            <h3>Are you sure you want to disapprove this request?</h3>
-            <GenericButton
-              onClick = { () => this.onNo()  }
-              text = { 'Yes' } />
-            <GenericButton
-              onClick = { onClose }
-              text = { 'Cancel' } />
-          </div>
+          remarks ?
+            <div>Rendered</div>
+              :
+            <center>
+              <h3>Please wait a moment</h3>
+              <CircularLoader show = {true} />
+            </center>
+
         }
 
       </Modal>
