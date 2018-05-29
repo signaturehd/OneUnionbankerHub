@@ -27,7 +27,7 @@ class DisapproveModal extends BaseMVPView {
 
   onDisapprove (remarks) {
     this.presenter.updateRemarks(this.props.transactionId , false, remarks)
-    this.setState({ showCircular : true })
+    this.setState({ showCircular : true, isDismisable : false })
   }
 
   onSuccess () {
@@ -36,7 +36,7 @@ class DisapproveModal extends BaseMVPView {
   }
 
   onFailed () {
-    this.setState({ showCircular : true })
+    this.setState({ showCircular : false, isDismisable : true })
   }
 
   getRemarks (remarks) {
@@ -53,13 +53,14 @@ class DisapproveModal extends BaseMVPView {
       showCircular,
       remarks,
       showOthers,
-      remarksText
+      remarksText,
+      isDismisable
     } = this.state
 
 
     return (
       <Modal
-        isDismisable = { true }
+        isDismisable = { isDismisable }
         onClose = { onClose }
       >
         {

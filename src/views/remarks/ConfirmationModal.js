@@ -14,12 +14,13 @@ class ConfirmationModal extends BaseMVPView {
       showCircular : false,
       approve: true,
       remarks: " ",
+      isDismisable : true,
     }
   }
 
   onApprove () {
     this.presenter.updateRemarks(this.props.transactionId , true, ' ')
-    this.setState({ showCircular : true })
+    this.setState({ showCircular : true, isDismisable : false })
   }
 
   onSuccess () {
@@ -28,7 +29,7 @@ class ConfirmationModal extends BaseMVPView {
   }
 
   onFailed () {
-    this.setState({ showCircular : true })
+    this.setState({ showCircular : false, isDismisable : true })
   }
 
   render () {
@@ -38,12 +39,13 @@ class ConfirmationModal extends BaseMVPView {
     } = this.props
 
     const {
-      showCircular
+      showCircular,
+      isDismisable
     } = this.state
 
     return (
       <Modal
-        isDismisable = { true }
+        isDismisable = { isDismisable }
         onClose = { onClose }
       >
         {
