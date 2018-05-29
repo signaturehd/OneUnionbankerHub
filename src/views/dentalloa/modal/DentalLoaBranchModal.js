@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal , GenericButton} from '../../../ub-components/'
+import { Modal , GenericButton } from '../../../ub-components/'
 
 class DentalLoaBranchModal extends Component {
   constructor (props) {
@@ -16,8 +16,8 @@ class DentalLoaBranchModal extends Component {
     Get Chosen Branch
   */
 
-  submitData (branchId, branchName) {
-    this.props.chosenBranch(branchId, branchName)
+  submitData (dentalClinicId, branchName) {
+    this.props.chosenBranch(dentalClinicId, branchName)
     this.props.onClose()
   }
 
@@ -34,7 +34,7 @@ class DentalLoaBranchModal extends Component {
       </div>
       <div className = { 'optical-modal-footer' }>
         {
-          details.map((branch, key ) =>
+          details.map((branch, key) =>
           <GenericButton
               key = { key }
               details = { branch }

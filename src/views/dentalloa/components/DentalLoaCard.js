@@ -11,7 +11,6 @@ import { GenericTextBox, GenericButton, Card } from '../../../ub-components'
 import '../../../../node_modules/react-datepicker/dist/react-datepicker.css'
 
 class DentalLoaCard extends Component {
-
   constructor (props) {
     super(props)
     this.state = {
@@ -20,7 +19,7 @@ class DentalLoaCard extends Component {
       showHealthwayBranchModal : false,
       showProcedureModal : false,
       datePicker : '',
-      date: moment(),
+      preferredDate: moment(),
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -33,8 +32,8 @@ class DentalLoaCard extends Component {
 
 
   onChange (data) {
-    this.setState({ date : data })
-    this.props.preferedDate(date)
+    this.setState({ preferredDate : data })
+    this.props.preferredDate(preferredDate)
   }
 
   render () {
@@ -54,7 +53,7 @@ class DentalLoaCard extends Component {
       submitForm,
     } = this.props
 
-    const { date, showRecipientModal, showHealthwayBranchModal, showProcedureModal } = this.state
+    const { preferredDate, showRecipientModal, showHealthwayBranchModal, showProcedureModal } = this.state
 
     return (
       <Card className={ 'dentalloa-card' }>
@@ -82,7 +81,7 @@ class DentalLoaCard extends Component {
               <DatePicker
                 dateFormat="LL"
                 readOnly
-                selected={this.state.date}
+                selected={this.state.preferredDate}
                 onChange={this.onChange}
                 className = {'calendar'}
                 calendarClassName = {"calendarClass"}/>

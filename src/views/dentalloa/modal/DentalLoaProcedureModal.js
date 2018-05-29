@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal , GenericButton} from '../../../ub-components/'
+import { Modal , GenericButton } from '../../../ub-components/'
 
 class DentalLoaProcedureModal extends Component {
   constructor (props) {
@@ -15,7 +15,7 @@ this.submitData = this.submitData.bind(this)
 /*
   Get Chosen Procedure
 */
-submitData ( value ) {
+submitData (value) {
   this.setState({ chosenProcedure : value })
   this.props.onClose()
 }
@@ -34,7 +34,7 @@ return (
     <div className = { 'optical-modal-footer' }>
       {
         details ?
-          details.map((procedure, key ) =>
+          details.map((procedure, key) =>
             procedure.id !== 3 &&
             procedure.id !== 4 &&
             procedure.id !== 5 &&
@@ -45,8 +45,8 @@ return (
                 disabled = { status }
                 details = {procedure}
                 text = { procedure.name}
-                onClick = { () => this.submitData( procedure )}/>
-              : <h3>{ procedure.name }</h3>
+                onClick = { () => this.submitData(procedure)}/> :
+              <h3>{ procedure.name }</h3>
             )
           :
           <center><h3>Please pick your Receipient</h3></center>

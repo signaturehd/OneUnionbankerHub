@@ -1,5 +1,6 @@
 import AddDentalLoaInteractor from '../../../domain/interactor/dentalLoa/AddDentalLoaInteractor'
 import GetDentalLoaInteractor from '../../../domain/interactor/dentalLoa/GetDentalLoaInteractor'
+import DentalLoaParam from '../../../domain/param/DentalLoaParam'
 
 
 export default class DentalLoaPresenter {
@@ -25,9 +26,9 @@ export default class DentalLoaPresenter {
  }
 
 
- addDentalLoa () {
+ addDentalLoa (accountNo, type, dependentId, releasingcCenter, branchId, procedures, preferedDate) {
   this.view.showLoading()
-  this.addDentalLoaInteractor.execute()
+  this.addDentalLoaInteractor.execute(DentalLoaParam(accountNo, type, dependentId, releasingcCenter, branchId, procedures, preferedDate))
    .subscribe(dentalloa => {
     this.view.hideLoading()
     this.view.addDentalLoa(dentalloa)
