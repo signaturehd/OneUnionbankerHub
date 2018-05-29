@@ -9,9 +9,12 @@ import Presenter from './presenter/BenefitsPresenter'
 import EducationFragment from './fragments/education/EducationFragment'
 import LoansFragment from './fragments/loans/LoansFragment'
 import MedicalFragment from './fragments/medical/MedicalFragment'
-import ReleasingCenterModal from './modal/ReleasingCenterModal'
 
-import { InputModal, Card, GenericButton, FloatingActionButton } from '../../ub-components'
+import TransactionPersonalFragment from '../transaction/TransactionPersonalFragment'
+import TransactionApprovalFragment from '../transaction/TransactionApprovalFragment'
+import OpticalFragment from '../optical/OpticalFragment'
+
+import { InputModal, Card, GenericButton } from '../../ub-components'
 
 import './styles/benefits.css'
 
@@ -21,21 +24,17 @@ class BenefitsFragment extends BaseMVPView {
 
     this.state = {
       showAccountNumberModal: false,
-      showReleasingCenterModal: false,
       accountNumber: '', // this is only used to handle onChange of input modal
-      releasingCenters: [],
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateFabToShow()
-    this.props.history.push('/benefits')
   }
 
-  showReleasingCenters(releasingCenters) {
-    this.setState({releasingCenters})
-    this.setState({ showReleasingCenterModal: true })
+  showReleasingCenters (releasingCenters) {
+  // TODO show to generic multilist dialog
   }
 
   onValidAccountNumber () {
@@ -47,27 +46,65 @@ class BenefitsFragment extends BaseMVPView {
   }
 
   render () {
-    const { history } = this.props
-    const { accountNumber, showAccountNumberModal, showReleasingCenterModal, releasingCenters } = this.state
+    const { history, onClick } = this.props
+    const { accountNumber, showAccountNumberModal } = this.state
+
     const benefitsOptions = [{
       id: 0 ,
       styleName: 'option-cards-1',
       title: 'EDUCATION',
-      path: '/benefits/education',
+      path: '/mybenefits/benefits/education',
     }, {
       id: 1 ,
       styleName: 'option-cards-2',
       title: 'MEDICAL',
-      path: '/benefits/medical',
+      path: '/mybenefits/benefits/medical',
     }, {
       id: 2,
       styleName: 'option-cards-3',
       title: 'LOANS',
-      path: '/benefits/loans',
+      path: '/mybenefits/benefits/loans',
     }]
-    const Benefits = () => (
-      <div className = { '_benefits-container' }>
-        <h1>Benefits</h1>
+
+  const Benefits = () => (
+    <div className = { '_benefits-container' }>
+      {
+        showAccountNumberModal &&
+        <InputModal
+          isDismisable = { true }
+          onClose = { () => this.setState({ showAccountNumberModal : false }) }
+          onChange = { e => this.setState({ accountNumber: e.target.value }) }
+          placeholder = { 'Account Number' }
+          type = { 'text' }
+          onSubmit = { e => {
+          e.preventDefault()
+          this.presenter.validateAccountNumber(accountNumber)
+              }
+            }
+          />
+      }
+        <div className = { 'adjustment' }>
+          <div className = { 'card-container' }>
+            {
+            benefitsOptions.map((value, idx) => (
+              <Card key={ idx }>
+                <div
+                  className = { value.styleName }
+                  text = { value.title }
+                  onClick = { () => history.push(value.path) } >
+                  <p className = { 'benefits-option-cards' }> { value.title } </p>
+                </div>
+              </Card>
+            ))
+            }
+        </div>
+      </div>
+    </div>)
+
+  return (
+    <div>
+      { super.render() }
+        <h1 className = {'title-view' }>My Benefits</h1>
         {
           showAccountNumberModal &&
             <InputModal
@@ -83,49 +120,48 @@ class BenefitsFragment extends BaseMVPView {
               }
             />
         }
-        {
-          showReleasingCenterModal &&
-            <ReleasingCenterModal
-              isDismisable = { true }
-              releasingCenters = { releasingCenters }
-              onClose = {() => this.setState({ showReleasingCenterModal: false })}
-              type = { 'text' }
-            />
-        }
-        <div className = { 'adjustment' }>
-        <div className = { 'card-container' }>
-          {
-          benefitsOptions.map((value, idx) => (
-            <Card key={ idx }>
-              <div
-                className = { value.styleName }
-                text = { value.title }
-                onClick = { () => history.push(value.path) } >
-                <p className = { 'benefits-option-cards' }> { value.title } </p>
-              </div>
-            </Card>
-          ))
-          }
+        <div className = { 'tabs-container' }>
+          <input
+            className = { 'input-tab' }
+            id='tab1'
+            type='radio'
+            name='tabs'
+            defaultChecked = {true}
+            onClick = { () => this.props.history.push('/mybenefits/benefits') }/>
+            <label  className = { 'mobile-icon' } htmlFor = 'tab1'>Benefits</label>
+
+           <input
+              className = { 'input-tab' }
+              id='tab2'
+              type='radio'
+              name='tabs'
+              onClick = { () => this.props.history.push('/mybenefits/transactions/personal') } />
+              <label className = { 'mobile-icon' } htmlFor='tab2'>My Transactions</label>
+
+           <input
+              className = { 'input-tab' }
+              id='tab3'  type='radio'
+              name='tabs'
+              onClick = { () => this.props.history.push('/mybenefits/transactions/approval') } />
+              <label className = { 'mobile-icon' } htmlFor = 'tab3' >For Approval</label>
+
+          <section id='content1'>
+              <Switch>
+                <Route path = '/mybenefits/transactions/personal'
+                  render = { props => <TransactionPersonalFragment { ...props } /> } />
+                <Route path = '/mybenefits/transactions/approval'
+                  render = { props => <TransactionApprovalFragment { ...props }/> } />
+                <Route path = '/mybenefits/benefits/education'
+                  render = { props => <EducationFragment { ...props } />}/>
+                <Route exact path = '/mybenefits/benefits/medical'
+                  render = { props => <MedicalFragment { ...props } />}/>
+                <Route path = '/mybenefits'
+                  render = { Benefits } />
+             </Switch>
+          </section>
         </div>
       </div>
-      {
-        <FloatingActionButton
-          text = "+"
-          onClick = { () => this.presenter.getReleasingCenters() }
-        />
-      }
-    </div>
-  )
-
-    return (
-    <div>
-       <Switch>
-         <Route exact path = '/benefits' render = { Benefits } />
-         <Route path = '/benefits/education' render = { props => <EducationFragment { ...props } />}/>
-         <Route path = '/benefits/medical' render = { props => <MedicalFragment { ...props } />}/>
-         <Route path = '/benefits/loans' render = { props => <LoansFragment  { ...props } />}/>
-      </Switch>
-    </div>)
+    )
   }
 }
 
