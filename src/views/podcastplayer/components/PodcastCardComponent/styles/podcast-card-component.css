@@ -12,8 +12,11 @@
 .podcasts-details-side-right {
   padding: 25px;
 }
-.news-body {
+.podcast-body {
   padding : 50px;
+}
+.podcast-card {
+  margin-bottom : 10px;
 }
 .fa-play-button {
   font-size : 50px;
@@ -29,6 +32,7 @@
   width: 50px;
 }
 .podcasts-player-details {
+  width: 700px;
   border-top : 1px;
   border-bottom : 1px;
 }

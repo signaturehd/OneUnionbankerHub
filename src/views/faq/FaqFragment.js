@@ -31,9 +31,8 @@ class FaqFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.history.push('/faqs')
     this.presenter.getFaqs(this.state.faqsList)
-    this.props.setSelectedNavigation(3)
+    this.props.setSelectedNavigation(2)
   }
 
   /**

@@ -5,7 +5,12 @@ import ConnectView from '../../utils/ConnectView'
 
 import PropTypes from 'prop-types'
 
-import { Modal, GenericTextBox, GenericButton, CircularLoader } from '../../ub-components/'
+import {
+  Modal,
+  GenericTextBox,
+  GenericButton,
+  CircularLoader
+} from '../../ub-components/'
 
 class Notice extends BaseMVPView {
   constructor (props) {

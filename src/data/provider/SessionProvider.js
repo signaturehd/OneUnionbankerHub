@@ -24,7 +24,6 @@ export default class SessionProvider {
   getAccountToken () {
     return this.storage.getItem(ACCOUNT_TOKEN) || ''
 
-
   }
 
   setAccountNumber (accountNumber = '') {

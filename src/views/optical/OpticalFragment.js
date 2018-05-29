@@ -11,8 +11,6 @@ import './styles/optical.css'
 
 import { CircularLoader } from '../../ub-components'
 
-import { connect } from 'react-redux'
-
 class OpticalFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -29,6 +27,7 @@ class OpticalFragment extends BaseMVPView {
 
   componentDidMount () {
     this.presenter.getOptical()
+    this.props.setSelectedNavigation(1)
   }
 
   isEligible (resp) {
@@ -44,7 +43,7 @@ class OpticalFragment extends BaseMVPView {
   }
 
   navigate () {
-    this.props.history.push('/benefits/medical')
+    this.props.history.push('/mybenefits/benefits/medical')
   }
 
   submitForm (amount, finalFile1, finalFile2) {
@@ -141,8 +140,4 @@ class OpticalFragment extends BaseMVPView {
   }
 }
 
-const mapStateToProps = state => ({
-  notify: state.notify
-})
-
-export default ConnectView(connect(mapStateToProps)(OpticalFragment), Presenter)
+export default ConnectView(OpticalFragment, Presenter)
