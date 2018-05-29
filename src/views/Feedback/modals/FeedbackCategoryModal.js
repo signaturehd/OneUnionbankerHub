@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './feedback-modal.css'
-import { Modal , GenericButton} from '../../../ub-components/'
+import { Modal , GenericButton } from '../../../ub-components/'
 
 class FeedbackCategoryModal extends Component {
   constructor (props) {
@@ -19,7 +19,7 @@ class FeedbackCategoryModal extends Component {
 
   render () {
   const {
-    details,
+    feedback,
     onClose,
     showCategoryModal,
     text,
@@ -40,13 +40,13 @@ class FeedbackCategoryModal extends Component {
       </div>
       <div className = { 'feedback-modal-footer' }>
         {
-          feedback && feedback.map((category, key ) =>
+          feedback && feedback.map((category, key) =>
           <GenericButton
               key = { key }
               feedback = { category }
               className = { 'feedback-modal-option-button' }
-              text = { details.feedbackCategory }
-              onClick = { () => this.submitData(details.id, details.feedbackCategory) }/>
+              text = { category.feedbackCategory }
+              onClick = { () => this.submitData(category.id, category.feedbackCategory) }/>
           )
         }
       </div>
