@@ -158,6 +158,10 @@ export default class HRBenefitsClient {
     return this.service.getDentalReimbursement(token)
       .pipe(ServiceErrorOperator())
   }
+  addDentalReimbursement (token, DentalRParam) {
+    return this.service.getDentalReimbursement(token, DentalRParam)
+      .pipe(ServiceErrorOperator())
+  }
 
   /* dental loa */
 
