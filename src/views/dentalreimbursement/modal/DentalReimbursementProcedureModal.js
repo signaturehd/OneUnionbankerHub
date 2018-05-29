@@ -5,7 +5,7 @@ import { Modal , GenericButton } from '../../../ub-components/'
 
 class DentalReimbursementProcedureModal extends Component {
 
-  render () {
+render () {
     const { onClose, procedures, onSubmit } = this.props
 
 return (

@@ -27,6 +27,7 @@ class DentalReimbursementFragment extends BaseMVPView {
 
   componentDidMount () {
     this.presenter.getDentalReimbursement()
+    this.presenter.addDentalReimbursement()
   }
 
   hideCircularLoader ( disabled ) {
@@ -68,10 +69,11 @@ class DentalReimbursementFragment extends BaseMVPView {
             {
               disabled ?
                <center className = { 'dentalloa-loader' }>
-                  <CircularLoader show = {this.state.disabled}/>
+                <CircularLoader show = {this.state.disabled}/>
                </center>
                :
               <DentalReimbursementCard
+                presenter = { this.presenter }
                 dependents = { dependents }/>
             }
           </div>

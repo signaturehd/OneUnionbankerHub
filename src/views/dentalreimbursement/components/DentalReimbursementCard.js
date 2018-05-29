@@ -11,22 +11,19 @@ class DentalReimbursementCard extends Component {
   constructor (props) {
   super(props)
 this.state = {
-  showConfirmation: false,
-  file: '',
-  file2: '',
+  file: '', // file1 array
+  file2: '',// file2 array
   imagePreviewUrl: '',
   imagePreviewUrl2: '',
   procedureModal : false, // display procedure modal
   dependents: [],
-  selectedDependent: null,
-  selectedProcedures: [],
+  selectedDependent: null, //selected dependent
+  selectedProcedures: [], //selected procedure
   procedureModal: false,
   reviewModal: false,
-
   submit: '',
   warning: '',
   procedure: '',
-  attachmentsSubmission : [],
 }
   this.handleImageChange = this.handleImageChange.bind(this)
   this.handleImageChange2 = this.handleImageChange2.bind(this)
@@ -37,18 +34,12 @@ Form Submission
 */
 handleSubmit(e) {
   e.preventDefault()
-  if(this.state.file === '' || this.state.file2 === '') {
-    this.setState({warning : 'Upload the needed file the needed'})
-  }
-  else
-  {
-  this.setState({showConfirmation : true})
-  console.log(this.state.selectedProcedures)
-  console.log(this.state.selectedDependent)
-  console.log(this.state.imagePreviewUrl)
-  console.log(this.state.imagePreviewUrl2)
-  this.setState({warning : ''})
-  }
+       this.props.presenter.addDentalReimbursement(
+         'UBP',
+         this.state.file,
+         this.state.file2,
+         this.selectedDependent.id,
+         this.selectedProcedures)
 }
 /*
 Optical Certificate Atachments
@@ -84,10 +75,9 @@ handleImageChange2(e1) {
   }
   reader2.readAsDataURL(file2)
 }
-
 render () {
     const { details, fileReceived, fileReceived2, onClick, dependents } = this.props
-    const { reviewModal, selectedDependent, selectedProcedures, procedureModal, attachmentsSubmission, showConfirmation, warning, procedure, showResults } = this.state
+    const { reviewModal, selectedDependent, selectedProcedures, procedureModal, warning, procedure, showResults } = this.state
     let {imagePreviewUrl, imagePreviewUrl2} = this.state
     let $imagePreview = null
     let $imagePreview2 = null
@@ -109,9 +99,8 @@ render () {
         }
       }
 
-
-    $imagePreview = (<div style = {styleImage.image1}></div>)
-    $imagePreview2 = (<div style = {styleImage.image2}></div>)
+  $imagePreview = (<div style = {styleImage.image1}></div>)
+  $imagePreview2 = (<div style = {styleImage.image2}></div>)
 
 return (
   <div className = { 'dentalreimbursement-container' }>
@@ -212,7 +201,6 @@ DentalReimbursementCard.propTypes = {
   onClick : PropTypes.func,
   procedure : PropTypes.string,
   warning : PropTypes.string,
-  attachmentsSubmission : PropTypes.array,
   dependents: PropTypes.array,
 }
 DentalReimbursementCard.defaultProps = {
