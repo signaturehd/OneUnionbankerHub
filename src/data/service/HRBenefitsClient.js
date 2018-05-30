@@ -61,10 +61,11 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getAccountNumber()
   }
 
+  /*Set Selected Releasing Center*/
   setReleasingCenter (releasingCenter) {
     this.sessionProvider.setReleasingCenter(releasingCenter)
   }
-
+  /*Get Selected Releasing Center*/
   getReleasingCenter () {
     return this.sessionProvider.getReleasingCenter()
   }
@@ -166,8 +167,18 @@ export default class HRBenefitsClient {
     return this.service.getDentalReimbursement(token)
       .pipe(ServiceErrorOperator())
   }
-  addDentalReimbursement (token, DentalRParam) {
-    return this.service.getDentalReimbursement(token, DentalRParam)
+  addDentalReimbursement (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    dentalReimbursementParam) {
+    return this.service.addDentalReimbursement(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      dentalReimbursementParam)
       .pipe(ServiceErrorOperator())
   }
 

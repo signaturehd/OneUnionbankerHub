@@ -54,18 +54,19 @@ export default class HRBenefitsService {
     })
   }
 
-  addDentalReimbursement (token, accountToken, accountNumber, DentalRParam) {
+  addDentalReimbursement (token, accountToken, accountNumber, releasingCenter, dentalReimbursementParam) {
+    const formData = new FormData()
     const dentalRObject = {
-      accountNumber ,
-      releasingCenter: 'UBP',
-      distributor: 'distributorTest'
+      accountNumber,
+      releasingCenter : releasingCenter,
+      type : 1,
+      procedures : dentalReimbursementParam.procedure
     }
+
     formData.append('uuid', 12345)
-    formData.append('releasingCenter', DentalParam.releasingCenter)
-    formData.append('opt', DentalParam.file1)
-    formData.append('med', DentalParam.file2)
-    formData.append('dependentId', DentalRParam.dependentId)
-    formData.append('procedures', DentalRParam.procedure)
+    formData.append('dent-cert', dentalReimbursementParam.file1)
+    formData.append('dependentId', dentalReimbursementParam.dependentId)
+    formData.append('sample11', dentalReimbursementParam.file2)
     formData.append('body', JSON.stringify(dentalRObject))
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {
       headers : { token, accountToken }
