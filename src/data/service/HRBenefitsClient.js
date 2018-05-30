@@ -61,6 +61,14 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getAccountNumber()
   }
 
+  setReleasingCenter (releasingCenter) {
+    this.sessionProvider.setReleasingCenter(releasingCenter)
+  }
+
+  getReleasingCenter () {
+    return this.sessionProvider.getReleasingCenter()
+  }
+
   setProfile (profile) {
     this.sessionProvider.setProfile(profile)
   }

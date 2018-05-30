@@ -179,9 +179,9 @@ export default class HRBenefitsService {
         headers: { token }
     })
   }
-
-  paddRating (token, bookParam) {
-    return this.apiClient.post('v1/books/podcasts', bookParam, {
+  /* Updated Podcast rating */
+  paddRating (token, podcastParam) {
+    return this.apiClient.post('v1/podcasts/rate', podcastParam, {
       headers : { token }
     })
   }
