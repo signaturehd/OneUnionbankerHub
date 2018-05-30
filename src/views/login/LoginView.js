@@ -13,7 +13,7 @@ import {
   Notify
 } from '../../ub-components'
 
-import './css/login.css'
+import './styles/login.css'
 
 import OtpModal from '../otp/OtpModal'
 

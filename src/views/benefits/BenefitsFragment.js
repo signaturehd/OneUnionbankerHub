@@ -14,7 +14,14 @@ import TransactionPersonalFragment from '../transaction/TransactionPersonalFragm
 import TransactionApprovalFragment from '../transaction/TransactionApprovalFragment'
 import OpticalFragment from '../optical/OpticalFragment'
 
-import { InputModal, Card, GenericButton } from '../../ub-components'
+import {
+  InputModal,
+  Card,
+  GenericButton,
+  FloatingActionButton
+ } from '../../ub-components'
+
+import ReleasingCenterModal from './modal/ReleasingCenterModal'
 
 import './styles/benefits.css'
 
@@ -24,6 +31,10 @@ class BenefitsFragment extends BaseMVPView {
 
     this.state = {
       showAccountNumberModal: false,
+      showReleasingCenterModal : false,
+      releasingCenters: null,
+      showModal: false,
+      isAccountNumber: null,
       accountNumber: '', // this is only used to handle onChange of input modal
     }
   }
@@ -31,10 +42,16 @@ class BenefitsFragment extends BaseMVPView {
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateFabToShow()
+    this.presenter.getReleasingCenters()
   }
 
   showReleasingCenters (releasingCenters) {
+    this.setState({releasingCenters})
   // TODO show to generic multilist dialog
+  }
+
+  showManagersCheck () {
+    this.setState({ showReleasingCenterModal: true })
   }
 
   onValidAccountNumber () {
@@ -45,9 +62,28 @@ class BenefitsFragment extends BaseMVPView {
     this.setState({ showAccountNumberModal: true })
   }
 
+  setReleasingCenter (releasingCenter) {
+    this.presenter.setReleasingCenter(releasingCenter)
+  }
+
+  isAccountNumber (bool) {
+    if (bool) {
+      this.setState({ showAccountNumberModal: true, isAccountNumber : bool })
+    } else {
+      this.setState({ showReleasingCenterModal: true, isAccountNumber : bool })
+    }
+  }
+
   render () {
     const { history, onClick } = this.props
-    const { accountNumber, showAccountNumberModal } = this.state
+    const {
+      accountNumber,
+      showAccountNumberModal,
+      showReleasingCenterModal,
+      releasingCenters,
+      showModal,
+      isAccountNumber,
+    } = this.state
 
     const benefitsOptions = [{
       id: 0 ,
@@ -69,20 +105,30 @@ class BenefitsFragment extends BaseMVPView {
   const Benefits = () => (
     <div className = { '_benefits-container' }>
       {
-        showAccountNumberModal &&
-        <InputModal
-          isDismisable = { true }
-          onClose = { () => this.setState({ showAccountNumberModal : false }) }
-          onChange = { e => this.setState({ accountNumber: e.target.value }) }
-          placeholder = { 'Account Number' }
-          type = { 'text' }
-          onSubmit = { e => {
-          e.preventDefault()
-          this.presenter.validateAccountNumber(accountNumber)
+          showAccountNumberModal &&
+          <InputModal
+            isDismisable = { true }
+            onClose = { () => this.setState({ showAccountNumberModal : false }) }
+            onChange = { e => this.setState({ accountNumber: e.target.value }) }
+            placeholder = { 'Account Number' }
+            type = { 'text' }
+            onSubmit = { e => {
+            e.preventDefault()
+            this.presenter.validateAccountNumber(accountNumber)
+                }
               }
-            }
           />
-      }
+        }
+        {
+          showReleasingCenterModal &&
+            <ReleasingCenterModal
+              isDismisable = { true }
+              releasingCenters = { releasingCenters }
+              onClick = { (releasingCenter) => this.setReleasingCenter(releasingCenter) }
+              onClose = { () => this.setState({ showReleasingCenterModal: false }) }
+              type = { 'text' }
+            />
+        }
         <div className = { 'adjustment' }>
           <div className = { 'card-container' }>
             {
@@ -99,27 +145,23 @@ class BenefitsFragment extends BaseMVPView {
             }
         </div>
       </div>
+      <FloatingActionButton
+        text = "+"
+        onClick = { () =>
+          {
+            isAccountNumber ?
+            this.setState({showAccountNumberModal : true})
+            :
+            this.setState({showReleasingCenterModal : true})
+          }
+        }
+      />
     </div>)
 
   return (
     <div>
       { super.render() }
         <h1 className = {'title-view' }>My Benefits</h1>
-        {
-          showAccountNumberModal &&
-            <InputModal
-              isDismisable = { true }
-              onClose = { () => this.setState({ showAccountNumberModal : false }) }
-              onChange = { e => this.setState({ accountNumber: e.target.value }) }
-              placeholder = { 'Account Number' }
-              type = { 'text' }
-              onSubmit = { e => {
-                  e.preventDefault()
-                  this.presenter.validateAccountNumber(accountNumber)
-                }
-              }
-            />
-        }
         <div className = { 'tabs-container' }>
           <input
             className = { 'input-tab' }
