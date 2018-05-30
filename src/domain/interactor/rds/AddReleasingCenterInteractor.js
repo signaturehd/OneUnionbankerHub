@@ -4,7 +4,6 @@ export default class GetReleasingCentersInteractor {
   }
 
   execute (releasingCenter) {
-    console.log(releasingCenter)
     return this.client.setReleasingCenter(releasingCenter)
   }
 }
