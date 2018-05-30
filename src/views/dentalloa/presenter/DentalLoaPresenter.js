@@ -26,9 +26,9 @@ export default class DentalLoaPresenter {
  }
 
 
- addDentalLoa (accountNo, type, dependentId, releasingcCenter, branchId, procedures, preferedDate) {
+ addDentalLoa (accountNo, type, dependentId, branchId, procedures, preferedDate) {
   this.view.showLoading()
-  this.addDentalLoaInteractor.execute(DentalLoaParam(accountNo, type, dependentId, releasingcCenter, branchId, procedures, preferedDate))
+  this.addDentalLoaInteractor.execute(DentalLoaParam(accountNo, type, dependentId, branchId, procedures, preferedDate))
    .subscribe(dentalloa => {
     this.view.hideLoading()
     this.view.addDentalLoa(dentalloa)

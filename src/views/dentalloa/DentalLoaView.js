@@ -82,6 +82,7 @@ class DentalLoaView extends BaseMVPView {
       procedures,
       preferedDate,
     } = this.state
+    console.log(procedure)
 
     return(
       <div  className = { 'benefits-container' }>

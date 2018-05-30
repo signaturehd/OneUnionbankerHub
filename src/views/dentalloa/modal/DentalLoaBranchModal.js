@@ -16,8 +16,8 @@ class DentalLoaBranchModal extends Component {
     Get Chosen Branch
   */
 
-  submitData (dentalClinicId, branchName) {
-    this.props.chosenBranch(dentalClinicId, branchName)
+  submitData (branchId, branchName) {
+    this.props.chosenBranch(branchId, branchName)
     this.props.onClose()
   }
 

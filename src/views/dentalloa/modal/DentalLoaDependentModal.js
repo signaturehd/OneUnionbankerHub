@@ -11,8 +11,8 @@ class DentalLoaDependentModal extends Component {
 /*
   Get Dependent Data
 */
-  sendDependents (dependentId, receipientText, procedure) {
-    this.props.chosenDependent(dependentId, receipientText, procedure, false)
+  sendDependents (receipientId, receipientText, procedure) {
+    this.props.chosenDependent(receipientId, receipientText, procedure, false)
     this.props.onClose()
   }
 

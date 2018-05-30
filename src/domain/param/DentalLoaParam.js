@@ -1,9 +1,9 @@
-export default (accountNo, type, dependentId, releasingCenter, branchId, procedures, preferedDate) => ({
+export default (accountNo, type, dependentId, branchId, procedures, preferedDate) => ({
+
   accountNo,
   type,
   dependentId,
-  dentalClinicId: branchId,
-  releasingCenter,
-  preferredDate: preferedDate,
+  dentalClinicId: branchId ,
+  preferredDate : preferedDate,
   dentalProcedures: procedures,
 })
