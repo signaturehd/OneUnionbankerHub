@@ -3,7 +3,7 @@ import GetDentalReimbursementInteractor from '../../../domain/interactor/dentalR
 
 import { Observable } from 'rxjs'
 
-import DentalRParam from '../../../domain/param/DentalRParam'
+import dentalReimbursementParam from '../../../domain/param/DentalRParam'
 
 import { NotifyActions } from '../../../actions'
 import store from '../../../store'
@@ -12,6 +12,7 @@ export default class DentalReimbursementPresenter {
   constructor (container) {
   this.AddDentalReimbursementInteractor =
     new AddDentalReimbursementInteractor(container.get('HRBenefitsClient'))
+
   this.getDentalReimbursementInteractor =
     new GetDentalReimbursementInteractor(container.get('HRBenefitsClient'))
 
@@ -32,10 +33,10 @@ export default class DentalReimbursementPresenter {
   .subscribe()
   }
 
-  addDentalReimbursement (releasingCenter, file1, file2, dependentId, procedure) {
+  addDentalReimbursement (file1, file2, dependentId, procedure) {
     this.view.showCircularLoader()
     this.AddDentalReimbursementInteractor.execute(
-      DentalRParam(releasingCenter, file1, file2, dependentId, procedure))
+      dentalReimbursementParam(file1, file2, dependentId, procedure))
       .subscribe(
         data => {
           store.dispatch( NotifyActions.addNotify({

@@ -21,25 +21,24 @@ class DentalReimbursementFragment extends BaseMVPView {
       procedureModal: false,
       reviewModal: false,
       disabled: false, // this is for circular loader
-
     }
   }
 
   componentDidMount () {
     this.presenter.getDentalReimbursement()
-    this.presenter.addDentalReimbursement()
   }
 
   hideCircularLoader ( disabled ) {
     this.setState({ disabled : false })
   }
 
+
   showCircularLoader ( disabled ) {
     this.setState({ disabled : true })
   }
 
   navigate () {
-    this.props.history.push('/benefits/medical')
+    this.props.history.push('/mybenefits/benefits/medical')
   }
 
   showDentalReimbursementValidate ( validateDentalReimbursementResp ) {

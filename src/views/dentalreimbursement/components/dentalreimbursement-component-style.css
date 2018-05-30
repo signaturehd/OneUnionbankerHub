@@ -13,7 +13,7 @@
   position: relative;
   background: url('../../../images/uploadicon-grey.jpg') no-repeat center center;
   background-size: 50px;
-  width: 225px;
+  width: -webkit-fill-available;
   height: 240px;
   object-fit: cover;
   border-radius: 20px;
@@ -46,4 +46,13 @@
   text-align: center;
   font-family: arial;
   float: right;
+}
+
+.dentalreimbursement-upload-header {
+  margin-top: 20px;
+}
+
+.dentalreimbursement-header-chooseDependents {
+  margin: 50px 0 5px 0px;
+  font-size: 16px;
 }
