@@ -13,7 +13,6 @@ class FaqCardComponent extends Component {
 
   render () {
   const { onClick, title, icon, imageResponse } = this.props
-  console.log(imageResponse)
   const style = {
     iconFaqs : {
       background : `url('${imageResponse}') rgb(0,0,0,0.7)`,
@@ -30,7 +29,6 @@ class FaqCardComponent extends Component {
       <Card
         className = { 'faqs-container' }
         onClick = { onClick }>
-        <ImageLoader file={imageResponse} alt='some text'/>
         <div style = { style.iconFaqs } className = { 'faqs-body' }>
         <h2>{ title }</h2>
         </div>
