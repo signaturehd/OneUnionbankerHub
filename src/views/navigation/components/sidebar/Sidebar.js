@@ -35,34 +35,29 @@ class SideBar extends Component {
       {
         id: 1 ,
         title: 'My Benefits',
-        action: () => history.push('/benefits'),
+        action: () => history.push('/mybenefits'),
         className: 'benefits-icon mobile-icon'
       },
       {
         id: 2 ,
-        title: 'Transactions',
-        action: () => history.push('/transactions'),
-        className: 'transaction-icon mobile-icon' },
-      {
-        id: 3 ,
         title: 'FAQS',
         action: () => history.push('/faqs'),
         className: 'faqs-icon mobile-icon'
       },
       {
-        id: 4 ,
+        id: 3 ,
         title: 'My Profile',
         action: () => history.push('/settings'),
         className: 'settings-icon mobile-icon'
       },
       {
-        id: 5 ,
+        id: 4 ,
         title: 'MyLearning',
         action: () => history.push('/mylearning'),
         className: 'mylearning-icon mobile-icon'
       },
       {
-        id: 6 ,
+        id: 5 ,
         title: 'Logout',
         action: logout,
         className: 'logout-icon mobile-icon'

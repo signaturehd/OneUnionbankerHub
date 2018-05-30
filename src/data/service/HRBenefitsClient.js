@@ -34,6 +34,7 @@ export default class HRBenefitsClient {
     return this.service.notice(token, noticeParam)
       .pipe(ServiceErrorOperator())
   }
+
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
@@ -58,6 +59,14 @@ export default class HRBenefitsClient {
 
   getAccountNumber () {
     return this.sessionProvider.getAccountNumber()
+  }
+
+  setReleasingCenter (releasingCenter) {
+    this.sessionProvider.setReleasingCenter(releasingCenter)
+  }
+
+  getReleasingCenter () {
+    return this.sessionProvider.getReleasingCenter()
   }
 
   setProfile (profile) {
@@ -99,11 +108,6 @@ export default class HRBenefitsClient {
 
   reserveBook (token, BookReserveParam) {
     return this.service.ReserveBook(token, BookReserveParam)
-        .pipe(ServiceErrorOperator())
-  }
-
-  reserveBook (token, BookReserveParam) {
-    return this.service.reserveBook(token, BookReserveParam)
         .pipe(ServiceErrorOperator())
   }
 
@@ -158,7 +162,6 @@ export default class HRBenefitsClient {
   }
 
   /* dental reimbursement */
-
   getDentalReimbursement (token) {
     return this.service.getDentalReimbursement(token)
       .pipe(ServiceErrorOperator())
@@ -169,6 +172,24 @@ export default class HRBenefitsClient {
   /* News */
   getNews (token) {
     return this.service.getNews(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Transactions Personal */
+  getTransactionsPersonal (token) {
+    return this.service.getTransactionsPersonal(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Transactions Approval */
+  getTransactionsApproval (token) {
+    return this.service.getTransactionsApproval(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Transaction Details */
+  getTransactionsDetails (token, GetTransactionParam){
+    return this.service.getTransactionsDetails(token, GetTransactionParam)
       .pipe(ServiceErrorOperator())
   }
 
@@ -183,12 +204,22 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getFaqsCategories (token) {
+    return this.service.getFaqsCategories(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Notice of Undertaking */
   updateNotice (token, noticeParam) {
     return this.service.updateNotice(token, noticeParam)
       .pipe(ServiceErrorOperator())
   }
 
+  /* Remarks */
+  getRemarks (token, remarksParam) {
+    return this.service.getRemarks(token, remarksParam)
+      .pipe(ServiceErrorOperator())
+  }
 
   getFaqsCategories (token) {
     return this.service.getFaqsCategories(token)
@@ -203,6 +234,11 @@ export default class HRBenefitsClient {
   getFaqsImage (accountToken, ImageParam) {
     return this.service.getFaqsImage(accountToken, ImageParam)
     .pipe(ServiceErrorOperator())
+  }
+
+  updateRemarks (token, remarksParam) {
+    return this.service.updateRemarks(token, remarksParam)
+      .pipe(ServiceErrorOperator())
   }
 
 }
