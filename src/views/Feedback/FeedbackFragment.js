@@ -49,6 +49,7 @@ class FeedbackView extends BaseMVPView {
 
    return (
       <div>
+        <h2 className = { 'header-margin-default ' }>FEEDBACK</h2>
         {
           showCategoryModal &&
           <FeedbackCategoryModal
@@ -59,20 +60,16 @@ class FeedbackView extends BaseMVPView {
         }
         <div className={ 'breadcrumbs-container' }>
         </div>
-        <div className = { 'feedback-container' }>
-            <div className = { 'feedback-container' }>
-              {
-                <FeedbackCard
-                  feedbackCategory = { feedbackValue }
-                  submitForm = { (feedbackValue) => this.submitForm(feedbackId, feedbackValue) }
-                  onClick = {
-                    (showCategoryModal) =>
-                    this.setState({ showCategoryModal })
-                  }
-                />
-              }
-           </div>
-        </div>
+            {
+              <FeedbackCard
+                feedbackCategory = { feedbackValue }
+                submitForm = { (feedbackValue) => this.submitForm(feedbackId, feedbackValue) }
+                onClick = {
+                  (showCategoryModal) =>
+                  this.setState({ showCategoryModal })
+                }
+              />
+            }
       </div>
     )
   }

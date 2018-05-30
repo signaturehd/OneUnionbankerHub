@@ -51,14 +51,13 @@ class FeedbackCard extends Component {
         feedbackTextareaValue = { feedbackTextareaValue }
          >
         <div className = { 'feedback-header' } >
-          <h2> Feedback </h2>
           <div className = { 'feedback-body' }>
             <div className = { 'feedback-col span_1_of_3' }>
             <center>
               <GenericTextBox
                value = { feedbackCategory && feedbackCategory }
                readOnly
-               onClick = { () => onClick(true)}
+               onClick = { () => onClick(true) }
                placeholder = { 'Feedback Title' }
              />
             </center>
