@@ -1,6 +1,7 @@
 const TOKEN = 'TOKEN'
 const ACCOUNT_TOKEN = 'ACCOUNT_TOKEN'
 const ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
+const RELEASING_CENTER = 'RELEASING_CENTER'
 const PROFILE = 'PROFILE'
 
 export default class SessionProvider {
@@ -32,6 +33,14 @@ export default class SessionProvider {
 
   getAccountNumber () {
     return this.storage.getItem(ACCOUNT_NUMBER) || ''
+  }
+
+  setReleasingCenter (releasingCenter = '') {
+    this.storage.setItem(RELEASING_CENTER, releasingCenter)
+  }
+
+  getReleasingCenter () {
+    return this.storage.getItem(RELEASING_CENTER) || ''
   }
 
   setProfile (profile) {

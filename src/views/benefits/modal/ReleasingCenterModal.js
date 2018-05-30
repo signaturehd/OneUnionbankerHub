@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import PropTypes from 'prop-types'
 
-import { GenericButton, GenericTextBox } from '../../../ub-components'
+import { GenericButton, GenericTextBox, CircularLoader } from '../../../ub-components'
 
 import Modal from '../../../ub-components/Modal/Modal'
 
@@ -13,33 +13,45 @@ class ReleasingCenterModal extends Component {
     super(props)
   }
 
-  renderReleasingCenter (releasingCenters) {
-    return releasingCenters ?
-    releasingCenters.map((releasingCenter, key) => {
-      return (
-        <GenericButton
-          className = { 'dentalloa-modal-option-button' }
-          key = { key }
-          text = { releasingCenter.unit }
-        />
-      )
-    })
-    :
-    <div></div>
-
-  }
   render() {
-      const { onClose, type, placeholder, onSubmit, isDismisable, releasingCenters } = this.props
+    const {
+      onClose,
+      type,
+      placeholder,
+      onSubmit,
+      isDismisable,
+      releasingCenters,
+      onClick
+    } = this.props
+
     return (
-      <form onSubmit = {onSubmit}>
-        <Modal
-          onClose = {onClose}
-          isDismisable = {isDismisable}>
-          <div>
-          { this.renderReleasingCenter(releasingCenters) }
-          </div>
-        </Modal>
-      </form>
+      <Modal
+        onClose = {onClose}
+        isDismisable = {isDismisable}>
+        <div>
+
+        { releasingCenters ?
+          releasingCenters.map((releasingCenter, key) => ((
+              <GenericButton
+                className = { 'dentalloa-modal-option-button' }
+                key = { key }
+                onClick = { () => {onClick(releasingCenter.unit), onClose()} }
+                text = { releasingCenter.unit }
+              />
+            ))
+          )
+          :
+          <center>
+            <h3>Releasing Center is Loading Please wait</h3>
+            <br/>
+            <br/>
+            <CircularLoader show={true}/>
+            <br/>
+            <br/>
+          </center>
+        }
+        </div>
+      </Modal>
     )
   }
 }
