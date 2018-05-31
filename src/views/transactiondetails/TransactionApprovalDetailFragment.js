@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Presenter from './presenter/TransactionDetailsPresenter'
+import Presenter from './presenter/TransactionApprovalDetailsPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
 
@@ -25,37 +25,46 @@ function  TransactionDetails ( props )  {
   const transactionId = props.details.benefitType.id
   const transactionDetails = props.details
   const transactionsPerson = props.transactions
+  const attachments = props.attachments
   if (transactionId == 6) {
     return <DentalRDetailsFragment
+      attachments = { attachments }
       details = { transactionDetails }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 7) {
     return <DentalLoaDetailsFragment
+      attachments = { attachments }
       details = { transactionDetails }
       transactionsPerson = { transactionsPerson } />
   } else if (transactionId == 8) {
     return <OpticalDetailsFragment
       details = { transactionDetails }
+      attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 11) {
     return <EducGrantAidDetailsFragment
       details = { transactionDetails }
+      attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 12) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
+      attachments = { attachments }
       transactionsPerson = { transactionsPerson } />
   } else if (transactionId == 13) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
+      attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 32) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
+      attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 1) {
     return <LoansDetailsFragment
       transactionsPerson = { transactionsPerson }
+      attachments = { attachments }
       details = { transactionDetails } />
   } else {
     return <h1>No Transaction Occured please reload</h1> // No  Transaction
@@ -70,7 +79,8 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
       transactions : null,
       showConfirmationModal : false,
       showDisapproveModal : false,
-      remarks : null
+      remarks : null,
+      attachments : null
     }
   }
 
@@ -101,6 +111,10 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
     this.presenter.getTransactionsPersonal()
   }
 
+  showAttachments (attachments) {
+    this.setState({attachments})
+  }
+
   getTransactionDetails (details) {
     this.setState({ details })
   }
@@ -116,9 +130,9 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
       transactions,
       showConfirmationModal,
       showDisapproveModal,
-      remarks
+      remarks,
+      attachments
     } = this.state
-
     return (
       <div  className = {'container'}>
         <div className={ 'breadcrumbs-container' }>
@@ -149,6 +163,7 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
             <div className = {'transaction-details-container'}>
               <TransactionDetails
                details = { details }
+               attachments = { attachments }
                transactions = { transactions }
               />
             <center>

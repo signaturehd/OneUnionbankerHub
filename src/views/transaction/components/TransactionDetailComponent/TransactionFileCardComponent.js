@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
-import { Card } from '../../../../ub-components/'
+import { Card, CircularLoader } from '../../../../ub-components/'
 
 class TransactionFileCardComponent extends Component {
   constructor(props) {
@@ -9,18 +9,31 @@ class TransactionFileCardComponent extends Component {
   }
 
   render() {
-    const { details } = this.props
+    const { details, attachments } = this.props
     return (
       <Card className = { 'transaction-card-details' }>
         <center><h4 className = { 'details-bold' }> Attachments </h4></center>
-          <div className = { 'transaction-attachments-container' }>
-            <img
-              className = { 'transaction-attachments _img-ub-logo' }
-              src={ require('../../../../images/union-logo.png') }/>
-            <img
-              className = { 'transaction-attachments _img-ub-logo' }
-              src={ require('../../../../images/union-logo.png') }/>
-          </div>
+          {
+            attachments ?
+              <div className = { 'transaction-attachments-container' }>
+                {
+                  attachments.map((image, key) => (
+                    <img
+                      className = { 'transaction-attachments _img-ub-logo' }
+                      src={image}/>
+                  ))
+                }
+              </div>
+              :
+              <center>
+                <br/>
+                <br/>
+                  <CircularLoader show={true}/>
+                <br/>
+                <br/>
+              </center>
+          }
+
       </Card>
     )
   }
