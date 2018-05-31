@@ -15,13 +15,13 @@ this.submitData = this.submitData.bind(this)
 /*
   Get Chosen Procedure
 */
-submitData (value) {
-  this.setState({ chosenProcedure : value })
+submitData (value1) {
+  this.props.chosenProcedure( value1)
   this.props.onClose()
 }
 
 render () {
-  const { details, onClose, showProcedureModal, text, isDismisable } = this.props
+  const { details, onClose, text, isDismisable } = this.props
 
 return (
   <Modal
@@ -43,10 +43,14 @@ return (
                 className = { 'dentalloa-modal-option-button' }
                 key = { key }
                 disabled = { status }
-                details = {procedure}
-                text = { procedure.name}
-                onClick = { () => this.submitData(procedure)}/> :
-              <h3>{ procedure.name }</h3>
+                details = { procedure }
+                text = { procedure.name }
+                onClick = { () => this.submitData(procedure, true)}/> :
+              <GenericButton
+                className = { 'dentalloa-modal-option-button-unlimited' }
+                key = { key }
+                text = { procedure.name }
+                onClick = { () => this.submitData(procedure, true) }/>
             )
           :
           <center><h3>Please pick your Receipient</h3></center>
@@ -59,7 +63,5 @@ return (
 DentalLoaProcedureModal.propTypes = {
   onClose : PropTypes.func,
   details : PropTypes.array,
-}
-DentalLoaProcedureModal.defaultProps = {
 }
 export default DentalLoaProcedureModal

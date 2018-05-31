@@ -7,6 +7,7 @@ import DentalLoaCard from './components/DentalLoaCard'
 import DentalLoaBranchModal from './modal/DentalLoaBranchModal'
 import DentalLoaDependentModal from './modal/DentalLoaDependentModal'
 import DentalLoaProcedureModal from './modal/DentalLoaProcedureModal'
+import DentalLoaSecondProcedureModal from './modal/DentalLoaSecondProcedureModal'
 import { CircularLoader } from '../../ub-components/'
 import './styles/dentalloa.css'
 class DentalLoaView extends BaseMVPView {
@@ -14,13 +15,15 @@ class DentalLoaView extends BaseMVPView {
     super(props)
     this.state = {
       dentalloa : null,
-      disabled : false,
-      showProcedureModal : false,
-      showRecipientModal : false,
-      showHealthwayBranchModal : false,
-      receipient : null,
-      procedures : null,
+      disabled : false, //Loader
+      showProcedureModal : false,//First Modal for Procedures
+      showRecipientModal : false, //Display Recipient Modal
+      showHealthwayBranchModal : false, //Display HealthWayBranch Modal
+      recipient : null,
+      procedures : null, //Get Procedures List
       procedure : null,
+      secondProcedure : null,
+      preferedDate : null, //get Date
       branch : null,
       date : null,
     }
@@ -29,10 +32,6 @@ class DentalLoaView extends BaseMVPView {
 
   componentWillMount () {
     this.presenter.getDentalLoa()
-    /*
-    temp
-    */
-    this.presenter.addDentalLoa()
   }
   /*
     Get Data from DentalLOA
@@ -40,7 +39,7 @@ class DentalLoaView extends BaseMVPView {
   getDentalLoa (dentalloa) {
       this.setState({ dentalloa })
   }
-
+  /* Show and Hide Loader */
   hideCircularLoader ( disabled ) {
     this.setState({ disabled : false})
   }
@@ -51,38 +50,42 @@ class DentalLoaView extends BaseMVPView {
   /*
     Submission of DentalLOA Form
   */
-  submitForm (receipientId, branchId, preferedDate, procedures) {
-    const procedure = [{
-        "id": 4
+  submitForm (recipient, branch, date, procedure) {
+    const procedureTest = [
+      {
+        'id' : 4
       },
       {
-        "id": 10
-    }]
-    this.presenter.addDentalLoa(receipientId, branchId, preferedDate, procedures)
+        'id' : 10
+      }
+    ]
+    this.presenter.addDentalLoa( recipient.id, branch.id, this.state.date, procedureTest)
   }
 
   navigate () {
       this.props.history.push('/benefits/medical')
   }
+
   render () {
     const { details, chosenBranch } = this.props
 
     const {
+      date,
       dentalloa,
       showCircularLoader,
       disabled,
       showHealthwayBranchModal,
       showRecipientModal,
       showProcedureModal,
-      receipientId,
-      receipientText,
+      recipient,
+      recipientText,
       branchId,
       branchText,
       procedure,
+      secondProcedure,
       procedures,
       preferedDate,
     } = this.state
-    console.log(procedure)
 
     return(
       <div  className = { 'benefits-container' }>
@@ -90,8 +93,17 @@ class DentalLoaView extends BaseMVPView {
           showRecipientModal &&
           <DentalLoaDependentModal
             details = { dentalloa }
-            chosenDependent = { (receipientId, receipientText, procedures, showReceipientModal) => this.setState({receipientId, receipientText, procedures, showReceipientModal}) }
-            onClose = { () => this.setState({ showRecipientModal : false }) } />
+            chosenDependent = { (
+              recipient,
+              recipientText,
+              showReceipientModal) => this.setState({
+              recipient,
+              recipientText,
+              showReceipientModal}
+            )
+          }
+          dependentProcedure = { (procedures) => this.setState({ procedures })}
+          onClose = { () => this.setState({ showRecipientModal : false }) } />
         }
 
         {
@@ -109,13 +121,17 @@ class DentalLoaView extends BaseMVPView {
           <DentalLoaProcedureModal
             showProcedureModal = { showProcedureModal }
             details = { procedures }
-            onChange = { (procedure) => this.setState({ procedure }) }
-            onClose = { () => this.setState({ showProcedureModal : false }) } />
+            chosenProcedure = { (procedure) =>
+              this.setState({ procedure }) }
+            onChange = { (procedure) =>
+              this.setState({ procedure }) }
+            onClose = { () =>
+              this.setState({ showProcedureModal : false }) } />
         }
 
         <div className={ 'breadcrumbs-container' }>
           <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
-          <h2 classNmae = { 'header-margin-default' }>Dental Loa Issuance</h2>
+          <h2 className = { 'header-margin-default' }>Dental Loa Issuance</h2>
         </div>
           <div className = { 'dentalloa-container' }>
             {
@@ -126,13 +142,20 @@ class DentalLoaView extends BaseMVPView {
              :
               <DentalLoaCard
                 details = { dentalloa }
-                receipient = { receipientText }
+                recipient = { recipientText }
                 procedure = { procedure }
                 branch = { branchText }
-                submitForm = { () => this.submitForm(receipientId, branchId, preferedDate, procedures) }
-                onClick = {
-                  (showRecipientModal, showHealthwayBranchModal, showProcedureModal) =>
-                  this.setState({ showRecipientModal, showHealthwayBranchModal, showProcedureModal })
+                getPreferredDate = { (data) => this.setState({ date :  data })}
+                submitForm = { () => this.submitForm(recipient, branchId, date, procedure) }
+                onClick = { (
+                  showRecipientModal,
+                  showHealthwayBranchModal,
+                  showProcedureModal) =>
+                  this.setState( {
+                    showRecipientModal,
+                    showHealthwayBranchModal,
+                    showProcedureModal
+                  } )
                 }
               />
             }
