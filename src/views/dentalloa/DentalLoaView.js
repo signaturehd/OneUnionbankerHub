@@ -7,7 +7,6 @@ import DentalLoaCard from './components/DentalLoaCard'
 import DentalLoaBranchModal from './modal/DentalLoaBranchModal'
 import DentalLoaDependentModal from './modal/DentalLoaDependentModal'
 import DentalLoaProcedureModal from './modal/DentalLoaProcedureModal'
-import DentalLoaSecondProcedureModal from './modal/DentalLoaSecondProcedureModal'
 import { CircularLoader } from '../../ub-components/'
 import './styles/dentalloa.css'
 class DentalLoaView extends BaseMVPView {
