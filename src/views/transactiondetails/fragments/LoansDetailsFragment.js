@@ -23,7 +23,7 @@ class LoansDetailsFragment extends Component {
   }
 
   render () {
-    const { details, transactionsPerson } = this.props
+    const { details, transactionsPerson, attachments } = this.props
     return (
       <div className = {'optical-details-container'}>
         <center><h2 className = { 'transaction-detail details-bold' }>Transaction Information</h2></center>
@@ -32,7 +32,7 @@ class LoansDetailsFragment extends Component {
           transactionsPerson = { transactionsPerson }
           details = { details } />
         <br/>
-        <MPLFileComponent details = { details } />
+        <MPLFileComponent details = { details } attachments = { attachments } />
         <br/>
         <MPLPurposeComponent details = { details } />
         <br/>
