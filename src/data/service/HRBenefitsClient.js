@@ -223,27 +223,27 @@ export default class HRBenefitsClient {
 
   addFeedback (token, addFeedbackParam) {
     return this.service.addFeedback(token, addFeedbackParam)
-    .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator())
   }
   /* Remarks */
   getRemarks (token, remarksParam) {
     return this.service.getRemarks(token, remarksParam)
-    .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator())
   }
 
   getFaqsCategories (token) {
     return this.service.getFaqsCategories(token)
-    .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator())
   }
 
   getBookImage (accountToken, ImageParam) {
     return this.service.getBookImage(accountToken, ImageParam)
-    .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator())
   }
 
   getFaqsImage (accountToken, ImageParam) {
     return this.service.getFaqsImage(accountToken, ImageParam)
-    .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator())
   }
 
   updateRemarks (token, remarksParam) {

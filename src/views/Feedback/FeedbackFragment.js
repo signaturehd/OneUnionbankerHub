@@ -11,7 +11,7 @@ import FeedbackCard from './components/FeedbackCardFragment/FeedbackCard'
 
 import './styles/feedback-styles.css'
 
-class FeedbackView extends BaseMVPView {
+class FeedbackFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
@@ -87,7 +87,7 @@ class FeedbackView extends BaseMVPView {
     )
   }
 }
-FeedbackView.propTypes = {
+FeedbackFragment.propTypes = {
   setSelectedNavigation: PropTypes.func,
 }
-export default ConnectView(FeedbackView, Presenter)
+export default ConnectView(FeedbackFragment, Presenter)
