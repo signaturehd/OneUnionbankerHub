@@ -9,16 +9,16 @@ class DentalLoaDependentModal extends Component {
   }
 
 /*
-  Get Dependent Data
+  Get Dependent Data, display procedures
 */
-  sendDependents (receipientId, receipientText, procedure) {
-    this.props.chosenDependent(receipientId, receipientText, procedure, false)
+  sendDependents (recipient, recipientText, procedure) {
+    this.props.chosenDependent(recipient, recipientText, false)
+    this.props.dependentProcedure(procedure)
     this.props.onClose()
   }
 
   render () {
   const { details, onClose, showDependentModal, isDismisable } = this.props
-
   return (
     <Modal
      onClose = { onClose }
@@ -28,20 +28,29 @@ class DentalLoaDependentModal extends Component {
         <h2>Dependent</h2>
       </div>
       <div className = { 'optical-modal-footer' }>
-          <GenericButton
-              className = { 'dentalloa-modal-option-button' }
-              text = { 'Me' }
-              onClick = { () => this.sendDependents(0, 'Personal', details.procedures) }
-          />
+          {
+            details.dependents &&
+            details.dependents.map((procedure) =>
+              <GenericButton
+                className = { 'dentalloa-modal-option-button' }
+                text = { 'Me' }
+                onClick = { () =>
+                  this.sendDependents(
+                    { id : 0, name : 'Personal' },
+                    "Personal",
+                    procedure.procedures) }
+              />
+            )
+          }
           {
             details.dependents &&
             details.dependents.map((dependent, key) =>
-            <GenericButton
-              key = { key }
-                className = { 'dentalloa-modal-option-button' }
-                text = { dependent.name }
-                onClick = { () => this.sendDependents(dependent.id, dependent.name, details.procedures) }
-            />
+              <GenericButton
+                key = { key }
+                  className = { 'dentalloa-modal-option-button' }
+                  text = { dependent.name }
+                  onClick = { () => this.sendDependents(dependent, dependent.name, dependent.procedures) }
+                />
             )
           }
           {
@@ -50,8 +59,8 @@ class DentalLoaDependentModal extends Component {
               <GenericButton
                   key = { key }
                   className = { 'dentalloa-modal-option-button' }
-                  details = {dependent.name}
-                  onClick = { () =>  (onClick(dependent.id, dependent.name, details.procedures), onClose) }
+                  details = { dependent.name }
+                  onClick = { () =>  (onClick(dependent, dependent.name, details.procedures), onClose) }
               />
             )
           }
@@ -63,7 +72,7 @@ class DentalLoaDependentModal extends Component {
 DentalLoaDependentModal.propTypes = {
   onClose : PropTypes.func,
   onClick : PropTypes.func,
-  details : PropTypes.array,
+  details : PropTypes.object,
 }
 DentalLoaDependentModal.defaultProps = {
 }
