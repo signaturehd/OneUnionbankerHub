@@ -10,7 +10,6 @@ class TransactionFileCardComponent extends Component {
 
   render() {
     const { details, attachments } = this.props
-    console.log(attachments)
     return (
       <Card className = { 'transaction-card-details' }>
         <center><h4 className = { 'details-bold' }> Attachments </h4></center>

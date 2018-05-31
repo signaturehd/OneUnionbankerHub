@@ -19,7 +19,6 @@ class DentalRDetailsFragment extends Component {
 
   render () {
     const { details, transactionsPerson, attachments } = this.props
-    console.log(this.props)
     return (
       <div className = {'details-container'}>
         <center><h2 className = { 'transaction-detail details-bold' }>Transaction Information</h2></center>
