@@ -18,7 +18,8 @@ class DentalRDetailsFragment extends Component {
   }
 
   render () {
-    const { details, transactionsPerson } = this.props
+    const { details, transactionsPerson, attachments } = this.props
+    console.log(this.props)
     return (
       <div className = {'details-container'}>
         <center><h2 className = { 'transaction-detail details-bold' }>Transaction Information</h2></center>
@@ -27,7 +28,7 @@ class DentalRDetailsFragment extends Component {
           transactionsPerson = { transactionsPerson }
           details = { details } />
         <br/>
-        <DentalRFileComponent details = { details } />
+        <DentalRFileComponent details = { details } attachments = { attachments } />
         <br/>
           <Card className = { 'transaction-card-details' }>
             <center><h2 className = { 'details-bold' }>Procedures</h2></center>

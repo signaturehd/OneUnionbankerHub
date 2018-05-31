@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Presenter from './presenter/TransactionDetailsPresenter'
+import Presenter from './presenter/TransactionPersonalDetailsPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
 
@@ -22,37 +22,47 @@ function  TransactionDetails ( props )  {
   const transactionId = props.details.benefitType.id
   const transactionDetails = props.details
   const transactionsPerson = props.transactions
+  const attachments = props.attachments
+
   if (transactionId == 6) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
+      attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 7) {
     return <DentalLoaDetailsFragment
       details = { transactionDetails }
+      attachments = { attachments }
       transactionsPerson = { transactionsPerson } />
   } else if (transactionId == 8) {
     return <OpticalDetailsFragment
       details = { transactionDetails }
+      attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 11) {
     return <EducGrantAidDetailsFragment
       details = { transactionDetails }
+      attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 12) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
+      attachments = { attachments }
       transactionsPerson = { transactionsPerson } />
   } else if (transactionId == 13) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
+      attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 32) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
+      attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId == 1) {
     return <LoansDetailsFragment
       transactionsPerson = { transactionsPerson }
+      attachments = { attachments }
       details = { transactionDetails } />
   } else {
     return <h1>No Transaction Occured please reload</h1> // No  Transaction
@@ -65,6 +75,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     this.state = {
       details : null,
       transactions : null,
+      attachment : null,
     }
   }
 
@@ -80,6 +91,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
 
   }
 
+  showAttachments (attachments) {
+    this.setState({attachments})
+  }
+
   transactions ( transactions ) {
     this.setState({ transactions })
   }
@@ -89,8 +104,11 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
   }
 
   render () {
-    const { details, transactions } = this.state
-
+    const {
+      details,
+      transactions,
+      attachments
+    } = this.state
     return (
       <div  className = {'container'}>
         <i className = { 'left' } onClick = {
@@ -101,6 +119,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
             <div className = {'transaction-detail-container'}>
               <TransactionDetails
                details = { details }
+               attachments = { attachments }
                transactions = { transactions }
               />
             </div>
