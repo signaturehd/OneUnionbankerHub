@@ -32,8 +32,8 @@ class DentalLoaCard extends Component {
 
 
   onChange (data) {
-    this.setState({ preferredDate : data })
-    this.props.preferredDate(preferredDate)
+    this.setState({preferredDate : data})
+    this.props.getPreferredDate(data && data.format('MM-DD-YYYY'))
   }
 
   render () {
@@ -43,28 +43,30 @@ class DentalLoaCard extends Component {
       text2,
       text3,
       text4,
-      onFocus,
-      details,
       onClose,
       submit,
-      receipient,
+      recipient,
       branch,
       onClick,
       submitForm,
     } = this.props
 
-    const { preferredDate, showRecipientModal, showHealthwayBranchModal, showProcedureModal } = this.state
+    const {
+      preferedDate,
+      showRecipientModal,
+      showHealthwayBranchModal,
+      showProcedureModal } = this.state
 
     return (
-      <Card className={ 'dentalloa-card' }>
-        <div className = {'dentalloa-header'} >
+      <Card className = { 'dentalloa-card' }>
+        <div className = { 'dentalloa-header' }>
           <h5 > LOA Details </h5>
           <div className = {'dentalloa-body '}>
             <div className = { 'dentalloa-col span_1_of_3' }>
               <i className = { 'dentalloa-icon text1-icon' }/>
                <GenericTextBox
                  onClick = { () => onClick(true, false, false)}
-                 value = { receipient && receipient }
+                 value = { recipient && recipient }
                  readOnly
                  placeholder = { text1 } />
           </div>
@@ -79,21 +81,21 @@ class DentalLoaCard extends Component {
           <div className = { 'dentalloa-col span_1_of_3' }>
             <i className = { 'dentalloa-icon text3-icon' }/>
               <DatePicker
-                dateFormat="LL"
+                dateFormat = { 'MM-DD-YYYY' }
                 readOnly
-                selected={this.state.preferredDate}
-                onChange={this.onChange}
-                className = {'calendar'}
-                calendarClassName = {"calendarClass"}/>
+                selected = { preferredDate }
+                onChange = { this.onChange }
+                className = { 'calendar' }
+                calendarClassName = { 'calendarClass' }/>
           </div>
           </div>
         </div>
-        <div className = {'dentalloa-footer-left'}>
+        <div className = { 'dentalloa-footer-left' }>
           <GenericButton
             onClick = { () => onClick(false, false, true)}
-            type = {'button'}
+            type = { 'button' }
             text = { text4 }
-            className = {'dentalloa-procedure' }
+            className = { 'dentalloa-procedure' }
             value = { 'Procedures' } />
           <div className = { 'dentalloa-button-submit' }>
             <GenericButton
@@ -110,11 +112,9 @@ class DentalLoaCard extends Component {
 DentalLoaCard.propTypes = {
   onClose : PropTypes.func,
   onClick : PropTypes.func,
-  details : PropTypes.object,
   text1   : PropTypes.string,
   text2   : PropTypes.string,
   text3   : PropTypes.string,
-  onFocus : PropTypes.func,
   submit  : PropTypes.string,
   text4  : PropTypes.string,
 }
