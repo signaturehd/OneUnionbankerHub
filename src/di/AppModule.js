@@ -24,6 +24,7 @@ export default container => {
         'X-IBM-Client-Id': CLIENT_ID,
         'X-IBM-Client-Secret': CLIENT_SECRET,
       },
+      responseType : 'blob',
     })
   )
 
