@@ -28,44 +28,30 @@ class DentalLoaDependentModal extends Component {
         <h2>Dependent</h2>
       </div>
       <div className = { 'optical-modal-footer' }>
-          {
-            details.dependents &&
-            details.dependents.map((procedure) =>
-              <GenericButton
-                className = { 'dentalloa-modal-option-button' }
-                text = { 'Me' }
-                onClick = { () =>
-                  this.sendDependents(
-                    { id : 0, name : 'Personal' },
-                    "Personal",
-                    procedure.procedures) }
-              />
-            )
-          }
-          {
-            details.dependents &&
-            details.dependents.map((dependent, key) =>
-              <GenericButton
-                key = { key }
-                  className = { 'dentalloa-modal-option-button' }
-                  text = { dependent.name }
-                  onClick = { () => this.sendDependents(dependent, dependent.name, dependent.procedures) }
-                />
-            )
-          }
-          {
-            details.dependent &&
-            details.dependent.map((dependent, key) =>
-              <GenericButton
-                  key = { key }
-                  className = { 'dentalloa-modal-option-button' }
-                  details = { dependent.name }
-                  onClick = { () =>  (onClick(dependent, dependent.name, details.procedures), onClose) }
-              />
-            )
-          }
-      </div>
-    </Modal>
+      {
+        details.dependents &&
+        details.dependents.map((dependent, key) =>
+          <GenericButton
+            key = { key }
+              className = { 'dentalloa-modal-option-button' }
+              text = { dependent.name }
+              onClick = { () => this.sendDependents(dependent, dependent.name, dependent.procedures) }
+            />
+        )
+      }
+      {
+        details.dependent &&
+        details.dependent.map((dependent, key) =>
+          <GenericButton
+              key = { key }
+              className = { 'dentalloa-modal-option-button' }
+              details = { dependent.name }
+              onClick = { () =>  (onClick(dependent, dependent.name, details.procedures), onClose) }
+          />
+        )
+      }
+    </div>
+  </Modal>
     )
   }
 }
@@ -73,7 +59,5 @@ DentalLoaDependentModal.propTypes = {
   onClose : PropTypes.func,
   onClick : PropTypes.func,
   details : PropTypes.object,
-}
-DentalLoaDependentModal.defaultProps = {
 }
 export default DentalLoaDependentModal

@@ -15,9 +15,9 @@ class DentalLoaCard extends Component {
     super(props)
     this.state = {
       showConfirmation: false,
-      showRecipientModal : false,
-      showHealthwayBranchModal : false,
-      showProcedureModal : false,
+      showRecipientModal : false, //Recipient Modal
+      showHealthwayBranchModal : false, //Recipient Branch Modal
+      showProcedureModal : false, //Recipient Procedure Modal
       datePicker : '',
       preferredDate: moment(),
     }
@@ -32,8 +32,9 @@ class DentalLoaCard extends Component {
 
 
   onChange (data) {
-    this.setState({preferredDate : data})
-    this.props.getPreferredDate(data && data.format('MM-DD-YYYY'))
+    this.setState({ preferredDate: data })
+    this.props.getPreferredDate(
+      data && data.format('MM-DD-YYYY'))
   }
 
   render () {
@@ -55,7 +56,6 @@ class DentalLoaCard extends Component {
       showRecipientModal,
       showHealthwayBranchModal,
       showProcedureModal } = this.state
-
     return (
       <Card className = { 'dentalloa-card' }>
         <div className = { 'dentalloa-header' }>
