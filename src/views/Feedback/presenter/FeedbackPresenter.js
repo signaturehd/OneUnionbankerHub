@@ -3,7 +3,7 @@ import AddFeedbackInteractor from '../../../domain/interactor/feedback/AddFeedba
 import FeedbackParam from '../../../domain/param/FeedbackParam'
 import { NotifyActions } from '../../../actions'
 
-import store from '../../../actions'
+import store from '../../../store'
 
 export default class FeedbackPresenter {
   constructor (container) {
@@ -23,7 +23,7 @@ export default class FeedbackPresenter {
         }, e => {
       })
   }
-  
+
   addFeedback (feedbackId, feedback) {
     this.view.showLoading()
     this.addFeedbackInteractor.execute(FeedbackParam(feedbackId, feedback))
@@ -36,10 +36,11 @@ export default class FeedbackPresenter {
               duration : 2000
             })
           )
-          this.view.showFeedback(data)
-          this.view.circularLoader(false)
+          this.view.onSuccessSubmit(true)
         },
         error => {
+          console.log(error)
+          this.view.onSuccessSubmit(true)
           this.view.hideLoading()
         }
     )

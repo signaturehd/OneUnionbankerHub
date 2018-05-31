@@ -20,6 +20,7 @@ class FeedbackView extends BaseMVPView {
       feedback : [],
       feedbackId : null,
       feedbackValue : null,
+      showFeedback : true,
     }
     this.showFeedback = this.showFeedback.bind(this)
   }
@@ -34,7 +35,17 @@ class FeedbackView extends BaseMVPView {
   }
 
   submitForm (feedbackId, feedbackValue) {
+    this.setState({showFeedback: false})
     this.presenter.addFeedback(feedbackId, feedbackValue)
+  }
+
+
+  onSuccessSubmit (showFeedback) {
+    this.setState({showFeedback})
+  }
+
+  onFailedSubmit (showFeedback) {
+    this.setState({showFeedback})
   }
 
   render () {
@@ -43,6 +54,7 @@ class FeedbackView extends BaseMVPView {
       feedback,
       feedbackValue,
       feedbackId,
+      showFeedback
     } = this.state
 
    const { details, chosenCategory, feedbackTextareaValue } = this.props
@@ -64,6 +76,7 @@ class FeedbackView extends BaseMVPView {
               <FeedbackCard
                 feedbackCategory = { feedbackValue }
                 submitForm = { (feedbackValue) => this.submitForm(feedbackId, feedbackValue) }
+                showFeedback = { showFeedback }
                 onClick = {
                   (showCategoryModal) =>
                   this.setState({ showCategoryModal })
