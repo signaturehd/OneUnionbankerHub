@@ -24,7 +24,6 @@ class LoansDetailsFragment extends Component {
 
   render () {
     const { details, transactionsPerson, attachments } = this.props
-    console.log(attachments)
     return (
       <div className = {'optical-details-container'}>
         <center><h2 className = { 'transaction-detail details-bold' }>Transaction Information</h2></center>
