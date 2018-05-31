@@ -22,7 +22,8 @@ class FaqListFragment extends Component {
     const {
       selectedFaqCategory,
       setSelectedFaqQuestion,
-      history
+      history,
+      imageResponse
     } = this.props
     const setSelectedFaqsCategory  = selectedFaqCategory && selectedFaqCategory.question
     let searchQuestions = setSelectedFaqsCategory
@@ -45,6 +46,7 @@ class FaqListFragment extends Component {
             searchQuestions.map((qtn, i) =>
               <FaqCardComponent
                 key = { i }
+                imageResponse = { imageResponse }
                 title = { qtn && qtn.title }
                 onClick = { () => setSelectedFaqQuestion(qtn) } />
             )

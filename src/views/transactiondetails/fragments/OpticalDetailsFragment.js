@@ -18,7 +18,7 @@ class OpticalDetailsFragment extends Component {
   }
 
   render () {
-    const { details, transactionsPerson } = this.props
+    const { details, transactionsPerson, attachments } = this.props
     return (
       <div className = {'details-container'}>
         <center><h2 className = { 'transaction-detail details-bold' }>Transaction Information</h2></center>
@@ -27,7 +27,7 @@ class OpticalDetailsFragment extends Component {
           details = { details }
           transactionsPerson = { transactionsPerson } />
         <br/>
-        <OpticalFileComponent details = { details } />
+        <OpticalFileComponent details = { details } attachments = { attachments } />
         <br/>
         <Card>
           <center>
