@@ -1,7 +1,9 @@
 import AddDentalLoaInteractor from '../../../domain/interactor/dentalLoa/AddDentalLoaInteractor'
 import GetDentalLoaInteractor from '../../../domain/interactor/dentalLoa/GetDentalLoaInteractor'
-import DentalLoaParam from '../../../domain/param/DentalLoaParam'
+import dentalLoaParam from '../../../domain/param/DentalLoaParam'
 
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
 
 export default class DentalLoaPresenter {
  constructor (container) {
@@ -25,16 +27,28 @@ export default class DentalLoaPresenter {
     })
  }
 
-
- addDentalLoa (accountNo, type, dependentId, branchId, procedures, preferedDate) {
-  this.view.showLoading()
-  this.addDentalLoaInteractor.execute(DentalLoaParam(accountNo, type, dependentId, branchId, procedures, preferedDate))
-   .subscribe(dentalloa => {
-    this.view.hideLoading()
-    this.view.addDentalLoa(dentalloa)
-   }, e => {
-    this.view.hideLoading()
-    // TODO prompt generic error
-   })
- }
-}
+ addDentalLoa (dependent, branch, date, procedure) {
+  this.view.showCircularLoader()
+  this.addDentalLoaInteractor.execute(
+    dentalLoaParam(
+      dependent,
+      branch,
+      date,
+      procedure))
+      .subscribe(
+        data => {
+          store.dispatch( NotifyActions.addNotify({
+            title: 'Dental LOA',
+            message : data.message,
+            type : 'success',
+            duration : 2000
+          })
+         )
+         this.view.hideCircularLoader()
+        },
+        error => {
+          this.view.hideCircularLoader()
+        }
+      )
+    }
+  }
