@@ -1,6 +1,6 @@
 .notify-container {
   position: fixed;
-  width: 20%;
+  width: auto;
   right: 10px;
   bottom: 10px;
   display: grid;
