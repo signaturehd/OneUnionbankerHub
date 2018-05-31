@@ -1,9 +1,9 @@
 
 export default class HRBenefitsService {
-
-  constructor(apiClient, accountClient) {
+  constructor (apiClient, accountClient, imageClient) {
     this.apiClient = apiClient
     this.accountClient = accountClient
+    this.imageClient = imageClient
   }
 
   /* user */
@@ -98,7 +98,7 @@ export default class HRBenefitsService {
   /* account */
   validateAccountNumber (token, accountNumber) {
      return this.accountClient.get(`accounts/v1/${accountNumber}`, {
-       headers: {token, referenceId : Math.random().toString(36).substring(7),
+        headers: {token, referenceId : Math.random().toString(36).substring(7),
        }
      })
    }
@@ -200,10 +200,41 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+/* Feedback */
+
+  getFeedback (token) {
+    return this.apiClient.get('v1/feedback', {
+      headers: { token }
+    })
+  }
+
+  addFeedback (token,addFeedbackParam) {
+    return this.apiClient.post('v1/feedback', addFeedbackParam, {
+      headers: { token }
+    })
+  }
 
   getFaqsCategories (token) {
     return this.apiClient.get('v1/faqs/categories', {
       headers: { token }
+    })
+  }
+
+  getBookImage (accountToken, ImageParam) {
+    return this.imageClient.get('v1/uploads?folder=faqs', {
+      headers : {
+        accountToken,
+        file : ImageParam
+      }
+    })
+  }
+
+  getFaqsImage (accountToken, ImageParam) {
+    return this.imageClient.get('v1/uploads?folder=faqs', {
+      headers : {
+        accountToken,
+        file : ImageParam
+      }
     })
   }
 
