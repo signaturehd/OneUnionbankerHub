@@ -33,26 +33,26 @@ export default class HRBenefitsService {
     })
   }
 
-  addDentalLoa (token, dentalLoaParam) {
-    return this.apiClient.post('v1/issuances/dental/loa/submit', dentalLoaParam, {
+  addDentalLoa (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    dentalLoaParam) {
+    const formData = new FormData()
+    const dentalLoaObject = {
+      accountNo : '109350022082',
+      type : 1,
+      dependentId : dentalLoaParam.dependent,
+      dentalClinicId : dentalLoaParam.branch,
+      preferredDate : dentalLoaParam.date,
+      dentalProcedure : dentalLoaParam.procedure
+    }
+    formData.append('body', JSON.stringify(dentalLoaObject))
+    return this.apiClient.post('v1/issuances/dental/loa/submit', dentalLoaObject, {
       headers : { token }
     })
   }
-
-
-  // addDentalLoa (token, accountNumber, opticalParam) {
-  //   // TODO to be fixed
-  //   const formData = new FormData()
-  //   formData.append('uuid', 1)
-  //   formData.append('med', opticalParam.medCert)
-  //   formData.append('opt', opticalParam.optCert)
-  //   formData.append('accountNumber', '111')
-  //   formData.append('releasingCenter', 'UBP')
-  //   formData.append('amount', opticalParam.amount)
-  //   return this.apiClient.post('v1/issuances/dental/loa/submit', formData, {
-  //     headers : { token }
-  //   })
-  // }
 
   /* dental reimbursements */
 
@@ -61,7 +61,7 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
-x
+
   addDentalReimbursement (token, dentalLoaParam) {
     const formData = new FormData()
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {

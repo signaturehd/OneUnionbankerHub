@@ -174,8 +174,18 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addDentalLoa (token, dentalLoaParam) {
-    return this.service.addDentalLoa(token, dentalLoaParam)
+  addDentalLoa (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    dentalLoaParam) {
+    return this.service.addDentalLoa(
+      token,
+      accountToken,
+      accountNo,
+      releasingCenter,
+      dentalLoaParam)
       .pipe(ServiceErrorOperator())
   }
 
