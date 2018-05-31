@@ -38,7 +38,6 @@ class DentalLoaCard extends Component {
 
   render () {
     const {
-      proceedModal,
       text1,
       text2,
       text3,
@@ -52,7 +51,7 @@ class DentalLoaCard extends Component {
     } = this.props
 
     const {
-      preferedDate,
+      preferredDate,
       showRecipientModal,
       showHealthwayBranchModal,
       showProcedureModal } = this.state
