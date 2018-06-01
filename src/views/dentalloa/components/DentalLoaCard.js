@@ -7,7 +7,12 @@ import DentalLoaDependentModal from '../modal/DentalLoaDependentModal'
 import DentalLoaProcedureModal from '../modal/DentalLoaProcedureModal'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
-import { GenericTextBox, GenericButton, Card } from '../../../ub-components'
+import {
+  GenericTextBox,
+  GenericButton,
+  Card,
+  List
+} from '../../../ub-components'
 import '../../../../node_modules/react-datepicker/dist/react-datepicker.css'
 
 class DentalLoaCard extends Component {
@@ -95,22 +100,18 @@ class DentalLoaCard extends Component {
         {
         selectedProcedures && selectedProcedures.map((procedure, key) => {
            return (
-             <div key = { key }>
-               <GenericTextBox
-                 value = { procedure.amount }
-                 type = { 'text'}
-                 onChange = { e => {
-                   const updatedProcedures = [...selectedProcedures]
-                   updatedProcedures[key].amount = parseInt(e.target.value)
-
-                   this.setState({ selectedProcedures: updatedProcedures })
-                   }}
-                   placeholder = { `${procedure.name} ${procedure.limit}`} />
+             <div>
+               <div key = { key } className = {'procedure-grid'}>
+                  <List
+                    description = {'' + procedure.limit}
+                    title = {procedure.name}
+                  />
                  <button
                    onClick = { () => {
-                   const { selectedProcedures } = this.state
                    selectedProcedures.splice(key, 1)
                    this.setState({ selectedProcedures }) }}>X</button>
+               </div>
+               <br/>
              </div>
              )
            })
