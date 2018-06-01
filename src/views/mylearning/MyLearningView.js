@@ -20,7 +20,7 @@ class MyLearningView extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.setSelectedNavigation(5)
+    this.props.setSelectedNavigation(4)
   }
 
   render () {

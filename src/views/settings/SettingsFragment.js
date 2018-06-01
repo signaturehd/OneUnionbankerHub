@@ -31,7 +31,7 @@ class SettingsFragment extends BaseMVPView {
   }
   componentDidMount () {
     this.presenter.getProfile()
-    this.props.setSelectedNavigation(4)
+    this.props.setSelectedNavigation(3)
   }
   showProfile (profile) {
     this.setState({ profile })

@@ -53,7 +53,7 @@ class LoansFragment extends Component {
     return (
       <div>
         <Switch>
-          <Route exact path = '/benefits/loans' render = { LoansHome } />
+          <Route exact path = '/mybenefits/benefits/loans' render = { LoansHome } />
         </Switch>
       </div>
     )

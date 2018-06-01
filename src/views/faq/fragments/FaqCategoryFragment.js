@@ -27,6 +27,7 @@ class FaqCategoryFragment extends Component {
       faqCategories,
       setSelectedFaqCategory,
       isLoading,
+      imageResponse,
     } = this.props
 
     let searchCategories = faqCategories
