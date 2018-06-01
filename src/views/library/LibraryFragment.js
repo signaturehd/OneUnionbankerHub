@@ -37,7 +37,6 @@ class LibraryFragment extends BaseMVPView {
       this.presenter.getBooks()
       this.presenter.getBooksBorrowed()
       this.presenter.getBooksRecommendation()
-      this.props.history.push('/mylearning/books')
   }
 
   showBooks (books) {
