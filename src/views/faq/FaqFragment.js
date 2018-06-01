@@ -66,12 +66,7 @@ class FaqFragment extends BaseMVPView {
   }
 
   showFaqs (faqs) {
-    faqs.map((faq, key) => this.presenter.getFaqsImage(faq.icon))
-    this.setState({ faqs, isCategoryLoading: false })
-  }
-
-  showedImage (imageResponse) {
-    this.setState({imageResponse})
+    this.setState({ faqs })
   }
 
   render () {
