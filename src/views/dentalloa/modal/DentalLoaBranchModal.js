@@ -29,8 +29,8 @@ class DentalLoaBranchModal extends Component {
       onClose = { onClose }
       isDismisable = { true }
       chosenBranch = { chosenBranch } >
-      <div className = { 'optical-description' }>
-        <h2>Recipients</h2>
+    <div className = { 'optical-description' }>
+      <h2>Recipients</h2>
       </div>
       <div className = { 'optical-modal-footer' }>
         {

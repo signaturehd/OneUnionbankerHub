@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/DentalLoaPresenter'
 import ConnectView from '../../utils/ConnectView'
@@ -8,26 +7,28 @@ import DentalLoaBranchModal from './modal/DentalLoaBranchModal'
 import DentalLoaDependentModal from './modal/DentalLoaDependentModal'
 import DentalLoaProcedureModal from './modal/DentalLoaProcedureModal'
 import Notice from '../notice/Notice'
+import ResponseModal from '../notice/NoticeResponseModal'
 import { CircularLoader, Modal } from '../../ub-components/'
 import './styles/dentalloa.css'
+
 class DentalLoaView extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-      dentalloa : null,
-      disabled : false, //Loader
-      showProcedureModal : false,//First Modal for Procedures
-      showRecipientModal : false, //Display Recipient Modal
-      showHealthwayBranchModal : false, //Display HealthWayBranch Modal
+      dentalloa : null, /*Dental LOA details*/
+      disabled : false, /*Loader Change State*/
+      showProcedureModal : false,/*First Modal for Procedures*/
+      showRecipientModal : false, /*Display Recipient Modal*/
+      showHealthwayBranchModal : false, /*Display HealthWayBranch Modal*/
+      showNoticeResponseModal: false, /* Display Notice Response Modal*/
+      showNoticeResponseApprovalModal : false,/* Display Notice Approval Response Modal*/
       recipient : null,
-      procedures : null, //Get Procedures List
+      procedures : null, /*Get Procedures List*/
       procedure : null,
-      secondProcedure : null,
-      preferedDate : null, //get Date
-      branch : null,
+      branch : null, /* Get Branch List*/
       date : null,
-      noticeResp: false,
-      noticeResponse: []
+      noticeResponse: [],
+      selectedProcedures : [] /* Selected Procedures */
     }
     this.getDentalLoa = this.getDentalLoa.bind(this)
   }
@@ -52,7 +53,8 @@ class DentalLoaView extends BaseMVPView {
   /*
     Submission of DentalLOA Form
   */
-  submitForm (recipient, branch, date, procedure) {
+  submitForm (recipient, branch, date, selectedProcedures) {
+
     const procedureTest = [
       {
         'id' : 4
@@ -66,7 +68,7 @@ class DentalLoaView extends BaseMVPView {
 
   /* Display Modal Notice of Undertaking*/
   noticeOfUndertaking (resp) {
-    this.setState({ noticeResp : resp })
+    this.setState({ showNoticeResponseModal : resp })
   }
   noticeOfUndertakingForm (respForm) {
     this.setState({ noticeResponse : respForm })
@@ -81,33 +83,50 @@ class DentalLoaView extends BaseMVPView {
     const { details, chosenBranch, onClose } = this.props
 
     const {
-      date,
       dentalloa,
-      showCircularLoader,
-      disabled,
-      showHealthwayBranchModal,
-      showRecipientModal,
       showProcedureModal,
+      showCircularLoader,
+      showRecipientModal,
+      showHealthwayBranchModal,
+      showNoticeResponseModal,
+      showNoticeResponseApprovalModal,
       recipient,
+      procedures,
+      procedure,
+      disabled,
       recipientText,
       branchId,
       branchText,
-      procedure,
-      secondProcedure,
-      procedures,
-      preferedDate,
-      noticeResp,
-      noticeResponse
+      response,
+      date,
+      noticeResponse,
+      selectedProcedures
     } = this.state
 
     return(
       <div  className = { 'benefits-container' }>
         {
-          noticeResp &&
+          showNoticeResponseModal &&
           <Notice
             onClose = { () => this.setState({ noticeResp : false })}
-            noticeResponse = { noticeResponse && noticeResponse }
+            benefitId = { '7' }
+            noticeResponse = { noticeResponse }
+            onDismiss = { (showNoticeResponseModal, response) =>
+              this.setState({ showNoticeResponseModal, response, showNoticeResponseApprovalModal : true })  }
             />
+        }
+        {
+          showNoticeResponseApprovalModal &&
+          <ResponseModal
+            onClose = { () => {
+              this.setState({ showNoticeResponseModal : false })
+              this.props.history.push('/mybenefits/benefits/medical')
+            }}
+            noticeResponse = { response }
+            benefitId = { '7' }
+            onDismiss = { (showNoticeResponseApprovalModal, response) =>
+              this.setState({ showNoticeResponseApprovalModal, response })  }
+          />
         }
         {
           showRecipientModal &&
@@ -127,7 +146,6 @@ class DentalLoaView extends BaseMVPView {
           onClose = { () =>
             this.setState({ showRecipientModal : false }) } />
         }
-
         {
           showHealthwayBranchModal &&
           <DentalLoaBranchModal
@@ -140,53 +158,55 @@ class DentalLoaView extends BaseMVPView {
             onClose = { () =>
               this.setState({ showHealthwayBranchModal : false }) } />
         }
-
         {
           showProcedureModal &&
           <DentalLoaProcedureModal
             showProcedureModal = { showProcedureModal }
-            details = { procedures }
-            chosenProcedure = { (procedure) =>
-              this.setState({ procedure }) }
+            onSubmit = { procedure => {
+              const updatedProcedures = [...selectedProcedures]
+
+              updatedProcedures.push(procedure)
+
+              this.setState({ selectedProcedures: updatedProcedures })
+            }}
+            details = { procedures ? procedures : [] }
             onChange = { (procedure) =>
               this.setState({ procedure }) }
-            onClose = { () =>
-              this.setState({ showProcedureModal : false }) } />
+            onClose = { () => this.setState({ showProcedureModal : false }) }/>
         }
-
-        <div className={ 'breadcrumbs-container' }>
-          <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
-          <h2 className = { 'header-margin-default' }>Dental Loa Issuance</h2>
-        </div>
-          <div className = { 'dentalloa-container' }>
-            {
-              disabled ?
-              <center className = { 'dentalloa-loader' }>
-                <CircularLoader show = {this.state.disabled}/>
-              </center>
-             :
-              <DentalLoaCard
-                details = { dentalloa }
-                recipient = { recipientText }
-                procedure = { procedure }
-                branch = { branchText }
-                getPreferredDate = { (data) => this.setState({ date :  data })}
-                submitForm = { () => this.submitForm(recipient, branchId, date, procedure) }
-                onClick = { (
-                  showRecipientModal,
-                  showHealthwayBranchModal,
-                  showProcedureModal) =>
-                  this.setState( {
-                    showRecipientModal,
-                    showHealthwayBranchModal,
-                    showProcedureModal
-                  } )
-                }
-              />
-            }
-
-         </div>
+      <div className={ 'breadcrumbs-container' }>
+        <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
+        <h2 className = { 'header-margin-default' }>DENTAL LOA ISSUANCE</h2>
       </div>
+        <div className = { 'dentalloa-container' }>
+        {
+          disabled ?
+          <center className = { 'dentalloa-loader' }>
+            <CircularLoader show = {this.state.disabled}/>
+          </center>
+         :
+          <DentalLoaCard
+            details = { dentalloa }
+            recipient = { recipientText }
+            procedure = { procedure }
+            branch = { branchText }
+            selectedProcedures = { selectedProcedures }
+            getPreferredDate = { (data) => this.setState({ date :  data })}
+            submitForm = { () => this.submitForm(recipient, branchId, date, selectedProcedures ) }
+            onClick = { (
+              showRecipientModal,
+              showHealthwayBranchModal,
+              showProcedureModal) =>
+              this.setState( {
+                showRecipientModal,
+                showHealthwayBranchModal,
+                showProcedureModal
+              } )
+            }
+          />
+        }
+       </div>
+    </div>
     )
   }
 }

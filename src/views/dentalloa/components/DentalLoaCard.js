@@ -30,11 +30,11 @@ class DentalLoaCard extends Component {
     e.preventDefault()
   }
 
-
+  /* store the date */
   onChange (data) {
     this.setState({ preferredDate: data })
     this.props.getPreferredDate(
-      data && data.format('MM-DD-YYYY'))
+      data && data.format('DD-MM-YYYY')) /*date format*/
   }
 
   render () {
@@ -49,6 +49,7 @@ class DentalLoaCard extends Component {
       branch,
       onClick,
       submitForm,
+      selectedProcedures
     } = this.props
 
     const {
@@ -56,6 +57,7 @@ class DentalLoaCard extends Component {
       showRecipientModal,
       showHealthwayBranchModal,
       showProcedureModal } = this.state
+
     return (
       <Card className = { 'dentalloa-card' }>
         <div className = { 'dentalloa-header' }>
@@ -71,16 +73,16 @@ class DentalLoaCard extends Component {
           </div>
           <div className = { 'dentalloa-col span_1_of_3' }>
             <i className = { 'dentalloa-icon text2-icon' }/>
-               <GenericTextBox
-                 value = { branch && branch }
-                 readOnly
-                 onClick = { () => onClick(false, true, false)}
-                 placeholder = { text2 } />
+             <GenericTextBox
+               value = { branch && branch }
+               readOnly
+               onClick = { () => onClick(false, true, false)}
+               placeholder = { text2 } />
           </div>
           <div className = { 'dentalloa-col span_1_of_3' }>
             <i className = { 'dentalloa-icon text3-icon' }/>
               <DatePicker
-                dateFormat = { 'MM-DD-YYYY' }
+                dateFormat = { 'DD-MM-YYYY' }
                 readOnly
                 selected = { preferredDate }
                 onChange = { this.onChange }
@@ -90,19 +92,44 @@ class DentalLoaCard extends Component {
           </div>
         </div>
         <div className = { 'dentalloa-footer-left' }>
+        {
+        selectedProcedures && selectedProcedures.map((procedure, key) => {
+           return (
+             <div key = { key }>
+               <GenericTextBox
+                 value = { procedure.amount }
+                 type = { 'text'}
+                 onChange = { e => {
+                   const updatedProcedures = [...selectedProcedures]
+                   updatedProcedures[key].amount = parseInt(e.target.value)
+
+                   this.setState({ selectedProcedures: updatedProcedures })
+                   }}
+                   placeholder = { `${procedure.name} ${procedure.limit}`} />
+                 <button
+                   onClick = { () => {
+                   const { selectedProcedures } = this.state
+                   selectedProcedures.splice(key, 1)
+                   this.setState({ selectedProcedures }) }}>X</button>
+             </div>
+             )
+           })
+         }
+         <br/>
+        <GenericButton
+          onClick = { () => onClick(false, false, true)}
+          type = { 'button' }
+          text = { text4 }
+          className = { 'dentalloa-procedure' }
+          value = { 'Procedures' } />
+
+        <div className = { 'dentalloa-button-submit' }>
           <GenericButton
-            onClick = { () => onClick(false, false, true)}
-            type = { 'button' }
-            text = { text4 }
-            className = { 'dentalloa-procedure' }
-            value = { 'Procedures' } />
-          <div className = { 'dentalloa-button-submit' }>
-            <GenericButton
-               className = { 'dentalloa-button' }
-               onClick = { submitForm }
-               text = { submit }/>
-          </div>
+             className = { 'dentalloa-button' }
+             onClick = { submitForm }
+             text = { submit }/>
         </div>
+      </div>
     </Card>
     )
   }
