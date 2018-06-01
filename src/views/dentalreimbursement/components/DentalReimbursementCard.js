@@ -5,28 +5,36 @@ import TextBox from './DentalReimbursementTextBox'
 import { Modal } from '../modal/DentalReimbursementReviewModal'
 import DentalReimbursementProcedureModal from '../modal/DentalReimbursementProcedureModal'
 import DentalReimbursementReviewModal from '../modal/DentalReimbursementReviewModal'
-import { Card, GenericButton, FileUploader, Checkbox, GenericTextBox } from '../../../ub-components/'
+import {
+  Card,
+  GenericButton,
+  FileUploader,
+  Checkbox,
+  GenericTextBox,
+  List
+ } from '../../../ub-components/'
 
-
+ import store from '../../../store'
+ import { NotifyActions } from '../../../actions'
 
 class DentalReimbursementCard extends Component {
   constructor (props) {
   super(props)
-this.state = {
-  file: '', // file1 array
-  file2: '',// file2 array
-  imagePreviewUrl: '',
-  imagePreviewUrl2: '',
-  procedureModal : false, // display procedure modal
-  dependents: [],
-  selectedDependent: null, //selected dependent
-  selectedProcedures: [], //selected procedure
-  procedureModal: false,
-  reviewModal: false,
-  submit: '',
-  warning: '',
-  procedure: '',
-}
+  this.state = {
+    file: '', // file1 array
+    file2: '',// file2 array
+    imagePreviewUrl: '',
+    imagePreviewUrl2: '',
+    procedureModal : false, // display procedure modal
+    dependents: [],
+    selectedDependent: null, //selected dependent
+    selectedProcedures: [], //selected procedure
+    procedureModal: false,
+    reviewModal: false,
+    submit: '',
+    warning: '',
+    procedure: '',
+  }
   this.handleImageChange = this.handleImageChange.bind(this)
   this.handleImageChange2 = this.handleImageChange2.bind(this)
   this.handleSubmit = this.handleSubmit.bind(this)
@@ -49,26 +57,44 @@ submission() {
 /*
 Optical Certificate Atachments
 */
+
+getExtension(filename) {
+  const parts = filename.split('/');
+  return parts[parts.length - 1];
+}
+
+
 handleImageChange(e) {
   e.preventDefault()
-
   let reader = new FileReader()
   let file = e.target.files[0]
-  if(this.files[0].size > 10000000){
-         alert("File is too big!");
-         this.value = "",
-      
-
-
-  reader.onloadend = () => {
-    this.setState({
-      file: file,
-      imagePreviewUrl: reader.result
-    })
+  let isValid
+  switch (this.getExtension(file.type).toLowerCase()) {
+    case 'jpeg' :
+    case 'jpg' :
+    case 'png' :
+    case 'pdf' :
+        isValid = true
   }
 
-  reader.readAsDataURL(file)
-}
+  if (isValid) {
+     reader.onloadend = () => {
+       this.setState({
+         file: file,
+         imagePreviewUrl: reader.result
+       })
+     }
+     reader.readAsDataURL(file)
+   } else {
+     store.dispatch(NotifyActions.addNotify({
+         title : 'File Uploading',
+         message : 'The accepted attachments are JPG/PNG/PDF',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+   }
+
 }
 /*
 Medical Certificate Atachments
@@ -77,19 +103,32 @@ handleImageChange2(e1) {
   e1.preventDefault()
   let reader2 = new FileReader()
   let file2 = e1.target.files[0]
- if(this.files[0].size > 10000000){
-        alert("File is too big!");
-        this.value = "",
-     
-
-  reader2.onloadend = () => {
-    this.setState({
-      file2: file2,
-      imagePreviewUrl2: reader2.result
-    })
+  let isValid = false
+  switch (this.getExtension(file2.type).toLowerCase()) {
+    case 'jpeg' :
+    case 'jpg' :
+    case 'png' :
+    case 'pdf' :
+        isValid = true
   }
-  reader2.readAsDataURL(file2)
-}
+  if (isValid) {
+     reader2.onloadend = () => {
+       this.setState({
+         file2: file2,
+         imagePreviewUrl2: reader2.result
+       })
+     }
+     reader2.readAsDataURL(file2)
+  } else {
+    store.dispatch(NotifyActions.addNotify({
+        title : 'File Uploading',
+        message : 'The accepted attachments are JPG/PNG/PDF',
+        type : 'warning',
+        duration : 2000
+      })
+    )
+  }
+
 }
 render () {
     const { details, fileReceived, fileReceived2, onClick, dependents } = this.props
@@ -172,20 +211,22 @@ return (
              className = {'dentalreimbursement-procedure' }
              text = { 'Open Procedures' } />
        </div>
+       <br/>
+       <br/>
        {
          selectedProcedures && selectedProcedures.map((procedure, key) => {
             return (
               <div key={ key } className = { 'dentalreimbursement-selected-procedure' }>
                 <GenericTextBox
-                  type = { 'button' }
                   value={ procedure.amount }
                   onChange={ e => {
                     const updatedProcedures = [...selectedProcedures]
-                    updatedProcedures[key].amount = e.target.value
+                    updatedProcedures[key].amount = parseInt(e.target.value) || 0
 
                     this.setState({ selectedProcedures: updatedProcedures })
                   }}
                   placeholder={ `${procedure.name} (${procedure.limit})` } />
+                <br/>
               </div>
             )
           })

@@ -26,6 +26,7 @@ class DentalReimbursementFragment extends BaseMVPView {
 
   componentDidMount () {
     this.presenter.getDentalReimbursement()
+    this.props.setSelectedNavigation(1)
   }
 
   hideCircularLoader ( disabled ) {
