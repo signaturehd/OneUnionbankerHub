@@ -32,6 +32,19 @@
   margin: 20px auto 20px auto;
 }
 
+.download-container {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.link {
+  text-align: center;
+  color: #ff8a00;
+  font-size:12px;
+  user-select: none;
+  cursor: pointer;
+}
+
 .login-button {
   border-radius: 100px;
   border: none;
