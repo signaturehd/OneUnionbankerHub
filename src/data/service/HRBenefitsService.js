@@ -64,9 +64,9 @@ export default class HRBenefitsService {
     }
 
     formData.append('uuid', 12345)
-    formData.append('dent-cert', dentalReimbursementParam.file1)
+    formData.append('dentcert1', dentalReimbursementParam.file1)
     formData.append('dependentId', dentalReimbursementParam.dependentId)
-    formData.append('sample11', dentalReimbursementParam.file2)
+    formData.append('dentcert2', dentalReimbursementParam.file2)
     formData.append('body', JSON.stringify(dentalRObject))
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {
       headers : { token, accountToken }
