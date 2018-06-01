@@ -212,24 +212,6 @@ export default class HRBenefitsService {
     })
   }
 
-  getBookImage (accountToken, ImageParam) {
-    return this.imageClient.get('v1/uploads?folder=faqs', {
-      headers : {
-        accountToken,
-        file : ImageParam
-      }
-    })
-  }
-
-  getFaqsImage (accountToken, ImageParam) {
-    return this.imageClient.get('v1/uploads?folder=faqs', {
-      headers : {
-        accountToken,
-        file : ImageParam
-      }
-    })
-  }
-
   /* Transactions Personal */
   getTransactionsPersonal (token) {
     return this.apiClient.get('v1/transactions?type=1', {
