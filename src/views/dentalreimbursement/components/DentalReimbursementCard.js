@@ -112,10 +112,12 @@ return (
          <h4>Form Attachments</h4>
        <div className = 'dentalreimbursement-main'>
            <FileUploader
+              accept="image/gif,image/jpeg,image/jpg,image/png,"
               onChange = { this.handleImageChange }
               placeholder = 'Official Certificate'
               value = { this.state.file.name } />
-          <FileUploader
+          <FileUploader  
+              accept="image/gif,image/jpeg,image/jpg,image/png,"
               onChange = { this.handleImageChange2 }
               placeholder = 'Medical Certificate'
               value = { this.state.file2.name } />
