@@ -66,6 +66,7 @@
 .dentalreimbursement-button-close {
   width: -webkit-fill-available;
   height: fit-content;
-  border-radius: 20px;
+  border-radius: 50px;
   border: none;
+  margin-top: 65px;
 }
