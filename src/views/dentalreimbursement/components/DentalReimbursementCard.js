@@ -7,6 +7,8 @@ import DentalReimbursementProcedureModal from '../modal/DentalReimbursementProce
 import DentalReimbursementReviewModal from '../modal/DentalReimbursementReviewModal'
 import { Card, GenericButton, FileUploader, Checkbox, GenericTextBox } from '../../../ub-components/'
 
+
+
 class DentalReimbursementCard extends Component {
   constructor (props) {
   super(props)
@@ -52,6 +54,11 @@ handleImageChange(e) {
 
   let reader = new FileReader()
   let file = e.target.files[0]
+  if(this.files[0].size > 10000000){
+         alert("File is too big!");
+         this.value = "",
+      
+
 
   reader.onloadend = () => {
     this.setState({
@@ -62,6 +69,7 @@ handleImageChange(e) {
 
   reader.readAsDataURL(file)
 }
+}
 /*
 Medical Certificate Atachments
 */
@@ -69,6 +77,10 @@ handleImageChange2(e1) {
   e1.preventDefault()
   let reader2 = new FileReader()
   let file2 = e1.target.files[0]
+ if(this.files[0].size > 10000000){
+        alert("File is too big!");
+        this.value = "",
+     
 
   reader2.onloadend = () => {
     this.setState({
@@ -77,6 +89,7 @@ handleImageChange2(e1) {
     })
   }
   reader2.readAsDataURL(file2)
+}
 }
 render () {
     const { details, fileReceived, fileReceived2, onClick, dependents } = this.props
@@ -116,7 +129,7 @@ return (
               onChange = { this.handleImageChange }
               placeholder = 'Official Certificate'
               value = { this.state.file.name } />
-          <FileUploader  
+          <FileUploader
               accept="image/gif,image/jpeg,image/jpg,image/png,"
               onChange = { this.handleImageChange2 }
               placeholder = 'Medical Certificate'
