@@ -159,7 +159,7 @@ render () {
 
 return (
   <div className = { 'dentalreimbursement-container' }>
-    <form onSubmit = { this.handleSubmit }>
+    <div onSubmit = { this.handleSubmit }>
       <Card className = { 'dentalreimbursement-card' }>
          <h4>Form Attachments</h4>
        <div className = 'dentalreimbursement-main'>
@@ -217,15 +217,22 @@ return (
          selectedProcedures && selectedProcedures.map((procedure, key) => {
             return (
               <div key={ key } className = { 'dentalreimbursement-selected-procedure' }>
-                <GenericTextBox
-                  value={ procedure.amount }
-                  onChange={ e => {
-                    const updatedProcedures = [...selectedProcedures]
-                    updatedProcedures[key].amount = parseInt(e.target.value) || 0
+                <div className = {'input-grid'}>
+                  <GenericTextBox
+                    value={ procedure.amount }
+                    onChange={ e => {
+                      const updatedProcedures = [...selectedProcedures]
+                      updatedProcedures[key].amount = parseInt(e.target.value) || 0
 
-                    this.setState({ selectedProcedures: updatedProcedures })
-                  }}
-                  placeholder={ `${procedure.name} (${procedure.limit})` } />
+                      this.setState({ selectedProcedures: updatedProcedures })
+                    }}
+                    placeholder={ `${procedure.name} (${procedure.limit})` } />
+                  <button onClick = { () => {
+                      const { selectedProcedures } = this.state
+                      selectedProcedures.splice(key, 1)
+                      this.setState({selectedProcedures}) 
+                  }}>X</button>
+                </div>
                 <br/>
               </div>
             )
@@ -252,7 +259,7 @@ return (
                type = { 'button' }
                text = { 'Submit' }/>
         </Card>
-      </form>
+      </div>
     </div>
     )
   }

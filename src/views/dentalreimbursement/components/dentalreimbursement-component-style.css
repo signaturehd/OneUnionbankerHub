@@ -56,3 +56,9 @@
   margin: 50px 0 5px 0px;
   font-size: 16px;
 }
+
+.input-grid {
+  display:grid;
+  grid-template-columns: 95% 5%;
+  justify-content: end;
+}
