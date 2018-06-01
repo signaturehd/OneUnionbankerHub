@@ -53,7 +53,6 @@ class FaqCategoryFragment extends Component {
                     searchCategories.map((faq, i) =>
                       <FaqCardComponent
                         key = { i }
-                        imageResponse = { imageResponse }
                         icon = { faq.icon }
                         title = { faq.category }
                         onClick = { () => setSelectedFaqCategory(faq) } />
