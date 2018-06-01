@@ -23,7 +23,9 @@ const {
 
 
 class MedPlayer extends Component {
+
   render () {
+    let IsCompleted
     const { selectedPodcast } = this.props
 
     const style = {
@@ -42,22 +44,29 @@ class MedPlayer extends Component {
       }
     }
 
+    const labelStyle = {
+      color:'#fff',
+      fontSize: '13px',
+      padding: '0px'
+    }
     return (
       <div className = { 'media-player-content' }>
         <Media>
-          {({ isFullscreen, playPause }) =>
+          {({ isFullscreen, playPause, currentTime, duration}) =>
           <div
             className={`media-player${  isFullscreen ? ' media-player--fullscreen' : ''}`}
             tabIndex="0">
             <div style = { style.defaultBackground }>
               <Player
                 className = { 'player-content' }
-                src = {selectedPodcast && selectedPodcast.url}
+                // src = {selectedPodcast && selectedPodcast.url}
+                src = 'https://www.youtube.com/watch?v=LEu7FxUUr90'
                 onClick = { () => playPause()}/>
             </div>
             <div className="media-controls">
+            <label style={labelStyle}>{IsCompleted}</label>
               <PlayPause className="media-control media-control--play-pause" />
-              <CurrentTime className="media-control media-control--current-time" />
+              <CurrentTime className="media-control media-control--current-time" onChange={isCompleted(currentTime, duration)}/>
 
               <div className="media-control-group media-control-group--seek">
                 <Progress className="media-control media-control--progress" />
@@ -74,6 +83,13 @@ class MedPlayer extends Component {
         </Media>
       </div>
     )
+
+    function isCompleted(currentTime, duration) {
+      if(currentTime>=duration)
+      {
+        IsCompleted= 'Completed'
+      }
+    }
   }
 }
 
