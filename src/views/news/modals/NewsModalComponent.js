@@ -25,6 +25,7 @@ class NewsModalComponent extends Component {
           backgroundRepeat : 'no-repeat',
           height : '250px',
           width: 'auto',
+          margin : 'auto',
           backgroundSize : 'cover',
           color : 'white',
           fontWeight : 'bold'
