@@ -33,10 +33,22 @@ class SideBar extends Component {
         className: 'newsfeed-icon mobile-icon'
       },
       {
+        id: 4 ,
+        title: 'My Learning',
+        action: () => history.push('/mylearning'),
+        className: 'mylearning-icon mobile-icon'
+      },
+      {
         id: 1 ,
         title: 'My Benefits',
         action: () => history.push('/mybenefits'),
         className: 'benefits-icon mobile-icon'
+      },
+      {
+        id: 3 ,
+        title: 'Personal',
+        action: () => history.push('/settings'),
+        className: 'settings-icon mobile-icon'
       },
       {
         id: 2 ,
@@ -44,20 +56,14 @@ class SideBar extends Component {
         action: () => history.push('/faqs'),
         className: 'faqs-icon mobile-icon'
       },
-      {
-        id: 3 ,
-        title: 'My Profile',
-        action: () => history.push('/settings'),
-        className: 'settings-icon mobile-icon'
-      },
-      {
-        id: 4 ,
-        title: 'MyLearning',
-        action: () => history.push('/mylearning'),
+     {
+        id: 6 ,
+        title: 'Feedback',
+        action: () => history.push('/feedback'),
         className: 'mylearning-icon mobile-icon'
       },
       {
-        id: 5 ,
+        id: 7 ,
         title: 'Logout',
         action: logout,
         className: 'logout-icon mobile-icon'

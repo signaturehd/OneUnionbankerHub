@@ -92,6 +92,10 @@ ul {
   -webkit-mask-image: url('../../../../../images/My ELearning.png');
   mask-image: url('../../../../../images/My ELearning.png');
   }
+  .feedback-icon {
+  -webkit-mask-image: url('../../../../../images/Feedback.png');
+  mask-image: url('../../../../../images/Feedback.png');
+  }
   .logout-icon {
   -webkit-mask-image: url('../../../../../images/LOGOUT.png');
   mask-image: url('../../../../../images/LOGOUT.png');

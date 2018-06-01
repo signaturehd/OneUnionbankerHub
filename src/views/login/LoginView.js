@@ -63,6 +63,15 @@ class LoginView extends BaseMVPView {
     this.setState({ disabled : false })
   }
 
+  downloadIOS() {
+    window.location.href = "itms-services://?action=download-manifest&amp;url=https://oneunionbankerhub.com/download/manifest.plist"
+  }
+
+  downloadAndroid() {
+    window.open("https://play.google.com/store/apps/details?id=com.unionbankph.oneunionbankerhub")
+  }
+
+
   render () {
     const { showOtpModal, username } = this.state
     const { notify } = this.props
@@ -130,6 +139,11 @@ class LoginView extends BaseMVPView {
                   <img
                     src = { require('../../images/icons/DesignationOrange.png') }
                     className = { 'icon-1' } />
+            </div>
+            <br/>
+            <div className = {'download-container'}>
+              <span className = {'link'} onClick = { () => this.downloadIOS() } >Download IOS Version</span>
+              <span className = {'link'} onClick = { () => this.downloadAndroid() }>Download Android Version</span>
             </div>
         </Card>
 
