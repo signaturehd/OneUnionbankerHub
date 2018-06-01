@@ -46,17 +46,18 @@ export default class DentalReimbursementPresenter {
             duration : 2000
           })
          )
-         store.dispatch( NotifyActions.addNotify({
-           title: 'Dental Reimbursement',
-           message : error.message,
-           type : 'warning',
-           duration : 2000
-         })
-        )
+
          this.view.hideCircularLoader()
-        },
-        error => {
-          this.view.hideCircularLoader()
+         this.view.noticeOfUndertaking(data)
+      },
+      error => {
+          store.dispatch( NotifyActions.addNotify({
+            title: 'Dental Reimbursement',
+            message : error.message,
+            type : 'warning',
+            duration : 2000
+          })
+         )
         }
       )
     }

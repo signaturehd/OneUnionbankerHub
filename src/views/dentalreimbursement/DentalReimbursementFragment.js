@@ -7,8 +7,9 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectPartial from '../../utils/ConnectPartial'
 import DentalReimbursementReviewModal from './modal/DentalReimbursementReviewModal'
 import DentalReimbursementProcedureModal from './modal/DentalReimbursementProcedureModal'
-
 import DentalReimbursementCard from './components/DentalReimbursementCard'
+import NoticeModal from '../notice/Notice'
+import ResponseModal from '../notice/NoticeResponseModal'
 import './styles/dental-reimbursement.css'
 
 import { CircularLoader, Checkbox } from '../../ub-components/'
@@ -21,6 +22,11 @@ class DentalReimbursementFragment extends BaseMVPView {
       procedureModal: false,
       reviewModal: false,
       disabled: false, // this is for circular loader
+      noticeResponse : null, /*notice response*/
+      showNoticeResponseModal : false,
+      showNoticeModal : false,
+      showConfirmation : false,
+
     }
   }
 
@@ -42,6 +48,12 @@ class DentalReimbursementFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/medical')
   }
 
+  /*Notice Response*/
+  noticeOfUndertaking (noticeResponse) {
+    // console.log(noticeResponse)
+    this.setState({ showNoticeModal : true, noticeResponse })
+  }
+
   showDentalReimbursementValidate ( validateDentalReimbursementResp ) {
     this.setState({
       dependents: validateDentalReimbursementResp.dependents,
@@ -56,6 +68,11 @@ class DentalReimbursementFragment extends BaseMVPView {
       dependents,
       selectedDependent,
       selectedProcedures,
+      showConfirmation,
+      showNoticeModal,
+      showNoticeResponseModal,
+      noticeResponse,
+      response,
     } = this.state
 
     return (
@@ -63,9 +80,34 @@ class DentalReimbursementFragment extends BaseMVPView {
         { super.render() }
         <div className={ 'breadcrumbs-container' }>
           <i className = { 'left' } onClick = { () => this.navigate() }></i>
-          <h4>Dental Reimbursement</h4>
+          <h4 className = { 'header-margin-default' } >DENTAL REIMBURSEMENT</h4>
         </div>
           <div className = { 'dentalreimbursement-container' }>
+            {
+              showNoticeModal &&
+              <NoticeModal
+                onClose = { () => this.setState({ showNotice : false })}
+                noticeResponse = { noticeResponse }
+                benefitId = { '8' }
+                onDismiss = { (showNoticeModal, response) =>
+                  this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
+              />
+            }
+
+            {
+              showNoticeResponseModal &&
+              <ResponseModal
+                onClose = { () => {
+                  this.setState({ showNoticeResponseModal : false })
+                  this.props.history.push('/mybenefits/benefits/medical')
+                }}
+                noticeResponse = { response }
+                benefitId = { '8' }
+                onDismiss = { (showNoticeModal, response) =>
+                  this.setState({ showNoticeModal, response })  }
+              />
+
+            }
             {
               disabled ?
                <center className = { 'dentalloa-loader' }>

@@ -244,11 +244,13 @@ render () {
                         this.setState({ selectedProcedures: updatedProcedures })
                       }}
                       placeholder={ `${procedure.name} (${procedure.limit})` } />
-                    <button onClick = { () => {
-                        const { selectedProcedures } = this.state
-                        selectedProcedures.splice(key, 1)
-                        this.setState({selectedProcedures})
-                    }}>X</button>
+                      <button
+                          className = { 'dentalreimbursement-button-close' }
+                          onClick = { () => {
+                          const { selectedProcedures } = this.state
+                          selectedProcedures.splice(key, 1)
+                          this.setState({selectedProcedures})
+                      }}>X</button>
                   </div>
                   <br/>
                 </div>
