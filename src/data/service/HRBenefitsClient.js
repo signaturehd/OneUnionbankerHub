@@ -136,7 +136,7 @@ export default class HRBenefitsClient {
     return this.service.getPodcast(token)
       .pipe(ServiceErrorOperator())
       .map(resp => {
-        for (var i in resp) {
+        for (const i in resp) {
           if (resp[i].id == id) {
             return resp[i]
           }
@@ -220,9 +220,34 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Feedback */
+  getFeedback (token, FeedbackParam) {
+    return this.service.getFeedback(token, FeedbackParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addFeedback (token, addFeedbackParam) {
+    return this.service.addFeedback(token, addFeedbackParam)
+      .pipe(ServiceErrorOperator())
+  }
   /* Remarks */
   getRemarks (token, remarksParam) {
     return this.service.getRemarks(token, remarksParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getFaqsCategories (token) {
+    return this.service.getFaqsCategories(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getBookImage (accountToken, ImageParam) {
+    return this.service.getBookImage(accountToken, ImageParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getFaqsImage (accountToken, ImageParam) {
+    return this.service.getFaqsImage(accountToken, ImageParam)
       .pipe(ServiceErrorOperator())
   }
 

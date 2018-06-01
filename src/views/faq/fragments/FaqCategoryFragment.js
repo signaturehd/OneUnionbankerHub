@@ -27,6 +27,7 @@ class FaqCategoryFragment extends Component {
       faqCategories,
       setSelectedFaqCategory,
       isLoading,
+      imageResponse,
     } = this.props
 
     let searchCategories = faqCategories
@@ -52,6 +53,7 @@ class FaqCategoryFragment extends Component {
                     searchCategories.map((faq, i) =>
                       <FaqCardComponent
                         key = { i }
+                        imageResponse = { imageResponse }
                         icon = { faq.icon }
                         title = { faq.category }
                         onClick = { () => setSelectedFaqCategory(faq) } />
