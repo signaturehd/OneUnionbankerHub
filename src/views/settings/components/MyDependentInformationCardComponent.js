@@ -11,16 +11,18 @@ class MyDependentInformationCardComponent extends Component {
   }
 
   render () {
-    const { profile, onClick, rank , linemanager } = this.props
+    const { profileDependent, onClick } = this.props
     return (
          <div className = 'card-container'>
+           <h4 className = {'text-title-profile'}> DEPENDENTS : </h4>
             {
-               profile.dependent &&
-                profile.dependent.map((dependents, i) => (
-                <h5> Dependents: {dependents.dependent}</h5>
-                ))
+                profileDependent && profileDependent.map((dependent, i) =>
+                <h5
+                  key = { i }
+                  className = { "title" }
+                  > {dependent.firstName} {dependent.lastName}</h5>
+                )
             }
-            <h4 className = {'text-title-profile'}> DEPENDENTS : </h4>
           </div>
     )
   }
