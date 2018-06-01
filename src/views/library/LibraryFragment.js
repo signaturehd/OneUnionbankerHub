@@ -52,8 +52,9 @@ class LibraryFragment extends BaseMVPView {
   }
 
   navigate () {
-    this.props.history.push ('/mylearning')
+    this.props.history.push('/mylearning')
   }
+
   updateSearch () {
     this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
   }
@@ -75,9 +76,8 @@ class LibraryFragment extends BaseMVPView {
     let filteredBooks = books
     const search = searchString.trim().toLowerCase()
     if (search.length > 0) {
-      filteredBooks = books.filter(book => book.title.toLowerCase().match(search))
+      filteredBooks = books.filter(book => books.title.toLowerCase().match(search))
     }
-    console.log(recommended)
 
     return (
       <div>
@@ -97,6 +97,7 @@ class LibraryFragment extends BaseMVPView {
             id='tab1'
             type='radio'
             name='tabs'
+            onClick = { () => this.props.history.push('/mylearning/books') }
             defaultChecked />
           <label  htmlFor = 'tab1'>All Books</label>
 
@@ -104,20 +105,27 @@ class LibraryFragment extends BaseMVPView {
             className = { 'input-tab' }
             id='tab2'
             type='radio'
+            onClick = { () => this.props.history.push('/mylearning/books/recommended') }
             name='tabs' />
           <label  htmlFor='tab2'>Recommended</label>
 
-          <input className = { 'input-tab' } id='tab3'  type='radio' name='tabs' />
+          <input
+            className = { 'input-tab' }
+            id='tab3'
+            onClick = { () => this.props.history.push('/mylearning/books/history') }
+            type='radio'
+            name='tabs' />
           <label  htmlFor = 'tab3' >Borrowed</label>
 
           <section id='content1'>
-            <BookListFragment presenter={ this.presenter } filteredBooks = { filteredBooks } />
-          </section>
-          <section id='content2'>
-            <BookRecommendationFragment presenter = { this.presenter } recommended = { recommended } />
-          </section>
-          <section  id='content3'>
-            <BookBorrowedFragment presenter = { this.presenter } borrowed = { borrowed } />
+              <Switch>
+                <Route path = '/mylearning/books/recommended'
+                  render = { props => <BookRecommendationFragment presenter = { this.presenter } recommended = { recommended } {...props } /> } />
+                <Route path = '/mylearning/books/history'
+                  render = { props => <BookBorrowedFragment presenter = { this.presenter } borrowed = { borrowed }  /> } />
+                <Route path = '/mylearning/books'
+                  render = { props => <BookListFragment presenter={ this.presenter } filteredBooks = { filteredBooks } /> } />
+             </Switch>
           </section>
         </div>
       </div>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import BookCardComponent from '../components/BookCardComponent/BookBorrowedCard'
 import BookViewModal from '../modals/BookViewModal'
 import BookConfirmationModal from '../modals/BookConfirmationModal'
+import { Switch, Route } from 'react-router-dom'
 
 class BookListFragment extends Component {
   constructor (props) {
@@ -20,6 +21,14 @@ class BookListFragment extends Component {
     }
   }
 
+  componentDidMount () {
+    window.addEventListener("scroll", this.handleScroll);
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
   addRating (id, rating) {
     this.props.presenter.rateBook(id, rating)
   }
@@ -28,6 +37,16 @@ class BookListFragment extends Component {
     this.props.presenter.reserveBook(id, quantity)
   }
 
+  handleScroll() {
+    const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.floor(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight) - 1;
+    const windowBottom = windowHeight + window.pageYOffset;
+    if (windowBottom >= docHeight) {
+      console.log('end of line for book list')
+    }
+  }
 
   render () {
     const {
@@ -44,7 +63,8 @@ class BookListFragment extends Component {
       bookQuantity,
       title,
     } = this.state
-    return (
+
+    const BookList = () => (
       <div className = {'library-container'}>
         {
           filteredBooks.map((book, key) =>
@@ -82,6 +102,14 @@ class BookListFragment extends Component {
           />
         }
 
+      </div>
+    )
+
+    return (
+      <div>
+        <Switch>
+          <Route path = '/mylearning/books'  render = { BookList } />
+        </Switch>
       </div>
     )
   }
