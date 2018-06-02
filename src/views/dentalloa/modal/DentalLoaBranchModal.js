@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { Modal , GenericButton } from '../../../ub-components/'
 
+import './styles/dentalloamodalstyle.css'
+
 class DentalLoaBranchModal extends Component {
   constructor (props) {
     super(props)
@@ -29,18 +31,18 @@ class DentalLoaBranchModal extends Component {
       onClose = { onClose }
       isDismisable = { true }
       chosenBranch = { chosenBranch } >
-    <div className = { 'optical-description' }>
-      <h2>Recipients</h2>
+      <div className = { 'dentalloa-description' }>
+        <h2 className = { 'header-default-margin' }>BRANCH</h2>
       </div>
-      <div className = { 'optical-modal-footer' }>
+      <div>
         {
           details.map((branch, key) =>
           <GenericButton
-              key = { key }
-              details = { branch }
-              className = { 'dentalloa-modal-option-button' }
-              text = { branch.name}
-              onClick = { () => this.submitData(branch, branch.name) }/>
+            key = { key }
+            details = { branch }
+            className = { 'dentalloa-modal-option-button' }
+            text = { branch.name}
+            onClick = { () => this.submitData(branch, branch.name) }/>
           )
         }
       </div>

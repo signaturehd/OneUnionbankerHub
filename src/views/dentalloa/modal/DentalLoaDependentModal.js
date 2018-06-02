@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Modal, GenericButton } from '../../../ub-components/'
+import './styles/dentalloamodalstyle.css'
 
 class DentalLoaDependentModal extends Component {
   constructor (props) {
@@ -23,9 +24,9 @@ class DentalLoaDependentModal extends Component {
     <Modal
      onClose = { onClose }
      isDismisable = { true }
-   >
-      <div className = { 'optical-description' }>
-        <h2>Dependent</h2>
+    >
+      <div className = { 'dentalloa-description' }>
+        <h2 className = { 'header-default-margin' }>DEPENDENT</h2>
       </div>
       <div className = { 'optical-modal-footer' }>
       {
@@ -33,20 +34,31 @@ class DentalLoaDependentModal extends Component {
         details.dependents.map((dependent, key) =>
           <GenericButton
             key = { key }
-              className = { 'dentalloa-modal-option-button' }
-              text = { dependent.name }
-              onClick = { () => this.sendDependents(dependent, dependent.name, dependent.procedures) }
-            />
+            className = { 'dentalloa-modal-option-button' }
+            text = { dependent.name }
+            onClick = { () =>
+              this.sendDependents(
+                dependent,
+                dependent.name,
+                dependent.procedures)
+            }
+          />
         )
       }
       {
         details.dependent &&
         details.dependent.map((dependent, key) =>
           <GenericButton
-              key = { key }
-              className = { 'dentalloa-modal-option-button' }
-              details = { dependent.name }
-              onClick = { () =>  (onClick(dependent, dependent.name, details.procedures), onClose) }
+            key = { key }
+            className = { 'dentalloa-modal-option-button' }
+            details = { dependent.name }
+            onClick = { () =>
+              (onClick(
+                dependent,
+                dependent.name,
+                details.procedures),
+                onClose)
+              }
           />
         )
       }
@@ -59,5 +71,6 @@ DentalLoaDependentModal.propTypes = {
   onClose : PropTypes.func,
   onClick : PropTypes.func,
   details : PropTypes.object,
+  showDependentModal : PropTypes.bool,
 }
 export default DentalLoaDependentModal
