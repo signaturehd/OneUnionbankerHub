@@ -4,11 +4,10 @@ body {
 i {
   cursor: pointer;
   border: solid #ff8a00;
-  border-width: 0 6px 6px 0;
+  border-width: 0px 7px 7px 0;
   display: -webkit-inline-box;
   padding: 6px;
   position: relative;
-  margin-right: 10px;
 }
 
 .back-arrow {
