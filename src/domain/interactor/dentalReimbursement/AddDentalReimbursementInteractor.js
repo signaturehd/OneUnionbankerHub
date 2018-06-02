@@ -4,6 +4,12 @@ export default class AddDentalReimbursementInteractor {
   }
 
   execute (dentalReimbursementParam) {
-    return this.client.addDentalReimbursement(this.client.getToken(), dentalReimbursementParam)
+    return this.client.addDentalReimbursement(
+        this.client.getToken(),
+        this.client.getAccountToken(),
+        this.client.getAccountNumber(),
+        this.client.getReleasingCenter(),
+        dentalReimbursementParam)
+
   }
 }

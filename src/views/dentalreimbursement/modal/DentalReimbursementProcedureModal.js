@@ -1,37 +1,29 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal , GenericButton} from '../../../ub-components/'
+import { Modal , GenericButton } from '../../../ub-components/'
 
 class DentalReimbursementProcedureModal extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-       showResults : []
-    }
-}
-submitData (showResults) {
-  console.log(showResults)
-}
+
 render () {
-  const { details, onClose, proceedModal, isDismisable } = this.props
+    const { onClose, procedures, onSubmit } = this.props
 
 return (
   <Modal
     onClose = { onClose }
-    isDismisable = { true } >
+    isDismisable = { true }>
     <div className = { 'optical-description' }>
       <h2>Procedures</h2>
     </div>
     <div>
       {
-        details.map((procedure, key ) =>
+        procedures && procedures.map((procedure, key) =>
         <GenericButton
             className = { 'dentalloa-modal-option-button' }
             key = { key }
-            details = {proecedure && procedure.name}
-            text = { procedure && procedure.name}
-            onClick = { () => this.submitData( procedure )}/>
+            details = { procedure && procedure.name }
+            text = { procedure && procedure.name }
+            onClick = { () => onSubmit({ ...procedure }) }/>
           )
         }
     </div>
@@ -41,7 +33,8 @@ return (
 }
 DentalReimbursementProcedureModal.propTypes = {
   onClose : PropTypes.func,
-  proceedModal : PropTypes.func,
+  procedures : PropTypes.array,
+  onSubmit: PropTypes.func,
 }
 
 export default DentalReimbursementProcedureModal
