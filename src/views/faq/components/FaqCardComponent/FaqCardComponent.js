@@ -5,34 +5,42 @@ import { Card } from '../../../../ub-components/'
 
 import './faq-card-component.css'
 
+
 class FaqCardComponent extends Component {
   constructor (props) {
     super(props)
   }
 
   render () {
-    const { faqs, onClick } = this.props
-    return (
-        <Card>
-          <div></div>
-          <div className = {'card-body'}>
-            <h3>{faqs.title}</h3>
-          </div>
-          <div className = {'card-footer'}>
-            <small><a onClick = { () => onClick(faqs) }>Read More</a></small>
-          </div>
-        </Card>
+  const { onClick, title, icon } = this.props
+  const style = {
+    iconFaqs : {
+      background : `url('http://${icon}') rgb(0,0,0,0.7)`,
+      backgroundSize : '125px',
+      backgroundRepeat : 'no-repeat',
+      height: '100% auto',
+      color: 'white',
+      backgroundBlendMode : 'color',
+      fontWeight : 'bold',
+    }
+  }
+
+  return (
+      <Card
+        className = { 'faqs-container' }
+        onClick = { onClick }>
+        <div style = { style.iconFaqs } className = { 'faqs-body' }>
+        <h2>{ title }</h2>
+        </div>
+      </Card>
     )
   }
 }
 
 FaqCardComponent.propTypes = {
-  faqs : PropTypes.object,
   onClick : PropTypes.func,
-}
-
-FaqCardComponent.defaultProps = {
-
+  icon: PropTypes.string,
+  title: PropTypes.string,
 }
 
 export default FaqCardComponent

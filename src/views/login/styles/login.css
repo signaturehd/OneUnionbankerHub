@@ -1,0 +1,123 @@
+
+.login-logo {
+  display: block;
+  width: 80px;
+  margin: 30px auto;
+  box-shadow: 0 5px 10px -7px #333333;
+  border-radius: 50%;
+}
+.text {
+  width: 100%;
+}
+.login-form {
+  background-color: #ffffff;
+  width: 380px;
+  padding: 30px 20px 30px 20px;
+  margin: 100px auto auto auto;
+  height: auto;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px -3px #333;
+  text-align: center;
+}
+
+.login-input {
+  border-radius: 100px;
+  padding: 10px 15px;
+  width: 50%;
+  border: 1px solid #D9D9D9;
+  outline: none;
+  display: block;
+  font-size: 14px;
+  margin: 20px auto 20px auto;
+}
+
+.download-container {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.link {
+  text-align: center;
+  color: #ff8a00;
+  font-size:12px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.login-button {
+  border-radius: 100px;
+  border: none;
+  padding: 10px;
+  color: #FFFFFF;
+  box-shadow: 0 2px 10px -3px #719BE6;
+  display: block;
+  margin: 25px auto 10px auto;
+}
+
+@media screen and (max-width: 580px) {
+  .login-form {
+    height: auto;
+    width: auto;
+    padding: 0 20px 20px 20px;
+    margin: 100px 20px 50px 20px;
+  }
+  .login-input {
+    font-size: 8px;
+  }
+  .layer-icons {
+    width: auto;
+    margin: 100px 20px 50px 20px;
+  }
+}
+@media screen and (max-height: 550px) {
+  .login-form {
+    height: auto;
+    margin-bottom: 100px;
+  }
+}
+
+@media screen and (max-width : 768px) {
+  .icon-1 {
+    padding:1% !important;
+  }
+
+  .login-form {
+    box-shadow: none !important;
+  }
+
+  .login-logo {
+    margin-top: 0px;
+  }
+}
+
+
+.login-layer-icons {
+  width: 380px;
+  margin-top: 200px;
+  text-align: center;
+  display: contents;
+  position: absolute;
+  padding: 20px;
+  top: -213;
+  text-align: center;
+
+}
+.icon-1 {
+  width: 30px;
+  margin-top: 50px;
+  margin:2%;
+  background: #fff;
+  margin-bottom: 10px;
+  border: 0px #e2d3d300;
+}
+
+.notify-container {
+  position: fixed;
+  width: 20%;
+  right: 10px;
+  bottom: 10px;
+  display: grid;
+  z-index: 99;
+  grid-row-gap: 10px;
+}

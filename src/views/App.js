@@ -14,11 +14,11 @@ import { EventActions } from '../actions'
 
 const mapStateToProps = state => ({
   events: state.events,
-});
+})
 
 class App extends BaseMVPView {
   constructor (props) {
-    super(props);
+    super(props)
 
     this.state = {
       isLogin: false,
@@ -30,6 +30,7 @@ class App extends BaseMVPView {
   }
 
   componentWillMount () {
+  
     this.presenter.checkLogin()
   }
 

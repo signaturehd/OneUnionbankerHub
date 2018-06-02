@@ -1,0 +1,43 @@
+.feedback-card {
+  padding : 10% 15% 10% 15%;
+  width: auto;
+}
+
+.feedback-textarea {
+  height: 200px;
+  align-items: flex-start;
+  margin: 10px auto;
+  resize: none;
+  width: -webkit-fill-available !important;
+  outline-color: #FF8A00;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.feedback-loader {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20%;
+  vertical-align: middle;
+}
+
+.feedback-body {
+  padding: 2px;
+}
+
+.feedback-body {
+  clear: both;
+  padding: 0px;
+  margin: 0px;
+}
+.feedback-body-group:before,
+.feedback-body-group:after {
+	content:"";
+	display:table;
+}
+.feedback-body-group:after {
+	clear:both;
+}
+.feedback-body-group {
+    zoom:1; /* For IE 6/7 */
+}

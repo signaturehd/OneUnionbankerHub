@@ -5,11 +5,22 @@ import LoginPresenter from './presenter/LoginPresenter'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { GenericButton, GenericTextBox } from '../../ub-components'
+import {
+  GenericButton,
+  GenericTextBox,
+  Card,
+  CircularLoader,
+  Notify
+} from '../../ub-components'
 
-import './css/login.css'
+import './styles/login.css'
 
 import OtpModal from '../otp/OtpModal'
+
+import { connect } from 'react-redux'
+
+import store from '../../store'
+import { NotifyActions } from '../../actions'
 
 class LoginView extends BaseMVPView {
   constructor (props) {
@@ -19,17 +30,51 @@ class LoginView extends BaseMVPView {
       username: '',
       password: '',
       showOtpModal: false,
+      disabled : false
     }
 
     this.onLoginSuccess = this.onLoginSuccess.bind(this)
+  }
+  componentDidMount () {
+    store.dispatch(NotifyActions.resetNotify())
+  }
+
+  disabledButton () {
+    this.setState({ disabled : true })
+  }
+
+  enabledButton () {
+    this.setState({ disabled : false })
+  }
+
+  disabledButton () {
+    this.setState({ disabled : true })
+  }
+
+  enabledButton () {
+    this.setState({ disabled : false })
   }
 
   onLoginSuccess () {
     this.setState({ showOtpModal: true })
   }
 
+  onLoginError (response) {
+    this.setState({ disabled : false })
+  }
+
+  downloadIOS() {
+    window.location.href = "itms-services://?action=download-manifest&amp;url=https://oneunionbankerhub.com/download/manifest.plist"
+  }
+
+  downloadAndroid() {
+    window.open("https://play.google.com/store/apps/details?id=com.unionbankph.oneunionbankerhub")
+  }
+
+
   render () {
     const { showOtpModal, username } = this.state
+    const { notify } = this.props
 
     return (
       <div>
@@ -44,31 +89,86 @@ class LoginView extends BaseMVPView {
             username = { username }
             transactionType = { 2 } /> // TODO, move this static '2' to proper file on domain
         }
-          <div className = {'_box-form'}>
-            <div className = { '_login-grid' }>
-              <div className = { '_benefit-frame' }>
-                <div className = { '_banner-logo' }></div>
-              </div>
-              <div className = { '._login-form-grid' }>
-                <div className = {'_image-logo'}></div>
-                <GenericTextBox
-                  onChange = { e => this.setState({ username: e.target.value }) }
-                  placeholder = { 'Employee ID' }
-                  type = { 'text' }/>
-                <GenericTextBox
-                  onChange = { e => this.setState({ password: e.target.value }) }
-                  placeholder = { 'Password' }
-                  type = { 'password' }/>
+        <Card className = {'login-form'}>
+          <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
+            <GenericTextBox
+              onChange = { e => this.setState({ username: e.target.value }) }
+              placeholder = { 'Employee ID' }
+              type = { 'text' }/>
+            <GenericTextBox
+              onChange = { e => this.setState({ password: e.target.value }) }
+              placeholder = { 'Password' }
+              type = { 'password' }/>
+              <br/>
+            {
+              this.state.disabled ?
+              <center>
                 <br/>
-                <GenericButton
-                  text="Login"
-                  onClick = { () => this.presenter.login(this.state.username, this.state.password)}/>
+                <CircularLoader show = { true }/>
+              </center>              :
+              <div>
+                <br/>
+                  <GenericButton
+                    disabled = {this.state.disabled}
+                    className = { 'login-button' }
+                    text="Login"
+                    onClick = { () => this.presenter.login(this.state.username, this.state.password)}/>
+                <br/>
               </div>
+
+            }
+            <div className = { 'login-layer-icons' }>
+                  <img
+                    src = { require('../../images/icons/PAGIBIG.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/PHIC.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/sssOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/PremiumBadgeOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/RankOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/taxOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/DesignationOrange.png') }
+                    className = { 'icon-1' } />
             </div>
+            <br/>
+            <div className = {'download-container'}>
+              <span className = {'link'} onClick = { () => this.downloadIOS() } >Download IOS Version</span>
+              <span className = {'link'} onClick = { () => this.downloadAndroid() }>Download Android Version</span>
+            </div>
+        </Card>
+
+          <div className = { 'notify-container' }>
+          {
+            notify &&
+            notify.map((notify, i) => (
+              <Notify
+                onClick = { () => {
+                  store.dispatch(NotifyActions.removeNotify(i))
+                }}
+                key = { i }
+                title = { notify.title }
+                message = { notify.message }
+                type = { notify.type }
+              />
+            ))
+          }
           </div>
       </div>
     )
   }
 }
+const mapStateToProps = state => ({
+  notify : state.notify
+})
 
-export default ConnectView(LoginView, LoginPresenter)
+export default ConnectView(connect(mapStateToProps)(LoginView), LoginPresenter)

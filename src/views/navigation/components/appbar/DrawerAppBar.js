@@ -10,10 +10,11 @@ class DrawerAppBar extends Component {
     super(props)
     this.onToggleShow = this.onToggleShow.bind(this)
   }
-
   onToggleShow () {
+
     if (this.props.displayShow === 'none') {
       this.props.hide()
+
     } else if (this.props.displayShow === 'block') {
       this.props.show()
     }
@@ -47,5 +48,4 @@ class DrawerAppBar extends Component {
     )
   }
 }
-
 export default DrawerAppBar

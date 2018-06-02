@@ -5,6 +5,9 @@ import { Observable } from 'rxjs'
 
 import SessionProvider from '../../provider/SessionProvider'
 
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
+
 export default function ServiceErrorOperator () {
   return function ServiceErrorOperatorImpl (source) {
     return Observable.create(subscriber => {
@@ -14,17 +17,38 @@ export default function ServiceErrorOperator () {
         if (code === 200) {
           subscriber.next(body)
         } else if (code === 400) {
+          body.errors.map((error, key) => (
+            store.dispatch(NotifyActions.addNotify({
+                title : 'My Benefits',
+                message : error.message,
+                type : 'warning',
+                duration : 2000
+              })
+            )
+          ))
           subscriber.error(new GenericError(body))
         } else if (code === 401) {
+          store.dispatch(NotifyActions.addNotify({
+              title : 'Unauthorize',
+              message : 'Please re log in',
+              type : 'danger',
+              duration : 2000
+            })
+          )
           subscriber.error(new ForbiddenError())
-          new SessionProvider().setToken('')
-          new SessionProvider().setAccountToken('')
         } else {
+          store.dispatch(NotifyActions.addNotify({
+              title : 'Internal Server Error',
+              message : 'It seems that we\'ve encountered a problem.',
+              type : 'danger',
+              duration : 2000
+            })
+          )
           subscriber.error(new ServerError('It seems that we\'ve encountered a problem. Error: 1'))
         }
       },
       err => subscriber.error(new ServerError('It seems that \'ve encountered a problem. Error: 2')),
-      () => subscriber.complete());
+      () => subscriber.complete())
 
       return subscription
    })

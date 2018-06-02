@@ -22,11 +22,12 @@ export default class OtpPresenter {
     this.verifyOtpInteractor.execute(OtpParam(username, otp, transactionType))
       .subscribe(
         data => {
-          this.view.hideLoading();
+          this.view.hideLoading()
           this.view.onOtpSuccess()
         },
         error => {
           this.view.hideLoading()
+          this.view.onOtpError()
         }
       )
   }

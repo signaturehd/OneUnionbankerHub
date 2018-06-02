@@ -20,15 +20,23 @@ class LibraryFragment extends BaseMVPView {
       books : [],
       recommended : [],
       borrowed : [],
+      reserve: [],
+      filteredBook: [],
       showRating : false,
-      showBook : false
+      showBook : false,
+      showBorrowed : false,
+      showRecommendation : false,
+      showBorrowedFiltered : false,
+      searchString : '',
+
     }
+    this.updateSearch = this.updateSearch.bind(this)
   }
 
   componentDidMount () {
       this.presenter.getBooks()
       this.presenter.getBooksBorrowed()
-      this.props.setSelectedNavigation(5)
+      this.props.history.push('/mylearning/books')
   }
 
   showBooks (books) {
@@ -43,14 +51,46 @@ class LibraryFragment extends BaseMVPView {
     this.setState({ borrowed })
   }
 
+  navigate () {
+    this.props.history.push ('/mylearning')
+  }
+  updateSearch () {
+    this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
+  }
 
+  showBorrowedFiltered (filteredBook) {
+    this.setState({ filteredBook })
+  }
 
   render () {
-    const { books, tabs, recommended, borrowed } = this.state
+    const {
+      filteredBook,
+      books,
+      tabs,
+      recommended,
+      borrowed,
+      reserve,
+      searchString,
+    } = this.state
+
+    let filteredBooks = books
+    const search = searchString.trim().toLowerCase()
+    if (search.length > 0) {
+      filteredBooks = books.filter(books => books.title.toLowerCase().match(search))
+    }
+
     return (
       <div>
       { super.render() }
-        <h1>Library</h1>
+      <div className={ 'header-margin-container' }>
+        <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) }></i>
+      </div>
+      <input type = 'text'
+           className = {'booksSearchBar'}
+           ref='search'
+           placeholder = {'Search Books'}
+           value = { this.state.searchString }
+           onChange = { this.updateSearch } />
         <div className = { 'tabs-container' }>
           <input
             className = { 'input-tab' }
@@ -58,20 +98,20 @@ class LibraryFragment extends BaseMVPView {
             type='radio'
             name='tabs'
             defaultChecked />
-          <label htmlFor = 'tab1'>All Books</label>
+          <label  htmlFor = 'tab1'>All Books</label>
 
           <input
             className = { 'input-tab' }
             id='tab2'
             type='radio'
             name='tabs' />
-          <label htmlFor='tab2'>Recommended</label>
+          <label  htmlFor='tab2'>Recommended</label>
 
           <input className = { 'input-tab' } id='tab3'  type='radio' name='tabs' />
-          <label htmlFor = 'tab3' >Borrowed</label>
+          <label  htmlFor = 'tab3' >Borrowed</label>
 
           <section id='content1'>
-            <BookListFragment presenter={ this.presenter } books = { books } />
+            <BookListFragment presenter={ this.presenter } books = { filteredBooks } />
           </section>
           <section id='content2'>
             <BookRecommendationFragment presenter = { this.presenter } recommended = { recommended } />

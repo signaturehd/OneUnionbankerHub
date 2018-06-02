@@ -10,16 +10,16 @@ export default class LoginPresenter {
     this.view = view
   }
 
-  login (username, password) {
-    this.view.showLoading()
+  login (username, password, disabled) {
+    this.view.disabledButton()
     this.loginInteractor.execute(LoginParam(username, password))
       .subscribe(
         data => {
-          this.view.hideLoading();
+          this.view.enabledButton()
           this.view.onLoginSuccess()
         },
         error => {
-          this.view.hideLoading()
+          this.view.onLoginError(error)
           // TODO generic error handling
         }
       )

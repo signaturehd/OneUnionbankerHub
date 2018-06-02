@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Card, GenericButton } from '../../../../ub-components'
-import OpticalFragment from '../../../optical/OpticalFragment'
 import './styles/medical.css'
+import DentalReimbursementFragment from '../../../dentalreimbursement/DentalReimbursementFragment'
 
 class MedicalFragment extends Component {
   constructor (props) {
@@ -11,7 +11,7 @@ class MedicalFragment extends Component {
   }
 
   navigate () {
-      this.props.history.push('/benefits')
+      this.props.history.push('/mybenefits/benefits')
   }
 
   render () {
@@ -20,46 +20,45 @@ class MedicalFragment extends Component {
     const benefitsOptions = [{
       styleName: 'medical-cards-1',
       title: 'DENTAL LOA',
-      path: '/benefits/medical/dentalloa',
+      path: '/mybenefits/benefits/medical/loa/dental',
     }, {
       styleName: 'medical-cards-2',
       title: 'DENTAL REIMBURSEMENT',
-      path: '/benefits/medical/dentalreimbursement',
+      path: '/mybenefits/benefits/medical/reimbursement/dental',
     }, {
       styleName: 'medical-cards-3',
       title: 'OPTICAL',
-      path: '/benefits/medical/optical',
+      path: '/mybenefits/benefits/medical/optical',
     }]
 
     const MedicalHome = () => (
         <div className = { 'benefits-container' }  >
           <div className={ 'breadcrumbs-container' }>
-            <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
+            <i className = { 'left' } onClick = { () => this.navigate() }></i>
             <h1>Medical</h1>
           </div>
-            <div className = { 'adjustment' }>
-            <div className = { 'card-container' }>
-              {
-              benefitsOptions.map((value, idx) => (
-                <Card key={ idx }>
-                  <div
-                    className = { value.styleName}
-                    text = { value.title }
-                    onClick = { () => history.push(value.path) } >
-                    <p className = { 'benefits-option-cards' }> { value.title } </p></div>
-                </Card>
-              ))
-              }
-            </div>
+          <div className = { 'adjustment' }>
+          <div className = { 'card-container' }>
+            {
+            benefitsOptions.map((value, idx) => (
+              <Card key={ idx }>
+                <div
+                  className = { value.styleName}
+                  text = { value.title }
+                  onClick = { () => history.push(value.path) } >
+                  <p className = { 'benefits-option-cards' }> { value.title } </p></div>
+              </Card>
+            ))
+          }
           </div>
         </div>
+      </div>
     )
 
     return (
       <div>
         <Switch>
-          <Route exact path = '/benefits/medical'  render = { MedicalHome } />
-          <Route path = '/benefits/medical/optical' render = { props => <OpticalFragment { ...props } />}/>
+          <Route exact path = '/mybenefits/benefits/medical'  render = { MedicalHome } />
         </Switch>
       </div>
     )
