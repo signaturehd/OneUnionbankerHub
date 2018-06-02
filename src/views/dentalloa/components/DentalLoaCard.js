@@ -27,12 +27,7 @@ class DentalLoaCard extends Component {
       preferredDate: moment(),
     }
 
-    this.handleSubmit = this.handleSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
-  }
-
-  handleSubmit (e) {
-    e.preventDefault()
   }
 
   /* store the date */
@@ -66,7 +61,6 @@ class DentalLoaCard extends Component {
     return (
       <Card className = { 'dentalloa-card' }>
         <div className = { 'dentalloa-header' }>
-          <h5 > LOA DETAILS </h5>
           <div className = {'dentalloa-body '}>
             <div className = { 'dentalloa-col span_1_of_3' }>
               <i className = { 'dentalloa-icon text1-icon' }/>

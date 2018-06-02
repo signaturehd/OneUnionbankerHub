@@ -54,16 +54,12 @@ class DentalLoaView extends BaseMVPView {
     Submission of DentalLOA Form
   */
   submitForm (recipient, branch, date, selectedProcedures) {
-
-    const procedureTest = [
-      {
-        'id' : 4
-      },
-      {
-        'id' : 10
-      }
-    ]
-    this.presenter.addDentalLoa( recipient.id, branch.id, date, procedureTest)
+    const procedures = []
+    const selectedProcedureIds =  [...selectedProcedures]
+      selectedProcedures.map((resp) =>
+        procedures.push({'id' : resp.id.toString()})
+      )
+    this.presenter.addDentalLoa( recipient.id, branch.id, date, procedures)
   }
 
   /* Display Modal Notice of Undertaking*/
