@@ -88,7 +88,7 @@ class DentalReimbursementFragment extends BaseMVPView {
               <NoticeModal
                 onClose = { () => this.setState({ showNotice : false })}
                 noticeResponse = { noticeResponse }
-                benefitId = { '8' }
+                benefitId = { '6' }
                 onDismiss = { (showNoticeModal, response) =>
                   this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
               />
@@ -102,7 +102,7 @@ class DentalReimbursementFragment extends BaseMVPView {
                   this.props.history.push('/mybenefits/benefits/medical')
                 }}
                 noticeResponse = { response }
-                benefitId = { '8' }
+                benefitId = { '6' }
                 onDismiss = { (showNoticeModal, response) =>
                   this.setState({ showNoticeModal, response })  }
               />
