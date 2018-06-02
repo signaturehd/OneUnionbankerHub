@@ -43,9 +43,7 @@ class DentalReimbursementCard extends Component {
 /*
 Form Submission
 */
-handleSubmit(e) {
-  e.preventDefault()
-}
+
 submission() {
   this.props.presenter.addDentalReimbursement(
     this.state.file1,
