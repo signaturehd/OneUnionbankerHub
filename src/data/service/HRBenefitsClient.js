@@ -45,6 +45,15 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getToken()
   }
 
+  setInitialToken (token) {
+    this.sessionProvider.setInitialToken(token)
+    store.dispatch(EventActions.changeToken(token))
+  }
+
+  getInitialToken () {
+    return this.sessionProvider.getInitialToken()
+  }
+
   setAccountToken (accountToken) {
     this.sessionProvider.setAccountToken(accountToken)
   }
