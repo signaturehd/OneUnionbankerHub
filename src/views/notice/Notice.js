@@ -56,6 +56,7 @@ class Notice extends BaseMVPView {
             <CircularLoader show={true}/>
           </center>          :
           <div>
+          <center>
             <GenericButton text = {'Agree'}
               onClick = { () => {
                   this.isAgree(noticeResponse.transactionId, 1, benefitId),
@@ -70,6 +71,7 @@ class Notice extends BaseMVPView {
                 }
               }
             />
+          </center>
           </div>
         }
 

@@ -24,7 +24,7 @@
   background-size: contain;
   object-fit: contain;
   height: 150px;
-  width: fit-content;
+  width: auto;
 }
 .details-bold {
   font-weight: bold;

@@ -17,6 +17,7 @@ import FeedbackFragment from '../Feedback/FeedbackFragment'
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
 import Drawer from './components/drawer/Drawer'
+import DentalReimbursement from '../dentalreimbursement/DentalReimbursementFragment'
 
 import './styles/drawerview.css'
 
