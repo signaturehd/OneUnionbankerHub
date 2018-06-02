@@ -38,12 +38,6 @@
   font-weight: lighter;
 }
 
-._benefits-container {
-  display:grid;
-  grid-column-gap: 5px;
-  font-weight: lighter;
-  grid-template-columns : repeat(300px);
-}
 
 .card-container {
   display:grid;
@@ -52,28 +46,6 @@
   text-align: center;
 }
 
-i {
-  cursor: pointer;
-  border: solid #ff8a00;
-  border-width: 0 7px 7px 0;
-  display: -webkit-inline-box;
-  padding: 4px;
-  margin-right: 10px;
-}
-
-.left {
-  transform: rotate(135deg);
-  -webkit-transform: rotate(135deg);
-}
-
-.breadcrumbs-container {
-  display: flex;
-  align-items: center;
-}
-
-.page-header-buttons {
-  text-align : right;
-}
 
 .benefits-option-cards {
   background: rgba(0,0,0,0.5);
@@ -82,22 +54,6 @@ i {
   padding: 12px 0 12px 0;
 }
 
-.adjustment {
-  margin-top: 4%;
-
-}
-.library-container {
-  display:  grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  column-count: 2;
-  grid-column-gap: 20px;
-}
-.page-header-buttons {
-  padding: 0 4% 0 4%;
-}
-.title-view {
-  margin : 25px auto;
-}
 section {
   display: none;
   padding: 20px 0 0;
@@ -167,22 +123,6 @@ label:hover {
     padding: 15px;
   }
 }
-.booksSearchBar {
-  width: 40%;
-  border-left: 0;
-  border-right: 0;
-  border-top: 0;
-  background: transparent;
-  height: 30px;
-  display: inline-block;
-  transition: all 0.05s ease-in-out;
-  -webkit-appearance: searchfield;
-  float: right;
-  opacity: 0.7;
-  outline: none;
-  border-bottom-color: #ff8a00;
-}
-
 .option-cards-1 {
   padding: 21% 0 20% 0 !important;
   cursor: pointer !important;

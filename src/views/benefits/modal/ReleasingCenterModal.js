@@ -16,12 +16,12 @@ class ReleasingCenterModal extends Component {
   render() {
     const {
       onClose,
-      type,
-      placeholder,
       onSubmit,
       isDismisable,
+      type,
+      placeholder,
+      onClick,
       releasingCenters,
-      onClick
     } = this.props
 
     return (
@@ -29,8 +29,8 @@ class ReleasingCenterModal extends Component {
         onClose = {onClose}
         isDismisable = {isDismisable}>
         <div>
-
-        { releasingCenters ?
+        {
+          releasingCenters ?
           releasingCenters.map((releasingCenter, key) => ((
               <GenericButton
                 className = { 'dentalloa-modal-option-button' }
@@ -58,12 +58,12 @@ class ReleasingCenterModal extends Component {
 
 ReleasingCenterModal.propTypes = {
   onClose : PropTypes.func,
-  onChange : PropTypes.func,
   onSubmit : PropTypes.func,
   isDimissable : PropTypes.func,
   type : PropTypes.string,
-  maxLength : PropTypes.number,
   placeholder : PropTypes.string,
+  onClick : PropTypes.func,
+  releasingCenters : PropTypes.object
 }
 
 export default ReleasingCenterModal
