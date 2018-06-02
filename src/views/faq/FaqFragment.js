@@ -36,10 +36,6 @@ class FaqFragment extends BaseMVPView {
     this.props.setSelectedNavigation(2)
   }
 
-  componentWillReceiveProps (nextProps, nextState) {
-
-  }
-
   /**
   * set clicked faq category
   * props: FaqCategoryFragment
@@ -66,7 +62,7 @@ class FaqFragment extends BaseMVPView {
   }
 
   showFaqs (faqs) {
-    this.setState({ faqs })
+    this.setState({ faqs, isCategoryLoading : false })
   }
 
   render () {
