@@ -39,7 +39,6 @@ export default class HRBenefitsService {
     accountNo,
     releasingCenter,
     dentalLoaParam) {
-    const formData = new FormData()
     const dentalLoaObject = {
       accountNo : accountNo,
       type : 1,
@@ -48,7 +47,6 @@ export default class HRBenefitsService {
       preferredDate : dentalLoaParam.date,
       dentalProcedure : dentalLoaParam.procedure
     }
-    formData.append('body', JSON.stringify(dentalLoaObject))
     return this.apiClient.post('v1/issuances/dental/loa/submit', dentalLoaObject, {
       headers : { token }
     })
