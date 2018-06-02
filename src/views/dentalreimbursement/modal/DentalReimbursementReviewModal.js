@@ -9,6 +9,7 @@ class DentalReimbursementModal extends Component {
     super(props)
     this.state = {
       showDentalReimbursementModal : false,
+      isDismisable : true,
     }
 
     this.submitForm = this.submitForm.bind(this)
@@ -20,20 +21,25 @@ class DentalReimbursementModal extends Component {
   }
 
   render () {
-    const { details, onClose, confirm, cancel, fileReceived, fileReceived2 } = this.props
+    const { isDismisable } = this.state
+    const { onClose, confirm, cancel, fileReceived, fileReceived2 } = this.props
     return (
         <Modal
-          onClose = { onClose }>
+          onClose = { onClose }
+          isDismisable = { isDismisable }>
           <div className = { 'dentalreimbursement-description' }>
               <h2>Description</h2>
           </div>
           <div className = { 'dentalreimbursement-modal-footer' }>
-            <GenericButton onClick = { () => this.submitForm() }
-                    className = { 'dentalreimbursement-footer-left' }
-                    text = { confirm } />
+            <GenericButton
+              onClick = { () => this.submitForm() }
+              className = { 'dentalreimbursement-footer-left' }
+              text = { confirm } />
           </div>
           <div className = { 'dentalreimbursement-modal-footer' }>
-            <GenericButton className = { 'dentalreimbursement-footer-right' } text = { cancel } />
+            <GenericButton
+              className = { 'dentalreimbursement-footer-right' }
+              text = { cancel } />
           </div>
         </Modal>
       )
@@ -41,7 +47,6 @@ class DentalReimbursementModal extends Component {
 }
 DentalReimbursementModal.propTypes = {
   onClose : PropTypes.func,
-  details : PropTypes.func,
   confirm : PropTypes.string,
   cancel : PropTypes.string,
 }
