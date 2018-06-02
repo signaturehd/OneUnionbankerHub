@@ -70,10 +70,11 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getAccountNumber()
   }
 
+  /*Set Selected Releasing Center*/
   setReleasingCenter (releasingCenter) {
     this.sessionProvider.setReleasingCenter(releasingCenter)
   }
-
+  /*Get Selected Releasing Center*/
   getReleasingCenter () {
     return this.sessionProvider.getReleasingCenter()
   }
@@ -126,8 +127,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addOptical (token, accountToken, accountNumber, opticalParam) {
-    return this.service.addOptical(token, accountToken, accountNumber, opticalParam)
+  addOptical (token, accountToken, accountNumber, releasingCenter, opticalParam) {
+    return this.service.addOptical(token, accountToken, accountNumber, releasingCenter, opticalParam)
       .pipe(ServiceErrorOperator())
   }
 
@@ -173,6 +174,20 @@ export default class HRBenefitsClient {
   /* dental reimbursement */
   getDentalReimbursement (token) {
     return this.service.getDentalReimbursement(token)
+      .pipe(ServiceErrorOperator())
+  }
+  addDentalReimbursement (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    dentalReimbursementParam) {
+    return this.service.addDentalReimbursement(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      dentalReimbursementParam)
       .pipe(ServiceErrorOperator())
   }
 

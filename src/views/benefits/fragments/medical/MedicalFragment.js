@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Card, GenericButton } from '../../../../ub-components'
 import './styles/medical.css'
+import DentalReimbursementFragment from '../../../dentalreimbursement/DentalReimbursementFragment'
 
 class MedicalFragment extends Component {
   constructor (props) {
@@ -33,25 +34,25 @@ class MedicalFragment extends Component {
     const MedicalHome = () => (
         <div className = { 'benefits-container' }  >
           <div className={ 'breadcrumbs-container' }>
-            <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
+            <i className = { 'left' } onClick = { () => this.navigate() }></i>
             <h1>Medical</h1>
           </div>
-            <div className = { 'adjustment' }>
-            <div className = { 'card-container' }>
-              {
-              benefitsOptions.map((value, idx) => (
-                <Card key={ idx }>
-                  <div
-                    className = { value.styleName}
-                    text = { value.title }
-                    onClick = { () => history.push(value.path) } >
-                    <p className = { 'benefits-option-cards' }> { value.title } </p></div>
-                </Card>
-              ))
-              }
-            </div>
+          <div className = { 'adjustment' }>
+          <div className = { 'card-container' }>
+            {
+            benefitsOptions.map((value, idx) => (
+              <Card key={ idx }>
+                <div
+                  className = { value.styleName}
+                  text = { value.title }
+                  onClick = { () => history.push(value.path) } >
+                  <p className = { 'benefits-option-cards' }> { value.title } </p></div>
+              </Card>
+            ))
+          }
           </div>
         </div>
+      </div>
     )
 
     return (

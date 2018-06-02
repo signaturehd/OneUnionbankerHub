@@ -54,10 +54,22 @@ export default class HRBenefitsService {
     })
   }
 
-  addDentalReimbursement (token, dentalLoaParam) {
+  addDentalReimbursement (token, accountToken, accountNumber, releasingCenter, dentalReimbursementParam) {
     const formData = new FormData()
+    const dentalRObject = {
+      accountNumber,
+      releasingCenter : releasingCenter,
+      type : 1,
+      procedures : dentalReimbursementParam.procedure
+    }
+
+    formData.append('uuid', 12345)
+    formData.append('dentcert1', dentalReimbursementParam.file1)
+    formData.append('dependentId', dentalReimbursementParam.dependentId)
+    formData.append('dentcert2', dentalReimbursementParam.file2)
+    formData.append('body', JSON.stringify(dentalRObject))
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {
-      headers : { token }
+      headers : { token, accountToken }
     })
   }
 
@@ -68,12 +80,12 @@ export default class HRBenefitsService {
     })
   }
 
-  addOptical (token, accountToken, accountNumber, opticalParam) {
+  addOptical (token, accountToken, accountNumber, releasingCenter, opticalParam) {
     const formData = new FormData()
     const opticalObject = {
       accountNumber,
-      amount: '200',
-      releasingCenter: 'UBP',
+      amount: opticalParam.amount,
+      releasingCenter: releasingCenter,
       distributor: 'distributorTest'
     }
     formData.append('uuid', 123345)

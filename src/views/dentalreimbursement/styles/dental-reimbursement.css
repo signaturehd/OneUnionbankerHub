@@ -9,17 +9,15 @@
   vertical-align: middle;
 }
 
-
 .dentalreimbursement-container {
   max-width: 100%;
 }
 .dentalreimbursement-procedure {
-  background: #ff8a00 url('../../../images/drawer/logout.png') no-repeat right;
   border-radius: 5px;
   outline: none;
   display: flex;
-  margin: auto;
-  width: 100%;
+  margin: 20px auto auto auto;
+  width: auto;
   cursor: pointer;
   background-size: 30px;
   height: 35px;
