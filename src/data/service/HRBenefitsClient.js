@@ -117,8 +117,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addOptical (token, accountToken, accountNumber, opticalParam) {
-    return this.service.addOptical(token, accountToken, accountNumber, opticalParam)
+  addOptical (token, accountToken, accountNumber, releasingCenter, opticalParam) {
+    return this.service.addOptical(token, accountToken, accountNumber, releasingCenter, opticalParam)
       .pipe(ServiceErrorOperator())
   }
 
