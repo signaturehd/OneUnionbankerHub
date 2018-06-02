@@ -1,11 +1,13 @@
 .news-modal-body {
   min-height:150px;
   line-height:normal !important;
+  text-align: center;
 }
 
 .news-modal-body-title {
-  font-size : 24px;
-  font-weight : lighter;
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff8a00;
 }
 
 .news-modal-body-description {
