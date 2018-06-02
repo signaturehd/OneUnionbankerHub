@@ -66,12 +66,12 @@ class DentalLoaCard extends Component {
     return (
       <Card className = { 'dentalloa-card' }>
         <div className = { 'dentalloa-header' }>
-          <h5 > LOA Details </h5>
+          <h5 > LOA DETAILS </h5>
           <div className = {'dentalloa-body '}>
             <div className = { 'dentalloa-col span_1_of_3' }>
               <i className = { 'dentalloa-icon text1-icon' }/>
                <GenericTextBox
-                 onClick = { () => onClick(true, false, false)}
+                 onClick = { () => onClick(true, false, false) }
                  value = { recipient && recipient }
                  readOnly
                  placeholder = { text1 } />
@@ -81,7 +81,7 @@ class DentalLoaCard extends Component {
              <GenericTextBox
                value = { branch && branch }
                readOnly
-               onClick = { () => onClick(false, true, false)}
+               onClick = { () => onClick(false, true, false) }
                placeholder = { text2 } />
           </div>
           <div className = { 'dentalloa-col span_1_of_3' }>
@@ -101,12 +101,13 @@ class DentalLoaCard extends Component {
         selectedProcedures && selectedProcedures.map((procedure, key) => {
            return (
              <div>
-               <div key = { key } className = {'procedure-grid'}>
+               <div key = { key } className = { 'procedure-grid' }>
                   <List
-                    description = {'' + procedure.limit}
-                    title = {procedure.name}
+                    description = { '' + procedure.limit }
+                    title = { procedure.name }
                   />
                  <button
+                   className = { 'dentalloa-cancel-button' }
                    onClick = { () => {
                    selectedProcedures.splice(key, 1)
                    this.setState({ selectedProcedures }) }}>X</button>
@@ -118,7 +119,7 @@ class DentalLoaCard extends Component {
          }
          <br/>
         <GenericButton
-          onClick = { () => onClick(false, false, true)}
+          onClick = { () => onClick(false, false, true) }
           type = { 'button' }
           text = { text4 }
           className = { 'dentalloa-procedure' }
