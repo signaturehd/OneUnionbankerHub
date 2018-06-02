@@ -36,7 +36,9 @@
   background-color: #00000087;
   margin-right: 10px;
 }
-
+.sidebar-icon:hover {
+  background-color: #ff8a00;
+}
 .sidebar-icon.active {
   background-color: #ff8a00;
 }

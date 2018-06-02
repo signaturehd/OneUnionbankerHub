@@ -193,6 +193,26 @@ export default class HRBenefitsClient {
 
   /* dental loa */
 
+  getDentalLoa (token) {
+    return this.service.getDentalLoa(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addDentalLoa (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    dentalLoaParam) {
+    return this.service.addDentalLoa(
+      token,
+      accountToken,
+      accountNo,
+      releasingCenter,
+      dentalLoaParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* News */
   getNews (token) {
     return this.service.getNews(token)

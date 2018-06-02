@@ -47,11 +47,8 @@ class NewsFragment extends BaseMVPView {
       details,
       showLoader
     } = this.state
-    let newsList = this.state.news
+    let newsList = news
     const search = this.state.searchString.trim().toLowerCase()
-
-    let filteredNews = news
-
     if (search.length > 0) {
       newsList = news.filter(news => news.title.toLowerCase().match(search))
     }
