@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './dentalreimbursement-component-style.css'
-import TextBox from './DentalReimbursementTextBox'
 import { Modal } from '../modal/DentalReimbursementReviewModal'
 import DentalReimbursementProcedureModal from '../modal/DentalReimbursementProcedureModal'
 import DentalReimbursementReviewModal from '../modal/DentalReimbursementReviewModal'
