@@ -244,14 +244,16 @@ render () {
                         this.setState({ selectedProcedures: updatedProcedures })
                       }}
                       placeholder={ `${procedure.name} (${procedure.limit})` } />
+                      <div className = { 'dentalreimbursement-button-close' }>
                         <img
                           src = { require('../../../images/x-circle-global.png') }
-                          className = { 'dentalreimbursement-button-close' }
                           onClick = { () => {
-                          const { selectedProcedures } = this.state
-                          selectedProcedures.splice(key, 1)
-                          this.setState({selectedProcedures})
-                        }} />
+                            const { selectedProcedures } = this.state
+                            selectedProcedures.splice(key, 1)
+                            this.setState({selectedProcedures})
+                          }}
+                        />
+                      </div>
                   </div>
                   <br/>
                 </div>
