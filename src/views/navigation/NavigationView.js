@@ -26,6 +26,7 @@ import { connect } from 'react-redux'
 import store from '../../store'
 import { NotifyActions } from '../../actions'
 
+import DentalLoaView from '../dentalloa/DentalLoaFragment'
 import OpticalFragment from '../optical/OpticalFragment'
 import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
 import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
@@ -109,7 +110,7 @@ class NavigationView extends BaseMVPView {
                           <DentalReimbursement { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation }/>}/>
                         <Route path = '/mybenefits/benefits/medical/loa/dental' render = { props =>
-                          <DentalLoa { ...props }
+                          <DentalLoaView { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation }/>}/>
                         <Route path = '/mybenefits' render = { props =>
                           <BenefitsFragment { ...props }

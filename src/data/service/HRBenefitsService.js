@@ -26,22 +26,28 @@ export default class HRBenefitsService {
   }
 
   /* dental loa */
-  validateDentalLoa (token) {
+
+  getDentalLoa (token) {
     return this.apiClient.get('v1/issuances/dental/loa/validate?type=1', {
       headers: { token }
     })
   }
 
-  addDentalLoa (token, accountNumber, dentalLoaParam) {
-    const formData = new FormData()
-
-    formData.append('uuid', 1)
-    formData.append('med-cert', dentalLoaParam.medCert)
-    formData.append('opt-cert', dentalLoaParam.optCert)
-    formData.append('accountNumber', accountNumber)
-    formData.append('releasingCenter', 'unionBank')
-    formData.append('amount', opticalParam)
-    return this.apiClient.post('v1/issuances/dental/loa/submit', formData, {
+  addDentalLoa (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    dentalLoaParam) {
+    const dentalLoaObject = {
+      accountNo : accountNo,
+      type : 1,
+      dependentId : dentalLoaParam.dependent,
+      dentalClinicId : dentalLoaParam.branch,
+      preferredDate : dentalLoaParam.date,
+      dentalProcedure : dentalLoaParam.procedure
+    }
+    return this.apiClient.post('v1/issuances/dental/loa/submit', dentalLoaObject, {
       headers : { token }
     })
   }
