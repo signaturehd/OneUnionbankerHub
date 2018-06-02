@@ -80,12 +80,12 @@ export default class HRBenefitsService {
     })
   }
 
-  addOptical (token, accountToken, accountNumber, opticalParam) {
+  addOptical (token, accountToken, accountNumber, releasingCenter, opticalParam) {
     const formData = new FormData()
     const opticalObject = {
       accountNumber,
-      amount: '200',
-      releasingCenter: 'UBP',
+      amount: opticalParam.amount,
+      releasingCenter: releasingCenter,
       distributor: 'distributorTest'
     }
     formData.append('uuid', 123345)
