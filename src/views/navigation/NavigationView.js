@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/NavigationPresenter'
-
+/*Modules Fragment */
 import BenefitsFragment from '../benefits/BenefitsFragment'
 import NewsFragment from '../news/NewsFragment'
 import FaqFragment from '../faq/FaqFragment'
@@ -13,7 +13,7 @@ import PodcastFragment from '../podcast/PodcastFragment'
 import LibraryFragment from '../library/LibraryFragment'
 import MyLearningView from '../mylearning/MyLearningView'
 import FeedbackFragment from '../Feedback/FeedbackFragment'
-
+/*Navigation Drawer Component*/
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
 import Drawer from './components/drawer/Drawer'
@@ -74,74 +74,78 @@ class NavigationView extends BaseMVPView {
     this.presenter.logout()
   }
   render () {
-    const { displayShow, displayNavIcon, displayNavIconState, selected, onClick } = this.state
+    const {
+      displayShow,
+      displayNavIcon,
+      displayNavIconState,
+      selected,
+      onClick } = this.state
     const style = {
       show: {
           display : displayShow
       }
     }
     return (
-        <div className = { 'body-div' }>
-          <header className = { 'page-boundary page-boundary--fixed-top' }>
-            <DrawerAppBar
-              onClick = { onClick }
-              displayNavIcon = { displayNavIcon } displayShow = { displayShow }
-              hide = { () => this.setState({ displayShow : 'block' })}
-              show = { () => this.setState({ displayShow : 'none' })} />
-          </header>
-          <div className="panels">
-              <main className ="panel main-content " role="main">
-              { super.render() }
-                  <Drawer >
-                      <Switch>
-                        <Route exact path = '/' render = {props =>
-                          <NewsFragment { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation } /> }/>
-                        <Route path = '/mybenefits/transactions/personal/:id' render = { props =>
-                          <TransactionPersonalDetailFragment { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation } />}/>
-                        <Route path = '/mybenefits/transactions/approval/:id' render = { props =>
-                          <TransactionApprovalDetailFragment { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                        <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
-                          <OpticalFragment { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation } />}/>
-                        <Route path = '/mybenefits/benefits/medical/reimbursement/dental' render = { props =>
-                          <DentalReimbursement { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                        <Route path = '/mybenefits/benefits/medical/loa/dental' render = { props =>
-                          <DentalLoaView { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                        <Route path = '/mybenefits' render = { props =>
-                          <BenefitsFragment { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                        <Route path = '/faqs' render = { props =>
-                          <FaqFragment { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                        <Route path = '/settings' render = { props =>
-                          <SettingsFragment { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                        <Route path = '/mylearning' render = { props =>
-                          <MyLearningView { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                        <Route path = '/feedback' render = { props =>
-                          <FeedbackFragment { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
-
-                     </Switch>
-                    </Drawer>
-              </main>
-              <aside
-                className ="left-side panel"
-                style = { style.show }>
-                <SideBar
-                  logout = { this.callLogout }
-                  selected={ selected }
-                  history = { this.props.history } >
-                 </SideBar>
-              </aside>
-          </div>
+      <div className = { 'navigation-body-div' }>
+        <header className = { 'page-boundary page-boundary--fixed-top' }>
+          <DrawerAppBar
+            onClick = { onClick }
+            displayNavIcon = { displayNavIcon } displayShow = { displayShow }
+            hide = { () => this.setState({ displayShow : 'block' })}
+            show = { () => this.setState({ displayShow : 'none' })} />
+        </header>
+        <div className="navigation-panels">
+          <main className ="navigation-panel navigation-content" role="main">
+          { super.render() }
+              <Drawer >
+                <Switch>
+                  <Route exact path = '/' render = {props =>
+                    <NewsFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> }/>
+                  <Route path = '/mybenefits/transactions/personal/:id' render = { props =>
+                    <TransactionPersonalDetailFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                  <Route path = '/mybenefits/transactions/approval/:id' render = { props =>
+                    <TransactionApprovalDetailFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                  <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
+                    <OpticalFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                  <Route path = '/mybenefits/benefits/medical/reimbursement/dental' render = { props =>
+                    <DentalReimbursement { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                  <Route path = '/mybenefits/benefits/medical/loa/dental' render = { props =>
+                    <DentalLoaView { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                  <Route path = '/mybenefits' render = { props =>
+                    <BenefitsFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/faqs' render = { props =>
+                    <FaqFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/settings' render = { props =>
+                    <SettingsFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mylearning' render = { props =>
+                    <MyLearningView { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/feedback' render = { props =>
+                    <FeedbackFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+               </Switch>
+            </Drawer>
+          </main>
+          <aside
+            className ="left-side"
+            style = { style.show }>
+            <SideBar
+              logout = { this.callLogout }
+              selected={ selected }
+              history = { this.props.history } >
+             </SideBar>
+          </aside>
         </div>
+      </div>
     )
   }
 }
