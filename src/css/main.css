@@ -25,3 +25,24 @@ i {
 .circular-loader-center {
   margin: 200px auto auto auto;
 }
+html, body, div, span
+h1, h2, h3, h4, h5, h6, p{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  width: -webkit-fill-available;
+  font: inherit;
+  vertical-align: baseline; }
+
+h1 {
+  font-weight: 350;
+  text-align: -webkit-auto;
+  display: inline-block;
+  margin: 0;
+}
+
+p {
+  margin: 0 0 20px;
+  line-height: 1.5;
+}

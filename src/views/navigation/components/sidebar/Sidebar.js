@@ -13,11 +13,7 @@ class SideBar extends Component {
   }
   render () {
     const {
-      textlink,
-      icon,
       onClick,
-      text,
-      path,
       onNavigationClick,
       selected,
       history,
@@ -30,43 +26,43 @@ class SideBar extends Component {
         id: 0 ,
         title: 'News',
         action: () => history.push('/'),
-        className: 'newsfeed-icon mobile-icon'
+        className: 'newsfeed-icon'
       },
       {
         id: 4 ,
         title: 'My Learning',
         action: () => history.push('/mylearning'),
-        className: 'mylearning-icon mobile-icon'
+        className: 'mylearning-icon'
       },
       {
         id: 1 ,
         title: 'My Benefits',
         action: () => history.push('/mybenefits'),
-        className: 'benefits-icon mobile-icon'
+        className: 'benefits-icon'
       },
       {
         id: 3 ,
-        title: 'Personal',
+        title: 'My Personal',
         action: () => history.push('/settings'),
-        className: 'settings-icon mobile-icon'
+        className: 'settings-icon'
       },
       {
         id: 2 ,
         title: 'FAQS',
         action: () => history.push('/faqs'),
-        className: 'faqs-icon mobile-icon'
+        className: 'faqs-icon'
       },
      {
         id: 6 ,
         title: 'Feedback',
         action: () => history.push('/feedback'),
-        className: 'mylearning-icon mobile-icon'
+        className: 'mylearning-icon'
       },
       {
         id: 7 ,
         title: 'Logout',
         action: logout,
-        className: 'logout-icon mobile-icon'
+        className: 'logout-icon'
       },
     ]
 
@@ -74,33 +70,33 @@ class SideBar extends Component {
     <div className = { '_sidebar-overlay' }>
     <ul className = { '_link-list ul' }>
       {
-        modules.map((d, idx) => <li
-              className = { `_text-link ${selected === d.id && 'active'}` }
-              key = { idx }
-              onClick = { d.action }>
-              <a key = { idx }
-                 className = { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-               { d.title }
-          </li>)
-       }
+        modules.map((d, idx) =>
+        <li
+          className = { `_text-link ${selected === d.id && 'active'}` }
+          key = { idx }
+          onClick = { d.action }>
+          <a key = { idx }
+            className =
+            { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+              { d.title }
+        </li>
+        )
+      }
     </ul>
-    </div>
-  )
-}
+  </div>
+    )
+  }
 }
 
 SideBar.propTypes = {
-  text : PropTypes.string,
-  icon : PropTypes.string,
-  path : PropTypes.string,
   onClick : PropTypes.func,
   selected: PropTypes.number,
   onNavigationClick: PropTypes.func,
+  history : PropTypes.object,
+  logout : PropTypes.func,
 }
 
 SideBar.defaultProps = {
-  text : 'title',
-  icon : 'image',
   selected: -1,
 }
 

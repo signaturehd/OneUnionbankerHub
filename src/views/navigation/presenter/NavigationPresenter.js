@@ -17,13 +17,14 @@ export default class NavigationPresenter {
   }
 
   getLibraries () {
-      this.view.showLoading()
-      this.getLibrariesInteractor.execute()
-        .subscribe(resp => {
-          this.view.hideLoading()
-        }, error => {
-          this.view.hideLoading()
-          // TODO prompt generic error
-        })
+    this.view.showLoading()
+    this.getLibrariesInteractor.execute()
+      .subscribe(resp => {
+        this.view.hideLoading()
+      }, error => {
+        this.view.hideLoading()
+        // TODO prompt generic error
+      }
+    )
   }
 }
