@@ -5,21 +5,31 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/NavigationPresenter'
 
-import LibraryFragment from '../library/LibraryFragment'
 import BenefitsFragment from '../benefits/BenefitsFragment'
-import TransactionFragment from '../transaction/TransactionFragment'
 import NewsFragment from '../news/NewsFragment'
 import FaqFragment from '../faq/FaqFragment'
 import SettingsFragment from '../settings/SettingsFragment'
-import PodcastView from '../podcast/PodcastView'
+import PodcastFragment from '../podcast/PodcastFragment'
+import LibraryFragment from '../library/LibraryFragment'
+import MyLearningView from '../mylearning/MyLearningView'
+import FeedbackFragment from '../Feedback/FeedbackFragment'
 
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
 import Drawer from './components/drawer/Drawer'
+import DentalReimbursement from '../dentalreimbursement/DentalReimbursementFragment'
 
 import './styles/drawerview.css'
 
 import { connect } from 'react-redux'
+
+import store from '../../store'
+import { NotifyActions } from '../../actions'
+
+import DentalLoaView from '../dentalloa/DentalLoaFragment'
+import OpticalFragment from '../optical/OpticalFragment'
+import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
+import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
 
 class NavigationView extends BaseMVPView {
   constructor (props) {
@@ -39,7 +49,7 @@ class NavigationView extends BaseMVPView {
     this.setState({ displayNavIcon : topBar })
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const mediaQuery = window.matchMedia('(min-width: 1201px)')
       if (mediaQuery.matches) {
         this.setDisplay('block', 'none')
@@ -53,9 +63,7 @@ class NavigationView extends BaseMVPView {
         this.setDisplay('none', 'block')
       }
     })
-  }
-
-  componentDidMount () {
+    store.dispatch(NotifyActions.resetNotify())
     this.presenter.getLibraries()
   }
 
@@ -66,7 +74,7 @@ class NavigationView extends BaseMVPView {
     this.presenter.logout()
   }
   render () {
-    const { displayShow, displayNavIcon, displayNavIconState, selected } = this.state
+    const { displayShow, displayNavIcon, displayNavIconState, selected, onClick } = this.state
     const style = {
       show: {
           display : displayShow
@@ -76,7 +84,7 @@ class NavigationView extends BaseMVPView {
         <div className = { 'body-div' }>
           <header className = { 'page-boundary page-boundary--fixed-top' }>
             <DrawerAppBar
-              logout = { this.callLogout }
+              onClick = { onClick }
               displayNavIcon = { displayNavIcon } displayShow = { displayShow }
               hide = { () => this.setState({ displayShow : 'block' })}
               show = { () => this.setState({ displayShow : 'none' })} />
@@ -89,11 +97,23 @@ class NavigationView extends BaseMVPView {
                         <Route exact path = '/' render = {props =>
                           <NewsFragment { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> }/>
-                        <Route path = '/benefits' render = { props =>
+                        <Route path = '/mybenefits/transactions/personal/:id' render = { props =>
+                          <TransactionPersonalDetailFragment { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                        <Route path = '/mybenefits/transactions/approval/:id' render = { props =>
+                          <TransactionApprovalDetailFragment { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                        <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
+                          <OpticalFragment { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                        <Route path = '/mybenefits/benefits/medical/reimbursement/dental' render = { props =>
+                          <DentalReimbursement { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                        <Route path = '/mybenefits/benefits/medical/loa/dental' render = { props =>
+                          <DentalLoaView { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                        <Route path = '/mybenefits' render = { props =>
                           <BenefitsFragment { ...props }
-                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                        <Route path = '/transactions' render = { props =>
-                          <TransactionFragment { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> } />
                         <Route path = '/faqs' render = { props =>
                           <FaqFragment { ...props }
@@ -101,12 +121,13 @@ class NavigationView extends BaseMVPView {
                         <Route path = '/settings' render = { props =>
                           <SettingsFragment { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                        <Route path = '/books' render = { props =>
-                            <LibraryFragment { ...props }
-                              setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                              <Route path = '/podcast' render = { props =>
-                          <PodcastView { ...props }
+                        <Route path = '/mylearning' render = { props =>
+                          <MyLearningView { ...props }
                             setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                        <Route path = '/feedback' render = { props =>
+                          <FeedbackFragment { ...props }
+                            setSelectedNavigation = { this.setSelectedNavigation } /> } />
+
                      </Switch>
                     </Drawer>
               </main>
@@ -114,8 +135,9 @@ class NavigationView extends BaseMVPView {
                 className ="left-side panel"
                 style = { style.show }>
                 <SideBar
+                  logout = { this.callLogout }
                   selected={ selected }
-                  onNavigationClick = { path => this.props.history.push(path) } >
+                  history = { this.props.history } >
                  </SideBar>
               </aside>
           </div>

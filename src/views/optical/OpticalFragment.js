@@ -11,8 +11,6 @@ import './styles/optical.css'
 
 import { CircularLoader } from '../../ub-components'
 
-import { connect } from 'react-redux'
-
 class OpticalFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -29,6 +27,7 @@ class OpticalFragment extends BaseMVPView {
 
   componentDidMount () {
     this.presenter.getOptical()
+    this.props.setSelectedNavigation(1)
   }
 
   isEligible (resp) {
@@ -44,7 +43,7 @@ class OpticalFragment extends BaseMVPView {
   }
 
   navigate () {
-    this.props.history.push('/benefits/medical')
+    this.props.history.push('/mybenefits/benefits/medical')
   }
 
   submitForm (amount, finalFile1, finalFile2) {
@@ -103,20 +102,34 @@ class OpticalFragment extends BaseMVPView {
             }}
             noticeResponse = { response }
             benefitId = { '8' }
-            onDismiss = { (showNoticeModal, response) => this.setState({ showNoticeModal, response })  }
+            onDismiss = { (showNoticeModal, response) =>
+              this.setState({ showNoticeModal, response })  }
           />
 
         }
 
         <div className={ 'breadcrumbs-container' }>
-          <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
+          <i className = { 'left' } onClick = {
+              this.navigate.bind(this) }></i>
           <h1>Optical Reimbursement</h1>
         </div>
         {
           isVisible ?
           <div className = { 'optical-container' }>
-            <Card onClick = { (showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2) =>
-              this.setState({ showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2 })  }/>
+            <Card onClick = {
+                (showConfirmation,
+                  file1,
+                  file2,
+                  amount,
+                  imagePreviewUrl,
+                  imagePreviewUrl2) =>
+            this.setState({
+                  showConfirmation,
+                  file1,
+                  file2,
+                  amount,
+                  imagePreviewUrl,
+                  imagePreviewUrl2 })  }/>
           </div>          :
           <div className = { 'optical-loader' }>
             <center><CircularLoader show = {true} /></center>

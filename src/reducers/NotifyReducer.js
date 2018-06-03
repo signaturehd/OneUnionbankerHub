@@ -1,4 +1,4 @@
-import { ADD_NOTIFY, REMOVE_NOTIFY } from '../utils/actionUtil'
+import { ADD_NOTIFY, REMOVE_NOTIFY, RESET_NOTIFY } from '../utils/actionUtil'
 import initialState from './initialState'
 
 export default function reducer (state = initialState.notify, action) {
@@ -10,6 +10,8 @@ export default function reducer (state = initialState.notify, action) {
         ...state.slice(0, action.index),
         ...state.slice(action.index + 1)
       ]
+    case RESET_NOTIFY:
+      return []
     default:
       return state
   }

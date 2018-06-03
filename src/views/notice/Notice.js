@@ -5,7 +5,12 @@ import ConnectView from '../../utils/ConnectView'
 
 import PropTypes from 'prop-types'
 
-import { Modal, GenericTextBox, GenericButton, CircularLoader } from '../../ub-components/'
+import {
+  Modal,
+  GenericTextBox,
+  GenericButton,
+  CircularLoader
+} from '../../ub-components/'
 
 class Notice extends BaseMVPView {
   constructor (props) {
@@ -51,6 +56,7 @@ class Notice extends BaseMVPView {
             <CircularLoader show={true}/>
           </center>          :
           <div>
+          <center>
             <GenericButton text = {'Agree'}
               onClick = { () => {
                   this.isAgree(noticeResponse.transactionId, 1, benefitId),
@@ -65,6 +71,7 @@ class Notice extends BaseMVPView {
                 }
               }
             />
+          </center>
           </div>
         }
 

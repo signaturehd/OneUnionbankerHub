@@ -5,6 +5,7 @@ import { Card } from '../../../../ub-components/'
 
 import './faq-card-component.css'
 
+
 class FaqCardComponent extends Component {
   constructor (props) {
     super(props)
@@ -14,7 +15,7 @@ class FaqCardComponent extends Component {
   const { onClick, title, icon } = this.props
   const style = {
     iconFaqs : {
-      background : `url('${icon}') rgb(0,0,0,0.7)`,
+      background : `url('http://${icon}') rgb(0,0,0,0.7)`,
       backgroundSize : '125px',
       backgroundRepeat : 'no-repeat',
       height: '100% auto',

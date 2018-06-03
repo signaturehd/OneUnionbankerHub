@@ -65,13 +65,7 @@ label:hover {
     margin: 0;
     font-size: 18px;
   }
-  .mobile-icon {
-    background: url('../../../images/profile-picture.png') no-repeat center center;
-    background-size: contain;
-    height: fit-content;
-    width: fit-content;
-    margin: auto;
-  }
+
 }
 
 @media screen and (max-width: 400px) {

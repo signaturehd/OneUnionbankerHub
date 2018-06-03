@@ -5,11 +5,22 @@ import LoginPresenter from './presenter/LoginPresenter'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { GenericButton, GenericTextBox, Card, CircularLoader } from '../../ub-components'
+import {
+  GenericButton,
+  GenericTextBox,
+  Card,
+  CircularLoader,
+  Notify
+} from '../../ub-components'
 
-import './css/login.css'
+import './styles/login.css'
 
 import OtpModal from '../otp/OtpModal'
+
+import { connect } from 'react-redux'
+
+import store from '../../store'
+import { NotifyActions } from '../../actions'
 
 class LoginView extends BaseMVPView {
   constructor (props) {
@@ -23,6 +34,17 @@ class LoginView extends BaseMVPView {
     }
 
     this.onLoginSuccess = this.onLoginSuccess.bind(this)
+  }
+  componentDidMount () {
+    store.dispatch(NotifyActions.resetNotify())
+  }
+
+  disabledButton () {
+    this.setState({ disabled : true })
+  }
+
+  enabledButton () {
+    this.setState({ disabled : false })
   }
 
   disabledButton () {
@@ -41,11 +63,22 @@ class LoginView extends BaseMVPView {
     this.setState({ disabled : false })
   }
 
+  downloadIOS() {
+    window.location.href = "itms-services://?action=download-manifest&amp;url=https://oneunionbankerhub.com/download/manifest.plist"
+  }
+
+  downloadAndroid() {
+    window.open("https://play.google.com/store/apps/details?id=com.unionbankph.oneunionbankerhub")
+  }
+
+
   render () {
     const { showOtpModal, username } = this.state
+    const { notify } = this.props
 
     return (
       <div>
+        { super.render() }
         {
           // TODO properly show otp modal as 'modal', not by just swapping views lol
           showOtpModal &&
@@ -59,12 +92,10 @@ class LoginView extends BaseMVPView {
         <Card className = {'login-form'}>
           <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
             <GenericTextBox
-              clasName = { 'login-input' }
               onChange = { e => this.setState({ username: e.target.value }) }
               placeholder = { 'Employee ID' }
               type = { 'text' }/>
             <GenericTextBox
-              className = { 'login-input' }
               onChange = { e => this.setState({ password: e.target.value }) }
               placeholder = { 'Password' }
               type = { 'password' }/>
@@ -109,10 +140,35 @@ class LoginView extends BaseMVPView {
                     src = { require('../../images/icons/DesignationOrange.png') }
                     className = { 'icon-1' } />
             </div>
+            <br/>
+            <div className = {'download-container'}>
+              <span className = {'link'} onClick = { () => this.downloadIOS() } >Download IOS Version</span>
+              <span className = {'link'} onClick = { () => this.downloadAndroid() }>Download Android Version</span>
+            </div>
         </Card>
+
+          <div className = { 'notify-container' }>
+          {
+            notify &&
+            notify.map((notify, i) => (
+              <Notify
+                onClick = { () => {
+                  store.dispatch(NotifyActions.removeNotify(i))
+                }}
+                key = { i }
+                title = { notify.title }
+                message = { notify.message }
+                type = { notify.type }
+              />
+            ))
+          }
+          </div>
       </div>
     )
   }
 }
+const mapStateToProps = state => ({
+  notify : state.notify
+})
 
-export default ConnectView(LoginView, LoginPresenter)
+export default ConnectView(connect(mapStateToProps)(LoginView), LoginPresenter)
