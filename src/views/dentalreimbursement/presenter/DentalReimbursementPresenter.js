@@ -58,6 +58,7 @@ export default class DentalReimbursementPresenter {
             duration : 2000
           })
          )
+         this.view.hideCircularLoader()
         }
       )
     }

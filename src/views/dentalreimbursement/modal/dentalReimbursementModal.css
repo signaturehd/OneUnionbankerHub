@@ -17,3 +17,8 @@
   font-weight: 550;
   border: 0;
 }
+.dentalreimbursement-grid-image {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: auto;
+}
