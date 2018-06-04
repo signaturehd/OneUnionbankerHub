@@ -29,10 +29,9 @@ class OpticalCard extends Component {
     this.handleImageChange2 = this.handleImageChange2.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  getExtension(filename) {
-  const parts = filename.split('/');
-  return parts[parts.length - 1];
-
+  getExtension (filename) {
+  const parts = filename.split('/')
+  return parts[parts.length - 1]
   }
   handleSubmit (e) {
     e.preventDefault()
@@ -63,7 +62,7 @@ class OpticalCard extends Component {
   if (isValid) {
      reader.onloadend = () => {
        this.setState({
-         file: file,
+         file,
          imagePreviewUrl: reader.result
        })
      }
@@ -77,7 +76,6 @@ class OpticalCard extends Component {
        })
      )
    }
-
 }
 
   handleImageChange2 (e1) {
@@ -95,7 +93,7 @@ let isValid = false
   if (isValid) {
      reader2.onloadend = () => {
        this.setState({
-         file2: file2,
+         file2,
          imagePreviewUrl2: reader2.result
        })
      }
@@ -109,7 +107,6 @@ let isValid = false
       })
     )
   }
-
 }
 
   render () {
