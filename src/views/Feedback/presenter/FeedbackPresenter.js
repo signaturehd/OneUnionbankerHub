@@ -1,5 +1,7 @@
-import GetFeedbackInteractor from '../../../domain/interactor/feedback/GetFeedbackInteractor'
-import AddFeedbackInteractor from '../../../domain/interactor/feedback/AddFeedbackInteractor'
+import GetFeedbackInteractor from
+'../../../domain/interactor/feedback/GetFeedbackInteractor'
+import AddFeedbackInteractor from
+'../../../domain/interactor/feedback/AddFeedbackInteractor'
 import FeedbackParam from '../../../domain/param/FeedbackParam'
 import { NotifyActions } from '../../../actions'
 
@@ -7,8 +9,11 @@ import store from '../../../store'
 
 export default class FeedbackPresenter {
   constructor (container) {
-    this.getFeedbackInteractor = new GetFeedbackInteractor(container.get('HRBenefitsClient'))
-    this.addFeedbackInteractor = new AddFeedbackInteractor(container.get('HRBenefitsClient'))
+    this.getFeedbackInteractor =
+      new GetFeedbackInteractor(container.get('HRBenefitsClient'))
+
+    this.addFeedbackInteractor =
+      new AddFeedbackInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -39,10 +44,16 @@ export default class FeedbackPresenter {
           this.view.onSuccessSubmit(true)
         },
         error => {
-          console.log(error)
+          store.dispatch(NotifyActions.addNotify({
+              title : 'Feedback',
+              message : error.message,
+              type : 'error',
+              duration : 2000
+            })
+          )
           this.view.onSuccessSubmit(true)
           this.view.hideLoading()
-        }
+      }
     )
   }
 }

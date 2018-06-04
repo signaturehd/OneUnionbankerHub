@@ -1,5 +1,8 @@
-import AddDentalReimbursementInteractor from '../../../domain/interactor/dentalReimbursement/AddDentalReimbursementInteractor'
-import GetDentalReimbursementInteractor from '../../../domain/interactor/dentalReimbursement/GetDentalReimbursementInteractor'
+import AddDentalReimbursementInteractor from
+'../../../domain/interactor/dentalReimbursement/AddDentalReimbursementInteractor'
+
+import GetDentalReimbursementInteractor from
+'../../../domain/interactor/dentalReimbursement/GetDentalReimbursementInteractor'
 
 import { Observable } from 'rxjs'
 
@@ -15,7 +18,6 @@ export default class DentalReimbursementPresenter {
 
   this.getDentalReimbursementInteractor =
     new GetDentalReimbursementInteractor(container.get('HRBenefitsClient'))
-
   }
 
   setView (view) {
@@ -39,7 +41,7 @@ export default class DentalReimbursementPresenter {
       dentalReimbursementParam(file1, file2, dependentId, procedure))
       .subscribe(
         data => {
-          store.dispatch( NotifyActions.addNotify({
+          store.dispatch(NotifyActions.addNotify({
             title: 'Dental Reimbursement',
             message : data.message,
             type : 'success',
@@ -51,7 +53,7 @@ export default class DentalReimbursementPresenter {
          this.view.noticeOfUndertaking(data)
       },
       error => {
-          store.dispatch( NotifyActions.addNotify({
+          store.dispatch(NotifyActions.addNotify({
             title: 'Dental Reimbursement',
             message : error.message,
             type : 'warning',

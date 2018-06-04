@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/DentalLoaPresenter'
 import ConnectView from '../../utils/ConnectView'
@@ -15,15 +16,15 @@ class DentalLoaView extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-      dentalloa : null, /*Dental LOA details*/
-      disabled : false, /*Loader Change State*/
-      showProcedureModal : false,/*First Modal for Procedures*/
-      showRecipientModal : false, /*Display Recipient Modal*/
-      showHealthwayBranchModal : false, /*Display HealthWayBranch Modal*/
+      dentalloa : null, /* Dental LOA details*/
+      disabled : false, /* Loader Change State*/
+      showProcedureModal : false,/* First Modal for Procedures*/
+      showRecipientModal : false, /* Display Recipient Modal*/
+      showHealthwayBranchModal : false, /* Display HealthWayBranch Modal*/
       showNoticeResponseModal: false, /* Display Notice Response Modal*/
       showNoticeResponseApprovalModal : false,/* Display Notice Approval Response Modal*/
       recipient : null,
-      procedures : null, /*Get Procedures List*/
+      procedures : null, /* Get Procedures List*/
       procedure : null,
       branch : null, /* Get Branch List*/
       date : null,
@@ -43,12 +44,12 @@ class DentalLoaView extends BaseMVPView {
       this.setState({ dentalloa })
   }
   /* Show and Hide Loader */
-  hideCircularLoader ( disabled ) {
-    this.setState({ disabled : false})
+  hideCircularLoader (disabled) {
+    this.setState({ disabled : false })
   }
 
-  showCircularLoader ( disabled ) {
-    this.setState({ disabled : true})
+  showCircularLoader (disabled) {
+    this.setState({ disabled : true })
   }
   /*
     Submission of DentalLOA Form
@@ -56,10 +57,10 @@ class DentalLoaView extends BaseMVPView {
   submitForm (recipient, branch, date, selectedProcedures) {
     const procedures = []
     const selectedProcedureIds =  [...selectedProcedures]
-      selectedProcedures.map((resp) =>
-        procedures.push({'id' : resp.id.toString()})
+      selectedProcedures.map(resp =>
+        procedures.push({ id : resp.id.toString() })
       )
-    this.presenter.addDentalLoa( recipient.id, branch.id, date, procedures)
+    this.presenter.addDentalLoa(recipient.id, branch.id, date, procedures)
   }
 
   /* Display Modal Notice of Undertaking*/
@@ -76,7 +77,7 @@ class DentalLoaView extends BaseMVPView {
   }
 
   render () {
-    const { details, chosenBranch, onClose } = this.props
+    const { details, chosenBranch, chosenDependent, onClose } = this.props
 
     const {
       dentalloa,
@@ -99,7 +100,7 @@ class DentalLoaView extends BaseMVPView {
       selectedProcedures
     } = this.state
 
-    return(
+    return (
       <div  className = { 'benefits-container' }>
         {
           showNoticeResponseModal &&
@@ -134,10 +135,10 @@ class DentalLoaView extends BaseMVPView {
               showReceipientModal) => this.setState({
               recipient,
               recipientText,
-              showReceipientModal}
+              showReceipientModal }
             )
           }
-          dependentProcedure = { (procedures) =>
+          dependentProcedure = { procedures =>
             this.setState({ procedures })}
           onClose = { () =>
             this.setState({ showRecipientModal : false }) } />
@@ -148,7 +149,7 @@ class DentalLoaView extends BaseMVPView {
             showHealthwayBranchModal = { showHealthwayBranchModal }
             details = { dentalloa.branches }
             chosenBranch = { (branchId, branchText, showHealthwayBranchModal) =>
-              this.setState({branchId, branchText, showHealthwayBranchModal}) }
+              this.setState({ branchId, branchText, showHealthwayBranchModal }) }
             onChange = { (branchId, branchText) =>
               this.setState({ branchId, branchText }) }
             onClose = { () =>
@@ -166,45 +167,57 @@ class DentalLoaView extends BaseMVPView {
               this.setState({ selectedProcedures: updatedProcedures })
             }}
             details = { procedures ? procedures : [] }
-            onChange = { (procedure) =>
+            onChange = { procedure =>
               this.setState({ procedure }) }
             onClose = { () => this.setState({ showProcedureModal : false }) }/>
         }
-      <div className={ 'breadcrumbs-container' }>
-        <i className = { 'left' } onClick = { this.navigate.bind(this) }></i>
+      <div>
+        <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) } />
         <h2 className = { 'header-margin-default' }>DENTAL LOA ISSUANCE</h2>
       </div>
-        <div className = { 'dentalloa-container' }>
-        {
-          disabled ?
-          <center className = { 'dentalloa-loader' }>
-            <CircularLoader show = {this.state.disabled}/>
-          </center>
-         :
-          <DentalLoaCard
-            details = { dentalloa }
-            recipient = { recipientText }
-            procedure = { procedure }
-            branch = { branchText }
-            selectedProcedures = { selectedProcedures }
-            getPreferredDate = { (data) => this.setState({ date :  data })}
-            submitForm = { () => this.submitForm(recipient, branchId, date, selectedProcedures ) }
-            onClick = { (
+      <div className = { 'dentalloa-container' }>
+      {
+        disabled ?
+        <center className = { 'dentalloa-loader' }>
+          <CircularLoader show = {this.state.disabled}/>
+        </center>       :
+        <DentalLoaCard
+          details = { dentalloa }
+          recipient = { recipientText }
+          procedure = { procedure }
+          branch = { branchText }
+          selectedProcedures = { selectedProcedures }
+          getPreferredDate = { data =>
+            this.setState({ date :  data })}
+          submitForm = { () =>
+            this.submitForm(
+              recipient,
+              branchId,
+              date,
+              selectedProcedures) }
+          onClick = { (
+            showRecipientModal,
+            showHealthwayBranchModal,
+            showProcedureModal) =>
+            this.setState({
               showRecipientModal,
               showHealthwayBranchModal,
-              showProcedureModal) =>
-              this.setState( {
-                showRecipientModal,
-                showHealthwayBranchModal,
-                showProcedureModal
-              } )
-            }
-          />
-        }
-       </div>
+              showProcedureModal
+            })
+          }
+        />
+      }
+      </div>
     </div>
     )
   }
+}
+
+DentalLoaView.propTypes = {
+  details : PropTypes.object,
+  onClick : PropTypes.func,
+  chosenBranch : PropTypes.func,
+  chosenDependent : PropTypes.func,
 }
 
 export default ConnectView(DentalLoaView, Presenter)

@@ -10,7 +10,7 @@
 }
 .dentalreimbursement-image-view {
   position: relative;
-  background: url('../../../images/uploadicon-grey.jpg') no-repeat center center;
+  background: url('../../../../images/uploadicon-grey.jpg') no-repeat center center;
   background-size: 50px;
   width: -webkit-fill-available;
   height: 240px;

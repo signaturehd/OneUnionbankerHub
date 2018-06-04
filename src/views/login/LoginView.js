@@ -63,12 +63,12 @@ class LoginView extends BaseMVPView {
     this.setState({ disabled : false })
   }
 
-  downloadIOS() {
-    window.location.href = "itms-services://?action=download-manifest&amp;url=https://oneunionbankerhub.com/download/manifest.plist"
+  downloadIOS () {
+    window.location.href = 'itms-services://?action=download-manifest&amp;url=https://oneunionbankerhub.com/download/manifest.plist'
   }
 
-  downloadAndroid() {
-    window.open("https://play.google.com/store/apps/details?id=com.unionbankph.oneunionbankerhub")
+  downloadAndroid () {
+    window.open('https://play.google.com/store/apps/details?id=com.unionbankph.oneunionbankerhub')
   }
 
 

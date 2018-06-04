@@ -58,7 +58,6 @@ class FaqFragment extends BaseMVPView {
 
   showFaqDetails (faqDetail) {
     this.setState({ faqDetail })
-
   }
 
   showFaqs (faqs) {

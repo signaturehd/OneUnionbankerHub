@@ -10,11 +10,10 @@ class BookConfirmationModal extends Component {
     }
 
     this.onYes = this.onYes.bind(this)
-
   }
 
   onYes () {
-    this.setState({showCircular : true})
+    this.setState({ showCircular : true })
     this.props.onYes()
   }
 
@@ -39,8 +38,7 @@ class BookConfirmationModal extends Component {
           <center>
             <h3>Submitting Your Request</h3>
             <CircularLoader show = {true}/>
-          </center>
-          :
+          </center>          :
           <div>
             <h3>Are you sure you want to {title} this book?</h3>
             <GenericButton

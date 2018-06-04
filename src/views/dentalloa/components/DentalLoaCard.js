@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './dentalloa-component-style.css'
+import './styles/dentalLoaComponentStyle.css'
 import DentalLoaBranchModal from '../modal/DentalLoaBranchModal'
 import DentalLoaDependentModal from '../modal/DentalLoaDependentModal'
 import DentalLoaProcedureModal from '../modal/DentalLoaProcedureModal'
@@ -19,9 +19,9 @@ class DentalLoaCard extends Component {
     super(props)
     this.state = {
       showConfirmation: false,
-      showRecipientModal : false, //Recipient Modal
-      showHealthwayBranchModal : false, //Recipient Branch Modal
-      showProcedureModal : false, //Recipient Procedure Modal
+      showRecipientModal : false, // Recipient Modal
+      showHealthwayBranchModal : false, // Recipient Branch Modal
+      showProcedureModal : false, // Recipient Procedure Modal
       datePicker : '',
       preferredDate: moment(),
     }
@@ -33,7 +33,7 @@ class DentalLoaCard extends Component {
   onChange (data) {
     this.setState({ preferredDate: data })
     this.props.getPreferredDate(
-      data && data.format('DD-MM-YYYY')) /*date format*/
+      data && data.format('DD-MM-YYYY')) /* date format*/
   }
 
   render () {
@@ -60,8 +60,8 @@ class DentalLoaCard extends Component {
     return (
       <Card className = { 'dentalloa-card' }>
         <div className = { 'dentalloa-header' }>
-          <div className = {'dentalloa-body '}>
-            <div className = { 'dentalloa-col span_1_of_3' }>
+          <div className = {'dentalloa-body'}>
+            <div className = { 'dentalloa-col' }>
               <i className = { 'dentalloa-icon text1-icon' }/>
                <GenericTextBox
                  onClick = { () => onClick(true, false, false) }
@@ -69,7 +69,7 @@ class DentalLoaCard extends Component {
                  readOnly
                  placeholder = { text1 } />
           </div>
-          <div className = { 'dentalloa-col span_1_of_3' }>
+          <div className = { 'dentalloa-col' }>
             <i className = { 'dentalloa-icon text2-icon' }/>
              <GenericTextBox
                value = { branch && branch }
@@ -77,7 +77,7 @@ class DentalLoaCard extends Component {
                onClick = { () => onClick(false, true, false) }
                placeholder = { text2 } />
           </div>
-          <div className = { 'dentalloa-col span_1_of_3' }>
+          <div className = { 'dentalloa-col' }>
             <i className = { 'dentalloa-icon text3-icon' }/>
               <DatePicker
                 dateFormat = { 'DD-MM-YYYY' }
@@ -91,24 +91,23 @@ class DentalLoaCard extends Component {
         </div>
         <div className = { 'dentalloa-footer-left' }>
         {
-        selectedProcedures && selectedProcedures.map((procedure, key) => {
-           return (
+        selectedProcedures && selectedProcedures.map((procedure, key) => (
              <div>
                <div key = { key } className = { 'procedure-grid' }>
                   <List
-                    description = { '' + procedure.limit }
+                    description = { `${  procedure.limit}` }
                     title = { procedure.name }
                   />
                  <button
                    className = { 'dentalloa-cancel-button' }
                    onClick = { () => {
                    selectedProcedures.splice(key, 1)
-                   this.setState({ selectedProcedures }) }}>X</button>
+                   this.setState({ selectedProcedures }) 
+}}>X</button>
                </div>
                <br/>
              </div>
-             )
-           })
+             ))
          }
          <br/>
         <GenericButton
@@ -138,6 +137,9 @@ DentalLoaCard.propTypes = {
   text3   : PropTypes.string,
   submit  : PropTypes.string,
   text4  : PropTypes.string,
+  selectedProcedures : PropTypes.array,
+  branch : PropTypes.string,
+  submitForm : PropTypes.func,
 }
 
 DentalLoaCard.defaultProps = {

@@ -40,7 +40,7 @@ class DisapproveModal extends BaseMVPView {
   }
 
   getRemarks (remarks) {
-    this.setState({remarks})
+    this.setState({ remarks })
   }
 
   render () {
@@ -68,12 +68,11 @@ class DisapproveModal extends BaseMVPView {
           <center>
             <h3>Submitting Your Remarks</h3>
             <CircularLoader show = {true} />
-          </center>
-          :
+          </center>          :
             showOthers ?
             <div>
               <GenericTextBox
-                onChange = { (e) => this.setState({ remarksText : e.target.value }) }
+                onChange = { e => this.setState({ remarksText : e.target.value }) }
               />
               <div className = {'remarks-button-grid'}>
                 <GenericButton
@@ -87,8 +86,7 @@ class DisapproveModal extends BaseMVPView {
                   onClick = { () => this.onDisapprove(remarksText)}
                 />
               </div>
-            </div>
-            :
+            </div>            :
               remarks ?
                 remarks.map((remark, key) => (
                   <div>
@@ -98,18 +96,16 @@ class DisapproveModal extends BaseMVPView {
                         className = { 'remarks-button' }
                         text = {remark.remarks}
                         onClick = { () => this.onDisapprove(remark.remarks)}
-                      />
-                      :
+                      />                      :
                       <GenericButton
                           key = { key }
                           className = { 'remarks-button' }
                           text = { 'Otheres (Please Specify)' }
-                          onClick = { () => this.setState({showOthers : true})}
+                          onClick = { () => this.setState({ showOthers : true })}
                       />
                     }
                   </div>
-                ))
-                :
+                ))                :
                 <center>
                   <h3>Please wait a moment</h3>
                   <CircularLoader show = {true} />

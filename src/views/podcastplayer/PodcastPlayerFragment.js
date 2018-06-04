@@ -36,7 +36,7 @@ class PodcastPlayerFragment extends BaseMVPView {
   }
 
   /* modal loader */
-  circularLoader ( loader ) {
+  circularLoader (loader) {
     this.setState({ showAddReview: false })
     this.setState({ showLoader : loader })
   }
@@ -51,14 +51,13 @@ class PodcastPlayerFragment extends BaseMVPView {
       this.setState({ podcasts })
   }
 
-  showPodcastReview ( reviews ) {
+  showPodcastReview (reviews) {
     this.setState({ reviews })
   }
   /* renders */
   renderPodcasts (podcasts) {
     return podcasts ?
-    podcasts.map((podcast, key) => {
-      return (
+    podcasts.map((podcast, key) => (
         <PodcastCardComponent
           key={ key }
           onClick={ () => {
@@ -67,9 +66,7 @@ class PodcastPlayerFragment extends BaseMVPView {
           }}
           podcast = { podcast }
         />
-      )
-    })
-    :
+      ))    :
     <div></div>
   }
 
