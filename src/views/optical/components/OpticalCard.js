@@ -29,10 +29,12 @@ class OpticalCard extends Component {
     this.handleImageChange2 = this.handleImageChange2.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
   getExtension (filename) {
   const parts = filename.split('/')
   return parts[parts.length - 1]
   }
+
   handleSubmit (e) {
     e.preventDefault()
     if (
