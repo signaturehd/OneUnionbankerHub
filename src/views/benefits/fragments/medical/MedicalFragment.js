@@ -32,16 +32,16 @@ class MedicalFragment extends Component {
     }]
 
     const MedicalHome = () => (
-        <div className = { 'benefits-container' }  >
-          <div className={ 'breadcrumbs-container' }>
-            <i className = { 'left' } onClick = { () => this.navigate() }></i>
-            <h1>Medical</h1>
-          </div>
+        <div  >
+            <i className = { 'back-arrow' } onClick = { () => this.navigate() }></i>
+            <h1>MEDICAL</h1>
           <div className = { 'adjustment' }>
           <div className = { 'card-container' }>
             {
             benefitsOptions.map((value, idx) => (
-              <Card key={ idx }>
+              <Card
+                className = { 'benefits-card' }
+                key={ idx }>
                 <div
                   className = { value.styleName}
                   text = { value.title }
@@ -63,6 +63,10 @@ class MedicalFragment extends Component {
       </div>
     )
   }
+}
+
+MedicalFragment.propTypes = {
+  history : PropTypes.object,
 }
 
 export default MedicalFragment

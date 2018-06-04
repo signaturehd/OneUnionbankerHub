@@ -62,37 +62,44 @@ class PodcastFragment extends BaseMVPView {
   * generic function for all podcast types. (recommended, all)
   */
   renderPodcasts (podcasts) {
-
     return podcasts ?
-    podcasts.map((podcast, key) => {
-      return (
+    podcasts.map((podcast, key) => (
         <PodcastCardComponent
           key={ key }
-          onClick={ () => this.props.history.push(`/mylearning/podcasts/${podcast.id}`) }
+          onClick={ () =>
+            this.props.history.push(`/mylearning/podcasts/${podcast.id}`) }
           podcast={ podcast }
         />
-      )
-    })
-    :
+      ))    :
     <div></div>
   }
 
   render () {
-    const { searchString, showLoader, podcasts, podcastRecommendations } = this.state
+    const {
+      searchString,
+      showLoader,
+      podcasts,
+      podcastRecommendations } = this.state
     const { history } = this.props
 
     let searchPodcast = podcasts
     let searchPodcastRecommendation = podcastRecommendations
     const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
-        searchPodcast = podcasts.filter(podcast => podcast.title.toLowerCase().match(search))
-        searchPodcastRecommendation = podcastRecommendations.filter(recommendation => recommendation.title.toLowerCase().match(search))
+        searchPodcast =
+          podcasts.filter(podcast =>
+            podcast.title.toLowerCase().match(search))
+        searchPodcastRecommendation =
+          podcastRecommendations.filter(recommendation =>
+            recommendation.title.toLowerCase().match(search))
     }
     return (
       <div>
         { super.render() }
         <div className={ 'header-margin-container' }>
-          <i className = { 'back-arrow' } onClick = { () => history.push('/mylearning') }></i>
+          <i className = { 'back-arrow' } onClick = { () =>
+              history.push('/mylearning') }>
+          </i>
           <h2 className = { 'header-margin-default' }>PODCAST</h2>
         </div>
         <input type = 'text'

@@ -13,7 +13,7 @@ class ConfirmationModal extends BaseMVPView {
     this.state = {
       showCircular : false,
       approve: true,
-      remarks: " ",
+      remarks: ' ',
       isDismisable : true,
     }
   }
@@ -53,8 +53,7 @@ class ConfirmationModal extends BaseMVPView {
           <center>
             <h3>Submitting Your Remarks</h3>
             <CircularLoader show = {true}/>
-          </center>
-          :
+          </center>          :
           <div>
             <h3>Are you sure you want to approve this request?</h3>
             <GenericButton

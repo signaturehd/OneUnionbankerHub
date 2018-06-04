@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/NavigationPresenter'
-/*Modules Fragment */
+/* Modules Fragment */
 import BenefitsFragment from '../benefits/BenefitsFragment'
 import NewsFragment from '../news/NewsFragment'
 import FaqFragment from '../faq/FaqFragment'
@@ -13,7 +13,7 @@ import PodcastFragment from '../podcast/PodcastFragment'
 import LibraryFragment from '../library/LibraryFragment'
 import MyLearningView from '../mylearning/MyLearningView'
 import FeedbackFragment from '../Feedback/FeedbackFragment'
-/*Navigation Drawer Component*/
+/* Navigation Drawer Component*/
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
 import Drawer from './components/drawer/Drawer'

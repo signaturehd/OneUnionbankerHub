@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Modal, GenericButton } from '../../../ub-components/'
 
-import './DentalReimbursementModal.css'
+import './styles/dentalReimbursementModal.css'
 
 class DentalReimbursementModal extends Component {
   constructor (props) {
@@ -91,7 +91,7 @@ class DentalReimbursementModal extends Component {
                 attachment1 && attachment1,
                 attachment2 && attachment2,
                 dependent && dependent,
-                procedure && procedure ) }
+                procedure && procedure) }
               text = { confirm } />
             <GenericButton
               text = { cancel }

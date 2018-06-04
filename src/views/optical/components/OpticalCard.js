@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './styles/optical-card-component.css'
+import './styles/opticalCardComponent.css'
 import Button from './OpticalButton'
 
 import ConnectView from '../../../utils/ConnectView'

@@ -8,7 +8,7 @@ import { Card, GenericButton } from '../../../../ub-components'
 import Rating from 'react-rating'
 
 import staticImage from '../../../../images/education_bg.jpg'
-import './styles/book-card-component.css'
+import './styles/bookCardComponent.css'
 
 class BookBorrowedCard extends Component {
   constructor (props) {

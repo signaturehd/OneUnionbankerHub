@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import '../../styles/benefits.css'
-import Countdown from '../../../common/components/Countdown/Countdown'
 
+import Countdown from '../../../common/components/Countdown/Countdown'
 import { CircularLoader } from '../../../../ub-components'
 
 class LoansFragment extends Component {
@@ -24,10 +23,10 @@ class LoansFragment extends Component {
     const { showLoader } = this.state
 
     const LoansHome = () => (
-      <div className={'background'}>
-        <div className = { 'container-option1' }>
-          <i className = { 'left' } onClick = { () => history.push('/benefits') }></i>
-          <h1>Loans</h1>
+      <div  className = { 'benefits-container' }>
+        <i className = { 'back-arrow' } onClick = { () => history.push('/mybenefits/benefits') } />
+        <div className = { 'adjustment' }>
+          <h1>LOANS</h1>
             <div className = { 'app' }>
               {
                 showLoader ?
@@ -40,11 +39,9 @@ class LoansFragment extends Component {
                   <div className={'app-countdown'}>
                     <br/>
                     <Countdown dateTo={{ year: 2018, month: 7, date: 9 }}  />
-                    </div>
+                  </div>
                 </center>
               }
-            <div className = { 'card-container' }>
-            </div>
           </div>
         </div>
       </div>
@@ -58,6 +55,10 @@ class LoansFragment extends Component {
       </div>
     )
   }
+}
+
+LoansFragment.propTypes = {
+  history : PropTypes.object,
 }
 
 export default LoansFragment

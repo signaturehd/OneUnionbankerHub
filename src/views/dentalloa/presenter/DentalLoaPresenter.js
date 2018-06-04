@@ -37,7 +37,7 @@ export default class DentalLoaPresenter {
       procedure))
       .subscribe(
         data => {
-          store.dispatch( NotifyActions.addNotify({
+          store.dispatch(NotifyActions.addNotify({
             title: 'Dental LOA',
             message : data.message,
             type : 'success',

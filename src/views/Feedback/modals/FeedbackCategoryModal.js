@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './feedback-modal.css'
+import './styles/feedbackModal.css'
 import { Modal , GenericButton } from '../../../ub-components/'
 
 class FeedbackCategoryModal extends Component {

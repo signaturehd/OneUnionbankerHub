@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { Modal , GenericButton } from '../../../ub-components/'
 
 class DentalReimbursementProcedureModal extends Component {
-
 render () {
   const { onClose, procedures, onSubmit } = this.props
 

@@ -4,13 +4,16 @@ import PropTypes from 'prop-types'
 
 import { Card } from '../../../ub-components'
 
-import './styles/details-fragment.css'
+import './styles/detailsFragment.css'
 /*
 Transaction Optical Form Agreement, Form Agreement, & File Attacment
 */
-import OpticalDetailsComponent from '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
-import OpticalFileComponent from '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
-import OpticalAgreementComponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
+import OpticalDetailsComponent from
+  '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
+import OpticalFileComponent from
+  '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
+import OpticalAgreementComponent from
+  '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
 
 class OpticalDetailsFragment extends Component {
   constructor (props) {
@@ -21,13 +24,19 @@ class OpticalDetailsFragment extends Component {
     const { details, transactionsPerson, attachments } = this.props
     return (
       <div className = {'details-container'}>
-        <center><h2 className = { 'transaction-detail details-bold' }>Transaction Information</h2></center>
+        <center>
+          <h2 className = { 'transaction-detail details-bold' }>
+            Transaction Information
+          </h2>
+        </center>
         <br/>
         <OpticalDetailsComponent
           details = { details }
           transactionsPerson = { transactionsPerson } />
         <br/>
-        <OpticalFileComponent details = { details } attachments = { attachments } />
+        <OpticalFileComponent
+          details = { details }
+          attachments = { attachments } />
         <br/>
         <Card>
           <center>

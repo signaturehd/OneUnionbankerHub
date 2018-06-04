@@ -11,10 +11,8 @@ class DrawerAppBar extends Component {
     this.onToggleShow = this.onToggleShow.bind(this)
   }
   onToggleShow () {
-
     if (this.props.displayShow === 'none') {
       this.props.hide()
-
     } else if (this.props.displayShow === 'block') {
       this.props.show()
     }

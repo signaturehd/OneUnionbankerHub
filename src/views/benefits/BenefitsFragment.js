@@ -46,7 +46,7 @@ class BenefitsFragment extends BaseMVPView {
   }
 
   showReleasingCenters (releasingCenters) {
-    this.setState({releasingCenters})
+    this.setState({ releasingCenters })
   // TODO show to generic multilist dialog
   }
 
@@ -103,16 +103,16 @@ class BenefitsFragment extends BaseMVPView {
     }]
 
   const Benefits = () => (
-    <div className = { '_benefits-container' }>
+    <div className = { 'benefits-container' }>
       {
-          showAccountNumberModal &&
-          <InputModal
-            isDismisable = { true }
-            onClose = { () => this.setState({ showAccountNumberModal : false }) }
-            onChange = { e => this.setState({ accountNumber: e.target.value }) }
-            placeholder = { 'Account Number' }
-            type = { 'text' }
-            onSubmit = { e => {
+        showAccountNumberModal &&
+        <InputModal
+          isDismisable = { true }
+          onClose = { () => this.setState({ showAccountNumberModal : false }) }
+          onChange = { e => this.setState({ accountNumber:   e.target.value }) }
+          placeholder = { 'Account Number' }
+          type = { 'text' }
+          onSubmit = { e => {
             e.preventDefault()
             this.presenter.validateAccountNumber(accountNumber)
                 }
@@ -124,7 +124,7 @@ class BenefitsFragment extends BaseMVPView {
             <ReleasingCenterModal
               isDismisable = { true }
               releasingCenters = { releasingCenters }
-              onClick = { (releasingCenter) => this.setReleasingCenter(releasingCenter) }
+              onClick = { releasingCenter => this.setReleasingCenter(releasingCenter) }
               onClose = { () => this.setState({ showReleasingCenterModal: false }) }
               type = { 'text' }
             />
@@ -147,21 +147,20 @@ class BenefitsFragment extends BaseMVPView {
       </div>
       <FloatingActionButton
         text = "+"
-        onClick = { () =>
-          {
+        onClick = { () => {
             isAccountNumber ?
-            this.setState({showAccountNumberModal : true})
-            :
-            this.setState({showReleasingCenterModal : true})
+            this.setState({ showAccountNumberModal : true })            :
+            this.setState({ showReleasingCenterModal : true })
           }
         }
       />
-    </div>)
+    </div>
+  )
 
   return (
     <div>
       { super.render() }
-        <h1 className = {'title-view' }>My Benefits</h1>
+        <h2 className = {'header-margin-default' }>MY BENEFITS</h2>
         <div className = { 'tabs-container' }>
           <input
             className = { 'input-tab' }
@@ -172,33 +171,35 @@ class BenefitsFragment extends BaseMVPView {
             onClick = { () => this.props.history.push('/mybenefits/benefits') }/>
             <label  className = { 'mobile-icon' } htmlFor = 'tab1'>Benefits</label>
 
-           <input
-              className = { 'input-tab' }
-              id='tab2'
-              type='radio'
-              name='tabs'
-              onClick = { () => this.props.history.push('/mybenefits/transactions/personal') } />
-              <label className = { 'mobile-icon' } htmlFor='tab2'>My Transactions</label>
+         <input
+            className = { 'input-tab' }
+            id='tab2'
+            type='radio'
+            name='tabs'
+            onClick = { () => this.props.history.push('/mybenefits/transactions/personal') } />
+            <label className = { 'mobile-icon' } htmlFor='tab2'>My Transactions</label>
 
-           <input
-              className = { 'input-tab' }
-              id='tab3'  type='radio'
-              name='tabs'
-              onClick = { () => this.props.history.push('/mybenefits/transactions/approval') } />
-              <label className = { 'mobile-icon' } htmlFor = 'tab3' >For Approval</label>
+         <input
+            className = { 'input-tab' }
+            id='tab3'  type='radio'
+            name='tabs'
+            onClick = { () => this.props.history.push('/mybenefits/transactions/approval') } />
+            <label className = { 'mobile-icon' } htmlFor = 'tab3' >For Approval</label>
 
           <section id='content1'>
-              <Switch>
-                <Route path = '/mybenefits/transactions/personal'
-                  render = { props => <TransactionPersonalFragment { ...props } /> } />
-                <Route path = '/mybenefits/transactions/approval'
-                  render = { props => <TransactionApprovalFragment { ...props }/> } />
-                <Route path = '/mybenefits/benefits/education'
-                  render = { props => <EducationFragment { ...props } />}/>
-                <Route exact path = '/mybenefits/benefits/medical'
-                  render = { props => <MedicalFragment { ...props } />}/>
-                <Route path = '/mybenefits'
-                  render = { Benefits } />
+            <Switch>
+              <Route path = '/mybenefits/transactions/personal'
+                render = { props => <TransactionPersonalFragment { ...props } /> } />
+              <Route path = '/mybenefits/transactions/approval'
+                render = { props => <TransactionApprovalFragment { ...props }/> } />
+              <Route path = '/mybenefits/benefits/education'
+                render = { props => <EducationFragment { ...props } />}/>
+              <Route exact path = '/mybenefits/benefits/medical'
+                render = { props => <MedicalFragment { ...props } />}/>
+              <Route exact path = '/mybenefits/benefits/loans'
+                render = { props => <LoansFragment { ...props } />}/>
+              <Route path = '/mybenefits'
+                render = { Benefits } />
              </Switch>
           </section>
         </div>
@@ -209,6 +210,8 @@ class BenefitsFragment extends BaseMVPView {
 
 BenefitsFragment.propTypes = {
   setSelectedNavigation: PropTypes.func,
+  onClick: PropTypes.func,
+  history: PropTypes.object,
 }
 
 export default ConnectView(BenefitsFragment, Presenter)

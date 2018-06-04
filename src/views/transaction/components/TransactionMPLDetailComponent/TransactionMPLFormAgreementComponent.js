@@ -1,14 +1,14 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Card } from '../../../../ub-components/'
 
 class TransactionMPLFormAgreementComponent extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
   }
 
-  render() {
+  render () {
     const { details } = this.props
     return (
       <Card className = { 'transaction-card-details' }>
