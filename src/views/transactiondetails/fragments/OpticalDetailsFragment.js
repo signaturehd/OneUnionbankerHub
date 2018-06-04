@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { Card } from '../../../ub-components'
 
-import './styles/details-fragment.css'
+import './styles/detailsFragment.css'
 /*
 Transaction Optical Form Agreement, Form Agreement, & File Attacment
 */

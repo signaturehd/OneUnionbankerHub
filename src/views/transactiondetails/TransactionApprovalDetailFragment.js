@@ -7,7 +7,7 @@ import BaseMVPView from '../common/base/BaseMVPView'
 
 import { CircularLoader, GenericButton } from '../../ub-components'
 
-import './styles/transaction-details.css'
+import './styles/transactionDetails.css'
 
 import DentalLoaDetailsFragment from './fragments/DentalLoaDetailsFragment'
 import DentalRDetailsFragment from './fragments/DentalRDetailsFragment'
