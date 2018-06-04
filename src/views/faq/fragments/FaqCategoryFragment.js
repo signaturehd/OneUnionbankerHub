@@ -5,7 +5,7 @@ import FaqCardComponent from '../components/FaqCardComponent'
 
 import { CircularLoader } from '../../../ub-components'
 
-import './styles/faqs-fragment.css'
+import './styles/faqsFragment.css'
 
 class FaqCategoryFragment extends Component {
   constructor (props) {

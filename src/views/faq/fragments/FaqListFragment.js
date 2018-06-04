@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import FaqCardComponent from '../components/FaqCardComponent'
-import './styles/faqs-fragment.css'
+import './styles/faqsFragment.css'
 
 class FaqListFragment extends Component {
   constructor (props) {
