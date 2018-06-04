@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './dentalReimbursementComponentStyle.css'
+import './styles/dentalReimbursementComponentStyle.css'
 
 import { Modal } from '../modal/DentalReimbursementReviewModal'
-import DentalReimbursementProcedureModal from '../modal/DentalReimbursementProcedureModal'
+import DentalReimbursementProcedureModal
+  from '../modal/DentalReimbursementProcedureModal'
 import ReviewSubmission from '../modal/DentalReimbursementReviewModal'
 
 import {
@@ -28,8 +29,8 @@ class DentalReimbursementCard extends Component {
     imagePreviewUrl2: '',
     procedureModal : false, // display procedure modal
     dependents: [],
-    selectedDependent: null, //selected dependent
-    selectedProcedures: [], //selected procedure
+    selectedDependent: null, // selected dependent
+    selectedProcedures: [], // selected procedure
     procedureModal: false,
     reviewModal: false,
     submit: '',
@@ -46,9 +47,9 @@ class DentalReimbursementCard extends Component {
 Optical Certificate Atachments
 */
 
-getExtension(filename) {
-  const parts = filename.split('/');
-  return parts[parts.length - 1];
+getExtension (filename) {
+  const parts = filename.split('/')
+  return parts[parts.length - 1]
 }
 
 /*
@@ -72,10 +73,10 @@ submission () {
     this.setState({ showReviewSubmissionModal : true })
   }
 }
-handleImageChange(e) {
+handleImageChange (e) {
   e.preventDefault()
-  let reader = new FileReader()
-  let file = e.target.files[0]
+  const reader = new FileReader()
+  const file = e.target.files[0]
   let isValid
   switch (this.getExtension(file.type).toLowerCase()) {
     case 'jpeg' :
@@ -88,7 +89,7 @@ handleImageChange(e) {
   if (isValid) {
      reader.onloadend = () => {
        this.setState({
-         file: file,
+         file,
          imagePreviewUrl: reader.result
        })
      }
@@ -102,15 +103,14 @@ handleImageChange(e) {
        })
      )
    }
-
 }
 /*
 Medical Certificate Atachments
 */
-handleImageChange2(e1) {
+handleImageChange2 (e1) {
   e1.preventDefault()
-  let reader2 = new FileReader()
-  let file2 = e1.target.files[0]
+  const reader2 = new FileReader()
+  const file2 = e1.target.files[0]
   let isValid = false
   switch (this.getExtension(file2.type).toLowerCase()) {
     case 'jpeg' :
@@ -122,7 +122,7 @@ handleImageChange2(e1) {
   if (isValid) {
      reader2.onloadend = () => {
        this.setState({
-         file2: file2,
+         file2,
          imagePreviewUrl2: reader2.result
        })
      }
@@ -136,7 +136,6 @@ handleImageChange2(e1) {
       })
     )
   }
-
 }
 render () {
   const {
@@ -160,7 +159,7 @@ render () {
     file2
   } = this.state
 
-  let { imagePreviewUrl, imagePreviewUrl2 } = this.state
+  const { imagePreviewUrl, imagePreviewUrl2 } = this.state
 
   let $imagePreview = null
   let $imagePreview2 = null
@@ -242,7 +241,7 @@ render () {
                   label={ dependent.name }
                   key={ key }
                   value={ dependent.id }
-                  checked={ dependent.id == selectedDependentId }
+                  checked={ dependent.id === selectedDependentId }
                   onChange={ e => this.setState({ selectedDependent: dependent }) } />
                )
              })
@@ -255,8 +254,7 @@ render () {
         <br/>
         <br/>
        {
-         selectedProcedures && selectedProcedures.map((procedure, key) => {
-           return (
+         selectedProcedures && selectedProcedures.map((procedure, key) => (
               <div key={ key } className = { 'dentalreimbursement-selected-procedure' }>
                 <div className = {'input-grid'}>
                   <GenericTextBox
@@ -275,15 +273,14 @@ render () {
                       onClick = { () => {
                         const { selectedProcedures } = this.state
                         selectedProcedures.splice(key, 1)
-                        this.setState({selectedProcedures})
+                        this.setState({ selectedProcedures })
                       }}
                     />
                   </div>
                 </div>
                 <br/>
               </div>
-            )
-          })
+            ))
          }
         </Card>
         <Card className = { 'dentalreimbursement-secondary' }>

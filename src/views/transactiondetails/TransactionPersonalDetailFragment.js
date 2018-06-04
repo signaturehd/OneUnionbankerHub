@@ -18,55 +18,54 @@ import EducGroupPlanDetailsFragment from './fragments/EducGroupPlanDetailsFragme
 import LoansDetailsFragment from './fragments/LoansDetailsFragment'
 import OpticalDetailsFragment from './fragments/OpticalDetailsFragment'
 
-function  TransactionDetails ( props )  {
+function  TransactionDetails (props)  {
   const transactionId = props.details.benefitType.id
   const transactionDetails = props.details
   const transactionsPerson = props.transactions
   const attachments = props.attachments
 
-  if (transactionId == 6) {
+  if (transactionId === 6) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId == 7) {
+  } else if (transactionId === 7) {
     return <DentalLoaDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson } />
-  } else if (transactionId == 8) {
+  } else if (transactionId === 8) {
     return <OpticalDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId == 11) {
+  } else if (transactionId === 11) {
     return <EducGrantAidDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId == 12) {
+  } else if (transactionId === 12) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson } />
-  } else if (transactionId == 13) {
+  } else if (transactionId === 13) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId == 32) {
+  } else if (transactionId === 32) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId == 1) {
+  } else if (transactionId === 1) {
     return <LoansDetailsFragment
       transactionsPerson = { transactionsPerson }
       attachments = { attachments }
       details = { transactionDetails } />
-  } else {
-    return <h1>No Transaction Occured please reload</h1> // No  Transaction
   }
+    return <h1>No Transaction Occured please reload</h1> // No  Transaction
 }
 
 class TransactionPersonalDetailsFragment extends BaseMVPView {
@@ -88,14 +87,13 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     const id = this.props.match.params.id
     this.presenter.getTransactionDetails(id)
     this.presenter.getTransactionsPersonal()
-
   }
 
   showAttachments (attachments) {
-    this.setState({attachments})
+    this.setState({ attachments })
   }
 
-  transactions ( transactions ) {
+  transactions (transactions) {
     this.setState({ transactions })
   }
 
@@ -122,8 +120,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
                attachments = { attachments }
                transactions = { transactions }
               />
-            </div>
-            :
+            </div>            :
             <div className = {'transaction-details-loader'}>
               <center>
                 <CircularLoader show = {true}/>

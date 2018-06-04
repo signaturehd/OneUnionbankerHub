@@ -19,9 +19,9 @@ class DentalLoaCard extends Component {
     super(props)
     this.state = {
       showConfirmation: false,
-      showRecipientModal : false, //Recipient Modal
-      showHealthwayBranchModal : false, //Recipient Branch Modal
-      showProcedureModal : false, //Recipient Procedure Modal
+      showRecipientModal : false, // Recipient Modal
+      showHealthwayBranchModal : false, // Recipient Branch Modal
+      showProcedureModal : false, // Recipient Procedure Modal
       datePicker : '',
       preferredDate: moment(),
     }
@@ -33,7 +33,7 @@ class DentalLoaCard extends Component {
   onChange (data) {
     this.setState({ preferredDate: data })
     this.props.getPreferredDate(
-      data && data.format('DD-MM-YYYY')) /*date format*/
+      data && data.format('DD-MM-YYYY')) /* date format*/
   }
 
   render () {
@@ -91,24 +91,23 @@ class DentalLoaCard extends Component {
         </div>
         <div className = { 'dentalloa-footer-left' }>
         {
-        selectedProcedures && selectedProcedures.map((procedure, key) => {
-           return (
+        selectedProcedures && selectedProcedures.map((procedure, key) => (
              <div>
                <div key = { key } className = { 'procedure-grid' }>
                   <List
-                    description = { '' + procedure.limit }
+                    description = { `${  procedure.limit}` }
                     title = { procedure.name }
                   />
                  <button
                    className = { 'dentalloa-cancel-button' }
                    onClick = { () => {
                    selectedProcedures.splice(key, 1)
-                   this.setState({ selectedProcedures }) }}>X</button>
+                   this.setState({ selectedProcedures }) 
+}}>X</button>
                </div>
                <br/>
              </div>
-             )
-           })
+             ))
          }
          <br/>
         <GenericButton

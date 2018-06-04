@@ -75,9 +75,7 @@ class NewsFragment extends BaseMVPView {
               <center>
                 <CircularLoader show = {true} />
               </center>
-            </div>
-
-          :
+            </div>          :
             <div className = 'news-card-container'>
             {
               newsList &&

@@ -33,7 +33,7 @@ class OtpModal extends BaseMVPView {
   }
 
   onOtpError () {
-    this.setState({disableSubmit: false})
+    this.setState({ disableSubmit: false })
   }
 
   onResendSuccess () {

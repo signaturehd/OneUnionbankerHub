@@ -55,10 +55,9 @@ return (
           key = { procedure.id  }
           details = { procedure }
           text = { procedure.name }
-          onClick = { () => this.submitData({...procedure}, procedure.id) } />
+          onClick = { () => this.submitData({ ...procedure }, procedure.id) } />
           }
-        )
-        :
+        )        :
         <center>
           <h3>Please pick your Recipient</h3>
         </center>

@@ -46,7 +46,7 @@ class BenefitsFragment extends BaseMVPView {
   }
 
   showReleasingCenters (releasingCenters) {
-    this.setState({releasingCenters})
+    this.setState({ releasingCenters })
   // TODO show to generic multilist dialog
   }
 
@@ -124,7 +124,7 @@ class BenefitsFragment extends BaseMVPView {
             <ReleasingCenterModal
               isDismisable = { true }
               releasingCenters = { releasingCenters }
-              onClick = { (releasingCenter) => this.setReleasingCenter(releasingCenter) }
+              onClick = { releasingCenter => this.setReleasingCenter(releasingCenter) }
               onClose = { () => this.setState({ showReleasingCenterModal: false }) }
               type = { 'text' }
             />
@@ -147,12 +147,10 @@ class BenefitsFragment extends BaseMVPView {
       </div>
       <FloatingActionButton
         text = "+"
-        onClick = { () =>
-          {
+        onClick = { () => {
             isAccountNumber ?
-            this.setState({showAccountNumberModal : true})
-            :
-            this.setState({showReleasingCenterModal : true})
+            this.setState({ showAccountNumberModal : true })            :
+            this.setState({ showReleasingCenterModal : true })
           }
         }
       />

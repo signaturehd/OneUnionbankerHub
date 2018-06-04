@@ -25,16 +25,25 @@ class FaqListFragment extends Component {
       history,
       imageResponse
     } = this.props
-    const setSelectedFaqsCategory  = selectedFaqCategory && selectedFaqCategory.question
-    let searchQuestions = setSelectedFaqsCategory
+    const setSelectedFaqsCategory  =
+      selectedFaqCategory && selectedFaqCategory.question
     const search = this.state.searchString.trim().toLowerCase()
+
+    let searchQuestions = setSelectedFaqsCategory
+
     if (search.length > 0) {
-        searchQuestions = setSelectedFaqsCategory.filter(setSelectedFaqsCategory => setSelectedFaqsCategory.title.toLowerCase().match(search))
+        searchQuestions = setSelectedFaqsCategory.filter(
+          setSelectedFaqsCategory =>
+            setSelectedFaqsCategory.title.toLowerCase().match(search))
     }
     return (
       <div className = {'container'}>
-        <i className = { 'left' } onClick = { () => history.push('/faqs') }></i>
-        <h1 className = { 'title-view' }>{selectedFaqCategory && selectedFaqCategory.category }</h1>
+        <i className = { 'left' } onClick = { () =>
+            history.push('/faqs') }>
+        </i>
+        <h1 className = { 'title-view' }>
+          {selectedFaqCategory && selectedFaqCategory.category }
+        </h1>
         <input type = 'text'
           className = 'faqsSearchBar'
           placeholder = 'Search FAQs'
@@ -49,11 +58,10 @@ class FaqListFragment extends Component {
                 imageResponse = { imageResponse }
                 title = { qtn && qtn.title }
                 onClick = { () => setSelectedFaqQuestion(qtn) } />
-            )
-          :
-            <div className = { 'faqs-loader' }>
-              <center><h1>No Category Found</h1></center>
-            </div>
+            )          :
+          <div className = { 'faqs-loader' }>
+            <center><h1>No Category Found</h1></center>
+          </div>
         }
         </div>
       </div>

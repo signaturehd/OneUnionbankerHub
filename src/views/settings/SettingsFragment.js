@@ -42,7 +42,7 @@ class SettingsFragment extends BaseMVPView {
   showRank (rank) {
     this.setState({ rank })
   }
-  showProfileDependent ( profileDependent ) {
+  showProfileDependent (profileDependent) {
     this.setState({ profileDependent })
   }
   showLineManager (linemanager) {

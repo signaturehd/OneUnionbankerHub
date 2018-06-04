@@ -11,7 +11,6 @@ import MyDependentInformationCardComponent from './MyDependentInformationCardCom
 class SettingsCardComponent extends Component {
   constructor (props) {
     super(props)
-
   }
 
   render () {

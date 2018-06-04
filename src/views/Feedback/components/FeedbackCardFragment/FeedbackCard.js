@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './feedback-styles.css'
+import './styles/feedbackStyles.css'
 import { GenericTextBox, GenericButton, Card, CircularLoader } from '../../../../ub-components'
 import FeedbackCategoryModal from '../../modals/FeedbackCategoryModal'
 import staticImage from '../../../../images/feedback.jpg'
@@ -25,7 +25,7 @@ class FeedbackCard extends Component {
   handleSubmit (e) {
     e.preventDefault()
   }
-  /*initital*/
+  /* initital*/
   render () {
     const {
       onClick,
@@ -79,15 +79,16 @@ class FeedbackCard extends Component {
               </div>
               <div className = {'feedback-footer-left'}>
                 <GenericButton
-                  onClick = { () => { submitForm(feedbackTextareaValue, false) } }
+                  onClick = { () => {
+ submitForm(feedbackTextareaValue, false)
+} }
                   type = { 'button' }
                   text = { submit }
                   className = {'feedback-procedure' }
                   value = { 'Procedures' }
                 />
               </div>
-            </div>
-            :
+            </div>            :
             <center>
               <CircularLoader show = {true}/>
             </center>

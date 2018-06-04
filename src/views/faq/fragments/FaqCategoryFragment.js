@@ -58,12 +58,10 @@ class FaqCategoryFragment extends Component {
                         onClick = { () => setSelectedFaqCategory(faq) } />
                       )
                   }
-                </div>
-              :
+                </div>              :
               <div>
                 <center><h1>No Category Found</h1></center>
-              </div>
-            :
+              </div>            :
             <div className = { 'faqs-loader' }>
               <center><CircularLoader show = {true} /></center>
             </div>

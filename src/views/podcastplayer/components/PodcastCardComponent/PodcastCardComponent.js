@@ -9,7 +9,6 @@ import { FaPlayCircleO } from 'react-icons/lib/fa/'
 import Rating from 'react-rating'
 
 class PodcastCardComponent extends Component {
-
   render () {
     const { podcast, onClick } = this.props
 

@@ -8,9 +8,14 @@ import './styles/detailsFragment.css'
 /*
 Transaction DentalLOA Form Agreement, Form Agreement, & File Attacment
 */
-import DentalLOADetailsComponent from '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
-import DentalLOAFileComponent from '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
-import DentalLOAgreementComponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
+import DentalLOADetailsComponent
+from '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
+
+import DentalLOAFileComponent
+from '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
+
+import DentalLOAgreementComponent
+from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
 
 class DentalLoaDetailsFragment extends Component {
   constructor (props) {
@@ -21,7 +26,11 @@ class DentalLoaDetailsFragment extends Component {
     const { details, transactionsPerson } = this.props
     return (
       <div className = {'details-container'}>
-        <center><h2 className = { 'transaction-detail details-bold' }>Transaction Information</h2></center>
+        <center>
+          <h2 className = { 'transaction-detail details-bold' }>
+            Transaction Information
+          </h2>
+        </center>
         <br/>
         <DentalLOADetailsComponent
           details = { details }
@@ -30,7 +39,11 @@ class DentalLoaDetailsFragment extends Component {
         <DentalLOAFileComponent details = { details } />
         <br/>
           <Card className = { 'transaction-card-details' }>
-            <center><h2 className = { 'details-bold' }>Procedures</h2></center>
+            <center>
+              <h2 className = { 'details-bold' }>
+                Procedures
+              </h2>
+            </center>
             <br/>
             {
               details && details.details.Procedures.map((procedure, key) =>

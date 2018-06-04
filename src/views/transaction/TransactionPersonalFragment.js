@@ -6,12 +6,14 @@ import './styles/transaction.css'
 import { Card, CircularLoader } from '../../ub-components/'
 import Presenter from './presenter/TransactionPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
-import TransactionCardComponent from './components/TransactionCardComponent/TransactionCardComponent'
+
+import TransactionCardComponent
+from './components/TransactionCardComponent/TransactionCardComponent'
 
 class TransactionPersonalFragment extends BaseMVPView {
   constructor (props) {
     super(props)
-    this.state={
+    this.state = {
       view : false,
       transactionId : null,
       transactions: null,
@@ -22,15 +24,14 @@ class TransactionPersonalFragment extends BaseMVPView {
 
   componentDidMount () {
     this.presenter.getTransactionsPersonal()
-
   }
 
   transactions (transactions) {
-    this.setState({transactions})
+    this.setState({ transactions })
   }
 
   transacitonDetails (transactionResponse) {
-    this.setState({transactionResponse})
+    this.setState({ transactionResponse })
   }
 
 
@@ -59,13 +60,12 @@ class TransactionPersonalFragment extends BaseMVPView {
               <TransactionCardComponent
                 detail = { transaction }
                 key = { key }
-                onClick = { (transaction) =>
+                onClick = { transaction =>
                   this.props.history.push(`/mybenefits/transactions/personal/${transaction.id}`) }
               />
             ))
           }
-        </div>
-        :
+        </div>        :
         <div className = {'transactions-loader'}>
           <center>
             <CircularLoader show = {true} />

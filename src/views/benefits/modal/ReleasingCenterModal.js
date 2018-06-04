@@ -13,7 +13,7 @@ class ReleasingCenterModal extends Component {
     super(props)
   }
 
-  render() {
+  render () {
     const {
       onClose,
       onSubmit,
@@ -35,12 +35,13 @@ class ReleasingCenterModal extends Component {
               <GenericButton
                 className = { 'dentalloa-modal-option-button' }
                 key = { key }
-                onClick = { () => {onClick(releasingCenter.unit), onClose()} }
+                onClick = { () => {
+onClick(releasingCenter.unit), onClose()
+} }
                 text = { releasingCenter.unit }
               />
             ))
-          )
-          :
+          )          :
           <center>
             <h3>Releasing Center is Loading Please wait</h3>
             <br/>
