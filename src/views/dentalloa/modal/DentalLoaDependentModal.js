@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Modal, GenericButton } from '../../../ub-components/'
-import './styles/dentalloamodalstyle.css'
+import './styles/dentalLoaModalStyle.css'
 
 class DentalLoaDependentModal extends Component {
   constructor (props) {

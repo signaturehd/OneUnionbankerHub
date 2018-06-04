@@ -51,17 +51,17 @@
   cursor: pointer;
 }
 .text1-icon {
-    background: url('../../../images/icons/DependentsOrange.png') no-repeat center center ;
+    background: url('../../../../images/icons/DependentsOrange.png') no-repeat center center ;
     background-position: bottom;
     background-size: 30px;
 }
 .text2-icon {
-    background: url('../../../images/icons/DependentsOrange.png') no-repeat center center;
+    background: url('../../../../images/icons/DependentsOrange.png') no-repeat center center;
     background-position: bottom;
     background-size: 30px;
 }
 .text3-icon {
-    background: url('../../../images/icons/Datehiredorange.png') no-repeat center center;
+    background: url('../../../../images/icons/Datehiredorange.png') no-repeat center center;
     background-position: bottom;
     background-size: 30px;
 }
@@ -195,7 +195,7 @@
   margin-top: 55px;
 }
 .dentalloa-procedure {
-  background: #ff8a00 url('../../../images/drawer/logout.png') no-repeat right;
+  background: #ff8a00 url('../../../../images/drawer/logout.png') no-repeat right;
   border-radius: 5px;
   outline: none;
   display: flex;

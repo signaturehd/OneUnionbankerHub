@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './dentalloacomponentstyle.css'
+import './styles/dentalLoaComponentStyle.css'
 import DentalLoaBranchModal from '../modal/DentalLoaBranchModal'
 import DentalLoaDependentModal from '../modal/DentalLoaDependentModal'
 import DentalLoaProcedureModal from '../modal/DentalLoaProcedureModal'

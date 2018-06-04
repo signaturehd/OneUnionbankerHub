@@ -6,7 +6,7 @@ import { GenericButton, GenericTextBox, CircularLoader } from '../../../ub-compo
 
 import Modal from '../../../ub-components/Modal/Modal'
 
-import './modal-style.css'
+import './styles/modalStyle.css'
 
 class ReleasingCenterModal extends Component {
   constructor (props) {
