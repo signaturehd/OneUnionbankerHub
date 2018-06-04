@@ -56,7 +56,7 @@ class SideBar extends Component {
         id: 6 ,
         title: 'Feedback',
         action: () => history.push('/feedback'),
-        className: 'mylearning-icon'
+        className: 'feedback-icon'
       },
       {
         id: 7 ,
