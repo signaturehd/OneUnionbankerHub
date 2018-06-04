@@ -18,15 +18,15 @@ class LoansFragment extends Component {
 
     const benefitsOptions = [{
       styleName: 'loans-cards-1',
-      title: 'Emergency Loan',
+      title: 'EMERGENCY LOAN',
       path: '/mybenefits/benefits/loans/emergency',
     }, {
       styleName: 'loans-cards-2',
-      title: 'Housing Assistance Loan',
+      title: 'HOUSING ASSISTANCE LOAN',
       path: '/mybenefits/benefits/loans/housingassistance',
     }, {
       styleName: 'loans-cards-3',
-      title: 'Salary Loan',
+      title: 'SALARY LOAN',
       path: '/mybenefits/benefits/loans/salary',
     }]
 

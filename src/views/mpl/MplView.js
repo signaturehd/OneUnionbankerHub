@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import BaseMVPView from '../common/base/BaseMVPView'
-import MultiPurposeForm from './components/MultiPurposeForm'
+import MultiPurposeForm from './components/MultiPurposeFormComponent'
 
 import { CircularLoader } from '../../ub-components/'
 
@@ -22,7 +22,7 @@ class MplView extends Component{
             className = { 'back-arrow' }
             onClick = { this.navigate.bind(this) }>
           </i>
-          <h4>Multi Purpose Loan</h4>
+          <h2 className = { 'header-margin-default' }>Multi Purpose Loan</h2>
         </div>
         <MultiPurposeForm/>
       </div>

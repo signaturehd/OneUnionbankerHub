@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../styles/mpl-view.css'
+import './styles/mplViewComponent.css'
 import { GenericTextBox,  Card, GenericButton } from '../../../ub-components/'
 
 class MultiPurposeForm extends Component {
@@ -17,7 +17,7 @@ class MultiPurposeForm extends Component {
     return(
       <div className = {'mplview-container'}>
         <Card className = {'message'}>
-          <h4>Benifits Form</h4>
+          <h4>Multi Purpose Form</h4>
           <div className = {'message-body'}>
             <GenericTextBox
               onChange = { e => this.setState({ purposeOfAvailment: e.target.value }) }

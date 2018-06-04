@@ -17,7 +17,6 @@ import FeedbackFragment from '../Feedback/FeedbackFragment'
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
 import Drawer from './components/drawer/Drawer'
-import DentalReimbursement from '../dentalreimbursement/DentalReimbursementFragment'
 
 import './styles/drawerview.css'
 
@@ -25,9 +24,13 @@ import { connect } from 'react-redux'
 
 import store from '../../store'
 import { NotifyActions } from '../../actions'
-
+/* Medical */
+import DentalReimbursement from '../dentalreimbursement/DentalReimbursementFragment'
 import DentalLoaView from '../dentalloa/DentalLoaFragment'
 import OpticalFragment from '../optical/OpticalFragment'
+/* MPL */
+import MPLView from '../mpl/MPLView'
+/*Transaction*/
 import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
 import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
 
@@ -80,11 +83,13 @@ class NavigationView extends BaseMVPView {
       displayNavIconState,
       selected,
       onClick } = this.state
+    const { history } = this.props
     const style = {
       show: {
           display : displayShow
       }
     }
+    let locationPath = history.location.pathname
     return (
       <div className = { 'navigation-body-div' }>
         <header className = { 'page-boundary page-boundary--fixed-top' }>
@@ -117,6 +122,9 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mybenefits/benefits/medical/loa/dental' render = { props =>
                     <DentalLoaView { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                  <Route path = '/mybenefits/benefits/loans/salary' render = { props =>
+                    <MPLView { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits' render = { props =>
                     <BenefitsFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
