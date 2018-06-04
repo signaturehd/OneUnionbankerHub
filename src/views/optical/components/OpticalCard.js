@@ -28,7 +28,9 @@ class OpticalCard extends Component {
 
   handleSubmit (e) {
     e.preventDefault()
-    if (this.state.file === '' || this.state.file2 === '') {
+    if (
+      this.state.file === '' ||
+      this.state.file2 === '') {
       this.setState({ warning : 'Please complete the attached forms' })
     } else {
       this.setState({ showConfirmation : true })
@@ -41,30 +43,66 @@ class OpticalCard extends Component {
 
     const reader = new FileReader()
     const [file] = e.target.files
-
-    reader.onloadend = () => {
-      this.setState({
-        file,
-        imagePreviewUrl: reader.result
-      })
-    }
-
-    reader.readAsDataURL(file)
+    let isValid
+  switch (this.getExtension(file.type).toLowerCase()) {
+    case 'jpeg' :
+    case 'jpg' :
+    case 'png' :
+    case 'pdf' :
+        isValid = true
   }
+
+  if (isValid) {
+     reader.onloadend = () => {
+       this.setState({
+         file: file,
+         imagePreviewUrl: reader.result
+       })
+     }
+     reader.readAsDataURL(file)
+   } else {
+     store.dispatch(NotifyActions.addNotify({
+         title : 'File Uploading',
+         message : 'The accepted attachments are JPG/PNG/PDF',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+   }
+
+}
 
   handleImageChange2 (e1) {
     e1.preventDefault()
     const reader2 = new FileReader()
     const [file2] = e1.target.files
-
-    reader2.onloadend = () => {
-      this.setState({
-        file2,
-        imagePreviewUrl2: reader2.result
-      })
-    }
-    reader2.readAsDataURL(file2)
+let isValid = false
+  switch (this.getExtension(file2.type).toLowerCase()) {
+    case 'jpeg' :
+    case 'jpg' :
+    case 'png' :
+    case 'pdf' :
+        isValid = true
   }
+  if (isValid) {
+     reader2.onloadend = () => {
+       this.setState({
+         file2: file2,
+         imagePreviewUrl2: reader2.result
+       })
+     }
+     reader2.readAsDataURL(file2)
+  } else {
+    store.dispatch(NotifyActions.addNotify({
+        title : 'File Uploading',
+        message : 'The accepted attachments are JPG/PNG/PDF',
+        type : 'warning',
+        duration : 2000
+      })
+    )
+  }
+
+}
 
   render () {
     const {
@@ -162,10 +200,13 @@ class OpticalCard extends Component {
     details : PropTypes.func,
     confirm : PropTypes.string,
     cancel : PropTypes.string,
+    warning : PropTypes.string,
   }
 
   OpticalCard.defaultProps = {
     confirm : 'Submit',
     cancel : 'Cancel',
+    warning : '',
+    
   }
 export default OpticalCard
