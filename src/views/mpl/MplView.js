@@ -16,10 +16,10 @@ class MplView extends Component{
 
   render() {
     return(
-      <div className = { 'benefits-container' }>
-        <div className={ 'breadcrumbs-container' }>
+      <div>
+        <div>
           <i
-            className = { 'left' }
+            className = { 'back-arrow' }
             onClick = { this.navigate.bind(this) }>
           </i>
           <h4>Multi Purpose Loan</h4>
