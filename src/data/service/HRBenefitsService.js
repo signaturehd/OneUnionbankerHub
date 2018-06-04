@@ -40,7 +40,7 @@ export default class HRBenefitsService {
     releasingCenter,
     dentalLoaParam) {
     const dentalLoaObject = {
-      accountNo : accountNo,
+      accountNo,
       type : 1,
       dependentId : dentalLoaParam.dependent,
       dentalClinicId : dentalLoaParam.branch,
@@ -64,7 +64,7 @@ export default class HRBenefitsService {
     const formData = new FormData()
     const dentalRObject = {
       accountNumber,
-      releasingCenter : releasingCenter,
+      releasingCenter,
       type : 1,
       procedures : dentalReimbursementParam.procedure
     }
@@ -91,7 +91,7 @@ export default class HRBenefitsService {
     const opticalObject = {
       accountNumber,
       amount: opticalParam.amount,
-      releasingCenter: releasingCenter,
+      releasingCenter,
       distributor: 'distributorTest'
     }
     formData.append('uuid', 123345)
@@ -108,7 +108,8 @@ export default class HRBenefitsService {
   /* account */
   validateAccountNumber (token, accountNumber) {
      return this.accountClient.get(`accounts/v1/${accountNumber}`, {
-        headers: {token, referenceId : Math.random().toString(36).substring(7),
+        headers: { token, referenceId : Math.random().toString(36)
+.substring(7),
        }
      })
    }
@@ -246,16 +247,16 @@ export default class HRBenefitsService {
 
   /* Transactions Details */
   getTransactionsDetails (token, GetTransactionParam) {
-    return this.apiClient.get('v1/transactions/' + GetTransactionParam, {
-      headers: {token}
+    return this.apiClient.get(`v1/transactions/${  GetTransactionParam}`, {
+      headers: { token }
     })
   }
 
   /* Remarks */
 
   getRemarks (token, remarksParam) {
-    return this.apiClient.get('v1/transactions/matrix/remarks?benefitId=' + remarksParam, {
-      headers: {token}
+    return this.apiClient.get(`v1/transactions/matrix/remarks?benefitId=${  remarksParam}`, {
+      headers: { token }
     })
   }
 
@@ -264,9 +265,8 @@ export default class HRBenefitsService {
       approve : updateTransactionParam.approve,
       remarks : updateTransactionParam.remarks,
     }
-    return this.apiClient.put('v1/transactions/' + updateTransactionParam.transactionId, transactionDetails, {
-      headers : {token}
+    return this.apiClient.put(`v1/transactions/${  updateTransactionParam.transactionId}`, transactionDetails, {
+      headers : { token }
     })
   }
-
 }
