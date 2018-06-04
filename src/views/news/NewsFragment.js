@@ -13,7 +13,7 @@ import NewsModalComponent from './modals/NewsModalComponent'
 import { CircularLoader } from '../../ub-components'
 
 
-import './styles/news-styles.css'
+import './styles/newsStyles.css'
 
 class NewsFragment extends BaseMVPView {
   constructor (props) {
