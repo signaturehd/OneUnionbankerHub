@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Rating from 'react-rating'
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 
-import './styles/podcast-modal-style.css'
+import './styles/podcastModalStyle.css'
 
 import { Modal, GenericButton, GenericTextBox } from '../../../ub-components/'
 

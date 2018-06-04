@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './styles/podcast-card-component.css'
+import './styles/podcastCardComponent.css'
 import { Card }  from '../../../../ub-components/'
 
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
