@@ -8,6 +8,10 @@ import Presenter from '../presenter/OpticalPresenter'
 import { GenericTextBox, FileUploader } from  '../../../ub-components/'
 
 import staticImage from '../../../images/uploadicon-grey.jpg'
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
+
+
 
 class OpticalCard extends Component {
   constructor (props) {
@@ -25,7 +29,11 @@ class OpticalCard extends Component {
     this.handleImageChange2 = this.handleImageChange2.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+  getExtension(filename) {
+  const parts = filename.split('/');
+  return parts[parts.length - 1];
 
+  }
   handleSubmit (e) {
     e.preventDefault()
     if (
@@ -207,6 +215,6 @@ let isValid = false
     confirm : 'Submit',
     cancel : 'Cancel',
     warning : '',
-    
+
   }
 export default OpticalCard
