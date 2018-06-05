@@ -134,10 +134,12 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
     } = this.state
     return (
       <div  className = {'container'}>
-        <div className={ 'breadcrumbs-container' }>
-          <i className = { 'left' } onClick = {
+        <div>
+          <i className = { 'back-arrow' } onClick = {
               this.navigate.bind(this) }></i>
-          <h1>{ details ? details.benefitType.name : 'Transaction' }</h1>
+            <h2 className = { 'header-margin-default' }>
+              { details ? details.benefitType.name : 'Transaction' }
+            </h2>
         </div>
         {
           showConfirmationModal &&
