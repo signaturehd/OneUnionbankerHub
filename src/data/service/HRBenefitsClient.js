@@ -205,7 +205,6 @@ export default class HRBenefitsClient {
     accountNo,
     releasingCenter,
     dentalLoaParam) {
-    console.log(releasingCenter)
     return this.service.addDentalLoa(
       token,
       accountToken,
