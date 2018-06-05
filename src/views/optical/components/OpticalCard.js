@@ -53,63 +53,77 @@ class OpticalCard extends Component {
     const reader = new FileReader()
     const [file] = e.target.files
     let isValid
-  switch (this.getExtension(file.type).toLowerCase()) {
-    case 'jpeg' :
-    case 'jpg' :
-    case 'png' :
-    case 'pdf' :
-        isValid = true
-  }
+      switch (this.getExtension(file.type).toLowerCase()) {
+        case 'jpeg' :
+          isValid = true
+          break
+        case 'image/jpg' :
+          isValid = true
+          break
+        case 'image/png' :
+          isValid = true
+          break
+        case 'image/pdf' :
+          isValid = true
+          break
+    }
 
-  if (isValid) {
-     reader.onloadend = () => {
-       this.setState({
-         file,
-         imagePreviewUrl: reader.result
-       })
+    if (isValid) {
+       reader.onloadend = () => {
+         this.setState({
+           file,
+           imagePreviewUrl: reader.result
+         })
+       }
+       reader.readAsDataURL(file)
+     } else {
+       store.dispatch(NotifyActions.addNotify({
+           title : 'File Uploading',
+           message : 'The accepted attachments are JPG/PNG/PDF',
+           type : 'warning',
+           duration : 2000
+         })
+       )
      }
-     reader.readAsDataURL(file)
-   } else {
-     store.dispatch(NotifyActions.addNotify({
-         title : 'File Uploading',
-         message : 'The accepted attachments are JPG/PNG/PDF',
-         type : 'warning',
-         duration : 2000
-       })
-     )
    }
-}
 
   handleImageChange2 (e1) {
     e1.preventDefault()
     const reader2 = new FileReader()
     const [file2] = e1.target.files
-let isValid = false
-  switch (this.getExtension(file2.type).toLowerCase()) {
-    case 'jpeg' :
-    case 'jpg' :
-    case 'png' :
-    case 'pdf' :
-        isValid = true
-  }
-  if (isValid) {
-     reader2.onloadend = () => {
-       this.setState({
-         file2,
-         imagePreviewUrl2: reader2.result
-       })
-     }
-     reader2.readAsDataURL(file2)
-  } else {
-    store.dispatch(NotifyActions.addNotify({
-        title : 'File Uploading',
-        message : 'The accepted attachments are JPG/PNG/PDF',
-        type : 'warning',
-        duration : 2000
-      })
-    )
-  }
-}
+    let isValid
+      switch (this.getExtension(file2.type).toLowerCase()) {
+        case 'jpeg' :
+          isValid = true
+          break
+        case 'image/jpg' :
+          isValid = true
+          break
+        case 'image/png' :
+          isValid = true
+          break
+        case 'image/pdf' :
+          isValid = true
+          break
+    }
+      if (isValid) {
+         reader2.onloadend = () => {
+           this.setState({
+             file2,
+             imagePreviewUrl2: reader2.result
+           })
+         }
+         reader2.readAsDataURL(file2)
+      } else {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'File Uploading',
+            message : 'The accepted attachments are JPG/PNG/PDF',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      }
+    }
 
   render () {
     const {
