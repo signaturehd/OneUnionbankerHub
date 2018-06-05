@@ -33,12 +33,12 @@ class LoginView extends BaseMVPView {
       disabled : false,
       type: 'password',
     }
-    this.showHide = this.showHide.bind(this);
+    this.showHide = this.showHide.bind(this)
     this.onLoginSuccess = this.onLoginSuccess.bind(this)
   }
-   showHide(e){
-    e.preventDefault();
-    e.stopPropagation();
+   showHide (e) {
+    e.preventDefault()
+    e.stopPropagation()
     this.setState({
       type: this.state.type === 'input' ? 'password' : 'input'
     })
