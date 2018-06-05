@@ -121,3 +121,12 @@
   z-index: 99;
   grid-row-gap: 10px;
 }
+.password__show{
+    background-image: url('../../../images/icons/ShowPass.png');
+    right: 0;
+    float: right;
+    margin-top: -32px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border: solid;
+}

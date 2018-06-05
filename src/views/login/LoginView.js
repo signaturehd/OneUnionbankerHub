@@ -110,7 +110,7 @@ class LoginView extends BaseMVPView {
               onChange = { e => this.setState({ password: e.target.value }) }
               placeholder = { 'Password' }
               type = { this.state.type } className="password__input"/>
-              <button className="password__show" onClick={this.showHide}>{this.state.type === 'input' ? 'Hide' : 'Show Password'}</button>
+              <span className={'password__show'} onClick={this.showHide}>{this.state.type === 'input' ? 'Hide' : 'show'}</span>
               <br/>
             {
               this.state.disabled ?
