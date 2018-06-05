@@ -52,18 +52,19 @@ class OpticalCard extends Component {
 
     const reader = new FileReader()
     const [file] = e.target.files
+    console.log(e.target.files)
     let isValid
       switch (this.getExtension(file.type).toLowerCase()) {
         case 'jpeg' :
           isValid = true
           break
-        case 'image/jpg' :
+        case 'jpg' :
           isValid = true
           break
-        case 'image/png' :
+        case 'png' :
           isValid = true
           break
-        case 'image/pdf' :
+        case 'pdf' :
           isValid = true
           break
     }
@@ -96,13 +97,13 @@ class OpticalCard extends Component {
         case 'jpeg' :
           isValid = true
           break
-        case 'image/jpg' :
+        case 'jpg' :
           isValid = true
           break
-        case 'image/png' :
+        case 'png' :
           isValid = true
           break
-        case 'image/pdf' :
+        case 'pdf' :
           isValid = true
           break
     }
