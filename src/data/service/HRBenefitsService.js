@@ -41,6 +41,7 @@ export default class HRBenefitsService {
     dentalLoaParam) {
     const dentalLoaObject = {
       accountNo,
+      releasingCenter,
       type : 1,
       dependentId : dentalLoaParam.dependent,
       dentalClinicId : dentalLoaParam.branch,
