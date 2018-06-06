@@ -9,9 +9,17 @@ class EmergencyLoanForm extends Component {
       purposeOfAvailment: '',
       modeOfLoan: '',
       desiredAmount: '',
-      termOfLoan: ''
+      termOfLoan: '',
+      value: ''
     }
+      this.onChange = this.onChange.bind(this)
   }
+onChange (e) {
+      const re = /^[0-9\.]+$/
+      if (e.target.value == '' || re.test(e.target.value)) {
+         this.setState({ value: e.target.value })
+      }
+   }
 
   render () {
     return (
@@ -28,7 +36,8 @@ class EmergencyLoanForm extends Component {
               placeholder = { 'Mode of Loan' }
               type = { 'text' }/>
             <GenericTextBox
-              onChange = { e => this.setState({ desiredAmount: e.target.value }) }
+             value={this.state.value}
+              onChange = {this.onChange}
               placeholder = { 'Desired Amount' }
               type = { 'text' }/>
             <GenericTextBox
