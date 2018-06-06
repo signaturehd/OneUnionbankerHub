@@ -5,8 +5,8 @@ import MultiPurposeForm from './components/MultiPurposeFormComponent'
 
 import { CircularLoader } from '../../ub-components/'
 
-class MplView extends Component{
-  constructor(props) {
+class MplView extends Component {
+  constructor (props) {
     super(props)
   }
 
@@ -14,8 +14,8 @@ class MplView extends Component{
     this.props.history.push('/mybenefits/benefits/loans')
   }
 
-  render() {
-    return(
+  render () {
+    return (
       <div>
         <div>
           <i

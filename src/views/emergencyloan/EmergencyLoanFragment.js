@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import BaseMVPView from '../common/base/BaseMVPView'
-import HousingLoanForm from './components/HousingLoanForm'
+import EmergencyLoanForm from './components/EmergencyLoanForm'
 
 import { CircularLoader } from '../../ub-components/'
 
-class MplView extends Component {
+class EmergencyLoanFragment extends Component {
   constructor (props) {
     super(props)
   }
@@ -22,11 +22,11 @@ class MplView extends Component {
             className = { 'back-arrow' }
             onClick = { this.navigate.bind(this) }>
           </i>
-          <h2 className = { 'header-margin-default' }>Housing Assistance Loan</h2>
+          <h2 className = { 'header-margin-default' }>Emergency Loan</h2>
         </div>
-        <HousingLoanForm/>
+        <EmergencyLoanForm/>
       </div>
     )
   }
 }
-export default MplView
+export default EmergencyLoanFragment
