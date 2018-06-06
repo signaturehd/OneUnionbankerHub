@@ -22,7 +22,9 @@ class MplView extends Component {
             className = { 'back-arrow' }
             onClick = { this.navigate.bind(this) }>
           </i>
-          <h2 className = { 'header-margin-default' }>Housing Assistance Loan</h2>
+          <h2 className = { 'header-margin-default' }>
+            Housing Assistance Loan
+          </h2>
         </div>
         <HousingLoanForm/>
       </div>

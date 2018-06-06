@@ -22,7 +22,9 @@ class EmergencyLoanFragment extends Component {
             className = { 'back-arrow' }
             onClick = { this.navigate.bind(this) }>
           </i>
-          <h2 className = { 'header-margin-default' }>Emergency Loan</h2>
+          <h2 className = { 'header-margin-default' }>
+            Emergency Loan
+          </h2>
         </div>
         <EmergencyLoanForm/>
       </div>

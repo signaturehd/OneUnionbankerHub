@@ -20,19 +20,23 @@ class HousingLoanForm extends Component {
           <h4>Housing Assistance Loan</h4>
           <div className = {'message-body'}>
             <GenericTextBox
-              onChange = { e => this.setState({ purposeOfAvailment: e.target.value }) }
+              onChange = { e =>
+                this.setState({ purposeOfAvailment: e.target.value }) }
               placeholder = { 'Purpose Of Availment' }
               type = { 'text' }/>
             <GenericTextBox
-              onChange = { e => this.setState({ modeOfLoan: e.target.value }) }
+              onChange = { e =>
+                this.setState({ modeOfLoan: e.target.value }) }
               placeholder = { 'Mode of Loan' }
               type = { 'text' }/>
             <GenericTextBox
-              onChange = { e => this.setState({ desiredAmount: e.target.value }) }
+              onChange = { e =>
+                this.setState({ desiredAmount: e.target.value }) }
               placeholder = { 'Desired Amount' }
               type = { 'text' }/>
             <GenericTextBox
-              onChange = { e => this.setState({ termOfLoan: e.target.value }) }
+              onChange = { e =>
+                this.setState({ termOfLoan: e.target.value }) }
               placeholder = { 'Term of Loan' }
               type = { 'text' }/>
             <GenericButton

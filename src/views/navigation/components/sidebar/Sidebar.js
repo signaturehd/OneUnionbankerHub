@@ -17,7 +17,8 @@ class SideBar extends Component {
       onNavigationClick,
       selected,
       history,
-      logout
+      logout,
+      profile
     } = this.props
 
     const modules =
@@ -56,7 +57,7 @@ class SideBar extends Component {
         id: 6 ,
         title: 'Feedback',
         action: () => history.push('/feedback'),
-        className: 'mylearning-icon'
+        className: 'feedback-icon'
       },
       {
         id: 7 ,
@@ -65,25 +66,32 @@ class SideBar extends Component {
         className: 'logout-icon'
       },
     ]
-
   return (
     <div className = { '_sidebar-overlay' }>
-    <ul className = { '_link-list ul' }>
-      {
-        modules.map((d, idx) =>
-        <li
-          className = { `_text-link ${selected === d.id && 'active'}` }
-          key = { idx }
-          onClick = { d.action }>
-          <a key = { idx }
-            className =
-            { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-              { d.title }
-        </li>
-        )
-      }
-    </ul>
-  </div>
+      <ul className = { '_link-list ul' }>
+        <div className = { 'sidebar-profile-body' }>
+          <img
+            src={ require('../../../../images/profile-picture.png') }
+            className= {'sidebar-img-ub-logo'}/>
+        </div>
+          <h4 className = { 'sidebar-profile-name' }>
+            { profile && profile.fullname }
+          </h4>
+        {
+          modules.map((d, idx) =>
+          <li
+            className = { `_text-link ${selected === d.id && 'active'}` }
+            key = { idx }
+            onClick = { d.action }>
+            <a key = { idx }
+              className =
+              { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                { d.title }
+          </li>
+          )
+        }
+      </ul>
+    </div>
     )
   }
 }

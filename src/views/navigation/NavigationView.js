@@ -42,6 +42,7 @@ class NavigationView extends BaseMVPView {
 
     this.state = {
       selected: 0,
+      profile: [],
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -52,6 +53,10 @@ class NavigationView extends BaseMVPView {
   setDisplay (sideBar, topBar) {
     this.setState ({ displayShow : sideBar })
     this.setState({ displayNavIcon : topBar })
+  }
+
+  showProfile (profile) {
+    this.setState({ profile })
   }
 
   componentDidMount () {
@@ -70,6 +75,7 @@ class NavigationView extends BaseMVPView {
     })
     store.dispatch(NotifyActions.resetNotify())
     this.presenter.getLibraries()
+    this.presenter.getProfile()
   }
 
   setSelectedNavigation (id) {
@@ -84,8 +90,9 @@ class NavigationView extends BaseMVPView {
       displayNavIcon,
       displayNavIconState,
       selected,
-      onClick } = this.state
-    const { history } = this.props
+      onClick,
+      profile } = this.state
+      const { history } = this.props
     const style = {
       show: {
           display : displayShow
@@ -157,6 +164,7 @@ class NavigationView extends BaseMVPView {
             <SideBar
               logout = { this.callLogout }
               selected={ selected }
+              profile = { profile }
               history = { this.props.history } >
              </SideBar>
           </aside>
