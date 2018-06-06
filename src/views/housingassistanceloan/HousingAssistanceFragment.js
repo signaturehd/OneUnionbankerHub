@@ -1,13 +1,22 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
 import BaseMVPView from '../common/base/BaseMVPView'
-import HousingLoanForm from './components/HousingLoanForm'
+import Presenter from '../mpl/presenter/MPLPresenter'
+import ConnectPartial from '../../utils/ConnectPartial'
 
 import { CircularLoader } from '../../ub-components/'
+import HousingLoanFormComponent from './components/HousingLoanFormComponent'
+import MPLPurposeOfAvailmentModal from '../mpl/modals/MPLPurposeOfAvailmentModal'
 
-class MplView extends Component {
+class HousingAssistanceFragment extends BaseMVPView {
   constructor (props) {
     super(props)
+  }
+
+  componentDidMount () {
+    this.presenter.getMPLTypes()
+    this.presenter.getMPLPurposeOfAvailment()
   }
 
   navigate () {
@@ -23,12 +32,12 @@ class MplView extends Component {
             onClick = { this.navigate.bind(this) }>
           </i>
           <h2 className = { 'header-margin-default' }>
-            Housing Assistance Loan
+            Multi Purpose Form
           </h2>
         </div>
-        <HousingLoanForm/>
+        <HousingLoanFormComponent/>
       </div>
     )
   }
 }
-export default MplView
+export default ConnectPartial(HousingAssistanceFragment, Presenter)

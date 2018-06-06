@@ -285,4 +285,31 @@ export default class HRBenefitsClient {
     return this.service.updateRemarks(token, remarksParam)
       .pipe(ServiceErrorOperator())
   }
+
+  /* MPL Client */
+
+  getMPLPurposeAvailment (token) {
+    return this.service.getMPLPurposeAvailment(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMPLTermAndRates (token) {
+    return this.service.getTermAndRates(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMPLTypes (token) {
+    return this.service.getMPLTypes(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMPLValidate (token) {
+    return this.service.getMPLValidate(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMPLFormAttachments (token) {
+    return this.service.getMPLFormAttachments (token)
+      .pipe(ServiceErrorOperator())
+  }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import BaseMVPView from '../common/base/BaseMVPView'
-import EmergencyLoanForm from './components/EmergencyLoanForm'
+import EmergencyLoanComponent from './components/EmergencyLoanComponent'
 
 import { CircularLoader } from '../../ub-components/'
 
@@ -26,7 +26,7 @@ class EmergencyLoanFragment extends Component {
             Emergency Loan
           </h2>
         </div>
-        <EmergencyLoanForm/>
+        <EmergencyLoanComponent/>
       </div>
     )
   }

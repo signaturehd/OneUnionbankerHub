@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './styles/houseloan.css'
 import { GenericTextBox,  Card, GenericButton } from '../../../ub-components/'
 
-class HousingLoanForm extends Component {
+class HousingLoanFormComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -50,4 +50,4 @@ class HousingLoanForm extends Component {
   }
 }
 
-export default HousingLoanForm
+export default HousingLoanFormComponent

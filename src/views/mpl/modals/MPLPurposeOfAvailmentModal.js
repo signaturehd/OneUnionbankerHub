@@ -3,26 +3,26 @@ import PropTypes from 'prop-types'
 
 import { Modal , GenericButton } from '../../../ub-components/'
 
-class DentalReimbursementProcedureModal extends Component {
+class MPLPurposeOfAvailmentModal extends Component {
 render () {
-  const { onClose, procedures, onSubmit } = this.props
+  const { onClose, purposeOfAvailment, onSubmit } = this.props
 
 return (
   <Modal
     onClose = { onClose }
     isDismisable = { true }>
     <div className = { 'dentalreimbursement-description' }>
-      <h2>PROCEDURES</h2>
+      <h2>Purpose Of Availment</h2>
     </div>
     <div>
       {
-        procedures && procedures.map((procedure, key) =>
+        purposeOfAvailment && purposeOfAvailment.map((resp, key) =>
         <GenericButton
             className = { 'dentalloa-modal-option-button' }
             key = { key }
-            details = { procedure && procedure.name }
-            text = { procedure && procedure.name }
-            onClick = { () => onSubmit({ ...procedure }) }/>
+            details = { resp && resp.name }
+            text = { resp && resp.name }
+            onClick = { () => onSubmit({ ...resp }) }/>
           )
         }
     </div>
@@ -30,10 +30,10 @@ return (
     )
   }
 }
-DentalReimbursementProcedureModal.propTypes = {
+MPLPurposeOfAvailmentModal.propTypes = {
   onClose : PropTypes.func,
-  procedures : PropTypes.array,
+  purposeOfAvailment : PropTypes.array,
   onSubmit: PropTypes.func,
 }
 
-export default DentalReimbursementProcedureModal
+export default MPLPurposeOfAvailmentModal

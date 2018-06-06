@@ -270,4 +270,44 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* MPL Service */
+
+  /* Purpose of Availment */
+
+  getMPLPurposeAvailment (token) {
+      return this.apiClient.get('v1/loans/mpl?loanId=1&purposeOfAvailment=1&subcategoryLevel=1', {
+        headers: { token }
+      })
+  }
+
+  /* Term and Rates */
+
+  getMPLTermAndRates (token) {
+      return this.apiClient.get('v1/loans/mpl/terms?loanType=1', {
+        headers: { token }
+      })
+  }
+
+  /* Types */
+
+  getMPLTypes (token) {
+    return this.apiClient.get('v1/loans/mpl/types', {
+      headers: { token }
+    })
+  }
+
+  /* Validate */
+
+  getMPLValidate (token) {
+    return this.apiClient.get('v1/loans/mpl/validate?loanId=1', {
+      headers: { token }
+    })
+  }
+
+  getMPLFormAttachments (token) {
+    return this.apiClient.get('v1/attachments?purposeOfLoan=Purchase%20of%20appliance&loanId=1', {
+        headers: { token }
+    })
+  }
 }
