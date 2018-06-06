@@ -12,7 +12,11 @@ return (
     onClose = { onClose }
     isDismisable = { true }>
     <div className = { 'dentalreimbursement-description' }>
-      <h2>Purpose Of Availment</h2>
+      <center>
+        <h2>
+          Purpose of Availment
+        </h2>
+      </center>
     </div>
     <div>
       {
@@ -20,9 +24,8 @@ return (
         <GenericButton
             className = { 'dentalloa-modal-option-button' }
             key = { key }
-            details = { resp && resp.name }
             text = { resp && resp.name }
-            onClick = { () => onSubmit({ ...resp }) }/>
+            onClick = { () => onSubmit( resp && resp.name, false ) }/>
           )
         }
     </div>
@@ -33,7 +36,6 @@ return (
 MPLPurposeOfAvailmentModal.propTypes = {
   onClose : PropTypes.func,
   purposeOfAvailment : PropTypes.array,
-  onSubmit: PropTypes.func,
 }
 
 export default MPLPurposeOfAvailmentModal

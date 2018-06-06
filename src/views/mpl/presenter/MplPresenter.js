@@ -18,15 +18,15 @@ export default class MPLPresenter {
 
   getMPLTypes () {
     this.getTypesInteractor.execute()
-    .do(e => console.log(e))
       .subscribe(
         data => {
+          this.view.showTypes(data)
         },
         error => {
           store.dispatch(NotifyActions.addNotify({
             title: 'Dental Reimbursement',
             message : error.message,
-            type : 'warning',
+            type : 'error',
             duration : 2000
           })
          )
@@ -41,9 +41,9 @@ export default class MPLPresenter {
         },
         error => {
           store.dispatch(NotifyActions.addNotify({
-            title: 'Dental Reimbursement',
+            title: 'Error',
             message : error.message,
-            type : 'warning',
+            type : 'error',
             duration : 2000
           })
          )

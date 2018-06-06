@@ -6,12 +6,18 @@ import Presenter from '../mpl/presenter/MPLPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 
 import { CircularLoader } from '../../ub-components/'
-import HousingLoanFormComponent from './components/HousingLoanFormComponent'
+import MPLFormComponent from '../mpl/components/MPLFormComponent'
 import MPLPurposeOfAvailmentModal from '../mpl/modals/MPLPurposeOfAvailmentModal'
 
 class HousingAssistanceFragment extends BaseMVPView {
   constructor (props) {
     super(props)
+    this.state = {
+      purposeOfAvailment: [],
+      modeOfLoan: '',
+      desiredAmount: '',
+      termOfLoan: '',
+    }
   }
 
   componentDidMount () {
@@ -19,11 +25,17 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.presenter.getMPLPurposeOfAvailment()
   }
 
+  showPurposeOfAvailment (purposeOfAvailment) {
+    this.setState({ purposeOfAvailment })
+  }
+
   navigate () {
     this.props.history.push('/mybenefits/benefits/loans')
   }
 
   render () {
+    const { purposeOfAvailment } = this.state
+
     return (
       <div>
         <div>
@@ -35,7 +47,9 @@ class HousingAssistanceFragment extends BaseMVPView {
             Multi Purpose Form
           </h2>
         </div>
-        <HousingLoanFormComponent/>
+        <MPLFormComponent
+          purposeOfAvailment = { purposeOfAvailment }
+        />
       </div>
     )
   }
