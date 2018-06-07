@@ -1,13 +1,44 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
 import BaseMVPView from '../common/base/BaseMVPView'
-import MPLFormComponent from '../mpl/components/MPLFormComponent'
+import Presenter from '../mpl/presenter/MPLPresenter'
+import ConnectPartial from '../../utils/ConnectPartial'
 
 import { CircularLoader } from '../../ub-components/'
+import MPLFormComponent from '../mpl/components/MPLFormComponent'
+import MPLPurposeOfAvailmentModal from '../mpl/modals/MPLPurposeOfAvailmentModal'
 
-class EmergencyLoanFragment extends Component {
+class EmergencyLoanFragment extends BaseMVPView {
   constructor (props) {
     super(props)
+    this.state = {
+      purposeOfAvailment: [],
+      termOfLoan: '',
+      formAttachments: '',
+      loanType: []
+    }
+  }
+
+  componentDidMount () {
+    this.presenter.getMPLTypes()
+    this.presenter.getMPLPurposeOfAvailment()
+  }
+
+  showPurposeOfAvailment (purposeOfAvailment) {
+    this.setState({ purposeOfAvailment })
+  }
+
+  showTermAndRates (termOfLoan) {
+    this.setState({ termOfLoan })
+  }
+
+  showMPLFormAttachments (formAttachments) {
+    this.setState({ formAttachments })
+  }
+
+  showTypes (loanType) {
+    this.setState({ loanType })
   }
 
   navigate () {
@@ -15,6 +46,7 @@ class EmergencyLoanFragment extends Component {
   }
 
   render () {
+    const { purposeOfAvailment, termOfLoan, loanType } = this.state
     return (
       <div>
         <div>
@@ -26,9 +58,12 @@ class EmergencyLoanFragment extends Component {
             Emergency Loan
           </h2>
         </div>
-        <MPLFormComponent/>
+          <MPLFormComponent
+            types = { loanType }
+            purposeOfAvailment = { purposeOfAvailment }
+          />
       </div>
     )
   }
 }
-export default EmergencyLoanFragment
+export default ConnectPartial(EmergencyLoanFragment, Presenter)

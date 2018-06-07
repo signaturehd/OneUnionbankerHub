@@ -14,9 +14,9 @@ class HousingAssistanceFragment extends BaseMVPView {
     super(props)
     this.state = {
       purposeOfAvailment: [],
-      modeOfLoan: '',
-      desiredAmount: '',
       termOfLoan: '',
+      formAttachments: '',
+      loanType: []
     }
   }
 
@@ -29,13 +29,24 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.setState({ purposeOfAvailment })
   }
 
+  showTermAndRates (termOfLoan) {
+    this.setState({ termOfLoan })
+  }
+
+  showMPLFormAttachments (formAttachments) {
+    this.setState({ formAttachments })
+  }
+
+  showTypes (loanType) {
+    this.setState({ loanType })
+  }
+
   navigate () {
     this.props.history.push('/mybenefits/benefits/loans')
   }
 
   render () {
-    const { purposeOfAvailment } = this.state
-
+    const { purposeOfAvailment, termOfLoan, loanType } = this.state
     return (
       <div>
         <div>
@@ -44,12 +55,13 @@ class HousingAssistanceFragment extends BaseMVPView {
             onClick = { this.navigate.bind(this) }>
           </i>
           <h2 className = { 'header-margin-default' }>
-            Multi Purpose Form
+            Housing Assistance Loan
           </h2>
         </div>
-        <MPLFormComponent
-          purposeOfAvailment = { purposeOfAvailment }
-        />
+          <MPLFormComponent
+            types = { loanType }
+            purposeOfAvailment = { purposeOfAvailment }
+          />
       </div>
     )
   }
