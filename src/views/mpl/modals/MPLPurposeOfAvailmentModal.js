@@ -36,6 +36,7 @@ return (
 MPLPurposeOfAvailmentModal.propTypes = {
   onClose : PropTypes.func,
   purposeOfAvailment : PropTypes.array,
+  onSubmit : PropTypes.func
 }
 
 export default MPLPurposeOfAvailmentModal

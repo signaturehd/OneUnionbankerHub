@@ -26,7 +26,7 @@ class MPLFormComponent extends Component {
 
   render() {
     const { showPurposeOfAvailment, poaText } = this.state
-    const { purposeOfAvailment } = this.props
+    const { purposeOfAvailment, types} = this.props
 
     return(
       <div className = {'mplview-container'}>
@@ -42,7 +42,7 @@ class MPLFormComponent extends Component {
           />
         }
         <Card className = {'message'}>
-          <h4>Housing Assistance Loan</h4>
+          <h4>Benefits Form</h4>
           <div className = {'message-body'}>
             <GenericTextBox
               type = 'button'
@@ -80,6 +80,7 @@ class MPLFormComponent extends Component {
 
 MPLFormComponent.propTypes = {
   purposeOfAvailment : PropTypes.array,
+  types : PropTypes.array,
 }
 
 export default MPLFormComponent
