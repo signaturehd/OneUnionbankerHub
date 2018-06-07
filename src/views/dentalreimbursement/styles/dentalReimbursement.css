@@ -1,0 +1,74 @@
+.dentalreimbursement-review {
+  display:grid !important;
+  grid-template-columns: 50% 50%;
+}
+.dentalloa-loader {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20%;
+  vertical-align: middle;
+}
+
+.dentalreimbursement-container {
+  max-width: 100%;
+}
+.dentalreimbursement-procedure {
+  border-radius: 5px;
+  outline: none;
+  display: flex;
+  margin: 20px auto auto auto;
+  width: auto;
+  cursor: pointer;
+  background-size: 30px;
+  height: 35px;
+}
+.dentalreimbursement-submit {
+  border-radius: 5px;
+  text-align: center;
+  outline: none;
+  margin: auto;
+  cursor: pointer;
+  background-size: 30px;
+  bottom: 0;
+  height: 35px;
+}
+@media only screen and (max-width: 600px) {
+    .dentalreimbursement-card {
+      max-width: 100%;
+      margin: 50px auto auto auto;
+      padding: 5px 5px;
+    }
+    .dentalreimbursement-secondary {
+      max-width: 100%;
+      margin: 50px auto auto auto;
+      padding: 0 5px;
+    }
+}
+.dentalreimbursement-main{
+  margin: auto auto 20px auto;
+}
+
+.contact {
+  border: none;
+  outline: 0;
+  display: block;
+  padding: 8px;
+  color: white;
+  background-color: #ff7200;
+  text-align: center;
+  cursor: pointer;
+  width: -webkit-fill-available;
+  bottom: 0;
+  margin: auto;
+  font-size: 14px;
+}
+
+.a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+.contact:hover, a:hover {
+  opacity: 0.7;
+}

@@ -1,14 +1,14 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Card, CircularLoader } from '../../../../ub-components/'
 
 class TransactionFileCardComponent extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
   }
 
-  render() {
+  render () {
     const { details, attachments } = this.props
     return (
       <Card className = { 'transaction-card-details' }>
@@ -23,8 +23,7 @@ class TransactionFileCardComponent extends Component {
                       src={image}/>
                   ))
                 }
-              </div>
-              :
+              </div>              :
               <center>
                 <br/>
                 <br/>

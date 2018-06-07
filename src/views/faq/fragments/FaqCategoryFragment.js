@@ -5,7 +5,7 @@ import FaqCardComponent from '../components/FaqCardComponent'
 
 import { CircularLoader } from '../../../ub-components'
 
-import './styles/faqs-fragment.css'
+import './styles/faqsFragment.css'
 
 class FaqCategoryFragment extends Component {
   constructor (props) {
@@ -53,18 +53,15 @@ class FaqCategoryFragment extends Component {
                     searchCategories.map((faq, i) =>
                       <FaqCardComponent
                         key = { i }
-                        imageResponse = { imageResponse }
                         icon = { faq.icon }
                         title = { faq.category }
                         onClick = { () => setSelectedFaqCategory(faq) } />
                       )
                   }
-                </div>
-              :
+                </div>              :
               <div>
                 <center><h1>No Category Found</h1></center>
-              </div>
-            :
+              </div>            :
             <div className = { 'faqs-loader' }>
               <center><CircularLoader show = {true} /></center>
             </div>

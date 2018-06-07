@@ -11,7 +11,7 @@ import BookRecommendationFragment from './fragments/BookRecommendationFragment'
 
 import { GenericButton } from '../../ub-components'
 
-import './styles/library-fragment.css'
+import './styles/libraryFragment.css'
 
 class LibraryFragment extends BaseMVPView {
   constructor (props) {

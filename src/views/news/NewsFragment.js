@@ -13,7 +13,7 @@ import NewsModalComponent from './modals/NewsModalComponent'
 import { CircularLoader } from '../../ub-components'
 
 
-import './styles/news-styles.css'
+import './styles/newsStyles.css'
 
 class NewsFragment extends BaseMVPView {
   constructor (props) {
@@ -47,11 +47,8 @@ class NewsFragment extends BaseMVPView {
       details,
       showLoader
     } = this.state
-    let newsList = this.state.news
+    let newsList = news
     const search = this.state.searchString.trim().toLowerCase()
-
-    let filteredNews = news
-
     if (search.length > 0) {
       newsList = news.filter(news => news.title.toLowerCase().match(search))
     }
@@ -78,9 +75,7 @@ class NewsFragment extends BaseMVPView {
               <center>
                 <CircularLoader show = {true} />
               </center>
-            </div>
-
-          :
+            </div>          :
             <div className = 'news-card-container'>
             {
               newsList &&

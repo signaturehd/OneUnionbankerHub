@@ -1,0 +1,32 @@
+
+.mplview-container {
+  max-width: 100%;
+  padding-top: 50px;
+}
+
+.message {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 50%;
+  float: center;
+  padding: 20px 5px 20px 5px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.message-body {
+    border-color: #0a0a0a;
+    color: #090909;
+}
+
+.mplview-submit {
+  border-radius: 5px;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  background-size: 30px;
+  bottom: 0;
+  height: 35px;
+  margin-top: 20px;
+  width: 95%;
+}

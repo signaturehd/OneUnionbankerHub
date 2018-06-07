@@ -14,12 +14,12 @@ class SettingsCardComponent extends Component {
   }
 
   render () {
-    const { profile, onClick, rank, linemanager } = this.props
-     let genderPartial
+    const { profile, onClick, rank, linemanager, profileDependent } = this.props
+    let genderPartial
     if (profile.gender === 'M') {
-     genderPartial = 'Male'
+      genderPartial = 'Male'
     } else {
-     genderPartial = 'Female'
+      genderPartial = 'Female'
     }
     return (
       <div>
@@ -38,20 +38,16 @@ class SettingsCardComponent extends Component {
             <h5 className = "title">{ genderPartial }</h5>
             <h4 className = { 'text-title-profile' }> GENDER </h4>
 
-            <h5 className = "title"> { profile.status }</h5>
+            <h5 className = "title"> { profile.civilstatus }</h5>
             <h4 className = { 'text-title-profile' }> CIVIL STATUS </h4>
 
-            <h5 className = "title"> +{ profile.email }</h5>
+            <h5 className = "title"> { profile.email }</h5>
             <h4 className = { 'text-title-profile' }> EMAIL </h4>
-
-
 
             <h5 className = "title"> +{ profile.contactNumber }</h5>
             <h4 className = { 'text-title-profile' }> MOBILE  </h4>
 
-
-
-             <h5 className = "title"> { profile.address } </h5>
+            <h5 className = "title"> { profile.address } </h5>
             <h4 className = { 'text-title-profile' }> COMPANY ADDRESS </h4>
 
       </Card>
@@ -97,10 +93,10 @@ class SettingsCardComponent extends Component {
 
           <section id='content3'>
             <MyDependentInformationCardComponent
-            linemanager = {linemanager}
             presenter={ this.presenter }
+            profileDependent = { profileDependent }
             profile = { profile }
-            rank = { rank } />
+            />
           </section>
         </div>
 

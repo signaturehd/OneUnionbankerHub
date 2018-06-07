@@ -2,48 +2,117 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Modal, GenericButton } from '../../../ub-components/'
-import './dentalreimbursement-modal.css'
+
+import './styles/dentalReimbursementModal.css'
 
 class DentalReimbursementModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
       showDentalReimbursementModal : false,
+      isDismisable : true,
     }
 
     this.submitForm = this.submitForm.bind(this)
   }
-  submitForm ()
-  {
-    console.log(this.props.fileReceived)
-    console.log(this.props.fileReceived2)
+  submitForm (attachment1, attachment2, dependent, procedure) {
+    this.props.presenter.addDentalReimbursement(
+      attachment1,
+      attachment2,
+      dependent,
+      procedure
+    )
   }
 
   render () {
-    const { details, onClose, confirm, cancel, fileReceived, fileReceived2 } = this.props
+    const { isDismisable } = this.state
+    const {
+      onClose,
+      confirm,
+      cancel,
+      attachment1,
+      attachment2,
+      dependent,
+      procedure,
+      imageUrl,
+      imageUrl2 } = this.props
+
+    let $imagePreview = null
+    let $imagePreview2 = null
+    const styleImage = {
+        image1 : {
+          backgroundImage: `url('${imageUrl}')`,
+          width : '180px',
+          height : '180px',
+          backgroundSize : 'cover',
+          backgroundRepeat : 'no-repeat',
+        },
+        image2 : {
+          backgroundImage: `url('${imageUrl2}')`,
+          width : '180px',
+          height : '180px',
+          backgroundSize : 'cover',
+          backgroundRepeat : 'no-repeat',
+        }
+      }
+      $imagePreview = (<div style = {styleImage.image1}></div>)
+      $imagePreview2 = (<div style = {styleImage.image2}></div>)
+
     return (
-        <Modal
-          onClose = { onClose }>
-          <div className = { 'dentalreimbursement-description' }>
-              <h2>Description</h2>
+      <Modal
+        onClose = { onClose }
+        isDismisable = { isDismisable }
+      >
+        <center>
+          <h2>REVIEW ATTACHMENTS</h2>
+        </center>
+        <div>
+          <div className = { 'dentalreimbursement-grid-image' } >
+            { $imagePreview }
+            { $imagePreview2 }
           </div>
-          <div className = { 'dentalreimbursement-modal-footer' }>
-            <GenericButton onClick = { () => this.submitForm() }
-                    className = { 'dentalreimbursement-footer-left' }
-                    text = { confirm } />
-          </div>
-          <div className = { 'dentalreimbursement-modal-footer' }>
-            <GenericButton className = { 'dentalreimbursement-footer-right' } text = { cancel } />
-          </div>
-        </Modal>
+            <br/>
+          <div>DEPENDENT : { dependent && dependent.name }</div>
+          <center>
+            <h4>PROCEDURE</h4>
+            {
+              procedure && procedure.map((resp, key) =>
+                <div key = { key }>
+                  { resp.name } : &#x20B1; { resp.limit }
+                </div>
+              )
+            }
+          </center>
+            <br/>
+          <center>
+            <GenericButton
+              onClick = { () =>
+              this.submitForm(
+                attachment1 && attachment1,
+                attachment2 && attachment2,
+                dependent && dependent,
+                procedure && procedure) }
+              text = { confirm } />
+            <GenericButton
+              text = { cancel }
+              onClick = { () => onClose}/>
+          </center>
+        </div>
+      </Modal>
       )
+    }
   }
-}
+
 DentalReimbursementModal.propTypes = {
   onClose : PropTypes.func,
-  details : PropTypes.func,
   confirm : PropTypes.string,
   cancel : PropTypes.string,
+  attachment1 : PropTypes.object,
+  attachment2 : PropTypes.object,
+  dependent : PropTypes.object,
+  procedure : PropTypes.array,
+  imageUrl : PropTypes.string,
+  imageUrl2 : PropTypes.string
 }
 DentalReimbursementModal.defaultProps = {
   confirm : 'Agree',

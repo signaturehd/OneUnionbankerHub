@@ -4,13 +4,16 @@ import PropTypes from 'prop-types'
 
 import { Card } from '../../../ub-components'
 
-import './styles/details-fragment.css'
+import './styles/detailsFragment.css'
 /*
 Transaction DentalR Form Agreement, Form Agreement, & File Attacment
 */
-import DentalRDetailsComponent from '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
-import DentalRFileComponent from '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
-import DentalRAgreementComponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
+import DentalRDetailsComponent from
+  '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
+import DentalRFileComponent from
+  '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
+import DentalRAgreementComponent from
+  '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
 
 class DentalRDetailsFragment extends Component {
   constructor (props) {
@@ -21,16 +24,26 @@ class DentalRDetailsFragment extends Component {
     const { details, transactionsPerson, attachments } = this.props
     return (
       <div className = {'details-container'}>
-        <center><h2 className = { 'transaction-detail details-bold' }>Transaction Information</h2></center>
+        <center>
+          <h2 className = { 'transaction-detail details-bold' }>
+            Transaction Information
+          </h2>
+        </center>
         <br/>
         <DentalRDetailsComponent
           transactionsPerson = { transactionsPerson }
           details = { details } />
         <br/>
-        <DentalRFileComponent details = { details } attachments = { attachments } />
+        <DentalRFileComponent
+          details = { details }
+          attachments = { attachments } />
         <br/>
           <Card className = { 'transaction-card-details' }>
-            <center><h2 className = { 'details-bold' }>Procedures</h2></center>
+            <center>
+              <h2 className = { 'details-bold' }>
+                Procedures
+              </h2>
+            </center>
             <br/>
             {
               details && details.details.Procedures.map((procedure, key) =>

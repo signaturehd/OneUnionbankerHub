@@ -4,7 +4,7 @@ import { GenericButton } from '../../../ub-components'
 import { Modal } from '../../../ub-components/'
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import Rating from 'react-rating'
-import './styles/book-modal.css'
+import './styles/bookModal.css'
 import staticImage from '../../../images/education_bg.jpg'
 
 class BookViewModal extends Component {

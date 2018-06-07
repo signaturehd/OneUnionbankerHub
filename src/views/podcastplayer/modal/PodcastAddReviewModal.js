@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Rating from 'react-rating'
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 
-import './styles/podcast-modal-style.css'
+import './styles/podcastModalStyle.css'
 
 import { Modal, GenericButton, GenericTextBox } from '../../../ub-components/'
 
@@ -35,8 +35,10 @@ class PodcastAddReviewModal extends Component {
               <Rating
                 emptySymbol = {<MdStarOutline style={{ fontSize: 40, color : '#c65e11' }} />}
                 fullSymbol = {<MdStar style={{ fontSize: 40,  color : '#c65e11' }} />}
-                onChange = { e => { e
-                this.setState({ rating : e}) }}
+                onChange = { e => {
+ e
+                this.setState({ rating : e }) 
+}}
                 initialRating = {  rating ? rating : 0 }
                 fractions = { 2 } />
               <GenericTextBox
