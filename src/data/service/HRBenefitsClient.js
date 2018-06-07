@@ -143,7 +143,7 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
       .map(resp => {
         for (const i in resp) {
-          if (resp[i].id === id) {
+          if (resp[i].id == id) {
             return resp[i]
           }
         }
