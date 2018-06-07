@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from '../mpl/presenter/MPLPresenter'
-import ConnectPartial from '../../utils/ConnectPartial'
+import ConnectView from '../../utils/ConnectView'
 
 import MPLFormComponent from '../mpl/components/MPLFormComponent'
 import MPLPurposeOfAvailmentModal from '../mpl/modals/MPLPurposeOfAvailmentModal'
@@ -71,4 +71,4 @@ class HousingAssistanceFragment extends BaseMVPView {
     )
   }
 }
-export default ConnectPartial(HousingAssistanceFragment, Presenter)
+export default ConnectView(HousingAssistanceFragment, Presenter)
