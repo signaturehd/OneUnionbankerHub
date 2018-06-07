@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { Modal , GenericButton } from '../../../ub-components/'
 
+import './styles/mplModalStyle.css'
+
 class MPLPurposeOfAvailmentModal extends Component {
 render () {
   const { onClose, purposeOfAvailment, onSubmit } = this.props
@@ -11,7 +13,7 @@ return (
   <Modal
     onClose = { onClose }
     isDismisable = { true }>
-    <div className = { 'dentalreimbursement-description' }>
+    <div>
       <center>
         <h2>
           Purpose of Availment
@@ -22,7 +24,7 @@ return (
       {
         purposeOfAvailment && purposeOfAvailment.map((resp, key) =>
         <GenericButton
-            className = { 'dentalloa-modal-option-button' }
+            className = { 'mpl-poa-modal-button' }
             key = { key }
             text = { resp && resp.name }
             onClick = { () => onSubmit( resp && resp.name, false ) }/>

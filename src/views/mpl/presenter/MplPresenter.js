@@ -3,6 +3,7 @@ import AddLoanInteractor from '../../../domain/interactor/mpl/AddLoanInteractor'
 import GetTermAndRatesInteractor from '../../../domain/interactor/mpl/GetTermAndRatesInteractor'
 import GetPurposeOfAvailmentInteractor from '../../../domain/interactor/mpl/GetPurposeOfAvailmentInteractor'
 import GetFormAttachmentsInteractor from '../../../domain/interactor/mpl/GetFormAttachmentsInteractor'
+import GetValidateInteractor from '../../../domain/interactor/mpl/GetValidateInteractor'
 
 import multiPurposeLoanParam from '../../../domain/param/MultiPurposeLoanParam'
 
@@ -25,11 +26,16 @@ export default class MPLPresenter {
 
     this.getFormAttachmentsInteractor =
       new GetFormAttachmentsInteractor(container.get('HRBenefitsClient'))
+
+    this.getValidateInteractor =
+      new GetValidateInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
   }
+
+  /*Types*/
 
   getMPLTypes () {
     this.getTypesInteractor.execute()
@@ -48,6 +54,9 @@ export default class MPLPresenter {
         }
       )
     }
+
+  /* Purpose of Availment */
+
   getMPLPurposeOfAvailment () {
     this.getPurposeOfAvailmentInteractor.execute()
       .subscribe(
@@ -65,11 +74,32 @@ export default class MPLPresenter {
         }
       )
     }
+
+  /* Term and Rates*/
+
   getMPLTermAndRates () {
     this.getTermAndRatesInteractor.execute()
       .subscribe(
         data => {
           this.view.showTermAndRates(data)
+        },
+        error => {
+          store.dispatch(NotifyActions.addNotify({
+            title: 'Error',
+            message : error.message,
+            type : 'error',
+            duration : 2000
+          })
+         )
+        }
+      )
+    }
+
+  getMPLValidate () {
+    this.getValidateInteractor.execute()
+      .subscribe(
+        data => {
+          this.view.showValidate(data)
         },
         error => {
           store.dispatch(NotifyActions.addNotify({
@@ -99,6 +129,8 @@ export default class MPLPresenter {
         }
       )
     }
+
+  /* add Loa salary, housing assistance, emergency*/
   addLoanInteractor (
     loanId,
     purposeOfLoan,
