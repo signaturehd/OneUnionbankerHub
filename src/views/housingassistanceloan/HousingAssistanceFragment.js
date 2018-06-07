@@ -13,17 +13,17 @@ class HousingAssistanceFragment extends BaseMVPView {
     super(props)
     this.state = {
       purposeOfAvailment: [],
-      termOfLoan: '',
+      termOfLoan: [],
       formAttachments: '',
-      loanType: []
+      loanType: 3,
     }
     this.getEnabledIds = this.getEnabledIds.bind(this)
   }
 
   componentDidMount () {
     this.presenter.getMPLTypes()
-    this.presenter.getMPLPurposeOfAvailment()
     this.presenter.getMPLValidate()
+    this.presenter.getMPLTermAndRates()
   }
 
   showPurposeOfAvailment (purposeOfAvailment) {
@@ -42,12 +42,12 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.setState({ loanType })
   }
 
-  navigate () {
-    this.props.history.push('/mybenefits/benefits/loans')
+  showTermAndRates (termOfLoan) {
+    this.setState({ termOfLoan })
   }
 
-  getEnabledIds () {
-    return [1, 2, 3]
+  navigate () {
+    this.props.history.push('/mybenefits/benefits/loans')
   }
 
   render () {
