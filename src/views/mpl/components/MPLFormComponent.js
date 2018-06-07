@@ -35,19 +35,23 @@ class MPLFormComponent extends Component {
           <MPLPurposeOfAvailmentModal
             purposeOfAvailment  = {  purposeOfAvailment && purposeOfAvailment.category }
             onSubmit = { (changePoaText, closePoaModal) =>
-              this.setState({ poaText : changePoaText, showPurposeOfAvailment : closePoaModal })
+              this.setState({
+                poaText : changePoaText,
+                showPurposeOfAvailment : closePoaModal
+              })
             }
             onClose = { () =>
               this.setState({ showPurposeOfAvailment : false }) }
           />
         }
         <Card className = {'message'}>
-          <h4>Benefits Form</h4>
+          <h4> Benefits Form </h4>
           <div className = {'message-body'}>
             <GenericTextBox
               type = 'button'
               value = { poaText }
-              onClick = { () => this.setState({ showPurposeOfAvailment : true }) }
+              onClick = { () =>
+                this.setState({ showPurposeOfAvailment : true }) }
               onChange = { (poaText) =>
                 this.setState({ poaText }) }
               placeholder = { 'Purpose Of Availment' }
@@ -58,7 +62,7 @@ class MPLFormComponent extends Component {
               placeholder = { 'Mode of Loan' }
               type = { 'text' }/>
             <GenericTextBox
-              value={this.state.value}
+              value = {this.state.value}
               onChange = {this.onChange}
               placeholder = { 'Desired Amount' }
               type = { 'text' }/>

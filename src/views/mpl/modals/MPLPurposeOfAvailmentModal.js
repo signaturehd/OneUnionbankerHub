@@ -11,7 +11,7 @@ return (
   <Modal
     onClose = { onClose }
     isDismisable = { true }>
-    <div className = { 'dentalreimbursement-description' }>
+    <div>
       <center>
         <h2>
           Purpose of Availment
@@ -22,10 +22,9 @@ return (
       {
         purposeOfAvailment && purposeOfAvailment.map((resp, key) =>
         <GenericButton
-            className = { 'dentalloa-modal-option-button' }
             key = { key }
             text = { resp && resp.name }
-            onClick = { () => onSubmit( resp && resp.name, false ) }/>
+            onClick = { () => onSubmit(resp && resp.name, false) }/>
           )
         }
     </div>
