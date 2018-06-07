@@ -122,11 +122,18 @@
   grid-row-gap: 10px;
 }
 .password__show{
-    background-image: url('../../../images/icons/ShowPass.png');
-    right: 0;
+    background-image: url('../../../images/icons/eye2.png');
     float: right;
+    margin-left: -32px;
     margin-top: -32px;
-    background-repeat: no-repeat;
+    margin-right: 20px;
+    position: relative;
+    z-index: 2;
     cursor: pointer;
-    border: solid;
+    color: transparent;
+    text-decoration:none;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
 }
