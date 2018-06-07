@@ -17,13 +17,14 @@ class HousingAssistanceFragment extends BaseMVPView {
       formAttachments: '',
       loanType: 3,
     }
-    this.getEnabledIds = this.getEnabledIds.bind(this)
   }
 
   componentDidMount () {
     this.presenter.getMPLTypes()
     this.presenter.getMPLValidate()
     this.presenter.getMPLTermAndRates()
+    this.presenter.getMPLPurposeOfAvailment()
+    this.presenter.getMPLFormAttachments()
   }
 
   showPurposeOfAvailment (purposeOfAvailment) {
