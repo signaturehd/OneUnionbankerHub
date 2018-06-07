@@ -310,4 +310,24 @@ export default class HRBenefitsService {
         headers: { token }
     })
   }
+
+  addLoan (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    multiPurposeLoanParam) {
+    const multiPurposeLoanObject = {
+      loanId : multiPurposeLoanParam.loanId,
+      purposeOfLoan : multiPurposeLoanParam.purposeOfLoan,
+      modeOfLoan: multiPurposeLoanParam.modeOfLoan,
+      principalLoanAmount : multiPurposeLoanParam.principalLoanAmount,
+      accountNumber : accountNumber,
+      releasingCenter: releasingCenter,
+      distributorTest : 'distributorTest'
+    }
+    return this.apiClient.post('v1/loans/mpl/submit', multiPurposeLoanObject, {
+      headers : { token }
+    })
+  }
 }

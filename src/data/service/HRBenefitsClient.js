@@ -294,7 +294,7 @@ export default class HRBenefitsClient {
   }
 
   getMPLTermAndRates (token) {
-    return this.service.getTermAndRates(token)
+    return this.service.getMPLTermAndRates(token)
       .pipe(ServiceErrorOperator())
   }
 
@@ -312,4 +312,20 @@ export default class HRBenefitsClient {
     return this.service.getMPLFormAttachments (token)
       .pipe(ServiceErrorOperator())
   }
+
+  addLoan (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    multiLoanPurposeParam) {
+    return this.service.addLoan(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      multiLoanPurposeParam)
+      .pipe(ServiceErrorOperator())
+  }
+
 }
