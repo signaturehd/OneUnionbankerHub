@@ -108,10 +108,10 @@ class OpticalFragment extends BaseMVPView {
 
         }
 
-        <div className={ 'breadcrumbs-container' }>
-          <i className = { 'left' } onClick = {
+        <div>
+          <i className = { 'back-arrow' } onClick = {
               this.navigate.bind(this) }></i>
-          <h1>Optical Reimbursement</h1>
+            <h2 className = { 'header-margin-default' }>Optical Reimbursement</h2>
         </div>
         {
           isVisible ?

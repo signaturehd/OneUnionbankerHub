@@ -51,7 +51,7 @@ export default class BenefitsPresenter {
     if (isManagersCheck) {
       const releasingCenter = this.validateReleasingCenterInteractor.execute()
       if (!releasingCenter) {
-        this.view.isAccountNumber(false)        
+        this.view.isAccountNumber(false)
       }
       // TODO get chosen releasing center then;
       // TODO show releasing centers if there's no releasing center chosen

@@ -5,7 +5,7 @@ import BaseMVPView from '../../../common/base/BaseMVPView'
 import { Card, GenericButton } from '../../../../ub-components'
 
 
-import './styles/transaction-card-component.css'
+import './styles/transactionCardComponent.css'
 
 class TransactionCardComponent extends Component {
   constructor (props) {

@@ -11,10 +11,8 @@ class DrawerAppBar extends Component {
     this.onToggleShow = this.onToggleShow.bind(this)
   }
   onToggleShow () {
-
     if (this.props.displayShow === 'none') {
       this.props.hide()
-
     } else if (this.props.displayShow === 'block') {
       this.props.show()
     }
@@ -41,7 +39,7 @@ class DrawerAppBar extends Component {
               style = { style.show }
               src = { require('../../../../images/profile-picture.png')}
               className = {'_img-ub-profile'}
-              onClick = { this.onToggleShow }/ >
+              onClick = { this.onToggleShow }/>
           </div>
         </div>
       </AppBar>

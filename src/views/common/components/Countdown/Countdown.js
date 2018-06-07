@@ -55,7 +55,7 @@ class Countdown extends Component {
       return `${this.state.day  } days `
     } else if (this.state.day === 1) {
       return `${this.state.day  } day `
-    } 
+    }
       return ''
   }
 

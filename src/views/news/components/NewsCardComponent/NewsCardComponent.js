@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Card } from '../../../../ub-components/'
 
 import { FaEye } from 'react-icons/lib/fa/'
-import './styles/news-card-component.css'
+import './styles/newsCardComponent.css'
 
 class NewsCardComponent extends Component {
   constructor (props) {
