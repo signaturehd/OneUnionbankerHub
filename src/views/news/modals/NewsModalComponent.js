@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Modal } from '../../../ub-components/'
 
-import './styles/news-modal.css'
+import './styles/newsModal.css'
 
 class NewsModalComponent extends Component {
   constructor (props) {
@@ -25,6 +25,7 @@ class NewsModalComponent extends Component {
           backgroundRepeat : 'no-repeat',
           height : '250px',
           width: 'auto',
+          margin : 'auto',
           backgroundSize : 'cover',
           color : 'white',
           fontWeight : 'bold'

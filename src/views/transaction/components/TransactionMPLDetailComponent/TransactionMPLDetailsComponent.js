@@ -1,16 +1,16 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Card } from '../../../../ub-components/'
 
 class TransactionMPLDetailComponent extends Component {
-    constructor(props) {
+    constructor (props) {
       super(props)
     }
 
-    render() {
+    render () {
     const { details, transactionsPerson } = this.props
-    let transactionID = details.transactionId
+    const transactionID = details.transactionId
     return (
       <Card className = { 'transaction-card-details-form' }>
         <div>
@@ -26,7 +26,7 @@ class TransactionMPLDetailComponent extends Component {
           <h2 className = { 'transaction-detail' }> { details && details.status.name } </h2>
           <h2 className = { 'transaction-detail' }> { details && details.details.AccountNo } </h2>
           {
-            transactionsPerson && transactionsPerson.map(( person ) =>
+            transactionsPerson && transactionsPerson.map(person =>
                 transactionID === person.id &&
                 <h2 key = {person.id} > { person.fullName } </h2>
             )

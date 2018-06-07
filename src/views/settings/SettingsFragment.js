@@ -21,10 +21,12 @@ class SettingsFragment extends BaseMVPView {
      profileInfo: [],
      rank: [],
      linemanager: [],
+     profileDependent: [],
      showProfile : false,
      showRank : false,
      showEmployeeProfile : false,
      showLineManager : false,
+     showProfileDependent : false,
     }
   }
   componentDidMount () {
@@ -40,19 +42,25 @@ class SettingsFragment extends BaseMVPView {
   showRank (rank) {
     this.setState({ rank })
   }
+  showProfileDependent (profileDependent) {
+    this.setState({ profileDependent })
+  }
   showLineManager (linemanager) {
     this.setState({ linemanager })
   }
   render () {
-    const { linemanager, profileInfo, profile, details, className, rank } = this.state
+    const { linemanager, profile, details, className, rank, profileDependent } = this.state
 
     return (
       <div className = { 'profile-container' }>
         { super.render() }
-        <h1 className = { 'title-view' }>Profile</h1>
-        <SettingsCardComponent profile = { profile }
+      <h1 className = { 'title-view' }> Profile </h1>
+        <SettingsCardComponent
+         profile = { profile }
          linemanager = { linemanager }
-         rank = { rank } presenter = { this.presenter }/>
+         profileDependent = { profileDependent }
+         rank = { rank }
+         presenter = { this.presenter }/>
       </div>
     )
   }

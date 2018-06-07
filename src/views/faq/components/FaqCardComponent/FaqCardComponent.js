@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Card } from '../../../../ub-components/'
 
-import './faq-card-component.css'
+import './styles/faqCardComponent.css'
 
 
 class FaqCardComponent extends Component {
@@ -12,10 +12,10 @@ class FaqCardComponent extends Component {
   }
 
   render () {
-  const { onClick, title, icon, imageResponse } = this.props
+  const { onClick, title, icon } = this.props
   const style = {
     iconFaqs : {
-      background : `url('${imageResponse}') rgb(0,0,0,0.7)`,
+      background : `url('http://${icon}') rgb(0,0,0,0.7)`,
       backgroundSize : '125px',
       backgroundRepeat : 'no-repeat',
       height: '100% auto',

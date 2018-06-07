@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import '../../styles/benefits.css'
-import Countdown from '../../../common/components/Countdown/Countdown'
-import staticImage from '../../../../images/UBBldg.jpg'
 
+import Countdown from '../../../common/components/Countdown/Countdown'
 import { CircularLoader } from '../../../../ub-components'
+
+import staticImage from '../../../../images/UBBldg.jpg'
+import '../../styles/benefits.css'
+
 
 class EducationFragment extends Component {
   constructor (props) {
@@ -25,29 +27,25 @@ class EducationFragment extends Component {
     const { showLoader } = this.state
 
     const EducationHome = () => (
-      <div className={'background'}>
-        <div className = { 'container-option1' }>
-          <i className = { 'left' } onClick = { () => history.push('/mybenefits/benefits') }></i>
-          <h1>Education</h1>
-            <div className = { 'app' }>
-              {
-                showLoader ?
-                <center>
-                  <CircularLoader show = {true} />
-                </center>                :
+      <div>
+        <i className = { 'back-arrow' } onClick = { () => history.push('/mybenefits/benefits') } />
+        <h1>EDUCATION</h1>
+          <div className = { 'app' }>
+            {
+              showLoader ?
+              <center>
+                <CircularLoader show = {true} />
+              </center>                :
                 <center>
                   <h1> This module will launch on July 9, 2018</h1>
-                  <br/>
-                  <div className={'app-countdown'}>
+                  <br />
+                  <div className = {'app-countdown'}>
                     <br/>
-                    <Countdown dateTo={{ year: 2018, month: 7, date: 9 }}  />
-                    </div>
+                    <Countdown dateTo = {{ year: 2018, month: 7, date: 9 }}  />
+                  </div>
                 </center>
               }
-            <div className = { 'card-container' }>
-            </div>
           </div>
-        </div>
       </div>
     )
 
@@ -59,6 +57,10 @@ class EducationFragment extends Component {
       </div>
     )
   }
+}
+
+EducationFragment.propTypes = {
+  history : PropTypes.object
 }
 
 export default EducationFragment

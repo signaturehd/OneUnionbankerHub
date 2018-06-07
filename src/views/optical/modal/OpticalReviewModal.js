@@ -5,7 +5,7 @@ import { Modal, GenericButton, CircularLoader } from '../../../ub-components/'
 import Button from '../components/OpticalButton'
 import BaseMVPView from '../../common/base/BaseMVPView'
 
-import './styles/optical-modal.css'
+import './styles/opticalModal.css'
 
 class OpticalModal extends Component {
   constructor (props) {
@@ -16,7 +16,6 @@ class OpticalModal extends Component {
       isDismisable : true
     }
   }
-
 
   render () {
     const {
@@ -29,6 +28,7 @@ class OpticalModal extends Component {
       imagePreviewUrl,
       imagePreviewUrl2,
     } = this.props
+
     const { disableSubmit, isDismisable } = this.state
     const styles = {
       image1 : {
@@ -69,18 +69,22 @@ class OpticalModal extends Component {
                   <div style = {styles.image2}></div>
                 </div>
                 <br/>
+              <center>
                 <GenericButton
                   onClick = { () => {
                     this.setState({ disableSubmit : true, isDismisable: false })
                     submitForm(fileReceived, fileReceived2, amount)
-} }
+                  }
+                }
                   text = { 'confirm' }
                   disabled = {this.state.disabled}
                 />
-                <GenericButton text = { 'cancel' } onClick = { onClose } />
-              </div>
-            }
-
+                <GenericButton
+                  text = { 'cancel' }
+                  onClick = { onClose } />
+              </center>
+            </div>
+          }
         </Modal>
       )
   }

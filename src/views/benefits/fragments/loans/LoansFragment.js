@@ -1,50 +1,59 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import '../../styles/benefits.css'
-import Countdown from '../../../common/components/Countdown/Countdown'
-
-import { CircularLoader } from '../../../../ub-components'
+import { Card, GenericButton } from '../../../../ub-components'
+import './styles/loans.css'
 
 class LoansFragment extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      showLoader : true
-    }
   }
 
-  componentDidMount () {
-    setTimeout(() => this.setState({ showLoader : false }), 3000)
+  navigate () {
+      this.props.history.push('/mybenefits/benefits')
   }
 
   render () {
     const { history } = this.props
 
-    const { showLoader } = this.state
+    const benefitsOptions = [{
+      styleName: 'loans-cards-1',
+      title: 'Emergency Loan',
+      path: '/mybenefits/benefits/loans/emergency',
+    }, {
+      styleName: 'loans-cards-2',
+      title: 'Housing Assistance Loan',
+      path: '/mybenefits/benefits/loans/housingassistance',
+    }, {
+      styleName: 'loans-cards-3',
+      title: 'Salary Loan',
+      path: '/mybenefits/benefits/loans/salary',
+    }]
 
     const LoansHome = () => (
-      <div className={'background'}>
-        <div className = { 'container-option1' }>
-          <i className = { 'left' } onClick = { () => history.push('/benefits') }></i>
-          <h1>Loans</h1>
-            <div className = { 'app' }>
-              {
-                showLoader ?
-                <center>
-                  <CircularLoader show = {true} />
-                </center>                :
-                <center>
-                  <h1> This module will launch on July 9, 2018</h1>
-                  <br/>
-                  <div className={'app-countdown'}>
-                    <br/>
-                    <Countdown dateTo={{ year: 2018, month: 7, date: 9 }}  />
-                    </div>
-                </center>
-              }
-            <div className = { 'card-container' }>
-            </div>
+        <div>
+            <i
+              className = { 'back-arrow' }
+              onClick = { () => this.navigate() }></i>
+            <h1>LOANS</h1>
+          <div className = { 'adjustment' }>
+          <div className = { 'card-container' }>
+            {
+            benefitsOptions.map((value, idx) => (
+              <Card
+                className = { 'benefits-card' }
+                key={ idx }>
+                <div
+                  className = { value.styleName}
+                  text = { value.title }
+                  onClick = { () => history.push(value.path) } >
+                  <p className = { 'benefits-option-cards' }>
+                    { value.title }
+                  </p>
+                </div>
+              </Card>
+            ))
+          }
           </div>
         </div>
       </div>
@@ -53,11 +62,15 @@ class LoansFragment extends Component {
     return (
       <div>
         <Switch>
-          <Route exact path = '/mybenefits/benefits/loans' render = { LoansHome } />
+          <Route exact path = '/mybenefits/benefits/loans'  render = { LoansHome } />
         </Switch>
       </div>
     )
   }
+}
+
+LoansFragment.propTypes = {
+  history : PropTypes.object,
 }
 
 export default LoansFragment
