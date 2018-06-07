@@ -5,7 +5,6 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from '../mpl/presenter/MPLPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 
-import { CircularLoader } from '../../ub-components/'
 import MPLFormComponent from '../mpl/components/MPLFormComponent'
 import MPLPurposeOfAvailmentModal from '../mpl/modals/MPLPurposeOfAvailmentModal'
 
@@ -18,11 +17,13 @@ class HousingAssistanceFragment extends BaseMVPView {
       formAttachments: '',
       loanType: []
     }
+    this.getEnabledIds = this.getEnabledIds.bind(this)
   }
 
   componentDidMount () {
     this.presenter.getMPLTypes()
     this.presenter.getMPLPurposeOfAvailment()
+    this.presenter.getMPLValidate()
   }
 
   showPurposeOfAvailment (purposeOfAvailment) {
@@ -43,6 +44,10 @@ class HousingAssistanceFragment extends BaseMVPView {
 
   navigate () {
     this.props.history.push('/mybenefits/benefits/loans')
+  }
+
+  getEnabledIds () {
+    return [1, 2, 3]
   }
 
   render () {
