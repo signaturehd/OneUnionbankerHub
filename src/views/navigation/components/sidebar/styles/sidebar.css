@@ -115,13 +115,15 @@ mask-image: url('../../../../../images/LOGOUT.png');
 /*IPHONE 6,7,8*/
 
  /*IPHONE X*/
-@media screen and (max-width: 768){
+@media screen and (max-width: 768px){
   ._sidebar-overlay {
       z-index: 3;
+      z-index: 3;
+      overflow-y: auto;
       width: 180px;
   }
 }
-@media screen and (max-height: 500px){
+@media screen and (max-height: 510px){
   ._sidebar-overlay {
       position: absolute;
       z-index: 3;
@@ -140,4 +142,27 @@ mask-image: url('../../../../../images/LOGOUT.png');
    ._link-list {
     font-size: 10px;
   }
+}
+
+/* Image Profile */
+.sidebar-profile-body {
+  margin: auto;
+  vertical-align: middle;
+  width: max-content;
+}
+.sidebar-img-ub-logo {
+  width: 90px;
+  height: 90px;
+  background-size: cover;
+  margin-top: 2%;
+  margin: auto;
+  display: block;
+  box-shadow: 0 5px 10px -7px #333333;
+  border-radius: 50%;
+}
+.sidebar-profile-name {
+  margin: 10px auto;
+  font-size : 14px;
+  font-weight: 100px;
+  text-align: center;
 }
