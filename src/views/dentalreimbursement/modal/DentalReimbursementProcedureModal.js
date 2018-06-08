@@ -27,7 +27,7 @@ return (
         }
     </div>
   </Modal>
-  )
+    )
   }
 }
 DentalReimbursementProcedureModal.propTypes = {
