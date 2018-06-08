@@ -3,7 +3,7 @@ export default class GetPurposeOfAvailmentInteractor {
     this.client = client
   }
 
-  execute () {
-    return this.client.getMPLPurposeAvailment(this.client.getToken())
+  execute (multiPurposeLoanParam) {
+    return this.client.getMPLPurposeAvailment(this.client.getToken(), multiPurposeLoanParam)
   }
 }

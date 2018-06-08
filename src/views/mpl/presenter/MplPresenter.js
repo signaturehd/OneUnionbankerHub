@@ -5,7 +5,9 @@ import GetPurposeOfAvailmentInteractor from '../../../domain/interactor/mpl/GetP
 import GetFormAttachmentsInteractor from '../../../domain/interactor/mpl/GetFormAttachmentsInteractor'
 import GetValidateInteractor from '../../../domain/interactor/mpl/GetValidateInteractor'
 
-import multiPurposeLoanParam from '../../../domain/param/MultiPurposeLoanParam'
+import multiPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
+import mplValidatedLoanParam from '../../../domain/param/MplValidateParam'
+import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam.js'
 
 import store from '../../../actions'
 import { NotifyActions } from '../../../actions'
@@ -57,8 +59,17 @@ export default class MPLPresenter {
 
   /* Purpose of Availment */
 
-  getMPLPurposeOfAvailment () {
-    this.getPurposeOfAvailmentInteractor.execute()
+  getMPLPurposeOfAvailment (
+    loanId,
+    purposeOfAvailment,
+    subCategory) {
+    this.getPurposeOfAvailmentInteractor.execute(
+      mplPurposeLoanAddParam(
+        loanId,
+        purposeOfAvailment,
+        subCategory
+      )
+    )
       .subscribe(
         data => {
           this.view.showPurposeOfAvailment(data)
@@ -95,8 +106,10 @@ export default class MPLPresenter {
       )
     }
 
-  getMPLValidate () {
-    this.getValidateInteractor.execute()
+  getMPLValidate (id) {
+    this.getValidateInteractor.execute(
+      mplValidatedLoanParam(id)
+    )
       .subscribe(
         data => {
           this.view.showValidate(data)
