@@ -299,8 +299,8 @@ export default class HRBenefitsService {
 
   /* Validate */
 
-  getMPLValidate (token) {
-    return this.apiClient.get('v1/loans/mpl/validate?loanId=1', {
+  getMPLValidate (token, mplValidatedLoanParam) {
+    return this.apiClient.get(`v1/loans/mpl/validate?loanId=${mplValidatedLoanParam.id}`, {
       headers: { token }
     })
   }
@@ -316,12 +316,12 @@ export default class HRBenefitsService {
     accountToken,
     accountNumber,
     releasingCenter,
-    multiPurposeLoanParam) {
+    multiPurposeLoanAddParam) {
     const multiPurposeLoanObject = {
-      loanId : multiPurposeLoanParam.loanId,
-      purposeOfLoan : multiPurposeLoanParam.purposeOfLoan,
-      modeOfLoan: multiPurposeLoanParam.modeOfLoan,
-      principalLoanAmount : multiPurposeLoanParam.principalLoanAmount,
+      loanId : multiPurposeLoanAddParam.loanId,
+      purposeOfLoan : multiPurposeLoanAddParam.purposeOfLoan,
+      modeOfLoan: multiPurposeLoanAddParam.modeOfLoan,
+      principalLoanAmount : multiPurposeLoanAddParam.principalLoanAmount,
       accountNumber : accountNumber,
       releasingCenter: releasingCenter,
       distributorTest : 'distributorTest'

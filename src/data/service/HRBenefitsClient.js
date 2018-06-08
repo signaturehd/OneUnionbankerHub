@@ -303,8 +303,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLValidate (token) {
-    return this.service.getMPLValidate(token)
+  getMPLValidate (token, mplValidatedLoanParam) {
+    return this.service.getMPLValidate(token, mplValidatedLoanParam)
       .pipe(ServiceErrorOperator())
   }
 
@@ -318,13 +318,13 @@ export default class HRBenefitsClient {
     accountToken,
     accountNumber,
     releasingCenter,
-    multiLoanPurposeParam) {
+    multiPurposeLoanAddParam) {
     return this.service.addLoan(
       token,
       accountToken,
       accountNumber,
       releasingCenter,
-      multiLoanPurposeParam)
+      multiPurposeLoanAddParam)
       .pipe(ServiceErrorOperator())
   }
 
