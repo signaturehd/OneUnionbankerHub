@@ -3,12 +3,12 @@ export default class AddLoanInteractor {
     this.client = client
   }
 
-  execute (multiPurposeLoanParam) {
+  execute (multiPurposeLoanAddParam) {
     return this.client.AddLoanInteractor(
         this.client.getToken(),
         this.client.getAccountToken(),
         this.client.getAccountNumber(),
         this.client.getReleasingCenter(),
-        multiPurposeLoanParam)
+        multiPurposeLoanAddParam)
   }
 }
