@@ -283,8 +283,8 @@ export default class HRBenefitsService {
 
   /* Term and Rates */
 
-  getMPLTermAndRates (token) {
-      return this.apiClient.get('v1/loans/mpl/terms?loanType=1', {
+  getMPLTermAndRates (token, mplValidateParam) {
+      return this.apiClient.get(`v1/loans/mpl/terms?loanType=1`, {
         headers: { token }
       })
   }
@@ -299,8 +299,8 @@ export default class HRBenefitsService {
 
   /* Validate */
 
-  getMPLValidate (token, mplValidatedLoanParam) {
-    return this.apiClient.get(`v1/loans/mpl/validate?loanId=${mplValidatedLoanParam.id}`, {
+  getMPLValidate (token, mplValidateParam) {
+    return this.apiClient.get(`v1/loans/mpl/validate?loanId=${mplValidateParam.loanTypeId}`, {
       headers: { token }
     })
   }
@@ -316,14 +316,15 @@ export default class HRBenefitsService {
     accountToken,
     accountNumber,
     releasingCenter,
-    multiPurposeLoanAddParam) {
+    mplPurposeLoanAddParam) {
     const multiPurposeLoanObject = {
-      loanId : multiPurposeLoanAddParam.loanId,
-      purposeOfLoan : multiPurposeLoanAddParam.purposeOfLoan,
-      modeOfLoan: multiPurposeLoanAddParam.modeOfLoan,
-      principalLoanAmount : multiPurposeLoanAddParam.principalLoanAmount,
-      accountNumber : accountNumber,
-      releasingCenter: releasingCenter,
+      loanId : mplPurposeLoanAddParam.loanId,
+      purposeOfLoan : mplPurposeLoanAddParam.purposeOfLoan,
+      modeOfLoan : mplPurposeLoanAddParam.modeOfLoan,
+      loanTerm :  mplPurposeLoanAddParam.loanTerm,
+      principalLoanAmount : mplPurposeLoanAddParam.principalLoanAmount,
+      accountNumber : 109350022082,
+      releasingCenter: 'UBP',
       distributorTest : 'distributorTest'
     }
     return this.apiClient.post('v1/loans/mpl/submit', multiPurposeLoanObject, {

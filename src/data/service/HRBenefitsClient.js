@@ -293,8 +293,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLTermAndRates (token) {
-    return this.service.getMPLTermAndRates(token)
+  getMPLTermAndRates (token, mplValidateParam) {
+    return this.service.getMPLTermAndRates(token, mplValidateParam)
       .pipe(ServiceErrorOperator())
   }
 
@@ -303,8 +303,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLValidate (token, mplValidatedLoanParam) {
-    return this.service.getMPLValidate(token, mplValidatedLoanParam)
+  getMPLValidate (token, mplValidateParam) {
+    return this.service.getMPLValidate(token, mplValidateParam)
       .pipe(ServiceErrorOperator())
   }
 
@@ -318,13 +318,13 @@ export default class HRBenefitsClient {
     accountToken,
     accountNumber,
     releasingCenter,
-    multiPurposeLoanAddParam) {
+    mplPurposeLoanAddParam) {
     return this.service.addLoan(
       token,
       accountToken,
       accountNumber,
       releasingCenter,
-      multiPurposeLoanAddParam)
+      mplPurposeLoanAddParam)
       .pipe(ServiceErrorOperator())
   }
 
