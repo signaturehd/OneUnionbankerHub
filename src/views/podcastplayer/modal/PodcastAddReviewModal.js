@@ -37,7 +37,7 @@ class PodcastAddReviewModal extends Component {
                 fullSymbol = {<MdStar style={{ fontSize: 40,  color : '#c65e11' }} />}
                 onChange = { e => {
  e
-                this.setState({ rating : e }) 
+                this.setState({ rating : e })
 }}
                 initialRating = {  rating ? rating : 0 }
                 fractions = { 2 } />

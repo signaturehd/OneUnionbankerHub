@@ -9,7 +9,7 @@ import { CircularLoader } from '../../ub-components/'
 import MPLFormComponent from '../mpl/components/MPLFormComponent'
 import MPLPurposeOfAvailmentModal from '../mpl/modals/MPLPurposeOfAvailmentModal'
 
-class SalaryLoanFragment extends BaseMVPView {
+class EmergencyLoanFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
@@ -55,7 +55,7 @@ class SalaryLoanFragment extends BaseMVPView {
             onClick = { this.navigate.bind(this) }>
           </i>
           <h2 className = { 'header-margin-default' }>
-            Salary Loan
+            Emergency Loan
           </h2>
         </div>
           <MPLFormComponent
@@ -66,4 +66,4 @@ class SalaryLoanFragment extends BaseMVPView {
     )
   }
 }
-export default ConnectPartial(SalaryLoanFragment, Presenter)
+export default ConnectPartial(EmergencyLoanFragment, Presenter)

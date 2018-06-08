@@ -22,7 +22,6 @@ export default class PodcastPresenter {
 
   getPodcast (id) {
     this.view.showLoading()
-
     this.getPodcastInteractor.execute(id)
       .subscribe(resp => {
         this.view.hideLoading()

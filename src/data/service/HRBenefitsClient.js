@@ -143,7 +143,7 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
       .map(resp => {
         for (const i in resp) {
-          if (resp[i].id === id) {
+          if (resp[i].id == id) {
             return resp[i]
           }
         }
@@ -285,4 +285,47 @@ export default class HRBenefitsClient {
     return this.service.updateRemarks(token, remarksParam)
       .pipe(ServiceErrorOperator())
   }
+
+  /* MPL Client */
+
+  getMPLPurposeAvailment (token) {
+    return this.service.getMPLPurposeAvailment(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMPLTermAndRates (token) {
+    return this.service.getMPLTermAndRates(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMPLTypes (token) {
+    return this.service.getMPLTypes(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMPLValidate (token, mplValidatedLoanParam) {
+    return this.service.getMPLValidate(token, mplValidatedLoanParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMPLFormAttachments (token) {
+    return this.service.getMPLFormAttachments (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addLoan (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    multiPurposeLoanAddParam) {
+    return this.service.addLoan(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      multiPurposeLoanAddParam)
+      .pipe(ServiceErrorOperator())
+  }
+
 }
