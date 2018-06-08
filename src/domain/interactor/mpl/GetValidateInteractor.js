@@ -3,7 +3,7 @@ export default class GetTermAndRatesInteractor {
     this.client = client
   }
 
-  execute () {
+  execute (mplValidatedLoanParam) {
     return this.client.getMPLValidate(this.client.getToken(), mplValidatedLoanParam)
   }
 }
