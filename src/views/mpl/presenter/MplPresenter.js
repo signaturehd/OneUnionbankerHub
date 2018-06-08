@@ -5,9 +5,8 @@ import GetPurposeOfAvailmentInteractor from '../../../domain/interactor/mpl/GetP
 import GetFormAttachmentsInteractor from '../../../domain/interactor/mpl/GetFormAttachmentsInteractor'
 import GetValidateInteractor from '../../../domain/interactor/mpl/GetValidateInteractor'
 
-import multiPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
-import mplValidatedLoanParam from '../../../domain/param/MplValidateParam'
-import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam.js'
+import mplValidateParam from '../../../domain/param/MplValidateParam'
+import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
 
 import store from '../../../actions'
 import { NotifyActions } from '../../../actions'
@@ -46,13 +45,6 @@ export default class MPLPresenter {
           this.view.showTypes(data)
         },
         error => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Dental Reimbursement',
-            message : error.message,
-            type : 'error',
-            duration : 2000
-          })
-         )
         }
       )
     }
@@ -60,68 +52,43 @@ export default class MPLPresenter {
   /* Purpose of Availment */
 
   getMPLPurposeOfAvailment (
-    loanId,
+    loanTypesId,
     purposeOfAvailment,
     subCategory) {
-    this.getPurposeOfAvailmentInteractor.execute(
-      mplPurposeLoanAddParam(
-        loanId,
-        purposeOfAvailment,
-        subCategory
-      )
-    )
+    this.getPurposeOfAvailmentInteractor.execute()
       .subscribe(
         data => {
           this.view.showPurposeOfAvailment(data)
         },
         error => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Error',
-            message : error.message,
-            type : 'error',
-            duration : 2000
-          })
-         )
         }
       )
     }
 
   /* Term and Rates*/
 
-  getMPLTermAndRates () {
-    this.getTermAndRatesInteractor.execute()
+  getMPLTermAndRates (loanTypeId) {
+    this.getTermAndRatesInteractor.execute(
+      mplValidateParam(loanTypeId)
+    )
       .subscribe(
         data => {
           this.view.showTermAndRates(data)
         },
         error => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Error',
-            message : error.message,
-            type : 'error',
-            duration : 2000
-          })
-         )
         }
       )
     }
 
-  getMPLValidate (id) {
+  getMPLValidate (loanTypeId) {
     this.getValidateInteractor.execute(
-      mplValidatedLoanParam(id)
+      mplValidateParam(loanTypeId)
     )
       .subscribe(
         data => {
           this.view.showValidate(data)
         },
         error => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Error',
-            message : error.message,
-            type : 'error',
-            duration : 2000
-          })
-         )
         }
       )
     }
@@ -132,44 +99,32 @@ export default class MPLPresenter {
           this.view.showMPLFormAttachments(data)
         },
         error => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Error',
-            message : error.message,
-            type : 'error',
-            duration : 2000
-          })
-         )
         }
       )
     }
 
   /* add Loa salary, housing assistance, emergency*/
-  addLoanInteractor (
+  addLoan (
     loanId,
     purposeOfLoan,
     modeOfLoan,
-    loanTerm) {
-    this.addLoanInteractor.execute(multiPurposeLoanParam(
+    loanTerm,
+    principalLoanAmount) {
+    this.addLoanInteractor.execute(mplPurposeLoanAddParam(
       loanId,
       purposeOfLoan,
       modeOfLoan,
       loanTerm,
-      )
+      principalLoanAmount)
     )
       .subscribe(
         data => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Multi Purpose Loan',
-            message : data.message,
-            type : 'success',
-            duration : 2000
-          })
-         )
+          console.log(data)
         },
         error => {
           store.dispatch(NotifyActions.addNotify({
-            title: 'Error',
-            message : error.message,
+            title: 'Error Submission',
+            message : data.message,
             type : 'error',
             duration : 2000
           })

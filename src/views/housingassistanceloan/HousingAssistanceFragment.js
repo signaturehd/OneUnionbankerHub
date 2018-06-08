@@ -13,23 +13,22 @@ class HousingAssistanceFragment extends BaseMVPView {
     super(props)
     this.state = {
       purposeOfAvailment: [],
-      termOfLoan: [],
+      termOfLoan: '',
       formAttachments: '',
       loanType: 3,
+      validateLoanType : [],
     }
   }
 
   componentDidMount () {
     this.presenter.getMPLTypes()
-    this.presenter.getMPLValidate()
-    this.presenter.getMPLTermAndRates()
+    this.presenter.getMPLValidate(this.state.loanType)
+    this.presenter.getMPLTermAndRates(this.state.loanType)
     this.presenter.getMPLPurposeOfAvailment()
     this.presenter.getMPLFormAttachments()
   }
 
-  showPurposeOfAvailment (purposeOfAvailment) {
-    this.setState({ purposeOfAvailment })
-  }
+  /* Implementation*/
 
   showTermAndRates (termOfLoan) {
     this.setState({ termOfLoan })
@@ -39,12 +38,8 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.setState({ formAttachments })
   }
 
-  showTypes (loanType) {
-    this.setState({ loanType })
-  }
-
-  showTermAndRates (termOfLoan) {
-    this.setState({ termOfLoan })
+  showValidate (validateLoanType) {
+    this.setState({ validateLoanType })
   }
 
   navigate () {
@@ -52,7 +47,12 @@ class HousingAssistanceFragment extends BaseMVPView {
   }
 
   render () {
-    const { purposeOfAvailment, termOfLoan, loanType } = this.state
+    const {
+      purposeOfAvailment,
+      termOfLoan,
+      loanType,
+      validateLoanType } = this.state
+
     return (
       <div>
         <div>
@@ -65,8 +65,10 @@ class HousingAssistanceFragment extends BaseMVPView {
           </h2>
         </div>
           <MPLFormComponent
-            types = { loanType }
+            loanType = { loanType }
             purposeOfAvailment = { purposeOfAvailment }
+            validateLoanType = { validateLoanType }
+            presenter = { this.presenter }
           />
       </div>
     )

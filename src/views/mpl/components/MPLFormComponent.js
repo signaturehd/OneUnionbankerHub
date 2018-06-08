@@ -12,22 +12,29 @@ class MPLFormComponent extends Component {
     this.state = {
       showPurposeOfAvailment: false,
       poaText : '',
-      value: '',
+      amountValue: '',
     }
      this.onChange = this.onChange.bind(this)
   }
+
   onChange (e) {
       const re = /^[0-9\.]+$/
-      if (e.target.value == '' || re.test(e.target.value)) {
-         this.setState({ value: e.target.value })
+      if (e.target.value == '' ||  re.test(e.target.value)) {
+        this.setState({ amountValue: e.target.value })
       }
    }
-   /*Change State*/
+
+   sendFormData (desiredAmount, modeLoan, loanTypeId, purposeOfAvailmentId ) {
+     if(parseInt(desiredAmount) >=  this.props.validateLoanType.maximumLoanableAmount) {
+       console.log("max")
+     } else {
+        this.props.presenter.addLoan(1, 'Personal',1, 1, 50000)
+     }
+   }
 
   render() {
-    const { showPurposeOfAvailment, poaText } = this.state
-    const { purposeOfAvailment, types} = this.props
-
+    const { showPurposeOfAvailment, poaText, amountValue } = this.state
+    const { purposeOfAvailment, loanType, validateLoanType, preferredFormData } = this.props
     return(
       <div className = {'mplview-container'}>
         {
@@ -45,7 +52,9 @@ class MPLFormComponent extends Component {
           />
         }
         <Card className = {'message'}>
-          <h4> Benefits Form </h4>
+          <h4>
+            Benefits Form
+          </h4>
           <div className = {'message-body'}>
             <GenericTextBox
               type = 'button'
@@ -62,8 +71,8 @@ class MPLFormComponent extends Component {
               placeholder = { 'Mode of Loan' }
               type = { 'text' }/>
             <GenericTextBox
-              value = {this.state.value}
-              onChange = {this.onChange}
+              value = { amountValue }
+              onChange = { this.onChange }
               placeholder = { 'Desired Amount' }
               type = { 'text' }/>
             <GenericTextBox
@@ -73,7 +82,8 @@ class MPLFormComponent extends Component {
               type = { 'text' }/>
             <GenericButton
               type = { 'button' }
-              text = 'Continue'
+              text = { 'continue' }
+              onClick = { () => this.sendFormData(amountValue, null, null, null) }
               className = {'mplview-submit' } />
           </div>
         </Card>
@@ -84,7 +94,9 @@ class MPLFormComponent extends Component {
 
 MPLFormComponent.propTypes = {
   purposeOfAvailment : PropTypes.array,
-  types : PropTypes.array,
+  validateLoanType : PropTypes.array,
+  loanType : PropTypes.number,
+  preferredFormData : PropTypes.func,
 }
 
 export default MPLFormComponent
