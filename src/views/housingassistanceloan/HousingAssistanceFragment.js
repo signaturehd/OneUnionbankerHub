@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import BaseMVPView from '../common/base/BaseMVPView'
-import Presenter from '../mpl/presenter/MPLPresenter'
+import Presenter from '../mpl/presenter/MultiPurposeLoanPresenter'
 import ConnectView from '../../utils/ConnectView'
 
-import MPLFormComponent from '../mpl/components/MPLFormComponent'
-import MPLPurposeOfAvailmentModal from '../mpl/modals/MPLPurposeOfAvailmentModal'
+import FormComponent from '../mpl/components/MplFormCardComponent'
 
 class HousingAssistanceFragment extends BaseMVPView {
   constructor (props) {
@@ -17,6 +16,7 @@ class HousingAssistanceFragment extends BaseMVPView {
       formAttachments: '',
       loanType: 3,
       validateLoanType : [],
+      offset : [],
     }
   }
 
@@ -38,8 +38,16 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.setState({ formAttachments })
   }
 
+  showOffset (offset) {
+    this.setState({ offset })
+  }
+
   showValidate (validateLoanType) {
     this.setState({ validateLoanType })
+  }
+
+  showPurposeOfAvailment (purposeOfAvailment) {
+    this.setState({ purposeOfAvailment })
   }
 
   navigate () {
@@ -51,8 +59,8 @@ class HousingAssistanceFragment extends BaseMVPView {
       purposeOfAvailment,
       termOfLoan,
       loanType,
-      validateLoanType } = this.state
-
+      validateLoanType,
+      offset } = this.state
     return (
       <div>
         <div>
@@ -64,11 +72,12 @@ class HousingAssistanceFragment extends BaseMVPView {
             Housing Assistance Loan
           </h2>
         </div>
-          <MPLFormComponent
+          <FormComponent
             loanType = { loanType }
             purposeOfAvailment = { purposeOfAvailment }
             validateLoanType = { validateLoanType }
             presenter = { this.presenter }
+            offset = { offset }
           />
       </div>
     )

@@ -5,7 +5,7 @@ import { Modal , GenericButton } from '../../../ub-components/'
 
 import './styles/mplModalStyle.css'
 
-class MPLPurposeOfAvailmentModal extends Component {
+class MplPurposeOfAvailmentModal extends Component {
 render () {
   const { onClose, purposeOfAvailment, onSubmit } = this.props
 
@@ -24,21 +24,21 @@ return (
       {
         purposeOfAvailment && purposeOfAvailment.map((resp, key) =>
         <GenericButton
-            className = { 'mpl-poa-modal-button' }
-            key = { key }
-            text = { resp && resp.name }
-            onClick = { () => onSubmit( resp && resp.name, false ) }/>
-          )
-        }
+          className = { 'mpl-poa-modal-button' }
+          key = { key }
+          text = { resp && resp.name }
+          onClick = { () => onSubmit( resp && resp.name, false ) }/>
+        )
+      }
     </div>
   </Modal>
     )
   }
 }
-MPLPurposeOfAvailmentModal.propTypes = {
+MplPurposeOfAvailmentModal.propTypes = {
   onClose : PropTypes.func,
   purposeOfAvailment : PropTypes.array,
   onSubmit : PropTypes.func
 }
 
-export default MPLPurposeOfAvailmentModal
+export default MplPurposeOfAvailmentModal

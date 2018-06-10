@@ -11,7 +11,7 @@ import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddPar
 import store from '../../../actions'
 import { NotifyActions } from '../../../actions'
 
-export default class MPLPresenter {
+export default class MultiPurposeLoanPresenter {
   constructor (container) {
     this.getTypesInteractor =
       new GetTypesInteractor(container.get('HRBenefitsClient'))
@@ -81,9 +81,8 @@ export default class MPLPresenter {
     }
 
   getMPLValidate (loanTypeId) {
-    this.getValidateInteractor.execute(
-      mplValidateParam(loanTypeId)
-    )
+    this.getValidateInteractor.execute(mplValidateParam(loanTypeId))
+      .do(os => this.view.showOffset(os && os.offset))
       .subscribe(
         data => {
           this.view.showValidate(data)
@@ -119,7 +118,6 @@ export default class MPLPresenter {
     )
       .subscribe(
         data => {
-          console.log(data)
         },
         error => {
           store.dispatch(NotifyActions.addNotify({
