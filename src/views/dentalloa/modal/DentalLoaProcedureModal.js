@@ -9,29 +9,56 @@ class DentalLoaProcedureModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
-    chosenProcedure : [],
-  }
-  this.submitData = this.submitData.bind(this)
-  this.getDisabledIds = this.getDisabledIds.bind(this)
+      chosenProcedure : [],
+    }
+    this.getDisabledIds = this.getDisabledIds.bind(this)
 }
 
 getDisabledIds () {
   return [3, 4, 5, 6]
 }
 
+setProcedure (selected) {
+  const {
+    onClose,
+    procedures,
+    onSubmit,
+    selectedProcedure
+  } = this.props
+
+  if (selectedProcedure) {
+    const valueArr = this.getDisabledIds().map(function(item){return item})
+    if (valueArr.includes(selected.id)) {
+      let isExisting
+      for (const i in selectedProcedure) {
+        if (selectedProcedure[i].id === selected.id) {
+          isExisting = true
+        } else {
+          isExisting = false
+        }
+      }
+      if (!isExisting) {
+        onSubmit({ ...selected })
+      }
+    } else {
+      onSubmit({ ...selected })
+    }
+  } else {
+    onSubmit({ ...selected })
+  }
+}
+
 /*
   Get Chosen Procedure
 */
-submitData (value1, key) {
-  this.props.onSubmit(value1)
-  this.props.onClose()
-}
 
 render () {
   const {
     details,
     onClose,
-    isDismisable } = this.props
+    isDismisable,
+    selectedProcedure
+  } = this.props
 
 return (
   <Modal
@@ -55,9 +82,10 @@ return (
           key = { procedure.id  }
           details = { procedure }
           text = { procedure.name }
-          onClick = { () => this.submitData({ ...procedure }, procedure.id) } />
+          onClick = { () => this.setProcedure({ ...procedure }) } />
           }
-        )        :
+        )
+        :
         <center>
           <h3>Please pick your Recipient</h3>
         </center>

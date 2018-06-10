@@ -225,11 +225,11 @@ render () {
             <DentalReimbursementProcedureModal
               onSubmit = { procedure => {
               const updatedProcedures = [...selectedProcedures]
-
               updatedProcedures.push(procedure)
 
               this.setState({ selectedProcedures: updatedProcedures })
             }}
+              selectedProcedure = { selectedProcedures }
               procedures = { selectedDependent ? selectedDependent.procedures : [] }
               onClose = { () => this.setState({ procedureModal : false }) } />
           }
@@ -266,7 +266,6 @@ render () {
                   onChange = { e => {
                     const updatedProcedures = [...selectedProcedures]
                     updatedProcedures[key].amount = parseInt(e.target.value) || 0
-                    console.log(updatedProcedures)
                     this.setState({ selectedProcedures: updatedProcedures })
                     this.setState({ })
                     }
