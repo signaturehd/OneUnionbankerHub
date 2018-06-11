@@ -12,14 +12,18 @@ class BookBorrowedFragment extends Component {
       view : false,
       bookRequest : null,
     }
+
+    this.borrowedPageNumber = 2
+    this.handleScroll = this.handleScroll.bind(this)
+    this.scroll
   }
 
   componentDidMount () {
-    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener("scroll", this.handleScroll, true);
   }
 
   componentWillUnmount () {
-    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll, true);
   }
 
 
@@ -28,14 +32,13 @@ class BookBorrowedFragment extends Component {
   }
 
   handleScroll() {
-    const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
-    const body = document.body;
-    const html = document.documentElement;
-    const docHeight = Math.floor(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight) - 1;
-    const windowBottom = windowHeight + window.pageYOffset;
-    if (windowBottom >= docHeight) {
-      console.log('end of line for borrowed')
-    }
+      const element = document.getElementById("navPanId")
+      const scrollBar = element.scrollTop
+      const docHeight = element.scrollHeight - element.offsetHeight
+
+      if (scrollBar >= docHeight) {
+          this.props.page(this.borrowedPageNumber++)
+      }
   }
 
   render () {

@@ -91,13 +91,13 @@ export default class HRBenefitsClient {
   }
 
   /* books */
-  getBooks (token) {
-    return this.service.getBooks(token)
+  getBooks (token, pageNumber, find) {
+    return this.service.getBooks(token, pageNumber, find)
       .pipe(ServiceErrorOperator())
   }
 
-  getBooksBorrowed (token) {
-    return this.service.getBooksBorrowed(token)
+  getBooksBorrowed (token, borrowedPageNumber, find) {
+    return this.service.getBooksBorrowed(token, borrowedPageNumber, find)
       .pipe(ServiceErrorOperator())
   }
 

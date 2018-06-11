@@ -3,7 +3,7 @@ export default class GetBooksInteractor {
     this.client = client
   }
 
-  execute () {
-    return this.client.getBooks(this.client.getToken())
+  execute (pageNumber, find) {
+    return this.client.getBooks(this.client.getToken(), pageNumber, find)
   }
 }

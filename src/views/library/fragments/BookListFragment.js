@@ -18,15 +18,19 @@ class BookListFragment extends Component {
       bookRating : null,
       bookQuantity : null,
       title : null,
+
     }
+    this.pageNumber = 2
+    this.handleScroll = this.handleScroll.bind(this)
+    this.scroll
   }
 
   componentDidMount () {
-    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener("scroll", this.handleScroll, true)
   }
 
   componentWillUnmount () {
-    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll, true)
   }
 
   addRating (id, rating) {
@@ -38,13 +42,26 @@ class BookListFragment extends Component {
   }
 
   handleScroll() {
-    const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
-    const body = document.body;
-    const html = document.documentElement;
-    const docHeight = Math.floor(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight) - 1;
-    const windowBottom = windowHeight + window.pageYOffset;
-    if (windowBottom >= docHeight) {
-      console.log('end of line for book list')
+    const element = document.getElementById("navPanId")
+    const scrollBar = element.scrollTop
+    const docHeight = element.scrollHeight - element.offsetHeight
+    const bookNumber = this.props.filteredBooks.length % 10
+    if (scrollBar >= docHeight) {
+      /*
+      => the bookNumber == 0 validation is temporary,
+      the API lacks the validation for paging thus makes it show unnecessary results
+      outside the search query when the pageNumber increments further.
+      this validation works fine unless the result/s (number of book/s) is 0 or 10,
+      if the result is 0, it's ok as long as there is no scrollbar. theoritically,
+      it will display the unnecessary result/s when the scrollbaw is clicked.
+      if the result is 10, it will most likely show unnecessary result/s because of the
+      visible scrollbar that when browse at the bottom, calls this method and (10 % 10) == 0
+      this can be fixed through API or we can make another validation but its better to apply
+      it on API.
+      */
+      if (bookNumber == 0) {
+        this.props.page(this.pageNumber++)
+      }
     }
   }
 
@@ -88,8 +105,8 @@ class BookListFragment extends Component {
           showConfirmationReserveModal &&
           <BookConfirmationModal
             onYes = { () => {
-this.addReserve(bookId, bookQuantity), this.setState({ showConfirmationReserveModal : false })
-} }
+              this.addReserve(bookId, bookQuantity), this.setState({ showConfirmationReserveModal : false })
+            } }
             title = { title }
             onClose = { () => this.setState({ showConfirmationReserveModal : false }) }
           />
