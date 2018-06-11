@@ -1,6 +1,5 @@
 import GetTypesInteractor from '../../../domain/interactor/mpl/GetTypesInteractor'
 import AddLoanInteractor from '../../../domain/interactor/mpl/AddLoanInteractor'
-import GetTermAndRatesInteractor from '../../../domain/interactor/mpl/GetTermAndRatesInteractor'
 import GetPurposeOfAvailmentInteractor from '../../../domain/interactor/mpl/GetPurposeOfAvailmentInteractor'
 import GetFormAttachmentsInteractor from '../../../domain/interactor/mpl/GetFormAttachmentsInteractor'
 import GetValidateInteractor from '../../../domain/interactor/mpl/GetValidateInteractor'
@@ -18,9 +17,6 @@ export default class MultiPurposeLoanPresenter {
 
     this.getPurposeOfAvailmentInteractor =
       new GetPurposeOfAvailmentInteractor(container.get('HRBenefitsClient'))
-
-    this.getTermAndRatesInteractor =
-      new GetTermAndRatesInteractor(container.get('HRBenefitsClient'))
 
     this.addLoanInteractor =
       new AddLoanInteractor(container.get('HRBenefitsClient'))
@@ -45,6 +41,13 @@ export default class MultiPurposeLoanPresenter {
           this.view.showTypes(data)
         },
         error => {
+          store.dispatch(NotifyActions.addNotify({
+            title: 'Loan Types Error',
+            message : error.message,
+            type : 'error',
+            duration : 2000
+          })
+         )
         }
       )
     }
@@ -61,33 +64,34 @@ export default class MultiPurposeLoanPresenter {
           this.view.showPurposeOfAvailment(data)
         },
         error => {
-        }
-      )
-    }
-
-  /* Term and Rates*/
-
-  getMPLTermAndRates (loanTypeId) {
-    this.getTermAndRatesInteractor.execute(
-      mplValidateParam(loanTypeId)
-    )
-      .subscribe(
-        data => {
-          this.view.showTermAndRates(data)
-        },
-        error => {
+          store.dispatch(NotifyActions.addNotify({
+            title: '',
+            message : error.message,
+            type : 'error',
+            duration : 2000
+          })
+         )
         }
       )
     }
 
   getMPLValidate (loanTypeId) {
+    this.view.showCircularLoader()
     this.getValidateInteractor.execute(mplValidateParam(loanTypeId))
       .do(os => this.view.showOffset(os && os.offset))
       .subscribe(
         data => {
           this.view.showValidate(data)
+          this.view.hideCircularLoader()
         },
         error => {
+          store.dispatch(NotifyActions.addNotify({
+            title: 'Validate Type ID',
+            message : error.message,
+            type : 'error',
+            duration : 2000
+          })
+         )
         }
       )
     }
@@ -98,6 +102,13 @@ export default class MultiPurposeLoanPresenter {
           this.view.showMPLFormAttachments(data)
         },
         error => {
+          store.dispatch(NotifyActions.addNotify({
+            title: 'Form Attachments Error',
+            message : error.message,
+            type : 'error',
+            duration : 2000
+          })
+         )
         }
       )
     }
@@ -118,6 +129,7 @@ export default class MultiPurposeLoanPresenter {
     )
       .subscribe(
         data => {
+          this.view.showFormAgreement(data)
         },
         error => {
           store.dispatch(NotifyActions.addNotify({

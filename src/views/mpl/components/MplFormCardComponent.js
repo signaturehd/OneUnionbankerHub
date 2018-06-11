@@ -8,6 +8,9 @@ import PurposeOfAvailmentModal from '../../mpl/modals/PurposeOfAvailmentModal'
 import ModeOfLoanModal from '../../mpl/modals/ModeOfLoanModal'
 import TermOfLoanModal from '../../mpl/modals/TermOfLoanModal'
 
+import store from '../../../store'
+import { NotifyActions } from '../../../actions/'
+
 class MplFormCardComponent extends Component {
   constructor(props) {
     super(props)
@@ -31,8 +34,16 @@ class MplFormCardComponent extends Component {
    }
 
    sendFormData (desiredAmount, modeLoan, loanTypeId, purposeOfAvailmentId ) {
-     if(parseInt(desiredAmount) >=  this.props.validateLoanType.maximumLoanableAmount) {
-       console.log("max")
+     const amount = parseFloat(desiredAmount)
+     const maximumAmount = parseFloat(this.props.validateLoanType.maximumLoanableAmount)
+     if(amount >= maximumAmount) {
+       store.dispatch(NotifyActions.addNotify({
+           title : 'Warning' ,
+           message : `You are only allowed to loan a maximum amount of ${ maximumAmount } `,
+           type : 'warning',
+           duration : 2000
+         })
+       )
      } else {
         this.props.presenter.addLoan(1, 'Personal',1, 1, 50000)
      }
@@ -71,7 +82,7 @@ class MplFormCardComponent extends Component {
         }
         {
           showPurposeOfAvailment &&
-          <PurposeOfAvailment
+          <PurposeOfAvailmentModal
             purposeOfAvailment  = {  purposeOfAvailment && purposeOfAvailment.category }
             onSubmit = { (changePoaText, closePoaModal) =>
               this.setState({
@@ -149,6 +160,7 @@ MplFormCardComponent.propTypes = {
   validateLoanType : PropTypes.array,
   loanType : PropTypes.number,
   preferredFormData : PropTypes.func,
+  offset : PropTypes.array
 }
 
 export default MplFormCardComponent
