@@ -111,3 +111,29 @@
   margin-bottom: 10px;
   border: 0px #e2d3d300;
 }
+
+.notify-container {
+  position: fixed;
+  width: 20%;
+  right: 10px;
+  bottom: 10px;
+  display: grid;
+  z-index: 99;
+  grid-row-gap: 10px;
+}
+.password__show{
+    background-image: url('../../../images/icons/eye2.png');
+    float: right;
+    margin-left: -32px;
+    margin-top: -32px;
+    margin-right: 20px;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    color: transparent;
+    text-decoration:none;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+}

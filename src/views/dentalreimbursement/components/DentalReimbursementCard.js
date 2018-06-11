@@ -34,7 +34,6 @@ class DentalReimbursementCard extends Component {
     procedureModal: false,
     reviewModal: false,
     submit: '',
-    warning: '',
     procedure: '',
     showReviewSubmissionModal : false,
   }
@@ -44,7 +43,7 @@ class DentalReimbursementCard extends Component {
 }
 
 /*
-Optical Certificate Atachments
+Official Certificate Atachments
 */
 
 getExtension (filename) {
@@ -55,7 +54,7 @@ getExtension (filename) {
 /*
   Form Submission
 */
-submission () {
+submission (e) {
   if (
     this.state.file === '' ||
     this.state.file2 === '' ||
@@ -80,10 +79,13 @@ handleImageChange (e) {
   let isValid
   switch (this.getExtension(file.type).toLowerCase()) {
     case 'jpeg' :
+      isValid = true
     case 'jpg' :
+      isValid = true
     case 'png' :
+      isValid = true
     case 'pdf' :
-        isValid = true
+      isValid = true
   }
 
   if (isValid) {
@@ -114,10 +116,13 @@ handleImageChange2 (e1) {
   let isValid = false
   switch (this.getExtension(file2.type).toLowerCase()) {
     case 'jpeg' :
+      isValid = true
     case 'jpg' :
+      isValid = true
     case 'png' :
+      isValid = true
     case 'pdf' :
-        isValid = true
+      isValid = true
   }
   if (isValid) {
      reader2.onloadend = () => {
@@ -151,7 +156,6 @@ render () {
     selectedDependent,
     selectedProcedures,
     procedureModal,
-    warning,
     procedure,
     showResults,
     showReviewSubmissionModal,
@@ -221,11 +225,11 @@ render () {
             <DentalReimbursementProcedureModal
               onSubmit = { procedure => {
               const updatedProcedures = [...selectedProcedures]
-
               updatedProcedures.push(procedure)
 
               this.setState({ selectedProcedures: updatedProcedures })
             }}
+              selectedProcedure = { selectedProcedures }
               procedures = { selectedDependent ? selectedDependent.procedures : [] }
               onClose = { () => this.setState({ procedureModal : false }) } />
           }
@@ -255,40 +259,41 @@ render () {
         <br/>
        {
          selectedProcedures && selectedProcedures.map((procedure, key) => (
-              <div key={ key } className = { 'dentalreimbursement-selected-procedure' }>
-                <div className = {'input-grid'}>
-                  <GenericTextBox
-                    value = { procedure.amount }
-                    onChange = { e => {
-                      const updatedProcedures = [...selectedProcedures]
-                      updatedProcedures[key].amount = parseInt(e.target.value) || 0
-
-                      this.setState({ selectedProcedures: updatedProcedures })
+            <div key={ key } className = { 'dentalreimbursement-selected-procedure' }>
+              <div className = {'input-grid'}>
+                <GenericTextBox
+                  value = { procedure.amount }
+                  onChange = { e => {
+                    const updatedProcedures = [...selectedProcedures]
+                    updatedProcedures[key].amount = parseInt(e.target.value) || 0
+                    this.setState({ selectedProcedures: updatedProcedures })
+                    this.setState({ })
+                    }
+                  }
+                  placeholder = { `${procedure.name} (${procedure.limit})` }
+                 />
+                <div className = { 'dentalreimbursement-button-close' }>
+                  <img
+                    src = { require('../../../images/x-circle-global.png') }
+                    onClick = { () => {
+                      const { selectedProcedures } = this.state
+                      selectedProcedures.splice(key, 1)
+                      this.setState({ selectedProcedures })
                     }}
-                    placeholder = { `${procedure.name} (${procedure.limit})` }
-                   />
-                  <div className = { 'dentalreimbursement-button-close' }>
-                    <img
-                      src = { require('../../../images/x-circle-global.png') }
-                      onClick = { () => {
-                        const { selectedProcedures } = this.state
-                        selectedProcedures.splice(key, 1)
-                        this.setState({ selectedProcedures })
-                      }}
-                    />
-                  </div>
+                  />
                 </div>
-                <br/>
               </div>
-            ))
+              <br/>
+            </div>
+            )
+          )
          }
         </Card>
         <Card className = { 'dentalreimbursement-secondary' }>
-          <h2 className = { 'dentalreimbursement-upload-header' }>Uploaded Files</h2>
+          <h2 className = { 'dentalreimbursement-upload-header' }>
+            Uploaded Files
+          </h2>
           <div className = 'dentalreimbursement-main'>
-            <h2 className = { 'dentalreimbursement-warning-display' }>
-              { warning }
-            </h2>
             <div className = { 'dentalreimbursement-review' }>
              <div className = { 'dentalreimbursement-image-view' }>
                  {$imagePreview}
@@ -313,12 +318,10 @@ DentalReimbursementCard.propTypes = {
   onClose : PropTypes.func,
   onClick : PropTypes.func,
   procedure : PropTypes.string,
-  warning : PropTypes.string,
   dependents: PropTypes.array,
 }
 DentalReimbursementCard.defaultProps = {
   procedure : 'PROCEDURE',
-  warning : '',
   text: 'procedure'
 }
 

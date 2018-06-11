@@ -30,11 +30,20 @@ class LoginView extends BaseMVPView {
       username: '',
       password: '',
       showOtpModal: false,
-      disabled : false
+      disabled : false,
+      type: 'password',
     }
-
+    this.showHide = this.showHide.bind(this)
     this.onLoginSuccess = this.onLoginSuccess.bind(this)
   }
+   showHide (e) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.setState({
+      type: this.state.type === 'input' ? 'password' : 'input'
+    })
+  }
+
   componentDidMount () {
     store.dispatch(NotifyActions.resetNotify())
   }
@@ -92,13 +101,21 @@ class LoginView extends BaseMVPView {
         <Card className = {'login-form'}>
           <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
             <GenericTextBox
+              autocomplete='off'
+              readonly
+              onfocus='this.removeAttribute(\'readonly\')'
               onChange = { e => this.setState({ username: e.target.value }) }
               placeholder = { 'Employee ID' }
               type = { 'text' }/>
             <GenericTextBox
+              autocomplete='off'
+              readonly 
+              onfocus='this.removeAttribute(\'readonly\')'
               onChange = { e => this.setState({ password: e.target.value }) }
               placeholder = { 'Password' }
-              type = { 'password' }/>
+              type = { this.state.type } 
+              className={ 'password__input' }/>
+              <span className={'password__show'} onClick={this.showHide}>{this.state.type === 'input' ? 'HIDE' : 'SHOW'}</span>
               <br/>
             {
               this.state.disabled ?

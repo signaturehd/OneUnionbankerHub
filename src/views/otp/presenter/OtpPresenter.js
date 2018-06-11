@@ -37,6 +37,7 @@ export default class OtpPresenter {
     this.resendOtpInteractor.execute(ResendOtpParam(username, transactionType))
       .subscribe(
         data => {
+          this.view.onResendSuccess()
           this.view.hideLoading()
         },
         error => {
