@@ -101,15 +101,20 @@ class LoginView extends BaseMVPView {
         <Card className = {'login-form'}>
           <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
             <GenericTextBox
-              autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"
+              autocomplete='off'
+              readonly
+              onfocus='this.removeAttribute(\'readonly\')'
               onChange = { e => this.setState({ username: e.target.value }) }
               placeholder = { 'Employee ID' }
               type = { 'text' }/>
             <GenericTextBox
-              autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"
+              autocomplete='off'
+              readonly 
+              onfocus='this.removeAttribute(\'readonly\')'
               onChange = { e => this.setState({ password: e.target.value }) }
               placeholder = { 'Password' }
-              type = { this.state.type } className="password__input"/>
+              type = { this.state.type } 
+              className={ 'password__input' }/>
               <span className={'password__show'} onClick={this.showHide}>{this.state.type === 'input' ? 'HIDE' : 'SHOW'}</span>
               <br/>
             {
