@@ -71,7 +71,15 @@ class PodcastPlayerFragment extends BaseMVPView {
   }
 
   render () {
-    const { rating, podcast, podcasts, reviews, showAddReview, showLoader } = this.state
+    const {
+      rating,
+      podcast,
+      podcasts,
+      reviews,
+      showAddReview,
+      showLoader
+    } = this.state
+
     const { history } = this.props
 
     return (
