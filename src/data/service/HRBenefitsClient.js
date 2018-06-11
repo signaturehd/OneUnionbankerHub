@@ -288,8 +288,8 @@ export default class HRBenefitsClient {
 
   /* MPL Client */
 
-  getMPLPurposeAvailment (token) {
-    return this.service.getMPLPurposeAvailment(token)
+  getMPLPurposeAvailment (token, poaGetParam) {
+    return this.service.getMPLPurposeAvailment(token, poaGetParam)
       .pipe(ServiceErrorOperator())
   }
 

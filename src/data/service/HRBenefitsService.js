@@ -275,16 +275,8 @@ export default class HRBenefitsService {
 
   /* Purpose of Availment */
 
-  getMPLPurposeAvailment (token) {
-      return this.apiClient.get('v1/loans/mpl?loanId=1&purposeOfAvailment=1&subcategoryLevel=1', {
-        headers: { token }
-      })
-  }
-
-  /* Term and Rates */
-
-  getMPLTermAndRates (token, mplValidateParam) {
-      return this.apiClient.get(`v1/loans/mpl/terms?loanType=1`, {
+  getMPLPurposeAvailment (token, poaGetParam) {
+      return this.apiClient.get(`v1/loans/mpl?loanId=${ poaGetParam.loanId }&purposeOfAvailment=${ poaGetParam.purposeOfLoan }&subcategoryLevel=${ poaGetParam.subcategoryLevel }`, {
         headers: { token }
       })
   }
