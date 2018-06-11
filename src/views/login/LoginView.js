@@ -102,15 +102,11 @@ class LoginView extends BaseMVPView {
           <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
             <GenericTextBox
               autocomplete='off'
-              readonly
-              onfocus='this.removeAttribute(\'readonly\')'
               onChange = { e => this.setState({ username: e.target.value }) }
               placeholder = { 'Employee ID' }
               type = { 'text' }/>
             <GenericTextBox
               autocomplete='off'
-              readonly 
-              onfocus='this.removeAttribute(\'readonly\')'
               onChange = { e => this.setState({ password: e.target.value }) }
               placeholder = { 'Password' }
               type = { this.state.type } 
