@@ -5,6 +5,8 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from '../mpl/presenter/MultiPurposeLoanPresenter'
 import ConnectView from '../../utils/ConnectView'
 
+import { CircularLoader } from '../../ub-components/'
+
 import FormComponent from '../mpl/components/MplFormCardComponent'
 
 class HousingAssistanceFragment extends BaseMVPView {
@@ -12,27 +14,22 @@ class HousingAssistanceFragment extends BaseMVPView {
     super(props)
     this.state = {
       purposeOfAvailment: [],
-      termOfLoan: '',
       formAttachments: '',
       loanType: 3,
       validateLoanType : [],
       offset : [],
+      enabledLoader : false,
     }
   }
 
   componentDidMount () {
     this.presenter.getMPLTypes()
     this.presenter.getMPLValidate(this.state.loanType)
-    this.presenter.getMPLTermAndRates(this.state.loanType)
     this.presenter.getMPLPurposeOfAvailment()
     this.presenter.getMPLFormAttachments()
   }
 
   /* Implementation*/
-
-  showTermAndRates (termOfLoan) {
-    this.setState({ termOfLoan })
-  }
 
   showMPLFormAttachments (formAttachments) {
     this.setState({ formAttachments })
@@ -50,6 +47,15 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.setState({ purposeOfAvailment })
   }
 
+  /*Loader*/
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+  /* Navigage back to loans Option*/
   navigate () {
     this.props.history.push('/mybenefits/benefits/loans')
   }
@@ -57,10 +63,10 @@ class HousingAssistanceFragment extends BaseMVPView {
   render () {
     const {
       purposeOfAvailment,
-      termOfLoan,
       loanType,
       validateLoanType,
-      offset } = this.state
+      offset,
+      enabledLoader } = this.state
     return (
       <div>
         <div>
@@ -72,13 +78,19 @@ class HousingAssistanceFragment extends BaseMVPView {
             Housing Assistance Loan
           </h2>
         </div>
-          <FormComponent
-            loanType = { loanType }
-            purposeOfAvailment = { purposeOfAvailment }
-            validateLoanType = { validateLoanType }
-            presenter = { this.presenter }
-            offset = { offset }
-          />
+          {
+            enabledLoader ?
+             <center className = { 'circular-loader-center' }>
+              <CircularLoader show = {this.state.enabledLoader}/>
+             </center> :
+            <FormComponent
+              loanType = { loanType }
+              purposeOfAvailment = { purposeOfAvailment }
+              validateLoanType = { validateLoanType }
+              presenter = { this.presenter }
+              offset = { offset }
+            />
+          }
       </div>
     )
   }
