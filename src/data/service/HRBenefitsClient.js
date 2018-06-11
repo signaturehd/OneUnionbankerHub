@@ -293,11 +293,6 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLTermAndRates (token, mplValidateParam) {
-    return this.service.getMPLTermAndRates(token, mplValidateParam)
-      .pipe(ServiceErrorOperator())
-  }
-
   getMPLTypes (token) {
     return this.service.getMPLTypes(token)
       .pipe(ServiceErrorOperator())

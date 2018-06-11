@@ -323,8 +323,8 @@ export default class HRBenefitsService {
       modeOfLoan : mplPurposeLoanAddParam.modeOfLoan,
       loanTerm :  mplPurposeLoanAddParam.loanTerm,
       principalLoanAmount : mplPurposeLoanAddParam.principalLoanAmount,
-      accountNumber : 109350022082,
-      releasingCenter: 'UBP',
+      accountNumber : accountNumber,
+      releasingCenter: releasingCenter,
       distributorTest : 'distributorTest'
     }
     return this.apiClient.post('v1/loans/mpl/submit', multiPurposeLoanObject, {
