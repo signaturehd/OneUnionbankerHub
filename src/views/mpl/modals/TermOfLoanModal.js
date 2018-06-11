@@ -17,7 +17,11 @@ return (
       <center>
         <h2>
           Term of Loan
+          <br/>
+          Housing Assistance Loan
         </h2>
+        <h4>
+        </h4>
       </center>
     </div>
     <div>
@@ -26,7 +30,7 @@ return (
         <GenericButton
           className = { 'mpl-poa-modal-button' }
           key = { key }
-          text = {`Loan Type: ${resp && resp.loanType} Term: ${resp && resp.term} Rate: ${resp && resp.rate}` }
+          text = {`Term: ${resp && resp.term} Rate: ${resp && resp.rate}` }
           onClick = { () => onSubmit( resp, false ) }/>
         )
       }

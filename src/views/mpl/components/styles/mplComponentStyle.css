@@ -3,9 +3,9 @@
   max-width: 100%;
 }
 
-.message {
+.mpl-form-card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 50%;
+  max-width: 100%;
   float: center;
   padding: 20px 5px 20px 5px;
   margin: auto;
@@ -13,9 +13,9 @@
   font-family: arial;
 }
 
-.message-body {
-    border-color: #0a0a0a;
-    color: #090909;
+.mpl-form-card-body {
+  border-color: #0a0a0a;
+  color: #090909;
 }
 
 .mplview-submit {
@@ -28,4 +28,22 @@
   height: 35px;
   margin-top: 20px;
   width: 95%;
+}
+
+.mpl-grid-column-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
+}
+
+@media (max-width : 768px) {
+  .mpl-grid-column-2 {
+    display: grid;
+    grid-template-columns: 1fr ;
+    column-gap: 2%;
+    grid-row-gap: 2%;
+  }
+  .mpl-form-card {
+    margin-top: 10px;
+  }
 }

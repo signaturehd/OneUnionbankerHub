@@ -6,6 +6,7 @@ import GetValidateInteractor from '../../../domain/interactor/mpl/GetValidateInt
 
 import mplValidateParam from '../../../domain/param/MplValidateParam'
 import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
+import poaGetParam from '../../../domain/param/MultiPurposeLoanAvailmentParam'
 
 import store from '../../../actions'
 import { NotifyActions } from '../../../actions'
@@ -58,7 +59,11 @@ export default class MultiPurposeLoanPresenter {
     loanTypesId,
     purposeOfAvailment,
     subCategory) {
-    this.getPurposeOfAvailmentInteractor.execute()
+    this.getPurposeOfAvailmentInteractor.execute(poaGetParam(
+      loanTypesId,
+      purposeOfAvailment,
+      subCategory
+    ))
       .subscribe(
         data => {
           this.view.showPurposeOfAvailment(data)
@@ -85,13 +90,7 @@ export default class MultiPurposeLoanPresenter {
           this.view.hideCircularLoader()
         },
         error => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Validate Type ID',
-            message : error.message,
-            type : 'error',
-            duration : 2000
-          })
-         )
+          this.view.hideCircularLoader()
         }
       )
     }
@@ -102,13 +101,6 @@ export default class MultiPurposeLoanPresenter {
           this.view.showMPLFormAttachments(data)
         },
         error => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Form Attachments Error',
-            message : error.message,
-            type : 'error',
-            duration : 2000
-          })
-         )
         }
       )
     }
@@ -120,6 +112,7 @@ export default class MultiPurposeLoanPresenter {
     modeOfLoan,
     loanTerm,
     principalLoanAmount) {
+    this.view.showCircularLoader(data)
     this.addLoanInteractor.execute(mplPurposeLoanAddParam(
       loanId,
       purposeOfLoan,
@@ -129,7 +122,15 @@ export default class MultiPurposeLoanPresenter {
     )
       .subscribe(
         data => {
+          store.dispatch(NotifyActions.addNotify({
+            title: 'Error Submission',
+            message : data.message,
+            type : 'error',
+            duration : 2000
+          })
+         )
           this.view.showFormAgreement(data)
+          this.view.hideCircularLoader()
         },
         error => {
           store.dispatch(NotifyActions.addNotify({
@@ -139,6 +140,7 @@ export default class MultiPurposeLoanPresenter {
             duration : 2000
           })
          )
+         this.view.hideCircularLoader()
         }
       )
     }

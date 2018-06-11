@@ -6,39 +6,47 @@ import { Modal , GenericButton } from '../../../ub-components/'
 import './styles/mplModalStyle.css'
 
 class MplPurposeOfAvailmentModal extends Component {
-render () {
-  const { onClose, purposeOfAvailment, onSubmit } = this.props
-
-return (
-  <Modal
-    onClose = { onClose }
-    isDismisable = { true }>
-    <div>
-      <center>
-        <h2>
-          Purpose of Availment
-        </h2>
-      </center>
-    </div>
-    <div>
-      {
-        purposeOfAvailment && purposeOfAvailment.map((resp, key) =>
-        <GenericButton
-          className = { 'mpl-poa-modal-button' }
-          key = { key }
-          text = { resp && resp.name }
-          onClick = { () => onSubmit( resp && resp.name, false ) }/>
-        )
+  constructor (props) {
+    super(props)
+     this.state = {
+        checkedSubCategory : false
       }
-    </div>
-  </Modal>
-    )
   }
-}
-MplPurposeOfAvailmentModal.propTypes = {
-  onClose : PropTypes.func,
-  purposeOfAvailment : PropTypes.array,
-  onSubmit : PropTypes.func
-}
+  render () {
+  const { onClose, poa, onSubmit } = this.props
+  const subcategory = poa && poa.subCategoryLvl
+  const { checkedSubCategory } = this.state
+  return (
+    <Modal
+      onClose = { onClose }
+      isDismisable = { true }>
+      <div>
+        <center>
+          <h2>
+            Purpose of Availment
+          </h2>
+        </center>
+      </div>
+      <div>
+        {
+          poa && poa.category.map((resp, key) =>
+          <GenericButton
+            className = { 'mpl-poa-modal-button' }
+            key = { subcategory }
+            text = { resp && resp.name }
+            onClick = { () => onSubmit(resp, subcategory, false, true) }
+          />
+          )
+        }
+      </div>
+    </Modal>
+      )
+    }
+  }
+  MplPurposeOfAvailmentModal.propTypes = {
+    onClose : PropTypes.func,
+    poa : PropTypes.array,
+    onSubmit : PropTypes.func
+  }
 
-export default MplPurposeOfAvailmentModal
+  export default MplPurposeOfAvailmentModal
