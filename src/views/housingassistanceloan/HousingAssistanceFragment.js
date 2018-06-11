@@ -14,6 +14,7 @@ class HousingAssistanceFragment extends BaseMVPView {
     super(props)
     this.state = {
       purposeOfAvailment: [],
+      selectedPoa: '',
       formAttachments: '',
       loanType: 3,
       validateLoanType : [],
@@ -23,9 +24,10 @@ class HousingAssistanceFragment extends BaseMVPView {
   }
 
   componentDidMount () {
+    this.props.setSelectedNavigation(1)
     this.presenter.getMPLTypes()
     this.presenter.getMPLValidate(this.state.loanType)
-    this.presenter.getMPLPurposeOfAvailment()
+    this.presenter.getMPLPurposeOfAvailment(this.state.loanType, this.state.selectedPoa, 1)
     this.presenter.getMPLFormAttachments()
   }
 
@@ -87,7 +89,6 @@ class HousingAssistanceFragment extends BaseMVPView {
               loanType = { loanType }
               purposeOfAvailment = { purposeOfAvailment }
               validateLoanType = { validateLoanType }
-              presenter = { this.presenter }
               offset = { offset }
             />
           }
