@@ -39,6 +39,7 @@ class DentalLoaView extends BaseMVPView {
 
   componentWillMount () {
     this.presenter.getDentalLoa()
+    this.props.setSelectedNavigation(1)
   }
   /*
     Get Data from DentalLOA
@@ -176,6 +177,7 @@ class DentalLoaView extends BaseMVPView {
         {
           showProcedureModal &&
           <DentalLoaProcedureModal
+            selectedProcedure = { selectedProcedures }
             showProcedureModal = { showProcedureModal }
             onSubmit = { procedure => {
               const updatedProcedures = [...selectedProcedures]
