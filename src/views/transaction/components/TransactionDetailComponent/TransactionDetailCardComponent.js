@@ -11,9 +11,9 @@ class TransactionDetailCardComponent extends Component {
     render () {
     const { details, transactionsPerson } = this.props
     const transactionID = details.transactionId
-    
+
     return (
-      <Card className = { 'transaction-card-details-form' }>
+      <div className = { 'transaction-card-details-form' }>
         <div>
           <h2 className = { 'transaction-detail details-bold' }> Date Filed: </h2>
           <h2 className = { 'transaction-detail details-bold' }> Reference Number: </h2>
@@ -33,7 +33,7 @@ class TransactionDetailCardComponent extends Component {
               )
             }
         </div>
-      </Card>
+      </div>
     )
   }
 }

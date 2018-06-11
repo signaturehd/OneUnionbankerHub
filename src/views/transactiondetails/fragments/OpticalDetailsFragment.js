@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import Accordion from '../Accordion'
+
 
 import { Card } from '../../../ub-components'
 
@@ -30,24 +32,48 @@ class OpticalDetailsFragment extends Component {
           </h2>
         </center>
         <br/>
+        <div>
+        <Accordion>
+            <div className="accor">
+            <div className="head">Details</div>
+            <div className="body">
         <OpticalDetailsComponent
           details = { details }
           transactionsPerson = { transactionsPerson } />
         <br/>
+      </div>
+    </div>
+      <div className="accor">
+            <div className="head">Attachments</div>
+            <div className="body">
         <OpticalFileComponent
           details = { details }
           attachments = { attachments } />
         <br/>
-        <Card>
+      </div>
+    </div>
+      <div className="accor">
+            <div className="head">Procedures</div>
+            <div className="body">
+        <div>
           <center>
             <h2>Amount</h2>
               <br/>
             <h2>&#x20b1; { details && details.details.Amount }</h2>
           </center>
-        </Card>
+        </div>
         <br/>
+      </div>
+    </div>
+      <div className="accor">
+            <div className="head">Notice</div>
+            <div className="body">
         <OpticalAgreementComponent details = { details } />
       </div>
+    </div>
+  </Accordion>
+</div>
+</div>
     )
   }
 }
