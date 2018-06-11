@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './styles/details-fragment.css'
+import './styles/detailsFragment.css'
 
 import { Card } from '../../../ub-components'
 /*

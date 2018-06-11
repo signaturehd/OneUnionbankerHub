@@ -23,7 +23,9 @@ class BookBorrowedFragment extends Component {
     return (
       <div className = {'library-container'}>
         {
-          borrowed  && borrowed.requests && borrowed.requests.map((bookRequest, key) =>
+          borrowed  &&
+          borrowed.requests &&
+          borrowed.requests.map((bookRequest, key) =>
             <BookBorrowedCard
 
               rateBook = { (id, rating) => this.addRating(id, rating) }

@@ -6,7 +6,7 @@ export default class GetTransactionDetailsInteractor {
   execute (GetTransactionParam) {
     return this.client.getTransactionsDetails(this.client.getToken(), GetTransactionParam)
       .map(resp => {
-        let respWithToken = { ...resp }
+        const respWithToken = { ...resp }
         respWithToken.token = this.client.getToken()
 
         return respWithToken

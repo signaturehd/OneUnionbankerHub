@@ -19,7 +19,7 @@ class MyDependentInformationCardComponent extends Component {
                 profileDependent && profileDependent.map((dependent, i) =>
                 <h5
                   key = { i }
-                  className = { "title" }
+                  className = { 'title' }
                   > {dependent.firstName} {dependent.lastName}</h5>
                 )
             }

@@ -40,7 +40,8 @@ export default class HRBenefitsService {
     releasingCenter,
     dentalLoaParam) {
     const dentalLoaObject = {
-      accountNo : accountNo,
+      accountNo,
+      releasingCenter,
       type : 1,
       dependentId : dentalLoaParam.dependent,
       dentalClinicId : dentalLoaParam.branch,
@@ -64,7 +65,7 @@ export default class HRBenefitsService {
     const formData = new FormData()
     const dentalRObject = {
       accountNumber,
-      releasingCenter : releasingCenter,
+      releasingCenter,
       type : 1,
       procedures : dentalReimbursementParam.procedure
     }
@@ -91,7 +92,7 @@ export default class HRBenefitsService {
     const opticalObject = {
       accountNumber,
       amount: opticalParam.amount,
-      releasingCenter: releasingCenter,
+      releasingCenter,
       distributor: 'distributorTest'
     }
     formData.append('uuid', 123345)
@@ -108,7 +109,8 @@ export default class HRBenefitsService {
   /* account */
   validateAccountNumber (token, accountNumber) {
      return this.accountClient.get(`accounts/v1/${accountNumber}`, {
-        headers: {token, referenceId : Math.random().toString(36).substring(7),
+        headers: { token, referenceId : Math.random().toString(36)
+.substring(7),
        }
      })
    }
@@ -246,16 +248,16 @@ export default class HRBenefitsService {
 
   /* Transactions Details */
   getTransactionsDetails (token, GetTransactionParam) {
-    return this.apiClient.get('v1/transactions/' + GetTransactionParam, {
-      headers: {token}
+    return this.apiClient.get(`v1/transactions/${  GetTransactionParam}`, {
+      headers: { token }
     })
   }
 
   /* Remarks */
 
   getRemarks (token, remarksParam) {
-    return this.apiClient.get('v1/transactions/matrix/remarks?benefitId=' + remarksParam, {
-      headers: {token}
+    return this.apiClient.get(`v1/transactions/matrix/remarks?benefitId=${  remarksParam}`, {
+      headers: { token }
     })
   }
 
@@ -264,9 +266,68 @@ export default class HRBenefitsService {
       approve : updateTransactionParam.approve,
       remarks : updateTransactionParam.remarks,
     }
-    return this.apiClient.put('v1/transactions/' + updateTransactionParam.transactionId, transactionDetails, {
-      headers : {token}
+    return this.apiClient.put(`v1/transactions/${  updateTransactionParam.transactionId}`, transactionDetails, {
+      headers : { token }
     })
   }
 
+  /* MPL Service */
+
+  /* Purpose of Availment */
+
+  getMPLPurposeAvailment (token) {
+      return this.apiClient.get('v1/loans/mpl?loanId=1&purposeOfAvailment=1&subcategoryLevel=1', {
+        headers: { token }
+      })
+  }
+
+  /* Term and Rates */
+
+  getMPLTermAndRates (token) {
+      return this.apiClient.get('v1/loans/mpl/terms?loanType=1', {
+        headers: { token }
+      })
+  }
+
+  /* Types */
+
+  getMPLTypes (token) {
+    return this.apiClient.get('v1/loans/mpl/types', {
+      headers: { token }
+    })
+  }
+
+  /* Validate */
+
+  getMPLValidate (token, mplValidatedLoanParam) {
+    return this.apiClient.get(`v1/loans/mpl/validate?loanId=${mplValidatedLoanParam.id}`, {
+      headers: { token }
+    })
+  }
+
+  getMPLFormAttachments (token) {
+    return this.apiClient.get('v1/attachments?purposeOfLoan=Purchase%20of%20appliance&loanId=1', {
+        headers: { token }
+    })
+  }
+
+  addLoan (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    multiPurposeLoanAddParam) {
+    const multiPurposeLoanObject = {
+      loanId : multiPurposeLoanAddParam.loanId,
+      purposeOfLoan : multiPurposeLoanAddParam.purposeOfLoan,
+      modeOfLoan: multiPurposeLoanAddParam.modeOfLoan,
+      principalLoanAmount : multiPurposeLoanAddParam.principalLoanAmount,
+      accountNumber : accountNumber,
+      releasingCenter: releasingCenter,
+      distributorTest : 'distributorTest'
+    }
+    return this.apiClient.post('v1/loans/mpl/submit', multiPurposeLoanObject, {
+      headers : { token }
+    })
+  }
 }

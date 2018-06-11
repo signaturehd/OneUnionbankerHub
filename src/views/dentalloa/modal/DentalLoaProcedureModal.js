@@ -3,65 +3,93 @@ import PropTypes from 'prop-types'
 
 import { Modal , GenericButton } from '../../../ub-components/'
 
+import './styles/dentalLoaModalStyle.css'
+
 class DentalLoaProcedureModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
-    chosenProcedure : [],
-  }
-this.submitData = this.submitData.bind(this)
-this.getDisabledIds = this.getDisabledIds.bind(this)
+      chosenProcedure : [],
+    }
+    this.getDisabledIds = this.getDisabledIds.bind(this)
 }
 
 getDisabledIds () {
   return [3, 4, 5, 6]
 }
 
+setProcedure (selected) {
+  const {
+    onClose,
+    procedures,
+    onSubmit,
+    selectedProcedure
+  } = this.props
+
+  if (selectedProcedure) {
+    const valueArr = this.getDisabledIds().map(function(item){return item})
+    if (valueArr.includes(selected.id)) {
+      let isExisting
+      for (const i in selectedProcedure) {
+        if (selectedProcedure[i].id === selected.id) {
+          isExisting = true
+        } else {
+          isExisting = false
+        }
+      }
+      if (!isExisting) {
+        onSubmit({ ...selected })
+      }
+    } else {
+      onSubmit({ ...selected })
+    }
+  } else {
+    onSubmit({ ...selected })
+  }
+}
+
 /*
   Get Chosen Procedure
 */
-submitData (value1, key) {
-  this.props.onSubmit(value1)
-  this.props.onClose()
-}
 
 render () {
   const {
     details,
-    detailsId,
     onClose,
-    text,
     isDismisable,
-    status } = this.props
+    selectedProcedure
+  } = this.props
 
 return (
   <Modal
     onClose = { onClose }
     isDismisable = { true }>
-  <div className = { 'optical-description' }>
-    <h2>Procedures</h2>
-  </div>
-  <div className = { 'optical-modal-footer' }>
-  {
-    details ?
-      details.map((procedure, key) => {
-        let isDisabled = false
-        for (const i in this.getDisabledIds()) {
-          if (this.getDisabledIds()[i] === procedure.id) {
-            isDisabled = true
-          }
+    <div className = { 'dentalloa-description' }>
+      <h2>PROCEDURES</h2>
+    </div>
+    <div>
+    {
+      details ?
+        details.map((procedure, key) => {
+          let isDisabled = false
+          for (const i in this.getDisabledIds()) {
+            if (this.getDisabledIds()[i] === procedure.id) {
+              isDisabled = true
+            }
         }
-
-      return <GenericButton
-        className = { `dentalloa-modal-option-button-${!isDisabled ? 'unlimited' : ''}` }
-        key = { procedure.id  }
-        details = { procedure }
-        text = { procedure.name }
-        onClick = { () => this.submitData({...procedure}, procedure.id) } />
-      })
-      :
-      <center><h3>Please pick your Recipient</h3></center>
-    }
+        return <GenericButton
+          className = { `dentalloa-modal-option-button-${!isDisabled ? 'unlimited' : ''}` }
+          key = { procedure.id  }
+          details = { procedure }
+          text = { procedure.name }
+          onClick = { () => this.setProcedure({ ...procedure }) } />
+          }
+        )
+        :
+        <center>
+          <h3>Please pick your Recipient</h3>
+        </center>
+      }
     </div>
   </Modal>
     )
@@ -70,5 +98,6 @@ return (
 DentalLoaProcedureModal.propTypes = {
   onClose : PropTypes.func,
   details : PropTypes.array,
+  isDismisable : PropTypes.bool
 }
 export default DentalLoaProcedureModal

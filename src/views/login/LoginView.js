@@ -30,11 +30,20 @@ class LoginView extends BaseMVPView {
       username: '',
       password: '',
       showOtpModal: false,
-      disabled : false
+      disabled : false,
+      type: 'password',
     }
-
+    this.showHide = this.showHide.bind(this)
     this.onLoginSuccess = this.onLoginSuccess.bind(this)
   }
+   showHide (e) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.setState({
+      type: this.state.type === 'input' ? 'password' : 'input'
+    })
+  }
+
   componentDidMount () {
     store.dispatch(NotifyActions.resetNotify())
   }
@@ -63,12 +72,12 @@ class LoginView extends BaseMVPView {
     this.setState({ disabled : false })
   }
 
-  downloadIOS() {
-    window.location.href = "itms-services://?action=download-manifest&amp;url=https://oneunionbankerhub.com/download/manifest.plist"
+  downloadIOS () {
+    window.location.href = 'itms-services://?action=download-manifest&amp;url=https://oneunionbankerhub.com/download/manifest.plist'
   }
 
-  downloadAndroid() {
-    window.open("https://play.google.com/store/apps/details?id=com.unionbankph.oneunionbankerhub")
+  downloadAndroid () {
+    window.open('https://play.google.com/store/apps/details?id=com.unionbankph.oneunionbankerhub')
   }
 
 
@@ -92,13 +101,17 @@ class LoginView extends BaseMVPView {
         <Card className = {'login-form'}>
           <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
             <GenericTextBox
+              autocomplete='off'
               onChange = { e => this.setState({ username: e.target.value }) }
               placeholder = { 'Employee ID' }
               type = { 'text' }/>
             <GenericTextBox
+              autocomplete='off'
               onChange = { e => this.setState({ password: e.target.value }) }
               placeholder = { 'Password' }
-              type = { 'password' }/>
+              type = { this.state.type } 
+              className={ 'password__input' }/>
+              <span className={'password__show'} onClick={this.showHide}>{this.state.type === 'input' ? 'HIDE' : 'SHOW'}</span>
               <br/>
             {
               this.state.disabled ?

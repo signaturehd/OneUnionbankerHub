@@ -10,6 +10,5 @@ export default class AddDentalReimbursementInteractor {
         this.client.getAccountNumber(),
         this.client.getReleasingCenter(),
         dentalReimbursementParam)
-
   }
 }

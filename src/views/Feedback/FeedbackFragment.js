@@ -9,7 +9,7 @@ import GetFeedbackInteractor from '../../domain/interactor/feedback/GetFeedbackI
 import FeedbackCategoryModal from './modals/FeedbackCategoryModal'
 import FeedbackCard from './components/FeedbackCardFragment/FeedbackCard'
 
-import './styles/feedback-styles.css'
+import './styles/feedbackStyles.css'
 
 class FeedbackFragment extends BaseMVPView {
   constructor (props) {
@@ -35,17 +35,17 @@ class FeedbackFragment extends BaseMVPView {
   }
 
   submitForm (feedbackId, feedbackValue) {
-    this.setState({showFeedback: false})
+    this.setState({ showFeedback: false })
     this.presenter.addFeedback(feedbackId, feedbackValue)
   }
 
 
   onSuccessSubmit (showFeedback) {
-    this.setState({showFeedback})
+    this.setState({ showFeedback })
   }
 
   onFailedSubmit (showFeedback) {
-    this.setState({showFeedback})
+    this.setState({ showFeedback })
   }
 
   render () {
@@ -75,10 +75,10 @@ class FeedbackFragment extends BaseMVPView {
             {
               <FeedbackCard
                 feedbackCategory = { feedbackValue }
-                submitForm = { (feedbackValue) => this.submitForm(feedbackId, feedbackValue) }
+                submitForm = { feedbackValue => this.submitForm(feedbackId, feedbackValue) }
                 showFeedback = { showFeedback }
                 onClick = {
-                  (showCategoryModal) =>
+                  showCategoryModal =>
                   this.setState({ showCategoryModal })
                 }
               />

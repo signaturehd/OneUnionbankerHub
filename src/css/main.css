@@ -4,13 +4,32 @@ body {
 i {
   cursor: pointer;
   border: solid #ff8a00;
-  border-width: 0 6px 6px 0;
+  border-width: 0px 7px 7px 0;
   display: -webkit-inline-box;
   padding: 6px;
   position: relative;
-  margin-right: 10px;
 }
+html, body, div, span
+h1, h2, h3, h4, h5, h6, p{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  width: -webkit-fill-available;
+  font: inherit;
+  vertical-align: baseline; }
 
+  h1 {
+    font-weight: 350;
+    text-align: -webkit-auto;
+    display: inline-block;
+    margin: 0;
+  }
+
+  p {
+    margin: 0 0 20px;
+    line-height: 1.5;
+  }
 .back-arrow {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
@@ -22,6 +41,36 @@ i {
   font-size: 35px;
   margin-left: 30px;
 }
+
+@media (max-width: 768px) {
+  .header-margin-default {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    margin-left: 30px;
+  }
+}
 .circular-loader-center {
   margin: 200px auto auto auto;
+}
+html, body, div, span
+h1, h2, h3, h4, h5, h6, p{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  width: -webkit-fill-available;
+  font: inherit;
+  vertical-align: baseline; }
+
+h1 {
+  font-weight: 350;
+  text-align: -webkit-auto;
+  display: inline-block;
+  margin: 0;
+}
+
+p {
+  margin: 0 0 20px;
+  line-height: 1.5;
 }

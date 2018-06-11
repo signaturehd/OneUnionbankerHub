@@ -22,7 +22,6 @@ export default class PodcastPresenter {
 
   getPodcast (id) {
     this.view.showLoading()
-
     this.getPodcastInteractor.execute(id)
       .subscribe(resp => {
         this.view.hideLoading()
@@ -61,7 +60,7 @@ export default class PodcastPresenter {
 }
 
   paddRating (id, rating, comments) {
-    this.view.circularLoader( true )
+    this.view.circularLoader(true)
     this.addPodcastRatingInteractor.execute(PodcastParam(id, rating, comments))
     .subscribe(
       data => {
@@ -72,7 +71,7 @@ export default class PodcastPresenter {
             duration : 2000
           })
         )
-        this.view.circularLoader( false )
+        this.view.circularLoader(false)
       },
       error => {
         this.view.hideLoading()
