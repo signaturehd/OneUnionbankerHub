@@ -23,7 +23,7 @@ class MplFormCardComponent extends Component {
       modeOfLoan: '',
       termOfLoan: '',
       rateOfLoan: '',
-      subCategoryId: null,
+      subCategoryId: '',
       poaId: null,
       file: '',
       file2: '',
@@ -55,6 +55,8 @@ class MplFormCardComponent extends Component {
          })
        )
      } else {
+       // console.log(this.state.subCategoryId)
+       // console.log(this.state.poaText)
         // this.props.presenter.addLoan(1, 'Personal',1, 1, 50000)
      }
    }
@@ -149,6 +151,7 @@ class MplFormCardComponent extends Component {
       modeOfLoan,
       termOfLoan,
       rateOfLoan,
+      subCategoryId,
       file2,
       file,
       imagePreviewUrl,
@@ -182,7 +185,6 @@ class MplFormCardComponent extends Component {
       let $imagePreview2 = null
         $imagePreview = (<div style = {styles.image1}></div>)
         $imagePreview2 = (<div style = {styles.image2}></div>)
-
     return(
       <div className = {'mplview-container'}>
         {
@@ -203,17 +205,18 @@ class MplFormCardComponent extends Component {
           showPurposeOfAvailment &&
           <PurposeOfAvailmentModal
             poa  = { purposeOfAvailment }
-            presenter = { this.presenter }
+            presenter = { this.props.presenter }
             loanType = { loanType }
-            onSubmit = { (changePoaText, subcategory, closePoaModal, bool) =>
+            onSubmit = { (changePoaText, subcategory, closePoaModal, openFileUpload) =>
               this.setState({
                 poaText : changePoaText.name,
                 poaId : changePoaText.id ? changePoaText.id : 0,
-                subCategoryId: subcategory.id,
+                subCategoryId: subcategory,
                 showPurposeOfAvailment : closePoaModal,
-                showFileUpload :bool
+                showFileUpload : openFileUpload
               })
             }
+            onClick = { () => this.props.presenter.getMplFormAttachments()}
             onClose = { () =>
               this.setState({ showPurposeOfAvailment : false }) }
           />

@@ -9,11 +9,19 @@ class MplPurposeOfAvailmentModal extends Component {
   constructor (props) {
     super(props)
      this.state = {
-        checkedSubCategory : false
+        checkedSubCategory : false,
       }
+      this.onGetClicked = this.onGetClicked.bind(this)
   }
+
+  onGetClicked (resp, subcategory, closePoaModal, openFileUpload)
+  {
+    this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload)
+    this.props.presenter.getMplFormAttachments(resp.name, this.props.loanType)
+  }
+
   render () {
-  const { onClose, poa, onSubmit } = this.props
+  const { onClose, poa } = this.props
   const subcategory = poa && poa.subCategoryLvl
   const { checkedSubCategory } = this.state
   return (
@@ -32,9 +40,9 @@ class MplPurposeOfAvailmentModal extends Component {
           poa && poa.category.map((resp, key) =>
           <GenericButton
             className = { 'mpl-poa-modal-button' }
-            key = { subcategory }
+            key = { key }
             text = { resp && resp.name }
-            onClick = { () => onSubmit(resp, subcategory, false, true) }
+            onClick = { () => this.onGetClicked(resp, subcategory, false, true) }
           />
           )
         }
@@ -45,7 +53,7 @@ class MplPurposeOfAvailmentModal extends Component {
   }
   MplPurposeOfAvailmentModal.propTypes = {
     onClose : PropTypes.func,
-    poa : PropTypes.array,
+    poa : PropTypes.object,
     onSubmit : PropTypes.func
   }
 

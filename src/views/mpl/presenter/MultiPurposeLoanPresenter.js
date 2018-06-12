@@ -7,6 +7,7 @@ import GetValidateInteractor from '../../../domain/interactor/mpl/GetValidateInt
 import mplValidateParam from '../../../domain/param/MplValidateParam'
 import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
 import poaGetParam from '../../../domain/param/MultiPurposeLoanAvailmentParam'
+import mplGetFormParam from '../../../domain/param/MplGetFormParam'
 
 import store from '../../../actions'
 import { NotifyActions } from '../../../actions'
@@ -35,7 +36,7 @@ export default class MultiPurposeLoanPresenter {
 
   /*Types*/
 
-  getMPLTypes () {
+  getMplTypes () {
     this.getTypesInteractor.execute()
       .subscribe(
         data => {
@@ -55,7 +56,7 @@ export default class MultiPurposeLoanPresenter {
 
   /* Purpose of Availment */
 
-  getMPLPurposeOfAvailment (
+  getMplPurposeOfAvailment (
     loanTypesId,
     purposeOfAvailment,
     subCategory) {
@@ -80,7 +81,7 @@ export default class MultiPurposeLoanPresenter {
       )
     }
 
-  getMPLValidate (loanTypeId) {
+  getMplValidate (loanTypeId) {
     this.view.showCircularLoader()
     this.getValidateInteractor.execute(mplValidateParam(loanTypeId))
       .do(os => this.view.showOffset(os && os.offset))
@@ -94,8 +95,8 @@ export default class MultiPurposeLoanPresenter {
         }
       )
     }
-  getMPLFormAttachments () {
-    this.getFormAttachmentsInteractor.execute()
+  getMplFormAttachments (formRequesting, loanId) {
+    this.getFormAttachmentsInteractor.execute(mplGetFormParam(formRequesting, loanId))
       .subscribe(
         data => {
           this.view.showMPLFormAttachments(data)
