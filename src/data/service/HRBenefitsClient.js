@@ -303,8 +303,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLFormAttachments (token) {
-    return this.service.getMPLFormAttachments (token)
+  getMPLFormAttachments (token, mplGetFormParam) {
+    return this.service.getMPLFormAttachments (token, mplGetFormParam)
       .pipe(ServiceErrorOperator())
   }
 

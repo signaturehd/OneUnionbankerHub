@@ -297,8 +297,8 @@ export default class HRBenefitsService {
     })
   }
 
-  getMPLFormAttachments (token) {
-    return this.apiClient.get('v1/attachments?purposeOfLoan=Purchase%20of%20appliance&loanId=1', {
+  getMPLFormAttachments (token, mplGetFormParam) {
+    return this.apiClient.get(`v1/attachments?purposeOfLoan=${ mplGetFormParam.formRequesting }&loanId=${ mplGetFormParam.loanId }`, {
         headers: { token }
     })
   }
