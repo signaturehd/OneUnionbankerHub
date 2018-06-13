@@ -7,6 +7,9 @@ import ConnectView from '../../utils/ConnectView'
 
 import { CircularLoader } from '../../ub-components/'
 
+import NoticeModal from '../notice/Notice'
+import ResponseModal from '../notice/NoticeResponseModal'
+
 import FormComponent from '../mpl/components/MplFormCardComponent'
 
 class EmergencyLoanFragment extends BaseMVPView {
@@ -14,19 +17,33 @@ class EmergencyLoanFragment extends BaseMVPView {
     super(props)
     this.state = {
       purposeOfAvailment: [],
-      formAttachments: '',
+      selectedPoa: '',
+      formAttachments: [],
       loanType: 3,
       validateLoanType : [],
       offset : [],
       enabledLoader : false,
+      noticeResponse : null, /* notice response*/
+      showNoticeResponseModal : false,
+      showNoticeModal : false,
+      showConfirmation : false,
     }
   }
 
   componentDidMount () {
-    this.presenter.getMPLTypes()
-    this.presenter.getMPLValidate(this.state.loanType)
-    this.presenter.getMPLPurposeOfAvailment()
-    this.presenter.getMPLFormAttachments()
+    this.props.setSelectedNavigation(1)
+    this.presenter.getMplTypes()
+    this.presenter.getMplFormAttachments()
+    this.presenter.getMplValidate(this.state.loanType)
+    this.presenter.getMplPurposeOfAvailment(
+      this.state.loanType,
+      1,
+      1)
+  }
+
+  /* Notice Response*/
+  noticeOfUndertaking (noticeResponse) {
+    this.setState({ showNoticeModal : true, noticeResponse })
   }
 
   /* Implementation*/
@@ -48,12 +65,13 @@ class EmergencyLoanFragment extends BaseMVPView {
   }
 
   /*Loader*/
-  showCircularLoader () {
-    this.setState({ enabledLoader : true })
-  }
 
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
   }
   /* Navigage back to loans Option*/
   navigate () {
@@ -66,29 +84,59 @@ class EmergencyLoanFragment extends BaseMVPView {
       loanType,
       validateLoanType,
       offset,
-      enabledLoader } = this.state
+      enabledLoader,
+      formAttachments,
+      showConfirmation,
+      showNoticeModal,
+      showNoticeResponseModal,
+      noticeResponse } = this.state
+
     return (
       <div>
+        {
+          showNoticeModal &&
+          <NoticeModal
+            onClose = { () => this.setState({ showNotice : false })}
+            noticeResponse = { noticeResponse }
+            onDismiss = { (showNoticeModal, response) =>
+              this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
+          />
+        }
+
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose = { () => {
+              this.setState({ showNoticeResponseModal : false })
+              this.props.history.push('/mybenefits/benefits/medical')
+            }}
+            noticeResponse = { response }
+            onDismiss = { (showNoticeModal, response) =>
+              this.setState({ showNoticeModal, response })  }
+          />
+
+        }
         <div>
           <i
             className = { 'back-arrow' }
             onClick = { this.navigate.bind(this) }>
           </i>
           <h2 className = { 'header-margin-default' }>
-            Housing Assistance Loan
+            Emergency Loan
           </h2>
         </div>
           {
             enabledLoader ?
              <center className = { 'circular-loader-center' }>
-              <CircularLoader show = {this.state.enabledLoader}/>
+               <CircularLoader show = { this.state.enabledLoader }/>
              </center> :
             <FormComponent
               loanType = { loanType }
               purposeOfAvailment = { purposeOfAvailment }
+              formAttachments = { formAttachments }
               validateLoanType = { validateLoanType }
-              presenter = { this.presenter }
               offset = { offset }
+              presenter = { this.presenter }
             />
           }
       </div>
