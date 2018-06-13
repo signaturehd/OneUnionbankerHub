@@ -307,13 +307,15 @@ export default class HRBenefitsClient {
 
   /* MPL Client */
 
-  getMPLPurposeAvailment (token) {
-    return this.service.getMPLPurposeAvailment(token)
-      .pipe(ServiceErrorOperator())
-  }
-
-  getMPLTermAndRates (token) {
-    return this.service.getMPLTermAndRates(token)
+  getMplPurposeOfAvailment (token, {
+    loanTypesId,
+    purposeOfLoan,
+    subcategoryLevel }) {
+    return this.service.getMplPurposeOfAvailment(token, {
+      loanTypesId,
+      purposeOfLoan,
+      subcategoryLevel
+    })
       .pipe(ServiceErrorOperator())
   }
 
@@ -322,13 +324,13 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLValidate (token, mplValidatedLoanParam) {
-    return this.service.getMPLValidate(token, mplValidatedLoanParam)
+  getMPLValidate (token, mplValidateParam) {
+    return this.service.getMPLValidate(token, mplValidateParam)
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLFormAttachments (token) {
-    return this.service.getMPLFormAttachments (token)
+  getMPLFormAttachments (token, mplGetFormParam) {
+    return this.service.getMPLFormAttachments (token, mplGetFormParam)
       .pipe(ServiceErrorOperator())
   }
 
@@ -337,13 +339,13 @@ export default class HRBenefitsClient {
     accountToken,
     accountNumber,
     releasingCenter,
-    multiPurposeLoanAddParam) {
+    mplPurposeLoanAddParam) {
     return this.service.addLoan(
       token,
       accountToken,
       accountNumber,
       releasingCenter,
-      multiPurposeLoanAddParam)
+      mplPurposeLoanAddParam)
       .pipe(ServiceErrorOperator())
   }
 

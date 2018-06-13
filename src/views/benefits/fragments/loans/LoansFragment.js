@@ -17,14 +17,17 @@ class LoansFragment extends Component {
     const { history } = this.props
 
     const benefitsOptions = [{
+      id: 2,
       styleName: 'loans-cards-1',
       title: 'EMERGENCY LOAN',
       path: '/mybenefits/benefits/loans/emergency',
     }, {
+      id: 3,
       styleName: 'loans-cards-2',
       title: 'HOUSING ASSISTANCE LOAN',
       path: '/mybenefits/benefits/loans/housingassistance',
     }, {
+      id: 1,
       styleName: 'loans-cards-3',
       title: 'SALARY LOAN',
       path: '/mybenefits/benefits/loans/salary',
@@ -42,7 +45,7 @@ class LoansFragment extends Component {
             benefitsOptions.map((value, idx) => (
               <Card
                 className = { 'benefits-card' }
-                key={ idx }>
+                key = { idx }>
                 <div
                   className = { value.styleName}
                   text = { value.title }

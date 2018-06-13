@@ -286,16 +286,12 @@ export default class HRBenefitsService {
 
   /* Purpose of Availment */
 
-  getMPLPurposeAvailment (token) {
-      return this.apiClient.get('v1/loans/mpl?loanId=1&purposeOfAvailment=1&subcategoryLevel=1', {
-        headers: { token }
-      })
-  }
-
-  /* Term and Rates */
-
-  getMPLTermAndRates (token) {
-      return this.apiClient.get('v1/loans/mpl/terms?loanType=1', {
+  getMplPurposeOfAvailment (token, {
+    loanTypesId,
+    purposeOfLoan,
+    subcategoryLevel }
+    ) {
+      return this.apiClient.get(`v1/loans/mpl?loanId=${ loanTypesId }&purposeOfAvailment=${ purposeOfLoan }&subcategoryLevel=${ subcategoryLevel }`, {
         headers: { token }
       })
   }
@@ -310,14 +306,14 @@ export default class HRBenefitsService {
 
   /* Validate */
 
-  getMPLValidate (token, mplValidatedLoanParam) {
-    return this.apiClient.get(`v1/loans/mpl/validate?loanId=${mplValidatedLoanParam.id}`, {
+  getMPLValidate (token, mplValidateParam) {
+    return this.apiClient.get(`v1/loans/mpl/validate?loanId=${mplValidateParam.loanTypeId}`, {
       headers: { token }
     })
   }
 
-  getMPLFormAttachments (token) {
-    return this.apiClient.get('v1/attachments?purposeOfLoan=Purchase%20of%20appliance&loanId=1', {
+  getMPLFormAttachments (token, mplGetFormParam) {
+    return this.apiClient.get(`v1/attachments?purposeOfLoan=${ mplGetFormParam.formRequesting }&loanId=${ mplGetFormParam.loanId }`, {
         headers: { token }
     })
   }
@@ -327,17 +323,26 @@ export default class HRBenefitsService {
     accountToken,
     accountNumber,
     releasingCenter,
-    multiPurposeLoanAddParam) {
+    mplPurposeLoanAddParam) {
+    const formData = new FormData()
     const multiPurposeLoanObject = {
-      loanId : multiPurposeLoanAddParam.loanId,
-      purposeOfLoan : multiPurposeLoanAddParam.purposeOfLoan,
-      modeOfLoan: multiPurposeLoanAddParam.modeOfLoan,
-      principalLoanAmount : multiPurposeLoanAddParam.principalLoanAmount,
+      loanId : {
+        id : mplPurposeLoanAddParam.loanId,
+        purpose : mplPurposeLoanAddParam.purposeOfLoan,
+        mode : mplPurposeLoanAddParam.modeOfLoan,
+        principalLoanAmount : mplPurposeLoanAddParam.principalLoanAmount
+      },
+      promissoryNoteNumbers : [
+        
+      ],
       accountNumber : accountNumber,
       releasingCenter: releasingCenter,
       distributorTest : 'distributorTest'
     }
-    return this.apiClient.post('v1/loans/mpl/submit', multiPurposeLoanObject, {
+    formData.append('uuid', 12345)
+    formData.append('MPL-cert', '')
+    formData.append('body', JSON.stringify(multiPurposeLoanObject))
+    return this.apiClient.post('v2/loans/mpl/submit', multiPurposeLoanObject, {
       headers : { token }
     })
   }

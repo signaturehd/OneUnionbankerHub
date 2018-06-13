@@ -2,53 +2,121 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import BaseMVPView from '../common/base/BaseMVPView'
-import Presenter from '../mpl/presenter/MPLPresenter'
-import ConnectPartial from '../../utils/ConnectPartial'
+import Presenter from '../mpl/presenter/MultiPurposeLoanPresenter'
+import ConnectView from '../../utils/ConnectView'
 
 import { CircularLoader } from '../../ub-components/'
-import MPLFormComponent from '../mpl/components/MPLFormComponent'
-import MPLPurposeOfAvailmentModal from '../mpl/modals/MPLPurposeOfAvailmentModal'
+
+import NoticeModal from '../notice/Notice'
+import ResponseModal from '../notice/NoticeResponseModal'
+
+import FormComponent from '../mpl/components/MplFormCardComponent'
 
 class EmergencyLoanFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
       purposeOfAvailment: [],
-      termOfLoan: '',
-      formAttachments: '',
-      loanType: []
+      selectedPoa: '',
+      formAttachments: [],
+      loanType: 3,
+      validateLoanType : [],
+      offset : [],
+      enabledLoader : false,
+      noticeResponse : null, /* notice response*/
+      showNoticeResponseModal : false,
+      showNoticeModal : false,
+      showConfirmation : false,
     }
   }
 
   componentDidMount () {
-    this.presenter.getMPLTypes()
-    this.presenter.getMPLPurposeOfAvailment()
+    this.props.setSelectedNavigation(1)
+    this.presenter.getMplTypes()
+    this.presenter.getMplValidate(this.state.loanType)
+    this.presenter.getMplPurposeOfAvailment(
+      this.state.loanType,
+      1,
+      1)
+  }
+
+  /* Notice Response*/
+  noticeOfUndertaking (noticeResponse) {
+    this.setState({ showNoticeModal : true, noticeResponse })
+  }
+
+  /* Implementation*/
+
+  showMPLFormAttachments (formAttachments) {
+    this.setState({ formAttachments })
+  }
+
+  showOffset (offset) {
+    this.setState({ offset })
+  }
+
+  showValidate (validateLoanType) {
+    this.setState({ validateLoanType })
   }
 
   showPurposeOfAvailment (purposeOfAvailment) {
     this.setState({ purposeOfAvailment })
   }
 
-  showTermAndRates (termOfLoan) {
-    this.setState({ termOfLoan })
+  /*Loader*/
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
   }
 
-  showMPLFormAttachments (formAttachments) {
-    this.setState({ formAttachments })
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
   }
-
-  showTypes (loanType) {
-    this.setState({ loanType })
-  }
-
+  /* Navigage back to loans Option*/
   navigate () {
     this.props.history.push('/mybenefits/benefits/loans')
   }
 
   render () {
-    const { purposeOfAvailment, termOfLoan, loanType } = this.state
+    const {
+      purposeOfAvailment,
+      loanType,
+      validateLoanType,
+      offset,
+      enabledLoader,
+      formAttachments,
+      showConfirmation,
+      showNoticeModal,
+      showNoticeResponseModal,
+      noticeResponse,
+      response } = this.state
     return (
       <div>
+        {
+          showNoticeModal &&
+          <NoticeModal
+            onClose = { () => this.setState({ showNotice : false })}
+            noticeResponse = { noticeResponse }
+            benefitId = { loanType }
+            onDismiss = { (showNoticeModal, response) =>
+              this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
+          />
+        }
+
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose = { () => {
+              this.setState({ showNoticeResponseModal : false })
+              this.props.history.push('/mybenefits/benefits/medical')
+            }}
+            benefitId = { loanType }
+            noticeResponse = { response }
+            onDismiss = { (showNoticeModal, response) =>
+              this.setState({ showNoticeModal, response })  }
+          />
+
+        }
         <div>
           <i
             className = { 'back-arrow' }
@@ -58,12 +126,22 @@ class EmergencyLoanFragment extends BaseMVPView {
             Emergency Loan
           </h2>
         </div>
-          <MPLFormComponent
-            types = { loanType }
-            purposeOfAvailment = { purposeOfAvailment }
-          />
+          {
+            enabledLoader ?
+             <center className = { 'circular-loader-center' }>
+               <CircularLoader show = { this.state.enabledLoader }/>
+             </center> :
+            <FormComponent
+              loanType = { loanType }
+              purposeOfAvailment = { purposeOfAvailment }
+              validateLoanType = { validateLoanType }
+              formAttachments = { formAttachments }
+              offset = { offset }
+              presenter = { this.presenter }
+            />
+          }
       </div>
     )
   }
 }
-export default ConnectPartial(EmergencyLoanFragment, Presenter)
+export default ConnectView(EmergencyLoanFragment, Presenter)
