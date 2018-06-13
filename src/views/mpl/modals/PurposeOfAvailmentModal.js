@@ -26,9 +26,16 @@ class MplPurposeOfAvailmentModal extends Component {
   }
 
   onGetClicked (resp, subcategory, closePoaModal, openFileUpload, loanType) {
+    const loanId = resp.id ? resp.id : null
+
     this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
-    this.props.presenter.getMplFormAttachments(resp.name, loanType)
-    this.props.presenter.getMplPurposeOfAvailment(loanType, resp.id, subcategory)
+    this.props.presenter.getMplFormAttachments(resp.name, loanType ? loanType : null)
+
+    if ( loanID ) {
+      this.props.presenter.getMplPurposeOfAvailment(loanType && loanType, resp.id, subcategory ? subcategory : null)
+    } else {
+      this.props.onClose()
+    }
   }
 
   render () {
