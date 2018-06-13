@@ -35,6 +35,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  validateTermsAndCondition (token) {
+    return this.service.validateTermsAndCondition(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
@@ -43,6 +48,15 @@ export default class HRBenefitsClient {
 
   getToken () {
     return this.sessionProvider.getToken()
+  }
+
+  setInitialToken (token) {
+    this.sessionProvider.setInitialToken(token)
+    store.dispatch(EventActions.changeToken(token))
+  }
+
+  getInitialToken () {
+    return this.sessionProvider.getInitialToken()
   }
 
   setAccountToken (accountToken) {
