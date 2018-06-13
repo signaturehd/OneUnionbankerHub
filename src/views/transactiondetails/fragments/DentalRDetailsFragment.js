@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Accordion from '../Accordion'
+import Accordion from '../components/Accordion'
+
 
 import { Card } from '../../../ub-components'
 

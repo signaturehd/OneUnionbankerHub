@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Accordion from '../Accordion'
+import Accordion from '../components/Accordion'
 
 import './styles/detailsFragment.css'
 

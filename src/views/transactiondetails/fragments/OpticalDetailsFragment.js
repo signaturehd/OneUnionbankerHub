@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Accordion from '../Accordion'
+import Accordion from '../components/Accordion'
 
 
 import { Card } from '../../../ub-components'
@@ -33,16 +33,16 @@ class OpticalDetailsFragment extends Component {
         </center>
         <br/>
         <div>
-        <Accordion>
-            <div className="accor">
+      <Accordion>
+        <div className="accor">
             <div className="head">Details</div>
             <div className="body">
         <OpticalDetailsComponent
           details = { details }
           transactionsPerson = { transactionsPerson } />
         <br/>
-      </div>
-    </div>
+            </div>
+        </div>
       <div className="accor">
             <div className="head">Attachments</div>
             <div className="body">
@@ -50,7 +50,7 @@ class OpticalDetailsFragment extends Component {
           details = { details }
           attachments = { attachments } />
         <br/>
-      </div>
+            </div>
     </div>
       <div className="accor">
             <div className="head">Procedures</div>
@@ -63,15 +63,15 @@ class OpticalDetailsFragment extends Component {
           </center>
         </div>
         <br/>
-      </div>
+          </div>
     </div>
       <div className="accor">
             <div className="head">Notice</div>
             <div className="body">
         <OpticalAgreementComponent details = { details } />
+            </div>
       </div>
-    </div>
-  </Accordion>
+    </Accordion>
 </div>
 </div>
     )
