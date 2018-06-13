@@ -34,7 +34,6 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.props.setSelectedNavigation(1)
     this.presenter.getMplTypes()
     this.presenter.getMplValidate(this.state.loanType)
-    this.presenter.getMplFormAttachments()
     this.presenter.getMplPurposeOfAvailment(
       this.state.loanType,
       1,
@@ -43,7 +42,6 @@ class HousingAssistanceFragment extends BaseMVPView {
 
   /* Notice Response*/
   noticeOfUndertaking (noticeResponse) {
-    // console.log(noticeResponse)
     this.setState({ showNoticeModal : true, noticeResponse })
   }
 
@@ -90,7 +88,8 @@ class HousingAssistanceFragment extends BaseMVPView {
       showConfirmation,
       showNoticeModal,
       showNoticeResponseModal,
-      noticeResponse } = this.state
+      noticeResponse,
+      response } = this.state
     return (
       <div>
         {
@@ -98,6 +97,7 @@ class HousingAssistanceFragment extends BaseMVPView {
           <NoticeModal
             onClose = { () => this.setState({ showNotice : false })}
             noticeResponse = { noticeResponse }
+            benefitId = { loanType }
             onDismiss = { (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
@@ -110,6 +110,7 @@ class HousingAssistanceFragment extends BaseMVPView {
               this.setState({ showNoticeResponseModal : false })
               this.props.history.push('/mybenefits/benefits/medical')
             }}
+            benefitId = { loanType }
             noticeResponse = { response }
             onDismiss = { (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response })  }

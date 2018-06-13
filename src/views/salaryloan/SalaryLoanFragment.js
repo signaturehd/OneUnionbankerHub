@@ -18,7 +18,7 @@ class SalaryLoanFragment extends BaseMVPView {
     this.state = {
       purposeOfAvailment: [],
       selectedPoa: '',
-      formAttachments: '',
+      formAttachments: [],
       loanType: 2,
       validateLoanType : [],
       offset : [],
@@ -42,7 +42,6 @@ class SalaryLoanFragment extends BaseMVPView {
 
   /* Notice Response*/
   noticeOfUndertaking (noticeResponse) {
-    // console.log(noticeResponse)
     this.setState({ showNoticeModal : true, noticeResponse })
   }
 
@@ -89,8 +88,8 @@ class SalaryLoanFragment extends BaseMVPView {
       showConfirmation,
       showNoticeModal,
       showNoticeResponseModal,
-      noticeResponse, } = this.state
-
+      noticeResponse,
+      response } = this.state
     return (
       <div>
         {
@@ -98,6 +97,7 @@ class SalaryLoanFragment extends BaseMVPView {
           <NoticeModal
             onClose = { () => this.setState({ showNotice : false })}
             noticeResponse = { noticeResponse }
+            benefitId = { loanType }
             onDismiss = { (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
@@ -110,6 +110,7 @@ class SalaryLoanFragment extends BaseMVPView {
               this.setState({ showNoticeResponseModal : false })
               this.props.history.push('/mybenefits/benefits/medical')
             }}
+            benefitId = { loanType }
             noticeResponse = { response }
             onDismiss = { (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response })  }
@@ -134,6 +135,7 @@ class SalaryLoanFragment extends BaseMVPView {
               loanType = { loanType }
               purposeOfAvailment = { purposeOfAvailment }
               validateLoanType = { validateLoanType }
+              formAttachments = { formAttachments }
               offset = { offset }
               presenter = { this.presenter }
             />

@@ -33,7 +33,6 @@ class EmergencyLoanFragment extends BaseMVPView {
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.getMplTypes()
-    this.presenter.getMplFormAttachments()
     this.presenter.getMplValidate(this.state.loanType)
     this.presenter.getMplPurposeOfAvailment(
       this.state.loanType,
@@ -89,8 +88,8 @@ class EmergencyLoanFragment extends BaseMVPView {
       showConfirmation,
       showNoticeModal,
       showNoticeResponseModal,
-      noticeResponse } = this.state
-
+      noticeResponse,
+      response } = this.state
     return (
       <div>
         {
@@ -98,6 +97,7 @@ class EmergencyLoanFragment extends BaseMVPView {
           <NoticeModal
             onClose = { () => this.setState({ showNotice : false })}
             noticeResponse = { noticeResponse }
+            benefitId = { loanType }
             onDismiss = { (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
@@ -110,6 +110,7 @@ class EmergencyLoanFragment extends BaseMVPView {
               this.setState({ showNoticeResponseModal : false })
               this.props.history.push('/mybenefits/benefits/medical')
             }}
+            benefitId = { loanType }
             noticeResponse = { response }
             onDismiss = { (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response })  }
@@ -133,8 +134,8 @@ class EmergencyLoanFragment extends BaseMVPView {
             <FormComponent
               loanType = { loanType }
               purposeOfAvailment = { purposeOfAvailment }
-              formAttachments = { formAttachments }
               validateLoanType = { validateLoanType }
+              formAttachments = { formAttachments }
               offset = { offset }
               presenter = { this.presenter }
             />
