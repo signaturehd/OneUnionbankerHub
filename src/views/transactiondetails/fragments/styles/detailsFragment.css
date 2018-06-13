@@ -30,7 +30,7 @@
   font-weight: bold;
 }
 
-
+/* added style for accordion */
 .html,
 body {
   width: 100%;
@@ -67,3 +67,4 @@ body {
   max-height: 600px;
   color: black;
 }
+/* end of accordion style */

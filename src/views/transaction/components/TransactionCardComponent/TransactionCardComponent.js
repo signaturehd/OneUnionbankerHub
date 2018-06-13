@@ -20,10 +20,10 @@ class TransactionCardComponent extends Component {
       <div className = {'column'}>
         <div className = {'transaction-header'} >
         </div>
-        <div className = {'transaction-body'}>
-          <h5 className = {'transaction-title'}>{ detail.benefit }</h5>
-          <h3 className = {'transaction-status'}>{detail.status}</h3>
-          <h4 className = {'transaction-date'}><Moment  format="MMMM-d-YYYY">{detail.applicationDate}</Moment></h4>
+        <div className = { 'transaction-body' }>
+          <h5 className = { 'transaction-title' }>{ detail.benefit }</h5>
+          <h3 className = { 'transaction-status' }>{detail.status}</h3>
+          <h4 className = { 'transaction-date' }><Moment  format="MMMM-d-YYYY">{detail.applicationDate}</Moment></h4>
         </div>
       </div>
       <div className = {'column'}>
