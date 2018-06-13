@@ -169,7 +169,7 @@ class MplFormCardComponent extends Component {
       preferredFormData,
       offset,
       onGetPurposeOfLoan } = this.props
-
+      console.log(validateLoanType)
       const styles = {
         image1 : {
           backgroundImage: `url('${imagePreviewUrl}')`,
@@ -271,6 +271,7 @@ class MplFormCardComponent extends Component {
                 value = { amountValue }
                 onChange = { this.onChange }
                 placeholder = { 'Desired Amount' }
+                maxLength = { validateLoanType && ( '' + validateLoanType.maximumLoanableAmount).length }
                 type = { 'text' }/>
               <GenericTextBox
                 value = { `Term: ${termOfLoan} Rate: ${rateOfLoan}` }
