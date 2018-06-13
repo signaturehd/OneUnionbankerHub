@@ -102,8 +102,8 @@ class DentalLoaCard extends Component {
                    className = { 'dentalloa-cancel-button' }
                    onClick = { () => {
                    selectedProcedures.splice(key, 1)
-                   this.setState({ selectedProcedures }) 
-}}>X</button>
+                   this.setState({ selectedProcedures })
+                  }}>X</button>
                </div>
                <br/>
              </div>
