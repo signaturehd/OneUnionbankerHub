@@ -34,27 +34,27 @@ class OpticalDetailsFragment extends Component {
         <br/>
         <div>
       <Accordion>
-        <div className="accor">
-            <div className="head">Details</div>
-            <div className="body">
+        <div className = { 'accor' } >
+            <div className = { 'head' } >Details</div>
+            <div className = { 'body' } >
         <OpticalDetailsComponent
           details = { details }
           transactionsPerson = { transactionsPerson } />
         <br/>
             </div>
         </div>
-      <div className="accor">
-            <div className="head">Attachments</div>
-            <div className="body">
+      <div className = { 'accor' } >
+            <div className = { 'head' } >Attachments</div>
+            <div className = { 'body' } >
         <OpticalFileComponent
           details = { details }
           attachments = { attachments } />
         <br/>
             </div>
     </div>
-      <div className="accor">
-            <div className="head">Procedures</div>
-            <div className="body">
+      <div className = { 'accor' } >
+            <div className = { 'head' } >Procedures</div>
+            <div className = { 'body' } >
         <div>
           <center>
             <h2>Amount</h2>
@@ -65,9 +65,9 @@ class OpticalDetailsFragment extends Component {
         <br/>
           </div>
     </div>
-      <div className="accor">
-            <div className="head">Notice</div>
-            <div className="body">
+      <div className = { 'accor' } >
+            <div className = { 'head' } >Notice</div>
+            <div className = { 'body' } >
         <OpticalAgreementComponent details = { details } />
             </div>
       </div>
