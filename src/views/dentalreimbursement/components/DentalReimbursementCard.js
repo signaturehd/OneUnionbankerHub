@@ -55,11 +55,17 @@ getExtension (filename) {
   Form Submission
 */
 submission (e) {
+  const {
+    file,
+    file2,
+    selectedDependent,
+    selectedProcedures
+  } = this.state
   if (
-    this.state.file === '' ||
-    this.state.file2 === '' ||
-    this.state.selectedDependent === null ||
-    this.state.selectedProcedures === null
+    file === '' ||
+    file2 === '' ||
+    selectedDependent === null ||
+    selectedProcedures.length === 0
   ) {
     store.dispatch(NotifyActions.addNotify({
         title : 'Error',
@@ -68,6 +74,25 @@ submission (e) {
         duration : 2000
       })
     )
+  } else if (selectedProcedures.length !== 0) {
+    let validate
+    selectedProcedures.map((procedure, key) => {
+      if (procedure.amount > procedure.limit || procedure.amount === 0) {
+        validate = true
+      }
+    })
+
+    if (validate) {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Dental Reimbursement',
+          message : 'Please check the amount for procedure',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else {
+      this.setState({ showReviewSubmissionModal : true })
+    }
   } else {
     this.setState({ showReviewSubmissionModal : true })
   }
@@ -267,9 +292,9 @@ render () {
                     const updatedProcedures = [...selectedProcedures]
                     updatedProcedures[key].amount = parseInt(e.target.value) || 0
                     this.setState({ selectedProcedures: updatedProcedures })
-                    this.setState({ })
                     }
                   }
+                  maxLength = { procedure.limit.toString().length }
                   placeholder = { `${procedure.name} (${procedure.limit})` }
                  />
                 <div className = { 'dentalreimbursement-button-close' }>

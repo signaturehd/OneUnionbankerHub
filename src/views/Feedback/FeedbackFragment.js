@@ -41,7 +41,7 @@ class FeedbackFragment extends BaseMVPView {
 
 
   onSuccessSubmit (showFeedback) {
-    this.setState({ showFeedback })
+    this.setState({ showFeedback, feedbackId: null, feedbackValue: null })
   }
 
   onFailedSubmit (showFeedback) {

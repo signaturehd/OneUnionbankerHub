@@ -38,7 +38,7 @@ class OtpModal extends BaseMVPView {
   }
 
   onResendSuccess () {
-    this.setState({ disabledResend : false, text : '' })
+    this.setState({ disableResend : false, text : '' })
   }
 
   render () {

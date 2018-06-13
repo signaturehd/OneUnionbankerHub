@@ -35,7 +35,6 @@ class BookBorrowedFragment extends Component {
       const element = document.getElementById("navPanId")
       const scrollBar = element.scrollTop
       const docHeight = element.scrollHeight - element.offsetHeight
-
       if (scrollBar >= docHeight) {
           this.props.page(this.borrowedPageNumber++)
       }
