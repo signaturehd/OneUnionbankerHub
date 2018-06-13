@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { Card } from '../../../../ub-components/'
 
+import moment from 'moment'
+
 class TransactionDetailCardComponent extends Component {
     constructor (props) {
       super(props)
@@ -22,7 +24,7 @@ class TransactionDetailCardComponent extends Component {
           <h2 className = { 'transaction-detail details-bold' }> Patient Name: </h2>
         </div>
         <div>
-          <h2 className = { 'transaction-detail' }> { details && details.dateFiled } </h2>
+          <h2 className = { 'transaction-detail' }> { details && moment(details.dateFiled).format('MMMM d, YYYY') } </h2>
           <h2 className = { 'transaction-detail' }> { details && details.details.ReferenceNumber }</h2>
           <h2 className = { 'transaction-detail' }> { details && details.status.name } </h2>
           <h2 className = { 'transaction-detail' }> { details && details.details.AccountNo } </h2>

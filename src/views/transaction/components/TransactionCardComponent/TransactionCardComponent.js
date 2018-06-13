@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Presenter from '../../presenter/TransactionPresenter'
 import BaseMVPView from '../../../common/base/BaseMVPView'
 import { Card, GenericButton } from '../../../../ub-components'
-import Moment from 'react-moment'
+import moment from 'moment'
 
 import './styles/transactionCardComponent.css'
 
@@ -23,7 +23,7 @@ class TransactionCardComponent extends Component {
         <div className = { 'transaction-body' }>
           <h5 className = { 'transaction-title' }>{ detail.benefit }</h5>
           <h3 className = { 'transaction-status' }>{detail.status}</h3>
-          <h4 className = { 'transaction-date' }><Moment  format="MMMM-d-YYYY">{detail.applicationDate}</Moment></h4>
+          <h4 className = { 'transaction-date' }>{moment(detail.applicationDate).format('MMMM d, YYYY')}</h4>
         </div>
       </div>
       <div className = {'column'}>
