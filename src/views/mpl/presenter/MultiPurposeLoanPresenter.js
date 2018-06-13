@@ -42,13 +42,6 @@ export default class MultiPurposeLoanPresenter {
           this.view.showTypes(data)
         },
         error => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Loan Types Error',
-            message : error.message,
-            type : 'error',
-            duration : 2000
-          })
-         )
         }
       )
     }
@@ -67,15 +60,6 @@ export default class MultiPurposeLoanPresenter {
       .subscribe(
         data => {
           this.view.showPurposeOfAvailment(data)
-        },
-        error => {
-          store.dispatch(NotifyActions.addNotify({
-            title: '',
-            message : error.message,
-            type : 'error',
-            duration : 2000
-          })
-         )
         }
       )
     }
@@ -84,25 +68,16 @@ export default class MultiPurposeLoanPresenter {
     this.view.showCircularLoader()
     this.getValidateInteractor.execute(mplValidateParam(loanTypeId))
       .do(os => this.view.showOffset(os && os.offset))
-      .subscribe(
-        data => {
-          this.view.showValidate(data)
-          this.view.hideCircularLoader()
-        },
-        error => {
-          this.view.hideCircularLoader()
-        }
-      )
+      .do(data => this.view.showValidate(data))
+      .do(data => this.view.hideCircularLoader(),
+          data => this.view.hideCircularLoader())
+      .subscribe()
     }
+
   getMplFormAttachments (formRequesting, loanId) {
     this.getFormAttachmentsInteractor.execute(mplGetFormParam(formRequesting, loanId))
-      .subscribe(
-        data => {
-          this.view.showMPLFormAttachments(data)
-        },
-        error => {
-        }
-      )
+      .do(data => this.view.showMPLFormAttachments(data))
+      .subscribe()
     }
 
   /* add Loa salary, housing assistance, emergency*/
@@ -112,7 +87,7 @@ export default class MultiPurposeLoanPresenter {
     modeOfLoan,
     loanTerm,
     principalLoanAmount) {
-    this.view.showCircularLoader(data)
+    this.view.showCircularLoader()
     this.addLoanInteractor.execute(mplPurposeLoanAddParam(
       loanId,
       purposeOfLoan,
@@ -122,25 +97,26 @@ export default class MultiPurposeLoanPresenter {
     )
       .subscribe(
         data => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Error Submission',
-            message : data.message,
-            type : 'error',
-            duration : 2000
-          })
-         )
-          this.view.showFormAgreement(data)
           this.view.hideCircularLoader()
-        },
-        error => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Error Submission',
-            message : data.message,
-            type : 'error',
-            duration : 2000
-          })
-         )
+          this.view.noticeOfUndertaking(data)
+            store.dispatch(NotifyActions.addNotify({
+              title: 'Successfully',
+              message : data.message,
+              type : 'success',
+              duration : 2000
+            }
+          )
+        )
+      },
+      error => {
          this.view.hideCircularLoader()
+           store.dispatch(NotifyActions.addNotify({
+             title: 'Warning',
+             message : error.message,
+             type : 'warning',
+             duration : 2000
+           })
+          )
         }
       )
     }
