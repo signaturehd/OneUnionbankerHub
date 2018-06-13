@@ -22,7 +22,15 @@ class DrawerAppBar extends Component {
     const { onClick, displayNavIcon, onToggleShow, displayShow } = this.props
     const style = {
       show: {
-        display : displayNavIcon
+        display : displayNavIcon,
+        width: 'auto',
+        margin: '10px',
+      },
+      navBar: {
+        width: '35px',
+        margin: '10px',
+        display: 'block',
+        height: '35px',
       }
     }
 
@@ -31,15 +39,14 @@ class DrawerAppBar extends Component {
         <div id={ 'drawer-header' }>
           <div className = {'icon-header'}>
             <img
-              src={ require('../../../../images/union-logo.png') }
-              className= {'_img-ub-logo'}/>
-          </div>
-          <div className = { 'burger-icon' }>
-            <img
-              style = { style.show }
-              src = { require('../../../../images/profile-picture.png')}
+              style={ style.show }
+              src={ require('../../../../images/menu.png')}
               className = {'_img-ub-profile'}
               onClick = { this.onToggleShow }/>
+            <img
+              style={ style.navbar }
+              src={ require('../../../../images/union-logo.png') }
+              className={'_img-ub-logo'}/>
           </div>
         </div>
       </AppBar>
