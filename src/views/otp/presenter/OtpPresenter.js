@@ -15,15 +15,13 @@ export default class OtpPresenter {
     this.view = view
   }
 
-
-
   verifyOtp (username, otp, transactionType) {
     this.view.showLoading()
     this.verifyOtpInteractor.execute(OtpParam(username, otp, transactionType))
       .subscribe(
         data => {
           this.view.hideLoading()
-          this.view.onOtpSuccess()
+          this.view.onOtpSuccess(data.termsAndCondition)
         },
         error => {
           this.view.hideLoading()

@@ -12,6 +12,7 @@ import NewsModalComponent from './modals/NewsModalComponent'
 
 import { CircularLoader } from '../../ub-components'
 
+import Carousel from '../carousel/Carousel'
 
 import './styles/newsStyles.css'
 
@@ -22,7 +23,8 @@ class NewsFragment extends BaseMVPView {
         news: [],
         show : false,
         searchString : '',
-        showLoader: true
+        showLoader: true,
+        showCarousel : true
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
@@ -45,7 +47,8 @@ class NewsFragment extends BaseMVPView {
       news,
       show,
       details,
-      showLoader
+      showLoader,
+      showCarousel
     } = this.state
     let newsList = news
     const search = this.state.searchString.trim().toLowerCase()
@@ -61,6 +64,12 @@ class NewsFragment extends BaseMVPView {
             onClose = { () => this.setState({ show: false })}
             details = { details }
            />
+        }
+        {
+          showCarousel &&
+          <Carousel
+            onClose = { () => this.setState({showCarousel: false}) }
+          />
         }
         <h1 className = { 'title-view' }>News Feed</h1>
         <input type = 'text'
