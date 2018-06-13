@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import Accordion from '../components/Accordion'
+
 
 import { Card } from '../../../ub-components'
 
@@ -30,15 +32,30 @@ class DentalRDetailsFragment extends Component {
           </h2>
         </center>
         <br/>
+        <div>
+        <Accordion>
+            <div className = { 'accor' } >
+            <div className = { 'head' } >Details</div>
+            <div className = { 'body' } >
         <DentalRDetailsComponent
           transactionsPerson = { transactionsPerson }
           details = { details } />
         <br/>
+      </div>
+    </div>
+      <div className = { 'accor' } >
+            <div className = { 'head' } >Attachments</div>
+            <div className = { 'body' } >
         <DentalRFileComponent
           details = { details }
           attachments = { attachments } />
         <br/>
-          <Card className = { 'transaction-card-details' }>
+      </div>
+    </div>
+      <div className = { 'accor' } >
+            <div className = { 'head' } >Procedures</div>
+            <div className = { 'body' } >
+          <div className = { 'transaction-card-details' }>
             <center>
               <h2 className = { 'details-bold' }>
                 Procedures
@@ -49,14 +66,24 @@ class DentalRDetailsFragment extends Component {
               details && details.details.Procedures.map((procedure, key) =>
                 <center key>
                   <h2>{ procedure.Name }</h2>
-                  <h2>{ procedure.Amount }</h2>
+                  <h2>&#x20b1;{ procedure.Amount }</h2>
                 </center>
               )
             }
-          </Card>
+          </div>
           <br/>
+        </div>
+      </div>
+        <div className = { 'accor' } >
+            <div className = { 'head' } >Notice</div>
+            <div className = { 'body' } >
         <DentalRAgreementComponent details = { details } />
       </div>
+    </div>
+  </Accordion>
+</div>
+</div>
+
     )
   }
 }

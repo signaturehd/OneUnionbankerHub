@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card } from '../../../../ub-components/'
 
 class TransactionFormAgreementCardComponent extends Component {
   constructor (props) {
@@ -11,7 +10,7 @@ class TransactionFormAgreementCardComponent extends Component {
   render () {
     const { details } = this.props
     return (
-      <Card className = { 'transaction-card-details' }>
+      <div className = { 'transaction-card-details' }>
         <h4 className = { 'details-bold' }>Form Agreements</h4>
         {
           details && details.details.FormAgreements.map ((formAgreement, key) =>
@@ -20,7 +19,7 @@ class TransactionFormAgreementCardComponent extends Component {
           </center>
           )
         }
-      </Card>
+      </div>
     )
   }
 }

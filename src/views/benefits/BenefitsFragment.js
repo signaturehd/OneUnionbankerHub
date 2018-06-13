@@ -169,7 +169,7 @@ class BenefitsFragment extends BaseMVPView {
             name='tabs'
             defaultChecked = {true}
             onClick = { () => this.props.history.push('/mybenefits/benefits') }/>
-            <label  className = { 'mobile-icon' } htmlFor = 'tab1'>Benefits</label>
+            <label  className = { 'benefit-icon' } htmlFor = 'tab1'>Benefits</label>
 
          <input
             className = { 'input-tab' }
@@ -177,14 +177,14 @@ class BenefitsFragment extends BaseMVPView {
             type='radio'
             name='tabs'
             onClick = { () => this.props.history.push('/mybenefits/transactions/personal') } />
-            <label className = { 'mobile-icon' } htmlFor='tab2'>My Transactions</label>
+            <label className = { 'trans-icon' } htmlFor='tab2'>My Transactions</label>
 
          <input
             className = { 'input-tab' }
             id='tab3'  type='radio'
             name='tabs'
             onClick = { () => this.props.history.push('/mybenefits/transactions/approval') } />
-            <label className = { 'mobile-icon' } htmlFor = 'tab3' >For Approval</label>
+            <label className = { 'approval-icon' } htmlFor = 'tab3' >For Approval</label>
 
           <section id='content1'>
             <Switch>

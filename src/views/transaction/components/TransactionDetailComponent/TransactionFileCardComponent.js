@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card, CircularLoader } from '../../../../ub-components/'
+import { CircularLoader } from '../../../../ub-components/'
 
 class TransactionFileCardComponent extends Component {
   constructor (props) {
@@ -11,7 +11,7 @@ class TransactionFileCardComponent extends Component {
   render () {
     const { details, attachments } = this.props
     return (
-      <Card className = { 'transaction-card-details' }>
+      <div className = { 'transaction-card-details' }>
         <center><h4 className = { 'details-bold' }> Attachments </h4></center>
           {
             attachments ?
@@ -33,7 +33,7 @@ class TransactionFileCardComponent extends Component {
               </center>
           }
 
-      </Card>
+      </div>
     )
   }
 }
