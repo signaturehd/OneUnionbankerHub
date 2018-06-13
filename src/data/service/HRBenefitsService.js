@@ -128,14 +128,19 @@ export default class HRBenefitsService {
   }
 
   /* library */
-  getBooks (token) {
-    return this.apiClient.get('v1/books', {
+  getBooks (token, pageNumber, find) {
+    return this.apiClient.get(`v1/books?pageNumber=${pageNumber}&find=${find}`, {
       headers: { token }
     })
   }
 
-  getBooksBorrowed (token) {
-    return this.apiClient.get('v1/books/history', {
+  getBooksBorrowed (token, borrowedPageNumber, find) {
+    return this.apiClient.get(`v1/books/history?pageNumber=${borrowedPageNumber}&find=${find}`, {
+        headers: { token }
+    })
+  }
+  getBooksRecommendation (token) {
+    return this.apiClient.get('v1/books/recommended', {
         headers: { token }
     })
   }
