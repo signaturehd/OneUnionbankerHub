@@ -34,27 +34,27 @@ class DentalRDetailsFragment extends Component {
         <br/>
         <div>
         <Accordion>
-            <div className="accor">
-            <div className="head">Details</div>
-            <div className="body">
+            <div className = { 'accor' } >
+            <div className = { 'head' } >Details</div>
+            <div className = { 'body' } >
         <DentalRDetailsComponent
           transactionsPerson = { transactionsPerson }
           details = { details } />
         <br/>
       </div>
     </div>
-      <div className="accor">
-            <div className="head">Attachments</div>
-            <div className="body">
+      <div className = { 'accor' } >
+            <div className = { 'head' } >Attachments</div>
+            <div className = { 'body' } >
         <DentalRFileComponent
           details = { details }
           attachments = { attachments } />
         <br/>
       </div>
     </div>
-      <div className="accor">
-            <div className="head">Procedures</div>
-            <div className="body">
+      <div className = { 'accor' } >
+            <div className = { 'head' } >Procedures</div>
+            <div className = { 'body' } >
           <div className = { 'transaction-card-details' }>
             <center>
               <h2 className = { 'details-bold' }>
@@ -74,9 +74,9 @@ class DentalRDetailsFragment extends Component {
           <br/>
         </div>
       </div>
-        <div className="accor">
-            <div className="head">Notice</div>
-            <div className="body">
+        <div className = { 'accor' } >
+            <div className = { 'head' } >Notice</div>
+            <div className = { 'body' } >
         <DentalRAgreementComponent details = { details } />
       </div>
     </div>

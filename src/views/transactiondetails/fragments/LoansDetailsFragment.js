@@ -32,32 +32,32 @@ class LoansDetailsFragment extends Component {
         <br/>
         <div>
         <Accordion>
-            <div className="accor">
-            <div className="head">Details</div>
-            <div className="body">
+            <div className = { 'accor' } >
+            <div className = { 'head' } >Details</div>
+            <div className = { 'body' } >
         <MPLDetailsComponent
           transactionsPerson = { transactionsPerson }
           details = { details } />
         <br/>
       </div>
     </div>
-    <div className="accor">
-            <div className="head">Attachements</div>
-            <div className="body">
+    <div className = { 'accor' } >
+            <div className = { 'head' } >Attachements</div>
+            <div className = { 'body' } >
         <MPLFileComponent details = { details } attachments = { attachments } />
         <br/>
       </div>
     </div>
-    <div className="accor">
-            <div className="head">Purpose</div>
-            <div className="body">
+    <div className = { 'accor' } >
+            <div className = { 'head' } >Purpose</div>
+            <div className = { 'body' } >
         <MPLPurposeComponent details = { details } />
         <br/>
       </div>
     </div>
-    <div className="accor">
-            <div className="head">Notice</div>
-            <div className="body">
+    <div className = { 'accor' } >
+            <div className = { 'head' } >Notice</div>
+            <div className = { 'body' } >
         <MPLAgreementComponent details = { details } />
       </div>
     </div>
