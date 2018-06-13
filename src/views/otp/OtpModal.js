@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import ConnectPartial from '../../utils/ConnectPartial'
 
@@ -22,13 +21,15 @@ class OtpModal extends BaseMVPView {
       otp: '',
       disableSubmit : false,
       disableResend : false,
-      text : null
+      text : null,
     }
 
     this.onResendSuccess = this.onResendSuccess.bind(this)
+    this.onOtpSuccess = this.onOtpSuccess.bind(this)
   }
 
-  onOtpSuccess () {
+  onOtpSuccess (terms) {
+    this.props.sendTerms(terms.accepted, terms.content)
     // TODO redirect to login
   }
 
@@ -44,14 +45,14 @@ class OtpModal extends BaseMVPView {
     const {
       transactionType,
       username,
-      onClose
+      onClose,
     } = this.props
 
     const {
       otp,
       text,
       disableSubmit,
-      disableResend
+      disableResend,
     } = this.state
 
     return (
@@ -66,7 +67,8 @@ class OtpModal extends BaseMVPView {
             <br/>
             <br/>
             <CircularLoader show={true}/>
-          </center>          :
+          </center>
+          :
           <div>
             <GenericTextBox
               text= "OTP"

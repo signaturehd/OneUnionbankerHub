@@ -25,6 +25,12 @@ export default class HRBenefitsService {
     })
   }
 
+  validateTermsAndCondition (token) {
+    return this.apiClient.post('v1/agreements/tnc', {
+      headers : { token }
+    })
+  }
+
   /* dental loa */
 
   getDentalLoa (token) {
@@ -201,7 +207,7 @@ export default class HRBenefitsService {
   }
 
   getFaqDetails (token, faqParam) {
-    return this.apiClient.get(`v1/faqs/${  faqParam}`, {
+    return this.apiClient.get(`v1/faqs/${faqParam}`, {
       headers: { token }
     })
   }

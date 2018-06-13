@@ -52,7 +52,6 @@ class OpticalCard extends Component {
 
     const reader = new FileReader()
     const [file] = e.target.files
-    console.log(e.target.files)
     let isValid
       switch (this.getExtension(file.type).toLowerCase()) {
         case 'jpeg' :

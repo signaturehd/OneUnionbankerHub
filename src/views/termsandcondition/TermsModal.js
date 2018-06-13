@@ -1,0 +1,71 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+import Presenter from './presenter/TermsPresenter'
+import ConnectPartial from '../../utils/ConnectPartial'
+import BaseMVPView from '../common/base/BaseMVPView'
+
+
+import {
+  GenericTextBox,
+  GenericButton,
+  Modal,
+  CircularLoader
+} from '../../ub-components'
+
+class TermsModal extends BaseMVPView {
+  constructor (props) {
+    super(props)
+    this.state = {
+      disableSubmit : false,
+      text : null,
+    }
+  }
+
+  disagreeTerms () {
+    const { onClose } = this.props
+    onClose()
+  }
+
+  render () {
+
+    const { onClose, terms } = this.props
+    const { disableSubmit, text } = this.state
+    return (
+      <Modal
+        isDismisable = {false}
+        onClose = { onClose }
+      >
+      {
+        disableSubmit ?
+        <center>
+          <h3>{ text }</h3>
+          <br/>
+          <br/>
+          <CircularLoader show={true}/>
+        </center>
+        :
+        <div>
+          <h3>{ terms }</h3>
+          <br/>
+          <br/>
+          <GenericButton text= "Agree"
+            onClick={ () => {
+                this.setState({ disableSubmit : true, text : 'Please wait while were submitting your Response' })
+                this.presenter.agreeTerms()
+              }
+            }
+            disabled = {disableSubmit}
+           />
+          <GenericButton text= "Disagree"
+            onClick={ () => this.disagreeTerms() }
+            disabled = {disableSubmit}
+          />
+        </div>
+      }
+      </Modal>
+    )
+  }
+}
+
+export default ConnectPartial(TermsModal, Presenter)
