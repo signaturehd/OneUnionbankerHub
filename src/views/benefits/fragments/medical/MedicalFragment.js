@@ -19,7 +19,7 @@ class MedicalFragment extends Component {
 
     const benefitsOptions = [{
       styleName: 'medical-cards-1',
-      title: 'DENTAL LOA',
+      title: 'DENTAL LOA ISSUANCE',
       path: '/mybenefits/benefits/medical/loa/dental',
     }, {
       styleName: 'medical-cards-2',
@@ -27,7 +27,7 @@ class MedicalFragment extends Component {
       path: '/mybenefits/benefits/medical/reimbursement/dental',
     }, {
       styleName: 'medical-cards-3',
-      title: 'OPTICAL',
+      title: 'OPTICAL REIMBURSEMENT',
       path: '/mybenefits/benefits/medical/optical',
     }]
 

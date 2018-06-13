@@ -46,7 +46,7 @@ class BookListFragment extends Component {
     const scrollBar = element.scrollTop
     const docHeight = element.scrollHeight - element.offsetHeight
     const bookNumber = this.props.filteredBooks.length % 10
-    if (scrollBar >= docHeight) {
+    if (Math.round(scrollBar) >= docHeight) {
       /*
       => the bookNumber == 0 validation is temporary,
       the API lacks the validation for paging thus makes it show unnecessary results
