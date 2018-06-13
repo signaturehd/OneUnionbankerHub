@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Presenter from './presenter/TermsPresenter'
-import ConnectPartial from '../../utils/ConnectPartial'
+import ConnectView from '../../utils/ConnectView'
 import BaseMVPView from '../common/base/BaseMVPView'
 
 
@@ -68,4 +68,4 @@ class TermsModal extends BaseMVPView {
   }
 }
 
-export default ConnectPartial(TermsModal, Presenter)
+export default ConnectView(TermsModal, Presenter)

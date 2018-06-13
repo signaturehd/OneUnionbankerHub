@@ -26,7 +26,7 @@ export default class HRBenefitsService {
   }
 
   validateTermsAndCondition (token) {
-    return this.apiClient.post('v1/agreements/tnc', {
+    return this.apiClient.post('v1/agreements/tnc', null, {
       headers : { token }
     })
   }

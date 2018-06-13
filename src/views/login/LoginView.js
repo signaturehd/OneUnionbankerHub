@@ -98,7 +98,7 @@ class LoginView extends BaseMVPView {
             onClose = { () => this.setState({ showOtpModal : false }) }
             parent = { this }
             username = { username }
-            sendTerms = { (accepted, terms) => this.setState({ showTermsAndCondition : !accepted, showOtpModal : accepted, terms }) }
+            sendTerms = { (accepted, terms) => this.setState({ showTermsAndCondition : !accepted, showOtpModal : false, terms }) }
             transactionType = { 2 } /> // TODO, move this static '2' to proper file on domain
         }
         {

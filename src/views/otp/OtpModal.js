@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ConnectPartial from '../../utils/ConnectPartial'
+import ConnectView from '../../utils/ConnectView'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/OtpPresenter'
@@ -104,4 +104,4 @@ class OtpModal extends BaseMVPView {
 }
 // TODO setup props that is required
 
-export default ConnectPartial(OtpModal, Presenter)
+export default ConnectView(OtpModal, Presenter)
