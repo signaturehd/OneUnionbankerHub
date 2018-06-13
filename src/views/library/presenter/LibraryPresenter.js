@@ -26,24 +26,35 @@ export default class LibraryPresenter {
     this.view = view
   }
 
-  getBooks () {
+  getBooks (pageNumber, find) {
     this.view.showLoading()
-    this.getBooksInteractor.execute()
-      .do(books => this.view.showBooks(books))
-      .concatMap(books => Observable.from(books))
+    this.getBooksInteractor.execute(pageNumber, find)
+      .do(books => this.view.showBooks(books.bookList))
+      .concatMap(books => Observable.from(books.bookList))
       .pipe(filter(book => book.isEditorsPick))
       .toArray()
       .subscribe(books => {
         this.view.hideLoading()
-        this.view.showRecommendation(books)
       }, e => {
         this.view.hideLoading()
       })
   }
 
-  getBooksBorrowed () {
+  getBooksRecommendation () {
     this.view.showLoading()
-    this.getBooksBorrowedInteractor.execute()
+    this.getBooksRecommendationInteractor.execute()
+      .subscribe(recommended => {
+        this.view.hideLoading()
+        this.view.showRecommendation(recommended)
+      }, e=> {
+        this.view.hideLoading()
+      })
+  }
+
+  getBooksBorrowed (borrowedPageNumber, find) {
+    this.view.showLoading()
+    this.getBooksBorrowedInteractor.execute(borrowedPageNumber, find)
+
     .subscribe(borrowed => {
         this.view.hideLoading()
         this.view.showBorrowed(borrowed)

@@ -11,7 +11,7 @@ class TransactionMPLFormAgreementComponent extends Component {
   render () {
     const { details } = this.props
     return (
-      <Card className = { 'transaction-card-details' }>
+      <div className = { 'transaction-card-details' }>
         <h4 className = { 'details-bold' }>Form Agreements</h4>
         {
           details && details.details.FormAgreements.map ((formAgreement, key) =>
@@ -20,7 +20,7 @@ class TransactionMPLFormAgreementComponent extends Component {
           </center>
           )
         }
-      </Card>
+      </div>
     )
   }
 }

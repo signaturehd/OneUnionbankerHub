@@ -9,6 +9,9 @@ import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import './styles/optical.css'
 
+import store from '../../store'
+import { NotifyActions } from '../../actions'
+
 import { CircularLoader } from '../../ub-components'
 
 class OpticalFragment extends BaseMVPView {
@@ -19,9 +22,11 @@ class OpticalFragment extends BaseMVPView {
       showConfirmation : false,
       noticeResponse : null,
       showNoticeResponseModal : false,
-      isVisible : false
+      isVisible : false,
+      file1 : null,
+      file2 : null,
     }
-
+    this.confirmation = this.confirmation.bind(this)
     // this.noticeOfUndertaking = this.noticeOfUndertaking.bind(this)
   }
 
@@ -46,8 +51,39 @@ class OpticalFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/medical')
   }
 
+  confirmation (showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2) {
+    console.log(file1)
+    console.log(file2)
+    if (amount > 3500 || amount === 0) {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Optical Reimbursement',
+          message : 'Please double check the amount',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (!file1 || !file2) {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Optical Reimbursement',
+          message : 'Please Check your attachments',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else {
+      this.setState({
+        showConfirmation,
+        file1,
+        file2,
+        amount,
+        imagePreviewUrl,
+        imagePreviewUrl2
+      })
+    }
+  }
+
   submitForm (amount, finalFile1, finalFile2) {
-     this.presenter.addOptical(amount, finalFile1, finalFile2)
+      this.presenter.addOptical(amount, finalFile1, finalFile2)
   }
 
   render () {
@@ -123,13 +159,13 @@ class OpticalFragment extends BaseMVPView {
                   amount,
                   imagePreviewUrl,
                   imagePreviewUrl2) =>
-            this.setState({
+            this.confirmation(
                   showConfirmation,
                   file1,
                   file2,
                   amount,
                   imagePreviewUrl,
-                  imagePreviewUrl2 })  }/>
+                  imagePreviewUrl2)  }/>
           </div>          :
           <div className = { 'optical-loader' }>
             <center><CircularLoader show = {true} /></center>

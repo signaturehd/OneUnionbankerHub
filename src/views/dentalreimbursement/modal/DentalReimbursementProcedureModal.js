@@ -21,13 +21,15 @@ setProcedure (selected) {
     const valueArr = this.getDisabledIds().map(function(item){return item})
     if (valueArr.includes(selected.id)) {
       let isExisting
+      const valueInsideArr = selectedProcedure.map(function(item){return item.id})
       for (const i in selectedProcedure) {
-        if (selectedProcedure[i].id === selected.id) {
+        if (valueInsideArr.includes(selected.id)) {
           isExisting = true
         } else {
           isExisting = false
         }
       }
+
       if (!isExisting) {
         onSubmit({ ...selected })
       }

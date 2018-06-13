@@ -108,10 +108,14 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
       attachments
     } = this.state
     return (
-      <div  className = {'container'}>
-        <i className = { 'left' } onClick = {
+      <div  className = { 'container' }>
+        <div>
+        <i className = { 'back-arrow' } onClick = {
             this.navigate.bind(this) }></i>
-            <h1>{ details ? details.benefitType.name : 'Transaction' }</h1>
+          <h2 className = { 'header-margin-default' }>
+            { details ? details.benefitType.name : 'Transaction' }
+          </h2>
+        </div>
         {
           details ?
             <div className = {'transaction-detail-container'}>

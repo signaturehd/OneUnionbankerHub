@@ -25,7 +25,7 @@ class BookBorrowedCard extends Component {
 
     const  styles = {
       cardHeader : {
-        backgroundImage :`rgba(0,0,0,0.5) url(${staticImage}) no-repeat center center`,
+        backgroundImage :`rgba(0,0,0,0.5) url(${detail.imageUrl}) no-repeat center center`,
         backgroundSize : 'cover',
         backgroundRepeat : 'no-repeat'
       }

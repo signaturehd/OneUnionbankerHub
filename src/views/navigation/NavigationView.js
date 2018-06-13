@@ -109,7 +109,7 @@ class NavigationView extends BaseMVPView {
             show = { () => this.setState({ displayShow : 'none' })} />
         </header>
         <div className="navigation-panels">
-          <main className ="navigation-panel navigation-content" role="main">
+          <main className ="navigation-panel navigation-content" role="main" id="navPanId">
           { super.render() }
               <Drawer >
                 <Switch>
