@@ -36,7 +36,6 @@ class MplPurposeOfAvailmentModal extends Component {
         </center>
       </div>
         <div>
-          !poa ?
             {
               poa && poa.category.map((resp, key) =>
               <GenericButton
@@ -47,8 +46,6 @@ class MplPurposeOfAvailmentModal extends Component {
                 />
               )
             }
-            :
-            <h2> Error 500 Internal Server</h2>
         </div>
       </Modal>
       )
