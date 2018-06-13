@@ -324,17 +324,25 @@ export default class HRBenefitsService {
     accountNumber,
     releasingCenter,
     mplPurposeLoanAddParam) {
+    const formData = new FormData()
     const multiPurposeLoanObject = {
-      loanId : mplPurposeLoanAddParam.loanId,
-      purposeOfLoan : mplPurposeLoanAddParam.purposeOfLoan,
-      modeOfLoan : mplPurposeLoanAddParam.modeOfLoan,
-      loanTerm :  mplPurposeLoanAddParam.loanTerm,
-      principalLoanAmount : mplPurposeLoanAddParam.principalLoanAmount,
+      loanId : {
+        id : mplPurposeLoanAddParam.loanId,
+        purpose : mplPurposeLoanAddParam.purposeOfLoan,
+        mode : mplPurposeLoanAddParam.modeOfLoan,
+        principalLoanAmount : mplPurposeLoanAddParam.principalLoanAmount
+      },
+      promissoryNoteNumbers : [
+        
+      ],
       accountNumber : accountNumber,
       releasingCenter: releasingCenter,
       distributorTest : 'distributorTest'
     }
-    return this.apiClient.post('v1/loans/mpl/submit', multiPurposeLoanObject, {
+    formData.append('uuid', 12345)
+    formData.append('MPL-cert', '')
+    formData.append('body', JSON.stringify(multiPurposeLoanObject))
+    return this.apiClient.post('v2/loans/mpl/submit', multiPurposeLoanObject, {
       headers : { token }
     })
   }
