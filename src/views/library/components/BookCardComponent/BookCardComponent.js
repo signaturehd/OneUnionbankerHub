@@ -34,12 +34,12 @@ class BookCardComponent extends Component {
     }
 
     return (
-      <Card className = {'book-card'}>
-        <div style = {styles.cardHeader} >
+      <Card className = { 'book-card' }>
+        <div style = { styles.cardHeader } >
         </div>
         <div className = {'card-body'}>
           <span>{ detail.title }</span>
-          <h2 style = { styles.authorStyle }>-{ detail.author }</h2>
+          <h2 style = { detail.authorStyle }>-{ detail.author }</h2>
         </div>
         <div className = {'card-footer'}>
           <center>

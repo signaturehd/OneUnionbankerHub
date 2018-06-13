@@ -3,7 +3,7 @@ export default class GetBooksBorrowedInteractor {
     this.client = client
   }
 
-  execute () {
-    return this.client.getBooksBorrowed(this.client.getToken())
+  execute (borrowedPageNumber, find) {
+    return this.client.getBooksBorrowed(this.client.getToken(), borrowedPageNumber, find)
   }
 }

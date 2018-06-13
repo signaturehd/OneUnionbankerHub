@@ -1,4 +1,5 @@
 const TOKEN = 'TOKEN'
+const INITIAL_TOKEN = 'INITIAL_TOKEN'
 const ACCOUNT_TOKEN = 'ACCOUNT_TOKEN'
 const ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
 const RELEASING_CENTER = 'RELEASING_CENTER'
@@ -15,6 +16,14 @@ export default class SessionProvider {
 
   getToken () {
     return this.storage.getItem(TOKEN) || ''
+  }
+
+  setInitialToken (token = '') {
+    this.storage.setItem(INITIAL_TOKEN, token)
+  }
+
+  getInitialToken () {
+    return this.storage.getItem(INITIAL_TOKEN) || ''
   }
 
   setAccountToken (accountToken = '') {

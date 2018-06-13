@@ -35,6 +35,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  validateTermsAndCondition (token) {
+    return this.service.validateTermsAndCondition(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
@@ -43,6 +48,15 @@ export default class HRBenefitsClient {
 
   getToken () {
     return this.sessionProvider.getToken()
+  }
+
+  setInitialToken (token) {
+    this.sessionProvider.setInitialToken(token)
+    store.dispatch(EventActions.changeToken(token))
+  }
+
+  getInitialToken () {
+    return this.sessionProvider.getInitialToken()
   }
 
   setAccountToken (accountToken) {
@@ -91,13 +105,18 @@ export default class HRBenefitsClient {
   }
 
   /* books */
-  getBooks (token) {
-    return this.service.getBooks(token)
+  getBooks (token, pageNumber, find) {
+    return this.service.getBooks(token, pageNumber, find)
       .pipe(ServiceErrorOperator())
   }
 
-  getBooksBorrowed (token) {
-    return this.service.getBooksBorrowed(token)
+  getBooksBorrowed (token, borrowedPageNumber, find) {
+    return this.service.getBooksBorrowed(token, borrowedPageNumber, find)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getBooksRecommendation (token) {
+    return this.service.getBooksRecommendation(token)
       .pipe(ServiceErrorOperator())
   }
 
@@ -108,7 +127,7 @@ export default class HRBenefitsClient {
 
 
   reserveBook (token, BookReserveParam) {
-    return this.service.ReserveBook(token, BookReserveParam)
+    return this.service.reserveBook(token, BookReserveParam)
         .pipe(ServiceErrorOperator())
   }
 
@@ -143,7 +162,7 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
       .map(resp => {
         for (const i in resp) {
-          if (resp[i].id === id) {
+          if (resp[i].id == id) {
             return resp[i]
           }
         }
@@ -285,4 +304,47 @@ export default class HRBenefitsClient {
     return this.service.updateRemarks(token, remarksParam)
       .pipe(ServiceErrorOperator())
   }
+
+  /* MPL Client */
+
+  getMPLPurposeAvailment (token) {
+    return this.service.getMPLPurposeAvailment(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMPLTermAndRates (token) {
+    return this.service.getMPLTermAndRates(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMPLTypes (token) {
+    return this.service.getMPLTypes(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMPLValidate (token, mplValidatedLoanParam) {
+    return this.service.getMPLValidate(token, mplValidatedLoanParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMPLFormAttachments (token) {
+    return this.service.getMPLFormAttachments (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addLoan (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    multiPurposeLoanAddParam) {
+    return this.service.addLoan(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      multiPurposeLoanAddParam)
+      .pipe(ServiceErrorOperator())
+  }
+
 }

@@ -12,6 +12,9 @@ import ResponseModal from '../notice/NoticeResponseModal'
 import { CircularLoader, Modal } from '../../ub-components/'
 import './styles/dentalloa.css'
 
+import { NotifyActions } from '../../actions'
+import store from '../../store'
+
 class DentalLoaView extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -36,6 +39,7 @@ class DentalLoaView extends BaseMVPView {
 
   componentWillMount () {
     this.presenter.getDentalLoa()
+    this.props.setSelectedNavigation(1)
   }
   /*
     Get Data from DentalLOA
@@ -60,7 +64,22 @@ class DentalLoaView extends BaseMVPView {
       selectedProcedures.map(resp =>
         procedures.push({ id : resp.id.toString() })
       )
-    this.presenter.addDentalLoa(recipient.id, branch.id, date, procedures)
+    if(
+      recipient === null ||
+      branch === null ||
+      date === null ||
+      selectedProcedures === null
+    ) {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Error',
+          message : 'Please complete all fields',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else {
+      this.presenter.addDentalLoa(recipient.id, branch.id, date, procedures)
+    }
   }
 
   /* Display Modal Notice of Undertaking*/
@@ -158,6 +177,7 @@ class DentalLoaView extends BaseMVPView {
         {
           showProcedureModal &&
           <DentalLoaProcedureModal
+            selectedProcedure = { selectedProcedures }
             showProcedureModal = { showProcedureModal }
             onSubmit = { procedure => {
               const updatedProcedures = [...selectedProcedures]

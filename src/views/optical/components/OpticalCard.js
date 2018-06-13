@@ -17,42 +17,29 @@ class OpticalCard extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      file: '',
-      file2: '',
-      imagePreviewUrl: '',
-      imagePreviewUrl2: '',
-      warning: '',
+      file: null,
+      file2: null,
+      imagePreviewUrl: null,
+      imagePreviewUrl2: null,
+      warning: null,
       amount : 0
     }
 
     this.handleImageChange = this.handleImageChange.bind(this)
     this.handleImageChange2 = this.handleImageChange2.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   getExtension (filename) {
-  const parts = filename.split('/')
-  return parts[parts.length - 1]
+    const parts = filename.split('/')
+    return parts[parts.length - 1]
   }
 
-  handleSubmit (e) {
-    e.preventDefault()
-    if (
-      this.state.file === '' ||
-      this.state.file2 === '') {
-      this.setState({ warning : 'Please complete the attached forms' })
-    } else {
-      this.setState({ showConfirmation : true })
-      this.setState({ warning : '' })
-    }
-  }
 
   handleImageChange (e) {
     e.preventDefault()
 
     const reader = new FileReader()
     const [file] = e.target.files
-    console.log(e.target.files)
     let isValid
       switch (this.getExtension(file.type).toLowerCase()) {
         case 'jpeg' :
@@ -170,13 +157,14 @@ class OpticalCard extends Component {
       $imagePreview2 = (<div style = {styles.image2}></div>)
     return (
         <div className = { 'optical-card' } >
-          <form onSubmit={ this.handleSubmit }>
+          <div>
             <div className = {'optical-header'} >
               <h5 >Form Attachments</h5>
               <div className = { 'optical-amount-field' }>
                 <GenericTextBox
                   value = { amount }
                   placeholder = { 'Enter Amount' }
+                  maxLength = { 4 }
                   onChange = { e => this.setState({ amount: parseInt(e.target.value, 10) || 0 }) }
                 />
               </div>
@@ -185,12 +173,12 @@ class OpticalCard extends Component {
                 <FileUploader
                   onChange = { this.handleImageChange }
                   placeholder = 'Optical Certificate'
-                  value = { this.state.file.name }
+                  value = { file && this.state.file.name }
                 />
                 <FileUploader
                   onChange = { this.handleImageChange2 }
                   placeholder = 'Medical Certificate'
-                  value = { this.state.file2.name }
+                  value = { file2 && this.state.file2.name }
                 />
               </div>
               <div className = { 'optical-button-submit' }>
@@ -211,7 +199,7 @@ class OpticalCard extends Component {
                 </div>
               </div>
             </div>
-          </form>
+          </div>
         </div>
       )
     }

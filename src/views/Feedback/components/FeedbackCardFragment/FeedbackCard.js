@@ -32,7 +32,7 @@ class FeedbackCard extends Component {
       submit,
       feedbackCategory,
       submitForm,
-      showFeedback
+      showFeedback,
     } = this.props
 
     const {
@@ -80,8 +80,10 @@ class FeedbackCard extends Component {
               <div className = {'feedback-footer-left'}>
                 <GenericButton
                   onClick = { () => {
- submitForm(feedbackTextareaValue, false)
-} }
+                     submitForm(feedbackTextareaValue, false),
+                     this.setState({feedbackTextareaValue : null})
+                    }
+                  }
                   type = { 'button' }
                   text = { submit }
                   className = {'feedback-procedure' }
