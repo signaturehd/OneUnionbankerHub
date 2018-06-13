@@ -27,7 +27,10 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.props.setSelectedNavigation(1)
     this.presenter.getMplTypes()
     this.presenter.getMplValidate(this.state.loanType)
-    this.presenter.getMplPurposeOfAvailment(this.state.loanType, this.state.selectedPoa, 1)
+    this.presenter.getMplPurposeOfAvailment(
+      this.state.loanType,
+      1,
+      1)
   }
 
   /* Implementation*/

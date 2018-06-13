@@ -6,7 +6,6 @@ import GetValidateInteractor from '../../../domain/interactor/mpl/GetValidateInt
 
 import mplValidateParam from '../../../domain/param/MplValidateParam'
 import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
-import poaGetParam from '../../../domain/param/MultiPurposeLoanAvailmentParam'
 import mplGetFormParam from '../../../domain/param/MplGetFormParam'
 
 import store from '../../../actions'
@@ -58,13 +57,13 @@ export default class MultiPurposeLoanPresenter {
 
   getMplPurposeOfAvailment (
     loanTypesId,
-    purposeOfAvailment,
-    subCategory) {
-    this.getPurposeOfAvailmentInteractor.execute(poaGetParam(
+    purposeOfLoan,
+    subcategoryLevel) {
+    this.getPurposeOfAvailmentInteractor.execute({
       loanTypesId,
-      purposeOfAvailment,
-      subCategory
-    ))
+      purposeOfLoan,
+      subcategoryLevel }
+    )
       .subscribe(
         data => {
           this.view.showPurposeOfAvailment(data)

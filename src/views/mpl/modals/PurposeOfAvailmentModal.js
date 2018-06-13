@@ -35,19 +35,22 @@ class MplPurposeOfAvailmentModal extends Component {
           </h2>
         </center>
       </div>
-      <div>
-        {
-          poa && poa.category.map((resp, key) =>
-          <GenericButton
-            className = { 'mpl-poa-modal-button' }
-            key = { key }
-            text = { resp && resp.name }
-            onClick = { () => this.onGetClicked(resp, subcategory, false, true) }
-          />
-          )
-        }
-      </div>
-    </Modal>
+        <div>
+          !poa ?
+            {
+              poa && poa.category.map((resp, key) =>
+              <GenericButton
+                className = { 'mpl-poa-modal-button' }
+                key = { key }
+                text = { resp && resp.name }
+                onClick = { () => this.onGetClicked(resp, subcategory, false, true) }
+                />
+              )
+            }
+            :
+            <h2> Error 500 Internal Server</h2>
+        </div>
+      </Modal>
       )
     }
   }

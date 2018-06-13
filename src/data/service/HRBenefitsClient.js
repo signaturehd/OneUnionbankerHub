@@ -288,8 +288,15 @@ export default class HRBenefitsClient {
 
   /* MPL Client */
 
-  getMPLPurposeAvailment (token, poaGetParam) {
-    return this.service.getMPLPurposeAvailment(token, poaGetParam)
+  getMplPurposeOfAvailment (token, {
+    loanTypesId,
+    purposeOfLoan,
+    subcategoryLevel }) {
+    return this.service.getMplPurposeOfAvailment(token, {
+      loanTypesId,
+      purposeOfLoan,
+      subcategoryLevel
+    })
       .pipe(ServiceErrorOperator())
   }
 

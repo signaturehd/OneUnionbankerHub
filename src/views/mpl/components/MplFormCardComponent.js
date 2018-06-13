@@ -55,9 +55,6 @@ class MplFormCardComponent extends Component {
          })
        )
      } else {
-       // console.log(this.state.subCategoryId)
-       // console.log(this.state.poaText)
-        // this.props.presenter.addLoan(1, 'Personal',1, 1, 50000)
      }
    }
    getExtension (filename) {
