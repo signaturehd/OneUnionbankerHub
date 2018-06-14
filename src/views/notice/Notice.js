@@ -59,14 +59,14 @@ class Notice extends BaseMVPView {
           </center>          :
           <div>
           <center>
-            <GenericButton text = {'Agree'} className = 'notice-button-modal'
+            <GenericButton text = {'Agree'} className = { 'notice-button-modal' }
               onClick = { () => {
                   this.isAgree(noticeResponse.transactionId, 1, benefitId),
                   this.setState({ isDimissable : true, disableSubmit: true })
                 }
               }
             />
-            <GenericButton text = {'Disagree'} className = 'notice-button-modal'
+            <GenericButton text = {'Disagree'} className = { 'notice-button-modal' }
               onClick = { () => {
                   this.isAgree(noticeResponse.transactionId, 0, benefitId),
                   this.setState({ isDimissable : true, disableSubmit: true })
