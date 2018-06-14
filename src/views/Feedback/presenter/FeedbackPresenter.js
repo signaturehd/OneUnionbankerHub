@@ -4,7 +4,6 @@ import AddFeedbackInteractor from
 '../../../domain/interactor/feedback/AddFeedbackInteractor'
 import FeedbackParam from '../../../domain/param/FeedbackParam'
 import { NotifyActions } from '../../../actions'
-
 import store from '../../../store'
 
 export default class FeedbackPresenter {
@@ -47,7 +46,7 @@ export default class FeedbackPresenter {
           store.dispatch(NotifyActions.addNotify({
               title : 'Feedback',
               message : error.message,
-              type : 'error',
+              type : 'warning',
               duration : 2000
             })
           )
