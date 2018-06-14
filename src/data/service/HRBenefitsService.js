@@ -307,7 +307,7 @@ export default class HRBenefitsService {
   /* Validate */
 
   getMPLValidate (token, mplValidateParam) {
-    return this.apiClient.get(`v1/loans/mpl/validate?loanId=${mplValidateParam.loanTypeId}`, {
+    return this.apiClient.get(`v1/loans/mpl/validate?loanId=${ mplValidateParam.loanTypeId }`, {
       headers: { token }
     })
   }
@@ -324,6 +324,7 @@ export default class HRBenefitsService {
     accountNumber,
     releasingCenter,
     mplPurposeLoanAddParam) {
+      console.log(mplPurposeLoanAddParam.attachments)
     const formData = new FormData()
     const multiPurposeLoanObject = {
       loanId : {
@@ -333,16 +334,16 @@ export default class HRBenefitsService {
         principalLoanAmount : mplPurposeLoanAddParam.principalLoanAmount
       },
       promissoryNoteNumbers : [
-        
+
       ],
       accountNumber : accountNumber,
       releasingCenter: releasingCenter,
       distributorTest : 'distributorTest'
     }
     formData.append('uuid', 12345)
-    formData.append('MPL-cert', '')
+    formData.append('MPL-cert', )
     formData.append('body', JSON.stringify(multiPurposeLoanObject))
-    return this.apiClient.post('v2/loans/mpl/submit', multiPurposeLoanObject, {
+    return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
   }
