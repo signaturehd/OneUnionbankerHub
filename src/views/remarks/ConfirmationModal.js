@@ -52,16 +52,16 @@ class ConfirmationModal extends BaseMVPView {
           showCircular ?
           <center>
             <h3>Submitting Your Remarks</h3>
-            <CircularLoader show = {true}/>
+            <CircularLoader show = { true }/>
           </center>          :
           <div>
             <center>
             <h3>Are you sure you want to approve this request?</h3>
             <br/>
-            <GenericButton className = 'remarks-button-modal'
+            <GenericButton className = { 'remarks-button-modal' }
               onClick = { () => this.onApprove() }
               text = { 'Yes' } />
-            <GenericButton className = 'remarks-button-modal'
+            <GenericButton className = { 'remarks-button-modal' }
               onClick = { onClose }
               text = { 'Cancel' } />
             </center>
