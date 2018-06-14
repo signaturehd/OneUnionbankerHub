@@ -86,14 +86,17 @@ export default class MultiPurposeLoanPresenter {
     purposeOfLoan,
     modeOfLoan,
     loanTerm,
-    principalLoanAmount) {
+    principalLoanAmount,
+    attachments) {
     this.view.showCircularLoader()
     this.addLoanInteractor.execute(mplPurposeLoanAddParam(
       loanId,
       purposeOfLoan,
       modeOfLoan,
       loanTerm,
-      principalLoanAmount)
+      principalLoanAmount,
+      attachments
+      )
     )
       .subscribe(
         data => {
