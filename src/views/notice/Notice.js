@@ -12,6 +12,8 @@ import {
   CircularLoader
 } from '../../ub-components/'
 
+import './styles/notice-styles.css'
+
 class Notice extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -57,14 +59,14 @@ class Notice extends BaseMVPView {
           </center>          :
           <div>
           <center>
-            <GenericButton text = {'Agree'}
+            <GenericButton text = {'Agree'} className = { 'notice-button-modal' }
               onClick = { () => {
                   this.isAgree(noticeResponse.transactionId, 1, benefitId),
                   this.setState({ isDimissable : true, disableSubmit: true })
                 }
               }
             />
-            <GenericButton text = {'Disagree'}
+            <GenericButton text = {'Disagree'} className = { 'notice-button-modal' }
               onClick = { () => {
                   this.isAgree(noticeResponse.transactionId, 0, benefitId),
                   this.setState({ isDimissable : true, disableSubmit: true })
