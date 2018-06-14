@@ -16,12 +16,12 @@ class SalaryLoanFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-      purposeOfAvailment: [],
+      purposeOfAvailment: [], /*Retrieved selected purpose of loan*/
       selectedPoa: '',
       formAttachments: [],
-      loanType: 2,
-      validateLoanType : [],
-      offset : [],
+      loanType: 2, /*Default Loan Id*/
+      validateLoanType : [], /*ValidateLoanType*/
+      offset : [], /*Offsets*/
       enabledLoader : false,
       noticeResponse : null, /* notice response*/
       showNoticeResponseModal : false,
