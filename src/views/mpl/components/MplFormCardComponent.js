@@ -45,11 +45,11 @@ class MplFormCardComponent extends Component {
       }
    }
 
-   sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId ) {
+   sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId, file, file2 ) {
      let amount = parseFloat(desiredAmount)
      let maximumAmount = parseFloat(this.props.validateLoanType.maximumLoanableAmount)
 
-     if(amount >= maximumAmount) {
+     if (amount >= maximumAmount) {
        store.dispatch(NotifyActions.addNotify({
            title : 'Warning' ,
            message : `You are only allowed to loan a maximum amount of ${ maximumAmount } `,
@@ -58,7 +58,7 @@ class MplFormCardComponent extends Component {
          })
        )
      } else {
-       this.props.presenter.addLoan(loanTypeId, poaText, modeOfLoanId, termId, desiredAmount)
+       this.props.presenter.addLoan(loanTypeId, poaText, modeOfLoanId, termId, desiredAmount, { file, file2 })
      }
    }
    getExtension (filename) {
@@ -142,7 +142,7 @@ class MplFormCardComponent extends Component {
          )
        }
      }
-  render() {
+  render () {
     const {
       showPurposeOfAvailment,
       showOffset,
@@ -169,31 +169,33 @@ class MplFormCardComponent extends Component {
       preferredFormData,
       offset,
       onGetPurposeOfLoan } = this.props
-      console.log(validateLoanType)
-      const styles = {
-        image1 : {
-          backgroundImage: `url('${imagePreviewUrl}')`,
-          width : '225px',
-          height : '240px',
-          backgroundSize : 'cover',
-          backgroundRepeat : 'no-repeat',
-        },
-        image2 : {
-          backgroundImage: `url('${imagePreviewUrl2}')`,
-          width : '225px',
-          height : '240px',
-          backgroundSize : 'cover',
-          backgroundRepeat : 'no-repeat',
-        }
+
+    const styles = {
+      image1 : {
+        backgroundImage: `url('${imagePreviewUrl}')`,
+        width: '-webkit-fill-available',
+        height: '-webkit-fill-available',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'noRepeat',
+      },
+      image2 : {
+        backgroundImage: `url('${imagePreviewUrl2}')`,
+        width: '-webkit-fill-available',
+        height: '-webkit-fill-available',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'noRepeat',
       }
+    }
 
-      let $imagePreview = null
-      let $imagePreview2 = null
-        $imagePreview = (<div style = {styles.image1}></div>)
-        $imagePreview2 = (<div style = {styles.image2}></div>)
+    let $imagePreview = null
+    let $imagePreview2 = null
+      $imagePreview = (<div style = { styles.image1 }></div>)
+      $imagePreview2 = (<div style = { styles.image2 }></div>)
 
-    return(
-      <div className = {'mplview-container'}>
+    return (
+      <div className = { 'mplview-container' }>
         {
           showOffset &&
           <ModeOfLoanModal
@@ -249,9 +251,9 @@ class MplFormCardComponent extends Component {
             <h4>
               Benefits Form
             </h4>
-            <div className = {'mpl-form-card-body '}>
+            <div className = { 'mpl-form-card-body' }>
               <GenericTextBox
-                type = 'button'
+                type = { 'button' }
                 value = { poaText }
                 onClick = { () =>
                   this.setState({ showPurposeOfAvailment : true }) }
@@ -274,7 +276,7 @@ class MplFormCardComponent extends Component {
                 maxLength = { validateLoanType && ( '' + validateLoanType.maximumLoanableAmount).length }
                 type = { 'text' }/>
               <GenericTextBox
-                value = { `Term: ${termOfLoan} Rate: ${rateOfLoan}` }
+                value = { `${ termOfLoan } (${ rateOfLoan } %)` }
                 onChange = { (termOfLoan, rateOfLoan) =>
                   this.setState({ termOfLoan, rateOfLoan }) }
                 onClick = { () =>
@@ -284,7 +286,7 @@ class MplFormCardComponent extends Component {
               <GenericButton
                 type = { 'button' }
                 text = { 'continue' }
-                onClick = { () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId) }
+                onClick = { () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, file, file2) }
                 className = { 'mplview-submit' } />
             </div>
           </Card>
@@ -294,28 +296,28 @@ class MplFormCardComponent extends Component {
             <h4>
               Form Attachments
             </h4>
-            <div className = {'optical-body'}>
+            <div className = { 'mpl-body' }>
              <FileUploader
                 onChange = { this.handleImageChange }
-                placeholder = 'Bill Materials'
-                value = { this.state.file.name }
+                placeholder = ''
+                value = { file.name }
               />
               <FileUploader
                 onChange = { this.handleImageChange2 }
-                placeholder = 'Medical Certificate'
-                value = { this.state.file2.name }
+                placeholder = { '' }
+                value = { file2.name }
               />
             </div>
             <div className = { 'mpl-form-card-body' }>
-              <div className = {'optical-footer-left'}>
-                <div className = { 'optical-grid' }>
-                  <div className = { 'optical-image-view' }>
-                    {$imagePreview}
-                    <div className = { 'optical-image-layer' }></div>
+              <div className = {'mpl-file-left'}>
+                <div className = { 'mpl-file-grid' }>
+                  <div className = { 'mpl-image-view' }>
+                    { $imagePreview }
+                    <div className = { 'mpl-image-layer' }></div>
                   </div>
-                  <div className = { 'optical-image-view' }>
-                    {$imagePreview2}
-                    <div className = {  'optical-image-layer' }></div>
+                  <div className = { 'mpl-image-view' }>
+                    { $imagePreview2 }
+                    <div className = { 'mpl-image-layer' }></div>
                   </div>
                 </div>
               </div>
