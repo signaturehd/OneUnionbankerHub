@@ -331,7 +331,7 @@ class MplFormCardComponent extends Component {
 }
 
 MplFormCardComponent.propTypes = {
-  purposeOfAvailment : PropTypes.array,
+  purposeOfAvailment : PropTypes.object,
   validateLoanType : PropTypes.array,
   loanType : PropTypes.number,
   preferredFormData : PropTypes.func,
