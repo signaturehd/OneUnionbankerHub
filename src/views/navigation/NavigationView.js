@@ -109,7 +109,7 @@ class NavigationView extends BaseMVPView {
           display : displayShow
       }
     }
-    console.log(wizard)
+    
     let locationPath = history.location.pathname
     return (
       <div className = { 'navigation-body-div' }>
