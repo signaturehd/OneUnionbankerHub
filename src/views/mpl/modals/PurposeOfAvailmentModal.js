@@ -27,14 +27,9 @@ class MplPurposeOfAvailmentModal extends Component {
     this.setState({ enabledLoader : false })
   }
 
-  onGetClicked (resp, subcategory, closePoaModal, displayAttachments, loanType) {
+  onGetClicked (resp, subcategory, closePoaModal, openFileUpload, loanType) {
     const loanId = resp.id ? resp.id : null
-    this.props.onSubmit(
-      resp,
-      subcategory,
-      closePoaModal,
-      displayAttachments,
-      loanType)
+    this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
 
     this.props.presenter.getMplFormAttachments(
       resp.name,
@@ -45,55 +40,60 @@ class MplPurposeOfAvailmentModal extends Component {
       loanId,
       subcategory ? subcategory : null)
 
-    if(subcategory === 1) {
-      this.setState({ attachmentsDisplay : true })
-      this.props.onClose()
-    } else {
-      this.props.presenter.getMplPurposeOfAvailment(loanType && loanType, loanId, subcategory ? subcategory : null)
-      this.setState({ attachmentsDisplay : false })
-    }
-
-  }
+    if ( loanId ) {
+       this.showPurposeLoader()
+         this.props.presenter.getMplPurposeOfAvailment(loanType && loanType, resp.id, subcategory ? subcategory : null)
+         this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
+       if(subcategory === 2 || subcategory === 3) {
+         this.props.presenter.getMplPurposeOfAvailment(loanType && loanType, resp.id, subcategory ? subcategory : null)
+         this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
+       } else {
+         this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
+         this.props.onClose()
+      }
+     } else {
+       this.props.onClose()
+     }
+   }
 
   render () {
-  const { onClose, poa, loanType } = this.props
-  const subcategory = poa && poa.subCategoryLvl
-  const { checkedSubCategory, enabledLoader, attachmentsDisplay } = this.state
-  console.log(attachmentsDisplay)
-  return (
-    <Modal
-      onClose = { onClose }
-      isDismisable = { true }>
-        <center>
-          <h2>
-            Purpose of Availment
-          </h2>
-        </center>
-        <div>
-          {
-            enabledLoader ?
-             <center>
-               <CircularLoader show = { this.state.enabledLoader }/>
-             </center> :
-            poa && poa.category.map((resp, key) =>
-            <GenericButton
-              className = { 'mpl-poa-modal-button' }
-              key = { key }
-              text = { resp && resp.name }
-              onClick = { () => this.onGetClicked(
-                resp,
-                subcategory,
-                subcategory === 1 ? false : true,
-                attachmentsDisplay,
-                loanType) }
-              />
-            )
-          }
-        </div>
-      </Modal>
-      )
+    const { onClose, poa, loanType } = this.props
+    const subcategory = poa && poa.subCategoryLvl
+    const { checkedSubCategory, enabledLoader, attachmentsDisplay } = this.state
+    return (
+      <Modal
+        onClose = { onClose }
+        isDismisable = { true }>
+          <center>
+            <h2>
+              Purpose of Availment
+            </h2>
+          </center>
+          <div>
+            {
+              enabledLoader ?
+               <center>
+                 <CircularLoader show = { this.state.enabledLoader }/>
+               </center> :
+              poa && poa.category.map((resp, key) =>
+              <GenericButton
+                className = { 'mpl-poa-modal-button' }
+                key = { key }
+                text = { resp && resp.name }
+                onClick = { () => this.onGetClicked(
+                  resp,
+                  subcategory,
+                  subcategory === 1 ? false : true,
+                  true,
+                  loanType) }
+                />
+              )
+            }
+          </div>
+        </Modal>
+        )
+      }
     }
-  }
   MplPurposeOfAvailmentModal.propTypes = {
     onClose : PropTypes.func,
     poa : PropTypes.object,

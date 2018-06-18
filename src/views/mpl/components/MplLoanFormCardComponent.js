@@ -27,12 +27,11 @@ class MplFormLoanCardComponent extends Component {
       termId: '',
       subCategoryId: '',
       poaId: '',
-      file: '',
+      file1: '',
       file2: '',
       imagePreviewUrl: '',
       imagePreviewUrl2: '',
       showFileUpload: false,
-      getRequiredDocumentsUploader: false,
     }
      this.onChange = this.onChange.bind(this)
      this.handleImageChange = this.handleImageChange.bind(this)
@@ -46,7 +45,7 @@ class MplFormLoanCardComponent extends Component {
       }
    }
 
-   sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId, file, file2 ) {
+   sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId, file1, file2 ) {
      let amount = parseFloat(desiredAmount)
      let maximumAmount = parseFloat(this.props.validateLoanType.maximumLoanableAmount)
 
@@ -59,7 +58,7 @@ class MplFormLoanCardComponent extends Component {
          })
        )
      } else {
-       this.props.presenter.addLoan(loanTypeId, poaText, modeOfLoanId, termId, desiredAmount, { file, file2 })
+       this.props.presenter.addLoan(loanTypeId, poaText, modeOfLoanId, termId, desiredAmount, { file1, file2 })
      }
    }
    getExtension (filename) {
@@ -70,9 +69,9 @@ class MplFormLoanCardComponent extends Component {
      e.preventDefault()
 
      const reader = new FileReader()
-     const [file] = e.target.files
+     const [file1] = e.target.files
      let isValid
-       switch (this.getExtension(file.type).toLowerCase()) {
+       switch (this.getExtension(file1.type).toLowerCase()) {
          case 'jpeg' :
            isValid = true
            break
@@ -90,11 +89,11 @@ class MplFormLoanCardComponent extends Component {
      if (isValid) {
         reader.onloadend = () => {
           this.setState({
-            file,
+            file1,
             imagePreviewUrl: reader.result
           })
         }
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(file1)
       } else {
         store.dispatch(NotifyActions.addNotify({
             title : 'File Uploading',
@@ -158,11 +157,10 @@ class MplFormLoanCardComponent extends Component {
       termId,
       subCategoryId,
       file2,
-      file,
+      file1,
       imagePreviewUrl,
       imagePreviewUrl2,
       showFileUpload,
-      getRequiredDocumentsUploader,
       response } = this.state
     const {
       purposeOfAvailment,
@@ -170,7 +168,8 @@ class MplFormLoanCardComponent extends Component {
       validateLoanType,
       preferredFormData,
       offset,
-      onGetPurposeOfLoan } = this.props
+      onGetPurposeOfLoan,
+      formAttachments } = this.props
 
     const styles = {
       image1 : {
@@ -191,9 +190,9 @@ class MplFormLoanCardComponent extends Component {
       }
     }
 
-    let $imagePreview = null
+    let $imagePreview1 = null
     let $imagePreview2 = null
-      $imagePreview = (<div style = { styles.image1 }></div>)
+      $imagePreview1 = (<div style = { styles.image1 }></div>)
       $imagePreview2 = (<div style = { styles.image2 }></div>)
 
     return (
@@ -288,7 +287,7 @@ class MplFormLoanCardComponent extends Component {
               <GenericButton
                 type = { 'button' }
                 text = { 'continue' }
-                onClick = { () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, file, file2) }
+                onClick = { () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, file1, file2) }
                 className = { 'mplview-submit' } />
             </div>
           </Card>
@@ -300,27 +299,13 @@ class MplFormLoanCardComponent extends Component {
             </h4>
             <div className = { 'mpl-body' }>
             {
-              getRequiredDocumentsUploader &&
-              <FileUploader
-                 onChange = { this.handleImageChange }
-                 placeholder = ''
-                 value = { file.name }
-              />
+              formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
+                <FileUploader
+                   onChange = { this.handleImageChange }
+                   placeholder = {  attachmentsLabel ? attachmentsLabel : 0 }
+                />
+              )
             }
-            </div>
-            <div className = { 'mpl-form-card-body' }>
-              <div className = {'mpl-file-left'}>
-                <div className = { 'mpl-file-grid' }>
-                  <div className = { 'mpl-image-view' }>
-                    { $imagePreview }
-                    <div className = { 'mpl-image-layer' }></div>
-                  </div>
-                  <div className = { 'mpl-image-view' }>
-                    { $imagePreview2 }
-                    <div className = { 'mpl-image-layer' }></div>
-                  </div>
-                </div>
-              </div>
             </div>
           </Card>
           }
@@ -337,6 +322,7 @@ MplFormLoanCardComponent.propTypes = {
   preferredFormData : PropTypes.func,
   offset : PropTypes.array,
   setSelectedNavigation: PropTypes.func,
+  formAttachments: PropTypes.array,
 }
 
 export default MplFormLoanCardComponent
