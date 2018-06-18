@@ -11,7 +11,7 @@ import TermOfLoanModal from '../../mpl/modals/TermOfLoanModal'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
-class MplFormCardComponent extends Component {
+class MplFormLoanCardComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -330,7 +330,7 @@ class MplFormCardComponent extends Component {
   }
 }
 
-MplFormCardComponent.propTypes = {
+MplFormLoanCardComponent.propTypes = {
   purposeOfAvailment : PropTypes.object,
   validateLoanType : PropTypes.array,
   loanType : PropTypes.number,
@@ -339,4 +339,4 @@ MplFormCardComponent.propTypes = {
   setSelectedNavigation: PropTypes.func,
 }
 
-export default MplFormCardComponent
+export default MplFormLoanCardComponent
