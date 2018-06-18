@@ -4,6 +4,9 @@ import ResendOtpInteractor from '../../../domain/interactor/user/ResendOtpIntera
 import OtpParam from '../../../domain/param/OtpParam'
 import ResendOtpParam from '../../../domain/param/ResendOtpParam'
 
+import { NotifyActions } from '../../../actions'
+import store from '../../../store'
+
 export default class OtpPresenter {
   constructor (container) {
     this.verifyOtpInteractor = new VerifyOtpInteractor(container.get('HRBenefitsClient'))
@@ -35,6 +38,13 @@ export default class OtpPresenter {
     this.resendOtpInteractor.execute(ResendOtpParam(username, transactionType))
       .subscribe(
         data => {
+          store.dispatch(NotifyActions.addNotify({
+              title : 'Resend OTP',
+              message : data.message + ' Please wait.',
+              type : 'success',
+              duration : 2000
+            })
+          )
           this.view.onResendSuccess()
           this.view.hideLoading()
         },
