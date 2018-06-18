@@ -50,7 +50,6 @@ export default class NavigationPresenter {
 
   getWizard () {
     this.view.showWizard(this.getWizardInteractor.execute())
-    console.log(this.getWizardInteractor.execute())
   }
 
   setWizard (wizard) {
