@@ -22,10 +22,9 @@ class BookBorrowedCard extends Component {
   render () {
     const { detail, onClick, rateBook } = this.props
     const { rating } = this.state
-
     const  styles = {
       cardHeader : {
-        backgroundImage :`rgba(0,0,0,0.5) url(${detail.imageUrl}) no-repeat center center`,
+        background :`rgba(0,0,0,0.5) url('${detail.imageUrl}')`,
         backgroundSize : 'cover',
         backgroundRepeat : 'no-repeat'
       }
@@ -37,8 +36,12 @@ class BookBorrowedCard extends Component {
         </div>
         <div className = {'card-body'}>
           <span>{ detail.title }</span>
+          <br/>
+          <small>Available Copies : { detail.availableCopies }</small>
         </div>
         <div className = {'card-footer'}>
+          <br/>
+          <br/>
           <center>
             <Rating
               emptySymbol = {<MdStarOutline style={{ fontSize: 30, color : '#c65e11' }} />}
