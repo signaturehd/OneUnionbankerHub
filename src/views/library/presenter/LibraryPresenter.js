@@ -1,5 +1,4 @@
 import GetBooksInteractor from '../../../domain/interactor/library/GetBooksInteractor'
-import GetBooksRecommendationInteractor from '../../../domain/interactor/library/GetBooksRecommendationInteractor'
 import AddBookRatingInteractor from '../../../domain/interactor/library/AddBookRatingInteractor'
 import GetBooksBorrowedInteractor from '../../../domain/interactor/library/GetBooksBorrowedInteractor'
 import ReserveBookInteractor from '../../../domain/interactor/library/ReserveBookInteractor'
@@ -14,7 +13,6 @@ import store from '../../../store'
 
 export default class LibraryPresenter {
   constructor (container) {
-    this.getBooksRecommendationInteractor = new GetBooksRecommendationInteractor(container.get('HRBenefitsClient'))
     this.getBooksInteractor = new GetBooksInteractor(container.get('HRBenefitsClient'))
     this.addBookInteractor = new AddBookRatingInteractor(container.get('HRBenefitsClient'))
     this.getBooksBorrowedInteractor = new GetBooksBorrowedInteractor(container.get('HRBenefitsClient'))
@@ -40,16 +38,6 @@ export default class LibraryPresenter {
       })
   }
 
-  getBooksRecommendation () {
-    this.view.showLoading()
-    this.getBooksRecommendationInteractor.execute()
-      .subscribe(recommended => {
-        this.view.hideLoading()
-        this.view.showRecommendation(recommended)
-      }, e=> {
-        this.view.hideLoading()
-      })
-  }
 
   getBooksBorrowed (borrowedPageNumber, find) {
     this.view.showLoading()

@@ -39,7 +39,6 @@ class LibraryFragment extends BaseMVPView {
     const { pageNumber, borrowedPageNumber } = this.state
       this.getBooks(pageNumber)
       this.presenter.getBooksBorrowed(borrowedPageNumber)
-      this.presenter.getBooksRecommendation()
   }
 
   componentWillUnmount () {
