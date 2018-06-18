@@ -50,7 +50,7 @@ class SideBar extends Component {
       },
       {
         id: 2 ,
-        title: 'FAQS',
+        title: 'FAQs',
         action: () => history.push('/faqs'),
         className: 'faqs-icon'
       },

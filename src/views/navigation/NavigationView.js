@@ -36,6 +36,8 @@ import SalaryLoanFragment from '../salaryloan/SalaryLoanFragment'
 import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
 import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
 
+import Carousel from '../carousel/Carousel'
+
 class NavigationView extends BaseMVPView {
   constructor (props) {
     super (props)
@@ -76,14 +78,21 @@ class NavigationView extends BaseMVPView {
     store.dispatch(NotifyActions.resetNotify())
     this.presenter.getLibraries()
     this.presenter.getProfile()
+    this.presenter.getWizard()
   }
 
   setSelectedNavigation (id) {
     this.setState({ selected: id })
   }
+
   callLogout () {
     this.presenter.logout()
   }
+
+  showWizard (wizard) {
+    this.setState({ wizard })
+  }
+
   render () {
     const {
       displayShow,
@@ -91,13 +100,16 @@ class NavigationView extends BaseMVPView {
       displayNavIconState,
       selected,
       onClick,
-      profile } = this.state
+      profile,
+      wizard
+    } = this.state
       const { history } = this.props
     const style = {
       show: {
           display : displayShow
       }
     }
+    
     let locationPath = history.location.pathname
     return (
       <div className = { 'navigation-body-div' }>
@@ -110,7 +122,14 @@ class NavigationView extends BaseMVPView {
         </header>
         <div className="navigation-panels">
           <main className ="navigation-panel navigation-content" role="main" id="navPanId">
+          {
+            !wizard &&
+            <Carousel
+              onClose = { () => this.presenter.setWizard('false') }
+            />
+          }
           { super.render() }
+
               <Drawer >
                 <Switch>
                   <Route exact path = '/' render = {props =>
