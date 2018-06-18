@@ -1,12 +1,16 @@
 import LogoutInteractor from '../../../domain/interactor/user/LogoutInteractor'
 import GetLibrariesInteractor from '../../../domain/interactor/user/GetLibrariesInteractor'
 import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInteractor'
+import GetWizardInteractor from '../../../domain/interactor/user/GetWizardInteractor'
+import SetWizardInteractor from '../../../domain/interactor/user/SetWizardInteractor'
 
 export default class NavigationPresenter {
   constructor (container) {
     this.logoutInteractor = new LogoutInteractor(container.get('HRBenefitsClient'))
     this.getProfileInteractor = new GetProfileInteractor(container.get('HRBenefitsClient'))
     this.getLibrariesInteractor = new GetLibrariesInteractor(container.get('HRBenefitsClient'))
+    this.getWizardInteractor = new GetWizardInteractor(container.get('HRBenefitsClient'))
+    this.setWizardInteractor = new SetWizardInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -29,11 +33,12 @@ export default class NavigationPresenter {
       }
     )
   }
+
   getProfile () {
    this.view.showLoading()
 
    this.getProfileInteractor.execute()
-   .do(profile => this.view.showProfile(profile.employee))
+    .do(profile => this.view.showProfile(profile.employee))
 
     .subscribe(profile => {
      this.view.hideLoading()
@@ -42,4 +47,15 @@ export default class NavigationPresenter {
      // TODO prompt generic error
    })
   }
+
+  getWizard () {
+    this.view.showWizard(this.getWizardInteractor.execute())
+    console.log(this.getWizardInteractor.execute())
+  }
+
+  setWizard (wizard) {
+    this.setWizardInteractor.execute(wizard)
+    this.view.showWizard(wizard)
+  }
+
 }

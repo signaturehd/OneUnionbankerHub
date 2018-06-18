@@ -40,8 +40,6 @@ class BookBorrowedCard extends Component {
           <small>Available Copies : { detail.availableCopies }</small>
         </div>
         <div className = {'card-footer'}>
-          <br/>
-          <br/>
           <center>
             <Rating
               emptySymbol = {<MdStarOutline style={{ fontSize: 30, color : '#c65e11' }} />}

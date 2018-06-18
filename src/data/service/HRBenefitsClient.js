@@ -84,6 +84,15 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getReleasingCenter()
   }
 
+  /* Set Wizard*/
+  setWizardValidation (wizard) {
+    this.sessionProvider.setWizardValidation(wizard)
+  }
+  /* Get Wizard*/
+  getWizardValidation () {
+    return this.sessionProvider.getWizardValidation()
+  }
+
   setProfile (profile) {
     this.sessionProvider.setProfile(profile)
   }

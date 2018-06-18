@@ -3,6 +3,7 @@ const INITIAL_TOKEN = 'INITIAL_TOKEN'
 const ACCOUNT_TOKEN = 'ACCOUNT_TOKEN'
 const ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
 const RELEASING_CENTER = 'RELEASING_CENTER'
+const WIZARD_VALIDATION = 'WIZARD_VALIDATION'
 const PROFILE = 'PROFILE'
 
 export default class SessionProvider {
@@ -24,6 +25,14 @@ export default class SessionProvider {
 
   getInitialToken () {
     return this.storage.getItem(INITIAL_TOKEN) || ''
+  }
+
+  setWizardValidation (wizardValue) {
+    this.storage.setItem(WIZARD_VALIDATION, wizardValue)
+  }
+
+  getWizardValidation () {
+    return this.storage.getItem(WIZARD_VALIDATION)
   }
 
   setAccountToken (accountToken = '') {
