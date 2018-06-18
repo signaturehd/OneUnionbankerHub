@@ -32,6 +32,7 @@ class MplFormLoanCardComponent extends Component {
       imagePreviewUrl: '',
       imagePreviewUrl2: '',
       showFileUpload: false,
+      getRequiredDocumentsUploader: false,
     }
      this.onChange = this.onChange.bind(this)
      this.handleImageChange = this.handleImageChange.bind(this)
@@ -161,6 +162,7 @@ class MplFormLoanCardComponent extends Component {
       imagePreviewUrl,
       imagePreviewUrl2,
       showFileUpload,
+      getRequiredDocumentsUploader,
       response } = this.state
     const {
       purposeOfAvailment,
@@ -297,16 +299,14 @@ class MplFormLoanCardComponent extends Component {
               Form Attachments
             </h4>
             <div className = { 'mpl-body' }>
-             <FileUploader
-                onChange = { this.handleImageChange }
-                placeholder = ''
-                value = { file.name }
-              />
+            {
+              getRequiredDocumentsUploader &&
               <FileUploader
-                onChange = { this.handleImageChange2 }
-                placeholder = { '' }
-                value = { file2.name }
+                 onChange = { this.handleImageChange }
+                 placeholder = ''
+                 value = { file.name }
               />
+            }
             </div>
             <div className = { 'mpl-form-card-body' }>
               <div className = {'mpl-file-left'}>

@@ -12,6 +12,7 @@ class MplPurposeOfAvailmentModal extends Component {
         checkedSubCategory : false,
         purposeOfAvailment : [],
         enabledLoader : false,
+        attachmentsDisplay : false,
       }
       this.onGetClicked = this.onGetClicked.bind(this)
   }
@@ -26,31 +27,39 @@ class MplPurposeOfAvailmentModal extends Component {
     this.setState({ enabledLoader : false })
   }
 
-  onGetClicked (resp, subcategory, closePoaModal, openFileUpload, loanType) {
+  onGetClicked (resp, subcategory, closePoaModal, displayAttachments, loanType) {
     const loanId = resp.id ? resp.id : null
-    this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
-    this.props.presenter.getMplFormAttachments(resp.name, loanType ? loanType : null)
+    this.props.onSubmit(
+      resp,
+      subcategory,
+      closePoaModal,
+      displayAttachments,
+      loanType)
 
-    if ( loanId ) {
-      this.showPurposeLoader()
-      this.props.presenter.getMplPurposeOfAvailment(loanType && loanType, resp.id, subcategory ? subcategory : null)
-      if(subcategory === 2 || subcategory === 3) {
-        this.hidePurposeLoader()
-        this.props.presenter.getMplPurposeOfAvailment(loanType && loanType, resp.id, subcategory ? subcategory : null)
-      }
-      else {
-        this.hidePurposeLoader()
-      }
-    } else {
+    this.props.presenter.getMplFormAttachments(
+      resp.name,
+      loanType ? loanType : null)
+
+    this.props.presenter.getMplPurposeOfAvailment(
+      loanType && loanType,
+      loanId,
+      subcategory ? subcategory : null)
+
+    if(subcategory === 1) {
+      this.setState({ attachmentsDisplay : true })
       this.props.onClose()
-      this.hidePurposeLoader()
+    } else {
+      this.props.presenter.getMplPurposeOfAvailment(loanType && loanType, loanId, subcategory ? subcategory : null)
+      this.setState({ attachmentsDisplay : false })
     }
+
   }
 
   render () {
   const { onClose, poa, loanType } = this.props
   const subcategory = poa && poa.subCategoryLvl
-  const { checkedSubCategory, enabledLoader } = this.state
+  const { checkedSubCategory, enabledLoader, attachmentsDisplay } = this.state
+  console.log(attachmentsDisplay)
   return (
     <Modal
       onClose = { onClose }
@@ -75,7 +84,7 @@ class MplPurposeOfAvailmentModal extends Component {
                 resp,
                 subcategory,
                 subcategory === 1 ? false : true,
-                true,
+                attachmentsDisplay,
                 loanType) }
               />
             )
