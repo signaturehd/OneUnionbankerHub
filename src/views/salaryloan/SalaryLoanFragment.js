@@ -10,18 +10,18 @@ import { CircularLoader } from '../../ub-components/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 
-import FormComponent from '../mpl/components/MplFormCardComponent'
+import FormComponent from '../mpl/components/MplLoanFormCardComponent'
 
 class SalaryLoanFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-      purposeOfAvailment: [], /*Retrieved selected purpose of loan*/
+      purposeOfAvailment: [],
       selectedPoa: '',
       formAttachments: [],
-      loanType: 2, /*Default Loan Id*/
-      validateLoanType : [], /*ValidateLoanType*/
-      offset : [], /*Offsets*/
+      loanType: 1,
+      validateLoanType : [],
+      offset : [],
       enabledLoader : false,
       noticeResponse : null, /* notice response*/
       showNoticeResponseModal : false,
@@ -33,7 +33,7 @@ class SalaryLoanFragment extends BaseMVPView {
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.getMplTypes()
-    this.presenter.getMplValidate(this.state.loanType)
+    this.presenter.getMplValidate(1)
     this.presenter.getMplPurposeOfAvailment(
       this.state.loanType,
       1,
@@ -102,7 +102,6 @@ class SalaryLoanFragment extends BaseMVPView {
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
         }
-
         {
           showNoticeResponseModal &&
           <ResponseModal
@@ -115,7 +114,6 @@ class SalaryLoanFragment extends BaseMVPView {
             onDismiss = { (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response })  }
           />
-
         }
         <div>
           <i
