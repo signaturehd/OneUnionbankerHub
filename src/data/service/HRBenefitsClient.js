@@ -353,5 +353,8 @@ export default class HRBenefitsClient {
       mplPurposeLoanAddParam)
       .pipe(ServiceErrorOperator())
   }
-
+    getCarValidate (token) {
+      return this.service.getCarValidate(token)
+      .pipe(ServiceErrorOperator())
+  }
 }

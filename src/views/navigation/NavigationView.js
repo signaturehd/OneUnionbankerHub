@@ -35,6 +35,7 @@ import SalaryLoanFragment from '../salaryloan/SalaryLoanFragment'
 /*Transaction*/
 import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
 import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
+import CarLeaseNewFragment from '../carleasenew/CarLeaseNewFragment'
 
 import OnboardingView from '../onboarding/OnboardingView'
 
@@ -111,7 +112,7 @@ class NavigationView extends BaseMVPView {
           display : displayShow
       }
     }
-    
+
     let locationPath = history.location.pathname
     return (
       <div className = { 'navigation-body-div' }>
@@ -154,6 +155,9 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation }/>}/>
                   <Route path = '/mybenefits/benefits/loans/housingassistance' render = { props =>
                     <HousingAssistanceFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/loans/carleasenew' render = { props =>
+                    <CarLeaseNewFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits/benefits/loans/emergency' render = { props =>
                     <EmergencyLoanFragment { ...props }

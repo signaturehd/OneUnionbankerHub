@@ -341,4 +341,9 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+  getCarValidate (token) {
+    return this.apiClient.get('v1/employees/lease/cars', {
+      headers: { token }
+    })
+  }
 }
