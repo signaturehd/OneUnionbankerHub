@@ -42,6 +42,8 @@ import TransactionPersonalDetailFragment from '../transactiondetails/Transaction
 
 import Carousel from '../carousel/Carousel'
 
+import NavigationViewModal from './modal/NavigationViewModal'
+
 class NavigationView extends BaseMVPView {
   constructor (props) {
     super (props)
@@ -49,6 +51,7 @@ class NavigationView extends BaseMVPView {
     this.state = {
       selected: 0,
       profile: [],
+      showLogoutModal: false
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -105,7 +108,8 @@ class NavigationView extends BaseMVPView {
       selected,
       onClick,
       profile,
-      wizard
+      wizard,
+      showLogoutModal
     } = this.state
       const { history } = this.props
     const style = {
@@ -132,6 +136,14 @@ class NavigationView extends BaseMVPView {
               onClose = { () => this.presenter.setWizard('false') }
             />
           }
+          {
+            showLogoutModal &&
+            <NavigationViewModal
+              logout = { () => this.presenter.logout() }
+              onClose = { () => this.setState({showLogoutModal : false}) }
+            />
+          }
+
           { super.render() }
 
               <Drawer >
@@ -191,7 +203,7 @@ class NavigationView extends BaseMVPView {
             className ="left-side"
             style = { style.show }>
             <SideBar
-              logout = { this.callLogout }
+              logout = { () => this.setState({ showLogoutModal : true }) }
               selected={ selected }
               profile = { profile }
               history = { this.props.history } >

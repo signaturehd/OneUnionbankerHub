@@ -1,8 +1,4 @@
-.center-text {
-  text-align: center;
-}
-
-.otp-function {
+.logout-modal-function {
   display:grid;
   grid-template-columns: repeat(2, 1fr)
 }

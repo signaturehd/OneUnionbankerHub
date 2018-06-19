@@ -15,6 +15,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  logout (token) {
+    return this.service.logout(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   otp (otpParam) {
     return this.service.otp(otpParam)
       .pipe(ServiceErrorOperator())
