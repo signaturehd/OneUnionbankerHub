@@ -75,7 +75,14 @@ class LibraryFragment extends BaseMVPView {
   }
 
   showRecommendation (recommended) {
-    this.setState({ recommended })
+    if (this.state.recommended.length == 0) {
+      this.setState({ recommended })
+    } else
+    {
+      const updateRecommendedBooks = [...this.state.recommended]
+      updateRecommendedBooks.push(...recommended)
+      this.setState({ recommended: updateRecommendedBooks })
+    }
   }
 
   showBorrowed (borrowed) {
@@ -177,10 +184,11 @@ class LibraryFragment extends BaseMVPView {
           <section id='content1'>
               <Switch>
                 <Route path = '/mylearning/books/recommended'
-                  render = { props => <BookRecommendationFragment  presenter = { this.presenter } recommended = { recommended } {...props } /> } />
+                  render = { props => <BookRecommendationFragment
+                    page = { (pageNumber) => this.getBooks(pageNumber) } presenter = { this.presenter } recommended = { recommended }  filteredBooks = { filteredBooks }/> } />
                 <Route path = '/mylearning/books/history'
                   render = { props => <BookBorrowedFragment
-                    page = { (pageNumber) => this.getBooks(pageNumber) } presenter = { this.presenter } borrowed = { borrowed }  /> } />
+                    presenter = { this.presenter } borrowed = { borrowed }  /> } />
                 <Route path = '/mylearning/books'
                   render = { props => <BookListFragment
                     page = { (pageNumber) => this.getBooks(pageNumber) } presenter = { this.presenter } filteredBooks = { filteredBooks } /> } />
