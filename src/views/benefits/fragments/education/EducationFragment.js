@@ -1,58 +1,61 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
-
-import Countdown from '../../../common/components/Countdown/Countdown'
-import { CircularLoader } from '../../../../ub-components'
-
-import staticImage from '../../../../images/UBBldg.jpg'
-import '../../styles/benefits.css'
-
+import { Card, GenericButton } from '../../../../ub-components'
+import './styles/education.css'
 
 class EducationFragment extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      showLoader : true
-    }
   }
 
-  componentDidMount () {
-    setTimeout(() => this.setState({ showLoader : false }), 3000)
+  navigate () {
+      this.props.history.push('/mybenefits/benefits')
   }
 
   render () {
     const { history } = this.props
 
-    const { showLoader } = this.state
+    const benefitsOptions = [{
+      id: 1,
+      styleName: 'education-cards-1',
+      title: 'EDUCATION GRANT-PLAN',
+      path: '/mybenefits/benefits/education/grant-plan',
+    }]
 
     const EducationHome = () => (
-      <div>
-        <i className = { 'back-arrow' } onClick = { () => history.push('/mybenefits/benefits') } />
-        <h1>EDUCATION</h1>
-          <div className = { 'app' }>
+        <div>
+            <i
+              className = { 'back-arrow' }
+              onClick = { () => this.navigate() }></i>
+            <h1>EDUCATION</h1>
+          <div className = { 'adjustment' }>
+          <div className = { 'card-container' }>
             {
-              showLoader ?
-              <center>
-                <CircularLoader show = {true} />
-              </center>                :
-                <center>
-                  <h1> This module will launch on July 9, 2018</h1>
-                  <br />
-                  <div className = {'app-countdown'}>
-                    <br/>
-                    <Countdown dateTo = {{ year: 2018, month: 7, date: 9 }}  />
-                  </div>
-                </center>
-              }
+            benefitsOptions.map((value, idx) => (
+              <Card
+                className = { 'benefits-card' }
+                key = { idx }>
+                <div
+                  className = { value.styleName}
+                  text = { value.title }
+                  onClick = { () => history.push(value.path) } >
+                  <p className = { 'benefits-option-cards' }>
+                    { value.title }
+                  </p>
+                </div>
+              </Card>
+            ))
+          }
           </div>
+        </div>
       </div>
     )
 
     return (
       <div>
         <Switch>
-          <Route exact path = '/mybenefits/benefits/education' render = { EducationHome } />
+          <Route exact path = '/mybenefits/benefits/education'  render = { EducationHome } />
         </Switch>
       </div>
     )
