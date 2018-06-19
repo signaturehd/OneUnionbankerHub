@@ -35,6 +35,7 @@ export default function ServiceErrorOperator () {
               duration : 2000
             })
           )
+          localStorage.clear()
           subscriber.error(new ForbiddenError())
         } else {
           store.dispatch(NotifyActions.addNotify({
