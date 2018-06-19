@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import BaseMVPView from '../common/base/BaseMVPView'
-import Presenter from './presenter/MplComputerLoanPresenter'
+import Presenter from './presenter/ComputerLoanPresenter'
 import ConnectView from '../../utils/ConnectView'
 
 import { CircularLoader } from '../../ub-components/'
 
 
-import FormComponent from './components/MplFormCardComponent'
+import FormComponent from './components/ComputerFormCardComponent'
 
 class ComputerLoanFragment extends BaseMVPView {
   constructor (props) {

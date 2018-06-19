@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 
 import { Modal , GenericButton } from '../../../ub-components/'
 
-import './styles/mplModalStyle.css'
+import './styles/computerModalStyle.css'
 
-class MplTermOfLoan extends Component {
+class MplModeOfLoanModal extends Component {
 render () {
-  const { onClose, term, onSubmit } = this.props
+  const { onClose, offset, onSubmit } = this.props
 
 return (
   <Modal
@@ -16,21 +16,17 @@ return (
     <div>
       <center>
         <h2>
-          Term of Loan
-          <br/>
-          Housing Assistance Loan
+          Mode of Loan
         </h2>
-        <h4>
-        </h4>
       </center>
     </div>
     <div>
       {
-        term && term.map((resp, key) =>
+        offset && offset.map((resp, key) =>
         <GenericButton
-          className = { 'mpl-poa-modal-button' }
+          className = { 'computer-modal-button' }
           key = { key }
-          text = {`Term: ${resp && resp.term} Rate: ${resp && resp.rate}` }
+          text = { resp && resp.name }
           onClick = { () => onSubmit( resp, false ) }/>
         )
       }
@@ -39,10 +35,10 @@ return (
     )
   }
 }
-MplTermOfLoan.propTypes = {
+MplModeOfLoanModal.propTypes = {
   onClose : PropTypes.func,
-  term : PropTypes.array,
+  offset : PropTypes.array,
   onSubmit : PropTypes.func
 }
 
-export default MplTermOfLoan
+export default MplModeOfLoanModal

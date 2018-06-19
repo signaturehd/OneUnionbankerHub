@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Modal , GenericButton, CircularLoader } from '../../../ub-components/'
 
-import './styles/mplModalStyle.css'
+import './styles/computerModalStyle.css'
 
 class MplPurposeOfAvailmentModal extends Component {
   constructor (props) {
