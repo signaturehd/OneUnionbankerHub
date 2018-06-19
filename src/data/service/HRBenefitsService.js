@@ -331,7 +331,6 @@ export default class HRBenefitsService {
       principalLoanAmount : mplPurposeLoanAddParam.principalLoanAmount,
       accountNumber : accountNumber,
     }
-    console.log(multiPurposeLoanObject)
     formData.append('uuid', 12345)
     formData.append('MPL-cert', mplPurposeLoanAddParam.attachments)
     formData.append('body', JSON.stringify(multiPurposeLoanObject))
