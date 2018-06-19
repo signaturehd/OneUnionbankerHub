@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import BookCardComponent from '../components/BookCardComponent/BookCardComponent'
 import BookViewModal from '../modals/BookViewModal'
@@ -20,6 +21,14 @@ class BookRecommendationFragment extends Component {
     }
   }
 
+  componentDidMount () {
+    window.addEventListener("scroll", this.handleScroll);
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
   addRating (id, rating) {
     this.props.presenter.rateBook(id, rating)
   }
@@ -28,6 +37,16 @@ class BookRecommendationFragment extends Component {
     this.props.presenter.reserveBook(id, quantity)
   }
 
+  handleScroll() {
+    const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.floor(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight) - 1;
+    const windowBottom = windowHeight + window.pageYOffset;
+    if (windowBottom >= docHeight) {
+      console.log('end of line for recommendation')
+    }
+  }
 
   render () {
     const {
@@ -45,8 +64,7 @@ class BookRecommendationFragment extends Component {
       bookQuantity,
       title,
     } = this.state
-
-    return (
+    const BookRecommendation = () => (
       <div className = {'library-container'}>
         {
           recommended.map((book, key) =>
@@ -88,6 +106,14 @@ this.addRating(bookId, bookRating), this.setState({ showConfirmationRateModal : 
             onClose = { () => this.setState({ showConfirmationRateModal : false }) }
           />
         }
+      </div>
+    )
+
+    return (
+      <div>
+        <Switch>
+          <Route exact path = '/mylearning/books/recommended'  render = { BookRecommendation } />
+        </Switch>
       </div>
     )
   }

@@ -109,12 +109,26 @@ label:hover {
     margin: 0;
     font-size: 18px;
   }
-  .mobile-icon {
-    background: url('../../../images/profile-picture.png') no-repeat center center;
+  .benefit-icon {
+    background: url('../../../images/drawer/Benefit.png') no-repeat center center;
     background-size: contain;
-    height: fit-content;
-    width: fit-content;
-    margin: auto;
+    height: 5%;
+    width: 30%;
+    margin: 5%;
+  }
+  .approval-icon {
+    background: url('../../../images/drawer/approval.png') no-repeat center center;
+    background-size: contain;
+    height: 5%;
+    width: 25%;
+    margin: 5%;
+  }
+  .trans-icon {
+    background: url('../../../images/drawer/mytransaction1.png') no-repeat center center;
+    background-size: contain;
+    height: 5%;
+    width: 25%;
+    margin: 0%;
   }
 }
 

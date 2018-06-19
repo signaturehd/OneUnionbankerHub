@@ -11,7 +11,7 @@ class TransactionMPLDetailComponent extends Component {
     render () {
     const { details } = this.props
     return (
-      <Card className = { 'transaction-card-details-form' }>
+      <div className = { 'transaction-card-details-form' }>
       <div>
         <h2 className = { 'transaction-detail details-bold' }> Purpose of Availement: </h2>
         <h2 className = { 'transaction-detail details-bold' }> Mode of Loan: </h2>
@@ -30,7 +30,7 @@ class TransactionMPLDetailComponent extends Component {
         { details && details.details.Term.Term }
         </h2>
         </div>
-      </Card>
+      </div>
     )
   }
 }

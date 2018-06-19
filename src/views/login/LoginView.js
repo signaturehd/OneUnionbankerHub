@@ -16,6 +16,7 @@ import {
 import './styles/login.css'
 
 import OtpModal from '../otp/OtpModal'
+import TermsModal from '../termsandcondition/TermsModal'
 
 import { connect } from 'react-redux'
 
@@ -29,12 +30,23 @@ class LoginView extends BaseMVPView {
     this.state = {
       username: '',
       password: '',
+      showTermsAndCondition : false,
       showOtpModal: false,
-      disabled : false
+      disabled : false,
+      terms : null,
+      type: 'password',
     }
-
+    this.showHide = this.showHide.bind(this)
     this.onLoginSuccess = this.onLoginSuccess.bind(this)
   }
+   showHide (e) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.setState({
+      type: this.state.type === 'input' ? 'password' : 'input'
+    })
+  }
+
   componentDidMount () {
     store.dispatch(NotifyActions.resetNotify())
   }
@@ -73,9 +85,8 @@ class LoginView extends BaseMVPView {
 
 
   render () {
-    const { showOtpModal, username } = this.state
+    const { showOtpModal, username, terms, showTermsAndCondition } = this.state
     const { notify } = this.props
-
     return (
       <div>
         { super.render() }
@@ -87,18 +98,31 @@ class LoginView extends BaseMVPView {
             onClose = { () => this.setState({ showOtpModal : false }) }
             parent = { this }
             username = { username }
+            sendTerms = { (accepted, terms) => this.setState({ showTermsAndCondition : !accepted, showOtpModal : false, terms }) }
             transactionType = { 2 } /> // TODO, move this static '2' to proper file on domain
         }
+        {
+          showTermsAndCondition &&
+          <TermsModal
+            onClose = { () => this.setState({ showTermsAndCondition : false }) }
+            terms = { terms }
+          />
+        }
+
         <Card className = {'login-form'}>
           <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
             <GenericTextBox
+              autocomplete='off'
               onChange = { e => this.setState({ username: e.target.value }) }
               placeholder = { 'Employee ID' }
               type = { 'text' }/>
             <GenericTextBox
+              autocomplete='off'
               onChange = { e => this.setState({ password: e.target.value }) }
               placeholder = { 'Password' }
-              type = { 'password' }/>
+              type = { this.state.type }
+              className={ 'password__input' }/>
+              <span className={'password__show'} onClick={this.showHide}>{this.state.type === 'input' ? 'HIDE' : 'SHOW'}</span>
               <br/>
             {
               this.state.disabled ?

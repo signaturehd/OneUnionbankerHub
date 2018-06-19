@@ -1,6 +1,5 @@
-
 import React, { Component } from 'react'
-import ConnectPartial from '../../utils/ConnectPartial'
+import ConnectView from '../../utils/ConnectView'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/OtpPresenter'
@@ -22,13 +21,15 @@ class OtpModal extends BaseMVPView {
       otp: '',
       disableSubmit : false,
       disableResend : false,
-      text : null
+      text : null,
     }
 
     this.onResendSuccess = this.onResendSuccess.bind(this)
+    this.onOtpSuccess = this.onOtpSuccess.bind(this)
   }
 
-  onOtpSuccess () {
+  onOtpSuccess (terms) {
+    this.props.sendTerms(terms.accepted, terms.content)
     // TODO redirect to login
   }
 
@@ -37,21 +38,21 @@ class OtpModal extends BaseMVPView {
   }
 
   onResendSuccess () {
-    this.setState({ disabledResend : false, text : '' })
+    this.setState({ disableResend : false, text : '' })
   }
 
   render () {
     const {
       transactionType,
       username,
-      onClose
+      onClose,
     } = this.props
 
     const {
       otp,
       text,
       disableSubmit,
-      disableResend
+      disableResend,
     } = this.state
 
     return (
@@ -66,7 +67,8 @@ class OtpModal extends BaseMVPView {
             <br/>
             <br/>
             <CircularLoader show={true}/>
-          </center>          :
+          </center>
+          :
           <div>
             <GenericTextBox
               text= "OTP"
@@ -102,4 +104,4 @@ class OtpModal extends BaseMVPView {
 }
 // TODO setup props that is required
 
-export default ConnectPartial(OtpModal, Presenter)
+export default ConnectView(OtpModal, Presenter)

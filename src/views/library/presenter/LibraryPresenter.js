@@ -1,5 +1,4 @@
 import GetBooksInteractor from '../../../domain/interactor/library/GetBooksInteractor'
-import GetBooksRecommendationInteractor from '../../../domain/interactor/library/GetBooksRecommendationInteractor'
 import AddBookRatingInteractor from '../../../domain/interactor/library/AddBookRatingInteractor'
 import GetBooksBorrowedInteractor from '../../../domain/interactor/library/GetBooksBorrowedInteractor'
 import ReserveBookInteractor from '../../../domain/interactor/library/ReserveBookInteractor'
@@ -14,7 +13,6 @@ import store from '../../../store'
 
 export default class LibraryPresenter {
   constructor (container) {
-    this.getBooksRecommendationInteractor = new GetBooksRecommendationInteractor(container.get('HRBenefitsClient'))
     this.getBooksInteractor = new GetBooksInteractor(container.get('HRBenefitsClient'))
     this.addBookInteractor = new AddBookRatingInteractor(container.get('HRBenefitsClient'))
     this.getBooksBorrowedInteractor = new GetBooksBorrowedInteractor(container.get('HRBenefitsClient'))
@@ -26,24 +24,25 @@ export default class LibraryPresenter {
     this.view = view
   }
 
-  getBooks () {
+  getBooks (pageNumber, find) {
     this.view.showLoading()
-    this.getBooksInteractor.execute()
-      .do(books => this.view.showBooks(books))
-      .concatMap(books => Observable.from(books))
+    this.getBooksInteractor.execute(pageNumber, find)
+      .do(books => this.view.showBooks(books.bookList))
+      .concatMap(books => Observable.from(books.bookList))
       .pipe(filter(book => book.isEditorsPick))
       .toArray()
       .subscribe(books => {
         this.view.hideLoading()
-        this.view.showRecommendation(books)
       }, e => {
         this.view.hideLoading()
       })
   }
 
-  getBooksBorrowed () {
+
+  getBooksBorrowed (borrowedPageNumber, find) {
     this.view.showLoading()
-    this.getBooksBorrowedInteractor.execute()
+    this.getBooksBorrowedInteractor.execute(borrowedPageNumber, find)
+
     .subscribe(borrowed => {
         this.view.hideLoading()
         this.view.showBorrowed(borrowed)

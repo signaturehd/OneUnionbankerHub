@@ -6,9 +6,10 @@ export default class VerifyOtpInteractor {
   execute (otpParam) {
     return this.client.otp(otpParam)
       .do(authResp => {
-        if (authResp) {
+        if (authResp && authResp.termsAndCondition.accepted) {
           this.client.setToken(authResp.token)
-          this.client.setAccountToken(authResp.accountToken)
+        } else {
+          this.client.setInitialToken(authResp.token)
         }
       })
   }

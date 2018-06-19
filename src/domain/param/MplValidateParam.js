@@ -1,0 +1,1 @@
+export default (loanTypeId) => ({ loanTypeId }) 

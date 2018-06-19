@@ -11,6 +11,9 @@ import FeedbackCard from './components/FeedbackCardFragment/FeedbackCard'
 
 import './styles/feedbackStyles.css'
 
+import { NotifyActions } from '../../actions'
+import store from '../../store'
+
 class FeedbackFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -36,12 +39,22 @@ class FeedbackFragment extends BaseMVPView {
 
   submitForm (feedbackId, feedbackValue) {
     this.setState({ showFeedback: false })
-    this.presenter.addFeedback(feedbackId, feedbackValue)
+    if (!feedbackId || !feedbackValue) {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Feedback',
+          message : 'Please check the Form before submitting',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else {
+      this.presenter.addFeedback(feedbackId, feedbackValue)
+    }
   }
 
 
   onSuccessSubmit (showFeedback) {
-    this.setState({ showFeedback })
+    this.setState({ showFeedback, feedbackId: null, feedbackValue: null })
   }
 
   onFailedSubmit (showFeedback) {

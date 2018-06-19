@@ -25,6 +25,12 @@ export default class HRBenefitsService {
     })
   }
 
+  validateTermsAndCondition (token) {
+    return this.apiClient.post('v1/agreements/tnc', null, {
+      headers : { token }
+    })
+  }
+
   /* dental loa */
 
   getDentalLoa (token) {
@@ -122,14 +128,14 @@ export default class HRBenefitsService {
   }
 
   /* library */
-  getBooks (token) {
-    return this.apiClient.get('v1/books', {
+  getBooks (token, pageNumber, find) {
+    return this.apiClient.get(`v1/books?pageNumber=${pageNumber}&find=${find}`, {
       headers: { token }
     })
   }
 
-  getBooksBorrowed (token) {
-    return this.apiClient.get('v1/books/history', {
+  getBooksBorrowed (token, borrowedPageNumber, find) {
+    return this.apiClient.get(`v1/books/history?pageNumber=${borrowedPageNumber}&find=${find}`, {
         headers: { token }
     })
   }
@@ -201,7 +207,7 @@ export default class HRBenefitsService {
   }
 
   getFaqDetails (token, faqParam) {
-    return this.apiClient.get(`v1/faqs/${  faqParam}`, {
+    return this.apiClient.get(`v1/faqs/${faqParam}`, {
       headers: { token }
     })
   }
@@ -267,6 +273,71 @@ export default class HRBenefitsService {
       remarks : updateTransactionParam.remarks,
     }
     return this.apiClient.put(`v1/transactions/${  updateTransactionParam.transactionId}`, transactionDetails, {
+      headers : { token }
+    })
+  }
+
+  /* MPL Service */
+
+  /* Purpose of Availment */
+
+  getMplPurposeOfAvailment (token, {
+    loanTypesId,
+    purposeOfLoan,
+    subcategoryLevel }
+    ) {
+      return this.apiClient.get(`v1/loans/mpl?loanId=${ loanTypesId }&purposeOfAvailment=${ purposeOfLoan }&subcategoryLevel=${ subcategoryLevel }`, {
+        headers: { token }
+      })
+  }
+
+  /* Types */
+
+  getMPLTypes (token) {
+    return this.apiClient.get('v1/loans/mpl/types', {
+      headers: { token }
+    })
+  }
+
+  /* Validate */
+
+  getMPLValidate (token, mplValidateParam) {
+    return this.apiClient.get(`v1/loans/mpl/validate?loanId=${mplValidateParam.loanTypeId}`, {
+      headers: { token }
+    })
+  }
+
+  getMPLFormAttachments (token, mplGetFormParam) {
+    return this.apiClient.get(`v1/attachments?purposeOfLoan=${ mplGetFormParam.formRequesting }&loanId=${ mplGetFormParam.loanId }`, {
+        headers: { token }
+    })
+  }
+
+  addLoan (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    mplPurposeLoanAddParam) {
+    const formData = new FormData()
+    const multiPurposeLoanObject = {
+      loanId : {
+        id : mplPurposeLoanAddParam.loanId,
+        purpose : mplPurposeLoanAddParam.purposeOfLoan,
+        mode : mplPurposeLoanAddParam.modeOfLoan,
+        principalLoanAmount : mplPurposeLoanAddParam.principalLoanAmount
+      },
+      promissoryNoteNumbers : [
+
+      ],
+      accountNumber : accountNumber,
+      releasingCenter: releasingCenter,
+      distributorTest : 'distributorTest'
+    }
+    formData.append('uuid', 12345)
+    formData.append('MPL-cert', '')
+    formData.append('body', JSON.stringify(multiPurposeLoanObject))
+    return this.apiClient.post('v2/loans/mpl/submit', multiPurposeLoanObject, {
       headers : { token }
     })
   }

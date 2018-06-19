@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './styles/sidebar.css'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { Line } from '../../../../ub-components'
 
 class SideBar extends Component {
   constructor (props) {
@@ -43,17 +44,17 @@ class SideBar extends Component {
       },
       {
         id: 3 ,
-        title: 'My Personal',
+        title: 'My Profile',
         action: () => history.push('/settings'),
         className: 'settings-icon'
       },
       {
         id: 2 ,
-        title: 'FAQS',
+        title: 'FAQs',
         action: () => history.push('/faqs'),
         className: 'faqs-icon'
       },
-     {
+      {
         id: 6 ,
         title: 'Feedback',
         action: () => history.push('/feedback'),
@@ -74,22 +75,23 @@ class SideBar extends Component {
             src={ require('../../../../images/profile-picture.png') }
             className= {'sidebar-img-ub-logo'}/>
         </div>
-          <h4 className = { 'sidebar-profile-name' }>
-            { profile && profile.fullname }
-          </h4>
-        {
-          modules.map((d, idx) =>
-          <li
-            className = { `_text-link ${selected === d.id && 'active'}` }
-            key = { idx }
-            onClick = { d.action }>
-            <a key = { idx }
-              className =
-              { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                { d.title }
-          </li>
-          )
-        }
+        <h4 className = { 'sidebar-profile-name' }>
+          { profile && profile.fullname }
+        </h4>
+        <Line/>
+          {
+            modules.map((d, idx) =>
+            <li
+              className = { `_text-link ${selected === d.id && 'active'}` }
+              key = { idx }
+              onClick = { d.action }>
+              <a key = { idx }
+                className =
+                { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                  { d.title }
+            </li>
+            )
+          }
       </ul>
     </div>
     )

@@ -28,19 +28,50 @@ class LibraryFragment extends BaseMVPView {
       showRecommendation : false,
       showBorrowedFiltered : false,
       searchString : '',
-
+      pageNumber : null,
+      borrowedPageNumber: null,
+      refresh : 0
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
 
   componentDidMount () {
-      this.presenter.getBooks()
-      this.presenter.getBooksBorrowed()
-      this.props.history.push('/mylearning/books')
+    const { pageNumber, borrowedPageNumber } = this.state
+      this.getBooks(pageNumber)
+      this.presenter.getBooksBorrowed(borrowedPageNumber)
+  }
+
+  componentWillUnmount () {
+    clearInterval(this.timer)
+  }
+
+  getBooks (pageNumber) {
+    this.presenter.getBooks(pageNumber ? pageNumber : 1, '')
+  }
+
+  getFilterBooks (pageNumber, find) {
+    this.setState({ books: [], pageNumber: 1 })
+    this.presenter.getBooks(pageNumber ? pageNumber : 1, find)
+  }
+
+  getBooksBorrowed (borrowedPageNumber) {
+    this.presenter.getBooksBorrowed(borrowedPageNumber ? borrowedPageNumber : 1, '')
+  }
+
+  getFilterBooksBorrowed () {
+    this.setState({ borrowed: [], borrowedPageNumber: 1 })
+    this.presenter.getBooksBorrowed(borrowedPageNumber ? borrowedPageNumber : 1, find)
   }
 
   showBooks (books) {
-    this.setState({ books })
+    if (this.state.books.length == 0) {
+      this.setState({ books })
+    } else
+    {
+      const updateBooks = [...this.state.books]
+      updateBooks.push(...books)
+      this.setState({ books: updateBooks })
+    }
   }
 
   showRecommendation (recommended) {
@@ -48,14 +79,43 @@ class LibraryFragment extends BaseMVPView {
   }
 
   showBorrowed (borrowed) {
-    this.setState({ borrowed })
+    if (this.state.borrowed.length == 0) {
+      this.setState({ borrowed })
+    } else
+    {
+      const updateBorrowedBooks = [...this.state.borrowed]
+      updateBorrowedBooks.push(...borrowed)
+      this.setState({ borrowed: updateBorrowedBooks })
+    }
   }
 
   navigate () {
-    this.props.history.push ('/mylearning')
+    this.props.history.push('/mylearning')
   }
+
   updateSearch () {
-    this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
+    const search = this.refs.search.value.substr(0 , 20)
+    this.setState({ searchString: search })
+    this.startTimer()
+  }
+
+  tick () {
+    const ref = this.state.refresh
+    this.setState({refresh: (ref + 1)})
+    if (ref >= 1) {
+      this.stopTimer()
+      this.getFilterBooks (this.state.pageNumber, this.state.searchString)
+      this.setState({refresh: 0})
+    }
+  }
+
+  startTimer () {
+    clearInterval(this.timer)
+    this.timer = setInterval(this.tick.bind(this), 500)
+  }
+
+  stopTimer () {
+    clearInterval(this.timer)
   }
 
   showBorrowedFiltered (filteredBook) {
@@ -71,14 +131,11 @@ class LibraryFragment extends BaseMVPView {
       borrowed,
       reserve,
       searchString,
+      pageNumber,
+      borrowedPageNumber
     } = this.state
-
     let filteredBooks = books
     const search = searchString.trim().toLowerCase()
-    if (search.length > 0) {
-      filteredBooks = books.filter(books => books.title.toLowerCase().match(search))
-    }
-
     return (
       <div>
       { super.render() }
@@ -97,6 +154,7 @@ class LibraryFragment extends BaseMVPView {
             id='tab1'
             type='radio'
             name='tabs'
+            onClick = { () => this.props.history.push('/mylearning/books') }
             defaultChecked />
           <label  htmlFor = 'tab1'>All Books</label>
 
@@ -104,20 +162,29 @@ class LibraryFragment extends BaseMVPView {
             className = { 'input-tab' }
             id='tab2'
             type='radio'
+            onClick = { () => this.props.history.push('/mylearning/books/recommended') }
             name='tabs' />
           <label  htmlFor='tab2'>Recommended</label>
 
-          <input className = { 'input-tab' } id='tab3'  type='radio' name='tabs' />
+          <input
+            className = { 'input-tab' }
+            id='tab3'
+            onClick = { () => this.props.history.push('/mylearning/books/history') }
+            type='radio'
+            name='tabs' />
           <label  htmlFor = 'tab3' >Borrowed</label>
 
           <section id='content1'>
-            <BookListFragment presenter={ this.presenter } books = { filteredBooks } />
-          </section>
-          <section id='content2'>
-            <BookRecommendationFragment presenter = { this.presenter } recommended = { recommended } />
-          </section>
-          <section  id='content3'>
-            <BookBorrowedFragment presenter = { this.presenter } borrowed = { borrowed } />
+              <Switch>
+                <Route path = '/mylearning/books/recommended'
+                  render = { props => <BookRecommendationFragment  presenter = { this.presenter } recommended = { recommended } {...props } /> } />
+                <Route path = '/mylearning/books/history'
+                  render = { props => <BookBorrowedFragment
+                    page = { (pageNumber) => this.getBooks(pageNumber) } presenter = { this.presenter } borrowed = { borrowed }  /> } />
+                <Route path = '/mylearning/books'
+                  render = { props => <BookListFragment
+                    page = { (pageNumber) => this.getBooks(pageNumber) } presenter = { this.presenter } filteredBooks = { filteredBooks } /> } />
+             </Switch>
           </section>
         </div>
       </div>

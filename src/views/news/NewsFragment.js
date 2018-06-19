@@ -45,7 +45,7 @@ class NewsFragment extends BaseMVPView {
       news,
       show,
       details,
-      showLoader
+      showLoader,
     } = this.state
     let newsList = news
     const search = this.state.searchString.trim().toLowerCase()

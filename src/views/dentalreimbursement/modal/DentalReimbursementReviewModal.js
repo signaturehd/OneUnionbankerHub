@@ -78,7 +78,7 @@ class DentalReimbursementModal extends Component {
             {
               procedure && procedure.map((resp, key) =>
                 <div key = { key }>
-                  { resp.name } : &#x20B1; { resp.limit }
+                  { resp.name } : &#x20B1; { resp.amount }
                 </div>
               )
             }
