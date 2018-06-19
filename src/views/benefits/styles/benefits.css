@@ -1,4 +1,8 @@
 /* benefits */
+.benefits-card {
+    margin-bottom: 10px;
+}
+
 .app-countdown {
   margin-left: auto;
   margin-right: auto;

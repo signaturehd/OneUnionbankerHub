@@ -40,3 +40,15 @@
   background-size: cover;
   background-position: center;
 }
+
+.loans-cards-5 {
+  padding: 21% 0 20% 0 ;
+  cursor: pointer ;
+  background-image: url('../../../../../images/motorcyle_loan.jpg') ;
+  background-repeat: no-repeat;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3) ;
+  border-radius: 5px ;
+  grid-area: card ;
+  background-size: cover;
+  background-position: center;
+}
