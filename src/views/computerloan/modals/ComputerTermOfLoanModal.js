@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Modal , GenericButton } from '../../../ub-components/'
 
-import './styles/mplModalStyle.css'
+import './styles/computerModalStyle.css'
 
 class MplTermOfLoan extends Component {
 render () {
@@ -30,7 +30,7 @@ return (
         <GenericButton
           className = { 'mpl-poa-modal-button' }
           key = { key }
-          text = {`Term ${resp && resp.term} Rate (${resp && resp.rate}%)` }
+          text = {`Term: ${resp && resp.term} Rate: ${resp && resp.rate}` }
           onClick = { () => onSubmit( resp, false ) }/>
         )
       }

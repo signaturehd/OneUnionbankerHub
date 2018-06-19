@@ -1,15 +1,15 @@
-.mpl-body {
+.computer-body {
   display: inline-flex;
   margin: auto;
   width: 100%;
   margin: auto auto auto -8px;
 }
 
-.mplview-container {
+.computer-container {
   max-width: 100%;
 }
 
-.mpl-form-card {
+.computer-form-card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 100%;
   float: center;
@@ -19,12 +19,12 @@
   font-family: arial;
 }
 
-.mpl-form-card-body {
+.computer-form-card-body {
   border-color: #0a0a0a;
   color: #090909;
 }
 
-.mplview-submit {
+.computer-submit {
   border-radius: 5px;
   text-align: center;
   outline: none;
@@ -36,20 +36,20 @@
   width: 95%;
 }
 
-.mpl-grid-column-2 {
+.computer-grid-column-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 2%;
 }
 
 @media (max-width : 768px) {
-  .mpl-grid-column-2 {
+  .computer-grid-column-2 {
     display: grid;
     grid-template-columns: 1fr ;
     column-gap: 2%;
     grid-row-gap: 2%;
   }
-  .mpl-form-card {
+  .computer-form-card {
     margin-top: 10px;
   }
 }
@@ -66,7 +66,7 @@
     transform: translate3d(0, 0, 0);
   }
 }
-.mpl-form-preview{
+.computer-form-preview{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: -webkit-fill-available;
   float: center;
@@ -78,7 +78,7 @@
   animation: fadeInUp 0.5s ease-in-out 0s forwards;
 }
 
-.mpl-file-left {
+.computer-file-left {
   background-color: white;
   overflow: hidden;
   width: auto;
@@ -86,12 +86,12 @@
   margin-top: 20px;
 }
 
-.mpl-file-grid {
+.computer-file-grid {
   display:grid !important;
   grid-template-columns: 50% 50%;
 }
 
-.mpl-image-view {
+.computer-image-view {
   position: relative;
   background: url('../../../../images/uploadicon-grey.jpg') no-repeat center center;
   background-size: 50px;
@@ -100,7 +100,7 @@
   object-fit: cover;
   border-radius: 20px;
 }
-.mpl-image-layer {
+.computer-image-layer {
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   bottom: 0;

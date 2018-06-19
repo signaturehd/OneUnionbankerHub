@@ -306,7 +306,7 @@ export default class HRBenefitsService {
   /* Validate */
 
   getMPLValidate (token, mplValidateParam) {
-    return this.apiClient.get(`v1/loans/mpl/validate?loanId=${mplValidateParam.loanTypeId}`, {
+    return this.apiClient.get(`v1/loans/mpl/validate?loanId=${ mplValidateParam.loanTypeId }`, {
       headers: { token }
     })
   }
@@ -325,23 +325,20 @@ export default class HRBenefitsService {
     mplPurposeLoanAddParam) {
     const formData = new FormData()
     const multiPurposeLoanObject = {
-      loanId : {
-        id : mplPurposeLoanAddParam.loanId,
-        purpose : mplPurposeLoanAddParam.purposeOfLoan,
-        mode : mplPurposeLoanAddParam.modeOfLoan,
-        principalLoanAmount : mplPurposeLoanAddParam.principalLoanAmount
-      },
+      loanId : mplPurposeLoanAddParam.loanId,
+      purposeOfLoan : mplPurposeLoanAddParam.purposeOfLoan,
+      modeOfLoan : mplPurposeLoanAddParam.modeOfLoan,
       promissoryNoteNumbers : [
-
+        "S01", "SO2"
       ],
+      loanTerm : mplPurposeLoanAddParam.termOfLoan,
+      principalLoanAmount : mplPurposeLoanAddParam.principalLoanAmount,
       accountNumber : accountNumber,
-      releasingCenter: releasingCenter,
-      distributorTest : 'distributorTest'
     }
     formData.append('uuid', 12345)
-    formData.append('MPL-cert', '')
+    formData.append('MPL-cert', mplPurposeLoanAddParam.attachments)
     formData.append('body', JSON.stringify(multiPurposeLoanObject))
-    return this.apiClient.post('v2/loans/mpl/submit', multiPurposeLoanObject, {
+    return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
   }
