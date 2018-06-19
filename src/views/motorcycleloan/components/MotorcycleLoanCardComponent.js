@@ -4,9 +4,10 @@ import PropTypes from 'prop-types'
 import './styles/motorComponentStyle.css'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
-import PurposeOfAvailmentModal from '../../mpl/modals/PurposeOfAvailmentModal'
-import ModeOfLoanModal from '../../mpl/modals/ModeOfLoanModal'
-import TermOfLoanModal from '../../mpl/modals/TermOfLoanModal'
+import PurposeOfAvailmentModal from '../modals/MotorcyclePurposeOfAvailmentModal'
+import ModeOfLoanModal from '../modals/MotorcycleModeOfLoanModal'
+import TermOfLoanModal from '../modals/MotorcycleTermOfLoanModal'
+import SupplierModal from '../modals/MotorcycleLoanSupplierModal'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -123,7 +124,7 @@ class MotorcycleLoanCardComponent extends Component {
         }
         {
           showSupplier &&
-          <SupplierLoanModal
+          <SupplierModal
             supplier  = {  supplier }
             onSubmit = { (getSupplier, closePoaModal) =>
               this.setState({
@@ -132,7 +133,7 @@ class MotorcycleLoanCardComponent extends Component {
               })
             }
             onClose = { () =>
-              this.setState({ showTerm : false }) }
+              this.setState({ showSupplier : false }) }
           />
         }
         <div className = { 'motor-grid-column-2' }>
