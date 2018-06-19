@@ -22,7 +22,6 @@ class BookListFragment extends Component {
     }
     this.pageNumber = 2
     this.handleScroll = this.handleScroll.bind(this)
-    this.scroll
   }
 
   componentDidMount () {
@@ -116,8 +115,8 @@ class BookListFragment extends Component {
           showConfirmationRateModal &&
           <BookConfirmationModal
             onYes = { () => {
-this.addRating(bookId, bookRating), this.setState({ showConfirmationRateModal : false })
-} }
+              this.addRating(bookId, bookRating), this.setState({ showConfirmationRateModal : false })
+            } }
             title = { title }
             onClose = { () => this.setState({ showConfirmationRateModal : false }) }
           />
