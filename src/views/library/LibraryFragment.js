@@ -77,8 +77,7 @@ class LibraryFragment extends BaseMVPView {
   showRecommendation (recommended) {
     if (this.state.recommended.length == 0) {
       this.setState({ recommended })
-    } else
-    {
+    } else {
       const updateRecommendedBooks = [...this.state.recommended]
       updateRecommendedBooks.push(...recommended)
       this.setState({ recommended: updateRecommendedBooks })
