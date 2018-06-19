@@ -1,0 +1,35 @@
+
+.general-container {
+  max-width: 100%;
+}
+
+.general-form-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+  float: center;
+  padding: 20px 5px 20px 5px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.general-form-card-body {
+  border-color: #0a0a0a;
+  color: #090909;
+}
+
+@media (max-width : 768px) {
+  .general-form-card {
+    margin-top: 10px;
+  }
+}
+.experience-textarea {
+  height: 200px;
+  align-items: flex-start;
+  margin: 10px auto;
+  resize: none;
+  width: -webkit-fill-available !important;
+  outline-color: #FF8A00;
+  border-radius: 5px;
+  font-size: 14px;
+}

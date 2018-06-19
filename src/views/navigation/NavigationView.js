@@ -36,6 +36,8 @@ import SalaryLoanFragment from '../salaryloan/SalaryLoanFragment'
 import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
 import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
 
+import OnboardingView from '../onboarding/OnboardingView'
+
 import Carousel from '../carousel/Carousel'
 
 class NavigationView extends BaseMVPView {
@@ -173,6 +175,9 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/feedback' render = { props =>
                     <FeedbackFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/onboard' render = { props =>
+                    <OnboardingView { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>
