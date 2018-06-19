@@ -48,7 +48,9 @@ class MplFormLoanCardComponent extends Component {
    sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId, file1, file2 ) {
      let amount = parseFloat(desiredAmount)
      let maximumAmount = parseFloat(this.props.validateLoanType.maximumLoanableAmount)
-
+     let id = parseInt(loanTypeId)
+     let term = parseInt(termId)
+     let mode = parseInt(modeOfLoanId)
      if (amount >= maximumAmount) {
        store.dispatch(NotifyActions.addNotify({
            title : 'Warning' ,
@@ -58,7 +60,7 @@ class MplFormLoanCardComponent extends Component {
          })
        )
      } else {
-       this.props.presenter.addLoan(loanTypeId, poaText, modeOfLoanId, termId, desiredAmount, { file1, file2 })
+       this.props.presenter.addLoan(id, poaText, mode, term, desiredAmount, { file1, file2 })
      }
    }
    getExtension (filename) {
