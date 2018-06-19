@@ -11,6 +11,10 @@ export default class HRBenefitsService {
     return this.apiClient.post('v1/login', loginParam)
   }
 
+  logout (token) {
+    return this.apiClient.post('v1/logout', {token})
+  }
+
   otp (otpParam) {
     return this.apiClient.post('v2/otp', otpParam)
   }
@@ -116,7 +120,7 @@ export default class HRBenefitsService {
   validateAccountNumber (token, accountNumber) {
      return this.accountClient.get(`accounts/v1/${accountNumber}`, {
         headers: { token, referenceId : Math.random().toString(36)
-.substring(7),
+          .substring(7),
        }
      })
    }

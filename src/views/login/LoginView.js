@@ -166,8 +166,8 @@ class LoginView extends BaseMVPView {
             </div>
             <br/>
             <div className = {'download-container'}>
-              <span className = {'link-googleplay'} onClick = { () => this.downloadIOS() } />
-              <span className = {'link-appstore'} onClick = { () => this.downloadAndroid() } />
+              <span className = {'link-googleplay'} onClick = { () => this.downloadAndroid() } />
+              <span className = {'link-appstore'} onClick = { () => this.downloadIOS() } />
             </div>
         </Card>
 

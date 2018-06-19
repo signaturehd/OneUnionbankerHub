@@ -33,6 +33,7 @@ export default class LibraryPresenter {
       .toArray()
       .subscribe(books => {
         this.view.hideLoading()
+        this.view.showRecommendation(books)
       }, e => {
         this.view.hideLoading()
       })
