@@ -36,6 +36,11 @@ class LoansFragment extends Component {
       styleName: 'loans-cards-4',
       title: 'COMPUTER LOAN',
       path: '/mybenefits/benefits/loans/computer',
+    }, {
+      id: 5,
+      styleName: 'loans-cards-5',
+      title: 'MOTORCYCLE LOAN',
+      path: '/mybenefits/benefits/loans/motorcycle',
     }]
 
     const LoansHome = () => (
