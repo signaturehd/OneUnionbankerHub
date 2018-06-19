@@ -7,7 +7,7 @@ import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-
 import PurposeOfAvailmentModal from '../modals/MotorcyclePurposeOfAvailmentModal'
 import ModeOfLoanModal from '../modals/MotorcycleModeOfLoanModal'
 import TermOfLoanModal from '../modals/MotorcycleTermOfLoanModal'
-import SupplierModal from '../modals/MotorcycleLoanSupplierModal'
+import SupplierModal from '../modals/MotorcycleSupplierModal'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
