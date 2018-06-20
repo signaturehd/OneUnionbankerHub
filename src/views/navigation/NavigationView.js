@@ -39,6 +39,8 @@ import ComputerLoanFragment from '../computerloan/ComputerLoanFragment'
 /*Transaction*/
 import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
 import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
+import CarLeaseNewFragment from '../carlease/CarLeaseNewFragment'
+import CarLeaseOldFragment from '../carlease/CarLeaseOldFragment'
 
 import Carousel from '../carousel/Carousel'
 
@@ -169,15 +171,21 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mybenefits/benefits/loans/housingassistance' render = { props =>
                     <HousingAssistanceFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/carlease/new' render = { props =>
+                    <CarLeaseNewFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/carlease/old' render = { props =>
+                    <CarLeaseOldFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits/benefits/loans/emergency' render = { props =>
                     <EmergencyLoanFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits/benefits/loans/salary' render = { props =>
                     <SalaryLoanFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                      <Route path = '/mybenefits/benefits/loans/motorcycle' render = { props =>
-                        <MotorcycleLoanFragment { ...props }
-                          setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/loans/motorcycle' render = { props =>
+                    <MotorcycleLoanFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits/benefits/loans/computer' render = { props =>
                     <ComputerLoanFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
