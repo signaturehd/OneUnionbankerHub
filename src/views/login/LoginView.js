@@ -128,7 +128,9 @@ class LoginView extends BaseMVPView {
               this.state.disabled ?
               <center>
               <br/>
+              <br/>
                 <CircularLoader show = { true }/>
+              <br/>
               <br/>
               </center>              :
               <div>
