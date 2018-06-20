@@ -42,8 +42,6 @@ import TransactionPersonalDetailFragment from '../transactiondetails/Transaction
 import CarLeaseNewFragment from '../carlease/CarLeaseNewFragment'
 import CarLeaseOldFragment from '../carlease/CarLeaseOldFragment'
 
-import OnboardingView from '../onboarding/OnboardingView'
-
 import Carousel from '../carousel/Carousel'
 
 import NavigationViewModal from './modal/NavigationViewModal'
@@ -205,9 +203,6 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/feedback' render = { props =>
                     <FeedbackFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/onboard' render = { props =>
-                    <OnboardingView { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>
