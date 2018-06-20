@@ -8,23 +8,17 @@ import moment from 'moment'
 
 
 
-class AboutMe extends Component {
-  constructor (props) {
+class Certificate extends Component {
+  constructor(props) {
     super(props)
     this.state = {
       preferredDate: moment(),
       endDate: moment(),
-      aboutMeTextValue: '',
 
     }
     this.onChange = this.onChange.bind(this)
     this.onEndChange = this.onEndChange.bind(this)
-    this.handleMeChanged = this.handleMeChanged.bind(this)
   }
-
-handleMeChanged (event) {
-  this.setState({ aboutMeTextValue:event.target.value })
-}
 
    onChange (data) {
     this.setState({ preferredDate: data })
@@ -37,30 +31,36 @@ handleMeChanged (event) {
      data && data.format('DD-MM-YYYY')) /* date format*/
  }
 
+  render() {
+    const { preferredDate, endDate} = this.state
+    const { onGetPurposeOfLoan } = this.props
 
-
-  render () {
-    const {
-      preferredDate, endDate, aboutMeTextValue } = this.state
-    const {
-      onGetPurposeOfLoan } = this.props
-    return (
-      <div className = {'general-container'}>
+    return(
+      <div className={ 'general-container' }>
         <div>
-          <Card className = { 'general-form-card' }>
+          <Card className={ 'general-form-card' }>
             <h4>
-             About Me
+             Certificate
             </h4>
-            <div className = {'general-form-card-body '}>
-              <FileUploader
-                type = 'file'
-                placeholder = { 'Profile Photo' }
-                />
+            <div className={ 'general-form-card-body' }>
               <GenericTextBox
-                value={this.state.aboutMeTextValue }
-                onChange = {this.handleMeChanged }
-                placeholder = { 'Describe yourself' }
+                type={ 'text' }
+                placeholder={ 'Certificate Name' }
+                type={ 'text' }/>
+              <GenericTextBox
+                placeholder={ 'Issuing Body' }
+                type={ 'text' }/>
+              <GenericTextBox
+                placeholder = { 'Address' }
                 type = { 'text' }/>
+              <h3> Date Issued: <DatePicker
+                dateFormat={ 'DD-MM-YYYY' }
+                readOnly
+                selected={ preferredDate }
+                onChange={ this.onChange }
+                className={ 'calendar' }
+                calendarClassName={ 'calendarClass' }/>
+            </h3>
             </div>
           </Card>
         </div>
@@ -69,7 +69,7 @@ handleMeChanged (event) {
   }
 }
 
-AboutMe.propTypes = {
+Certificate.propTypes = {
   purposeOfAvailment : PropTypes.array,
   validateLoanType : PropTypes.array,
   loanType : PropTypes.number,
@@ -78,4 +78,4 @@ AboutMe.propTypes = {
   setSelectedNavigation: PropTypes.func,
 }
 
-export default AboutMe
+export default Certificate

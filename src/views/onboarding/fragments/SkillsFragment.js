@@ -40,20 +40,20 @@ class Certificate extends Component {
       onGetPurposeOfLoan } = this.props
 
     return(
-      <div className = {'general-container'}>
+      <div className={ 'general-container' }>
         <div>
-          <Card className = { 'general-form-card' }>
+          <Card className={ 'general-form-card' }>
             <h4>
              Skills
             </h4>
-            <div className = {'general-form-card-body '}>
+            <div className={ 'general-form-card-body' }>
               <GenericTextBox
-                type = 'text'
-                placeholder = { 'Input Skills' }
-                type = { 'text' }/>
+                type={ 'text' }
+                placeholder={ 'Input Skills' }
+                type={ 'text' }/>
               <GenericTextBox
-                placeholder = { 'Skills Level' }
-                type = { 'text' }/>
+                placeholder={ 'Skills Level' }
+                type={ 'text' }/>
             </div>
           </Card>
         </div>

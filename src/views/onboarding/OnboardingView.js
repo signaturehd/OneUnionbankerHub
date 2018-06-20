@@ -5,13 +5,13 @@ import BaseMVPView from '../common/base/BaseMVPView'
 
 import ConnectView from '../../utils/ConnectView'
 
-import Stepper from './components/Steps'
+import Stepper from './components/StepsComponent'
 import './components/styles/boarding-styles.css'
-import Education from './fragments/Education'
-import Experience from './fragments/Experience'
-import Skills from './fragments/Skills'
-import Certificate from './fragments/Certificate'
-import AboutMe from './fragments/AboutMe'
+import Education from './fragments/EducationFragment'
+import Experience from './fragments/ExperienceFragment'
+import Skills from './fragments/SkillsFragment'
+import Certificate from './fragments/CertificateFragment'
+import AboutMe from './fragments/AboutMeFragment'
 
 const steps = [
   {
@@ -44,8 +44,6 @@ const steps = [
   }
 ]
 
-
-
 class OnboardingView extends Component {
   constructor (props) {
     super(props)
@@ -55,7 +53,7 @@ class OnboardingView extends Component {
       alert('submited');
     }
     return (
-          <Stepper steps={steps} onFinish={submit} />
+          <Stepper steps={ steps } onFinish={ submit } />
     )
   }
 }
