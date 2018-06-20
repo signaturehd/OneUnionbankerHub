@@ -60,7 +60,23 @@ class MplFormLoanCardComponent extends Component {
          })
        )
      } else {
-       this.props.presenter.addLoan(id, poaText, mode, term, desiredAmount, { file1, file2 })
+       if(
+         id === null ||
+         term === null ||
+         mode === null ||
+         amount === 0 ||
+         poaText === ''
+      ) {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Warning' ,
+            message : 'Please fill all the fields',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else {
+        this.props.presenter.addLoan(id, poaText, mode, term, desiredAmount, { file1, file2 })
+      }
      }
    }
    getExtension (filename) {
