@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import BaseMVPView from '../common/base/BaseMVPView'
-import Presenter from '../mpl/presenter/MultiPurposeLoanPresenter'
+import Presenter from './presenter/CarLeasePresenter'
 import ConnectView from '../../utils/ConnectView'
 
 import { CircularLoader } from '../../ub-components/'
@@ -10,9 +10,9 @@ import { CircularLoader } from '../../ub-components/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 
-import FormComponent from '../mpl/components/CarLeaseNewForm'
+import FormComponent from './components/CarLeaseOldForm'
 
-class CarLeaseNewFragment extends BaseMVPView {
+class CarLeaseOldFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
@@ -62,7 +62,7 @@ class CarLeaseNewFragment extends BaseMVPView {
   }
   /* Navigage back to loans Option*/
   navigate () {
-    this.props.history.push('/mybenefits/benefits/loans')
+    this.props.history.push('/mybenefits/benefits/carlease')
   }
 
   render () {
@@ -97,7 +97,7 @@ class CarLeaseNewFragment extends BaseMVPView {
           <ResponseModal
             onClose = { () => {
               this.setState({ showNoticeResponseModal : false })
-              this.props.history.push('/mybenefits/benefits/loans')
+              this.props.history.push('/mybenefits/benefits/carlease')
             }}
             benefitId = { loanType }
             noticeResponse = { response }
@@ -112,7 +112,7 @@ class CarLeaseNewFragment extends BaseMVPView {
             onClick = { this.navigate.bind(this) }>
           </i>
           <h2 className = { 'header-margin-default' }>
-            Car Lease Brand New
+            Car Lease Second Hand
           </h2>
         </div>
           {
@@ -133,4 +133,4 @@ class CarLeaseNewFragment extends BaseMVPView {
     )
   }
 }
-export default ConnectView(CarLeaseNewFragment, Presenter)
+export default ConnectView(CarLeaseOldFragment, Presenter)
