@@ -20,7 +20,7 @@ class EducationFragment extends Component {
       id: 1,
       styleName: 'education-cards-1',
       title: 'EDUCATION GRANT-PLAN',
-      path: '/mybenefits/benefits/education/grant-plan',
+      path: '/mybenefits/benefits/education/grantplan',
     }]
 
     const EducationHome = () => (
