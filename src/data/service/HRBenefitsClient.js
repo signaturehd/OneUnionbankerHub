@@ -358,8 +358,20 @@ export default class HRBenefitsClient {
       mplPurposeLoanAddParam)
       .pipe(ServiceErrorOperator())
   }
-    getCarValidate (token) {
-      return this.service.getCarValidate(token)
+  getCarValidate (token) {
+    return this.service.getCarValidate(token)
       .pipe(ServiceErrorOperator())
+  }
+
+  getCarRequest (token, carRequestParam) {
+    return this.service.getCarRequest(token, carRequestParam, {
+      headers: { token }
+    })
+  }
+
+  getCarLease (token, carRequestParam) {
+    return this.service.getCarLease(token, carRequestParam, {
+      headers: { token }
+    })
   }
 }
