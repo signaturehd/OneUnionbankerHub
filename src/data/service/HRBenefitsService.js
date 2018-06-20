@@ -333,7 +333,7 @@ export default class HRBenefitsService {
         principalAmount : mplPurposeLoanAddParam.principalLoanAmount
       },
       accountNumber : accountNumber,
-      promissoryNoteNumbers : ["S01", "S02"],
+      promissoryNoteNumbers : [],
       relesingCenter : releasingCenter,
       distributor : "distributorTest",
     }
