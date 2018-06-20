@@ -10,7 +10,7 @@ import { CircularLoader } from '../../ub-components/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 
-import FormComponent from './components/CarLeaseOldForm'
+import FormComponent from './components/CarLeaseOldFormComponent'
 
 class CarLeaseOldFragment extends BaseMVPView {
   constructor (props) {

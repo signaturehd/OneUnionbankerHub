@@ -30,22 +30,22 @@ class CarLeaseFragment extends Component {
 
     const CarHome = () => (
         <div>
-            <i
-              className = { 'back-arrow' }
-              onClick = { () => this.navigate() }></i>
-            <h1>CAR LEASE</h1>
-          <div className = { 'adjustment' }>
-          <div className = { 'card-container' }>
+          <i
+            className={ 'back-arrow' }
+            onClick={ () => this.navigate() }></i>
+          <h1>CAR LEASE</h1>
+          <div className={ 'adjustment' }>
+          <div className={ 'card-container' }>
             {
             benefitsOptions.map((value, idx) => (
               <Card
-                className = { 'benefits-card' }
-                key = { idx }>
+                className={ 'benefits-card' }
+                key={ idx }>
                 <div
-                  className = { value.styleName}
-                  text = { value.title }
-                  onClick = { () => history.push(value.path) } >
-                  <p className = { 'benefits-option-cards' }>
+                  className={ value.styleName}
+                  text={ value.title }
+                  onClick={ () => history.push(value.path) } >
+                  <p className={ 'benefits-option-cards' }>
                     { value.title }
                   </p>
                 </div>
@@ -60,7 +60,7 @@ class CarLeaseFragment extends Component {
     return (
       <div>
         <Switch>
-          <Route exact path = '/mybenefits/benefits/carlease'  render = { CarHome } />
+          <Route exact path={ '/mybenefits/benefits/carlease' } render = { CarHome } />
         </Switch>
       </div>
     )

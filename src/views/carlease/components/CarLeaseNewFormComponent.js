@@ -12,7 +12,7 @@ import CarSecondaryColorModal from '../modals/carBrandNewModal/CarSecondaryColor
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
-class CarLeaseOldForm extends Component {
+class CarLeaseNewFormComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -166,64 +166,71 @@ class CarLeaseOldForm extends Component {
         $imagePreview2 = (<div style = {styles.image2}></div>)
 
     return (
-      <div className = {'carview-container'}>
-        <div className = { 'car-grid-column-2' }>
-          <Card className = { 'car-form-card' }>
+      <div className={'carview-container'}>
+        <div className={ 'car-grid-column-2' }>
+          <Card className={ 'car-form-card' }>
             <h4>
               Car Lease Form (Old)
             </h4>
-            <div className = {'car-form-card-body '}>
+            <div className={ 'car-form-card-body' }>
               <GenericTextBox
-                type = 'text'
-                placeholder = { 'Brand' }
-                type = { 'text' }/>
+                type={ 'text' }
+                placeholder={ 'Brand' }
+                type={ 'text' }/>
               <GenericTextBox
-                placeholder = { 'Model' }
-                type = { 'text' }/>
+                placeholder={ 'Model' }
+                type={ 'text' }/>
               <GenericTextBox
-                placeholder = { 'Year' }
-                type = { 'text' }/>
+                placeholder={ 'Year' }
+                type={ 'text' }/>
               <GenericTextBox
-                placeholder = { 'Primary Color' }
-                type = { 'text' }/>
+                placeholder={ 'Primary Color' }
+                type={ 'text' }/>
               <GenericTextBox
-                placeholder = { 'Secondary Color' }
-                type = { 'text' }/>
+                placeholder={ 'Secondary Color' }
+                type={ 'text' }/>
               <GenericButton
-                type = { 'button' }
-                text = { 'continue' }
-                onClick = { () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId) }
-                className = { 'carview-submit' } />
+                type={ 'button' }
+                text={ 'continue' }
+                onClick={ () =>
+                  this.sendFormData(
+                    amountValue,
+                    modeOfLoanId,
+                    loanType,
+                    poaText,
+                    termId)
+                  }
+                className={ 'carview-submit' } />
             </div>
           </Card>
           {
             showFileUpload &&
-          <Card className = { 'car-form-preview' }>
+          <Card className={ 'car-form-preview' }>
             <h4>
               Dealer Quotation Attachment
             </h4>
-            <div className = {'optical-body'}>
+            <div className={ 'optical-body' }>
              <FileUploader
-                onChange = { this.handleImageChange }
-                placeholder = 'Dealer Quotation'
-                value = { this.state.file.name }
+                onChange={ this.handleImageChange }
+                placeholder={ 'Dealer Quotation' }
+                value={ this.state.file.name }
               />
               <FileUploader
-                onChange = { this.handleImageChange2 }
-                placeholder = 'Dealer Quotation'
-                value = { this.state.file2.name }
+                onChange={ this.handleImageChange2 }
+                placeholder={ 'Dealer Quotation' }
+                value={ this.state.file2.name }
               />
             </div>
-            <div className = { 'car-form-card-body' }>
-              <div className = {'optical-footer-left'}>
-                <div className = { 'optical-grid' }>
-                  <div className = { 'optical-image-view' }>
+            <div className={ 'car-form-card-body' }>
+              <div className={ 'optical-footer-left' }>
+                <div className={ 'optical-grid' }>
+                  <div className={ 'optical-image-view' }>
                     {$imagePreview}
-                    <div className = { 'optical-image-layer' }></div>
+                    <div className={ 'optical-image-layer' }></div>
                   </div>
-                  <div className = { 'optical-image-view' }>
+                  <div className={ 'optical-image-view' }>
                     {$imagePreview2}
-                    <div className = {  'optical-image-layer' }></div>
+                    <div className={  'optical-image-layer' }></div>
                   </div>
                 </div>
               </div>
@@ -236,7 +243,7 @@ class CarLeaseOldForm extends Component {
   }
 }
 
-CarLeaseOldForm.propTypes = {
+CarLeaseNewFormComponent.propTypes = {
   purposeOfAvailment : PropTypes.array,
   validateLoanType : PropTypes.array,
   loanType : PropTypes.number,
@@ -245,4 +252,4 @@ CarLeaseOldForm.propTypes = {
   setSelectedNavigation: PropTypes.func,
 }
 
-export default CarLeaseOldForm
+export default CarLeaseNewFormComponent
