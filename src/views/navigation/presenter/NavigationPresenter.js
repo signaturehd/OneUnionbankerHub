@@ -19,7 +19,7 @@ export default class NavigationPresenter {
 
   logout () {
     this.logoutInteractor.execute()
-    // TODO make reactive when logout API call is integrated
+      .subscribe()
   }
 
   getLibraries () {

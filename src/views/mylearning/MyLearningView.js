@@ -77,13 +77,13 @@ class MyLearningView extends BaseMVPView {
     return (
       <div>
         <Switch>
-          <Route exact path = '/mylearning' render = { MyLearning } />
           <Route exact path = '/mylearning/podcasts' render = { props =>
             <PodcastFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts/:id' render = { props =>
             <PodcastPlayerFragment { ...props } /> } />
           <Route path = '/mylearning/books' render = { props =>
             <LibraryView { ...props } /> } />
+          <Route path = '/mylearning' render = { MyLearning } />
         </Switch>
       </div>
     )
