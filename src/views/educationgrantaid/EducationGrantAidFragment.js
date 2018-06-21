@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import ConnectView from '../../utils/ConnectView'
-import Presenter from './presenter/EducationAidPresenter'
+import Presenter from './presenter/EducationGrantAidPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 
 import { CircularLoader } from '../../ub-components/'
@@ -10,9 +10,9 @@ import { CircularLoader } from '../../ub-components/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 
-import FormComponent from './components/EducationAidFormCardComponent'
+import FormComponent from './components/EducationGrantAidFormCardComponent'
 
-class EducationAidFragment extends BaseMVPView{
+class EducationGrantAidFragment extends BaseMVPView{
   constructor(props) {
     super(props)
     this.state = {
@@ -63,4 +63,4 @@ class EducationAidFragment extends BaseMVPView{
 }
 
 
-export default ConnectView(EducationAidFragment, Presenter)
+export default ConnectView(EducationGrantAidFragment, Presenter)

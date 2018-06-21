@@ -1,4 +1,4 @@
-export default class EducationAidPresenter {
+export default class EducationGrantAidPresenter {
   constructor (container) {
   }
 

@@ -1,25 +1,16 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
-
-import Countdown from '../../../common/components/Countdown/Countdown'
-import { Card, CircularLoader } from '../../../../ub-components'
-
-import staticImage from '../../../../images/UBBldg.jpg'
-import '../../styles/benefits.css'
-import '../../fragments/education/styles/education.css'
-
+import { Card, GenericButton } from '../../../../ub-components'
+import './styles/education.css'
 
 class EducationFragment extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      showLoader : true
-    }
   }
 
-  componentDidMount () {
-    setTimeout(() => this.setState({ showLoader : false }), 3000)
+  navigate () {
+      this.props.history.push('/mybenefits/benefits')
   }
 
   navigate () {
@@ -30,10 +21,19 @@ class EducationFragment extends Component {
     const { history } = this.props
 
     const benefitsOptions = [{
-      id: 2,
+      id: 1,
       styleName: 'education-cards-1',
       title: 'EDUCATION AID',
       path: '/mybenefits/benefits/education/educationaid',
+      id: 2,
+      styleName: 'education-cards-3',
+      title: 'EDUCATION GRANT - AID',
+      path: '/mybenefits/benefits/education/grantaid',
+    }, {
+      id: 3,
+      styleName: 'education-cards-4',
+      title: 'EDUCATION GRANT - PLAN',
+      path: '/mybenefits/benefits/education/grantplan',
     }]
 
     const EducationHome = () => (
