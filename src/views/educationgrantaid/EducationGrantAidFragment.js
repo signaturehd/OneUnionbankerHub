@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import ConnectView from '../../utils/ConnectView'
-import Presenter from './presenter/EducationGrantPlanPresenter'
+import Presenter from './presenter/EducationGrantAidPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 
 import { CircularLoader } from '../../ub-components/'
@@ -10,21 +10,15 @@ import { CircularLoader } from '../../ub-components/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 
-import FormComponent from './components/EducationGrantPlanFormCardComponent'
+import FormComponent from './components/EducationGrantAidFormCardComponent'
 
-class EducationGrantPlanFragment extends BaseMVPView{
+class EducationGrantAidFragment extends BaseMVPView{
   constructor(props) {
     super(props)
     this.state = {
       enabledLoader : false
     }
   }
-
-  componentDidMount () {
-    /*this.presenter.getDentalReimbursement()*/
-    this.props.setSelectedNavigation(1)
-  }
-
 
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
@@ -51,7 +45,7 @@ class EducationGrantPlanFragment extends BaseMVPView{
             onClick = { this.navigate.bind(this) }>
           </i>
           <h2 className = { 'header-margin-default' }>
-            Education Grant - Plan
+            Education Grant - Aid
           </h2>
         </div>
         {
@@ -69,4 +63,4 @@ class EducationGrantPlanFragment extends BaseMVPView{
 }
 
 
-export default ConnectView(EducationGrantPlanFragment, Presenter)
+export default ConnectView(EducationGrantAidFragment, Presenter)

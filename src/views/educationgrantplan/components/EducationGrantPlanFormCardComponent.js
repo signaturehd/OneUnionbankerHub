@@ -11,7 +11,7 @@ import { NotifyActions } from '../../../actions/'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-class EducationFormCardComponent extends Component {
+class EducationGrantPlanFormCardComponent extends Component {
   constructor (props) {
     super (props)
     this.state = {
@@ -21,8 +21,14 @@ class EducationFormCardComponent extends Component {
       effectiveDate: '',
       maturityDate: '',
       typeOfGrant: '',
-      grantAmount: ''
+      grantAmount: '',
+      file: ''
     }
+  }
+
+  getExtension (filename) {
+    const parts = filename.split('/')
+    return parts[parts.length - 1]
   }
 
   render () {
@@ -34,7 +40,8 @@ class EducationFormCardComponent extends Component {
       effectiveDate,
       maturityDate,
       typeOfGrant,
-      grantAmount
+      grantAmount,
+      file
     } = this.state
 
     return (
@@ -84,7 +91,44 @@ class EducationFormCardComponent extends Component {
               <br/>
               <FileUploader
                 accept="image/gif,image/jpeg,image/jpg,image/png,"
-                placeholder = 'Form Attachments'/>
+                placeholder = 'Form Attachments'
+                value = { this.state.file.name }
+                onChange = {
+                  (e) => {
+                    e.preventDefault()
+                    const reader = new FileReader()
+                    const file = e.target.files[0]
+                    let isValid
+                    switch (this.getExtension(file.type).toLowerCase()) {
+                      case 'jpeg' :
+                        isValid = true
+                      case 'jpg' :
+                        isValid = true
+                      case 'png' :
+                        isValid = true
+                      case 'pdf' :
+                        isValid = true
+                    }
+
+                    if (isValid) {
+                      reader.onloadend = () => {
+                        this.setState({
+                          file
+                        })
+                      }
+                      reader.readAsDataURL(file)
+                   } else {
+                       store.dispatch(NotifyActions.addNotify({
+                           title : 'File Uploading',
+                           message : 'The accepted attachments are JPG/PNG/PDF',
+                           type : 'warning',
+                           duration : 2000
+                         })
+                       )
+                     }
+                  }
+                }
+                />
               <GenericButton
                 type = { 'button' }
                 text = { 'continue' }
@@ -98,4 +142,4 @@ class EducationFormCardComponent extends Component {
   }
 }
 
-export default EducationFormCardComponent
+export default EducationGrantPlanFormCardComponent
