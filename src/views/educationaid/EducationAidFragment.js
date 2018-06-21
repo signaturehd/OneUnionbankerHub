@@ -45,7 +45,7 @@ class EducationAidFragment extends BaseMVPView{
             onClick = { this.navigate.bind(this) }>
           </i>
           <h2 className = { 'header-margin-default' }>
-            Education Grant - Aid
+            Education Aid
           </h2>
         </div>
         {

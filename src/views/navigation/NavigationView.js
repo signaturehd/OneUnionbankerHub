@@ -25,6 +25,7 @@ import { connect } from 'react-redux'
 import store from '../../store'
 import { NotifyActions } from '../../actions'
 /* Education */
+import EducationAidFragment from '../educationaid/EducationAidFragment'
 import EducationGrantPlanFragment from '../educationgrantplan/EducationGrantPlanFragment'
 import EducationGrantAidFragment from '../educationgrantaid/EducationGrantAidFragment'
 /* Medical */
@@ -144,6 +145,9 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mybenefits/transactions/approval/:id' render = { props =>
                     <TransactionApprovalDetailFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                      <Route path = '/mybenefits/benefits/education/aid' render = { props =>
+                        <EducationAidFragment { ...props }
+                          setSelectedNavigation = { this.setSelectedNavigation } />}/>
                   <Route path = '/mybenefits/benefits/education/grantplan' render = { props =>
                     <EducationGrantPlanFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>

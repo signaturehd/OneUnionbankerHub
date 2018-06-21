@@ -13,10 +13,6 @@ class EducationFragment extends Component {
       this.props.history.push('/mybenefits/benefits')
   }
 
-  navigate () {
-      this.props.history.push('/mybenefits/benefits')
-  }
-
   render () {
     const { history } = this.props
 
@@ -24,14 +20,15 @@ class EducationFragment extends Component {
       id: 1,
       styleName: 'education-cards-1',
       title: 'EDUCATION AID',
-      path: '/mybenefits/benefits/education/educationaid',
+      path: '/mybenefits/benefits/education/aid',
+    }, {
       id: 2,
-      styleName: 'education-cards-3',
+      styleName: 'education-cards-2',
       title: 'EDUCATION GRANT - AID',
       path: '/mybenefits/benefits/education/grantaid',
     }, {
       id: 3,
-      styleName: 'education-cards-4',
+      styleName: 'education-cards-3',
       title: 'EDUCATION GRANT - PLAN',
       path: '/mybenefits/benefits/education/grantplan',
     }]
