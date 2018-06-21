@@ -16,23 +16,35 @@ class CarLeaseNewFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-      carBrand: '',
-      carModel: '',
-      makeYear: '',
-      primaryColor: '',
-      secondaryColor : '',
       enabledLoader : false,
       noticeResponse : null, /* notice response*/
       showNoticeResponseModal : false,
       showNoticeModal : false,
       showConfirmation : false,
-      loanType: 1,
+      loanType: 15,
+      carBrand: '',
+      carModel: '',
+      makeYear: 0,
+      primaryColor: '',
+      secondaryColor: '',
+      file: ''
     }
+    this.sendFormData = this.sendFormData.bind(this)
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.getCarValidate(this.state.loanType)
+    this.presenter.getCarValidate()
+  }
+
+  sendFormData (
+    carBrand,
+    carModel,
+    makeYear,
+    primaryColor,
+    secondaryColor,
+    file) {
+      console.log(carBrand, carModel,makeYear,primaryColor,secondaryColor,file)
   }
 
   /* Notice Response*/
@@ -50,7 +62,6 @@ class CarLeaseNewFragment extends BaseMVPView {
     this.setState({ validateLoanType })
   }
 
-
   /* Loader*/
 
   hideCircularLoader () {
@@ -67,66 +78,86 @@ class CarLeaseNewFragment extends BaseMVPView {
 
   render () {
     const {
-      carBrand,
-      carModel,
-      makeYear,
-      primaryColor,
-      secondaryColor,
       enabledLoader,
       formAttachments,
       showConfirmation,
       showNoticeModal,
       showNoticeResponseModal,
       noticeResponse,
-      response } = this.state
+      response,
+      carBrand,
+      carModel,
+      makeYear,
+      primaryColor,
+      secondaryColor,
+      file } = this.state
+      console.log(carBrand)
     return (
       <div>
         {
           showNoticeModal &&
           <NoticeModal
-            onClose = { () => this.setState({ showNotice : false })}
-            noticeResponse = { noticeResponse }
-            benefitId = { loanType }
-            onDismiss = { (showNoticeModal, response) =>
+            onClose={ () => this.setState({ showNotice : false })}
+            noticeResponse={ noticeResponse }
+            benefitId={ loanType }
+            onDismiss={ (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
         }
-
         {
           showNoticeResponseModal &&
           <ResponseModal
-            onClose = { () => {
+            onClose={ () => {
               this.setState({ showNoticeResponseModal : false })
               this.props.history.push('/mybenefits/benefits/carlease')
             }}
-            benefitId = { loanType }
-            noticeResponse = { response }
-            onDismiss = { (showNoticeModal, response) =>
+            benefitId={ loanType }
+            noticeResponse={ response }
+            onDismiss={ (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response })  }
           />
-
         }
         <div>
           <i
-            className = { 'back-arrow' }
-            onClick = { this.navigate.bind(this) }>
+            className={ 'back-arrow' }
+            onClick={ this.navigate.bind(this) }>
           </i>
-          <h2 className = { 'header-margin-default' }>
+          <h2 className={ 'header-margin-default' }>
             Car Lease Brand New
           </h2>
         </div>
           {
             enabledLoader ?
-             <center className = { 'circular-loader-center' }>
-               <CircularLoader show = { this.state.enabledLoader }/>
+             <center className={ 'circular-loader-center' }>
+               <CircularLoader show={ this.state.enabledLoader }/>
              </center> :
             <FormComponent
-              carBrand = { carBrand }
-              carModel = { carModel }
-              makeYear = { makeYear }
-              primaryColor = { primaryColor }
-              secondaryColor = { secondaryColor }
-              presenter = { this.presenter }
+              presenter={ this.presenter }
+              onClick={
+                this.sendFormData(
+                  carBrand,
+                  carModel,
+                  makeYear,
+                  primaryColor,
+                  secondaryColor,
+                  file
+                  )
+                }
+              onSubmit={ (
+                getCarBrandData,
+                getCarModelData,
+                getMakeYearData,
+                getPrimaryColorData,
+                getSecondaryColorData,
+                getFileData) => this.setState({
+                  carBrand : getCarBrandData,
+                  carModel : getCarModelData,
+                  makeYear : getMakeYearData,
+                  primaryColor : getPrimaryColorData,
+                  secondaryColor : getSecondaryColorData,
+                  file : getFileData
+                })
+              }
             />
           }
       </div>
