@@ -35,7 +35,7 @@ export default function ServiceErrorOperator () {
               duration : 2000
             })
           )
-          localStorage.clear() // TODO update this to interactor
+          // localStorage.clear() // TODO update this to interactor
           subscriber.error(new ForbiddenError())
         } else {
           store.dispatch(NotifyActions.addNotify({
