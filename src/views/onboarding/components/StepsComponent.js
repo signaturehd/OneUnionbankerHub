@@ -29,30 +29,28 @@ class Stepper extends Component {
   render () {
     const { steps, onFinish } = this.props
     const { activeStep } = this.state
-    const stepIndicators = steps.map((step, i) => {
-      return (
-        <div className={ "stepper-inner" }
+    const stepIndicators = steps.map((step, i) => (
+        <div className={ 'stepper-inner' }
              onClick={() => this.handleStepChange(i) }>
           <div className={ `stepper-number ${ activeStep === i && 'active' }` }>
-            <span>{i+1}</span>
-            <div className={ "line-linkage" }></div>
+            <span>{i + 1}</span>
+            <div className={ 'line-linkage' }></div>
           </div>
           {
             i !== steps.length &&
-              <div className={ "stepper-label" }>
+              <div className={ 'stepper-label' }>
               { step.label }
               </div>
           }
         </div>
-       )
-    })
+       ))
 
     return (
-      <div className={ "stepper" }>
-        <div className={ "stepper-indicator" }>
+      <div className={ 'stepper' }>
+        <div className={ 'stepper-indicator' }>
           {stepIndicators}
         </div>
-        <div className={ "stepper-steps" }>
+        <div className={ 'stepper-steps' }>
           { steps[activeStep].component }
         </div>
         <div className="stepper-actions">

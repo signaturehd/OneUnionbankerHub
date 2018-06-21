@@ -8,16 +8,29 @@ import moment from 'moment'
 
 
 
-class Certificate extends Component {
-  constructor(props) {
+class SkillsFragment extends Component {
+  constructor (props) {
     super(props)
     this.state = {
       preferredDate: moment(),
       endDate: moment(),
+      skills: null,
+      forms:[],
 
     }
     this.onChange = this.onChange.bind(this)
     this.onEndChange = this.onEndChange.bind(this)
+    this.add = this.add.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+ handleChange (evt) {
+    this.setState({ [evt.target.name]: evt.target.value })
+  }
+
+
+  add () {
+    const forms = this.state.forms.concat(SkillsFragment)
+    this.setState({ forms })
   }
 
    onChange (data) {
@@ -33,20 +46,19 @@ class Certificate extends Component {
 
 
 
-  render() {
+  render () {
     const {
-      preferredDate, endDate} = this.state
-    const {
-      onGetPurposeOfLoan } = this.props
-
-    return(
+      preferredDate, endDate,skills,skillLevel } = this.state
+      const forms = this.state.forms.map((Element, index) => <Element key={ index } index={ index } />)
+    return (
       <div className={ 'general-container' }>
         <div>
           <Card className={ 'general-form-card' }>
             <h4>
              Skills
             </h4>
-            <div className={ 'general-form-card-body' }>
+            <div className={ 'general-form-card-body' }
+               name = { `document-${ this.props.index }-document` } >
               <GenericTextBox
                 type={ 'text' }
                 placeholder={ 'Input Skills' }
@@ -54,15 +66,24 @@ class Certificate extends Component {
               <GenericTextBox
                 placeholder={ 'Skills Level' }
                 type={ 'text' }/>
+                  <div>
+                <GenericButton
+                  onClick = { this.add }
+                  type = { 'button' }
+                  text = { 'Add Skills' }/>
+               </div>
             </div>
           </Card>
         </div>
+        <div className="inputs">
+        { forms }
+      </div>
       </div>
     )
   }
 }
 
-Certificate.propTypes = {
+SkillsFragment.propTypes = {
   purposeOfAvailment : PropTypes.array,
   validateLoanType : PropTypes.array,
   loanType : PropTypes.number,
@@ -71,4 +92,4 @@ Certificate.propTypes = {
   setSelectedNavigation: PropTypes.func,
 }
 
-export default Certificate
+export default SkillsFragment

@@ -9,15 +9,30 @@ import moment from 'moment'
 
 
 class Experience extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       preferredDate: moment(),
       endDate: moment(),
-
+      forms:[],
+      compName:null,
+      address:null,
+      position:null,
+      textarea:null,
     }
     this.onChange = this.onChange.bind(this)
     this.onEndChange = this.onEndChange.bind(this)
+    this.add = this.add.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+  handleChange (evt) {
+    this.setState({ [evt.target.name]: evt.target.value })
+  }
+
+
+  add () {
+    const forms = this.state.forms.concat(Experience)
+    this.setState({ forms })
   }
 
    onChange (data) {
@@ -33,26 +48,25 @@ class Experience extends Component {
 
 
 
-  render() {
+  render () {
     const {
       preferredDate,
-      endDate } = this.state
-    const { onGetPurposeOfLoan } = this.props
+      endDate, compName,address,position,textarea } = this.state
+      const forms = this.state.forms.map((Element, index) => <Element key={ index } index={ index } />)
 
-    return(
+    return (
       <div className={ 'general-container' }>
         <div>
           <Card className={ 'general-form-card' }>
             <h4>
              Experience
             </h4>
-            <div className={ 'general-form-card-body' }>
+            <div className={ 'general-form-card-body' }
+              name = { `document-${ this.props.index }-document` } >
+              >
               <GenericTextBox
                 type={ 'text' }
                 placeholder={ 'Company Name' }
-                type={ 'text' }/>
-              <GenericTextBox
-                placeholder={ 'Degree' }
                 type={ 'text' }/>
               <GenericTextBox
                 placeholder={ 'Address' }
@@ -78,8 +92,17 @@ class Experience extends Component {
                 onChange={ e => this.getTextareaValue(e.target.value) }
                 className={ 'experience-textarea' }
                 placeholder={ 'Brief description of duties' }/>
+                <div>
+                <GenericButton
+                  onClick = { this.add }
+                  type = { 'button' }
+                  text = { 'Add Experience' }/>
+               </div>
             </div>
           </Card>
+          <div className="inputs">
+        { forms }
+      </div>
         </div>
       </div>
     )

@@ -9,15 +9,31 @@ import moment from 'moment'
 
 
 class Education extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       preferredDate: moment(),
       endDate: moment(),
-
+      forms: [],
+      school: null,
+      degree: null,
+      course: null,
+      specialH: null,
     }
     this.onChange = this.onChange.bind(this)
     this.onEndChange = this.onEndChange.bind(this)
+    this.add = this.add.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+handleChange (evt) {
+    this.setState({ [evt.target.name]: evt.target.value })
+  }
+
+
+  add () {
+    const forms = this.state.forms.concat(Education)
+    this.setState({ forms })
   }
 
    onChange (data) {
@@ -33,39 +49,39 @@ class Education extends Component {
 
 
 
-  render() {
-    const { preferredDate, endDate} = this.state
-    const {
-      purposeOfAvailment,
-      loanType,
-      validateLoanType,
-      preferredFormData,
-      offset,
-      onGetPurposeOfLoan } = this.props
+  render () {
+    const { preferredDate, endDate, school, degree, course, specialH } = this.state
+      const forms = this.state.forms.map((Element, index) => <Element key={ index } index={ index } />)
 
-    return(
+    return (
       <div className={ 'general-container' }>
         <div>
           <Card className={ 'general-form-card' }>
             <h4>
              Education
             </h4>
-            <div className={ 'general-form-card-body' }>
+            <div className={ 'general-form-card-body' }
+               name = { `document-${ this.props.index }-document` } >
               <GenericTextBox
+                name="school"
                 type={ 'text' }
-                onClick={ () =>
-                  this.setState({ showPurposeOfAvailment : true }) }
                 placeholder={ 'School' }
-                type={ 'text' }/>
+                onChange={this.handleChange}/>
               <GenericTextBox
+                name="degree"
                 placeholder={ 'Degree' }
-                type={ 'text' }/>
+                type={ 'text' }
+                onChange={this.handleChange}/>
               <GenericTextBox
+                name="course"
                 placeholder={ 'Course' }
-                type={ 'text' }/>
+                type={ 'text' }
+                onChange={this.handleChange}/>
               <GenericTextBox
+                name="specialH"
                 placeholder={ 'Special Honors' }
-                type={ 'text' }/>
+                type={ 'text' }
+                onChange={this.handleChange}/>
               <label> Inclusive Dates </label>
               <h3> From Year: <DatePicker
                 dateFormat={ 'DD-MM-YYYY' }
@@ -80,10 +96,20 @@ class Education extends Component {
                 onEndChange={ this.onEndChange }
                 className={ 'calendar' }
                 calendarClassName={ 'calendarClass' }/>
+                <div>
+                <GenericButton
+                  onClick = { this.add }
+                  type = { 'button' }
+                  text = { 'Add Education' }/>
+               </div>
             </div>
           </Card>
         </div>
+        <div className="inputs">
+        { forms }
       </div>
+      </div>
+
     )
   }
 }
