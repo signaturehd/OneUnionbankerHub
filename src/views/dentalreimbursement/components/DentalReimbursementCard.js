@@ -76,23 +76,32 @@ submission (e) {
     )
   } else if (selectedProcedures.length !== 0) {
     let validate
+    let checknull
     selectedProcedures.map((procedure, key) => {
       if (procedure.amount > procedure.limit || procedure.amount === 0) {
         validate = true
       }
+      if(procedure.amount)
+      {
+        checknull= false
+      }
+      else
+      {
+        checknull=true
+      }
+      if (validate || checknull) {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Dental Reimbursement',
+            message : 'Please check the amount for procedure  '+procedure.name+'. It should not be zero or empty',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else {
+        this.setState({ showReviewSubmissionModal : true })
+      }
     })
-
-    if (validate) {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Dental Reimbursement',
-          message : 'Please check the amount for procedure',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    } else {
-      this.setState({ showReviewSubmissionModal : true })
-    }
+    
   } else {
     this.setState({ showReviewSubmissionModal : true })
   }
