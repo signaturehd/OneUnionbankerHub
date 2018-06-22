@@ -33,7 +33,7 @@ class EmergencyLoanFragment extends BaseMVPView {
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.getMplTypes()
-    this.presenter.getMplValidate(1)
+    this.presenter.getMplValidate(this.state.loanType)
     this.presenter.getMplPurposeOfAvailment(
       this.state.loanType,
       1,
@@ -107,7 +107,7 @@ class EmergencyLoanFragment extends BaseMVPView {
           <ResponseModal
             onClose = { () => {
               this.setState({ showNoticeResponseModal : false })
-              this.props.history.push('/mybenefits/benefits/medical')
+              this.props.history.push('/mybenefits/benefits/loans')
             }}
             benefitId = { loanType }
             noticeResponse = { response }
