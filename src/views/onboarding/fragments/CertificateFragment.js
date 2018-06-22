@@ -12,18 +12,54 @@ class Certificate extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      preferredDate: moment(),
-      endDate: moment(),
+      preferredDate:moment(),
       forms: [],
-
+      certName:'',
+      issuingBody:'',
+      address:'',
     }
     this.onChange = this.onChange.bind(this)
-    this.onEndChange = this.onEndChange.bind(this)
     this.add = this.add.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
-  handleChange (evt) {
-    this.setState({ [evt.target.name]: evt.target.value })
+
+  componentDidMount () {
+    this.hydrateStateWithsessionStorage()
+    window.addEventListener(
+      'beforeunload',
+      this.saveStateTosessionStorage.bind(this)
+    )
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener(
+      'beforeunload',
+      this.saveStateTosessionStorage.bind(this)
+    )
+    this.saveStateTosessionStorage()
+  }
+
+  hydrateStateWithsessionStorage () {
+    for (let key in this.state) {
+      if (sessionStorage.hasOwnProperty(key)) {
+        let value = sessionStorage.getItem(key)
+        try {
+          value = JSON.parse(value)
+          this.setState({ [key]: value })
+        } catch (e) {
+          this.setState({ [key]: value })
+        }
+      }
+    }
+  }
+
+  saveStateTosessionStorage () {
+    for (let key in this.state) {
+      sessionStorage.setItem(key, JSON.stringify(this.state[key]))
+    }
+  }
+
+  updateInput(key, value) {
+    this.setState({ [key]: value })
   }
 
   add () {
@@ -35,14 +71,9 @@ class Certificate extends Component {
     this.props.getPreferredDate(
       data && data.format('DD-MM-YYYY')) /* date format*/
   }
-  onEndChange (data) {
-   this.setState({ endDate: data })
-   this.props.getPreferredDate(
-     data && data.format('DD-MM-YYYY')) /* date format*/
- }
 
   render () {
-    const { preferredDate, endDate } = this.state
+    const { preferredDate, endDate, certName, issuingBody, address } = this.state
     const forms = this.state.forms.map((Element, index) => {
     return <Element key={ index } index={ index } />
     })
@@ -62,17 +93,20 @@ class Certificate extends Component {
                 type={ 'text' }
                 placeholder={ 'Certificate Name' }
                 type={ 'text' }
-                onChange={this.handleChange}/>
+                value={this.state.certName}
+                onChange={e => this.updateInput('certName', e.target.value)}/>
               <GenericTextBox
                 name="issuingBody"
                 placeholder={ 'Issuing Body' }
                 type={ 'text' }
-                onChange={this.handleChange}/>
+                value={this.state.issuingBody}
+                onChange={e => this.updateInput('issuingBody', e.target.value)}/>
               <GenericTextBox
                 name="address"
                 placeholder = { 'Address' }
                 type = { 'text' }
-                onChange={this.handleChange}/>
+                value={this.state.address}
+                onChange={e => this.updateInput('address', e.target.value)}/>
               <h3> Date Issued: <DatePicker
                 dateFormat={ 'DD-MM-YYYY' }
                 readOnly
@@ -99,6 +133,7 @@ class Certificate extends Component {
 }
 
 Certificate.propTypes = {
+
   purposeOfAvailment : PropTypes.array,
   validateLoanType : PropTypes.array,
   loanType : PropTypes.number,

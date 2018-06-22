@@ -12,14 +12,56 @@ class AboutMe extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      preferredDate: moment(),
-      endDate: moment(),
       aboutMeTextValue: '',
 
     }
     this.onChange = this.onChange.bind(this)
     this.onEndChange = this.onEndChange.bind(this)
     this.handleMeChanged = this.handleMeChanged.bind(this)
+  }
+
+    componentDidMount () {
+    this.hydrateStateWithsessionStorage()
+    window.addEventListener(
+      'beforeunload',
+      this.saveStateTosessionStorage.bind(this)
+    )
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener(
+      'beforeunload',
+      this.saveStateTosessionStorage.bind(this)
+    )
+    this.saveStateTosessionStorage()
+  }
+
+  hydrateStateWithsessionStorage () {
+    for (let key in this.state) {
+      if (sessionStorage.hasOwnProperty(key)) {
+        let value = sessionStorage.getItem(key)
+        try {
+          value = JSON.parse(value)
+          this.setState({ [key]: value })
+        } catch (e) {
+          this.setState({ [key]: value })
+        }
+      }
+    }
+  }
+
+  saveStateTosessionStorage () {
+    for (let key in this.state) {
+      sessionStorage.setItem(key, JSON.stringify(this.state[key]))
+    }
+  }
+
+  updateInput(key, value) {
+    this.setState({ [key]: value })
+  }
+
+ handleChange (evt) {
+    this.setState({ [evt.target.name]: evt.target.value })
   }
 
 handleMeChanged (event) {
@@ -58,10 +100,10 @@ handleMeChanged (event) {
                 placeholder={ 'Profile Photo' }
                 />
               <GenericTextBox
-                value={ this.state.aboutMeTextValue }
-                onChange={ this.handleMeChanged }
                 placeholder={ 'Describe yourself' }
-                type={ 'text' }/>
+                type={ 'text' }
+                value={this.state.aboutMeTextValue}
+                onChange={e => this.updateInput('aboutMeTextValue', e.target.value)}/>
             </div>
           </Card>
         </div>

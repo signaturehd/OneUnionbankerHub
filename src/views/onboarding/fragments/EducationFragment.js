@@ -15,21 +15,56 @@ class Education extends Component {
       preferredDate: moment(),
       endDate: moment(),
       forms: [],
-      school: null,
-      degree: null,
-      course: null,
-      specialH: null,
+      school: '',
+      degree: '',
+      course: '',
+      specialH: '',
+
     }
     this.onChange = this.onChange.bind(this)
     this.onEndChange = this.onEndChange.bind(this)
     this.add = this.add.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
 
-handleChange (evt) {
-    this.setState({ [evt.target.name]: evt.target.value })
+  componentDidMount () {
+    this.hydrateStateWithsessionStorage()
+    window.addEventListener(
+      'beforeunload',
+      this.saveStateTosessionStorage.bind(this)
+    )
   }
 
+  componentWillUnmount () {
+    window.removeEventListener(
+      'beforeunload',
+      this.saveStateTosessionStorage.bind(this)
+    )
+    this.saveStateTosessionStorage()
+  }
+
+  hydrateStateWithsessionStorage () {
+    for (let key in this.state) {
+      if (sessionStorage.hasOwnProperty(key)) {
+        let value = sessionStorage.getItem(key)
+        try {
+          value = JSON.parse(value)
+          this.setState({ [key]: value })
+        } catch (e) {
+          this.setState({ [key]: value })
+        }
+      }
+    }
+  }
+
+  saveStateTosessionStorage () {
+    for (let key in this.state) {
+      sessionStorage.setItem(key, JSON.stringify(this.state[key]))
+    }
+  }
+
+  updateInput(key, value) {
+    this.setState({ [key]: value })
+  }
 
   add () {
     const forms = this.state.forms.concat(Education)
@@ -52,7 +87,6 @@ handleChange (evt) {
   render () {
     const { preferredDate, endDate, school, degree, course, specialH } = this.state
       const forms = this.state.forms.map((Element, index) => <Element key={ index } index={ index } />)
-
     return (
       <div className={ 'general-container' }>
         <div>
@@ -66,36 +100,26 @@ handleChange (evt) {
                 name="school"
                 type={ 'text' }
                 placeholder={ 'School' }
-                onChange={this.handleChange}/>
+                value={this.state.school}
+                onChange={e => this.updateInput('school', e.target.value)}/>
               <GenericTextBox
                 name="degree"
                 placeholder={ 'Degree' }
                 type={ 'text' }
-                onChange={this.handleChange}/>
+                value = {this.state.degree}
+                onChange={e => this.updateInput('degree', e.target.value)}/>
               <GenericTextBox
                 name="course"
                 placeholder={ 'Course' }
                 type={ 'text' }
-                onChange={this.handleChange}/>
+                value = {this.state.course}
+                onChange={e => this.updateInput('course', e.target.value)}/>
               <GenericTextBox
                 name="specialH"
                 placeholder={ 'Special Honors' }
                 type={ 'text' }
-                onChange={this.handleChange}/>
-              <label> Inclusive Dates </label>
-              <h3> From Year: <DatePicker
-                dateFormat={ 'DD-MM-YYYY' }
-                readOnly
-                selected={ preferredDate }
-                onChange={ this.onChange }
-                className={ 'calendar' }
-                calendarClassName={ 'calendarClass' }/> to </h3>
-              <DatePicker dateFormat={ 'DD-MM-YY' }
-                readOnly
-                selected={ endDate }
-                onEndChange={ this.onEndChange }
-                className={ 'calendar' }
-                calendarClassName={ 'calendarClass' }/>
+                value = {this.state.specialH}
+                onChange={e => this.updateInput('specialH', e.target.value)}/>
                 <div>
                 <GenericButton
                   onClick = { this.add }

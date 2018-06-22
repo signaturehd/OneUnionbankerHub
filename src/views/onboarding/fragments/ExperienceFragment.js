@@ -23,12 +23,7 @@ class Experience extends Component {
     this.onChange = this.onChange.bind(this)
     this.onEndChange = this.onEndChange.bind(this)
     this.add = this.add.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
-  handleChange (evt) {
-    this.setState({ [evt.target.name]: evt.target.value })
-  }
-
 
   add () {
     const forms = this.state.forms.concat(Experience)
@@ -42,10 +37,9 @@ class Experience extends Component {
   }
   onEndChange (data) {
    this.setState({ endDate: data })
-   this.props.getPreferredDate(
+   this.props.getendDate(
      data && data.format('DD-MM-YYYY')) /* date format*/
  }
-
 
 
   render () {
@@ -63,7 +57,7 @@ class Experience extends Component {
             </h4>
             <div className={ 'general-form-card-body' }
               name = { `document-${ this.props.index }-document` } >
-              >
+
               <GenericTextBox
                 type={ 'text' }
                 placeholder={ 'Company Name' }

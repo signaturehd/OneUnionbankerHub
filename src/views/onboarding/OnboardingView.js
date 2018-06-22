@@ -50,7 +50,7 @@ class OnboardingView extends Component {
   }
   render () {
     const submit = () => {
-      alert('submited');
+      alert('submited')
     }
     return (
           <Stepper steps={ steps } onFinish={ submit } />
