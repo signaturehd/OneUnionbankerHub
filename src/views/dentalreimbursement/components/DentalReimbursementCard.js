@@ -78,17 +78,9 @@ submission (e) {
     let validate
     let checknull
     selectedProcedures.map((procedure, key) => {
-      if (procedure.amount > procedure.limit || procedure.amount === 0) {
-        validate = true
-      }
-      if(procedure.amount)
-      {
-        checknull= false
-      }
-      else
-      {
-        checknull=true
-      }
+      validate = procedure.amount > procedure.limit || procedure.amount === 0
+      checknull = !procedure.amount
+      
       if (validate || checknull) {
         store.dispatch(NotifyActions.addNotify({
             title : 'Dental Reimbursement',
