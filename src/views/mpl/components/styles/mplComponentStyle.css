@@ -109,3 +109,12 @@
   height: 50%;
   border-radius: 5px;
 }
+
+.mpl-review {
+  display:grid !important;
+  grid-template-columns: 50% 50%;
+}
+
+.mpl-main{
+  margin: auto auto 20px auto;
+}
