@@ -17,7 +17,7 @@ class ComputerLoanFragment extends BaseMVPView {
       purposeOfAvailment: [],
       selectedPoa: '',
       formAttachments: [],
-      loanType: 3,
+      loanType: 5,
       validateLoanType : [],
       offset : [],
       enabledLoader : false,
