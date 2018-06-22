@@ -5,7 +5,7 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from '../mpl/presenter/MultiPurposeLoanPresenter'
 import ConnectView from '../../utils/ConnectView'
 
-import { CircularLoader } from '../../ub-components/'
+import { CircularLoader, Modal } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
@@ -33,7 +33,7 @@ class SalaryLoanFragment extends BaseMVPView {
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.getMplTypes()
-    this.presenter.getMplValidate(1)
+    this.presenter.getMplValidate(this.state.loanType)
     this.presenter.getMplPurposeOfAvailment(
       this.state.loanType,
       1,
@@ -90,6 +90,7 @@ class SalaryLoanFragment extends BaseMVPView {
       showNoticeResponseModal,
       noticeResponse,
       response } = this.state
+
     return (
       <div>
         {
@@ -107,35 +108,36 @@ class SalaryLoanFragment extends BaseMVPView {
           <ResponseModal
             onClose = { () => {
               this.setState({ showNoticeResponseModal : false })
-              this.props.history.push('/mybenefits/benefits/medical')
+              this.props.history.push('/mybenefits/benefits/loans')
             }}
-            benefitId = { loanType }
-            noticeResponse = { response }
-            onDismiss = { (showNoticeModal, response) =>
+            benefitId={ loanType }
+            noticeResponse={ response }
+            onDismiss={ (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response })  }
           />
         }
         <div>
           <i
-            className = { 'back-arrow' }
-            onClick = { this.navigate.bind(this) }>
+            className={ 'back-arrow' }
+            onClick={ this.navigate.bind(this) }>
           </i>
-          <h2 className = { 'header-margin-default' }>
+          <h2 className={ 'header-margin-default' }>
             Salary Loan
           </h2>
         </div>
           {
             enabledLoader ?
-             <center className = { 'circular-loader-center' }>
-               <CircularLoader show = { this.state.enabledLoader }/>
-             </center> :
+            <center className = { 'circular-loader-center' }>
+              <CircularLoader show = { this.state.enabledLoader }/>
+            </center>
+              :
             <FormComponent
-              loanType = { loanType }
-              purposeOfAvailment = { purposeOfAvailment }
-              validateLoanType = { validateLoanType }
-              formAttachments = { formAttachments }
-              offset = { offset }
-              presenter = { this.presenter }
+              loanType={ loanType }
+              purposeOfAvailment={ purposeOfAvailment }
+              validateLoanType={ validateLoanType }
+              formAttachments={ formAttachments }
+              offset={ offset }
+              presenter={ this.presenter }
             />
           }
       </div>
