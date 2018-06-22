@@ -26,47 +26,48 @@ function  TransactionDetails (props)  {
   const transactionDetails = props.details
   const transactionsPerson = props.transactions
   const attachments = props.attachments
-  if (transactionId === 6) {
-    return <DentalRDetailsFragment
-      attachments = { attachments }
-      details = { transactionDetails }
-      transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId === 7) {
-    return <DentalLoaDetailsFragment
-      attachments = { attachments }
-      details = { transactionDetails }
-      transactionsPerson = { transactionsPerson } />
-  } else if (transactionId === 8) {
-    return <OpticalDetailsFragment
-      details = { transactionDetails }
-      attachments = { attachments }
-      transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId === 11) {
-    return <EducGrantAidDetailsFragment
-      details = { transactionDetails }
-      attachments = { attachments }
-      transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId === 12) {
-    return <DentalRDetailsFragment
-      details = { transactionDetails }
-      attachments = { attachments }
-      transactionsPerson = { transactionsPerson } />
-  } else if (transactionId === 13) {
-    return <DentalRDetailsFragment
-      details = { transactionDetails }
-      attachments = { attachments }
-      transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId === 32) {
-    return <DentalRDetailsFragment
-      details = { transactionDetails }
-      attachments = { attachments }
-      transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId === 1) {
-    return <LoansDetailsFragment
-      transactionsPerson = { transactionsPerson }
-      attachments = { attachments }
-      details = { transactionDetails } />
-  }
+
+    if (transactionId === 6) {
+      return <DentalRDetailsFragment
+        details = { transactionDetails }
+        attachments = { attachments }
+        transactionsPerson = { transactionsPerson }/>
+    } else if (transactionId === 7) {
+      return <DentalLoaDetailsFragment
+        details = { transactionDetails }
+        attachments = { attachments }
+        transactionsPerson = { transactionsPerson } />
+    } else if (transactionId === 8) {
+      return <OpticalDetailsFragment
+        details = { transactionDetails }
+        attachments = { attachments }
+        transactionsPerson = { transactionsPerson }/>
+    } else if (transactionId === 13) {
+      return <EducGrantAidDetailsFragment
+        details = { transactionDetails }
+        attachments = { attachments }
+        transactionsPerson = { transactionsPerson }/>
+    } else if (transactionId === 12) {
+      return <DentalRDetailsFragment
+        details = { transactionDetails }
+        attachments = { attachments }
+        transactionsPerson = { transactionsPerson } />
+    } else if (transactionId === 11) {
+      return <DentalRDetailsFragment
+        details = { transactionDetails }
+        attachments = { attachments }
+        transactionsPerson = { transactionsPerson }/>
+    } else if (transactionId === 32) {
+      return <DentalRDetailsFragment
+        details = { transactionDetails }
+        attachments = { attachments }
+        transactionsPerson = { transactionsPerson }/>
+    } else if (transactionId === 1) {
+      return <LoansDetailsFragment
+        transactionsPerson = { transactionsPerson }
+        attachments = { attachments }
+        details = { transactionDetails } />
+    }
     return <h1>No Transaction Occured please reload</h1> // No  Transaction
 }
 

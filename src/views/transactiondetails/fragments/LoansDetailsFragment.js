@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Accordion from '../components/Accordion'
+import Accordion from '../components/AccordionComponent'
 
 import './styles/detailsFragment.css'
 
@@ -27,41 +27,55 @@ class LoansDetailsFragment extends Component {
   render () {
     const { details, transactionsPerson, attachments } = this.props
     return (
-      <div className = {'optical-details-container'}>
-        <center><h2 className = { 'transaction-detail details-bold' }>Transaction Information</h2></center>
-        <br/>
+      <div className={'optical-details-container'}>
+        <center>
+          <h2 className={ 'transaction-detail details-bold' }>
+            Transaction Information
+          </h2>
+        </center>
+          <br/>
         <div>
-        <Accordion>
-            <div className = { 'accor' } >
-            <div className = { 'head' } >Details</div>
-            <div className = { 'body' } >
-        <MPLDetailsComponent
-          transactionsPerson = { transactionsPerson }
-          details = { details } />
-        <br/>
-      </div>
-    </div>
-    <div className = { 'accor' } >
-            <div className = { 'head' } >Attachements</div>
-            <div className = { 'body' } >
-        <MPLFileComponent details = { details } attachments = { attachments } />
-        <br/>
-      </div>
-    </div>
-    <div className = { 'accor' } >
-            <div className = { 'head' } >Purpose</div>
-            <div className = { 'body' } >
-        <MPLPurposeComponent details = { details } />
-        <br/>
-      </div>
-    </div>
-    <div className = { 'accor' } >
-            <div className = { 'head' } >Notice</div>
-            <div className = { 'body' } >
-        <MPLAgreementComponent details = { details } />
-      </div>
-    </div>
-  </Accordion>
+          <Accordion>
+            <div className={ 'accor' } >
+              <div className={ 'head' } >
+                Details
+              </div>
+              <div className={ 'body' } >
+                <MPLDetailsComponent
+                  transactionsPerson={ transactionsPerson }
+                  details={ details } />
+                <br/>
+              </div>
+            </div>
+            <div className={ 'accor' } >
+              <div className={ 'head' } >
+                Attachements
+              </div>
+              <div className={ 'body' } >
+                <MPLFileComponent
+                  details={ details }
+                  attachments={ attachments } />
+                <br/>
+              </div>
+            </div>
+          <div className={ 'accor' } >
+            <div className={ 'head' } >
+              Purpose
+            </div>
+            <div className={ 'body' } >
+              <MPLPurposeComponent details={ details } />
+                <br/>
+            </div>
+          </div>
+          <div className={ 'accor' } >
+            <div className={ 'head' } >
+              Notice
+            </div>
+            <div className={ 'body' } >
+              <MPLAgreementComponent details={ details } />
+            </div>
+          </div>
+        </Accordion>
       </div>
     </div>
     )
