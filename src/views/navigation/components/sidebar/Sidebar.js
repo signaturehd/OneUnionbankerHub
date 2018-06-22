@@ -9,9 +9,11 @@ class SideBar extends Component {
     super(props)
     this.callLogout = this.callLogout.bind(this)
   }
+
   callLogout () {
     this.props.logout()
   }
+
   render () {
     const {
       onClick,
@@ -26,7 +28,7 @@ class SideBar extends Component {
     [
       {
         id: 0 ,
-        title: 'News',
+        title: 'News Feed',
         action: () => history.push('/'),
         className: 'newsfeed-icon'
       },
