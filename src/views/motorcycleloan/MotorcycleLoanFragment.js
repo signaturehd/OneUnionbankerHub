@@ -16,7 +16,7 @@ class MotorCycleLoanFragment extends BaseMVPView {
       purposeOfAvailment: [],
       selectedPoa: '',
       formAttachments: [],
-      loanType: 3,
+      loanType: 4,
       validateLoanType : [],
       offset : [],
       enabledLoader : false,
@@ -30,7 +30,7 @@ class MotorCycleLoanFragment extends BaseMVPView {
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.getMplTypes()
-    this.presenter.getMplValidate(1)
+    this.presenter.getMplValidate(this.state.loanType)
     this.presenter.getMplPurposeOfAvailment(
       this.state.loanType,
       1,
