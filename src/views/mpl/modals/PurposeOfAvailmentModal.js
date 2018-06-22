@@ -34,22 +34,31 @@ class MplPurposeOfAvailmentModal extends Component {
     this.props.presenter.getMplFormAttachments(
       resp.name,
       loanType ? loanType : null)
-
     this.props.presenter.getMplPurposeOfAvailment(
       loanType && loanType,
       loanId,
       subcategory ? subcategory : null)
-
     if ( loanId ) {
        this.showPurposeLoader()
-         this.props.presenter.getMplPurposeOfAvailment(loanType && loanType, resp.id, subcategory ? subcategory : null)
+       this.props.presenter.getMplPurposeOfAvailment(
+         loanType && loanType,
+         loanId,
+         subcategory ? subcategory : null)
          this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
        if(subcategory === 2 || subcategory === 3) {
-         this.props.presenter.getMplPurposeOfAvailment(loanType && loanType, resp.id, subcategory ? subcategory : null)
+         this.props.presenter.getMplPurposeOfAvailment(
+           loanType && loanType,
+           loanId,
+           subcategory ? subcategory : null)
          this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
+         this.hidePurposeLoader()
        } else {
+         this.props.presenter.getMplPurposeOfAvailment(
+           loanType && loanType,
+           loanId,
+           subcategory ? subcategory : null)
          this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
-         this.props.onClose()
+         this.hidePurposeLoader()
       }
      } else {
        this.props.onClose()

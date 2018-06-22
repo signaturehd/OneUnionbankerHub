@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import BaseMVPView from '../common/base/BaseMVPView'
-import Presenter from '../mpl/presenter/MultiPurposeLoanPresenter'
+import Presenter from './presenter/CarLeasePresenter'
 import ConnectView from '../../utils/ConnectView'
 
 import { CircularLoader } from '../../ub-components/'
@@ -10,34 +10,29 @@ import { CircularLoader } from '../../ub-components/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 
-import FormComponent from '../mpl/components/MplLoanFormCardComponent'
+import FormComponent from './components/CarLeaseNewFormComponent'
 
-class EmergencyLoanFragment extends BaseMVPView {
+class CarLeaseNewFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-      purposeOfAvailment: [],
-      selectedPoa: '',
-      formAttachments: [],
-      loanType: 2,
-      validateLoanType : [],
-      offset : [],
+      carBrand: '',
+      carModel: '',
+      makeYear: '',
+      primaryColor: '',
+      secondaryColor : '',
       enabledLoader : false,
       noticeResponse : null, /* notice response*/
       showNoticeResponseModal : false,
       showNoticeModal : false,
       showConfirmation : false,
+      loanType: 1,
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.getMplTypes()
-    this.presenter.getMplValidate(this.state.loanType)
-    this.presenter.getMplPurposeOfAvailment(
-      this.state.loanType,
-      1,
-      1)
+    this.presenter.getCarValidate(this.state.loanType)
   }
 
   /* Notice Response*/
@@ -51,19 +46,12 @@ class EmergencyLoanFragment extends BaseMVPView {
     this.setState({ formAttachments })
   }
 
-  showOffset (offset) {
-    this.setState({ offset })
-  }
-
   showValidate (validateLoanType) {
     this.setState({ validateLoanType })
   }
 
-  showPurposeOfAvailment (purposeOfAvailment) {
-    this.setState({ purposeOfAvailment })
-  }
 
-  /*Loader*/
+  /* Loader*/
 
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
@@ -74,15 +62,16 @@ class EmergencyLoanFragment extends BaseMVPView {
   }
   /* Navigage back to loans Option*/
   navigate () {
-    this.props.history.push('/mybenefits/benefits/loans')
+    this.props.history.push('/mybenefits/benefits/carlease')
   }
 
   render () {
     const {
-      purposeOfAvailment,
-      loanType,
-      validateLoanType,
-      offset,
+      carBrand,
+      carModel,
+      makeYear,
+      primaryColor,
+      secondaryColor,
       enabledLoader,
       formAttachments,
       showConfirmation,
@@ -102,18 +91,20 @@ class EmergencyLoanFragment extends BaseMVPView {
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
         }
+
         {
           showNoticeResponseModal &&
           <ResponseModal
             onClose = { () => {
               this.setState({ showNoticeResponseModal : false })
-              this.props.history.push('/mybenefits/benefits/loans')
+              this.props.history.push('/mybenefits/benefits/carlease')
             }}
             benefitId = { loanType }
             noticeResponse = { response }
             onDismiss = { (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response })  }
           />
+
         }
         <div>
           <i
@@ -121,7 +112,7 @@ class EmergencyLoanFragment extends BaseMVPView {
             onClick = { this.navigate.bind(this) }>
           </i>
           <h2 className = { 'header-margin-default' }>
-            Emergency Loan
+            Car Lease Brand New
           </h2>
         </div>
           {
@@ -130,11 +121,11 @@ class EmergencyLoanFragment extends BaseMVPView {
                <CircularLoader show = { this.state.enabledLoader }/>
              </center> :
             <FormComponent
-              loanType = { loanType }
-              purposeOfAvailment = { purposeOfAvailment }
-              validateLoanType = { validateLoanType }
-              formAttachments = { formAttachments }
-              offset = { offset }
+              carBrand = { carBrand }
+              carModel = { carModel }
+              makeYear = { makeYear }
+              primaryColor = { primaryColor }
+              secondaryColor = { secondaryColor }
               presenter = { this.presenter }
             />
           }
@@ -142,4 +133,4 @@ class EmergencyLoanFragment extends BaseMVPView {
     )
   }
 }
-export default ConnectView(EmergencyLoanFragment, Presenter)
+export default ConnectView(CarLeaseNewFragment, Presenter)
