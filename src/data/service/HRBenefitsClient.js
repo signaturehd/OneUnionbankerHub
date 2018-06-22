@@ -354,4 +354,9 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  validateGrantAid (token) {
+    return this.service.validateGrantAid(token)
+      .pipe(ServiceErrorOperator())
+  }
+
 }
