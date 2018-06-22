@@ -10,7 +10,7 @@ import { CircularLoader } from '../../ub-components/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 
-import FormComponent from '../mpl/components/MplFormCardComponent'
+import FormComponent from '../mpl/components/MplLoanFormCardComponent'
 
 class HousingAssistanceFragment extends BaseMVPView {
   constructor (props) {
@@ -19,7 +19,7 @@ class HousingAssistanceFragment extends BaseMVPView {
       purposeOfAvailment: [],
       selectedPoa: '',
       formAttachments: [],
-      loanType: 1,
+      loanType: 3,
       validateLoanType : [],
       offset : [],
       enabledLoader : false,
@@ -102,20 +102,18 @@ class HousingAssistanceFragment extends BaseMVPView {
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
         }
-
         {
           showNoticeResponseModal &&
           <ResponseModal
             onClose = { () => {
               this.setState({ showNoticeResponseModal : false })
-              this.props.history.push('/mybenefits/benefits/medical')
+              this.props.history.push('/mybenefits/benefits/loans')
             }}
             benefitId = { loanType }
             noticeResponse = { response }
             onDismiss = { (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response })  }
           />
-
         }
         <div>
           <i

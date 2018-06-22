@@ -15,6 +15,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  logout (token) {
+    return this.service.logout(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   otp (otpParam) {
     return this.service.otp(otpParam)
       .pipe(ServiceErrorOperator())
@@ -353,5 +358,20 @@ export default class HRBenefitsClient {
       mplPurposeLoanAddParam)
       .pipe(ServiceErrorOperator())
   }
+  getCarValidate (token) {
+    return this.service.getCarValidate(token)
+      .pipe(ServiceErrorOperator())
+  }
 
+  getCarRequest (token, carRequestParam) {
+    return this.service.getCarRequest(token, carRequestParam, {
+      headers: { token }
+    })
+  }
+
+  getCarLease (token, carRequestParam) {
+    return this.service.getCarLease(token, carRequestParam, {
+      headers: { token }
+    })
+  }
 }

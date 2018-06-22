@@ -17,18 +17,42 @@ class Carousel extends Component {
 
     return (
       <Modal
-        onClose = { onClose }
-        isDismisable = {true}
-        className = {'modal-height'}
-        width = {50}
+        onClose={ onClose }
+        isDismisable={ true }
+        className={ 'modal-height' }
+        width={ 75 }
+        boxShadow={ 'none' }
+        backgroundColor={ 'transparent' }
+        overflowY={ 'visible' }
+        borderRadius ={ 'none' }
       >
       <div className={'slider'}>
-        <input type='radio' name='slider' title='slide1'  defaultChecked = {true}
- className='slider__nav'/>
-        <input type='radio' name='slider' title='slide2' className='slider__nav'/>
-        <input type='radio' name='slider' title='slide3' className='slider__nav'/>
-        <input type='radio' name='slider' title='slide4' className='slider__nav'/>
-        <input type='radio' name='slider' title='slide5' className='slider__nav'/>
+        <input
+          type={ 'radio' }
+          name={ 'slider' }
+          title={ 'slide1' }
+          defaultChecked = { true }
+          className={ 'slider__nav' }/>
+        <input
+          type={ 'radio' }
+          name={ 'slider' }
+          title={ 'slide2' }
+          className={ 'slider__nav' }/>
+        <input
+          type={ 'radio' }
+          name={ 'slider' }
+          title={ 'slide3' }
+          className={ 'slider__nav' }/>
+        <input
+          type={ 'radio' }
+          name={ 'slider' }
+          title={ 'slide4' }
+          className={ 'slider__nav' }/>
+        <input
+          type={ 'radio' }
+          name={ 'slider' }
+          title={ 'slide5' }
+          className={ 'slider__nav' }/>
         <div className={'slider__inner'}>
           <div className={'slider__contents'}>
             <img src = { require('../../images/carousel/1.jpg') }/>
@@ -50,7 +74,6 @@ class Carousel extends Component {
       </Modal>
     )
   }
-
 }
 
 Carousel.propTypes = {

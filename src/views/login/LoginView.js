@@ -122,13 +122,16 @@ class LoginView extends BaseMVPView {
               placeholder = { 'Password' }
               type = { this.state.type }
               className={ 'password__input' }/>
-              <span className={'password__show'} onClick={this.showHide}>{this.state.type === 'input' ? 'HIDE' : 'SHOW'}</span>
+              <span className={'password__show'} onClick={this.showHide}>{this.state.type === 'input' ? '' : ''}</span>
               <br/>
             {
               this.state.disabled ?
               <center>
-                <br/>
+              <br/>
+              <br/>
                 <CircularLoader show = { true }/>
+              <br/>
+              <br/>
               </center>              :
               <div>
                 <br/>
@@ -166,8 +169,8 @@ class LoginView extends BaseMVPView {
             </div>
             <br/>
             <div className = {'download-container'}>
-              <span className = {'link'} onClick = { () => this.downloadIOS() } >Download IOS Version</span>
-              <span className = {'link'} onClick = { () => this.downloadAndroid() }>Download Android Version</span>
+              <span className = {'link-googleplay'} onClick = { () => this.downloadAndroid() } />
+              <span className = {'link-appstore'} onClick = { () => this.downloadIOS() } />
             </div>
         </Card>
 

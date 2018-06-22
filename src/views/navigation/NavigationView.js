@@ -36,11 +36,19 @@ import OpticalFragment from '../optical/OpticalFragment'
 import HousingAssistanceFragment from '../housingassistanceloan/HousingAssistanceFragment'
 import EmergencyLoanFragment from '../emergencyloan/EmergencyLoanFragment'
 import SalaryLoanFragment from '../salaryloan/SalaryLoanFragment'
+/*  MPL Motorcycle */
+import MotorcycleLoanFragment from '../motorcycleloan/MotorcycleLoanFragment'
+/*  MPL Motorcycle */
+import ComputerLoanFragment from '../computerloan/ComputerLoanFragment'
 /*Transaction*/
 import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
 import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
+import CarLeaseNewFragment from '../carlease/CarLeaseNewFragment'
+import CarLeaseOldFragment from '../carlease/CarLeaseOldFragment'
 
 import Carousel from '../carousel/Carousel'
+
+import NavigationViewModal from './modal/NavigationViewModal'
 
 class NavigationView extends BaseMVPView {
   constructor (props) {
@@ -49,6 +57,7 @@ class NavigationView extends BaseMVPView {
     this.state = {
       selected: 0,
       profile: [],
+      showLogoutModal: false
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -105,7 +114,8 @@ class NavigationView extends BaseMVPView {
       selected,
       onClick,
       profile,
-      wizard
+      wizard,
+      showLogoutModal
     } = this.state
       const { history } = this.props
     const style = {
@@ -132,6 +142,14 @@ class NavigationView extends BaseMVPView {
               onClose = { () => this.presenter.setWizard('false') }
             />
           }
+          {
+            showLogoutModal &&
+            <NavigationViewModal
+              logout = { () => this.presenter.logout() }
+              onClose = { () => this.setState({showLogoutModal : false}) }
+            />
+          }
+
           { super.render() }
 
               <Drawer >
@@ -166,11 +184,23 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mybenefits/benefits/loans/housingassistance' render = { props =>
                     <HousingAssistanceFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/carlease/new' render = { props =>
+                    <CarLeaseNewFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/carlease/old' render = { props =>
+                    <CarLeaseOldFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits/benefits/loans/emergency' render = { props =>
                     <EmergencyLoanFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits/benefits/loans/salary' render = { props =>
                     <SalaryLoanFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/loans/motorcycle' render = { props =>
+                    <MotorcycleLoanFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/loans/computer' render = { props =>
+                    <ComputerLoanFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits' render = { props =>
                     <BenefitsFragment { ...props }
@@ -194,7 +224,7 @@ class NavigationView extends BaseMVPView {
             className ="left-side"
             style = { style.show }>
             <SideBar
-              logout = { this.callLogout }
+              logout = { () => this.setState({ showLogoutModal : true }) }
               selected={ selected }
               profile = { profile }
               history = { this.props.history } >

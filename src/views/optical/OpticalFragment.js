@@ -52,8 +52,7 @@ class OpticalFragment extends BaseMVPView {
   }
 
   confirmation (showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2) {
-    console.log(file1)
-    console.log(file2)
+
     if (amount > 3500 || amount === 0) {
       store.dispatch(NotifyActions.addNotify({
           title : 'Optical Reimbursement',
