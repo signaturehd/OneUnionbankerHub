@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Card } from '../../../ub-components/'
 
-import './styles.css'
+import './styles/settings.css'
 
 class MyDependentInformationCardComponent extends Component {
   constructor (props) {
@@ -13,15 +13,15 @@ class MyDependentInformationCardComponent extends Component {
   render () {
     const { profileDependent, onClick } = this.props
     return (
-         <div className = 'card-container'>
-           <h4 className = {'text-title-profile'}> DEPENDENTS : </h4>
+         <div className='card-container'>
+           <h4 className={ 'text-title-profile' }> DEPENDENTS : </h4>
             {
-                profileDependent && profileDependent.map((dependent, i) =>
-                <h5
-                  key = { i }
-                  className = { 'title' }
-                  > {dependent.firstName} {dependent.lastName}</h5>
-                )
+              profileDependent && profileDependent.map((dependent, i) =>
+              <h5
+                key={ i }
+                className={ 'title' }
+                > { dependent.firstName ? dependent.firstName : "(Not Yet Provided)" } { dependent.lastName ? dependent.lastName : "(Not Yet Provided)" }</h5>
+              )
             }
           </div>
     )
