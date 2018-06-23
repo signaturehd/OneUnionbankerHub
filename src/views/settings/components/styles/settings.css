@@ -1,7 +1,7 @@
 
 .profile-card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 32%;
+  max-width: 45%;
   float : left;
   padding: 20px;
   margin: 20px 0 auto 0;
@@ -9,7 +9,7 @@
 }
 .profile-info-secondary {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 65%;
+  max-width: 50%;
   left: 0;
   padding: 20px 5px 20px 5px;
   margin: 20px 0 auto 0;
@@ -34,9 +34,6 @@
      .label-tab {
       font-size: 12px;
      }
-     .title-view {
-      margin: 25px auto;
-     }
 }
 .image-profile {
  display: block;
@@ -50,16 +47,17 @@
 }
 .title {
   color: grey;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .text-title-profile {
- font-size: 11px;
-    color: #ffa800;
-    margin-bottom: 20px;
+  font-size: 11px;
+  color: #ffa800;
+  margin-bottom: 15px;
+
 }
 
-section {
+#content1, #content2, #content3 {
   display: none;
   padding: 20px 0 0;
   border-top: 1px solid #ddd;
@@ -208,5 +206,11 @@ section {
 .profile-settings-grid {
   display: grid;
   padding: 0px 5px 0px 20px;
-  grid-template-columns: .2fr 1fr;
+  grid-template-columns: .15fr 1fr;
+}
+
+.profile-container {
+  display:grid;
+  grid-template-columns: 1fr;
+  text-align: left;
 }

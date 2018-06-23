@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { Card } from '../../../ub-components/'
 
 import './styles/settings.css'
-import CardBasicInfo from './BasicInformationCardComponent'
-import CardCompanyInformation from './CompanyInformationCardComponent'
+import CardBasicInfo from './CompanyInformationCardComponent'
+import CardCompanyInformation from './OtherInformationCardComponent'
 import MyDependentInformationCardComponent from './MyDependentInformationCardComponent'
 
 class SettingsCardComponent extends Component {
@@ -28,18 +28,18 @@ class SettingsCardComponent extends Component {
         <div className={ 'profile-settings-grid' }>
           <div>
             <div></div>
-            <span className={ 'icon-settings employeeId' }/>
+              <span className={ 'icon-settings employeeId' }/>
             <div></div>
           </div>
           <div>
-            <h5 className={ 'title-title-profile' }>{ profile.employeeNumber ? profile.employeeNumber : "(Not Yet Provided)" }</h5>
+            <h5 className={ 'title' }>{ profile.employeeNumber ? profile.employeeNumber : "(Not Yet Provided)" }</h5>
             <h4 className={ 'text-title-profile' }> EMPLOYEE NUMBER </h4>
           </div>
         </div>
         <div className={ 'profile-settings-grid' }>
           <div>
             <div></div>
-            <span className={ 'icon-settings employeeFullName' }/>
+              <span className={ 'icon-settings employeeFullName' }/>
             <div></div>
           </div>
           <div>
@@ -50,7 +50,7 @@ class SettingsCardComponent extends Component {
         <div className={ 'profile-settings-grid' }>
           <div>
             <div></div>
-            <span className={ 'icon-settings employeeBdate' }/>
+              <span className={ 'icon-settings employeeBdate' }/>
             <div></div>
           </div>
           <div>
@@ -61,7 +61,7 @@ class SettingsCardComponent extends Component {
         <div className={ 'profile-settings-grid' }>
           <div>
             <div></div>
-            <span className={ 'icon-settings employeeGender' }/>
+              <span className={ 'icon-settings employeeGender' }/>
             <div></div>
           </div>
           <div>
@@ -72,7 +72,7 @@ class SettingsCardComponent extends Component {
         <div className={ 'profile-settings-grid' }>
           <div>
             <div></div>
-            <span className={ 'icon-settings employeeCivilStatus' }/>
+              <span className={ 'icon-settings employeeCivilStatus' }/>
             <div></div>
           </div>
           <div>
@@ -83,7 +83,7 @@ class SettingsCardComponent extends Component {
         <div className={ 'profile-settings-grid' }>
           <div>
             <div></div>
-            <span className={ 'icon-settings employeeEmail' }/>
+              <span className={ 'icon-settings employeeEmail' }/>
             <div></div>
           </div>
           <div>
@@ -94,7 +94,7 @@ class SettingsCardComponent extends Component {
         <div className={ 'profile-settings-grid' }>
           <div>
             <div></div>
-            <span className={ 'icon-settings employeeMobileNumber' }/>
+              <span className={ 'icon-settings employeeMobileNumber' }/>
             <div></div>
           </div>
           <div>
@@ -105,7 +105,7 @@ class SettingsCardComponent extends Component {
         <div className={ 'profile-settings-grid' }>
           <div>
             <div></div>
-            <span className={ 'icon-settings employeeHomeAddress' }/>
+              <span className={ 'icon-settings employeeHomeAddress' }/>
             <div></div>
           </div>
           <div>
@@ -122,26 +122,18 @@ class SettingsCardComponent extends Component {
             type={ 'radio' }
             name={ 'tabs' }
             defaultChecked />
-          <label className={ 'label-tab' } htmlFor={ 'tab1' }>My Employment Information</label>
+          <label className={ 'label-tab' } htmlFor={ 'tab1' }>Company Information</label>
 
           <input
             className={ 'input-tab' }
             id={ 'tab2' }
             type={ 'radio' }
             name={ 'tabs' }/>
-          <label className={ 'label-tab' } htmlFor={ 'tab2' }>My Additional Information</label>
-
-          <input
-            className={ 'input-tab' }
-            id={ 'tab3' }
-            type={ 'radio' }
-            name={ 'tabs' } />
-          <label className={ 'label-tab' } htmlFor={ 'tab3' }>My Dependents Information</label>
+          <label className={ 'label-tab' } htmlFor={ 'tab2' }>Other Information</label>
 
           <section id='content1'>
             <CardBasicInfo
             linemanager = {linemanager}
-            presenter={ this.presenter }
             profile = { profile }
             rank= { rank } />
           </section>
@@ -149,17 +141,9 @@ class SettingsCardComponent extends Component {
           <section id='content2'>
             <CardCompanyInformation
             linemanager = {linemanager}
-            presenter={ this.presenter }
-            profile = { profile }
-            rank = { rank } />
-          </section>
-
-          <section id='content3'>
-            <MyDependentInformationCardComponent
-            presenter={ this.presenter }
             profileDependent = { profileDependent }
             profile = { profile }
-            />
+            rank = { rank } />
           </section>
         </div>
 
