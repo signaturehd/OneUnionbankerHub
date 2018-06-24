@@ -75,21 +75,36 @@ class SideBar extends Component {
             src={ require('../../../../images/profile-picture.png') }
             className= {'sidebar-img-ub-logo'}/>
         </div>
-        <h4 className = { 'sidebar-profile-name' }>
+        <h5 className = { 'sidebar-profile-name' }>
           { profile && profile.fullname }
-        </h4>
-        <Line/>
+        </h5>
           {
             modules.map((d, idx) =>
-            <li
-              className = { `_text-link ${selected === d.id && 'active'}` }
-              key = { idx }
-              onClick = { d.action }>
-              <a key = { idx }
-                className =
-                { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                  { d.title }
-            </li>
+            d.id === 1 ?
+            <div>
+              <li
+                className = { `_text-link ${selected === d.id && 'active'}` }
+                key = { idx }
+                onClick = { d.action }>
+                <a key = { idx }
+                  className =
+                  { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                    { d.title }
+              </li>
+              <Line />
+            </div>
+              :
+              <div>
+                <li
+                  className = { `_text-link ${selected === d.id && 'active'}` }
+                  key = { idx }
+                  onClick = { d.action }>
+                  <a key = { idx }
+                    className =
+                    { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                    { d.title }
+                </li>
+              </div>
             )
           }
       </ul>

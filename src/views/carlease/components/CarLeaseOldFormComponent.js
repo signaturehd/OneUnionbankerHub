@@ -4,11 +4,6 @@ import PropTypes from 'prop-types'
 import './styles/carleaseStyle.css'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
-import BrandModal from '../modals/carBrandNewModal/CarBrandNewModal'
-import ModelModal from '../modals/carBrandNewModal/CarModelNewModal'
-import CarPrimaryColorModal from '../modals/carOldModal/CarPrimaryColorOldModal'
-import CarSecondaryColorModal from '../modals/carOldModal/CarSecondaryColorOldModal'
-
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
@@ -213,23 +208,23 @@ class CarLeaseOldForm extends Component {
              <FileUploader
                 onChange={ this.handleImageChange }
                 placeholder={ 'Dealer Quotation' }
-                value={ this.state.file.name }
+                value={ file.name }
               />
               <FileUploader
                 onChange={ this.handleImageChange2 }
                 placeholder={ 'Dealer Quotation' }
-                value={ this.state.file2.name }
+                value={ file2.name }
               />
             </div>
             <div className={ 'car-form-card-body' }>
               <div className={ 'optical-footer-left' }>
                 <div className={ 'optical-grid' }>
                   <div className={ 'optical-image-view' }>
-                    {$imagePreview}
+                    { $imagePreview }
                     <div className={ 'optical-image-layer' }></div>
                   </div>
                   <div className={ 'optical-image-view' }>
-                    {$imagePreview2}
+                    { $imagePreview2 }
                     <div className={  'optical-image-layer' }></div>
                   </div>
                 </div>

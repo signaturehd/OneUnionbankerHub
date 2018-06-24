@@ -351,14 +351,31 @@ export default class HRBenefitsService {
     })
   }
 
-  getCarRequest (token, carRequestParam) {
+  getCarRequest (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    carRequestParam) {
+    const formData = new FormData()
+    const addCarleaseObject = {
+      brand : carRequestParam.carBrand,
+      model : carRequestParam.carModel,
+      year : carRequestParam.year,
+      leaseMode : carRequestParam.leaseMode,
+      primaryColor : carRequestParam.primaryColor,
+      secondaryColor : carRequestParam.secondaryColor,
+    }
+    formData.append('uuid', 12345)
+    formData.append('body', JSON.stringify(addCarleaseObject))
+    formData.append('attachments', carRequestParam.attachments)
     return this.apiClient.post('v1/lease/car/request', carRequestParam, {
       headers: { token }
     })
   }
 
-  getCarLease (token, carRequestParam) {
-    return this.apiClient.post('v1/leases/car', carRequestParam, {
+  getCarLease (token) {
+    return this.apiClient.post('v1/leases/car', {
       headers: { token }
     })
   }
