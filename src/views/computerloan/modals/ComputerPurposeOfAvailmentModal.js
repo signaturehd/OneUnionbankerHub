@@ -16,7 +16,7 @@ class MplPurposeOfAvailmentModal extends Component {
       this.onGetClicked = this.onGetClicked.bind(this)
   }
 
-  /*Loader*/
+  /* Loader*/
   showPurposeLoader () {
     this.setState({ enabledLoader : true })
   }
@@ -31,7 +31,7 @@ class MplPurposeOfAvailmentModal extends Component {
     this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
     this.props.presenter.getMplFormAttachments(resp.name, loanType ? loanType : null)
 
-    if ( loanID ) {
+    if (loanID) {
       this.props.presenter.getMplPurposeOfAvailment(loanType && loanType, resp.id, subcategory ? subcategory : null)
     } else {
       this.props.onClose()
@@ -65,7 +65,7 @@ class MplPurposeOfAvailmentModal extends Component {
               onClick = { () => this.onGetClicked(
                 resp,
                 subcategory,
-                subcategory === 1 ? false : true,
+                subcategory !== 1,
                 true,
                 loanType) }
               />

@@ -33,7 +33,7 @@ export default class MultiPurposeLoanPresenter {
     this.view = view
   }
 
-  /*Types*/
+  /* Types*/
 
   getMplTypes () {
     this.getTypesInteractor.execute()
@@ -80,7 +80,7 @@ export default class MultiPurposeLoanPresenter {
       .subscribe()
     }
 
-  /* add Loa salary, housing assistance, emergency*/
+  /* add Computer loan */
   addLoan (
     loanId,
     purposeOfLoan,
