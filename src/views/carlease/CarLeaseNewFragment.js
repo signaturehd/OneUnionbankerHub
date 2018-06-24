@@ -132,7 +132,6 @@ class CarLeaseNewFragment extends BaseMVPView {
                <CircularLoader show={ this.state.enabledLoader }/>
              </center> :
             <FormComponent
-              presenter={ this.presenter }
               onClick={
                 this.sendFormData(
                   carBrand,
