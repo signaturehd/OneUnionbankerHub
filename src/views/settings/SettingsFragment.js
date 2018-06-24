@@ -10,7 +10,6 @@ import GetProfileInteractor from '../../domain/interactor/user/GetProfileInterac
 import SettingsCardComponent from './components/SettingsCardComponent'
 
 import { Card } from '../../ub-components/'
-import './styles/profile.css'
 
 class SettingsFragment extends BaseMVPView {
   constructor (props) {
@@ -54,7 +53,7 @@ class SettingsFragment extends BaseMVPView {
     return (
       <div className = { 'profile-container' }>
         { super.render() }
-      <h1 className = { 'title-view' }> Profile </h1>
+      <h2 className = { 'header-margin-default ' }> My Profile Information </h2>
         <SettingsCardComponent
          profile = { profile }
          linemanager = { linemanager }
