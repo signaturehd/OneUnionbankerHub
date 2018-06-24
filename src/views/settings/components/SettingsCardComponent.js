@@ -23,7 +23,7 @@ class SettingsCardComponent extends Component {
     return (
       <div>
       <Card className={ 'profile-card' }>
-        <img src = { require('../../../images/profile-picture.png') } className={ 'image-profile' }/>
+        <img src={ require('../../../images/profile-picture.png') } className={ 'image-profile' }/>
         <div className={ 'profile-settings-grid' }>
           <div>
             <div></div>
@@ -132,17 +132,17 @@ class SettingsCardComponent extends Component {
 
           <section id={ 'content1' }>
             <CardBasicInfo
-            linemanager = {linemanager}
-            profile = { profile }
-            rank= { rank } />
+            linemanager={linemanager}
+            profile={ profile }
+            rank={ rank } />
           </section>
 
           <section id={ 'content2' }>
             <CardCompanyInformation
-            linemanager = {linemanager}
-            profileDependent = { profileDependent }
-            profile = { profile }
-            rank = { rank } />
+            linemanager={linemanager}
+            profileDependent={ profileDependent }
+            profile={ profile }
+            rank={ rank } />
           </section>
         </div>
 
