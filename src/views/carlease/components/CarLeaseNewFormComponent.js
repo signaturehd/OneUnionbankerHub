@@ -4,11 +4,6 @@ import PropTypes from 'prop-types'
 import './styles/carleaseStyle.css'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
-import BrandModal from '../modals/carBrandNewModal/CarBrandNewModal'
-import ModelModal from '../modals/carBrandNewModal/CarModelNewModal'
-import CarPrimaryColorModal from '../modals/carBrandNewModal/CarPrimaryColorNewModal'
-import CarSecondaryColorModal from '../modals/carBrandNewModal/CarSecondaryColorNewModal'
-
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
