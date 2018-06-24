@@ -14,7 +14,6 @@ class MotorCycleLoanFragment extends BaseMVPView {
     super(props)
     this.state={
       purposeOfAvailment: [],
-      selectedPoa: '',
       formAttachments: [],
       loanType: 4,
       validateLoanType : [],
@@ -24,12 +23,12 @@ class MotorCycleLoanFragment extends BaseMVPView {
       showNoticeResponseModal : false,
       showNoticeModal : false,
       showConfirmation : false,
-      carBrand: '',
-      carModel: '',
-      makeYear: 0,
-      primaryColor: '',
-      secondaryColor: '',
-      file: ''
+      poaText : '',
+      modeOfLoanId : '',
+      termId : '',
+      amountValue : '',
+      selectedSupplier : '',
+      file : ''
     }
     this.sendFormData=this.sendFormData.bind(this)
   }
