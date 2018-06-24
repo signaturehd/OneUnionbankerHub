@@ -12,7 +12,7 @@ import FormComponent from './components/MotorcycleLoanCardComponent'
 class MotorCycleLoanFragment extends BaseMVPView {
   constructor (props) {
     super(props)
-    this.state = {
+    this.state={
       purposeOfAvailment: [],
       selectedPoa: '',
       formAttachments: [],
@@ -24,7 +24,14 @@ class MotorCycleLoanFragment extends BaseMVPView {
       showNoticeResponseModal : false,
       showNoticeModal : false,
       showConfirmation : false,
+      carBrand: '',
+      carModel: '',
+      makeYear: 0,
+      primaryColor: '',
+      secondaryColor: '',
+      file: ''
     }
+    this.sendFormData=this.sendFormData.bind(this)
   }
 
   componentDidMount () {
@@ -74,6 +81,23 @@ class MotorCycleLoanFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/loans')
   }
 
+  sendFormData (
+    poaText,
+    modeOfLoanId,
+    termId,
+    amountValue,
+    selectedSupplier,
+    file) {
+      console.log(
+        poaText,
+        modeOfLoanId,
+        termId,
+        amountValue,
+        selectedSupplier,
+        file
+      )
+  }
+
   render () {
     const {
       purposeOfAvailment,
@@ -86,30 +110,60 @@ class MotorCycleLoanFragment extends BaseMVPView {
       showNoticeModal,
       showNoticeResponseModal,
       noticeResponse,
-      response } = this.state
+      response,
+      poaText,
+      modeOfLoanId,
+      termId,
+      amountValue,
+      selectedSupplier,
+      file }=this.state
     return (
       <div>
         <div>
           <i
-            className = { 'back-arrow' }
-            onClick = { this.navigate.bind(this) }>
+            className={ 'back-arrow' }
+            onClick={ this.navigate.bind(this) }>
           </i>
-          <h2 className = { 'header-margin-default' }>
+          <h2 className={ 'header-margin-default' }>
             Motorcycle Loan
           </h2>
         </div>
           {
             enabledLoader ?
-             <center className = { 'circular-loader-center' }>
-               <CircularLoader show = { this.state.enabledLoader }/>
+             <center className={ 'circular-loader-center' }>
+               <CircularLoader show={ this.state.enabledLoader }/>
              </center> :
             <FormComponent
-              loanType = { loanType }
-              purposeOfAvailment = { purposeOfAvailment }
-              validateLoanType = { validateLoanType }
-              formAttachments = { formAttachments }
-              offset = { offset }
-              presenter = { this.presenter }
+              loanType={ loanType }
+              purposeOfAvailment={ purposeOfAvailment }
+              validateLoanType={ validateLoanType }
+              formAttachments={ formAttachments }
+              offset={ offset }
+              onClick={
+                this.sendFormData(
+                  carBrand,
+                  carModel,
+                  makeYear,
+                  primaryColor,
+                  secondaryColor,
+                  file
+                  )
+                }
+              onSubmit={ (
+                getPoaTextData,
+                getModeOfLoanId,
+                getTermIdData,
+                getAmountValueData,
+                getSelectedSupplierData,
+                getFileData) => this.setState({
+                  poaText : getPoaTextData,
+                  modeOfLoanId : getModeOfLoanId,
+                  termId : getTermIdData,
+                  amountValue : getAmountValueData,
+                  selectedSupplier : getSelectedSupplierData,
+                  file : getFileData
+                })
+              }
             />
           }
       </div>

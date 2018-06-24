@@ -8,13 +8,13 @@ import './styles/motorModalStyle.css'
 class MotorcyclePurposeOfAvailmentModal extends Component {
   constructor (props) {
     super(props)
-     this.state = {
+     this.state={
         checkedSubCategory : false,
         purposeOfAvailment : [],
         enabledLoader : false,
         attachmentsDisplay : false,
       }
-      this.onGetClicked = this.onGetClicked.bind(this)
+      this.onGetClicked=this.onGetClicked.bind(this)
   }
 
   /*  Loader  */
@@ -28,7 +28,7 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
   }
 
   onGetClicked (resp, subcategory, closePoaModal, openFileUpload, loanType) {
-    const loanId = resp.id ? resp.id : null
+    const loanId=resp.id ? resp.id : null
     this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
 
     this.props.presenter.getMplFormAttachments(
@@ -57,13 +57,13 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
    }
 
   render () {
-    const { onClose, poa, loanType } = this.props
-    const subcategory = poa && poa.subCategoryLvl
-    const { checkedSubCategory, enabledLoader, attachmentsDisplay } = this.state
+    const { onClose, poa, loanType }=this.props
+    const subcategory=poa && poa.subCategoryLvl
+    const { checkedSubCategory, enabledLoader, attachmentsDisplay }=this.state
     return (
       <Modal
-        onClose = { onClose }
-        isDismisable = { true }>
+        onClose={ onClose }
+        isDismisable={ true }>
           <center>
             <h2>
               Purpose of Availment
@@ -73,14 +73,14 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
             {
               enabledLoader ?
                <center>
-                 <CircularLoader show = { this.state.enabledLoader }/>
+                 <CircularLoader show={ this.state.enabledLoader }/>
                </center> :
               poa && poa.category.map((resp, key) =>
               <GenericButton
-                className = { 'motor-modal-button' }
-                key = { key }
-                text = { resp && resp.name }
-                onClick = { () => this.onGetClicked(
+                className={ 'motor-modal-button' }
+                key={ key }
+                text={ resp && resp.name }
+                onClick={ () => this.onGetClicked(
                   resp,
                   subcategory,
                   subcategory === 1 ? false : true,
@@ -94,7 +94,7 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
         )
       }
     }
-  MotorcyclePurposeOfAvailmentModal.propTypes = {
+  MotorcyclePurposeOfAvailmentModal.propTypes={
     onClose : PropTypes.func,
     poa : PropTypes.object,
     onSubmit : PropTypes.func,
