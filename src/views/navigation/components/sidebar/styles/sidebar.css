@@ -19,6 +19,7 @@
   font-weight: lighter;
 }
 ._text-link:hover {
+  cursor: pointer;
   color: #ff8a00;
 }
 .active {
@@ -159,7 +160,7 @@ ul {
 }
 .sidebar-profile-name {
   margin: 10px auto 20px auto;
-  font-size: 14px;
+  font-size: 12px;
   display: block;
   font-weight: normal;
   opacity: .4;
