@@ -33,7 +33,7 @@ class CarLeaseFragment extends Component {
           <i
             className={ 'back-arrow' }
             onClick={ () => this.navigate() }></i>
-          <h1>CAR LEASE</h1>
+          <h1>CAR LEASE OPTION</h1>
           <div className={ 'adjustment' }>
           <div className={ 'card-container' }>
             {
