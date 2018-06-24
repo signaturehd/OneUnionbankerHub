@@ -3,7 +3,6 @@ import AddLoanInteractor from '../../../domain/interactor/mpl/AddLoanInteractor'
 import GetPurposeOfAvailmentInteractor from '../../../domain/interactor/mpl/GetPurposeOfAvailmentInteractor'
 import GetFormAttachmentsInteractor from '../../../domain/interactor/mpl/GetFormAttachmentsInteractor'
 import GetValidateInteractor from '../../../domain/interactor/mpl/GetValidateInteractor'
-import CarNewValidateInteractor from '../../../domain/interactor/mpl/CarNewValidateInteractor'
 
 import mplValidateParam from '../../../domain/param/MplValidateParam'
 import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
@@ -28,9 +27,6 @@ export default class MultiPurposeLoanPresenter {
 
     this.getValidateInteractor =
       new GetValidateInteractor(container.get('HRBenefitsClient'))
-
-    this.carNewValidateInteractor =
-      new CarNewValidateInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -98,14 +94,6 @@ export default class MultiPurposeLoanPresenter {
           this.view.showErrorMessage(error && error.message)
         }
       )
-    }
-  getCarValidate () {
-    this.view.showCircularLoader()
-    this.carNewValidateInteractor.execute()
-      .do(data => this.view.showValidate(data))
-      .do(data => this.view.hideCircularLoader(),
-          data => this.view.hideCircularLoader())
-      .subscribe()
     }
 
   getMplFormAttachments (formRequesting, loanId) {
