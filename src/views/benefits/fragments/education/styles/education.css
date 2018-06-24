@@ -1,0 +1,30 @@
+/* benefits */
+/* Education */
+
+.adjustment {
+  margin-top: 4%;
+}
+
+.education-cards-4 {
+  padding: 21% 0 20% 0 ;
+  cursor: pointer ;
+  background-image: url('../../../../../images/education_grant_plan_banner.png') ;
+  background-repeat: no-repeat;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3) ;
+  border-radius: 5px ;
+  grid-area: card ;
+  background-size: cover;
+  background-position: center;
+}
+
+.education-cards-3 {
+  padding: 21% 0 20% 0 ;
+  cursor: pointer ;
+  background-image: url('../../../../../images/education_grant_aid.png') ;
+  background-repeat: no-repeat;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3) ;
+  border-radius: 5px ;
+  grid-area: card ;
+  background-size: cover;
+  background-position: center;
+}
