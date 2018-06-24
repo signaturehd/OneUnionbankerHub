@@ -6,7 +6,6 @@ import { Card } from '../../../ub-components/'
 import './styles/settings.css'
 import CardBasicInfo from './CompanyInformationCardComponent'
 import CardCompanyInformation from './OtherInformationCardComponent'
-import MyDependentInformationCardComponent from './MyDependentInformationCardComponent'
 
 class SettingsCardComponent extends Component {
   constructor (props) {
@@ -32,7 +31,7 @@ class SettingsCardComponent extends Component {
             <div></div>
           </div>
           <div>
-            <h5 className={ 'title' }>{ profile.employeeNumber ? profile.employeeNumber : "(Not Yet Provided)" }</h5>
+            <h5 className={ 'title' }>{ profile.employeeNumber ? profile.employeeNumber : '(Not Yet Provided)' }</h5>
             <h4 className={ 'text-title-profile' }> EMPLOYEE NUMBER </h4>
           </div>
         </div>
@@ -43,7 +42,7 @@ class SettingsCardComponent extends Component {
             <div></div>
           </div>
           <div>
-            <h5 className={'title'}>{ profile.fullname ? profile.fullname : "(Not Yet Provided)" }</h5>
+            <h5 className={'title'}>{ profile.fullname ? profile.fullname : '(Not Yet Provided)' }</h5>
             <h4 className={ 'text-title-profile' }> EMPLOYEE NAME </h4>
           </div>
         </div>
@@ -54,7 +53,7 @@ class SettingsCardComponent extends Component {
             <div></div>
           </div>
           <div>
-            <h5 className={ "title" }>{ profile.birthDate ? profile.birthDate  : "(Not Yet Provided)" }</h5>
+            <h5 className={ 'title' }>{ profile.birthDate ? profile.birthDate  : '(Not Yet Provided)' }</h5>
             <h4 className={ 'text-title-profile' }> BIRTH DATE </h4>
           </div>
         </div>
@@ -65,7 +64,7 @@ class SettingsCardComponent extends Component {
             <div></div>
           </div>
           <div>
-            <h5 className={ "title" }>{ genderPartial ? genderPartial : "(Not Yet Provided)" }</h5>
+            <h5 className={ 'title' }>{ genderPartial ? genderPartial : '(Not Yet Provided)' }</h5>
             <h4 className={ 'text-title-profile' }> GENDER </h4>
           </div>
         </div>
@@ -76,7 +75,7 @@ class SettingsCardComponent extends Component {
             <div></div>
           </div>
           <div>
-            <h5 className={ "title" }> { profile.civilstatus ? profile.civilstatus : "(Not Yet Provided)" }</h5>
+            <h5 className={ 'title' }> { profile.civilstatus ? profile.civilstatus : '(Not Yet Provided)' }</h5>
             <h4 className={ 'text-title-profile' }> CIVIL STATUS </h4>
           </div>
         </div>
@@ -87,7 +86,7 @@ class SettingsCardComponent extends Component {
             <div></div>
           </div>
           <div>
-            <h5 className={ "title" }> { profile.email ? profile.email : "(Not Yet Provided)"  }</h5>
+            <h5 className={ 'title' }> { profile.email ? profile.email : '(Not Yet Provided)'  }</h5>
             <h4 className={ 'text-title-profile' }> EMAIL </h4>
           </div>
         </div>
@@ -98,7 +97,7 @@ class SettingsCardComponent extends Component {
             <div></div>
           </div>
           <div>
-            <h5 className={ "title" }> +{ profile.contactNumber ? profile.contactNumber : "(Not Yet Provided)"  }</h5>
+            <h5 className={ 'title' }> +{ profile.contactNumber ? profile.contactNumber : '(Not Yet Provided)'  }</h5>
             <h4 className={ 'text-title-profile' }> MOBILE NUMBER  </h4>
           </div>
         </div>
@@ -109,7 +108,7 @@ class SettingsCardComponent extends Component {
             <div></div>
           </div>
           <div>
-            <h5 className={ "title" }> { profile.address ? profile.address  : "(Not Yet Provided)" } </h5>
+            <h5 className={ 'title' }> { profile.address ? profile.address  : '(Not Yet Provided)' } </h5>
             <h4 className={ 'text-title-profile' }> COMPANY ADDRESS </h4>
           </div>
         </div>
@@ -131,14 +130,14 @@ class SettingsCardComponent extends Component {
             name={ 'tabs' }/>
           <label className={ 'label-tab' } htmlFor={ 'tab2' }>Other Information</label>
 
-          <section id='content1'>
+          <section id={ 'content1' }>
             <CardBasicInfo
             linemanager = {linemanager}
             profile = { profile }
             rank= { rank } />
           </section>
 
-          <section id='content2'>
+          <section id={ 'content2' }>
             <CardCompanyInformation
             linemanager = {linemanager}
             profileDependent = { profileDependent }
