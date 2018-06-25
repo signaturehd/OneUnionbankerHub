@@ -156,46 +156,95 @@ class MotorcycleLoanCardComponent extends Component {
               Benefits Form
             </h4>
             <div className={ 'motor-form-card-body' }>
-              <span className={ 'motor-icon' } />
-              <GenericTextBox
-                type={ 'button' }
-                value={ poaText }
-                onClick={ () =>
-                  this.setState({ showPurposeOfAvailment : true }) }
-                onChange={ (poaText) =>
-                  this.setState({ poaText }) }
-                placeholder={ 'Purpose Of Availment' }
-                type={ 'text' }/>
-              <GenericTextBox
-                onChange={ (modeOfLoanText) =>
-                  this.setState({ modeOfLoanText }) }
-                onClick={ () =>
-                  this.setState({ showOffset : true }) }
-                placeholder={ 'Mode of Loan' }
-                value={ offset ? 'New Loan' : modeOoffsetfLoan }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={ amountValue }
-                onChange={ this.onChange }
-                placeholder={ 'Desired Amount' }
-                maxLength={ validateLoanType && ( '' + validateLoanType.maximumLoanableAmount).length }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={ `${ termOfLoan } (${ rateOfLoan } %)` }
-                onChange={ (termOfLoan, rateOfLoan) =>
-                  this.setState({ termOfLoan, rateOfLoan }) }
-                onClick={ () =>
-                  this.setState({ showTerm : true }) }
-                placeholder={ 'Term of Loan' }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={ selectedSupplier ? selectedSupplier : null }
-                onChange={ (supplier) =>
-                  this.setState({ selectedSupplier : supplier }) }
-                onClick={ () =>
-                  this.setState({ showSupplier : true }) }
-                placeholder={ 'Supplier Name' }
-                type={ 'text' }/>
+              <div className={ 'motor-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'motor-icon-forms motorMailBoxIcon' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    type={ 'button' }
+                    value={ poaText }
+                    group={ 'motor-group-textbox' }
+                    container={ 'motor-form-icon-container' }
+                    onClick={ () =>
+                      this.setState({ showPurposeOfAvailment : true }) }
+                    onChange={ poaText =>
+                      this.setState({ poaText }) }
+                    placeholder={ 'Purpose Of Availment' }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'motor-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'motor-icon-forms motorEditIcon' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    group={ 'motor-group-textbox' }
+                    container={ 'motor-form-icon-container' }
+                    onChange={ modeOfLoanText =>
+                      this.setState({ modeOfLoanText }) }
+                    onClick={ () =>
+                      this.setState({ showOffset : true }) }
+                    placeholder={ 'Mode of Loan' }
+                    value={ offset ? 'New Loan' : modeOoffsetfLoan }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'motor-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'motor-icon-forms pesoSign' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    group={ 'motor-group-textbox' }
+                    container={ 'motor-form-icon-container' }
+                    value={ amountValue }
+                    onChange={ this.onChange }
+                    placeholder={ 'Desired Amount' }
+                    maxLength={ validateLoanType && (`${  validateLoanType.maximumLoanableAmount}`).length }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'motor-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'motor-icon-forms transactionDate' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    group={ 'motor-group-textbox' }
+                    container={ 'motor-form-icon-container' }
+                    value={ `${ termOfLoan } (${ rateOfLoan } %)` }
+                    onChange={ (termOfLoan, rateOfLoan) =>
+                      this.setState({ termOfLoan, rateOfLoan }) }
+                    onClick={ () =>
+                      this.setState({ showTerm : true }) }
+                    placeholder={ 'Term of Loan' }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'motor-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'motor-icon-forms personGreyIcon' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    group={ 'motor-group-textbox' }
+                    container={ 'motor-form-icon-container' }
+                    value={ selectedSupplier ? selectedSupplier : null }
+                    onChange={ supplier =>
+                      this.setState({ selectedSupplier : supplier }) }
+                    onClick={ () =>
+                      this.setState({ showSupplier : true }) }
+                    placeholder={ 'Supplier Name' }
+                    type={ 'text' }/>
+                </div>
+              </div>
               <GenericButton
                 type={ 'button' }
                 text={ 'continue' }
