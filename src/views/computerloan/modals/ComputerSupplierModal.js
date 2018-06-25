@@ -29,7 +29,7 @@ return (
           className = { 'computer-modal-button' }
           key = { key }
           text = {`Term ${resp && resp.term} Rate (${resp && resp.rate}%)` }
-          onClick = { () => onSubmit( resp, false ) }/>
+          onClick = { () => onSubmit(resp, false) }/>
         )
       }
     </div>

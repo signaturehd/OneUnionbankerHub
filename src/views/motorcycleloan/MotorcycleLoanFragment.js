@@ -9,7 +9,7 @@ import { CircularLoader } from '../../ub-components/'
 
 import FormComponent from './components/MotorcycleLoanCardComponent'
 
-import store from '../../actions'
+import store from '../../store'
 import { NotifyActions } from '../../actions'
 
 class MotorCycleLoanFragment extends BaseMVPView {
@@ -97,6 +97,13 @@ class MotorCycleLoanFragment extends BaseMVPView {
         termId === null ||
         file === '' )
       {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Invalid',
+            message : 'Please complete all fields',
+            type : 'warning',
+            duration : 2000
+          })
+        )
       } else {
           this.presenter.addLoan(
             poaText,
@@ -152,7 +159,7 @@ class MotorCycleLoanFragment extends BaseMVPView {
               formAttachments={ formAttachments }
               offset={ offset }
               presenter={ this.presenter }
-              onClick={
+              onClick={ () =>
                 this.sendFormData(
                   poaText,
                   modeOfLoanId,

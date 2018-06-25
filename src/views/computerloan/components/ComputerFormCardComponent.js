@@ -12,7 +12,7 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class ComputerFormCardComponent extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       showPurposeOfAvailment: false,
@@ -31,7 +31,8 @@ class ComputerFormCardComponent extends Component {
       showSupplier : false,
       supplier: ''
     }
-     this.onChange = this.onChange.bind(this)
+    this.onGetClicked = this.onGetClicked.bind(this)
+    this.onChange = this.onChange.bind(this)
   }
 
   onChange (e) {
@@ -41,11 +42,24 @@ class ComputerFormCardComponent extends Component {
       }
    }
 
-   sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId ) {
+ onGetClicked (
+   poaText,
+   modeOfLoanId,
+   amountValue,
+   termId,
+   selectedSupplier,
+   file) {
+   this.props.onSubmit(
+     poaText,
+     modeOfLoanId,
+     amountValue,
+     termId,
+     selectedSupplier,
+     file
+   )
+ }
 
-   }
-
-  render() {
+  render () {
     const {
       showPurposeOfAvailment,
       showOffset,
@@ -70,7 +84,7 @@ class ComputerFormCardComponent extends Component {
       offset,
       selectedSupplier } = this.props
 
-    return(
+    return (
       <div className = {'computer-container'}>
         {
           showOffset &&
@@ -148,12 +162,12 @@ class ComputerFormCardComponent extends Component {
                 value = { poaText }
                 onClick = { () =>
                   this.setState({ showPurposeOfAvailment : true }) }
-                onChange = { (poaText) =>
+                onChange = { poaText =>
                   this.setState({ poaText }) }
                 placeholder = { 'Purpose Of Availment' }
                 type = { 'text' }/>
               <GenericTextBox
-                onChange = { (modeOfLoanText) =>
+                onChange = { modeOfLoanText =>
                   this.setState({ modeOfLoanText }) }
                 onClick = { () =>
                   this.setState({ showOffset : true }) }
@@ -164,7 +178,7 @@ class ComputerFormCardComponent extends Component {
                 value = { amountValue }
                 onChange = { this.onChange }
                 placeholder = { 'Desired Amount' }
-                maxLength = { validateLoanType && ( '' + validateLoanType.maximumLoanableAmount).length }
+                maxLength = { validateLoanType && (`${  validateLoanType.maximumLoanableAmount}`).length }
                 type = { 'text' }/>
               <GenericTextBox
                 value = { `${ termOfLoan } (${ rateOfLoan } %)` }
@@ -176,7 +190,7 @@ class ComputerFormCardComponent extends Component {
                 type = { 'text' }/>
               <GenericTextBox
                 value = { selectedSupplier ? selectedSupplier : null }
-                onChange = { (supplier) =>
+                onChange = { supplier =>
                   this.setState({ selectedSupplier : supplier }) }
                 onClick = { () =>
                   this.setState({ showSupplier : true }) }
@@ -185,7 +199,15 @@ class ComputerFormCardComponent extends Component {
               <GenericButton
                 type = { 'button' }
                 text = { 'continue' }
-                onClick = { () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, file1, file2) }
+                onClick={ () =>
+                  this.onGetClicked(
+                    poaText,
+                    modeOfLoanId,
+                    amountValue,
+                    termId,
+                    selectedSupplier,
+                    file)
+                  }
                 className = { 'computer-submit' } />
             </div>
           </Card>
