@@ -9,6 +9,9 @@ import { CircularLoader } from '../../ub-components/'
 
 import FormComponent from './components/MotorcycleLoanCardComponent'
 
+import store from '../../actions'
+import { NotifyActions } from '../../actions'
+
 class MotorCycleLoanFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -87,15 +90,23 @@ class MotorCycleLoanFragment extends BaseMVPView {
     amountValue,
     selectedSupplier,
     file) {
-      console.log(
-        poaText,
-        modeOfLoanId,
-        termId,
-        amountValue,
-        selectedSupplier,
-        file
-      )
-  }
+      if(
+        poaText === null ||
+        modeOfLoanId === null ||
+        amountValue === 0 ||
+        termId === null ||
+        file === '' )
+      {
+      } else {
+          this.presenter.addLoan(
+            poaText,
+            modeOfLoanId,
+            termId,
+            amountValue,
+            selectedSupplier,
+            file)
+          }
+        }
 
   render () {
     const {
@@ -116,8 +127,10 @@ class MotorCycleLoanFragment extends BaseMVPView {
       amountValue,
       selectedSupplier,
       file }=this.state
+
     return (
       <div>
+        { super.render() }
         <div>
           <i
             className={ 'back-arrow' }
@@ -138,13 +151,14 @@ class MotorCycleLoanFragment extends BaseMVPView {
               validateLoanType={ validateLoanType }
               formAttachments={ formAttachments }
               offset={ offset }
+              presenter={ this.presenter }
               onClick={
                 this.sendFormData(
-                  carBrand,
-                  carModel,
-                  makeYear,
-                  primaryColor,
-                  secondaryColor,
+                  poaText,
+                  modeOfLoanId,
+                  termId,
+                  amountValue,
+                  selectedSupplier,
                   file
                   )
                 }

@@ -78,8 +78,8 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
               poa && poa.category.map((resp, key) =>
               <GenericButton
                 className={ 'motor-modal-button' }
-                key={ key }
-                text={ resp && resp.name }
+                key={ key ? key : 0}
+                text={ resp && resp.name ? resp && resp.name : '(null)' }
                 onClick={ () => this.onGetClicked(
                   resp,
                   subcategory,
@@ -96,7 +96,7 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
     }
   MotorcyclePurposeOfAvailmentModal.propTypes={
     onClose : PropTypes.func,
-    poa : PropTypes.object,
+    poa : PropTypes.array,
     onSubmit : PropTypes.func,
   }
 
