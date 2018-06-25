@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import './styles/carleaseStyle.css'
-import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
+import { GenericTextBox,  Card, GenericButton, FileUploader, Modal } from '../../../ub-components/'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -20,7 +20,8 @@ class CarLeaseOldForm extends Component {
       file2: '',
       imagePreviewUrl: '',
       imagePreviewUrl2: '',
-      showFileUpload: true,
+      showFileUpload: false,
+      showTemporaryMessage: true,
     }
      this.onChange = this.onChange.bind(this)
      this.handleImageChange = this.handleImageChange.bind(this)
@@ -34,6 +35,9 @@ class CarLeaseOldForm extends Component {
       }
    }
 
+   navigate () {
+     this.props.history.push('/mybenefits/benefits/carlease')
+   }
 
    getExtension (filename) {
      const parts = filename.split('/')
@@ -129,15 +133,16 @@ class CarLeaseOldForm extends Component {
       imagePreviewUrl,
       imagePreviewUrl2,
       showFileUpload,
-      response } = this.state
+      response,
+      showTemporaryMessage } = this.state
     const {
       purposeOfAvailment,
       loanType,
       validateLoanType,
       preferredFormData,
       offset,
-      onGetPurposeOfLoan } = this.props
-
+      onGetPurposeOfLoan,
+      history } = this.props
       const styles = {
         image1 : {
           backgroundImage: `url('${imagePreviewUrl}')`,
@@ -163,6 +168,24 @@ class CarLeaseOldForm extends Component {
     return (
       <div className={'carview-container'}>
         <div className={ 'car-grid-column-2' }>
+          {
+            showTemporaryMessage &&
+            <Modal
+              onClose={ ()=> this.setState({
+                showTemporaryMessage: false  })
+              }
+            >
+            <center>Loan for second hand car is not yet available</center>
+            <center>
+              <br/>
+              <GenericButton
+                text={ 'OK' }
+                onClick={ () =>
+                  this.props.history.push('/mybenefits/benefits/carlease')
+                }/>
+            </center>
+          </Modal>
+          }
           <Card className={ 'car-form-card' }>
             <h4>
               Car Lease Form (Old)
@@ -233,6 +256,7 @@ class CarLeaseOldForm extends Component {
           </Card>
           }
         </div>
+        }
       </div>
     )
   }
