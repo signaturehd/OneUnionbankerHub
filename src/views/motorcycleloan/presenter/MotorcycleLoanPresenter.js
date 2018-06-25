@@ -30,7 +30,7 @@ export default class MotorcycleLoanPresenter {
   }
 
   setView (view) {
-    this.view = view
+    this.view=view
   }
 
   /*Types*/
@@ -67,11 +67,16 @@ export default class MotorcycleLoanPresenter {
   getMplValidate (loanTypeId) {
     this.view.showCircularLoader()
     this.getValidateInteractor.execute(mplValidateParam(loanTypeId))
-      .do(os => this.view.showOffset(os && os.offset))
-      .do(data => this.view.showValidate(data))
-      .do(data => this.view.hideCircularLoader(),
-          data => this.view.hideCircularLoader())
-      .subscribe()
+      .subscribe(
+        data => {
+          this.view.showOffset(os && os.offset)
+          this.view.showValidate(data)
+          this.view.hideCircularLoader()
+        },
+        error => {
+          this.view.navigate()
+        }
+      )
     }
 
   getMplFormAttachments (formRequesting, loanId) {

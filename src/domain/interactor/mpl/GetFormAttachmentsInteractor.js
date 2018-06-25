@@ -4,6 +4,6 @@ export default class GetTermAndRatesInteractor {
   }
 
   execute (mplGetFormParam) {
-    return this.client.getMPLFormAttachments(this.client.getToken(), mplGetFormParam)
+    return this.client.getMplFormAttachments(this.client.getToken(), mplGetFormParam)
   }
 }

@@ -7,12 +7,12 @@ import './styles/motorModalStyle.css'
 
 class MotorcycleModeOfLoanModal extends Component {
 render () {
-  const { onClose, offset, onSubmit } = this.props
+  const { onClose, offset, onSubmit }=this.props
 
 return (
   <Modal
-    onClose = { onClose }
-    isDismisable = { true }>
+    onClose={ onClose }
+    isDismisable={ true }>
     <div>
       <center>
         <h2>
@@ -24,10 +24,10 @@ return (
       {
         offset && offset.map((resp, key) =>
         <GenericButton
-          className = { 'motor-modal-button' }
-          key = { key }
-          text = { resp && resp.name }
-          onClick = { () => onSubmit(resp, false) }/>
+          className={ 'motor-modal-button' }
+          key={ key }
+          text={ resp && resp.name }
+          onClick={ () => onSubmit(resp, false) }/>
         )
       }
     </div>
@@ -35,7 +35,7 @@ return (
     )
   }
 }
-MotorcycleModeOfLoanModal.propTypes = {
+MotorcycleModeOfLoanModal.propTypes={
   onClose : PropTypes.func,
   offset : PropTypes.array,
   onSubmit : PropTypes.func

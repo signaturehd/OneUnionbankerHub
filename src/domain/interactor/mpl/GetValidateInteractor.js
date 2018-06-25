@@ -4,6 +4,6 @@ export default class GetValidateInteractor {
   }
 
   execute (mplValidatedLoanParam) {
-    return this.client.getMPLValidate(this.client.getToken(), mplValidatedLoanParam)
+    return this.client.getMplValidate(this.client.getToken(), mplValidatedLoanParam)
   }
 }
