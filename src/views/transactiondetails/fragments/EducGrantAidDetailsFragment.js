@@ -8,11 +8,15 @@ import './styles/detailsFragment.css'
 /*
 Transaction Education Grant Aid Form Agreement, Form Agreement, & File Attacment
 */
-import EducationDetailsComponent
-from '../../transaction/components/TransactionEducationComponent/EducationDetailsComponent'
+import EducationDetailsComponent from
+ '../../transaction/components/TransactionEducationComponent/EducationDetailsComponent'
 
-import EducationFileComponent
-from '../../transaction/components/TransactionEducationComponent/EducationFileAttachmentComponent'
+import EducationFileComponent from
+ '../../transaction/components/TransactionEducationComponent/EducationFileAttachmentComponent'
+
+import EducGrantAidAgreementComponent from
+ '../../transaction/components/TransactionEducationComponent/TransactionEducationFormAgreementComponent'
+
 
 class EducGrantAidDetailsFragment extends Component {
   constructor (props) {
@@ -50,27 +54,14 @@ class EducGrantAidDetailsFragment extends Component {
                 <br/>
               </div>
             </div>
-            <div className={ 'accor' }>
-              <div className={ 'head' }>Procedures</div>
-              <div className={ 'body' }>
-                <div className={ 'transaction-card-details' }>
-                  <center>
-                    <h2 className={ 'details-bold' }>
-                      Procedures
-                    </h2>
-                  </center>
-                  <br/>
-                  </div>
-                  <br/>
-              </div>
-            </div>
 
             <div className={ 'accor' }>
               <div className={ 'head' }>
                 Notice
               </div>
-            <div className={ 'body' }>
-            </div>
+              <div className = { 'body' } >
+                <EducGrantAidAgreementComponent details = { details } />
+              </div>
           </div>
         </Accordion>
       </div>

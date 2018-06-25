@@ -44,7 +44,6 @@ class CarLeaseNewFragment extends BaseMVPView {
     primaryColor,
     secondaryColor,
     file) {
-      console.log(carBrand, carModel,makeYear,primaryColor,secondaryColor,file)
   }
 
   /* Notice Response*/
@@ -91,7 +90,6 @@ class CarLeaseNewFragment extends BaseMVPView {
       primaryColor,
       secondaryColor,
       file } = this.state
-      console.log(carBrand)
     return (
       <div>
         {

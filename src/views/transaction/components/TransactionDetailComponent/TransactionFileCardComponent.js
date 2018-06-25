@@ -20,7 +20,8 @@ class TransactionFileCardComponent extends Component {
                   attachments.map((image, key) => (
                     <img
                       className = { 'transaction-attachments _img-ub-logo' }
-                      src={image}/>
+                      src={image}
+                    />
                   ))
                 }
               </div>              :
