@@ -5,7 +5,7 @@ import { Card } from '../../../../ub-components/'
 
 import moment from 'moment'
 
-class TransactionMPLDetailComponent extends Component {
+class EducationDetailsComponent extends Component {
     constructor (props) {
       super(props)
     }
@@ -29,8 +29,8 @@ class TransactionMPLDetailComponent extends Component {
           <h2 className = { 'transaction-detail' }> { details && details.details.AccountNo } </h2>
           {
             transactionsPerson && transactionsPerson.map(person =>
-                transactionID === person.id &&
-                <h2 key = {person.id} > { person.fullName } </h2>
+              transactionID === person.id &&
+              <h2 key = {person.id} > { person.fullName } </h2>
             )
           }
         </div>
@@ -39,4 +39,4 @@ class TransactionMPLDetailComponent extends Component {
   }
 }
 
-export default TransactionMPLDetailComponent
+export default EducationDetailsComponent

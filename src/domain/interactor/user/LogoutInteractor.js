@@ -8,5 +8,7 @@ export default class LogoutInteractor {
       .do(resp => this.client.setToken(''))
       .do(resp => this.client.setInitialToken(''))
       .do(resp => this.client.setProfile(''))
+      .do(resp => this.client.setAccountNumber(''))
+      .do(resp => this.client.setReleasingCenter(''))
   }
 }
