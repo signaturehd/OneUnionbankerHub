@@ -6,28 +6,30 @@ import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
-  <div>
+
+const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
+  <div className = {'container'}>
+    <div className ="group">
     <label>{label}</label>
-    <div>
-      <input {...input} type={type} placeholder={label} />
+      <input {...input} type={type} placeholder={label} className = {'text'} />
       {touched && error && <span>{error}</span>}
+      <span className = { 'text-label' }>{ placeholder }</span>
+      <span className ={ 'bar' }></span>
     </div>
   </div>
 )
 
 const renderDatePicker = ({ input, label, type, className, selected, meta: { touched, error } }) =>
   <DatePicker
-    format="DD MMM YYYY"
-    time={showTime}
     {...input}
-        selected={selected}
         placeholder={'Start Date'}
         type={type}
         className={'calendar'}
         dropdownMode="select"
+        dateForm="YYYY/MM/DD"
+        selected={input.value ? moment(input.value) : null}
+        onChange={date => input.onChange(moment(date).format('YYYY/MM/DD'))}
   />
-
 
 const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
 <div>
@@ -52,25 +54,27 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           onClick={() => fields.remove(index)}
         />
         <h4>Education #{index + 1}</h4>
-        <GenericTextBox
+        <Field
           name={`${member}.school`}
           type="text"
           component={renderField}
           placeholder={ 'School' }
         />
-        <GenericTextBox
+        <span className = { 'text-label' }></span>
+        <span className ={ 'bar' }></span>
+        <Field
           name={`${member}.degree`}
           type="text"
           component={renderField}
           placeholder={ 'Degree' }
         />
-        <GenericTextBox
+        <Field
           name={`${member}.course`}
           type="text"
           component={renderField}
           placeholder={ 'Course' }
         />
-        <GenericTextBox
+        <Field
           name={`${member}.specialH`}
           type="text"
           component={renderField}
@@ -85,7 +89,15 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           component={renderDatePicker}
           className = { 'calendar' }
           calendarClassName = { 'calendarClass' }
-
+        />
+        <label>End Date</label>
+        <Field
+          placeholder = {'End Date'}
+          name={`${member}.endDate`}
+          readOnly
+          component={renderDatePicker}
+          className = { 'calendar' }
+          calendarClassName = { 'calendarClass' }
         />
       </div>
       </div>
@@ -104,5 +116,7 @@ const FieldArraysForm = props => {
 }
 
 export default reduxForm({
-  form: 'education' // a unique identifier for this form
+  form: 'form', // a unique identifier for this form
+  destroyOnUnmount: false, //        <------ preserve form data
+  forceUnregisterOnUnmount: true,
 })(FieldArraysForm)

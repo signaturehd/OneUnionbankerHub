@@ -8,15 +8,29 @@ import moment from 'moment'
 
 
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
-  <div>
+const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
+  <div className = {'container'}>
+    <div className ="group">
     <label>{label}</label>
-    <div>
-      <input {...input} type={type} placeholder={label} />
+      <input {...input} type={type} placeholder={label} className = {'text'} />
       {touched && error && <span>{error}</span>}
+      <span className = { 'text-label' }>{ placeholder }</span>
+      <span className ={ 'bar' }></span>
     </div>
   </div>
 )
+
+const renderDatePicker = ({ input, label, type, className, selected, meta: { touched, error } }) =>
+  <DatePicker
+    {...input}
+        placeholder={'Start Date'}
+        type={type}
+        className={'calendar'}
+        dropdownMode="select"
+        dateForm="YYYY/MM/DD"
+        selected={input.value ? moment(input.value) : null}
+        onChange={date => input.onChange(moment(date).format('YYYY/MM/DD'))}
+  />
 
 const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
 <div>
@@ -41,23 +55,26 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           onClick={() => fields.remove(index)}
         />
         <h4>Certificate #{index + 1}</h4>
-        <GenericTextBox
+        <Field
           name={`${member}.CertName`}
           type="text"
           component={renderField}
           placeholder={ 'Certificate Name' }
         />
-        <GenericTextBox
+        <Field
           name={`${member}.issBody`}
           type="text"
           component={renderField}
           placeholder={ 'Issuing Body' }
         />
-        <GenericTextBox
-          name={`${member}.address`}
-          type="text"
-          component={renderField}
-          placeholder={ 'Address' }
+        <label>Date Issued</label>
+        <Field
+          placeholder = {'Start Date'}
+          name={`${member}.startDate`}
+          readOnly
+          component={renderDatePicker}
+          className = { 'calendar' }
+          calendarClassName = { 'calendarClass' }
         />
       </div>
     ))}
@@ -75,5 +92,7 @@ const FieldArraysForm = props => {
 }
 
 export default reduxForm({
-  form: 'certificate' // a unique identifier for this form
+  form: 'form', // a unique identifier for this form
+  destroyOnUnmount: false, //        <------ preserve form data
+  forceUnregisterOnUnmount: true,
 })(FieldArraysForm)

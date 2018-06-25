@@ -14,12 +14,11 @@ import Experience from './fragments/ExperienceFragment'
 import Skills from './fragments/SkillsFragment'
 import Certificate from './fragments/CertificateFragment'
 import AboutMe from './fragments/AboutMeFragment'
-
 const steps = [
   {
     label: 'Education',
     component: <Provider store={store}>
-      <Education onSubmit={'To do: add submit function'} />
+      <Education onSubmit={'handleSubmit'} />
   </Provider>,
     exitValidation: false
   },

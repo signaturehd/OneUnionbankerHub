@@ -8,15 +8,29 @@ import moment from 'moment'
 
 
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
-  <div>
+const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
+  <div className = {'container'}>
+    <div className ="group">
     <label>{label}</label>
-    <div>
-      <input {...input} type={type} placeholder={label} />
+      <input {...input} type={type} placeholder={label} className = {'text'} />
       {touched && error && <span>{error}</span>}
+      <span className = { 'text-label' }>{ placeholder }</span>
+      <span className ={ 'bar' }></span>
     </div>
   </div>
 )
+
+const renderDatePicker = ({ input, label, type, className, selected, meta: { touched, error } }) =>
+  <DatePicker
+    {...input}
+        placeholder={'Start Date'}
+        type={type}
+        className={'calendar'}
+        dropdownMode="select"
+        dateForm="YYYY/MM/DD"
+        selected={input.value ? moment(input.value) : null}
+        onChange={date => input.onChange(moment(date).format('YYYY/MM/DD'))}
+  />
 
 const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
 <div>
@@ -41,31 +55,51 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           onClick={() => fields.remove(index)}
         />
         <h4>Experience #{index + 1}</h4>
-        <GenericTextBox
+        <Field
           name={`${member}.compName`}
           type="text"
           component={renderField}
           placeholder={ 'Company Name' }
         />
-        <GenericTextBox
+        <Field
           name={`${member}.address`}
           type="text"
           component={renderField}
           placeholder={ 'Address' }
         />
-        <GenericTextBox
+        <Field
           name={`${member}.position`}
           type="text"
           component={renderField}
           placeholder={ 'Position' }
         />
-        <textarea
+        <Field
           name={`${member}.expDescription`}
           type="text"
-          component={renderField}
+          component={'textarea'}
           className={ 'experience-textarea' }
           placeholder={ 'Brief description of duties' }
         />
+        <div> <h4> Inclusive Dates </h4>
+        <label>Start Date</label>
+        <Field
+          placeholder = {'Start Date'}
+          name={`${member}.startDate`}
+          readOnly
+          component={renderDatePicker}
+          className = { 'calendar' }
+          calendarClassName = { 'calendarClass' }
+        />
+        <label>End Date</label>
+        <Field
+          placeholder = {'End Date'}
+          name={`${member}.endDate`}
+          readOnly
+          component={renderDatePicker}
+          className = { 'calendar' }
+          calendarClassName = { 'calendarClass' }
+        />
+      </div>
       </div>
     ))}
   </Card>
@@ -82,5 +116,7 @@ const FieldArraysForm = props => {
 }
 
 export default reduxForm({
-  form: 'experience' // a unique identifier for this form
+  form: 'form', // a unique identifier for this form
+  destroyOnUnmount: false, //        <------ preserve form data
+  forceUnregisterOnUnmount: true,
 })(FieldArraysForm)

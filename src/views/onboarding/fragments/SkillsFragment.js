@@ -7,13 +7,14 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
 
-
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
-  <div>
+const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
+  <div className = {'container'}>
+    <div className ="group">
     <label>{label}</label>
-    <div>
-      <input {...input} type={type} placeholder={label} />
+      <input {...input} type={type} placeholder={label} className = {'text'} />
       {touched && error && <span>{error}</span>}
+      <span className = { 'text-label' }>{ placeholder }</span>
+      <span className ={ 'bar' }></span>
     </div>
   </div>
 )
@@ -41,13 +42,13 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           onClick={() => fields.remove(index)}
         />
         <h4>Skill #{index + 1}</h4>
-        <GenericTextBox
+        <Field
           name={`${member}.skillName`}
           type="text"
           component={renderField}
           placeholder={ 'Skill Name' }
         />
-        <GenericTextBox
+        <Field
           name={`${member}.skillLvl`}
           type="text"
           component={renderField}
@@ -69,5 +70,7 @@ const FieldArraysForm = props => {
 }
 
 export default reduxForm({
-  form: 'skills' // a unique identifier for this form
+  form: 'form', // a unique identifier for this form
+  destroyOnUnmount: false, //        <------ preserve form data
+  forceUnregisterOnUnmount: true,
 })(FieldArraysForm)
