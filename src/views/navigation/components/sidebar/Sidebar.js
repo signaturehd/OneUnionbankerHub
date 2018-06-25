@@ -83,10 +83,11 @@ class SideBar extends Component {
           {
             modules.map((d, idx) =>
             d.id === 1 ?
-            <div>
+            <div
+              key = { idx }
+            >
               <li
                 className = { `_text-link ${selected === d.id && 'active'}` }
-                key = { idx }
                 onClick = { d.action }>
                 <a key = { idx }
                   className =
@@ -96,10 +97,11 @@ class SideBar extends Component {
               <Line />
             </div>
               :
-              <div>
+              <div
+                key = { idx }
+              >
                 <li
                   className = { `_text-link ${selected === d.id && 'active'}` }
-                  key = { idx }
                   onClick = { d.action }>
                   <a key = { idx }
                     className =
