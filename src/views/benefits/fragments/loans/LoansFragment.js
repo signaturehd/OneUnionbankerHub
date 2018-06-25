@@ -48,7 +48,7 @@ class LoansFragment extends Component {
             <i
               className = { 'back-arrow' }
               onClick = { () => this.navigate() }></i>
-            <h1>LOANS</h1>
+            <h1>MULTI PURPOSE LOAN</h1>
           <div className = { 'adjustment' }>
           <div className = { 'card-container' }>
             {

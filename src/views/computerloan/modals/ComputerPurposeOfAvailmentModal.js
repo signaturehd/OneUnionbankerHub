@@ -8,15 +8,15 @@ import './styles/computerModalStyle.css'
 class MplPurposeOfAvailmentModal extends Component {
   constructor (props) {
     super(props)
-     this.state = {
+     this.state={
         checkedSubCategory : false,
         purposeOfAvailment : [],
         enabledLoader : false,
       }
-      this.onGetClicked = this.onGetClicked.bind(this)
+      this.onGetClicked=this.onGetClicked.bind(this)
   }
 
-  /*Loader*/
+  /* Loader*/
   showPurposeLoader () {
     this.setState({ enabledLoader : true })
   }
@@ -25,27 +25,42 @@ class MplPurposeOfAvailmentModal extends Component {
     this.setState({ enabledLoader : false })
   }
 
-  onGetClicked (resp, subcategory, closePoaModal, openFileUpload, loanType) {
-    const loanId = resp.id ? resp.id : null
+  onGetClicked (
+    resp,
+    subcategory,
+    closePoaModal,
+    openFileUpload,
+    loanType) {
+      const loanId=resp.id ? resp.id : null
 
-    this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
-    this.props.presenter.getMplFormAttachments(resp.name, loanType ? loanType : null)
+      this.props.onSubmit(
+        resp,
+        subcategory,
+        closePoaModal,
+        openFileUpload,
+        loanType)
+          this.props.presenter.getMplFormAttachments(
+            resp.name ? resp.name: '',
+            loanType ? loanType : null)
 
-    if ( loanID ) {
-      this.props.presenter.getMplPurposeOfAvailment(loanType && loanType, resp.id, subcategory ? subcategory : null)
+    if (loanID) {
+      this.props.presenter.getMplPurposeOfAvailment(
+        loanType && loanType ? loanType : '',
+        resp.id ? resp.id : '',
+        subcategory ? subcategory : null)
     } else {
       this.props.onClose()
     }
   }
 
   render () {
-  const { onClose, poa, loanType } = this.props
-  const subcategory = poa && poa.subCategoryLvl
-  const { checkedSubCategory, enabledLoader } = this.state
+  const { onClose, poa, loanType }=this.props
+  const subcategory=poa && poa.subCategoryLvl
+  const { checkedSubCategory, enabledLoader }=this.state
   return (
     <Modal
-      onClose = { onClose }
-      isDismisable = { true }>
+      onClose={ onClose }
+      isDismisable={ true }>
         <center>
           <h2>
             Purpose of Availment
@@ -55,19 +70,19 @@ class MplPurposeOfAvailmentModal extends Component {
           {
             enabledLoader ?
              <center>
-               <CircularLoader show = { this.state.enabledLoader }/>
+               <CircularLoader show={ this.state.enabledLoader }/>
              </center> :
             poa && poa.category.map((resp, key) =>
             <GenericButton
-              className = { 'mpl-poa-modal-button' }
-              key = { key }
-              text = { resp && resp.name }
-              onClick = { () => this.onGetClicked(
-                resp,
-                subcategory,
-                subcategory === 1 ? false : true,
+              className={ 'mpl-poa-modal-button' }
+              key={ key ? key : '' }
+              text={ resp && resp.name ? resp.name : '' }
+              onClick={ () => this.onGetClicked(
+                resp ? resp : '',
+                subcategory ? subcategory : '',
+                subcategory !== 1,
                 true,
-                loanType) }
+                loanType ? loanType : '') }
               />
             )
           }
@@ -76,7 +91,7 @@ class MplPurposeOfAvailmentModal extends Component {
       )
     }
   }
-  MplPurposeOfAvailmentModal.propTypes = {
+  MplPurposeOfAvailmentModal.propTypes={
     onClose : PropTypes.func,
     poa : PropTypes.object,
     onSubmit : PropTypes.func,

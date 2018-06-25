@@ -27,7 +27,8 @@ class CarLeaseOldFragment extends BaseMVPView {
       makeYear: 0,
       primaryColor: '',
       secondaryColor: '',
-      file: ''
+      file: '',
+      hideFormComponent: false
     }
     this.sendFormData = this.sendFormData.bind(this)
   }
@@ -44,7 +45,6 @@ class CarLeaseOldFragment extends BaseMVPView {
     primaryColor,
     secondaryColor,
     file) {
-      console.log(carBrand, carModel,makeYear,primaryColor,secondaryColor,file)
   }
 
   /* Notice Response*/
@@ -90,8 +90,9 @@ class CarLeaseOldFragment extends BaseMVPView {
       makeYear,
       primaryColor,
       secondaryColor,
-      file } = this.state
-      console.log(carBrand)
+      file,
+      hideFormComponent } = this.state
+      const { history } = this.props
     return (
       <div>
         {
@@ -132,6 +133,7 @@ class CarLeaseOldFragment extends BaseMVPView {
                <CircularLoader show={ this.state.enabledLoader }/>
              </center> :
             <FormComponent
+              history={ history }
               onClick={
                 this.sendFormData(
                   carBrand,
@@ -159,6 +161,7 @@ class CarLeaseOldFragment extends BaseMVPView {
               }
             />
           }
+        }
       </div>
     )
   }

@@ -45,7 +45,6 @@ class BookRecommendationFragment extends Component {
     const docHeight = element.scrollHeight - element.offsetHeight
     const bookNumber = this.props.filteredBooks.length % 10
     if (Math.round(scrollBar) >= docHeight) {
-      console.log('scrolling')
       /*
       => the bookNumber == 0 validation is temporary,
       the API lacks the validation for paging thus makes it show unnecessary results

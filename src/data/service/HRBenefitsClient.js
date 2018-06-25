@@ -329,18 +329,18 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLTypes (token) {
-    return this.service.getMPLTypes(token)
+  getMplTypes (token) {
+    return this.service.getMplTypes(token)
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLValidate (token, mplValidateParam) {
-    return this.service.getMPLValidate(token, mplValidateParam)
+  getMplValidate (token, mplValidateParam) {
+    return this.service.getMplValidate(token, mplValidateParam)
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLFormAttachments (token, mplGetFormParam) {
-    return this.service.getMPLFormAttachments (token, mplGetFormParam)
+  getMplFormAttachments (token, mplGetFormParam) {
+    return this.service.getMplFormAttachments (token, mplGetFormParam)
       .pipe(ServiceErrorOperator())
   }
 

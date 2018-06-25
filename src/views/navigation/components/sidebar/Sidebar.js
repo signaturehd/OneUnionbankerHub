@@ -9,9 +9,11 @@ class SideBar extends Component {
     super(props)
     this.callLogout = this.callLogout.bind(this)
   }
+
   callLogout () {
     this.props.logout()
   }
+
   render () {
     const {
       onClick,
@@ -26,7 +28,7 @@ class SideBar extends Component {
     [
       {
         id: 0 ,
-        title: 'News',
+        title: 'News Feed',
         action: () => history.push('/'),
         className: 'newsfeed-icon'
       },
@@ -81,10 +83,11 @@ class SideBar extends Component {
           {
             modules.map((d, idx) =>
             d.id === 1 ?
-            <div>
+            <div
+              key = { idx }
+            >
               <li
                 className = { `_text-link ${selected === d.id && 'active'}` }
-                key = { idx }
                 onClick = { d.action }>
                 <a key = { idx }
                   className =
@@ -94,10 +97,11 @@ class SideBar extends Component {
               <Line />
             </div>
               :
-              <div>
+              <div
+                key = { idx }
+              >
                 <li
                   className = { `_text-link ${selected === d.id && 'active'}` }
-                  key = { idx }
                   onClick = { d.action }>
                   <a key = { idx }
                     className =
