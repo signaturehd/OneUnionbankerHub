@@ -12,9 +12,9 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class ComputerFormCardComponent extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
-    this.state = {
+    this.state={
       showPurposeOfAvailment: false,
       showOffset: false,
       showTerm: false,
@@ -31,21 +31,35 @@ class ComputerFormCardComponent extends Component {
       showSupplier : false,
       supplier: ''
     }
-     this.onChange = this.onChange.bind(this)
+    this.onGetClicked=this.onGetClicked.bind(this)
+    this.onChange=this.onChange.bind(this)
   }
 
   onChange (e) {
-      const re = /^[0-9\.]+$/
+      const re=/^[0-9\.]+$/
       if (e.target.value == '' ||  re.test(e.target.value)) {
         this.setState({ amountValue: e.target.value })
       }
    }
 
-   sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId ) {
+ onGetClicked (
+   poaText,
+   modeOfLoanId,
+   amountValue,
+   termId,
+   selectedSupplier,
+   file) {
+   this.props.onSubmit(
+     poaText,
+     modeOfLoanId,
+     amountValue,
+     termId,
+     selectedSupplier,
+     file
+   )
+ }
 
-   }
-
-  render() {
+  render () {
     const {
       showPurposeOfAvailment,
       showOffset,
@@ -61,39 +75,39 @@ class ComputerFormCardComponent extends Component {
       subCategoryId,
       showFileUpload,
       showSupplier,
-      supplier } = this.state
+      supplier }=this.state
 
     const {
       purposeOfAvailment,
       loanType,
       validateLoanType,
       offset,
-      selectedSupplier } = this.props
+      selectedSupplier }=this.props
 
-    return(
-      <div className = {'computer-container'}>
+    return (
+      <div className={'computer-container'}>
         {
           showOffset &&
           <ModeOfLoanModal
-            offset  = {  offset && offset }
-            onSubmit = { (changeOffsetValue, closePoaModal) =>
+            offset ={  offset && offset }
+            onSubmit={ (changeOffsetValue, closePoaModal) =>
               this.setState({
                 modeOfLoanText : changeOffsetValue.name,
                 modeOfLoanId : changeOffsetValue.id,
                 showOffset : closePoaModal
               })
             }
-            onClose = { () =>
+            onClose={ () =>
               this.setState({ showOffset : false }) }
           />
         }
         {
           showPurposeOfAvailment &&
           <PurposeOfAvailmentModal
-            poa  = { purposeOfAvailment }
-            loanType = { loanType }
-            presenter = { this.props.presenter }
-            onSubmit = { (changePoaText, subcategory, closePoaModal, openFileUpload, loanType) =>
+            poa ={ purposeOfAvailment }
+            loanType={ loanType }
+            presenter={ this.props.presenter }
+            onSubmit={ (changePoaText, subcategory, closePoaModal, openFileUpload, loanType) =>
               this.setState({
                 poaText : changePoaText.name,
                 poaId : changePoaText.id,
@@ -102,15 +116,15 @@ class ComputerFormCardComponent extends Component {
                 showFileUpload : openFileUpload
               })
             }
-            onClose = { () =>
+            onClose={ () =>
               this.setState({ showPurposeOfAvailment : false }) }
           />
         }
         {
           showTerm &&
           <TermOfLoanModal
-            term  = {  validateLoanType && validateLoanType.terms }
-            onSubmit = { (changeTermOfLoan, closePoaModal) =>
+            term ={  validateLoanType && validateLoanType.terms }
+            onSubmit={ (changeTermOfLoan, closePoaModal) =>
               this.setState({
                 termId : changeTermOfLoan.id,
                 termOfLoan : changeTermOfLoan.term,
@@ -118,89 +132,97 @@ class ComputerFormCardComponent extends Component {
                 showTerm : closePoaModal
               })
             }
-            onClose = { () =>
+            onClose={ () =>
               this.setState({ showTerm : false }) }
           />
         }
         {
           showSupplier &&
           <SupplierModal
-            supplier  = {  supplier }
-            onSubmit = { (getSupplier, closePoaModal) =>
+            supplier ={  supplier }
+            onSubmit={ (getSupplier, closePoaModal) =>
               this.setState({
                 selectedSupplier : getSupplier,
                 showSupplier : closePoaModal
               })
             }
-            onClose = { () =>
+            onClose={ () =>
               this.setState({ showSupplier : false }) }
           />
         }
-        <div className = { 'computer-grid-column-2' }>
-          <Card className = { 'computer-form-card' }>
+        <div className={ 'computer-grid-column-2' }>
+          <Card className={ 'computer-form-card' }>
             <h4>
               Benefits Form
             </h4>
-            <div className = { 'computer-form-card-body' }>
-              <span className = { 'computer-icon' } />
+            <div className={ 'computer-form-card-body' }>
+              <span className={ 'computer-icon' } />
               <GenericTextBox
-                type = { 'button' }
-                value = { poaText }
-                onClick = { () =>
+                type={ 'button' }
+                value={ poaText }
+                onClick={ () =>
                   this.setState({ showPurposeOfAvailment : true }) }
-                onChange = { (poaText) =>
+                onChange={ poaText =>
                   this.setState({ poaText }) }
-                placeholder = { 'Purpose Of Availment' }
-                type = { 'text' }/>
+                placeholder={ 'Purpose Of Availment' }
+                type={ 'text' }/>
               <GenericTextBox
-                onChange = { (modeOfLoanText) =>
+                onChange={ modeOfLoanText =>
                   this.setState({ modeOfLoanText }) }
-                onClick = { () =>
+                onClick={ () =>
                   this.setState({ showOffset : true }) }
-                placeholder = { 'Mode of Loan' }
-                value = { offset ? 'New Loan' : modeOoffsetfLoan }
-                type = { 'text' }/>
+                placeholder={ 'Mode of Loan' }
+                value={ offset ? 'New Loan' : modeOoffsetfLoan }
+                type={ 'text' }/>
               <GenericTextBox
-                value = { amountValue }
-                onChange = { this.onChange }
-                placeholder = { 'Desired Amount' }
-                maxLength = { validateLoanType && ( '' + validateLoanType.maximumLoanableAmount).length }
-                type = { 'text' }/>
+                value={ amountValue }
+                onChange={ this.onChange }
+                placeholder={ 'Desired Amount' }
+                maxLength={ validateLoanType && (`${  validateLoanType.maximumLoanableAmount}`).length }
+                type={ 'text' }/>
               <GenericTextBox
-                value = { `${ termOfLoan } (${ rateOfLoan } %)` }
-                onChange = { (termOfLoan, rateOfLoan) =>
+                value={ `${ termOfLoan } (${ rateOfLoan } %)` }
+                onChange={ (termOfLoan, rateOfLoan) =>
                   this.setState({ termOfLoan, rateOfLoan }) }
-                onClick = { () =>
+                onClick={ () =>
                   this.setState({ showTerm : true }) }
-                placeholder = { 'Term of Loan' }
-                type = { 'text' }/>
+                placeholder={ 'Term of Loan' }
+                type={ 'text' }/>
               <GenericTextBox
-                value = { selectedSupplier ? selectedSupplier : null }
-                onChange = { (supplier) =>
+                value={ selectedSupplier ? selectedSupplier : null }
+                onChange={ supplier =>
                   this.setState({ selectedSupplier : supplier }) }
-                onClick = { () =>
+                onClick={ () =>
                   this.setState({ showSupplier : true }) }
-                placeholder = { 'Supplier Name' }
-                type = { 'text' }/>
+                placeholder={ 'Supplier Name' }
+                type={ 'text' }/>
               <GenericButton
-                type = { 'button' }
-                text = { 'continue' }
-                onClick = { () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, file1, file2) }
-                className = { 'computer-submit' } />
+                type={ 'button' }
+                text={ 'continue' }
+                onClick={ () =>
+                  this.onGetClicked(
+                    poaText ? poaText : '',
+                    modeOfLoanId ? modeOfLoanId : '',
+                    amountValue,
+                    termId ? termId : '',
+                    selectedSupplier ? selectedSupplier : '',
+                    file ? file : '' )
+                  }
+                className={ 'computer-submit' } />
             </div>
           </Card>
           {
            showFileUpload &&
-         <Card className = { 'computer-form-preview' }>
+         <Card className={ 'computer-form-preview' }>
            <h4>
              Form Attachments
            </h4>
-           <div className = { 'computer-body' }>
+           <div className={ 'computer-body' }>
            {
              formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
                <FileUploader
-                  onChange = { this.handleImageChange }
-                  placeholder = {  attachmentsLabel ? attachmentsLabel : 0 }
+                  onChange={ this.handleImageChange }
+                  placeholder={  attachmentsLabel ? attachmentsLabel : 0 }
                />
              )
            }
@@ -213,7 +235,7 @@ class ComputerFormCardComponent extends Component {
   }
 }
 
-ComputerFormCardComponent.propTypes = {
+ComputerFormCardComponent.propTypes={
   purposeOfAvailment : PropTypes.array,
   validateLoanType : PropTypes.array,
   loanType : PropTypes.number,

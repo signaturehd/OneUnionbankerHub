@@ -298,7 +298,7 @@ export default class HRBenefitsService {
 
   /* Types */
 
-  getMPLTypes (token) {
+  getMplTypes (token) {
     return this.apiClient.get('v1/loans/mpl/types', {
       headers: { token }
     })
@@ -306,13 +306,13 @@ export default class HRBenefitsService {
 
   /* Validate */
 
-  getMPLValidate (token, mplValidateParam) {
+  getMplValidate (token, mplValidateParam) {
     return this.apiClient.get(`v1/loans/mpl/validate?loanId=${ mplValidateParam.loanTypeId }`, {
       headers: { token }
     })
   }
 
-  getMPLFormAttachments (token, mplGetFormParam) {
+  getMplFormAttachments (token, mplGetFormParam) {
     return this.apiClient.get(`v1/attachments?purposeOfLoan=${ mplGetFormParam.formRequesting }&loanId=${ mplGetFormParam.loanId }`, {
         headers: { token }
     })
