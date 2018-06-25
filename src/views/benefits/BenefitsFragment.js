@@ -99,7 +99,7 @@ class BenefitsFragment extends BaseMVPView {
     }, {
       id: 2,
       styleName: 'option-cards-3',
-      title: 'LOANS',
+      title: 'MULTI PURPOSE LOAN',
       path: '/mybenefits/benefits/loans',
     }, {
       id: 3,

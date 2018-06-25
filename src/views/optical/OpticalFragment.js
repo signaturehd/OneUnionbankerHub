@@ -43,7 +43,6 @@ class OpticalFragment extends BaseMVPView {
   }
 
   noticeOfUndertaking (noticeResponse) {
-    // console.log(noticeResponse)
     this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
   }
 

@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card } from '../../../../ub-components/'
 
-class TransactionEducationFormAgreementComponent extends Component {
+class CarLeaseFormAgreementCardComponent extends Component {
   constructor (props) {
     super(props)
   }
@@ -25,4 +24,4 @@ class TransactionEducationFormAgreementComponent extends Component {
   }
 }
 
-export default TransactionEducationFormAgreementComponent
+export default CarLeaseFormAgreementCardComponent

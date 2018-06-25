@@ -50,7 +50,6 @@ class DentalReimbursementFragment extends BaseMVPView {
 
   /* Notice Response*/
   noticeOfUndertaking (noticeResponse) {
-    // console.log(noticeResponse)
     this.setState({ showNoticeModal : true, noticeResponse })
   }
 
