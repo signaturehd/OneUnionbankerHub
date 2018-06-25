@@ -29,9 +29,10 @@ return (
         term && term.map((resp, key) =>
         <GenericButton
           className={ 'motor-modal-button' }
-          key={ key }
-          text={ `Term ${resp && resp.term} Rate (${resp && resp.rate}%)` }
-          onClick={ () => onSubmit( resp, false ) }/>
+          key={ key ? key : '' }
+          text={ `Term ${ resp && resp.term ? resp.term : '' }
+                  Rate (${ resp && resp.rate ? resp.rate : '' }%)` }
+          onClick={ () => onSubmit( resp ? resp : '', false ) }/>
         )
       }
     </div>
