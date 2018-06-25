@@ -8,7 +8,7 @@ import mplValidateParam from '../../../domain/param/MplValidateParam'
 import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
 import mplGetFormParam from '../../../domain/param/MplGetFormParam'
 
-import store from '../../../actions'
+import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
 export default class MotorcycleLoanPresenter {
@@ -37,13 +37,8 @@ export default class MotorcycleLoanPresenter {
 
   getMplTypes () {
     this.getTypesInteractor.execute()
-      .subscribe(
-        data => {
-          this.view.showTypes(data)
-        },
-        error => {
-        }
-      )
+      .do(data => this.view.showTypes(data))
+      .subscribe()
     }
 
   /* Purpose of Availment */
@@ -57,11 +52,8 @@ export default class MotorcycleLoanPresenter {
       purposeOfLoan,
       subcategoryLevel }
     )
-      .subscribe(
-        data => {
-          this.view.showPurposeOfAvailment(data)
-        }
-      )
+    .do(data => this.view.showPurposeOfAvailment(data))
+      .subscribe()
     }
 
   getMplValidate (loanTypeId) {
@@ -74,6 +66,13 @@ export default class MotorcycleLoanPresenter {
           this.view.hideCircularLoader()
         },
         error => {
+          store.dispatch(NotifyActions.addNotify({
+              title : error.name,
+              message : error.message ? error.message  : 'Internal Server Error'  ,
+              type : 'danger',
+              duration : 2000
+            })
+          )
           this.view.navigate()
         }
       )
@@ -108,7 +107,7 @@ export default class MotorcycleLoanPresenter {
           this.view.hideCircularLoader()
           this.view.noticeOfUndertaking(data)
             store.dispatch(NotifyActions.addNotify({
-              title: 'Successfully',
+              title: data.name,
               message : data.message,
               type : 'success',
               duration : 2000
@@ -119,8 +118,8 @@ export default class MotorcycleLoanPresenter {
       error => {
          this.view.hideCircularLoader()
            store.dispatch(NotifyActions.addNotify({
-             title: 'Warning',
-             message : error.message,
+             title: data.name,
+             message : error.message ? error.message : 'Internal Server Error' ,
              type : 'warning',
              duration : 2000
            })
