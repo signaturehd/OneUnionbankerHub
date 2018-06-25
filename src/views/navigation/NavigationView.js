@@ -116,7 +116,7 @@ class NavigationView extends BaseMVPView {
       wizard,
       showLogoutModal
     } = this.state
-      const { history } = this.props
+    const { history } = this.props
     const style = {
       show: {
           display : displayShow
