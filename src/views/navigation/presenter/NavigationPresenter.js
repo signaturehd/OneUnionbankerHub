@@ -25,8 +25,6 @@ export default class NavigationPresenter {
   logout () {
     this.logoutInteractor.execute()
       .subscribe(resp => {
-        console.log(resp)
-        console.log(this.view)
         this.view.relogin()
       })
   }

@@ -12,7 +12,6 @@ export default function ServiceErrorOperator () {
   return function ServiceErrorOperatorImpl (source) {
     return Observable.create(subscriber => {
       const subscription = source.subscribe(data => {
-        console.log(data)
         const code = data.status
         const body = data.data
         if (code === 200) {
