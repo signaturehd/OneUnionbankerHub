@@ -16,10 +16,13 @@ class EducationAidFragment extends BaseMVPView{
   constructor(props) {
     super(props)
     this.state = {
-      enabledLoader : false
+      enabledLoader: false,
+      educationAid: null //education aid details
     }
   }
-
+  getEducationAid(educationAid) {
+    this.setState({ educationAid })
+  }
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
   }
@@ -34,6 +37,7 @@ class EducationAidFragment extends BaseMVPView{
 
   render () {
     const {
+      educationAid,
       enabledLoader
     } = this.state
 

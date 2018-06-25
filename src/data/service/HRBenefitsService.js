@@ -35,6 +35,14 @@ export default class HRBenefitsService {
     })
   }
 
+  /* Education */
+
+  getEducationAid (token) {
+    return this.apiClient.get('v1/reimbursements/education/personal/validate', {
+      headers: { token }
+    })
+  }
+
   /* dental loa */
 
   getDentalLoa (token) {

@@ -220,6 +220,12 @@ export default class HRBenefitsClient {
       dentalReimbursementParam)
       .pipe(ServiceErrorOperator())
   }
+  /* Education */
+
+  getEducationAid (token) {
+    return this.service.getEducationAid(token)
+      .pipe(ServiceErrorOperator())
+  }
 
   /* dental loa */
 

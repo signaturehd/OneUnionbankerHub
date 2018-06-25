@@ -169,7 +169,6 @@ class EducationAidFormCardComponent extends Component {
                         this.setState({
                           fileOR: file
                         })
-                        console.log(this.state.fileOR)
                       }
                       reader.readAsDataURL(file)
                    } else {
