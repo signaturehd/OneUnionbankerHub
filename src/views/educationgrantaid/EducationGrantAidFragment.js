@@ -16,8 +16,18 @@ class EducationGrantAidFragment extends BaseMVPView{
   constructor(props) {
     super(props)
     this.state = {
-      enabledLoader : false
+      enabledLoader : false,
+      grantAid: []
     }
+  }
+
+  componentDidMount () {
+    this.props.setSelectedNavigation(1)
+    this.presenter.validateGrantAid()
+  }
+
+  setGrantAid(grantAid) {
+    this.setState({ grantAid })
   }
 
   hideCircularLoader () {
@@ -34,7 +44,8 @@ class EducationGrantAidFragment extends BaseMVPView{
 
   render () {
     const {
-      enabledLoader
+      enabledLoader,
+      grantAid
     } = this.state
 
     return (
@@ -54,6 +65,7 @@ class EducationGrantAidFragment extends BaseMVPView{
              <CircularLoader show = { this.state.enabledLoader }/>
            </center> :
           <FormComponent
+            grantAid = { grantAid }
             presenter = { this.presenter }
           />
         }
@@ -61,6 +73,5 @@ class EducationGrantAidFragment extends BaseMVPView{
     )
   }
 }
-
 
 export default ConnectView(EducationGrantAidFragment, Presenter)

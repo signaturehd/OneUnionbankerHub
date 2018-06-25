@@ -220,12 +220,6 @@ export default class HRBenefitsClient {
       dentalReimbursementParam)
       .pipe(ServiceErrorOperator())
   }
-  /* Education */
-
-  getEducationAid (token) {
-    return this.service.getEducationAid(token)
-      .pipe(ServiceErrorOperator())
-  }
 
   /* dental loa */
 
@@ -375,9 +369,15 @@ export default class HRBenefitsClient {
     })
   }
 
-  getCarLease (token, carRequestParam) {
-    return this.service.getCarLease(token, carRequestParam, {
-      headers: { token }
-    })
+  /* Education */
+  getEducationAid (token) {
+    return this.service.getEducationAid(token)
+      .pipe(ServiceErrorOperator())
   }
+
+  validateGrantAid (token) {
+    return this.service.validateGrantAid(token)
+      .pipe(ServiceErrorOperator())
+  }
+
 }

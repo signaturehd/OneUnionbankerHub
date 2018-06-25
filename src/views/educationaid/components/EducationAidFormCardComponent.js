@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
 import './styles/educationAidComponentStyle.css'
+import EducationAidModal from '../modal/EducationAidModal'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -15,10 +16,11 @@ class EducationAidFormCardComponent extends Component {
   constructor (props) {
     super (props)
     this.state = {
+      showModal: false,
       tuitionFeeText: '',
       registrationFeeText: '',
       totalFeeText: '',
-      collegeText: '',
+      collegeType: '',
       courseText: '',
       academicYearText: '',
       semesterText: '',
@@ -26,7 +28,8 @@ class EducationAidFormCardComponent extends Component {
       gwaText: '',
       fileOR: '',
       fileCOG: '',
-      fileRegForm: ''
+      fileRegForm: '',
+      computations: ''
     }
   }
 
@@ -36,12 +39,17 @@ class EducationAidFormCardComponent extends Component {
   }
 
   render () {
+    const {
+      educationAid,
+      presenter
+    } = this.props
 
     const {
+      showModal,
       tuitionFeeText,
       registrationFeeText,
       totalFeeText,
-      collegeText,
+      collegeType,
       courseText,
       academicYearText,
       semesterText,
@@ -49,57 +57,79 @@ class EducationAidFormCardComponent extends Component {
       totalReimbursableAmount,
       fileOR,
       fileCOG,
-      fileRegForm
+      fileRegForm,
+      computations
       } = this.state
+
+    const resultTotalFee = tuitionFeeText && registrationFeeText ? tuitionFeeText + registrationFeeText : 0;
+
+    console.log(computations)
 
     return (
       <div className = {'educ-container'}>
         <div className = { 'educ-grid-column-2' }>
-          <div></div>
+              {  showModal &&
+                <EducationAidModal
+                tog = { educationAid.schools }
+                presenter = { presenter }
+                onSubmit = {
+                  (collegeType, minGWA, maxGWA, percentage) => {
+                    this.setState({
+                      collegeType,
+                      minGWA,
+                      maxGWA,
+                      percentage
+                    })
+                  }
+                }
+                onClose = {
+                  () => {
+                    this.setState({ showModal : false })
+                  }
+                }
+                />
+              }
+            <div></div>
           <Card className = { 'educ-form-card' }>
             <h4>
               Benefits Details
             </h4>
             <div className = {'educ-form-card-body '}>
             <GenericTextBox
-              value = { tuitionFeeText }
+              value = { tuitionFeeText ? tuitionFeeText : 0 }
               onChange = {
                 (e) => {
                   const re = /^[0-9\.]+$/
                   if (e.target.value == '' ||  re.test(e.target.value)) {
-                    this.setState({ tuitionFeeText: e.target.value })
+                    this.setState({ tuitionFeeText: parseInt(e.target.value) })
                   }
                }
               }
               placeholder = { 'Tuition Fee' }
             type = { 'text' }/>
             <GenericTextBox
-              value = { registrationFeeText }
+              value = { registrationFeeText ? registrationFeeText : 0}
               onChange = {
                 (e) =>{
                   const re = /^[0-9\.]+$/
                   if (e.target.value == '' || re.test(e.target.value)) {
-                    this.setState({registrationFeeText: e.target.value })
+                    this.setState({registrationFeeText: parseInt(e.target.value) })
                   }
                 }
                }
               placeholder = { 'Registration Fee' }
             type = { 'text' }/>
             <GenericTextBox
-              value = { totalFeeText }
-              onChange = {
-                  (e) => {
-                    const re = /^[0-9\.]+$/
-                    if (e.target.value == '' || re.test(e.target.value)) {
-                      this.setState({totalFeeText: e.target.value })
-                    }
-                  }
-               }
-              placeholder = { 'Total Fee' }
+              value = { resultTotalFee }
+              disabled = { 'disabled' }
             type = { 'text' }/>
             <GenericTextBox
-              value = { collegeText }
-              onChange = { (e) => { this.setState({collegeText: e.target.value}) } }
+              value = { collegeType }
+              onClick = {
+                () => {
+                  this.setState({ showModal : true })
+                }
+              }
               placeholder = { 'Colleges/Universities' }
             type = { 'text' }/>
             <GenericTextBox
@@ -119,27 +149,14 @@ class EducationAidFormCardComponent extends Component {
             type = { 'text' }/>
             <GenericTextBox
               value = { gwaText }
-              onChange = {
-                (e) => {
-                  const re = /^[0-9\.]+$/
-                  if (e.target.value == '' || re.test(e.target.value)) {
-                    this.setState({gwaText: e.target.value })
-                  }
-                }
-              }
+              onChange = { (e) => { this.setState({gwaText: e.target.value}) } }
               placeholder = { 'General Weighted Average (GWA)' }
             type = { 'text' }/>
             <GenericTextBox
               value = { totalReimbursableAmount }
-              onChange = {
-                (e) => {
-                    const re = /^[0-9\.]+$/
-                    if (e.target.value == '' ||  re.test(e.target.value)) {
-                      this.setState({ totalReimbursableAmount: e.target.value })
-                    }
-                 }
-              }
               placeholder = { 'Total Reimbursable Amount' }
+              onChange = { (e) => { this.setState({totalReimbursableAmount: e.target.value}) } }
+              disabled = { 'disabled' }
             type = { 'text' }/>
 
               <br/>

@@ -35,14 +35,6 @@ export default class HRBenefitsService {
     })
   }
 
-  /* Education */
-
-  getEducationAid (token) {
-    return this.apiClient.get('v1/reimbursements/education/personal/validate', {
-      headers: { token }
-    })
-  }
-
   /* dental loa */
 
   getDentalLoa (token) {
@@ -371,4 +363,18 @@ export default class HRBenefitsService {
     })
   }
 
+  /* Education */
+
+  getEducationAid (token) {
+    return this.apiClient.get('v1/reimbursements/education/personal/validate', {
+      headers: { token }
+    })
+  }
+
+  /* validate grant aid */
+  validateGrantAid (token) {
+    return this.apiClient.get('v1/grants/education/personal/validate', {
+      headers: { token }
+    })
+  }
 }

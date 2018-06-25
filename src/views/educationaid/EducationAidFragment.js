@@ -17,10 +17,15 @@ class EducationAidFragment extends BaseMVPView{
     super(props)
     this.state = {
       enabledLoader: false,
-      educationAid: null //education aid details
+      educationAid: [] //education aid details
     }
   }
-  getEducationAid(educationAid) {
+  componentDidMount () {
+    this.props.setSelectedNavigation(1)
+    this.presenter.getEducationAid()
+  }
+  setEducationAid(educationAid) {
+    console.log(":"+educationAid)
     this.setState({ educationAid })
   }
   hideCircularLoader () {
@@ -58,6 +63,7 @@ class EducationAidFragment extends BaseMVPView{
              <CircularLoader show = { this.state.enabledLoader }/>
            </center> :
           <FormComponent
+            educationAid = { educationAid }
             presenter = { this.presenter }
           />
         }
