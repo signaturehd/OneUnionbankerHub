@@ -25,9 +25,9 @@ return (
         offset && offset.map((resp, key) =>
         <GenericButton
           className = { 'computer-modal-button' }
-          key = { key }
-          text = { resp && resp.name }
-          onClick = { () => onSubmit(resp, false) }/>
+          key = { key ? key : '' }
+          text = { resp && resp.name ? resp.name : '' }
+          onClick = { () => onSubmit(resp ? resp : '', false) }/>
         )
       }
     </div>
