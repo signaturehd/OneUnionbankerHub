@@ -18,9 +18,6 @@ export default class EducationGrantPlanPresenter {
         grantPlan => {
           this.view.setGrantPlan(grantPlan)
           this.view.hideCircularLoader()
-          /*if(grantPlan.isValid = '1') {
-              this.view.hideCircularLoader()
-          }*/
         },
         error => {
         }
