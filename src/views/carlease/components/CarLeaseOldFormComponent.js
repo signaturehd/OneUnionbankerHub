@@ -175,7 +175,9 @@ class CarLeaseOldForm extends Component {
                 showTemporaryMessage: false  })
               }
             >
-            <center>Loan for second hand car is not yet available</center>
+            <h1>Coming Soon!</h1>
+            <br />
+            <center>The current feature is not available</center>
             <center>
               <br/>
               <GenericButton

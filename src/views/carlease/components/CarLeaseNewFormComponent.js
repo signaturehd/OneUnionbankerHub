@@ -129,7 +129,7 @@ class CarLeaseNewFormComponent extends Component {
       userActionsDecision,
       confirmationDealerQuotation } = this.state
     const {
-      loanType } = this.props
+      loanType, group, container } = this.props
 
       const styles = {
         image : {
@@ -164,44 +164,100 @@ class CarLeaseNewFormComponent extends Component {
               Car Lease Form (Old)
             </h4>
             <div className={ 'car-form-card-body' }>
-              <GenericTextBox
-                value={ carBrand }
-                onChange={ this.getCarBrand }
-                placeholder={ 'Brand' }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={ carModel }
-                onChange={ this.getCarModel }
-                placeholder={ 'Model' }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={ makeYear }
-                onChange={ this.onChange }
-                placeholder={ 'Year' }
-                type={ 'text' } />
-              <GenericTextBox
-                value={ primaryColor }
-                onChange={ this.getPrimaryColor }
-                placeholder={ 'Primary Color' }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={ secondaryColor }
-                onChange={ this.getSecondaryColor }
-                placeholder={ 'Secondary Color' }
-                type={ 'text' }/>
-              <GenericButton
-                type={ 'button' }
-                text={ 'continue' }
-                onClick={ () =>
-                  this.onGetClicked(
-                    carBrand,
-                    carModel,
-                    makeYear,
-                    primaryColor,
-                    secondaryColor,
-                    file)
-                  }
-                className={ 'carview-submit' } />
+              <div className={ 'carlease-grid-newform' }>
+                <div>
+                  <br/>
+                  <br/>
+                  <span className={ 'car-icon-forms carBrandIcon' } />
+                </div>
+                <div>
+                  <GenericTextBox
+                    value={ carBrand }
+                    onChange={ this.getCarBrand }
+                    placeholder={ 'Brand' }
+                    container={ 'car-form-icon-container' }
+                    group={ 'car-group-textbox' }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'carlease-grid-newform' }>
+                <div>
+                  <br/>
+                  <br/>
+                  <span className={ 'car-icon-forms carModelIcon' } />
+                </div>
+                <div>
+                  <GenericTextBox
+                    value={ carModel }
+                    onChange={ this.getCarModel }
+                    placeholder={ 'Model' }
+                    container={ 'car-form-icon-container' }
+                    group={ 'car-group-textbox' }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'carlease-grid-newform' }>
+                <div>
+                  <br/>
+                  <br/>
+                  <span className={ 'car-icon-forms carYearIcon' } />
+                </div>
+                <div>
+                  <GenericTextBox
+                    value={ makeYear }
+                    onChange={ this.onChange }
+                    placeholder={ 'Year' }
+                    container={ 'car-form-icon-container' }
+                    group={ 'car-group-textbox' }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'carlease-grid-newform' }>
+                <div>
+                  <br/>
+                  <br/>
+                  <span className={ 'car-icon-forms carColorPaintIcon' } />
+                </div>
+                <div>
+                  <GenericTextBox
+                    value={ primaryColor }
+                    onChange={ this.getPrimaryColor }
+                    container={ 'car-form-icon-container' }
+                    group={ 'car-group-textbox' }
+                    placeholder={ 'Primary Color' }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'carlease-grid-newform' }>
+                <div>
+                  <br/>
+                  <br/>
+                  <span className={ 'car-icon-forms carColorPaintIcon' } />
+                </div>
+                <div>
+                  <GenericTextBox
+                   value={ secondaryColor }
+                   onChange={ this.getSecondaryColor }
+                   placeholder={ 'Secondary Color' }
+                   container={ 'car-form-icon-container' }
+                   group={ 'car-group-textbox' }
+                   type={ 'text' }/>
+                </div>
+              </div>
+              <br/>
+                <GenericButton
+                  type={ 'button' }
+                  text={ 'continue' }
+                  onClick={ () =>
+                    this.onGetClicked(
+                      carBrand,
+                      carModel,
+                      makeYear,
+                      primaryColor,
+                      secondaryColor,
+                      file)
+                    }
+                  className={ 'carview-submit' } />
             </div>
           </Card>
           {
