@@ -39,7 +39,7 @@ function  TransactionDetails (props)  {
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId === 11) {
+  } else if (transactionId === 13) {
     return <EducGrantAidDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
@@ -49,7 +49,7 @@ function  TransactionDetails (props)  {
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson } />
-  } else if (transactionId === 13) {
+  } else if (transactionId === 11) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
@@ -108,26 +108,26 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
       attachments
     } = this.state
     return (
-      <div  className = { 'container' }>
+      <div  className={ 'container' }>
         <div>
-        <i className = { 'back-arrow' } onClick = {
+        <i className={ 'back-arrow' } onClick = {
             this.navigate.bind(this) }></i>
-          <h2 className = { 'header-margin-default' }>
+          <h2 className={ 'header-margin-default' }>
             { details ? details.benefitType.name : 'Transaction' }
           </h2>
         </div>
         {
           details ?
-            <div className = {'transaction-detail-container'}>
+            <div className={ 'transaction-detail-container' }>
               <TransactionDetails
-               details = { details }
-               attachments = { attachments }
-               transactions = { transactions }
+               details={ details }
+               attachments={ attachments }
+               transactions={ transactions }
               />
             </div>            :
-            <div className = {'transaction-details-loader'}>
+            <div className={ 'transaction-details-loader' }>
               <center>
-                <CircularLoader show = {true}/>
+                <CircularLoader show={ true }/>
               </center>
             </div>
         }
