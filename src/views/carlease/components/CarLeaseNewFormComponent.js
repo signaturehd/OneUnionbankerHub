@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import './styles/carleaseStyle.css'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
+import CarDealerQuotation from '../modals/CarDealerQuotation'
+
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
@@ -18,7 +20,8 @@ class CarLeaseNewFormComponent extends Component {
       secondaryColor: '',
       file: '',
       imagePreviewUrl: '',
-      showFileUpload: true,
+      userActionsDecision: false,
+      confirmationDealerQuotation: true
     }
      this.onChange = this.onChange.bind(this)
      this.getCarBrand = this.getCarBrand.bind(this)
@@ -123,7 +126,8 @@ class CarLeaseNewFormComponent extends Component {
       secondaryColor,
       file,
       imagePreviewUrl,
-      showFileUpload } = this.state
+      userActionsDecision,
+      confirmationDealerQuotation } = this.state
     const {
       loanType } = this.props
 
@@ -143,6 +147,18 @@ class CarLeaseNewFormComponent extends Component {
     return (
       <div className={'carview-container'}>
         <div className={ 'car-grid-column-2' }>
+          {
+            confirmationDealerQuotation &&
+            <CarDealerQuotation
+              onClose={ () => this.setState({ confirmationDealerQuotation : false }) }
+              onUserConfirmation={ (hideModal, confirmationAction) =>
+                this.setState({
+                  confirmationDealerQuotation: hideModal,
+                  userActionsDecision : confirmationAction
+                  })
+                }
+            />
+          }
           <Card className={ 'car-form-card' }>
             <h4>
               Car Lease Form (Old)
@@ -189,7 +205,7 @@ class CarLeaseNewFormComponent extends Component {
             </div>
           </Card>
           {
-            showFileUpload &&
+            userActionsDecision &&
           <Card className={ 'car-form-preview' }>
             <h4>
               Dealer Quotation Attachment
