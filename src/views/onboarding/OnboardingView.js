@@ -14,6 +14,7 @@ import Experience from './fragments/ExperienceFragment'
 import Skills from './fragments/SkillsFragment'
 import Certificate from './fragments/CertificateFragment'
 import AboutMe from './fragments/AboutMeFragment'
+import Summary from './fragments/Summary'
 const steps = [
   {
     label: 'Education',
@@ -47,8 +48,9 @@ const steps = [
   },
   {
     label: 'Profile Summary',
-    component: <div>Coming soon</div>
-
+    component: <Provider store={store}>
+      <Summary />
+              </Provider>,
   }
 ]
 

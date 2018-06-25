@@ -54,14 +54,12 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           onClick={() => fields.remove(index)}
         />
         <h4>Education #{index + 1}</h4>
-        <Field
+        <Field 
           name={`${member}.school`}
           type="text"
           component={renderField}
           placeholder={ 'School' }
         />
-        <span className = { 'text-label' }></span>
-        <span className ={ 'bar' }></span>
         <Field
           name={`${member}.degree`}
           type="text"
