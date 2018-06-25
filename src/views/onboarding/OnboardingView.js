@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Provider } from 'react-redux'
+import store from './store'
 import PropTypes from 'prop-types'
 
 import BaseMVPView from '../common/base/BaseMVPView'
@@ -16,21 +18,28 @@ import AboutMe from './fragments/AboutMeFragment'
 const steps = [
   {
     label: 'Education',
-    component: <Education/>,
+    component: <Provider store={store}>
+      <Education onSubmit={'To do: add submit function'} />
+  </Provider>,
     exitValidation: false
   },
   {
     label: 'Experience',
-    component: <Experience/>
+    component: <Provider store={store}>
+      <Experience onSubmit={'To do: add submit function'} />
+  </Provider>,
   },
   {
     label: 'Certificate',
-    component: <Certificate/>
+    component: <Provider store={store}>
+      <Certificate onSubmit={'To do: add submit function'} />
+  </Provider>,
   },
   {
     label: 'Skills',
-    component: <Skills/>
-
+    component: <Provider store={store}>
+      <Skills onSubmit={'To do: add submit function'} />
+  </Provider>,
   },
   {
     label: 'About Me',

@@ -33,3 +33,15 @@
   border-radius: 5px;
   font-size: 14px;
 }
+.calendar {
+  border-bottom: 1px solid #ff8A00;
+  border-top: 0px;
+  border-left:0px;
+  outline:none;
+  border-right :0px;
+}
+.text3-icon {
+    background: url('../../../../images/icons/Datehiredorange.png') no-repeat center center;
+    background-position: bottom;
+    background-size: 30px;
+}
