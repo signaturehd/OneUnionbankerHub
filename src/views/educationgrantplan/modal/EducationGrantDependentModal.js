@@ -5,7 +5,7 @@ import { Modal , GenericButton, CircularLoader } from '../../../ub-components/'
 
 import './styles/educationModalStyle.css'
 
-class EducationGrantPersonalModal extends Component {
+class EducationGrantDependentModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -62,10 +62,10 @@ class EducationGrantPersonalModal extends Component {
   }
 }
 
-EducationGrantPersonalModal.propTypes = {
+EducationGrantDependentModal.propTypes = {
     onClose : PropTypes.func,
     tog : PropTypes.array,
     onSubmit : PropTypes.func,
 }
 
-export default EducationGrantPersonalModal
+export default EducationGrantDependentModal

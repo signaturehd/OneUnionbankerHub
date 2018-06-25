@@ -16,15 +16,20 @@ class EducationGrantPlanFragment extends BaseMVPView{
   constructor(props) {
     super(props)
     this.state = {
-      enabledLoader : false
+      enabledLoader : false,
+      grantPlan : []
     }
   }
 
   componentDidMount () {
-    /*this.presenter.getDentalReimbursement()*/
     this.props.setSelectedNavigation(1)
+    this.presenter.validateGrantPlan()
+    this.showCircularLoader()
   }
 
+  setGrantPlan (grantPlan) {
+    this.setState({ grantPlan })
+  }
 
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
@@ -40,7 +45,8 @@ class EducationGrantPlanFragment extends BaseMVPView{
 
   render () {
     const {
-      enabledLoader
+      enabledLoader,
+      grantPlan
     } = this.state
 
     return (
@@ -57,9 +63,10 @@ class EducationGrantPlanFragment extends BaseMVPView{
         {
           enabledLoader ?
            <center className = { 'circular-loader-center' }>
-             <CircularLoader show = { this.state.enabledLoader }/>
+             <CircularLoader show = { enabledLoader }/>
            </center> :
           <FormComponent
+            grantPlan = { grantPlan }
             presenter = { this.presenter }
           />
         }

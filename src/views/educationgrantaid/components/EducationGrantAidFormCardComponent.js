@@ -79,18 +79,22 @@ class EducationGrantAidFormCardComponent extends Component {
             <div className = {'educ-form-card-body '}>
             <GenericTextBox
               value = { grantAid.college }
+              onChange = {() => {}}
               placeholder = { 'College/Universities' }
               type = { 'text' }/>
             <GenericTextBox
               value = { grantAid.course }
+              onChange = {() => {}}
               placeholder = { 'Course' }
               type = { 'text' }/>
             <GenericTextBox
               value = { grantAid.academicYear }
+              onChange = {() => {}}
               placeholder = { 'Academic Year' }
               type = { 'text' }/>
             <GenericTextBox
               value = { grantAid.semester }
+              onChange = {() => {}}
               placeholder = { 'Semester' }
               type = { 'text' }/>
             <GenericTextBox
@@ -104,6 +108,7 @@ class EducationGrantAidFormCardComponent extends Component {
               type = { 'text' }/>
             <GenericTextBox
               value = { grantAmount }
+              onChange = {() => {}}
               placeholder = { 'Grant Amount' }
               type = { 'text' }/>
               <br/>
@@ -150,7 +155,7 @@ class EducationGrantAidFormCardComponent extends Component {
               <GenericButton
                 type = { 'button' }
                 text = { 'continue' }
-                onClick = { () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId) }
+                onClick = { () => {} }
                 className = { 'educ-submit' } />
             </div>
           </Card>

@@ -12,13 +12,14 @@ export default class EducationGrantAidPresenter {
 
   /* Types of Grant */
   validateGrantAid () {
+    this.view.showCircularLoader()
     this.validateGrantAidInteractor.execute()
       .subscribe(
         grantAid => {
           this.view.setGrantAid(grantAid)
+          this.view.hideCircularLoader()
         },
         error => {
-          console.log('sam ting wong')
         }
       )
   }

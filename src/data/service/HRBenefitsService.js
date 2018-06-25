@@ -348,4 +348,11 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  /* validate grant plan */
+  validateGrantPlan (token) {
+    return this.apiClient.get('v1/grants/education/dependent/validate', {
+      headers: { token }
+    })
+  }
 }
