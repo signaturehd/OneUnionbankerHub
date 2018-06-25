@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { CircularLoader } from '../../../../ub-components/'
 
-class EducationFileAttachmentComponent extends Component {
+class CarLeaseFileCardComponent extends Component {
   constructor (props) {
     super(props)
   }
@@ -11,16 +11,15 @@ class EducationFileAttachmentComponent extends Component {
   render () {
     const { details, attachments } = this.props
     return (
-      <div className={ 'transaction-card-details' }>
-        <center><h4 className={ 'details-bold' }> Attachments </h4></center>
+      <div className = { 'transaction-card-details' }>
+        <center><h4 className = { 'details-bold' }> Attachments </h4></center>
           {
             attachments ?
-              <div className={ 'transaction-attachments-container' }>
+              <div className = { 'transaction-attachments-container' }>
                 {
                   attachments.map((image, key) => (
                     <img
-                      key = { key }
-                      className={ 'transaction-attachments _img-ub-logo' }
+                      className = { 'transaction-attachments _img-ub-logo' }
                       src={image}
                     />
                   ))
@@ -34,9 +33,10 @@ class EducationFileAttachmentComponent extends Component {
                 <br/>
               </center>
           }
+
       </div>
     )
   }
 }
 
-export default EducationFileAttachmentComponent
+export default CarLeaseFileCardComponent

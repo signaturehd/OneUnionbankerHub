@@ -45,17 +45,17 @@ function  TransactionDetails (props)  {
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 12) {
-    return <DentalRDetailsFragment
+    return <EducGroupPlanDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson } />
   } else if (transactionId === 11) {
-    return <DentalRDetailsFragment
+    return <EducAidDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 32) {
-    return <DentalRDetailsFragment
+    return <EducGrantPlanDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>

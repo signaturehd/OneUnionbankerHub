@@ -19,20 +19,15 @@ class EducationDetailsComponent extends Component {
           <h2 className = { 'transaction-detail details-bold' }> Date Filed: </h2>
           <h2 className = { 'transaction-detail details-bold' }> Reference Number: </h2>
           <h2 className = { 'transaction-detail details-bold' }> Transaction Status: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Account Number: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Patient Name: </h2>
+          { details && details.details.AccountNo &&  <h2 className = { 'transaction-detail details-bold' }> Account Number: </h2> }
+          <h2 className = { 'transaction-detail details-bold' }> Dependent Name: </h2>
         </div>
         <div>
           <h2 className = { 'transaction-detail' }> { details && moment(details.dateFiled).format('MMMM d, YYYY') } </h2>
           <h2 className = { 'transaction-detail' }> { details && details.details.ReferenceNumber }</h2>
           <h2 className = { 'transaction-detail' }> { details && details.status.name } </h2>
           <h2 className = { 'transaction-detail' }> { details && details.details.AccountNo } </h2>
-          {
-            transactionsPerson && transactionsPerson.map(person =>
-              transactionID === person.id &&
-              <h2 key = {person.id} > { person.fullName } </h2>
-            )
-          }
+          <h2 className = { 'transaction-detail' }> { details && details.details.Dependent } </h2>
         </div>
       </div>
     )
