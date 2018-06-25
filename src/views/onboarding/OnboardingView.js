@@ -43,7 +43,9 @@ const steps = [
   },
   {
     label: 'About Me',
-    component: <AboutMe/>
+    component: <Provider store={store}>
+      <AboutMe />
+              </Provider>,
 
   },
   {
