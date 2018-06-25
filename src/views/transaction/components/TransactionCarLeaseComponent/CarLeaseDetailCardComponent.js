@@ -5,7 +5,7 @@ import { Card } from '../../../../ub-components/'
 
 import moment from 'moment'
 
-class TransactionDetailCardComponent extends Component {
+class CarLeaseDetailCardComponent extends Component {
     constructor (props) {
       super(props)
     }
@@ -40,4 +40,4 @@ class TransactionDetailCardComponent extends Component {
   }
 }
 
-export default TransactionDetailCardComponent
+export default CarLeaseDetailCardComponent
