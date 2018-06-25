@@ -1,12 +1,14 @@
-import CarNewValidateInteractor from '../../../domain/interactor/mpl/CarNewValidateInteractor'
+import GetCarNewValidateInteractor from '../../../domain/interactor/mpl/GetCarNewValidateInteractor'
 
 import store from '../../../actions'
 import { NotifyActions } from '../../../actions'
 
+import addCarParam from '../../../domain/param/AddCarleaseRequestParam'
+
 export default class CarLeasePresenter {
   constructor (container) {
     this.carNewValidateInteractor =
-      new CarNewValidateInteractor(container.get('HRBenefitsClient'))
+      new GetCarNewValidateInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -14,7 +16,7 @@ export default class CarLeasePresenter {
   }
 
   getCarValidate () {
-    this.view.showCircularLoader()
+    this.view.hideCircularLoader()
     this.carNewValidateInteractor.execute()
       .do(data => this.view.showValidate(data))
       .do(data => this.view.hideCircularLoader(),
