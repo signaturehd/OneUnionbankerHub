@@ -16,16 +16,19 @@ class CarDealerQuotation extends Component {
     return (
       <Modal
         onClose={ onClose }
-        isDismisable={ true }
       >
-        <center>With Dealer Quotation?</center>
-        <center>
-          <GenericButton
-            onClick={ ()=> onUserConfirmation(false, true) }
-            text={ 'Yes' } />
+        <center><h2>With Dealer Quotation?</h2></center>
+        <br/>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        <br/>
+        <br/>
+        <center className={ 'car-grid-modal' }>
           <GenericButton
             onClick={ ()=> onUserConfirmation(false, false) }
             text={ 'No' }/>
+          <GenericButton
+            onClick={ ()=> onUserConfirmation(false, true) }
+            text={ 'Yes' } />
         </center>
       </Modal>
     )
