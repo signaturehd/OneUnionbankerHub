@@ -7,17 +7,23 @@ import ConnectView from '../../utils/ConnectView'
 
 import { CircularLoader } from '../../ub-components/'
 
-
 import FormComponent from './components/ComputerFormCardComponent'
 
+import store from '../../store'
+import { NotifyActions } from '../../actions'
 class ComputerLoanFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-      purposeOfAvailment: [],
-      selectedPoa: '',
-      formAttachments: [],
-      loanType: 3,
+      purposeOfAvailment : [],
+      poaText  : '',
+      modeOfLoanId : '',
+      amountValue : '',
+      termId : '',
+      selectedSupplier : '',
+      file : [],
+      formAttachments : [],
+      loanType : 5,
       validateLoanType : [],
       offset : [],
       enabledLoader : false,
@@ -61,7 +67,7 @@ class ComputerLoanFragment extends BaseMVPView {
     this.setState({ purposeOfAvailment })
   }
 
-  /*Loader*/
+  /* Loader*/
 
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
@@ -73,6 +79,39 @@ class ComputerLoanFragment extends BaseMVPView {
   /* Navigage back to loans Option*/
   navigate () {
     this.props.history.push('/mybenefits/benefits/loans')
+  }
+
+  sendFormData (
+    poaText,
+    modeOfLoanId,
+    amountValue,
+    termId,
+    selectedSupplier,
+    file) {
+      if(
+        poaText === null ||
+        modeOfLoanId === null ||
+        amountValue === 0 ||
+        termId === null ||
+        selectedSupplier === null ||
+        file === null )
+      {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Error',
+            message : 'Please fill all fields',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else {
+        this.presenter.addLoan(
+          poaText,
+          modeOfLoanId,
+          amountValue,
+          termId,
+          selectedSupplier,
+          file)
+      }
   }
 
   render () {
@@ -87,7 +126,14 @@ class ComputerLoanFragment extends BaseMVPView {
       showNoticeModal,
       showNoticeResponseModal,
       noticeResponse,
-      response } = this.state
+      response,
+      poaText,
+      modeOfLoanId,
+      amountValue,
+      termId,
+      selectedSupplier,
+      file } = this.state
+
     return (
       <div>
         <div>
@@ -110,7 +156,31 @@ class ComputerLoanFragment extends BaseMVPView {
               validateLoanType = { validateLoanType }
               formAttachments = { formAttachments }
               offset = { offset }
-              presenter = { this.presenter }
+              onClick={ () =>
+                this.sendFormData(
+                  poaText,
+                  modeOfLoanId,
+                  amountValue,
+                  termId,
+                  selectedSupplier,
+                  file
+                  )
+                }
+              onSubmit={ (
+                getPoaTextData,
+                getModeOfLoanData,
+                getAmountValueData,
+                getTermData,
+                getSupplierData,
+                getFileData) => this.setState({
+                  poaText : getPoaTextData,
+                  modeOfLoanId : getModeOfLoanData,
+                  amountValue : getAmountValueData,
+                  termId : getTermData,
+                  selectedSupplier : getSupplierData,
+                  file : getFileData
+                })
+              }
             />
           }
       </div>
