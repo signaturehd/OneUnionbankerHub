@@ -108,7 +108,6 @@ class NavigationView extends BaseMVPView {
   }
 
   relogin () {
-    console.log('triggered')
     try {
       this.props.history.push('/')
     } catch (e) {
