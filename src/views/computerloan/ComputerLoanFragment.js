@@ -7,9 +7,10 @@ import ConnectView from '../../utils/ConnectView'
 
 import { CircularLoader } from '../../ub-components/'
 
-
 import FormComponent from './components/ComputerFormCardComponent'
 
+import store from '../../store'
+import { NotifyActions } from '../../actions'
 class ComputerLoanFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -87,13 +88,30 @@ class ComputerLoanFragment extends BaseMVPView {
     termId,
     selectedSupplier,
     file) {
-      console.log(
-       poaText,
-       modeOfLoanId,
-       amountValue,
-       termId,
-       selectedSupplier,
-       file)
+      if(
+        poaText === null ||
+        modeOfLoanId === null ||
+        amountValue === 0 ||
+        termId === null ||
+        selectedSupplier === null ||
+        file === null )
+      {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Error',
+            message : 'Please fill all fields',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else {
+        this.presenter.addLoan(
+          poaText,
+          modeOfLoanId,
+          amountValue,
+          termId,
+          selectedSupplier,
+          file)
+      }
   }
 
   render () {
@@ -115,6 +133,7 @@ class ComputerLoanFragment extends BaseMVPView {
       termId,
       selectedSupplier,
       file } = this.state
+
     return (
       <div>
         <div>
@@ -137,7 +156,7 @@ class ComputerLoanFragment extends BaseMVPView {
               validateLoanType = { validateLoanType }
               formAttachments = { formAttachments }
               offset = { offset }
-              onClick={
+              onClick={ () =>
                 this.sendFormData(
                   poaText,
                   modeOfLoanId,
