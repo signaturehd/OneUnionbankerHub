@@ -36,8 +36,7 @@ class ComputerLoanFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.getMplTypes()
-    this.presenter.getMplValidate(this.state.loanType)
+    this.presenter.getMplValidate(1)
     this.presenter.getMplPurposeOfAvailment(
       this.state.loanType,
       1,
