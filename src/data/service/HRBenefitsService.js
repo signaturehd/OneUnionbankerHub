@@ -381,4 +381,16 @@ export default class HRBenefitsService {
     })
   }
 
+  getPayslip () {
+    return this.apiClient.post('v1/payslip', {
+      headers : { token }
+    })
+  }
+
+  getPayslipSelectedDate () {
+    return this.apiClient.post('v1/payslip/', payslipParam, {
+      headers : { token }
+    })
+  }
+
 }
