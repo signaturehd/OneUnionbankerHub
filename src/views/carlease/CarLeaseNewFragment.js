@@ -34,7 +34,6 @@ class CarLeaseNewFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.getCarValidate()
   }
 
   sendFormData (
@@ -44,6 +43,13 @@ class CarLeaseNewFragment extends BaseMVPView {
     primaryColor,
     secondaryColor,
     file) {
+      this.presenter.addCarRequest(
+        carBrand,
+        carModel,
+        makeYear,
+        primaryColor,
+        secondaryColor,
+        file)
   }
 
   /* Notice Response*/
@@ -72,7 +78,7 @@ class CarLeaseNewFragment extends BaseMVPView {
   }
   /* Navigage back to loans Option*/
   navigate () {
-    this.props.history.push('/mybenefits/benefits/carlease')
+    this.props.history.push('/mybenefits/benefits')
   }
 
   render () {

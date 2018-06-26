@@ -347,12 +347,12 @@ export default class HRBenefitsService {
   }
 
   getCarValidate (token) {
-    return this.apiClient.get('v1/employees/lease/cars', {
+    return this.apiClient.get('v1/eligibility/car', {
       headers: { token }
     })
   }
 
-  getCarRequest (
+  addCarRequest (
     token,
     accountToken,
     accountNumber,
@@ -360,6 +360,8 @@ export default class HRBenefitsService {
     carRequestParam) {
     const formData = new FormData()
     const addCarleaseObject = {
+      accountNumber : accountNumber,
+      releasingCenter : releasingCenter,
       brand : carRequestParam.carBrand,
       model : carRequestParam.carModel,
       year : carRequestParam.year,
@@ -370,13 +372,19 @@ export default class HRBenefitsService {
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(addCarleaseObject))
     formData.append('attachments', carRequestParam.attachments)
-    return this.apiClient.post('v1/lease/car/request', carRequestParam, {
+    return this.apiClient.post('v1/leases/car', carRequestParam, {
       headers: { token }
     })
   }
 
-  getCarLease (token) {
-    return this.apiClient.post('v1/leases/car', {
+  addCarLeasePayment (token) {
+    return this.apiClient.post('v1/leases/car/payment', {
+      headers: { token }
+    })
+  }
+
+  addCarLeaseConfirmation (token) {
+    return this.apiClient.post('v1/leases/car/confirm', {
       headers: { token }
     })
   }
