@@ -360,6 +360,8 @@ export default class HRBenefitsService {
     carRequestParam) {
     const formData = new FormData()
     const addCarleaseObject = {
+      accountNumber : accountNumber,
+      releasingCenter : releasingCenter,
       brand : carRequestParam.carBrand,
       model : carRequestParam.carModel,
       year : carRequestParam.year,
