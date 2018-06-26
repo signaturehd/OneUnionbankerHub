@@ -57,7 +57,7 @@ export default class MultiPurposeLoanPresenter {
   }
 
   getMplValidate (loanTypeId) {
-    this.view.hideCircularLoader()
+    this.view.showCircularLoader()
     this.getValidateInteractor.execute(mplValidateParam(loanTypeId))
       .subscribe(
         data => {
