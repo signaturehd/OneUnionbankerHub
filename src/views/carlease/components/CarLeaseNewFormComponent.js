@@ -161,7 +161,7 @@ class CarLeaseNewFormComponent extends Component {
           }
           <Card className={ 'car-form-card' }>
             <h4>
-              Car Lease Form (Old)
+              Car Lease Form (New)
             </h4>
             <div className={ 'car-form-card-body' }>
               <div className={ 'carlease-grid-newform' }>
