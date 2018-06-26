@@ -45,6 +45,12 @@ class SideBar extends Component {
         className: 'benefits-icon'
       },
       {
+        id: 8 ,
+        title: 'My Payslip',
+        action: () => history.push('/payslip'),
+        className: 'payslip-icon'
+      },
+      {
         id: 3 ,
         title: 'My Profile',
         action: () => history.push('/settings'),
@@ -82,7 +88,7 @@ class SideBar extends Component {
         </h5>
           {
             modules.map((d, idx) =>
-            d.id === 1 ?
+            d.id === 8 ?
             <div
               key = { idx }
             >

@@ -82,7 +82,9 @@ class ComputerFormCardComponent extends Component {
       loanType,
       validateLoanType,
       offset,
-      selectedSupplier }=this.props
+      selectedSupplier,
+      group,
+      container }=this.props
 
     return (
       <div className={'computer-container'}>
@@ -156,46 +158,95 @@ class ComputerFormCardComponent extends Component {
               Benefits Form
             </h4>
             <div className={ 'computer-form-card-body' }>
-              <span className={ 'computer-icon' } />
-              <GenericTextBox
-                type={ 'button' }
-                value={ poaText }
-                onClick={ () =>
-                  this.setState({ showPurposeOfAvailment : true }) }
-                onChange={ poaText =>
-                  this.setState({ poaText }) }
-                placeholder={ 'Purpose Of Availment' }
-                type={ 'text' }/>
-              <GenericTextBox
-                onChange={ modeOfLoanText =>
-                  this.setState({ modeOfLoanText }) }
-                onClick={ () =>
-                  this.setState({ showOffset : true }) }
-                placeholder={ 'Mode of Loan' }
-                value={ offset ? 'New Loan' : modeOoffsetfLoan }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={ amountValue }
-                onChange={ this.onChange }
-                placeholder={ 'Desired Amount' }
-                maxLength={ validateLoanType && (`${  validateLoanType.maximumLoanableAmount}`).length }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={ `${ termOfLoan } (${ rateOfLoan } %)` }
-                onChange={ (termOfLoan, rateOfLoan) =>
-                  this.setState({ termOfLoan, rateOfLoan }) }
-                onClick={ () =>
-                  this.setState({ showTerm : true }) }
-                placeholder={ 'Term of Loan' }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={ selectedSupplier ? selectedSupplier : null }
-                onChange={ supplier =>
-                  this.setState({ selectedSupplier : supplier }) }
-                onClick={ () =>
-                  this.setState({ showSupplier : true }) }
-                placeholder={ 'Supplier Name' }
-                type={ 'text' }/>
+              <div className={ 'computer-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'computer-icon-forms computerMailBoxIcon' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    type={ 'button' }
+                    value={ poaText }
+                    group={ 'computer-group-textbox' }
+                    container={ 'computer-form-icon-container' }
+                    onClick={ () =>
+                      this.setState({ showPurposeOfAvailment : true }) }
+                    onChange={ poaText =>
+                      this.setState({ poaText }) }
+                    placeholder={ 'Purpose Of Availment' }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'computer-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'computer-icon-forms computerEditIcon' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    group={ 'computer-group-textbox' }
+                    container={ 'computer-form-icon-container' }
+                    onChange={ modeOfLoanText =>
+                      this.setState({ modeOfLoanText }) }
+                    onClick={ () =>
+                      this.setState({ showOffset : true }) }
+                    placeholder={ 'Mode of Loan' }
+                    value={ offset ? 'New Loan' : modeOoffsetfLoan }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'computer-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'computer-icon-forms pesoSign' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    group={ 'computer-group-textbox' }
+                    container={ 'computer-form-icon-container' }
+                    value={ amountValue }
+                    onChange={ this.onChange }
+                    placeholder={ 'Desired Amount' }
+                    maxLength={ validateLoanType && (`${  validateLoanType.maximumLoanableAmount}`).length }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'computer-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'computer-icon-forms transactionDate' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    group={ 'computer-group-textbox' }
+                    container={ 'computer-form-icon-container' }
+                    value={ `${ termOfLoan } (${ rateOfLoan } %)` }
+                    onChange={ (termOfLoan, rateOfLoan) =>
+                      this.setState({ termOfLoan, rateOfLoan }) }
+                    onClick={ () =>
+                      this.setState({ showTerm : true }) }
+                    placeholder={ 'Term of Loan' }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'computer-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'computer-icon-forms personGreyIcon' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    group={ 'computer-group-textbox' }
+                    container={ 'computer-form-icon-container' }
+                    value={ selectedSupplier ? selectedSupplier : null }
+                    onChange={ supplier =>
+                      this.setState({ selectedSupplier : supplier }) }
+                    onClick={ () =>
+                      this.setState({ showSupplier : true }) }
+                    placeholder={ 'Supplier Name' }
+                    type={ 'text' }/>
+                </div>
+              </div>
               <GenericButton
                 type={ 'button' }
                 text={ 'continue' }
@@ -238,6 +289,8 @@ class ComputerFormCardComponent extends Component {
 ComputerFormCardComponent.propTypes={
   purposeOfAvailment : PropTypes.array,
   validateLoanType : PropTypes.array,
+  group : PropTypes.string,
+  container : PropTypes.string,
   loanType : PropTypes.number,
   preferredFormData : PropTypes.func,
   offset : PropTypes.array,
