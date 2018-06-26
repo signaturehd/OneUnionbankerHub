@@ -1,4 +1,4 @@
-export default class NewsInteractor {
+export default class GetSelectedDateInteractor {
   constructor (client) {
     this.client = client
   }
