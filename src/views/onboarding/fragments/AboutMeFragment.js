@@ -18,21 +18,18 @@ const renderField = ({ input, label, type, meta: { touched, error }, placeholder
   </div>
 )
 
-const renderFileUploader = ({ input, label, type, className, selected, meta: { touched, error }, placeholder, onChange, value },...custom) => (
+const field_file = ({ input, type, field, value, placeholder,meta: { touched, error, warning } }) => (
   <div className = {'file-container'}>
     <div className ="file-group">
-      <input
-        type = { 'file' }
-        className = { 'file' }
-        onChange = { onChange }
-        required
-      />
-      <span className = { 'file-text' }> { value } </span>
+  <input type="file" {...field} className = {'file'}/>
+  <span className = { 'file-text' }> { value } </span>
       <span className = { 'file-label' }>{ placeholder }</span>
       <span className ={ 'bar' }></span>
     </div>
   </div>
 )
+
+
 const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
 <div>
   <div>
@@ -56,15 +53,10 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           onClick={() => fields.remove(index)}
         />
         <h4>About Me #{index + 1}</h4>
-        <Field
-          name={`${member}.compName`}
-          type = { 'file' }
-          className = { 'file' }
-          component={renderFileUploader}
-          placeholder={ 'Profile Photo' }
-          value = {null}
 
-        />
+         <Field   name={`${member}.profpic`} type='file' component={field_file} />
+
+
         <Field
           name={`${member}.whoami`}
           type="text"
@@ -82,7 +74,7 @@ const FieldArraysForm = props => {
   const { handleSubmit, pristine, reset, submitting } = props
   return (
     <Card onSubmit={handleSubmit} className={ 'general-form-card' }>
-      <FieldArray name="experience" component={renderMembers} />
+      <FieldArray name="ABoutMe" component={renderMembers} />
     </Card>
   )
 }
