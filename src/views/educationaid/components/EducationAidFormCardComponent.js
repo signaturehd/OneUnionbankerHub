@@ -38,6 +38,19 @@ class EducationAidFormCardComponent extends Component {
     return parts[parts.length - 1]
   }
 
+  totalReimbursableAmount (computations, gwa, totalFee) {
+    let result
+    computations &&
+    computations.map(
+      (value, key) => {
+        if (gwa >= value.minimum && gwa <= value.maximum) {
+          result = totalFee * value.percent
+        }
+      }
+    )
+    return result
+  }
+
   render () {
     const {
       educationAid,
@@ -61,9 +74,7 @@ class EducationAidFormCardComponent extends Component {
       computations
       } = this.state
 
-    const resultTotalFee = tuitionFeeText && registrationFeeText ? tuitionFeeText + registrationFeeText : 0;
-
-    console.log(computations)
+    const resultTotalFee = tuitionFeeText && registrationFeeText ? tuitionFeeText + registrationFeeText : ''
 
     return (
       <div className = {'educ-container'}>
@@ -73,12 +84,10 @@ class EducationAidFormCardComponent extends Component {
                 tog = { educationAid.schools }
                 presenter = { presenter }
                 onSubmit = {
-                  (collegeType, minGWA, maxGWA, percentage) => {
+                  (collegeType, computations) => {
                     this.setState({
                       collegeType,
-                      minGWA,
-                      maxGWA,
-                      percentage
+                      computations
                     })
                   }
                 }
@@ -96,7 +105,7 @@ class EducationAidFormCardComponent extends Component {
             </h4>
             <div className = {'educ-form-card-body '}>
             <GenericTextBox
-              value = { tuitionFeeText ? tuitionFeeText : 0 }
+              value = { tuitionFeeText ? tuitionFeeText : '' }
               onChange = {
                 (e) => {
                   const re = /^[0-9\.]+$/
@@ -108,7 +117,7 @@ class EducationAidFormCardComponent extends Component {
               placeholder = { 'Tuition Fee' }
             type = { 'text' }/>
             <GenericTextBox
-              value = { registrationFeeText ? registrationFeeText : 0}
+              value = { registrationFeeText ? registrationFeeText : ''}
               onChange = {
                 (e) =>{
                   const re = /^[0-9\.]+$/
@@ -126,36 +135,35 @@ class EducationAidFormCardComponent extends Component {
             <GenericTextBox
               value = { collegeType }
               onClick = {
-                () => {
-                  this.setState({ showModal : true })
-                }
+                () => this.setState({ showModal : true })
               }
               placeholder = { 'Colleges/Universities' }
             type = { 'text' }/>
             <GenericTextBox
               value = { courseText }
-              onChange = { (e) => { this.setState({courseText: e.target.value}) } }
+              onChange = { (e) => this.setState({courseText: e.target.value}) }
               placeholder = { 'Course' }
             type = { 'text' }/>
             <GenericTextBox
               value = { academicYearText }
-              onChange = { (e) => { this.setState({academicYearText: e.target.value}) } }
+              onChange = { (e) => this.setState({academicYearText: e.target.value}) }
               placeholder = { 'Academic Year' }
             type = { 'text' }/>
             <GenericTextBox
               value = { semesterText }
-              onChange = { (e) => { this.setState({semesterText: e.target.value}) } }
+              onChange = { (e) =>  this.setState({semesterText: e.target.value}) }
               placeholder = { 'Semester' }
             type = { 'text' }/>
             <GenericTextBox
               value = { gwaText }
-              onChange = { (e) => { this.setState({gwaText: e.target.value}) } }
+              onChange = { (e) => {
+                this.setState({gwaText: e.target.value})
+              }
+             }
               placeholder = { 'General Weighted Average (GWA)' }
             type = { 'text' }/>
             <GenericTextBox
-              value = { totalReimbursableAmount }
-              placeholder = { 'Total Reimbursable Amount' }
-              onChange = { (e) => { this.setState({totalReimbursableAmount: e.target.value}) } }
+              value = { this.totalReimbursableAmount(computations, gwaText, resultTotalFee) }
               disabled = { 'disabled' }
             type = { 'text' }/>
 
