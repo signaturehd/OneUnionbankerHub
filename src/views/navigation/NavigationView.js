@@ -110,14 +110,6 @@ class NavigationView extends BaseMVPView {
     this.setState({ wizard })
   }
 
-  relogin () {
-    try {
-      this.props.history.push('/')
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
   render () {
     const {
       displayShow,
@@ -139,6 +131,7 @@ class NavigationView extends BaseMVPView {
     let locationPath = history.location.pathname
     return (
       <div className = { 'navigation-body-div' }>
+        { super.render() }
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
             onClick = { onClick }
@@ -165,12 +158,9 @@ class NavigationView extends BaseMVPView {
           {
             login &&
             <ReloginModal
-              relogin = { () => { this.presenter.relogin(), this.relogin() } }
+              relogin = { () => { this.presenter.relogin(), history.push('/') } }
             />
           }
-
-          { super.render() }
-
               <Drawer >
                 <Switch>
                   <Route exact path = '/' render = {props =>
@@ -261,6 +251,7 @@ NavigationView.propTypes = {
 
 const mapStateToProps = state => ({
   login : state.login,
+  notify : state.notify
 })
 
 
