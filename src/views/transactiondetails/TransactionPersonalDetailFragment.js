@@ -17,6 +17,7 @@ import EducGrantPlanDetailsFragment from './fragments/EducGrantPlanDetailsFragme
 import EducGroupPlanDetailsFragment from './fragments/EducGroupPlanDetailsFragment'
 import LoansDetailsFragment from './fragments/LoansDetailsFragment'
 import OpticalDetailsFragment from './fragments/OpticalDetailsFragment'
+import CarLeaseDetailsFragment from './fragments/CarLeaseDetailsFragment'
 
 function  TransactionDetails (props)  {
   const transactionId = props.details.benefitType.id
@@ -36,6 +37,11 @@ function  TransactionDetails (props)  {
       transactionsPerson = { transactionsPerson } />
   } else if (transactionId === 8) {
     return <OpticalDetailsFragment
+      details = { transactionDetails }
+      attachments = { attachments }
+      transactionsPerson = { transactionsPerson }/>
+  } else if (transactionId === 15) {
+    return <CarLeaseDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
