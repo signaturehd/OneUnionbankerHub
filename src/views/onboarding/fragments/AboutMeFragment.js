@@ -59,7 +59,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
     <div className={ 'general-form-card-body' }>
       <GenericButton className={'generic-button'}
         type="button"
-        onClick={() => fields.push({})}
+        onClick={() => fields.length <= 0 && fields.push({})}
         text= {'Add About Me'}
       >
       </GenericButton>
@@ -73,12 +73,10 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           text="Remove About Me"
           onClick={() => fields.remove(index)}
         />
-        <h4>About Me #{index + 1}</h4>
-
-         <Field   name={`${member}.profpic`} type='file' component={renderFileUp}  />
-
-
-        <Field
+        <h4>About Me </h4>
+         <Field   name={`${member}.profpic`} type='file' component={renderFileUp}
+          />
+         <Field
           name={`${member}.whoami`}
           type="text"
           component={'textarea'}
