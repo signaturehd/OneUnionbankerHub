@@ -107,14 +107,6 @@ class NavigationView extends BaseMVPView {
     this.setState({ wizard })
   }
 
-  relogin () {
-    try {
-
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
   render () {
     const {
       displayShow,
