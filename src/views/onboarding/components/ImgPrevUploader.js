@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import './styles/boarding-styles.css'
+
 
 import {
   Card,
@@ -106,14 +108,14 @@ render () {
   const styleImage = {
     image1 : {
       backgroundImage: `url('${imagePreviewUrl}')`,
-      width : '225px',
-      height : '250px',
+      width : '220px',
+      height : '225px',
       backgroundSize : 'cover',
       backgroundRepeat : 'no-repeat',
     }
   }
 
-  $imagePreview = (<div style = {styleImage.image1}></div>)
+  $imagePreview = (<div className = { 'avatar' } style = {styleImage.image1}></div>)
 
   return (
     <div>
@@ -131,10 +133,12 @@ render () {
           <h2>
             Uploaded Files
           </h2>
-          <div className = 'dentalreimbursement-main'>
+          <div>
             <div >
              <div>
+               <center>
                  {$imagePreview}
+               </center>
              </div>
 
            </div>
