@@ -9,9 +9,11 @@ class SideBar extends Component {
     super(props)
     this.callLogout = this.callLogout.bind(this)
   }
+
   callLogout () {
     this.props.logout()
   }
+
   render () {
     const {
       onClick,
@@ -26,7 +28,7 @@ class SideBar extends Component {
     [
       {
         id: 0 ,
-        title: 'News',
+        title: 'News Feed',
         action: () => history.push('/'),
         className: 'newsfeed-icon'
       },
@@ -75,21 +77,38 @@ class SideBar extends Component {
             src={ require('../../../../images/profile-picture.png') }
             className= {'sidebar-img-ub-logo'}/>
         </div>
-        <h4 className = { 'sidebar-profile-name' }>
+        <h5 className = { 'sidebar-profile-name' }>
           { profile && profile.fullname }
-        </h4>
-        <Line/>
+        </h5>
           {
             modules.map((d, idx) =>
-            <li
-              className = { `_text-link ${selected === d.id && 'active'}` }
+            d.id === 1 ?
+            <div
               key = { idx }
-              onClick = { d.action }>
-              <a key = { idx }
-                className =
-                { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                  { d.title }
-            </li>
+            >
+              <li
+                className = { `_text-link ${selected === d.id && 'active'}` }
+                onClick = { d.action }>
+                <a key = { idx }
+                  className =
+                  { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                    { d.title }
+              </li>
+              <Line />
+            </div>
+              :
+              <div
+                key = { idx }
+              >
+                <li
+                  className = { `_text-link ${selected === d.id && 'active'}` }
+                  onClick = { d.action }>
+                  <a key = { idx }
+                    className =
+                    { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                    { d.title }
+                </li>
+              </div>
             )
           }
       </ul>

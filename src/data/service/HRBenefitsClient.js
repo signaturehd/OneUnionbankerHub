@@ -329,18 +329,18 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLTypes (token) {
-    return this.service.getMPLTypes(token)
+  getMplTypes (token) {
+    return this.service.getMplTypes(token)
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLValidate (token, mplValidateParam) {
-    return this.service.getMPLValidate(token, mplValidateParam)
+  getMplValidate (token, mplValidateParam) {
+    return this.service.getMplValidate(token, mplValidateParam)
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLFormAttachments (token, mplGetFormParam) {
-    return this.service.getMPLFormAttachments (token, mplGetFormParam)
+  getMplFormAttachments (token, mplGetFormParam) {
+    return this.service.getMplFormAttachments (token, mplGetFormParam)
       .pipe(ServiceErrorOperator())
   }
 
@@ -358,21 +358,35 @@ export default class HRBenefitsClient {
       mplPurposeLoanAddParam)
       .pipe(ServiceErrorOperator())
   }
+
   getCarValidate (token) {
     return this.service.getCarValidate(token)
       .pipe(ServiceErrorOperator())
   }
 
-  getCarRequest (token, carRequestParam) {
-    return this.service.getCarRequest(token, carRequestParam, {
-      headers: { token }
-    })
+  getCarRequest (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    carRequestParam) {
+    return this.service.getCarRequest(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      carRequestParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getCarLease (token) {
+    return this.service.getCarLease(token)
+      .pipe(ServiceErrorOperator())
   }
 
   /* Education */
   getEducationAid (token) {
     return this.service.getEducationAid(token)
-      .pipe(ServiceErrorOperator())
   }
 
   validateGrantAid (token) {

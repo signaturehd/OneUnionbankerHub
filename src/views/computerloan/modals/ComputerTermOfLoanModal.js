@@ -18,7 +18,7 @@ return (
         <h2>
           Term of Loan
           <br/>
-          Housing Assistance Loan
+          Computer Loan
         </h2>
         <h4>
         </h4>
@@ -29,9 +29,10 @@ return (
         term && term.map((resp, key) =>
         <GenericButton
           className = { 'mpl-poa-modal-button' }
-          key = { key }
-          text = {`Term: ${resp && resp.term} Rate: ${resp && resp.rate}` }
-          onClick = { () => onSubmit( resp, false ) }/>
+          key = { key ? key : '' }
+          text = { `Term: ${ resp && resp.term ? resp.term : ''}
+                    Rate: ${ resp && resp.rate ? resp.rate : '' }` }
+          onClick = { () => onSubmit(resp ? resp : '', false) }/>
         )
       }
     </div>

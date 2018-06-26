@@ -9,14 +9,16 @@ import { CircularLoader } from '../../ub-components/'
 
 import FormComponent from './components/MotorcycleLoanCardComponent'
 
+import store from '../../store'
+import { NotifyActions } from '../../actions'
+
 class MotorCycleLoanFragment extends BaseMVPView {
   constructor (props) {
     super(props)
-    this.state = {
+    this.state={
       purposeOfAvailment: [],
-      selectedPoa: '',
       formAttachments: [],
-      loanType: 3,
+      loanType: 4,
       validateLoanType : [],
       offset : [],
       enabledLoader : false,
@@ -24,13 +26,20 @@ class MotorCycleLoanFragment extends BaseMVPView {
       showNoticeResponseModal : false,
       showNoticeModal : false,
       showConfirmation : false,
+      poaText : '',
+      modeOfLoanId : '',
+      termId : '',
+      amountValue : '',
+      selectedSupplier : '',
+      file : ''
     }
+    this.sendFormData=this.sendFormData.bind(this)
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.getMplTypes()
-    this.presenter.getMplValidate(1)
+    this.presenter.getMplValidate(this.state.loanType)
     this.presenter.getMplPurposeOfAvailment(
       this.state.loanType,
       1,
@@ -74,6 +83,38 @@ class MotorCycleLoanFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/loans')
   }
 
+  sendFormData (
+    poaText,
+    modeOfLoanId,
+    termId,
+    amountValue,
+    selectedSupplier,
+    file) {
+      if(
+        poaText === null ||
+        modeOfLoanId === null ||
+        amountValue === 0 ||
+        termId === null ||
+        file === '' )
+      {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Invalid',
+            message : 'Please complete all fields',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else {
+          this.presenter.addLoan(
+            poaText,
+            modeOfLoanId,
+            termId,
+            amountValue,
+            selectedSupplier,
+            file)
+          }
+        }
+
   render () {
     const {
       purposeOfAvailment,
@@ -86,30 +127,63 @@ class MotorCycleLoanFragment extends BaseMVPView {
       showNoticeModal,
       showNoticeResponseModal,
       noticeResponse,
-      response } = this.state
+      response,
+      poaText,
+      modeOfLoanId,
+      termId,
+      amountValue,
+      selectedSupplier,
+      file }=this.state
+
     return (
       <div>
+        { super.render() }
         <div>
           <i
-            className = { 'back-arrow' }
-            onClick = { this.navigate.bind(this) }>
+            className={ 'back-arrow' }
+            onClick={ this.navigate.bind(this) }>
           </i>
-          <h2 className = { 'header-margin-default' }>
+          <h2 className={ 'header-margin-default' }>
             Motorcycle Loan
           </h2>
         </div>
           {
             enabledLoader ?
-             <center className = { 'circular-loader-center' }>
-               <CircularLoader show = { this.state.enabledLoader }/>
+             <center className={ 'circular-loader-center' }>
+               <CircularLoader show={ this.state.enabledLoader }/>
              </center> :
             <FormComponent
-              loanType = { loanType }
-              purposeOfAvailment = { purposeOfAvailment }
-              validateLoanType = { validateLoanType }
-              formAttachments = { formAttachments }
-              offset = { offset }
-              presenter = { this.presenter }
+              loanType={ loanType }
+              purposeOfAvailment={ purposeOfAvailment }
+              validateLoanType={ validateLoanType }
+              formAttachments={ formAttachments }
+              offset={ offset }
+              presenter={ this.presenter }
+              onClick={ () =>
+                this.sendFormData(
+                  poaText,
+                  modeOfLoanId,
+                  termId,
+                  amountValue,
+                  selectedSupplier,
+                  file
+                  )
+                }
+              onSubmit={ (
+                getPoaTextData,
+                getModeOfLoanId,
+                getTermIdData,
+                getAmountValueData,
+                getSelectedSupplierData,
+                getFileData) => this.setState({
+                  poaText : getPoaTextData,
+                  modeOfLoanId : getModeOfLoanId,
+                  termId : getTermIdData,
+                  amountValue : getAmountValueData,
+                  selectedSupplier : getSelectedSupplierData,
+                  file : getFileData
+                })
+              }
             />
           }
       </div>

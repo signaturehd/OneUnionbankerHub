@@ -1,8 +1,7 @@
 
 export default class HRBenefitsService {
-  constructor (apiClient, accountClient, imageClient) {
+  constructor (apiClient, imageClient) {
     this.apiClient = apiClient
-    this.accountClient = accountClient
     this.imageClient = imageClient
   }
 
@@ -118,9 +117,11 @@ export default class HRBenefitsService {
 
   /* account */
   validateAccountNumber (token, accountNumber) {
-     return this.accountClient.get(`accounts/v1/${accountNumber}`, {
-        headers: { token, referenceId : Math.random().toString(36)
-          .substring(7),
+     return this.apiClient.get(`accounts/v1/${accountNumber}`, {
+        headers: {
+           'Content-Type': 'application/json',
+           token,
+           referenceId : Math.random().toString(36).substring(7),
        }
      })
    }
@@ -297,7 +298,7 @@ export default class HRBenefitsService {
 
   /* Types */
 
-  getMPLTypes (token) {
+  getMplTypes (token) {
     return this.apiClient.get('v1/loans/mpl/types', {
       headers: { token }
     })
@@ -305,13 +306,13 @@ export default class HRBenefitsService {
 
   /* Validate */
 
-  getMPLValidate (token, mplValidateParam) {
+  getMplValidate (token, mplValidateParam) {
     return this.apiClient.get(`v1/loans/mpl/validate?loanId=${ mplValidateParam.loanTypeId }`, {
       headers: { token }
     })
   }
 
-  getMPLFormAttachments (token, mplGetFormParam) {
+  getMplFormAttachments (token, mplGetFormParam) {
     return this.apiClient.get(`v1/attachments?purposeOfLoan=${ mplGetFormParam.formRequesting }&loanId=${ mplGetFormParam.loanId }`, {
         headers: { token }
     })
@@ -351,14 +352,31 @@ export default class HRBenefitsService {
     })
   }
 
-  getCarRequest (token, carRequestParam) {
+  getCarRequest (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    carRequestParam) {
+    const formData = new FormData()
+    const addCarleaseObject = {
+      brand : carRequestParam.carBrand,
+      model : carRequestParam.carModel,
+      year : carRequestParam.year,
+      leaseMode : carRequestParam.leaseMode,
+      primaryColor : carRequestParam.primaryColor,
+      secondaryColor : carRequestParam.secondaryColor,
+    }
+    formData.append('uuid', 12345)
+    formData.append('body', JSON.stringify(addCarleaseObject))
+    formData.append('attachments', carRequestParam.attachments)
     return this.apiClient.post('v1/lease/car/request', carRequestParam, {
       headers: { token }
     })
   }
 
-  getCarLease (token, carRequestParam) {
-    return this.apiClient.post('v1/leases/car', carRequestParam, {
+  getCarLease (token) {
+    return this.apiClient.post('v1/leases/car', {
       headers: { token }
     })
   }

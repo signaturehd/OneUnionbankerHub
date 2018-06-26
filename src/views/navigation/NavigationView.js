@@ -47,8 +47,9 @@ import CarLeaseNewFragment from '../carlease/CarLeaseNewFragment'
 import CarLeaseOldFragment from '../carlease/CarLeaseOldFragment'
 
 import Carousel from '../carousel/Carousel'
-
+/* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
+import ReloginModal from './modal/ReloginModal'
 
 class NavigationView extends BaseMVPView {
   constructor (props) {
@@ -63,6 +64,7 @@ class NavigationView extends BaseMVPView {
     this.setDisplay = this.setDisplay.bind(this)
     this.setSelectedNavigation = this.setSelectedNavigation.bind(this)
     this.callLogout = this.callLogout.bind(this)
+    this.relogin = this.relogin.bind(this)
   }
 
   setDisplay (sideBar, topBar) {
@@ -106,6 +108,14 @@ class NavigationView extends BaseMVPView {
     this.setState({ wizard })
   }
 
+  relogin () {
+    try {
+      this.props.history.push('/')
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   render () {
     const {
       displayShow,
@@ -117,7 +127,7 @@ class NavigationView extends BaseMVPView {
       wizard,
       showLogoutModal
     } = this.state
-      const { history } = this.props
+      const { history, login } = this.props
     const style = {
       show: {
           display : displayShow
@@ -147,6 +157,13 @@ class NavigationView extends BaseMVPView {
             <NavigationViewModal
               logout = { () => this.presenter.logout() }
               onClose = { () => this.setState({showLogoutModal : false}) }
+            />
+          }
+
+          {
+            login &&
+            <ReloginModal
+              relogin = { () => { this.presenter.relogin(), this.relogin() } }
             />
           }
 
@@ -241,7 +258,7 @@ NavigationView.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  notify : state.notify
+  login : state.login,
 })
 
 
