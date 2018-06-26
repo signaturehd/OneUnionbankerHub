@@ -1,4 +1,4 @@
-export default class NewsInteractor {
+export default class GetPayslipInteractor {
   constructor (client) {
     this.client = client
   }
