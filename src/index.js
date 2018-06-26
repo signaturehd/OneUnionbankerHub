@@ -20,7 +20,7 @@ import AppModule from './di/AppModule'
 
 ReactDOM.render(
   <Provider store={ store }>
-    <BrowserRouter history={ browserHistory }>
+    <BrowserRouter basename = { '/' }>
       <App />
     </BrowserRouter>
   </Provider>, document.getElementById('root'))
