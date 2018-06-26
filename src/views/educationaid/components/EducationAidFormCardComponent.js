@@ -44,11 +44,14 @@ class EducationAidFormCardComponent extends Component {
     computations.map(
       (value, key) => {
         if (gwa >= value.minimum && gwa <= value.maximum) {
-          result = totalFee * value.percent
+          result = parseFloat(totalFee) * parseFloat(value.percent)
+        }
+        else if (gwa <= value.minimum && gwa >= value.maximum) {
+          result = parseFloat(totalFee) * parseFloat(value.percent)
         }
       }
     )
-    return result
+    return result ? parseFloat(result).toFixed(2) : 0
   }
 
   render () {
@@ -74,8 +77,7 @@ class EducationAidFormCardComponent extends Component {
       computations
       } = this.state
 
-    const resultTotalFee = tuitionFeeText && registrationFeeText ? tuitionFeeText + registrationFeeText : ''
-
+    const resultTotalFee = tuitionFeeText && registrationFeeText ? parseFloat(tuitionFeeText) + parseFloat(registrationFeeText) : ''
     return (
       <div className = {'educ-container'}>
         <div className = { 'educ-grid-column-2' }>
@@ -108,9 +110,9 @@ class EducationAidFormCardComponent extends Component {
               value = { tuitionFeeText ? tuitionFeeText : '' }
               onChange = {
                 (e) => {
-                  const re = /^[0-9\.]+$/
+                  const re = /^[0-9.,]+$/
                   if (e.target.value == '' ||  re.test(e.target.value)) {
-                    this.setState({ tuitionFeeText: parseInt(e.target.value) })
+                    this.setState({ tuitionFeeText: e.target.value })
                   }
                }
               }
@@ -122,7 +124,7 @@ class EducationAidFormCardComponent extends Component {
                 (e) =>{
                   const re = /^[0-9\.]+$/
                   if (e.target.value == '' || re.test(e.target.value)) {
-                    this.setState({registrationFeeText: parseInt(e.target.value) })
+                    this.setState({registrationFeeText: e.target.value })
                   }
                 }
                }
@@ -156,10 +158,15 @@ class EducationAidFormCardComponent extends Component {
             type = { 'text' }/>
             <GenericTextBox
               value = { gwaText }
-              onChange = { (e) => {
-                this.setState({gwaText: e.target.value})
-              }
-             }
+              onChange = {
+                (e) =>{
+                  const re = /^[0-9\.]+$/
+                  if (e.target.value == '' || re.test(e.target.value)) {
+                    this.setState({gwaText: e.target.value })
+                  }
+                }
+               }
+
               placeholder = { 'General Weighted Average (GWA)' }
             type = { 'text' }/>
             <GenericTextBox
@@ -251,7 +258,7 @@ class EducationAidFormCardComponent extends Component {
               <FileUploader
                 accept="image/gif,image/jpeg,image/jpg,image/png,"
                 value = { this.state.fileRegForm.name }
-                placeholder = 'Registration Form/Official Breakdown of F...'
+                placeholder = 'Registration Form/Official Breakdown of Fees'
                 onChange = {
                   (e) => {
                     e.preventDefault()
@@ -290,7 +297,7 @@ class EducationAidFormCardComponent extends Component {
               />
               <GenericButton
                 type = { 'button' }
-                text = { 'continue' }
+                text = { 'submit' }
                 onClick = { () => this.sendFormData(tuitionFeeText, registrationFeeText, totalFeeText, collegeText,
                   courseText, academicYearText, semesterText, gwaText, totalReimbursableAmount, fileOR, fileCOG, fileRegForm) }
                 className = { 'educ-submit' } />
