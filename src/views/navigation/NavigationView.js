@@ -66,7 +66,6 @@ class NavigationView extends BaseMVPView {
     this.setDisplay = this.setDisplay.bind(this)
     this.setSelectedNavigation = this.setSelectedNavigation.bind(this)
     this.callLogout = this.callLogout.bind(this)
-    this.relogin = this.relogin.bind(this)
   }
 
   setDisplay (sideBar, topBar) {
