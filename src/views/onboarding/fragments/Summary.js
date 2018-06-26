@@ -24,11 +24,12 @@ class Summary extends Component {
     }
     return (
     <div>
+        <AboutMe/>
         <Education/>
         <Experience/>
         <Skills/>
         <Certificate/>
-        <AboutMe/>
+
     </div>
 
 

@@ -43,8 +43,9 @@ const steps = [
   },
   {
     label: 'About Me',
-    component: <AboutMe/>
-
+    component: <Provider store={store}>
+      <AboutMe onSubmit={'To do: add submit function'} />
+  </Provider>,
   },
   {
     label: 'Profile Summary',

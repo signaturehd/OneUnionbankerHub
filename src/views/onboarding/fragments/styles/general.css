@@ -33,6 +33,16 @@
   border-radius: 5px;
   font-size: 14px;
 }
+.whoami-textarea {
+  height: 200px;
+  align-items: flex-start;
+  margin: 10px auto;
+  resize: none;
+  width: -webkit-fill-available !important;
+  outline-color: #FF8A00;
+  border-radius: 5px;
+  font-size: 14px;
+}
 .calendar {
   border-bottom: 1px solid #ff8A00;
   border-top: 0px;
