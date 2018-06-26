@@ -5,6 +5,11 @@ import './styles/general.css'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import ImgPrevUploader from '../components/ImgPrevUploader'
+
+
+
+
 
 const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
   <div className = {'container'}>
@@ -17,18 +22,34 @@ const renderField = ({ input, label, type, meta: { touched, error }, placeholder
     </div>
   </div>
 )
+const renderFileUp = ({ input, type, field, value, files, placeholder,meta: { touched, error, warning } }) => (
+  <ImgPrevUploader/>
+)
 
-const field_file = ({ input, type, field, value, placeholder,meta: { touched, error, warning } }) => (
+const field_file = ({ input, type, field, value, files, placeholder,meta: { touched, error, warning } }) => (
+
   <div className = {'file-container'}>
     <div className ="file-group">
-  <input type="file" {...field} className = {'file'}/>
+      <input
+      type="file"
+      className = {'file'}
+      onChange={
+        ( e ) => {
+          e.preventDefault();
+          const { fields } = this.props;
+          // convert files to an array
+          const files = [ ...e.target.files ];
+          fields.yourField.handleChange(files);
+        }
+      }
+    />
+
   <span className = { 'file-text' }> { value } </span>
       <span className = { 'file-label' }>{ placeholder }</span>
       <span className ={ 'bar' }></span>
     </div>
   </div>
 )
-
 
 const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
 <div>
@@ -54,7 +75,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
         />
         <h4>About Me #{index + 1}</h4>
 
-         <Field   name={`${member}.profpic`} type='file' component={field_file} />
+         <Field   name={`${member}.profpic`} type='file' component={renderFileUp}  />
 
 
         <Field
