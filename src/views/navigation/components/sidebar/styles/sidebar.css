@@ -91,6 +91,10 @@ ul {
   -webkit-mask-image: url('../../../../../images/LOGOUT.png');
   mask-image: url('../../../../../images/LOGOUT.png');
 }
+.payslip-icon {
+  -webkit-mask-image: url('../../../../../images/icons/ic_payslip.png');
+  mask-image: url('../../../../../images/icons/ic_payslip.png');
+}
 @media screen and (max-width: 3000px) and (max-height: 2000px) {
   ._sidebar-overlay {
     width: 250px;
