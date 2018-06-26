@@ -387,6 +387,22 @@ export default class HRBenefitsClient {
   /* Education */
   getEducationAid (token) {
     return this.service.getEducationAid(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addEducationAid (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    dentalLoaParam) {
+    return this.service.addEducationAid(
+      token,
+      accountToken,
+      accountNo,
+      releasingCenter,
+      dentalLoaParam)
+      .pipe(ServiceErrorOperator())
   }
 
   validateGrantAid (token) {

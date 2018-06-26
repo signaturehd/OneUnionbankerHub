@@ -389,6 +389,26 @@ export default class HRBenefitsService {
     })
   }
 
+  addEducationAid (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    dentalLoaParam) {
+    const dentalLoaObject = {
+      accountNo,
+      releasingCenter,
+      type : 1,
+      dependentId : dentalLoaParam.dependent,
+      dentalClinicId : dentalLoaParam.branch,
+      preferredDate : dentalLoaParam.date,
+      dentalProcedure : dentalLoaParam.procedure
+    }
+    return this.apiClient.post('v1/issuances/dental/loa/submit', dentalLoaObject, {
+      headers : { token }
+    })
+  }
+
   /* validate grant aid */
   validateGrantAid (token) {
     return this.apiClient.get('v1/grants/education/personal/validate', {

@@ -25,7 +25,6 @@ class EducationAidFragment extends BaseMVPView{
     this.presenter.getEducationAid()
   }
   setEducationAid(educationAid) {
-    console.log(":"+educationAid)
     this.setState({ educationAid })
   }
   hideCircularLoader () {

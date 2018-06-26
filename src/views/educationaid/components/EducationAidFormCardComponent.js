@@ -110,7 +110,7 @@ class EducationAidFormCardComponent extends Component {
               value = { tuitionFeeText ? tuitionFeeText : '' }
               onChange = {
                 (e) => {
-                  const re = /^[0-9.,]+$/
+                  const re = /^[0-9\.]+$/
                   if (e.target.value == '' ||  re.test(e.target.value)) {
                     this.setState({ tuitionFeeText: e.target.value })
                   }
@@ -298,8 +298,8 @@ class EducationAidFormCardComponent extends Component {
               <GenericButton
                 type = { 'button' }
                 text = { 'submit' }
-                onClick = { () => this.sendFormData(tuitionFeeText, registrationFeeText, totalFeeText, collegeText,
-                  courseText, academicYearText, semesterText, gwaText, totalReimbursableAmount, fileOR, fileCOG, fileRegForm) }
+                onClick = { () => this.sendFormData (tuitionFeeText, registrationFeeText, collegeType,
+                  courseText, academicYearText, semesterText, gwaText, fileOR, fileCOG, fileRegForm) }
                 className = { 'educ-submit' } />
             </div>
           </Card>
