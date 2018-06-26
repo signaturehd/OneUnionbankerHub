@@ -44,6 +44,10 @@ import TransactionApprovalDetailFragment from '../transactiondetails/Transaction
 import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
 import CarLeaseNewFragment from '../carlease/CarLeaseNewFragment'
 import CarLeaseOldFragment from '../carlease/CarLeaseOldFragment'
+
+/*Payslip*/
+import Payslip from '../payslip/PayslipFragment'
+
 import OnboardingView from '../onboarding/OnboardingView'
 import Carousel from '../carousel/Carousel'
 /* Modals */
@@ -107,14 +111,6 @@ class NavigationView extends BaseMVPView {
     this.setState({ wizard })
   }
 
-  relogin () {
-    try {
-      this.props.history.push('/')
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
   render () {
     const {
       displayShow,
@@ -136,6 +132,7 @@ class NavigationView extends BaseMVPView {
     let locationPath = history.location.pathname
     return (
       <div className = { 'navigation-body-div' }>
+        { super.render() }
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
             onClick = { onClick }
@@ -162,12 +159,9 @@ class NavigationView extends BaseMVPView {
           {
             login &&
             <ReloginModal
-              relogin = { () => { this.presenter.relogin(), this.relogin() } }
+              relogin = { () => { this.presenter.relogin(), history.push('/') } }
             />
           }
-
-          { super.render() }
-
               <Drawer >
                 <Switch>
                   <Route exact path = '/' render = {props =>
@@ -218,6 +212,9 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mybenefits' render = { props =>
                     <BenefitsFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/payslip' render = { props =>
+                    <Payslip { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/faqs' render = { props =>
                     <FaqFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
@@ -258,6 +255,7 @@ NavigationView.propTypes = {
 
 const mapStateToProps = state => ({
   login : state.login,
+  notify : state.notify
 })
 
 

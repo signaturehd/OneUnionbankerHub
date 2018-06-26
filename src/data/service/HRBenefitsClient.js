@@ -383,4 +383,14 @@ export default class HRBenefitsClient {
     return this.service.getCarLease(token)
       .pipe(ServiceErrorOperator())
   }
+
+  getPayslip (token) {
+    return this.service.getPayslip(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPayslipSelectedDate (token, payslipParam) {
+    return this.service.getPayslipSelectedDate(token, payslipParam)
+      .pipe(ServiceErrorOperator())
+  }
 }

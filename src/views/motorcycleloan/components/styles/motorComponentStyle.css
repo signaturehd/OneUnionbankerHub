@@ -117,3 +117,50 @@
   height: 240px;
   object-fit: cover;
 }
+
+
+.motorMailBoxIcon {
+  background-image: url('../../../../images/icons/ic_markunread_mailbox_grey_500_18dp.png');
+}
+
+.motorEditIcon {
+  background-image: url('../../../../images/icons/ic_mode_edit_grey_500_18dp.png')
+}
+
+.personGreyIcon {
+  background-image: url('../../../../images/icons/ic_person_grey_400_48dp.png')
+}
+
+.transactionDate {
+  background-image: url('../../../../images/icons/ic_transacion_date_filed.png')
+}
+
+.pesoSign {
+  background-image: url('../../../../images/icons/peso_sign.png')
+}
+
+.motor-icon-forms {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 30px;
+  width: 30px;
+  background-repeat: no-repeat;
+}
+
+.motor-grid-form {
+  display: grid;
+  padding: 0px 10px 0px 10px;
+  grid-template-columns: .01fr 1fr;
+}
+
+.motor-group-textbox {
+  position:relative;
+  width:100%;
+  margin-top:0px;
+}
+
+.motor-form-icon-container {
+  padding: 30px 15px 0px 5px;
+}
