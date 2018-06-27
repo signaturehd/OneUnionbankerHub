@@ -21,6 +21,7 @@ class EducationAidFormCardComponent extends Component {
       registrationFeeText: '',
       totalFeeText: '',
       collegeType: '',
+      collegeID: '',
       courseText: '',
       academicYearText: '',
       semesterText: '',
@@ -51,7 +52,7 @@ class EducationAidFormCardComponent extends Component {
         }
       }
     )
-    return result ? parseFloat(result).toFixed(2) : 0
+    return result ? parseFloat(result).toFixed(2) : 0.00
   }
 
   render () {
@@ -66,6 +67,7 @@ class EducationAidFormCardComponent extends Component {
       registrationFeeText,
       totalFeeText,
       collegeType,
+      collegeID,
       courseText,
       academicYearText,
       semesterText,
@@ -77,7 +79,7 @@ class EducationAidFormCardComponent extends Component {
       computations
       } = this.state
 
-    const resultTotalFee = tuitionFeeText && registrationFeeText ? parseFloat(tuitionFeeText) + parseFloat(registrationFeeText) : ''
+    const resultTotalFee = tuitionFeeText && registrationFeeText ? parseFloat(tuitionFeeText) + parseFloat(registrationFeeText) : 0.00
     return (
       <div className = {'educ-container'}>
         <div className = { 'educ-grid-column-2' }>
@@ -86,8 +88,9 @@ class EducationAidFormCardComponent extends Component {
                 tog = { educationAid.schools }
                 presenter = { presenter }
                 onSubmit = {
-                  (collegeType, computations) => {
+                  (collegeID, collegeType, computations) => {
                     this.setState({
+                      collegeID,
                       collegeType,
                       computations
                     })
@@ -131,7 +134,7 @@ class EducationAidFormCardComponent extends Component {
               placeholder = { 'Registration Fee' }
             type = { 'text' }/>
             <GenericTextBox
-              value = { resultTotalFee }
+              value = { resultTotalFee && parseFloat(resultTotalFee).toFixed(2) }
               disabled = { 'disabled' }
             type = { 'text' }/>
             <GenericTextBox
@@ -298,7 +301,7 @@ class EducationAidFormCardComponent extends Component {
               <GenericButton
                 type = { 'button' }
                 text = { 'submit' }
-                onClick = { () => this.sendFormData (tuitionFeeText, registrationFeeText, collegeType,
+                onClick = { () => this.sendFormData (tuitionFeeText, registrationFeeText, collegeID,
                   courseText, academicYearText, semesterText, gwaText, fileOR, fileCOG, fileRegForm) }
                 className = { 'educ-submit' } />
             </div>

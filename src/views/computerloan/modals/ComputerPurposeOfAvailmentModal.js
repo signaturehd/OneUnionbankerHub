@@ -6,8 +6,10 @@ import { Modal , GenericButton, CircularLoader } from '../../../ub-components/'
 import './styles/computerModalStyle.css'
 
 class MplPurposeOfAvailmentModal extends Component {
+
   constructor (props) {
     super(props)
+
      this.state={
         checkedSubCategory : false,
         purposeOfAvailment : [],
@@ -54,43 +56,45 @@ class MplPurposeOfAvailmentModal extends Component {
   }
 
   render () {
-  const { onClose, poa, loanType }=this.props
-  const subcategory=poa && poa.subCategoryLvl
-  const { checkedSubCategory, enabledLoader }=this.state
-  return (
-    <Modal
-      onClose={ onClose }
-      isDismisable={ true }>
-        <center>
-          <h2>
-            Purpose of Availment
-          </h2>
-        </center>
-        <div>
-          {
-            enabledLoader ?
-             <center>
-               <CircularLoader show={ this.state.enabledLoader }/>
-             </center> :
-            poa && poa.category.map((resp, key) =>
-            <GenericButton
-              className={ 'mpl-poa-modal-button' }
-              key={ key ? key : '' }
-              text={ resp && resp.name ? resp.name : '' }
-              onClick={ () => this.onGetClicked(
-                resp ? resp : '',
-                subcategory ? subcategory : '',
-                subcategory !== 1,
-                true,
-                loanType ? loanType : '') }
-              />
-            )
-          }
-        </div>
-      </Modal>
-      )
+
+    const { onClose, poa, loanType }=this.props
+    const subcategory=poa && poa.subCategoryLvl
+    const { checkedSubCategory, enabledLoader }=this.state
+
+    return (
+      <Modal
+        onClose={ onClose }
+        isDismisable={ true }>
+          <center>
+            <h2>
+              Purpose of Availment
+            </h2>
+          </center>
+          <div>
+            {
+              enabledLoader ?
+               <center>
+                 <CircularLoader show={ this.state.enabledLoader }/>
+               </center> :
+              poa && poa.category.map((resp, key) =>
+              <GenericButton
+                className={ 'mpl-poa-modal-button' }
+                key={ key ? key : '' }
+                text={ resp && resp.name ? resp.name : '' }
+                onClick={ () => this.onGetClicked(
+                  resp ? resp : '',
+                  subcategory ? subcategory : '',
+                  subcategory !== 1,
+                  true,
+                  loanType ? loanType : '') }
+                />
+              )
+            }
+          </div>
+        </Modal>
+        )
+      }
     }
-  }
   MplPurposeOfAvailmentModal.propTypes={
     onClose : PropTypes.func,
     poa : PropTypes.object,

@@ -23,8 +23,8 @@ class EducationAidModal extends Component {
     this.setState({ enabledLoader : false })
   }
 
-  onGetClicked (name, computations) {
-    this.props.onSubmit(name, computations)
+  onGetClicked (id, name, computations) {
+    this.props.onSubmit(id, name, computations)
     this.props.onClose()
   }
 
@@ -53,7 +53,7 @@ class EducationAidModal extends Component {
               key = { key }
               text = { resp && resp.name }
               onClick = {
-                () => this.onGetClicked(resp.name, resp.computations)
+                () => this.onGetClicked(resp.id, resp.name, resp.computations)
               }
               />
             )
