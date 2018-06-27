@@ -1,124 +1,107 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
+import { Field, FieldArray, reduxForm } from 'redux-form'
 import './styles/general.css'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import ImgPrevUploader from '../components/ImgPrevUploader'
 
 
 
-class AboutMe extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      aboutMeTextValue: '',
 
-    }
-    this.onChange = this.onChange.bind(this)
-    this.onEndChange = this.onEndChange.bind(this)
-    this.handleMeChanged = this.handleMeChanged.bind(this)
-  }
 
-    componentDidMount () {
-    this.hydrateStateWithsessionStorage()
-    window.addEventListener(
-      'beforeunload',
-      this.saveStateTosessionStorage.bind(this)
-    )
-  }
+const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
+  <div className = {'container'}>
+    <div className ="group">
+    <label>{label}</label>
+      <input {...input} type={type} placeholder={label} className = {'text'} />
+      {touched && error && <span>{error}</span>}
+      <span className = { 'text-label' }>{ placeholder }</span>
+      <span className ={ 'bar' }></span>
+    </div>
+  </div>
+)
+const renderFileUp = ({ input, type, field, value, files, placeholder,meta: { touched, error, warning } }) => (
+  <ImgPrevUploader/>
+)
 
-  componentWillUnmount () {
-    window.removeEventListener(
-      'beforeunload',
-      this.saveStateTosessionStorage.bind(this)
-    )
-    this.saveStateTosessionStorage()
-  }
+const field_file = ({ input, type, field, value, files, placeholder,meta: { touched, error, warning } }) => (
 
-  hydrateStateWithsessionStorage () {
-    for (let key in this.state) {
-      if (sessionStorage.hasOwnProperty(key)) {
-        let value = sessionStorage.getItem(key)
-        try {
-          value = JSON.parse(value)
-          this.setState({ [key]: value })
-        } catch (e) {
-          this.setState({ [key]: value })
+  <div className = {'file-container'}>
+    <div className ="file-group">
+      <input
+      type="file"
+      className = {'file'}
+      onChange={
+        ( e ) => {
+          e.preventDefault();
+          const { fields } = this.props;
+          // convert files to an array
+          const files = [ ...e.target.files ];
+          fields.yourField.handleChange(files);
         }
       }
-    }
-  }
+    />
 
-  saveStateTosessionStorage () {
-    for (let key in this.state) {
-      sessionStorage.setItem(key, JSON.stringify(this.state[key]))
-    }
-  }
+  <span className = { 'file-text' }> { value } </span>
+      <span className = { 'file-label' }>{ placeholder }</span>
+      <span className ={ 'bar' }></span>
+    </div>
+  </div>
+)
 
-  updateInput(key, value) {
-    this.setState({ [key]: value })
-  }
+const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
+<div>
+  <div>
+    <Card>
+      <h4> About Me </h4>
+    <div className={ 'general-form-card-body' }>
+      <GenericButton className={'generic-button'}
+        type="button"
+        onClick={() => fields.push({})}
+        text= {'Add About Me'}
+      >
+      </GenericButton>
+      {(touched || submitFailed) && error && <span>{error}</span>}
+    </div>
+    {fields.map((member, index) => (
 
- handleChange (evt) {
-    this.setState({ [evt.target.name]: evt.target.value })
-  }
+      <div className={'general-form-card'} key={index}>
+        <GenericButton
+          type='button'
+          text="Remove About Me"
+          onClick={() => fields.remove(index)}
+        />
+        <h4>About Me #{index + 1}</h4>
 
-handleMeChanged (event) {
-  this.setState({ aboutMeTextValue:event.target.value })
-}
-
-   onChange (data) {
-    this.setState({ preferredDate: data })
-    this.props.getPreferredDate(
-      data && data.format('DD-MM-YYYY')) /* date format*/
-  }
-  onEndChange (data) {
-   this.setState({ endDate: data })
-   this.props.getPreferredDate(
-     data && data.format('DD-MM-YYYY')) /* date format*/
- }
+         <Field   name={`${member}.profpic`} type='file' component={renderFileUp}  />
 
 
-
-  render () {
-    const {
-      preferredDate,
-      endDate,
-      aboutMeTextValue } = this.state
-    const { onGetPurposeOfLoan } = this.props
-    return (
-      <div className={ 'general-container' }>
-        <div>
-          <Card className={ 'general-form-card' }>
-            <h4>
-             About Me
-            </h4>
-            <div className={'general-form-card-body' }>
-              <FileUploader
-                type={ 'file' }
-                placeholder={ 'Profile Photo' }
-                />
-              <GenericTextBox
-                placeholder={ 'Describe yourself' }
-                type={ 'text' }
-                value={this.state.aboutMeTextValue}
-                onChange={e => this.updateInput('aboutMeTextValue', e.target.value)}/>
-            </div>
-          </Card>
-        </div>
+        <Field
+          name={`${member}.whoami`}
+          type="text"
+          component={'textarea'}
+          className={ 'whoami-textarea' }
+          placeholder={ 'Brief description of you' }
+        />
       </div>
-    )
-  }
+    ))}
+  </Card>
+</div>
+</div>
+)
+const FieldArraysForm = props => {
+  const { handleSubmit, pristine, reset, submitting } = props
+  return (
+    <Card onSubmit={handleSubmit} className={ 'general-form-card' }>
+      <FieldArray name="ABoutMe" component={renderMembers} />
+    </Card>
+  )
 }
 
-AboutMe.propTypes = {
-  purposeOfAvailment : PropTypes.array,
-  validateLoanType : PropTypes.array,
-  loanType : PropTypes.number,
-  preferredFormData : PropTypes.func,
-  offset : PropTypes.array,
-  setSelectedNavigation: PropTypes.func,
-}
-
-export default AboutMe
+export default reduxForm({
+  form: 'form', // a unique identifier for this form
+  destroyOnUnmount: false, //        <------ preserve form data
+  forceUnregisterOnUnmount: true,
+})(FieldArraysForm)

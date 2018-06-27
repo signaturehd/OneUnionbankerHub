@@ -5,7 +5,7 @@ import GetWizardInteractor from '../../../domain/interactor/user/GetWizardIntera
 import SetWizardInteractor from '../../../domain/interactor/user/SetWizardInteractor'
 import RelogInInteractor from '../../../domain/interactor/user/RelogInInteractor'
 
-import { NotifyActions } from '../../../actions'
+import { NotifyActions, LoginActions } from '../../../actions'
 import store from '../../../store'
 
 export default class NavigationPresenter {
@@ -31,8 +31,7 @@ export default class NavigationPresenter {
 
   relogin () {
     this.relogInInteractor.execute()
-      .do(resp => store.dispatch(LoginActions.showReloginModal(false)))
-      .do(resp => this.view.relogin())
+    store.dispatch(LoginActions.showReloginModal(false))
   }
 
   getLibraries () {

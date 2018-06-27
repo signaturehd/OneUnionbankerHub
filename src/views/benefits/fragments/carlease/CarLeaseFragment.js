@@ -13,6 +13,10 @@ class CarLeaseFragment extends Component {
       this.props.history.push('/mybenefits/benefits')
   }
 
+  componentDidMount () {
+    this.props.presenter.getCarValidate()
+  }
+
   render () {
     const { history } = this.props
 

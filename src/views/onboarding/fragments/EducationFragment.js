@@ -60,8 +60,6 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           component={renderField}
           placeholder={ 'School' }
         />
-        <span className = { 'text-label' }></span>
-        <span className ={ 'bar' }></span>
         <Field
           name={`${member}.degree`}
           type="text"
@@ -114,6 +112,9 @@ const FieldArraysForm = props => {
     </Card>
   )
 }
+
+
+
 
 export default reduxForm({
   form: 'form', // a unique identifier for this form
