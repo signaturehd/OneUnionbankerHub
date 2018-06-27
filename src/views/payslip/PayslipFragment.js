@@ -6,8 +6,9 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/PayslipPresenter'
 
+import PayslipCardComponent from './components/PayslipCardComponent'
 
-import { Card, List, Modal, GenericButton } from '../../ub-components'
+import { Card, Modal, GenericButton, GenericSelect } from '../../ub-components'
 
 import './styles/payslip.css'
 
@@ -18,12 +19,13 @@ class PayslipFragment extends BaseMVPView {
 
     this.state={
       payslipList : [],
-      showMessageModal : true,
+      showMessageModal : false,
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(8)
+    this.presenter.getPayslip()
   }
 
   showPayslipList (payslipList) {
@@ -36,10 +38,12 @@ class PayslipFragment extends BaseMVPView {
   }
 
   render () {
+
     const { history }=this.props
-    const { showMessageModal }=this.state
+    const { showMessageModal, payslipList }=this.state
+
     return (
-      <div>
+      <div className={ 'payslip-container' }>
         { super.render() }
         <h2 className={ 'header-margin-default ' }> Payslip </h2>
         {
@@ -57,6 +61,7 @@ class PayslipFragment extends BaseMVPView {
             </center>
           </Modal>
         }
+          <PayslipCardComponent/>
       </div>
     )
   }
@@ -66,4 +71,5 @@ PayslipFragment.propTypes={
   setSelectedNavigation: PropTypes.func,
   history : PropTypes.object,
 }
+
 export default ConnectView(PayslipFragment, Presenter)

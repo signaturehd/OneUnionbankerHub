@@ -352,8 +352,37 @@ export default class HRBenefitsService {
     })
   }
 
+  addLoanComputerOrMotor (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMotorLoanParam) {
+    const formData = new FormData()
+    const multiLoanBodyObject = {
+      loan : {
+        id : addMotorLoanParam.loanId,
+        purpose : addMotorLoanParam.purposeOfLoan,
+        mode : addMotorLoanParam.modeOfLoan,
+        term : addMotorLoanParam.loanTerm,
+        principalAmount : addMotorLoanParam.principalLoanAmount,
+        supplierName: addMotorLoanParam.supplierName
+      },
+      accountNumber : accountNumber,
+      promissoryNoteNumbers : [],
+      relesingCenter : releasingCenter,
+      distributor : "distributorTest",
+    }
+    formData.append('uuid', 12345)
+    formData.append('body', JSON.stringify(multiLoanBodyObject))
+    formData.append('MPL-cert', addMotorLoanParam.attachments)
+    return this.apiClient.post('v2/loans/mpl/submit', formData, {
+      headers : { token }
+    })
+  }
+
   getCarValidate (token) {
-    return this.apiClient.get('v1/eligibility/car', {
+    return this.apiClient.get('v1/leases/car/validate', {
       headers: { token }
     })
   }
@@ -395,14 +424,58 @@ export default class HRBenefitsService {
     })
   }
 
-  getPayslip () {
+  getPayslip (token) {
     return this.apiClient.post('v1/payslip', {
       headers : { token }
     })
   }
 
-  getPayslipSelectedDate () {
+  /* validate grant aid */
+  addGrantAid (token, accountToken, accountNumber, releasingCenter, grantAidParam) {
+    const formData = new FormData()
+    const grantAidObject = {
+      grantType : grantAidParam.grantId,
+      accountNumber,
+      releasingCenter
+    }
+    formData.append('uuid', 12345)
+    formData.append('cert', grantAidParam.file)
+    formData.append('body', JSON.stringify(grantAidObject))
+    return this.apiClient.post('v2/grants/education/personal/submit', formData, {
+      headers : { token }
+    })
+  }
+
+  getPayslipSelectedDate (token, payslipParam) {
     return this.apiClient.post('v1/payslip/', payslipParam, {
+      headers : { token }
+    })
+  }
+
+  validateGrantAid (token) {
+    return this.apiClient.get('v1/grants/education/personal/validate', {
+      headers: { token }
+    })
+  }
+
+  /* validate grant plan */
+  validateGrantPlan (token) {
+    return this.apiClient.get('v1/grants/education/dependent/validate', {
+      headers: { token }
+    })
+  }
+
+  addGrantPlan (token, accountToken, accountNumber, releasingCenter, grantPlanParam) {
+    const formData = new FormData()
+    const grantPlanObject = {
+      grantType : grantPlanParam.grantId,
+      accountNumber,
+      releasingCenter
+    }
+    formData.append('uuid', 12345)
+    formData.append('cert', grantPlanParam.file)
+    formData.append('body', JSON.stringify(grantPlanObject))
+    return this.apiClient.post('v2/grants/education/dependent/submit', formData, {
       headers : { token }
     })
   }
