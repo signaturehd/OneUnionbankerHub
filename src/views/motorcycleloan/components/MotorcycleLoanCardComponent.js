@@ -29,7 +29,8 @@ class MotorcycleLoanCardComponent extends Component {
       subCategoryId: '',
       showFileUpload: false,
       showSupplier : false,
-      supplier: ''
+      supplier: '',
+      file: ''
     }
      this.onChange=this.onChange.bind(this)
      this.onGetClicked = this.onGetClicked.bind(this)
@@ -75,7 +76,8 @@ class MotorcycleLoanCardComponent extends Component {
       subCategoryId,
       showSupplier,
       showFileUpload,
-      supplier }=this.state
+      supplier,
+      file }=this.state
     const {
       purposeOfAvailment,
       loanType,
