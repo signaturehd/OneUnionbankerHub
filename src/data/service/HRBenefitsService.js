@@ -352,6 +352,35 @@ export default class HRBenefitsService {
     })
   }
 
+  addLoanComputerOrMotor (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMotorLoanParam) {
+    const formData = new FormData()
+    const multiLoanBodyObject = {
+      loan : {
+        id : addMotorLoanParam.loanId,
+        purpose : addMotorLoanParam.purposeOfLoan,
+        mode : addMotorLoanParam.modeOfLoan,
+        term : addMotorLoanParam.loanTerm,
+        principalAmount : addMotorLoanParam.principalLoanAmount,
+        supplierName: addMotorLoanParam.supplierName
+      },
+      accountNumber : accountNumber,
+      promissoryNoteNumbers : [],
+      relesingCenter : releasingCenter,
+      distributor : "distributorTest",
+    }
+    formData.append('uuid', 12345)
+    formData.append('body', JSON.stringify(multiLoanBodyObject))
+    formData.append('MPL-cert', addMotorLoanParam.attachments)
+    return this.apiClient.post('v2/loans/mpl/submit', formData, {
+      headers : { token }
+    })
+  }
+
   getCarValidate (token) {
     return this.apiClient.get('v1/leases/car/validate', {
       headers: { token }
@@ -416,6 +445,7 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
   getPayslipSelectedDate (token, payslipParam) {
     return this.apiClient.post('v1/payslip/', payslipParam, {
       headers : { token }
@@ -434,4 +464,20 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  addGrantPlan (token, accountToken, accountNumber, releasingCenter, grantPlanParam) {
+    const formData = new FormData()
+    const grantPlanObject = {
+      grantType : grantPlanParam.grantId,
+      accountNumber,
+      releasingCenter
+    }
+    formData.append('uuid', 12345)
+    formData.append('cert', grantPlanParam.file)
+    formData.append('body', JSON.stringify(grantPlanObject))
+    return this.apiClient.post('v2/grants/education/dependent/submit', formData, {
+      headers : { token }
+    })
+  }
+
 }

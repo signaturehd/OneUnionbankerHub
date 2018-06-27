@@ -364,6 +364,21 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  addLoanComputerOrMotor (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMotorLoanParam) {
+    return this.service.addLoanComputerOrMotor(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      addMotorLoanParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   getCarValidate (token) {
     return this.service.getCarValidate(token)
       .pipe(ServiceErrorOperator())
@@ -383,6 +398,7 @@ export default class HRBenefitsClient {
       carRequestParam)
       .pipe(ServiceErrorOperator())
   }
+
   /* Education Grant Aid */
   addGrantAid (
     token,
@@ -429,4 +445,19 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Education Grant Plan */
+  addGrantPlan (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    grantPlanParam) {
+    return this.service.addGrantPlan(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      grantPlanParam)
+      .pipe(ServiceErrorOperator())
+  }
 }
