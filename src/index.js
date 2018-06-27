@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
 /* Routers */
-import { BrowserRouter, Route, browserHistory } from 'react-router-dom'
+import { HashRouter, Route, browserHistory } from 'react-router-dom'
 
 /* Routes */
 import App from './views/App'
@@ -20,7 +20,7 @@ import AppModule from './di/AppModule'
 
 ReactDOM.render(
   <Provider store={ store }>
-    <BrowserRouter history={ browserHistory }>
+    <HashRouter basename = { '/' }>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </Provider>, document.getElementById('root'))

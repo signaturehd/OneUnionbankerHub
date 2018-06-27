@@ -299,6 +299,11 @@ export default class HRBenefitsClient {
     return this.service.addFeedback(token, addFeedbackParam)
       .pipe(ServiceErrorOperator())
   }
+
+  addBenefitFeedback(token, addBenefitFeedbackParam) {
+    return this.service.addBenefitFeedback(token, addBenefitFeedbackParam)
+      .pipe(ServiceErrorOperator())
+  }
   /* Remarks */
   getRemarks (token, remarksParam) {
     return this.service.getRemarks(token, remarksParam)
@@ -359,18 +364,33 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  addLoanComputerOrMotor (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMotorLoanParam) {
+    return this.service.addLoanComputerOrMotor(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      addMotorLoanParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   getCarValidate (token) {
     return this.service.getCarValidate(token)
       .pipe(ServiceErrorOperator())
   }
 
-  getCarRequest (
+  addCarRequest (
     token,
     accountToken,
     accountNumber,
     releasingCenter,
     carRequestParam) {
-    return this.service.getCarRequest(
+    return this.service.addCarRequest(
       token,
       accountToken,
       accountNumber,
@@ -378,9 +398,50 @@ export default class HRBenefitsClient {
       carRequestParam)
       .pipe(ServiceErrorOperator())
   }
-
-  getCarLease (token) {
-    return this.service.getCarLease(token)
+  /* Education Grant Aid */
+  addGrantAid (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    grantAidParam) {
+    return this.service.addGrantAid(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      grantAidParam)
       .pipe(ServiceErrorOperator())
   }
+
+  addCarLeasePayment (token) {
+    return this.service.addCarLeasePayment(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addCarLeaseConfirmation (token) {
+    return this.service.addCarLeaseConfirmation(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPayslip (token) {
+    return this.service.getPayslip(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPayslipSelectedDate (token, payslipParam) {
+    return this.service.getPayslipSelectedDate(token, payslipParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateGrantAid (token) {
+    return this.service.validateGrantAid(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateGrantPlan (token) {
+    return this.service.validateGrantPlan(token)
+      .pipe(ServiceErrorOperator())
+  }
+
 }

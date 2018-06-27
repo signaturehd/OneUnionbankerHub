@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
+import EducationGrantPersonalModal from '../modal/EducationGrantPersonalModal'
+
 import './styles/educationComponentStyle.css'
 
 import store from '../../../store'
@@ -15,13 +17,13 @@ class EducationGrantAidFormCardComponent extends Component {
   constructor (props) {
     super (props)
     this.state = {
-      collegeText: '',
-      courseText: '',
-      academicYearText: '',
-      semesterText: '',
-      typeOfGrantText: '',
+      showGrantTypes : false,
+      grantId : '',
+      grantType : '',
       grantAmount: '',
-      file: ''
+      attachment : 'Form Attachments',
+      file: '',
+      imagePreviewUrl: null
     }
   }
 
@@ -33,17 +35,47 @@ class EducationGrantAidFormCardComponent extends Component {
   render () {
 
     const {
-        collegeText,
-        courseText,
-        academicYearText,
-        semesterText,
-        typeOfGrantText,
-        grantAmount,
-        formAttachmentsText
-      } = this.state
+      grantAid,
+      presenter,
+      onClick
+    } = this.props
+
+    const {
+      showGrantTypes,
+      grantId,
+      grantType,
+      grantAmount,
+      attachment,
+      file,
+      imagePreviewUrl
+    } = this.state
 
     return (
       <div className = {'educ-container'}>
+
+        {
+          showGrantTypes &&
+          <EducationGrantPersonalModal
+            tog = { grantAid.grants }
+            presenter = { presenter }
+            onSubmit = {
+              (grantId, grantType, grantAmount, attachment) => {
+                this.setState({
+                  grantId,
+                  grantType,
+                  grantAmount,
+                  attachment
+                })
+              }
+            }
+            onClose = {
+              () => {
+                this.setState({ showGrantTypes : false })
+              }
+            }
+          />
+        }
+
         <div className = { 'educ-grid-column-2' }>
           <div></div>
           <Card className = { 'educ-form-card' }>
@@ -52,48 +84,44 @@ class EducationGrantAidFormCardComponent extends Component {
             </h4>
             <div className = {'educ-form-card-body '}>
             <GenericTextBox
-              value = { collegeText }
-              onChange = { (e) => { this.setState({collegeText: e.target.value}) } }
+              value = { grantAid.college }
+              onChange = {() => {}}
               placeholder = { 'College/Universities' }
-            type = { 'text' }/>
+              type = { 'text' }/>
             <GenericTextBox
-              value = { courseText }
-              onChange = { (e) => { this.setState({courseText: e.target.value}) } }
+              value = { grantAid.course }
+              onChange = {() => {}}
               placeholder = { 'Course' }
-            type = { 'text' }/>
+              type = { 'text' }/>
             <GenericTextBox
-              value = { academicYearText }
-              onChange = { (e) => { this.setState({academicYearText: e.target.value}) } }
+              value = { grantAid.academicYear }
+              onChange = {() => {}}
               placeholder = { 'Academic Year' }
-            type = { 'text' }/>
+              type = { 'text' }/>
             <GenericTextBox
-              value = { semesterText }
-              onChange = { (e) => { this.setState({semesterText: e.target.value}) } }
+              value = { grantAid.semester }
+              onChange = {() => {}}
               placeholder = { 'Semester' }
-            type = { 'text' }/>
+              type = { 'text' }/>
             <GenericTextBox
-              value = { typeOfGrantText }
-              onChange = { (e) => { this.setState({typeOfGrantText: e.target.value}) } }
+              value = { grantType }
+              onClick = {
+                () => {
+                  this.setState({ showGrantTypes : true })
+                }
+              }
               placeholder = { 'Type of Grant' }
-            type = { 'text' }/>
+              type = { 'text' }/>
             <GenericTextBox
               value = { grantAmount }
-              onChange = {
-                (e) => {
-                    const re = /^[0-9\.]+$/
-                    if (e.target.value == '' ||  re.test(e.target.value)) {
-                      this.setState({ grantAmount: e.target.value })
-                    }
-                 }
-              }
+              onChange = {() => {}}
               placeholder = { 'Grant Amount' }
-            type = { 'text' }/>
-
+              type = { 'text' }/>
               <br/>
               <FileUploader
                 accept="image/gif,image/jpeg,image/jpg,image/png,"
-                value = { this.state.file.name }
-                placeholder = 'Form Attachments'
+                value = { file.name }
+                placeholder = { attachment }
                 onChange = {
                   (e) => {
                     e.preventDefault()
@@ -114,7 +142,8 @@ class EducationGrantAidFormCardComponent extends Component {
                     if (isValid) {
                       reader.onloadend = () => {
                         this.setState({
-                          file
+                          file,
+                          imagePreviewUrl: reader.result
                         })
                       }
                       reader.readAsDataURL(file)
@@ -133,7 +162,9 @@ class EducationGrantAidFormCardComponent extends Component {
               <GenericButton
                 type = { 'button' }
                 text = { 'continue' }
-                onClick = { () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId) }
+                onClick = {
+                  () => onClick(true, grantId, grantType, grantAmount, file, imagePreviewUrl)
+                }
                 className = { 'educ-submit' } />
             </div>
           </Card>

@@ -34,7 +34,6 @@ class CarLeaseNewFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.getCarValidate()
   }
 
   sendFormData (
@@ -44,6 +43,27 @@ class CarLeaseNewFragment extends BaseMVPView {
     primaryColor,
     secondaryColor,
     file) {
+      if(
+        carBrand === null ||
+        carModel === null ||
+        makeYear === null ||
+        primaryColor === null ||
+        secondaryColor === null ||
+        file === null) {
+          store.dispatch(NotifyActions.addNotify({
+              title : 'Warning',
+              message : 'Please complete all fields'
+          })
+        )
+      } else {
+        this.presenter.addCarRequest(
+          carBrand,
+          carModel,
+          makeYear,
+          primaryColor,
+          secondaryColor,
+          file)
+      }
   }
 
   /* Notice Response*/
@@ -72,7 +92,7 @@ class CarLeaseNewFragment extends BaseMVPView {
   }
   /* Navigage back to loans Option*/
   navigate () {
-    this.props.history.push('/mybenefits/benefits/carlease')
+    this.props.history.push('/mybenefits/benefits')
   }
 
   render () {
@@ -130,7 +150,7 @@ class CarLeaseNewFragment extends BaseMVPView {
                <CircularLoader show={ this.state.enabledLoader }/>
              </center> :
             <FormComponent
-              onClick={
+              onClick={ () =>
                 this.sendFormData(
                   carBrand,
                   carModel,

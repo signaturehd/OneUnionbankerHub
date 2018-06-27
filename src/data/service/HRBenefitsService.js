@@ -85,7 +85,7 @@ export default class HRBenefitsService {
     formData.append('dentcert2', dentalReimbursementParam.file2)
     formData.append('body', JSON.stringify(dentalRObject))
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {
-      headers : { token, accountToken }
+      headers : { token }
     })
   }
 
@@ -109,7 +109,7 @@ export default class HRBenefitsService {
     formData.append('opt', opticalParam.optCert)
     formData.append('body', JSON.stringify(opticalObject))
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
-      headers : { token, accountToken }
+      headers : { token }
     })
   }
 
@@ -237,6 +237,12 @@ export default class HRBenefitsService {
     })
   }
 
+  addBenefitFeedback (token, addBenefitFeedbackParam) {
+    return this.apiClient.post('v1/feedback/ratings', addBenefitFeedbackParam, {
+      headers: { token }
+    })
+  }
+
   getFaqsCategories (token) {
     return this.apiClient.get('v1/faqs/categories', {
       headers: { token }
@@ -346,13 +352,42 @@ export default class HRBenefitsService {
     })
   }
 
+  addLoanComputerOrMotor (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMotorLoanParam) {
+    const formData = new FormData()
+    const multiLoanBodyObject = {
+      loan : {
+        id : addMotorLoanParam.loanId,
+        purpose : addMotorLoanParam.purposeOfLoan,
+        mode : addMotorLoanParam.modeOfLoan,
+        term : addMotorLoanParam.loanTerm,
+        principalAmount : addMotorLoanParam.principalLoanAmount,
+        supplierName: addMotorLoanParam.supplierName
+      },
+      accountNumber : accountNumber,
+      promissoryNoteNumbers : [],
+      relesingCenter : releasingCenter,
+      distributor : "distributorTest",
+    }
+    formData.append('uuid', 12345)
+    formData.append('body', JSON.stringify(multiLoanBodyObject))
+    formData.append('MPL-cert', addMotorLoanParam.attachments)
+    return this.apiClient.post('v2/loans/mpl/submit', formData, {
+      headers : { token }
+    })
+  }
+
   getCarValidate (token) {
-    return this.apiClient.get('v1/employees/lease/cars', {
+    return this.apiClient.get('v1/leases/car/validate', {
       headers: { token }
     })
   }
 
-  getCarRequest (
+  addCarRequest (
     token,
     accountToken,
     accountNumber,
@@ -360,6 +395,8 @@ export default class HRBenefitsService {
     carRequestParam) {
     const formData = new FormData()
     const addCarleaseObject = {
+      accountNumber : accountNumber,
+      releasingCenter : releasingCenter,
       brand : carRequestParam.carBrand,
       model : carRequestParam.carModel,
       year : carRequestParam.year,
@@ -370,15 +407,60 @@ export default class HRBenefitsService {
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(addCarleaseObject))
     formData.append('attachments', carRequestParam.attachments)
-    return this.apiClient.post('v1/lease/car/request', carRequestParam, {
+    return this.apiClient.post('v1/leases/car', carRequestParam, {
       headers: { token }
     })
   }
 
-  getCarLease (token) {
-    return this.apiClient.post('v1/leases/car', {
+  addCarLeasePayment (token) {
+    return this.apiClient.post('v1/leases/car/payment', {
       headers: { token }
     })
   }
 
+  addCarLeaseConfirmation (token) {
+    return this.apiClient.post('v1/leases/car/confirm', {
+      headers: { token }
+    })
+  }
+
+  getPayslip (token) {
+    return this.apiClient.post('v1/payslip', {
+      headers : { token }
+    })
+  }
+
+  /* validate grant aid */
+  addGrantAid (token, accountToken, accountNumber, releasingCenter, grantAidParam) {
+    const formData = new FormData()
+    const grantAidObject = {
+      grantType : grantAidParam.grantId,
+      accountNumber,
+      releasingCenter
+    }
+    formData.append('uuid', 12345)
+    formData.append('cert', grantAidParam.file)
+    formData.append('body', JSON.stringify(grantAidObject))
+    return this.apiClient.post('v2/grants/education/personal/submit', formData, {
+      headers : { token }
+    })
+  }
+  getPayslipSelectedDate (token, payslipParam) {
+    return this.apiClient.post('v1/payslip/', payslipParam, {
+      headers : { token }
+    })
+  }
+
+  validateGrantAid (token) {
+    return this.apiClient.get('v1/grants/education/personal/validate', {
+      headers: { token }
+    })
+  }
+
+  /* validate grant plan */
+  validateGrantPlan (token) {
+    return this.apiClient.get('v1/grants/education/dependent/validate', {
+      headers: { token }
+    })
+  }
 }

@@ -7,6 +7,9 @@ import ConnectView from '../../utils/ConnectView'
 
 import { CircularLoader } from '../../ub-components/'
 
+import NoticeModal from '../notice/Notice'
+import ResponseModal from '../notice/NoticeResponseModal'
+import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 import FormComponent from './components/ComputerFormCardComponent'
 
 import store from '../../store'
@@ -31,12 +34,12 @@ class ComputerLoanFragment extends BaseMVPView {
       showNoticeResponseModal : false,
       showNoticeModal : false,
       showConfirmation : false,
+      showBenefitFeedbackModal: false,
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.getMplTypes()
     this.presenter.getMplValidate(this.state.loanType)
     this.presenter.getMplPurposeOfAvailment(
       this.state.loanType,
@@ -81,38 +84,64 @@ class ComputerLoanFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/loans')
   }
 
+  noticeResponse (noticeResponse) {
+    this.setState({ noticeResponse })
+  }
+
   sendFormData (
     poaText,
     modeOfLoanId,
-    amountValue,
     termId,
+    amountValue,
     selectedSupplier,
     file) {
-      if(
-        poaText === null ||
-        modeOfLoanId === null ||
-        amountValue === 0 ||
-        termId === null ||
-        selectedSupplier === null ||
-        file === null )
+      if(poaText === "" || poaText === null)
       {
         store.dispatch(NotifyActions.addNotify({
-            title : 'Error',
-            message : 'Please fill all fields',
+            title : 'Computer Loan',
+            message : 'Please include the Purpose of Availment',
             type : 'warning',
             duration : 2000
           })
         )
-      } else {
-        this.presenter.addLoan(
-          poaText,
-          modeOfLoanId,
-          amountValue,
-          termId,
-          selectedSupplier,
-          file)
       }
-  }
+      else if (amountValue === 0 || grantAmount === "") {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Computer Loan',
+            message : 'Please include the Desired Amount',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      }
+      else if ( termId === null || termId === "") {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Computer Loan',
+            message : 'Please specify the Term and Rates',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      }
+      else if (!file) {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Computer Loan',
+            message : 'Please check the file attachments',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      }
+       else {
+          this.presenter.addLoan(
+            poaText,
+            modeOfLoanId,
+            termId,
+            amountValue,
+            selectedSupplier,
+            file)
+          }
+        }
 
   render () {
     const {
@@ -125,6 +154,7 @@ class ComputerLoanFragment extends BaseMVPView {
       showConfirmation,
       showNoticeModal,
       showNoticeResponseModal,
+      showBenefitFeedbackModal,
       noticeResponse,
       response,
       poaText,
@@ -145,6 +175,36 @@ class ComputerLoanFragment extends BaseMVPView {
             Computer Loan
           </h2>
         </div>
+          {
+            showNoticeModal &&
+            <NoticeModal
+              onClose = { () => this.setState({ showNoticeModal : false })}
+              noticeResponse = { noticeResponse }
+              benefitId = { loanType }
+              onDismiss = { (showNoticeModal, noticeResponse) =>
+                this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
+            />
+          }
+
+          {
+            showNoticeResponseModal &&
+            <ResponseModal
+              onClose = { () => {
+                this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
+              }}
+              noticeResponse = { noticeResponse }
+            />
+          }
+          {
+            showBenefitFeedbackModal &&
+            <BenefitFeedbackModal
+              benefitId = { loanType }
+              onClose = { () => {
+                this.props.history.push('/mybenefits/benefits/carlease'),
+                this.setState({ showBenefitFeedbackModal : false })
+              }}
+            />
+          }
           {
             enabledLoader ?
              <center className = { 'circular-loader-center' }>
