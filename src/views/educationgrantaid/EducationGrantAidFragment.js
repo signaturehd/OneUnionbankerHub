@@ -10,6 +10,7 @@ import { CircularLoader } from '../../ub-components/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import ConfirmationModal from './modal/EducationGrantAidReviewModal'
+import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import store from '../../store'
 import { NotifyActions } from '../../actions'
@@ -30,7 +31,8 @@ class EducationGrantAidFragment extends BaseMVPView{
       grantType : '',
       grantAmount : '',
       file : null,
-      imagePreviewUrl : null
+      imagePreviewUrl : null,
+      showBenefitFeedbackModal : false
     }
   }
 
@@ -119,7 +121,8 @@ class EducationGrantAidFragment extends BaseMVPView{
       grantType,
       grantAmount,
       file,
-      imagePreviewUrl
+      imagePreviewUrl,
+      showBenefitFeedbackModal
     } = this.state
 
     return (
@@ -154,15 +157,22 @@ class EducationGrantAidFragment extends BaseMVPView{
           showNoticeResponseModal &&
           <ResponseModal
             onClose = { () => {
-              this.setState({ showNoticeResponseModal : false })
-              this.props.history.push('/benefits/education')
+              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
             }}
             noticeResponse = { noticeResponse }
-            benefitId = { '13' }
-            onDismiss = { (showNoticeModal, noticeResponse) =>
-              this.setState({ showNoticeModal, noticeResponse })  }
           />
 
+        }
+
+        {
+          showBenefitFeedbackModal &&
+          <BenefitFeedbackModal
+            benefitId = { '13' }
+            onClose = { () => {
+              this.props.history.push('/mybenefits/benefits/education'),
+              this.setState({ showBenefitFeedbackModal : false })
+            }}
+          />
         }
 
         <div>
