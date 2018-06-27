@@ -9,6 +9,7 @@ import { CircularLoader, Modal } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
+import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import FormComponent from '../mpl/components/MplLoanFormCardComponent'
 
@@ -25,6 +26,7 @@ class SalaryLoanFragment extends BaseMVPView {
       enabledLoader : false,
       noticeResponse : null, /* notice response*/
       showNoticeResponseModal : false,
+      showBenefitFeedbackModal : false,
       showNoticeModal : false,
       showConfirmation : false,
     }
@@ -87,6 +89,7 @@ class SalaryLoanFragment extends BaseMVPView {
       formAttachments,
       showConfirmation,
       showNoticeModal,
+      showBenefitFeedbackModal,
       showNoticeResponseModal,
       noticeResponse,
       response } = this.state
@@ -107,15 +110,23 @@ class SalaryLoanFragment extends BaseMVPView {
           showNoticeResponseModal &&
           <ResponseModal
             onClose = { () => {
-              this.setState({ showNoticeResponseModal : false })
-              this.props.history.push('/mybenefits/benefits/loans')
+              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
             }}
-            benefitId={ loanType }
-            noticeResponse={ response }
-            onDismiss={ (showNoticeModal, response) =>
-              this.setState({ showNoticeModal, response })  }
+            noticeResponse = { response }
           />
         }
+
+        {
+          showBenefitFeedbackModal &&
+          <BenefitFeedbackModal
+            benefitId = { loanType }
+            onClose = { () => {
+              this.props.history.push('/mybenefits/benefits/loans'),
+              this.setState({ showBenefitFeedbackModal : false })
+            }}
+          />
+        }
+
         <div>
           <i
             className={ 'back-arrow' }
