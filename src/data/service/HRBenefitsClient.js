@@ -299,6 +299,11 @@ export default class HRBenefitsClient {
     return this.service.addFeedback(token, addFeedbackParam)
       .pipe(ServiceErrorOperator())
   }
+
+  addBenefitFeedback(token, addBenefitFeedbackParam) {
+    return this.service.addBenefitFeedback(token, addBenefitFeedbackParam)
+      .pipe(ServiceErrorOperator())
+  }
   /* Remarks */
   getRemarks (token, remarksParam) {
     return this.service.getRemarks(token, remarksParam)

@@ -301,7 +301,7 @@ class EducationAidFormCardComponent extends Component {
               <GenericButton
                 type = { 'button' }
                 text = { 'submit' }
-                onClick = { () => this.sendFormData (tuitionFeeText, registrationFeeText, collegeID,
+                onClick = { () => onClick (tuitionFeeText, registrationFeeText, collegeID,
                   courseText, academicYearText, semesterText, gwaText, fileOR, fileCOG, fileRegForm) }
                 className = { 'educ-submit' } />
             </div>

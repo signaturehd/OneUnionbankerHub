@@ -64,6 +64,7 @@ class EducationAidFragment extends BaseMVPView{
           <FormComponent
             educationAid = { educationAid }
             presenter = { this.presenter }
+            
           />
         }
       </div>
