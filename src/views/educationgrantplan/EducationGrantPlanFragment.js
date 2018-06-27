@@ -10,6 +10,7 @@ import { CircularLoader } from '../../ub-components/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import ConfirmationModal from './modal/EducationGrantPlanReviewModal'
+import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import store from '../../store'
 import { NotifyActions } from '../../actions'
@@ -30,7 +31,8 @@ class EducationGrantPlanFragment extends BaseMVPView{
       grantType : '',
       grantAmount : '',
       file : null,
-      imagePreviewUrl : null
+      imagePreviewUrl : null,
+      showBenefitFeedbackModal : false
     }
   }
 
@@ -39,7 +41,7 @@ class EducationGrantPlanFragment extends BaseMVPView{
     this.presenter.validateGrantPlan()
   }
 
-  confirmation (showConfirmation, grantPlan, grantType, grantAmount, file, imagePreviewUrl) {
+  confirmation (showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl) {
     if (grantType === "") {
       store.dispatch(NotifyActions.addNotify({
           title : 'education Grant - Plan',
@@ -70,7 +72,7 @@ class EducationGrantPlanFragment extends BaseMVPView{
     else {
       this.setState({
         showConfirmation,
-        grantPlan,
+        grantId,
         grantType,
         grantAmount,
         file,
@@ -99,8 +101,8 @@ class EducationGrantPlanFragment extends BaseMVPView{
     this.setState({showConfirmation: false, noticeResponse })
   }
 
-  submitForm (grantPlan, grantAmount, file) {
-    this.presenter.addGrantPlan(grantPlan, file)
+  submitForm (grantId, grantAmount, file) {
+    this.presenter.addGrantPlan(grantId, file)
   }
 
   navigate () {
@@ -119,7 +121,8 @@ class EducationGrantPlanFragment extends BaseMVPView{
       grantType,
       grantAmount,
       file,
-      imagePreviewUrl
+      imagePreviewUrl,
+      showBenefitFeedbackModal
     } = this.state
 
     return (
@@ -133,8 +136,8 @@ class EducationGrantPlanFragment extends BaseMVPView{
             grantAmount = { grantAmount }
             file = { file }
             imagePreviewUrl = { imagePreviewUrl }
-            submitForm = { (grantPlan, grantAmount, file) =>
-              this.submitForm(grantPlan, grantAmount, file) }
+            submitForm = { (grantId, grantAmount, file) =>
+              this.submitForm(grantId, grantAmount, file) }
             onClose = { () => this.setState({ showConfirmation : false }) }
           />
         }
@@ -154,15 +157,22 @@ class EducationGrantPlanFragment extends BaseMVPView{
           showNoticeResponseModal &&
           <ResponseModal
             onClose = { () => {
-              this.setState({ showNoticeResponseModal : false })
-              this.props.history.push('/benefits/education')
+              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
             }}
             noticeResponse = { noticeResponse }
-            benefitId = { '32' }
-            onDismiss = { (showNoticeModal, response) =>
-              this.setState({ showNoticeModal, response })  }
           />
 
+        }
+
+        {
+          showBenefitFeedbackModal &&
+          <BenefitFeedbackModal
+            benefitId = { '32' }
+            onClose = { () => {
+              this.props.history.push('/mybenefits/benefits/education'),
+              this.setState({ showBenefitFeedbackModal : false })
+            }}
+          />
         }
 
         <div>
@@ -182,8 +192,8 @@ class EducationGrantPlanFragment extends BaseMVPView{
           <FormComponent
             grantPlan = { grantPlan }
             onClick = {
-              (showConfirmation, grantPlan, grantType, grantAmount, file, imagePreviewUrl) => {
-                this.confirmation(showConfirmation, grantPlan, grantType, grantAmount, file, imagePreviewUrl)
+              (showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl) => {
+                this.confirmation(showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl)
               }
             }
             presenter = { this.presenter }

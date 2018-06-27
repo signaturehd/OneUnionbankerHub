@@ -20,7 +20,7 @@ class EducationGrantAidFormCardComponent extends Component {
       showGrantTypes : false,
       grantId : '',
       grantType : '',
-      grantAmount: '',
+      grantAmount : '',
       attachment : 'Form Attachments',
       file: '',
       imagePreviewUrl: null
@@ -83,40 +83,40 @@ class EducationGrantAidFormCardComponent extends Component {
               Benefits Form
             </h4>
             <div className = {'educ-form-card-body '}>
-            <GenericTextBox
-              value = { grantAid.college }
-              onChange = {() => {}}
-              placeholder = { 'College/Universities' }
-              type = { 'text' }/>
-            <GenericTextBox
-              value = { grantAid.course }
-              onChange = {() => {}}
-              placeholder = { 'Course' }
-              type = { 'text' }/>
-            <GenericTextBox
-              value = { grantAid.academicYear }
-              onChange = {() => {}}
-              placeholder = { 'Academic Year' }
-              type = { 'text' }/>
-            <GenericTextBox
-              value = { grantAid.semester }
-              onChange = {() => {}}
-              placeholder = { 'Semester' }
-              type = { 'text' }/>
-            <GenericTextBox
-              value = { grantType }
-              onClick = {
-                () => {
-                  this.setState({ showGrantTypes : true })
+              <GenericTextBox
+                value = { grantAid.college }
+                onChange = {() => {}}
+                placeholder = { 'College/Universities' }
+                type = { 'text' }/>
+              <GenericTextBox
+                value = { grantAid.course }
+                onChange = {() => {}}
+                placeholder = { 'Course' }
+                type = { 'text' }/>
+              <GenericTextBox
+                value = { grantAid.academicYear }
+                onChange = {() => {}}
+                placeholder = { 'Academic Year' }
+                type = { 'text' }/>
+              <GenericTextBox
+                value = { grantAid.semester }
+                onChange = {() => {}}
+                placeholder = { 'Semester' }
+                type = { 'text' }/>
+              <GenericTextBox
+                value = { grantType }
+                onClick = {
+                  () => {
+                    this.setState({ showGrantTypes : true })
+                  }
                 }
-              }
-              placeholder = { 'Type of Grant' }
-              type = { 'text' }/>
-            <GenericTextBox
-              value = { grantAmount }
-              onChange = {() => {}}
-              placeholder = { 'Grant Amount' }
-              type = { 'text' }/>
+                placeholder = { 'Type of Grant' }
+                type = { 'text' }/>
+              <GenericTextBox
+                value = { grantAmount }
+                onChange = {() => {}}
+                placeholder = { 'Grant Amount' }
+                type = { 'text' }/>
               <br/>
               <FileUploader
                 accept="image/gif,image/jpeg,image/jpg,image/png,"
