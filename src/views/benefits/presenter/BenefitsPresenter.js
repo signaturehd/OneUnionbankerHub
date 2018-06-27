@@ -49,18 +49,18 @@ export default class BenefitsPresenter {
       })
   }
 
-    getCarValidate () {
-      this.view.showLoading()
-      this.getCarValidateInteractor.execute()
-      .subscribe(
-        validate => {
-          this.view.hideLoading()
-        }, error => {
-          this.view.navigate()
-          this.view.hideLoading()
-        }
-      )
-    }
+  getCarValidate () {
+    this.view.showLoading()
+    this.getCarValidateInteractor.execute()
+    .subscribe(
+      validate => {
+        this.view.hideLoading()
+      }, error => {
+        this.view.navigate()
+        this.view.hideLoading()
+      }
+    )
+  }
 
   setReleasingCenter (releasingCenter) {
     this.addReleasingCenterInteractor.execute(releasingCenter)

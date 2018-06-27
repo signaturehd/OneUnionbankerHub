@@ -35,7 +35,6 @@ class CarLeaseOldFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.getCarValidate()
   }
 
   sendFormData (
