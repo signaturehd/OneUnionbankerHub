@@ -76,11 +76,7 @@ class NavigationView extends BaseMVPView {
   showProfile (profile) {
     this.setState({ profile })
   }
-
-  componentWillReceiveProps (nextProps) {
-    console.log(nextProps)
-  }
-
+  
   componentDidMount () {
     const mediaQuery = window.matchMedia('(min-width: 1201px)')
       if (mediaQuery.matches) {

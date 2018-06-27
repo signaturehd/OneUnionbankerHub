@@ -28,6 +28,7 @@ import ReleasingCenterModal from './modal/ReleasingCenterModal'
 import './styles/benefits.css'
 
 class BenefitsFragment extends BaseMVPView {
+
   constructor (props) {
     super(props)
 
