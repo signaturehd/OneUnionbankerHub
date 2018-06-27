@@ -29,6 +29,7 @@ class MotorCycleLoanFragment extends BaseMVPView {
       showNoticeResponseModal : false,
       showNoticeModal : false,
       showConfirmation : false,
+      showBenefitFeedbackModal: false,
       poaText : '',
       modeOfLoanId : '',
       termId : '',
@@ -47,11 +48,6 @@ class MotorCycleLoanFragment extends BaseMVPView {
       this.state.loanType,
       1,
       1)
-  }
-
-  /* Notice Response*/
-  noticeOfUndertaking (noticeResponse) {
-    this.setState({ showNoticeModal : true, noticeResponse })
   }
 
   /* Implementation*/
@@ -86,12 +82,13 @@ class MotorCycleLoanFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/loans')
   }
 
+    /* Notice Response*/
   noticeOfUndertaking (noticeResponse) {
-    this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
+    this.setState({ showNoticeModal : true, noticeResponse })
   }
 
   noticeResponse (noticeResponse) {
-    this.setState({showConfirmation: false, noticeResponse })
+    this.setState({ noticeResponse })
   }
 
   sendFormData (

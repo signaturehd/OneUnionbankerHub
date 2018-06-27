@@ -66,6 +66,7 @@ export default class MotorcycleLoanPresenter {
           this.view.hideCircularLoader()
         },
         error => {
+          this.view.navigate()
         }
       )
     }
@@ -76,7 +77,7 @@ export default class MotorcycleLoanPresenter {
       .subscribe()
     }
 
-  /* add Loa salary, housing assistance, emergency*/
+  /* add motorloan or computer loan salary*/
   addLoanComputerOrMotor (
     loanId,
     purposeOfLoan,
