@@ -12,13 +12,18 @@
 .login-form {
   background-color: #ffffff;
   width: 380px;
-  padding: 30px 20px 30px 20px;
-  margin: 100px auto auto auto;
-  height: auto;
+  position: absolute;
+  padding: 5px 20px 5px 20px;
+  margin: auto;
+  height: 570px;
   border-radius: 8px;
+  left: 0;
   overflow: hidden;
   box-shadow: 0 2px 10px -3px #333;
   text-align: center;
+  bottom: 0;
+  right: 0;
+  top: 0;
 }
 
 .login-input {
@@ -37,12 +42,29 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
-.link {
-  text-align: center;
-  color: #ff8a00;
-  font-size:12px;
+.link-googleplay {
+  cursor: pointer;
+  background: url('../../../images/Googleplay.png') no-repeat center;
+  background-size: 140px;
+  vertical-align: middle;
+  border-radius: 10px;
+  height: 45px;
+  width: auto;
+  outline: none;
+  border: none;
+}
+
+.link-appstore {
   user-select: none;
   cursor: pointer;
+  background: url('../../../images/APPLE.png') no-repeat center;
+  background-size: 140px;
+  vertical-align: middle;
+  border-radius: 10px;
+  height: 45px;
+  width: auto;
+  outline: none;
+  border: none;
 }
 
 .login-button {

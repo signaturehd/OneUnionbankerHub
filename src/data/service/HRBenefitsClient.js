@@ -15,6 +15,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  logout (token) {
+    return this.service.logout(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   otp (otpParam) {
     return this.service.otp(otpParam)
       .pipe(ServiceErrorOperator())
@@ -294,6 +299,11 @@ export default class HRBenefitsClient {
     return this.service.addFeedback(token, addFeedbackParam)
       .pipe(ServiceErrorOperator())
   }
+
+  addBenefitFeedback(token, addBenefitFeedbackParam) {
+    return this.service.addBenefitFeedback(token, addBenefitFeedbackParam)
+      .pipe(ServiceErrorOperator())
+  }
   /* Remarks */
   getRemarks (token, remarksParam) {
     return this.service.getRemarks(token, remarksParam)
@@ -324,18 +334,18 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLTypes (token) {
-    return this.service.getMPLTypes(token)
+  getMplTypes (token) {
+    return this.service.getMplTypes(token)
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLValidate (token, mplValidateParam) {
-    return this.service.getMPLValidate(token, mplValidateParam)
+  getMplValidate (token, mplValidateParam) {
+    return this.service.getMplValidate(token, mplValidateParam)
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLFormAttachments (token, mplGetFormParam) {
-    return this.service.getMPLFormAttachments (token, mplGetFormParam)
+  getMplFormAttachments (token, mplGetFormParam) {
+    return this.service.getMplFormAttachments (token, mplGetFormParam)
       .pipe(ServiceErrorOperator())
   }
 
@@ -354,6 +364,25 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getCarValidate (token) {
+    return this.service.getCarValidate(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addCarRequest (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    carRequestParam) {
+    return this.service.addCarRequest(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      carRequestParam)
+      .pipe(ServiceErrorOperator())
+  }
   /* Education Grant Aid */
   addGrantAid (
     token,
@@ -366,6 +395,29 @@ export default class HRBenefitsClient {
       accountToken,
       accountNumber,
       releasingCenter,
+      grantAidParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addCarLeasePayment (token) {
+    return this.service.addCarLeasePayment(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addCarLeaseConfirmation (token) {
+    return this.service.addCarLeaseConfirmation(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPayslip (token) {
+    return this.service.getPayslip(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPayslipSelectedDate (token, payslipParam) {
+    return this.service.getPayslipSelectedDate(token, payslipParam)
+      .pipe(ServiceErrorOperator())
+  }
       grantAidParam)
       .pipe(ServiceErrorOperator())
   }

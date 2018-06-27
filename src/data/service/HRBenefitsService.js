@@ -1,14 +1,17 @@
 
 export default class HRBenefitsService {
-  constructor (apiClient, accountClient, imageClient) {
+  constructor (apiClient, imageClient) {
     this.apiClient = apiClient
-    this.accountClient = accountClient
     this.imageClient = imageClient
   }
 
   /* user */
   login (loginParam) {
     return this.apiClient.post('v1/login', loginParam)
+  }
+
+  logout (token) {
+    return this.apiClient.post('v1/logout', {token})
   }
 
   otp (otpParam) {
@@ -82,7 +85,7 @@ export default class HRBenefitsService {
     formData.append('dentcert2', dentalReimbursementParam.file2)
     formData.append('body', JSON.stringify(dentalRObject))
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {
-      headers : { token, accountToken }
+      headers : { token }
     })
   }
 
@@ -106,7 +109,7 @@ export default class HRBenefitsService {
     formData.append('opt', opticalParam.optCert)
     formData.append('body', JSON.stringify(opticalObject))
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
-      headers : { token, accountToken }
+      headers : { token }
     })
   }
 
@@ -114,9 +117,11 @@ export default class HRBenefitsService {
 
   /* account */
   validateAccountNumber (token, accountNumber) {
-     return this.accountClient.get(`accounts/v1/${accountNumber}`, {
-        headers: { token, referenceId : Math.random().toString(36)
-.substring(7),
+     return this.apiClient.get(`accounts/v1/${accountNumber}`, {
+        headers: {
+           'Content-Type': 'application/json',
+           token,
+           referenceId : Math.random().toString(36).substring(7),
        }
      })
    }
@@ -232,6 +237,12 @@ export default class HRBenefitsService {
     })
   }
 
+  addBenefitFeedback (token, addBenefitFeedbackParam) {
+    return this.apiClient.post('v1/feedback/ratings', addBenefitFeedbackParam, {
+      headers: { token }
+    })
+  }
+
   getFaqsCategories (token) {
     return this.apiClient.get('v1/faqs/categories', {
       headers: { token }
@@ -293,7 +304,7 @@ export default class HRBenefitsService {
 
   /* Types */
 
-  getMPLTypes (token) {
+  getMplTypes (token) {
     return this.apiClient.get('v1/loans/mpl/types', {
       headers: { token }
     })
@@ -301,13 +312,13 @@ export default class HRBenefitsService {
 
   /* Validate */
 
-  getMPLValidate (token, mplValidateParam) {
-    return this.apiClient.get(`v1/loans/mpl/validate?loanId=${mplValidateParam.loanTypeId}`, {
+  getMplValidate (token, mplValidateParam) {
+    return this.apiClient.get(`v1/loans/mpl/validate?loanId=${ mplValidateParam.loanTypeId }`, {
       headers: { token }
     })
   }
 
-  getMPLFormAttachments (token, mplGetFormParam) {
+  getMplFormAttachments (token, mplGetFormParam) {
     return this.apiClient.get(`v1/attachments?purposeOfLoan=${ mplGetFormParam.formRequesting }&loanId=${ mplGetFormParam.loanId }`, {
         headers: { token }
     })
@@ -320,24 +331,72 @@ export default class HRBenefitsService {
     releasingCenter,
     mplPurposeLoanAddParam) {
     const formData = new FormData()
-    const multiPurposeLoanObject = {
-      loanId : {
+    const multiLoanBodyObject = {
+      loan : {
         id : mplPurposeLoanAddParam.loanId,
         purpose : mplPurposeLoanAddParam.purposeOfLoan,
         mode : mplPurposeLoanAddParam.modeOfLoan,
-        principalLoanAmount : mplPurposeLoanAddParam.principalLoanAmount
+        term : mplPurposeLoanAddParam.loanTerm,
+        principalAmount : mplPurposeLoanAddParam.principalLoanAmount
       },
-      promissoryNoteNumbers : [
-
-      ],
       accountNumber : accountNumber,
-      releasingCenter: releasingCenter,
-      distributorTest : 'distributorTest'
+      promissoryNoteNumbers : [],
+      relesingCenter : releasingCenter,
+      distributor : "distributorTest",
     }
     formData.append('uuid', 12345)
-    formData.append('MPL-cert', '')
-    formData.append('body', JSON.stringify(multiPurposeLoanObject))
-    return this.apiClient.post('v2/loans/mpl/submit', multiPurposeLoanObject, {
+    formData.append('body', JSON.stringify(multiLoanBodyObject))
+    formData.append('MPL-cert', mplPurposeLoanAddParam.attachments)
+    return this.apiClient.post('v2/loans/mpl/submit', formData, {
+      headers : { token }
+    })
+  }
+
+  getCarValidate (token) {
+    return this.apiClient.get('v1/eligibility/car', {
+      headers: { token }
+    })
+  }
+
+  addCarRequest (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    carRequestParam) {
+    const formData = new FormData()
+    const addCarleaseObject = {
+      accountNumber : accountNumber,
+      releasingCenter : releasingCenter,
+      brand : carRequestParam.carBrand,
+      model : carRequestParam.carModel,
+      year : carRequestParam.year,
+      leaseMode : carRequestParam.leaseMode,
+      primaryColor : carRequestParam.primaryColor,
+      secondaryColor : carRequestParam.secondaryColor,
+    }
+    formData.append('uuid', 12345)
+    formData.append('body', JSON.stringify(addCarleaseObject))
+    formData.append('attachments', carRequestParam.attachments)
+    return this.apiClient.post('v1/leases/car', carRequestParam, {
+      headers: { token }
+    })
+  }
+
+  addCarLeasePayment (token) {
+    return this.apiClient.post('v1/leases/car/payment', {
+      headers: { token }
+    })
+  }
+
+  addCarLeaseConfirmation (token) {
+    return this.apiClient.post('v1/leases/car/confirm', {
+      headers: { token }
+    })
+  }
+
+  getPayslip (token) {
+    return this.apiClient.post('v1/payslip', {
       headers : { token }
     })
   }
@@ -354,6 +413,11 @@ export default class HRBenefitsService {
     formData.append('cert', grantAidParam.file)
     formData.append('body', JSON.stringify(grantAidObject))
     return this.apiClient.post('v2/grants/education/personal/submit', formData, {
+      headers : { token }
+    })
+  }
+  getPayslipSelectedDate (token, payslipParam) {
+    return this.apiClient.post('v1/payslip/', payslipParam, {
       headers : { token }
     })
   }

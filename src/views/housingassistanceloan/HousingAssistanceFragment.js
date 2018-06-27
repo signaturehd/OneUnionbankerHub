@@ -9,8 +9,9 @@ import { CircularLoader } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
+import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
-import FormComponent from '../mpl/components/MplFormCardComponent'
+import FormComponent from '../mpl/components/MplLoanFormCardComponent'
 
 class HousingAssistanceFragment extends BaseMVPView {
   constructor (props) {
@@ -19,12 +20,13 @@ class HousingAssistanceFragment extends BaseMVPView {
       purposeOfAvailment: [],
       selectedPoa: '',
       formAttachments: [],
-      loanType: 1,
+      loanType: 3,
       validateLoanType : [],
       offset : [],
       enabledLoader : false,
       noticeResponse : null, /* notice response*/
       showNoticeResponseModal : false,
+      showBenefitFeedbackModal : false,
       showNoticeModal : false,
       showConfirmation : false,
     }
@@ -87,6 +89,7 @@ class HousingAssistanceFragment extends BaseMVPView {
       formAttachments,
       showConfirmation,
       showNoticeModal,
+      showBenefitFeedbackModal,
       showNoticeResponseModal,
       noticeResponse,
       response } = this.state
@@ -102,21 +105,27 @@ class HousingAssistanceFragment extends BaseMVPView {
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
         }
-
         {
           showNoticeResponseModal &&
           <ResponseModal
             onClose = { () => {
-              this.setState({ showNoticeResponseModal : false })
-              this.props.history.push('/mybenefits/benefits/medical')
+              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
             }}
-            benefitId = { loanType }
             noticeResponse = { response }
-            onDismiss = { (showNoticeModal, response) =>
-              this.setState({ showNoticeModal, response })  }
           />
-
         }
+
+        {
+          showBenefitFeedbackModal &&
+          <BenefitFeedbackModal
+            benefitId = { loanType }
+            onClose = { () => {
+              this.props.history.push('/mybenefits/benefits/loans'),
+              this.setState({ showBenefitFeedbackModal : false })
+            }}
+          />
+        }
+
         <div>
           <i
             className = { 'back-arrow' }

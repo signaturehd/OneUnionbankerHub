@@ -10,6 +10,7 @@ import DentalReimbursementProcedureModal from
   './modal/DentalReimbursementProcedureModal'
 import DentalReimbursementCard from './components/DentalReimbursementCard'
 import NoticeModal from '../notice/Notice'
+import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 import ResponseModal from '../notice/NoticeResponseModal'
 
 import './styles/dentalReimbursement.css'
@@ -24,6 +25,7 @@ class DentalReimbursementFragment extends BaseMVPView {
       disabled: false, // this is for circular loader
       noticeResponse : null, /* notice response*/
       showNoticeResponseModal : false,
+      showBenefitFeedbackModal : false,
       showNoticeModal : false,
       showConfirmation : false,
 
@@ -50,7 +52,6 @@ class DentalReimbursementFragment extends BaseMVPView {
 
   /* Notice Response*/
   noticeOfUndertaking (noticeResponse) {
-    // console.log(noticeResponse)
     this.setState({ showNoticeModal : true, noticeResponse })
   }
 
@@ -70,6 +71,7 @@ class DentalReimbursementFragment extends BaseMVPView {
       showConfirmation,
       showNoticeModal,
       showNoticeResponseModal,
+      showBenefitFeedbackModal,
       noticeResponse,
       response,
     } = this.state
@@ -97,16 +99,24 @@ class DentalReimbursementFragment extends BaseMVPView {
               showNoticeResponseModal &&
               <ResponseModal
                 onClose = { () => {
-                  this.setState({ showNoticeResponseModal : false })
-                  this.props.history.push('/mybenefits/benefits/medical')
+                  this.setState({ showNoticeResponseModal : false,  showBenefitFeedbackModal : true })
                 }}
                 noticeResponse = { response }
-                benefitId = { '6' }
-                onDismiss = { (showNoticeModal, response) =>
-                  this.setState({ showNoticeModal, response })  }
               />
 
             }
+
+            {
+              showBenefitFeedbackModal &&
+              <BenefitFeedbackModal
+                benefitId = { '6' }
+                onClose = { () => {
+                  this.props.history.push('/mybenefits/benefits/medical'),
+                  this.setState({ showBenefitFeedbackModal : false })
+                }}
+              />
+            }
+
             {
               disabled ?
                <center className = { 'dentalloa-loader' }>

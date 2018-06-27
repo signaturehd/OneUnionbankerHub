@@ -4,6 +4,6 @@ export default class GetTypesInteractor {
   }
 
   execute () {
-    return this.client.getMPLTypes(this.client.getToken())
+    return this.client.getMplTypes(this.client.getToken())
   }
 }

@@ -27,7 +27,7 @@ return (
           className = { 'mpl-poa-modal-button' }
           key = { key }
           text = { resp && resp.name }
-          onClick = { () => onSubmit( resp, false ) }/>
+          onClick = { () => onSubmit(resp, false) }/>
         )
       }
     </div>

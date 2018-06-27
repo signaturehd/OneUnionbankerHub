@@ -79,23 +79,29 @@ class OtpModal extends BaseMVPView {
               onChange={ e => this.setState({ otp: e.target.value }) }
             />
             <br/>
-            <GenericButton text= "Submit"
-              onClick={ () => {
-                  this.presenter.verifyOtp(username, otp, transactionType),
-                  this.setState({ disableSubmit : true, text : 'Please wait while were verifying your OTP' })
+            <br/>
+            <div className = {'otp-function'}>
+              <GenericButton text= "Submit"
+                onClick={ () => {
+                    this.presenter.verifyOtp(username, otp, transactionType),
+                    this.setState({ disableSubmit : true, text : 'Please wait while were verifying your OTP' })
+                  }
                 }
-              }
-              disabled = {this.state.disableSubmit}
-             />
-            <GenericButton text= "Resend OTP"
-              onClick={ () => {
-                  this.presenter.resendOtp(username, transactionType),
-                  this.setState({ disableResend: true, text : 'Please wait while were resending your OTP' })
+                disabled = {this.state.disableSubmit}
+               />
+              <GenericButton text= "Resend OTP"
+                onClick={ () => {
+                    this.presenter.resendOtp(username, transactionType),
+                    this.setState({ disableResend: true, text : 'Please wait while were resending your OTP' })
+                  }
                 }
-              }
-              disabled = {this.state.disableResend}
-            />
-          </div>
+                disabled = {this.state.disableResend}
+              />
+            </div>
+
+            <br/>
+            <br/>
+            </div>
         }
 
       </Modal>
