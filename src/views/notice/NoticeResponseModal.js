@@ -10,7 +10,7 @@ class NoticeResponseModal extends Component {
   }
 
   render () {
-    const { noticeResponse, onClose, onDismiss } = this.props
+    const { noticeResponse, onClose } = this.props
     return (
       <Modal
         isDismissable = { false }
