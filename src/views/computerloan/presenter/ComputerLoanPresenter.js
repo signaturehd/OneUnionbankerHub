@@ -67,10 +67,10 @@ export default class MultiPurposeLoanPresenter {
         },
         error => {
           store.dispatch(NotifyActions.addNotify({
-              title : error.name,
-              message : error.message ? error.message  : 'Internal Server Error'  ,
-              type : 'danger',
-              duration : 2000
+            title : 'Sorry',
+            message : error.message ,
+            type : 'danger',
+            duration : 2000
             })
           )
           this.view.navigate()
