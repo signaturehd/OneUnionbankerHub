@@ -21,7 +21,10 @@ class NoticeResponseModal extends Component {
           noticeResponse.message
         }
         <br/>
+        <br/>
         <center><GenericButton text = {'OK'} onClick = { onClose }/></center>
+        <br/>
+        <br/>
       </Modal>
     )
   }
