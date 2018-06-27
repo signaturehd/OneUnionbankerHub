@@ -369,13 +369,13 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getCarRequest (
+  addCarRequest (
     token,
     accountToken,
     accountNumber,
     releasingCenter,
     carRequestParam) {
-    return this.service.getCarRequest(
+    return this.service.addCarRequest(
       token,
       accountToken,
       accountNumber,
@@ -384,8 +384,13 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getCarLease (token) {
-    return this.service.getCarLease(token)
+  addCarLeasePayment (token) {
+    return this.service.addCarLeasePayment(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addCarLeaseConfirmation (token) {
+    return this.service.addCarLeaseConfirmation(token)
       .pipe(ServiceErrorOperator())
   }
 

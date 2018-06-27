@@ -1,4 +1,5 @@
 export default class GetCarNewValidateInteractor {
+  
   constructor (client) {
     this.client = client
   }
