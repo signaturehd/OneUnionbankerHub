@@ -418,9 +418,6 @@ export default class HRBenefitsClient {
     return this.service.getPayslipSelectedDate(token, payslipParam)
       .pipe(ServiceErrorOperator())
   }
-      grantAidParam)
-      .pipe(ServiceErrorOperator())
-  }
 
   validateGrantAid (token) {
     return this.service.validateGrantAid(token)
