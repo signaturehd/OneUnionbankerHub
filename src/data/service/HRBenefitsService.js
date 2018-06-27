@@ -353,7 +353,7 @@ export default class HRBenefitsService {
   }
 
   getCarValidate (token) {
-    return this.apiClient.get('v1/eligibility/car', {
+    return this.apiClient.get('v1/leases/car/validate', {
       headers: { token }
     })
   }
@@ -394,6 +394,8 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  /* Payslip */
 
   getPayslip () {
     return this.apiClient.post('v1/payslip', {
