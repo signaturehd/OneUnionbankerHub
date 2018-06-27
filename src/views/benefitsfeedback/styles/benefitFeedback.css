@@ -6,3 +6,7 @@
 .benefit-feedback {
   padding:5%;
 }
+
+.default-feedback-textarea {
+  width: 100%;
+}

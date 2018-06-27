@@ -286,13 +286,13 @@ class MplFormLoanCardComponent extends Component {
                 onClick = { () =>
                   this.setState({ showOffset : true }) }
                 placeholder = { 'Mode of Loan' }
-                value = { offset ? 'New Loan' : modeOoffsetfLoan }
+                value = { offset ? modeOfLoanText : 'New Loan' }
                 type = { 'text' }/>
               <GenericTextBox
                 value = { amountValue }
                 onChange = { this.onChange }
                 placeholder = { 'Desired Amount' }
-                maxLength = { validateLoanType && ( '' + validateLoanType.maximumLoanableAmount).length }
+                maxLength = { 11 }
                 type = { 'text' }/>
               <GenericTextBox
                 value = { `${ termOfLoan } (${ rateOfLoan } %)` }
