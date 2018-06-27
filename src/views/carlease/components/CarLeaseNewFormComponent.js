@@ -207,6 +207,7 @@ class CarLeaseNewFormComponent extends Component {
                     value={ makeYear }
                     onChange={ this.onChange }
                     placeholder={ 'Year' }
+                    maxLength={ 4 }
                     container={ 'car-form-icon-container' }
                     group={ 'car-group-textbox' }
                     type={ 'text' }/>
