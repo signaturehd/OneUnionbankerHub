@@ -66,7 +66,6 @@ export default class MotorcycleLoanPresenter {
           this.view.hideCircularLoader()
         },
         error => {
-          // this.view.navigate()
         }
       )
     }
