@@ -66,13 +66,6 @@ export default class MultiPurposeLoanPresenter {
           this.view.hideCircularLoader()
         },
         error => {
-          store.dispatch(NotifyActions.addNotify({
-            title : 'Sorry',
-            message : error.message ,
-            type : 'danger',
-            duration : 2000
-            })
-          )
           this.view.navigate()
         }
       )
