@@ -430,13 +430,13 @@ export default class HRBenefitsService {
     })
   }
 
-  getPayslip () {
+  getPayslip (token) {
     return this.apiClient.post('v1/payslip', {
       headers : { token }
     })
   }
 
-  getPayslipSelectedDate () {
+  getPayslipSelectedDate (token, payslipParam) {
     return this.apiClient.post('v1/payslip/', payslipParam, {
       headers : { token }
     })
