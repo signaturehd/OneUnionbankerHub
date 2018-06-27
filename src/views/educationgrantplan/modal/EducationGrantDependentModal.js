@@ -5,7 +5,7 @@ import { Modal , GenericButton, CircularLoader } from '../../../ub-components/'
 
 import './styles/educationModalStyle.css'
 
-class EducationGrantPersonalModal extends Component {
+class EducationGrantDependentModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -22,8 +22,8 @@ class EducationGrantPersonalModal extends Component {
     this.setState({ enabledLoader : false })
   }
 
-  onGetClicked (id, name, amount, attachment) {
-    this.props.onSubmit(id, name, amount, attachment)
+  onGetClicked (name, amount, attachment) {
+    this.props.onSubmit(name, amount, attachment)
     this.props.onClose()
   }
 
@@ -51,7 +51,7 @@ class EducationGrantPersonalModal extends Component {
               key = { key }
               text = { resp && resp.name }
               onClick = {
-                () => this.onGetClicked(resp.id, resp.name, resp.amount, resp.attachments[0])
+                () => this.onGetClicked(resp.name, resp.amount, resp.attachments[0])
               }
               />
             )
@@ -62,10 +62,10 @@ class EducationGrantPersonalModal extends Component {
   }
 }
 
-EducationGrantPersonalModal.propTypes = {
+EducationGrantDependentModal.propTypes = {
     onClose : PropTypes.func,
     tog : PropTypes.array,
     onSubmit : PropTypes.func,
 }
 
-export default EducationGrantPersonalModal
+export default EducationGrantDependentModal

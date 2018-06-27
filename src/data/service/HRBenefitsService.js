@@ -353,7 +353,7 @@ export default class HRBenefitsService {
   }
 
   getCarValidate (token) {
-    return this.apiClient.get('v1/eligibility/car', {
+    return this.apiClient.get('v1/leases/car/validate', {
       headers: { token }
     })
   }
@@ -424,9 +424,18 @@ export default class HRBenefitsService {
   }
 
   /* validate grant aid */
-  validateGrantAid (token) {
-    return this.apiClient.get('v1/grants/education/personal/validate', {
-      headers: { token }
+  addGrantAid (token, accountToken, accountNumber, releasingCenter, grantAidParam) {
+    const formData = new FormData()
+    const grantAidObject = {
+      grantType : grantAidParam.grantId,
+      accountNumber,
+      releasingCenter
+    }
+    formData.append('uuid', 12345)
+    formData.append('cert', grantAidParam.file)
+    formData.append('body', JSON.stringify(grantAidObject))
+    return this.apiClient.post('v2/grants/education/personal/submit', formData, {
+      headers : { token }
     })
   }
 
@@ -442,4 +451,16 @@ export default class HRBenefitsService {
     })
   }
 
+  validateGrantAid (token) {
+    return this.apiClient.get('v1/grants/education/personal/validate', {
+      headers: { token }
+    })
+  }
+
+  /* validate grant plan */
+  validateGrantPlan (token) {
+    return this.apiClient.get('v1/grants/education/dependent/validate', {
+      headers: { token }
+    })
+  }
 }
