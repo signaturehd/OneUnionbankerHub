@@ -352,6 +352,35 @@ export default class HRBenefitsService {
     })
   }
 
+  addLoanComputerOrMotor (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMotorLoanParam) {
+    const formData = new FormData()
+    const multiLoanBodyObject = {
+      loan : {
+        id : addMotorLoanParam.loanId,
+        purpose : addMotorLoanParam.purposeOfLoan,
+        mode : addMotorLoanParam.modeOfLoan,
+        term : addMotorLoanParam.loanTerm,
+        principalAmount : addMotorLoanParam.principalLoanAmount,
+        supplierName: addMotorLoanParam.supplierName
+      },
+      accountNumber : accountNumber,
+      promissoryNoteNumbers : [],
+      relesingCenter : releasingCenter,
+      distributor : "distributorTest",
+    }
+    formData.append('uuid', 12345)
+    formData.append('body', JSON.stringify(multiLoanBodyObject))
+    formData.append('MPL-cert', addMotorLoanParam.attachments)
+    return this.apiClient.post('v2/loans/mpl/submit', formData, {
+      headers : { token }
+    })
+  }
+
   getCarValidate (token) {
     return this.apiClient.get('v1/leases/car/validate', {
       headers: { token }
