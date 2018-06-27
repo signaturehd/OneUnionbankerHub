@@ -104,7 +104,6 @@ class OpticalFragment extends BaseMVPView {
 
     return (
       <div  className = { 'benefits-container' }>
-        { super.render() }
         {
           showConfirmation &&
           <ConfirmationModal

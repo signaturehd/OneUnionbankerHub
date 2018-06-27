@@ -85,7 +85,7 @@ export default class HRBenefitsService {
     formData.append('dentcert2', dentalReimbursementParam.file2)
     formData.append('body', JSON.stringify(dentalRObject))
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {
-      headers : { token, accountToken }
+      headers : { token }
     })
   }
 
@@ -109,7 +109,7 @@ export default class HRBenefitsService {
     formData.append('opt', opticalParam.optCert)
     formData.append('body', JSON.stringify(opticalObject))
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
-      headers : { token, accountToken }
+      headers : { token }
     })
   }
 
@@ -238,7 +238,7 @@ export default class HRBenefitsService {
   }
 
   addBenefitFeedback (token, addBenefitFeedbackParam) {
-    return this.apiClient.post('v1/feedback/rating', addBenefitFeedbackParam, {
+    return this.apiClient.post('v1/feedback/ratings', addBenefitFeedbackParam, {
       headers: { token }
     })
   }

@@ -1,13 +1,13 @@
-import AddFeedbackInteractor from '../../../domain/interactor/feedback/AddBenefitFeedbackInteractor'
-
-import store from '../../../actions'
 import { NotifyActions } from '../../../actions'
+import store from '../../../store'
 
-import AddBenefitFeedbackInteractor from '../../../domain/param/AddBenefitFeedbackParam'
+import AddBenefitFeedbackInteractor from '../../../domain/interactor/feedback/AddBenefitFeedbackInteractor'
+
+import addBenefitFeedbackParam from '../../../domain/param/AddBenefitFeedbackParam'
 
 export default class BenefitFeedbackPresenter {
   constructor (container) {
-    this.addBenefitFeedbackParam =
+    this.addBenefitFeedbackInteractor =
       new AddBenefitFeedbackInteractor(container.get('HRBenefitsClient'))
   }
 
@@ -16,10 +16,18 @@ export default class BenefitFeedbackPresenter {
   }
 
   addFeedback ( benefitId, rating, comment ) {
-    addFeedbackInteractor.execute(addBenefitFeedbackParam( benefitId, rating, comment ))
+    this.addBenefitFeedbackInteractor.execute(addBenefitFeedbackParam( benefitId, rating, comment ))
       .subscribe(resp => {
+        store.dispatch(NotifyActions.addNotify({
+            title: 'Benefit Feedback',
+            message : resp.message,
+            type : 'success',
+            duration : 2000
+          })
+        )
         this.view.successFeedback(resp)
       }, e => {
+        this.view.feedbackFailed()
         console.error(e)
       })
   }

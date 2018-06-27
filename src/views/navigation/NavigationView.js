@@ -77,6 +77,10 @@ class NavigationView extends BaseMVPView {
     this.setState({ profile })
   }
 
+  componentWillReceiveProps (nextProps) {
+    console.log(nextProps)
+  }
+
   componentDidMount () {
     const mediaQuery = window.matchMedia('(min-width: 1201px)')
       if (mediaQuery.matches) {
@@ -110,6 +114,7 @@ class NavigationView extends BaseMVPView {
   }
 
   render () {
+    
     const {
       displayShow,
       displayNavIcon,

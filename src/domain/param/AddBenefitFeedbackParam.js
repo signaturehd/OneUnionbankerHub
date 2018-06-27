@@ -1,5 +1,5 @@
-export default (benefitId, rating, comment) => ({
+export default (benefitId, rating, feedback) => ({
     benefitId,
     rating,
-    comment,
+    feedback,
 })

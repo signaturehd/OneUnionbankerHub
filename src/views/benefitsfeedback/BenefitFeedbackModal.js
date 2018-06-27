@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 
 import Presenter from './presenter/BenefitFeedbackPresenter'
 import ConnectView from '../../utils/ConnectView'
+import BaseMVPView from '../common/base/BaseMVPView'
 
 import { Modal, GenericButton, CircularLoader } from '../../ub-components'
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
@@ -12,36 +13,45 @@ import Rating from 'react-rating'
 
 import './styles/benefitFeedback.css'
 
-class BenefitFeedbackModal extends Component {
+class BenefitFeedbackModal extends BaseMVPView {
   constructor (props) {
     super(props)
-    this.setState = {
+    this.state = {
       rating : 0,
       comment : null,
       submitLoader : false
     }
+
+    this.addRating = this.addRating.bind(this)
+    console.log(this.props)
   }
 
   addRating () {
     const { rating, comment } = this.state
     const { benefitId } = this.props
-    this.presenter.addRating( benefitId, rating, comment )
+    this.presenter.addFeedback( benefitId, rating, comment )
     this.setState({ submitLoader : true })
   }
 
   successFeedback (resp) {
-    console.log(resp)
+    this.props.onClose()
+  }
+
+  feedbackFailed () {
+    this.setState({ submitLoader : false })
   }
 
   render () {
 
-    const { submitLoader } = this.state
+    const { submitLoader, rating } = this.state
+    const { onClose } = this.props
 
     return (
       <Modal
         isDismisable = { true }
         onClose = { onClose }
       >
+        { super.render() }
         <div className = { 'benefit-feedback' } >
           {
             submitLoader ?
@@ -51,20 +61,26 @@ class BenefitFeedbackModal extends Component {
             </center>
             :
             <div>
-              <h3>Your Feedback is important to us to improve our system</h3>
+              <center>
+                <h3>Your Feedback is important to us to improve our system</h3>
+                <br/>
+                <Rating
+                  emptySymbol = {<MdStarOutline style = {{ fontSize: 30, color : '#c65e11' }} />}
+                  fullSymbol = {<MdStar style = {{ fontSize: 30,  color : '#c65e11' }} />}
+                  onChange = { e => {
+                    this.setState({ rating : e })
+                  }}
+                  initialRating = { rating && rating }
+                  fractions = { 2 }
+                />
+                <br/>
+              </center>
               <br/>
-              <Rating
-                emptySymbol = {<MdStarOutline style = {{ fontSize: 30, color : '#c65e11' }} />}
-                fullSymbol = {<MdStar style = {{ fontSize: 30,  color : '#c65e11' }} />}
-                onChange = { e => {
-                  this.setState({ rating : e })
-                }}
-                fractions = { 2 }
-              />
               <br/>
               <textarea placeholder = { 'Your Feedback' } onChange = { e => this.setState({ comment : e.target.value }) }/>
               <br/>
-              <div className = { 'benefit-feedback-action-grid' }>
+              <br/>
+              <div className = { 'benefit-feedback-actions-grid' }>
                 <GenericButton onClick = { () => onClose() } text = { 'Close' } />
                 <GenericButton onClick = { () => this.addRating() } text = { 'Submit Feedback' } />
               </div>
@@ -77,7 +93,7 @@ class BenefitFeedbackModal extends Component {
 }
 
 BenefitFeedbackModal.propTypes = {
-  benefitId : PropTypes.number,
+  benefitId : PropTypes.string,
   onClose : PropTypes.func
 }
 

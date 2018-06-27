@@ -185,12 +185,16 @@ class BenefitsFragment extends BaseMVPView {
             onClick = { () => this.props.history.push('/mybenefits/transactions/personal') } />
             <label className = { 'trans-icon' } htmlFor='tab2'>My Transactions</label>
 
-         <input
-            className = { 'input-tab' }
-            id='tab3'  type='radio'
-            name='tabs'
-            onClick = { () => this.props.history.push('/mybenefits/transactions/approval') } />
-            <label className = { 'approval-icon' } htmlFor = 'tab3' >For Approval</label>
+          {
+            // TODO uncomment if required the for approval module
+
+            // <input
+            //    className = { 'input-tab' }
+            //    id='tab3'  type='radio'
+            //    name='tabs'
+            //    onClick = { () => this.props.history.push('/mybenefits/transactions/approval') } />
+            //    <label className = { 'approval-icon' } htmlFor = 'tab3' >For Approval</label>
+          }
 
           <section id='content1'>
             <Switch>
