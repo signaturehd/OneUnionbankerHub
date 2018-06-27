@@ -1,0 +1,45 @@
+.payslip-date-button {
+  border-radius: 5px;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  background-size: 30px;
+  bottom: 0;
+  height: 35px;
+  margin-top: 20px;
+  width: 95%;
+}
+
+.payslip-card-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+}
+
+.payslip-card-component {
+  padding: 25px 5px 25px 5px;
+  cursor: pointer;
+}
+
+.payslip-grid-card-container {
+  display: grid;
+  grid-template-columns: .1fr 1fr .1fr;
+}
+
+.payslip-icon {
+  background-image: url('../../../../images/icons/ic_payslip.png')
+}
+
+.payslip-icon-proceed {
+  background-image: url('../../../../images/icons/ic_next_page.png')
+}
+
+.payslip-icon-forms {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 30px;
+  width: 30px;
+  background-repeat: no-repeat;
+}
