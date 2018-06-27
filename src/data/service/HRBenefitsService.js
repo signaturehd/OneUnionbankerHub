@@ -343,6 +343,21 @@ export default class HRBenefitsService {
   }
 
   /* validate grant aid */
+  addGrantAid (token, accountToken, accountNumber, releasingCenter, grantAidParam) {
+    const formData = new FormData()
+    const grantAidObject = {
+      grantType : grantAidParam.grantId,
+      accountNumber,
+      releasingCenter
+    }
+    formData.append('uuid', 12345)
+    formData.append('cert', grantAidParam.file)
+    formData.append('body', JSON.stringify(grantAidObject))
+    return this.apiClient.post('v2/grants/education/personal/submit', formData, {
+      headers : { token }
+    })
+  }
+
   validateGrantAid (token) {
     return this.apiClient.get('v1/grants/education/personal/validate', {
       headers: { token }

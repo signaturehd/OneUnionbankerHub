@@ -354,6 +354,22 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Education Grant Aid */
+  addGrantAid (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    grantAidParam) {
+    return this.service.addGrantAid(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      grantAidParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   validateGrantAid (token) {
     return this.service.validateGrantAid(token)
       .pipe(ServiceErrorOperator())

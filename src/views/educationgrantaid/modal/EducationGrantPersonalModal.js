@@ -22,8 +22,8 @@ class EducationGrantPersonalModal extends Component {
     this.setState({ enabledLoader : false })
   }
 
-  onGetClicked (name, amount, attachment) {
-    this.props.onSubmit(name, amount, attachment)
+  onGetClicked (id, name, amount, attachment) {
+    this.props.onSubmit(id, name, amount, attachment)
     this.props.onClose()
   }
 
@@ -51,7 +51,7 @@ class EducationGrantPersonalModal extends Component {
               key = { key }
               text = { resp && resp.name }
               onClick = {
-                () => this.onGetClicked(resp.name, resp.amount, resp.attachments[0])
+                () => this.onGetClicked(resp.id, resp.name, resp.amount, resp.attachments[0])
               }
               />
             )

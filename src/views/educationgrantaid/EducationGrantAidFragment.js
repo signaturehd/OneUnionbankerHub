@@ -9,6 +9,10 @@ import { CircularLoader } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
+import ConfirmationModal from './modal/EducationGrantAidReviewModal'
+
+import store from '../../store'
+import { NotifyActions } from '../../actions'
 
 import FormComponent from './components/EducationGrantAidFormCardComponent'
 
@@ -16,14 +20,63 @@ class EducationGrantAidFragment extends BaseMVPView{
   constructor(props) {
     super(props)
     this.state = {
+      showNoticeModal : false,
+      showConfirmation : false,
+      noticeResponse : null,
+      showNoticeResponseModal : false,
       enabledLoader : false,
-      grantAid: []
+      grantAid : [],
+      grantId : '',
+      grantType : '',
+      grantAmount : '',
+      file : null,
+      imagePreviewUrl : null
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateGrantAid()
+  }
+
+  confirmation (showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl) {
+    if (grantType === "") {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'education Grant - Aid',
+          message : 'Please double check your type of grant',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    }
+    else if ( grantAmount === 0 || grantAmount === "") {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'education Grant - Aid',
+          message : 'Please double check your grant amount',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    }
+    else if (!file) {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'education Grant - Aid',
+          message : 'Please double check your attachments',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    }
+    else {
+      this.setState({
+        showConfirmation,
+        grantId,
+        grantType,
+        grantAmount,
+        file,
+        imagePreviewUrl
+      })
+    }
   }
 
   setGrantAid(grantAid) {
@@ -38,18 +91,80 @@ class EducationGrantAidFragment extends BaseMVPView{
     this.setState({ enabledLoader : true })
   }
 
+  noticeOfUndertaking (noticeResponse) {
+  this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
+  }
+
+  noticeResponse (noticeResponse) {
+    this.setState({showConfirmation: false, noticeResponse })
+  }
+
+  submitForm (grantId, grantAmount, file) {
+    this.presenter.addGrantAid(grantId, file)
+  }
+
   navigate () {
     this.props.history.push('/mybenefits/benefits/education')
   }
 
   render () {
     const {
+      showNoticeModal,
+      showConfirmation,
+      noticeResponse,
+      showNoticeResponseModal,
       enabledLoader,
-      grantAid
+      grantAid,
+      grantId,
+      grantType,
+      grantAmount,
+      file,
+      imagePreviewUrl
     } = this.state
 
     return (
       <div>
+        {
+          showConfirmation &&
+          <ConfirmationModal
+            grantAid = { grantAid }
+            grantId = { grantId }
+            grantType = { grantType }
+            grantAmount = { grantAmount }
+            file = { file }
+            imagePreviewUrl = { imagePreviewUrl }
+            submitForm = { (grantId, grantAmount, file) =>
+              this.submitForm(grantId, grantAmount, file) }
+            onClose = { () => this.setState({ showConfirmation : false }) }
+          />
+        }
+
+        {
+          showNoticeModal &&
+          <NoticeModal
+            onClose = { () => this.setState({ showNoticeModal : false })}
+            noticeResponse = { noticeResponse }
+            benefitId = { '13' }
+            onDismiss = { (showNoticeModal, noticeResponse) =>
+              this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
+          />
+        }
+
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose = { () => {
+              this.setState({ showNoticeResponseModal : false })
+              this.props.history.push('/benefits/education')
+            }}
+            noticeResponse = { noticeResponse }
+            benefitId = { '13' }
+            onDismiss = { (showNoticeModal, noticeResponse) =>
+              this.setState({ showNoticeModal, noticeResponse })  }
+          />
+
+        }
+
         <div>
           <i
             className = { 'back-arrow' }
@@ -62,10 +177,15 @@ class EducationGrantAidFragment extends BaseMVPView{
         {
           enabledLoader ?
            <center className = { 'circular-loader-center' }>
-             <CircularLoader show = { this.state.enabledLoader }/>
+             <CircularLoader show = { enabledLoader }/>
            </center> :
           <FormComponent
             grantAid = { grantAid }
+            onClick = {
+              (showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl) => {
+                this.confirmation(showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl)
+              }
+            }
             presenter = { this.presenter }
           />
         }

@@ -17,11 +17,13 @@ class EducationGrantAidFormCardComponent extends Component {
   constructor (props) {
     super (props)
     this.state = {
-      showGrantTypes: false,
+      showGrantTypes : false,
+      grantId : '',
       grantType : '',
       grantAmount: '',
       attachment : 'Form Attachments',
-      file: ''
+      file: '',
+      imagePreviewUrl: null
     }
   }
 
@@ -34,15 +36,18 @@ class EducationGrantAidFormCardComponent extends Component {
 
     const {
       grantAid,
-      presenter
+      presenter,
+      onClick
     } = this.props
 
     const {
       showGrantTypes,
+      grantId,
       grantType,
       grantAmount,
       attachment,
-      file
+      file,
+      imagePreviewUrl
     } = this.state
 
     return (
@@ -54,8 +59,9 @@ class EducationGrantAidFormCardComponent extends Component {
             tog = { grantAid.grants }
             presenter = { presenter }
             onSubmit = {
-              (grantType, grantAmount, attachment) => {
+              (grantId, grantType, grantAmount, attachment) => {
                 this.setState({
+                  grantId,
                   grantType,
                   grantAmount,
                   attachment
@@ -136,7 +142,8 @@ class EducationGrantAidFormCardComponent extends Component {
                     if (isValid) {
                       reader.onloadend = () => {
                         this.setState({
-                          file
+                          file,
+                          imagePreviewUrl: reader.result
                         })
                       }
                       reader.readAsDataURL(file)
@@ -155,7 +162,9 @@ class EducationGrantAidFormCardComponent extends Component {
               <GenericButton
                 type = { 'button' }
                 text = { 'continue' }
-                onClick = { () => {} }
+                onClick = {
+                  () => onClick(true, grantId, grantType, grantAmount, file, imagePreviewUrl)
+                }
                 className = { 'educ-submit' } />
             </div>
           </Card>
