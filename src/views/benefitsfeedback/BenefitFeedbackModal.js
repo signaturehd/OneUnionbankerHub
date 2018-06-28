@@ -23,7 +23,6 @@ class BenefitFeedbackModal extends BaseMVPView {
     }
 
     this.addRating=this.addRating.bind(this)
-    console.log(this.props)
   }
 
   addRating () {

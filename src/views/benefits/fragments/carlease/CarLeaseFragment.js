@@ -43,8 +43,6 @@ class CarLeaseFragment extends Component {
       path: '/mybenefits/benefits/carlease/old',
     }]
 
-    console.log(carValidate)
-
     return (
       <div>
         <i

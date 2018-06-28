@@ -1,3 +1,5 @@
+
+
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -8,6 +10,7 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import { CircularLoader } from '../../ub-components'
 
 import './styles/transactionDetails.css'
+
 
 import DentalLoaDetailsFragment from './fragments/DentalLoaDetailsFragment'
 import DentalRDetailsFragment from './fragments/DentalRDetailsFragment'

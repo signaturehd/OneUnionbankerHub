@@ -11,7 +11,7 @@ export default class HRBenefitsService {
   }
 
   logout (token) {
-    return this.apiClient.post('v1/logout', {token})
+    return this.apiClient.post('v1/logout', { token })
   }
 
   otp (otpParam) {
@@ -332,6 +332,8 @@ export default class HRBenefitsService {
     mplPurposeLoanAddParam) {
     const formData = new FormData()
     const multiLoanBodyObject = {
+      accountNumber : accountNumber,
+      relesingCenter : releasingCenter,
       loan : {
         id : mplPurposeLoanAddParam.loanId,
         purpose : mplPurposeLoanAddParam.purposeOfLoan,
@@ -339,10 +341,8 @@ export default class HRBenefitsService {
         term : mplPurposeLoanAddParam.loanTerm,
         principalAmount : mplPurposeLoanAddParam.principalLoanAmount
       },
-      accountNumber : accountNumber,
       promissoryNoteNumbers : [],
-      relesingCenter : releasingCenter,
-      distributor : "distributorTest",
+      distributor : 'distributorTest',
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
@@ -360,6 +360,8 @@ export default class HRBenefitsService {
     addMotorLoanParam) {
     const formData = new FormData()
     const multiLoanBodyObject = {
+      relesingCenter,
+      accountNumber,
       loan : {
         id : addMotorLoanParam.loanId,
         purpose : addMotorLoanParam.purposeOfLoan,
@@ -368,10 +370,8 @@ export default class HRBenefitsService {
         principalAmount : addMotorLoanParam.principalLoanAmount,
         supplierName: addMotorLoanParam.supplierName
       },
-      accountNumber : accountNumber,
       promissoryNoteNumbers : [],
-      relesingCenter : releasingCenter,
-      distributor : "distributorTest",
+      distributor : 'distributorTest',
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
@@ -395,8 +395,8 @@ export default class HRBenefitsService {
     carRequestParam) {
     const formData = new FormData()
     const addCarleaseObject = {
-      accountNumber : accountNumber,
-      releasingCenter : releasingCenter,
+      accountNumber,
+      releasingCenter,
       brand : carRequestParam.carBrand,
       model : carRequestParam.carModel,
       year : carRequestParam.year,
@@ -477,6 +477,32 @@ export default class HRBenefitsService {
     formData.append('body', JSON.stringify(grantPlanObject))
     return this.apiClient.post('v2/grants/education/dependent/submit', formData, {
       headers : { token }
+    })
+  }
+
+  /* bereavement benefit */
+  validateBereavement (token) {
+    return this.apiClient.get('v1/bereavement/validate', {
+      headers: { token }
+    })
+  }
+
+  addBereavement (token, bereavementParam) {
+    return this.apiClient.get('v1/bereavement/validate', {
+      headers: { token }
+    })
+  }
+
+  /* Calamity Assitance */
+  validateCalamityAssistance (token) {
+    return this.apiClient.get('v1/calamity/validate', {
+      headers: { token }
+    })
+  }
+
+  addCalamityAssistance (token, calamityAssistanceParam) {
+    return this.apiClient.get('v1/calamity/availment', {
+      headers: { token }
     })
   }
 
