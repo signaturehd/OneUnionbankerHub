@@ -66,7 +66,7 @@ class DentalLoaView extends BaseMVPView {
       selectedProcedures.map(resp =>
         procedures.push({ id : resp.id.toString() })
       )
-    if(
+    if (
       recipient === null ||
       branch === null ||
       date === null ||

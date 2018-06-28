@@ -1,5 +1,4 @@
 export default class GetPayslipInteractor {
-
   constructor (client) {
     this.client = client
   }

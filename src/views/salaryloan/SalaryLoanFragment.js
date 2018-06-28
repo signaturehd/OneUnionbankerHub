@@ -65,7 +65,7 @@ class SalaryLoanFragment extends BaseMVPView {
     this.setState({ purposeOfAvailment })
   }
 
-  /*Loader*/
+  /* Loader*/
 
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
@@ -140,8 +140,7 @@ class SalaryLoanFragment extends BaseMVPView {
             enabledLoader ?
             <center className = { 'circular-loader-center' }>
               <CircularLoader show = { this.state.enabledLoader }/>
-            </center>
-              :
+            </center>              :
             <FormComponent
               loanType={ loanType }
               purposeOfAvailment={ purposeOfAvailment }

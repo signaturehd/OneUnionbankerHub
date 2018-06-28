@@ -8,13 +8,13 @@ import './styles/motorModalStyle.css'
 class MotorcyclePurposeOfAvailmentModal extends Component {
   constructor (props) {
     super(props)
-     this.state={
+     this.state = {
         checkedSubCategory : false,
         purposeOfAvailment : [],
         enabledLoader : false,
         attachmentsDisplay : false,
       }
-      this.onGetClicked=this.onGetClicked.bind(this)
+      this.onGetClicked = this.onGetClicked.bind(this)
   }
 
   /*  Loader  */
@@ -33,7 +33,7 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
     closePoaModal,
     openFileUpload,
     loanType) {
-      const loanId=resp.id ? resp.id : null
+      const loanId = resp.id ? resp.id : null
       this.props.onSubmit(
         resp,
         subcategory,
@@ -50,7 +50,7 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
         loanId ? loanId : '',
         subcategory ? subcategory : null)
 
-    if ( loanId ) {
+    if (loanId) {
        this.showPurposeLoader()
          this.props.presenter.getMplPurposeOfAvailment(
            loanType && loanType ? loanType : '',
@@ -62,7 +62,7 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
            closePoaModal,
            openFileUpload,
            loanType)
-       if(subcategory === 2 || subcategory === 3) {
+       if (subcategory === 2 || subcategory === 3) {
          this.props.presenter.getMplPurposeOfAvailment(loanType && loanType, resp.id, subcategory ? subcategory : null)
          this.props.onSubmit(
            resp,
@@ -85,9 +85,9 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
    }
 
   render () {
-    const { onClose, poa, loanType }=this.props
-    const subcategory=poa && poa.subCategoryLvl
-    const { checkedSubCategory, enabledLoader, attachmentsDisplay }=this.state
+    const { onClose, poa, loanType } = this.props
+    const subcategory = poa && poa.subCategoryLvl
+    const { checkedSubCategory, enabledLoader, attachmentsDisplay } = this.state
     return (
       <Modal
         onClose={ onClose }
@@ -111,7 +111,7 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
                 onClick={ () => this.onGetClicked(
                   resp ? resp : '',
                   subcategory ? subcategory : '',
-                  subcategory === 1 ? false : true,
+                  subcategory !== 1,
                   true,
                   loanType ? loanType : '') }
                 />
@@ -122,7 +122,7 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
         )
       }
     }
-  MotorcyclePurposeOfAvailmentModal.propTypes={
+  MotorcyclePurposeOfAvailmentModal.propTypes = {
     onClose : PropTypes.func,
     poa : PropTypes.array,
     onSubmit : PropTypes.func,

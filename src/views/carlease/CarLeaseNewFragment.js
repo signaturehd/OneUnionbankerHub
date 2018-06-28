@@ -44,7 +44,27 @@ class CarLeaseNewFragment extends BaseMVPView {
     primaryColor,
     secondaryColor,
     file) {
-      console.log(carBrand, carModel,makeYear,primaryColor,secondaryColor,file)
+      if (
+        carBrand === null ||
+        carModel === null ||
+        makeYear === null ||
+        primaryColor === null ||
+        secondaryColor === null ||
+        file === null) {
+          store.dispatch(NotifyActions.addNotify({
+              title : 'Warning',
+              message : 'Please complete all fields'
+          })
+        )
+      } else {
+        this.presenter.addCarRequest(
+          carBrand,
+          carModel,
+          makeYear,
+          primaryColor,
+          secondaryColor,
+          file)
+      }
   }
 
   /* Notice Response*/

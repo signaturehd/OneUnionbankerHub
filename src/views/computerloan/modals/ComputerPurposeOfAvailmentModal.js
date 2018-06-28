@@ -6,16 +6,15 @@ import { Modal , GenericButton, CircularLoader } from '../../../ub-components/'
 import './styles/computerModalStyle.css'
 
 class MplPurposeOfAvailmentModal extends Component {
-
   constructor (props) {
     super(props)
 
-     this.state={
+     this.state = {
         checkedSubCategory : false,
         purposeOfAvailment : [],
         enabledLoader : false,
       }
-      this.onGetClicked=this.onGetClicked.bind(this)
+      this.onGetClicked = this.onGetClicked.bind(this)
   }
 
   /* Loader*/
@@ -33,7 +32,7 @@ class MplPurposeOfAvailmentModal extends Component {
     closePoaModal,
     openFileUpload,
     loanType) {
-      const loanId=resp.id ? resp.id : null
+      const loanId = resp.id ? resp.id : null
 
       this.props.onSubmit(
         resp,
@@ -42,7 +41,7 @@ class MplPurposeOfAvailmentModal extends Component {
         openFileUpload,
         loanType)
           this.props.presenter.getMplFormAttachments(
-            resp.name ? resp.name: '',
+            resp.name ? resp.name : '',
             loanType ? loanType : null)
 
     if (loanID) {
@@ -56,10 +55,9 @@ class MplPurposeOfAvailmentModal extends Component {
   }
 
   render () {
-
-    const { onClose, poa, loanType }=this.props
-    const subcategory=poa && poa.subCategoryLvl
-    const { checkedSubCategory, enabledLoader }=this.state
+    const { onClose, poa, loanType } = this.props
+    const subcategory = poa && poa.subCategoryLvl
+    const { checkedSubCategory, enabledLoader } = this.state
 
     return (
       <Modal
@@ -95,7 +93,7 @@ class MplPurposeOfAvailmentModal extends Component {
         )
       }
     }
-  MplPurposeOfAvailmentModal.propTypes={
+  MplPurposeOfAvailmentModal.propTypes = {
     onClose : PropTypes.func,
     poa : PropTypes.object,
     onSubmit : PropTypes.func,

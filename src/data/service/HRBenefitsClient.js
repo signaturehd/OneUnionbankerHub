@@ -172,7 +172,7 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
       .map(resp => {
         for (const i in resp) {
-          if (resp[i].id == id) {
+          if (resp[i].id === id) {
             return resp[i]
           }
         }
@@ -300,7 +300,7 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addBenefitFeedback(token, addBenefitFeedbackParam) {
+  addBenefitFeedback (token, addBenefitFeedbackParam) {
     return this.service.addBenefitFeedback(token, addBenefitFeedbackParam)
       .pipe(ServiceErrorOperator())
   }
@@ -479,6 +479,28 @@ export default class HRBenefitsClient {
       accountNumber,
       releasingCenter,
       grantPlanParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Bereavement */
+  getBereveavementValidate (token) {
+    return this.service.validateBereavement(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addBereavement (token) {
+    return this.service.addBereavement(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Calamity Assitance */
+  getCalamityAssistanceValidate (token) {
+    return this.service.validateCalamityAssistance(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addCalamityAssistance (token) {
+    return this.service.addCalamityAssistance(token)
       .pipe(ServiceErrorOperator())
   }
 }

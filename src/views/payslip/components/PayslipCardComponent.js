@@ -7,17 +7,15 @@ import {  Card } from '../../../ub-components/'
 import PayslipDetailsModal from '../modals/PayslipDetailsModal'
 
 class PayslipComponent extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
-    this.state={
+    this.state = {
       showPayslipDetails: false,
     }
   }
 
   render () {
-
-    const { showPayslipDetails }=this.state
+    const { showPayslipDetails } = this.state
     const staticOptions = [{
       id: 0 ,
       styleName: 'option-cards-1',
@@ -66,7 +64,7 @@ class PayslipComponent extends Component {
   }
 }
 
-PayslipComponent.propTypes={
+PayslipComponent.propTypes = {
   payslipList : PropTypes.array,
 }
 

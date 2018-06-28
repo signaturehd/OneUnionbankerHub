@@ -8,7 +8,7 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class CarLeaseNewFormComponent extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       carBrand : '',
@@ -47,7 +47,7 @@ class CarLeaseNewFormComponent extends Component {
 
   onChange (e) {
       const re = /^[0-9\.]+$/
-      if (e.target.value == '' || re.test(e.target.value)) {
+      if (e.target.value === '' || re.test(e.target.value)) {
         this.setState({ makeYear: e.target.value })
       }
    }
