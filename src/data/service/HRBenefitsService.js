@@ -435,11 +435,11 @@ export default class HRBenefitsService {
   addEducationAid (
     token,
     accountToken,
-    accountNo,
+    accountNumber,
     releasingCenter,
     educationAidParam) {
     const educationAidObject = {
-      accountNo,
+      accountNumber,
       releasingCenter,
       course : educationAidParam.course,
       academicYear : educationAidParam.academicYear,
