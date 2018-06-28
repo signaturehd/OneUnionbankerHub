@@ -11,7 +11,6 @@ class ReloginModal extends Component {
   }
 
   render () {
-
     const {
       relogin,
     } = this.props

@@ -1,16 +1,21 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Card, GenericButton } from '../../../../ub-components'
+import { Card, GenericButton, CircularLoader } from '../../../../ub-components'
 import './styles/carlease.css'
 
 class CarLeaseFragment extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      carValidate : true
+    }
+
+    this.navigate = this.navigate.bind(this)
   }
 
   navigate () {
-      this.props.history.push('/mybenefits/benefits')
+    this.props.history.push('/mybenefits/benefits')
   }
 
   componentDidMount () {
@@ -18,6 +23,7 @@ class CarLeaseFragment extends Component {
   }
 
   render () {
+    const { carValidate } = this.state
     const { history } = this.props
 
     const benefitsOptions = [{
@@ -32,13 +38,13 @@ class CarLeaseFragment extends Component {
       path: '/mybenefits/benefits/carlease/old',
     }]
 
-    const CarHome = () => (
-        <div>
-          <i
-            className={ 'back-arrow' }
-            onClick={ () => this.navigate() }></i>
-          <h1>CAR LEASE OPTION</h1>
-          <div className={ 'adjustment' }>
+    return (
+      <div>
+        <i
+          className={ 'back-arrow' }
+          onClick={ () => this.navigate() }></i>
+        <h1>CAR LEASE OPTION</h1>
+        <div className={ 'adjustment' }>
           <div className={ 'card-container' }>
             {
             benefitsOptions.map((value, idx) => (
@@ -54,18 +60,10 @@ class CarLeaseFragment extends Component {
                   </p>
                 </div>
               </Card>
-            ))
-          }
+              ))
+            }
           </div>
-        </div>
       </div>
-    )
-
-    return (
-      <div>
-        <Switch>
-          <Route exact path={ '/mybenefits/benefits/carlease' } render = { CarHome } />
-        </Switch>
       </div>
     )
   }

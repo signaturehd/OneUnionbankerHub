@@ -14,7 +14,7 @@ import { NotifyActions } from '../../../actions/'
 class ComputerFormCardComponent extends Component {
   constructor (props) {
     super(props)
-    this.state={
+    this.state = {
       showPurposeOfAvailment: false,
       showOffset: false,
       showTerm: false,
@@ -27,37 +27,22 @@ class ComputerFormCardComponent extends Component {
       termId: '',
       subCategoryId: '',
       poaId: '',
+      payeeNameLabel : '',
+      payeeName : '',
       showFileUpload: false,
       showSupplier : false,
       supplier: ''
     }
-    this.onGetClicked=this.onGetClicked.bind(this)
-    this.onChange=this.onChange.bind(this)
+
+    this.onChange = this.onChange.bind(this)
   }
 
   onChange (e) {
-      const re=/^[0-9\.]+$/
-      if (e.target.value == '' ||  re.test(e.target.value)) {
+      const re = /^[0-9\.]+$/
+      if (e.target.value === '' ||  re.test(e.target.value)) {
         this.setState({ amountValue: e.target.value })
       }
    }
-
- onGetClicked (
-   poaText,
-   modeOfLoanId,
-   amountValue,
-   termId,
-   selectedSupplier,
-   file) {
-   this.props.onSubmit(
-     poaText,
-     modeOfLoanId,
-     amountValue,
-     termId,
-     selectedSupplier,
-     file
-   )
- }
 
   render () {
     const {
@@ -75,7 +60,8 @@ class ComputerFormCardComponent extends Component {
       subCategoryId,
       showFileUpload,
       showSupplier,
-      supplier }=this.state
+      payeeName,
+      supplier } = this.state
 
     const {
       purposeOfAvailment,
@@ -84,7 +70,10 @@ class ComputerFormCardComponent extends Component {
       offset,
       selectedSupplier,
       group,
-      container }=this.props
+      payeeNameLabel,
+      container,
+      onSubmit
+    } = this.props
 
     return (
       <div className={'computer-container'}>
@@ -158,6 +147,12 @@ class ComputerFormCardComponent extends Component {
               Benefits Form
             </h4>
             <div className={ 'computer-form-card-body' }>
+              <GenericTextBox
+                value={ payeeName }
+                onChange={ e =>
+                  this.setState({ payeeName : e.target.value }) }
+                placeholder={ payeeNameLabel && payeeNameLabel }
+                type={ 'text' }/>
               <div className={ 'computer-grid-form' }>
                 <div>
                   <br/>  <br/>
@@ -165,7 +160,6 @@ class ComputerFormCardComponent extends Component {
                 </div>
                 <div>
                   <GenericTextBox
-                    type={ 'button' }
                     value={ poaText }
                     group={ 'computer-group-textbox' }
                     container={ 'computer-form-icon-container' }
@@ -251,13 +245,14 @@ class ComputerFormCardComponent extends Component {
                 type={ 'button' }
                 text={ 'continue' }
                 onClick={ () =>
-                  this.onGetClicked(
+                  onSubmit(
+                    payeeName ? payeeName : '',
                     poaText ? poaText : '',
                     modeOfLoanId ? modeOfLoanId : '',
                     amountValue,
                     termId ? termId : '',
                     selectedSupplier ? selectedSupplier : '',
-                    file ? file : '' )
+                    file ? file : '')
                   }
                 className={ 'computer-submit' } />
             </div>
@@ -286,7 +281,7 @@ class ComputerFormCardComponent extends Component {
   }
 }
 
-ComputerFormCardComponent.propTypes={
+ComputerFormCardComponent.propTypes = {
   purposeOfAvailment : PropTypes.array,
   validateLoanType : PropTypes.array,
   group : PropTypes.string,

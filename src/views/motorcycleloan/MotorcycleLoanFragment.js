@@ -18,7 +18,7 @@ import { NotifyActions } from '../../actions'
 class MotorCycleLoanFragment extends BaseMVPView {
   constructor (props) {
     super(props)
-    this.state={
+    this.state = {
       purposeOfAvailment: [],
       formAttachments: [],
       loanType: 4,
@@ -30,6 +30,7 @@ class MotorCycleLoanFragment extends BaseMVPView {
       showNoticeModal : false,
       showConfirmation : false,
       showBenefitFeedbackModal: false,
+      payeeNameLabel : '',
       poaText : '',
       modeOfLoanId : '',
       termId : '',
@@ -37,7 +38,7 @@ class MotorCycleLoanFragment extends BaseMVPView {
       selectedSupplier : '',
       file : ''
     }
-    this.sendFormData=this.sendFormData.bind(this)
+    this.sendFormData = this.sendFormData.bind(this)
   }
 
   componentDidMount () {
@@ -48,6 +49,7 @@ class MotorCycleLoanFragment extends BaseMVPView {
       this.state.loanType,
       1,
       1)
+    this.presenter.isManagersCheck()
   }
 
   /* Implementation*/
@@ -68,7 +70,7 @@ class MotorCycleLoanFragment extends BaseMVPView {
     this.setState({ purposeOfAvailment })
   }
 
-  /*Loader*/
+  /* Loader*/
 
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
@@ -91,15 +93,19 @@ class MotorCycleLoanFragment extends BaseMVPView {
     this.setState({ noticeResponse })
   }
 
+  isManagersCheck (payeeNameLabel) {
+    this.setState({ payeeNameLabel })
+  }
+
   sendFormData (
+    payeeName,
     poaText,
     modeOfLoanId,
     termId,
     amountValue,
     selectedSupplier,
     file) {
-      if(poaText === "" || poaText === null)
-      {
+      if (poaText === '' || poaText === null) {
         store.dispatch(NotifyActions.addNotify({
             title : 'Motorcycle Loan',
             message : 'Please include the Purpose of Availment',
@@ -107,8 +113,7 @@ class MotorCycleLoanFragment extends BaseMVPView {
             duration : 2000
           })
         )
-      }
-      else if (amountValue === 0 || grantAmount === "") {
+      } else if (amountValue === 0 || grantAmount === '') {
         store.dispatch(NotifyActions.addNotify({
             title : 'Motorcycle Loan',
             message : 'Please include the Desired Amount',
@@ -116,8 +121,7 @@ class MotorCycleLoanFragment extends BaseMVPView {
             duration : 2000
           })
         )
-      }
-      else if ( termId === null || termId === "") {
+      } else if (termId === null || termId === '') {
         store.dispatch(NotifyActions.addNotify({
             title : 'Motorcycle Loan',
             message : 'Please specify the Term and Rates',
@@ -125,8 +129,7 @@ class MotorCycleLoanFragment extends BaseMVPView {
             duration : 2000
           })
         )
-      }
-      else if (!file) {
+      } else if (!file) {
         store.dispatch(NotifyActions.addNotify({
             title : 'Motorcycle Loan',
             message : 'Please check the file attachments',
@@ -134,9 +137,9 @@ class MotorCycleLoanFragment extends BaseMVPView {
             duration : 2000
           })
         )
-      }
-       else {
+      } else {
           this.presenter.addLoan(
+            payeeName,
             poaText,
             modeOfLoanId,
             termId,
@@ -165,7 +168,9 @@ class MotorCycleLoanFragment extends BaseMVPView {
       termId,
       amountValue,
       selectedSupplier,
-      file }=this.state
+      payeeNameLabel,
+      file
+    } = this.state
 
     return (
       <div>
@@ -220,31 +225,24 @@ class MotorCycleLoanFragment extends BaseMVPView {
               validateLoanType={ validateLoanType }
               formAttachments={ formAttachments }
               offset={ offset }
+              payeeNameLabel = { payeeNameLabel }
               presenter={ this.presenter }
-              onClick={ () =>
-                this.sendFormData(
+              onSubmit={ (
+                payeeName,
+                poaText,
+                modeOfLoanId,
+                termId,
+                amountValue,
+                selectedSupplier,
+                file) => this.sendFormData(
+                  payeeName,
                   poaText,
                   modeOfLoanId,
                   termId,
                   amountValue,
                   selectedSupplier,
                   file
-                  )
-                }
-              onSubmit={ (
-                getPoaTextData,
-                getModeOfLoanId,
-                getTermIdData,
-                getAmountValueData,
-                getSelectedSupplierData,
-                getFileData) => this.setState({
-                  poaText : getPoaTextData,
-                  modeOfLoanId : getModeOfLoanId,
-                  termId : getTermIdData,
-                  amountValue : getAmountValueData,
-                  selectedSupplier : getSelectedSupplierData,
-                  file : getFileData
-                })
+                )
               }
             />
           }

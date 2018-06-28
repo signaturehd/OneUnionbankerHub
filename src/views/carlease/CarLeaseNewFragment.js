@@ -43,7 +43,7 @@ class CarLeaseNewFragment extends BaseMVPView {
     primaryColor,
     secondaryColor,
     file) {
-      if(
+      if (
         carBrand === null ||
         carModel === null ||
         makeYear === null ||
@@ -92,7 +92,7 @@ class CarLeaseNewFragment extends BaseMVPView {
   }
   /* Navigage back to loans Option*/
   navigate () {
-    this.props.history.push('/mybenefits/benefits')
+    this.props.history.push('/mybenefits/benefits/carlease')
   }
 
   render () {

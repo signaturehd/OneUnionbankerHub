@@ -7,7 +7,7 @@ import './styles/motorModalStyle.css'
 
 class MotorcycleLoanSupplierModal extends Component {
 render () {
-  const { onClose, term, onSubmit }=this.props
+  const { onClose, term, onSubmit } = this.props
 
 return (
   <Modal
@@ -30,7 +30,7 @@ return (
           key={ key ? key : '' }
           text={ `Term ${ resp && resp.term ? resp.term : '' }
                   Rate (${ resp && resp.rate ? resp.rate : '' }%)` }
-          onClick={ () => onSubmit( resp ? resp : '', false ) }/>
+          onClick={ () => onSubmit(resp ? resp : '', false) }/>
         )
       }
     </div>
@@ -38,7 +38,7 @@ return (
     )
   }
 }
-MotorcycleLoanSupplierModal.propTypes={
+MotorcycleLoanSupplierModal.propTypes = {
   onClose : PropTypes.func,
   term : PropTypes.array,
   onSubmit : PropTypes.func
