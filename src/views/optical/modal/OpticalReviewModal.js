@@ -69,7 +69,7 @@ class OpticalModal extends Component {
                   <div style = {styles.image2}></div>
                 </div>
                 <br/>
-              <center>
+              <div className = { 'optical-modal-action-button' }>
                 <GenericButton
                   onClick = { () => {
                     this.setState({ disableSubmit : true, isDismisable: false })
@@ -82,7 +82,7 @@ class OpticalModal extends Component {
                 <GenericButton
                   text = { 'cancel' }
                   onClick = { onClose } />
-              </center>
+              </div>
             </div>
           }
         </Modal>
