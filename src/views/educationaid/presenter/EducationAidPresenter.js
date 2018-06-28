@@ -36,10 +36,13 @@ export default class EducationAidPresenter {
     fileAttachments
     )
   )
+  this.view.showCircularLoader()
    .subscribe(educationAid => {
-    this.view.noticeOfUndertaking(educationAid)
+     this.view.noticeOfUndertaking(educationAid)
+     this.view.hideCircularLoader()
    }, e => {
-    this.view.noticeResponse(e)
+     this.view.noticeResponse(e)
+     this.view.hideCircularLoader()
    })
  }
 
