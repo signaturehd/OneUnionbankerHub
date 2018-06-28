@@ -456,16 +456,6 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  validateGrantAid (token) {
-    return this.service.validateGrantAid(token)
-      .pipe(ServiceErrorOperator())
-  }
-
-  validateGrantPlan (token) {
-    return this.service.validateGrantPlan(token)
-      .pipe(ServiceErrorOperator())
-  }
-
   /* Education Grant Plan */
   addGrantPlan (
     token,
@@ -479,6 +469,42 @@ export default class HRBenefitsClient {
       accountNumber,
       releasingCenter,
       grantPlanParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateGrantAid (token) {
+    return this.service.validateGrantAid(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateGrantPlan (token) {
+    return this.service.validateGrantPlan(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Education Gorup Aid */
+  addGroupAid (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    groupAidParam) {
+    return this.service.addGroupAid(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      groupAidParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateAid (token) {
+    return this.service.validateAid(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateGroupAid (token) {
+    return this.service.validateGroupAid(token)
       .pipe(ServiceErrorOperator())
   }
 
