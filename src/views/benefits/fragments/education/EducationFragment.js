@@ -23,11 +23,16 @@ class EducationFragment extends Component {
       path: '/mybenefits/benefits/education/aid',
     }, {
       id: 2,
+      styleName: 'education-cards-4',
+      title: 'EDUCATION GROUP - PLAN',
+      path: '/mybenefits/benefits/education/groupplan',
+    }, {
+      id: 3,
       styleName: 'education-cards-2',
       title: 'EDUCATION GRANT - AID',
       path: '/mybenefits/benefits/education/grantaid',
     }, {
-      id: 3,
+      id: 4,
       styleName: 'education-cards-3',
       title: 'EDUCATION GRANT - PLAN',
       path: '/mybenefits/benefits/education/grantplan',
