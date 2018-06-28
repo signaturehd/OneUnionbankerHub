@@ -1,22 +1,24 @@
-import validateGrantPlanInteractor from '../../../domain/interactor/education/validateGrantPlanInteractor'
-import addGrantPlanInteractor from '../../../domain/interactor/education/addGrantPlanInteractor'
-import grantPlanParam from '../../../domain/param/GrantPlanParam'
+import validateGroupAidInteractor from '../../../domain/interactor/educationAid/validateGroupAidInteractor'
+import addGroupAidInteractor from '../../../domain/interactor/educationAid/AddEducationAidInteractor'
+import groupAidParam from '../../../domain/param/GroupAidParam'
 
 export default class EducationGroupAidPresenter {
+
   constructor (container) {
-    this.validateGrantPlanInteractor =
-      new validateGrantPlanInteractor(container.get('HRBenefitsClient'))
-    this.addGrantPlanInteractor =
-      new addGrantPlanInteractor(container.get('HRBenefitsClient'))
+    this.validateGroupAidInteractor =
+      new validateGroupAidInteractor(container.get('HRBenefitsClient'))
+
+    this.addGroupAidInteractor =
+      new addGroupAidInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
-  this.view = view
+    this.view = view
   }
 
   /* Add grant dependent */
-   addGrantPlan (grantId, file) {
-    this.addGrantPlanInteractor.execute(grantPlanParam(grantId, file))
+   addGroupAid (grantId, file) {
+    this.addGroupAidInteractor.execute(groupAidParam(grantId, file))
      .subscribe(grantPlan => {
       this.view.noticeOfUndertaking(grantPlan)
      }, e => {
@@ -24,11 +26,10 @@ export default class EducationGroupAidPresenter {
      })
    }
 
-
-  /* Types of Grant */
-  validateGrantPlan () {
+  /* Types of Group */
+  validateGroupAid () {
     this.view.showCircularLoader()
-    this.validateGrantPlanInteractor.execute()
+    this.validateGroupAidInteractor.execute()
       .subscribe(
         grantPlan => {
           this.view.setGrantPlan(grantPlan)

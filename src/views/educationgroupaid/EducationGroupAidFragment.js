@@ -38,7 +38,7 @@ class EducationGroupAidFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.validateGrantPlan()
+    this.presenter.validateGroupAid()
   }
 
   confirmation (showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl) {
