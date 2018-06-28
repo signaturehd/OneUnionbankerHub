@@ -28,7 +28,7 @@ const renderDatePicker = ({ input, label, type, className, selected, meta: { tou
     {...input}
         placeholder={'Start Date'}
         type={type}
-        className={'calendar'}
+        className={'general-calenar'}
         dropdownMode="select"
         dateForm="YYYY/MM/DD"
         selected={input.value ? moment(input.value) : null}
@@ -98,7 +98,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           name={`${member}.startDate`}
           readOnly
           component={renderDatePicker}
-          className = { 'calendar' }
+          className = { 'general-calenar' }
           calendarClassName = { 'calendarClass' }
         />
         <label>End Date</label>
@@ -107,7 +107,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           name={`${member}.endDate`}
           readOnly
           component={renderDatePicker}
-          className = { 'calendar' }
+          className = { 'general-calenar' }
           calendarClassName = { 'calendarClass' }
         />
       </div>
