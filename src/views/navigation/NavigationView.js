@@ -109,6 +109,10 @@ class NavigationView extends BaseMVPView {
     this.setState({ wizard })
   }
 
+  relogin () {
+    this.props.history.push('/')
+  }
+
   render () {
 
     const {
@@ -158,7 +162,7 @@ class NavigationView extends BaseMVPView {
           {
             login &&
             <ReloginModal
-              relogin = { () => { this.presenter.relogin(), history.push('/') } }
+              relogin = { () => { this.presenter.relogin() } }
             />
           }
               <Drawer >

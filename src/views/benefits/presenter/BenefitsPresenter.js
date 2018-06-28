@@ -55,8 +55,9 @@ export default class BenefitsPresenter {
     .subscribe(
       validate => {
         this.view.hideLoading()
+        this.view.navigate(false)
       }, error => {
-        this.view.navigate()
+        this.view.navigate(true)
         this.view.hideLoading()
       }
     )
