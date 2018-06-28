@@ -12,7 +12,7 @@ export default function reducer (state = initialState, action) {
         ...notifys.slice(action.index + 1)
       ]}
     case RESET_NOTIFY:
-      // return { ...state, notify: [] }
+      return { ...state, notify: [] }
     default:
       return state
   }
