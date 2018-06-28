@@ -343,7 +343,7 @@ export default class HRBenefitsService {
         principalAmount : mplPurposeLoanAddParam.principalLoanAmount
       },
       promissoryNoteNumbers : [],
-      distributor : 'distributorTest',
+      distributor : mplPurposeLoanAddParam.payeeName,
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
@@ -363,7 +363,6 @@ export default class HRBenefitsService {
     const multiLoanBodyObject = {
       relesingCenter,
       accountNumber,
-      payeeName :
       loan : {
         id : addMotorLoanParam.loanId,
         purpose : addMotorLoanParam.purposeOfLoan,

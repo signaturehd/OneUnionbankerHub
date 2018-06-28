@@ -3,7 +3,7 @@ import AddLoanInteractor from '../../../domain/interactor/mpl/AddLoanInteractor'
 import GetPurposeOfAvailmentInteractor from '../../../domain/interactor/mpl/GetPurposeOfAvailmentInteractor'
 import GetFormAttachmentsInteractor from '../../../domain/interactor/mpl/GetFormAttachmentsInteractor'
 import GetValidateInteractor from '../../../domain/interactor/mpl/GetValidateInteractor'
-
+import GetInformationInteractor from '../../../domain/interactor/user/GetInformationInteractor'
 import mplValidateParam from '../../../domain/param/MplValidateParam'
 import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
 import mplGetFormParam from '../../../domain/param/MplGetFormParam'
@@ -27,6 +27,9 @@ export default class MultiPurposeLoanPresenter {
 
     this.getValidateInteractor =
       new GetValidateInteractor(container.get('HRBenefitsClient'))
+
+    this.getInformationInteractor =
+      new GetInformationInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -109,8 +112,10 @@ export default class MultiPurposeLoanPresenter {
     loanTerm,
     principalLoanAmount,
     attachments) {
+    const fullname = this.getInformationInteractor.execute().fullname
     this.view.showCircularLoader()
     this.addLoanInteractor.execute(mplPurposeLoanAddParam(
+      fullname,
       loanId,
       purposeOfLoan,
       modeOfLoan,

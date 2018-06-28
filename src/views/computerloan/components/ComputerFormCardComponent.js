@@ -33,7 +33,7 @@ class ComputerFormCardComponent extends Component {
       showSupplier : false,
       supplier: ''
     }
-    
+
     this.onChange = this.onChange.bind(this)
   }
 

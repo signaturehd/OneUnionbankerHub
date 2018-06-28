@@ -30,7 +30,7 @@ class MotorcycleLoanCardComponent extends Component {
       showFileUpload: false,
       showSupplier : false,
       supplier: '',
-      payeeName: ''
+      payeeName: '',
       file: ''
     }
      this.onChange = this.onChange.bind(this)

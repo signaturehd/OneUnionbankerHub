@@ -5,6 +5,6 @@ export default class GetManagersCheckInteractor {
 
   execute () {
     const user = this.client.getProfile()
-    return user !== undefined ? user.employee && user.employee.allowManagersCheck : null
+    return user && user.employee
   }
 }
