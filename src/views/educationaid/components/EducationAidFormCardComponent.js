@@ -15,6 +15,7 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
 class EducationAidFormCardComponent extends Component {
+
   constructor (props) {
     super (props)
     this.state={
@@ -29,6 +30,7 @@ class EducationAidFormCardComponent extends Component {
       academicYearText: '',
       semesterText: '',
       totalReimbursableAmount: '',
+      totalReimbursableAmountText: '',
       gwaText: '',
       fileOR: '',
       fileCOG: '',
@@ -38,6 +40,7 @@ class EducationAidFormCardComponent extends Component {
       imagePrevRegForm: null,
       computations: ''
     }
+    this.onGetClicked=this.onGetClicked.bind(this)
   }
 
   getExtension (filename) {
@@ -59,13 +62,49 @@ class EducationAidFormCardComponent extends Component {
       }
     )
     return result ? parseFloat(result).toFixed(2) : 0.00
+
+  }
+
+  onGetClicked (
+    courseText,
+    academicYearText,
+    semesterText,
+    gwaText,
+    tuitionFeeText,
+    registrationFeeText,
+    schoolID,
+    fileOR,
+    fileCOG,
+    fileRegForm,
+    imagePrevOR,
+    imagePrevCOG,
+    imagePrevRegForm,
+    totalFeeText,
+    totalReimbursableAmountText) {
+      this.props.getFormData(
+        courseText,
+        academicYearText,
+        semesterText,
+        gwaText,
+        tuitionFeeText,
+        registrationFeeText,
+        schoolID,
+        fileOR,
+        fileCOG,
+        fileRegForm,
+        imagePrevOR,
+        imagePrevCOG,
+        imagePrevRegForm,
+        totalFeeText,
+        totalReimbursableAmountText
+      )
   }
 
   render () {
     const {
       educationAid,
       presenter,
-      onClick
+      getFormData
     }=this.props
 
     const {
@@ -81,6 +120,7 @@ class EducationAidFormCardComponent extends Component {
       semesterText,
       gwaText,
       totalReimbursableAmount,
+      totalReimbursableAmountText,
       fileOR,
       fileCOG,
       fileRegForm,
@@ -89,6 +129,7 @@ class EducationAidFormCardComponent extends Component {
       imagePrevRegForm,
       computations
       }=this.state
+
     const resultTotalFee=tuitionFeeText && registrationFeeText ? parseFloat(tuitionFeeText) + parseFloat(registrationFeeText) : 0.00
 
     return (
@@ -115,13 +156,13 @@ class EducationAidFormCardComponent extends Component {
               }
               />
             }
-
             {
               showReviewEducationModal &&
               <EducationAidReviewModal
                 collegeType={ collegeType }
                 tuitionFeeText={ tuitionFeeText }
                 courseText={ courseText }
+                registrationFeeText={ registrationFeeText }
                 academicYearText={ academicYearText }
                 semesterText={ semesterText }
                 gwaText={ gwaText }
@@ -132,8 +173,41 @@ class EducationAidFormCardComponent extends Component {
                 imagePrevOR={ imagePrevOR }
                 imagePrevCOG={ imagePrevCOG }
                 imagePrevRegForm={ imagePrevRegForm }
+                totalReimbursableAmountText={ totalReimbursableAmountText }
                 onClose={ () => this.setState({ showReviewEducationModal : false }) }
-                />
+                getFormData={ ()=> this.setState({
+                  courseText,
+                  academicYearText,
+                  semesterText,
+                  gwaText,
+                  tuitionFeeText,
+                  registrationFeeText,
+                  schoolID,
+                  fileOR,
+                  fileCOG,
+                  fileRegForm,
+                  imagePrevOR,
+                  imagePrevCOG,
+                  imagePrevRegForm,
+                  totalFeeText })}
+                onClick={ () => this.onGetClicked(
+                  courseText,
+                  academicYearText,
+                  semesterText,
+                  gwaText,
+                  tuitionFeeText,
+                  registrationFeeText,
+                  schoolID,
+                  fileOR,
+                  fileCOG,
+                  fileRegForm,
+                  imagePrevOR,
+                  imagePrevCOG,
+                  imagePrevRegForm,
+                  totalFeeText
+                  )
+                }
+              />
             }
             <div></div>
           <Card className={ 'educ-form-card' }>
@@ -176,21 +250,21 @@ class EducationAidFormCardComponent extends Component {
                 () => this.setState({ showModal : true })
               }
               placeholder={ 'Colleges/Universities' }
-              onChange={ () => this.setState({ collegeType : e.target.value }) }
-              type={ 'text' }/>
+              onChange={ (e) => this.setState({ collegeType : e.target.value }) }
+              type={ 'button' }/>
             <GenericTextBox
               value={ courseText }
-              onChange={ (e) => this.setState({courseText: e.target.value}) }
+              onChange={ (e) => this.setState({ courseText: e.target.value }) }
               placeholder={ 'Course' }
               type={ 'text' }/>
             <GenericTextBox
               value={ academicYearText }
-              onChange={ (e) => this.setState({academicYearText: e.target.value}) }
+              onChange={ (e) => this.setState({ academicYearText: e.target.value }) }
               placeholder={ 'Academic Year' }
               type={ 'text' }/>
             <GenericTextBox
               value={ semesterText }
-              onChange={ (e) =>  this.setState({semesterText: e.target.value}) }
+              onChange={ (e) =>  this.setState({ semesterText: e.target.value }) }
               placeholder={ 'Semester' }
               type={ 'text' }/>
             <GenericTextBox
@@ -199,7 +273,7 @@ class EducationAidFormCardComponent extends Component {
                 (e) =>{
                   const re=/^[0-9\.]+$/
                   if (e.target.value == '' || re.test(e.target.value)) {
-                    this.setState({gwaText: e.target.value })
+                    this.setState({ gwaText: e.target.value })
                   }
                 }
                }
@@ -249,8 +323,8 @@ class EducationAidFormCardComponent extends Component {
                       })
                     )
                   }
-                 }
                 }
+              }
               />
               <FileUploader
                 accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }

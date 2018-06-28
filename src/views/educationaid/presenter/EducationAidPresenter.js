@@ -14,10 +14,26 @@ export default class EducationAidPresenter {
   this.view = view
  }
 
- addEducationAid (course, academicYear, semester, gwa, tuitionFee, registrationFee,
- schoolId, fileOR, fileCOG, fileRegForm) {
-  this.addEducationAidInteractor.execute(educationAidParam(course, academicYear, semester, gwa, tuitionFee, registrationFee,
-  schoolId, fileOR, fileCOG, fileRegForm))
+ addEducationAid (
+   courseText,
+   academicYearText,
+   semesterText,
+   gwaText,
+   tuitionFeeText,
+   registrationFeeText,
+   schoolId,
+   fileAttachments) {
+  this.addEducationAidInteractor.execute(educationAidParam(
+    courseText,
+    academicYearText,
+    semesterText,
+    gwaText,
+    tuitionFeeText,
+    registrationFeeText,
+    schoolId,
+    fileAttachments
+    )
+  )
    .subscribe(educationAid => {
     this.view.noticeOfUndertaking(educationAid)
    }, e => {

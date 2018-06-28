@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Modal, GenericButton, CircularLoader } from '../../../ub-components/'
 
-import './styles/educationModalStyle.css'
+import './styles/educationAidModalStyle.css'
 
 import imageDefault from '../../../images/profile-picture.png'
 
@@ -43,6 +43,7 @@ class EducationAidReviewModal extends Component {
       academicYearText,
       semesterText,
       gwaText,
+      onClick,
     }=this.props
 
     const {
@@ -55,28 +56,28 @@ class EducationAidReviewModal extends Component {
         backgroundImage: `url('${imagePrevOR}')`,
         width : 'auto',
         height : '150px',
-        backgroundSize : 'cover',
+        backgroundSize : 'contain',
         backgroundRepeat : 'no-repeat',
       },
       image2 : {
         backgroundImage: `url('${imagePrevCOG}')`,
         width : 'auto',
         height : '150px',
-        backgroundSize : 'cover',
+        backgroundSize : 'contain',
         backgroundRepeat : 'no-repeat',
       },
       image3 : {
         backgroundImage: `url('${imagePrevRegForm}')`,
         width : 'auto',
         height : '150px',
-        backgroundSize : 'cover',
+        backgroundSize : 'contain',
         backgroundRepeat : 'no-repeat',
       },
       image4 : {
         backgroundImage: `url('${imageDefault}')`,
         width : 'auto',
         height : '150px',
-        backgroundSize : 'cover',
+        backgroundSize : 'contain',
         backgroundRepeat : 'no-repeat',
       }
     }
@@ -100,7 +101,7 @@ class EducationAidReviewModal extends Component {
           <h4>File COG : { fileCOG.name ? fileCOG.name  : '(Not Yet Provided)'  }</h4>
           <h4>File Registration Form : { fileRegForm.name ? fileRegForm.name  : '(Not Yet Provided)'  }</h4>
           <br/>
-          <div className={ 'education-image-display' }>
+          <div className={ 'educationAid-image-display' }>
             <div style={ styles.image1 ? styles.image1 : styles.image4 }></div>
             <div style={ styles.image2 ? styles.image2 : styles.image4 }></div>
             <div style={ styles.image3 ? styles.image3 : styles.image4 }></div>
@@ -108,12 +109,8 @@ class EducationAidReviewModal extends Component {
           <br/>
           <center>
             <GenericButton
-              onClick={ () =>
-                submitForm(course, academicYear, semester, gwa, tuitionFee, registrationFee,
-                schoolId, fileOR, fileCOG, fileRegForm)
-            }
+              onClick={ onClick }
               text={ 'confirm' }
-              disabled={ this.state.disabled }
             />
             <GenericButton
               text={ 'cancel' }

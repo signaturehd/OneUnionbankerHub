@@ -18,11 +18,12 @@ import { NotifyActions } from '../../actions'
 import FormComponent from './components/EducationAidFormCardComponent'
 
 class EducationAidFragment extends BaseMVPView{
+
   constructor(props) {
     super(props)
-    this.state = {
+
+    this.state={
       showNoticeModal : false,
-      showConfirmation : false,
       noticeResponse : null,
       showNoticeResponseModal : false,
       enabledLoader : false,
@@ -39,39 +40,38 @@ class EducationAidFragment extends BaseMVPView{
       fileOR: '',
       fileCOG: '',
       fileRegForm: '',
-      imgPrevOR : null,
-      imgPrevCOG : null,
-      imgPrevRegForm : null,
+      imagePrevOR : null,
+      imagePrevCOG : null,
+      imagePrevRegForm : null,
       showBenefitFeedbackModal : false,
       educationAid: [] //education aid details
     }
   }
+
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.getEducationAid()
   }
 
   confirmation (
-  tuitionFee,
-  registrationFee,
-  totalFee,
-  collegeType,
-  schoolID,
-  course,
-  academicYear,
-  semester,
-  totalReimbursableAmount,
-  gwa,
-  fileOR,
-  fileCOG,
-  fileRegForm,
-  imgPrevOR,
-  imgPrevCOG,
-  imgPrevRegForm)
+    courseText,
+    academicYearText,
+    semesterText,
+    gwaText,
+    tuitionFeeText,
+    registrationFeeText,
+    schoolID,
+    fileOR,
+    fileCOG,
+    fileRegForm,
+    imagePrevOR,
+    imagePrevCOG,
+    imagePrevRegForm,
+    totalFeeText)
   {
-    if (( tuitionFee === 0 || tuitionFee === "") || ( registrationFee === 0 || registrationFee === "") ||
-        collegeType === "" || course === "" || academicYear === "" || semester === "" ||
-        ( gwa === 0 || gwa === "")) {
+    if (( tuitionFeeText === 0 || tuitionFeeText === "") || ( registrationFeeText === 0 || registrationFeeText === "") ||
+        schoolID === "" || courseText === "" || academicYearText === "" || semesterText === "" ||
+        ( gwaText === 0 || gwaText === "")) {
       store.dispatch(NotifyActions.addNotify({
           title : 'Education Aid',
           message : 'Please provide a valid information',
@@ -90,25 +90,30 @@ class EducationAidFragment extends BaseMVPView{
       )
     }
     else {
-      this.setState({
-        showConfirmation,
-        tuitionFee,
-        registrationFee,
-        totalFee,
-        collegeType,
-        schoolID,
-        course,
-        academicYear,
-        semester,
-        totalReimbursableAmount,
-        gwa,
-        fileOR,
-        fileCOG,
-        fileRegForm,
-        imgPrevOR,
-        imgPrevCOG,
-        imgPrevRegForm
-      })
+      const fileORName = {
+        "name" : fileOR.name,
+        "attachments" : imagePrevOR
+      }
+      const fileCOGName  = {
+        "name" : fileCOG.name,
+        "attachments" : imagePrevCOG
+      }
+      const fileRegFormName  = {
+        "name" : fileCOG.name,
+        "attachments" : imagePrevRegForm
+      }
+
+      const fileAttachments = [fileORName, fileCOGName, fileRegFormName]
+        this.presenter.addEducationAid(
+          courseText,
+          academicYearText,
+          semesterText,
+          gwaText,
+          tuitionFeeText,
+          registrationFeeText,
+          schoolID,
+          fileAttachments
+      )
     }
   }
 
@@ -132,81 +137,43 @@ class EducationAidFragment extends BaseMVPView{
     this.setState({showConfirmation: false, noticeResponse })
   }
 
-  submitForm (course, academicYear, semester, gwa, tuitionFee, registrationFee,
-  schoolId, attachments) {
-    console.log(attachments)
-    // this.presenter.addGrantAid(course, academicYear, semester, gwa, tuitionFee, registrationFee,
-    // schoolId, attachments)
-  }
-
   navigate () {
     this.props.history.push('/mybenefits/benefits/education')
   }
 
   render () {
     const {
-      tuitionFee,
-      registrationFee,
-      totalFee,
-      collegeType,
+      courseText,
+      academicYearText,
+      semesterText,
+      gwaText,
+      tuitionFeeText,
+      registrationFeeText,
       schoolID,
-      course,
-      academicYear,
-      semester,
-      totalReimbursableAmount,
-      gwa,
       fileOR,
       fileCOG,
       fileRegForm,
-      imgPrevOR,
-      imgPrevCOG,
-      imgPrevRegForm,
+      imagePrevOR,
+      imagePrevCOG,
+      imagePrevRegForm,
+      totalFeeText,
       educationAid,
       enabledLoader,
       showNoticeModal,
-      showConfirmation,
       noticeResponse,
       showNoticeResponseModal,
       showBenefitFeedbackModal
-    } = this.state
+    }=this.state
 
     return (
       <div>
         {
-          showConfirmation &&
-          <ConfirmationModal
-            educationAid = { educationAid }
-            tuitionFee = { tuitionFee }
-            registrationFee = { registrationFee }
-            totalFee = { totalFee }
-            collegeType = { collegeType }
-            schoolID = { schoolID }
-            course = { course }
-            academicYear = { academicYear }
-            semester = { semester }
-            totalReimbursableAmount = { totalReimbursableAmount }
-            gwa = { gwa }
-            fileOR = { fileOR }
-            fileCOG = { fileCOG }
-            fileRegForm = { fileRegForm }
-            imgPrevOR = { imgPrevOR }
-            imgPrevCOG = { imgPrevCOG }
-            imgPrevRegForm = { imgPrevRegForm }
-            submitForm = { (course, academicYear, semester, gwa, tuitionFee, registrationFee,
-            schoolId, attachments) =>
-              this.submitForm(course, academicYear, semester, gwa, tuitionFee, registrationFee,
-              schoolId, attachments) }
-            onClose = { () => this.setState({ showConfirmation : false }) }
-          />
-        }
-
-        {
           showNoticeModal &&
           <NoticeModal
-            onClose = { () => this.setState({ showNoticeModal : false })}
-            noticeResponse = { noticeResponse }
-            benefitId = { '13' }
-            onDismiss = { (showNoticeModal, noticeResponse) =>
+            onClose={ () => this.setState({ showNoticeModal : false })}
+            noticeResponse={ noticeResponse }
+            benefitId={ '13' }
+            onDismiss={ (showNoticeModal, noticeResponse) =>
               this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
           />
         }
@@ -214,19 +181,18 @@ class EducationAidFragment extends BaseMVPView{
         {
           showNoticeResponseModal &&
           <ResponseModal
-            onClose = { () => {
+            onClose={ () => {
               this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
             }}
-            noticeResponse = { noticeResponse }
+            noticeResponse={ noticeResponse }
           />
-
         }
 
         {
           showBenefitFeedbackModal &&
           <BenefitFeedbackModal
-            benefitId = { '13' }
-            onClose = { () => {
+            benefitId={ '13' }
+            onClose={ () => {
               this.props.history.push('/mybenefits/benefits/education'),
               this.setState({ showBenefitFeedbackModal : false })
             }}
@@ -235,59 +201,51 @@ class EducationAidFragment extends BaseMVPView{
 
         <div>
           <i
-            className = { 'back-arrow' }
-            onClick = { this.navigate.bind(this) }>
+            className={ 'back-arrow' }
+            onClick={ this.navigate.bind(this) }>
           </i>
-          <h2 className = { 'header-margin-default' }>
+          <h2 className={ 'header-margin-default' }>
             Education Aid
           </h2>
         </div>
         {
           enabledLoader ?
-           <center className = { 'circular-loader-center' }>
-             <CircularLoader show = { this.state.enabledLoader }/>
+           <center className={ 'circular-loader-center' }>
+             <CircularLoader show={ this.state.enabledLoader }/>
            </center> :
           <FormComponent
-            educationAid = { educationAid }
-            presenter = { this.presenter }
-            onClick =
-            {
-              (showConfirmation,
-              tuitionFeeText,
-              registrationFeeText,
-              totalFeeText,
-              collegeType,
-              schoolID,
-              courseText,
-              academicYearText,
-              semesterText,
-              totalReimbursableAmount,
-              gwaText,
-              fileOR,
-              fileCOG,
-              fileRegForm,
-              imgPrevOR,
-              imgPrevCOG,
-              imgPrevRegForm) =>
-              {
-                this.confirmation(showConfirmation,
-                tuitionFeeText,
-                registrationFeeText,
-                totalFeeText,
-                collegeType,
-                schoolID,
-                courseText,
-                academicYearText,
-                semesterText,
-                totalReimbursableAmount,
-                gwaText,
-                fileOR,
-                fileCOG,
-                fileRegForm,
-                imgPrevOR,
-                imgPrevCOG,
-                imgPrevRegForm)
-              }
+            educationAid={ educationAid }
+            getFormData={ (
+              getCourseText,
+              getAcademicYearText,
+              getSemesterText,
+              getGwaText,
+              getTuitionFeeText,
+              getRegistrationFeeText,
+              getSchoolID,
+              getFileOR,
+              getFileCOG,
+              getFileRegForm,
+              getImagePrevOR,
+              getImagePrevCOG,
+              getImagePrevRegForm,
+              getTotalFee
+            ) => this.confirmation(
+              getCourseText,
+              getAcademicYearText,
+              getSemesterText,
+              getGwaText,
+              getTuitionFeeText,
+              getRegistrationFeeText,
+              getSchoolID,
+              getFileOR,
+              getFileCOG,
+              getFileRegForm,
+              getImagePrevOR,
+              getImagePrevCOG,
+              getImagePrevRegForm,
+              getTotalFee
+              )
             }
           />
         }

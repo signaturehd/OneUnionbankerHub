@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Modal , GenericButton, CircularLoader } from '../../../ub-components/'
 
-import './styles/educationModalStyle.css'
+import './styles/educationAidModalStyle.css'
 
 class EducationAidModal extends Component {
   constructor (props) {
