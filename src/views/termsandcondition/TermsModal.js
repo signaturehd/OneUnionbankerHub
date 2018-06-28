@@ -28,7 +28,6 @@ class TermsModal extends BaseMVPView {
   }
 
   render () {
-
     const { onClose, terms } = this.props
     const { disableSubmit, text } = this.state
     return (
@@ -43,8 +42,7 @@ class TermsModal extends BaseMVPView {
           <br/>
           <br/>
           <CircularLoader show={true}/>
-        </center>
-        :
+        </center>        :
         <div>
           <h3>{ terms }</h3>
           <br/>

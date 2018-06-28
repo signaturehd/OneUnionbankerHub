@@ -13,9 +13,9 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class MotorcycleLoanCardComponent extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
-    this.state= {
+    this.state = {
       showPurposeOfAvailment: false,
       showOffset: false,
       showTerm: false,
@@ -30,34 +30,18 @@ class MotorcycleLoanCardComponent extends Component {
       showFileUpload: false,
       showSupplier : false,
       supplier: '',
+      payeeName: '',
       file: ''
     }
-     this.onChange=this.onChange.bind(this)
+     this.onChange = this.onChange.bind(this)
      this.onGetClicked = this.onGetClicked.bind(this)
   }
 
   onChange (e) {
-      const re=/^[0-9\.]+$/
-      if (e.target.value == '' ||  re.test(e.target.value)) {
+      const re = /^[0-9\.]+$/
+      if (e.target.value === '' ||  re.test(e.target.value)) {
         this.setState({ amountValue: e.target.value })
       }
-   }
-
-   onGetClicked (
-     poaText,
-     modeOfLoanId,
-     termId,
-     amountValue,
-     selectedSupplier,
-     file) {
-     this.props.onSubmit(
-       poaText,
-       modeOfLoanId,
-       termId,
-       amountValue,
-       selectedSupplier,
-       file
-     )
    }
 
   render () {
@@ -77,14 +61,20 @@ class MotorcycleLoanCardComponent extends Component {
       showSupplier,
       showFileUpload,
       supplier,
-      file }=this.state
+      payeeName,
+      file
+    } = this.state
+
     const {
       purposeOfAvailment,
       loanType,
       validateLoanType,
       offset,
       formAttachments,
-      selectedSupplier }=this.props
+      selectedSupplier,
+      payeeNameLabel,
+      onSubmit
+    } = this.props
 
     return (
       <div className={ 'motor-container' }>
@@ -178,6 +168,13 @@ class MotorcycleLoanCardComponent extends Component {
                 </div>
               </div>
               <div className={ 'motor-grid-form' }>
+                <GenericTextBox
+                  value={ payeeName }
+                  onChange={ e =>
+                    this.setState({ payeeName : e.target.value }) }
+                  placeholder={ payeeNameLabel && payeeNameLabel }
+                  type={ 'text' }
+                />
                 <div>
                   <br/>  <br/>
                   <span className={ 'motor-icon-forms motorEditIcon' }/>
@@ -226,7 +223,8 @@ class MotorcycleLoanCardComponent extends Component {
                     onClick={ () =>
                       this.setState({ showTerm : true }) }
                     placeholder={ 'Term of Loan' }
-                    type={ 'text' }/>
+                    type={ 'text' }
+                  />
                 </div>
               </div>
               <div className={ 'motor-grid-form' }>
@@ -251,7 +249,8 @@ class MotorcycleLoanCardComponent extends Component {
                 type={ 'button' }
                 text={ 'continue' }
                 onClick={ () =>
-                  this.onGetClicked(
+                  onSubmit(
+                    payeeName,
                     poaText,
                     modeOfLoanId,
                     termId,
@@ -286,7 +285,7 @@ class MotorcycleLoanCardComponent extends Component {
   }
 }
 
-MotorcycleLoanCardComponent.propTypes={
+MotorcycleLoanCardComponent.propTypes = {
   purposeOfAvailment : PropTypes.object,
   validateLoanType : PropTypes.array,
   loanType : PropTypes.number,

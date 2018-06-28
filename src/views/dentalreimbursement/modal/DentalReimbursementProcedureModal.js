@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { Modal , GenericButton } from '../../../ub-components/'
 
 class DentalReimbursementProcedureModal extends Component {
-
 getDisabledIds () {
   return [3, 4, 5, 6]
 }
@@ -18,10 +17,10 @@ setProcedure (selected) {
   } = this.props
 
   if (selectedProcedure.length !== 0) {
-    const valueArr = this.getDisabledIds().map(function(item){return item})
+    const valueArr = this.getDisabledIds().map(item => item)
     if (valueArr.includes(selected.id)) {
       let isExisting
-      const valueInsideArr = selectedProcedure.map(function(item){return item.id})
+      const valueInsideArr = selectedProcedure.map(item => item.id)
       for (const i in selectedProcedure) {
         if (valueInsideArr.includes(selected.id)) {
           isExisting = true
@@ -68,8 +67,7 @@ return (
               details = { procedure && procedure.name }
               text = { procedure && procedure.name }
               onClick = { () =>  this.setProcedure({ ...procedure }) } />
-          })
-          :
+          })          :
           <center>
             <h3>Please pick your Recipient</h3>
           </center>

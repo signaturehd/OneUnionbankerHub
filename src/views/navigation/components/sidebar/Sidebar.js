@@ -101,8 +101,7 @@ class SideBar extends Component {
                     { d.title }
               </li>
               <Line />
-            </div>
-              :
+            </div>              :
               <div
                 key = { idx }
               >

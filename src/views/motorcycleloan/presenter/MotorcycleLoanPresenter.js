@@ -3,10 +3,10 @@ import AddLoanMotorLoanInteractor from '../../../domain/interactor/mpl/AddLoanMo
 import GetPurposeOfAvailmentInteractor from '../../../domain/interactor/mpl/GetPurposeOfAvailmentInteractor'
 import GetFormAttachmentsInteractor from '../../../domain/interactor/mpl/GetFormAttachmentsInteractor'
 import GetValidateInteractor from '../../../domain/interactor/mpl/GetValidateInteractor'
-
 import mplValidateParam from '../../../domain/param/MplValidateParam'
 import AddMotorLoanParam from '../../../domain/param/AddMotorLoanParam'
 import mplGetFormParam from '../../../domain/param/MplGetFormParam'
+import GetManagersCheckInteractor from '../../../domain/interactor/user/GetManagersCheckInteractor'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
@@ -27,13 +27,16 @@ export default class MotorcycleLoanPresenter {
 
     this.getValidateInteractor =
       new GetValidateInteractor(container.get('HRBenefitsClient'))
+
+    this.getManagersCheckInteractor =
+      new GetManagersCheckInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
-    this.view=view
+    this.view = view
   }
 
-  /*Types*/
+  /* Types*/
 
   getMplTypes () {
     this.getTypesInteractor.execute()
@@ -79,6 +82,7 @@ export default class MotorcycleLoanPresenter {
 
   /* add motorloan or computer loan salary*/
   addLoanComputerOrMotor (
+    payeeName,
     loanId,
     purposeOfLoan,
     modeOfLoan,
@@ -88,6 +92,7 @@ export default class MotorcycleLoanPresenter {
     attachments) {
     this.view.showCircularLoader()
     this.addMotorLoanInteractor.execute(AddMotorLoanParam(
+      payeeName,
       loanId,
       purposeOfLoan,
       modeOfLoan,
@@ -107,5 +112,26 @@ export default class MotorcycleLoanPresenter {
          this.view.noticeResponse(error)
         }
       )
+    }
+
+    isManagersCheck () {
+      const isManagersCheck = this.getManagersCheckInteractor.execute()
+      if (isManagersCheck !== null) {
+        if (isManagersCheck) {
+          this.view.isManagersCheck('Dealer Name')
+          // TODO get chosen releasing center then;
+          // TODO show releasing centers if there's no releasing center chosen
+        } else {
+          this.view.isManagersCheck('Payee Name')
+        }
+      } else {
+        store.dispatch(NotifyActions.addNotify({
+            title: 'Benefits',
+            message : 'Theres a Problem Getting your profile',
+            type : 'success',
+            duration : 2000
+          })
+        )
+      }
     }
   }

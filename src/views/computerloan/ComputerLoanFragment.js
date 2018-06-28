@@ -18,23 +18,24 @@ class ComputerLoanFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-      purposeOfAvailment : [],
       poaText  : '',
       modeOfLoanId : '',
       amountValue : '',
       termId : '',
       selectedSupplier : '',
+      payeeNameLabel : '',
+      purposeOfAvailment : [],
       file : [],
       formAttachments : [],
-      loanType : 5,
       validateLoanType : [],
       offset : [],
       enabledLoader : false,
-      noticeResponse : null, /* notice response*/
       showNoticeResponseModal : false,
       showNoticeModal : false,
       showConfirmation : false,
       showBenefitFeedbackModal: false,
+      noticeResponse : null, /* notice response*/
+      loanType : 5,
     }
   }
 
@@ -45,6 +46,7 @@ class ComputerLoanFragment extends BaseMVPView {
       this.state.loanType,
       1,
       1)
+    this.presenter.isManagersCheck()
   }
 
   /* Notice Response*/
@@ -88,15 +90,19 @@ class ComputerLoanFragment extends BaseMVPView {
     this.setState({ noticeResponse })
   }
 
+  isManagersCheck (payeeNameLabel) {
+    this.setState({ payeeNameLabel })
+  }
+
   sendFormData (
+    payeeName,
     poaText,
     modeOfLoanId,
     termId,
     amountValue,
     selectedSupplier,
     file) {
-      if(poaText === "" || poaText === null)
-      {
+      if (poaText === '' || poaText === null) {
         store.dispatch(NotifyActions.addNotify({
             title : 'Computer Loan',
             message : 'Please include the Purpose of Availment',
@@ -104,8 +110,7 @@ class ComputerLoanFragment extends BaseMVPView {
             duration : 2000
           })
         )
-      }
-      else if (amountValue === 0 || grantAmount === "") {
+      } else if (amountValue === 0 || grantAmount === '') {
         store.dispatch(NotifyActions.addNotify({
             title : 'Computer Loan',
             message : 'Please include the Desired Amount',
@@ -113,8 +118,7 @@ class ComputerLoanFragment extends BaseMVPView {
             duration : 2000
           })
         )
-      }
-      else if ( termId === null || termId === "") {
+      } else if (termId === null || termId === '') {
         store.dispatch(NotifyActions.addNotify({
             title : 'Computer Loan',
             message : 'Please specify the Term and Rates',
@@ -122,8 +126,7 @@ class ComputerLoanFragment extends BaseMVPView {
             duration : 2000
           })
         )
-      }
-      else if (!file) {
+      } else if (!file) {
         store.dispatch(NotifyActions.addNotify({
             title : 'Computer Loan',
             message : 'Please check the file attachments',
@@ -131,9 +134,9 @@ class ComputerLoanFragment extends BaseMVPView {
             duration : 2000
           })
         )
-      }
-       else {
+      } else {
           this.presenter.addLoan(
+            payeeName,
             poaText,
             modeOfLoanId,
             termId,
@@ -162,7 +165,9 @@ class ComputerLoanFragment extends BaseMVPView {
       amountValue,
       termId,
       selectedSupplier,
-      file } = this.state
+      payeeNameLabel,
+      file
+    } = this.state
 
     return (
       <div>
@@ -216,30 +221,23 @@ class ComputerLoanFragment extends BaseMVPView {
               validateLoanType = { validateLoanType }
               formAttachments = { formAttachments }
               offset = { offset }
-              onClick={ () =>
-                this.sendFormData(
+              payeeNameLabel = { payeeNameLabel }
+              onSubmit = {(
+                payeeName,
+                poaText,
+                modeOfLoanId,
+                amountValue,
+                termId,
+                selectedSupplier,
+                file) => this.sendFormData(
+                  payeeName,
                   poaText,
                   modeOfLoanId,
                   amountValue,
                   termId,
                   selectedSupplier,
                   file
-                  )
-                }
-              onSubmit={ (
-                getPoaTextData,
-                getModeOfLoanData,
-                getAmountValueData,
-                getTermData,
-                getSupplierData,
-                getFileData) => this.setState({
-                  poaText : getPoaTextData,
-                  modeOfLoanId : getModeOfLoanData,
-                  amountValue : getAmountValueData,
-                  termId : getTermData,
-                  selectedSupplier : getSupplierData,
-                  file : getFileData
-                })
+                )
               }
             />
           }

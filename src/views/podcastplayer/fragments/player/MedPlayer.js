@@ -23,7 +23,6 @@ const {
 
 
 class MedPlayer extends Component {
-
   render () {
     let IsCompleted
     const { selectedPodcast } = this.props
@@ -52,7 +51,7 @@ class MedPlayer extends Component {
     return (
       <div className = { 'media-player-content' }>
         <Media>
-          {({ isFullscreen, playPause, currentTime, duration}) =>
+          {({ isFullscreen, playPause, currentTime, duration }) =>
           <div
             className={`media-player${  isFullscreen ? ' media-player--fullscreen' : ''}`}
             tabIndex="0">
@@ -84,10 +83,9 @@ class MedPlayer extends Component {
       </div>
     )
 
-    function isCompleted(currentTime, duration) {
-      if(currentTime>=duration)
-      {
-        IsCompleted= 'Completed'
+    function isCompleted (currentTime, duration) {
+      if (currentTime >= duration) {
+        IsCompleted = 'Completed'
       }
     }
   }

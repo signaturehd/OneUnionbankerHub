@@ -39,13 +39,13 @@ import SalaryLoanFragment from '../salaryloan/SalaryLoanFragment'
 import MotorcycleLoanFragment from '../motorcycleloan/MotorcycleLoanFragment'
 /*  MPL Motorcycle */
 import ComputerLoanFragment from '../computerloan/ComputerLoanFragment'
-/*Transaction*/
+/* Transaction*/
 import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
 import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
 import CarLeaseNewFragment from '../carlease/CarLeaseNewFragment'
 import CarLeaseOldFragment from '../carlease/CarLeaseOldFragment'
 
-/*Payslip*/
+/* Payslip*/
 import Payslip from '../payslip/PayslipFragment'
 
 import Carousel from '../carousel/Carousel'
@@ -109,8 +109,11 @@ class NavigationView extends BaseMVPView {
     this.setState({ wizard })
   }
 
-  render () {
+  relogin () {
+    this.props.history.push('/')
+  }
 
+  render () {
     const {
       displayShow,
       displayNavIcon,
@@ -128,7 +131,7 @@ class NavigationView extends BaseMVPView {
       }
     }
 
-    let locationPath = history.location.pathname
+    const locationPath = history.location.pathname
     return (
       <div className = { 'navigation-body-div' }>
         { super.render() }
@@ -151,14 +154,16 @@ class NavigationView extends BaseMVPView {
             showLogoutModal &&
             <NavigationViewModal
               logout = { () => this.presenter.logout() }
-              onClose = { () => this.setState({showLogoutModal : false}) }
+              onClose = { () => this.setState({ showLogoutModal : false }) }
             />
           }
 
           {
             login &&
             <ReloginModal
-              relogin = { () => { this.presenter.relogin(), history.push('/') } }
+              relogin = { () => {
+ this.presenter.relogin() 
+} }
             />
           }
               <Drawer >

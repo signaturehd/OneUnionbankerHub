@@ -10,7 +10,6 @@ class CarDealerQuotation extends Component {
   }
 
   render () {
-
     const { onClose, onUserConfirmation } = this.props
 
     return (
@@ -24,10 +23,10 @@ class CarDealerQuotation extends Component {
         <br/>
         <center className={ 'car-grid-modal' }>
           <GenericButton
-            onClick={ ()=> onUserConfirmation(false, false) }
+            onClick={ () => onUserConfirmation(false, false) }
             text={ 'No' }/>
           <GenericButton
-            onClick={ ()=> onUserConfirmation(false, true) }
+            onClick={ () => onUserConfirmation(false, true) }
             text={ 'Yes' } />
         </center>
       </Modal>
