@@ -447,8 +447,8 @@ export default class HRBenefitsService {
       generalWeightedAverage : educationAidParam.gwa,
       tuitionFee : educationAidParam.tuitionFee,
       registrationFee : educationAidParam.registrationFee,
-      schoolId : educationAidParam.collegeID,
-      attachments : []
+      schoolId : educationAidParam.schoolId,
+      attachments : educationAidParam.attachments
     }
     return this.apiClient.post('v1/reimbursements/education/personal/submit', educationAidObject, {
       headers : { token }
