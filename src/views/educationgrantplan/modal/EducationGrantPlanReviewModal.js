@@ -54,15 +54,16 @@ class EducationGrantPlanReviewModal extends Component {
               <CircularLoader show={true}/>
             </center>              :
             <div>
-              <h2>Education Grant - Aid Description</h2>
+              <h2>Education Grant - Plan Description</h2>
               <br/>
-              <h4>College/University : { grantAid.college }</h4>
-              <h4>Course : { grantAid.course }</h4>
-              <h4>Academic Year : { grantAid.academicYear }</h4>
-              <h4>Semester : { grantAid.semester }</h4>
+              <h4>Dependentsx : { grantPlan.dependent }</h4>
+              <h4>Company : { grantPlan.company }</h4>
+              <h4>Duration of Premium Payment : { grantPlan.durationOfPremium }</h4>
+              <h4>Effectivity Date/Coverage Insurance : { grantPlan.effectivityDate }</h4>
+              <h4>Maturity : { grantPlan.maturityDate }</h4>
               <h4>Type of Grant : { grantType }</h4>
               <h4>Amount : { grantAmount }</h4>
-              <h4>Attachments : { file.name }</h4>
+              <h4>Form Attachments : { file.name }</h4>
               <br/>
               <div className = { 'education-image-display' }>
                 <div style = {styles.image1}></div>

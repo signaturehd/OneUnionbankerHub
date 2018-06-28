@@ -18,10 +18,12 @@ class EducationGrantPlanFormCardComponent extends Component {
     super (props)
     this.state = {
       showGrantTypes : false,
-      grantType: '',
+      grantId : '',
+      grantType : '',
       grantAmount : '',
       attachment : 'Form Attachments',
-      file: ''
+      file: '',
+      imagePreviewUrl: null
     }
   }
 
@@ -34,17 +36,20 @@ class EducationGrantPlanFormCardComponent extends Component {
 
     const {
       grantPlan,
-      presenter
+      presenter,
+      onClick
     } = this.props
 
     const {
       showGrantTypes,
+      grantId,
       grantType,
       grantAmount,
       attachment,
-      file
+      file,
+      imagePreviewUrl
     } = this.state
-
+    
     return (
       <div className = {'educ-container'}>
 
@@ -54,8 +59,9 @@ class EducationGrantPlanFormCardComponent extends Component {
             tog = { grantPlan.grants }
             presenter = { presenter }
             onSubmit = {
-              (grantType, grantAmount, attachment) => {
+              (grantId, grantType, grantAmount, attachment) => {
                 this.setState({
+                  grantId,
                   grantType,
                   grantAmount,
                   attachment
@@ -141,7 +147,8 @@ class EducationGrantPlanFormCardComponent extends Component {
                     if (isValid) {
                       reader.onloadend = () => {
                         this.setState({
-                          file
+                          file,
+                          imagePreviewUrl: reader.result
                         })
                       }
                       reader.readAsDataURL(file)
@@ -156,11 +163,13 @@ class EducationGrantPlanFormCardComponent extends Component {
                      }
                   }
                 }
-                />
+              />
               <GenericButton
                 type = { 'button' }
                 text = { 'continue' }
-                onClick = { () => {} }
+                onClick = {
+                  () => onClick(true, grantId, grantType, grantAmount, file, imagePreviewUrl)
+                }
                 className = { 'educ-submit' } />
             </div>
           </Card>
