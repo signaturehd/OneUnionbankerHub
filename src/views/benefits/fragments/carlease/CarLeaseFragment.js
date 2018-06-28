@@ -14,7 +14,7 @@ class CarLeaseFragment extends Component {
     this.navigate = this.navigate.bind(this)
   }
 
-  navigate (bool) {
+  navigate () {
     this.props.history.push('/mybenefits/benefits')
   }
 
