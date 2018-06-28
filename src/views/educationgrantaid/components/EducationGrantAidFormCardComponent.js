@@ -147,7 +147,9 @@ class EducationGrantAidFormCardComponent extends Component {
                       case 'pdf' :
                         isValid = true
                     }
-
+                  }
+                }
+                />
               {
                 imagePreviewUrl &&
                 attachment &&
