@@ -12,12 +12,11 @@ class CarLeaseFragment extends Component {
     }
 
     this.navigate = this.navigate.bind(this)
-
   }
 
   navigate (bool) {
     if (bool) {
-      this.setState({carValidate : bool})
+      this.setState({ carValidate : bool })
     } else {
       this.props.history.push('/mybenefits/benefits')
     }
@@ -55,8 +54,7 @@ class CarLeaseFragment extends Component {
               <center>
                 <h2>Please wait while we&#39;re processing car lease module</h2>
                 <CircularLoader show={true}/>
-              </center>
-              :
+              </center>              :
               <div className={ 'card-container' }>
                 {
                 benefitsOptions.map((value, idx) => (

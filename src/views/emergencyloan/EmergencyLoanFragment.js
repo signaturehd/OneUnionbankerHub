@@ -65,7 +65,7 @@ class EmergencyLoanFragment extends BaseMVPView {
     this.setState({ purposeOfAvailment })
   }
 
-  /*Loader*/
+  /* Loader*/
 
   hideCircularLoader () {
     this.setState({ enabledLoader : false })

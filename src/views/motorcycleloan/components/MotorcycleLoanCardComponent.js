@@ -13,9 +13,9 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class MotorcycleLoanCardComponent extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
-    this.state= {
+    this.state = {
       showPurposeOfAvailment: false,
       showOffset: false,
       showTerm: false,
@@ -32,13 +32,13 @@ class MotorcycleLoanCardComponent extends Component {
       supplier: '',
       file: ''
     }
-     this.onChange=this.onChange.bind(this)
+     this.onChange = this.onChange.bind(this)
      this.onGetClicked = this.onGetClicked.bind(this)
   }
 
   onChange (e) {
-      const re=/^[0-9\.]+$/
-      if (e.target.value == '' ||  re.test(e.target.value)) {
+      const re = /^[0-9\.]+$/
+      if (e.target.value === '' ||  re.test(e.target.value)) {
         this.setState({ amountValue: e.target.value })
       }
    }
@@ -77,14 +77,14 @@ class MotorcycleLoanCardComponent extends Component {
       showSupplier,
       showFileUpload,
       supplier,
-      file }=this.state
+      file } = this.state
     const {
       purposeOfAvailment,
       loanType,
       validateLoanType,
       offset,
       formAttachments,
-      selectedSupplier }=this.props
+      selectedSupplier } = this.props
 
     return (
       <div className={ 'motor-container' }>
@@ -286,7 +286,7 @@ class MotorcycleLoanCardComponent extends Component {
   }
 }
 
-MotorcycleLoanCardComponent.propTypes={
+MotorcycleLoanCardComponent.propTypes = {
   purposeOfAvailment : PropTypes.object,
   validateLoanType : PropTypes.array,
   loanType : PropTypes.number,

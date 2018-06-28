@@ -121,7 +121,8 @@ export default class HRBenefitsService {
         headers: {
            'Content-Type': 'application/json',
            token,
-           referenceId : Math.random().toString(36).substring(7),
+           referenceId : Math.random().toString(36)
+.substring(7),
        }
      })
    }
@@ -332,7 +333,7 @@ export default class HRBenefitsService {
     mplPurposeLoanAddParam) {
     const formData = new FormData()
     const multiLoanBodyObject = {
-      accountNumber : accountNumber,
+      accountNumber,
       relesingCenter : releasingCenter,
       loan : {
         id : mplPurposeLoanAddParam.loanId,
@@ -505,5 +506,4 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
-
 }

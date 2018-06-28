@@ -64,10 +64,9 @@ class LibraryFragment extends BaseMVPView {
   }
 
   showBooks (books) {
-    if (this.state.books.length == 0) {
+    if (this.state.books.length === 0) {
       this.setState({ books })
-    } else
-    {
+    } else {
       const updateBooks = [...this.state.books]
       updateBooks.push(...books)
       this.setState({ books: updateBooks })
@@ -75,7 +74,7 @@ class LibraryFragment extends BaseMVPView {
   }
 
   showRecommendation (recommended) {
-    if (this.state.recommended.length == 0) {
+    if (this.state.recommended.length === 0) {
       this.setState({ recommended })
     } else {
       const updateRecommendedBooks = [...this.state.recommended]
@@ -85,10 +84,9 @@ class LibraryFragment extends BaseMVPView {
   }
 
   showBorrowed (borrowed) {
-    if (this.state.borrowed.length == 0) {
+    if (this.state.borrowed.length === 0) {
       this.setState({ borrowed })
-    } else
-    {
+    } else {
       const updateBorrowedBooks = [...this.state.borrowed]
       updateBorrowedBooks.push(...borrowed)
       this.setState({ borrowed: updateBorrowedBooks })
@@ -107,11 +105,11 @@ class LibraryFragment extends BaseMVPView {
 
   tick () {
     const ref = this.state.refresh
-    this.setState({refresh: (ref + 1)})
+    this.setState({ refresh: (ref + 1) })
     if (ref >= 1) {
       this.stopTimer()
       this.getFilterBooks (this.state.pageNumber, this.state.searchString)
-      this.setState({refresh: 0})
+      this.setState({ refresh: 0 })
     }
   }
 
@@ -140,7 +138,7 @@ class LibraryFragment extends BaseMVPView {
       pageNumber,
       borrowedPageNumber
     } = this.state
-    let filteredBooks = books
+    const filteredBooks = books
     const search = searchString.trim().toLowerCase()
     return (
       <div>
@@ -184,13 +182,13 @@ class LibraryFragment extends BaseMVPView {
               <Switch>
                 <Route path = '/mylearning/books/recommended'
                   render = { props => <BookRecommendationFragment
-                    page = { (pageNumber) => this.getBooks(pageNumber) } presenter = { this.presenter } recommended = { recommended }  filteredBooks = { filteredBooks }/> } />
+                    page = { pageNumber => this.getBooks(pageNumber) } presenter = { this.presenter } recommended = { recommended }  filteredBooks = { filteredBooks }/> } />
                 <Route path = '/mylearning/books/history'
                   render = { props => <BookBorrowedFragment
                     presenter = { this.presenter } borrowed = { borrowed }  /> } />
                 <Route path = '/mylearning/books'
                   render = { props => <BookListFragment
-                    page = { (pageNumber) => this.getBooks(pageNumber) } presenter = { this.presenter } filteredBooks = { filteredBooks } /> } />
+                    page = { pageNumber => this.getBooks(pageNumber) } presenter = { this.presenter } filteredBooks = { filteredBooks } /> } />
              </Switch>
           </section>
         </div>

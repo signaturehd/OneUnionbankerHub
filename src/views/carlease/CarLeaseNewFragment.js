@@ -43,7 +43,7 @@ class CarLeaseNewFragment extends BaseMVPView {
     primaryColor,
     secondaryColor,
     file) {
-      if(
+      if (
         carBrand === null ||
         carModel === null ||
         makeYear === null ||

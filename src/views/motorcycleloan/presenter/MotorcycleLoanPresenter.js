@@ -30,10 +30,10 @@ export default class MotorcycleLoanPresenter {
   }
 
   setView (view) {
-    this.view=view
+    this.view = view
   }
 
-  /*Types*/
+  /* Types*/
 
   getMplTypes () {
     this.getTypesInteractor.execute()

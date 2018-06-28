@@ -27,7 +27,6 @@ export default class MultiPurposeLoanPresenter {
 
     this.getValidateInteractor =
       new GetValidateInteractor(container.get('HRBenefitsClient'))
-
   }
 
   setView (view) {

@@ -8,7 +8,7 @@ import mplValidateParam from '../../../domain/param/MplValidateParam'
 import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
 import mplGetFormParam from '../../../domain/param/MplGetFormParam'
 
-import store from '../../../actions'
+import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
 export default class MultiPurposeLoanPresenter {
@@ -33,7 +33,7 @@ export default class MultiPurposeLoanPresenter {
     this.view = view
   }
 
-  /*Types*/
+  /* Types*/
 
   getMplTypes () {
     this.getTypesInteractor.execute()
@@ -78,8 +78,7 @@ export default class MultiPurposeLoanPresenter {
         } // create instance of "New Loan"
 
         offsetLoan.offset ?
-        offsetLoan.offset.push(modeOfLoanStatic)
-        :
+        offsetLoan.offset.push(modeOfLoanStatic)        :
         offsetLoan.offset.push(modeOfLoan) // add the New Loan to the offsets option
 
         return offsetLoan

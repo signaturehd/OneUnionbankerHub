@@ -95,8 +95,7 @@ class ComputerLoanFragment extends BaseMVPView {
     amountValue,
     selectedSupplier,
     file) {
-      if(poaText === "" || poaText === null)
-      {
+      if (poaText === '' || poaText === null) {
         store.dispatch(NotifyActions.addNotify({
             title : 'Computer Loan',
             message : 'Please include the Purpose of Availment',
@@ -104,8 +103,7 @@ class ComputerLoanFragment extends BaseMVPView {
             duration : 2000
           })
         )
-      }
-      else if (amountValue === 0 || grantAmount === "") {
+      } else if (amountValue === 0 || grantAmount === '') {
         store.dispatch(NotifyActions.addNotify({
             title : 'Computer Loan',
             message : 'Please include the Desired Amount',
@@ -113,8 +111,7 @@ class ComputerLoanFragment extends BaseMVPView {
             duration : 2000
           })
         )
-      }
-      else if ( termId === null || termId === "") {
+      } else if (termId === null || termId === '') {
         store.dispatch(NotifyActions.addNotify({
             title : 'Computer Loan',
             message : 'Please specify the Term and Rates',
@@ -122,8 +119,7 @@ class ComputerLoanFragment extends BaseMVPView {
             duration : 2000
           })
         )
-      }
-      else if (!file) {
+      } else if (!file) {
         store.dispatch(NotifyActions.addNotify({
             title : 'Computer Loan',
             message : 'Please check the file attachments',
@@ -131,8 +127,7 @@ class ComputerLoanFragment extends BaseMVPView {
             duration : 2000
           })
         )
-      }
-       else {
+      } else {
           this.presenter.addLoan(
             poaText,
             modeOfLoanId,

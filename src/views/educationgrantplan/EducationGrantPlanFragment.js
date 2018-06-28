@@ -17,8 +17,8 @@ import { NotifyActions } from '../../actions'
 
 import FormComponent from './components/EducationGrantPlanFormCardComponent'
 
-class EducationGrantPlanFragment extends BaseMVPView{
-  constructor(props) {
+class EducationGrantPlanFragment extends BaseMVPView {
+  constructor (props) {
     super(props)
     this.state = {
       showNoticeModal : false,
@@ -42,7 +42,7 @@ class EducationGrantPlanFragment extends BaseMVPView{
   }
 
   confirmation (showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl) {
-    if (grantType === "") {
+    if (grantType === '') {
       store.dispatch(NotifyActions.addNotify({
           title : 'education Grant - Plan',
           message : 'Please double check your type of grant',
@@ -50,8 +50,7 @@ class EducationGrantPlanFragment extends BaseMVPView{
           duration : 2000
         })
       )
-    }
-    else if ( grantAmount === 0 || grantAmount === "") {
+    } else if (grantAmount === 0 || grantAmount === '') {
       store.dispatch(NotifyActions.addNotify({
           title : 'education Grant - Plan',
           message : 'Please double check your grant amount',
@@ -59,8 +58,7 @@ class EducationGrantPlanFragment extends BaseMVPView{
           duration : 2000
         })
       )
-    }
-    else if (!file) {
+    } else if (!file) {
       store.dispatch(NotifyActions.addNotify({
           title : 'education Grant - Plan',
           message : 'Please double check your attachments',
@@ -68,8 +66,7 @@ class EducationGrantPlanFragment extends BaseMVPView{
           duration : 2000
         })
       )
-    }
-    else {
+    } else {
       this.setState({
         showConfirmation,
         grantId,
@@ -98,7 +95,7 @@ class EducationGrantPlanFragment extends BaseMVPView{
   }
 
   noticeResponse (noticeResponse) {
-    this.setState({showConfirmation: false, noticeResponse })
+    this.setState({ showConfirmation: false, noticeResponse })
   }
 
   submitForm (grantId, grantAmount, file) {

@@ -33,7 +33,6 @@ class EducationGrantAidFormCardComponent extends Component {
   }
 
   render () {
-
     const {
       grantAid,
       presenter,
@@ -123,7 +122,7 @@ class EducationGrantAidFormCardComponent extends Component {
                 value = { file.name }
                 placeholder = { attachment }
                 onChange = {
-                  (e) => {
+                  e => {
                     e.preventDefault()
                     const reader = new FileReader()
                     const file = e.target.files[0]

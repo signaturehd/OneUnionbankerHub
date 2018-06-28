@@ -14,7 +14,7 @@ import { NotifyActions } from '../../../actions/'
 class ComputerFormCardComponent extends Component {
   constructor (props) {
     super(props)
-    this.state={
+    this.state = {
       showPurposeOfAvailment: false,
       showOffset: false,
       showTerm: false,
@@ -31,13 +31,13 @@ class ComputerFormCardComponent extends Component {
       showSupplier : false,
       supplier: ''
     }
-    this.onGetClicked=this.onGetClicked.bind(this)
-    this.onChange=this.onChange.bind(this)
+    this.onGetClicked = this.onGetClicked.bind(this)
+    this.onChange = this.onChange.bind(this)
   }
 
   onChange (e) {
-      const re=/^[0-9\.]+$/
-      if (e.target.value == '' ||  re.test(e.target.value)) {
+      const re = /^[0-9\.]+$/
+      if (e.target.value === '' ||  re.test(e.target.value)) {
         this.setState({ amountValue: e.target.value })
       }
    }
@@ -75,7 +75,7 @@ class ComputerFormCardComponent extends Component {
       subCategoryId,
       showFileUpload,
       showSupplier,
-      supplier }=this.state
+      supplier } = this.state
 
     const {
       purposeOfAvailment,
@@ -84,7 +84,7 @@ class ComputerFormCardComponent extends Component {
       offset,
       selectedSupplier,
       group,
-      container }=this.props
+      container } = this.props
 
     return (
       <div className={'computer-container'}>
@@ -257,7 +257,7 @@ class ComputerFormCardComponent extends Component {
                     amountValue,
                     termId ? termId : '',
                     selectedSupplier ? selectedSupplier : '',
-                    file ? file : '' )
+                    file ? file : '')
                   }
                 className={ 'computer-submit' } />
             </div>
@@ -286,7 +286,7 @@ class ComputerFormCardComponent extends Component {
   }
 }
 
-ComputerFormCardComponent.propTypes={
+ComputerFormCardComponent.propTypes = {
   purposeOfAvailment : PropTypes.array,
   validateLoanType : PropTypes.array,
   group : PropTypes.string,
