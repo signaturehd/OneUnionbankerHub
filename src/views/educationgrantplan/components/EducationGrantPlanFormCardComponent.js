@@ -21,7 +21,7 @@ class EducationGrantPlanFormCardComponent extends Component {
       grantId : '',
       grantType : '',
       grantAmount : '',
-      attachment : 'Form Attachments',
+      attachment : null,
       file: '',
       imagePreviewUrl: null
     }
@@ -49,7 +49,17 @@ class EducationGrantPlanFormCardComponent extends Component {
       file,
       imagePreviewUrl
     } = this.state
-    
+
+    const styles = {
+      image1 : {
+        backgroundImage: `url('${imagePreviewUrl}')`,
+        width : 'auto',
+        height : '60px',
+        backgroundSize : 'contain',
+        backgroundRepeat : 'no-repeat',
+      }
+    }
+
     return (
       <div className = {'educ-container'}>
 
@@ -123,47 +133,73 @@ class EducationGrantPlanFormCardComponent extends Component {
                 placeholder = { 'Grant Amount' }
                 type = { 'text' }/>
               <br/>
-              <FileUploader
-                accept="image/gif,image/jpeg,image/jpg,image/png,"
-                placeholder = { attachment }
-                value = { file.name }
-                onChange = {
-                  (e) => {
-                    e.preventDefault()
-                    const reader = new FileReader()
-                    const file = e.target.files[0]
-                    let isValid
-                    switch (this.getExtension(file.type).toLowerCase()) {
-                      case 'jpeg' :
-                        isValid = true
-                      case 'jpg' :
-                        isValid = true
-                      case 'png' :
-                        isValid = true
-                      case 'pdf' :
-                        isValid = true
-                    }
 
-                    if (isValid) {
-                      reader.onloadend = () => {
-                        this.setState({
-                          file,
-                          imagePreviewUrl: reader.result
-                        })
+              {
+                imagePreviewUrl &&
+                attachment &&
+                <div>
+                  <label className="educ-form-title">{ attachment }</label>
+                  <div className="educ-attachment-form">
+                    <img
+                      src={ require('../../../ub-components/Notify/images/x-circle.png') }
+                      className='close-button'
+                      onClick={
+                        () => {
+                          this.setState({ file : '', imagePreviewUrl : null })
+                        }
                       }
-                      reader.readAsDataURL(file)
-                   } else {
-                       store.dispatch(NotifyActions.addNotify({
-                           title : 'File Uploading',
-                           message : 'The accepted attachments are JPG/PNG/PDF',
-                           type : 'warning',
-                           duration : 2000
-                         })
-                       )
-                     }
+                    />
+                    <div style = {styles.image1}><h6 className="educ-file-name">{ file.name }</h6></div>
+                  </div>
+                </div>
+              }
+
+              {
+                !imagePreviewUrl &&
+                attachment &&
+                <FileUploader
+                  accept="image/gif,image/jpeg,image/jpg,image/png,"
+                  placeholder = { attachment }
+                  value = { file.name }
+                  onChange = {
+                    (e) => {
+                      e.preventDefault()
+                      const reader = new FileReader()
+                      const file = e.target.files[0]
+                      let isValid
+                      switch (this.getExtension(file.type).toLowerCase()) {
+                        case 'jpeg' :
+                          isValid = true
+                        case 'jpg' :
+                          isValid = true
+                        case 'png' :
+                          isValid = true
+                        case 'pdf' :
+                          isValid = true
+                      }
+
+                      if (isValid) {
+                        reader.onloadend = () => {
+                          this.setState({
+                            file,
+                            imagePreviewUrl: reader.result
+                          })
+                        }
+                        reader.readAsDataURL(file)
+                     } else {
+                         store.dispatch(NotifyActions.addNotify({
+                             title : 'File Uploading',
+                             message : 'The accepted attachments are JPG/PNG/PDF',
+                             type : 'warning',
+                             duration : 2000
+                           })
+                         )
+                       }
+                    }
                   }
-                }
-              />
+                />
+              }
+
               <GenericButton
                 type = { 'button' }
                 text = { 'continue' }
