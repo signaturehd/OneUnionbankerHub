@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './styles/boarding-styles.css'
+import './styles/boardingStyle.css'
 
 
 import {
@@ -33,19 +33,10 @@ class ImgPrevUploader extends Component {
   }
   this.handleImageChange = this.handleImageChange.bind(this)
 }
-
-/*
-Official Certificate Atachments
-*/
-
 getExtension (filename) {
   const parts = filename.split('/')
   return parts[parts.length - 1]
 }
-
-/*
-  Form Submission
-*/
 
 handleImageChange (e) {
   e.preventDefault()
@@ -58,8 +49,6 @@ handleImageChange (e) {
     case 'jpg' :
       isValid = true
     case 'png' :
-      isValid = true
-    case 'pdf' :
       isValid = true
   }
 
@@ -126,13 +115,11 @@ render () {
           <FileUploader
             accept="image/gif,image/jpeg,image/jpg,image/png,"
             onChange = { this.handleImageChange }
-            value = { this.state.file.name } />
+            value = { this.state.file.name }
+            placeholder={'Attach Photo'}/>
         </div>
         </Card>
         <Card>
-          <h2>
-            Uploaded Files
-          </h2>
           <div>
             <div >
              <div>

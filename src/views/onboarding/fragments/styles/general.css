@@ -1,6 +1,16 @@
-
 .general-container {
   max-width: 100%;
+}
+.summary-card-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 20px;
+}
+.summary-card-component {
+  padding: 25px 5px 25px 5px;
+}
+.summary-card-headers {
+text-align: center
 }
 
 .general-form-card {

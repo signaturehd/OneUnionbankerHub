@@ -15,6 +15,11 @@
   width: 40%;
 }
 
+.optical-modal-action-button {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .optical-image-display {
   display:grid;
   grid-column-gap: 5px;

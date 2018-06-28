@@ -134,15 +134,6 @@
   border: 0px #e2d3d300;
 }
 
-.notify-container {
-  position: fixed;
-  width: 20%;
-  right: 10px;
-  bottom: 10px;
-  display: grid;
-  z-index: 99;
-  grid-row-gap: 10px;
-}
 .password__show{
     background-image: url('../../../images/icons/eye2.png');
     float: right;

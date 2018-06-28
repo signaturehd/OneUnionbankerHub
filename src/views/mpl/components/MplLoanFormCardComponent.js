@@ -75,7 +75,7 @@ class MplFormLoanCardComponent extends Component {
           })
         )
       } else {
-        this.props.presenter.addLoan(id, poaText, mode, term, desiredAmount, { file1, file2 })
+        this.props.presenter.addLoan(id, poaText, mode, term, desiredAmount, [ file1, file2 ])
       }
      }
    }
@@ -286,13 +286,13 @@ class MplFormLoanCardComponent extends Component {
                 onClick = { () =>
                   this.setState({ showOffset : true }) }
                 placeholder = { 'Mode of Loan' }
-                value = { offset ? 'New Loan' : modeOoffsetfLoan }
+                value = { offset ? modeOfLoanText : 'New Loan' }
                 type = { 'text' }/>
               <GenericTextBox
                 value = { amountValue }
                 onChange = { this.onChange }
                 placeholder = { 'Desired Amount' }
-                maxLength = { validateLoanType && ( '' + validateLoanType.maximumLoanableAmount).length }
+                maxLength = { '11' }
                 type = { 'text' }/>
               <GenericTextBox
                 value = { `${ termOfLoan } (${ rateOfLoan } %)` }
@@ -320,10 +320,20 @@ class MplFormLoanCardComponent extends Component {
               formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
                 <FileUploader
                    onChange = { this.handleImageChange }
+                   value = { file1.name }
                    placeholder = {  attachmentsLabel ? attachmentsLabel : 0 }
                 />
               )
             }
+            </div>
+            <div className = 'mpl-main'>
+              <div className = { 'mpl-review' }>
+               <div className = { 'mpl-image-view ' }>
+                 { $imagePreview1 }
+               </div>
+               <div className = { 'mpl-image-view ' }>
+               </div>
+             </div>
             </div>
           </Card>
           }
