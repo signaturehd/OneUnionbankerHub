@@ -33,9 +33,9 @@ class EducationAidFormCardComponent extends Component {
       fileOR: '',
       fileCOG: '',
       fileRegForm: '',
-      imgPrevOR: null,
-      imgPrevCOG: null,
-      imgPrevRegForm: null,
+      imagePrevOR: null,
+      imagePrevCOG: null,
+      imagePrevRegForm: null,
       computations: ''
     }
   }
@@ -84,12 +84,13 @@ class EducationAidFormCardComponent extends Component {
       fileOR,
       fileCOG,
       fileRegForm,
-      imgPrevOR,
-      imgPrevCOG,
-      imgPrevRegForm,
+      imagePrevOR,
+      imagePrevCOG,
+      imagePrevRegForm,
       computations
       }=this.state
     const resultTotalFee=tuitionFeeText && registrationFeeText ? parseFloat(tuitionFeeText) + parseFloat(registrationFeeText) : 0.00
+
     return (
       <div className={'educ-container'}>
         <div className={ 'educ-grid-column-2' }>
@@ -128,9 +129,9 @@ class EducationAidFormCardComponent extends Component {
                 fileOR={ fileOR }
                 fileCOG={ fileCOG }
                 fileRegForm={ fileRegForm }
-                imgPrevOR={ imgPrevOR }
-                imgPrevCOG={ imgPrevCOG }
-                imgPrevRegForm={ imgPrevRegForm }
+                imagePrevOR={ imagePrevOR }
+                imagePrevCOG={ imagePrevCOG }
+                imagePrevRegForm={ imagePrevRegForm }
                 onClose={ () => this.setState({ showReviewEducationModal : false }) }
                 />
             }
@@ -158,7 +159,7 @@ class EducationAidFormCardComponent extends Component {
                 (e) =>{
                   const re=/^[0-9\.]+$/
                   if (e.target.value == '' || re.test(e.target.value)) {
-                    this.setState({registrationFeeText: e.target.value })
+                    this.setState({ registrationFeeText: e.target.value })
                   }
                 }
                }
@@ -210,17 +211,58 @@ class EducationAidFormCardComponent extends Component {
               type={ 'text' }
               placeholder={ 'Total Reimbursable Amount' }/>
               <br/>
+            <FileUploader
+              accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
+              value={ fileOR.name }
+              placeholder={ 'Official Receipt of Tuition Fee' }
+              onChange={
+                (e) => {
+                  e.preventDefault()
+                  const reader=new FileReader()
+                  const file=e.target.files[0]
+                  let isValid
+                  switch (this.getExtension(file.type).toLowerCase()) {
+                    case 'jpeg' :
+                      isValid=true
+                    case 'jpg' :
+                      isValid=true
+                    case 'png' :
+                      isValid=true
+                    case 'pdf' :
+                      isValid=true
+                  }
+
+                  if (isValid) {
+                    reader.onloadend=() => {
+                      this.setState({
+                        fileOR: file,
+                        imagePrevOR: reader.result
+                      })
+                    }
+                    reader.readAsDataURL(file)
+                 } else {
+                     store.dispatch(NotifyActions.addNotify({
+                         title : 'File Uploading',
+                         message : 'The accepted attachments are JPG/PNG/PDF',
+                         type : 'warning',
+                         duration : 2000
+                      })
+                    )
+                  }
+                 }
+                }
+              />
               <FileUploader
-                accept="image/gif,image/jpeg,image/jpg,image/png,"
-                value={ this.state.fileOR.name }
-                placeholder='Official Receipt of Tuition Fee'
+                accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
+                value={ fileCOG.name }
+                placeholder={ 'Certification of Grades' }
                 onChange={
                   (e) => {
                     e.preventDefault()
-                    const reader=new FileReader()
-                    const file=e.target.files[0]
+                    const reader2=new FileReader()
+                    const file2=e.target.files[0]
                     let isValid
-                    switch (this.getExtension(file.type).toLowerCase()) {
+                    switch (this.getExtension(file2.type).toLowerCase()) {
                       case 'jpeg' :
                         isValid=true
                       case 'jpg' :
@@ -232,12 +274,13 @@ class EducationAidFormCardComponent extends Component {
                     }
 
                     if (isValid) {
-                      reader.onloadend=() => {
+                      reader2.onloadend=() => {
                         this.setState({
-                          fileOR: file
+                          fileCOG: file2,
+                          imagePrevCOG : reader2.result
                         })
                       }
-                      reader.readAsDataURL(file)
+                      reader2.readAsDataURL(file2)
                    } else {
                        store.dispatch(NotifyActions.addNotify({
                            title : 'File Uploading',
@@ -251,16 +294,16 @@ class EducationAidFormCardComponent extends Component {
                 }
               />
               <FileUploader
-                accept="image/gif,image/jpeg,image/jpg,image/png,"
-                value={ this.state.fileCOG.name }
-                placeholder='Certification of Grades'
+                accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
+                value={ fileRegForm.name }
+                placeholder={ 'Registration Form/Official Breakdown of Fees' }
                 onChange={
                   (e) => {
                     e.preventDefault()
-                    const reader=new FileReader()
-                    const file=e.target.files[0]
+                    const reader3=new FileReader()
+                    const file3=e.target.files[0]
                     let isValid
-                    switch (this.getExtension(file.type).toLowerCase()) {
+                    switch (this.getExtension(file3.type).toLowerCase()) {
                       case 'jpeg' :
                         isValid=true
                       case 'jpg' :
@@ -272,52 +315,13 @@ class EducationAidFormCardComponent extends Component {
                     }
 
                     if (isValid) {
-                      reader.onloadend=() => {
+                      reader3.onloadend=() => {
                         this.setState({
-                          fileCOG: file
+                          fileRegForm: file3,
+                          imagePrevRegForm: reader3.result
                         })
                       }
-                      reader.readAsDataURL(file)
-                   } else {
-                       store.dispatch(NotifyActions.addNotify({
-                           title : 'File Uploading',
-                           message : 'The accepted attachments are JPG/PNG/PDF',
-                           type : 'warning',
-                           duration : 2000
-                         })
-                       )
-                     }
-                  }
-                }
-              />
-              <FileUploader
-                accept="image/gif,image/jpeg,image/jpg,image/png,"
-                value={ this.state.fileRegForm.name }
-                placeholder='Registration Form/Official Breakdown of Fees'
-                onChange={
-                  (e) => {
-                    e.preventDefault()
-                    const reader=new FileReader()
-                    const file=e.target.files[0]
-                    let isValid
-                    switch (this.getExtension(file.type).toLowerCase()) {
-                      case 'jpeg' :
-                        isValid=true
-                      case 'jpg' :
-                        isValid=true
-                      case 'png' :
-                        isValid=true
-                      case 'pdf' :
-                        isValid=true
-                    }
-
-                    if (isValid) {
-                      reader.onloadend=() => {
-                        this.setState({
-                          fileRegForm: file
-                        })
-                      }
-                      reader.readAsDataURL(file)
+                      reader3.readAsDataURL(file3)
                    } else {
                        store.dispatch(NotifyActions.addNotify({
                            title : 'File Uploading',

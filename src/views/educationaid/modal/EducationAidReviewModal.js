@@ -31,10 +31,9 @@ class EducationAidReviewModal extends Component {
       fileOR,
       fileCOG,
       fileRegForm,
-      imgPrevOR,
-      imgPrevUrlOR,
-      imgPrevCOG,
-      imgPrevRegForm,
+      imagePrevOR,
+      imagePrevCOG,
+      imagePrevRegForm,
       submitForm,
       onClose,
       tuitionFeeText,
@@ -53,21 +52,21 @@ class EducationAidReviewModal extends Component {
 
     const styles={
       image1 : {
-        backgroundImage: `url('${imgPrevOR}')`,
+        backgroundImage: `url('${imagePrevOR}')`,
         width : 'auto',
         height : '150px',
         backgroundSize : 'cover',
         backgroundRepeat : 'no-repeat',
       },
       image2 : {
-        backgroundImage: `url('${imgPrevCOG}')`,
+        backgroundImage: `url('${imagePrevCOG}')`,
         width : 'auto',
         height : '150px',
         backgroundSize : 'cover',
         backgroundRepeat : 'no-repeat',
       },
       image3 : {
-        backgroundImage: `url('${imgPrevRegForm}')`,
+        backgroundImage: `url('${imagePrevRegForm}')`,
         width : 'auto',
         height : '150px',
         backgroundSize : 'cover',
