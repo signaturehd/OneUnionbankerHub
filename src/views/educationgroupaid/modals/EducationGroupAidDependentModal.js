@@ -3,14 +3,13 @@ import PropTypes from 'prop-types'
 
 import { Modal , GenericButton, CircularLoader } from '../../../ub-components/'
 
-import './styles/educationGroupPlanModalStyle.css'
+import './styles/educationGroupAidModalStyle.css'
 
-class EducationGroupPlanCollegeModal extends Component {
+class EducationGroupAidDependentModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      collegeType : [],
-      computations : [],
+      typeOfGrant : [],
       enabledLoader : false
     }
   }
@@ -23,8 +22,8 @@ class EducationGroupPlanCollegeModal extends Component {
     this.setState({ enabledLoader : false })
   }
 
-  onGetClicked (id, name, computations) {
-    this.props.onSubmit(id, name, computations)
+  onGetClicked (id, name, amount, attachment) {
+    this.props.onSubmit(id, name, amount, attachment)
     this.props.onClose()
   }
 
@@ -37,7 +36,7 @@ class EducationGroupPlanCollegeModal extends Component {
         isDismisable = { true }>
         <center>
           <h2>
-            Colleges/Universities
+            Types of Grant
           </h2>
         </center>
         <div>
@@ -46,14 +45,13 @@ class EducationGroupPlanCollegeModal extends Component {
              <center>
                <CircularLoader show = { this.state.enabledLoader }/>
              </center> :
-            tog &&
             tog.map((resp, key) =>
             <GenericButton
               className = { 'mpl-poa-modal-button' }
               key = { key }
               text = { resp && resp.name }
               onClick = {
-                () => this.onGetClicked(resp.id, resp.name, resp.computations)
+                () => this.onGetClicked(resp.id, resp.name, resp.amount, resp.attachments[0])
               }
               />
             )
@@ -64,10 +62,10 @@ class EducationGroupPlanCollegeModal extends Component {
   }
 }
 
-EducationGroupPlanCollegeModal.propTypes = {
+EducationGroupAidDependentModal.propTypes = {
     onClose : PropTypes.func,
-    tog : PropTypes.object,
+    tog : PropTypes.array,
     onSubmit : PropTypes.func,
 }
 
-export default EducationGroupPlanCollegeModal
+export default EducationGroupAidDependentModal
