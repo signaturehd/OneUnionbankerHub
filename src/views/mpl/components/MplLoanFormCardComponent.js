@@ -292,7 +292,7 @@ class MplFormLoanCardComponent extends Component {
                 value = { amountValue }
                 onChange = { this.onChange }
                 placeholder = { 'Desired Amount' }
-                maxLength = { 11 }
+                maxLength = { '11' }
                 type = { 'text' }/>
               <GenericTextBox
                 value = { `${ termOfLoan } (${ rateOfLoan } %)` }

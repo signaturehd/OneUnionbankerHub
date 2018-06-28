@@ -125,8 +125,8 @@ class BenefitsFragment extends BaseMVPView {
           placeholder={ 'Account Number' }
           type={ 'text' }
           onSubmit={ e => {
-            e.preventDefault()
-            this.presenter.validateAccountNumber(accountNumber)
+                e.preventDefault()
+                this.presenter.validateAccountNumber(accountNumber)
               }
             }
           />
@@ -171,7 +171,6 @@ class BenefitsFragment extends BaseMVPView {
 
   return (
     <div>
-      { super.render() }
         <h2 className={'header-margin-default' }>MY BENEFITS</h2>
         <div className={ 'tabs-container' }>
           <input
