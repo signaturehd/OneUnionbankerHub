@@ -5,8 +5,8 @@ import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-
 
 import './styles/educationGroupPlanComponentStyle.css'
 
-import EducationAidModal from '../modal/EducationAidModal'
-import EducationAidReviewModal from '../modal/EducationAidReviewModal'
+import EducationGroupPlanCollegeModal from '../modals/EducationGroupPlanCollegeModal'
+import EducationGroupPlanReviewModal from '../modals/EducationGroupPlanReviewModal'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -137,7 +137,7 @@ class EducationGroupPlanCardComponent extends Component {
         <div className={ 'educ-grid-column-2' }>
           {
             showModal &&
-            <EducationAidModal
+            <EducationGroupPlanCollegeModal
               tog={ educationAid.schools }
               presenter={ presenter }
               onSubmit={
@@ -158,7 +158,7 @@ class EducationGroupPlanCardComponent extends Component {
             }
             {
               showReviewEducationModal &&
-              <EducationAidReviewModal
+              <EducationGroupPlanReviewModal
                 collegeType={ collegeType }
                 tuitionFeeText={ tuitionFeeText }
                 courseText={ courseText }

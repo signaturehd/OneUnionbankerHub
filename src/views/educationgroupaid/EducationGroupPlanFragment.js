@@ -9,13 +9,12 @@ import { CircularLoader } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
-import ConfirmationModal from './modal/EducationAidReviewModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import store from '../../store'
 import { NotifyActions } from '../../actions'
 
-import FormComponent from './components/EducationAidFormCardComponent'
+import FormComponent from './components/EducationGroupPlanFormCardComponent'
 
 class EducationGroupPlanFragment extends BaseMVPView{
 
@@ -205,7 +204,7 @@ class EducationGroupPlanFragment extends BaseMVPView{
             onClick={ this.navigate.bind(this) }>
           </i>
           <h2 className={ 'header-margin-default' }>
-            Education Aid
+            Education Group Plan
           </h2>
         </div>
         {
