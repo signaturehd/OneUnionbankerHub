@@ -8,7 +8,10 @@ import moment from 'moment'
 import ImgPrevUploader from '../components/ImgPrevUploader'
 
 
-
+const required = value => value ? undefined : 'Required'
+const minLength = min => value =>
+  value && value.length > min ? `Must be ${max} characters or more` : undefined
+const maxLength15 = minLength(0)
 
 
 const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
@@ -54,7 +57,7 @@ const field_file = ({ input, type, field, value, files, placeholder,meta: { touc
 const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
 <div>
   <div>
-    <Card>
+    <form>
       <h4> About Me </h4>
     <div className={ 'general-form-card-body' }>
       <GenericButton className={'generic-button'}
@@ -74,7 +77,10 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           onClick={() => fields.remove(index)}
         />
         <h4>About Me </h4>
-         <Field   name={`${member}.profpic`} type='file' component={renderFileUp}
+         <Field
+            name={`${member}.profpic`}
+            type='file' component={renderFileUp}
+           validate={[required]}
           />
          <Field
           name={`${member}.whoami`}
@@ -82,10 +88,11 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           component={'textarea'}
           className={ 'whoami-textarea' }
           placeholder={ 'Brief description of you' }
+          validate={[required]}
         />
       </div>
     ))}
-  </Card>
+  </form>
 </div>
 </div>
 )

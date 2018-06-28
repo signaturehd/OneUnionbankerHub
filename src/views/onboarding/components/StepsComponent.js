@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import './styles/boarding-styles.css'
+import './styles/boardingStyle.css'
 
 class Stepper extends Component {
   constructor () {
@@ -25,6 +25,11 @@ class Stepper extends Component {
       this.setState({ activeStep: this.state.activeStep - 1 })
     }
   }
+
+  myOwnSubmitHanlder() {
+     console.log('hello', this.state);
+     this.props.handleSubmit()
+   }
 
   render () {
     const { steps, onFinish } = this.props

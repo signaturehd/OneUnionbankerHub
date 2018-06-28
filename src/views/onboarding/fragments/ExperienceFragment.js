@@ -6,7 +6,10 @@ import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-
+const required = value => value ? undefined : 'Required'
+const minLength = min => value =>
+  value && value.length > min ? `Must be ${max} characters or more` : undefined
+const maxLength15 = minLength(0)
 
 const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
   <div className = {'container'}>
@@ -35,7 +38,7 @@ const renderDatePicker = ({ input, label, type, className, selected, meta: { tou
 const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
 <div>
   <div>
-    <Card>
+    <form>
       <h4> Experience </h4>
     <div className={ 'general-form-card-body' }>
       <GenericButton className={'generic-button'}
@@ -60,18 +63,24 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           type="text"
           component={renderField}
           placeholder={ 'Company Name' }
+          validate={[required]}
+
         />
         <Field
           name={`${member}.address`}
           type="text"
           component={renderField}
           placeholder={ 'Address' }
+          validate={[required]}
+
         />
         <Field
           name={`${member}.position`}
           type="text"
           component={renderField}
           placeholder={ 'Position' }
+          validate={[required]}
+
         />
         <Field
           name={`${member}.expDescription`}
@@ -79,6 +88,8 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           component={'textarea'}
           className={ 'experience-textarea' }
           placeholder={ 'Brief description of duties' }
+          validate={[required]}
+
         />
         <div> <h4> Inclusive Dates </h4>
         <label>Start Date</label>
@@ -102,7 +113,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
       </div>
       </div>
     ))}
-  </Card>
+  </form>
 </div>
 </div>
 )

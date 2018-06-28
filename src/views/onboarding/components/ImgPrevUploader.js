@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './styles/boarding-styles.css'
+import './styles/boardingStyle.css'
 
 
 import {

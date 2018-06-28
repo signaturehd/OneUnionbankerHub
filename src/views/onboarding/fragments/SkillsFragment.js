@@ -6,6 +6,10 @@ import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
+const required = value => value ? undefined : 'Required'
+const minLength = min => value =>
+  value && value.length > min ? `Must be ${max} characters or more` : undefined
+const maxLength15 = minLength(0)
 
 const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
   <div className = {'container'}>
@@ -22,7 +26,7 @@ const renderField = ({ input, label, type, meta: { touched, error }, placeholder
 const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
 <div>
   <div>
-    <Card>
+    <form>
       <h4> Skills </h4>
     <div className={ 'general-form-card-body' }>
       <GenericButton className={'generic-button'}
@@ -47,16 +51,20 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           type="text"
           component={renderField}
           placeholder={ 'Skill Name' }
+          validate={[required]}
+
         />
         <Field
           name={`${member}.skillLvl`}
           type="text"
           component={renderField}
           placeholder={ 'Skill Level' }
+          validate={[required]}
+
         />
       </div>
     ))}
-  </Card>
+  </form>
 </div>
 </div>
 )

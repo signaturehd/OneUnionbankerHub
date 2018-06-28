@@ -8,13 +8,16 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 
 import Stepper from './components/StepsComponent'
-import './components/styles/boarding-styles.css'
+import './components/styles/boardingStyle.css'
 import Education from './fragments/EducationFragment'
 import Experience from './fragments/ExperienceFragment'
 import Skills from './fragments/SkillsFragment'
 import Certificate from './fragments/CertificateFragment'
 import AboutMe from './fragments/AboutMeFragment'
 import Summary from './fragments/Summary'
+
+
+
 const steps = [
   {
     label: 'Education',
@@ -59,6 +62,7 @@ class OnboardingView extends Component {
   constructor (props) {
     super(props)
   }
+
   render () {
     const submit = () => {
       alert('submited')

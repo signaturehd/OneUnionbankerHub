@@ -43,17 +43,17 @@
   border-radius: 5px;
   font-size: 14px;
 }
-.calendar {
+.general-calendar {
   border-bottom: 1px solid #ff8A00;
   border-top: 0px;
   border-left:0px;
   outline:none;
   border-right :0px;
 }
-.react-datepicker-popper {
+.general-react-datepicker-popper {
   width:250px;
 }
-.react-datepicker__input-container {
+.general-react-datepicker__input-container {
   margin-top: 0px !important;
 }
 
@@ -63,17 +63,17 @@
   margin-top: 55px;
 }
 
-.container {
+.general-container {
   padding:0px 15px 0px 15px;
 }
 
-.group {
+.general-group {
   position:relative;
   width:100%;
   margin-top:45px;
 }
 
-.text {
+.general-text {
   font-size:16px;
   padding:10px 0px 10px 0px;
   display:block;
@@ -81,10 +81,10 @@
   background: transparent;
   border-bottom:1px solid #757575;
 }
-.text:focus { outline:none; }
+.general-text:focus { outline:none; }
 
 /* .text-label ======================================= */
-.text-label {
+.general-text-label {
   color:#999;
   font-size:16px;
   font-weight:normal;
@@ -99,15 +99,15 @@
 }
 
 /* active state */
-.text:focus ~ .text-label, .text:valid ~ .text-label 		{
+.general-text:focus ~ .text-label, .text:valid ~ .text-label 		{
   top:-20px;
   font-size:14px;
   color:#ff8a00;
 }
 
 /* BOTTOM BARS ================================= */
-.bar 	{ position:relative; display:block; width:100%; }
-.bar:before, .bar:after 	{
+.general-bar 	{ position:relative; display:block; width:100%; }
+.general-bar:before, .bar:after 	{
   content:'';
   height:2px;
   width:0;
@@ -118,20 +118,20 @@
   -moz-transition:0.2s ease all;
   -webkit-transition:0.2s ease all;
 }
-.bar:before {
+.general-bar:before {
   left:50%;
 }
-.bar:after {
+.general-bar:after {
   right:50%;
 }
 
 /* active state */
-.text:focus ~ .bar:before, .text:focus ~ .bar:after {
+.general-text:focus ~ .bar:before, .text:focus ~ .bar:after {
   width:50%;
 }
 
 /* HIGHLIGHTER ================================== */
-.highlight {
+.general-highlight {
   position:absolute;
   height:60%;
   width:100px;
@@ -142,7 +142,7 @@
 }
 
 /* active state */
-.text:focus ~ .highlight {
+.general-text:focus ~ .highlight {
   -webkit-animation:.textHighlighter 0.3s ease;
   -moz-animation:.textHighlighter 0.3s ease;
   animation:.textHighlighter 0.3s ease;
@@ -161,24 +161,24 @@
 	from { background:#5264AE; }
   to 	{ width:0; background:transparent; }
 }
-input[type=file] {
+general-input[type=file] {
   opacity:0;
   padding:10px 0px 10px 0px;
   position:absolute;
 }
 
-.file-container {
+.general-file-container {
   padding:0px 15px 0px 15px;
 }
 
-.file-group {
+.general-file-group {
   object-fit: cover;
   position:relative;
   width:100%;
   margin-top:45px;
 }
 
-.file-text {
+.general-file-text {
   overflow: hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
@@ -192,7 +192,7 @@ input[type=file] {
   display:block;
 }
 
-.file {
+.general-file {
   display:block;
   padding:10px 0px 10px 0px;
   width:100%;
@@ -200,10 +200,10 @@ input[type=file] {
   background: transparent;
 }
 
-.file:focus { outline:none; }
+.general-file:focus { outline:none; }
 
 /* .file-label ======================================= */
-.file-label {
+.general-file-label {
   color:#999;
   font-size:16px;
   font-weight:normal;
@@ -218,8 +218,8 @@ input[type=file] {
 }
 
 /* BOTTOM BARS ================================= */
-.bar 	{ position:relative; display:block; width:100%; }
-.bar:before, .bar:after 	{
+.general-bar 	{ position:relative; display:block; width:100%; }
+.general-bar:before, .bar:after 	{
   content:'';
   height:2px;
   width:0;
@@ -230,20 +230,20 @@ input[type=file] {
   -moz-transition:0.2s ease all;
   -webkit-transition:0.2s ease all;
 }
-.bar:before {
+.general-bar:before {
   left:50%;
 }
-.bar:after {
+.general-bar:after {
   right:50%;
 }
 
 /* active state */
-.file:focus ~ .bar:before, .file:focus ~ .bar:after {
+.general-file:focus ~ .bar:before, .file:focus ~ .bar:after {
   width:50%;
 }
 
 /* HIGHLIGHTER ================================== */
-.highlight {
+.general-highlight {
   position:absolute;
   height:60%;
   width:100px;
@@ -254,7 +254,7 @@ input[type=file] {
 }
 
 /* active state */
-.file:focus ~ .highlight {
+.general-file:focus ~ .highlight {
   -webkit-animation:.fileHighlighter 0.3s ease;
   -moz-animation:.fileHighlighter 0.3s ease;
   animation:.fileHighlighter 0.3s ease;
@@ -273,9 +273,9 @@ input[type=file] {
 	from { background:#5264AE; }
   to 	{ width:0; background:transparent; }
 }
-img{
+general-img{
   max-width:180px;
 }
-input[type=file]{
+general-input[type=file]{
 padding:10px;
 background:#2d2d2d;}

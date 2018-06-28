@@ -6,6 +6,12 @@ import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
+const required = value => value ? undefined : 'Required'
+const minLength = min => value =>
+  value && value.length > min ? `Must be ${max} characters or more` : undefined
+const maxLength15 = minLength(0)
+
+
 
 const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
   <div className = {'container'}>
@@ -29,12 +35,14 @@ const renderDatePicker = ({ input, label, type, className, selected, meta: { tou
         dateForm="YYYY/MM/DD"
         selected={input.value ? moment(input.value) : null}
         onChange={date => input.onChange(moment(date).format('YYYY/MM/DD'))}
+        required
   />
 
 const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
+
 <div>
   <div>
-    <Card>
+    <form>
       <h4> Education </h4>
     <div className={ 'general-form-card-body' }>
       <GenericButton className={'generic-button'}
@@ -59,24 +67,32 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           type="text"
           component={renderField}
           placeholder={ 'School' }
+          validate={[required]}
+
         />
         <Field
           name={`${member}.degree`}
           type="text"
           component={renderField}
           placeholder={ 'Degree' }
+          validate={[required]}
+
         />
         <Field
           name={`${member}.course`}
           type="text"
           component={renderField}
           placeholder={ 'Course' }
+          validate={[required]}
+
         />
         <Field
           name={`${member}.specialH`}
           type="text"
           component={renderField}
           placeholder={ 'Special Honors' }
+          validate={[required]}
+
         />
         <div> <h4> Inclusive Dates </h4>
         <label>Start Date</label>
@@ -87,6 +103,8 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           component={renderDatePicker}
           className = { 'calendar' }
           calendarClassName = { 'calendarClass' }
+          validate={[required]}
+
         />
         <label>End Date</label>
         <Field
@@ -96,11 +114,16 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           component={renderDatePicker}
           className = { 'calendar' }
           calendarClassName = { 'calendarClass' }
+          validate={[required]}
         />
+        <div>
+          <br/>
+          <GenericButton type="submit" className="next" text = {'Save'}/>
+        </div>
       </div>
       </div>
     ))}
-  </Card>
+  </form>
 </div>
 </div>
 )
@@ -109,6 +132,7 @@ const FieldArraysForm = props => {
   return (
     <Card onSubmit={handleSubmit} className={ 'general-form-card' }>
       <FieldArray name="Education" component={renderMembers} />
+
     </Card>
   )
 }

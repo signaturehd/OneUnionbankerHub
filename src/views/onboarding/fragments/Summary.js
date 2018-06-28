@@ -6,7 +6,7 @@ import BaseMVPView from '../../common/base/BaseMVPView'
 
 import ConnectView from '../../../utils/ConnectView'
 
-import '../components/styles/boarding-styles.css'
+import '../components/styles/boardingStyle.css'
 import Education from './EducationFragment'
 import Experience from './ExperienceFragment'
 import Skills from './SkillsFragment'
