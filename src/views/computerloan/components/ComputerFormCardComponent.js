@@ -27,11 +27,13 @@ class ComputerFormCardComponent extends Component {
       termId: '',
       subCategoryId: '',
       poaId: '',
+      payeeNameLabel : '',
+      payeeName : '',
       showFileUpload: false,
       showSupplier : false,
       supplier: ''
     }
-    this.onGetClicked = this.onGetClicked.bind(this)
+    
     this.onChange = this.onChange.bind(this)
   }
 
@@ -41,23 +43,6 @@ class ComputerFormCardComponent extends Component {
         this.setState({ amountValue: e.target.value })
       }
    }
-
- onGetClicked (
-   poaText,
-   modeOfLoanId,
-   amountValue,
-   termId,
-   selectedSupplier,
-   file) {
-   this.props.onSubmit(
-     poaText,
-     modeOfLoanId,
-     amountValue,
-     termId,
-     selectedSupplier,
-     file
-   )
- }
 
   render () {
     const {
@@ -75,6 +60,7 @@ class ComputerFormCardComponent extends Component {
       subCategoryId,
       showFileUpload,
       showSupplier,
+      payeeName,
       supplier } = this.state
 
     const {
@@ -84,7 +70,10 @@ class ComputerFormCardComponent extends Component {
       offset,
       selectedSupplier,
       group,
-      container } = this.props
+      payeeNameLabel,
+      container,
+      onSubmit
+    } = this.props
 
     return (
       <div className={'computer-container'}>
@@ -158,6 +147,12 @@ class ComputerFormCardComponent extends Component {
               Benefits Form
             </h4>
             <div className={ 'computer-form-card-body' }>
+              <GenericTextBox
+                value={ payeeName }
+                onChange={ e =>
+                  this.setState({ payeeName : e.target.value }) }
+                placeholder={ payeeNameLabel && payeeNameLabel }
+                type={ 'text' }/>
               <div className={ 'computer-grid-form' }>
                 <div>
                   <br/>  <br/>
@@ -165,7 +160,6 @@ class ComputerFormCardComponent extends Component {
                 </div>
                 <div>
                   <GenericTextBox
-                    type={ 'button' }
                     value={ poaText }
                     group={ 'computer-group-textbox' }
                     container={ 'computer-form-icon-container' }
@@ -251,7 +245,8 @@ class ComputerFormCardComponent extends Component {
                 type={ 'button' }
                 text={ 'continue' }
                 onClick={ () =>
-                  this.onGetClicked(
+                  onSubmit(
+                    payeeName ? payeeName : '',
                     poaText ? poaText : '',
                     modeOfLoanId ? modeOfLoanId : '',
                     amountValue,

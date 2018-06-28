@@ -30,6 +30,7 @@ class MotorCycleLoanFragment extends BaseMVPView {
       showNoticeModal : false,
       showConfirmation : false,
       showBenefitFeedbackModal: false,
+      payeeNameLabel : '',
       poaText : '',
       modeOfLoanId : '',
       termId : '',
@@ -48,6 +49,7 @@ class MotorCycleLoanFragment extends BaseMVPView {
       this.state.loanType,
       1,
       1)
+    this.presenter.isManagersCheck()
   }
 
   /* Implementation*/
@@ -91,7 +93,12 @@ class MotorCycleLoanFragment extends BaseMVPView {
     this.setState({ noticeResponse })
   }
 
+  isManagersCheck (payeeNameLabel) {
+    this.setState({ payeeNameLabel })
+  }
+
   sendFormData (
+    payeeName,
     poaText,
     modeOfLoanId,
     termId,
@@ -132,6 +139,7 @@ class MotorCycleLoanFragment extends BaseMVPView {
         )
       } else {
           this.presenter.addLoan(
+            payeeName,
             poaText,
             modeOfLoanId,
             termId,
@@ -160,7 +168,9 @@ class MotorCycleLoanFragment extends BaseMVPView {
       termId,
       amountValue,
       selectedSupplier,
-      file } = this.state
+      payeeNameLabel,
+      file
+    } = this.state
 
     return (
       <div>
@@ -215,31 +225,24 @@ class MotorCycleLoanFragment extends BaseMVPView {
               validateLoanType={ validateLoanType }
               formAttachments={ formAttachments }
               offset={ offset }
+              payeeNameLabel = { payeeNameLabel }
               presenter={ this.presenter }
-              onClick={ () =>
-                this.sendFormData(
+              onSubmit={ (
+                payeeName,
+                poaText,
+                modeOfLoanId,
+                termId,
+                amountValue,
+                selectedSupplier,
+                file) => this.sendFormData(
+                  payeeName,
                   poaText,
                   modeOfLoanId,
                   termId,
                   amountValue,
                   selectedSupplier,
                   file
-                  )
-                }
-              onSubmit={ (
-                getPoaTextData,
-                getModeOfLoanId,
-                getTermIdData,
-                getAmountValueData,
-                getSelectedSupplierData,
-                getFileData) => this.setState({
-                  poaText : getPoaTextData,
-                  modeOfLoanId : getModeOfLoanId,
-                  termId : getTermIdData,
-                  amountValue : getAmountValueData,
-                  selectedSupplier : getSelectedSupplierData,
-                  file : getFileData
-                })
+                )
               }
             />
           }
