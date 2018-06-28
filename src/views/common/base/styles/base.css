@@ -8,15 +8,14 @@
   z-index:9;
 }
 
-@media  (max-width : 768px) {
+@media screen and (max-width : 768px) {
   .notify-container {
     position: fixed;
-    width: 60%;
+    width: 70%;
     right: 10px;
     bottom: 10px;
     display: grid;
     grid-row-gap: 10px;
-    z-index: 9;
-    height: auto;
+    z-index:9;
   }
 }
