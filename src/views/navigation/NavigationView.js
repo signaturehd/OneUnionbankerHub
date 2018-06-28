@@ -28,7 +28,7 @@ import { NotifyActions } from '../../actions'
 import EducationAidFragment from '../educationaid/EducationAidFragment'
 import EducationGrantPlanFragment from '../educationgrantplan/EducationGrantPlanFragment'
 import EducationGrantAidFragment from '../educationgrantaid/EducationGrantAidFragment'
-import EducationGroupPlanFragment from  '../educationgroupaid/EducationGroupPlanFragment'
+import EducationGroupAidFragment from  '../educationgroupaid/EducationGroupAidFragment'
 /* Medical */
 import DentalReimbursement from '../dentalreimbursement/DentalReimbursementFragment'
 import DentalLoaView from '../dentalloa/DentalLoaFragment'
@@ -179,17 +179,17 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mybenefits/transactions/approval/:id' render = { props =>
                     <TransactionApprovalDetailFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                      <Route path = '/mybenefits/benefits/education/aid' render = { props =>
-                        <EducationAidFragment { ...props }
-                          setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                  <Route path = '/mybenefits/benefits/education/aid' render = { props =>
+                    <EducationAidFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
                   <Route path = '/mybenefits/benefits/education/grantplan' render = { props =>
                     <EducationGrantPlanFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
-                  <Route path = '/mybenefits/benefits/education/grantaid' render = { props =>
-                    <EducationGrantAidFragment { ...props }
+                  <Route path = '/mybenefits/benefits/education/groupaid' render = { props =>
+                    <EducationGroupAidFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
-                  <Route path = '/mybenefits/benefits/education/groupplan' render = { props =>
-                    <EducationGroupPlanFragment { ...props }
+                  <Route path = '/mybenefits/benefits/education/groupaid' render = { props =>
+                    <EducationGroupAidFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
                   <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
                     <OpticalFragment { ...props }
