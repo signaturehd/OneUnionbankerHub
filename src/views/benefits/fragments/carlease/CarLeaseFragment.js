@@ -15,11 +15,7 @@ class CarLeaseFragment extends Component {
   }
 
   navigate (bool) {
-    if (bool) {
-      this.setState({ carValidate : bool })
-    } else {
-      this.props.history.push('/mybenefits/benefits')
-    }
+    this.props.history.push('/mybenefits/benefits')
   }
 
   componentDidMount () {
@@ -49,31 +45,24 @@ class CarLeaseFragment extends Component {
           onClick={ () => this.navigate() }></i>
         <h1>CAR LEASE OPTION</h1>
         <div className={ 'adjustment' }>
-          {
-              carValidate ?
-              <center>
-                <h2>Please wait while we&#39;re processing car lease module</h2>
-                <CircularLoader show={true}/>
-              </center>              :
-              <div className={ 'card-container' }>
-                {
-                benefitsOptions.map((value, idx) => (
-                  <Card
-                    className={ 'benefits-card' }
-                    key={ idx }>
-                    <div
-                      className={ value.styleName}
-                      text={ value.title }
-                      onClick={ () => history.push(value.path) } >
-                      <p className={ 'benefits-option-cards' }>
-                        { value.title }
-                      </p>
-                    </div>
-                  </Card>
-                  ))
-                }
-              </div>
-          }
+          <div className={ 'card-container' }>
+            {
+            benefitsOptions.map((value, idx) => (
+              <Card
+                className={ 'benefits-card' }
+                key={ idx }>
+                <div
+                  className={ value.styleName}
+                  text={ value.title }
+                  onClick={ () => history.push(value.path) } >
+                  <p className={ 'benefits-option-cards' }>
+                    { value.title }
+                  </p>
+                </div>
+              </Card>
+              ))
+            }
+          </div>
       </div>
       </div>
     )
