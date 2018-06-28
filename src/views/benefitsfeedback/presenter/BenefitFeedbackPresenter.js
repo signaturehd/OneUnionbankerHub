@@ -28,7 +28,6 @@ export default class BenefitFeedbackPresenter {
         this.view.successFeedback(resp)
       }, e => {
         this.view.feedbackFailed()
-        console.error(e)
       })
   }
 }

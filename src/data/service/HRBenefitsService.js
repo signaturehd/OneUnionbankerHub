@@ -425,10 +425,35 @@ export default class HRBenefitsService {
     })
   }
 
-  getPayslip (token) {
-    return this.apiClient.post('v1/payslip', {
-      headers : { token }
+  /* Education */
+
+  getEducationAid (token) {
+    return this.apiClient.get('v1/reimbursements/education/personal/validate', {
+      headers: { token }
     })
+  }
+
+  addEducationAid (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    educationAidParam) {
+    const educationAidObject = {
+      accountNumber,
+      releasingCenter,
+      course : educationAidParam.course,
+      academicYear : educationAidParam.academicYear,
+      semester : educationAidParam.semester,
+      generalWeightedAverage : educationAidParam.gwa,
+      tuitionFee : educationAidParam.tuitionFee,
+      registrationFee : educationAidParam.registrationFee,
+      schoolId : educationAidParam.schoolId,
+      attachments : educationAidParam.attachments
+    }
+    return this.apiClient.post('v1/reimbursements/education/personal/submit', educationAidObject, {
+      headers : { token }
+      })
   }
 
   /* validate grant aid */
@@ -443,6 +468,12 @@ export default class HRBenefitsService {
     formData.append('cert', grantAidParam.file)
     formData.append('body', JSON.stringify(grantAidObject))
     return this.apiClient.post('v2/grants/education/personal/submit', formData, {
+      headers : { token }
+    })
+  }
+
+  getPayslip (token) {
+    return this.apiClient.post('v1/payslip', {
       headers : { token }
     })
   }

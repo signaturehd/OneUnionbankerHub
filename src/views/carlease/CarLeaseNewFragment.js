@@ -34,6 +34,7 @@ class CarLeaseNewFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
+    this.presenter.getCarValidate()
   }
 
   sendFormData (
@@ -150,7 +151,7 @@ class CarLeaseNewFragment extends BaseMVPView {
                <CircularLoader show={ this.state.enabledLoader }/>
              </center> :
             <FormComponent
-              onClick={ () =>
+              onClick={
                 this.sendFormData(
                   carBrand,
                   carModel,
