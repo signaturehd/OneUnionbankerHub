@@ -84,7 +84,7 @@ class DentalReimbursementModal extends Component {
             }
           </center>
             <br/>
-          <center>
+          <div className = { 'dental-reimbursement-modal-action-button' }>
             <GenericButton
               onClick = { () =>
               this.submitForm(
@@ -96,7 +96,7 @@ class DentalReimbursementModal extends Component {
             <GenericButton
               text = { cancel }
               onClick = { () => onClose}/>
-          </center>
+          </div>
         </div>
       </Modal>
       )

@@ -38,6 +38,7 @@ class BaseView extends Component {
         <div className = { 'notify-container' }>
         {
           notify &&
+          notify.length !== 0 &&
           notify.map((notify, i) => (
             <Notify
               onClick = { () => {
