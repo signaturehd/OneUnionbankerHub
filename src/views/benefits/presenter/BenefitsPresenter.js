@@ -4,6 +4,10 @@ import ValidateReleasingCenterInteractor from '../../../domain/interactor/rds/Va
 import GetReleasingCentersInteractor from '../../../domain/interactor/rds/GetReleasingCentersInteractor'
 import AddReleasingCenterInteractor from '../../../domain/interactor/rds/AddReleasingCenterInteractor'
 import GetManagersCheckInteractor from '../../../domain/interactor/user/GetManagersCheckInteractor'
+import GetCarValidateInteractor from '../../../domain/interactor/carlease/GetCarNewValidateInteractor'
+
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
 
 export default class BenefitsPresenter {
   constructor (container) {
@@ -24,6 +28,9 @@ export default class BenefitsPresenter {
 
     this.getManagersCheckInteractor =
       new GetManagersCheckInteractor(container.get('HRBenefitsClient'))
+
+    this.getCarValidateInteractor =
+      new GetCarValidateInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -40,6 +47,19 @@ export default class BenefitsPresenter {
         this.view.hideLoading()
         // TODO prompt generic error
       })
+  }
+
+  getCarValidate () {
+    this.view.showLoading()
+    this.getCarValidateInteractor.execute()
+    .subscribe(
+      validate => {
+        this.view.hideLoading()
+      }, error => {
+        this.view.navigate()
+        this.view.hideLoading()
+      }
+    )
   }
 
   setReleasingCenter (releasingCenter) {

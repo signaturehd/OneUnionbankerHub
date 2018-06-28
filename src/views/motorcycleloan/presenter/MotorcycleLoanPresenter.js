@@ -1,11 +1,11 @@
 import GetTypesInteractor from '../../../domain/interactor/mpl/GetTypesInteractor'
-import AddLoanInteractor from '../../../domain/interactor/mpl/AddLoanInteractor'
+import AddLoanMotorLoanInteractor from '../../../domain/interactor/mpl/AddLoanMotorLoanInteractor'
 import GetPurposeOfAvailmentInteractor from '../../../domain/interactor/mpl/GetPurposeOfAvailmentInteractor'
 import GetFormAttachmentsInteractor from '../../../domain/interactor/mpl/GetFormAttachmentsInteractor'
 import GetValidateInteractor from '../../../domain/interactor/mpl/GetValidateInteractor'
 
 import mplValidateParam from '../../../domain/param/MplValidateParam'
-import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
+import AddMotorLoanParam from '../../../domain/param/AddMotorLoanParam'
 import mplGetFormParam from '../../../domain/param/MplGetFormParam'
 
 import store from '../../../store'
@@ -19,8 +19,8 @@ export default class MotorcycleLoanPresenter {
     this.getPurposeOfAvailmentInteractor =
       new GetPurposeOfAvailmentInteractor(container.get('HRBenefitsClient'))
 
-    this.addLoanInteractor =
-      new AddLoanInteractor(container.get('HRBenefitsClient'))
+    this.addMotorLoanInteractor =
+      new AddLoanMotorLoanInteractor(container.get('HRBenefitsClient'))
 
     this.getFormAttachmentsInteractor =
       new GetFormAttachmentsInteractor(container.get('HRBenefitsClient'))
@@ -57,7 +57,7 @@ export default class MotorcycleLoanPresenter {
     }
 
   getMplValidate (loanTypeId) {
-    this.view.showCircularLoader()
+    this.view.hideCircularLoader()
     this.getValidateInteractor.execute(mplValidateParam(loanTypeId))
       .subscribe(
         data => {
@@ -66,13 +66,6 @@ export default class MotorcycleLoanPresenter {
           this.view.hideCircularLoader()
         },
         error => {
-          store.dispatch(NotifyActions.addNotify({
-              title : error.name,
-              message : error.message ? error.message  : 'Internal Server Error'  ,
-              type : 'danger',
-              duration : 2000
-            })
-          )
           this.view.navigate()
         }
       )
@@ -84,46 +77,34 @@ export default class MotorcycleLoanPresenter {
       .subscribe()
     }
 
-  /* add Loa salary, housing assistance, emergency*/
-  addLoan (
+  /* add motorloan or computer loan salary*/
+  addLoanComputerOrMotor (
     loanId,
     purposeOfLoan,
     modeOfLoan,
     loanTerm,
     principalLoanAmount,
+    selectedSupplier,
     attachments) {
     this.view.showCircularLoader()
-    this.addLoanInteractor.execute(mplPurposeLoanAddParam(
+    this.addMotorLoanInteractor.execute(AddMotorLoanParam(
       loanId,
       purposeOfLoan,
       modeOfLoan,
       loanTerm,
       principalLoanAmount,
+      selectedSupplier,
       attachments
       )
     )
-      .subscribe(
-        data => {
-          this.view.hideCircularLoader()
-          this.view.noticeOfUndertaking(data)
-            store.dispatch(NotifyActions.addNotify({
-              title: data.name,
-              message : data.message,
-              type : 'success',
-              duration : 2000
-            }
-          )
-        )
+    .subscribe(
+      data => {
+        this.view.hideCircularLoader()
+        this.view.noticeOfUndertaking(data)
       },
       error => {
          this.view.hideCircularLoader()
-           store.dispatch(NotifyActions.addNotify({
-             title: data.name,
-             message : error.message ? error.message : 'Internal Server Error' ,
-             type : 'warning',
-             duration : 2000
-           })
-          )
+         this.view.noticeResponse(error)
         }
       )
     }

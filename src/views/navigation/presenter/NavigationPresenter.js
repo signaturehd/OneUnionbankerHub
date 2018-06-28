@@ -32,7 +32,6 @@ export default class NavigationPresenter {
   relogin () {
     this.relogInInteractor.execute()
     store.dispatch(LoginActions.showReloginModal(false))
-    this.view.relogin()
   }
 
   getLibraries () {
