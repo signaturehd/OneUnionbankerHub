@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
+import { getFormValues } from 'redux-form'
 import store from './store'
 import PropTypes from 'prop-types'
 
@@ -15,14 +16,14 @@ import Skills from './fragments/SkillsFragment'
 import Certificate from './fragments/CertificateFragment'
 import AboutMe from './fragments/AboutMeFragment'
 import Summary from './fragments/Summary'
-
+import FormValues from './values'
 
 
 const steps = [
   {
     label: 'Education',
     component: <Provider store={store}>
-      <Education onSubmit={'handleSubmit'} />
+      <Education onSubmit={'submit'} />
   </Provider>,
     exitValidation: false
   },
@@ -65,10 +66,16 @@ class OnboardingView extends Component {
 
   render () {
     const submit = () => {
-      alert('submited')
+    alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
     }
+
+
     return (
+      <div>
           <Stepper steps={ steps } onFinish={ submit } />
+
+        </div>
+
     )
   }
 }

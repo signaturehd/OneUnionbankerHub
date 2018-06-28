@@ -28,7 +28,8 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
   <div>
     <form>
       <h4> Skills </h4>
-    <div className={ 'general-form-card-body' }>
+    <div>
+      <br/>
       <GenericButton className={'generic-button'}
         type="button"
         onClick={() => fields.push({})}
@@ -69,7 +70,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
 </div>
 )
 const FieldArraysForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props
+  const { handleSubmit, pristine, reset, submitting, previousPage } = props
   return (
     <Card onSubmit={handleSubmit} className={ 'general-form-card' }>
       <FieldArray name="skills" component={renderMembers} />

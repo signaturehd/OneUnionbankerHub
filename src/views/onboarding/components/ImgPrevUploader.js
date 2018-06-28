@@ -120,9 +120,6 @@ render () {
         </div>
         </Card>
         <Card>
-          <h2>
-            Uploaded Files
-          </h2>
           <div>
             <div >
              <div>

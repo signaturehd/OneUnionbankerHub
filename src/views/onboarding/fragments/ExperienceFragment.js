@@ -28,7 +28,7 @@ const renderDatePicker = ({ input, label, type, className, selected, meta: { tou
     {...input}
         placeholder={'Start Date'}
         type={type}
-        className={'general-calenar'}
+        className={'calendar'}
         dropdownMode="select"
         dateForm="YYYY/MM/DD"
         selected={input.value ? moment(input.value) : null}
@@ -51,7 +51,8 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
     </div>
     {fields.map((member, index) => (
 
-      <div className={'general-form-card'} key={index}>
+      <div key={index}>
+        <br/>
         <GenericButton
           type='button'
           text="Remove Experience"
@@ -98,7 +99,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           name={`${member}.startDate`}
           readOnly
           component={renderDatePicker}
-          className = { 'general-calenar' }
+          className = { 'calendar' }
           calendarClassName = { 'calendarClass' }
         />
         <label>End Date</label>
@@ -107,7 +108,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           name={`${member}.endDate`}
           readOnly
           component={renderDatePicker}
-          className = { 'general-calenar' }
+          className = { 'calendar' }
           calendarClassName = { 'calendarClass' }
         />
       </div>

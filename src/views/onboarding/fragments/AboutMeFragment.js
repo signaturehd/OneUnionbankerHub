@@ -29,30 +29,27 @@ const renderFileUp = ({ input, type, field, value, files, placeholder,meta: { to
   <ImgPrevUploader/>
 )
 
-const field_file = ({ input, type, field, value, files, placeholder,meta: { touched, error, warning } }) => (
+const adaptFileEventToValue = delegate =>
+  e => delegate(e.target.files[0])
 
-  <div className = {'file-container'}>
-    <div className ="file-group">
-      <input
-      type="file"
-      className = {'file'}
-      onChange={
-        ( e ) => {
-          e.preventDefault();
-          const { fields } = this.props;
-          // convert files to an array
-          const files = [ ...e.target.files ];
-          fields.yourField.handleChange(files);
-        }
-      }
-    />
+const FileInput = ({
+  input: {
+    value: omitValue,
+  onChange,
+  onBlur,
+  ...inputProps,
+  },
+  meta: omitMeta,
+  ...props,
+}) =>
+  <input
+    onChange={adaptFileEventToValue(onChange)}
+    onBlur={adaptFileEventToValue(onBlur)}
+    type="file"
+    {...inputProps}
+    {...props}
+  />
 
-  <span className = { 'file-text' }> { value } </span>
-      <span className = { 'file-label' }>{ placeholder }</span>
-      <span className ={ 'bar' }></span>
-    </div>
-  </div>
-)
 
 const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
 <div>
@@ -70,7 +67,8 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
     </div>
     {fields.map((member, index) => (
 
-      <div className={'general-form-card'} key={index}>
+      <div key={index}>
+        <br/>
         <GenericButton
           type='button'
           text="Remove About Me"
@@ -97,7 +95,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
 </div>
 )
 const FieldArraysForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props
+  const { handleSubmit, pristine, reset, submitting, previousPage } = props
   return (
     <Card onSubmit={handleSubmit} className={ 'general-form-card' }>
       <FieldArray name="ABoutMe" component={renderMembers} />

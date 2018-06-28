@@ -55,7 +55,8 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
     </div>
     {fields.map((member, index) => (
 
-      <div className={'general-form-card'} key={index}>
+      <div key={index}>
+        <br/>
         <GenericButton
           type='button'
           text="Remove Education"
@@ -116,14 +117,11 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           calendarClassName = { 'calendarClass' }
           validate={[required]}
         />
-        <div>
-          <br/>
-          <GenericButton type="submit" className="next" text = {'Save'}/>
-        </div>
       </div>
       </div>
     ))}
   </form>
+
 </div>
 </div>
 )
