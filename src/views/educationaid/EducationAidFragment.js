@@ -172,7 +172,7 @@ class EducationAidFragment extends BaseMVPView{
           <NoticeModal
             onClose={ () => this.setState({ showNoticeModal : false })}
             noticeResponse={ noticeResponse }
-            benefitId={ '13' }
+            benefitId={ '11' }
             onDismiss={ (showNoticeModal, noticeResponse) =>
               this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
           />
@@ -191,7 +191,7 @@ class EducationAidFragment extends BaseMVPView{
         {
           showBenefitFeedbackModal &&
           <BenefitFeedbackModal
-            benefitId={ '13' }
+            benefitId={ '11' }
             onClose={ () => {
               this.props.history.push('/mybenefits/benefits/education'),
               this.setState({ showBenefitFeedbackModal : false })
