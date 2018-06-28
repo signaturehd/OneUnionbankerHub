@@ -28,6 +28,7 @@ import { NotifyActions } from '../../actions'
 import EducationAidFragment from '../educationaid/EducationAidFragment'
 import EducationGrantPlanFragment from '../educationgrantplan/EducationGrantPlanFragment'
 import EducationGrantAidFragment from '../educationgrantaid/EducationGrantAidFragment'
+import EducationGroupPlanFragment from  '../educationgroupaid/EducationGroupPlanFragment'
 /* Medical */
 import DentalReimbursement from '../dentalreimbursement/DentalReimbursementFragment'
 import DentalLoaView from '../dentalloa/DentalLoaFragment'
@@ -163,7 +164,7 @@ class NavigationView extends BaseMVPView {
             login &&
             <ReloginModal
               relogin = { () => {
- this.presenter.relogin() 
+ this.presenter.relogin()
 } }
             />
           }
@@ -186,6 +187,9 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
                   <Route path = '/mybenefits/benefits/education/grantaid' render = { props =>
                     <EducationGrantAidFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                  <Route path = '/mybenefits/benefits/education/groupplan' render = { props =>
+                    <EducationGroupPlanFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
                   <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
                     <OpticalFragment { ...props }
