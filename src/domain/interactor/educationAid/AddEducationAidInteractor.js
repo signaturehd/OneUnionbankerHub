@@ -4,7 +4,7 @@ export default class addEducationAidInteractor {
   }
 
   execute (educationAidParam) {
-    return this.client.addDentalLoa(
+    return this.client.addEducationAid(
       this.client.getToken(),
       this.client.getAccountToken(),
       this.client.getAccountNumber(),
