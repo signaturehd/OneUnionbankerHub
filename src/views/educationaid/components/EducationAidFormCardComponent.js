@@ -16,7 +16,7 @@ import moment from 'moment'
 class EducationAidFormCardComponent extends Component {
   constructor (props) {
     super (props)
-    this.state = {
+    this.state={
       showModal: false,
       tuitionFeeText: '',
       registrationFeeText: '',
@@ -39,7 +39,7 @@ class EducationAidFormCardComponent extends Component {
   }
 
   getExtension (filename) {
-    const parts = filename.split('/')
+    const parts=filename.split('/')
     return parts[parts.length - 1]
   }
 
@@ -49,10 +49,10 @@ class EducationAidFormCardComponent extends Component {
     computations.map(
       (value, key) => {
         if (gwa >= value.minimum && gwa <= value.maximum) {
-          result = parseFloat(totalFee) * parseFloat(value.percent)
+          result=parseFloat(totalFee) * parseFloat(value.percent)
         }
         else if (gwa <= value.minimum && gwa >= value.maximum) {
-          result = parseFloat(totalFee) * parseFloat(value.percent)
+          result=parseFloat(totalFee) * parseFloat(value.percent)
         }
       }
     )
@@ -64,7 +64,7 @@ class EducationAidFormCardComponent extends Component {
       educationAid,
       presenter,
       onClick
-    } = this.props
+    }=this.props
 
     const {
       showModal,
@@ -85,17 +85,17 @@ class EducationAidFormCardComponent extends Component {
       imgPrevCOG,
       imgPrevRegForm,
       computations
-      } = this.state
+      }=this.state
 
-    const resultTotalFee = tuitionFeeText && registrationFeeText ? parseFloat(tuitionFeeText) + parseFloat(registrationFeeText) : 0.00
+    const resultTotalFee=tuitionFeeText && registrationFeeText ? parseFloat(tuitionFeeText) + parseFloat(registrationFeeText) : 0.00
     return (
-      <div className = {'educ-container'}>
-        <div className = { 'educ-grid-column-2' }>
+      <div className={'educ-container'}>
+        <div className={ 'educ-grid-column-2' }>
               {  showModal &&
                 <EducationAidModal
-                tog = { educationAid.schools }
-                presenter = { presenter }
-                onSubmit = {
+                tog={ educationAid.schools }
+                presenter={ presenter }
+                onSubmit={
                   (schoolID, collegeType, computations) => {
                     this.setState({
                       schoolID,
@@ -104,7 +104,7 @@ class EducationAidFormCardComponent extends Component {
                     })
                   }
                 }
-                onClose = {
+                onClose={
                   () => {
                     this.setState({ showModal : false })
                   }
@@ -112,103 +112,104 @@ class EducationAidFormCardComponent extends Component {
                 />
               }
             <div></div>
-          <Card className = { 'educ-form-card' }>
+          <Card className={ 'educ-form-card' }>
             <h4>
               Benefits Details
             </h4>
-            <div className = {'educ-form-card-body '}>
+            <div className={'educ-form-card-body '}>
             <GenericTextBox
-              value = { tuitionFeeText ? tuitionFeeText : '' }
-              onChange = {
+              value={ tuitionFeeText ? tuitionFeeText : '' }
+              onChange={
                 (e) => {
-                  const re = /^[0-9\.]+$/
+                  const re=/^[0-9\.]+$/
                   if (e.target.value == '' ||  re.test(e.target.value)) {
                     this.setState({ tuitionFeeText: e.target.value })
                   }
                }
               }
-              placeholder = { 'Tuition Fee' }
-            type = { 'text' }/>
+              placeholder={ 'Tuition Fee' }
+            type={ 'text' }/>
             <GenericTextBox
-              value = { registrationFeeText ? registrationFeeText : ''}
-              onChange = {
+              value={ registrationFeeText ? registrationFeeText : ''}
+              onChange={
                 (e) =>{
-                  const re = /^[0-9\.]+$/
+                  const re=/^[0-9\.]+$/
                   if (e.target.value == '' || re.test(e.target.value)) {
                     this.setState({registrationFeeText: e.target.value })
                   }
                 }
                }
-              placeholder = { 'Registration Fee' }
-            type = { 'text' }/>
+              placeholder={ 'Registration Fee' }
+            type={ 'text' }/>
             <GenericTextBox
-              value = { resultTotalFee && parseFloat(resultTotalFee).toFixed(2) }
-              disabled = { 'disabled' }
-            type = { 'text' }/>
+              value={ resultTotalFee && parseFloat(resultTotalFee).toFixed(2) }
+              disabled={ 'disabled' }
+              placeholder={ 'Total Fee' }
+              type={ 'text' }/>
             <GenericTextBox
-              value = { collegeType }
-              onClick = {
+              value={ collegeType }
+              onClick={
                 () => this.setState({ showModal : true })
               }
-              placeholder = { 'Colleges/Universities' }
-            type = { 'text' }/>
+              placeholder={ 'Colleges/Universities' }
+            type={ 'text' }/>
             <GenericTextBox
-              value = { courseText }
-              onChange = { (e) => this.setState({courseText: e.target.value}) }
-              placeholder = { 'Course' }
-            type = { 'text' }/>
+              value={ courseText }
+              onChange={ (e) => this.setState({courseText: e.target.value}) }
+              placeholder={ 'Course' }
+            type={ 'text' }/>
             <GenericTextBox
-              value = { academicYearText }
-              onChange = { (e) => this.setState({academicYearText: e.target.value}) }
-              placeholder = { 'Academic Year' }
-            type = { 'text' }/>
+              value={ academicYearText }
+              onChange={ (e) => this.setState({academicYearText: e.target.value}) }
+              placeholder={ 'Academic Year' }
+            type={ 'text' }/>
             <GenericTextBox
-              value = { semesterText }
-              onChange = { (e) =>  this.setState({semesterText: e.target.value}) }
-              placeholder = { 'Semester' }
-            type = { 'text' }/>
+              value={ semesterText }
+              onChange={ (e) =>  this.setState({semesterText: e.target.value}) }
+              placeholder={ 'Semester' }
+            type={ 'text' }/>
             <GenericTextBox
-              value = { gwaText }
-              onChange = {
+              value={ gwaText }
+              onChange={
                 (e) =>{
-                  const re = /^[0-9\.]+$/
+                  const re=/^[0-9\.]+$/
                   if (e.target.value == '' || re.test(e.target.value)) {
                     this.setState({gwaText: e.target.value })
                   }
                 }
                }
 
-              placeholder = { 'General Weighted Average (GWA)' }
-            type = { 'text' }/>
+              placeholder={ 'General Weighted Average (GWA)' }
+            type={ 'text' }/>
             <GenericTextBox
-              value = { this.totalReimbursableAmount(computations, gwaText, resultTotalFee) }
-              disabled = { 'disabled' }
-            type = { 'text' }/>
-
+              value={ this.totalReimbursableAmount(computations, gwaText, resultTotalFee) }
+              disabled={ 'disabled' }
+              type={ 'text' }
+              placeholder={ 'Total Reimbursable Amount' }/>
               <br/>
               <FileUploader
                 accept="image/gif,image/jpeg,image/jpg,image/png,"
-                value = { this.state.fileOR.name }
-                placeholder = 'Official Receipt of Tuition Fee'
-                onChange = {
+                value={ this.state.fileOR.name }
+                placeholder='Official Receipt of Tuition Fee'
+                onChange={
                   (e) => {
                     e.preventDefault()
-                    const reader = new FileReader()
-                    const file = e.target.files[0]
+                    const reader=new FileReader()
+                    const file=e.target.files[0]
                     let isValid
                     switch (this.getExtension(file.type).toLowerCase()) {
                       case 'jpeg' :
-                        isValid = true
+                        isValid=true
                       case 'jpg' :
-                        isValid = true
+                        isValid=true
                       case 'png' :
-                        isValid = true
+                        isValid=true
                       case 'pdf' :
-                        isValid = true
+                        isValid=true
                     }
 
                     if (isValid) {
-                      reader.onloadend = () => {
+                      reader.onloadend=() => {
                         this.setState({
                           fileOR: file
                         })
@@ -228,27 +229,27 @@ class EducationAidFormCardComponent extends Component {
               />
               <FileUploader
                 accept="image/gif,image/jpeg,image/jpg,image/png,"
-                value = { this.state.fileCOG.name }
-                placeholder = 'Certification of Grades'
-                onChange = {
+                value={ this.state.fileCOG.name }
+                placeholder='Certification of Grades'
+                onChange={
                   (e) => {
                     e.preventDefault()
-                    const reader = new FileReader()
-                    const file = e.target.files[0]
+                    const reader=new FileReader()
+                    const file=e.target.files[0]
                     let isValid
                     switch (this.getExtension(file.type).toLowerCase()) {
                       case 'jpeg' :
-                        isValid = true
+                        isValid=true
                       case 'jpg' :
-                        isValid = true
+                        isValid=true
                       case 'png' :
-                        isValid = true
+                        isValid=true
                       case 'pdf' :
-                        isValid = true
+                        isValid=true
                     }
 
                     if (isValid) {
-                      reader.onloadend = () => {
+                      reader.onloadend=() => {
                         this.setState({
                           fileCOG: file
                         })
@@ -268,27 +269,27 @@ class EducationAidFormCardComponent extends Component {
               />
               <FileUploader
                 accept="image/gif,image/jpeg,image/jpg,image/png,"
-                value = { this.state.fileRegForm.name }
-                placeholder = 'Registration Form/Official Breakdown of Fees'
-                onChange = {
+                value={ this.state.fileRegForm.name }
+                placeholder='Registration Form/Official Breakdown of Fees'
+                onChange={
                   (e) => {
                     e.preventDefault()
-                    const reader = new FileReader()
-                    const file = e.target.files[0]
+                    const reader=new FileReader()
+                    const file=e.target.files[0]
                     let isValid
                     switch (this.getExtension(file.type).toLowerCase()) {
                       case 'jpeg' :
-                        isValid = true
+                        isValid=true
                       case 'jpg' :
-                        isValid = true
+                        isValid=true
                       case 'png' :
-                        isValid = true
+                        isValid=true
                       case 'pdf' :
-                        isValid = true
+                        isValid=true
                     }
 
                     if (isValid) {
-                      reader.onloadend = () => {
+                      reader.onloadend=() => {
                         this.setState({
                           fileRegForm: file
                         })
@@ -307,12 +308,12 @@ class EducationAidFormCardComponent extends Component {
                 }
               />
               <GenericButton
-                type = { 'button' }
-                text = { 'submit' }
-                onClick = { () => onClick (true, tuitionFeeText, registrationFeeText, schoolID,
+                type={ 'button' }
+                text={ 'submit' }
+                onClick={ () => onClick (true, tuitionFeeText, registrationFeeText, schoolID,
                   courseText, academicYearText, semesterText, gwaText, fileOR, fileCOG, fileRegForm,
                   imgPrevOR, imgPrevCOG, imgPrevRegForm) }
-                className = { 'educ-submit' } />
+                className={ 'educ-submit' } />
             </div>
           </Card>
         </div>
