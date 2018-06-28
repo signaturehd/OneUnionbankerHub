@@ -430,13 +430,13 @@ export default class HRBenefitsClient {
     accountToken,
     accountNo,
     releasingCenter,
-    dentalLoaParam) {
+    educationAidParam) {
     return this.service.addEducationAid(
       token,
       accountToken,
       accountNo,
       releasingCenter,
-      dentalLoaParam)
+      educationAidParam)
       .pipe(ServiceErrorOperator())
   }
 

@@ -408,17 +408,20 @@ export default class HRBenefitsService {
     accountToken,
     accountNo,
     releasingCenter,
-    dentalLoaParam) {
-    const dentalLoaObject = {
+    educationAidParam) {
+    const educationAidObject = {
       accountNo,
       releasingCenter,
-      type : 1,
-      dependentId : dentalLoaParam.dependent,
-      dentalClinicId : dentalLoaParam.branch,
-      preferredDate : dentalLoaParam.date,
-      dentalProcedure : dentalLoaParam.procedure
+      course : educationAidParam.course,
+      academicYear : educationAidParam.academicYear,
+      semester : educationAidParam.semester,
+      generalWeightedAverage : educationAidParam.gwa,
+      tuitionFee : educationAidParam.tuitionFee,
+      registrationFee : educationAidParam.registrationFee,
+      schoolId : educationAidParam.collegeID,
+      attachments : []
     }
-    return this.apiClient.post('v1/issuances/dental/loa/submit', dentalLoaObject, {
+    return this.apiClient.post('v1/reimbursements/education/personal/submit', educationAidObject, {
       headers : { token }
       })
   }

@@ -1,8 +1,6 @@
-
 import GetEducationAidInteractor from '../../../domain/interactor/educationAid/GetEducationAidInteractor'
 import AddEducationAidInteractor from '../../../domain/interactor/educationAid/AddEducationAidInteractor'
-
-import addEducationAidParam from '../../../domain/param/AddEducationAidParam'
+import educationAidParam from '../../../domain/param/AddEducationAidParam'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
@@ -16,6 +14,17 @@ export default class EducationAidPresenter {
   this.view = view
  }
 
+ addEducationAid (course, academicYear, semester, gwa, tuitionFee, registrationFee,
+ schoolId, fileOR, fileCOG, fileRegForm) {
+  this.addEducationAidInteractor.execute(educationAidParam(course, academicYear, semester, gwa, tuitionFee, registrationFee,
+  schoolId, fileOR, fileCOG, fileRegForm))
+   .subscribe(educationAid => {
+    this.view.noticeOfUndertaking(educationAid)
+   }, e => {
+    this.view.noticeResponse(e)
+   })
+ }
+
  getEducationAid () {
    this.getEducationAidInteractor.execute()
      .subscribe(
@@ -27,37 +36,4 @@ export default class EducationAidPresenter {
        }
      )
  }
-
- addEducationAid (course, academicYear, semester, gwa, tuitionFee, registrationFee,
- schoolId, attachments) {
-  this.view.showCircularLoader()
-  this.addEducationAidInteractor.execute(
-    addEducationAidParam(
-      course,
-      academicYear,
-      semester,
-      gwa,
-      tuitionFee,
-      registrationFee,
-      schoolId,
-      attachments))
-      .subscribe(
-        data => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Education Aid',
-            message : data.message,
-            type : 'success',
-            duration : 2000
-          })
-         )
-         this.view.hideCircularLoader()
-         this.view.noticeOfUndertaking(true)
-         this.view.noticeOfUndertakingForm(data)
-        },
-        error => {
-          this.view.hideCircularLoader()
-        }
-      )
-    }
-
 }

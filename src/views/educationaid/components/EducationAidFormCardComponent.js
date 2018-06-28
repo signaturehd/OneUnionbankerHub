@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
 import './styles/educationAidComponentStyle.css'
+
 import EducationAidModal from '../modal/EducationAidModal'
 
 import store from '../../../store'
@@ -21,7 +22,7 @@ class EducationAidFormCardComponent extends Component {
       registrationFeeText: '',
       totalFeeText: '',
       collegeType: '',
-      collegeID: '',
+      schoolID: '',
       courseText: '',
       academicYearText: '',
       semesterText: '',
@@ -30,6 +31,9 @@ class EducationAidFormCardComponent extends Component {
       fileOR: '',
       fileCOG: '',
       fileRegForm: '',
+      imgPrevOR: null,
+      imgPrevCOG: null,
+      imgPrevRegForm: null,
       computations: ''
     }
   }
@@ -58,7 +62,8 @@ class EducationAidFormCardComponent extends Component {
   render () {
     const {
       educationAid,
-      presenter
+      presenter,
+      onClick
     } = this.props
 
     const {
@@ -67,7 +72,7 @@ class EducationAidFormCardComponent extends Component {
       registrationFeeText,
       totalFeeText,
       collegeType,
-      collegeID,
+      schoolID,
       courseText,
       academicYearText,
       semesterText,
@@ -76,6 +81,9 @@ class EducationAidFormCardComponent extends Component {
       fileOR,
       fileCOG,
       fileRegForm,
+      imgPrevOR,
+      imgPrevCOG,
+      imgPrevRegForm,
       computations
       } = this.state
 
@@ -88,9 +96,9 @@ class EducationAidFormCardComponent extends Component {
                 tog = { educationAid.schools }
                 presenter = { presenter }
                 onSubmit = {
-                  (collegeID, collegeType, computations) => {
+                  (schoolID, collegeType, computations) => {
                     this.setState({
-                      collegeID,
+                      schoolID,
                       collegeType,
                       computations
                     })
@@ -301,8 +309,9 @@ class EducationAidFormCardComponent extends Component {
               <GenericButton
                 type = { 'button' }
                 text = { 'submit' }
-                onClick = { () => onClick (tuitionFeeText, registrationFeeText, collegeID,
-                  courseText, academicYearText, semesterText, gwaText, fileOR, fileCOG, fileRegForm) }
+                onClick = { () => onClick (true, tuitionFeeText, registrationFeeText, schoolID,
+                  courseText, academicYearText, semesterText, gwaText, fileOR, fileCOG, fileRegForm,
+                  imgPrevOR, imgPrevCOG, imgPrevRegForm) }
                 className = { 'educ-submit' } />
             </div>
           </Card>
