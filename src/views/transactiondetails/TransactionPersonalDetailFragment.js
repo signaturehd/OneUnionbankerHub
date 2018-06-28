@@ -73,6 +73,18 @@ function  TransactionDetails (props)  {
       transactionsPerson = { transactionsPerson }
       attachments = { attachments }
       details = { transactionDetails } />
+  } else if (transactionId === 21) {
+    // Bereavement Transaction Details
+    return <LoansDetailsFragment
+      transactionsPerson = { transactionsPerson }
+      attachments = { attachments }
+      details = { transactionDetails } />
+  } else if (transactionId === 22) {
+    // Calamity Assistance
+    return <LoansDetailsFragment
+      transactionsPerson = { transactionsPerson }
+      attachments = { attachments }
+      details = { transactionDetails } />
   }
     return <h1>No Transaction Occured please reload</h1> // No  Transaction
 }
