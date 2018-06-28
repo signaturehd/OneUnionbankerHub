@@ -6,6 +6,7 @@ import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-
 import './styles/educationAidComponentStyle.css'
 
 import EducationAidModal from '../modal/EducationAidModal'
+import EducationAidReviewModal from '../modal/EducationAidReviewModal'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -18,6 +19,7 @@ class EducationAidFormCardComponent extends Component {
     super (props)
     this.state={
       showModal: false,
+      showReviewEducationModal: false,
       tuitionFeeText: '',
       registrationFeeText: '',
       totalFeeText: '',
@@ -68,6 +70,7 @@ class EducationAidFormCardComponent extends Component {
 
     const {
       showModal,
+      showReviewEducationModal,
       tuitionFeeText,
       registrationFeeText,
       totalFeeText,
@@ -86,31 +89,51 @@ class EducationAidFormCardComponent extends Component {
       imgPrevRegForm,
       computations
       }=this.state
-
     const resultTotalFee=tuitionFeeText && registrationFeeText ? parseFloat(tuitionFeeText) + parseFloat(registrationFeeText) : 0.00
     return (
       <div className={'educ-container'}>
         <div className={ 'educ-grid-column-2' }>
-              {  showModal &&
-                <EducationAidModal
-                tog={ educationAid.schools }
-                presenter={ presenter }
-                onSubmit={
-                  (schoolID, collegeType, computations) => {
-                    this.setState({
-                      schoolID,
-                      collegeType,
-                      computations
-                    })
-                  }
+          {
+            showModal &&
+            <EducationAidModal
+              tog={ educationAid.schools }
+              presenter={ presenter }
+              onSubmit={
+                (schoolID, collegeType, computations) => {
+                  this.setState({
+                    schoolID,
+                    collegeType,
+                    computations
+                  })
                 }
-                onClose={
-                  () => {
-                    this.setState({ showModal : false })
-                  }
-                }
-                />
               }
+              onClose={
+                () => {
+                  this.setState({ showModal : false })
+                }
+              }
+              />
+            }
+
+            {
+              showReviewEducationModal &&
+              <EducationAidReviewModal
+                collegeType={ collegeType }
+                tuitionFeeText={ tuitionFeeText }
+                courseText={ courseText }
+                academicYearText={ academicYearText }
+                semesterText={ semesterText }
+                gwaText={ gwaText }
+                totalFeeText={ totalFeeText }
+                fileOR={ fileOR }
+                fileCOG={ fileCOG }
+                fileRegForm={ fileRegForm }
+                imgPrevOR={ imgPrevOR }
+                imgPrevCOG={ imgPrevCOG }
+                imgPrevRegForm={ imgPrevRegForm }
+                onClose={ () => this.setState({ showReviewEducationModal : false }) }
+                />
+            }
             <div></div>
           <Card className={ 'educ-form-card' }>
             <h4>
@@ -128,7 +151,7 @@ class EducationAidFormCardComponent extends Component {
                }
               }
               placeholder={ 'Tuition Fee' }
-            type={ 'text' }/>
+              type={ 'text' }/>
             <GenericTextBox
               value={ registrationFeeText ? registrationFeeText : ''}
               onChange={
@@ -140,7 +163,7 @@ class EducationAidFormCardComponent extends Component {
                 }
                }
               placeholder={ 'Registration Fee' }
-            type={ 'text' }/>
+              type={ 'text' }/>
             <GenericTextBox
               value={ resultTotalFee && parseFloat(resultTotalFee).toFixed(2) }
               disabled={ 'disabled' }
@@ -152,22 +175,23 @@ class EducationAidFormCardComponent extends Component {
                 () => this.setState({ showModal : true })
               }
               placeholder={ 'Colleges/Universities' }
-            type={ 'text' }/>
+              onChange={ () => this.setState({ collegeType : e.target.value }) }
+              type={ 'text' }/>
             <GenericTextBox
               value={ courseText }
               onChange={ (e) => this.setState({courseText: e.target.value}) }
               placeholder={ 'Course' }
-            type={ 'text' }/>
+              type={ 'text' }/>
             <GenericTextBox
               value={ academicYearText }
               onChange={ (e) => this.setState({academicYearText: e.target.value}) }
               placeholder={ 'Academic Year' }
-            type={ 'text' }/>
+              type={ 'text' }/>
             <GenericTextBox
               value={ semesterText }
               onChange={ (e) =>  this.setState({semesterText: e.target.value}) }
               placeholder={ 'Semester' }
-            type={ 'text' }/>
+              type={ 'text' }/>
             <GenericTextBox
               value={ gwaText }
               onChange={
@@ -178,9 +202,8 @@ class EducationAidFormCardComponent extends Component {
                   }
                 }
                }
-
               placeholder={ 'General Weighted Average (GWA)' }
-            type={ 'text' }/>
+              type={ 'text' }/>
             <GenericTextBox
               value={ this.totalReimbursableAmount(computations, gwaText, resultTotalFee) }
               disabled={ 'disabled' }
@@ -310,9 +333,7 @@ class EducationAidFormCardComponent extends Component {
               <GenericButton
                 type={ 'button' }
                 text={ 'submit' }
-                onClick={ () => onClick (true, tuitionFeeText, registrationFeeText, schoolID,
-                  courseText, academicYearText, semesterText, gwaText, fileOR, fileCOG, fileRegForm,
-                  imgPrevOR, imgPrevCOG, imgPrevRegForm) }
+                onClick={ () => this.setState({ showReviewEducationModal : true }) }
                 className={ 'educ-submit' } />
             </div>
           </Card>
