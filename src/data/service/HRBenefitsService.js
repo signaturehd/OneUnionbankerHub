@@ -11,7 +11,7 @@ export default class HRBenefitsService {
   }
 
   logout (token) {
-    return this.apiClient.post('v1/logout', {token})
+    return this.apiClient.post('v1/logout', { token })
   }
 
   otp (otpParam) {
@@ -121,7 +121,8 @@ export default class HRBenefitsService {
         headers: {
            'Content-Type': 'application/json',
            token,
-           referenceId : Math.random().toString(36).substring(7),
+           referenceId : Math.random().toString(36)
+.substring(7),
        }
      })
    }
@@ -332,6 +333,8 @@ export default class HRBenefitsService {
     mplPurposeLoanAddParam) {
     const formData = new FormData()
     const multiLoanBodyObject = {
+      accountNumber,
+      relesingCenter : releasingCenter,
       loan : {
         id : mplPurposeLoanAddParam.loanId,
         purpose : mplPurposeLoanAddParam.purposeOfLoan,
@@ -339,10 +342,8 @@ export default class HRBenefitsService {
         term : mplPurposeLoanAddParam.loanTerm,
         principalAmount : mplPurposeLoanAddParam.principalLoanAmount
       },
-      accountNumber : accountNumber,
       promissoryNoteNumbers : [],
-      relesingCenter : releasingCenter,
-      distributor : "distributorTest",
+      distributor : mplPurposeLoanAddParam.payeeName,
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
@@ -360,6 +361,8 @@ export default class HRBenefitsService {
     addMotorLoanParam) {
     const formData = new FormData()
     const multiLoanBodyObject = {
+      relesingCenter,
+      accountNumber,
       loan : {
         id : addMotorLoanParam.loanId,
         purpose : addMotorLoanParam.purposeOfLoan,
@@ -368,10 +371,8 @@ export default class HRBenefitsService {
         principalAmount : addMotorLoanParam.principalLoanAmount,
         supplierName: addMotorLoanParam.supplierName
       },
-      accountNumber : accountNumber,
       promissoryNoteNumbers : [],
-      relesingCenter : releasingCenter,
-      distributor : "distributorTest",
+      distributor : addMotorLoanParam.payeeName,
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
@@ -395,8 +396,8 @@ export default class HRBenefitsService {
     carRequestParam) {
     const formData = new FormData()
     const addCarleaseObject = {
-      accountNumber : accountNumber,
-      releasingCenter : releasingCenter,
+      accountNumber,
+      releasingCenter,
       brand : carRequestParam.carBrand,
       model : carRequestParam.carModel,
       year : carRequestParam.year,
@@ -424,10 +425,35 @@ export default class HRBenefitsService {
     })
   }
 
-  getPayslip (token) {
-    return this.apiClient.post('v1/payslip', {
-      headers : { token }
+  /* Education */
+
+  getEducationAid (token) {
+    return this.apiClient.get('v1/reimbursements/education/personal/validate', {
+      headers: { token }
     })
+  }
+
+  addEducationAid (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    educationAidParam) {
+    const educationAidObject = {
+      accountNumber,
+      releasingCenter,
+      course : educationAidParam.course,
+      academicYear : educationAidParam.academicYear,
+      semester : educationAidParam.semester,
+      generalWeightedAverage : educationAidParam.gwa,
+      tuitionFee : educationAidParam.tuitionFee,
+      registrationFee : educationAidParam.registrationFee,
+      schoolId : educationAidParam.schoolId,
+      attachments : educationAidParam.attachments
+    }
+    return this.apiClient.post('v1/reimbursements/education/personal/submit', educationAidObject, {
+      headers : { token }
+      })
   }
 
   /* validate grant aid */
@@ -442,6 +468,12 @@ export default class HRBenefitsService {
     formData.append('cert', grantAidParam.file)
     formData.append('body', JSON.stringify(grantAidObject))
     return this.apiClient.post('v2/grants/education/personal/submit', formData, {
+      headers : { token }
+    })
+  }
+
+  getPayslip (token) {
+    return this.apiClient.post('v1/payslip', {
       headers : { token }
     })
   }
@@ -480,4 +512,29 @@ export default class HRBenefitsService {
     })
   }
 
+  /* bereavement benefit */
+  validateBereavement (token) {
+    return this.apiClient.get('v1/bereavement/validate', {
+      headers: { token }
+    })
+  }
+
+  addBereavement (token, bereavementParam) {
+    return this.apiClient.get('v1/bereavement/validate', {
+      headers: { token }
+    })
+  }
+
+  /* Calamity Assitance */
+  validateCalamityAssistance (token) {
+    return this.apiClient.get('v1/calamity/validate', {
+      headers: { token }
+    })
+  }
+
+  addCalamityAssistance (token, calamityAssistanceParam) {
+    return this.apiClient.get('v1/calamity/availment', {
+      headers: { token }
+    })
+  }
 }

@@ -27,10 +27,10 @@ setProcedure (selected) {
   } = this.props
 
   if (selectedProcedure) {
-    const valueArr = this.getDisabledIds().map(function(item){return item})
+    const valueArr = this.getDisabledIds().map(item => item)
     if (valueArr.includes(selected.id)) {
       let isExisting
-      const valueInsideArr = selectedProcedure.map(function(item){return item.id})
+      const valueInsideArr = selectedProcedure.map(item => item.id)
       for (const i in selectedProcedure) {
         if (valueInsideArr.includes(selected.id)) {
           isExisting = true
@@ -85,8 +85,7 @@ return (
           text = { procedure.name }
           onClick = { () => this.setProcedure({ ...procedure }) } />
           }
-        )
-        :
+        )        :
         <center>
           <h3>Please pick your Recipient</h3>
         </center>

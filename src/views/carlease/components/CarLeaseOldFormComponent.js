@@ -8,7 +8,7 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class CarLeaseOldForm extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       carBrand : '',
@@ -30,7 +30,7 @@ class CarLeaseOldForm extends Component {
 
   onChange (e) {
       const re = /^[0-9\.]+$/
-      if (e.target.value == '' ||  re.test(e.target.value)) {
+      if (e.target.value === '' ||  re.test(e.target.value)) {
         this.setState({ amountValue: e.target.value })
       }
    }
@@ -171,7 +171,7 @@ class CarLeaseOldForm extends Component {
           {
             showTemporaryMessage &&
             <Modal
-              onClose={ ()=> this.setState({
+              onClose={ () => this.setState({
                 showTemporaryMessage: false  })
               }
             >

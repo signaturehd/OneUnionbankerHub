@@ -15,7 +15,6 @@ class NavigationViewModal extends Component {
   }
 
   render () {
-
     const {
       onClose,
       logout
@@ -40,8 +39,7 @@ class NavigationViewModal extends Component {
               <CircularLoader show={true}/>
               <br/>
               <br/>
-            </center>
-          :
+            </center>          :
           <div>
             <center>
               <h3>Are you sure you want to Log out?</h3>
@@ -53,7 +51,7 @@ class NavigationViewModal extends Component {
                 onClick={ () => onClose() }
                />
               <GenericButton text= "Log Out"
-                onClick={ () => (logout() , this.setState({showCircularLoader: true, isDismisable: false})) }
+                onClick={ () => (logout() , this.setState({ showCircularLoader: true, isDismisable: false })) }
               />
             </div>
             <br/>

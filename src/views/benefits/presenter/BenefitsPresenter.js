@@ -68,18 +68,28 @@ export default class BenefitsPresenter {
 
   validateFabToShow () {
     const isManagersCheck = this.getManagersCheckInteractor.execute()
-    if (isManagersCheck) {
-      const releasingCenter = this.validateReleasingCenterInteractor.execute()
-      if (!releasingCenter) {
-        this.view.isAccountNumber(false)
+    if (isManagersCheck !== null) {
+      if (isManagersCheck) {
+        const releasingCenter = this.validateReleasingCenterInteractor.execute()
+        if (!releasingCenter) {
+          this.view.isAccountNumber(false)
+        }
+        // TODO get chosen releasing center then;
+        // TODO show releasing centers if there's no releasing center chosen
+      } else {
+        const accountNumber = this.getAccountNumberInteractor.execute()
+        if (!accountNumber) {
+          this.view.isAccountNumber(true)
+        }
       }
-      // TODO get chosen releasing center then;
-      // TODO show releasing centers if there's no releasing center chosen
     } else {
-      const accountNumber = this.getAccountNumberInteractor.execute()
-      if (!accountNumber) {
-        this.view.isAccountNumber(true)
-      }
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Benefits',
+          message : 'Theres a Problem Getting your profile',
+          type : 'success',
+          duration : 2000
+        })
+      )
     }
   }
 

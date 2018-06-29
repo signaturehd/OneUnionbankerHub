@@ -40,7 +40,7 @@ export default class OtpPresenter {
         data => {
           store.dispatch(NotifyActions.addNotify({
               title : 'Resend OTP',
-              message : data.message + ' Please wait.',
+              message : `${data.message  } Please wait.`,
               type : 'success',
               duration : 2000
             })

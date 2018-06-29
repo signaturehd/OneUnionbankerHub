@@ -7,15 +7,12 @@ import { NotifyActions } from '../../../actions'
 import addCarParam from '../../../domain/param/AddCarleaseRequestParam'
 
 export default class CarLeasePresenter {
-
   constructor (container) {
-
     this.carNewValidateInteractor =
       new GetCarNewValidateInteractor(container.get('HRBenefitsClient'))
 
     this.carNewSubmissionInteractor =
       new GetCarNewFormSubmissionInteractor(container.get('HRBenefitsClient'))
-
   }
 
   setView (view) {

@@ -3,6 +3,7 @@ import addGrantAidInteractor from '../../../domain/interactor/education/addGrant
 import grantAidParam from '../../../domain/param/grantAidParam'
 
 export default class EducationGrantAidPresenter {
+  
   constructor (container) {
     this.validateGrantAidInteractor =
       new validateGrantAidInteractor(container.get('HRBenefitsClient'))

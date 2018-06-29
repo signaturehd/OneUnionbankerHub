@@ -15,8 +15,8 @@ export default class BenefitFeedbackPresenter {
     this.view = view
   }
 
-  addFeedback ( benefitId, rating, comment ) {
-    this.addBenefitFeedbackInteractor.execute(addBenefitFeedbackParam( benefitId, rating, comment ))
+  addFeedback (benefitId, rating, comment) {
+    this.addBenefitFeedbackInteractor.execute(addBenefitFeedbackParam(benefitId, rating, comment))
       .subscribe(resp => {
         store.dispatch(NotifyActions.addNotify({
             title: 'Benefit Feedback',
@@ -28,7 +28,6 @@ export default class BenefitFeedbackPresenter {
         this.view.successFeedback(resp)
       }, e => {
         this.view.feedbackFailed()
-        console.error(e)
       })
   }
 }

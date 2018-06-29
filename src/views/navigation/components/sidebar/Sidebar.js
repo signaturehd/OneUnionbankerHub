@@ -46,7 +46,7 @@ class SideBar extends Component {
       },
       {
         id: 8 ,
-        title: 'My Payslip',
+        title: 'My Pay',
         action: () => history.push('/payslip'),
         className: 'payslip-icon'
       },
@@ -101,8 +101,7 @@ class SideBar extends Component {
                     { d.title }
               </li>
               <Line />
-            </div>
-              :
+            </div>              :
               <div
                 key = { idx }
               >

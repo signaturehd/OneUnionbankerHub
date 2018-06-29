@@ -28,11 +28,10 @@ import ReleasingCenterModal from './modal/ReleasingCenterModal'
 import './styles/benefits.css'
 
 class BenefitsFragment extends BaseMVPView {
-
   constructor (props) {
     super(props)
 
-    this.state={
+    this.state = {
       showAccountNumberModal: false,
       showReleasingCenterModal : false,
       releasingCenters: null,
@@ -82,7 +81,7 @@ class BenefitsFragment extends BaseMVPView {
   }
 
   render () {
-    const { history, onClick }=this.props
+    const { history, onClick } = this.props
     const {
       accountNumber,
       showAccountNumberModal,
@@ -90,9 +89,9 @@ class BenefitsFragment extends BaseMVPView {
       releasingCenters,
       showModal,
       isAccountNumber,
-    }=this.state
+    } = this.state
 
-    const benefitsOptions=[{
+    const benefitsOptions = [{
       id: 0 ,
       styleName: 'option-cards-1',
       title: 'EDUCATION',
@@ -114,7 +113,7 @@ class BenefitsFragment extends BaseMVPView {
       path: '/mybenefits/benefits/carlease',
     }]
 
-  const Benefits=() => (
+  const Benefits = () => (
     <div className={ 'benefits-container' }>
       {
         showAccountNumberModal &&
@@ -125,8 +124,8 @@ class BenefitsFragment extends BaseMVPView {
           placeholder={ 'Account Number' }
           type={ 'text' }
           onSubmit={ e => {
-            e.preventDefault()
-            this.presenter.validateAccountNumber(accountNumber)
+                e.preventDefault()
+                this.presenter.validateAccountNumber(accountNumber)
               }
             }
           />
@@ -171,7 +170,6 @@ class BenefitsFragment extends BaseMVPView {
 
   return (
     <div>
-      { super.render() }
         <h2 className={'header-margin-default' }>MY BENEFITS</h2>
         <div className={ 'tabs-container' }>
           <input
@@ -228,7 +226,7 @@ class BenefitsFragment extends BaseMVPView {
   }
 }
 
-BenefitsFragment.propTypes={
+BenefitsFragment.propTypes = {
   setSelectedNavigation: PropTypes.func,
   onClick: PropTypes.func,
   history: PropTypes.object,

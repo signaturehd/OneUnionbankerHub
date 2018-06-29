@@ -81,7 +81,7 @@ class FeedbackCard extends Component {
                 <GenericButton
                   onClick = { () => {
                      submitForm(feedbackTextareaValue, false),
-                     this.setState({feedbackTextareaValue : null})
+                     this.setState({ feedbackTextareaValue : null })
                     }
                   }
                   type = { 'button' }

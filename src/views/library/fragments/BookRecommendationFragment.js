@@ -24,11 +24,11 @@ class BookRecommendationFragment extends Component {
   }
 
   componentDidMount () {
-    window.addEventListener("scroll", this.handleScroll, true)
+    window.addEventListener('scroll', this.handleScroll, true)
   }
 
   componentWillUnmount () {
-    window.removeEventListener("scroll", this.handleScroll, true)
+    window.removeEventListener('scroll', this.handleScroll, true)
   }
 
   addRating (id, rating) {
@@ -39,8 +39,8 @@ class BookRecommendationFragment extends Component {
     this.props.presenter.reserveBook(id, quantity)
   }
 
-  handleScroll() {
-    const element = document.getElementById("navPanId")
+  handleScroll () {
+    const element = document.getElementById('navPanId')
     const scrollBar = element.scrollTop
     const docHeight = element.scrollHeight - element.offsetHeight
     const bookNumber = this.props.filteredBooks.length % 10
@@ -57,7 +57,7 @@ class BookRecommendationFragment extends Component {
       this can be fixed through API or we can make another validation but its better to apply
       it on API.
       */
-      if (bookNumber == 0) {
+      if (bookNumber === 0) {
         this.props.page(this.pageNumber++)
       }
     }
