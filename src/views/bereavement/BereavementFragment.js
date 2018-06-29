@@ -19,7 +19,7 @@ import { NotifyActions } from '../../actions'
 
 import FormComponent from  './components/BereavementFormCardComponent'
 
-class BereavementFormFragment extends BaseMVPView {
+class BereavementFragment extends BaseMVPView {
   constructor (props) {
     super (props)
     this.state = {
@@ -46,6 +46,7 @@ class BereavementFormFragment extends BaseMVPView {
   render ()
   {
     const { enabledLoader } = this.state
+    const { withDeathCert } = this.props
 
     return (
       <div>
@@ -64,6 +65,7 @@ class BereavementFormFragment extends BaseMVPView {
             <CircularLoader show = { enabledLoader }/>
           </center> :
           <FormComponent
+            withDeathCert = { withDeathCert }
             onClick = { () => console.log('clicked')
             }
             presenter = { this.presenter }
@@ -74,4 +76,4 @@ class BereavementFormFragment extends BaseMVPView {
   }
 }
 
-export default ConnectView(BereavementFormFragment, Presenter)
+export default ConnectView(BereavementFragment, Presenter)

@@ -48,8 +48,6 @@ import CarLeaseNewFragment from '../carlease/CarLeaseNewFragment'
 import CarLeaseOldFragment from '../carlease/CarLeaseOldFragment'
 /*Payslip*/
 import Payslip from '../payslip/PayslipFragment'
-/*Bereavement*/
-import BereavementFormFragment from '../bereavement/BereavementFormFragment'
 import Carousel from '../carousel/Carousel'
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
@@ -209,9 +207,7 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mybenefits/benefits/carlease/old' render = { props =>
                     <CarLeaseOldFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/mybenefits/benefits/bereavement/bereavementform' render = { props =>
-                    <BereavementFormFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+
                   <Route path = '/mybenefits/benefits/loans/emergency' render = { props =>
                     <EmergencyLoanFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
