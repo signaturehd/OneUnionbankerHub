@@ -430,8 +430,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getPayslipSelectedDate (token, payslipParam) {
-    return this.service.getPayslipSelectedDate(token, payslipParam)
+  addPayslipSelectedDate (token, payslipParam) {
+    return this.service.addPayslipSelectedDate(token, payslipParam)
       .pipe(ServiceErrorOperator())
   }
 
