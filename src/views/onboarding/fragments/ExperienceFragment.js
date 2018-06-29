@@ -10,6 +10,10 @@ const required = value => value ? undefined : 'Required'
 const minLength = min => value =>
   value && value.length > min ? `Must be ${max} characters or more` : undefined
 const maxLength15 = minLength(0)
+const specialChar = value =>
+  value && !/^([a-zA-Z0-9\s]*)$/i.test(value) ?
+  'No Special Characters' : undefined
+
 
 const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
   <div className = {'container'}>
@@ -64,7 +68,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           type="text"
           component={renderField}
           placeholder={ 'Company Name' }
-          validate={[required]}
+          validate={[required, specialChar]}
 
         />
         <Field
@@ -80,7 +84,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           type="text"
           component={renderField}
           placeholder={ 'Position' }
-          validate={[required]}
+          validate={[required, specialChar]}
 
         />
         <Field
@@ -89,7 +93,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           component={'textarea'}
           className={ 'experience-textarea' }
           placeholder={ 'Brief description of duties' }
-          validate={[required]}
+          validate={[required, specialChar]}
 
         />
         <div> <h4> Inclusive Dates </h4>

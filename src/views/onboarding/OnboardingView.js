@@ -19,6 +19,7 @@ import Summary from './fragments/Summary'
 import FormValues from './values'
 
 
+
 const steps = [
   {
     label: 'Education',
@@ -66,7 +67,7 @@ class OnboardingView extends Component {
 
   render () {
     const submit = () => {
-    alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
+      window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
     }
 
 

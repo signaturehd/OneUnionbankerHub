@@ -18,25 +18,23 @@ import Certificate from './CertificateFragment'
 import AboutMe from './AboutMeFragment'
 import FormValues from '../values'
 
-const submit = () => {
-  window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
-}
-
 const values  = ({ values }) =>
 
-  <div>
-    <code>
+
       <pre>
         {values ? JSON.stringify(values, 0, 2) : String(values)}
       </pre>
-    </code>
-  </div>
 
   connect(state => ({
   values: getFormValues('form')(state)
 
 }))(values)
-console.log(values)
+
+const submit = values => {
+  window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
+  };
+
+
 
 
 const Summary = props => {
@@ -98,7 +96,10 @@ const Summary = props => {
               <div>
                 <Certificate/>
                 </div>
+                <button type="submit" onClick = {submit} disabled={pristine || submitting}>Submit</button>
+
         </Card>
+
         <FormValues />
 
       </div>
