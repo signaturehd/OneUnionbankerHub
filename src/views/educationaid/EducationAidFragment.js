@@ -50,7 +50,7 @@ class EducationAidFragment extends BaseMVPView{
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.getEducationAid()
+    this.presenter.validateAid()
   }
 
   confirmation (
@@ -119,6 +119,10 @@ class EducationAidFragment extends BaseMVPView{
 
   setEducationAid(educationAid) {
     this.setState({ educationAid })
+  }
+
+  setValidateAid(validateAid) {
+    this.setState({ validateAid })
   }
 
   hideCircularLoader () {

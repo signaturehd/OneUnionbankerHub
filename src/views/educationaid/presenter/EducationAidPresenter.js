@@ -1,5 +1,5 @@
-import GetEducationAidInteractor from '../../../domain/interactor/educationAid/GetEducationAidInteractor'
 import AddEducationAidInteractor from '../../../domain/interactor/educationAid/AddEducationAidInteractor'
+import validateAidInteractor from '../../../domain/interactor/educationAid/validateAidInteractor'
 import educationAidParam from '../../../domain/param/AddEducationAidParam'
 
 import store from '../../../store'
@@ -8,7 +8,7 @@ import { NotifyActions } from '../../../actions'
 export default class EducationAidPresenter {
 
  constructor (container) {
-   this.getEducationAidInteractor = new GetEducationAidInteractor(container.get('HRBenefitsClient'))
+   this.validateAidInteractor = new validateAidInteractor(container.get('HRBenefitsClient'))
    this.addEducationAidInteractor = new AddEducationAidInteractor(container.get('HRBenefitsClient'))
  }
 
@@ -46,14 +46,14 @@ export default class EducationAidPresenter {
    })
  }
 
- getEducationAid () {
-   this.getEducationAidInteractor.execute()
+ validateAid () {
+   this.validateAidInteractor.execute()
      .subscribe(
        educationAid => {
          this.view.setEducationAid(educationAid)
        },
        error => {
-        }
-     )
+      }
+   )
  }
 }
