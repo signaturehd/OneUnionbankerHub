@@ -554,7 +554,7 @@ export default class HRBenefitsService {
 
   /* Calamity Assitance */
   validateCalamityAssistance (token) {
-    return this.apiClient.post('v1/calamity/validate', {
+    return this.apiClient.post('v1/calamity/validate', null, {
       headers: { token }
     })
   }
