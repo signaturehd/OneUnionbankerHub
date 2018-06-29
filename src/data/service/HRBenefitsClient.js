@@ -435,12 +435,6 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  /* Education */
-  getEducationAid (token) {
-    return this.service.getEducationAid(token)
-    .pipe(ServiceErrorOperator())
-  }
-
   addEducationAid (
     token,
     accountToken,
