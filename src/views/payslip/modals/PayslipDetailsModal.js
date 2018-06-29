@@ -5,17 +5,15 @@ import './styles/payslipModal.css'
 import { Modal, Card } from '../../../ub-components/'
 
 class PayslipDetailsModal extends Component {
+  
   constructor (props) {
     super(props)
-    this.state = {
-      showPayslipDetails: false,
-    }
   }
 
   render () {
     const { showPayslipDetails } = this.state
     const { payslipResult } = this.props
-    
+
     return (
 
       <Modal

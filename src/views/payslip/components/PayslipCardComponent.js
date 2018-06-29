@@ -31,7 +31,7 @@ class PayslipComponent extends Component {
                   <span className={ ' payslip-icon-forms payslip-icon' }/>
                 </div>
                 <div>
-                  <h2>
+                  <h2 className={ 'payslip-label' }>
                     { payslip && payslip.date ? payslip.date : '(Not Yet Provided)' }
                   </h2>
                 </div>
