@@ -15,7 +15,7 @@ class PayslipDetailsModal extends Component {
   render () {
     const { showPayslipDetails } = this.state
     const { payslipResult } = this.props
-    console.log(payslipResult)
+    
     return (
 
       <Modal
