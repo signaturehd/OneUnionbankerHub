@@ -10,6 +10,7 @@ import EducationFragment from './fragments/education/EducationFragment'
 import LoansFragment from './fragments/loans/LoansFragment'
 import MedicalFragment from './fragments/medical/MedicalFragment'
 import CarLeaseFragment from './fragments/carlease/CarLeaseFragment'
+import CalamityFragment from '../calamity/CalamityFragment'
 
 import TransactionPersonalFragment from '../transaction/TransactionPersonalFragment'
 import TransactionApprovalFragment from '../transaction/TransactionApprovalFragment'
@@ -111,6 +112,11 @@ class BenefitsFragment extends BaseMVPView {
       styleName: 'option-cards-4',
       title: 'CAR LEASE',
       path: '/mybenefits/benefits/carlease',
+    }, {
+      id: 4,
+      styleName: 'option-cards-5',
+      title: 'CALAMITY',
+      path: '/mybenefits/benefits/calamity',
     }]
 
   const Benefits = () => (
@@ -218,6 +224,8 @@ class BenefitsFragment extends BaseMVPView {
                   presenter={ this.presenter } />}/>
               <Route path='/mybenefits'
                 render={ Benefits } />
+              <Route exact path='/mybenefits/calamity'
+                render={ props => <CalamityFragment { ...props } />}/>
              </Switch>
           </section>
         </div>

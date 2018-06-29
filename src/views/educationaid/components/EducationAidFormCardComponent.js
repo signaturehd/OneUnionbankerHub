@@ -285,6 +285,10 @@ class EducationAidFormCardComponent extends Component {
               type={ 'text' }
               placeholder={ 'Total Reimbursable Amount' }/>
               <br/>
+              <br/>
+              <h4>
+                Form Attachments
+              </h4>
             <FileUploader
               accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
               value={ fileOR.name }
