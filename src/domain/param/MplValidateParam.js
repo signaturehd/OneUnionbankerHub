@@ -1,1 +1,1 @@
-export default (loanTypeId) => ({ loanTypeId }) 
+export default loanTypeId => ({ loanTypeId }) 

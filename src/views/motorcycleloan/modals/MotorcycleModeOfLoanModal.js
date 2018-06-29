@@ -7,7 +7,7 @@ import './styles/motorModalStyle.css'
 
 class MotorcycleModeOfLoanModal extends Component {
 render () {
-  const { onClose, offset, onSubmit }=this.props
+  const { onClose, offset, onSubmit } = this.props
 
 return (
   <Modal
@@ -35,7 +35,7 @@ return (
     )
   }
 }
-MotorcycleModeOfLoanModal.propTypes={
+MotorcycleModeOfLoanModal.propTypes = {
   onClose : PropTypes.func,
   offset : PropTypes.array,
   onSubmit : PropTypes.func

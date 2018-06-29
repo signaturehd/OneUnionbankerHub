@@ -18,12 +18,22 @@ class EducationFragment extends Component {
 
     const benefitsOptions = [{
       id: 1,
-      styleName: 'education-cards-3',
-      title: 'EDUCATION GRANT - AID',
-      path: '/mybenefits/benefits/education/grantaid',
+      styleName: 'education-cards-1',
+      title: 'EDUCATION AID',
+      path: '/mybenefits/benefits/education/aid',
     }, {
       id: 2,
       styleName: 'education-cards-4',
+      title: 'EDUCATION GROUP - AID',
+      path: '/mybenefits/benefits/education/groupaid',
+    }, {
+      id: 3,
+      styleName: 'education-cards-2',
+      title: 'EDUCATION GRANT - AID',
+      path: '/mybenefits/benefits/education/grantaid',
+    }, {
+      id: 4,
+      styleName: 'education-cards-3',
       title: 'EDUCATION GRANT - PLAN',
       path: '/mybenefits/benefits/education/grantplan',
     }]

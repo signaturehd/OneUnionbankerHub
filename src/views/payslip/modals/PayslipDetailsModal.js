@@ -5,19 +5,17 @@ import './styles/payslipModal.css'
 import { Modal, Card } from '../../../ub-components/'
 
 class PayslipDetailsModal extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
-    this.state={
+    this.state = {
       showPayslipDetails: false,
     }
   }
 
   render () {
-
-    const { showPayslipDetails }=this.state
-    const { gross, title, date, netPay, onClose, deduction }=this.props
-
+    const { showPayslipDetails } = this.state
+    const { payslipResult } = this.props
+    
     return (
 
       <Modal
@@ -72,12 +70,8 @@ class PayslipDetailsModal extends Component {
   }
 }
 
-PayslipDetailsModal.propTypes={
-  gross : PropTypes.object,
-  title : PropTypes.object,
-  date : PropTypes.object,
-  netPay : PropTypes.object,
-  onClose : PropTypes.func,
+PayslipDetailsModal.propTypes = {
+  payslipResult : PropTypes.object
 }
 
 export default PayslipDetailsModal

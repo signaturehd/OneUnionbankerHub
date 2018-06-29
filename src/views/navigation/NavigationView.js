@@ -25,8 +25,10 @@ import { connect } from 'react-redux'
 import store from '../../store'
 import { NotifyActions } from '../../actions'
 /* Education */
+import EducationAidFragment from '../educationaid/EducationAidFragment'
 import EducationGrantPlanFragment from '../educationgrantplan/EducationGrantPlanFragment'
 import EducationGrantAidFragment from '../educationgrantaid/EducationGrantAidFragment'
+import EducationGroupAidFragment from  '../educationgroupaid/EducationGroupAidFragment'
 /* Medical */
 import DentalReimbursement from '../dentalreimbursement/DentalReimbursementFragment'
 import DentalLoaView from '../dentalloa/DentalLoaFragment'
@@ -39,7 +41,7 @@ import SalaryLoanFragment from '../salaryloan/SalaryLoanFragment'
 import MotorcycleLoanFragment from '../motorcycleloan/MotorcycleLoanFragment'
 /*  MPL Motorcycle */
 import ComputerLoanFragment from '../computerloan/ComputerLoanFragment'
-/*Transaction*/
+/* Transaction*/
 import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
 import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
 import CarLeaseNewFragment from '../carlease/CarLeaseNewFragment'
@@ -109,8 +111,11 @@ class NavigationView extends BaseMVPView {
     this.setState({ wizard })
   }
 
-  render () {
+  relogin () {
+    this.props.history.push('/')
+  }
 
+  render () {
     const {
       displayShow,
       displayNavIcon,
@@ -128,7 +133,7 @@ class NavigationView extends BaseMVPView {
       }
     }
 
-    let locationPath = history.location.pathname
+    const locationPath = history.location.pathname
     return (
       <div className = { 'navigation-body-div' }>
         { super.render() }
@@ -151,14 +156,16 @@ class NavigationView extends BaseMVPView {
             showLogoutModal &&
             <NavigationViewModal
               logout = { () => this.presenter.logout() }
-              onClose = { () => this.setState({showLogoutModal : false}) }
+              onClose = { () => this.setState({ showLogoutModal : false }) }
             />
           }
 
           {
             login &&
             <ReloginModal
-              relogin = { () => { this.presenter.relogin(), history.push('/') } }
+              relogin = { () => {
+ this.presenter.relogin()
+} }
             />
           }
               <Drawer >
@@ -172,11 +179,17 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mybenefits/transactions/approval/:id' render = { props =>
                     <TransactionApprovalDetailFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                  <Route path = '/mybenefits/benefits/education/aid' render = { props =>
+                    <EducationAidFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
                   <Route path = '/mybenefits/benefits/education/grantplan' render = { props =>
                     <EducationGrantPlanFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
                   <Route path = '/mybenefits/benefits/education/grantaid' render = { props =>
                     <EducationGrantAidFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                  <Route path = '/mybenefits/benefits/education/groupaid' render = { props =>
+                    <EducationGroupAidFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
                   <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
                     <OpticalFragment { ...props }

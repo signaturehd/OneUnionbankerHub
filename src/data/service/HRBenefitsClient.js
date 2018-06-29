@@ -172,7 +172,7 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
       .map(resp => {
         for (const i in resp) {
-          if (resp[i].id == id) {
+          if (resp[i].id === id) {
             return resp[i]
           }
         }
@@ -300,7 +300,7 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addBenefitFeedback(token, addBenefitFeedbackParam) {
+  addBenefitFeedback (token, addBenefitFeedbackParam) {
     return this.service.addBenefitFeedback(token, addBenefitFeedbackParam)
       .pipe(ServiceErrorOperator())
   }
@@ -430,18 +430,23 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getPayslipSelectedDate (token, payslipParam) {
-    return this.service.getPayslipSelectedDate(token, payslipParam)
+  addPayslipSelectedDate (token, payslipParam) {
+    return this.service.addPayslipSelectedDate(token, payslipParam)
       .pipe(ServiceErrorOperator())
   }
 
-  validateGrantAid (token) {
-    return this.service.validateGrantAid(token)
-      .pipe(ServiceErrorOperator())
-  }
-
-  validateGrantPlan (token) {
-    return this.service.validateGrantPlan(token)
+  addEducationAid (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    educationAidParam) {
+    return this.service.addEducationAid(
+      token,
+      accountToken,
+      accountNo,
+      releasingCenter,
+      educationAidParam)
       .pipe(ServiceErrorOperator())
   }
 
@@ -458,6 +463,64 @@ export default class HRBenefitsClient {
       accountNumber,
       releasingCenter,
       grantPlanParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateGrantAid (token) {
+    return this.service.validateGrantAid(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateGrantPlan (token) {
+    return this.service.validateGrantPlan(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Education Gorup Aid */
+  addGroupAid (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    groupAidParam) {
+    return this.service.addGroupAid(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      groupAidParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateAid (token) {
+    return this.service.validateAid(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateGroupAid (token) {
+    return this.service.validateGroupAid(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Bereavement */
+  getBereveavementValidate (token) {
+    return this.service.validateBereavement(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addBereavement (token) {
+    return this.service.addBereavement(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Calamity Assitance */
+  getCalamityAssistanceValidate (token) {
+    return this.service.validateCalamityAssistance(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addCalamityAssistance (token) {
+    return this.service.addCalamityAssistance(token)
       .pipe(ServiceErrorOperator())
   }
 }

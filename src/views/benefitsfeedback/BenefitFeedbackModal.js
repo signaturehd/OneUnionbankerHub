@@ -16,20 +16,19 @@ import './styles/benefitFeedback.css'
 class BenefitFeedbackModal extends BaseMVPView {
   constructor (props) {
     super(props)
-    this.state={
+    this.state = {
       rating : 0,
       comment : null,
       submitLoader : false
     }
 
-    this.addRating=this.addRating.bind(this)
-    console.log(this.props)
+    this.addRating = this.addRating.bind(this)
   }
 
   addRating () {
-    const { rating, comment }=this.state
-    const { benefitId }=this.props
-    this.presenter.addFeedback( benefitId, rating, comment )
+    const { rating, comment } = this.state
+    const { benefitId } = this.props
+    this.presenter.addFeedback(benefitId, rating, comment)
     this.setState({ submitLoader : true })
   }
 
@@ -42,9 +41,8 @@ class BenefitFeedbackModal extends BaseMVPView {
   }
 
   render () {
-
-    const { submitLoader, rating }=this.state
-    const { onClose }=this.props
+    const { submitLoader, rating } = this.state
+    const { onClose } = this.props
 
     return (
       <Modal
@@ -58,8 +56,7 @@ class BenefitFeedbackModal extends BaseMVPView {
             <center>
               <h3>Please wait while we are submitting your feedback</h3>
               <CircularLoader show={ true }/>
-            </center>
-            :
+            </center>            :
             <div>
               <center>
                 <h3>Your Feedback is important to us to improve our system</h3>
@@ -95,7 +92,7 @@ class BenefitFeedbackModal extends BaseMVPView {
   }
 }
 
-BenefitFeedbackModal.propTypes={
+BenefitFeedbackModal.propTypes = {
   benefitId : PropTypes.string,
   onClose : PropTypes.func
 }

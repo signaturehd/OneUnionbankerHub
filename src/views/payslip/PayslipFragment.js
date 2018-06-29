@@ -20,48 +20,58 @@ class PayslipFragment extends BaseMVPView {
     this.state={
       payslipList : [],
       showMessageModal : false,
+      employeeId : [],
+      payslipResult : [],
+      showPayslipDetails: false
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(8)
     this.presenter.getPayslip()
+    this.presenter.getProfile()
   }
 
   showPayslipList (payslipList) {
     this.setState({ payslipList })
   }
 
-  navigate () {
-    this.setState({ showMessageModal : false })
-    this.props.history.push('/')
+  getEmployeeId (employeeId) {
+    this.setState({ employeeId })
   }
 
-  render () {
+  getSelectedDate (payslipResult) {
+    this.setState({ payslipResult })
+  }
 
+  selectedDate (empId, date) {
+    this.presenter.addPayslipSelectedDate(empId, date)
+  }
+
+  navigate () {
+    this.props.history.push('/')
+  }
+  render () {
+    const { payslipList, employeeId, payslipResult, showPayslipDetails }=this.state
     const { history }=this.props
-    const { showMessageModal, payslipList }=this.state
+    const empId=employeeId && employeeId.employeeNumber
 
     return (
       <div className={ 'payslip-container' }>
         { super.render() }
-        <h2 className={ 'header-margin-default ' }> Payslip </h2>
         {
-          showMessageModal &&
-          <Modal>
-            <h1> Coming Soon ! </h1>
-            <center>
-              <h2> The current feature is not available yet </h2>
-              <br/>
-              <br/>
-            <GenericButton
-              text={ 'Ok' }
-              onClick={ () => this.navigate() }
-              />
-            </center>
-          </Modal>
+          showPayslipDetails &&
+
+            <PayslipDetailsModal
+              payslipResult={ payslipResult }
+              onClose={ () => this.setState({ showPayslipDetails: false }) }
+            />
         }
-          <PayslipCardComponent/>
+        <h2 className={ 'header-margin-default ' }> Payslip </h2>
+          <PayslipCardComponent
+            payslipList={ payslipList }
+            onSubmit={ (date) => this.selectedDate(empId, date) }
+          />
       </div>
     )
   }

@@ -29,11 +29,10 @@ import ReleasingCenterModal from './modal/ReleasingCenterModal'
 import './styles/benefits.css'
 
 class BenefitsFragment extends BaseMVPView {
-
   constructor (props) {
     super(props)
 
-    this.state={
+    this.state = {
       showAccountNumberModal: false,
       showReleasingCenterModal : false,
       releasingCenters: null,
@@ -83,7 +82,7 @@ class BenefitsFragment extends BaseMVPView {
   }
 
   render () {
-    const { history, onClick }=this.props
+    const { history, onClick } = this.props
     const {
       accountNumber,
       showAccountNumberModal,
@@ -91,9 +90,9 @@ class BenefitsFragment extends BaseMVPView {
       releasingCenters,
       showModal,
       isAccountNumber,
-    }=this.state
+    } = this.state
 
-    const benefitsOptions=[{
+    const benefitsOptions = [{
       id: 0 ,
       styleName: 'option-cards-1',
       title: 'EDUCATION',
@@ -120,7 +119,7 @@ class BenefitsFragment extends BaseMVPView {
       path: '/mybenefits/benefits/bereavement',
     }]
 
-  const Benefits=() => (
+  const Benefits = () => (
     <div className={ 'benefits-container' }>
       {
         showAccountNumberModal &&
@@ -235,7 +234,7 @@ class BenefitsFragment extends BaseMVPView {
   }
 }
 
-BenefitsFragment.propTypes={
+BenefitsFragment.propTypes = {
   setSelectedNavigation: PropTypes.func,
   onClick: PropTypes.func,
   history: PropTypes.object,

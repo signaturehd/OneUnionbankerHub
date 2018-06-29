@@ -33,7 +33,6 @@ class EducationGrantAidFormCardComponent extends Component {
   }
 
   render () {
-
     const {
       grantAid,
       presenter,
