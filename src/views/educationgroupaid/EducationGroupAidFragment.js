@@ -178,7 +178,7 @@ class EducationGroupAidFragment extends BaseMVPView {
             onClick = { this.navigate.bind(this) }>
           </i>
           <h2 className = { 'header-margin-default' }>
-            Education Group - Plan
+            Education Group - Aid
           </h2>
         </div>
         {
