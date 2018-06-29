@@ -14,8 +14,8 @@ class PayslipDetailsModal extends Component {
 
   render () {
     const { showPayslipDetails } = this.state
-    const { gross, title, date, netPay, onClose, deduction } = this.props
-
+    const { payslipResult } = this.props
+    console.log(payslipResult)
     return (
 
       <Modal
@@ -71,11 +71,7 @@ class PayslipDetailsModal extends Component {
 }
 
 PayslipDetailsModal.propTypes = {
-  gross : PropTypes.object,
-  title : PropTypes.object,
-  date : PropTypes.object,
-  netPay : PropTypes.object,
-  onClose : PropTypes.func,
+  payslipResult : PropTypes.object
 }
 
 export default PayslipDetailsModal
