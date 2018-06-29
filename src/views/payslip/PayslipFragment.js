@@ -13,11 +13,10 @@ import { Card, Modal, GenericButton, GenericSelect } from '../../ub-components'
 import './styles/payslip.css'
 
 class PayslipFragment extends BaseMVPView {
-
   constructor (props) {
     super(props)
 
-    this.state={
+    this.state = {
       payslipList : [],
       showMessageModal : false,
     }
@@ -38,9 +37,8 @@ class PayslipFragment extends BaseMVPView {
   }
 
   render () {
-
-    const { history }=this.props
-    const { showMessageModal, payslipList }=this.state
+    const { history } = this.props
+    const { showMessageModal, payslipList } = this.state
 
     return (
       <div className={ 'payslip-container' }>
@@ -67,7 +65,7 @@ class PayslipFragment extends BaseMVPView {
   }
 }
 
-PayslipFragment.propTypes={
+PayslipFragment.propTypes = {
   setSelectedNavigation: PropTypes.func,
   history : PropTypes.object,
 }

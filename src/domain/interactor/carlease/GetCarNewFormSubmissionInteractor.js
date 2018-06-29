@@ -1,5 +1,4 @@
 export default class GetCarNewFormSubmissionInteractor {
-
   constructor (client) {
     this.client = client
   }
@@ -10,6 +9,7 @@ export default class GetCarNewFormSubmissionInteractor {
       this.client.getAccountToken(),
       this.client.getAccountNumber(),
       this.client.getReleasingCenter(),
-      addCarParam)
+      addCarParam
+    )
   }
 }

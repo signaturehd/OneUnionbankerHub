@@ -1,3 +1,5 @@
+
+
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -8,6 +10,7 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import { CircularLoader } from '../../ub-components'
 
 import './styles/transactionDetails.css'
+
 
 import DentalLoaDetailsFragment from './fragments/DentalLoaDetailsFragment'
 import DentalRDetailsFragment from './fragments/DentalRDetailsFragment'
@@ -66,6 +69,18 @@ function  TransactionDetails (props)  {
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 1) {
+    return <LoansDetailsFragment
+      transactionsPerson = { transactionsPerson }
+      attachments = { attachments }
+      details = { transactionDetails } />
+  } else if (transactionId === 21) {
+    // Bereavement Transaction Details
+    return <LoansDetailsFragment
+      transactionsPerson = { transactionsPerson }
+      attachments = { attachments }
+      details = { transactionDetails } />
+  } else if (transactionId === 22) {
+    // Calamity Assistance
     return <LoansDetailsFragment
       transactionsPerson = { transactionsPerson }
       attachments = { attachments }

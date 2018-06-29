@@ -38,14 +38,14 @@ class MplPurposeOfAvailmentModal extends Component {
       loanType && loanType,
       loanId,
       subcategory ? subcategory : null)
-    if ( loanId ) {
+    if (loanId) {
        this.showPurposeLoader()
        this.props.presenter.getMplPurposeOfAvailment(
          loanType && loanType,
          loanId,
          subcategory ? subcategory : null)
          this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
-       if(subcategory === 2 || subcategory === 3) {
+       if (subcategory === 2 || subcategory === 3) {
          this.props.presenter.getMplPurposeOfAvailment(
            loanType && loanType,
            loanId,
@@ -92,7 +92,7 @@ class MplPurposeOfAvailmentModal extends Component {
                 onClick = { () => this.onGetClicked(
                   resp,
                   subcategory,
-                  subcategory === 1 ? false : true,
+                  subcategory !== 1,
                   true,
                   loanType) }
                 />

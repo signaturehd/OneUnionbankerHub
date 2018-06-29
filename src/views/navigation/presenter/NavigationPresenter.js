@@ -67,5 +67,4 @@ export default class NavigationPresenter {
     this.setWizardInteractor.execute(wizard)
     this.view.showWizard(wizard)
   }
-
 }
