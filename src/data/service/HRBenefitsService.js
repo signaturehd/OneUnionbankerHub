@@ -466,13 +466,17 @@ export default class HRBenefitsService {
   }
 
   getPayslip (token) {
-    return this.apiClient.post('v1/payslip', {
+    return this.apiClient.get('v1/pay/periods', {
       headers : { token }
     })
   }
 
-  getPayslipSelectedDate (token, payslipParam) {
-    return this.apiClient.post('v1/payslip/', payslipParam, {
+  addPayslipSelectedDate (token, payslipParam) {
+    const payslipObject = {
+      id : payslipParam.employeeId,
+      period : payslipParam.date
+    }
+    return this.apiClient.post('v1/pay', payslipObject, {
       headers : { token }
     })
   }
