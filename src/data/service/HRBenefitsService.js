@@ -425,13 +425,6 @@ export default class HRBenefitsService {
     })
   }
 
-  /* Education */
-
-  getEducationAid (token) {
-    return this.apiClient.get('v1/reimbursements/education/personal/validate', {
-      headers: { token }
-    })
-  }
 
   addEducationAid (
     token,
@@ -511,6 +504,36 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Education Aid and Group Aid */
+   validateAid (token) {
+     return this.apiClient.get('v1/reimbursements/education/personal/validate', {
+       headers: { token }
+     })
+   }
+
+   /* validate group aid */
+   validateGroupAid (token) {
+     return this.apiClient.get('v1/reimbursements/education/dependent/validate', {
+       headers: { token }
+     })
+   }
+
+   addGroupAid (token, accountToken, accountNumber, releasingCenter, groupAidParam) {
+     const formData = new FormData()
+     const grantPlanObject = {
+       grantType : groupAidParam.grantId,
+       accountNumber,
+       releasingCenter
+     }
+     formData.append('uuid', 12345)
+     formData.append('cert', groupAidParam.file)
+     formData.append('body', JSON.stringify(grantPlanObject))
+     return this.apiClient.post('v2/reimbursements/education/dependent/submit', formData, {
+       headers : { token }
+     })
+   }
+
 
   /* bereavement benefit */
   validateBereavement (token) {
