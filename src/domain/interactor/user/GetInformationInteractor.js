@@ -1,4 +1,4 @@
-export default class GetManagersCheckInteractor {
+export default class GetInformationInteractor {
   constructor (client) {
     this.client = client
   }
