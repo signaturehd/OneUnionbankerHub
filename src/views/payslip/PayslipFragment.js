@@ -7,7 +7,7 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/PayslipPresenter'
 
 import PayslipCardComponent from './components/PayslipCardComponent'
-
+import PayslipDetailsModal from './modals/PayslipDetailsModal'
 import { Card, Modal, GenericButton, GenericSelect } from '../../ub-components'
 
 import './styles/payslip.css'
@@ -68,14 +68,18 @@ class PayslipFragment extends BaseMVPView {
 
             <PayslipDetailsModal
               payslipResult={ payslipResult }
+              showPayslipDetails={ showPayslipDetails }
               onClose={ () => this.setState({ showPayslipDetails: false }) }
             />
         }
 
-        <h2 className={ 'header-margin-default ' }> Payslip </h2>
+        <h2 className={ 'header-margin-default ' }> My Pay </h2>
           <PayslipCardComponent
             payslipList={ payslipList }
-            onSubmit={ (date) => this.selectedDate(empId, date) }
+            showPayslipDetails={showPayslipDetails}
+            onSubmit={ (date) =>
+              this.setState({ showPayslipDetails : true })
+             }
           />
       </div>
     )
