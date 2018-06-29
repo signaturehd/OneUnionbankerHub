@@ -12,8 +12,9 @@
 
 .payslip-card-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-column-gap: 20px;
+  grid-row-gap: 10px;
 }
 
 @media (max-width : 786px) {
@@ -43,11 +44,15 @@
 }
 
 .payslip-icon-forms {
-  background-size: contain;
+  background-size: auto;
   cursor: pointer;
   background-color: transparent;
   display: block;
-  height: 30px;
-  width: 30px;
+  height: 45px;
+  width: 50px;
   background-repeat: no-repeat;
+}
+
+.payslip-label {
+  margin: 15px 0px 0px 20px;
 }

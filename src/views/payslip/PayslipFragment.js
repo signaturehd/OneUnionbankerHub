@@ -48,6 +48,10 @@ class PayslipFragment extends BaseMVPView {
     this.presenter.addPayslipSelectedDate(empId, date)
   }
 
+  displayShowDetails () {
+    this.setState({ showPayslipDetails : true })
+  }
+
   navigate () {
     this.props.history.push('/')
   }
@@ -67,6 +71,7 @@ class PayslipFragment extends BaseMVPView {
               onClose={ () => this.setState({ showPayslipDetails: false }) }
             />
         }
+
         <h2 className={ 'header-margin-default ' }> Payslip </h2>
           <PayslipCardComponent
             payslipList={ payslipList }
