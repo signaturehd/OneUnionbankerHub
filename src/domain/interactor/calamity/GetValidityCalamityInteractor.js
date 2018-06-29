@@ -1,4 +1,4 @@
-export default class CalamityInteractor {
+export default class GetValidityCalamityInteractor {
   constructor (client) {
     this.client = client
   }
