@@ -1,4 +1,4 @@
-import CalamityInteractor from '../../../domain/interactor/calamity/CalamityInteractor'
+import CalamityInteractor from '../../../domain/interactor/calamity/GetValidityCalamityInteractor'
 
 export default class CalamityPresenter {
 
@@ -17,7 +17,7 @@ export default class CalamityPresenter {
          this.view.setValidateCalamityAssistance(calamityAssistance)
        },
        error => {
-         console.log("validateCalamityAssistance - Presenter")
+
       }
    )
  }

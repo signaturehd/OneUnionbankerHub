@@ -23,6 +23,11 @@ class CalamityModal extends Component {
     this.setState({ enabledLoader : false })
   }
 
+  onGetClicked (id, description) {
+    this.props.onSubmit(id, description)
+    this.props.onClose()
+  }
+
   render () {
     const { onClose, tog } = this.props
     const { enabledLoader, titleModal } = this.state
@@ -46,9 +51,9 @@ class CalamityModal extends Component {
             <GenericButton
               className = { 'calamity-tog-modal-button' }
               key = { key }
-              text = { resp && resp.name }
+              text = { resp && resp.description }
               onClick = {
-                () => this.onGetClicked()
+                () => this.onGetClicked(resp.id, resp.description)
               }
               />
             )

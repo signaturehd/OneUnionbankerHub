@@ -70,7 +70,7 @@ class CalamityFormCardComponent extends Component {
               onSubmit={
                 (calamityAssistance) => {
                   this.setState({
-                    calamityAssistance
+                    calamityType
                   })
                 }
               }
@@ -90,15 +90,14 @@ class CalamityFormCardComponent extends Component {
             <div className={'calamity-form-card-body '}>
 
             <GenericTextBox
-              value={ calamityAssistance }
+              value={ calamityType }
               onClick={
                 () => {
                   this.setState({ showModal : true })
-                  this.setState({ titleModal : 'Type of Calamity' })
                }
               }
               placeholder={ 'Type of Calamity' }
-              onChange={ (e) => this.setState({ calamityAssistance : e.target.value }) }
+              onChange={ (e) => this.setState({ calamityType : e.target.value }) }
               type={ 'button' }/>
 
             <DatePicker
