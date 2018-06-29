@@ -15,7 +15,8 @@ class PayslipComponent extends Component {
   }
 
   render () {
-    const { showPayslipDetails } = this.state
+    const { showPayslipDetails }=this.state
+    const { payslipList }=this.props
     const staticOptions = [{
       id: 0 ,
       styleName: 'option-cards-1',
@@ -29,7 +30,7 @@ class PayslipComponent extends Component {
       styleName: 'option-cards-3',
       title: 'July 1-15, 2018',
     }]
-
+    console.log(payslipList)
     return (
 
       <div className={ 'payslip-card-container' }>
@@ -41,7 +42,7 @@ class PayslipComponent extends Component {
             />
         }
         {
-          staticOptions.map((payslip, key) =>
+          payslipList.map((payslip, key) =>
             <Card
               className={ 'payslip-card-component' }
               key={ key }
@@ -51,7 +52,7 @@ class PayslipComponent extends Component {
                   <span className={ ' payslip-icon-forms payslip-icon' }/>
                 </div>
                 <div>
-                  <h2>{ payslip.title }</h2>
+                  <h2>{ payslip.date }</h2>
                 </div>
                 <div><span className={ 'payslip-icon-forms payslip-icon-proceed' }/>
               </div>
