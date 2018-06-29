@@ -514,7 +514,7 @@ export default class HRBenefitsClient {
   }
 
   /* Calamity Assitance */
-  getCalamityAssistanceValidate (token) {
+  validateCalamityAssistance (token) {
     return this.service.validateCalamityAssistance(token)
       .pipe(ServiceErrorOperator())
   }
