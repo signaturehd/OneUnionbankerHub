@@ -132,14 +132,14 @@ class BenefitsFragment extends BaseMVPView {
         <BereavementConfirmationModal
           onYes = {
             () => {
-              this.setState({ withDeathCert : true, showBereavementConfirmationModal : false })
-              history.push('/mybenefits/benefits/bereavement')
+              this.setState({ showBereavementConfirmationModal : false })
+              history.push('/mybenefits/benefits/bereavement/certified')
             }
           }
           onClose  = {
             () => {
-              this.setState({ withDeathCert : false, showBereavementConfirmationModal : false })
-              history.push('/mybenefits/benefits/bereavement')
+              this.setState({ showBereavementConfirmationModal : false })
+              history.push('/mybenefits/benefits/bereavement/uncertified')
             }
           }
         />
@@ -255,11 +255,6 @@ class BenefitsFragment extends BaseMVPView {
                 render={ props => <CarLeaseFragment
                   { ...props }
                   presenter={ this.presenter } />}/>
-              <Route exact path='/mybenefits/benefits/bereavement'
-                render={ props => <BereavementFragment
-                   { ...props }
-                   withDeathCert = { withDeathCert }
-                   setSelectedNavigation = { this.props.setSelectedNavigation } />}/>
               <Route path='/mybenefits'
                 render={ Benefits } />
              </Switch>

@@ -23,16 +23,17 @@ class BereavementFragment extends BaseMVPView {
   constructor (props) {
     super (props)
     this.state = {
-      enabledLoader : false
+      enabledLoader : true
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
+    this.presenter.validateBereavement()
   }
 
-  hideCircularLoader () {
-    this.setState({ enabledLoader : false })
+  isEligible (bool) {
+    this.setState({ enabledLoader : !bool })
   }
 
   showCircularLoader () {
@@ -43,10 +44,9 @@ class BereavementFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits')
   }
 
-  render ()
-  {
+  render () {
     const { enabledLoader } = this.state
-    const { withDeathCert } = this.props
+    const { type } = this.props.match.params
 
     return (
       <div>
@@ -63,11 +63,10 @@ class BereavementFragment extends BaseMVPView {
           enabledLoader ?
           <center className = { 'circular-loader-center' }>
             <CircularLoader show = { enabledLoader }/>
-          </center> :
+          </center>
+          :
           <FormComponent
-            withDeathCert = { withDeathCert }
-            onClick = { () => console.log('clicked')
-            }
+            withDeathCert = { type === "certified" ? true : false  }
             presenter = { this.presenter }
           />
         }

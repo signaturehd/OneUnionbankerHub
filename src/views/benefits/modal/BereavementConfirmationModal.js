@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { Modal, GenericButton} from '../../../ub-components/'
 
+import './styles/modalStyle.css'
+
 class BereavementConfirmationModal extends Component {
   constructor (props) {
     super (props)
@@ -30,19 +32,16 @@ class BereavementConfirmationModal extends Component {
         <div>
           <h2>Do you have a death certificate?</h2>
           <br/>
-          <center>
+          <div className = { 'confirmation-grid-action' } >
             <GenericButton
-              onClick = {
-                onYes
-              }
-
+              onClick = { onYes }
               text = { 'yes' }
               disabled = {this.state.disabled}
             />
             <GenericButton
               onClick = { onClose }
               text = { 'no' } />
-          </center>
+          </div>
         </div>
       </Modal>
     )
