@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Card, Line } from '../../../ub-components/'
-import SettingsOtherInformationComponent from './SettingsOtherInformationComponent'
+import SettingsProfileDescriptions from './SettingsProfileDescriptions'
 
 import ContactInfoModal from '../modals/ContactsModal'
 import DependentsModal from '../modals/DependentsModal'
@@ -48,7 +48,7 @@ class SettingsProfileCardComponent extends Component {
               profileName={ profile && profile.fullname }
               profileEmail={ profile && profile.email }
               profileNumber={ profile && profile.contactNumber }
-              onClose={ () => this.setState({ showContactInfo : false }) }
+              onClose={ () => this.setState({ showContactInfoModal : false }) }
             />
         }
         {
@@ -89,35 +89,39 @@ class SettingsProfileCardComponent extends Component {
                 </h2>
               </div>
               <div>
-                <div className={ 'profile-information-view-right' }>
+                <div
+                  onClick={ () => this.setState({ showContactInfoModal : true }) }
+                  className={ 'profile-information-view-right' }>
                   <div>
-                     <span className={ 'profile-icon-settings employeeWorkClass' }/>
+                    <span className={ 'profile-icon-settings employeeContact' }/>
                   </div>
                   <div>
-                    <h5 className={ 'profile-margin-label' }>
-                      { profile.workClass ? profile.workClass : '(Not Yet Provided)'  }
-                    </h5>
-                  </div>
-                </div>
-                <div className={ 'profile-information-view-right' }>
-                  <div>
-                    <span className={ 'profile-icon-settings employeeRank' }/>
-                  </div>
-                  <div>
-                    <h5 className={ 'profile-margin-label' }>
-                      { rank.rank ? rank.rank : '(Not Yet Provided)'  }
+                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
+                      { 'See contact info'  }
                     </h5>
                   </div>
                 </div>
                 <div
-                  onClick={ () => this.setState({ showContactInfo : true }) }
+                  onClick={ () => this.setState({ showDependentModal : true }) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings employeeDependent' }/>
                   </div>
                   <div>
                     <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
-                      { 'See contact info'  }
+                      { 'See dependents list'  }
+                    </h5>
+                  </div>
+                </div>
+                <div
+                  onClick={ () => this.setState({ showDependentModal : true }) }
+                  className={ 'profile-information-view-right' }>
+                  <div>
+                    <span className={ 'profile-icon-settings employeeDependent' }/>
+                  </div>
+                  <div>
+                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
+                      { 'See company info'  }
                     </h5>
                   </div>
                 </div>
@@ -127,8 +131,8 @@ class SettingsProfileCardComponent extends Component {
               <br/><Line/><br/>
             </div>
             <div>
-              <SettingsOtherInformationComponent
-                profile={ profile }
+              <SettingsProfileDescriptions
+                profileDescriptions={ profile && profile.description }
               />
             </div>
           </Card>
@@ -136,11 +140,13 @@ class SettingsProfileCardComponent extends Component {
             profileWork={ profile && profile.work }
             profileEducation={ profile && profile.education }
             />
-          <SkillsComponent
-            profileSkills={ profile && profile.skills }/>
         </div>
         <div>
-          <CertificateComponent />
+          <CertificateComponent
+            profileCertificate={ profile && profile.certificate } />
+
+          <SkillsComponent
+            profileSkills={ profile && profile.skills }/>
         </div>
       </div>
       <div className={ 'profile-settings-grid-column-mobile' }>

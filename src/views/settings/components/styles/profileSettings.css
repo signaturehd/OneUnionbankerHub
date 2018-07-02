@@ -21,6 +21,10 @@
   background-image: url('../../../../images/icons/IdCardOrange.png');
 }
 
+.employeeContact {
+  background-image: url('../../../../images/My Profile.png');
+}
+
 .employeeFullName {
   background-image: url('../../../../images/icons/FullNameOrange.png');
 }
@@ -153,7 +157,7 @@
 }
 
 .profile-others-card {
-  padding: 0px 0px 25px 25px;
+  padding: 0px 25px 25px 25px;
   position: relative;
 }
 
@@ -195,10 +199,17 @@
   margin-bottom: 5px;
 }
 
+
+/* Settings Other Information */
 .profile-others-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-bottom: 5px;
+}
+
+.profile-others-grid-row {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
 }
 
 /*  Mobile View */

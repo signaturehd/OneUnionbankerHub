@@ -18,6 +18,7 @@ class DependentsModal extends Component {
     const {
       onClose,
       profileDependent,
+      profileName,
       backgroundColor }=this.props
 
     const { isDismisable }=this.state
@@ -31,20 +32,40 @@ class DependentsModal extends Component {
             <Line/>
             <br/>
               <div className={ 'contact-info-grid' }>
-                
-                <div className={ 'contact-number-grid' }>
-                  <div>
-                    <span className={ 'contact-icon-settings employeeEmail' }/>
-                  </div>
-                  <div className={ 'contact-info-grid-row' }>
-                    <div className={ 'font-size-18px contact-title' }>
-                      <h2>Email</h2>
-                    </div>
-                    <div className={ 'font-size-16px' }>
-                      <a>{ profileEmail ? profileEmail : '(Not Yet Provided)' }</a>
-                    </div>
-                  </div>
-                </div>
+                {
+                  profileDependent ?
+                   profileDependent.map((dependent, key) =>
+                      <div
+                        key={ key }
+                        className={ 'contact-number-grid' }>
+                        <div>
+                          <span className={ 'contact-icon-settings employeeDependent' }/>
+                        </div>
+                        <div className={ 'contact-info-grid-row' }>
+                          <div className={ 'font-size-18px contact-title' }>
+                            <h2>Dependent { key + 1 }</h2>
+                          </div>
+                          <div className={ 'font-size-16px' }>
+                            <a>{ profileEmail ? profileEmail : '(Not Yet Provided)' }</a>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                    :
+                      <div className={ 'contact-number-grid' }>
+                        <div>
+                          <span className={ 'contact-icon-settings employeeDependent' }/>
+                        </div>
+                        <div className={ 'contact-info-grid-row' }>
+                          <div className={ 'font-size-18px contact-title' }>
+                            <h2>{ '(Nothing to display)' }</h2>
+                          </div>
+                          <div className={ 'font-size-16px' }>
+                            <a>{ '(Nothing to display)' }</a>
+                          </div>
+                        </div>
+                      </div>
+                }
                 <br/>
               </div>
         </Modal>
@@ -54,6 +75,8 @@ class DependentsModal extends Component {
 DependentsModal.propTypes={
   onClose : PropTypes.func,
   backgroundColor : PropTypes.string,
+  profileName : PropTypes.string,
+  profileDependent : PropTypes.object,
 }
 DependentsModal.defaultProps={
 }
