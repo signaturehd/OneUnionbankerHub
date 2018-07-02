@@ -53,3 +53,75 @@ h1, h2, h3, h4, h5, h6, p{
 .circular-loader-center {
   margin: 200px auto auto auto;
 }
+
+.font-weight-normal {
+  font-weight: normal;
+}
+
+.font-weight-bolder {
+  font-weight: bolder;
+}
+
+.font-weight-initial {
+  font-weight: initial;
+}
+
+.font-weight-lighter {
+  font-weight: lighter;
+}
+
+.font-size-10px {
+  font-size: 10px;
+}
+
+.font-size-11px {
+  font-size: 11px;
+}
+
+.font-size-12px {
+  font-size: 12px;
+}
+
+.font-size-13px {
+  font-size: 13px;
+}
+
+.font-size-14px {
+  font-size: 14px;
+}
+
+.font-size-15px {
+  font-size: 15px;
+}
+
+.font-size-16px {
+  font-size: 16px;
+}
+
+.font-size-18px {
+  font-size: 18px;
+}
+
+.font-size-19px{
+  font-size: 19px;
+}
+
+.font-size-20px{
+  font-size: 20px;
+}
+
+.font-size-21px{
+  font-size: 21px;
+}
+
+.font-size-22px{
+  font-size: 22px;
+}
+
+.font-size-23px{
+  font-size: 23px;
+}
+
+.font-size-24px{
+  font-size: 24px;
+}
