@@ -37,7 +37,9 @@ class SkillsComponent extends Component {
 
     return (
       <Card className={ 'profile-common-card' }>
-        <h2> Skills </h2>
+        <h2 className={ 'font-weight-normal unionbank-color' }> Skills </h2>
+        <br/>
+        <Line />
         <br/>
         {
           skillsDefault.map((skills, key)=>

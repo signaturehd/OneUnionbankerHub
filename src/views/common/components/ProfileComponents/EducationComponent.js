@@ -42,14 +42,14 @@ class EducationComponent extends Component {
 
     return (
       <div>
-        <h2> Education </h2>
+        <h2 className={ 'unionbank-color font-weight-normal' }> Education </h2>
         <br/>
         {
           educationDefault.map((education, key)=>
           <div
             key={ key }
             className={ 'components-view' }>
-            <div>
+            <div className={ 'text-align-center' }>
               <img
                 className={ 'components-image' }
                 key={ key }

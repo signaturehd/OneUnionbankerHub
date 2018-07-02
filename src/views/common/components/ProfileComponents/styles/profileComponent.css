@@ -14,7 +14,7 @@
 }
 
 .components-image{
-  width: auto;
-  height: 50px;
-  background-size: contain;
+  width: 50px;
+  height: auto;
+  background-size: cover;
 }

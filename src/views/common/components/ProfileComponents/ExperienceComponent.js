@@ -30,14 +30,14 @@ class ExperienceComponent extends Component {
     return (
       <div>
         <Card className={ 'profile-common-card' }>
-          <h2> Work & Experience </h2>
+          <h2 className={ 'unionbank-color font-weight-normal' }> Work & Experience </h2>
           <br/>
             {
               experienceDefault.map((experience, key)=>
                 <div
                   key={ key }
                   className={ 'components-view' }>
-                  <div>
+                  <div className={ 'text-align-center' }>
                     <img
                       className={ 'components-image' }
                       key={ key }

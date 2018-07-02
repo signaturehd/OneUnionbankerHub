@@ -32,7 +32,9 @@ class CertificateComponent extends Component {
 
     return (
       <div>
-        <h2> Certificate </h2>
+        <h2 className={ 'font-weight-normal unionbank-color' }> Certificate </h2>
+        <br/>
+        <Line/>
         <br/>
         {
           certificateDefault.map((certificate, key)=>
