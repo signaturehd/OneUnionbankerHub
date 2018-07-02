@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal, GenericButton} from '../../../../../ub-components/'
+import { Modal, GenericButton} from '../../../ub-components/'
 
 class BereavementConfirmationModal extends Component {
   constructor (props) {
@@ -35,7 +35,7 @@ class BereavementConfirmationModal extends Component {
               onClick = {
                 onYes
               }
-            
+
               text = { 'yes' }
               disabled = {this.state.disabled}
             />
