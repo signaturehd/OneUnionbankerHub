@@ -54,6 +54,8 @@ h1, h2, h3, h4, h5, h6, p{
   margin: 200px auto auto auto;
 }
 
+/* font weight */
+
 .font-weight-normal {
   font-weight: normal;
 }
@@ -69,6 +71,8 @@ h1, h2, h3, h4, h5, h6, p{
 .font-weight-lighter {
   font-weight: lighter;
 }
+
+/* font size */
 
 .font-size-10px {
   font-size: 10px;
@@ -124,4 +128,16 @@ h1, h2, h3, h4, h5, h6, p{
 
 .font-size-24px{
   font-size: 24px;
+}
+
+/* text-align center*/
+
+.text-align-center {
+  text-align: center;
+}
+
+/* Default color */
+
+.unionbank-color {
+  color: #ff8a00;
 }
