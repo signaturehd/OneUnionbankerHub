@@ -8,8 +8,6 @@ import addCarParam from '../../../domain/param/AddCarleaseRequestParam'
 
 export default class CarLeasePresenter {
   constructor (container) {
-    this.carNewValidateInteractor =
-      new GetCarNewValidateInteractor(container.get('HRBenefitsClient'))
 
     this.carNewSubmissionInteractor =
       new GetCarNewFormSubmissionInteractor(container.get('HRBenefitsClient'))
@@ -17,15 +15,6 @@ export default class CarLeasePresenter {
 
   setView (view) {
     this.view = view
-  }
-
-  getCarValidate () {
-    this.view.hideCircularLoader()
-    this.carNewValidateInteractor.execute()
-      .do(data => this.view.showValidate(data))
-      .do(data => this.view.hideCircularLoader(),
-          data => this.view.hideCircularLoader())
-      .subscribe()
   }
 
   addCarRequest (

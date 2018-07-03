@@ -4,10 +4,13 @@ import PropTypes from 'prop-types'
 import './styles/carleaseStyle.css'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
+import CarDealerQuotation from '../modals/CarDealerQuotationModal'
+
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class CarLeaseNewFormComponent extends Component {
+
   constructor (props) {
     super(props)
     this.state = {
@@ -18,7 +21,8 @@ class CarLeaseNewFormComponent extends Component {
       secondaryColor: '',
       file: '',
       imagePreviewUrl: '',
-      showFileUpload: true,
+      showFileUpload: false,
+      showQuotation: true,
     }
      this.onChange = this.onChange.bind(this)
      this.getCarBrand = this.getCarBrand.bind(this)
@@ -123,9 +127,13 @@ class CarLeaseNewFormComponent extends Component {
       secondaryColor,
       file,
       imagePreviewUrl,
-      showFileUpload } = this.state
+      showFileUpload,
+      showQuotation
+    } = this.state
+
     const {
-      loanType } = this.props
+      loanType
+    } = this.props
 
       const styles = {
         image : {
@@ -143,9 +151,18 @@ class CarLeaseNewFormComponent extends Component {
     return (
       <div className={'carview-container'}>
         <div className={ 'car-grid-column-2' }>
+          {
+            showQuotation &&
+            <CarDealerQuotation
+              onUserConfirmation={ (showQuotation, showFileUpload) =>
+                this.setState({ showQuotation, showFileUpload }) }
+              onClose={ () =>
+                this.setState({ showQuotation: false })  }
+              />
+          }
           <Card className={ 'car-form-card' }>
             <h4>
-              Car Lease Form (Old)
+              Car Lease Form (New)
             </h4>
             <div className={ 'car-form-card-body' }>
               <GenericTextBox

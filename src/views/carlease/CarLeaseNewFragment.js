@@ -13,6 +13,7 @@ import ResponseModal from '../notice/NoticeResponseModal'
 import FormComponent from './components/CarLeaseNewFormComponent'
 
 class CarLeaseNewFragment extends BaseMVPView {
+
   constructor (props) {
     super(props)
     this.state = {
@@ -27,14 +28,13 @@ class CarLeaseNewFragment extends BaseMVPView {
       makeYear: 0,
       primaryColor: '',
       secondaryColor: '',
-      file: ''
+      file: '',
     }
     this.sendFormData = this.sendFormData.bind(this)
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.getCarValidate()
   }
 
   sendFormData (
@@ -78,10 +78,6 @@ class CarLeaseNewFragment extends BaseMVPView {
     this.setState({ formAttachments })
   }
 
-  showValidate (validateLoanType) {
-    this.setState({ validateLoanType })
-  }
-
   /* Loader*/
 
   hideCircularLoader () {
@@ -110,7 +106,9 @@ class CarLeaseNewFragment extends BaseMVPView {
       makeYear,
       primaryColor,
       secondaryColor,
-      file } = this.state
+      file,
+    } = this.state
+
     return (
       <div>
         {
@@ -151,7 +149,7 @@ class CarLeaseNewFragment extends BaseMVPView {
                <CircularLoader show={ this.state.enabledLoader }/>
              </center> :
             <FormComponent
-              onClick={
+              onClick={ () =>
                 this.sendFormData(
                   carBrand,
                   carModel,
