@@ -28,6 +28,12 @@ class SettingsProfileCardComponent extends Component {
       }
   }
 
+  renderEditable () {
+  }
+
+  renderSaveIntances () {
+  }
+
   render () {
     const {
       profile,
@@ -80,7 +86,8 @@ class SettingsProfileCardComponent extends Component {
           showCompanyInfoModal &&
             <CompanyInfoModal
               profile={ profile && profile}
-              rank={ rank && rank }
+              lineManager={ lineManager && lineManager.fullName }
+              rank={ rank && rank.rank }
               onClose={ () => this.setState({ showCompanyInfoModal : false }) }
             />
         }
@@ -172,12 +179,13 @@ class SettingsProfileCardComponent extends Component {
             <div>
               <SettingsProfileDescriptions
                 profileDescriptions={ profile && profile.description }
+                profileRatings={ profile && profile.performanceRating }
               />
             </div>
           </Card>
           <ExperienceFragment
             profileWork={ profile && profile.work }
-            profileEducation={ profile && profile.education }
+            profileExperience={ profile && profile.experience }
             />
           <EducationFragment
             profileEducation={ profile && profile.education }
@@ -200,7 +208,10 @@ class SettingsProfileCardComponent extends Component {
 
 SettingsProfileCardComponent.propTypes = {
   onClick : PropTypes.func,
-  profileImageUrl : PropTypes.string
+  profileImageUrl : PropTypes.string,
+  rank: PropTypes.object,
+  profile: PropTypes.object,
+  lineManager: PropTypes.object,
 }
 
 export default SettingsProfileCardComponent

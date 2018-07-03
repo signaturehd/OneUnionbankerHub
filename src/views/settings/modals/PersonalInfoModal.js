@@ -40,7 +40,7 @@ class PersonalInfoModal extends Component {
                   <span className={ 'contact-icon-settings employeeId' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-18px contact-title' }>
+                  <div className={ 'font-size-17px contact-title' }>
                     <h2>Employee ID </h2>
                   </div>
                   <div className={ 'font-size-16px' }>
@@ -57,8 +57,8 @@ class PersonalInfoModal extends Component {
                   <span className={ 'contact-icon-settings employeeBdate' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-18px contact-title' }>
-                    <h2>Employee ID </h2>
+                  <div className={ 'font-size-17px contact-title' }>
+                    <h2>Birth Date </h2>
                   </div>
                   <div className={ 'font-size-16px' }>
                     <a>
@@ -74,7 +74,7 @@ class PersonalInfoModal extends Component {
                   <span className={ 'contact-icon-settings employeeGender' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-18px contact-title' }>
+                  <div className={ 'font-size-17px contact-title' }>
                     <h2>Gender</h2>
                   </div>
                   <div className={ 'font-size-16px' }>
@@ -85,13 +85,12 @@ class PersonalInfoModal extends Component {
                 </div>
               </div>
               <br/>
-              <div
-                className={ 'contact-number-grid' }>
+              <div className={ 'contact-number-grid' }>
                 <div>
                   <span className={ 'contact-icon-settings employeeCivilStatus' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-18px contact-title' }>
+                  <div className={ 'font-size-17px contact-title' }>
                     <h2>Civil Status</h2>
                   </div>
                   <div className={ 'font-size-16px' }>
@@ -108,7 +107,7 @@ class PersonalInfoModal extends Component {
                   <span className={ 'contact-icon-settings employeeHomeAddress' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-18px contact-title' }>
+                  <div className={ 'font-size-17px contact-title' }>
                     <h2>Address</h2>
                   </div>
                   <div className={ 'font-size-16px' }>
@@ -126,7 +125,7 @@ class PersonalInfoModal extends Component {
 PersonalInfoModal.propTypes={
   onClose : PropTypes.func,
   backgroundColor : PropTypes.string,
-  profile : PropTypes.string,
+  profile : PropTypes.object,
 }
 PersonalInfoModal.defaultProps={
 }

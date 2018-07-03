@@ -1,11 +1,11 @@
 .contact-info-grid {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr;
 }
 
 .contact-info-grid-row {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto;
 }
 
 .contact-number-grid {

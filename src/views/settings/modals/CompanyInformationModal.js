@@ -23,7 +23,6 @@ class CompanyInforModal extends Component {
       backgroundColor }=this.props
 
     const { isDismisable }=this.state
-
     return (
       <Modal
         isDismisable={ isDismisable }
@@ -42,7 +41,7 @@ class CompanyInforModal extends Component {
                   <span className={ 'contact-icon-settings employeeWorkClass' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-18px contact-title' }>
+                  <div className={ 'font-size-17px contact-title' }>
                     <h2>Work Class </h2>
                   </div>
                   <div className={ 'font-size-16px' }>
@@ -59,12 +58,12 @@ class CompanyInforModal extends Component {
                   <span className={ 'contact-icon-settings employeeRank' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-18px contact-title' }>
+                  <div className={ 'font-size-17px contact-title' }>
                     <h2>Rank </h2>
                   </div>
                   <div className={ 'font-size-16px' }>
                     <a>
-                      { rank.rank ?  rank.rank : '(Not Yet Provided)' }
+                      { rank ?  rank : '(Not Yet Provided)' }
                     </a>
                   </div>
                 </div>
@@ -76,12 +75,12 @@ class CompanyInforModal extends Component {
                   <span className={ 'contact-icon-settings employeeLineManager' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-18px contact-title' }>
+                  <div className={ 'font-size-17px contact-title' }>
                     <h2>Line Manager</h2>
                   </div>
                   <div className={ 'font-size-16px' }>
                     <a>
-                      { lineManager.fullName ?  lineManager.fullName : '(Not Yet Provided)' }
+                      { lineManager ? lineManager : '(Not Yet Provided)' }
                     </a>
                   </div>
                 </div>
@@ -93,7 +92,7 @@ class CompanyInforModal extends Component {
                   <span className={ 'contact-icon-settings employeeLocation' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-18px contact-title' }>
+                  <div className={ 'font-size-17px contact-title' }>
                     <h2>Address</h2>
                   </div>
                   <div className={ 'font-size-16px' }>
@@ -107,10 +106,10 @@ class CompanyInforModal extends Component {
               <div
                 className={ 'contact-number-grid' }>
                 <div>
-                  <span className={ 'contact-icon-settings employeeHomeAddress' }/>
+                  <span className={ 'contact-icon-settings employeeDateHired' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-18px contact-title' }>
+                  <div className={ 'font-size-17px contact-title' }>
                     <h2>Date Hired</h2>
                   </div>
                   <div className={ 'font-size-16px' }>
@@ -127,7 +126,7 @@ class CompanyInforModal extends Component {
                   <span className={ 'contact-icon-settings employeeRegularizationDate' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-18px contact-title' }>
+                  <div className={ 'font-size-17px contact-title' }>
                     <h2>Regularization Date</h2>
                   </div>
                   <div className={ 'font-size-16px' }>
@@ -145,7 +144,7 @@ class CompanyInforModal extends Component {
 CompanyInforModal.propTypes={
   onClose : PropTypes.func,
   backgroundColor : PropTypes.string,
-  profile : PropTypes.string,
+  profile : PropTypes.object,
   rank : PropTypes.object,
   lineManager : PropTypes.object,
 }
