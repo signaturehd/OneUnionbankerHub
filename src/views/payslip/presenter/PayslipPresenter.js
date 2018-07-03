@@ -41,7 +41,6 @@ export default class PayslipPresenter {
     this.addSelectedDateInteractor.execute(PayslipParam(employeeId, date))
       .subscribe(payslip => {
         this.view.getSelectedDate(payslip)
-        this.view.showPayslipDetails()
         this.view.hideLoading()
      }, e => {
       this.view.hideLoading()

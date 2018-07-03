@@ -24,7 +24,7 @@ class EducationFragment extends Component {
     }, {
       id: 2,
       styleName: 'education-cards-4',
-      title: 'EDUCATION GROUP - AID',
+      title: 'EDUCATION GROUP - PLAN',
       path: '/mybenefits/benefits/education/groupaid',
     }, {
       id: 3,
