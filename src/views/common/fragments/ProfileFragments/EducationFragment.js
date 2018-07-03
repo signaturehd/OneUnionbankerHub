@@ -13,7 +13,8 @@ class EducationFragment extends Component {
 
   render () {
     const {
-      profileEducation }=this.props
+      profileEducation, 
+    }=this.props
 
       const educationDefault = [{
         id: 0 ,
