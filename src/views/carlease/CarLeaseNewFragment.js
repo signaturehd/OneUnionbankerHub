@@ -12,6 +12,9 @@ import ResponseModal from '../notice/NoticeResponseModal'
 
 import FormComponent from './components/CarLeaseNewFormComponent'
 
+import store from '../../store'
+import { NotifyActions } from '../../actions'
+
 class CarLeaseNewFragment extends BaseMVPView {
 
   constructor (props) {
@@ -23,6 +26,7 @@ class CarLeaseNewFragment extends BaseMVPView {
       showNoticeModal : false,
       showConfirmation : false,
       loanType: 15,
+      leaseMode: 1,
       carBrand: '',
       carModel: '',
       makeYear: 0,
@@ -41,29 +45,59 @@ class CarLeaseNewFragment extends BaseMVPView {
     carBrand,
     carModel,
     makeYear,
+    leaseMode,
     primaryColor,
     secondaryColor,
     file) {
-      if (
-        carBrand === null ||
-        carModel === null ||
-        makeYear === null ||
-        primaryColor === null ||
-        secondaryColor === null ||
-        file === null) {
+      if (carBrand === null) {
           store.dispatch(NotifyActions.addNotify({
-              title : 'Warning',
-              message : 'Please complete all fields'
+              title : 'Car Lease (New)',
+              message : 'Car Brand fields are required',
+              type: 'warning'
           })
         )
-      } else {
+      }
+      else if (carModel === null) {
+          store.dispatch(NotifyActions.addNotify({
+            title : 'Car Lease (New)',
+            message : 'Car Model fields are required',
+            type: 'warning'
+          })
+        )
+      }
+      else if (makeYear === null) {
+          store.dispatch(NotifyActions.addNotify({
+            title : 'Car Lease (New)',
+            message : 'Year fields are required',
+            type: 'warning'
+          })
+        )
+      }
+      else if (primaryColor === null) {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Car Lease (New)',
+            message : 'Primary Color fields are required',
+            type: 'warning'
+          })
+        )
+      }
+      else if (secondaryColor === null) {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Car Lease (New)',
+            message : 'Secondary Color fields are required',
+            type: 'warning'
+          })
+        )
+      }
+      else {
         this.presenter.addCarRequest(
           carBrand,
           carModel,
           makeYear,
+          leaseMode,
           primaryColor,
           secondaryColor,
-          file)
+          file ? file : null)
       }
   }
 
@@ -107,7 +141,9 @@ class CarLeaseNewFragment extends BaseMVPView {
       primaryColor,
       secondaryColor,
       file,
+      leaseMode
     } = this.state
+    const { onSubmit }=this.props
 
     return (
       <div>
@@ -149,31 +185,23 @@ class CarLeaseNewFragment extends BaseMVPView {
                <CircularLoader show={ this.state.enabledLoader }/>
              </center> :
             <FormComponent
-              onClick={ () =>
+              onSubmit={ (
+                carBrand,
+                carModel,
+                makeYear,
+                primaryColor,
+                secondaryColor,
+                file) =>
                 this.sendFormData(
                   carBrand,
                   carModel,
                   makeYear,
+                  leaseMode,
                   primaryColor,
                   secondaryColor,
                   file
                   )
                 }
-              onSubmit={ (
-                getCarBrandData,
-                getCarModelData,
-                getMakeYearData,
-                getPrimaryColorData,
-                getSecondaryColorData,
-                getFileData) => this.setState({
-                  carBrand : getCarBrandData,
-                  carModel : getCarModelData,
-                  makeYear : getMakeYearData,
-                  primaryColor : getPrimaryColorData,
-                  secondaryColor : getSecondaryColorData,
-                  file : getFileData
-                })
-              }
             />
           }
       </div>

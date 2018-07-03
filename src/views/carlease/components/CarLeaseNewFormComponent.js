@@ -179,6 +179,7 @@ class CarLeaseNewFormComponent extends Component {
                 value={ makeYear }
                 onChange={ this.onChange }
                 placeholder={ 'Year' }
+                maxLength={ 4 }
                 type={ 'text' } />
               <GenericTextBox
                 value={ primaryColor }

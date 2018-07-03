@@ -21,6 +21,7 @@ export default class CarLeasePresenter {
     carBrand,
     carModel,
     makeYear,
+    leaseMode,
     primaryColor,
     secondaryColor,
     file
@@ -29,6 +30,7 @@ export default class CarLeasePresenter {
       carBrand,
       carModel,
       makeYear,
+      leaseMode,
       primaryColor,
       secondaryColor,
       file
