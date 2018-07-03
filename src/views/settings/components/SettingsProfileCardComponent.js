@@ -6,7 +6,9 @@ import SettingsProfileDescriptions from './SettingsProfileDescriptions'
 
 import ContactInfoModal from '../modals/ContactsModal'
 import DependentsModal from '../modals/DependentsModal'
-import CompanyInformationModal from '../modals/CompanyInformationModal'
+import CompanyInfoModal from '../modals/CompanyInformationModal'
+import PersonalInfoModal from '../modals/PersonalInfoModal'
+
 import SkillsFragment from '../../common/fragments/ProfileFragments/SkillsFragment'
 import ExperienceFragment from '../../common/fragments/ProfileFragments/ExperienceFragment'
 import CertificateFragment from '../../common/fragments/ProfileFragments/CertificateFragment'
@@ -21,7 +23,8 @@ class SettingsProfileCardComponent extends Component {
       this.state={
         showContactInfoModal : false,
         showDependentModal : false,
-        showCompanyInfoModal : false
+        showCompanyInfoModal : false,
+        showPersonalInfoModal : false
       }
   }
 
@@ -33,7 +36,11 @@ class SettingsProfileCardComponent extends Component {
       lineManager,
       profileImageUrl }=this.props
 
-    const { showContactInfoModal, showDependentModal, showCompanyInfoModal }=this.state
+    const {
+      showContactInfoModal,
+      showDependentModal,
+      showCompanyInfoModal,
+      showPersonalInfoModal }=this.state
 
     let genderPartial
     if (profile.gender === 'M') {
@@ -62,21 +69,38 @@ class SettingsProfileCardComponent extends Component {
               onClose={ () => this.setState({ showDependentModal : false }) }
             />
         }
+        {
+          showPersonalInfoModal &&
+            <PersonalInfoModal
+              profile={ profile && profile}
+              onClose={ () => this.setState({ showPersonalInfoModal : false }) }
+            />
+        }
+        {
+          showCompanyInfoModal &&
+            <CompanyInfoModal
+              profile={ profile && profile}
+              rank={ rank && rank }
+              onClose={ () => this.setState({ showCompanyInfoModal : false }) }
+            />
+        }
         <div>
           <Card className={ 'profile-settings-card-view' }>
             <div className={ 'profile-banner' }>
               <div className={ 'profile-picture-card' }>
-                {
-                  profileImageUrl ?
+                <div>
+                  {
+                    profileImageUrl ?
 
-                  <img src={
-                    require(`${ profileImageUrl }`) }
-                    className={ 'profile-picture' }/>
-                  :
-                  <img src={
-                    require('../../../images/profile-picture.png') }
-                    className={ 'profile-picture' }/>
-                }
+                    <img src={
+                      require(`${ profileImageUrl }`) }
+                      className={ 'profile-picture' }/>
+                    :
+                    <img src={
+                      require('../../../images/profile-picture.png') }
+                      className={ 'profile-picture' }/>
+                  }
+                </div>
               </div>
             </div>
             <div className={ 'profile-information-view' }>
@@ -92,6 +116,18 @@ class SettingsProfileCardComponent extends Component {
                 </h2>
               </div>
               <div>
+                <div
+                  onClick={ () => this.setState({ showPersonalInfoModal : true }) }
+                  className={ 'profile-information-view-right' }>
+                  <div>
+                    <span className={ 'profile-icon-settings employeeContact' }/>
+                  </div>
+                  <div>
+                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
+                      { 'See personal info'  }
+                    </h5>
+                  </div>
+                </div>
                 <div
                   onClick={ () => this.setState({ showContactInfoModal : true }) }
                   className={ 'profile-information-view-right' }>

@@ -5,7 +5,7 @@ import { Modal, Line } from '../../../ub-components/'
 
 import './styles/contactModal.css'
 
-class CompanyInforModal extends Component {
+class PersonalInfoModal extends Component {
 
   constructor (props) {
     super(props)
@@ -18,8 +18,6 @@ class CompanyInforModal extends Component {
     const {
       onClose,
       profile,
-      rank,
-      lineManager,
       backgroundColor }=this.props
 
     const { isDismisable }=this.state
@@ -39,15 +37,15 @@ class CompanyInforModal extends Component {
               <div
                 className={ 'contact-number-grid' }>
                 <div>
-                  <span className={ 'contact-icon-settings employeeWorkClass' }/>
+                  <span className={ 'contact-icon-settings employeeId' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
                   <div className={ 'font-size-18px contact-title' }>
-                    <h2>Work Class </h2>
+                    <h2>Employee ID </h2>
                   </div>
                   <div className={ 'font-size-16px' }>
                     <a>
-                      { profile.workClass ?  profile.workClass : '(Not Yet Provided)' }
+                      { profile.employeeNumber ?  profile.employeeNumber : '(Not Yet Provided)' }
                     </a>
                   </div>
                 </div>
@@ -56,15 +54,15 @@ class CompanyInforModal extends Component {
               <div
                 className={ 'contact-number-grid' }>
                 <div>
-                  <span className={ 'contact-icon-settings employeeRank' }/>
+                  <span className={ 'contact-icon-settings employeeBdate' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
                   <div className={ 'font-size-18px contact-title' }>
-                    <h2>Rank </h2>
+                    <h2>Employee ID </h2>
                   </div>
                   <div className={ 'font-size-16px' }>
                     <a>
-                      { rank.rank ?  rank.rank : '(Not Yet Provided)' }
+                      { profile.birthDate ?  profile.birthDate : '(Not Yet Provided)' }
                     </a>
                   </div>
                 </div>
@@ -73,15 +71,15 @@ class CompanyInforModal extends Component {
               <div
                 className={ 'contact-number-grid' }>
                 <div>
-                  <span className={ 'contact-icon-settings employeeLineManager' }/>
+                  <span className={ 'contact-icon-settings employeeGender' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
                   <div className={ 'font-size-18px contact-title' }>
-                    <h2>Line Manager</h2>
+                    <h2>Gender</h2>
                   </div>
                   <div className={ 'font-size-16px' }>
                     <a>
-                      { lineManager.fullName ?  lineManager.fullName : '(Not Yet Provided)' }
+                      { profile.gender ?  profile.gender : '(Not Yet Provided)' }
                     </a>
                   </div>
                 </div>
@@ -90,15 +88,15 @@ class CompanyInforModal extends Component {
               <div
                 className={ 'contact-number-grid' }>
                 <div>
-                  <span className={ 'contact-icon-settings employeeLocation' }/>
+                  <span className={ 'contact-icon-settings employeeCivilStatus' }/>
                 </div>
                 <div className={ 'contact-info-grid-row' }>
                   <div className={ 'font-size-18px contact-title' }>
-                    <h2>Address</h2>
+                    <h2>Civil Status</h2>
                   </div>
                   <div className={ 'font-size-16px' }>
                     <a>
-                      { profile.location ?  profile.location : '(Not Yet Provided)' }
+                      { profile.civilstatus ?  profile.civilstatus : '(Not Yet Provided)' }
                     </a>
                   </div>
                 </div>
@@ -111,28 +109,11 @@ class CompanyInforModal extends Component {
                 </div>
                 <div className={ 'contact-info-grid-row' }>
                   <div className={ 'font-size-18px contact-title' }>
-                    <h2>Date Hired</h2>
+                    <h2>Address</h2>
                   </div>
                   <div className={ 'font-size-16px' }>
                     <a>
-                      { profile.dateHired ?  profile.dateHired : '(Not Yet Provided)' }
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <br/>
-              <div
-                className={ 'contact-number-grid' }>
-                <div>
-                  <span className={ 'contact-icon-settings employeeRegularizationDate' }/>
-                </div>
-                <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-18px contact-title' }>
-                    <h2>Regularization Date</h2>
-                  </div>
-                  <div className={ 'font-size-16px' }>
-                    <a>
-                      { profile.regularizationDate ?  profile.regularizationDate : '(Not Yet Provided)' }
+                      { profile.address ?  profile.address : '(Not Yet Provided)' }
                     </a>
                   </div>
                 </div>
@@ -142,14 +123,12 @@ class CompanyInforModal extends Component {
       )
     }
   }
-CompanyInforModal.propTypes={
+PersonalInfoModal.propTypes={
   onClose : PropTypes.func,
   backgroundColor : PropTypes.string,
   profile : PropTypes.string,
-  rank : PropTypes.object,
-  lineManager : PropTypes.object,
 }
-CompanyInforModal.defaultProps={
+PersonalInfoModal.defaultProps={
 }
 
-export default CompanyInforModal
+export default PersonalInfoModal
