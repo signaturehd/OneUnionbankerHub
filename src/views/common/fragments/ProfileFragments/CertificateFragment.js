@@ -14,7 +14,8 @@ class CertificateFragment extends Component {
   render () {
     const {
       onClick,
-      profileCertificate }=this.props
+      profileCertificate,
+    }=this.props
 
       const certificateDefault = [{
         id: 0 ,
