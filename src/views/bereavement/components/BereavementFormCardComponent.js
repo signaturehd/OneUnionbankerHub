@@ -253,7 +253,7 @@ class BereavementFormCardComponent extends Component {
                   type = { 'button' }
                   text = { 'continue' }
                   onClick = {
-                    () => console.log('clicked submit')
+                    () => {}
                   }
                   className = { 'brv-submit' } />
               </div>
