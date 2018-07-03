@@ -508,8 +508,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addBereavement (token) {
-    return this.service.addBereavement(token)
+  addBereavement (token, addBereavementParam) {
+    return this.service.addBereavement(token, addBereavementParam)
       .pipe(ServiceErrorOperator())
   }
 
