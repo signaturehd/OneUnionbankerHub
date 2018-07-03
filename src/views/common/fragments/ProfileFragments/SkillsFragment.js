@@ -18,7 +18,8 @@ class SkillsFragment extends Component {
   render () {
     const {
       profileSkills,
-      onClick }=this.props
+      onClick,
+    }=this.props
 
     const skillsDefault=[
     {
