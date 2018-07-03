@@ -6,9 +6,13 @@ import SettingsProfileDescriptions from './SettingsProfileDescriptions'
 
 import ContactInfoModal from '../modals/ContactsModal'
 import DependentsModal from '../modals/DependentsModal'
-import SkillsComponent from '../../common/components/ProfileComponents/SkillsComponent'
-import ExperienceComponent from '../../common/components/ProfileComponents/ExperienceComponent'
-import CertificateComponent from '../../common/components/ProfileComponents/CertificateComponent'
+import CompanyInfoModal from '../modals/CompanyInformationModal'
+import PersonalInfoModal from '../modals/PersonalInfoModal'
+
+import SkillsFragment from '../../common/fragments/ProfileFragments/SkillsFragment'
+import ExperienceFragment from '../../common/fragments/ProfileFragments/ExperienceFragment'
+import CertificateFragment from '../../common/fragments/ProfileFragments/CertificateFragment'
+import EducationFragment from '../../common/fragments/ProfileFragments/EducationFragment'
 
 import './styles/profileSettings.css'
 
@@ -18,8 +22,16 @@ class SettingsProfileCardComponent extends Component {
     super(props)
       this.state={
         showContactInfoModal : false,
-        showDependentModal : false
+        showDependentModal : false,
+        showCompanyInfoModal : false,
+        showPersonalInfoModal : false
       }
+  }
+
+  renderEditable () {
+  }
+
+  renderSaveIntances () {
   }
 
   render () {
@@ -30,7 +42,11 @@ class SettingsProfileCardComponent extends Component {
       lineManager,
       profileImageUrl }=this.props
 
-    const { showContactInfoModal, showDependentModal }=this.state
+    const {
+      showContactInfoModal,
+      showDependentModal,
+      showCompanyInfoModal,
+      showPersonalInfoModal }=this.state
 
     let genderPartial
     if (profile.gender === 'M') {
@@ -59,21 +75,39 @@ class SettingsProfileCardComponent extends Component {
               onClose={ () => this.setState({ showDependentModal : false }) }
             />
         }
+        {
+          showPersonalInfoModal &&
+            <PersonalInfoModal
+              profile={ profile && profile}
+              onClose={ () => this.setState({ showPersonalInfoModal : false }) }
+            />
+        }
+        {
+          showCompanyInfoModal &&
+            <CompanyInfoModal
+              profile={ profile && profile}
+              lineManager={ lineManager && lineManager.fullName }
+              rank={ rank && rank.rank }
+              onClose={ () => this.setState({ showCompanyInfoModal : false }) }
+            />
+        }
         <div>
           <Card className={ 'profile-settings-card-view' }>
             <div className={ 'profile-banner' }>
               <div className={ 'profile-picture-card' }>
-                {
-                  profileImageUrl ?
+                <div>
+                  {
+                    profileImageUrl ?
 
-                  <img src={
-                    require(`${ profileImageUrl }`) }
-                    className={ 'profile-picture' }/>
-                  :
-                  <img src={
-                    require('../../../images/profile-picture.png') }
-                    className={ 'profile-picture' }/>
-                }
+                    <img src={
+                      require(`${ profileImageUrl }`) }
+                      className={ 'profile-picture' }/>
+                    :
+                    <img src={
+                      require('../../../images/profile-picture.png') }
+                      className={ 'profile-picture' }/>
+                  }
+                </div>
               </div>
             </div>
             <div className={ 'profile-information-view' }>
@@ -89,6 +123,18 @@ class SettingsProfileCardComponent extends Component {
                 </h2>
               </div>
               <div>
+                <div
+                  onClick={ () => this.setState({ showPersonalInfoModal : true }) }
+                  className={ 'profile-information-view-right' }>
+                  <div>
+                    <span className={ 'profile-icon-settings employeeContact' }/>
+                  </div>
+                  <div>
+                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
+                      { 'See personal info'  }
+                    </h5>
+                  </div>
+                </div>
                 <div
                   onClick={ () => this.setState({ showContactInfoModal : true }) }
                   className={ 'profile-information-view-right' }>
@@ -114,7 +160,7 @@ class SettingsProfileCardComponent extends Component {
                   </div>
                 </div>
                 <div
-                  onClick={ () => this.setState({ showDependentModal : true }) }
+                  onClick={ () => this.setState({ showCompanyInfoModal : true }) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings employeeDependent' }/>
@@ -133,19 +179,23 @@ class SettingsProfileCardComponent extends Component {
             <div>
               <SettingsProfileDescriptions
                 profileDescriptions={ profile && profile.description }
+                profileRatings={ profile && profile.performanceRating }
               />
             </div>
           </Card>
-          <ExperienceComponent
+          <ExperienceFragment
             profileWork={ profile && profile.work }
+            profileExperience={ profile && profile.experience }
+            />
+          <EducationFragment
             profileEducation={ profile && profile.education }
             />
         </div>
         <div>
-          <CertificateComponent
+          <CertificateFragment
             profileCertificate={ profile && profile.certificate } />
 
-          <SkillsComponent
+          <SkillsFragment
             profileSkills={ profile && profile.skills }/>
         </div>
       </div>
@@ -158,7 +208,10 @@ class SettingsProfileCardComponent extends Component {
 
 SettingsProfileCardComponent.propTypes = {
   onClick : PropTypes.func,
-  profileImageUrl : PropTypes.string
+  profileImageUrl : PropTypes.string,
+  rank: PropTypes.object,
+  profile: PropTypes.object,
+  lineManager: PropTypes.object,
 }
 
 export default SettingsProfileCardComponent

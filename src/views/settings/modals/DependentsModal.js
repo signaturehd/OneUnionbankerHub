@@ -42,7 +42,7 @@ class DependentsModal extends Component {
                           <span className={ 'contact-icon-settings employeeDependent' }/>
                         </div>
                         <div className={ 'contact-info-grid-row' }>
-                          <div className={ 'font-size-18px contact-title' }>
+                          <div className={ 'font-size-17px contact-title' }>
                             <h2>Dependent { key + 1 }</h2>
                           </div>
                           <div className={ 'font-size-16px' }>
@@ -57,7 +57,7 @@ class DependentsModal extends Component {
                           <span className={ 'contact-icon-settings employeeDependent' }/>
                         </div>
                         <div className={ 'contact-info-grid-row' }>
-                          <div className={ 'font-size-18px contact-title' }>
+                          <div className={ 'font-size-17px contact-title' }>
                             <h2>{ '(Nothing to display)' }</h2>
                           </div>
                           <div className={ 'font-size-16px' }>
