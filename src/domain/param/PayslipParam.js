@@ -1,1 +1,1 @@
-export default date => ({ date })
+export default (employeeId, date) => ({ employeeId, date })
