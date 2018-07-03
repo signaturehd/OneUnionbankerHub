@@ -41,13 +41,14 @@ import SalaryLoanFragment from '../salaryloan/SalaryLoanFragment'
 import MotorcycleLoanFragment from '../motorcycleloan/MotorcycleLoanFragment'
 /*  MPL Motorcycle */
 import ComputerLoanFragment from '../computerloan/ComputerLoanFragment'
+/* Bereavement */
+import BereavementFragment from '../bereavement/BereavementFragment'
 /* Transaction*/
 import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
 import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
 import CarLeaseNewFragment from '../carlease/CarLeaseNewFragment'
 import CarLeaseOldFragment from '../carlease/CarLeaseOldFragment'
-
-/* Payslip*/
+/*Payslip*/
 import Payslip from '../payslip/PayslipFragment'
 
 import OnboardingView from '../onboarding/OnboardingView'
@@ -165,8 +166,8 @@ class NavigationView extends BaseMVPView {
             login &&
             <ReloginModal
               relogin = { () => {
- this.presenter.relogin()
-} }
+               this.presenter.relogin()
+              } }
             />
           }
               <Drawer >
@@ -221,6 +222,9 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits/benefits/loans/computer' render = { props =>
                     <ComputerLoanFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/bereavement/:type' render = { props =>
+                    <BereavementFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits' render = { props =>
                     <BenefitsFragment { ...props }

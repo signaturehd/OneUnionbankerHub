@@ -36,8 +36,9 @@ class ReleasingCenterModal extends Component {
                 className = { 'dentalloa-modal-option-button' }
                 key = { key }
                 onClick = { () => {
-onClick(releasingCenter.unit), onClose()
-} }
+                    onClick(releasingCenter.unit), onClose()
+                  }
+                }
                 text = { releasingCenter.unit }
               />
             ))

@@ -3,7 +3,7 @@ export default class AddBereavementInteractor {
     this.client = client
   }
 
-  execute () {
-    return this.client.getCalamityAssistanceValidate(this.client.getToken())
+  execute (AddBereavementParam) {
+    return this.client.addBereavementInteractor(this.client.getToken(), AddBereavementParam)
   }
 }

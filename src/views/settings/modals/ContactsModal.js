@@ -38,7 +38,7 @@ class ContactsModal extends Component {
                     <span className={ 'contact-icon-settings employeeEmail' }/>
                   </div>
                   <div className={ 'contact-info-grid-row' }>
-                    <div className={ 'font-size-18px contact-title' }>
+                    <div className={ 'font-size-17px contact-title' }>
                       <h2>Email</h2>
                     </div>
                     <div className={ 'font-size-16px' }>
@@ -52,7 +52,7 @@ class ContactsModal extends Component {
                     <span className={ 'contact-icon-settings employeeMobileNumber' }/>
                   </div>
                   <div className={ 'contact-info-grid-row' }>
-                    <div className={ 'font-size-18px contact-title' }>
+                    <div className={ 'font-size-17px contact-title' }>
                       <h2>Mobile Number</h2>
                     </div>
                     <div className={ 'font-size-16px' }>
