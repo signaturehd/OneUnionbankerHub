@@ -6,9 +6,11 @@ import SettingsProfileDescriptions from './SettingsProfileDescriptions'
 
 import ContactInfoModal from '../modals/ContactsModal'
 import DependentsModal from '../modals/DependentsModal'
-import SkillsComponent from '../../common/components/ProfileComponents/SkillsComponent'
-import ExperienceComponent from '../../common/components/ProfileComponents/ExperienceComponent'
-import CertificateComponent from '../../common/components/ProfileComponents/CertificateComponent'
+import CompanyInformationModal from '../modals/CompanyInformationModal'
+import SkillsFragment from '../../common/fragments/ProfileFragments/SkillsFragment'
+import ExperienceFragment from '../../common/fragments/ProfileFragments/ExperienceFragment'
+import CertificateFragment from '../../common/fragments/ProfileFragments/CertificateFragment'
+import EducationFragment from '../../common/fragments/ProfileFragments/EducationFragment'
 
 import './styles/profileSettings.css'
 
@@ -18,7 +20,8 @@ class SettingsProfileCardComponent extends Component {
     super(props)
       this.state={
         showContactInfoModal : false,
-        showDependentModal : false
+        showDependentModal : false,
+        showCompanyInfoModal : false
       }
   }
 
@@ -30,7 +33,7 @@ class SettingsProfileCardComponent extends Component {
       lineManager,
       profileImageUrl }=this.props
 
-    const { showContactInfoModal, showDependentModal }=this.state
+    const { showContactInfoModal, showDependentModal, showCompanyInfoModal }=this.state
 
     let genderPartial
     if (profile.gender === 'M') {
@@ -114,7 +117,7 @@ class SettingsProfileCardComponent extends Component {
                   </div>
                 </div>
                 <div
-                  onClick={ () => this.setState({ showDependentModal : true }) }
+                  onClick={ () => this.setState({ showCompanyInfoModal : true }) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings employeeDependent' }/>
@@ -136,16 +139,19 @@ class SettingsProfileCardComponent extends Component {
               />
             </div>
           </Card>
-          <ExperienceComponent
+          <ExperienceFragment
             profileWork={ profile && profile.work }
+            profileEducation={ profile && profile.education }
+            />
+          <EducationFragment
             profileEducation={ profile && profile.education }
             />
         </div>
         <div>
-          <CertificateComponent
+          <CertificateFragment
             profileCertificate={ profile && profile.certificate } />
 
-          <SkillsComponent
+          <SkillsFragment
             profileSkills={ profile && profile.skills }/>
         </div>
       </div>
