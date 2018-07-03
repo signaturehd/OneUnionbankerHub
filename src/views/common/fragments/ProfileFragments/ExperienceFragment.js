@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Card, Line } from '../../../../ub-components/'
 
-import './styles/profileComponent.css'
-import EducationComponent from './EducationComponent'
+import './styles/profileFragment.css'
 
 class ExperienceComponent extends Component {
 
@@ -14,9 +13,7 @@ class ExperienceComponent extends Component {
 
   render () {
     const {
-      profile,
-      profileExperience,
-      profileEducation }=this.props
+      profileExperience}=this.props
 
     const experienceDefault = [{
       id: 0 ,
@@ -33,6 +30,27 @@ class ExperienceComponent extends Component {
           <h2 className={ 'unionbank-color font-weight-normal' }> Work & Experience </h2>
           <br/>
             {
+              profileExperience ?
+
+              profileExperience.map((experience, key)=>
+                <div
+                  key={ key }
+                  className={ 'components-view' }>
+                  <div className={ 'text-align-center' }>
+                    <img
+                      className={ 'components-image' }
+                      key={ key }
+                      src={ experience.imagePath }/>
+                  </div>
+                  <div>
+                    <h2 className={ 'font-size-18px font-weight-normal' }>{ experience.company }</h2>
+                    <h3 className={ 'font-size-17px font-weight-lighter' }>{ experience.position }</h3>
+                    <h4 className={ 'font-size-15px font-weight-lighter' }>{ experience.year }</h4>
+                    <h5 className={ 'font-size-15px font-weight-lighter' }>{ experience.location }</h5>
+                  </div>
+                </div>
+              )
+              :
               experienceDefault.map((experience, key)=>
                 <div
                   key={ key }
@@ -52,9 +70,6 @@ class ExperienceComponent extends Component {
                 </div>
               )
             }
-          <Line />
-          <br/>
-          <EducationComponent profileEducation={ profileEducation }/>
         </Card>
       </div>
     )
