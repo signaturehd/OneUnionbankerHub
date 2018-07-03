@@ -13,7 +13,8 @@ class ExperienceComponent extends Component {
 
   render () {
     const {
-      profileExperience}=this.props
+      profileExperience,
+    }=this.props
 
     const experienceDefault = [{
       id: 0 ,
