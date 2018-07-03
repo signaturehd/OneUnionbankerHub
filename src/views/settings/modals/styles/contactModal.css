@@ -1,0 +1,41 @@
+.contact-info-grid {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.contact-info-grid-row {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.contact-number-grid {
+  display: grid;
+  grid-template-columns: .15fr 1fr;
+}
+
+.contact-card-background {
+  background-color: #fff;
+}
+
+.contact-title {
+  font-weight: initial;
+  color: #ff8a00;
+}
+
+.contact-icon-settings {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 40px;
+  width: 40px;
+  background-repeat: no-repeat;
+}
+
+.employeeMobileNumber {
+  background-image: url('../../../../images/icons/MobileNumber.png');
+}
+
+.employeeEmail {
+  background-image: url('../../../../images/icons/emailorange.png');
+}

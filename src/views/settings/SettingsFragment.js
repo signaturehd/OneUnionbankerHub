@@ -5,9 +5,7 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/SettingsPresenter'
 
-import GetProfileInteractor from '../../domain/interactor/user/GetProfileInteractor'
-
-import SettingsCardComponent from './components/SettingsCardComponent'
+import SettingsProfileCardComponent from './components/SettingsProfileCardComponent'
 
 import { Card } from '../../ub-components/'
 
@@ -53,13 +51,13 @@ class SettingsFragment extends BaseMVPView {
     return (
       <div className = { 'profile-container' }>
         { super.render() }
-      <h2 className = { 'header-margin-default ' }> My Profile Information </h2>
-        <SettingsCardComponent
-         profile = { profile }
-         linemanager = { linemanager }
-         profileDependent = { profileDependent }
-         rank = { rank }
-         presenter = { this.presenter }/>
+        <SettingsProfileCardComponent
+           profile = { profile }
+           linemanager = { linemanager }
+           profileDependent = { profileDependent }
+           rank = { rank }
+           presenter = { this.presenter }
+        />
       </div>
     )
   }
