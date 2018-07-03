@@ -107,14 +107,20 @@ class CarLeaseNewFormComponent extends Component {
     makeYear,
     primaryColor,
     secondaryColor,
-    file) {
+    file,
+    imagePreviewUrl) {
+      const attachments=[{
+        "base64Doc" : imagePreviewUrl,
+        "documentType" : file.type,
+        "remarks" : file.name
+      }]
     this.props.onSubmit(
       carBrand,
       carModel,
       makeYear,
       primaryColor,
       secondaryColor,
-      file
+      attachments
     )
   }
 
@@ -201,7 +207,8 @@ class CarLeaseNewFormComponent extends Component {
                     makeYear,
                     primaryColor,
                     secondaryColor,
-                    file)
+                    file,
+                    imagePreviewUrl)
                   }
                 className={ 'carview-submit' } />
             </div>

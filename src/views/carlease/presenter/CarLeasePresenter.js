@@ -26,6 +26,7 @@ export default class CarLeasePresenter {
     secondaryColor,
     file
   ) {
+    this.view.showCircularLoader()
     this.carNewSubmissionInteractor.execute(addCarParam(
       carBrand,
       carModel,
@@ -45,16 +46,16 @@ export default class CarLeasePresenter {
              }
            )
          )
-         this.view.showCircularLoader()
+         this.view.hideCircularLoader()
        }, error => {
            store.dispatch(NotifyActions.addNotify({
-               title : 'Warning',
-               message : error.message,
-               type : 'warning',
-               duration : 2000
-             }
-           )
+             title : 'Warning',
+             message : error.message,
+             type : 'warning',
+             duration : 2000
+           })
          )
+         this.view.hideCircularLoader()
        }
      )
   }
