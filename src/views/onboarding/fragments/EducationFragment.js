@@ -37,6 +37,9 @@ const renderDatePicker = ({ input, label, type, className, selected, meta: { tou
         dateForm="YYYY/MM/DD"
         selected={input.value ? moment(input.value) : null}
         onChange={date => input.onChange(moment(date).format('YYYY/MM/DD'))}
+        peekNextMonth
+        showMonthDropdown
+        showYearDropdown
         required
   />
 
@@ -106,6 +109,9 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           component={renderDatePicker}
           className = { 'calendar' }
           calendarClassName = { 'calendarClass' }
+          peekNextMonth
+          showMonthDropdown
+          showYearDropdown
           validate={[required]}
 
         />
@@ -117,6 +123,9 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           component={renderDatePicker}
           className = { 'calendar' }
           calendarClassName = { 'calendarClass' }
+          peekNextMonth
+          showMonthDropdown
+          showYearDropdown
           validate={[required]}
         />
       </div>

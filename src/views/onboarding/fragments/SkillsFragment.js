@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Field, FieldArray, reduxForm } from 'redux-form'
 import './styles/general.css'
-import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
+import { GenericTextBox, Card, GenericButton, FileUploader, Modal } from '../../../ub-components/'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+
+const levels = ['Not Applicable', 'Fundamental Awareness', 'Novice', 'Intermediate', 'Advanced', 'Expert']
+
 
 const required = value => value ? undefined : 'Required'
 const minLength = min => value =>
@@ -14,6 +17,17 @@ const specialChar = value =>
   value && !/^([a-zA-Z0-9\s]*)$/i.test(value) ?
   'No Special Characters' : undefined
 
+const renderSkillLvl = ({ input,  meta: { touched, error } }) => (
+  <div className= {'select'}>
+    <select className = {'select-text'} {...input}>
+      <option value="">Select Skill Level...</option>
+      {levels.map(val => <option value={val} key={val}>{val}</option>)}
+    </select>
+    <span class="select-highlight"></span>
+          <span class="select-bar"></span>
+    {touched && error && <span>{error}</span>}
+  </div>
+)
 
 const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
   <div className = {'container'}>
@@ -44,7 +58,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
     </div>
     {fields.map((member, index) => (
 
-      <div className={'general-form-card'} key={index}>
+      <div key={index}>
         <GenericButton
           type='button'
           text="Remove Skill"
@@ -57,16 +71,17 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           component={renderField}
           placeholder={ 'Skill Name' }
           validate={[required, specialChar]}
-
         />
+        <br/>
+        <center>
         <Field
           name={`${member}.skillLvl`}
           type="text"
-          component={renderField}
+          component={renderSkillLvl}
           placeholder={ 'Skill Level' }
           validate={[required, specialChar]}
-
         />
+      </center>
       </div>
     ))}
   </form>

@@ -35,6 +35,9 @@ const renderDatePicker = ({ input, label, type, className, selected, meta: { tou
         className={'calendar'}
         dropdownMode="select"
         dateForm="YYYY/MM/DD"
+        peekNextMonth
+        showMonthDropdown
+        showYearDropdown
         selected={input.value ? moment(input.value) : null}
         onChange={date => input.onChange(moment(date).format('YYYY/MM/DD'))}
   />
@@ -104,6 +107,9 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           readOnly
           component={renderDatePicker}
           className = { 'calendar' }
+          peekNextMonth
+          showMonthDropdown
+          showYearDropdown
           calendarClassName = { 'calendarClass' }
         />
         <label>End Date</label>
@@ -113,6 +119,9 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           readOnly
           component={renderDatePicker}
           className = { 'calendar' }
+          peekNextMonth
+          showMonthDropdown
+          showYearDropdown
           calendarClassName = { 'calendarClass' }
         />
       </div>

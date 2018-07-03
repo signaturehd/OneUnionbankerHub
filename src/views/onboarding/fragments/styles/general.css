@@ -15,7 +15,7 @@ text-align: center
 
 .general-form-card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 100%;
+  max-width: 70%;
   float: center;
   padding: 20px 5px 20px 5px;
   margin: auto;
@@ -289,3 +289,125 @@ img{
 input[type=file]{
 padding:10px;
 background:#2d2d2d;}
+
+/* Start of select style */
+.body {
+  position: relative;
+
+}
+
+.wrap {
+  position: absolute;
+  right: 0;
+  top: 40%;
+  width: 350px;
+  left: 0;
+  margin: 0 auto;
+}
+
+/* select starting stylings ------------------------------*/
+.select {
+	position: relative;
+	width: 70%;
+}
+
+.select-text {
+	position: relative;
+	background-color: transparent;
+	width: 70%;
+	padding: 10px 10px 10px 0;
+	font-size: 16px;
+	border-radius: 0;
+	border: none;
+	border-bottom: 1px solid rgba(0,0,0, 0.12);
+}
+
+/* Remove focus */
+.select-text:focus {
+	outline: none;
+	border-bottom: 1px solid rgba(0,0,0, 0);
+}
+
+	/* Use custom arrow */
+.select .select-text {
+	appearance: none;
+	-webkit-appearance:none
+}
+
+.select:after {
+	position: absolute;
+	top: 16px;
+	right: 60px;
+	/* Styling the down arrow */
+	width: 0;
+	height: 0;
+	padding: 0;
+	content: '';
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-top: 6px solid rgba(0, 0, 0, 0.12);
+	pointer-events: none;
+}
+
+
+/* LABEL ======================================= */
+.select-label {
+	color: rgba(0,0,0, 0.26);
+	font-size: 18px;
+	font-weight: normal;
+	position: absolute;
+	pointer-events: none;
+	left: 0;
+	top: 10px;
+	transition: 0.2s ease all;
+}
+
+/* active state */
+.select-text:focus ~ .select-label, .select-text:valid ~ .select-label {
+	color: #FF8A00;
+	top: -20px;
+	transition: 0.2s ease all;
+	font-size: 14px;
+
+}
+
+/* BOTTOM BARS ================================= */
+.select-bar {
+	position: relative;
+	display: block;
+	width: 70%;
+}
+
+.select-bar:before, .select-bar:after {
+	content: '';
+	height: 2px;
+	width: 0;
+	bottom: 1px;
+	position: absolute;
+	background: #FF8A00;
+	transition: 0.2s ease all;
+}
+
+.select-bar:before {
+	left: 50%;
+}
+
+.select-bar:after {
+	right: 50%;
+}
+
+/* active state */
+.select-text:focus ~ .select-bar:before, .select-text:focus ~ .select-bar:after {
+	width: 50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.select-highlight {
+	position: absolute;
+	height: 60%;
+	width: 70%;
+	top: 25%;
+	left: 0;
+	pointer-events: none;
+	opacity: 0.5;
+}

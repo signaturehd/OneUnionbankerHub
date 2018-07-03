@@ -8,9 +8,10 @@ import PropTypes from 'prop-types'
 import BaseMVPView from '../../common/base/BaseMVPView'
 
 import ConnectView from '../../../utils/ConnectView'
-import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
+import { GenericTextBox,  Card, GenericButton, FileUploader, Line } from '../../../ub-components/'
 
-import '../components/styles/boardingStyle.css'
+import './styles/summary.css'
+
 import Education from './EducationFragment'
 import Experience from './ExperienceFragment'
 import Skills from './SkillsFragment'
@@ -40,70 +41,89 @@ const submit = values => {
 const Summary = props => {
   const { handleSubmit, pristine, previousPage, submitting } = props
   return (
+  <div>
+    <div className={ 'profile-settings-grid-column-desktop' }>
 
-  <div>
-  <div>
-    <Card className={'summary-card-component'}>
-      <div className={'summary-card-headers'}>
-        <h1> Profile Summmary Review
-        </h1>
-        <br></br><br></br>
-        <h2>
-          <AboutMe/>
-        </h2>
-          <br></br><br></br>
-        </div>
-      </Card>
+      <div>
+        <Card className={ 'profile-settings-card-view' }>
+          <div className={ 'profile-banner' }>
+            <div className={ 'profile-picture-card' }>
+
+
+                <img src={
+                  require('../../../images/profile-picture.png') }
+                  className={ 'profile-picture' }/>
+
+            </div>
+          </div>
+          <div className={ 'profile-information-view' }>
+            <div className={ 'profile-padding' }>
+              <h1 className={ 'profile-name' }>
+                UNIONBANKER SURNAME170000
+              </h1>
+              <h2 className={ 'profile-position' }>
+                Probationary
+              </h2>
+              <h2 className={ 'profile-margin-label' }>
+                Onyx Road, Cor Meralco Ave Pasig City
+              </h2>
+            </div>
+            <div>
+              <div
+                className={ 'profile-information-view-right' }>
+                <div>
+                  <span className={ 'profile-icon-settings employeeContact' }/>
+                </div>
+                <div>
+                  <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
+                  </h5>
+                </div>
+              </div>
+              <div
+                className={ 'profile-information-view-right' }>
+                <div>
+                  <span className={ 'profile-icon-settings employeeDependent' }/>
+                </div>
+                <div>
+                  <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
+                  </h5>
+                </div>
+              </div>
+              <div
+                className={ 'profile-information-view-right' }>
+                <div>
+                  <span className={ 'profile-icon-settings employeeDependent' }/>
+                </div>
+                <div>
+                  <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={ 'profile-padding' }>
+            <br/><Line/><br/>
+          </div>
+          <div>
+            <AboutMe
+            />
+          </div>
+        </Card>
+        <Experience
+          />
+          <Education/>
+      </div>
+      <div>
+        <Certificate
+         />
+
+        <Skills
+        />
+      </div>
     </div>
-    <br></br>
-      <div className={ 'summary-card-container' }>
-        <Card className={'summary-card-component'}>
-        <div className={'summary-card-headers'}>
-                <h2>Education</h2>
-              </div>
-              <br></br>
-              <div>
-                <Education/>
-                </div>
-        </Card>
-        <Card className={'summary-card-component'}>
-        <div className={ 'summary-card-headers'}>
-                <h2> Work Experience</h2>
-              </div>
-              <br></br>
-              <div>
-                <Experience/>
-                </div>
-        </Card>
-
-      </div>
-      <br></br>
-      <div className={ 'summary-card-container' }>
-        <Card className={'summary-card-component'}>
-        <div className={'summary-card-headers'}>
-                <h2>Skills</h2>
-              </div>
-              <br></br>
-              <div>
-                <Skills/>
-                </div>
-        </Card>
-        <Card className={'summary-card-component'}>
-        <div className={ 'summary-card-headers'}>
-                <h2>Certification</h2>
-              </div>
-              <br></br>
-              <div>
-                <Certificate/>
-                </div>
-                <button type="submit" onClick = {submit} disabled={pristine || submitting}>Submit</button>
-
-        </Card>
-
-        <FormValues />
-
-      </div>
-      </div>
+    <div className={ 'profile-settings-grid-column-mobile' }>
+    </div>
+  </div>
   )
 }
 

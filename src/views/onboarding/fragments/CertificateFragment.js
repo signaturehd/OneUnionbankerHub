@@ -35,6 +35,9 @@ const renderDatePicker = ({ input, label, type, className, selected, meta: { tou
         className={'calendar'}
         dropdownMode="select"
         dateForm="YYYY/MM/DD"
+        peekNextMonth
+        showMonthDropdown
+        showYearDropdown
         selected={input.value ? moment(input.value) : null}
         onChange={date => input.onChange(moment(date).format('YYYY/MM/DD'))}
   />
@@ -68,7 +71,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           type="text"
           component={renderField}
           placeholder={ 'Certificate Name' }
-          validate={[required, specialChar]}
+          validate={[specialChar]}
 
         />
         <Field
@@ -76,7 +79,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           type="text"
           component={renderField}
           placeholder={ 'Issuing Body' }
-          validate={[required, specialChar]}
+          validate={[specialChar]}
 
         />
         <label>Date Issued</label>
@@ -86,8 +89,10 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           readOnly
           component={renderDatePicker}
           className = { 'general-calenar' }
+          peekNextMonth
+          showMonthDropdown
+          showYearDropdown
           calendarClassName = { 'calendarClass' }
-          validate={[required]}
 
         />
       </div>
