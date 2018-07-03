@@ -425,13 +425,6 @@ export default class HRBenefitsService {
     })
   }
 
-  /* Education */
-
-  getEducationAid (token) {
-    return this.apiClient.get('v1/reimbursements/education/personal/validate', {
-      headers: { token }
-    })
-  }
 
   addEducationAid (
     token,
@@ -473,13 +466,17 @@ export default class HRBenefitsService {
   }
 
   getPayslip (token) {
-    return this.apiClient.post('v1/payslip', {
+    return this.apiClient.get('v1/pay/periods', {
       headers : { token }
     })
   }
 
-  getPayslipSelectedDate (token, payslipParam) {
-    return this.apiClient.post('v1/payslip/', payslipParam, {
+  addPayslipSelectedDate (token, payslipParam) {
+    const payslipObject = {
+      id : payslipParam.employeeId,
+      period : payslipParam.date
+    }
+    return this.apiClient.post('v1/pay', payslipObject, {
       headers : { token }
     })
   }
@@ -512,6 +509,36 @@ export default class HRBenefitsService {
     })
   }
 
+  /* Education Aid and Group Aid */
+   validateAid (token) {
+     return this.apiClient.get('v1/reimbursements/education/personal/validate', {
+       headers: { token }
+     })
+   }
+
+   /* validate group aid */
+   validateGroupAid (token) {
+     return this.apiClient.get('v1/reimbursements/education/dependent/validate', {
+       headers: { token }
+     })
+   }
+
+   addGroupAid (token, accountToken, accountNumber, releasingCenter, groupAidParam) {
+     const formData = new FormData()
+     const grantPlanObject = {
+       grantType : groupAidParam.grantId,
+       accountNumber,
+       releasingCenter
+     }
+     formData.append('uuid', 12345)
+     formData.append('cert', groupAidParam.file)
+     formData.append('body', JSON.stringify(grantPlanObject))
+     return this.apiClient.post('v2/reimbursements/education/dependent/submit', formData, {
+       headers : { token }
+     })
+   }
+
+
   /* bereavement benefit */
   validateBereavement (token) {
     return this.apiClient.get('v1/bereavement/validate', {
@@ -519,8 +546,8 @@ export default class HRBenefitsService {
     })
   }
 
-  addBereavement (token, bereavementParam) {
-    return this.apiClient.get('v1/bereavement/validate', {
+  addBereavement (token, addBereavementParam) {
+    return this.apiClient.post('v1/bereavement/validate', addBereavementParam, {
       headers: { token }
     })
   }

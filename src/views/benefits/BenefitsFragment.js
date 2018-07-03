@@ -14,6 +14,8 @@ import CarLeaseFragment from './fragments/carlease/CarLeaseFragment'
 import TransactionPersonalFragment from '../transaction/TransactionPersonalFragment'
 import TransactionApprovalFragment from '../transaction/TransactionApprovalFragment'
 import OpticalFragment from '../optical/OpticalFragment'
+import BereavementFragment from '../bereavement/BereavementFragment'
+
 
 import {
   InputModal,
@@ -24,6 +26,7 @@ import {
  } from '../../ub-components'
 
 import ReleasingCenterModal from './modal/ReleasingCenterModal'
+import BereavementConfirmationModal from './modal/BereavementConfirmationModal'
 
 import './styles/benefits.css'
 
@@ -32,10 +35,12 @@ class BenefitsFragment extends BaseMVPView {
     super(props)
 
     this.state = {
+      showBereavementConfirmationModal: false,
       showAccountNumberModal: false,
       showReleasingCenterModal : false,
       releasingCenters: null,
       showModal: false,
+      withDeathCert : false,
       isAccountNumber: null,
       accountNumber: '', // this is only used to handle onChange of input modal
     }
@@ -84,10 +89,12 @@ class BenefitsFragment extends BaseMVPView {
     const { history, onClick } = this.props
     const {
       accountNumber,
+      showBereavementConfirmationModal,
       showAccountNumberModal,
       showReleasingCenterModal,
       releasingCenters,
       showModal,
+      withDeathCert,
       isAccountNumber,
     } = this.state
 
@@ -111,10 +118,33 @@ class BenefitsFragment extends BaseMVPView {
       styleName: 'option-cards-4',
       title: 'CAR LEASE',
       path: '/mybenefits/benefits/carlease',
+    }, {
+      id: 4,
+      styleName: 'option-cards-5',
+      title: 'BEREAVEMENT',
+      path: '/mybenefits/benefits/bereavement',
     }]
 
   const Benefits = () => (
     <div className={ 'benefits-container' }>
+      {
+        showBereavementConfirmationModal &&
+        <BereavementConfirmationModal
+          onYes = {
+            () => {
+              this.setState({ showBereavementConfirmationModal : false })
+              history.push('/mybenefits/benefits/bereavement/certified')
+            }
+          }
+          onClose  = {
+            () => {
+              this.setState({ showBereavementConfirmationModal : false })
+              history.push('/mybenefits/benefits/bereavement/uncertified')
+            }
+          }
+        />
+      }
+
       {
         showAccountNumberModal &&
         <InputModal
@@ -144,11 +174,20 @@ class BenefitsFragment extends BaseMVPView {
           <div className={ 'card-container' }>
             {
             benefitsOptions.map((value, idx) => (
+
               <Card className={ 'benefits-card' } key={ idx }>
                 <div
                   className={ value.styleName }
                   text={ value.title }
-                  onClick={ () => history.push(value.path) } >
+                  onClick={ () => {
+                    if(value.id == 4) {
+                      this.setState({ showBereavementConfirmationModal : true })
+                    } else {
+                      history.push(value.path)
+                    }
+                  }
+                } >
+
                   <p className={ 'benefits-option-cards' }> { value.title } </p>
                 </div>
               </Card>

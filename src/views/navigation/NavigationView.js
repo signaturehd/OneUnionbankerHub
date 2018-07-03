@@ -28,6 +28,7 @@ import { NotifyActions } from '../../actions'
 import EducationAidFragment from '../educationaid/EducationAidFragment'
 import EducationGrantPlanFragment from '../educationgrantplan/EducationGrantPlanFragment'
 import EducationGrantAidFragment from '../educationgrantaid/EducationGrantAidFragment'
+import EducationGroupAidFragment from  '../educationgroupaid/EducationGroupAidFragment'
 /* Medical */
 import DentalReimbursement from '../dentalreimbursement/DentalReimbursementFragment'
 import DentalLoaView from '../dentalloa/DentalLoaFragment'
@@ -40,15 +41,15 @@ import SalaryLoanFragment from '../salaryloan/SalaryLoanFragment'
 import MotorcycleLoanFragment from '../motorcycleloan/MotorcycleLoanFragment'
 /*  MPL Motorcycle */
 import ComputerLoanFragment from '../computerloan/ComputerLoanFragment'
+/* Bereavement */
+import BereavementFragment from '../bereavement/BereavementFragment'
 /* Transaction*/
 import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
 import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
 import CarLeaseNewFragment from '../carlease/CarLeaseNewFragment'
 import CarLeaseOldFragment from '../carlease/CarLeaseOldFragment'
-
-/* Payslip*/
+/*Payslip*/
 import Payslip from '../payslip/PayslipFragment'
-
 import Carousel from '../carousel/Carousel'
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
@@ -163,8 +164,8 @@ class NavigationView extends BaseMVPView {
             login &&
             <ReloginModal
               relogin = { () => {
- this.presenter.relogin() 
-} }
+               this.presenter.relogin()
+              } }
             />
           }
               <Drawer >
@@ -178,14 +179,17 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mybenefits/transactions/approval/:id' render = { props =>
                     <TransactionApprovalDetailFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                      <Route path = '/mybenefits/benefits/education/aid' render = { props =>
-                        <EducationAidFragment { ...props }
-                          setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                  <Route path = '/mybenefits/benefits/education/aid' render = { props =>
+                    <EducationAidFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
                   <Route path = '/mybenefits/benefits/education/grantplan' render = { props =>
                     <EducationGrantPlanFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
                   <Route path = '/mybenefits/benefits/education/grantaid' render = { props =>
                     <EducationGrantAidFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                  <Route path = '/mybenefits/benefits/education/groupaid' render = { props =>
+                    <EducationGroupAidFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
                   <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
                     <OpticalFragment { ...props }
@@ -216,6 +220,9 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits/benefits/loans/computer' render = { props =>
                     <ComputerLoanFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/bereavement/:type' render = { props =>
+                    <BereavementFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits' render = { props =>
                     <BenefitsFragment { ...props }

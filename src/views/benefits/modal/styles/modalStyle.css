@@ -16,3 +16,8 @@
   font-weight: 550;
   border: 0;
 }
+
+.confirmation-grid-action {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr)
+}

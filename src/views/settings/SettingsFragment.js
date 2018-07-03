@@ -5,9 +5,7 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/SettingsPresenter'
 
-import GetProfileInteractor from '../../domain/interactor/user/GetProfileInteractor'
-
-import SettingsCardComponent from './components/SettingsCardComponent'
+import SettingsProfileCardComponent from './components/SettingsProfileCardComponent'
 
 import { Card } from '../../ub-components/'
 
@@ -15,11 +13,11 @@ class SettingsFragment extends BaseMVPView {
   constructor (props) {
     super(props)
 
-    this.state = {
+    this.state={
      profile: [],
      profileInfo: [],
      rank: [],
-     linemanager: [],
+     lineManager: [],
      profileDependent: [],
      showProfile : false,
      showRank : false,
@@ -44,28 +42,28 @@ class SettingsFragment extends BaseMVPView {
   showProfileDependent (profileDependent) {
     this.setState({ profileDependent })
   }
-  showLineManager (linemanager) {
-    this.setState({ linemanager })
+  showLineManager (lineManager) {
+    this.setState({ lineManager })
   }
   render () {
-    const { linemanager, profile, details, className, rank, profileDependent } = this.state
+    const { lineManager, profile, details, className, rank, profileDependent }=this.state
 
     return (
-      <div className = { 'profile-container' }>
+      <div className={ 'profile-container' }>
         { super.render() }
-      <h2 className = { 'header-margin-default ' }> My Profile Information </h2>
-        <SettingsCardComponent
-         profile = { profile }
-         linemanager = { linemanager }
-         profileDependent = { profileDependent }
-         rank = { rank }
-         presenter = { this.presenter }/>
+        <SettingsProfileCardComponent
+           profile={ profile }
+           lineManager={ lineManager }
+           profileDependent={ profileDependent }
+           rank={ rank }
+           presenter={ this.presenter }
+        />
       </div>
     )
   }
 }
 
-SettingsFragment.propTypes = {
+SettingsFragment.propTypes={
   setSelectedNavigation: PropTypes.func,
 }
 
