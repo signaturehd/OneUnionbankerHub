@@ -60,7 +60,7 @@ export default class MotorcycleLoanPresenter {
     }
 
   getMplValidate (loanTypeId) {
-    this.view.hideCircularLoader()
+    this.view.showCircularLoader()
     this.getValidateInteractor.execute(mplValidateParam(loanTypeId))
       .subscribe(
         data => {
@@ -70,14 +70,22 @@ export default class MotorcycleLoanPresenter {
         },
         error => {
           this.view.navigate()
+          this.view.hideCircularLoader()
         }
       )
     }
 
   getMplFormAttachments (formRequesting, loanId) {
     this.getFormAttachmentsInteractor.execute(mplGetFormParam(formRequesting, loanId))
-      .do(data => this.view.showMPLFormAttachments(data))
-      .subscribe()
+      .subscribe(
+        data=> {
+          this.view.showMPLFormAttachments(data)
+          this.view.hideCircularLoader()
+        },
+        error => {
+          this.view.hideCircularLoader()
+        }
+      )
     }
 
   /* add motorloan or computer loan salary*/
@@ -90,18 +98,18 @@ export default class MotorcycleLoanPresenter {
     principalLoanAmount,
     selectedSupplier,
     attachments) {
-    this.view.showCircularLoader()
-    this.addMotorLoanInteractor.execute(AddMotorLoanParam(
-      payeeName,
-      loanId,
-      purposeOfLoan,
-      modeOfLoan,
-      loanTerm,
-      principalLoanAmount,
-      selectedSupplier,
-      attachments
+      this.view.hideCircularLoader()
+      this.addMotorLoanInteractor.execute(AddMotorLoanParam(
+        payeeName,
+        loanId,
+        purposeOfLoan,
+        modeOfLoan,
+        loanTerm,
+        principalLoanAmount,
+        selectedSupplier,
+        attachments
+        )
       )
-    )
     .subscribe(
       data => {
         this.view.hideCircularLoader()
