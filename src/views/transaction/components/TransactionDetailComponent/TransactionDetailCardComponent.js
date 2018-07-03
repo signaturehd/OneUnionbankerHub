@@ -20,7 +20,7 @@ class TransactionDetailCardComponent extends Component {
           <h2 className = { 'transaction-detail details-bold' }> Date Filed: </h2>
           <h2 className = { 'transaction-detail details-bold' }> Reference Number: </h2>
           <h2 className = { 'transaction-detail details-bold' }> Transaction Status: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Account Number: </h2>
+          { details && details.details.AccountNo &&  <h2 className = { 'transaction-detail details-bold' }> Account Number: </h2> }
           <h2 className = { 'transaction-detail details-bold' }> Patient Name: </h2>
         </div>
         <div>

@@ -58,7 +58,7 @@
     'semi': ['error', 'never'],
     'dot-notation': 'error',
     'one-var': ['error', 'never'],
-    'max-len': ['error', {  'code': 120, 'tabWidth': 2, 'ignoreComments': true, 'ignoreTrailingComments': true }],
+    'max-len': ['error', {  'code': 150, 'tabWidth': 2, 'ignoreComments': true, 'ignoreTrailingComments': true }],
     'operator-linebreak': ['error', 'after'],
     'nonblock-statement-body-position': 'error',
     'object-shorthand': 'warn',

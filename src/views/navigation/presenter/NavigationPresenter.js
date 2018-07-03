@@ -3,6 +3,10 @@ import GetLibrariesInteractor from '../../../domain/interactor/user/GetLibraries
 import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInteractor'
 import GetWizardInteractor from '../../../domain/interactor/user/GetWizardInteractor'
 import SetWizardInteractor from '../../../domain/interactor/user/SetWizardInteractor'
+import RelogInInteractor from '../../../domain/interactor/user/RelogInInteractor'
+
+import { NotifyActions, LoginActions } from '../../../actions'
+import store from '../../../store'
 
 export default class NavigationPresenter {
   constructor (container) {
@@ -11,6 +15,7 @@ export default class NavigationPresenter {
     this.getLibrariesInteractor = new GetLibrariesInteractor(container.get('HRBenefitsClient'))
     this.getWizardInteractor = new GetWizardInteractor(container.get('HRBenefitsClient'))
     this.setWizardInteractor = new SetWizardInteractor(container.get('HRBenefitsClient'))
+    this.relogInInteractor = new  RelogInInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -19,7 +24,14 @@ export default class NavigationPresenter {
 
   logout () {
     this.logoutInteractor.execute()
-      .subscribe()
+      .subscribe(resp => {
+        this.view.relogin()
+      })
+  }
+
+  relogin () {
+    this.relogInInteractor.execute()
+    store.dispatch(LoginActions.showReloginModal(false))
   }
 
   getLibraries () {
@@ -44,7 +56,6 @@ export default class NavigationPresenter {
      this.view.hideLoading()
     }, e => {
      this.view.hideLoading()
-     // TODO prompt generic error
    })
   }
 
@@ -56,5 +67,4 @@ export default class NavigationPresenter {
     this.setWizardInteractor.execute(wizard)
     this.view.showWizard(wizard)
   }
-
 }

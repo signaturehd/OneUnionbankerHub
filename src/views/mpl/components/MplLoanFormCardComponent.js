@@ -12,7 +12,7 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class MplFormLoanCardComponent extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       showPurposeOfAvailment: false,
@@ -40,17 +40,17 @@ class MplFormLoanCardComponent extends Component {
 
   onChange (e) {
       const re = /^[0-9\.]+$/
-      if (e.target.value == '' ||  re.test(e.target.value)) {
+      if (e.target.value === '' ||  re.test(e.target.value)) {
         this.setState({ amountValue: e.target.value })
       }
    }
 
-   sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId, file1, file2 ) {
-     let amount = parseFloat(desiredAmount)
-     let maximumAmount = parseFloat(this.props.validateLoanType.maximumLoanableAmount)
-     let id = parseInt(loanTypeId)
-     let term = parseInt(termId)
-     let mode = parseInt(modeOfLoanId)
+   sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId, file1, file2) {
+     const amount = parseFloat(desiredAmount)
+     const maximumAmount = parseFloat(this.props.validateLoanType.maximumLoanableAmount)
+     const id = parseInt(loanTypeId)
+     const term = parseInt(termId)
+     const mode = parseInt(modeOfLoanId)
      if (amount >= maximumAmount) {
        store.dispatch(NotifyActions.addNotify({
            title : 'Warning' ,
@@ -60,7 +60,7 @@ class MplFormLoanCardComponent extends Component {
          })
        )
      } else {
-       if(
+       if (
          id === null ||
          term === null ||
          mode === null ||
@@ -75,7 +75,7 @@ class MplFormLoanCardComponent extends Component {
           })
         )
       } else {
-        this.props.presenter.addLoan(id, poaText, mode, term, desiredAmount, { file1, file2 })
+        this.props.presenter.addLoan(id, poaText, mode, term, desiredAmount, [file1, file2])
       }
      }
    }
@@ -276,23 +276,23 @@ class MplFormLoanCardComponent extends Component {
                 value = { poaText }
                 onClick = { () =>
                   this.setState({ showPurposeOfAvailment : true }) }
-                onChange = { (poaText) =>
+                onChange = { poaText =>
                   this.setState({ poaText }) }
                 placeholder = { 'Purpose Of Availment' }
                 type = { 'text' }/>
               <GenericTextBox
-                onChange = { (modeOfLoanText) =>
+                onChange = { modeOfLoanText =>
                   this.setState({ modeOfLoanText }) }
                 onClick = { () =>
                   this.setState({ showOffset : true }) }
                 placeholder = { 'Mode of Loan' }
-                value = { offset ? 'New Loan' : modeOoffsetfLoan }
+                value = { offset ? modeOfLoanText : 'New Loan' }
                 type = { 'text' }/>
               <GenericTextBox
                 value = { amountValue }
                 onChange = { this.onChange }
                 placeholder = { 'Desired Amount' }
-                maxLength = { validateLoanType && ( '' + validateLoanType.maximumLoanableAmount).length }
+                maxLength = { 11 }
                 type = { 'text' }/>
               <GenericTextBox
                 value = { `${ termOfLoan } (${ rateOfLoan } %)` }
@@ -320,10 +320,20 @@ class MplFormLoanCardComponent extends Component {
               formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
                 <FileUploader
                    onChange = { this.handleImageChange }
+                   value = { file1.name }
                    placeholder = {  attachmentsLabel ? attachmentsLabel : 0 }
                 />
               )
             }
+            </div>
+            <div className = 'mpl-main'>
+              <div className = { 'mpl-review' }>
+               <div className = { 'mpl-image-view ' }>
+                 { $imagePreview1 }
+               </div>
+               <div className = { 'mpl-image-view ' }>
+               </div>
+             </div>
             </div>
           </Card>
           }

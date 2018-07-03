@@ -11,8 +11,8 @@ render () {
 
 return (
   <Modal
-    onClose = { onClose }
-    isDismisable = { true }>
+    onClose={ onClose }
+    isDismisable={ true }>
     <div>
       <center>
         <h2>
@@ -26,10 +26,11 @@ return (
       {
         term && term.map((resp, key) =>
         <GenericButton
-          className = { 'motor-modal-button' }
-          key = { key }
-          text = {`Term ${resp && resp.term} Rate (${resp && resp.rate}%)` }
-          onClick = { () => onSubmit( resp, false ) }/>
+          className={ 'motor-modal-button' }
+          key={ key ? key : '' }
+          text={ `Term ${ resp && resp.term ? resp.term : '' }
+                  Rate (${ resp && resp.rate ? resp.rate : '' }%)` }
+          onClick={ () => onSubmit(resp ? resp : '', false) }/>
         )
       }
     </div>

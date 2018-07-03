@@ -6,6 +6,7 @@ import ConnectView from '../../utils/ConnectView'
 import Card from './components/OpticalCard'
 import ConfirmationModal from './modal/OpticalReviewModal'
 import NoticeModal from '../notice/Notice'
+import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 import ResponseModal from '../notice/NoticeResponseModal'
 import './styles/optical.css'
 
@@ -22,6 +23,7 @@ class OpticalFragment extends BaseMVPView {
       showConfirmation : false,
       noticeResponse : null,
       showNoticeResponseModal : false,
+      showBenefitFeedbackModal : false,
       isVisible : false,
       file1 : null,
       file2 : null,
@@ -43,7 +45,6 @@ class OpticalFragment extends BaseMVPView {
   }
 
   noticeOfUndertaking (noticeResponse) {
-    // console.log(noticeResponse)
     this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
   }
 
@@ -52,7 +53,6 @@ class OpticalFragment extends BaseMVPView {
   }
 
   confirmation (showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2) {
-
     if (amount > 3500 || amount === 0) {
       store.dispatch(NotifyActions.addNotify({
           title : 'Optical Reimbursement',
@@ -89,6 +89,7 @@ class OpticalFragment extends BaseMVPView {
     const {
       showConfirmation,
       showNoticeModal,
+      showBenefitFeedbackModal,
       showNoticeResponseModal,
       noticeResponse,
       file1,
@@ -102,7 +103,6 @@ class OpticalFragment extends BaseMVPView {
 
     return (
       <div  className = { 'benefits-container' }>
-        { super.render() }
         {
           showConfirmation &&
           <ConfirmationModal
@@ -132,15 +132,21 @@ class OpticalFragment extends BaseMVPView {
           showNoticeResponseModal &&
           <ResponseModal
             onClose = { () => {
-              this.setState({ showNoticeResponseModal : false })
-              this.props.history.push('/benefits/medical')
+              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
             }}
             noticeResponse = { response }
-            benefitId = { '8' }
-            onDismiss = { (showNoticeModal, response) =>
-              this.setState({ showNoticeModal, response })  }
           />
+        }
 
+        {
+          showBenefitFeedbackModal &&
+          <BenefitFeedbackModal
+            benefitId = { '8' }
+            onClose = { () => {
+              this.props.history.push('/mybenefits/benefits/medical'),
+              this.setState({ showBenefitFeedbackModal : false })
+            }}
+          />
         }
 
         <div>

@@ -95,8 +95,8 @@
   position: relative;
   background: url('../../../../images/uploadicon-grey.jpg') no-repeat center center;
   background-size: 50px;
-  width: 225px;
-  height: 240px;
+  width: 100%;
+  height: 300px;
   object-fit: cover;
   border-radius: 20px;
 }
@@ -108,4 +108,63 @@
   width: 100%;
   height: 50%;
   border-radius: 5px;
+}
+
+.car-footer-left {
+  background-color: white;
+  overflow: hidden;
+  width: auto;
+  min-height: 300px;
+}
+
+.car-grid {
+  display: grid !important;
+  grid-template-columns: 100%;
+}
+
+.car-grid-modal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.carColorPaintIcon {
+  background-image: url('../../../../images/icons/ic_color.png');
+}
+
+.carYearIcon {
+  background-image: url('../../../../images/icons/ic_calendar.png');
+}
+
+.carModelIcon {
+  background-image: url('../../../../images/icons/ic_car.png');
+}
+
+.carBrandIcon {
+  background-image: url('../../../../images/icons/ic_brand.png');
+}
+
+.car-icon-forms {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 30px;
+  width: 30px;
+  background-repeat: no-repeat;
+}
+
+.carlease-grid-newform {
+  display: grid;
+  padding: 0px 10px 0px 10px;
+  grid-template-columns: .01fr 1fr;
+}
+
+.car-group-textbox {
+  position:relative;
+  width:100%;
+  margin-top:0px;
+}
+
+.car-form-icon-container {
+  padding: 30px 15px 0px 5px;
 }

@@ -11,8 +11,8 @@ render () {
 
 return (
   <Modal
-    onClose = { onClose }
-    isDismisable = { true }>
+    onClose={ onClose }
+    isDismisable={ true }>
     <div>
       <center>
         <h2>
@@ -24,10 +24,10 @@ return (
       {
         offset && offset.map((resp, key) =>
         <GenericButton
-          className = { 'motor-modal-button' }
-          key = { key }
-          text = { resp && resp.name }
-          onClick = { () => onSubmit(resp, false) }/>
+          className={ 'motor-modal-button' }
+          key={ key ? key : '' }
+          text={ resp && resp.name ? resp.name : '' }
+          onClick={ () => onSubmit(resp ? resp : '', false) }/>
         )
       }
     </div>

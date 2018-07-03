@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
+import EducationGrantPersonalModal from '../modal/EducationGrantPersonalModal'
+
 import './styles/educationComponentStyle.css'
 
 import store from '../../../store'
@@ -15,13 +17,13 @@ class EducationGrantAidFormCardComponent extends Component {
   constructor (props) {
     super (props)
     this.state = {
-      collegeText: '',
-      courseText: '',
-      academicYearText: '',
-      semesterText: '',
-      typeOfGrantText: '',
-      grantAmount: '',
-      file: ''
+      showGrantTypes : false,
+      grantId : '',
+      grantType : '',
+      grantAmount : '',
+      attachment : null,
+      file: '',
+      imagePreviewUrl: null
     }
   }
 
@@ -31,19 +33,58 @@ class EducationGrantAidFormCardComponent extends Component {
   }
 
   render () {
+    const {
+      grantAid,
+      presenter,
+      onClick
+    } = this.props
 
     const {
-        collegeText,
-        courseText,
-        academicYearText,
-        semesterText,
-        typeOfGrantText,
-        grantAmount,
-        formAttachmentsText
-      } = this.state
+      showGrantTypes,
+      grantId,
+      grantType,
+      grantAmount,
+      attachment,
+      file,
+      imagePreviewUrl
+    } = this.state
+
+    const styles = {
+      image1 : {
+        backgroundImage: `url('${imagePreviewUrl}')`,
+        width : 'auto',
+        height : '60px',
+        backgroundSize : 'contain',
+        backgroundRepeat : 'no-repeat',
+      }
+    }
 
     return (
       <div className = {'educ-container'}>
+
+        {
+          showGrantTypes &&
+          <EducationGrantPersonalModal
+            tog = { grantAid.grants }
+            presenter = { presenter }
+            onSubmit = {
+              (grantId, grantType, grantAmount, attachment) => {
+                this.setState({
+                  grantId,
+                  grantType,
+                  grantAmount,
+                  attachment
+                })
+              }
+            }
+            onClose = {
+              () => {
+                this.setState({ showGrantTypes : false })
+              }
+            }
+          />
+        }
+
         <div className = { 'educ-grid-column-2' }>
           <div></div>
           <Card className = { 'educ-form-card' }>
@@ -51,89 +92,114 @@ class EducationGrantAidFormCardComponent extends Component {
               Benefits Form
             </h4>
             <div className = {'educ-form-card-body '}>
-            <GenericTextBox
-              value = { collegeText }
-              onChange = { (e) => { this.setState({collegeText: e.target.value}) } }
-              placeholder = { 'College/Universities' }
-            type = { 'text' }/>
-            <GenericTextBox
-              value = { courseText }
-              onChange = { (e) => { this.setState({courseText: e.target.value}) } }
-              placeholder = { 'Course' }
-            type = { 'text' }/>
-            <GenericTextBox
-              value = { academicYearText }
-              onChange = { (e) => { this.setState({academicYearText: e.target.value}) } }
-              placeholder = { 'Academic Year' }
-            type = { 'text' }/>
-            <GenericTextBox
-              value = { semesterText }
-              onChange = { (e) => { this.setState({semesterText: e.target.value}) } }
-              placeholder = { 'Semester' }
-            type = { 'text' }/>
-            <GenericTextBox
-              value = { typeOfGrantText }
-              onChange = { (e) => { this.setState({typeOfGrantText: e.target.value}) } }
-              placeholder = { 'Type of Grant' }
-            type = { 'text' }/>
-            <GenericTextBox
-              value = { grantAmount }
-              onChange = {
-                (e) => {
-                    const re = /^[0-9\.]+$/
-                    if (e.target.value == '' ||  re.test(e.target.value)) {
-                      this.setState({ grantAmount: e.target.value })
-                    }
-                 }
-              }
-              placeholder = { 'Grant Amount' }
-            type = { 'text' }/>
-
-              <br/>
-              <FileUploader
-                accept="image/gif,image/jpeg,image/jpg,image/png,"
-                value = { this.state.file.name }
-                placeholder = 'Form Attachments'
-                onChange = {
-                  (e) => {
-                    e.preventDefault()
-                    const reader = new FileReader()
-                    const file = e.target.files[0]
-                    let isValid
-                    switch (this.getExtension(file.type).toLowerCase()) {
-                      case 'jpeg' :
-                        isValid = true
-                      case 'jpg' :
-                        isValid = true
-                      case 'png' :
-                        isValid = true
-                      case 'pdf' :
-                        isValid = true
-                    }
-
-                    if (isValid) {
-                      reader.onloadend = () => {
-                        this.setState({
-                          file
-                        })
-                      }
-                      reader.readAsDataURL(file)
-                   } else {
-                       store.dispatch(NotifyActions.addNotify({
-                           title : 'File Uploading',
-                           message : 'The accepted attachments are JPG/PNG/PDF',
-                           type : 'warning',
-                           duration : 2000
-                         })
-                       )
-                     }
+              <GenericTextBox
+                value = { grantAid.college }
+                onChange = {() => {}}
+                placeholder = { 'College/Universities' }
+                type = { 'text' }/>
+              <GenericTextBox
+                value = { grantAid.course }
+                onChange = {() => {}}
+                placeholder = { 'Course' }
+                type = { 'text' }/>
+              <GenericTextBox
+                value = { grantAid.academicYear }
+                onChange = {() => {}}
+                placeholder = { 'Academic Year' }
+                type = { 'text' }/>
+              <GenericTextBox
+                value = { grantAid.semester }
+                onChange = {() => {}}
+                placeholder = { 'Semester' }
+                type = { 'text' }/>
+              <GenericTextBox
+                value = { grantType }
+                onClick = {
+                  () => {
+                    this.setState({ showGrantTypes : true })
                   }
                 }
-              />
+                placeholder = { 'Type of Grant' }
+                type = { 'text' }/>
+              <GenericTextBox
+                value = { grantAmount }
+                onChange = {() => {}}
+                placeholder = { 'Grant Amount' }
+                type = { 'text' }/>
+              <br/>
+
+              {
+                imagePreviewUrl &&
+                attachment &&
+                <div>
+                  <label className="educ-form-title">{ attachment }</label>
+                  <div className="educ-attachment-form">
+                    <img
+                      src={ require('../../../ub-components/Notify/images/x-circle.png') }
+                      className='close-button'
+                      onClick={
+                        () => {
+                          this.setState({ file : '', imagePreviewUrl : null })
+                        }
+                      }
+                    />
+                    <div style = {styles.image1}><h6 className="educ-file-name">{ file.name }</h6></div>
+                  </div>
+                </div>
+              }
+
+              {
+                !imagePreviewUrl &&
+                attachment &&
+                <FileUploader
+                  accept="image/gif,image/jpeg,image/jpg,image/png,"
+                  value = { file.name }
+                  placeholder = { attachment }
+                  onChange = {
+                    (e) => {
+                      e.preventDefault()
+                      const reader = new FileReader()
+                      const file = e.target.files[0]
+                      let isValid
+                      switch (this.getExtension(file.type).toLowerCase()) {
+                        case 'jpeg' :
+                          isValid = true
+                        case 'jpg' :
+                          isValid = true
+                        case 'png' :
+                          isValid = true
+                        case 'pdf' :
+                          isValid = true
+                      }
+
+                      if (isValid) {
+                        reader.onloadend = () => {
+                          this.setState({
+                            file,
+                            imagePreviewUrl: reader.result
+                          })
+                        }
+                        reader.readAsDataURL(file)
+                     } else {
+                         store.dispatch(NotifyActions.addNotify({
+                             title : 'File Uploading',
+                             message : 'The accepted attachments are JPG/PNG/PDF',
+                             type : 'warning',
+                             duration : 2000
+                           })
+                         )
+                       }
+                    }
+                  }
+                />
+              }
+
               <GenericButton
                 type = { 'button' }
                 text = { 'continue' }
-                onClick = { () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId) }
+                onClick = {
+                  () => onClick(true, grantId, grantType, grantAmount, file, imagePreviewUrl)
+                }
                 className = { 'educ-submit' } />
             </div>
           </Card>

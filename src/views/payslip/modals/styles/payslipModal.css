@@ -1,0 +1,8 @@
+.payslip-card-modal {
+  padding: 25px 10px 25px 10px;
+}
+
+.payslip-card-grid {
+  display: grid;
+  grid-template-columns: .5fr 1fr;
+}

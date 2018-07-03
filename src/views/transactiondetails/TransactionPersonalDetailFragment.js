@@ -1,3 +1,5 @@
+
+
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -9,6 +11,7 @@ import { CircularLoader } from '../../ub-components'
 
 import './styles/transactionDetails.css'
 
+
 import DentalLoaDetailsFragment from './fragments/DentalLoaDetailsFragment'
 import DentalRDetailsFragment from './fragments/DentalRDetailsFragment'
 import EducAidDetailsFragment from './fragments/EducAidDetailsFragment'
@@ -17,6 +20,7 @@ import EducGrantPlanDetailsFragment from './fragments/EducGrantPlanDetailsFragme
 import EducGroupPlanDetailsFragment from './fragments/EducGroupPlanDetailsFragment'
 import LoansDetailsFragment from './fragments/LoansDetailsFragment'
 import OpticalDetailsFragment from './fragments/OpticalDetailsFragment'
+import CarLeaseDetailsFragment from './fragments/CarLeaseDetailsFragment'
 
 function  TransactionDetails (props)  {
   const transactionId = props.details.benefitType.id
@@ -39,27 +43,44 @@ function  TransactionDetails (props)  {
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId === 11) {
+  } else if (transactionId === 15) {
+    return <CarLeaseDetailsFragment
+      details = { transactionDetails }
+      attachments = { attachments }
+      transactionsPerson = { transactionsPerson }/>
+  } else if (transactionId === 13) {
     return <EducGrantAidDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 12) {
-    return <DentalRDetailsFragment
+    return <EducGroupPlanDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson } />
-  } else if (transactionId === 13) {
-    return <DentalRDetailsFragment
+  } else if (transactionId === 11) {
+    return <EducAidDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 32) {
-    return <DentalRDetailsFragment
+    return <EducGrantPlanDetailsFragment
       details = { transactionDetails }
       attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 1) {
+    return <LoansDetailsFragment
+      transactionsPerson = { transactionsPerson }
+      attachments = { attachments }
+      details = { transactionDetails } />
+  } else if (transactionId === 21) {
+    // Bereavement Transaction Details
+    return <LoansDetailsFragment
+      transactionsPerson = { transactionsPerson }
+      attachments = { attachments }
+      details = { transactionDetails } />
+  } else if (transactionId === 22) {
+    // Calamity Assistance
     return <LoansDetailsFragment
       transactionsPerson = { transactionsPerson }
       attachments = { attachments }
@@ -108,26 +129,26 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
       attachments
     } = this.state
     return (
-      <div  className = { 'container' }>
+      <div  className={ 'container' }>
         <div>
-        <i className = { 'back-arrow' } onClick = {
+        <i className={ 'back-arrow' } onClick = {
             this.navigate.bind(this) }></i>
-          <h2 className = { 'header-margin-default' }>
+          <h2 className={ 'header-margin-default' }>
             { details ? details.benefitType.name : 'Transaction' }
           </h2>
         </div>
         {
           details ?
-            <div className = {'transaction-detail-container'}>
+            <div className={ 'transaction-detail-container' }>
               <TransactionDetails
-               details = { details }
-               attachments = { attachments }
-               transactions = { transactions }
+               details={ details }
+               attachments={ attachments }
+               transactions={ transactions }
               />
             </div>            :
-            <div className = {'transaction-details-loader'}>
+            <div className={ 'transaction-details-loader' }>
               <center>
-                <CircularLoader show = {true}/>
+                <CircularLoader show={ true }/>
               </center>
             </div>
         }

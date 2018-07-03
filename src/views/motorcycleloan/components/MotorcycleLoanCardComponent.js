@@ -13,7 +13,7 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class MotorcycleLoanCardComponent extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       showPurposeOfAvailment: false,
@@ -29,20 +29,19 @@ class MotorcycleLoanCardComponent extends Component {
       subCategoryId: '',
       showFileUpload: false,
       showSupplier : false,
-      supplier: ''
+      supplier: '',
+      payeeName: '',
+      file: ''
     }
      this.onChange = this.onChange.bind(this)
+     this.onGetClicked = this.onGetClicked.bind(this)
   }
 
   onChange (e) {
       const re = /^[0-9\.]+$/
-      if (e.target.value == '' ||  re.test(e.target.value)) {
+      if (e.target.value === '' ||  re.test(e.target.value)) {
         this.setState({ amountValue: e.target.value })
       }
-   }
-
-   sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId, file1, file2 ) {
-
    }
 
   render () {
@@ -61,39 +60,46 @@ class MotorcycleLoanCardComponent extends Component {
       subCategoryId,
       showSupplier,
       showFileUpload,
-      supplier } = this.state
+      supplier,
+      payeeName,
+      file
+    } = this.state
+
     const {
       purposeOfAvailment,
       loanType,
       validateLoanType,
       offset,
       formAttachments,
-      selectedSupplier } = this.props
+      selectedSupplier,
+      payeeNameLabel,
+      onSubmit
+    } = this.props
 
     return (
-      <div className = { 'motor-container' }>
+      <div className={ 'motor-container' }>
         {
           showOffset &&
           <ModeOfLoanModal
-            offset  = {  offset && offset }
-            onSubmit = { (changeOffsetValue, closePoaModal) =>
+            offset ={  offset && offset }
+            onSubmit={ (changeOffsetValue, closePoaModal) =>
               this.setState({
                 modeOfLoanText : changeOffsetValue.name,
                 modeOfLoanId : changeOffsetValue.id,
                 showOffset : closePoaModal
               })
             }
-            onClose = { () =>
+            onClose={ () =>
               this.setState({ showOffset : false }) }
           />
         }
         {
           showPurposeOfAvailment &&
           <PurposeOfAvailmentModal
-            poa  = { purposeOfAvailment }
-            loanType = { loanType }
-            presenter = { this.props.presenter }
-            onSubmit = { (changePoaText, subcategory, closePoaModal, openFileUpload, loanType) =>
+            poa ={ purposeOfAvailment }
+            loanType={ loanType }
+            presenter={ this.props.presenter }
+            onSubmit={ (changePoaText, subcategory, closePoaModal, openFileUpload, loanType) =>
               this.setState({
                 poaText : changePoaText.name,
                 poaId : changePoaText.id,
@@ -102,15 +108,15 @@ class MotorcycleLoanCardComponent extends Component {
                 showFileUpload : openFileUpload
               })
             }
-            onClose = { () =>
+            onClose={ () =>
               this.setState({ showPurposeOfAvailment : false }) }
           />
         }
         {
           showTerm &&
           <TermOfLoanModal
-            term  = {  validateLoanType && validateLoanType.terms }
-            onSubmit = { (changeTermOfLoan, closePoaModal) =>
+            term ={  validateLoanType && validateLoanType.terms }
+            onSubmit={ (changeTermOfLoan, closePoaModal) =>
               this.setState({
                 termId : changeTermOfLoan.id,
                 termOfLoan : changeTermOfLoan.term,
@@ -118,89 +124,155 @@ class MotorcycleLoanCardComponent extends Component {
                 showTerm : closePoaModal
               })
             }
-            onClose = { () =>
+            onClose={ () =>
               this.setState({ showTerm : false }) }
           />
         }
         {
           showSupplier &&
           <SupplierModal
-            supplier  = {  supplier }
-            onSubmit = { (getSupplier, closePoaModal) =>
+            supplier ={  supplier }
+            onSubmit={ (getSupplier, closePoaModal) =>
               this.setState({
                 selectedSupplier : getSupplier,
                 showSupplier : closePoaModal
               })
             }
-            onClose = { () =>
+            onClose={ () =>
               this.setState({ showSupplier : false }) }
           />
         }
-        <div className = { 'motor-grid-column-2' }>
-          <Card className = { 'motor-form-card' }>
+        <div className={ 'motor-grid-column-2' }>
+          <Card className={ 'motor-form-card' }>
             <h4>
               Benefits Form
             </h4>
-            <div className = { 'motor-form-card-body' }>
-              <span className = { 'motor-icon' } />
-              <GenericTextBox
-                type = { 'button' }
-                value = { poaText }
-                onClick = { () =>
-                  this.setState({ showPurposeOfAvailment : true }) }
-                onChange = { (poaText) =>
-                  this.setState({ poaText }) }
-                placeholder = { 'Purpose Of Availment' }
-                type = { 'text' }/>
-              <GenericTextBox
-                onChange = { (modeOfLoanText) =>
-                  this.setState({ modeOfLoanText }) }
-                onClick = { () =>
-                  this.setState({ showOffset : true }) }
-                placeholder = { 'Mode of Loan' }
-                value = { offset ? 'New Loan' : modeOoffsetfLoan }
-                type = { 'text' }/>
-              <GenericTextBox
-                value = { amountValue }
-                onChange = { this.onChange }
-                placeholder = { 'Desired Amount' }
-                maxLength = { validateLoanType && ( '' + validateLoanType.maximumLoanableAmount).length }
-                type = { 'text' }/>
-              <GenericTextBox
-                value = { `${ termOfLoan } (${ rateOfLoan } %)` }
-                onChange = { (termOfLoan, rateOfLoan) =>
-                  this.setState({ termOfLoan, rateOfLoan }) }
-                onClick = { () =>
-                  this.setState({ showTerm : true }) }
-                placeholder = { 'Term of Loan' }
-                type = { 'text' }/>
-              <GenericTextBox
-                value = { selectedSupplier ? selectedSupplier : null }
-                onChange = { (supplier) =>
-                  this.setState({ selectedSupplier : supplier }) }
-                onClick = { () =>
-                  this.setState({ showSupplier : true }) }
-                placeholder = { 'Supplier Name' }
-                type = { 'text' }/>
+            <div className={ 'motor-form-card-body' }>
+              <div className={ 'motor-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'motor-icon-forms motorMailBoxIcon' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    type={ 'button' }
+                    value={ poaText }
+                    group={ 'motor-group-textbox' }
+                    container={ 'motor-form-icon-container' }
+                    onClick={ () =>
+                      this.setState({ showPurposeOfAvailment : true }) }
+                    onChange={ poaText =>
+                      this.setState({ poaText }) }
+                    placeholder={ 'Purpose Of Availment' }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'motor-grid-form' }>
+                <GenericTextBox
+                  value={ payeeName }
+                  onChange={ e =>
+                    this.setState({ payeeName : e.target.value }) }
+                  placeholder={ payeeNameLabel && payeeNameLabel }
+                  type={ 'text' }
+                />
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'motor-icon-forms motorEditIcon' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    group={ 'motor-group-textbox' }
+                    container={ 'motor-form-icon-container' }
+                    onChange={ modeOfLoanText =>
+                      this.setState({ modeOfLoanText }) }
+                    onClick={ () =>
+                      this.setState({ showOffset : true }) }
+                    placeholder={ 'Mode of Loan' }
+                    value={ offset ? 'New Loan' : modeOoffsetfLoan }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'motor-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'motor-icon-forms pesoSign' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    group={ 'motor-group-textbox' }
+                    container={ 'motor-form-icon-container' }
+                    value={ amountValue }
+                    onChange={ this.onChange }
+                    placeholder={ 'Desired Amount' }
+                    maxLength={ validateLoanType && (`${  validateLoanType.maximumLoanableAmount}`).length }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'motor-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'motor-icon-forms transactionDate' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    group={ 'motor-group-textbox' }
+                    container={ 'motor-form-icon-container' }
+                    value={ `${ termOfLoan } (${ rateOfLoan } %)` }
+                    onChange={ (termOfLoan, rateOfLoan) =>
+                      this.setState({ termOfLoan, rateOfLoan }) }
+                    onClick={ () =>
+                      this.setState({ showTerm : true }) }
+                    placeholder={ 'Term of Loan' }
+                    type={ 'text' }
+                  />
+                </div>
+              </div>
+              <div className={ 'motor-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'motor-icon-forms personGreyIcon' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    group={ 'motor-group-textbox' }
+                    container={ 'motor-form-icon-container' }
+                    value={ selectedSupplier ? selectedSupplier : null }
+                    onChange={ supplier =>
+                      this.setState({ selectedSupplier : supplier }) }
+                    onClick={ () =>
+                      this.setState({ showSupplier : true }) }
+                    placeholder={ 'Supplier Name' }
+                    type={ 'text' }/>
+                </div>
+              </div>
               <GenericButton
-                type = { 'button' }
-                text = { 'continue' }
-                onClick = { () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, file1, file2) }
-                className = { 'motor-submit' } />
+                type={ 'button' }
+                text={ 'continue' }
+                onClick={ () =>
+                  onSubmit(
+                    payeeName,
+                    poaText,
+                    modeOfLoanId,
+                    termId,
+                    amountValue,
+                    selectedSupplier,
+                    file)
+                  }
+                className={ 'motor-submit' } />
             </div>
           </Card>
           {
             showFileUpload &&
-          <Card className = { 'motor-form-preview' }>
+          <Card className={ 'motor-form-preview' }>
             <h4>
               Form Attachments
             </h4>
-            <div className = { 'motor-body' }>
+            <div className={ 'motor-body' }>
             {
               formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
                 <FileUploader
-                   onChange = { this.handleImageChange }
-                   placeholder = {  attachmentsLabel ? attachmentsLabel : 0 }
+                   onChange={ this.handleImageChange }
+                   placeholder={  attachmentsLabel ? attachmentsLabel : 0 }
                 />
               )
             }

@@ -195,7 +195,7 @@ class LoginView extends BaseMVPView {
   }
 }
 const mapStateToProps = state => ({
-  notify : state.notify
+  notify : state.notify.notify
 })
 
 export default ConnectView(connect(mapStateToProps)(LoginView), LoginPresenter)

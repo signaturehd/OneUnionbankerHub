@@ -9,6 +9,7 @@ import { CircularLoader } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
+import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import FormComponent from '../mpl/components/MplLoanFormCardComponent'
 
@@ -25,6 +26,7 @@ class EmergencyLoanFragment extends BaseMVPView {
       enabledLoader : false,
       noticeResponse : null, /* notice response*/
       showNoticeResponseModal : false,
+      showBenefitFeedbackModal : false,
       showNoticeModal : false,
       showConfirmation : false,
     }
@@ -63,7 +65,7 @@ class EmergencyLoanFragment extends BaseMVPView {
     this.setState({ purposeOfAvailment })
   }
 
-  /*Loader*/
+  /* Loader*/
 
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
@@ -87,9 +89,11 @@ class EmergencyLoanFragment extends BaseMVPView {
       formAttachments,
       showConfirmation,
       showNoticeModal,
+      showBenefitFeedbackModal,
       showNoticeResponseModal,
       noticeResponse,
-      response } = this.state
+      response
+    } = this.state
     return (
       <div>
         {
@@ -97,24 +101,33 @@ class EmergencyLoanFragment extends BaseMVPView {
           <NoticeModal
             onClose = { () => this.setState({ showNotice : false })}
             noticeResponse = { noticeResponse }
-            benefitId = { loanType }
+            benefitId = { '1' }
             onDismiss = { (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
         }
+
         {
           showNoticeResponseModal &&
           <ResponseModal
             onClose = { () => {
-              this.setState({ showNoticeResponseModal : false })
-              this.props.history.push('/mybenefits/benefits/loans')
+              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
             }}
-            benefitId = { loanType }
             noticeResponse = { response }
-            onDismiss = { (showNoticeModal, response) =>
-              this.setState({ showNoticeModal, response })  }
           />
         }
+
+        {
+          showBenefitFeedbackModal &&
+          <BenefitFeedbackModal
+            benefitId = { '1' }
+            onClose = { () => {
+              this.props.history.push('/mybenefits/benefits/loans'),
+              this.setState({ showBenefitFeedbackModal : false })
+            }}
+          />
+        }
+
         <div>
           <i
             className = { 'back-arrow' }

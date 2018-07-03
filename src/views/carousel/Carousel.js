@@ -12,7 +12,6 @@ class Carousel extends Component {
   }
 
   render () {
-
     const { onClose } = this.props
 
     return (

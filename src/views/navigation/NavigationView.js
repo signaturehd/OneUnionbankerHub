@@ -25,8 +25,10 @@ import { connect } from 'react-redux'
 import store from '../../store'
 import { NotifyActions } from '../../actions'
 /* Education */
+import EducationAidFragment from '../educationaid/EducationAidFragment'
 import EducationGrantPlanFragment from '../educationgrantplan/EducationGrantPlanFragment'
 import EducationGrantAidFragment from '../educationgrantaid/EducationGrantAidFragment'
+import EducationGroupAidFragment from  '../educationgroupaid/EducationGroupAidFragment'
 /* Medical */
 import DentalReimbursement from '../dentalreimbursement/DentalReimbursementFragment'
 import DentalLoaView from '../dentalloa/DentalLoaFragment'
@@ -39,15 +41,19 @@ import SalaryLoanFragment from '../salaryloan/SalaryLoanFragment'
 import MotorcycleLoanFragment from '../motorcycleloan/MotorcycleLoanFragment'
 /*  MPL Motorcycle */
 import ComputerLoanFragment from '../computerloan/ComputerLoanFragment'
-/*Transaction*/
+/* Bereavement */
+import BereavementFragment from '../bereavement/BereavementFragment'
+/* Transaction*/
 import TransactionApprovalDetailFragment from '../transactiondetails/TransactionApprovalDetailFragment'
 import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
 import CarLeaseNewFragment from '../carlease/CarLeaseNewFragment'
 import CarLeaseOldFragment from '../carlease/CarLeaseOldFragment'
-
+/*Payslip*/
+import Payslip from '../payslip/PayslipFragment'
 import Carousel from '../carousel/Carousel'
-
+/* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
+import ReloginModal from './modal/ReloginModal'
 
 class NavigationView extends BaseMVPView {
   constructor (props) {
@@ -105,6 +111,10 @@ class NavigationView extends BaseMVPView {
     this.setState({ wizard })
   }
 
+  relogin () {
+    this.props.history.push('/')
+  }
+
   render () {
     const {
       displayShow,
@@ -116,16 +126,17 @@ class NavigationView extends BaseMVPView {
       wizard,
       showLogoutModal
     } = this.state
-      const { history } = this.props
+      const { history, login } = this.props
     const style = {
       show: {
           display : displayShow
       }
     }
 
-    let locationPath = history.location.pathname
+    const locationPath = history.location.pathname
     return (
       <div className = { 'navigation-body-div' }>
+        { super.render() }
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
             onClick = { onClick }
@@ -145,12 +156,18 @@ class NavigationView extends BaseMVPView {
             showLogoutModal &&
             <NavigationViewModal
               logout = { () => this.presenter.logout() }
-              onClose = { () => this.setState({showLogoutModal : false}) }
+              onClose = { () => this.setState({ showLogoutModal : false }) }
             />
           }
 
-          { super.render() }
-
+          {
+            login &&
+            <ReloginModal
+              relogin = { () => {
+               this.presenter.relogin()
+              } }
+            />
+          }
               <Drawer >
                 <Switch>
                   <Route exact path = '/' render = {props =>
@@ -162,11 +179,17 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mybenefits/transactions/approval/:id' render = { props =>
                     <TransactionApprovalDetailFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                  <Route path = '/mybenefits/benefits/education/aid' render = { props =>
+                    <EducationAidFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
                   <Route path = '/mybenefits/benefits/education/grantplan' render = { props =>
                     <EducationGrantPlanFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
                   <Route path = '/mybenefits/benefits/education/grantaid' render = { props =>
                     <EducationGrantAidFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                  <Route path = '/mybenefits/benefits/education/groupaid' render = { props =>
+                    <EducationGroupAidFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
                   <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
                     <OpticalFragment { ...props }
@@ -198,8 +221,14 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mybenefits/benefits/loans/computer' render = { props =>
                     <ComputerLoanFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/bereavement/:type' render = { props =>
+                    <BereavementFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits' render = { props =>
                     <BenefitsFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/payslip' render = { props =>
+                    <Payslip { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/faqs' render = { props =>
                     <FaqFragment { ...props }
@@ -237,7 +266,8 @@ NavigationView.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  notify : state.notify
+  login : state.login,
+  notify : state.notify.notify,
 })
 
 

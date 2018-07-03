@@ -27,28 +27,56 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
     this.setState({ enabledLoader : false })
   }
 
-  onGetClicked (resp, subcategory, closePoaModal, openFileUpload, loanType) {
-    const loanId = resp.id ? resp.id : null
-    this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
+  onGetClicked (
+    resp,
+    subcategory,
+    closePoaModal,
+    openFileUpload,
+    loanType) {
+      const loanId = resp.id ? resp.id : null
+      this.props.onSubmit(
+        resp,
+        subcategory,
+        closePoaModal,
+        openFileUpload,
+        loanType)
 
-    this.props.presenter.getMplFormAttachments(
-      resp.name,
-      loanType ? loanType : null)
+      this.props.presenter.getMplFormAttachments(
+        resp.name ? resp.name : '',
+        loanType ? loanType : null)
 
-    this.props.presenter.getMplPurposeOfAvailment(
-      loanType && loanType,
-      loanId,
-      subcategory ? subcategory : null)
+      this.props.presenter.getMplPurposeOfAvailment(
+        loanType && loanType ? loanType : '',
+        loanId ? loanId : '',
+        subcategory ? subcategory : null)
 
-    if ( loanId ) {
+    if (loanId) {
        this.showPurposeLoader()
+         this.props.presenter.getMplPurposeOfAvailment(
+           loanType && loanType ? loanType : '',
+           resp.id ? resp.id : '',
+           subcategory ? subcategory : null)
+         this.props.onSubmit(
+           resp,
+           subcategory,
+           closePoaModal,
+           openFileUpload,
+           loanType)
+       if (subcategory === 2 || subcategory === 3) {
          this.props.presenter.getMplPurposeOfAvailment(loanType && loanType, resp.id, subcategory ? subcategory : null)
-         this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
-       if(subcategory === 2 || subcategory === 3) {
-         this.props.presenter.getMplPurposeOfAvailment(loanType && loanType, resp.id, subcategory ? subcategory : null)
-         this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
+         this.props.onSubmit(
+           resp,
+           subcategory,
+           closePoaModal,
+           openFileUpload,
+           loanType)
        } else {
-         this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
+         this.props.onSubmit(
+           resp,
+           subcategory,
+           closePoaModal,
+           openFileUpload,
+           loanType)
          this.props.onClose()
       }
      } else {
@@ -62,8 +90,8 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
     const { checkedSubCategory, enabledLoader, attachmentsDisplay } = this.state
     return (
       <Modal
-        onClose = { onClose }
-        isDismisable = { true }>
+        onClose={ onClose }
+        isDismisable={ true }>
           <center>
             <h2>
               Purpose of Availment
@@ -73,19 +101,19 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
             {
               enabledLoader ?
                <center>
-                 <CircularLoader show = { this.state.enabledLoader }/>
+                 <CircularLoader show={ this.state.enabledLoader }/>
                </center> :
               poa && poa.category.map((resp, key) =>
               <GenericButton
-                className = { 'motor-modal-button' }
-                key = { key }
-                text = { resp && resp.name }
-                onClick = { () => this.onGetClicked(
-                  resp,
-                  subcategory,
-                  subcategory === 1 ? false : true,
+                className={ 'motor-modal-button' }
+                key={ key ? key : 0}
+                text={ resp && resp.name ? resp && resp.name : '(null)' }
+                onClick={ () => this.onGetClicked(
+                  resp ? resp : '',
+                  subcategory ? subcategory : '',
+                  subcategory !== 1,
                   true,
-                  loanType) }
+                  loanType ? loanType : '') }
                 />
               )
             }
@@ -96,7 +124,7 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
     }
   MotorcyclePurposeOfAvailmentModal.propTypes = {
     onClose : PropTypes.func,
-    poa : PropTypes.object,
+    poa : PropTypes.array,
     onSubmit : PropTypes.func,
   }
 

@@ -2,18 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import './styles/carleaseStyle.css'
-import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
-
-import BrandModal from '../modals/carBrandNewModal/CarBrandNewModal'
-import ModelModal from '../modals/carBrandNewModal/CarModelNewModal'
-import CarPrimaryColorModal from '../modals/carOldModal/CarPrimaryColorOldModal'
-import CarSecondaryColorModal from '../modals/carOldModal/CarSecondaryColorOldModal'
+import { GenericTextBox,  Card, GenericButton, FileUploader, Modal } from '../../../ub-components/'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class CarLeaseOldForm extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       carBrand : '',
@@ -25,7 +20,8 @@ class CarLeaseOldForm extends Component {
       file2: '',
       imagePreviewUrl: '',
       imagePreviewUrl2: '',
-      showFileUpload: true,
+      showFileUpload: false,
+      showTemporaryMessage: true,
     }
      this.onChange = this.onChange.bind(this)
      this.handleImageChange = this.handleImageChange.bind(this)
@@ -34,11 +30,14 @@ class CarLeaseOldForm extends Component {
 
   onChange (e) {
       const re = /^[0-9\.]+$/
-      if (e.target.value == '' ||  re.test(e.target.value)) {
+      if (e.target.value === '' ||  re.test(e.target.value)) {
         this.setState({ amountValue: e.target.value })
       }
    }
 
+   navigate () {
+     this.props.history.push('/mybenefits/benefits/carlease')
+   }
 
    getExtension (filename) {
      const parts = filename.split('/')
@@ -134,15 +133,16 @@ class CarLeaseOldForm extends Component {
       imagePreviewUrl,
       imagePreviewUrl2,
       showFileUpload,
-      response } = this.state
+      response,
+      showTemporaryMessage } = this.state
     const {
       purposeOfAvailment,
       loanType,
       validateLoanType,
       preferredFormData,
       offset,
-      onGetPurposeOfLoan } = this.props
-
+      onGetPurposeOfLoan,
+      history } = this.props
       const styles = {
         image1 : {
           backgroundImage: `url('${imagePreviewUrl}')`,
@@ -168,6 +168,26 @@ class CarLeaseOldForm extends Component {
     return (
       <div className={'carview-container'}>
         <div className={ 'car-grid-column-2' }>
+          {
+            showTemporaryMessage &&
+            <Modal
+              onClose={ () => this.setState({
+                showTemporaryMessage: false  })
+              }
+            >
+            <h1>Coming Soon!</h1>
+            <br />
+            <center>The current feature is not available</center>
+            <center>
+              <br/>
+              <GenericButton
+                text={ 'OK' }
+                onClick={ () =>
+                  this.props.history.push('/mybenefits/benefits/carlease')
+                }/>
+            </center>
+          </Modal>
+          }
           <Card className={ 'car-form-card' }>
             <h4>
               Car Lease Form (Old)
@@ -213,23 +233,23 @@ class CarLeaseOldForm extends Component {
              <FileUploader
                 onChange={ this.handleImageChange }
                 placeholder={ 'Dealer Quotation' }
-                value={ this.state.file.name }
+                value={ file.name }
               />
               <FileUploader
                 onChange={ this.handleImageChange2 }
                 placeholder={ 'Dealer Quotation' }
-                value={ this.state.file2.name }
+                value={ file2.name }
               />
             </div>
             <div className={ 'car-form-card-body' }>
               <div className={ 'optical-footer-left' }>
                 <div className={ 'optical-grid' }>
                   <div className={ 'optical-image-view' }>
-                    {$imagePreview}
+                    { $imagePreview }
                     <div className={ 'optical-image-layer' }></div>
                   </div>
                   <div className={ 'optical-image-view' }>
-                    {$imagePreview2}
+                    { $imagePreview2 }
                     <div className={  'optical-image-layer' }></div>
                   </div>
                 </div>
@@ -238,6 +258,7 @@ class CarLeaseOldForm extends Component {
           </Card>
           }
         </div>
+        }
       </div>
     )
   }

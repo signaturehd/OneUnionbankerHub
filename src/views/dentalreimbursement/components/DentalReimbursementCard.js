@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './styles/dentalReimbursementComponentStyle.css'
 
-import { Modal } from '../modal/DentalReimbursementReviewModal'
-import DentalReimbursementProcedureModal
-  from '../modal/DentalReimbursementProcedureModal'
+import DentalReimbursementProcedureModal from
+  '../modal/DentalReimbursementProcedureModal'
 import ReviewSubmission from '../modal/DentalReimbursementReviewModal'
 
 import {
@@ -78,21 +77,13 @@ submission (e) {
     let validate
     let checknull
     selectedProcedures.map((procedure, key) => {
-      if (procedure.amount > procedure.limit || procedure.amount === 0) {
-        validate = true
-      }
-      if(procedure.amount)
-      {
-        checknull= false
-      }
-      else
-      {
-        checknull=true
-      }
+      validate = procedure.amount > procedure.limit || procedure.amount === 0
+      checknull = !procedure.amount
+
       if (validate || checknull) {
         store.dispatch(NotifyActions.addNotify({
             title : 'Dental Reimbursement',
-            message : 'Please check the amount for procedure  '+procedure.name+'. It should not be zero or empty',
+            message : `Please check the amount for procedure  ${procedure.name}. It should not be zero or empty`,
             type : 'warning',
             duration : 2000
           })
@@ -101,7 +92,6 @@ submission (e) {
         this.setState({ showReviewSubmissionModal : true })
       }
     })
-    
   } else {
     this.setState({ showReviewSubmissionModal : true })
   }

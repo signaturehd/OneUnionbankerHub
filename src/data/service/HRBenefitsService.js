@@ -11,7 +11,7 @@ export default class HRBenefitsService {
   }
 
   logout (token) {
-    return this.apiClient.post('v1/logout', {token})
+    return this.apiClient.post('v1/logout', { token })
   }
 
   otp (otpParam) {
@@ -85,7 +85,7 @@ export default class HRBenefitsService {
     formData.append('dentcert2', dentalReimbursementParam.file2)
     formData.append('body', JSON.stringify(dentalRObject))
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {
-      headers : { token, accountToken }
+      headers : { token }
     })
   }
 
@@ -109,7 +109,7 @@ export default class HRBenefitsService {
     formData.append('opt', opticalParam.optCert)
     formData.append('body', JSON.stringify(opticalObject))
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
-      headers : { token, accountToken }
+      headers : { token }
     })
   }
 
@@ -121,7 +121,8 @@ export default class HRBenefitsService {
         headers: {
            'Content-Type': 'application/json',
            token,
-           referenceId : Math.random().toString(36).substring(7),
+           referenceId : Math.random().toString(36)
+.substring(7),
        }
      })
    }
@@ -237,6 +238,12 @@ export default class HRBenefitsService {
     })
   }
 
+  addBenefitFeedback (token, addBenefitFeedbackParam) {
+    return this.apiClient.post('v1/feedback/ratings', addBenefitFeedbackParam, {
+      headers: { token }
+    })
+  }
+
   getFaqsCategories (token) {
     return this.apiClient.get('v1/faqs/categories', {
       headers: { token }
@@ -298,7 +305,7 @@ export default class HRBenefitsService {
 
   /* Types */
 
-  getMPLTypes (token) {
+  getMplTypes (token) {
     return this.apiClient.get('v1/loans/mpl/types', {
       headers: { token }
     })
@@ -306,13 +313,13 @@ export default class HRBenefitsService {
 
   /* Validate */
 
-  getMPLValidate (token, mplValidateParam) {
+  getMplValidate (token, mplValidateParam) {
     return this.apiClient.get(`v1/loans/mpl/validate?loanId=${ mplValidateParam.loanTypeId }`, {
       headers: { token }
     })
   }
 
-  getMPLFormAttachments (token, mplGetFormParam) {
+  getMplFormAttachments (token, mplGetFormParam) {
     return this.apiClient.get(`v1/attachments?purposeOfLoan=${ mplGetFormParam.formRequesting }&loanId=${ mplGetFormParam.loanId }`, {
         headers: { token }
     })
@@ -326,6 +333,8 @@ export default class HRBenefitsService {
     mplPurposeLoanAddParam) {
     const formData = new FormData()
     const multiLoanBodyObject = {
+      accountNumber,
+      relesingCenter : releasingCenter,
       loan : {
         id : mplPurposeLoanAddParam.loanId,
         purpose : mplPurposeLoanAddParam.purposeOfLoan,
@@ -333,10 +342,8 @@ export default class HRBenefitsService {
         term : mplPurposeLoanAddParam.loanTerm,
         principalAmount : mplPurposeLoanAddParam.principalLoanAmount
       },
-      accountNumber : accountNumber,
       promissoryNoteNumbers : [],
-      relesingCenter : releasingCenter,
-      distributor : "distributorTest",
+      distributor : mplPurposeLoanAddParam.payeeName,
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
@@ -346,22 +353,215 @@ export default class HRBenefitsService {
     })
   }
 
+  addLoanComputerOrMotor (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMotorLoanParam) {
+    const formData = new FormData()
+    const multiLoanBodyObject = {
+      relesingCenter,
+      accountNumber,
+      loan : {
+        id : addMotorLoanParam.loanId,
+        purpose : addMotorLoanParam.purposeOfLoan,
+        mode : addMotorLoanParam.modeOfLoan,
+        term : addMotorLoanParam.loanTerm,
+        principalAmount : addMotorLoanParam.principalLoanAmount,
+        supplierName: addMotorLoanParam.supplierName
+      },
+      promissoryNoteNumbers : [],
+      distributor : addMotorLoanParam.payeeName,
+    }
+    formData.append('uuid', 12345)
+    formData.append('body', JSON.stringify(multiLoanBodyObject))
+    formData.append('MPL-cert', addMotorLoanParam.attachments)
+    return this.apiClient.post('v2/loans/mpl/submit', formData, {
+      headers : { token }
+    })
+  }
+
   getCarValidate (token) {
-    return this.apiClient.get('v1/employees/lease/cars', {
+    return this.apiClient.get('v1/leases/car/validate', {
       headers: { token }
     })
   }
 
-  getCarRequest (token, carRequestParam) {
-    return this.apiClient.post('v1/lease/car/request', carRequestParam, {
-      headers: { token }
-    })
-  }
-
-  getCarLease (token, carRequestParam) {
+  addCarRequest (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    carRequestParam) {
+    const formData = new FormData()
+    const addCarleaseObject = {
+      accountNumber,
+      releasingCenter,
+      brand : carRequestParam.carBrand,
+      model : carRequestParam.carModel,
+      year : carRequestParam.year,
+      leaseMode : carRequestParam.leaseMode,
+      primaryColor : carRequestParam.primaryColor,
+      secondaryColor : carRequestParam.secondaryColor,
+    }
+    formData.append('uuid', 12345)
+    formData.append('body', JSON.stringify(addCarleaseObject))
+    formData.append('attachments', carRequestParam.attachments)
     return this.apiClient.post('v1/leases/car', carRequestParam, {
       headers: { token }
     })
   }
 
+  addCarLeasePayment (token) {
+    return this.apiClient.post('v1/leases/car/payment', {
+      headers: { token }
+    })
+  }
+
+  addCarLeaseConfirmation (token) {
+    return this.apiClient.post('v1/leases/car/confirm', {
+      headers: { token }
+    })
+  }
+
+
+  addEducationAid (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    educationAidParam) {
+    const educationAidObject = {
+      accountNumber,
+      releasingCenter,
+      course : educationAidParam.course,
+      academicYear : educationAidParam.academicYear,
+      semester : educationAidParam.semester,
+      generalWeightedAverage : educationAidParam.gwa,
+      tuitionFee : educationAidParam.tuitionFee,
+      registrationFee : educationAidParam.registrationFee,
+      schoolId : educationAidParam.schoolId,
+      attachments : educationAidParam.attachments
+    }
+    return this.apiClient.post('v1/reimbursements/education/personal/submit', educationAidObject, {
+      headers : { token }
+      })
+  }
+
+  /* validate grant aid */
+  addGrantAid (token, accountToken, accountNumber, releasingCenter, grantAidParam) {
+    const formData = new FormData()
+    const grantAidObject = {
+      grantType : grantAidParam.grantId,
+      accountNumber,
+      releasingCenter
+    }
+    formData.append('uuid', 12345)
+    formData.append('cert', grantAidParam.file)
+    formData.append('body', JSON.stringify(grantAidObject))
+    return this.apiClient.post('v2/grants/education/personal/submit', formData, {
+      headers : { token }
+    })
+  }
+
+  getPayslip (token) {
+    return this.apiClient.get('v1/pay/periods', {
+      headers : { token }
+    })
+  }
+
+  addPayslipSelectedDate (token, payslipParam) {
+    const payslipObject = {
+      id : payslipParam.employeeId,
+      period : payslipParam.date
+    }
+    return this.apiClient.post('v1/pay', payslipObject, {
+      headers : { token }
+    })
+  }
+
+  validateGrantAid (token) {
+    return this.apiClient.get('v1/grants/education/personal/validate', {
+      headers: { token }
+    })
+  }
+
+  /* validate grant plan */
+  validateGrantPlan (token) {
+    return this.apiClient.get('v1/grants/education/dependent/validate', {
+      headers: { token }
+    })
+  }
+
+  addGrantPlan (token, accountToken, accountNumber, releasingCenter, grantPlanParam) {
+    const formData = new FormData()
+    const grantPlanObject = {
+      grantType : grantPlanParam.grantId,
+      accountNumber,
+      releasingCenter
+    }
+    formData.append('uuid', 12345)
+    formData.append('cert', grantPlanParam.file)
+    formData.append('body', JSON.stringify(grantPlanObject))
+    return this.apiClient.post('v2/grants/education/dependent/submit', formData, {
+      headers : { token }
+    })
+  }
+
+  /* Education Aid and Group Aid */
+   validateAid (token) {
+     return this.apiClient.get('v1/reimbursements/education/personal/validate', {
+       headers: { token }
+     })
+   }
+
+   /* validate group aid */
+   validateGroupAid (token) {
+     return this.apiClient.get('v1/reimbursements/education/dependent/validate', {
+       headers: { token }
+     })
+   }
+
+   addGroupAid (token, accountToken, accountNumber, releasingCenter, groupAidParam) {
+     const formData = new FormData()
+     const grantPlanObject = {
+       grantType : groupAidParam.grantId,
+       accountNumber,
+       releasingCenter
+     }
+     formData.append('uuid', 12345)
+     formData.append('cert', groupAidParam.file)
+     formData.append('body', JSON.stringify(grantPlanObject))
+     return this.apiClient.post('v2/reimbursements/education/dependent/submit', formData, {
+       headers : { token }
+     })
+   }
+
+
+  /* bereavement benefit */
+  validateBereavement (token) {
+    return this.apiClient.get('v1/bereavement/validate', {
+      headers: { token }
+    })
+  }
+
+  addBereavement (token, addBereavementParam) {
+    return this.apiClient.post('v1/bereavement/validate', addBereavementParam, {
+      headers: { token }
+    })
+  }
+
+  /* Calamity Assitance */
+  validateCalamityAssistance (token) {
+    return this.apiClient.get('v1/calamity/validate', {
+      headers: { token }
+    })
+  }
+
+  addCalamityAssistance (token, calamityAssistanceParam) {
+    return this.apiClient.get('v1/calamity/availment', {
+      headers: { token }
+    })
+  }
 }

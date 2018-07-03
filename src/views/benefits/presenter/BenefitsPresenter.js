@@ -4,6 +4,10 @@ import ValidateReleasingCenterInteractor from '../../../domain/interactor/rds/Va
 import GetReleasingCentersInteractor from '../../../domain/interactor/rds/GetReleasingCentersInteractor'
 import AddReleasingCenterInteractor from '../../../domain/interactor/rds/AddReleasingCenterInteractor'
 import GetManagersCheckInteractor from '../../../domain/interactor/user/GetManagersCheckInteractor'
+import GetCarValidateInteractor from '../../../domain/interactor/carlease/GetCarNewValidateInteractor'
+
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
 
 export default class BenefitsPresenter {
   constructor (container) {
@@ -24,6 +28,9 @@ export default class BenefitsPresenter {
 
     this.getManagersCheckInteractor =
       new GetManagersCheckInteractor(container.get('HRBenefitsClient'))
+
+    this.getCarValidateInteractor =
+      new GetCarValidateInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -42,24 +49,47 @@ export default class BenefitsPresenter {
       })
   }
 
+  getCarValidate () {
+    this.view.showLoading()
+    this.getCarValidateInteractor.execute()
+    .subscribe(
+      validate => {
+        this.view.hideLoading()
+      }, error => {
+        this.view.navigate()
+        this.view.hideLoading()
+      }
+    )
+  }
+
   setReleasingCenter (releasingCenter) {
     this.addReleasingCenterInteractor.execute(releasingCenter)
   }
 
   validateFabToShow () {
     const isManagersCheck = this.getManagersCheckInteractor.execute()
-    if (isManagersCheck) {
-      const releasingCenter = this.validateReleasingCenterInteractor.execute()
-      if (!releasingCenter) {
-        this.view.isAccountNumber(false)
+    if (isManagersCheck !== null) {
+      if (isManagersCheck) {
+        const releasingCenter = this.validateReleasingCenterInteractor.execute()
+        if (!releasingCenter) {
+          this.view.isAccountNumber(false)
+        }
+        // TODO get chosen releasing center then;
+        // TODO show releasing centers if there's no releasing center chosen
+      } else {
+        const accountNumber = this.getAccountNumberInteractor.execute()
+        if (!accountNumber) {
+          this.view.isAccountNumber(true)
+        }
       }
-      // TODO get chosen releasing center then;
-      // TODO show releasing centers if there's no releasing center chosen
     } else {
-      const accountNumber = this.getAccountNumberInteractor.execute()
-      if (!accountNumber) {
-        this.view.isAccountNumber(true)
-      }
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Benefits',
+          message : 'Theres a Problem Getting your profile',
+          type : 'success',
+          duration : 2000
+        })
+      )
     }
   }
 

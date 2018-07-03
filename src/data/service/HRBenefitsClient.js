@@ -172,7 +172,7 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
       .map(resp => {
         for (const i in resp) {
-          if (resp[i].id == id) {
+          if (resp[i].id === id) {
             return resp[i]
           }
         }
@@ -299,6 +299,11 @@ export default class HRBenefitsClient {
     return this.service.addFeedback(token, addFeedbackParam)
       .pipe(ServiceErrorOperator())
   }
+
+  addBenefitFeedback (token, addBenefitFeedbackParam) {
+    return this.service.addBenefitFeedback(token, addBenefitFeedbackParam)
+      .pipe(ServiceErrorOperator())
+  }
   /* Remarks */
   getRemarks (token, remarksParam) {
     return this.service.getRemarks(token, remarksParam)
@@ -329,18 +334,18 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLTypes (token) {
-    return this.service.getMPLTypes(token)
+  getMplTypes (token) {
+    return this.service.getMplTypes(token)
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLValidate (token, mplValidateParam) {
-    return this.service.getMPLValidate(token, mplValidateParam)
+  getMplValidate (token, mplValidateParam) {
+    return this.service.getMplValidate(token, mplValidateParam)
       .pipe(ServiceErrorOperator())
   }
 
-  getMPLFormAttachments (token, mplGetFormParam) {
-    return this.service.getMPLFormAttachments (token, mplGetFormParam)
+  getMplFormAttachments (token, mplGetFormParam) {
+    return this.service.getMplFormAttachments (token, mplGetFormParam)
       .pipe(ServiceErrorOperator())
   }
 
@@ -358,20 +363,164 @@ export default class HRBenefitsClient {
       mplPurposeLoanAddParam)
       .pipe(ServiceErrorOperator())
   }
+
+  addLoanComputerOrMotor (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMotorLoanParam) {
+    return this.service.addLoanComputerOrMotor(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      addMotorLoanParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   getCarValidate (token) {
     return this.service.getCarValidate(token)
       .pipe(ServiceErrorOperator())
   }
 
-  getCarRequest (token, carRequestParam) {
-    return this.service.getCarRequest(token, carRequestParam, {
-      headers: { token }
-    })
+  addCarRequest (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    carRequestParam) {
+    return this.service.addCarRequest(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      carRequestParam)
+      .pipe(ServiceErrorOperator())
   }
 
-  getCarLease (token, carRequestParam) {
-    return this.service.getCarLease(token, carRequestParam, {
-      headers: { token }
-    })
+  /* Education Grant Aid */
+  addGrantAid (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    grantAidParam) {
+    return this.service.addGrantAid(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      grantAidParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addCarLeasePayment (token) {
+    return this.service.addCarLeasePayment(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addCarLeaseConfirmation (token) {
+    return this.service.addCarLeaseConfirmation(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPayslip (token) {
+    return this.service.getPayslip(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addPayslipSelectedDate (token, payslipParam) {
+    return this.service.addPayslipSelectedDate(token, payslipParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addEducationAid (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    educationAidParam) {
+    return this.service.addEducationAid(
+      token,
+      accountToken,
+      accountNo,
+      releasingCenter,
+      educationAidParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Education Grant Plan */
+  addGrantPlan (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    grantPlanParam) {
+    return this.service.addGrantPlan(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      grantPlanParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateGrantAid (token) {
+    return this.service.validateGrantAid(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateGrantPlan (token) {
+    return this.service.validateGrantPlan(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Education Gorup Aid */
+  addGroupAid (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    groupAidParam) {
+    return this.service.addGroupAid(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      groupAidParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateAid (token) {
+    return this.service.validateAid(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateGroupAid (token) {
+    return this.service.validateGroupAid(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Bereavement */
+  getBereveavementValidate (token) {
+    return this.service.validateBereavement(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addBereavement (token, addBereavementParam) {
+    return this.service.addBereavement(token, addBereavementParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Calamity Assitance */
+  getCalamityAssistanceValidate (token) {
+    return this.service.validateCalamityAssistance(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addCalamityAssistance (token) {
+    return this.service.addCalamityAssistance(token)
+      .pipe(ServiceErrorOperator())
   }
 }

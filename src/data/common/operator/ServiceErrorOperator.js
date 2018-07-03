@@ -6,7 +6,7 @@ import { Observable } from 'rxjs'
 import SessionProvider from '../../provider/SessionProvider'
 
 import store from '../../../store'
-import { NotifyActions } from '../../../actions'
+import { NotifyActions, LoginActions } from '../../../actions'
 
 export default function ServiceErrorOperator () {
   return function ServiceErrorOperatorImpl (source) {
@@ -28,14 +28,7 @@ export default function ServiceErrorOperator () {
           ))
           subscriber.error(new GenericError(body))
         } else if (code === 401) {
-          store.dispatch(NotifyActions.addNotify({
-              title : 'Unauthorize',
-              message : 'Please re log in',
-              type : 'danger',
-              duration : 2000
-            })
-          )
-          // localStorage.clear() // TODO update this to interactor
+          store.dispatch(LoginActions.showReloginModal(true))
           subscriber.error(new ForbiddenError())
         } else {
           store.dispatch(NotifyActions.addNotify({

@@ -1,14 +1,14 @@
 import GetTypesInteractor from '../../../domain/interactor/mpl/GetTypesInteractor'
-import AddLoanInteractor from '../../../domain/interactor/mpl/AddLoanInteractor'
+import AddLoanMotorLoanInteractor from '../../../domain/interactor/mpl/AddLoanMotorLoanInteractor'
 import GetPurposeOfAvailmentInteractor from '../../../domain/interactor/mpl/GetPurposeOfAvailmentInteractor'
 import GetFormAttachmentsInteractor from '../../../domain/interactor/mpl/GetFormAttachmentsInteractor'
 import GetValidateInteractor from '../../../domain/interactor/mpl/GetValidateInteractor'
-
 import mplValidateParam from '../../../domain/param/MplValidateParam'
-import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
+import AddMotorLoanParam from '../../../domain/param/AddMotorLoanParam'
 import mplGetFormParam from '../../../domain/param/MplGetFormParam'
+import GetManagersCheckInteractor from '../../../domain/interactor/user/GetManagersCheckInteractor'
 
-import store from '../../../actions'
+import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
 export default class MotorcycleLoanPresenter {
@@ -19,31 +19,29 @@ export default class MotorcycleLoanPresenter {
     this.getPurposeOfAvailmentInteractor =
       new GetPurposeOfAvailmentInteractor(container.get('HRBenefitsClient'))
 
-    this.addLoanInteractor =
-      new AddLoanInteractor(container.get('HRBenefitsClient'))
+    this.addMotorLoanInteractor =
+      new AddLoanMotorLoanInteractor(container.get('HRBenefitsClient'))
 
     this.getFormAttachmentsInteractor =
       new GetFormAttachmentsInteractor(container.get('HRBenefitsClient'))
 
     this.getValidateInteractor =
       new GetValidateInteractor(container.get('HRBenefitsClient'))
+
+    this.getManagersCheckInteractor =
+      new GetManagersCheckInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
   }
 
-  /*Types*/
+  /* Types*/
 
   getMplTypes () {
     this.getTypesInteractor.execute()
-      .subscribe(
-        data => {
-          this.view.showTypes(data)
-        },
-        error => {
-        }
-      )
+      .do(data => this.view.showTypes(data))
+      .subscribe()
     }
 
   /* Purpose of Availment */
@@ -57,21 +55,23 @@ export default class MotorcycleLoanPresenter {
       purposeOfLoan,
       subcategoryLevel }
     )
-      .subscribe(
-        data => {
-          this.view.showPurposeOfAvailment(data)
-        }
-      )
+    .do(data => this.view.showPurposeOfAvailment(data))
+      .subscribe()
     }
 
   getMplValidate (loanTypeId) {
-    this.view.showCircularLoader()
+    this.view.hideCircularLoader()
     this.getValidateInteractor.execute(mplValidateParam(loanTypeId))
-      .do(os => this.view.showOffset(os && os.offset))
-      .do(data => this.view.showValidate(data))
-      .do(data => this.view.hideCircularLoader(),
-          data => this.view.hideCircularLoader())
-      .subscribe()
+      .subscribe(
+        data => {
+          this.view.showOffset(os && os.offset)
+          this.view.showValidate(data)
+          this.view.hideCircularLoader()
+        },
+        error => {
+          this.view.navigate()
+        }
+      )
     }
 
   getMplFormAttachments (formRequesting, loanId) {
@@ -80,47 +80,58 @@ export default class MotorcycleLoanPresenter {
       .subscribe()
     }
 
-  /* add Loa salary, housing assistance, emergency*/
-  addLoan (
+  /* add motorloan or computer loan salary*/
+  addLoanComputerOrMotor (
+    payeeName,
     loanId,
     purposeOfLoan,
     modeOfLoan,
     loanTerm,
     principalLoanAmount,
+    selectedSupplier,
     attachments) {
     this.view.showCircularLoader()
-    this.addLoanInteractor.execute(mplPurposeLoanAddParam(
+    this.addMotorLoanInteractor.execute(AddMotorLoanParam(
+      payeeName,
       loanId,
       purposeOfLoan,
       modeOfLoan,
       loanTerm,
       principalLoanAmount,
+      selectedSupplier,
       attachments
       )
     )
-      .subscribe(
-        data => {
-          this.view.hideCircularLoader()
-          this.view.noticeOfUndertaking(data)
-            store.dispatch(NotifyActions.addNotify({
-              title: 'Successfully',
-              message : data.message,
-              type : 'success',
-              duration : 2000
-            }
-          )
-        )
+    .subscribe(
+      data => {
+        this.view.hideCircularLoader()
+        this.view.noticeOfUndertaking(data)
       },
       error => {
          this.view.hideCircularLoader()
-           store.dispatch(NotifyActions.addNotify({
-             title: 'Warning',
-             message : error.message,
-             type : 'warning',
-             duration : 2000
-           })
-          )
+         this.view.noticeResponse(error)
         }
       )
+    }
+
+    isManagersCheck () {
+      const isManagersCheck = this.getManagersCheckInteractor.execute()
+      if (isManagersCheck !== null) {
+        if (isManagersCheck) {
+          this.view.isManagersCheck('Dealer Name')
+          // TODO get chosen releasing center then;
+          // TODO show releasing centers if there's no releasing center chosen
+        } else {
+          this.view.isManagersCheck('Payee Name')
+        }
+      } else {
+        store.dispatch(NotifyActions.addNotify({
+            title: 'Benefits',
+            message : 'Theres a Problem Getting your profile',
+            type : 'success',
+            duration : 2000
+          })
+        )
+      }
     }
   }

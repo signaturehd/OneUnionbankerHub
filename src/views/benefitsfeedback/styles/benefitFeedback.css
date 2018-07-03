@@ -1,0 +1,12 @@
+.benefit-feedback-actions-grid {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.benefit-feedback {
+  padding:5%;
+}
+
+.default-feedback-textarea {
+  width: 100%;
+}

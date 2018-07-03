@@ -10,7 +10,7 @@ class NoticeResponseModal extends Component {
   }
 
   render () {
-    const { noticeResponse, onClose, onDismiss } = this.props
+    const { noticeResponse, onClose } = this.props
     return (
       <Modal
         isDismissable = { false }
@@ -21,7 +21,10 @@ class NoticeResponseModal extends Component {
           noticeResponse.message
         }
         <br/>
+        <br/>
         <center><GenericButton text = {'OK'} onClick = { onClose }/></center>
+        <br/>
+        <br/>
       </Modal>
     )
   }

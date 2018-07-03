@@ -8,6 +8,7 @@ import DentalLoaBranchModal from './modal/DentalLoaBranchModal'
 import DentalLoaDependentModal from './modal/DentalLoaDependentModal'
 import DentalLoaProcedureModal from './modal/DentalLoaProcedureModal'
 import Notice from '../notice/Notice'
+import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 import ResponseModal from '../notice/NoticeResponseModal'
 import { CircularLoader, Modal } from '../../ub-components/'
 import './styles/dentalloa.css'
@@ -24,6 +25,7 @@ class DentalLoaView extends BaseMVPView {
       showProcedureModal : false,/* First Modal for Procedures*/
       showRecipientModal : false, /* Display Recipient Modal*/
       showHealthwayBranchModal : false, /* Display HealthWayBranch Modal*/
+      showBenefitFeedbackModal : false,
       showNoticeResponseModal: false, /* Display Notice Response Modal*/
       showNoticeResponseApprovalModal : false,/* Display Notice Approval Response Modal*/
       recipient : null,
@@ -64,7 +66,7 @@ class DentalLoaView extends BaseMVPView {
       selectedProcedures.map(resp =>
         procedures.push({ id : resp.id.toString() })
       )
-    if(
+    if (
       recipient === null ||
       branch === null ||
       date === null ||
@@ -105,6 +107,7 @@ class DentalLoaView extends BaseMVPView {
       showRecipientModal,
       showHealthwayBranchModal,
       showNoticeResponseModal,
+      showBenefitFeedbackModal,
       showNoticeResponseApprovalModal,
       recipient,
       procedures,
@@ -135,15 +138,24 @@ class DentalLoaView extends BaseMVPView {
           showNoticeResponseApprovalModal &&
           <ResponseModal
             onClose = { () => {
-              this.setState({ showNoticeResponseModal : false })
-              this.props.history.push('/mybenefits/benefits/medical')
+              this.setState({ showNoticeResponseModal : false,  showBenefitFeedbackModal : true })
             }}
             noticeResponse = { response }
-            benefitId = { '7' }
-            onDismiss = { (showNoticeResponseApprovalModal, response) =>
-              this.setState({ showNoticeResponseApprovalModal, response })  }
           />
         }
+
+        {
+          showBenefitFeedbackModal &&
+          <BenefitFeedbackModal
+            benefitId = { '7' }
+            onClose = { () => {
+              this.props.history.push('/mybenfits/benefits/medical'),
+              this.setState({ showBenefitFeedbackModal : false })
+            }}
+          />
+        }
+
+
         {
           showRecipientModal &&
           <DentalLoaDependentModal

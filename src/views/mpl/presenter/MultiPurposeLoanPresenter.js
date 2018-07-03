@@ -3,13 +3,12 @@ import AddLoanInteractor from '../../../domain/interactor/mpl/AddLoanInteractor'
 import GetPurposeOfAvailmentInteractor from '../../../domain/interactor/mpl/GetPurposeOfAvailmentInteractor'
 import GetFormAttachmentsInteractor from '../../../domain/interactor/mpl/GetFormAttachmentsInteractor'
 import GetValidateInteractor from '../../../domain/interactor/mpl/GetValidateInteractor'
-import CarNewValidateInteractor from '../../../domain/interactor/mpl/CarNewValidateInteractor'
-
+import GetInformationInteractor from '../../../domain/interactor/user/GetInformationInteractor'
 import mplValidateParam from '../../../domain/param/MplValidateParam'
 import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
 import mplGetFormParam from '../../../domain/param/MplGetFormParam'
 
-import store from '../../../actions'
+import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
 export default class MultiPurposeLoanPresenter {
@@ -29,15 +28,15 @@ export default class MultiPurposeLoanPresenter {
     this.getValidateInteractor =
       new GetValidateInteractor(container.get('HRBenefitsClient'))
 
-    this.carNewValidateInteractor =
-      new CarNewValidateInteractor(container.get('HRBenefitsClient'))
+    this.getInformationInteractor =
+      new GetInformationInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
   }
 
-  /*Types*/
+  /* Types*/
 
   getMplTypes () {
     this.getTypesInteractor.execute()
@@ -82,8 +81,7 @@ export default class MultiPurposeLoanPresenter {
         } // create instance of "New Loan"
 
         offsetLoan.offset ?
-        offsetLoan.offset.push(modeOfLoanStatic)
-        :
+        offsetLoan.offset.push(modeOfLoanStatic)        :
         offsetLoan.offset.push(modeOfLoan) // add the New Loan to the offsets option
 
         return offsetLoan
@@ -98,14 +96,6 @@ export default class MultiPurposeLoanPresenter {
           this.view.showErrorMessage(error && error.message)
         }
       )
-    }
-  getCarValidate () {
-    this.view.showCircularLoader()
-    this.carNewValidateInteractor.execute()
-      .do(data => this.view.showValidate(data))
-      .do(data => this.view.hideCircularLoader(),
-          data => this.view.hideCircularLoader())
-      .subscribe()
     }
 
   getMplFormAttachments (formRequesting, loanId) {
@@ -122,8 +112,10 @@ export default class MultiPurposeLoanPresenter {
     loanTerm,
     principalLoanAmount,
     attachments) {
+    const fullname = this.getInformationInteractor.execute().fullname
     this.view.showCircularLoader()
     this.addLoanInteractor.execute(mplPurposeLoanAddParam(
+      fullname,
       loanId,
       purposeOfLoan,
       modeOfLoan,
