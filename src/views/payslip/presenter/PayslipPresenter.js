@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs'
+
 import GetPayslipInteractor from '../../../domain/interactor/payslip/GetPayslipInteractor'
 import AddSelectedDateInteractor from '../../../domain/interactor/payslip/AddSelectedDateInteractor'
 import GetInformationInteractor from '../../../domain/interactor/user/GetInformationInteractor'
@@ -17,6 +19,7 @@ export default class PayslipPresenter {
     this.getInformationInteractor =
       new GetInformationInteractor(container.get('HRBenefitsClient'))
 
+    this.getPdf = container.get('FileClient')
   }
 
   setView (view) {
@@ -25,7 +28,6 @@ export default class PayslipPresenter {
 
    getPayslip () {
     this.view.showLoading()
-
     this.getPayslipInteractor.execute()
       .subscribe(payslip => {
         this.view.showPayslipList(payslip)
@@ -37,14 +39,14 @@ export default class PayslipPresenter {
 
    addPayslipSelectedDate (employeeId, date) {
     this.view.showLoading()
-
     this.addSelectedDateInteractor.execute(PayslipParam(employeeId, date))
       .subscribe(payslip => {
-        this.view.getSelectedDate(payslip)
-        this.view.hideLoading()
-     }, e => {
-      this.view.hideLoading()
-    })
+          console.log(payslip)
+          this.view.setPdfFile(payslip)
+          this.view.hideLoading()
+        }, e => {
+          this.view.hideLoading()
+      })
    }
 
   getProfile () {

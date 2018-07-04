@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import './styles/payslipModal.css'
-import { Modal, Card, GenericButton } from '../../../ub-components/'
+import { Modal, Card, GenericButton, CircularLoader } from '../../../ub-components/'
 import Feedback from '../../benefitsfeedback/BenefitFeedbackModal'
 
 class PayslipDetailsModal extends Component {
@@ -11,19 +11,33 @@ class PayslipDetailsModal extends Component {
     super(props)
 
     this.state={
-      showFeedback: false
+      showFeedback: false,
+      numPages: null,
+      pageNumber: 1,
     }
   }
 
+  onDocumentLoad (numPagess) {
+     this.setState({ numPages })
+  }
+
   render () {
-    const { showFeedback }=this.state
-    const { payslipResult, onClose, test, showPayslipDetails } = this.props
+    const { showFeedback, pageNumber, numPages }=this.state
+
+    const {
+      pdfFile,
+      onClose,
+      test,
+      showPayslipDetails
+    } = this.props
+
 
     return (
 
       <Modal
         isDismisable = { true }
         onClose = { onClose }
+        width = { 70 }
         showPayslipDetails = { true }
         >
         {
@@ -32,55 +46,33 @@ class PayslipDetailsModal extends Component {
             isDismisable={ true }
             onClose={ () => this.setState({ showFeedback : false }) }/>
         }
-          <Card className={ 'payslip-card-modal' }>
-            <div className={ 'payslip-card-grid' }>
-              <div>
-                <h2>Date</h2>
-              </div>
-              <div>
-                 { test ? test : '(Not Yet Provided)' }
-              </div>
-            </div>
-            <div className={ 'payslip-card-grid' }>
-              <div>
-                <h2>Title</h2>
-              </div>
-              <div>
-                 { test ? test : '(Not Yet Provided)' }
-              </div>
-            </div>
-            <div className={ 'payslip-card-grid' }>
-              <div>
-                <h2>Gross</h2>
-              </div>
-              <div>
-                 { test ? test : '(Not Yet Provided)' }
-              </div>
-            </div>
-            <div className={ 'payslip-card-grid' }>
-              <div>
-                <h2>Deduction</h2>
-              </div>
-              <div>
-                 { test ? test : '(Not Yet Provided)' }
-              </div>
-            </div>
-            <div className={ 'payslip-card-grid' }>
-              <div>
-                <h2>Net Pay</h2>
-              </div>
-              <div>
-                 { test ? test : '(Not Yet Provided)' }
-              </div>
-            </div>
+
+        {
+          pdfFile ?
+          <iframe src = {pdfFile}
+            style = {{
+              height: 400,
+              width: '100%'
+            }}
+          >
+          </iframe>
+          :
+          <center>
             <br/>
             <br/>
+              <h3>Please wait...</h3>
+            <br/>
+            <br/>
+              <CircularLoader show = {true} />
+            <br/>
+            <br/>
+          </center>
+        }
             <center>
               <GenericButton
                 text={ 'Report Issue' }
                 onClick={ () => this.setState({ showFeedback : true,   }) }/>
             </center>
-          </Card>
       </Modal>
 
     )

@@ -22,6 +22,7 @@ class PayslipFragment extends BaseMVPView {
       showMessageModal : false,
       employeeId : [],
       payslipResult : [],
+      pdfFile: null,
       showPayslipDetails: false
     }
   }
@@ -52,23 +53,33 @@ class PayslipFragment extends BaseMVPView {
     this.setState({ showPayslipDetails : true })
   }
 
+  setPdfFile (pdfFile) {
+    this.setState({ pdfFile })
+  }
+
   navigate () {
     this.props.history.push('/')
   }
   render () {
-    const { payslipList, employeeId, payslipResult, showPayslipDetails }=this.state
+    const {
+      payslipList,
+      employeeId,
+      payslipResult,
+      showPayslipDetails,
+      pdfFile
+    } = this.state
+
     const { history }=this.props
-    const empId=employeeId && employeeId.employeeNumber
+    const empId = employeeId && employeeId.employeeNumber
 
     return (
       <div className={ 'payslip-container' }>
         { super.render() }
         {
           showPayslipDetails &&
-
             <PayslipDetailsModal
-              payslipResult={ payslipResult }
-              showPayslipDetails={ showPayslipDetails }
+              pdfFile = { pdfFile }
+              showPayslipDetails = { showPayslipDetails }
               onClose={ () => this.setState({ showPayslipDetails: false }) }
             />
         }
@@ -78,7 +89,7 @@ class PayslipFragment extends BaseMVPView {
             payslipList={ payslipList }
             showPayslipDetails={showPayslipDetails}
             onSubmit={ (date) =>
-              this.setState({ showPayslipDetails : true })
+                  {this.selectedDate(empId, date) , this.setState({ showPayslipDetails : true })}
              }
           />
       </div>
