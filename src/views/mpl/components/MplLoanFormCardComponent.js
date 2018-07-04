@@ -33,8 +33,6 @@ class MplFormLoanCardComponent extends Component {
       showFileUpload: false,
     }
      this.onChange = this.onChange.bind(this)
-     this.handleImageChange = this.handleImageChange.bind(this)
-     this.handleImageChange2 = this.handleImageChange2.bind(this)
   }
 
   onChange (e) {
