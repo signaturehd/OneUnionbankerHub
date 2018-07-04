@@ -17,7 +17,6 @@ class CarLeaseOldForm extends Component {
       primaryColor : '',
       secondayeryColor: '',
       file: '',
-      file2: '',
       imagePreviewUrl: '',
       imagePreviewUrl2: '',
       showFileUpload: false,
@@ -83,43 +82,6 @@ class CarLeaseOldForm extends Component {
       }
     }
 
-   handleImageChange2 (e1) {
-     e1.preventDefault()
-     const reader2 = new FileReader()
-     const [file2] = e1.target.files
-     let isValid
-       switch (this.getExtension(file2.type).toLowerCase()) {
-         case 'jpeg' :
-           isValid = true
-           break
-         case 'jpg' :
-           isValid = true
-           break
-         case 'png' :
-           isValid = true
-           break
-         case 'pdf' :
-           isValid = true
-           break
-     }
-       if (isValid) {
-          reader2.onloadend = () => {
-            this.setState({
-              file2,
-              imagePreviewUrl2: reader2.result
-            })
-          }
-          reader2.readAsDataURL(file2)
-       } else {
-         store.dispatch(NotifyActions.addNotify({
-             title : 'File Uploading',
-             message : 'The accepted attachments are JPG/PNG/PDF',
-             type : 'warning',
-             duration : 2000
-           })
-         )
-       }
-     }
   render () {
     const {
       showPurposeOfAvailment,

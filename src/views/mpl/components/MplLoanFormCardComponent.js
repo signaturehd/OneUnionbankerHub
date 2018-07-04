@@ -12,6 +12,7 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class MplFormLoanCardComponent extends Component {
+
   constructor (props) {
     super(props)
     this.state = {
@@ -27,10 +28,8 @@ class MplFormLoanCardComponent extends Component {
       termId: '',
       subCategoryId: '',
       poaId: '',
-      file1: '',
-      file2: '',
+      file: '',
       imagePreviewUrl: '',
-      imagePreviewUrl2: '',
       showFileUpload: false,
     }
      this.onChange = this.onChange.bind(this)
@@ -83,83 +82,7 @@ class MplFormLoanCardComponent extends Component {
      const parts = filename.split('/')
      return parts[parts.length - 1]
    }
-   handleImageChange (e) {
-     e.preventDefault()
 
-     const reader = new FileReader()
-     const [file1] = e.target.files
-     let isValid
-       switch (this.getExtension(file1.type).toLowerCase()) {
-         case 'jpeg' :
-           isValid = true
-           break
-         case 'jpg' :
-           isValid = true
-           break
-         case 'png' :
-           isValid = true
-           break
-         case 'pdf' :
-           isValid = true
-           break
-     }
-
-     if (isValid) {
-        reader.onloadend = () => {
-          this.setState({
-            file1,
-            imagePreviewUrl: reader.result
-          })
-        }
-        reader.readAsDataURL(file1)
-      } else {
-        store.dispatch(NotifyActions.addNotify({
-            title : 'File Uploading',
-            message : 'The accepted attachments are JPG/PNG/PDF',
-            type : 'warning',
-            duration : 2000
-          })
-        )
-      }
-    }
-
-   handleImageChange2 (e1) {
-     e1.preventDefault()
-     const reader2 = new FileReader()
-     const [file2] = e1.target.files
-     let isValid
-       switch (this.getExtension(file2.type).toLowerCase()) {
-         case 'jpeg' :
-           isValid = true
-           break
-         case 'jpg' :
-           isValid = true
-           break
-         case 'png' :
-           isValid = true
-           break
-         case 'pdf' :
-           isValid = true
-           break
-     }
-       if (isValid) {
-          reader2.onloadend = () => {
-            this.setState({
-              file2,
-              imagePreviewUrl2: reader2.result
-            })
-          }
-          reader2.readAsDataURL(file2)
-       } else {
-         store.dispatch(NotifyActions.addNotify({
-             title : 'File Uploading',
-             message : 'The accepted attachments are JPG/PNG/PDF',
-             type : 'warning',
-             duration : 2000
-           })
-         )
-       }
-     }
   render () {
     const {
       showPurposeOfAvailment,
@@ -174,10 +97,8 @@ class MplFormLoanCardComponent extends Component {
       rateOfLoan,
       termId,
       subCategoryId,
-      file2,
-      file1,
+      file,
       imagePreviewUrl,
-      imagePreviewUrl2,
       showFileUpload,
       response } = this.state
     const {
@@ -192,14 +113,6 @@ class MplFormLoanCardComponent extends Component {
     const styles = {
       image1 : {
         backgroundImage: `url('${imagePreviewUrl}')`,
-        width: '-webkit-fill-available',
-        height: '-webkit-fill-available',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'noRepeat',
-      },
-      image2 : {
-        backgroundImage: `url('${imagePreviewUrl2}')`,
         width: '-webkit-fill-available',
         height: '-webkit-fill-available',
         backgroundSize: 'cover',
@@ -319,9 +232,45 @@ class MplFormLoanCardComponent extends Component {
             {
               formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
                 <FileUploader
-                   onChange = { this.handleImageChange }
-                   value = { file1.name }
-                   placeholder = {  attachmentsLabel ? attachmentsLabel : 0 }
+                  accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
+                  value={ file[key].name }
+                  placeholder={ attachments && attachments.name ? attachments.name : '(Not Yet Provided)' }
+                  onChange={
+                    (e) => {
+                      e.preventDefault()
+                      const reader=new FileReader()
+                      const file=e.target.files[key]
+                      let isValid
+                      switch (this.getExtension(file.type).toLowerCase()) {
+                        case 'jpeg' :
+                          isValid=true
+                        case 'jpg' :
+                          isValid=true
+                        case 'png' :
+                          isValid=true
+                        case 'pdf' :
+                          isValid=true
+                      }
+
+                      if (isValid) {
+                        reader.onloadend=() => {
+                          this.setState({
+                            file: file,
+                            imagePrevUrl: reader.result
+                          })
+                        }
+                        reader.readAsDataURL(file)
+                     } else {
+                         store.dispatch(NotifyActions.addNotify({
+                             title : 'File Uploading',
+                             message : 'The accepted attachments are JPG/PNG/PDF',
+                             type : 'warning',
+                             duration : 2000
+                          })
+                        )
+                      }
+                    }
+                  }
                 />
               )
             }

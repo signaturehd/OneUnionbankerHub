@@ -5,11 +5,9 @@ import { Card, GenericButton, CircularLoader } from '../../../../ub-components'
 import './styles/carlease.css'
 
 class CarLeaseFragment extends Component {
+
   constructor (props) {
     super(props)
-    this.state = {
-      carValidate : true
-    }
 
     this.navigate = this.navigate.bind(this)
   }
@@ -23,7 +21,6 @@ class CarLeaseFragment extends Component {
   }
 
   render () {
-    const { carValidate } = this.state
     const { history } = this.props
 
     const benefitsOptions = [{

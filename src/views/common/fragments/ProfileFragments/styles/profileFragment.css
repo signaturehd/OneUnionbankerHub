@@ -1,0 +1,20 @@
+
+.profile-common-card {
+  padding: 25px;
+  position: relative;
+  border-radius: 0px;
+}
+
+.components-view {
+  display: grid;
+  grid-template-columns: .3fr 1fr;
+  margin-bottom: 15px;
+  padding: 20px;
+  border-radius: 0px;
+}
+
+.components-image{
+  width: 50px;
+  height: auto;
+  background-size: cover;
+}
