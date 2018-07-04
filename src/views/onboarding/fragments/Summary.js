@@ -119,6 +119,8 @@ const Summary = props => {
 
         <Skills
         />
+        <FormValues/>
+        
       </div>
     </div>
     <div className={ 'profile-settings-grid-column-mobile' }>

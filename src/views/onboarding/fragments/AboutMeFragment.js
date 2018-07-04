@@ -7,6 +7,11 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import ImgPrevUploader from '../components/ImgPrevUploader'
 
+const adaptFileEventToValue = delegate => e => delegate(e.target.files[0]);
+
+
+
+
 
 const required = value => value ? undefined : 'Required'
 const minLength = min => value =>
@@ -32,26 +37,7 @@ const renderFileUp = ({ input, type, field, value, files, placeholder,meta: { to
   <ImgPrevUploader/>
 )
 
-const adaptFileEventToValue = delegate =>
-  e => delegate(e.target.files[0])
 
-const FileInput = ({
-  input: {
-    value: omitValue,
-  onChange,
-  onBlur,
-  ...inputProps,
-  },
-  meta: omitMeta,
-  ...props,
-}) =>
-  <input
-    onChange={adaptFileEventToValue(onChange)}
-    onBlur={adaptFileEventToValue(onBlur)}
-    type="file"
-    {...inputProps}
-    {...props}
-  />
 
 
 const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (

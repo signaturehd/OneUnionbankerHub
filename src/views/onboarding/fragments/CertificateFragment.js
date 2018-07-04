@@ -42,24 +42,24 @@ const renderDatePicker = ({ input, label, type, className, selected, meta: { tou
         onChange={date => input.onChange(moment(date).format('YYYY/MM/DD'))}
   />
 
-const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
-<div>
-  <div>
-    <form>
-      <h4> Certificates </h4>
-    <div className={ 'general-form-card-body' }>
+  const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
+  <div className={ 'general-form-card-body' }>
+    <center><h4> Certificate </h4></center>
       <GenericButton className={'generic-button'}
         type="button"
         onClick={() => fields.push({})}
-        text= {'Add Certificates'}
+        text= {'Add Certificate'}
       >
       </GenericButton>
-      {(touched || submitFailed) && error && <span>{error}</span>}
-    </div>
-    {fields.map((member, index) => (
-
-      <div key={index}>
-        <br/>
+  <div >
+    <div>
+  <div className={ 'general-form-card-body' }>
+    {(touched || submitFailed) && error && <span>{error}</span>}
+  </div>
+      <form className = 'educ-form-container'>
+      {fields.map((member, index) => (
+        <div key={index}>
+          <br/>
         <GenericButton
           type='button'
           text="Remove Certificate"
@@ -98,6 +98,7 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
       </div>
     ))}
   </form>
+</div>
 </div>
 </div>
 )

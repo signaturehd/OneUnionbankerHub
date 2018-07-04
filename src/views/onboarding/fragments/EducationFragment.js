@@ -7,25 +7,13 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
 const required = value => value ? undefined : 'Required'
-const minLength = min => value =>
-  value && value.length > min ? `Must be ${max} characters or more` : undefined
-const maxLength15 = minLength(0)
+  const minLength = min => value =>
+    value && value.length > min ? `Must be ${max} characters or more` : undefined
+    const maxLength15 = minLength(0)
+
 const specialChar = value =>
   value && !/^([a-zA-Z0-9\s]*)$/i.test(value) ?
   'No Special Characters' : undefined
-
-
-const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
-  <div className = {'container'}>
-    <div className ="group">
-    <label>{label}</label>
-      <input {...input} type={type} placeholder={label} className = {'text'} />
-      {touched && error && <span>{error}</span>}
-      <span className = { 'text-label' }>{ placeholder }</span>
-      <span className ={ 'bar' }></span>
-    </div>
-  </div>
-)
 
 const renderDatePicker = ({ input, label, type, className, selected, meta: { touched, error } }) =>
   <DatePicker
@@ -44,62 +32,52 @@ const renderDatePicker = ({ input, label, type, className, selected, meta: { tou
   />
 
 const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
-
-<div>
-  <div>
-    <form>
-      <h4> Education </h4>
-    <div className={ 'general-form-card-body' }>
+<div >
+  <center><h4> Education </h4></center>
+    <center>
       <GenericButton className={'generic-button'}
-        type="button"
-        onClick={() => fields.push({})}
-        text= {'Add Education'}
-      >
-      </GenericButton>
-      {(touched || submitFailed) && error && <span>{error}</span>}
-    </div>
+      type="button"
+      onClick={() => fields.push({})}
+      text= {'Add Education'}
+    />
+    </center>
+    <br/>
+    <div>
+      <div>
+        <div>
+          {(touched || submitFailed) && error && <span>{error}</span>}
+        </div>
+
+  <form className = 'educ-form-container'>
     {fields.map((member, index) => (
-
-      <div key={index}>
+      <Card key={index}>
         <br/>
-        <GenericButton
-          type='button'
-          text="Remove Education"
-          onClick={() => fields.remove(index)}
-        />
-        <h4>Education #{index + 1}</h4>
-        <Field
-          name={`${member}.school`}
-          type="text"
-          component={renderField}
-          placeholder={ 'School' }
-          validate={[required, specialChar]}
+        <center>
+          <GenericButton
+            type='button'
+            text="Remove Education"
+            onClick={() => fields.remove(index)}
+          />
 
-        />
-        <Field
-          name={`${member}.degree`}
-          type="text"
-          component={renderField}
-          placeholder={ 'Degree' }
-          validate={[required, specialChar]}
+      <h4>Education #{index + 1}</h4></center>
 
+        <GenericTextBox
+          placeholder = {'School'}
+          maxLength={60}
         />
-        <Field
-          name={`${member}.course`}
-          type="text"
-          component={renderField}
-          placeholder={ 'Course' }
-          validate={[required, specialChar]}
-
+        <GenericTextBox
+          placeholder = {'Degree'}
+          maxLength={60}
         />
-        <Field
-          name={`${member}.specialH`}
-          type="text"
-          component={renderField}
-          placeholder={ 'Special Honors' }
-          validate={[required, specialChar]}
-
+        <GenericTextBox
+          placeholder = {'Course'}
+          maxLength={60}
         />
+        <GenericTextBox
+          placeholder = {'Special Honors'}
+          maxLength={60}
+        />
+        <center>
         <div> <h4> Inclusive Dates </h4>
         <label>Start Date</label>
         <Field
@@ -113,7 +91,6 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           showMonthDropdown
           showYearDropdown
           validate={[required]}
-
         />
         <label>End Date</label>
         <Field
@@ -128,27 +105,27 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           showYearDropdown
           validate={[required]}
         />
-      </div>
-      </div>
+          <br/>
+        </div>
+      </center>
+    </Card>
     ))}
   </form>
 
-</div>
+        </div>
+    </div>
 </div>
 )
+
 const FieldArraysForm = props => {
   const { handleSubmit, pristine, reset, submitting } = props
   return (
-    <Card onSubmit={handleSubmit} className={ 'general-form-card' }>
+    <div onSubmit={handleSubmit} >
       <FieldArray name="Education" component={renderMembers} />
 
-    </Card>
+    </div>
   )
 }
-
-
-
-
 export default reduxForm({
   form: 'form', // a unique identifier for this form
   destroyOnUnmount: false, //        <------ preserve form data
