@@ -401,14 +401,15 @@ export default class HRBenefitsService {
       brand : carRequestParam.carBrand,
       model : carRequestParam.carModel,
       year : carRequestParam.year,
-      leaseMode : carRequestParam.leaseMode,
+      insurancePayment: '1',
+      leaseMode : parseInt(carRequestParam.leaseMode),
       primaryColor : carRequestParam.primaryColor,
       secondaryColor : carRequestParam.secondaryColor,
     }
-    formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(addCarleaseObject))
-    formData.append('attachments', carRequestParam.attachments)
-    return this.apiClient.post('v1/leases/car', carRequestParam, {
+    formData.append('uuid', 12345)
+    formData.append('attachment1', carRequestParam.attachments)
+    return this.apiClient.post('v1/leases/car', formData, {
       headers: { token }
     })
   }
