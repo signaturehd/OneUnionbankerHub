@@ -20,13 +20,13 @@ class CertificateFragment extends Component {
       const certificateDefault = [{
         id: 0 ,
         title: 'UP Diliman',
-        imagePath: require('../../../../images/icons/IdCardOrange.png'),
+        imagePath: require('../../../../images/icons/ic_course.png'),
         course: 'Bachelor of Science in Computer Studies',
         year: '2015-2018'
       }, {
         id: 1 ,
         title: 'De Lasalle University',
-        imagePath: require('../../../../images/icons/IdCardOrange.png'),
+        imagePath: require('../../../../images/icons/ic_course.png'),
         course: 'Bachelor of Science in Computer Studies',
         year: '2015-2018'
       }]
