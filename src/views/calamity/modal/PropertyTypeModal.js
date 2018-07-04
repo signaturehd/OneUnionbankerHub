@@ -5,12 +5,10 @@ import { Modal , GenericButton, CircularLoader } from '../../../ub-components/'
 
 import './styles/calamityModalStyle.css'
 
-class CalamityModal extends Component {
+class PropertyTypeModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      titleModal: '',
-      calamityAssistance: [],
       enabledLoader : false
     }
   }
@@ -29,7 +27,7 @@ class CalamityModal extends Component {
   }
 
   render () {
-    const { onClose, tog, titleModal } = this.props
+    const { onClose, tog } = this.props
     const { enabledLoader} = this.state
     return (
       <Modal
@@ -37,7 +35,7 @@ class CalamityModal extends Component {
         isDismisable = { true }>
         <center>
           <h2>
-            Types of Calamity
+            Property Types
           </h2>
         </center>
         <div>
@@ -64,10 +62,10 @@ class CalamityModal extends Component {
   }
 }
 
-CalamityModal.propTypes = {
+PropertyTypeModal.propTypes = {
     onClose : PropTypes.func,
     tog : PropTypes.object,
     onSubmit : PropTypes.func,
 }
 
-export default CalamityModal
+export default PropertyTypeModal

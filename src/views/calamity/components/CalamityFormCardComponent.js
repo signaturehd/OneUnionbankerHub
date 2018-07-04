@@ -6,6 +6,7 @@ import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-
 import './styles/calamityComponentStyle.css'
 
 import CalamityModal from '../modal/CalamityModal'
+import PropertyTypeModal from '../modal/PropertyTypeModal'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -13,14 +14,17 @@ import { NotifyActions } from '../../../actions/'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
+import '../../../../node_modules/react-datepicker/dist/react-datepicker.css'
+
 class CalamityFormCardComponent extends Component {
 
   constructor (props) {
     super (props)
     this.state={
       showModal: false,
+      showPropModal: false,
       calamityType: '',
-      dateOccurrence: '',
+      dateOccurrence: moment(),
       property: '',
       propertyDesc: '',
       propertyType: '',
@@ -28,9 +32,17 @@ class CalamityFormCardComponent extends Component {
       estimatedCost: '',
       fileBC: null,
       fileDP: null,
-      titleModal: ''
+      titleModal: '',
+      propertyTypeValue: [{description: 'types'},{description: 'ttt'}]
     }
     // this.onGetClicked=this.onGetClicked.bind(this)
+  }
+
+  /* store the date */
+  onChange (data) {
+    this.setState({ dateOccurrence: data })
+    this.props.getPreferredDate(
+      data && data.format('DD-MM-YYYY')) /* date format*/
   }
 
   getExtension (filename) {
@@ -46,6 +58,7 @@ class CalamityFormCardComponent extends Component {
 
     const {
       showModal,
+      showPropModal,
       calamityType,
       dateOccurrence,
       property,
@@ -55,7 +68,8 @@ class CalamityFormCardComponent extends Component {
       estimatedCost,
       fileBC,
       fileDP,
-      titleModal
+      titleModal,
+      propertyTypeValue
       }=this.state
 
     return (
@@ -66,9 +80,9 @@ class CalamityFormCardComponent extends Component {
             <CalamityModal
               tog={ calamityAssistance }
               presenter={ presenter }
-              titleModal={ 'titleModal' }
+              titleModal={ titleModal }
               onSubmit={
-                (calamityAssistance) => {
+                (calamityType) => {
                   this.setState({
                     calamityType
                   })
@@ -81,6 +95,26 @@ class CalamityFormCardComponent extends Component {
               }
               />
             }
+
+            {
+              showPropModal &&
+              <PropertyTypeModal
+                tog={ propertyTypeValue }
+                presenter={ presenter }
+                onSubmit={
+                  (propertyType) => {
+                    this.setState({
+                      propertyType
+                    })
+                  }
+                }
+                onClose={
+                  () => {
+                    this.setState({ showPropModal : false })
+                  }
+                }
+                />
+              }
 
             <div></div>
           <Card className={ 'calamity-form-card' }>
@@ -101,19 +135,21 @@ class CalamityFormCardComponent extends Component {
               type={ 'button' }/>
 
             <DatePicker
-              value={ dateOccurrence ? dateOccurrence : '' }
-
-              placeholder={ 'Date of Occurrence' }
-              type={ 'text' }/>
-
+              dateFormat = { 'DD-MM-YYYY' }
+              readOnly
+              selected = { dateOccurrence }
+              onChange = { this.onChange }
+              className = { 'calendar' }
+              calendarClassName = { 'calendarClass' }/>
+                    
             <GenericTextBox
               value={ property ? property : ''}
-              onChange={ (e) => this.setState({ propertyDesc: e.target.value }) }
+              onChange={ (e) => this.setState({ property: e.target.value }) }
               placeholder={ 'Property' }
               type={ 'text' }/>
 
             <GenericTextBox
-              value={ propertyDesc ? property : '' }
+              value={ propertyDesc ? propertyDesc : '' }
               onChange={ (e) => this.setState({ propertyDesc: e.target.value }) }
               placeholder={ 'Property Description' }
               type={ 'text' }/>
@@ -121,7 +157,7 @@ class CalamityFormCardComponent extends Component {
             <GenericTextBox
               value={ propertyType ? propertyType : '' }
               onClick={
-                () => this.setState({ showModal : true, titleModal : 'Property Type' })
+                () => this.setState({ showPropModal : true })
               }
               placeholder={ 'Property Type' }
               onChange={ (e) => this.setState({ propertyType : e.target.value }) }
