@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { Modal, GenericButton } from '../../../ub-components'
 
 class CarDealerQuotation extends Component {
+
   constructor (props) {
       super(props)
   }
