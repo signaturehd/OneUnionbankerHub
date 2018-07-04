@@ -10,7 +10,6 @@ class MplPurposeOfAvailmentModal extends Component {
     super(props)
      this.state = {
         checkedSubCategory : false,
-        purposeOfAvailment : [],
         enabledLoader : false,
         attachmentsDisplay : false,
       }
@@ -69,6 +68,7 @@ class MplPurposeOfAvailmentModal extends Component {
     const { onClose, poa, loanType } = this.props
     const subcategory = poa && poa.subCategoryLvl
     const { checkedSubCategory, enabledLoader, attachmentsDisplay } = this.state
+
     return (
       <Modal
         onClose = { onClose }
@@ -105,7 +105,7 @@ class MplPurposeOfAvailmentModal extends Component {
     }
   MplPurposeOfAvailmentModal.propTypes = {
     onClose : PropTypes.func,
-    poa : PropTypes.object,
+    poa : PropTypes.array,
     onSubmit : PropTypes.func,
   }
 
