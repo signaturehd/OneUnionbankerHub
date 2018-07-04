@@ -49,7 +49,7 @@ class MplFormLoanCardComponent extends Component {
      const term = parseInt(termId)
      const mode = parseInt(modeOfLoanId)
      if (amount >= maximumAmount) {
-       store.dispatch(NotifyActions.addNotify({
+        store.dispatch(NotifyActions.addNotify({
            title : 'Warning' ,
            message : `You are only allowed to loan a maximum amount of ${ maximumAmount } `,
            type : 'warning',
@@ -57,18 +57,36 @@ class MplFormLoanCardComponent extends Component {
          })
        )
      } else {
-       if (
-         id === null ||
-         term === null ||
-         mode === null ||
-         amount === 0 ||
-         poaText === ''
-      ) {
-        store.dispatch(NotifyActions.addNotify({
+       if (mode === null) {
+         store.dispatch(NotifyActions.addNotify({
             title : 'Warning' ,
-            message : 'Please fill all the fields',
+            message : '',
             type : 'warning',
             duration : 2000
+          })
+        )
+      } else if (term === null) {
+          store.dispatch(NotifyActions.addNotify({
+            title : 'Warning' ,
+            message : 'Term & Rates is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (amount === 0) {
+          store.dispatch(NotifyActions.addNotify({
+            title : 'Warning',
+            message : 'Amount field is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (poaText === '') {
+          store.dispatch(NotifyActions.addNotify({
+            title: 'Warning',
+            message : 'Purpose of Availment is required',
+            type: 'warning',
+            duration: 2000
           })
         )
       } else {
@@ -98,7 +116,9 @@ class MplFormLoanCardComponent extends Component {
       file,
       imagePreviewUrl,
       showFileUpload,
-      response } = this.state
+      response
+    } = this.state
+
     const {
       purposeOfAvailment,
       loanType,
@@ -106,7 +126,8 @@ class MplFormLoanCardComponent extends Component {
       preferredFormData,
       offset,
       onGetPurposeOfLoan,
-      formAttachments } = this.props
+      formAttachments
+    } = this.props
 
     const styles = {
       image1 : {
