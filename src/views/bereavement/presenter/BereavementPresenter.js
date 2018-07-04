@@ -25,9 +25,10 @@ export default class BereavementPresenter {
   validateBereavement () {
     this.getBereavementValidateInteractor.execute()
       .subscribe(resp => {
-          console.log(resp)
+          this.view.showValidatedValue(resp)
+          this.view.showDependentsValue(resp.dependents)
+          this.view.hideCircularLoader()
         }, e => {
-          console.error(e)
           this.view.navigate()
       })
   }

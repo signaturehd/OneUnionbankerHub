@@ -22,8 +22,10 @@ import FormComponent from  './components/BereavementFormCardComponent'
 class BereavementFragment extends BaseMVPView {
   constructor (props) {
     super (props)
-    this.state = {
-      enabledLoader : true
+    this.state={
+      enabledLoader : true,
+      validatedBereavement: [],
+      showDepedents: []
     }
   }
 
@@ -40,34 +42,47 @@ class BereavementFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showValidatedValue (validatedBereavement) {
+    this.setState({ validatedBereavement })
+  }
+
+  showDependentsValue (showDepedents) {
+    this.setState({ showDepedents })
+  }
+
   navigate () {
     this.props.history.push('/mybenefits/benefits')
   }
 
   render () {
-    const { enabledLoader } = this.state
-    const { type } = this.props.match.params
+    const { enabledLoader, validatedBereavement, showDepedents }=this.state
+    const { type }=this.props.match.params
 
     return (
       <div>
         <div>
           <i
-            className = { 'back-arrow' }
-            onClick = { this.navigate.bind(this) }>
+            className={ 'back-arrow' }
+            onClick={ this.navigate.bind(this) }>
           </i>
-          <h2 className = { 'header-margin-default' }>
+          <h2 className={ 'header-margin-default' }>
             Bereavement
           </h2>
         </div>
         {
           enabledLoader ?
-          <center className = { 'circular-loader-center' }>
-            <CircularLoader show = { enabledLoader }/>
+          <center className={ 'circular-loader-center' }>
+            <CircularLoader show={ enabledLoader }/>
           </center>
           :
           <FormComponent
-            withDeathCert = { type === "certified" ? true : false  }
-            presenter = { this.presenter }
+            withDeathCert={ type === "certified" ? true : false  }
+            validatedBereavement={ validatedBereavement }
+            showDepedents={ showDepedents }
           />
         }
       </div>
