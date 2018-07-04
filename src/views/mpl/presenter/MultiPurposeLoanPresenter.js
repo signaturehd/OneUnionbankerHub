@@ -44,7 +44,7 @@ export default class MultiPurposeLoanPresenter {
         data => {
           this.view.showTypes(data)
         },
-        error => {
+        error => {  
         }
       )
     }

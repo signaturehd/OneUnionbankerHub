@@ -14,7 +14,7 @@ import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 import FormComponent from '../mpl/components/MplLoanFormCardComponent'
 
 class HousingAssistanceFragment extends BaseMVPView {
-  
+
   constructor (props) {
     super(props)
     this.state = {
