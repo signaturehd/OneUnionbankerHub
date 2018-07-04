@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Provider, connect } from 'react-redux'
-import store from '../store'
 import { Field, FieldArray, reduxForm , getFormValues} from 'redux-form'
 
 import PropTypes from 'prop-types'
@@ -120,7 +119,7 @@ const Summary = props => {
         <Skills
         />
         <FormValues/>
-        
+
       </div>
     </div>
     <div className={ 'profile-settings-grid-column-mobile' }>

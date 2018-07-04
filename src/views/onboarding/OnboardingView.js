@@ -1,15 +1,12 @@
+/* React Dependencies */
 import React, { Component } from 'react'
-import { Provider, connect } from 'react-redux'
-import { getFormValues } from 'redux-form'
-import store from './store'
 import PropTypes from 'prop-types'
 
+// Imports
 import BaseMVPView from '../common/base/BaseMVPView'
-
 import ConnectView from '../../utils/ConnectView'
 
-import Stepper from './components/StepsComponent'
-import './components/styles/boardingStyle.css'
+// Major Fragments
 import Education from './fragments/EducationFragment'
 import Experience from './fragments/ExperienceFragment'
 import Skills from './fragments/SkillsFragment'
@@ -18,66 +15,89 @@ import AboutMe from './fragments/AboutMeFragment'
 import Summary from './fragments/Summary'
 import FormValues from './values'
 
+// Presenter
+import Presenter from './presenter/OnboardingPresenter'
 
-
-const steps = [
-  {
-    label: 'Education',
-    component: <Provider store={store}>
-      <Education onSubmit={'submit'} />
-  </Provider>,
-    exitValidation: false
-  },
-  {
-    label: 'Experience',
-    component: <Provider store={store}>
-      <Experience onSubmit={'To do: add submit function'} />
-  </Provider>,
-  },
-  {
-    label: 'Certificate',
-    component: <Provider store={store}>
-      <Certificate onSubmit={'To do: add submit function'} />
-  </Provider>,
-  },
-  {
-    label: 'Skills',
-    component: <Provider store={store}>
-      <Skills onSubmit={'To do: add submit function'} />
-  </Provider>,
-  },
-  {
-    label: 'About Me',
-    component: <Provider store={store}>
-      <AboutMe onSubmit={'To do: add submit function'} />
-  </Provider>,
-  },
-  {
-    label: 'Profile Summary',
-    component: <Provider store={store}>
-      <Summary />
-              </Provider>,
-  }
-]
+// Other Components
+import Stepper from './components/StepsComponent'
+import './components/styles/boardingStyle.css'
 
 class OnboardingView extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      education : [],
+      experience : [],
+      certificate : [],
+      skills : [],
+      about : [],
+    }
   }
 
   render () {
-    const submit = () => {
-      window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
-    }
+    console.log(this.state)
+    const {
+      education,
+      experience,
+      skills,
+      certificate,
+      about,
+    } = this.state
 
-
+    const steps = [
+      {
+        label: 'Education',
+        component: <Education
+          setEducation = { (education) => this.setState({ education }) }
+          educationForm = { education }
+        />
+      },
+      {
+        label: 'Experience',
+        component: <Experience
+          setExperience = { (experience) => this.setState({ experience }) }
+          experienceForm = { experience }
+        />
+      },
+      {
+        label: 'Certificate',
+        component: <Certificate
+          setCertificate = { (certificate) => this.setState({ certificate }) }
+          certificateForm = { certificate }
+        />
+      },
+      {
+        label: 'Skills',
+        component: <Skills
+          setSkills = { (skills) => this.setState({ skills }) }
+          skillsForm = { skills }
+        />
+      },
+      {
+        label: 'About Me',
+        component: <AboutMe
+          setAbout = { (about) => this.setState({ about }) }
+          aboutForm = { about }
+        />
+      },
+      {
+        label: 'Profile Summary',
+        component: <Summary
+          education = { education }
+          experience = { experience }
+          certificate = { certificate }
+          skills = { skills }
+          about = { about }
+        />
+      }
+    ]
     return (
       <div>
-          <Stepper steps={ steps } onFinish={ submit } />
-
-        </div>
-
+        <Stepper steps = {steps} />
+      </div>
     )
   }
 }
-export default (OnboardingView)
+
+
+export default OnboardingView

@@ -1,118 +1,117 @@
+/* import react */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Field, FieldArray, reduxForm } from 'redux-form'
-import './styles/general.css'
-import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
-import DatePicker from 'react-datepicker'
-import moment from 'moment'
 
-const required = value => value ? undefined : 'Required'
-const minLength = min => value =>
-  value && value.length > min ? `Must be ${max} characters or more` : undefined
-const maxLength15 = minLength(0)
-const specialChar = value =>
-  value && !/^([a-zA-Z0-9\s]*)$/i.test(value) ?
-  'No Special Characters' : undefined
+/* import redux */
+import store from '../../../store'
+import { OnboardingActions } from '../../../actions'
 
+/* Generic Components */
+import {
+  GenericTextBox,
+  Card,
+  GenericButton,
+  FileUploader,
+  CircularLoader
+} from '../../../ub-components/'
 
-const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
-  <div className = {'container'}>
-    <div className ="group">
-    <label>{label}</label>
-      <input {...input} type={type} placeholder={label} className = {'text'} />
-      {touched && error && <span>{error}</span>}
-      <span className = { 'text-label' }>{ placeholder }</span>
-      <span className ={ 'bar' }></span>
-    </div>
-  </div>
-)
+/* import styles */
+import './styles/certificateFragment.css'
 
-const renderDatePicker = ({ input, label, type, className, selected, meta: { touched, error } }) =>
-  <DatePicker
-    {...input}
-        placeholder={'Start Date'}
-        type={type}
-        className={'calendar'}
-        dropdownMode="select"
-        dateForm="YYYY/MM/DD"
-        peekNextMonth
-        showMonthDropdown
-        showYearDropdown
-        selected={input.value ? moment(input.value) : null}
-        onChange={date => input.onChange(moment(date).format('YYYY/MM/DD'))}
-  />
+class CertificateFragment extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      certificateForm : [],
+    }
 
-  const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
-  <div className={ 'general-form-card-body' }>
-    <center><h4> Certificate </h4></center>
-      <GenericButton className={'generic-button'}
-        type="button"
-        onClick={() => fields.push({})}
-        text= {'Add Certificate'}
-      >
-      </GenericButton>
-  <div >
-    <div>
-  <div className={ 'general-form-card-body' }>
-    {(touched || submitFailed) && error && <span>{error}</span>}
-  </div>
-      <form className = 'educ-form-container'>
-      {fields.map((member, index) => (
-        <div key={index}>
-          <br/>
-        <GenericButton
-          type='button'
-          text="Remove Certificate"
-          onClick={() => fields.remove(index)}
-        />
-        <h4>Certificate #{index + 1}</h4>
-        <Field
-          name={`${member}.CertName`}
-          type="text"
-          component={renderField}
-          placeholder={ 'Certificate Name' }
-          validate={[specialChar]}
+    this.addNewCertificate = this.addNewCertificate.bind(this)
+    this.removeCertificate = this.removeCertificate.bind(this)
+  }
 
-        />
-        <Field
-          name={`${member}.issBody`}
-          type="text"
-          component={renderField}
-          placeholder={ 'Issuing Body' }
-          validate={[specialChar]}
+  addNewCertificate () {
+    const { certificateForm } = this.state
+    const certificateObj = {
+      certificateName: '',
+      issuingBody: '',
+      dateIssued: '',
+    }
+    certificateForm.push(certificateObj)
+    this.setState({ certificateForm })
+  }
 
-        />
-        <label>Date Issued</label>
-        <Field
-          placeholder = {'Start Date'}
-          name={`${member}.startDate`}
-          readOnly
-          component={renderDatePicker}
-          className = { 'general-calenar' }
-          peekNextMonth
-          showMonthDropdown
-          showYearDropdown
-          calendarClassName = { 'calendarClass' }
+  removeCertificate (index) {
+    const { certificateForm } = this.state
+    certificateForm.splice(index)
+    this.setState({ certificateForm })
+  }
 
-        />
+  componentWillUnmount () {
+    const { certificateForm } = this.state
+    const { setCertificate } = this.props
+    setCertificate(certificateForm)
+  }
+
+  render () {
+    const { certificateForm } = this.state
+    return(
+      <div>
+        <center>
+          <GenericButton className={'generic-button'}
+            onClick={() => this.addNewExperience()}
+            text= {'Add Experience'}
+          />
+        </center>
+        <br/>
+        <div className = { 'onboarding-certificate-form-container' } >
+          {
+            certificateForm.length !== 0 &&
+            certificateForm.map((certificate, key) =>
+              <Card
+                className = { 'onboarding-certificate-form' }
+                key = {key}
+              >
+                <GenericTextBox
+                  placeholder = {'Certificate Name'}
+                  maxLength={60}
+                  onChange = { e => {
+                      const updatedCertificate = [...certificateForm]
+                      updatedCertificate[key].certificateName = e.target.value
+                      this.setState({ certificateForm: updatedCertificate })
+                    }
+                  }
+                />
+                <GenericTextBox
+                  placeholder = {'Issuing Body'}
+                  maxLength={60}
+                  onChange = { e => {
+                      const updatedCertificate = [...certificateForm]
+                      updatedCertificate[key].issuingBody = e.target.value
+                      this.setState({ certificateForm: updatedCertificate })
+                    }
+                  }
+                />
+                <GenericTextBox
+                  placeholder = {'Date Issued'}
+                  maxLength={60}
+                  onChange = { e => {
+                      const updatedCertificate = [...certificateForm]
+                      updatedCertificate[key].dateIssued = e.target.value
+                      this.setState({ certificateForm: updatedCertificate })
+                    }
+                  }
+                />
+                <GenericButton
+                  onClick = { () => this.removeCertificate(key) }
+                  text= {'Remove Form'}
+                />
+              </Card>
+            )
+          }
+        </div>
       </div>
-    ))}
-  </form>
-</div>
-</div>
-</div>
-)
-const FieldArraysForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props
-  return (
-    <Card onSubmit={handleSubmit} className={ 'general-form-card' }>
-      <FieldArray name="certificate" component={renderMembers} />
-    </Card>
-  )
+    )
+  }
 }
 
-export default reduxForm({
-  form: 'form', // a unique identifier for this form
-  destroyOnUnmount: false, //        <------ preserve form data
-  forceUnregisterOnUnmount: true,
-})(FieldArraysForm)
+export default CertificateFragment
