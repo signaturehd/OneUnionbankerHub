@@ -38,23 +38,11 @@ export default class CarLeasePresenter {
     ))
      .subscribe(
        data => {
-         store.dispatch(NotifyActions.addNotify({
-             title : 'Success',
-             message : data.message,
-             type : 'success',
-             duration : 2000
-             }
-           )
-         )
          this.view.hideCircularLoader()
+         this.view.noticeOfUndertaking(data)
+         this.view.navigate()
        }, error => {
-           store.dispatch(NotifyActions.addNotify({
-             title : 'Warning',
-             message : error.message,
-             type : 'warning',
-             duration : 2000
-           })
-         )
+         this.view.navigate()
          this.view.hideCircularLoader()
        }
      )
