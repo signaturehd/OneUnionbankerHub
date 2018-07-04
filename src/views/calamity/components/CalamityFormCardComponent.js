@@ -6,6 +6,7 @@ import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-
 import './styles/calamityComponentStyle.css'
 
 import CalamityModal from '../modal/CalamityModal'
+import CalamityReviewModal from '../modal/CalamityReviewModal'
 import PropertyTypeModal from '../modal/PropertyTypeModal'
 
 import store from '../../../store'
@@ -14,17 +15,17 @@ import { NotifyActions } from '../../../actions/'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-import '../../../../node_modules/react-datepicker/dist/react-datepicker.css'
-
 class CalamityFormCardComponent extends Component {
 
   constructor (props) {
     super (props)
     this.state={
       showModal: false,
+      showReviewCalamityModal: false,
       showPropModal: false,
+      calamityId: '',
       calamityType: '',
-      dateOccurrence: moment(),
+      preferredDate: '',
       property: '',
       propertyDesc: '',
       propertyType: '',
@@ -32,15 +33,45 @@ class CalamityFormCardComponent extends Component {
       estimatedCost: '',
       fileBC: null,
       fileDP: null,
-      titleModal: '',
-      propertyTypeValue: [{description: 'types'},{description: 'ttt'}]
+      imgPrevBC: null,
+      imgPrevDP: null,
+      propertyTypeValue: [{description: 'Replaceable'},{description: 'Irreplaceable'}]
     }
-    // this.onGetClicked=this.onGetClicked.bind(this)
+    this.onGetClicked=this.onGetClicked.bind(this)
+  }
+
+  onGetClicked (
+    calamityId,
+    calamityType,
+    preferredDate,
+    property,
+    propertyDesc,
+    propertyType,
+    acquisitionValue,
+    estimatedCost,
+    fileBC,
+    fileDP,
+    imgPrevBC,
+    imgPrevDP) {
+      this.props.getFormData(
+        calamityId,
+        calamityType,
+        preferredDate,
+        property,
+        propertyDesc,
+        propertyType,
+        acquisitionValue,
+        estimatedCost,
+        fileBC,
+        fileDP,
+        imgPrevBC,
+        imgPrevDP
+      )
   }
 
   /* store the date */
   onChange (data) {
-    this.setState({ dateOccurrence: data })
+    this.setState({ preferredDate: data })
     this.props.getPreferredDate(
       data && data.format('DD-MM-YYYY')) /* date format*/
   }
@@ -58,9 +89,11 @@ class CalamityFormCardComponent extends Component {
 
     const {
       showModal,
+      showReviewCalamityModal,
       showPropModal,
+      calamityId,
       calamityType,
-      dateOccurrence,
+      preferredDate,
       property,
       propertyDesc,
       propertyType,
@@ -68,7 +101,8 @@ class CalamityFormCardComponent extends Component {
       estimatedCost,
       fileBC,
       fileDP,
-      titleModal,
+      imgPrevBC,
+      imgPrevDP,
       propertyTypeValue
       }=this.state
 
@@ -80,10 +114,10 @@ class CalamityFormCardComponent extends Component {
             <CalamityModal
               tog={ calamityAssistance }
               presenter={ presenter }
-              titleModal={ titleModal }
               onSubmit={
-                (calamityType) => {
+                (calamityId, calamityType) => {
                   this.setState({
+                    calamityId,
                     calamityType
                   })
                 }
@@ -116,6 +150,53 @@ class CalamityFormCardComponent extends Component {
                 />
               }
 
+              {
+                showReviewCalamityModal &&
+                <CalamityReviewModal
+                  calamityId={ calamityId }
+                  calamityType={ calamityType }
+                  preferredDate={ preferredDate }
+                  property={ property }
+                  propertyDesc={ propertyDesc }
+                  propertyType={ propertyType }
+                  acquisitionValue={ acquisitionValue }
+                  estimatedCost={ estimatedCost }
+                  fileBC={ fileBC }
+                  fileDP={ fileDP }
+                  imgPrevBC={ imgPrevBC }
+                  imgPrevDP={ imgPrevDP }
+                  onClose={ () => this.setState({ showReviewEducationModal : false }) }
+                  getFormData={ ()=> this.setState({
+                    calamityId,
+                    calamityType,
+                    preferredDate,
+                    property,
+                    propertyDesc,
+                    propertyType,
+                    acquisitionValue,
+                    estimatedCost,
+                    fileBC,
+                    fileDP,
+                    imgPrevBC,
+                    imgPrevDP })}
+                  onClick={ () => this.onGetClicked(
+                    calamityId,
+                    calamityType,
+                    preferredDate,
+                    property,
+                    propertyDesc,
+                    propertyType,
+                    acquisitionValue,
+                    estimatedCost,
+                    fileBC,
+                    fileDP,
+                    imgPrevBC,
+                    imgPrevDP
+                    )
+                  }
+                />
+              }
+
             <div></div>
           <Card className={ 'calamity-form-card' }>
             <h4>
@@ -134,14 +215,12 @@ class CalamityFormCardComponent extends Component {
               onChange={ (e) => this.setState({ calamityType : e.target.value }) }
               type={ 'button' }/>
 
-            <DatePicker
-              dateFormat = { 'DD-MM-YYYY' }
-              readOnly
-              selected = { dateOccurrence }
-              onChange = { this.onChange }
-              className = { 'calendar' }
-              calendarClassName = { 'calendarClass' }/>
-                    
+              <GenericTextBox
+                value={ preferredDate ? preferredDate : ''}
+                onChange={ (e) => this.setState({ preferredDate: e.target.value }) }
+                placeholder={ 'Date' }
+                type={ 'text' }/>
+
             <GenericTextBox
               value={ property ? property : ''}
               onChange={ (e) => this.setState({ property: e.target.value }) }
@@ -218,6 +297,7 @@ class CalamityFormCardComponent extends Component {
                       reader.onloadend=() => {
                         this.setState({
                           fileBC: file,
+                          imgPrevBC: reader.result
                         })
                       }
                       reader.readAsDataURL(file)
@@ -258,7 +338,8 @@ class CalamityFormCardComponent extends Component {
                     if (isValid) {
                       reader2.onloadend=() => {
                         this.setState({
-                          fileDP: file2
+                          fileDP: file2,
+                          imgPrevDP: reader2.result
                         })
                       }
                       reader2.readAsDataURL(file2)
@@ -278,7 +359,7 @@ class CalamityFormCardComponent extends Component {
               <GenericButton
                 type={ 'button' }
                 text={ 'submit' }
-                onClick={ () => this.setState({ showReviewEducationModal : true }) }
+                onClick={ () => this.setState({ showReviewCalamityModal : true }) }
                 className={ 'calamity-submit' } />
             </div>
           </Card>

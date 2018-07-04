@@ -9,7 +9,6 @@ class CalamityModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      titleModal: '',
       calamityAssistance: [],
       enabledLoader : false
     }
@@ -23,13 +22,13 @@ class CalamityModal extends Component {
     this.setState({ enabledLoader : false })
   }
 
-  onGetClicked (description) {
-    this.props.onSubmit(description)
+  onGetClicked (id, description) {
+    this.props.onSubmit(id, description)
     this.props.onClose()
   }
 
   render () {
-    const { onClose, tog, titleModal } = this.props
+    const { onClose, tog } = this.props
     const { enabledLoader} = this.state
     return (
       <Modal
@@ -53,7 +52,7 @@ class CalamityModal extends Component {
               key = { key }
               text = { resp && resp.description }
               onClick = {
-                () => this.onGetClicked(resp.description)
+                () => this.onGetClicked(resp.id, resp.description)
               }
               />
             )
