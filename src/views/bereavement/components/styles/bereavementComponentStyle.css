@@ -110,11 +110,65 @@
   display: grid;
   grid-template-columns: .15fr 1fr;
 }
+.brv-icon-text-grid-date {
+  display: grid;
+  grid-template-columns: .5fr .5fr .5fr 1fr;
+}
 
 .brv-icon-settings {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 50px;
+  width: 40px;
+  margin-top: 30px;
+  margin-left: 40px;
+  background-repeat: no-repeat;
+}
 
+.brv-container {
+  padding-left: 0%;
+  padding-right: 10%;
+  padding-top: 0%;
 }
 
 .brv-dependents {
-  background-image: url('../../../../images/icon/');
+  background-image: url('../../../../images/icons/ic_deceased_name.png');
+}
+
+.brv-relationship {
+  background-image: url('../../../../images/icons/ic_relationship.png');
+}
+
+.brv-calendar {
+  background-image: url('../../../../images/icons/ic_calendar.png');
+}
+
+.brv-school {
+  background-image: url('../../../../images/icons/ic_school.png');
+}
+
+.brv-address {
+  background-image: url('../../../../images/icons/ic_address.png');
+}
+
+.brv-region {
+  background-image: url('../../../../images/icons/ic_region.png');
+}
+
+.brv-province {
+  background-image: url('../../../../images/icons/ic_location.png');
+}
+
+.brv-city {
+  background-image: url('../../../../images/icons/ic_building.png');
+}
+
+.brv-memorial-park {
+  background-image: url('../../../../images/icons/ic_memorial_park.png');
+}
+
+.brv-file {
+  background-image: url('../../../../images/icons/ic_insert_drive_file_grey_500_18dp.png');
 }

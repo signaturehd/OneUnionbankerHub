@@ -79,10 +79,12 @@ class BereavementFormCardComponent extends Component {
             <div className={'brv-form-card-body '}>
               <div className={ 'brv-icon-text-grid' }>
                 <div>
+                  <br/>
                   <span className={ 'brv-icon-settings brv-dependents' }/>
                 </div>
                 <div>
                   <GenericTextBox
+                    container={ 'brv-container' }
                     value={ dependentsName ? dependentsName : '' }
                     onClick={ () => this.setState({ showDeceasedDependents: true }) }
                     placeholder={ 'Deceased Name' }
@@ -91,18 +93,34 @@ class BereavementFormCardComponent extends Component {
                   />
                 </div>
               </div>
-              <GenericTextBox
-                value={ dependentsRelationship ? dependentsRelationship : '' }
-                placeholder={ 'Relationship' }
-                type={ 'text' }
-                readOnly
-              />
-              <DatePicker
-                value={''}
-                onChange={ () => {} }
-                placeholder={ 'Date of Birth' }
-                type={ 'text' }
-              />
+              <div className={ 'brv-icon-text-grid' }>
+                <div>
+                  <br/>
+                  <span className={ 'brv-icon-settings brv-relationship' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    container={ 'brv-container' }
+                    value={ dependentsRelationship ? dependentsRelationship : '' }
+                    placeholder={ 'Relationship' }
+                    type={ 'text' }
+                    readOnly
+                  />
+                </div>
+              </div>
+              <div className={ 'brv-icon-text-grid-date' }>
+                <div>
+                  <br/>
+                  <span className={ 'brv-icon-settings brv-calendar' }/>
+                </div>
+                <div>
+                <DatePicker
+                  value={''}
+                  onChange={ () => {} }
+                  placeholder={ 'Date of Birth' }
+                />
+                </div>
+              </div>
               <br/>
               <br/>
             </div>
@@ -117,42 +135,94 @@ class BereavementFormCardComponent extends Component {
             Funeral Detail
             </h4>
             <div className={'brv-form-card-body '}>
-              <GenericTextBox
-                value={''}
-                onChange={() => {}}
-                placeholder={ 'Date of Wake' }
-                type={ 'text' }
-              />
-              <GenericTextBox
-                value={''}
-                onChange={() => {}}
-                placeholder={ 'Location' }
-                type={ 'text' }
-              />
-              <GenericTextBox
-                value={''}
-                onChange={() => {}}
-                placeholder={ 'Funeral Home' }
-                type={ 'text' }
-              />
-              <GenericTextBox
-                value={''}
-                onChange={() => {}}
-                placeholder={ 'Address' }
-                type={ 'text' }
-              />
-              <GenericTextBox
-                value={''}
-                onChange={() => {}}
-                placeholder={ 'City' }
-                type={ 'text' }
-              />
-              <GenericTextBox
-                value={''}
-                onChange={() => {}}
-                placeholder={ 'Region' }
-                type={ 'text' }
-              />
+              <div className={ 'brv-icon-text-grid-date' }>
+                <div>
+                  <br/>
+                  <span className={ 'brv-icon-settings brv-calendar' }/>
+                </div>
+                <div>
+                <DatePicker
+                  value={''}
+                  onChange={ () => {} }
+                  placeholder={ 'Date of Wake' }
+                />
+                </div>
+              </div>
+              <div className={ 'brv-icon-text-grid' }>
+                <div>
+                  <br/>
+                  <span className={ 'brv-icon-settings brv-school' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    container={ 'brv-container' }
+                    value={''}
+                    onChange={() => {}}
+                    placeholder={ 'Funeral Home' }
+                    type={ 'text' }
+                  />
+                </div>
+              </div>
+              <div className={ 'brv-icon-text-grid' }>
+                <div>
+                  <br/>
+                  <span className={ 'brv-icon-settings brv-address' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    container={ 'brv-container' }
+                    value={''}
+                    onChange={() => {}}
+                    placeholder={ 'Address' }
+                    type={ 'text' }
+                  />
+                </div>
+              </div>
+              <div className={ 'brv-icon-text-grid' }>
+                <div>
+                  <br/>
+                  <span className={ 'brv-icon-settings brv-region' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    container={ 'brv-container' }
+                    value={''}
+                    onChange={() => {}}
+                    placeholder={ 'Region' }
+                    type={ 'text' }
+                  />
+                </div>
+              </div>
+              <div className={ 'brv-icon-text-grid' }>
+                <div>
+                  <br/>
+                  <span className={ 'brv-icon-settings brv-province' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    container={ 'brv-container' }
+                    value={''}
+                    onChange={() => {}}
+                    placeholder={ 'Province' }
+                    type={ 'text' }
+                  />
+                </div>
+              </div>
+              <div className={ 'brv-icon-text-grid' }>
+                <div>
+                  <br/>
+                  <span className={ 'brv-icon-settings brv-city' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    container={ 'brv-container' }
+                    value={''}
+                    onChange={() => {}}
+                    placeholder={ 'City' }
+                    type={ 'text' }
+                  />
+                </div>
+              </div>
               <br/>
               <br/>
             </div>
@@ -167,36 +237,78 @@ class BereavementFormCardComponent extends Component {
             Internment Detail
             </h4>
             <div className={'brv-form-card-body '}>
-              <DatePicker
-                value={ '' }
-                onChange={ () => {} }
-                placeholder={ 'Date of Internment' }
-              />
-              <GenericTextBox
-                value={''}
-                onChange={() => {}}
-                placeholder={ 'Location of Internment' }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={''}
-                onChange={() => {}}
-                placeholder={ 'Memorial Park' }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={''}
-                onChange={() => {}}
-                placeholder={ 'Address' }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={''}
-                onChange={() => {}}
-                placeholder={ 'City' }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={''}
-                onChange={() => {}}
-                placeholder={ 'Region' }
-                type={ 'text' }/>
+              <div className={ 'brv-icon-text-grid-date' }>
+                <div>
+                  <br/>
+                  <span className={ 'brv-icon-settings brv-calendar' }/>
+                </div>
+                <div>
+                  <DatePicker
+                    container={ 'brv-container' }
+                    value={ '' }
+                    onChange={ () => {} }
+                    placeholder={ 'Date of Internment' }
+                  />
+                </div>
+              </div>
+              <div className={ 'brv-icon-text-grid' }>
+                <div>
+                  <br/>
+                  <span className={ 'brv-icon-settings brv-memorial-park' }/>
+                </div>
+                <div>
+                <GenericTextBox
+                    container={ 'brv-container' }
+                    value={''}
+                    onChange={() => {}}
+                    placeholder={ 'Memorial Park' }
+                    type={ 'text' }
+                  />
+                </div>
+              </div>
+              <div className={ 'brv-icon-text-grid' }>
+                <div>
+                  <br/>
+                  <span className={ 'brv-icon-settings brv-address' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    container={ 'brv-container' }
+                    value={''}
+                    onChange={() => {}}
+                    placeholder={ 'Address' }
+                    type={ 'text' }
+                  />
+                </div>
+              </div>
+              <div className={ 'brv-icon-text-grid' }>
+                <div>
+                  <br/>
+                  <span className={ 'brv-icon-settings brv-region' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    container={ 'brv-container' }
+                    value={''}
+                    onChange={() => {}}
+                    placeholder={ 'Region' }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'brv-icon-text-grid' }>
+                <div>
+                  <br/>
+                  <span className={ 'brv-icon-settings brv-city' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    container={ 'brv-container' }
+                    value={''}
+                    onChange={() => {}}
+                    placeholder={ 'City' }
+                    type={ 'text' }/>
+                </div>
+              </div>
               {
                 !withDeathCert &&
                 <GenericButton
