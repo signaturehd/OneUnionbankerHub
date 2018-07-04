@@ -13,15 +13,16 @@ export default class TransactionPersonalDetailsPresenter {
     this.getTransactionPersonalInteractor =
       new GetTransactionPersonalInteractor(container.get('HRBenefitsClient'))
 
-    this.getTransactionImage = container.get('ImageClient')
+    this.getTransactionImage = container.get('FileClient')
   }
+
   setView (view) {
     this.view = view
   }
 
   getTransactionDetails (id) {
     this.getTransactionDetailsInteractor.execute(GetTransactionParam(id))
-      .do(resp => this.view.getTransactionDetails(resp))
+    .do(resp => this.view.getTransactionDetails(resp))
       .flatMap(resp =>
         Observable.from(resp.details.Attachments)
           .flatMap(attachment =>
@@ -29,12 +30,12 @@ export default class TransactionPersonalDetailsPresenter {
               headers: {
                 token: resp.token,
                 file: attachment.FileName,
-              }
+              },
+              responseType : 'blob'
             }))
           .flatMap(resp =>
             Observable.create(observer => {
               const reader = new FileReader()
-
               reader.onerror = err => observer.error(err)
               reader.onabort = err => observer.error(err)
               reader.onload = () => observer.next(reader.result)

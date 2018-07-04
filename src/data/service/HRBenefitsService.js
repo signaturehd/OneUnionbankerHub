@@ -1,8 +1,8 @@
 
 export default class HRBenefitsService {
-  constructor (apiClient, imageClient) {
+  constructor (apiClient, fileClient) {
     this.apiClient = apiClient
-    this.imageClient = imageClient
+    this.fileClient = fileClient
   }
 
   /* user */
@@ -122,7 +122,7 @@ export default class HRBenefitsService {
            'Content-Type': 'application/json',
            token,
            referenceId : Math.random().toString(36)
-.substring(7),
+            .substring(7),
        }
      })
    }
@@ -478,6 +478,16 @@ export default class HRBenefitsService {
     }
     return this.apiClient.post('v1/pay', payslipObject, {
       headers : { token }
+    })
+  }
+
+  getPdf (token, file) {
+    return this.fileClient.get('v1/uploads?folder=' + file.folder, {
+      headers : {
+        token,
+        file : file.file
+      },
+      responseType : 'blob'
     })
   }
 
