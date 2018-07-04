@@ -105,3 +105,16 @@
 .hr-line {
   width: 50%;
 }
+
+.brv-icon-text-grid {
+  display: grid;
+  grid-template-columns: .15fr 1fr;
+}
+
+.brv-icon-settings {
+
+}
+
+.brv-dependents {
+  background-image: url('../../../../images/icon/');
+}

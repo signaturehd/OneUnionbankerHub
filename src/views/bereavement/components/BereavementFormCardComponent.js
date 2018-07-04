@@ -9,6 +9,7 @@ import BereavementDependentsModal from '../modals/BereavementDependentsModal'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
+import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
 class BereavementFormCardComponent extends Component {
@@ -76,22 +77,29 @@ class BereavementFormCardComponent extends Component {
             Deceased Detail
             </h4>
             <div className={'brv-form-card-body '}>
-              <GenericTextBox
-                value={ dependentsName ? dependentsName : '' }
-                onClick={ () => this.setState({ showDeceasedDependents: true }) }
-                placeholder={ 'Deceased Name' }
-                readOnly
-                type={ 'text' }
-              />
+              <div className={ 'brv-icon-text-grid' }>
+                <div>
+                  <span className={ 'brv-icon-settings brv-dependents' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    value={ dependentsName ? dependentsName : '' }
+                    onClick={ () => this.setState({ showDeceasedDependents: true }) }
+                    placeholder={ 'Deceased Name' }
+                    readOnly
+                    type={ 'text' }
+                  />
+                </div>
+              </div>
               <GenericTextBox
                 value={ dependentsRelationship ? dependentsRelationship : '' }
                 placeholder={ 'Relationship' }
                 type={ 'text' }
                 readOnly
               />
-              <GenericTextBox
+              <DatePicker
                 value={''}
-                onChange={() => {}}
+                onChange={ () => {} }
                 placeholder={ 'Date of Birth' }
                 type={ 'text' }
               />
@@ -159,11 +167,11 @@ class BereavementFormCardComponent extends Component {
             Internment Detail
             </h4>
             <div className={'brv-form-card-body '}>
-              <GenericTextBox
-                value={''}
-                onChange={() => {}}
+              <DatePicker
+                value={ '' }
+                onChange={ () => {} }
                 placeholder={ 'Date of Internment' }
-                type={ 'text' }/>
+              />
               <GenericTextBox
                 value={''}
                 onChange={() => {}}
