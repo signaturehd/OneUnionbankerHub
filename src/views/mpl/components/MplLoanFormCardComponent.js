@@ -49,7 +49,7 @@ class MplFormLoanCardComponent extends Component {
      const term = parseInt(termId)
      const mode = parseInt(modeOfLoanId)
      if (amount >= maximumAmount) {
-       store.dispatch(NotifyActions.addNotify({
+        store.dispatch(NotifyActions.addNotify({
            title : 'Warning' ,
            message : `You are only allowed to loan a maximum amount of ${ maximumAmount } `,
            type : 'warning',
@@ -57,18 +57,36 @@ class MplFormLoanCardComponent extends Component {
          })
        )
      } else {
-       if (
-         id === null ||
-         term === null ||
-         mode === null ||
-         amount === 0 ||
-         poaText === ''
-      ) {
-        store.dispatch(NotifyActions.addNotify({
+       if (mode === null) {
+         store.dispatch(NotifyActions.addNotify({
             title : 'Warning' ,
-            message : 'Please fill all the fields',
+            message : '',
             type : 'warning',
             duration : 2000
+          })
+        )
+      } else if (term === null) {
+          store.dispatch(NotifyActions.addNotify({
+            title : 'Warning' ,
+            message : 'Term & Rates is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (amount === 0) {
+          store.dispatch(NotifyActions.addNotify({
+            title : 'Warning',
+            message : 'Amount field is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (poaText === '') {
+          store.dispatch(NotifyActions.addNotify({
+            title: 'Warning',
+            message : 'Purpose of Availment is required',
+            type: 'warning',
+            duration: 2000
           })
         )
       } else {
@@ -98,7 +116,9 @@ class MplFormLoanCardComponent extends Component {
       file,
       imagePreviewUrl,
       showFileUpload,
-      response } = this.state
+      response
+    } = this.state
+
     const {
       purposeOfAvailment,
       loanType,
@@ -106,7 +126,8 @@ class MplFormLoanCardComponent extends Component {
       preferredFormData,
       offset,
       onGetPurposeOfLoan,
-      formAttachments } = this.props
+      formAttachments
+    } = this.props
 
     const styles = {
       image1 : {
@@ -119,10 +140,8 @@ class MplFormLoanCardComponent extends Component {
       }
     }
 
-    let $imagePreview1 = null
-    let $imagePreview2 = null
-      $imagePreview1 = (<div style = { styles.image1 }></div>)
-      $imagePreview2 = (<div style = { styles.image2 }></div>)
+    let $imagePreview = null
+      $imagePreview = (<div style = { styles.image1 }></div>)
 
     return (
       <div className = { 'mplview-container' }>
@@ -222,67 +241,67 @@ class MplFormLoanCardComponent extends Component {
           </Card>
           {
             showFileUpload &&
-          <Card className = { 'mpl-form-preview' }>
-            <h4>
-              Form Attachments
-            </h4>
-            <div className = { 'mpl-body' }>
-            {
-              formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
-                <FileUploader
-                  accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
-                  value={ file[key].name }
-                  placeholder={ attachments && attachments.name ? attachments.name : '(Not Yet Provided)' }
-                  onChange={
-                    (e) => {
-                      e.preventDefault()
-                      const reader=new FileReader()
-                      const file=e.target.files[key]
-                      let isValid
-                      switch (this.getExtension(file.type).toLowerCase()) {
-                        case 'jpeg' :
-                          isValid=true
-                        case 'jpg' :
-                          isValid=true
-                        case 'png' :
-                          isValid=true
-                        case 'pdf' :
-                          isValid=true
-                      }
-
-                      if (isValid) {
-                        reader.onloadend=() => {
-                          this.setState({
-                            file: file,
-                            imagePrevUrl: reader.result
-                          })
+            <Card className = { 'mpl-form-preview' }>
+              <h4>
+                Form Attachments
+              </h4>
+              <div className = { 'mpl-body' }>
+              {
+                formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
+                  <FileUploader
+                    accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
+                    value={ file[key] }
+                    placeholder={ attachmentsLabel && attachmentsLabel ? attachmentsLabel : '(Not Yet Provided)' }
+                    onChange={
+                      (e) => {
+                        e.preventDefault()
+                        const reader=new FileReader()
+                        const file=e.target.files[key]
+                        let isValid
+                        switch (this.getExtension(file.type).toLowerCase()) {
+                          case 'jpeg' :
+                            isValid=true
+                          case 'jpg' :
+                            isValid=true
+                          case 'png' :
+                            isValid=true
+                          case 'pdf' :
+                            isValid=true
                         }
-                        reader.readAsDataURL(file)
-                     } else {
-                         store.dispatch(NotifyActions.addNotify({
-                             title : 'File Uploading',
-                             message : 'The accepted attachments are JPG/PNG/PDF',
-                             type : 'warning',
-                             duration : 2000
-                          })
-                        )
+
+                        if (isValid) {
+                          reader.onloadend=() => {
+                            this.setState({
+                              file: file,
+                              imagePrevUrl: reader.result
+                            })
+                          }
+                          reader.readAsDataURL(file)
+                       } else {
+                           store.dispatch(NotifyActions.addNotify({
+                               title : 'File Uploading',
+                               message : 'The accepted attachments are JPG/PNG/PDF',
+                               type : 'warning',
+                               duration : 2000
+                            })
+                          )
+                        }
                       }
                     }
-                  }
-                />
-              )
-            }
-            </div>
-            <div className = 'mpl-main'>
-              <div className = { 'mpl-review' }>
-               <div className = { 'mpl-image-view ' }>
-                 { $imagePreview1 }
+                  />
+                )
+              }
+              </div>
+              <div className = 'mpl-main'>
+                <div className = { 'mpl-review' }>
+                 <div className = { 'mpl-image-view ' }>
+                   { $imagePreview }
+                 </div>
+                 <div className = { 'mpl-image-view ' }>
+                 </div>
                </div>
-               <div className = { 'mpl-image-view ' }>
-               </div>
-             </div>
-            </div>
-          </Card>
+              </div>
+            </Card>
           }
         </div>
       </div>
@@ -291,7 +310,7 @@ class MplFormLoanCardComponent extends Component {
 }
 
 MplFormLoanCardComponent.propTypes = {
-  purposeOfAvailment : PropTypes.object,
+  purposeOfAvailment : PropTypes.array,
   validateLoanType : PropTypes.array,
   loanType : PropTypes.number,
   preferredFormData : PropTypes.func,
