@@ -127,29 +127,7 @@ class EducationGrantAidFormCardComponent extends Component {
                 placeholder = { 'Grant Amount' }
                 type = { 'text' }/>
               <br/>
-              <FileUploader
-                accept="image/gif,image/jpeg,image/jpg,image/png,"
-                value = { file.name }
-                placeholder = { attachment }
-                onChange = {
-                  e => {
-                    e.preventDefault()
-                    const reader = new FileReader()
-                    const file = e.target.files[0]
-                    let isValid
-                    switch (this.getExtension(file.type).toLowerCase()) {
-                      case 'jpeg' :
-                        isValid = true
-                      case 'jpg' :
-                        isValid = true
-                      case 'png' :
-                        isValid = true
-                      case 'pdf' :
-                        isValid = true
-                    }
-                  }
-                }
-                />
+
               {
                 imagePreviewUrl &&
                 attachment &&

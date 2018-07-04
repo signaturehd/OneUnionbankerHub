@@ -13,6 +13,7 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class MotorcycleLoanCardComponent extends Component {
+
   constructor (props) {
     super(props)
     this.state = {
@@ -34,7 +35,6 @@ class MotorcycleLoanCardComponent extends Component {
       file: ''
     }
      this.onChange = this.onChange.bind(this)
-     this.onGetClicked = this.onGetClicked.bind(this)
   }
 
   onChange (e) {
@@ -163,23 +163,29 @@ class MotorcycleLoanCardComponent extends Component {
                       this.setState({ showPurposeOfAvailment : true }) }
                     onChange={ poaText =>
                       this.setState({ poaText }) }
-                    placeholder={ 'Purpose Of Availment' }
-                    type={ 'text' }/>
+                    placeholder={ 'Purpose Of Availment' }/>
                 </div>
               </div>
               <div className={ 'motor-grid-form' }>
+                <div>
+                  <br/>  <br/>
+                  <span className={ 'motor-icon-forms motorEditIcon' }/>
+                </div>
                 <GenericTextBox
                   value={ payeeName }
+                  group={ 'motor-group-textbox' }
+                  container={ 'motor-form-icon-container' }
                   onChange={ e =>
                     this.setState({ payeeName : e.target.value }) }
                   placeholder={ payeeNameLabel && payeeNameLabel }
                   type={ 'text' }
                 />
-                <div>
-                  <br/>  <br/>
-                  <span className={ 'motor-icon-forms motorEditIcon' }/>
-                </div>
-                <div>
+              </div>
+              <div className={ 'motor-grid-form' }>
+                  <div>
+                    <br/>  <br/>
+                    <span className={ 'motor-icon-forms motorEditIcon' }/>
+                  </div>
                   <GenericTextBox
                     group={ 'motor-group-textbox' }
                     container={ 'motor-form-icon-container' }
@@ -190,7 +196,6 @@ class MotorcycleLoanCardComponent extends Component {
                     placeholder={ 'Mode of Loan' }
                     value={ offset ? 'New Loan' : modeOoffsetfLoan }
                     type={ 'text' }/>
-                </div>
               </div>
               <div className={ 'motor-grid-form' }>
                 <div>

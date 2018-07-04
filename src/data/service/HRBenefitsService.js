@@ -546,8 +546,8 @@ export default class HRBenefitsService {
     })
   }
 
-  addBereavement (token, bereavementParam) {
-    return this.apiClient.get('v1/bereavement/validate', {
+  addBereavement (token, addBereavementParam) {
+    return this.apiClient.post('v1/bereavement/validate', addBereavementParam, {
       headers: { token }
     })
   }
