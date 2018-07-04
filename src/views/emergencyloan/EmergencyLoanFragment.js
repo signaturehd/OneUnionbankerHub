@@ -14,6 +14,7 @@ import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 import FormComponent from '../mpl/components/MplLoanFormCardComponent'
 
 class EmergencyLoanFragment extends BaseMVPView {
+
   constructor (props) {
     super(props)
     this.state = {
@@ -94,6 +95,7 @@ class EmergencyLoanFragment extends BaseMVPView {
       noticeResponse,
       response
     } = this.state
+    
     return (
       <div>
         {
