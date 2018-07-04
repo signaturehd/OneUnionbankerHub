@@ -44,7 +44,7 @@ class EducationGroupAidFragment extends BaseMVPView {
   confirmation (showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl) {
     if (grantType === '') {
       store.dispatch(NotifyActions.addNotify({
-          title : 'Education Group - Aid',
+          title : 'Education Group - Plan',
           message : 'Please double check your type of group',
           type : 'warning',
           duration : 2000
@@ -52,7 +52,7 @@ class EducationGroupAidFragment extends BaseMVPView {
       )
     } else if (grantAmount === 0 || grantAmount === '') {
       store.dispatch(NotifyActions.addNotify({
-          title : 'Education Group - Aid',
+          title : 'Education Group - Plan',
           message : 'Please double check your group amount',
           type : 'warning',
           duration : 2000
@@ -60,7 +60,7 @@ class EducationGroupAidFragment extends BaseMVPView {
       )
     } else if (!file) {
       store.dispatch(NotifyActions.addNotify({
-          title : 'Education Group - Aid',
+          title : 'Education Group - Plan',
           message : 'Please double check your attachments',
           type : 'warning',
           duration : 2000
@@ -178,7 +178,7 @@ class EducationGroupAidFragment extends BaseMVPView {
             onClick = { this.navigate.bind(this) }>
           </i>
           <h2 className = { 'header-margin-default' }>
-            Education Group - Aid
+            Education Group - Plan
           </h2>
         </div>
         {
