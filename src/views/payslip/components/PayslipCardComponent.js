@@ -24,7 +24,7 @@ class PayslipComponent extends Component {
               className={ 'payslip-card-component' }
               key={ key }
               onClick={ () =>
-                onSubmit(payslip && payslip.date ? payslip.date : '')
+                onSubmit(payslip && payslip.period ? payslip.period : '')
               } >
               <div className={ 'payslip-grid-card-container' }>
                 <div>

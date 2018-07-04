@@ -13,7 +13,7 @@ export default class TransactionApprovalDetailPresenter {
     this.getTransactionPersonalInteractor =
       new GetTransactionPersonalInteractor(container.get('HRBenefitsClient'))
 
-    this.getTransactionImage = container.get('ImageClient')
+    this.getTransactionImage = container.get('FileClient')
   }
   setView (view) {
     this.view = view
@@ -29,7 +29,8 @@ export default class TransactionApprovalDetailPresenter {
               headers: {
                 token: resp.token,
                 file: attachment.FileName,
-              }
+              },
+              responseType : 'blob'
             }))
           .flatMap(resp =>
             Observable.create(observer => {

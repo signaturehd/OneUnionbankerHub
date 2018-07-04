@@ -7,7 +7,7 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/PayslipPresenter'
 
 import PayslipCardComponent from './components/PayslipCardComponent'
-
+import PayslipDetailsModal from './modals/PayslipDetailsModal'
 import { Card, Modal, GenericButton, GenericSelect } from '../../ub-components'
 
 import './styles/payslip.css'
@@ -22,6 +22,7 @@ class PayslipFragment extends BaseMVPView {
       showMessageModal : false,
       employeeId : [],
       payslipResult : [],
+      pdfFile: null,
       showPayslipDetails: false
     }
   }
@@ -52,30 +53,44 @@ class PayslipFragment extends BaseMVPView {
     this.setState({ showPayslipDetails : true })
   }
 
+  setPdfFile (pdfFile) {
+    this.setState({ pdfFile })
+  }
+
   navigate () {
     this.props.history.push('/')
   }
   render () {
-    const { payslipList, employeeId, payslipResult, showPayslipDetails }=this.state
+    const {
+      payslipList,
+      employeeId,
+      payslipResult,
+      showPayslipDetails,
+      pdfFile
+    } = this.state
+
     const { history }=this.props
-    const empId=employeeId && employeeId.employeeNumber
+    const empId = employeeId && employeeId.employeeNumber
 
     return (
       <div className={ 'payslip-container' }>
         { super.render() }
         {
           showPayslipDetails &&
-
             <PayslipDetailsModal
-              payslipResult={ payslipResult }
+              pdfFile = { pdfFile }
+              showPayslipDetails = { showPayslipDetails }
               onClose={ () => this.setState({ showPayslipDetails: false }) }
             />
         }
 
-        <h2 className={ 'header-margin-default ' }> Payslip </h2>
+        <h2 className={ 'header-margin-default ' }> My Pay </h2>
           <PayslipCardComponent
             payslipList={ payslipList }
-            onSubmit={ (date) => this.selectedDate(empId, date) }
+            showPayslipDetails={showPayslipDetails}
+            onSubmit={ (date) =>
+                  {this.selectedDate(empId, date) , this.setState({ showPayslipDetails : true })}
+             }
           />
       </div>
     )
