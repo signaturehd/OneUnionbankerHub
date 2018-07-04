@@ -18,7 +18,9 @@ class BereavementFormCardComponent extends Component {
     this.state={
       file: '',
       imagePreviewUrl: null,
-      showDeceasedDependents: false
+      showDeceasedDependents: false,
+      dependentsName: '',
+      dependentsRelationship: ''
     }
   }
 
@@ -30,13 +32,16 @@ class BereavementFormCardComponent extends Component {
   render () {
 
     const {
+      showDepedents,
       withDeathCert,
-      showDeceasedDependents
     }=this.props
 
     const {
       file,
-      imagePreviewUrl
+      showDeceasedDependents,
+      imagePreviewUrl,
+      dependentsName,
+      dependentsRelationship
     }=this.state
 
     const styles={
@@ -56,8 +61,14 @@ class BereavementFormCardComponent extends Component {
             showDeceasedDependents &&
             <BereavementDependentsModal
               showDepedents={ showDepedents }
+              chosenDependent={ (dependentsName, dependentsRelationship) =>
+                this.setState({
+                  dependentsName,
+                  dependentsRelationship
+               })
+             }
               onClose={ () => this.setState({ showDeceasedDependents: false }) }
-              />
+            />
           }
           <div></div>
           <Card className={ 'brv-form-card' }>
@@ -66,20 +77,24 @@ class BereavementFormCardComponent extends Component {
             </h4>
             <div className={'brv-form-card-body '}>
               <GenericTextBox
-                value={''}
+                value={ dependentsName ? dependentsName : '' }
                 onClick={ () => this.setState({ showDeceasedDependents: true }) }
                 placeholder={ 'Deceased Name' }
-                type={ 'button' }/>
+                readOnly
+                type={ 'text' }
+              />
               <GenericTextBox
-                value={''}
-                onChange={() => {}}
+                value={ dependentsRelationship ? dependentsRelationship : '' }
                 placeholder={ 'Relationship' }
-                type={ 'text' }/>
+                type={ 'text' }
+                readOnly
+              />
               <GenericTextBox
                 value={''}
                 onChange={() => {}}
                 placeholder={ 'Date of Birth' }
-                type={ 'text' }/>
+                type={ 'text' }
+              />
               <br/>
               <br/>
             </div>
@@ -98,32 +113,38 @@ class BereavementFormCardComponent extends Component {
                 value={''}
                 onChange={() => {}}
                 placeholder={ 'Date of Wake' }
-                type={ 'text' }/>
+                type={ 'text' }
+              />
               <GenericTextBox
                 value={''}
                 onChange={() => {}}
                 placeholder={ 'Location' }
-                type={ 'text' }/>
+                type={ 'text' }
+              />
               <GenericTextBox
                 value={''}
                 onChange={() => {}}
                 placeholder={ 'Funeral Home' }
-                type={ 'text' }/>
+                type={ 'text' }
+              />
               <GenericTextBox
                 value={''}
                 onChange={() => {}}
                 placeholder={ 'Address' }
-                type={ 'text' }/>
+                type={ 'text' }
+              />
               <GenericTextBox
                 value={''}
                 onChange={() => {}}
                 placeholder={ 'City' }
-                type={ 'text' }/>
+                type={ 'text' }
+              />
               <GenericTextBox
                 value={''}
                 onChange={() => {}}
                 placeholder={ 'Region' }
-                type={ 'text' }/>
+                type={ 'text' }
+              />
               <br/>
               <br/>
             </div>
