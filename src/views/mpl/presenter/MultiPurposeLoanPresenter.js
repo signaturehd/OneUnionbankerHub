@@ -44,7 +44,7 @@ export default class MultiPurposeLoanPresenter {
         data => {
           this.view.showTypes(data)
         },
-        error => {
+        error => {  
         }
       )
     }
@@ -85,6 +85,7 @@ export default class MultiPurposeLoanPresenter {
 
         return offsetLoan
       })
+
       .subscribe(
         data =>  {
           this.view.showOffset(data && data.offset)
@@ -92,6 +93,13 @@ export default class MultiPurposeLoanPresenter {
           this.view.hideCircularLoader()
         },
         error => {
+          store.dispatch(NotifyActions.addNotify({
+              title: 'Warning',
+              message: `We're sorry, but right now, you're not yet able to avail of this benefit because if your ${ error.message }`,
+              type: 'warning',
+              duration: 2000
+            })
+          )
           this.view.navigate()
         }
       )
@@ -129,20 +137,13 @@ export default class MultiPurposeLoanPresenter {
       )
       .subscribe(
         data => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Successfully',
-            message : data.message,
-            type : 'success',
-            duration : 2000
-          })
-        )
-        this.view.hideCircularLoader()
-        this.view.noticeOfUndertaking(data)
+          this.view.hideCircularLoader()
+          this.view.noticeOfUndertaking(data)
       },
-      error => {
+      errors => {
          store.dispatch(NotifyActions.addNotify({
-           title: 'Warning',
-           message : error.message,
+           title: 'Sorry',
+           message : errors.message,
            type : 'warning',
            duration : 2000
          })
