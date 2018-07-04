@@ -6,14 +6,6 @@ import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-const required = value => value ? undefined : 'Required'
-  const minLength = min => value =>
-    value && value.length > min ? `Must be ${max} characters or more` : undefined
-    const maxLength15 = minLength(0)
-
-const specialChar = value =>
-  value && !/^([a-zA-Z0-9\s]*)$/i.test(value) ?
-  'No Special Characters' : undefined
 
 const renderDatePicker = ({ input, label, type, className, selected, meta: { touched, error } }) =>
   <DatePicker
@@ -90,7 +82,6 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           peekNextMonth
           showMonthDropdown
           showYearDropdown
-          validate={[required]}
         />
         <label>End Date</label>
         <Field

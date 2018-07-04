@@ -6,26 +6,6 @@ import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-const required = value => value ? undefined : 'Required'
-const minLength = min => value =>
-  value && value.length > min ? `Must be ${max} characters or more` : undefined
-const maxLength15 = minLength(0)
-const specialChar = value =>
-  value && !/^([a-zA-Z0-9\s]*)$/i.test(value) ?
-  'No Special Characters' : undefined
-
-
-const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
-  <div className = {'container'}>
-    <div className ="group">
-    <label>{label}</label>
-      <input {...input} type={type} placeholder={label} className = {'text'} />
-      {touched && error && <span>{error}</span>}
-      <span className = { 'text-label' }>{ placeholder }</span>
-      <span className ={ 'bar' }></span>
-    </div>
-  </div>
-)
 
 const renderDatePicker = ({ input, label, type, className, selected, meta: { touched, error } }) =>
   <DatePicker
@@ -43,45 +23,45 @@ const renderDatePicker = ({ input, label, type, className, selected, meta: { tou
   />
 
   const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
-  <div className={ 'general-form-card-body' }>
+  <div >
     <center><h4> Certificate </h4></center>
-      <GenericButton className={'generic-button'}
+      <center>
+        <GenericButton className={'generic-button'}
         type="button"
         onClick={() => fields.push({})}
         text= {'Add Certificate'}
-      >
-      </GenericButton>
-  <div >
-    <div>
-  <div className={ 'general-form-card-body' }>
-    {(touched || submitFailed) && error && <span>{error}</span>}
-  </div>
-      <form className = 'educ-form-container'>
+      />
+      </center>
+      <br/>
+      <div>
+        <div>
+          <div>
+            {(touched || submitFailed) && error && <span>{error}</span>}
+          </div>
+
+    <form className = 'educ-form-container'>
       {fields.map((member, index) => (
-        <div key={index}>
+        <Card key={index}>
           <br/>
-        <GenericButton
-          type='button'
-          text="Remove Certificate"
-          onClick={() => fields.remove(index)}
-        />
-        <h4>Certificate #{index + 1}</h4>
-        <Field
-          name={`${member}.CertName`}
-          type="text"
-          component={renderField}
-          placeholder={ 'Certificate Name' }
-          validate={[specialChar]}
+          <center>
+            <GenericButton
+              type='button'
+              text="Remove Certificate"
+              onClick={() => fields.remove(index)}
+            />
 
-        />
-        <Field
-          name={`${member}.issBody`}
-          type="text"
-          component={renderField}
-          placeholder={ 'Issuing Body' }
-          validate={[specialChar]}
+        <h4>Certificate #{index + 1}</h4></center>
 
+        <GenericTextBox
+          placeholder = {'Certificate Name'}
+          maxLength={60}
         />
+
+        <GenericTextBox
+          placeholder = {'Issuing Body'}
+          maxLength={60}
+        />
+      <center>
         <label>Date Issued</label>
         <Field
           placeholder = {'Start Date'}
@@ -93,9 +73,10 @@ const renderDatePicker = ({ input, label, type, className, selected, meta: { tou
           showMonthDropdown
           showYearDropdown
           calendarClassName = { 'calendarClass' }
-
         />
-      </div>
+        <br/>
+      </center>
+      </Card>
     ))}
   </form>
 </div>
@@ -105,9 +86,9 @@ const renderDatePicker = ({ input, label, type, className, selected, meta: { tou
 const FieldArraysForm = props => {
   const { handleSubmit, pristine, reset, submitting } = props
   return (
-    <Card onSubmit={handleSubmit} className={ 'general-form-card' }>
+    <div onSubmit={handleSubmit}>
       <FieldArray name="certificate" component={renderMembers} />
-    </Card>
+    </div>
   )
 }
 

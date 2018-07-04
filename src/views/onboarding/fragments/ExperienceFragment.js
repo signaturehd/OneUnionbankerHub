@@ -6,26 +6,6 @@ import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-const required = value => value ? undefined : 'Required'
-const minLength = min => value =>
-  value && value.length > min ? `Must be ${max} characters or more` : undefined
-const maxLength15 = minLength(0)
-const specialChar = value =>
-  value && !/^([a-zA-Z0-9\s]*)$/i.test(value) ?
-  'No Special Characters' : undefined
-
-
-const renderField = ({ input, label, type, meta: { touched, error }, placeholder }, ...custom) => (
-  <div className = {'container'}>
-    <div className ="group">
-    <label>{label}</label>
-      <input {...input} type={type} placeholder={label} className = {'text'} />
-      {touched && error && <span>{error}</span>}
-      <span className = { 'text-label' }>{ placeholder }</span>
-      <span className ={ 'bar' }></span>
-    </div>
-  </div>
-)
 
 const renderDatePicker = ({ input, label, type, className, selected, meta: { touched, error } }) =>
   <DatePicker
@@ -43,62 +23,52 @@ const renderDatePicker = ({ input, label, type, className, selected, meta: { tou
   />
 
 const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
-<div>
-  <div>
-    <form>
-      <h4> Experience </h4>
-    <div className={ 'general-form-card-body' }>
-      <GenericButton className={'generic-button'}
+  <div >
+    <center><h4> Experience </h4></center>
+      <center>
+        <GenericButton className={'generic-button'}
         type="button"
         onClick={() => fields.push({})}
         text= {'Add Experience'}
-      >
-      </GenericButton>
-      {(touched || submitFailed) && error && <span>{error}</span>}
-    </div>
-    {fields.map((member, index) => (
+      />
+      </center>
+      <br/>
+      <div>
+        <div>
+          <div>
+            {(touched || submitFailed) && error && <span>{error}</span>}
+          </div>
 
-      <div key={index}>
-        <br/>
-        <GenericButton
-          type='button'
-          text="Remove Experience"
-          onClick={() => fields.remove(index)}
-        />
-        <h4>Experience #{index + 1}</h4>
-        <Field
-          name={`${member}.compName`}
-          type="text"
-          component={renderField}
-          placeholder={ 'Company Name' }
-          validate={[required, specialChar]}
+    <form className = 'educ-form-container'>
+      {fields.map((member, index) => (
+        <Card key={index}>
+          <br/>
+          <center>
+            <GenericButton
+              type='button'
+              text="Remove Experience"
+              onClick={() => fields.remove(index)}
+            />
 
-        />
-        <Field
-          name={`${member}.address`}
-          type="text"
-          component={renderField}
-          placeholder={ 'Address' }
-          validate={[required]}
+        <h4>Experience #{index + 1}</h4></center>
 
+        <GenericTextBox
+          placeholder = {'Company Name'}
+          maxLength={60}
         />
-        <Field
-          name={`${member}.position`}
-          type="text"
-          component={renderField}
-          placeholder={ 'Position' }
-          validate={[required, specialChar]}
-
+        <GenericTextBox
+          placeholder = {'Company Address'}
+          maxLength={60}
         />
-        <Field
-          name={`${member}.expDescription`}
-          type="text"
-          component={'textarea'}
-          className={ 'experience-textarea' }
-          placeholder={ 'Brief description of duties' }
-          validate={[required, specialChar]}
-
+        <GenericTextBox
+          placeholder = {'Position'}
+          maxLength={60}
         />
+        <textarea
+          className = { 'experience-textarea' }
+          placeholder = { 'Brief Description of duties' }
+        />
+        <center>
         <div> <h4> Inclusive Dates </h4>
         <label>Start Date</label>
         <Field
@@ -124,19 +94,22 @@ const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
           showYearDropdown
           calendarClassName = { 'calendarClass' }
         />
-      </div>
-      </div>
+        <br/>
+        </div>
+        </center>
+      </Card>
     ))}
-  </form>
-</div>
+      </form>
+    </div>
+  </div>
 </div>
 )
 const FieldArraysForm = props => {
   const { handleSubmit, pristine, reset, submitting } = props
   return (
-    <Card onSubmit={handleSubmit} className={ 'general-form-card' }>
+    <div onSubmit={handleSubmit}>
       <FieldArray name="experience" component={renderMembers} />
-    </Card>
+    </div>
   )
 }
 
