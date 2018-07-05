@@ -105,7 +105,10 @@ class MplPurposeOfAvailmentModal extends Component {
     }
   MplPurposeOfAvailmentModal.propTypes = {
     onClose : PropTypes.func,
-    poa : PropTypes.array,
+    poa : PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array
+    ]),
     onSubmit : PropTypes.func,
   }
 
