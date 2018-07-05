@@ -28,6 +28,8 @@ class EducationAidFormCardComponent extends Component {
       schoolID: '',
       courseText: '',
       academicYearText: '',
+      ayFrom: '',
+      ayTo: '',
       semesterText: '',
       totalReimbursableAmount: '',
       totalReimbursableAmountText: '',
@@ -117,6 +119,8 @@ class EducationAidFormCardComponent extends Component {
       schoolID,
       courseText,
       academicYearText,
+      ayFrom,
+      ayTo,
       semesterText,
       gwaText,
       totalReimbursableAmount,
@@ -130,7 +134,32 @@ class EducationAidFormCardComponent extends Component {
       computations
       }=this.state
 
+    const academicyear = ayFrom + " - " + ayTo
     const resultTotalFee=tuitionFeeText && registrationFeeText ? parseFloat(tuitionFeeText) + parseFloat(registrationFeeText) : 0.00
+
+    const styles = {
+      image1 : {
+        backgroundImage: `url('${imagePrevOR}')`,
+        width : 'auto',
+        height : '60px',
+        backgroundSize : 'contain',
+        backgroundRepeat : 'no-repeat',
+      },
+      image2 : {
+        backgroundImage: `url('${imagePrevCOG}')`,
+        width : 'auto',
+        height : '60px',
+        backgroundSize : 'contain',
+        backgroundRepeat : 'no-repeat',
+      },
+      image3 : {
+        backgroundImage: `url('${imagePrevRegForm}')`,
+        width : 'auto',
+        height : '60px',
+        backgroundSize : 'contain',
+        backgroundRepeat : 'no-repeat',
+      }
+    }
 
     return (
       <div className={'educ-container'}>
@@ -250,18 +279,47 @@ class EducationAidFormCardComponent extends Component {
                 () => this.setState({ showModal : true })
               }
               placeholder={ 'Colleges/Universities' }
-              onChange={ (e) => this.setState({ collegeType : e.target.value }) }
-              type={ 'button' }/>
+              /*onChange={ (e) => this.setState({ collegeType : e.target.value }) }*/
+              type={ 'text' }/>
             <GenericTextBox
               value={ courseText }
               onChange={ (e) => this.setState({ courseText: e.target.value }) }
               placeholder={ 'Course' }
               type={ 'text' }/>
-            <GenericTextBox
-              value={ academicYearText }
-              onChange={ (e) => this.setState({ academicYearText: e.target.value }) }
-              placeholder={ 'Academic Year' }
-              type={ 'text' }/>
+            <div>
+              <div className="educ-acad-year">
+              <div className="educ-acad-title">
+              <label className="educ-acad-label">{ 'Academic Year' }</label>
+              </div>
+              <GenericTextBox
+                value={ ayFrom }
+                onChange={
+                  (e) => {
+                    const re=/^[0-9\.]+$/
+                    if (e.target.value == '' || re.test(e.target.value))  {
+                      this.setState({ayFrom : e.target.value, academicYearText : e.target.value + " - " + ayTo})
+                    }
+                  }
+                }
+                maxLength = { 4 }
+                placeholder={ 'From' }
+                type={ 'text' }/>
+              <GenericTextBox
+                value={ ayTo }
+                onChange={
+                  (e) => {
+                    const re=/^[0-9\.]+$/
+                    if (e.target.value == '' || re.test(e.target.value))  {
+                      this.setState({ayTo:  e.target.value, academicYearText : ayFrom + " - " + e.target.value})
+                    }
+                  }
+                }
+                maxLength = { 4 }
+                placeholder={ 'To' }
+                type={ 'text' }/>
+
+              </div>
+            </div>
             <GenericTextBox
               value={ semesterText }
               onChange={ (e) =>  this.setState({ semesterText: e.target.value }) }
@@ -277,6 +335,7 @@ class EducationAidFormCardComponent extends Component {
                   }
                 }
                }
+              maxLength = { 4 }
               placeholder={ 'General Weighted Average (GWA)' }
               type={ 'text' }/>
             <GenericTextBox
@@ -310,108 +369,198 @@ class EducationAidFormCardComponent extends Component {
                       isValid=true
                   }
 
-                  if (isValid) {
-                    reader.onloadend=() => {
-                      this.setState({
-                        fileOR: file,
-                        imagePrevOR: reader.result
-                      })
-                    }
-                    reader.readAsDataURL(file)
-                 } else {
-                     store.dispatch(NotifyActions.addNotify({
-                         title : 'File Uploading',
-                         message : 'The accepted attachments are JPG/PNG/PDF',
-                         type : 'warning',
-                         duration : 2000
-                      })
-                    )
-                  }
-                }
+              {
+                imagePrevOR &&
+                <div>
+                  <label className="educ-form-title">{ 'Official Receipt of Tuition Fee' }</label>
+                  <div className="educ-attachment-form">
+                    <img
+                      src={ require('../../../ub-components/Notify/images/x-circle.png') }
+                      className='close-button'
+                      onClick={
+                        () => {
+                          this.setState({ fileOR : '', imagePrevOR : null })
+                        }
+                      }
+                    />
+                    <div style = {styles.image1}><h6 className="educ-file-name">{ fileOR.name }</h6></div>
+                  </div>
+                </div>
               }
-              />
-              <FileUploader
-                accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
-                value={ fileCOG.name }
-                placeholder={ 'Certification of Grades' }
-                onChange={
-                  (e) => {
-                    e.preventDefault()
-                    const reader2=new FileReader()
-                    const file2=e.target.files[0]
-                    let isValid
-                    switch (this.getExtension(file2.type).toLowerCase()) {
-                      case 'jpeg' :
-                        isValid=true
-                      case 'jpg' :
-                        isValid=true
-                      case 'png' :
-                        isValid=true
-                      case 'pdf' :
-                        isValid=true
-                    }
 
-                    if (isValid) {
-                      reader2.onloadend=() => {
-                        this.setState({
-                          fileCOG: file2,
-                          imagePrevCOG : reader2.result
-                        })
+              {
+                !imagePrevOR &&
+                <FileUploader
+                  accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
+                  value={ fileOR.name }
+                  placeholder={ 'Official Receipt of Tuition Fee' }
+                  onChange={
+                    (e) => {
+                      e.preventDefault()
+                      const reader=new FileReader()
+                      const file=e.target.files[0]
+                      let isValid
+                      switch (this.getExtension(file.type).toLowerCase()) {
+                        case 'jpeg' :
+                          isValid=true
+                        case 'jpg' :
+                          isValid=true
+                        case 'png' :
+                          isValid=true
+                        case 'pdf' :
+                          isValid=true
                       }
-                      reader2.readAsDataURL(file2)
-                   } else {
-                       store.dispatch(NotifyActions.addNotify({
-                           title : 'File Uploading',
-                           message : 'The accepted attachments are JPG/PNG/PDF',
-                           type : 'warning',
-                           duration : 2000
-                         })
-                       )
-                     }
-                  }
-                }
-              />
-              <FileUploader
-                accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
-                value={ fileRegForm.name }
-                placeholder={ 'Registration Form/Official Breakdown of Fees' }
-                onChange={
-                  (e) => {
-                    e.preventDefault()
-                    const reader3=new FileReader()
-                    const file3=e.target.files[0]
-                    let isValid
-                    switch (this.getExtension(file3.type).toLowerCase()) {
-                      case 'jpeg' :
-                        isValid=true
-                      case 'jpg' :
-                        isValid=true
-                      case 'png' :
-                        isValid=true
-                      case 'pdf' :
-                        isValid=true
-                    }
 
-                    if (isValid) {
-                      reader3.onloadend=() => {
-                        this.setState({
-                          fileRegForm: file3,
-                          imagePrevRegForm: reader3.result
-                        })
+                      if (isValid) {
+                        reader.onloadend=() => {
+                          this.setState({
+                            fileOR: file,
+                            imagePrevOR: reader.result
+                          })
+                        }
+                        reader.readAsDataURL(file)
+                     } else {
+                         store.dispatch(NotifyActions.addNotify({
+                             title : 'File Uploading',
+                             message : 'The accepted attachments are JPG/PNG/PDF',
+                             type : 'warning',
+                             duration : 2000
+                          })
+                        )
                       }
-                      reader3.readAsDataURL(file3)
-                   } else {
-                       store.dispatch(NotifyActions.addNotify({
-                           title : 'File Uploading',
-                           message : 'The accepted attachments are JPG/PNG/PDF',
-                           type : 'warning',
-                           duration : 2000
-                         })
-                       )
-                     }
+                    }
                   }
-                }
-              />
+                />
+              }
+
+              {
+                imagePrevCOG &&
+                <div>
+                  <label className="educ-form-title">{ 'Certification of Grades' }</label>
+                  <div className="educ-attachment-form">
+                    <img
+                      src={ require('../../../ub-components/Notify/images/x-circle.png') }
+                      className='close-button'
+                      onClick={
+                        () => {
+                          this.setState({ fileCOG : '', imagePrevCOG : null })
+                        }
+                      }
+                    />
+                    <div style = {styles.image2}><h6 className="educ-file-name">{ fileCOG.name }</h6></div>
+                  </div>
+                </div>
+              }
+
+              {
+                !imagePrevCOG &&
+                <FileUploader
+                  accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
+                  value={ fileCOG.name }
+                  placeholder={ 'Certification of Grades' }
+                  onChange={
+                    (e) => {
+                      e.preventDefault()
+                      const reader2=new FileReader()
+                      const file2=e.target.files[0]
+                      let isValid
+                      switch (this.getExtension(file2.type).toLowerCase()) {
+                        case 'jpeg' :
+                          isValid=true
+                        case 'jpg' :
+                          isValid=true
+                        case 'png' :
+                          isValid=true
+                        case 'pdf' :
+                          isValid=true
+                      }
+
+                      if (isValid) {
+                        reader2.onloadend=() => {
+                          this.setState({
+                            fileCOG: file2,
+                            imagePrevCOG : reader2.result
+                          })
+                        }
+                        reader2.readAsDataURL(file2)
+                     } else {
+                         store.dispatch(NotifyActions.addNotify({
+                             title : 'File Uploading',
+                             message : 'The accepted attachments are JPG/PNG/PDF',
+                             type : 'warning',
+                             duration : 2000
+                           })
+                         )
+                       }
+                    }
+                  }
+                />
+              }
+
+              {
+                imagePrevRegForm &&
+                <div>
+                  <label className="educ-form-title">{ 'Registration Form/Official Breakdown of Fees' }</label>
+                  <div className="educ-attachment-form">
+                    <img
+                      src={ require('../../../ub-components/Notify/images/x-circle.png') }
+                      className='close-button'
+                      onClick={
+                        () => {
+                          this.setState({ fileRegForm : '', imagePrevRegForm : null })
+                        }
+                      }
+                    />
+                    <div style = {styles.image3}><h6 className="educ-file-name">{ fileRegForm.name }</h6></div>
+                  </div>
+                </div>
+              }
+
+              {
+                !imagePrevRegForm &&
+                <FileUploader
+                  accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
+                  value={ fileRegForm.name }
+                  placeholder={ 'Registration Form/Official Breakdown of Fees' }
+                  onChange={
+                    (e) => {
+                      e.preventDefault()
+                      const reader3=new FileReader()
+                      const file3=e.target.files[0]
+                      let isValid
+                      switch (this.getExtension(file3.type).toLowerCase()) {
+                        case 'jpeg' :
+                          isValid=true
+                        case 'jpg' :
+                          isValid=true
+                        case 'png' :
+                          isValid=true
+                        case 'pdf' :
+                          isValid=true
+                      }
+
+                      if (isValid) {
+                        reader3.onloadend=() => {
+                          this.setState({
+                            fileRegForm: file3,
+                            imagePrevRegForm: reader3.result
+                          })
+                        }
+                        reader3.readAsDataURL(file3)
+                     } else {
+                         store.dispatch(NotifyActions.addNotify({
+                             title : 'File Uploading',
+                             message : 'The accepted attachments are JPG/PNG/PDF',
+                             type : 'warning',
+                             duration : 2000
+                           })
+                         )
+                       }
+                    }
+                  }
+                />
+              }
+
               <GenericButton
                 type={ 'button' }
                 text={ 'submit' }

@@ -1,11 +1,13 @@
 import ServiceErrorOperator from '../common/operator/ServiceErrorOperator'
 import store from '../../store'
 import { EventActions } from '../../actions'
+import { Observable } from 'rxjs'
 
 export default class HRBenefitsClient {
-  constructor (service, sessionProvider) {
+  constructor (service, sessionProvider, fileProvider) {
     this.service = service
     this.sessionProvider = sessionProvider
+    this.fileProvider = fileProvider
   }
 
   /* User */
@@ -433,6 +435,21 @@ export default class HRBenefitsClient {
   addPayslipSelectedDate (token, payslipParam) {
     return this.service.addPayslipSelectedDate(token, payslipParam)
       .pipe(ServiceErrorOperator())
+      .flatMap(resp => {
+          return this.service.getPdf(token, resp)
+        }
+      )
+      .flatMap(resp =>
+        Observable.create(observer => {
+          const reader = new FileReader()
+          reader.onerror = err => observer.error(err)
+          reader.onabort = err => observer.error(err)
+          reader.onload = () => observer.next(reader.result)
+          reader.onloadend = () => observer.complete()
+
+          reader.readAsDataURL(resp.data)
+        })
+      )
   }
 
   addEducationAid (

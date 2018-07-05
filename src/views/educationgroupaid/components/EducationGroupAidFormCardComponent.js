@@ -58,7 +58,6 @@ class EducationGroupAidFormCardComponent extends Component {
         backgroundRepeat : 'no-repeat',
       }
     }
-
     return (
       <div className = {'educ-container'}>
         {
@@ -102,6 +101,11 @@ class EducationGroupAidFormCardComponent extends Component {
                 placeholder = { 'Company' }
                 type = { 'text' }/>
               <GenericTextBox
+                value = { grantAmount }
+                onChange = {() => {}}
+                placeholder = { 'Grant Amount' }
+                type = { 'text' }/>
+              <GenericTextBox
                 value = { grantPlan.durationOfPremium }
                 onChange = {() => {}}
                 placeholder = { 'Duration of Premium Payment' }
@@ -116,21 +120,6 @@ class EducationGroupAidFormCardComponent extends Component {
                 onChange = {() => {}}
                 placeholder = { 'Maturity Date' }
                 type = { 'text' }/>
-              <GenericTextBox
-                value = { grantType }
-                onClick = {
-                  () => {
-                    this.setState({ showGrantTypes : true })
-                  }
-                }
-                placeholder = { 'Type of Grant' }
-                type = { 'text' }/>
-              <GenericTextBox
-                value = { grantAmount }
-                onChange = {() => {}}
-                placeholder = { 'Grant Amount' }
-                type = { 'text' }/>
-              <br/>
               <FileUploader
                 accept="image/gif,image/jpeg,image/jpg,image/png,"
                 placeholder = { attachment }
