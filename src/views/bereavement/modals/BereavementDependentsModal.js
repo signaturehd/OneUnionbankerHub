@@ -12,8 +12,8 @@ class BereavementDependentsModal extends Component {
 /*
   Get Dependent Data, display procedures
 */
-  sendDependents (dependentsName, dependentRelationship) {
-    this.props.chosenDependent(dependentsName, dependentRelationship)
+  sendDependents (dependentId, dependentsName, dependentRelationship) {
+    this.props.chosenDependent(dependentId, dependentsName, dependentRelationship)
     this.props.onClose()
   }
 
@@ -36,6 +36,7 @@ class BereavementDependentsModal extends Component {
             text={ dependent.name }
             onClick={ () =>
               this.sendDependents(
+                dependent.id,
                 dependent.name,
                 dependent.relationship
             )}

@@ -10,6 +10,7 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 import DatePicker from 'react-datepicker'
+import '../../../../node_modules/react-datepicker/dist/react-datepicker.css'
 import moment from 'moment'
 
 class BereavementFormCardComponent extends Component {
@@ -21,13 +22,129 @@ class BereavementFormCardComponent extends Component {
       imagePreviewUrl: null,
       showDeceasedDependents: false,
       dependentsName: '',
-      dependentsRelationship: ''
+      dependentsRelationship: '',
+      dependentId: '',
+      deceasedDate: moment(),
+      funeralDate: moment(),
+      internmentDate: moment(),
+      funeralHome: '',
+      funeralAddress: '',
+      funeralRegion: '',
+      funeralProvince: '',
+      funeralCity: '',
+      memorialPark: '',
+      memorialAddress: '',
+      memorialRegion: '',
+      memorialProvince: '',
+      memorialCity: '',
     }
+    this.getDeceasedDate = this.getDeceasedDate.bind(this)
+    this.getFuneralDate = this.getFuneralDate.bind(this)
+    this.getInternmentDate = this.getInternmentDate.bind(this)
+    this.getOnClicked = this.getOnClicked.bind(this)
+    this.getFuneralHome = this.getFuneralHome.bind(this)
+    this.getFuneralAddress = this.getFuneralAddress.bind(this)
+    this.getFuneralRegion = this.getFuneralRegion.bind(this)
+    this.getFuneralProvince = this.getFuneralProvince.bind(this)
+    this.getFuneralCity = this.getFuneralCity.bind(this)
+    this.getMemorialHome = this.getMemorialHome.bind(this)
+    this.getMemorialAddress = this.getMemorialAddress.bind(this)
+    this.getMemorialRegion = this.getMemorialRegion.bind(this)
+    this.getMemorialProvince = this.getMemorialProvince.bind(this)
+    this.getMemorialCity = this.getMemorialCity.bind(this)
+  }
+
+  getDeceasedDate (e) {
+    this.setState({ deceasedDate  : e })
+  }
+
+  getFuneralDate (e) {
+    this.setState({ funeralDate  : e })
+  }
+
+  getInternmentDate (e) {
+    this.setState({ internmentDate : e })
+  }
+
+  getFuneralHome (e) {
+    this.setState({ funeralHome : e.target.value })
+  }
+
+  getFuneralAddress (e) {
+    this.setState({ funeralAddress : e.target.value })
+  }
+
+  getFuneralRegion (e) {
+    this.setState({ funeralRegion : e.target.value })
+  }
+
+  getFuneralProvince (e) {
+    this.setState({ funeralProvince : e.target.value })
+  }
+
+  getFuneralCity (e) {
+    this.setState({ funeralCity : e.target.value })
+  }
+
+  getMemorialHome (e) {
+    this.setState({ memorialPark : e.target.value })
+  }
+
+  getMemorialAddress (e) {
+    this.setState({ memorialAddress : e.target.value })
+  }
+
+  getMemorialRegion (e) {
+    this.setState({ memorialRegion : e.target.value })
+  }
+
+  getMemorialProvince (e) {
+    this.setState({ memorialProvince : e.target.value })
+  }
+
+  getMemorialCity (e) {
+    this.setState({ memorialCity : e.target.value })
   }
 
   getExtension (filename) {
     const parts=filename.split('/')
     return parts[parts.length - 1]
+  }
+
+  getOnClicked(
+    funeralDate,
+    internmentDate,
+    deceasedDate,
+    dependentId,
+    funeralHome,
+    funeralAddress,
+    funeralRegion,
+    funeralProvince,
+    funeralCity,
+    memorialPark,
+    memorialAddress,
+    memorialRegion,
+    memorialProvince,
+    memorialCity,
+    file
+  ) {
+    this.props.sendFormData(
+      funeralDate && funeralDate.format('MM/DD/YYYY'),
+      internmentDate && internmentDate.format('MM/DD/YYYY'),
+      deceasedDate  && internmentDate.format('MM/DD/YYYY'),
+      dependentId,
+      funeralHome,
+      funeralAddress,
+      funeralRegion,
+      funeralProvince,
+      funeralCity,
+      memorialPark,
+      memorialAddress,
+      memorialRegion,
+      memorialProvince,
+      memorialCity,
+      file
+    )
   }
 
   render () {
@@ -41,8 +158,22 @@ class BereavementFormCardComponent extends Component {
       file,
       showDeceasedDependents,
       imagePreviewUrl,
+      dependentId,
       dependentsName,
-      dependentsRelationship
+      dependentsRelationship,
+      deceasedDate,
+      funeralDate,
+      internmentDate,
+      funeralHome,
+      funeralAddress,
+      funeralRegion,
+      funeralProvince,
+      funeralCity,
+      memorialPark,
+      memorialAddress,
+      memorialRegion,
+      memorialProvince,
+      memorialCity,
     }=this.state
 
     const styles={
@@ -62,8 +193,9 @@ class BereavementFormCardComponent extends Component {
             showDeceasedDependents &&
             <BereavementDependentsModal
               showDepedents={ showDepedents }
-              chosenDependent={ (dependentsName, dependentsRelationship) =>
+              chosenDependent={ (dependentId, dependentsName, dependentsRelationship) =>
                 this.setState({
+                  dependentId,
                   dependentsName,
                   dependentsRelationship
                })
@@ -114,11 +246,13 @@ class BereavementFormCardComponent extends Component {
                   <span className={ 'brv-icon-settings brv-calendar' }/>
                 </div>
                 <div>
-                <DatePicker
-                  value={''}
-                  onChange={ () => {} }
-                  placeholder={ 'Date of Birth' }
-                />
+                  <DatePicker
+                    dateFormat={ 'MM/DD/YYYY' }
+                    readOnly
+                    selected={ deceasedDate }
+                    onChange={this.getDeceasedDate }
+                    className={ 'calendar' }
+                    calendarClassName={ 'calendarClass' }/>
                 </div>
               </div>
               <br/>
@@ -141,11 +275,15 @@ class BereavementFormCardComponent extends Component {
                   <span className={ 'brv-icon-settings brv-calendar' }/>
                 </div>
                 <div>
-                <DatePicker
-                  value={''}
-                  onChange={ () => {} }
-                  placeholder={ 'Date of Wake' }
-                />
+                  <DatePicker
+                    dateFormat={ 'MM/DD/YYYY' }
+                    readOnly
+                    selected={ funeralDate }
+                    onChange={ this.getFuneralDate }
+                    placeholder={ 'Date of Wake' }
+                    className={ 'calendar' }
+                    calendarClassName={ 'calendarClass' }
+                  />
                 </div>
               </div>
               <div className={ 'brv-icon-text-grid' }>
@@ -156,8 +294,8 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={''}
-                    onChange={() => {}}
+                    value={ funeralHome }
+                    onChange={ this.getFuneralHome }
                     placeholder={ 'Funeral Home' }
                     type={ 'text' }
                   />
@@ -171,8 +309,8 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={''}
-                    onChange={() => {}}
+                    value={ funeralAddress }
+                    onChange={ this.getFuneralAddress }
                     placeholder={ 'Address' }
                     type={ 'text' }
                   />
@@ -186,8 +324,8 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={''}
-                    onChange={() => {}}
+                    value={ funeralRegion }
+                    onChange={ this.getFuneralRegion }
                     placeholder={ 'Region' }
                     type={ 'text' }
                   />
@@ -201,8 +339,8 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={''}
-                    onChange={() => {}}
+                    value={ funeralProvince }
+                    onChange={ this.getFuneralProvince }
                     placeholder={ 'Province' }
                     type={ 'text' }
                   />
@@ -216,8 +354,8 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={''}
-                    onChange={() => {}}
+                    value={ funeralCity }
+                    onChange={ this.getFuneralCity }
                     placeholder={ 'City' }
                     type={ 'text' }
                   />
@@ -243,12 +381,14 @@ class BereavementFormCardComponent extends Component {
                   <span className={ 'brv-icon-settings brv-calendar' }/>
                 </div>
                 <div>
-                  <DatePicker
-                    container={ 'brv-container' }
-                    value={ '' }
-                    onChange={ () => {} }
-                    placeholder={ 'Date of Internment' }
-                  />
+                    <DatePicker
+                      dateFormat={ 'MM/DD/YYYY' }
+                      readOnly
+                      selected={ funeralDate }
+                      onChange={ this.getFuneralDate }
+                      placeholder={ 'Date of Wake' }
+                      className={ 'calendar' }
+                      />
                 </div>
               </div>
               <div className={ 'brv-icon-text-grid' }>
@@ -259,8 +399,8 @@ class BereavementFormCardComponent extends Component {
                 <div>
                 <GenericTextBox
                     container={ 'brv-container' }
-                    value={''}
-                    onChange={() => {}}
+                    value={ memorialPark }
+                    onChange={ this.getMemorialHome }
                     placeholder={ 'Memorial Park' }
                     type={ 'text' }
                   />
@@ -274,8 +414,8 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={''}
-                    onChange={() => {}}
+                    value={ memorialAddress }
+                    onChange={ this.getMemorialAddress }
                     placeholder={ 'Address' }
                     type={ 'text' }
                   />
@@ -289,9 +429,23 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={''}
-                    onChange={() => {}}
+                    value={ memorialRegion}
+                    onChange={ this.getMemorialRegion }
                     placeholder={ 'Region' }
+                    type={ 'text' }/>
+                </div>
+              </div>
+              <div className={ 'brv-icon-text-grid' }>
+                <div>
+                  <br/>
+                  <span className={ 'brv-icon-settings brv-province' }/>
+                </div>
+                <div>
+                  <GenericTextBox
+                    container={ 'brv-container' }
+                    value={ memorialProvince }
+                    onChange={ this.getMemorialProvince }
+                    placeholder={ 'Province' }
                     type={ 'text' }/>
                 </div>
               </div>
@@ -303,8 +457,8 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={''}
-                    onChange={() => {}}
+                    value={ memorialCity }
+                    onChange={ this.getMemorialCity }
                     placeholder={ 'City' }
                     type={ 'text' }/>
                 </div>
@@ -315,7 +469,22 @@ class BereavementFormCardComponent extends Component {
                   type={ 'button' }
                   text={ 'continue' }
                   onClick={
-                    () => console.log('clicked submit')
+                    () => this.getOnClicked(
+                      funeralDate,
+                      internmentDate,
+                      deceasedDate,
+                      dependentId,
+                      funeralHome,
+                      funeralAddress,
+                      funeralRegion,
+                      funeralProvince,
+                      funeralCity,
+                      memorialPark,
+                      memorialAddress,
+                      memorialRegion,
+                      memorialProvince,
+                      memorialCity
+                    )
                   }
                   className={ 'brv-submit' } />
               }
@@ -348,7 +517,7 @@ class BereavementFormCardComponent extends Component {
                           }
                         }
                       />
-                      <div style={styles.image1}><h6 className="brv-file-name">{ file.name }</h6></div>
+                      <div style={ styles.image1 }><h6 className="brv-file-name">{ file.name }</h6></div>
                     </div>
                   </div>
                 }
@@ -401,7 +570,23 @@ class BereavementFormCardComponent extends Component {
                   type={ 'button' }
                   text={ 'continue' }
                   onClick={
-                    () => {}
+                    () => this.getOnClicked(
+                      funeralDate,
+                      internmentDate,
+                      deceasedDate,
+                      dependentId,
+                      funeralHome,
+                      funeralAddress,
+                      funeralRegion,
+                      funeralProvince,
+                      funeralCity,
+                      memorialPark,
+                      memorialAddress,
+                      memorialRegion,
+                      memorialProvince,
+                      memorialCity,
+                      file
+                    )
                   }
                   className={ 'brv-submit' } />
               </div>
