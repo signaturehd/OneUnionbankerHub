@@ -32,10 +32,101 @@ class OnboardingView extends Component {
       skills : [],
       about : [],
     }
+
+    this.addFormArray = this.addFormArray.bind(this)
+    this.removeFormArray = this.removeFormArray.bind(this)
   }
 
+  addFormArray (form, data) {
+    const {
+      education,
+      skills,
+      experience,
+      certificate
+    } = this.state
+
+    switch (form) {
+      case 'education':
+          const updatedEducation = [...education]
+          updatedEducation.push(data)
+          this.setState({ education : updatedEducation })
+        break
+      case 'experience':
+          const updatedExperience = [...experience]
+          updatedExperience.push(data)
+          this.setState({ experience : updatedExperience })
+        break
+      case 'skills':
+          const updatedSkills = [...skills]
+          updatedSkills.push(data)
+          this.setState({ skills : updatedSkills })
+        break
+      case 'certificate':
+          const updatedCertificate = [...certificate]
+          updatedCertificate.push(data)
+          this.setState({ certificate : updatedCertificate })
+        break
+    }
+  }
+
+  removeFormArray (form, index) {
+    const {
+      education,
+      skills,
+      experience,
+      certificate
+    } = this.state
+
+    switch (form) {
+      case 'education':
+          const updatedEducation = [...education]
+          updatedEducation.splice(index)
+          this.setState({ education : updatedEducation })
+        break
+      case 'experience':
+          const updatedExperience = [...experience]
+          updatedExperience.splice(index)
+          this.setState({ experience : updatedExperience })
+        break
+      case 'skills':
+          const updatedSkills = [...skills]
+          updatedSkills.splice(index)
+          this.setState({ skills : skills })
+        break
+      case 'certificate':
+          const updatedCertificate = [...certificate]
+          updatedCertificate.splice(index)
+          this.setState({ certificate : updatedCertificate })
+        break
+    }
+  }
+
+  updateArray (form, data) {
+    const {
+      education,
+      skills,
+      experience,
+      certificate
+    } = this.state
+
+    switch (form) {
+      case 'education':
+          this.setState({ education : data })
+        break
+      case 'experience':
+          this.setState({ experience : data })
+        break
+      case 'skills':
+          this.setState({ skills : data })
+        break
+      case 'certificate':
+          this.setState({ certificate : data })
+        break
+    }
+  }
+
+
   render () {
-    console.log(this.state)
     const {
       education,
       experience,
@@ -44,33 +135,46 @@ class OnboardingView extends Component {
       about,
     } = this.state
 
+
     const steps = [
       {
         label: 'Education',
         component: <Education
           setEducation = { (education) => this.setState({ education }) }
+          education = { (education) => this.addFormArray('education' , education) }
+          removeForm = { (index) => this.removeFormArray('education', index) }
           educationForm = { education }
+          updateArray = { (education) => this.updateArray('education', education) }
         />
       },
       {
         label: 'Experience',
         component: <Experience
           setExperience = { (experience) => this.setState({ experience }) }
+          experience = { (experience) => this.addFormArray('experience' , experience) }
+          removeForm = { (index) => this.removeFormArray('experience', index) }
           experienceForm = { experience }
+          updateArray = { (experience) => this.updateArray('experience', experience) }
         />
       },
       {
         label: 'Certificate',
         component: <Certificate
           setCertificate = { (certificate) => this.setState({ certificate }) }
+          certificate = { (certificate) => this.addFormArray('certificate' , certificate) }
+          removeForm = { (index) => this.removeFormArray('certificate', index) }
           certificateForm = { certificate }
+          updateArray = { (certificate) => this.updateArray('certificate', certificate) }
         />
       },
       {
         label: 'Skills',
         component: <Skills
           setSkills = { (skills) => this.setState({ skills }) }
+          skills = { (skills) => this.addFormArray('skills' , skills) }
+          removeForm = { (index) => this.removeFormArray('skills', index) }
           skillsForm = { skills }
+          updateArray = { (skills) => this.updateArray('skills', skills) }
         />
       },
       {

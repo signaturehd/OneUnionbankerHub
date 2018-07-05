@@ -30,7 +30,7 @@ class ExperienceFragment extends Component {
   }
 
   addNewExperience () {
-    const { experienceForm } = this.state
+    const { experienceForm, experience } = this.props
     const experienceObj = {
       companyName: '',
       companyAddress: '',
@@ -38,25 +38,16 @@ class ExperienceFragment extends Component {
       startYear: '',
       finalYear: '',
     }
-    experienceForm.push(experienceObj)
-    this.setState({ experienceForm })
+    experience(experienceObj)
   }
 
   removeExperience (index) {
-    const { experienceForm } = this.state
-    experienceForm.splice(index)
-    this.setState({ experienceForm })
+    const { removeFormArray } = this.props
+    removeFormArray(index)
   }
-
-  componentWillUnmount () {
-    const { experienceForm } = this.state
-    const { setExperience } = this.props
-    setExperience(experienceForm)
-  }
-
 
   render () {
-    const { experienceForm } = this.state
+    const { experienceForm, updateArray } = this.props
     return(
       <div>
         <center>
@@ -77,50 +68,55 @@ class ExperienceFragment extends Component {
                 <GenericTextBox
                   placeholder = {'Company Name'}
                   maxLength={60}
+                  value = { experience.companyName }
                   onChange = { e => {
                       const updatedExperience = [...experienceForm]
                       updatedExperience[key].companyName = e.target.value
-                      this.setState({ experienceForm: updatedExperience })
+                      updateArray(updatedExperience)
                     }
                   }
                 />
                 <GenericTextBox
                   placeholder = {'Company Address'}
                   maxLength={60}
+                  value = { experience.companyAddress }
                   onChange = { e => {
                       const updatedExperience = [...experienceForm]
                       updatedExperience[key].companyAddress = e.target.value
-                      this.setState({ experienceForm: updatedExperience })
+                      updateArray(updatedExperience)
                     }
                   }
                 />
                 <GenericTextBox
                   placeholder = {'Position'}
                   maxLength={60}
+                  value = { experience.position }
                   onChange = { e => {
                       const updatedExperience = [...experienceForm]
                       updatedExperience[key].position = e.target.value
-                      this.setState({ experienceForm: updatedExperience })
+                      updateArray(updatedExperience)
                     }
                   }
                 />
                 <GenericTextBox
                   placeholder = {'Start Year'}
                   maxLength={60}
+                  value = { experience.startYear }
                   onChange = { e => {
                       const updatedExperience = [...experienceForm]
                       updatedExperience[key].startYear = e.target.value
-                      this.setState({ experienceForm: updatedExperience })
+                      updateArray(updatedExperience)
                     }
                   }
                 />
                 <GenericTextBox
                   placeholder = {'End Year'}
+                  value = { experience.finalYear }
                   maxLength={60}
                   onChange = { e => {
                       const updatedExperience = [...experienceForm]
                       updatedExperience[key].finalYear = e.target.value
-                      this.setState({ experienceForm: updatedExperience })
+                      updateArray(updatedExperience)
                     }
                   }
                 />

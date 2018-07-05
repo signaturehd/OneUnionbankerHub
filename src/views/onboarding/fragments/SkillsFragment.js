@@ -30,42 +30,35 @@ class SkillsFragment extends Component {
   }
 
   addNewSkill () {
-    const { skillsForm } = this.state
-    const experienceObj = {
+    const { skillsForm, skills } = this.props
+    const skillsObj = {
       skillName: '',
       skillLevel: '',
     }
-    experienceForm.push(experienceObj)
-    this.setState({ skillsForm })
+    skills(skillsObj)
   }
 
   removeSkill (index) {
-    const { skillsForm } = this.state
-    skillsForm.splice(index)
-    this.setState({ skillsForm })
-  }
-
-  componentWillUnmount () {
-    const { skillsForm } = this.state
-    store.dispatch(OnboardingActions.addSkills(skillsForm))
+    const { removeFormArray } = this.props
+    removeFormArray(index)
   }
 
 
   render () {
-    const { certificateForm } = this.state
+    const { skillsForm, updateArray } = this.props
     return(
       <div>
         <center>
           <GenericButton className={'generic-button'}
-            onClick={() => this.addNewExperience()}
+            onClick={() => this.addNewSkill()}
             text= {'Add Experience'}
           />
         </center>
         <br/>
         <div className = { 'onboarding-certificate-form-container' } >
           {
-            certificateForm.length !== 0 &&
-            certificateForm.map((certificate, key) =>
+            skillsForm.length !== 0 &&
+            skillsForm.map((skills, key) =>
               <Card
                 className = { 'onboarding-certificate-form' }
                 key = {key}
@@ -73,10 +66,11 @@ class SkillsFragment extends Component {
                 <GenericTextBox
                   placeholder = {'Certificate Name'}
                   maxLength={60}
+                  value = { skills.skillName }
                   onChange = { e => {
-                    const updatedCertificate = [...certificateForm]
-                    updatedCertificate[key].skillName = e.target.value
-                    this.setState({ certificateForm: updatedCertificate })
+                      const updatedSkills = [...skillsForm]
+                      updatedSkills[key].skillName = e.target.value
+                      updateArray(updatedSkills)
                     }
                   }
                 />
@@ -84,6 +78,7 @@ class SkillsFragment extends Component {
                   placeholder = {'Issuing Body'}
                   maxLength={60}
                 />
+                <br/>
                 <GenericButton
                   onClick = { () => this.removeSkill(key) }
                   text= {'Remove Form'}

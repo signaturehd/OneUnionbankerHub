@@ -30,9 +30,7 @@ class EducationFragment extends Component {
   }
 
   addNewEducation () {
-    const { educationForm } = this.state
-    const {  } = this.props
-
+    const { educationForm, education } = this.props
     const educationObj = {
       course: '',
       schoolName: '',
@@ -41,24 +39,16 @@ class EducationFragment extends Component {
       startYear: '',
       finalYear: '',
     }
-    educationForm.push(educationObj)
-    this.setState({ educationForm })
+    education(educationObj)
   }
 
   removeEducation (index) {
-    const { educationForm } = this.state
-    educationForm.splice(index)
-    this.setState({ educationForm })
-  }
-
-  componentWillUnmount () {
-    const { educationForm } = this.state
-    const { setEducation } = this.props
-    setEducation(educationForm)
+    const { removeFormArray } = this.props
+    removeFormArray(index)
   }
 
   render () {
-    const { educationForm } = this.state
+    const { educationForm, education, updateArray } = this.props
     return (
       <div>
         <center>
@@ -79,60 +69,66 @@ class EducationFragment extends Component {
                 <GenericTextBox
                   placeholder = {'School'}
                   maxLength={60}
+                  value = { education.schoolName }
                   onChange = { e => {
                       const updatedEducation = [...educationForm]
                       updatedEducation[key].schoolName = e.target.value
-                      this.setState({ educationForm: updatedEducation })
+                      updateArray(updatedEducation)
                     }
                   }
                 />
                 <GenericTextBox
                   placeholder = {'Degree'}
                   maxLength={60}
+                  value = { education.degree }
                   onChange = { e => {
                       const updatedEducation = [...educationForm]
                       updatedEducation[key].degree = e.target.value
-                      this.setState({ educationForm: updatedEducation })
+                      updateArray(updatedEducation)
                     }
                   }
                 />
                 <GenericTextBox
                   placeholder = {'Course'}
                   maxLength={60}
+                  value = { education.course }
                   onChange = { e => {
                       const updatedEducation = [...educationForm]
                       updatedEducation[key].course = e.target.value
-                      this.setState({ educationForm: updatedEducation })
+                      updateArray(updatedEducation)
                     }
                   }
                 />
                 <GenericTextBox
                   placeholder = {'Special Honors'}
                   maxLength={60}
+                  value = { education.honor }
                   onChange = { e => {
                       const updatedEducation = [...educationForm]
                       updatedEducation[key].honor = e.target.value
-                      this.setState({ educationForm: updatedEducation })
+                      updateArray(updatedEducation)
                     }
                   }
                 />
                 <GenericTextBox
                   placeholder = {'Start Year'}
                   maxLength={60}
+                  value = { education.startYear }
                   onChange = { e => {
                       const updatedEducation = [...educationForm]
                       updatedEducation[key].startYear = e.target.value
-                      this.setState({ educationForm: updatedEducation })
+                      updateArray(updatedEducation)
                     }
                   }
                 />
                 <GenericTextBox
                   placeholder = {'End Year'}
                   maxLength={60}
+                  value = { education.finalYear }
                   onChange = { e => {
                       const updatedEducation = [...educationForm]
                       updatedEducation[key].finalYear = e.target.value
-                      this.setState({ educationForm: updatedEducation })
+                      updateArray(updatedEducation)
                     }
                   }
                 />

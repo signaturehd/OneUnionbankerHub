@@ -30,36 +30,28 @@ class CertificateFragment extends Component {
   }
 
   addNewCertificate () {
-    const { certificateForm } = this.state
+    const { certificateForm, certificate } = this.props
     const certificateObj = {
       certificateName: '',
       issuingBody: '',
       dateIssued: '',
     }
-    certificateForm.push(certificateObj)
-    this.setState({ certificateForm })
+    certificate(certificateObj)
   }
 
   removeCertificate (index) {
-    const { certificateForm } = this.state
-    certificateForm.splice(index)
-    this.setState({ certificateForm })
-  }
-
-  componentWillUnmount () {
-    const { certificateForm } = this.state
-    const { setCertificate } = this.props
-    setCertificate(certificateForm)
+    const { removeFormArray } = this.props
+    removeFormArray(index)
   }
 
   render () {
-    const { certificateForm } = this.state
+    const { certificateForm, updateArray } = this.props
     return(
       <div>
         <center>
           <GenericButton className={'generic-button'}
-            onClick={() => this.addNewExperience()}
-            text= {'Add Experience'}
+            onClick={() => this.addNewCertificate()}
+            text= {'Add Certificate'}
           />
         </center>
         <br/>
@@ -74,33 +66,37 @@ class CertificateFragment extends Component {
                 <GenericTextBox
                   placeholder = {'Certificate Name'}
                   maxLength={60}
+                  value = { certificate.certificateName }
                   onChange = { e => {
                       const updatedCertificate = [...certificateForm]
                       updatedCertificate[key].certificateName = e.target.value
-                      this.setState({ certificateForm: updatedCertificate })
+                      updateArray(updatedCertificate)
                     }
                   }
                 />
                 <GenericTextBox
                   placeholder = {'Issuing Body'}
                   maxLength={60}
+                  value = { certificate.issuingBody }
                   onChange = { e => {
                       const updatedCertificate = [...certificateForm]
                       updatedCertificate[key].issuingBody = e.target.value
-                      this.setState({ certificateForm: updatedCertificate })
+                      updateArray(updatedCertificate)
                     }
                   }
                 />
                 <GenericTextBox
                   placeholder = {'Date Issued'}
                   maxLength={60}
+                  value = { certificate.dateIssued }
                   onChange = { e => {
                       const updatedCertificate = [...certificateForm]
                       updatedCertificate[key].dateIssued = e.target.value
-                      this.setState({ certificateForm: updatedCertificate })
+                      updateArray(updatedCertificate)
                     }
                   }
                 />
+                <br/>
                 <GenericButton
                   onClick = { () => this.removeCertificate(key) }
                   text= {'Remove Form'}
