@@ -560,12 +560,12 @@ export default class HRBenefitsService {
   addBereavement (token, addBereavementParam) {
     const formData = new FormData()
     const bereavementObject = {
-      id : bereavementObject.dependentId,
+      id : addBereavementParam.dependentId,
       accountNumber,
       releasingCenter,
-      date : bereavementObject.objectDate,
-      funeral : bereavementObject.objectFuneral,
-      memorial: bereavementObject.objectMemorial,
+      date : addBereavementParam.objectDate,
+      funeral : addBereavementParam.objectFuneral,
+      memorial: addBereavementParam.objectMemorial,
     }
     formData.append('uuid', 12345)
     formData.append('file', addBereavementParam.file)
