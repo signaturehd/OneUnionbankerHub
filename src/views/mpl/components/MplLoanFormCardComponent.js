@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 import './styles/mplComponentStyle.css'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
+
+import { RequiredValidation, Validator, MoneyValidation } from '../../../utils/validate'
+
 import PurposeOfAvailmentModal from '../../mpl/modals/PurposeOfAvailmentModal'
 import ModeOfLoanModal from '../../mpl/modals/ModeOfLoanModal'
 import TermOfLoanModal from '../../mpl/modals/TermOfLoanModal'
@@ -15,7 +18,7 @@ class MplFormLoanCardComponent extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {
+    this.state={
       showPurposeOfAvailment: false,
       showOffset: false,
       showTerm: false,
@@ -32,70 +35,40 @@ class MplFormLoanCardComponent extends Component {
       imagePreviewUrl: '',
       showFileUpload: false,
     }
-     this.onChange = this.onChange.bind(this)
+    this.onChange=this.onChange.bind(this)
   }
 
   onChange (e) {
-      const re = /^[0-9\.]+$/
+      const re=/^[0-9\.]+$/
       if (e.target.value === '' ||  re.test(e.target.value)) {
         this.setState({ amountValue: e.target.value })
       }
    }
 
-   sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId, file1, file2) {
-     const amount = parseFloat(desiredAmount)
-     const maximumAmount = parseFloat(this.props.validateLoanType.maximumLoanableAmount)
-     const id = parseInt(loanTypeId)
-     const term = parseInt(termId)
-     const mode = parseInt(modeOfLoanId)
-     if (amount >= maximumAmount) {
-        store.dispatch(NotifyActions.addNotify({
-           title : 'Warning' ,
-           message : `You are only allowed to loan a maximum amount of ${ maximumAmount } `,
-           type : 'warning',
-           duration : 2000
-         })
-       )
-     } else {
-       if (mode === null) {
+   validator(input) {
+     !new RequiredValidation().isValid(input)
+   }
+
+   sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId) {
+     const amount=parseFloat(desiredAmount)
+     const id=parseInt(loanTypeId)
+     const term=parseInt(termId)
+     const mode=parseInt(modeOfLoanId)
+       if (!this.validator(mode) || !this.validator(term) || !this.validator(amountValue) || !this.validator(poaText)) {
          store.dispatch(NotifyActions.addNotify({
             title : 'Warning' ,
-            message : '',
+            message : 'All fields are required',
             type : 'warning',
             duration : 2000
           })
         )
-      } else if (term === null) {
-          store.dispatch(NotifyActions.addNotify({
-            title : 'Warning' ,
-            message : 'Term & Rates is required',
-            type : 'warning',
-            duration : 2000
-          })
-        )
-      } else if (amount === 0) {
-          store.dispatch(NotifyActions.addNotify({
-            title : 'Warning',
-            message : 'Amount field is required',
-            type : 'warning',
-            duration : 2000
-          })
-        )
-      } else if (poaText === '') {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Warning',
-            message : 'Purpose of Availment is required',
-            type: 'warning',
-            duration: 2000
-          })
-        )
-      } else {
-        this.props.presenter.addLoan(id, poaText, mode, term, desiredAmount, [file1, file2])
       }
-     }
+       else {
+        this.props.presenter.addLoan(id, poaText, mode, term, desiredAmount)
+      }
    }
    getExtension (filename) {
-     const parts = filename.split('/')
+     const parts=filename.split('/')
      return parts[parts.length - 1]
    }
 
@@ -116,8 +89,8 @@ class MplFormLoanCardComponent extends Component {
       file,
       imagePreviewUrl,
       showFileUpload,
-      response
-    } = this.state
+      response,
+    }=this.state
 
     const {
       purposeOfAvailment,
@@ -126,10 +99,11 @@ class MplFormLoanCardComponent extends Component {
       preferredFormData,
       offset,
       onGetPurposeOfLoan,
-      formAttachments
-    } = this.props
+      formAttachments,
+      textLabel
+    }=this.props
 
-    const styles = {
+    const styles={
       image1 : {
         backgroundImage: `url('${imagePreviewUrl}')`,
         width: '-webkit-fill-available',
@@ -140,33 +114,33 @@ class MplFormLoanCardComponent extends Component {
       }
     }
 
-    let $imagePreview = null
-      $imagePreview = (<div style = { styles.image1 }></div>)
+    let $imagePreview=null
+      $imagePreview=(<div style={ styles.image1 }></div>)
 
     return (
-      <div className = { 'mplview-container' }>
+      <div className={ 'mplview-container' }>
         {
           showOffset &&
           <ModeOfLoanModal
-            offset  = {  offset && offset }
-            onSubmit = { (changeOffsetValue, closePoaModal) =>
+            offset ={  offset && offset }
+            onSubmit={ (changeOffsetValue, closePoaModal) =>
               this.setState({
                 modeOfLoanText : changeOffsetValue.name,
                 modeOfLoanId : changeOffsetValue.id,
                 showOffset : closePoaModal
               })
             }
-            onClose = { () =>
+            onClose={ () =>
               this.setState({ showOffset : false }) }
           />
         }
         {
           showPurposeOfAvailment &&
           <PurposeOfAvailmentModal
-            poa  = { purposeOfAvailment }
-            loanType = { loanType }
-            presenter = { this.props.presenter }
-            onSubmit = { (changePoaText, subcategory, closePoaModal, openFileUpload, loanType) =>
+            poa ={ purposeOfAvailment }
+            loanType={ loanType }
+            presenter={ this.props.presenter }
+            onSubmit={ (changePoaText, subcategory, closePoaModal, openFileUpload, loanType) =>
               this.setState({
                 poaText : changePoaText.name,
                 poaId : changePoaText.id,
@@ -175,15 +149,15 @@ class MplFormLoanCardComponent extends Component {
                 showFileUpload : openFileUpload
               })
             }
-            onClose = { () =>
+            onClose={ () =>
               this.setState({ showPurposeOfAvailment : false }) }
           />
         }
         {
           showTerm &&
           <TermOfLoanModal
-            term  = {  validateLoanType && validateLoanType.terms }
-            onSubmit = { (changeTermOfLoan, closePoaModal) =>
+            term ={  validateLoanType && validateLoanType.terms }
+            onSubmit={ (changeTermOfLoan, closePoaModal) =>
               this.setState({
                 termId : changeTermOfLoan.id,
                 termOfLoan : changeTermOfLoan.term,
@@ -191,61 +165,61 @@ class MplFormLoanCardComponent extends Component {
                 showTerm : closePoaModal
               })
             }
-            onClose = { () =>
+            onClose={ () =>
               this.setState({ showTerm : false }) }
           />
         }
-        <div className = { 'mpl-grid-column-2' }>
-          <Card className = { 'mpl-form-card' }>
+        <div className={ 'mpl-grid-column-2' }>
+          <Card className={ 'mpl-form-card' }>
             <h4>
               Benefits Form
             </h4>
-            <div className = { 'mpl-form-card-body' }>
+            <div className={ 'mpl-form-card-body' }>
               <GenericTextBox
-                type = { 'button' }
-                value = { poaText }
-                onClick = { () =>
+                type={ 'button' }
+                value={ poaText }
+                onClick={ () =>
                   this.setState({ showPurposeOfAvailment : true }) }
-                onChange = { poaText =>
+                onChange={ poaText =>
                   this.setState({ poaText }) }
-                placeholder = { 'Purpose Of Availment' }
-                type = { 'text' }/>
+                placeholder={ 'Purpose Of Availment' }
+                type={ 'text' }/>
               <GenericTextBox
-                onChange = { modeOfLoanText =>
+                onChange={ modeOfLoanText =>
                   this.setState({ modeOfLoanText }) }
-                onClick = { () =>
+                onClick={ () =>
                   this.setState({ showOffset : true }) }
-                placeholder = { 'Mode of Loan' }
-                value = { offset ? modeOfLoanText : 'New Loan' }
-                type = { 'text' }/>
+                placeholder={ 'Mode of Loan' }
+                value={ offset ? modeOfLoanText : 'New Loan' }
+                type={ 'text' }/>
               <GenericTextBox
-                value = { amountValue }
-                onChange = { this.onChange }
-                placeholder = { 'Desired Amount' }
-                maxLength = { 11 }
-                type = { 'text' }/>
+                value={ amountValue }
+                onChange={ this.onChange }
+                placeholder={ 'Desired Amount' }
+                maxLength={ 11 }
+                type={ 'text' }/>
               <GenericTextBox
-                value = { `${ termOfLoan } (${ rateOfLoan } %)` }
-                onChange = { (termOfLoan, rateOfLoan) =>
+                value={ `${ termOfLoan } (${ rateOfLoan } %)` }
+                onChange={ (termOfLoan, rateOfLoan) =>
                   this.setState({ termOfLoan, rateOfLoan }) }
-                onClick = { () =>
+                onClick={ () =>
                   this.setState({ showTerm : true }) }
-                placeholder = { 'Term of Loan' }
-                type = { 'text' }/>
+                placeholder={ 'Term of Loan' }
+                type={ 'text' }/>
               <GenericButton
-                type = { 'button' }
-                text = { 'continue' }
-                onClick = { () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, file1, file2) }
-                className = { 'mplview-submit' } />
+                type={ 'button' }
+                text={ 'continue' }
+                onClick={ () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId) }
+                className={ 'mplview-submit' } />
             </div>
           </Card>
           {
             showFileUpload &&
-            <Card className = { 'mpl-form-preview' }>
+            <Card className={ 'mpl-form-preview' }>
               <h4>
                 Form Attachments
               </h4>
-              <div className = { 'mpl-body' }>
+              <div className={ 'mpl-body' }>
               {
                 formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
                   <FileUploader
@@ -292,12 +266,12 @@ class MplFormLoanCardComponent extends Component {
                 )
               }
               </div>
-              <div className = 'mpl-main'>
-                <div className = { 'mpl-review' }>
-                 <div className = { 'mpl-image-view ' }>
+              <div className='mpl-main'>
+                <div className={ 'mpl-review' }>
+                 <div className={ 'mpl-image-view ' }>
                    { $imagePreview }
                  </div>
-                 <div className = { 'mpl-image-view ' }>
+                 <div className={ 'mpl-image-view ' }>
                  </div>
                </div>
               </div>
@@ -309,14 +283,24 @@ class MplFormLoanCardComponent extends Component {
   }
 }
 
-MplFormLoanCardComponent.propTypes = {
-  purposeOfAvailment : PropTypes.array,
-  validateLoanType : PropTypes.array,
+MplFormLoanCardComponent.propTypes={
+  purposeOfAvailment : PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
+  validateLoanType : PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
   loanType : PropTypes.number,
   preferredFormData : PropTypes.func,
   offset : PropTypes.array,
   setSelectedNavigation: PropTypes.func,
-  formAttachments: PropTypes.array,
+  formAttachments : PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
+  textLabel:PropTypes.string
 }
 
 export default MplFormLoanCardComponent
