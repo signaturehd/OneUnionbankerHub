@@ -12,7 +12,7 @@ import Experience from './fragments/ExperienceFragment'
 import Skills from './fragments/SkillsFragment'
 import Certificate from './fragments/CertificateFragment'
 import AboutMe from './fragments/AboutMeFragment'
-import Summary from './fragments/Summary'
+import OnboardingSummary from './fragments/OnboardingSummary'
 import FormValues from './values'
 
 // Presenter
@@ -186,7 +186,7 @@ class OnboardingView extends Component {
       },
       {
         label: 'Profile Summary',
-        component: <Summary
+        component: <OnboardingSummary
           education = { education }
           experience = { experience }
           certificate = { certificate }

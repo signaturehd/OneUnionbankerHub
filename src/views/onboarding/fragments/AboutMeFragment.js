@@ -21,25 +21,11 @@ import './styles/aboutFragment.css'
 class AboutFragment extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      description : null,
-      profilePicture : null
-    }
-  }
-
-  submitExperience () {
-    store.dispatch(OnboardingActions.addAbout(aboutForm))
   }
 
   render () {
     return(
       <div>
-        <center>
-          <GenericButton className={'generic-button'}
-            text= {'Add Experience'}
-          />
-        </center>
-        <div></div>
       </div>
     )
   }
