@@ -2,8 +2,6 @@ import CalamityInteractor from '../../../domain/interactor/calamity/GetValidityC
 import AddCalamityInteractor from '../../../domain/interactor/calamity/AddCalamityAssistanceInteractor'
 import calamityAssistanceParam from '../../../domain/param/AddCalamityAssistanceParam'
 
-import { NotifyActions } from '../../../actions'
-
 export default class CalamityPresenter {
 
  constructor (container) {
@@ -13,36 +11,6 @@ export default class CalamityPresenter {
 
  setView (view) {
   this.view = view
- }
-
- addCalamityAssistance (
-   calamityId,
-   date,
-   property,
-   propertyDesc,
-   propertyType,
-   acquisitionValue,
-   estimatedCost,
-   fileAttachments) {
-  this.addCalamityInteractor.execute(calamityAssistanceParam(
-    calamityId,
-    date,
-    property,
-    propertyDesc,
-    propertyType,
-    acquisitionValue,
-    estimatedCost,
-    fileAttachments
-    )
-  )
-  this.view.showCircularLoader()
-  .subscribe(calamityAssistance => {
-     this.view.noticeOfUndertaking(calamityAssistance)
-     this.view.hideCircularLoader()
-   }, error => {
-     this.view.noticeResponse(error)
-     this.view.hideCircularLoader()
-   })
  }
 
  validateCalamityAssistance () {
@@ -55,6 +23,36 @@ export default class CalamityPresenter {
 
       }
    )
+ }
+
+ addCalamityAssistance (
+   calamityId,
+   date,
+   property,
+   propertyDesc,
+   propertyType,
+   acquisitionValue,
+   estimatedCost,
+   fileAttachments) {
+  this.view.showCircularLoader()
+  this.addCalamityInteractor.execute(calamityAssistanceParam(
+    calamityId,
+    date,
+    property,
+    propertyDesc,
+    propertyType,
+    acquisitionValue,
+    estimatedCost,
+    fileAttachments
+    )
+  )
+  .subscribe(calamityAssistance => {
+     this.view.noticeOfUndertaking(calamityAssistance)
+     this.view.hideCircularLoader()
+   }, e => {
+     this.view.noticeResponse(e)
+     this.view.hideCircularLoader()
+   })
  }
 
 }

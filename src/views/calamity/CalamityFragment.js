@@ -16,7 +16,6 @@ import ConfirmationModal from './modal/CalamityReviewModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import FormComponent from './components/CalamityFormCardComponent'
-import moment from 'moment'
 
 class CalamityFragment extends BaseMVPView{
 
@@ -147,6 +146,37 @@ class CalamityFragment extends BaseMVPView{
 
     return (
       <div>
+      {
+        showNoticeModal &&
+        <NoticeModal
+          onClose={ () => this.setState({ showNoticeModal : false })}
+          noticeResponse={ noticeResponse }
+          benefitId={ '22' }
+          onDismiss={ (showNoticeModal, noticeResponse) =>
+            this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
+        />
+      }
+
+      {
+        showNoticeResponseModal &&
+        <ResponseModal
+          onClose={ () => {
+            this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
+          }}
+          noticeResponse={ noticeResponse }
+        />
+      }
+
+      {
+        showBenefitFeedbackModal &&
+        <BenefitFeedbackModal
+          benefitId={ '22' }
+          onClose={ () => {
+            this.props.history.push('/mybenefits/benefits'),
+            this.setState({ showBenefitFeedbackModal : false })
+          }}
+        />
+      }
         <div>
           <i
             className={ 'back-arrow' }

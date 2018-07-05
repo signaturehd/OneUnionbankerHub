@@ -577,13 +577,13 @@ export default class HRBenefitsService {
       accountNumber,
       releasingCenter,
       date: calamityAssistanceParam.date,
-      damageProperty: {
+      damageProperty: [{
         propertyName: calamityAssistanceParam.property,
         description: calamityAssistanceParam.propertyDesc,
         propertyType: calamityAssistanceParam.propertyType,
         acquisitionValue: calamityAssistanceParam.acquisitionValue,
         repairCost: calamityAssistanceParam.estimatedCost
-      }
+      }]
     }
 
     formData.append('uuid', 12345)
