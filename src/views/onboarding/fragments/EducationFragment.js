@@ -41,7 +41,6 @@ class EducationFragment extends Component {
     }
     education(educationObj)
   }
-
   removeEducation (index) {
     const { removeFormArray } = this.props
     removeFormArray(index)
@@ -49,6 +48,7 @@ class EducationFragment extends Component {
 
   render () {
     const { educationForm, education, updateArray } = this.props
+
     return (
       <div>
         <center>
@@ -112,7 +112,7 @@ class EducationFragment extends Component {
                 />
                 <GenericTextBox
                   placeholder = {'Start Year'}
-                  maxLength={60}
+                  maxLength='4'
                   value = { education.startYear }
                   onChange = { e => {
                       const updatedEducation = [...educationForm]
@@ -123,7 +123,7 @@ class EducationFragment extends Component {
                 />
                 <GenericTextBox
                   placeholder = {'End Year'}
-                  maxLength={60}
+                  maxLength={4}
                   value = { education.finalYear }
                   onChange = { e => {
                       const updatedEducation = [...educationForm]

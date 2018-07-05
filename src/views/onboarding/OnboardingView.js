@@ -13,7 +13,6 @@ import Skills from './fragments/SkillsFragment'
 import Certificate from './fragments/CertificateFragment'
 import AboutMe from './fragments/AboutMeFragment'
 import OnboardingSummary from './fragments/OnboardingSummary'
-import FormValues from './values'
 
 // Presenter
 import Presenter from './presenter/OnboardingPresenter'
@@ -30,7 +29,7 @@ class OnboardingView extends Component {
       experience : [],
       certificate : [],
       skills : [],
-      about : [],
+      about : []
     }
 
     this.addFormArray = this.addFormArray.bind(this)
@@ -42,7 +41,8 @@ class OnboardingView extends Component {
       education,
       skills,
       experience,
-      certificate
+      certificate,
+      about
     } = this.state
 
     switch (form) {
@@ -66,6 +66,11 @@ class OnboardingView extends Component {
           updatedCertificate.push(data)
           this.setState({ certificate : updatedCertificate })
         break
+        case 'about':
+            const updatedaboutMe = [...about]
+            updatedaboutMe.push(data)
+            this.setState({ about : updatedaboutMe })
+          break
     }
   }
 
@@ -74,7 +79,8 @@ class OnboardingView extends Component {
       education,
       skills,
       experience,
-      certificate
+      certificate,
+      about
     } = this.state
 
     switch (form) {
@@ -98,6 +104,11 @@ class OnboardingView extends Component {
           updatedCertificate.splice(index)
           this.setState({ certificate : updatedCertificate })
         break
+      case 'about':
+          const updatedaboutMe = [...about]
+          updatedaboutMe.splice(index)
+          this.setState({ about : updatedaboutMe })
+        break
     }
   }
 
@@ -106,7 +117,8 @@ class OnboardingView extends Component {
       education,
       skills,
       experience,
-      certificate
+      certificate,
+      about
     } = this.state
 
     switch (form) {
@@ -122,6 +134,9 @@ class OnboardingView extends Component {
       case 'certificate':
           this.setState({ certificate : data })
         break
+        case 'about':
+            this.setState({ about : data })
+          break
     }
   }
 
@@ -182,6 +197,10 @@ class OnboardingView extends Component {
         component: <AboutMe
           setAbout = { (about) => this.setState({ about }) }
           aboutForm = { about }
+          about = { (about) => this.addFormArray('about' , about) }
+          removeForm = { (index) => this.removeFormArray('about', index) }
+          updateArray = { (about) => this.updateArray('about', about) }
+
         />
       },
       {

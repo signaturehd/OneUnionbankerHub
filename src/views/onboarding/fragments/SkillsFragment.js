@@ -46,12 +46,12 @@ class SkillsFragment extends Component {
 
   render () {
     const { skillsForm, updateArray } = this.props
-    return(
+    return (
       <div>
         <center>
           <GenericButton className={'generic-button'}
             onClick={() => this.addNewSkill()}
-            text= {'Add Experience'}
+            text= {'Add Skill'}
           />
         </center>
         <br/>
@@ -64,7 +64,7 @@ class SkillsFragment extends Component {
                 key = {key}
               >
                 <GenericTextBox
-                  placeholder = {'Certificate Name'}
+                  placeholder = {'Skill Name'}
                   maxLength={60}
                   value = { skills.skillName }
                   onChange = { e => {
@@ -75,8 +75,15 @@ class SkillsFragment extends Component {
                   }
                 />
                 <GenericTextBox
-                  placeholder = {'Issuing Body'}
+                  placeholder = {'Skill Level'}
                   maxLength={60}
+                  value = { skills.skillLevel }
+                  onChange = { e => {
+                      const updatedSkills = [...skillsForm]
+                      updatedSkills[key].skillLevel = e.target.value
+                      updateArray(updatedSkills)
+                    }
+                  }
                 />
                 <br/>
                 <GenericButton

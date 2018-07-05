@@ -20,13 +20,12 @@ class OnboardingSummary extends Component {
   }
 
   render () {
-
     const {
       education,
       skills,
       certificate,
       profileDescription,
-      profileImage,
+      file,
       experience,
     } = this.props
 
@@ -47,7 +46,9 @@ OnboardingSummary.propTypes = {
   skills : PropTypes.array,
   certificate : PropTypes.array,
   profileDescription : PropTypes.string,
-  profileImage : PropTypes.string,
+  file : PropTypes.object,
+  about : PropTypes.array,
+
 }
 
 export default OnboardingSummary
