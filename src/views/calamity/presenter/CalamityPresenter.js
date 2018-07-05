@@ -2,6 +2,8 @@ import CalamityInteractor from '../../../domain/interactor/calamity/GetValidityC
 import AddCalamityInteractor from '../../../domain/interactor/calamity/AddCalamityAssistanceInteractor'
 import calamityAssistanceParam from '../../../domain/param/AddCalamityAssistanceParam'
 
+import { NotifyActions } from '../../../actions'
+
 export default class CalamityPresenter {
 
  constructor (container) {
@@ -11,18 +13,6 @@ export default class CalamityPresenter {
 
  setView (view) {
   this.view = view
- }
-
- validateCalamityAssistance () {
-   this.calamityInteractor.execute()
-     .subscribe(
-       calamityAssistance => {
-         this.view.setValidateCalamityAssistance(calamityAssistance)
-       },
-       error => {
-
-      }
-   )
  }
 
  addCalamityAssistance (
@@ -46,13 +36,25 @@ export default class CalamityPresenter {
     )
   )
   this.view.showCircularLoader()
-   .subscribe(calamityAssistance => {
+  .subscribe(calamityAssistance => {
      this.view.noticeOfUndertaking(calamityAssistance)
      this.view.hideCircularLoader()
-   }, e => {
-     this.view.noticeResponse(e)
+   }, error => {
+     this.view.noticeResponse(error)
      this.view.hideCircularLoader()
    })
+ }
+
+ validateCalamityAssistance () {
+   this.calamityInteractor.execute()
+     .subscribe(
+       calamityAssistance => {
+         this.view.setValidateCalamityAssistance(calamityAssistance)
+       },
+       error => {
+
+      }
+   )
  }
 
 }

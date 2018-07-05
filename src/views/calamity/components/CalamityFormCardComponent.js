@@ -211,9 +211,10 @@ class CalamityFormCardComponent extends Component {
                   this.setState({ showModal : true })
                }
               }
+              readOnly
               placeholder={ 'Type of Calamity' }
               onChange={ (e) => this.setState({ calamityType : e.target.value }) }
-              type={ 'button' }/>
+              type={ 'text' }/>
 
               <GenericTextBox
                 value={ preferredDate ? preferredDate : ''}

@@ -585,10 +585,10 @@ export default class HRBenefitsService {
         repairCost: calamityAssistanceParam.estimatedCost
       }
     }
+
     formData.append('uuid', 12345)
-    formData.append('cert', calamityAssistanceParam.attachments)
+    formData.append('file', calamityAssistanceParam.attachments)
     formData.append('body', JSON.stringify(calamityObject))
-    console.log(calamityObject)
     return this.apiClient.post('v1/calamity/availment', formData,{
       headers: { token }
     })
