@@ -25,9 +25,8 @@ class Stepper extends Component {
       this.setState({ activeStep: this.state.activeStep - 1 })
     }
   }
-
-  myOwnSubmitHanlder() {
-     console.log('hello', this.state);
+  
+   myOwnSubmitHanlder() {
      this.props.handleSubmit()
    }
 
@@ -35,7 +34,9 @@ class Stepper extends Component {
     const { steps, onFinish } = this.props
     const { activeStep } = this.state
     const stepIndicators = steps.map((step, i) => (
-        <div className={ 'stepper-inner' }
+        <div
+             key = {i}
+             className={ 'stepper-inner' }
              onClick={() => this.handleStepChange(i) }>
           <div className={ `stepper-number ${ activeStep === i && 'active' }` }>
             <span>{i + 1}</span>

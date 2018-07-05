@@ -1,124 +1,149 @@
+/* import react */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Field, FieldArray, reduxForm } from 'redux-form'
-import './styles/general.css'
-import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
-import DatePicker from 'react-datepicker'
-import moment from 'moment'
 
+/* import redux */
+import store from '../../../store'
+import { OnboardingActions } from '../../../actions'
 
-const renderDatePicker = ({ input, label, type, className, selected, meta: { touched, error } }) =>
-  <DatePicker
-    {...input}
-        placeholder={'Start Date'}
-        type={type}
-        className={'calendar'}
-        dropdownMode="select"
-        dateForm="YYYY/MM/DD"
-        selected={input.value ? moment(input.value) : null}
-        onChange={date => input.onChange(moment(date).format('YYYY/MM/DD'))}
-        peekNextMonth
-        showMonthDropdown
-        showYearDropdown
-        required
-  />
+/* Generic Components */
+import {
+  GenericTextBox,
+  Card,
+  GenericButton,
+  FileUploader,
+  CircularLoader
+} from '../../../ub-components/'
 
-const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
-<div >
-  <center><h4> Education </h4></center>
-    <center>
-      <GenericButton className={'generic-button'}
-      type="button"
-      onClick={() => fields.push({})}
-      text= {'Add Education'}
-    />
-    </center>
-    <br/>
-    <div>
+/* import styles */
+import './styles/educationFragment.css'
+
+class EducationFragment extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      educationForm : [],
+    }
+
+    this.addNewEducation = this.addNewEducation.bind(this)
+    this.removeEducation = this.removeEducation.bind(this)
+  }
+
+  addNewEducation () {
+    const { educationForm, education } = this.props
+    const educationObj = {
+      course: '',
+      schoolName: '',
+      degree: '',
+      honor: '',
+      startYear: '',
+      finalYear: '',
+    }
+    education(educationObj)
+  }
+
+  removeEducation (index) {
+    const { removeFormArray } = this.props
+    removeFormArray(index)
+  }
+
+  render () {
+    const { educationForm, education, updateArray } = this.props
+    return (
       <div>
-        <div>
-          {(touched || submitFailed) && error && <span>{error}</span>}
-        </div>
-
-  <form className = 'educ-form-container'>
-    {fields.map((member, index) => (
-      <Card key={index}>
-        <br/>
         <center>
-          <GenericButton
-            type='button'
-            text="Remove Education"
-            onClick={() => fields.remove(index)}
+          <GenericButton className={'generic-button'}
+            onClick={() => this.addNewEducation()}
+            text= {'Add Education'}
           />
-
-      <h4>Education #{index + 1}</h4></center>
-
-        <GenericTextBox
-          placeholder = {'School'}
-          maxLength={60}
-        />
-        <GenericTextBox
-          placeholder = {'Degree'}
-          maxLength={60}
-        />
-        <GenericTextBox
-          placeholder = {'Course'}
-          maxLength={60}
-        />
-        <GenericTextBox
-          placeholder = {'Special Honors'}
-          maxLength={60}
-        />
-        <center>
-        <div> <h4> Inclusive Dates </h4>
-        <label>Start Date</label>
-        <Field
-          placeholder = {'Start Date'}
-          name={`${member}.startDate`}
-          readOnly
-          component={renderDatePicker}
-          className = { 'calendar' }
-          calendarClassName = { 'calendarClass' }
-          peekNextMonth
-          showMonthDropdown
-          showYearDropdown
-        />
-        <label>End Date</label>
-        <Field
-          placeholder = {'End Date'}
-          name={`${member}.endDate`}
-          readOnly
-          component={renderDatePicker}
-          className = { 'calendar' }
-          calendarClassName = { 'calendarClass' }
-          peekNextMonth
-          showMonthDropdown
-          showYearDropdown
-          validate={[required]}
-        />
-          <br/>
+        </center>
+        <br/>
+        <div className = { 'onboarding-education-form-container' } >
+          {
+            educationForm.length !== 0 &&
+            educationForm.map((education, key) =>
+              <Card
+                className = { 'onboarding-education-form' }
+                key = {key}
+              >
+                <GenericTextBox
+                  placeholder = {'School'}
+                  maxLength={60}
+                  value = { education.schoolName }
+                  onChange = { e => {
+                      const updatedEducation = [...educationForm]
+                      updatedEducation[key].schoolName = e.target.value
+                      updateArray(updatedEducation)
+                    }
+                  }
+                />
+                <GenericTextBox
+                  placeholder = {'Degree'}
+                  maxLength={60}
+                  value = { education.degree }
+                  onChange = { e => {
+                      const updatedEducation = [...educationForm]
+                      updatedEducation[key].degree = e.target.value
+                      updateArray(updatedEducation)
+                    }
+                  }
+                />
+                <GenericTextBox
+                  placeholder = {'Course'}
+                  maxLength={60}
+                  value = { education.course }
+                  onChange = { e => {
+                      const updatedEducation = [...educationForm]
+                      updatedEducation[key].course = e.target.value
+                      updateArray(updatedEducation)
+                    }
+                  }
+                />
+                <GenericTextBox
+                  placeholder = {'Special Honors'}
+                  maxLength={60}
+                  value = { education.honor }
+                  onChange = { e => {
+                      const updatedEducation = [...educationForm]
+                      updatedEducation[key].honor = e.target.value
+                      updateArray(updatedEducation)
+                    }
+                  }
+                />
+                <GenericTextBox
+                  placeholder = {'Start Year'}
+                  maxLength={60}
+                  value = { education.startYear }
+                  onChange = { e => {
+                      const updatedEducation = [...educationForm]
+                      updatedEducation[key].startYear = e.target.value
+                      updateArray(updatedEducation)
+                    }
+                  }
+                />
+                <GenericTextBox
+                  placeholder = {'End Year'}
+                  maxLength={60}
+                  value = { education.finalYear }
+                  onChange = { e => {
+                      const updatedEducation = [...educationForm]
+                      updatedEducation[key].finalYear = e.target.value
+                      updateArray(updatedEducation)
+                    }
+                  }
+                />
+                <br/>
+                <GenericButton
+                  onClick = { () => this.removeEducation(key) }
+                  text= {'Remove Form'}
+                />
+              </Card>
+            )
+          }
         </div>
-      </center>
-    </Card>
-    ))}
-  </form>
-
-        </div>
-    </div>
-</div>
-)
-
-const FieldArraysForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props
-  return (
-    <div onSubmit={handleSubmit} >
-      <FieldArray name="Education" component={renderMembers} />
-
-    </div>
-  )
+      </div>
+    )
+  }
 }
-export default reduxForm({
-  form: 'form', // a unique identifier for this form
-  destroyOnUnmount: false, //        <------ preserve form data
-  forceUnregisterOnUnmount: true,
-})(FieldArraysForm)
+
+export default EducationFragment

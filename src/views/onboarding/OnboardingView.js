@@ -1,15 +1,12 @@
+/* React Dependencies */
 import React, { Component } from 'react'
-import { Provider, connect } from 'react-redux'
-import { getFormValues } from 'redux-form'
-import store from './store'
 import PropTypes from 'prop-types'
 
+// Imports
 import BaseMVPView from '../common/base/BaseMVPView'
-
 import ConnectView from '../../utils/ConnectView'
 
-import Stepper from './components/StepsComponent'
-import './components/styles/boardingStyle.css'
+// Major Fragments
 import Education from './fragments/EducationFragment'
 import Experience from './fragments/ExperienceFragment'
 import Skills from './fragments/SkillsFragment'
@@ -18,66 +15,193 @@ import AboutMe from './fragments/AboutMeFragment'
 import Summary from './fragments/Summary'
 import FormValues from './values'
 
+// Presenter
+import Presenter from './presenter/OnboardingPresenter'
 
-
-const steps = [
-  {
-    label: 'Education',
-    component: <Provider store={store}>
-      <Education onSubmit={'submit'} />
-  </Provider>,
-    exitValidation: false
-  },
-  {
-    label: 'Experience',
-    component: <Provider store={store}>
-      <Experience onSubmit={'To do: add submit function'} />
-  </Provider>,
-  },
-  {
-    label: 'Certificate',
-    component: <Provider store={store}>
-      <Certificate onSubmit={'To do: add submit function'} />
-  </Provider>,
-  },
-  {
-    label: 'Skills',
-    component: <Provider store={store}>
-      <Skills onSubmit={'To do: add submit function'} />
-  </Provider>,
-  },
-  {
-    label: 'About Me',
-    component: <Provider store={store}>
-      <AboutMe onSubmit={'To do: add submit function'} />
-  </Provider>,
-  },
-  {
-    label: 'Profile Summary',
-    component: <Provider store={store}>
-      <Summary />
-              </Provider>,
-  }
-]
+// Other Components
+import Stepper from './components/StepsComponent'
+import './components/styles/boardingStyle.css'
 
 class OnboardingView extends Component {
   constructor (props) {
     super(props)
-  }
-
-  render () {
-    const submit = () => {
-      window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
+    this.state = {
+      education : [],
+      experience : [],
+      certificate : [],
+      skills : [],
+      about : [],
     }
 
+    this.addFormArray = this.addFormArray.bind(this)
+    this.removeFormArray = this.removeFormArray.bind(this)
+  }
 
+  addFormArray (form, data) {
+    const {
+      education,
+      skills,
+      experience,
+      certificate
+    } = this.state
+
+    switch (form) {
+      case 'education':
+          const updatedEducation = [...education]
+          updatedEducation.push(data)
+          this.setState({ education : updatedEducation })
+        break
+      case 'experience':
+          const updatedExperience = [...experience]
+          updatedExperience.push(data)
+          this.setState({ experience : updatedExperience })
+        break
+      case 'skills':
+          const updatedSkills = [...skills]
+          updatedSkills.push(data)
+          this.setState({ skills : updatedSkills })
+        break
+      case 'certificate':
+          const updatedCertificate = [...certificate]
+          updatedCertificate.push(data)
+          this.setState({ certificate : updatedCertificate })
+        break
+    }
+  }
+
+  removeFormArray (form, index) {
+    const {
+      education,
+      skills,
+      experience,
+      certificate
+    } = this.state
+
+    switch (form) {
+      case 'education':
+          const updatedEducation = [...education]
+          updatedEducation.splice(index)
+          this.setState({ education : updatedEducation })
+        break
+      case 'experience':
+          const updatedExperience = [...experience]
+          updatedExperience.splice(index)
+          this.setState({ experience : updatedExperience })
+        break
+      case 'skills':
+          const updatedSkills = [...skills]
+          updatedSkills.splice(index)
+          this.setState({ skills : skills })
+        break
+      case 'certificate':
+          const updatedCertificate = [...certificate]
+          updatedCertificate.splice(index)
+          this.setState({ certificate : updatedCertificate })
+        break
+    }
+  }
+
+  updateArray (form, data) {
+    const {
+      education,
+      skills,
+      experience,
+      certificate
+    } = this.state
+
+    switch (form) {
+      case 'education':
+          this.setState({ education : data })
+        break
+      case 'experience':
+          this.setState({ experience : data })
+        break
+      case 'skills':
+          this.setState({ skills : data })
+        break
+      case 'certificate':
+          this.setState({ certificate : data })
+        break
+    }
+  }
+
+
+  render () {
+    const {
+      education,
+      experience,
+      skills,
+      certificate,
+      about,
+    } = this.state
+
+
+    const steps = [
+      {
+        label: 'Education',
+        component: <Education
+          setEducation = { (education) => this.setState({ education }) }
+          education = { (education) => this.addFormArray('education' , education) }
+          removeForm = { (index) => this.removeFormArray('education', index) }
+          educationForm = { education }
+          updateArray = { (education) => this.updateArray('education', education) }
+        />
+      },
+      {
+        label: 'Experience',
+        component: <Experience
+          setExperience = { (experience) => this.setState({ experience }) }
+          experience = { (experience) => this.addFormArray('experience' , experience) }
+          removeForm = { (index) => this.removeFormArray('experience', index) }
+          experienceForm = { experience }
+          updateArray = { (experience) => this.updateArray('experience', experience) }
+        />
+      },
+      {
+        label: 'Certificate',
+        component: <Certificate
+          setCertificate = { (certificate) => this.setState({ certificate }) }
+          certificate = { (certificate) => this.addFormArray('certificate' , certificate) }
+          removeForm = { (index) => this.removeFormArray('certificate', index) }
+          certificateForm = { certificate }
+          updateArray = { (certificate) => this.updateArray('certificate', certificate) }
+        />
+      },
+      {
+        label: 'Skills',
+        component: <Skills
+          setSkills = { (skills) => this.setState({ skills }) }
+          skills = { (skills) => this.addFormArray('skills' , skills) }
+          removeForm = { (index) => this.removeFormArray('skills', index) }
+          skillsForm = { skills }
+          updateArray = { (skills) => this.updateArray('skills', skills) }
+        />
+      },
+      {
+        label: 'About Me',
+        component: <AboutMe
+          setAbout = { (about) => this.setState({ about }) }
+          aboutForm = { about }
+        />
+      },
+      {
+        label: 'Profile Summary',
+        component: <Summary
+          education = { education }
+          experience = { experience }
+          certificate = { certificate }
+          skills = { skills }
+          about = { about }
+        />
+      }
+    ]
     return (
       <div>
-          <Stepper steps={ steps } onFinish={ submit } />
-
-        </div>
-
+        <Stepper steps = {steps} />
+      </div>
     )
   }
 }
-export default (OnboardingView)
+
+
+export default OnboardingView

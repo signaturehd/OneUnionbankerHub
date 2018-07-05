@@ -1,120 +1,137 @@
+/* import react */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Field, FieldArray, reduxForm } from 'redux-form'
-import './styles/general.css'
-import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
-import DatePicker from 'react-datepicker'
-import moment from 'moment'
 
+/* import redux */
+import store from '../../../store'
+import { OnboardingActions } from '../../../actions'
 
-const renderDatePicker = ({ input, label, type, className, selected, meta: { touched, error } }) =>
-  <DatePicker
-    {...input}
-        placeholder={'Start Date'}
-        type={type}
-        className={'calendar'}
-        dropdownMode="select"
-        dateForm="YYYY/MM/DD"
-        peekNextMonth
-        showMonthDropdown
-        showYearDropdown
-        selected={input.value ? moment(input.value) : null}
-        onChange={date => input.onChange(moment(date).format('YYYY/MM/DD'))}
-  />
+/* Generic Components */
+import {
+  GenericTextBox,
+  Card,
+  GenericButton,
+  FileUploader,
+  CircularLoader
+} from '../../../ub-components/'
 
-const renderMembers = ({ fields, meta: { touched, error, submitFailed } }) => (
-  <div >
-    <center><h4> Experience </h4></center>
-      <center>
-        <GenericButton className={'generic-button'}
-        type="button"
-        onClick={() => fields.push({})}
-        text= {'Add Experience'}
-      />
-      </center>
-      <br/>
+/* import styles */
+import './styles/experienceFragment.css'
+
+class ExperienceFragment extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      experienceForm : [],
+    }
+
+    this.addNewExperience = this.addNewExperience.bind(this)
+    this.removeExperience = this.removeExperience.bind(this)
+  }
+
+  addNewExperience () {
+    const { experienceForm, experience } = this.props
+    const experienceObj = {
+      companyName: '',
+      companyAddress: '',
+      position: '',
+      startYear: '',
+      finalYear: '',
+    }
+    experience(experienceObj)
+  }
+
+  removeExperience (index) {
+    const { removeFormArray } = this.props
+    removeFormArray(index)
+  }
+
+  render () {
+    const { experienceForm, updateArray } = this.props
+    return(
       <div>
-        <div>
-          <div>
-            {(touched || submitFailed) && error && <span>{error}</span>}
-          </div>
-
-    <form className = 'educ-form-container'>
-      {fields.map((member, index) => (
-        <Card key={index}>
-          <br/>
-          <center>
-            <GenericButton
-              type='button'
-              text="Remove Experience"
-              onClick={() => fields.remove(index)}
-            />
-
-        <h4>Experience #{index + 1}</h4></center>
-
-        <GenericTextBox
-          placeholder = {'Company Name'}
-          maxLength={60}
-        />
-        <GenericTextBox
-          placeholder = {'Company Address'}
-          maxLength={60}
-        />
-        <GenericTextBox
-          placeholder = {'Position'}
-          maxLength={60}
-        />
-        <textarea
-          className = { 'experience-textarea' }
-          placeholder = { 'Brief Description of duties' }
-        />
         <center>
-        <div> <h4> Inclusive Dates </h4>
-        <label>Start Date</label>
-        <Field
-          placeholder = {'Start Date'}
-          name={`${member}.startDate`}
-          readOnly
-          component={renderDatePicker}
-          className = { 'calendar' }
-          peekNextMonth
-          showMonthDropdown
-          showYearDropdown
-          calendarClassName = { 'calendarClass' }
-        />
-        <label>End Date</label>
-        <Field
-          placeholder = {'End Date'}
-          name={`${member}.endDate`}
-          readOnly
-          component={renderDatePicker}
-          className = { 'calendar' }
-          peekNextMonth
-          showMonthDropdown
-          showYearDropdown
-          calendarClassName = { 'calendarClass' }
-        />
-        <br/>
-        </div>
+          <GenericButton className={'generic-button'}
+            onClick={() => this.addNewExperience()}
+            text= {'Add Experience'}
+          />
         </center>
-      </Card>
-    ))}
-      </form>
-    </div>
-  </div>
-</div>
-)
-const FieldArraysForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props
-  return (
-    <div onSubmit={handleSubmit}>
-      <FieldArray name="experience" component={renderMembers} />
-    </div>
-  )
+        <br/>
+        <div className = { 'onboarding-experience-form-container' } >
+          {
+            experienceForm.length !== 0 &&
+            experienceForm.map((experience, key) =>
+              <Card
+                className = { 'onboarding-experience-form' }
+                key = {key}
+              >
+                <GenericTextBox
+                  placeholder = {'Company Name'}
+                  maxLength={60}
+                  value = { experience.companyName }
+                  onChange = { e => {
+                      const updatedExperience = [...experienceForm]
+                      updatedExperience[key].companyName = e.target.value
+                      updateArray(updatedExperience)
+                    }
+                  }
+                />
+                <GenericTextBox
+                  placeholder = {'Company Address'}
+                  maxLength={60}
+                  value = { experience.companyAddress }
+                  onChange = { e => {
+                      const updatedExperience = [...experienceForm]
+                      updatedExperience[key].companyAddress = e.target.value
+                      updateArray(updatedExperience)
+                    }
+                  }
+                />
+                <GenericTextBox
+                  placeholder = {'Position'}
+                  maxLength={60}
+                  value = { experience.position }
+                  onChange = { e => {
+                      const updatedExperience = [...experienceForm]
+                      updatedExperience[key].position = e.target.value
+                      updateArray(updatedExperience)
+                    }
+                  }
+                />
+                <GenericTextBox
+                  placeholder = {'Start Year'}
+                  maxLength={60}
+                  value = { experience.startYear }
+                  onChange = { e => {
+                      const updatedExperience = [...experienceForm]
+                      updatedExperience[key].startYear = e.target.value
+                      updateArray(updatedExperience)
+                    }
+                  }
+                />
+                <GenericTextBox
+                  placeholder = {'End Year'}
+                  value = { experience.finalYear }
+                  maxLength={60}
+                  onChange = { e => {
+                      const updatedExperience = [...experienceForm]
+                      updatedExperience[key].finalYear = e.target.value
+                      updateArray(updatedExperience)
+                    }
+                  }
+                />
+                <br/>
+                <GenericButton
+                  onClick = { () => this.removeExperience(key) }
+                  text= {'Remove Form'}
+                />
+              </Card>
+            )
+          }
+        </div>
+      </div>
+    )
+  }
 }
 
-export default reduxForm({
-  form: 'form', // a unique identifier for this form
-  destroyOnUnmount: false, //        <------ preserve form data
-  forceUnregisterOnUnmount: true,
-})(FieldArraysForm)
+export default ExperienceFragment
