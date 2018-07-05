@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './styles/dentalLoaComponentStyle.css'
+import './styles/dentalloaComponentStyle.css'
 import DentalLoaBranchModal from '../modal/DentalLoaBranchModal'
 import DentalLoaDependentModal from '../modal/DentalLoaDependentModal'
 import DentalLoaProcedureModal from '../modal/DentalLoaProcedureModal'
@@ -58,73 +58,82 @@ class DentalLoaCard extends Component {
       showProcedureModal } = this.state
 
     return (
-      <Card className = { 'dentalloa-card' }>
-        <div className = { 'dentalloa-header' }>
-          <div className = {'dentalloa-body'}>
-            <div className = { 'dentalloa-col' }>
-              <i className = { 'dentalloa-icon text1-icon' }/>
-               <GenericTextBox
-                 onClick = { () => onClick(true, false, false) }
-                 value = { recipient && recipient }
-                 readOnly
-                 placeholder = { text1 } />
-          </div>
-          <div className = { 'dentalloa-col' }>
-            <i className = { 'dentalloa-icon text2-icon' }/>
-             <GenericTextBox
-               value = { branch && branch }
-               readOnly
-               onClick = { () => onClick(false, true, false) }
-               placeholder = { text2 } />
-          </div>
-          <div className = { 'dentalloa-col' }>
-            <i className = { 'dentalloa-icon text3-icon' }/>
-              <DatePicker
-                dateFormat = { 'DD-MM-YYYY' }
-                readOnly
-                selected = { preferredDate }
-                onChange = { this.onChange }
-                className = { 'calendar' }
-                calendarClassName = { 'calendarClass' }/>
-          </div>
-          </div>
-        </div>
-        <div className = { 'dentalloa-footer-left' }>
-        {
-        selectedProcedures && selectedProcedures.map((procedure, key) => (
-             <div>
-               <div key = { key } className = { 'procedure-grid' }>
-                  <List
-                    description = { `${  procedure.limit}` }
-                    title = { procedure.name }
-                  />
-                 <button
-                   className = { 'dentalloa-cancel-button' }
-                   onClick = { () => {
-                   selectedProcedures.splice(key, 1)
-                   this.setState({ selectedProcedures })
-                  }}>X</button>
-               </div>
-               <br/>
-             </div>
-             ))
-         }
-         <br/>
-        <GenericButton
-          onClick = { () => onClick(false, false, true) }
-          type = { 'button' }
-          text = { text4 }
-          className = { 'dentalloa-procedure' }
-          value = { 'Procedures' } />
+      <div className = { 'dentalloa-container' }>
+        <div className = { 'dentalloa-grid-column-2' }>
+          <div></div>
+          <Card className = { 'dentalloa-card' }>
+            <div className = { 'dentalloa-header' }>
+              <div className = {'dentalloa-body'}>
+                <GenericTextBox
+                  onClick = { () => onClick(true, false, false) }
+                  value = { recipient && recipient }
+                  readOnly
+                  placeholder = { text1 } />
+                <GenericTextBox
+                  value = { branch && branch }
+                  readOnly
+                  onClick = { () => onClick(false, true, false) }
+                  placeholder = { text2 } />
+                <div>
+                  <DatePicker
+                    dateFormat = { 'DD-MM-YYYY' }
+                    readOnly
+                    selected = { preferredDate }
+                    onChange = { this.onChange }
+                    className = { 'calendar' }
+                    calendarClassName = { 'calendarClass' }/>
+                  <label className="dentalloa-label">Date</label>
+                </div>
+              </div>
+            </div>
+            <div className = { 'dentalloa-footer-left' }>
+            <div className={'procedure-header'}>
+            <div className={'grid'}>
+              <h4 className={ 'dentalloa-procedure-list-title' }>PROCEDURES</h4>
+              <GenericButton
+                onClick = { () => onClick(false, false, true) }
+                type = { 'button' }
+                text = { 'Add procedure' }
+                className = { 'dentalloa-procedure' }
+                value = { 'Procedures' } />
+              </div>
+            </div>
+            {
+            selectedProcedures && selectedProcedures.map((procedure, key) => (
+                 <div className = { 'dentalloa-procedure-list' }>
+                   <div key = { key } className = { 'procedure-grid' }>
+                      <div className={ 'procedure-div' }>
+                        <h5 className={'dentalloa-procedure-list-name'}>{ procedure.name }</h5>
+                        <h6 className={'dentalloa-procedure-list-limit'}>{ `${  procedure.limit}` }</h6>
+                      </div>
+                      <img
+                        src={ require('../../../ub-components/Notify/images/x-circle.png') }
+                        className='close-button'
+                        onClick={
+                          () => {
+                            selectedProcedures.splice(key, 1)
+                            this.setState({ selectedProcedures })
+                          }
+                        }
+                      />
+                   </div>
+                   <br/>
+                 </div>
+                 ))
+             }
+             <br/>
 
-        <div className = { 'dentalloa-button-submit' }>
-          <GenericButton
-             className = { 'dentalloa-button' }
-             onClick = { submitForm }
-             text = { submit }/>
-        </div>
+
+            <div className = { 'dentalloa-button-submit' }>
+              <GenericButton
+                 className = { 'dentalloa-button' }
+                 onClick = { submitForm }
+                 text = { submit }/>
+            </div>
+          </div>
+        </Card>
       </div>
-    </Card>
+    </div>
     )
   }
 }
