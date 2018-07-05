@@ -40,10 +40,10 @@ export default class CarLeasePresenter {
        data => {
          this.view.hideCircularLoader()
          this.view.noticeOfUndertaking(data)
-         this.view.navigate()
        }, error => {
-         this.view.navigate()
+         this.view.noticeResponse(error)
          this.view.hideCircularLoader()
+         this.view.navigate()
        }
      )
   }
