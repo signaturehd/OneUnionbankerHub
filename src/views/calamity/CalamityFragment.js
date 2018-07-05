@@ -141,7 +141,8 @@ class CalamityFragment extends BaseMVPView{
       showBenefitFeedbackModal,
       calamityAssistance,
       enabledLoader,
-      date
+      date,
+      response
     }=this.state
 
     return (
@@ -152,8 +153,8 @@ class CalamityFragment extends BaseMVPView{
           onClose={ () => this.setState({ showNoticeModal : false })}
           noticeResponse={ noticeResponse }
           benefitId={ '22' }
-          onDismiss={ (showNoticeModal, noticeResponse) =>
-            this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
+          onDismiss={ (showNoticeModal, response) =>
+            this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
         />
       }
 
@@ -163,7 +164,7 @@ class CalamityFragment extends BaseMVPView{
           onClose={ () => {
             this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
           }}
-          noticeResponse={ noticeResponse }
+          noticeResponse={ response }
         />
       }
 
