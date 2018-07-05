@@ -21,10 +21,10 @@ class CarLeaseNewFragment extends BaseMVPView {
     super(props)
     this.state = {
       enabledLoader : false,
-      noticeResponse : null, /* notice response*/
-      showNoticeResponseModal : false,
       showNoticeModal : false,
-      showConfirmation : false,
+      noticeResponse : null,
+      showNoticeResponseModal : false,
+      showBenefitFeedbackModal : false,
       loanType: 15,
       leaseMode: 1,
       carBrand: '',
@@ -102,8 +102,13 @@ class CarLeaseNewFragment extends BaseMVPView {
   }
 
   /* Notice Response*/
+
   noticeOfUndertaking (noticeResponse) {
-    this.setState({ showNoticeModal : true, noticeResponse })
+  this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
+  }
+
+  noticeResponse (noticeResponse) {
+    this.setState({showConfirmation: false, noticeResponse })
   }
 
   /* Implementation*/
@@ -130,10 +135,10 @@ class CarLeaseNewFragment extends BaseMVPView {
     const {
       enabledLoader,
       formAttachments,
-      showConfirmation,
       showNoticeModal,
-      showNoticeResponseModal,
       noticeResponse,
+      showNoticeResponseModal,
+      showBenefitFeedbackModal,
       response,
       carBrand,
       carModel,
@@ -150,27 +155,34 @@ class CarLeaseNewFragment extends BaseMVPView {
         {
           showNoticeModal &&
           <NoticeModal
-            onClose={ () => this.setState({ showNotice : false })}
+            onClose={ () => this.setState({ showNoticeModal : false })}
             noticeResponse={ noticeResponse }
             benefitId={ loanType }
-            onDismiss={ (showNoticeModal, response) =>
-              this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
+            onDismiss={ (showNoticeModal, noticeResponse) =>
+              this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
           />
         }
+
         {
           showNoticeResponseModal &&
           <ResponseModal
             onClose={ () => {
-              this.setState({ showNoticeResponseModal : false })
-              this.props.history.push('/mybenefits/benefits/carlease')
+              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
             }}
-            benefitId={ loanType }
-            noticeResponse={ response }
-            onDismiss={ (showNoticeModal, response) =>
-              this.setState({ showNoticeModal, response })  }
+            noticeResponse={ noticeResponse }
           />
         }
-        <div>
+
+        {
+          showBenefitFeedbackModal &&
+          <BenefitFeedbackModal
+            benefitId={ loanType }
+            onClose={ () => {
+              this.props.history.push('/mybenefits/benefits/education'),
+              this.setState({ showBenefitFeedbackModal : false })
+            }}
+          />
+        }v>
           <i
             className={ 'back-arrow' }
             onClick={ this.navigate.bind(this) }>
