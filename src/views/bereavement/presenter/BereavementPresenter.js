@@ -25,19 +25,30 @@ export default class BereavementPresenter {
   validateBereavement () {
     this.getBereavementValidateInteractor.execute()
       .subscribe(resp => {
-          console.log(resp)
+          this.view.showValidatedValue(resp)
+          this.view.showDependentsValue(resp.dependents)
+          this.view.hideCircularLoader()
         }, e => {
-          console.error(e)
           this.view.navigate()
       })
   }
 
   addBereavement () {
-    this.addBereavementInteractor.execute(AddBereavementParam)
+    this.view.showCircularLoader()
+    this.addBereavementInteractor.execute(AddBereavementParam(AddBereavementParam(
+      dependentId,
+      objectDate,
+      objectFuneral,
+      objectMemorial,
+      file
+      ))
+    )
       .subscribe(resp => {
-          console.log(resp)
+        this.view.noticeOfUndertaking(resp)
+        this.view.hideCircularLoader()
         }, e => {
-          console.error(e)
+          this.view.noticeResponse(e)
+          this.view.hideCircularLoader()
       })
   }
 
