@@ -182,7 +182,8 @@ class CarLeaseNewFragment extends BaseMVPView {
               this.setState({ showBenefitFeedbackModal : false })
             }}
           />
-        }v>
+        }
+        <div>
           <i
             className={ 'back-arrow' }
             onClick={ this.navigate.bind(this) }>
