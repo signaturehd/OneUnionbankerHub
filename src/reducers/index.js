@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   samples,
   notify,
   events,
-  login
+  login,
 })
 
 export default rootReducer

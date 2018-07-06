@@ -1,0 +1,221 @@
+/* Icon settings */
+.profile-icon-settings {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 20px;
+  width: 20px;
+  background-repeat: no-repeat;
+}
+
+.profile-cursor-pointer {
+  cursor: pointer;
+}
+
+.profile-cursor-pointer:hover {
+  color: #ff8a00;
+}
+
+.employeeId {
+  background-image: url('../../../../images/icons/IdCardOrange.png');
+}
+
+.employeeContact {
+  background-image: url('../../../../images/My Profile.png');
+}
+
+.employeeFullName {
+  background-image: url('../../../../images/icons/FullNameOrange.png');
+}
+
+.employeeBdate {
+  background-image: url('../../../../images/icons/BirthdayOrange.png');
+}
+
+.employeeDesignation {
+  background-image: url('../../../../images/icons/DesignationOrange.png');
+}
+
+.employeeDependent {
+  background-image: url('../../../../images/icons/DependentsOrange.png');
+}
+
+.employeeGender {
+  background-image: url('../../../../images/icons/GenderOrange.png');
+}
+
+.employeeHomeAddress {
+  background-image: url('../../../../images/icons/HomeAddress.png');
+}
+
+.employeeLocation {
+  background-image: url('../../../../images/icons/LocationOrange.png');
+}
+
+.employeeLineManager {
+  background-image: url('../../../../images/icons/LineManagerOrange.png');
+}
+
+.employeeMilitaryRank {
+  background-image: url('../../../../images/icons/MilitaryRankOrange.png');
+}
+
+
+.employeeWorkClass {
+  background-image: url('../../../../images/icons/WorkClassOrange.png');
+}
+
+.employeeUnitAssignment {
+  background-image: url('../../../../images/icons/UnitAssignmentOrange.png');
+}
+
+.employeeTax {
+  background-image: url('../../../../images/icons/taxOrange.png');
+}
+
+.employeePagibig {
+  background-image: url('../../../../images/icons/PAGIBIG.png');
+}
+
+.employeePHIC {
+  background-image: url('../../../../images/icons/PHIC.png');
+}
+
+.employeeSSS {
+  background-image: url('../../../../images/icons/sssOrange.png');
+}
+
+.employeePremiumBadge {
+  background-image: url('../../../../images/icons/PremiumBadgeOrange.png');
+}
+
+.employeeRegularizationDate {
+  background-image: url('../../../../images/icons/RegularizationDateOrange.png');
+}
+
+.employeeRank {
+  background-image: url('../../../../images/icons/RankOrange.png');
+}
+
+.employeeCivilStatus {
+  background-image: url('../../../../images/icons/CivilStatusOrange.png');
+}
+
+.employeeDateHired {
+  background-image: url('../../../../images/icons/Datehiredorange.png');
+}
+
+.employeeEmail {
+  background-image: url('../../../../images/icons/emailorange.png');
+}
+
+/* Desktop View */
+.profile-settings-grid-column-desktop {
+  display: grid;
+  grid-template-columns: 1fr .5fr;
+  column-gap: 20px;
+}
+
+.profile-settings-grid-row-desktop {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.profile-banner {
+  background-image: url('../../../../images/UBBldg.jpg');
+  background-size: cover;
+  display: block;
+  background-repeat: no-repeat;
+  width: -webkit-fill-available;
+  background-position: bottom;
+  height: 180px;
+}
+
+.profile-banner-image-grid {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  grid-template-rows: 1fr 1fr;
+  border-radius: 0px;
+}
+
+.profile-settings-card-others {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.profile-picture {
+   display: block;
+   width: 120px;
+   box-shadow: inset 0px 0px 0px 20px #ffffff;
+   border-radius: 50%;
+}
+
+.profile-picture-card {
+  padding: 120px 0px 0px 25px;
+  position: relative;
+}
+
+.profile-others-card {
+  padding: 0px 25px 25px 25px;
+  position: relative;
+}
+
+.profile-settings-card-view {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  border-radius: 0px;
+}
+
+.profile-information-view {
+  display: grid;
+  grid-template-columns: 1fr .5fr;
+  padding: 80px 0px 0px 25px;
+}
+
+.profile-name {
+  font-weight: bolder;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+.profile-position {
+  font-weight: normal;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.profile-margin-label {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.profile-padding {
+  padding: 0px 10px 0px 10px;
+}
+
+.profile-information-view-right {
+  display: grid;
+  grid-template-columns: .15fr 1fr;
+  margin-bottom: 5px;
+}
+
+
+/* Settings Other Information */
+.profile-others-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 5px;
+}
+
+.profile-others-grid-row {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+/*  Mobile View */
+
+.profile-settings-grid-column-mobile {
+  display: none;
+  grid-template-columns: 1fr .5fr;
+  column-gap: 20px;
+}
