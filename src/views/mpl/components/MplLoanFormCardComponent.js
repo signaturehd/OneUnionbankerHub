@@ -5,11 +5,12 @@ import './styles/mplComponentStyle.css'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
 
-import { RequiredValidation, Validator, MoneyValidation } from '../../../utils/validate'
+import { RequiredValidation, MoneyValidation } from '../../../utils/validate'
 
 import PurposeOfAvailmentModal from '../../mpl/modals/PurposeOfAvailmentModal'
 import ModeOfLoanModal from '../../mpl/modals/ModeOfLoanModal'
 import TermOfLoanModal from '../../mpl/modals/TermOfLoanModal'
+import OffsetOfLoanModal from '../../mpl/modals/OffsetOfLoanModal'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -34,39 +35,47 @@ class MplFormLoanCardComponent extends Component {
       file: '',
       imagePreviewUrl: '',
       showFileUpload: false,
+      showOffsetLoanCard: false,
+      showOffsetOfLoanModal : false
     }
     this.onChange=this.onChange.bind(this)
+    this.validator=this.validator.bind(this)
   }
 
   onChange (e) {
-      const re=/^[0-9\.]+$/
-      if (e.target.value === '' ||  re.test(e.target.value)) {
-        this.setState({ amountValue: e.target.value })
-      }
+      new MoneyValidation().isValid(e.target.value) ?
+        this.setState({ amountValue : e.target.value }) :
+        this.setState({ amountValue : '' })
    }
 
    validator(input) {
-     !new RequiredValidation().isValid(input)
+     return new RequiredValidation().isValid(input)
    }
 
-   sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId) {
+   sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId, offset) {
+     const pnNumber=[]
      const amount=parseFloat(desiredAmount)
      const id=parseInt(loanTypeId)
      const term=parseInt(termId)
      const mode=parseInt(modeOfLoanId)
-       if (!this.validator(mode) || !this.validator(term) || !this.validator(amountValue) || !this.validator(poaText)) {
-         store.dispatch(NotifyActions.addNotify({
-            title : 'Warning' ,
-            message : 'All fields are required',
-            type : 'warning',
-            duration : 2000
-          })
-        )
-      }
+       if (
+         !this.validator(poaText) ||
+         !this.validator(mode) ||
+         !this.validator(term) ||
+         !this.validator(amount)) {
+           store.dispatch(NotifyActions.addNotify({
+              title : 'Warning' ,
+              message : 'All fields are required',
+              type : 'warning',
+              duration : 2000
+            })
+          )
+        }
        else {
-        this.props.presenter.addLoan(id, poaText, mode, term, desiredAmount)
+        this.props.presenter.addLoan(id, poaText, mode ? mode : 1, term, desiredAmount)
       }
    }
+
    getExtension (filename) {
      const parts=filename.split('/')
      return parts[parts.length - 1]
@@ -90,6 +99,8 @@ class MplFormLoanCardComponent extends Component {
       imagePreviewUrl,
       showFileUpload,
       response,
+      showOffsetLoanCard,
+      showOffsetOfLoanModal
     }=this.state
 
     const {
@@ -123,11 +134,12 @@ class MplFormLoanCardComponent extends Component {
           showOffset &&
           <ModeOfLoanModal
             offset ={  offset && offset }
-            onSubmit={ (changeOffsetValue, closePoaModal) =>
+            onSubmit={ (changeOffsetValue, showOffsetLoanModal, closePoaModal) =>
               this.setState({
                 modeOfLoanText : changeOffsetValue.name,
                 modeOfLoanId : changeOffsetValue.id,
-                showOffset : closePoaModal
+                showOffset : closePoaModal,
+                showOffsetLoanCard : showOffsetLoanModal
               })
             }
             onClose={ () =>
@@ -169,7 +181,17 @@ class MplFormLoanCardComponent extends Component {
               this.setState({ showTerm : false }) }
           />
         }
+        {
+          showOffsetOfLoanModal &&
+          <OffsetOfLoanModal
+            offset={ offset }
+            onClose={ () => this.setState({ showOffsetOfLoanModal : false }) }
+            onSelect={ (offsetObject, showFileUpload) =>
+              console.log(offsetObject.id, offsetObject.promissoryNoteNumber) }
+          />
+        }
         <div className={ 'mpl-grid-column-2' }>
+          <div></div>
           <Card className={ 'mpl-form-card' }>
             <h4>
               Benefits Form
@@ -209,12 +231,41 @@ class MplFormLoanCardComponent extends Component {
               <GenericButton
                 type={ 'button' }
                 text={ 'continue' }
-                onClick={ () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId) }
+                onClick={ () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, offset) }
                 className={ 'mplview-submit' } />
             </div>
+            <br/>
           </Card>
+        </div>
+        <br/>
+          {
+            showOffsetLoanCard &&
+
+            <div className={ 'mpl-grid-column-2' }>
+              <div></div>
+              <Card className={ 'mpl-form-card' }>
+                <div className={ 'mpl-offset-grid' }>
+                  <h4 className={ 'text-align-left' }>
+                    Loans to Offset
+                  </h4>
+                  <div className={ 'text-align-right' }>
+                    <span
+                      onClick={ () => this.setState({ showOffsetOfLoanModal : true }) }
+                      className={ 'mpl-icons mpl-add-offset' }/>
+                  </div>
+                </div>
+                <div className={ 'mpl-form-card-body' }>
+                </div>
+              </Card>
+            </div>
+          }
+          <br/>
+          <br/>
           {
             showFileUpload &&
+
+          <div className={ 'mpl-grid-column-2' }>
+            <div></div>
             <Card className={ 'mpl-form-preview' }>
               <h4>
                 Form Attachments
@@ -243,28 +294,25 @@ class MplFormLoanCardComponent extends Component {
                             isValid=true
                         }
 
-                        if (isValid) {
-                          reader.onloadend=() => {
-                            this.setState({
-                              file: file,
-                              imagePrevUrl: reader.result
-                            })
-                          }
-                          reader.readAsDataURL(file)
-                       } else {
-                           store.dispatch(NotifyActions.addNotify({
-                               title : 'File Uploading',
-                               message : 'The accepted attachments are JPG/PNG/PDF',
-                               type : 'warning',
-                               duration : 2000
-                            })
-                          )
+                      if (isValid) {
+                        reader.onloadend=() => {
+                          this.setState({
+                            file: file,
+                            imagePrevUrl: reader.result
+                          })
                         }
-                      }
-                    }
-                  />
-                )
-              }
+                        reader.readAsDataURL(file)
+                     } else {
+                         store.dispatch(NotifyActions.addNotify({
+                             title : 'File Uploading',
+                             message : 'The accepted attachments are JPG/PNG/PDF',
+                             type : 'warning',
+                             duration : 2000
+                          })
+                        )}
+                      }}
+                  />)
+                }
               </div>
               <div className='mpl-main'>
                 <div className={ 'mpl-review' }>
@@ -276,8 +324,8 @@ class MplFormLoanCardComponent extends Component {
                </div>
               </div>
             </Card>
-          }
-        </div>
+          </div>
+        }
       </div>
     )
   }

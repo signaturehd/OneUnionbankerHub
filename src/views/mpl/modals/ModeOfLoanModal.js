@@ -7,12 +7,12 @@ import './styles/mplModalStyle.css'
 
 class MplModeOfLoanModal extends Component {
 render () {
-  const { onClose, offset, onSubmit } = this.props
+  const { onClose, offset, onSubmit }=this.props
 
 return (
   <Modal
-    onClose = { onClose }
-    isDismisable = { true }>
+    onClose={ onClose }
+    isDismisable={ true }>
     <div>
       <center>
         <h2>
@@ -23,19 +23,23 @@ return (
     <div>
       {
         offset && offset.map((resp, key) =>
-        <GenericButton
-          className = { 'mpl-poa-modal-button' }
-          key = { key }
-          text = { resp && resp.name }
-          onClick = { () => onSubmit(resp, false) }/>
-        )
+          resp.id === 1 ||
+          resp.id === 2 ?
+          <GenericButton
+            className={ 'mpl-poa-modal-button' }
+            key={ key }
+            text={ resp && resp.name }
+            onClick={ () => onSubmit(resp, resp.id === 2 ? true : false, false) }/>
+          :
+          <div ket={ key }></div>
+      )
       }
     </div>
   </Modal>
     )
   }
 }
-MplModeOfLoanModal.propTypes = {
+MplModeOfLoanModal.propTypes={
   onClose : PropTypes.func,
   offset : PropTypes.array,
   onSubmit : PropTypes.func

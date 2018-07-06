@@ -30,7 +30,7 @@ return (
         <GenericButton
           className = { 'mpl-poa-modal-button' }
           key = { key }
-          text = {`${resp && resp.term} Months (${resp && resp.rate}%)` }
+          text = {`${resp && resp.term} Months, (${resp && resp.rate}% Interest)` }
           onClick = { () => onSubmit(resp, false) }/>
         )
       }
