@@ -158,8 +158,10 @@ class CarLeaseNewFormComponent extends Component {
           {
             showQuotation &&
             <CarDealerQuotation
-              onUserConfirmation={ (showQuotation, showFileUpload) =>
-                this.setState({ showQuotation, showFileUpload }) }
+              onUserConfirmation={ (showQuotation, showFileUpload, navigate) =>
+                this.setState({ showQuotation, showFileUpload }),
+                navigate ? this.props.history.push('/mybenefits/benefits/education') : null
+               }
               onClose={ () =>
                 this.setState({ showQuotation: false })  }
               />
