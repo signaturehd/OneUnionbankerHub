@@ -401,14 +401,15 @@ export default class HRBenefitsService {
       brand : carRequestParam.carBrand,
       model : carRequestParam.carModel,
       year : carRequestParam.year,
-      leaseMode : carRequestParam.leaseMode,
+      insurancePayment: '1',
+      leaseMode : parseInt(carRequestParam.leaseMode),
       primaryColor : carRequestParam.primaryColor,
       secondaryColor : carRequestParam.secondaryColor,
     }
-    formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(addCarleaseObject))
-    formData.append('attachments', carRequestParam.attachments)
-    return this.apiClient.post('v1/leases/car', carRequestParam, {
+    formData.append('uuid', 12345)
+    formData.append('attachment1', carRequestParam.attachments)
+    return this.apiClient.post('v1/leases/car', formData, {
       headers: { token }
     })
   }
@@ -557,7 +558,19 @@ export default class HRBenefitsService {
   }
 
   addBereavement (token, addBereavementParam) {
-    return this.apiClient.post('v1/bereavement/validate', addBereavementParam, {
+    const formData = new FormData()
+    const bereavementObject = {
+      id : addBereavementParam.dependentId,
+      accountNumber,
+      releasingCenter,
+      date : addBereavementParam.objectDate,
+      funeral : addBereavementParam.objectFuneral,
+      memorial: addBereavementParam.objectMemorial,
+    }
+    formData.append('uuid', 12345)
+    formData.append('file', addBereavementParam.file)
+    formData.append('body', JSON.stringify(bereavementObject))
+    return this.apiClient.post('v1/bereavement/availment', formData, {
       headers: { token }
     })
   }

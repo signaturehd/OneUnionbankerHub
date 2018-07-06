@@ -1,16 +1,12 @@
 export default (
-  carBrand,
-  carModel,
-  year,
-  leaseMode,
-  primaryColor,
-  secondaryColor,
-  attachments) => ({
-    carBrand,
-    carModel,
-    year,
-    leaseMode,
-    primaryColor,
-    secondaryColor,
-    attachments
+  dependentId,
+  objectDate,
+  objectFuneral,
+  objectMemorial,
+  file) => ({
+    dependentId,
+    objectDate,
+    objectFuneral,
+    objectMemorial,
+    file
   })

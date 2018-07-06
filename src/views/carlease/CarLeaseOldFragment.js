@@ -9,6 +9,7 @@ import { CircularLoader } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
+import UnavailableContentModal from './modals/CarUnavailableContentModal'
 
 import FormComponent from './components/CarLeaseOldFormComponent'
 
@@ -27,7 +28,9 @@ class CarLeaseOldFragment extends BaseMVPView {
       makeYear: 0,
       primaryColor: '',
       secondaryColor: '',
-      file: ''
+      file: '',
+      notAvailableModal: true,
+      contentNotAvailable: false
     }
     this.sendFormData = this.sendFormData.bind(this)
   }
@@ -84,10 +87,21 @@ class CarLeaseOldFragment extends BaseMVPView {
       makeYear,
       primaryColor,
       secondaryColor,
-      file
+      file,
+      contentNotAvailable,
+      notAvailableModal,
     } = this.state
     return (
       <div>
+      {
+          notAvailableModal &&
+          <UnavailableContentModal
+            onClick={ ()=> this.navigate()  }
+            />
+      }
+      {
+        contentNotAvailable &&
+        <div>
         {
           showNoticeModal &&
           <NoticeModal
@@ -154,6 +168,8 @@ class CarLeaseOldFragment extends BaseMVPView {
             />
           }
       </div>
+    }
+    </div>
     )
   }
 }
