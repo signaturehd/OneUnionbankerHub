@@ -17,7 +17,9 @@ import { NotifyActions } from '../../actions'
 
 import FormComponent from './components/EducationAidFormCardComponent'
 
-class EducationAidFragment extends BaseMVPView{
+import { RequiredValidation, MoneyValidation } from '../../utils/validate'
+
+class EducationAidFragment extends BaseMVPView {
 
   constructor(props) {
     super(props)
@@ -46,7 +48,12 @@ class EducationAidFragment extends BaseMVPView{
       showBenefitFeedbackModal : false,
       educationAid: [] //education aid details
     }
+    this.validator = this.validator.bind(this)
   }
+
+  validator (input) {
+     return new RequiredValidation().isValid(input)
+   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
@@ -67,20 +74,17 @@ class EducationAidFragment extends BaseMVPView{
     imagePrevOR,
     imagePrevCOG,
     imagePrevRegForm,
-    totalFeeText)
-  {
-    if (( tuitionFeeText === 0 || tuitionFeeText === "") || ( registrationFeeText === 0 || registrationFeeText === "") ||
-        schoolID === "" || courseText === "" || academicYearText === "" || semesterText === "" ||
-        ( gwaText === 0 || gwaText === "")) {
+    totalFeeText) {
+    if (!this.validator(tuitionFeeText) || !this.validator(registrationFeeText) || !this.validator(schoolID ||
+    !this.validator(courseText) || !this.validator(academicYearText) || !this.validator(courseText) || !this.validator(semesterText))) {
       store.dispatch(NotifyActions.addNotify({
-          title : 'Education Aid',
-          message : 'Please provide a valid information',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    }
-    else if (!fileOR && !fileCOG && !fileRegForm) {
+         title : 'Education Aid' ,
+         message : 'All fields are required',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    } else if (!fileOR && !fileCOG && !fileRegForm) {
       store.dispatch(NotifyActions.addNotify({
           title : 'Education Aid',
           message : 'Please check your attachments',

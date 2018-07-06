@@ -14,6 +14,8 @@ import { NotifyActions } from '../../../actions/'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
+import { MoneyValidation } from '../../../utils/validate'
+
 class EducationAidFormCardComponent extends Component {
 
   constructor (props) {
@@ -43,7 +45,19 @@ class EducationAidFormCardComponent extends Component {
       computations: ''
     }
     this.onGetClicked=this.onGetClicked.bind(this)
+    this.onChange = this.onChange.bind(this)
+    this.onKey=this.onKey.bind(this)
   }
+  onChange (e) {
+      new MoneyValidation().isValid(e.target.value) ?
+        this.setState({ tuitionFeeText : e.target.value }) :
+        this.setState({ tuitionFeeText : '' })
+   }
+   onKey (e) {
+     new MoneyValidation().isValid(e.target.value) ?
+       this.setState({ registrationFeeText : e.target.value }) :
+       this.setState({ registrationFeeText : '' })
+   }
 
   getExtension (filename) {
     const parts=filename.split('/')
@@ -247,24 +261,14 @@ class EducationAidFormCardComponent extends Component {
             <GenericTextBox
               value={ tuitionFeeText ? tuitionFeeText : '' }
               onChange={
-                (e) => {
-                  const re=/^[0-9\.]+$/
-                  if (e.target.value == '' ||  re.test(e.target.value)) {
-                    this.setState({ tuitionFeeText: e.target.value })
-                  }
-               }
+                this.onChange
               }
               placeholder={ 'Tuition Fee' }
               type={ 'text' }/>
             <GenericTextBox
               value={ registrationFeeText ? registrationFeeText : ''}
               onChange={
-                (e) =>{
-                  const re=/^[0-9\.]+$/
-                  if (e.target.value == '' || re.test(e.target.value)) {
-                    this.setState({ registrationFeeText: e.target.value })
-                  }
-                }
+                this.onKey
                }
               placeholder={ 'Registration Fee' }
               type={ 'text' }/>
