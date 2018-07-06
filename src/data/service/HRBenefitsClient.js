@@ -536,8 +536,17 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addCalamityAssistance (token) {
-    return this.service.addCalamityAssistance(token)
+  addCalamityAssistance (token,
+  accountToken,
+  accountNumber,
+  releasingCenter,
+  calamityAssistanceParam) {
+  return this.service.addCalamityAssistance(
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    calamityAssistanceParam)
       .pipe(ServiceErrorOperator())
   }
 }

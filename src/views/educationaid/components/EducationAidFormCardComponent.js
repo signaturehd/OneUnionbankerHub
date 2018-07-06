@@ -382,7 +382,10 @@ class EducationAidFormCardComponent extends Component {
               type={ 'text' }
               placeholder={ 'Total Reimbursable Amount' }/>
               <br/>
-
+              <br/>
+              <h4>
+                Form Attachments
+              </h4>
               {
                 imagePrevOR &&
                 <div>
