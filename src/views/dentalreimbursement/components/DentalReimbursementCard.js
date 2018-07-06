@@ -18,6 +18,9 @@ import {
  import store from '../../../store'
  import { NotifyActions } from '../../../actions'
 
+ import { RequiredValidation, Validator, MoneyValidation } from '../../../utils/validate'
+
+
 class DentalReimbursementCard extends Component {
   constructor (props) {
   super(props)
@@ -39,6 +42,7 @@ class DentalReimbursementCard extends Component {
   this.handleImageChange = this.handleImageChange.bind(this)
   this.handleImageChange2 = this.handleImageChange2.bind(this)
   this.submission = this.submission.bind(this)
+  this.validator = this.validator.bind(this)
 }
 
 /*
@@ -50,6 +54,10 @@ getExtension (filename) {
   return parts[parts.length - 1]
 }
 
+  validator (input) {
+    return new RequiredValidation().isValid(input)
+  }
+
 /*
   Form Submission
 */
@@ -60,19 +68,14 @@ submission (e) {
     selectedDependent,
     selectedProcedures
   } = this.state
-  if (
-    file === '' ||
-    file2 === '' ||
-    selectedDependent === null ||
-    selectedProcedures.length === 0
-  ) {
+  if (!this.validator(file) || !this.validator(selectedProcedures) || !this.validator(file2) || !this.validator(selectedDependent)) {
     store.dispatch(NotifyActions.addNotify({
-        title : 'Error',
-        message : 'Please complete all information requested on this form',
-        type : 'warning',
-        duration : 2000
-      })
-    )
+       title : 'Warning' ,
+       message : 'All fields are required',
+       type : 'warning',
+       duration : 2000
+     })
+   )
   } else if (selectedProcedures.length !== 0) {
     let validate
     let checknull
@@ -83,7 +86,7 @@ submission (e) {
       if (validate || checknull) {
         store.dispatch(NotifyActions.addNotify({
             title : 'Dental Reimbursement',
-            message : `Please check the amount for procedure  ${procedure.name}. It should not be zero or empty`,
+            message : `Please check the amount for procedure  ${procedure.name}. It should not be zero, empty or more than the set limit`,
             type : 'warning',
             duration : 2000
           })
