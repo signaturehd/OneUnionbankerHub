@@ -58,13 +58,12 @@ export default class MultiPurposeLoanPresenter {
     this.getPurposeOfAvailmentInteractor.execute({
       loanTypesId,
       purposeOfLoan,
-      subcategoryLevel }
-    )
+      subcategoryLevel
+    })
       .subscribe(
         data => {
           this.view.showPurposeOfAvailment(data)
-        }
-      )
+      })
     }
 
   getMplValidate (loanTypeId) {
@@ -86,6 +85,7 @@ export default class MultiPurposeLoanPresenter {
 
         return offsetLoan
       })
+
       .subscribe(
         data =>  {
           this.view.showOffset(data && data.offset)
@@ -93,7 +93,7 @@ export default class MultiPurposeLoanPresenter {
           this.view.hideCircularLoader()
         },
         error => {
-          this.view.showErrorMessage(error && error.message)
+          this.view.navigate()
         }
       )
     }
@@ -101,7 +101,11 @@ export default class MultiPurposeLoanPresenter {
   getMplFormAttachments (formRequesting, loanId) {
     this.getFormAttachmentsInteractor.execute(mplGetFormParam(formRequesting, loanId))
       .do(data => this.view.showMPLFormAttachments(data))
-        .subscribe()
+        .subscribe(
+          data => {
+            this.view.hideCircularLoader(),
+            this.view.hideCircularLoader()
+      })
     }
 
   /* add Loa salary, housing assistance, emergency*/
@@ -112,40 +116,26 @@ export default class MultiPurposeLoanPresenter {
     loanTerm,
     principalLoanAmount,
     attachments) {
-    const fullname = this.getInformationInteractor.execute().fullname
-    this.view.showCircularLoader()
-    this.addLoanInteractor.execute(mplPurposeLoanAddParam(
-      fullname,
-      loanId,
-      purposeOfLoan,
-      modeOfLoan,
-      loanTerm,
-      principalLoanAmount,
-      attachments
+      const fullname = this.getInformationInteractor.execute().fullname
+      this.view.showCircularLoader()
+      this.addLoanInteractor.execute(mplPurposeLoanAddParam(
+        fullname,
+        loanId,
+        purposeOfLoan,
+        modeOfLoan,
+        loanTerm,
+        principalLoanAmount,
+        attachments
+        )
       )
-    )
       .subscribe(
         data => {
           this.view.hideCircularLoader()
           this.view.noticeOfUndertaking(data)
-            store.dispatch(NotifyActions.addNotify({
-              title: 'Successfully',
-              message : data.message,
-              type : 'success',
-              duration : 2000
-            }
-          )
-        )
       },
-      error => {
-         this.view.hideCircularLoader()
-           store.dispatch(NotifyActions.addNotify({
-             title: 'Warning',
-             message : error.message,
-             type : 'warning',
-             duration : 2000
-           })
-          )
+      errors => {
+          this.view.noticeResponse(data)
+          this.view.hideCircularLoader()
         }
       )
     }

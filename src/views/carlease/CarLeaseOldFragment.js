@@ -9,6 +9,7 @@ import { CircularLoader } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
+import UnavailableContentModal from './modals/CarUnavailableContentModal'
 
 import FormComponent from './components/CarLeaseOldFormComponent'
 
@@ -27,14 +28,15 @@ class CarLeaseOldFragment extends BaseMVPView {
       makeYear: 0,
       primaryColor: '',
       secondaryColor: '',
-      file: ''
+      file: '',
+      notAvailableModal: true,
+      contentNotAvailable: false
     }
     this.sendFormData = this.sendFormData.bind(this)
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.getCarValidate()
   }
 
   sendFormData (
@@ -55,10 +57,6 @@ class CarLeaseOldFragment extends BaseMVPView {
 
   showMPLFormAttachments (formAttachments) {
     this.setState({ formAttachments })
-  }
-
-  showValidate (validateLoanType) {
-    this.setState({ validateLoanType })
   }
 
   /* Loader*/
@@ -89,9 +87,21 @@ class CarLeaseOldFragment extends BaseMVPView {
       makeYear,
       primaryColor,
       secondaryColor,
-      file } = this.state
+      file,
+      contentNotAvailable,
+      notAvailableModal,
+    } = this.state
     return (
       <div>
+      {
+          notAvailableModal &&
+          <UnavailableContentModal
+            onClick={ ()=> this.navigate()  }
+            />
+      }
+      {
+        contentNotAvailable &&
+        <div>
         {
           showNoticeModal &&
           <NoticeModal
@@ -158,6 +168,8 @@ class CarLeaseOldFragment extends BaseMVPView {
             />
           }
       </div>
+    }
+    </div>
     )
   }
 }
