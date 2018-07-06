@@ -5,6 +5,8 @@ import { Line, Card } from '../../../../ub-components/'
 
 import './styles/profileFragment.css'
 
+import defaultImage from '../../../../images/updilimanDefault.png'
+
 class EducationFragment extends Component {
 
   constructor (props) {
@@ -13,7 +15,7 @@ class EducationFragment extends Component {
 
   render () {
     const {
-      profileEducation, 
+      profileEducation,
     }=this.props
 
       const educationDefault = [{
@@ -52,17 +54,19 @@ class EducationFragment extends Component {
                   <img
                     className={ 'components-image' }
                     key={ key }
-                    src={ education.imagePath }/>
+                    src={ defaultImage }/>
                 </div>
                 <div>
                   <h2 className={ 'font-size-18px font-weight-normal' }>
-                    { education.title }
+                    { education.name }
                   </h2>
                   <h3 className={ 'font-size-17px font-weight-lighter' }>
-                    { education.course }
+                    { `${'Course : ' + education.course}` }
+                    <br/>
+                    { `${ 'Degree :' + education.degree }` }
                   </h3>
                   <h4 className={ 'font-size-16px font-weight-lighter' }>
-                    { education.year }
+                    { `${ education.startYear }+ ' - ' ${ education.endYear } `  }
                   </h4>
                 </div>
               </div>

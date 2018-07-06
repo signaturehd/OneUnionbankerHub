@@ -10,6 +10,7 @@ import SettingsProfileCardComponent from './components/SettingsProfileCardCompon
 import { Card } from '../../ub-components/'
 
 class SettingsFragment extends BaseMVPView {
+
   constructor (props) {
     super(props)
 
