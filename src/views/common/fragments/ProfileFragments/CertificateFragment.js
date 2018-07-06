@@ -5,6 +5,8 @@ import { Line, Card } from '../../../../ub-components/'
 
 import './styles/profileFragment.css'
 
+import defaultImage from '../../../../images/icons/ic_course.png'
+
 class CertificateFragment extends Component {
 
   constructor (props) {
@@ -39,7 +41,7 @@ class CertificateFragment extends Component {
         <br/>
         {
           profileCertificate ?
-            certificateDefault.map((certificate, key)=>
+            profileCertificate.map((certificate, key)=>
               <Card
                 key={ key }
                 className={ 'components-view' }>
@@ -47,17 +49,17 @@ class CertificateFragment extends Component {
                   <img
                     className={ 'components-image' }
                     key={ key }
-                    src={ certificate.imagePath }/>
+                    src={ defaultImage }/>
                 </div>
                 <div>
                   <h2 className={ 'font-size-18px font-weight-normal' }>
-                    { certificate.title }
+                    { certificate.name }
                   </h2>
                   <h3 className={ 'font-size-17px font-weight-lighter' }>
-                    { certificate.course }
+                    { certificate.issuingBody }
                   </h3>
                   <h4 className={ 'font-size-16px font-weight-lighter' }>
-                    { certificate.year }
+                    { certificate.dateIssued }
                   </h4>
                 </div>
               </Card>
