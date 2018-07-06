@@ -69,13 +69,6 @@ class CalamityFormCardComponent extends Component {
       )
   }
 
-  /* store the date */
-  onChange (data) {
-    this.setState({ preferredDate: data })
-    this.props.getPreferredDate(
-      data && data.format('DD-MM-YYYY')) /* date format*/
-  }
-
   getExtension (filename) {
     const parts=filename.split('/')
     return parts[parts.length - 1]
