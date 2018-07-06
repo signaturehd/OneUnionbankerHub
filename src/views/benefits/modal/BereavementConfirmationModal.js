@@ -30,17 +30,21 @@ class BereavementConfirmationModal extends Component {
         isDismisable = { isDismisable }
         onClose = { onClose }>
         <div>
-          <h2>Do you have a death certificate?</h2>
-          <br/>
+          <center>
+            <h2>Is the death certificate available?</h2>
+            <br/>
+            <p>We're sorry to hear about your loss. Please accept our sympathies. We'd like to help you on this time of need. Has the Death certificate been prepared?
+            </p>
+          </center>
           <div className = { 'confirmation-grid-action' } >
+            <GenericButton
+              onClick = { onClose }
+              text = { 'no' } />
             <GenericButton
               onClick = { onYes }
               text = { 'yes' }
               disabled = {this.state.disabled}
             />
-            <GenericButton
-              onClick = { onClose }
-              text = { 'no' } />
           </div>
         </div>
       </Modal>

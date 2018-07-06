@@ -44,7 +44,7 @@ export default class MultiPurposeLoanPresenter {
         data => {
           this.view.showTypes(data)
         },
-        error => {  
+        error => {
         }
       )
     }
@@ -93,13 +93,6 @@ export default class MultiPurposeLoanPresenter {
           this.view.hideCircularLoader()
         },
         error => {
-          store.dispatch(NotifyActions.addNotify({
-              title: 'Warning',
-              message: `We're sorry, but right now, you're not yet able to avail of this benefit because if your ${ error.message }`,
-              type: 'warning',
-              duration: 2000
-            })
-          )
           this.view.navigate()
         }
       )
@@ -141,13 +134,7 @@ export default class MultiPurposeLoanPresenter {
           this.view.noticeOfUndertaking(data)
       },
       errors => {
-         store.dispatch(NotifyActions.addNotify({
-           title: 'Sorry',
-           message : errors.message,
-           type : 'warning',
-           duration : 2000
-         })
-        )
+          this.view.noticeResponse(data)
           this.view.hideCircularLoader()
         }
       )
