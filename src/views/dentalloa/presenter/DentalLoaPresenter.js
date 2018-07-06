@@ -37,13 +37,6 @@ export default class DentalLoaPresenter {
       procedure))
       .subscribe(
         data => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Dental LOA',
-            message : data.message,
-            type : 'success',
-            duration : 2000
-          })
-         )
          this.view.hideCircularLoader()
          this.view.noticeOfUndertaking(true)
          this.view.noticeOfUndertakingForm(data)
