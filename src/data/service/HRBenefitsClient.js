@@ -520,7 +520,7 @@ export default class HRBenefitsClient {
   }
 
   /* Bereavement */
-  getBereveavementValidate (token) {
+  validateBereavement (token) {
     return this.service.validateBereavement(token)
       .pipe(ServiceErrorOperator())
   }
@@ -531,7 +531,7 @@ export default class HRBenefitsClient {
   }
 
   /* Calamity Assitance */
-  getCalamityAssistanceValidate (token) {
+  validateCalamityAssistance (token) {
     return this.service.validateCalamityAssistance(token)
       .pipe(ServiceErrorOperator())
   }

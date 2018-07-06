@@ -21,7 +21,7 @@ class BereavementFragment extends BaseMVPView {
   constructor (props) {
     super (props)
     this.state={
-      enabledLoader : true,
+      enabledLoader : false,
       validatedBereavement: [],
       showDepedents: [],
       showNoticeModal : false,
@@ -34,7 +34,7 @@ class BereavementFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.validateBereavement()
+    // this.presenter.validateBereavement()
   }
 
   isEligible (bool) {
