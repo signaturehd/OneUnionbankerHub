@@ -48,7 +48,10 @@ import TransactionApprovalDetailFragment from '../transactiondetails/Transaction
 import TransactionPersonalDetailFragment from '../transactiondetails/TransactionPersonalDetailFragment'
 import CarLeaseNewFragment from '../carlease/CarLeaseNewFragment'
 import CarLeaseOldFragment from '../carlease/CarLeaseOldFragment'
-/*Payslip*/
+/* Calamity */
+import CalamityFragment from '../calamity/CalamityFragment'
+
+/* Payslip*/
 import Payslip from '../payslip/PayslipFragment'
 
 import OnboardingView from '../onboarding/OnboardingView'
@@ -225,6 +228,9 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits/benefits/bereavement/:type' render = { props =>
                     <BereavementFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/calamity' render = { props =>
+                    <CalamityFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits' render = { props =>
                     <BenefitsFragment { ...props }
