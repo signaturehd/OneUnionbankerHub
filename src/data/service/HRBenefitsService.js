@@ -408,7 +408,7 @@ export default class HRBenefitsService {
     }
     formData.append('body', JSON.stringify(addCarleaseObject))
     formData.append('uuid', 12345)
-    formData.append('attachment1', carRequestParam.attachments)
+    formData.append('attachment1', carRequestParam.attachments ? carRequestParam.attachments : null)
     return this.apiClient.post('v1/leases/car', formData, {
       headers: { token }
     })

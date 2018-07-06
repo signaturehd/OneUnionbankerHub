@@ -23,7 +23,7 @@ export default class BereavementPresenter {
   }
 
   validateBereavement () {
-    this.view.hideCircularLoader()
+    this.view.showCircularLoader()
     this.getBereavementValidateInteractor.execute()
       .subscribe(resp => {
           this.view.showValidatedValue(resp)
