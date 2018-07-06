@@ -558,7 +558,19 @@ export default class HRBenefitsService {
   }
 
   addBereavement (token, addBereavementParam) {
-    return this.apiClient.post('v1/bereavement/validate', addBereavementParam, {
+    const formData = new FormData()
+    const bereavementObject = {
+      id : addBereavementParam.dependentId,
+      accountNumber,
+      releasingCenter,
+      date : addBereavementParam.objectDate,
+      funeral : addBereavementParam.objectFuneral,
+      memorial: addBereavementParam.objectMemorial,
+    }
+    formData.append('uuid', 12345)
+    formData.append('file', addBereavementParam.file)
+    formData.append('body', JSON.stringify(bereavementObject))
+    return this.apiClient.post('v1/bereavement/availment', formData, {
       headers: { token }
     })
   }
