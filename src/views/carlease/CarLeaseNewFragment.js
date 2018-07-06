@@ -146,7 +146,8 @@ class CarLeaseNewFragment extends BaseMVPView {
       primaryColor,
       secondaryColor,
       file,
-      leaseMode
+      leaseMode,
+      loanType
     } = this.state
     const { onSubmit }=this.props
 

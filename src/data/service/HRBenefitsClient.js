@@ -520,7 +520,7 @@ export default class HRBenefitsClient {
   }
 
   /* Bereavement */
-  getBereveavementValidate (token) {
+  validateBereavement (token) {
     return this.service.validateBereavement(token)
       .pipe(ServiceErrorOperator())
   }
