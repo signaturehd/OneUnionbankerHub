@@ -41,7 +41,6 @@ export default class PayslipPresenter {
     this.view.showLoading()
     this.addSelectedDateInteractor.execute(PayslipParam(employeeId, date))
       .subscribe(payslip => {
-          console.log(payslip)
           this.view.setPdfFile(payslip)
           this.view.hideLoading()
         }, e => {

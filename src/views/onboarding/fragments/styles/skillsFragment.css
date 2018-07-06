@@ -1,0 +1,9 @@
+.onboarding-skills-form-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 15px;
+}
+
+.onboarding-skills-form {
+  padding: 3%;
+}
