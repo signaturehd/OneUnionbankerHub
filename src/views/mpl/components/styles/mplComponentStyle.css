@@ -38,7 +38,7 @@
 
 .mpl-grid-column-2 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 3fr 1fr;
   column-gap: 2%;
 }
 
@@ -121,4 +121,23 @@
 
 .error-message {
   color: red;
+}
+
+.mpl-offset-grid {
+  display: grid;
+  grid-template-columns: 1fr .3fr;
+}
+
+.mpl-add-offset {
+  background-image: url('../../../../images/icons/ic_add_circle_outline_green_500_24dp.png');
+}
+
+.mpl-icons {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  background-repeat: no-repeat;
 }

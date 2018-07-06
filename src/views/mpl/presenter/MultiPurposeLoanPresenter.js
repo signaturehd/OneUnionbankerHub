@@ -67,7 +67,7 @@ export default class MultiPurposeLoanPresenter {
     }
 
   getMplValidate (loanTypeId) {
-    this.view.showCircularLoader()
+    this.view.hideCircularLoader()
     this.getValidateInteractor.execute(mplValidateParam(loanTypeId))
       .map(offsetLoan => {
         const modeOfLoanStatic = {
@@ -76,11 +76,11 @@ export default class MultiPurposeLoanPresenter {
         } // create instance of "New Loan"
         const modeOfLoan = {
           id: 2,
-          name: offsetLoan.offset.name,
+          name: 'Offset Loan',
         } // create instance of "New Loan"
 
         offsetLoan.offset ?
-        offsetLoan.offset.push(modeOfLoanStatic)        :
+        offsetLoan.offset.push(modeOfLoanStatic , modeOfLoan):
         offsetLoan.offset.push(modeOfLoan) // add the New Loan to the offsets option
 
         return offsetLoan
@@ -133,7 +133,7 @@ export default class MultiPurposeLoanPresenter {
           this.view.hideCircularLoader()
           this.view.noticeOfUndertaking(data)
       },
-      errors => {
+        errors => {
           this.view.noticeResponse(data)
           this.view.hideCircularLoader()
         }
