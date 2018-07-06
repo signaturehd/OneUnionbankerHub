@@ -577,13 +577,31 @@ export default class HRBenefitsService {
 
   /* Calamity Assitance */
   validateCalamityAssistance (token) {
-    return this.apiClient.get('v1/calamity/validate', {
+    return this.apiClient.post('v1/calamity/validate', null, {
       headers: { token }
     })
   }
 
-  addCalamityAssistance (token, calamityAssistanceParam) {
-    return this.apiClient.get('v1/calamity/availment', {
+  addCalamityAssistance (token, accountToken, accountNumber, releasingCenter, calamityAssistanceParam) {
+    const formData = new FormData()
+    const calamityObject = {
+      id: calamityAssistanceParam.calamityId,
+      accountNumber,
+      releasingCenter,
+      date: calamityAssistanceParam.date,
+      damageProperty: [{
+        propertyName: calamityAssistanceParam.property,
+        description: calamityAssistanceParam.propertyDesc,
+        propertyType: calamityAssistanceParam.propertyType,
+        acquisitionValue: calamityAssistanceParam.acquisitionValue,
+        repairCost: calamityAssistanceParam.estimatedCost
+      }]
+    }
+
+    formData.append('uuid', 12345)
+    formData.append('file', calamityAssistanceParam.attachments ? calamityAssistanceParam.attachments : null)
+    formData.append('body', JSON.stringify(calamityObject))
+    return this.apiClient.post('v1/calamity/availment', formData,{
       headers: { token }
     })
   }

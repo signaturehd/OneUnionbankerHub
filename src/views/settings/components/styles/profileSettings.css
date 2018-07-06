@@ -23,6 +23,7 @@
   background-image: url('../../../../images/icons/IdCardOrange.png');
 }
 
+
 .employeeContact {
   background-image: url('../../../../images/My Profile.png');
 }
@@ -121,7 +122,6 @@
 }
 
 
-
 /* Desktop View */
 .profile-settings-grid-column-desktop {
   display: grid;
@@ -163,7 +163,7 @@
   object-fit: cover;
 }
 
-.profile-picture-card {
+.profile-picture-cards {
   width: 110px;
   display: grid;
   height: 110px;
