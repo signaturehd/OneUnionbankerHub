@@ -1,0 +1,18 @@
+.onboarding-about-form-container {
+  max-width: 80%;
+
+}
+
+.onboarding-about-form {
+  padding: 3%;
+}
+.onboarding-textarea{
+  height: 200px;
+  align-items: flex-start;
+  margin: 10px auto;
+  resize: none;
+  width: -webkit-fill-available !important;
+  outline-color: #FF8A00;
+  border-radius: 5px;
+  font-size: 14px;
+}
