@@ -102,6 +102,7 @@ export default class MultiPurposeLoanPresenter {
     this.getFormAttachmentsInteractor.execute(mplGetFormParam(formRequesting, loanId))
       .do(data => this.view.showMPLFormAttachments(data))
       .map(data => this.view.showAdditionalFilesCount((data.AdditionalDocuments).length))
+      .map(data => this.view.showAdRequiredFilesCount((data.RequiredDocuments).length))
         .subscribe(
           data => {
             this.view.hideCircularLoader(),
