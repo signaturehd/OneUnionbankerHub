@@ -59,9 +59,12 @@ return (
     isDismisable={ true }>
     <div>
       <center>
-        <h2>
-          Loan of Offsets
+        <span className={ 'mpl-icons mpl-offset-icon' }/>
+        <h2 className={ 'font-weight-normal' }>
+          Offsets
         </h2>
+        <h5 className={ 'font-size-14px font-weight-lighter' }>Select your offset loans</h5>
+          <br/>
       </center>
     </div>
     <div>

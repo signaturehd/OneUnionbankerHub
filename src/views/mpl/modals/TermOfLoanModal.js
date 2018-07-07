@@ -15,13 +15,12 @@ return (
     isDismisable = { true }>
     <div>
       <center>
-        <h2>
+        <span className={ 'mpl-icons mpl-term-icon' }/>
+        <h2 className={ 'font-weight-normal' }>
           Term of Loan
-          <br/>
-          Housing Assistance Loan
         </h2>
-        <h4>
-        </h4>
+        <h5 className={ 'font-size-14px font-weight-lighter' }>Choose your desired term of loan</h5>
+          <br/>
       </center>
     </div>
     <div>

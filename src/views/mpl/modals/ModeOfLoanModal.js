@@ -15,9 +15,12 @@ return (
     isDismisable={ true }>
     <div>
       <center>
-        <h2>
+        <span className={ 'mpl-icons mpl-mode-icon' }/>
+        <h2 className={ 'font-weight-normal' }>
           Mode of Loan
         </h2>
+        <h5 className={ 'font-size-14px font-weight-lighter' }>Choose your desired mode of loan</h5>
+          <br/>
       </center>
     </div>
     <div>
