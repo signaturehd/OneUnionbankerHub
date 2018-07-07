@@ -21,7 +21,7 @@ class BereavementFragment extends BaseMVPView {
   constructor (props) {
     super (props)
     this.state={
-      enabledLoader : true,
+      enabledLoader : false,
       validatedBereavement: [],
       showDepedents: [],
       showNoticeModal : false,

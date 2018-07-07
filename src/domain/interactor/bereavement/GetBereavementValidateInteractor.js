@@ -1,9 +1,9 @@
-export default class GetBereavementValidateInteractor {
+export default class validateBereavement {
   constructor (client) {
     this.client = client
   }
 
   execute () {
-    return this.client.getBereveavementValidate(this.client.getToken())
+    return this.client.validateBereavement(this.client.getToken())
   }
 }
