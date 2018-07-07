@@ -163,7 +163,7 @@
   object-fit: cover;
 }
 
-.profile-picture-cards {
+.profile-picture-card {
   width: 110px;
   display: grid;
   height: 110px;
