@@ -72,3 +72,91 @@
   opacity: 0;
   animation: fadeInUp 0.5s ease-in-out 0s forwards;
 }
+
+.calamity-attachment-form {
+  padding: 10px;
+  margin: 0 30px 0 30px;
+  background-color: #f6f6f6;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: #DBDBE0;
+}
+
+.calamity-form-title {
+  display: block;
+  text-align: left;
+  font-size:14px;
+  pointer-events:none;
+  color: #ff8a00 !important;
+}
+
+.close-button {
+  float: right;
+}
+
+.calamity-file-name {
+  margin-left: 120px;
+  line-height: 60px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.hr-line {
+  width: 50%;
+}
+
+.calamity-icon-text-grid {
+  display: grid;
+  grid-template-columns: .15fr 1fr;
+}
+.calamity-icon-text-grid-date {
+  display: grid;
+  grid-template-columns: .5fr .5fr .5fr 1fr;
+}
+
+.calamity-icon-settings {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 50px;
+  width: 40px;
+  margin-top: 30px;
+  margin-left: 40px;
+  background-repeat: no-repeat;
+}
+
+.calamity-container {
+  padding-left: 0%;
+  padding-right: 10%;
+  padding-top: 0%;
+}
+
+.calamity-calamity {
+  background-image: url('../../../../images/icons/ic_calamity.png');
+}
+
+.calamity-property {
+  background-image: url('../../../../images/icons/ic_property.png');
+}
+
+.calamity-calendar {
+  background-image: url('../../../../images/icons/ic_calendar.png');
+}
+
+.calamity-description {
+  background-image: url('../../../../images/icons/ic_description.png');
+}
+
+.calamity-property-type {
+  background-image: url('../../../../images/icons/ic_transaction_status_bookmark.png');
+}
+
+.calamity-peso {
+  background-image: url('../../../../images/icons/peso_sign_48.png');
+}
+
+.calamity-file {
+  background-image: url('../../../../images/icons/ic_insert_drive_file_grey_500_18dp.png');
+}

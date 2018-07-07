@@ -38,6 +38,13 @@ class CalamityFormCardComponent extends Component {
       propertyTypeValue: [{description: 'Replaceable'},{description: 'Irreplaceable'}]
     }
     this.onGetClicked=this.onGetClicked.bind(this)
+    this.handleChange=this.handleChange.bind(this)
+  }
+
+  handleChange(date) {
+    this.setState({
+      preferredDate: date
+    });
   }
 
   onGetClicked (
@@ -98,6 +105,24 @@ class CalamityFormCardComponent extends Component {
       imgPrevDP,
       propertyTypeValue
       }=this.state
+
+      const styles={
+        image1 : {
+          backgroundImage: `url('${imgPrevBC}')`,
+          width : 'auto',
+          height : '60px',
+          backgroundSize : 'contain',
+          backgroundRepeat : 'no-repeat',
+        },
+
+        image2 : {
+          backgroundImage: `url('${imgPrevDP}')`,
+          width : 'auto',
+          height : '60px',
+          backgroundSize : 'contain',
+          backgroundRepeat : 'no-repeat',
+        }
+      }
 
     return (
       <div className={'calamity-container'}>
@@ -197,164 +222,292 @@ class CalamityFormCardComponent extends Component {
             </h4>
             <div className={'calamity-form-card-body '}>
 
-            <GenericTextBox
-              value={ calamityType }
-              onClick={
-                () => {
-                  this.setState({ showModal : true })
-               }
-              }
-              readOnly
-              placeholder={ 'Type of Calamity' }
-              onChange={ (e) => this.setState({ calamityType : e.target.value }) }
-              type={ 'text' }/>
-
-              <GenericTextBox
-                value={ preferredDate ? preferredDate : ''}
-                onChange={ (e) => this.setState({ preferredDate: e.target.value }) }
-                placeholder={ 'Date' }
-                type={ 'text' }/>
-
-            <GenericTextBox
-              value={ property ? property : ''}
-              onChange={ (e) => this.setState({ property: e.target.value }) }
-              placeholder={ 'Property' }
-              type={ 'text' }/>
-
-            <GenericTextBox
-              value={ propertyDesc ? propertyDesc : '' }
-              onChange={ (e) => this.setState({ propertyDesc: e.target.value }) }
-              placeholder={ 'Property Description' }
-              type={ 'text' }/>
-
-            <GenericTextBox
-              value={ propertyType ? propertyType : '' }
-              onClick={
-                () => this.setState({ showPropModal : true })
-              }
-              placeholder={ 'Property Type' }
-              onChange={ (e) => this.setState({ propertyType : e.target.value }) }
-              type={ 'button' }/>
-
-            <GenericTextBox
-              value={ acquisitionValue ? acquisitionValue : '' }
-              onChange={
-                (e) =>{
-                  const re=/^[0-9\.]+$/
-                  if (e.target.value == '' || re.test(e.target.value)) {
-                    this.setState({ acquisitionValue: e.target.value })
+            <div className={ 'calamity-icon-text-grid' }>
+              <div>
+                <br/>
+                <span className={ 'calamity-icon-settings calamity-calamity' }/>
+              </div>
+              <div>
+                <GenericTextBox
+                  container={ 'calamity-container' }
+                  value={ calamityType ? calamityType : '' }
+                  onClick={
+                    () => {
+                      this.setState({ showModal : true })
+                   }
                   }
-                }
-               }
-              placeholder={ 'Acquisition Value' }
-              type={ 'text' }/>
-
-              <GenericTextBox
-                value={ estimatedCost ? estimatedCost : '' }
-                onChange={
-                  (e) =>{
-                    const re=/^[0-9\.]+$/
-                    if (e.target.value == '' || re.test(e.target.value)) {
-                      this.setState({ estimatedCost: e.target.value })
-                    }
-                  }
-                 }
-                placeholder={ 'Estimated Cost Repair' }
-                type={ 'text' }/>
-              <br/>
-              <br/>
-              <h4>
-                Form Attachments
-              </h4>
-              <FileUploader
-                accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
-                value={ fileBC ? fileBC.name : null }
-                placeholder={ 'Barangay Certificate' }
-                onChange={
-                  (e) => {
-                    e.preventDefault()
-                    const reader=new FileReader()
-                    const file=e.target.files[0]
-                    let isValid
-                    switch (this.getExtension(file.type).toLowerCase()) {
-                      case 'jpeg' :
-                        isValid=true
-                      case 'jpg' :
-                        isValid=true
-                      case 'png' :
-                        isValid=true
-                      case 'pdf' :
-                        isValid=true
-                    }
-
-                    if (isValid) {
-                      reader.onloadend=() => {
-                        this.setState({
-                          fileBC: file,
-                          imgPrevBC: reader.result
-                        })
-                      }
-                      reader.readAsDataURL(file)
-                   } else {
-                       store.dispatch(NotifyActions.addNotify({
-                           title : 'File Uploading',
-                           message : 'The accepted attachments are JPG/PNG/PDF',
-                           type : 'warning',
-                           duration : 2000
-                         })
-                       )
-                     }
-                  }
-                }
-              />
-
-              <FileUploader
-                accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
-                value={ fileDP ? fileDP.name : null }
-                placeholder={ 'Damaged Property' }
-                onChange={
-                  (e) => {
-                    e.preventDefault()
-                    const reader2=new FileReader()
-                    const file2=e.target.files[0]
-                    let isValid
-                    switch (this.getExtension(file2.type).toLowerCase()) {
-                      case 'jpeg' :
-                        isValid=true
-                      case 'jpg' :
-                        isValid=true
-                      case 'png' :
-                        isValid=true
-                      case 'pdf' :
-                        isValid=true
-                    }
-
-                    if (isValid) {
-                      reader2.onloadend=() => {
-                        this.setState({
-                          fileDP: file2,
-                          imgPrevDP: reader2.result
-                        })
-                      }
-                      reader2.readAsDataURL(file2)
-                   } else {
-                       store.dispatch(NotifyActions.addNotify({
-                           title : 'File Uploading',
-                           message : 'The accepted attachments are JPG/PNG/PDF',
-                           type : 'warning',
-                           duration : 2000
-                        })
-                      )
-                    }
-                  }
-                }
+                  onChange={ (e) => this.setState({ calamityType: e.target.value }) }
+                  placeholder={ 'Type of Calamity' }
+                  readOnly
+                  type={ 'text' }
                 />
+              </div>
+            </div>
 
-              <GenericButton
-                type={ 'button' }
-                text={ 'submit' }
-                onClick={ () => this.setState({ showReviewCalamityModal : true }) }
-                className={ 'calamity-submit' } />
+            <div className={ 'calamity-icon-text-grid-date' }>
+              <div>
+                <br/>
+                <span className={ 'calamity-icon-settings calamity-calendar' }/>
+              </div>
+              <div>
+                <DatePicker
+                  dateFormat={ 'MM/DD/YYYY' }
+                  maxDate={ moment() }
+                  readOnly
+                  selected={ preferredDate ? moment(preferredDate, 'DD-MM-YYYY') : moment()}
+                  onChange={ this.handleChange }
+                  className={ 'calendar' }
+                  calendarClassName={ 'calendarClass' }/>
+              </div>
+            </div>
+
+            <div className={ 'calamity-icon-text-grid' }>
+              <div>
+                <br/>
+                <span className={ 'calamity-icon-settings calamity-property' }/>
+              </div>
+              <div>
+                <GenericTextBox
+                  container={ 'calamity-container' }
+                  value={ property ? property : '' }
+                  onChange={ (e) => this.setState({ property: e.target.value }) }
+                  placeholder={ 'Property' }
+                  readOnly
+                  type={ 'text' }
+                />
+              </div>
+            </div>
+
+            <div className={ 'calamity-icon-text-grid' }>
+              <div>
+                <br/>
+                <span className={ 'calamity-icon-settings calamity-description' }/>
+              </div>
+              <div>
+                <GenericTextBox
+                  container={ 'calamity-container' }
+                  value={ propertyDesc ? propertyDesc : '' }
+                  onChange={ (e) => this.setState({ propertyDesc: e.target.value }) }
+                  placeholder={ 'Property Description' }
+                  readOnly
+                  type={ 'text' }
+                />
+              </div>
+            </div>
+
+            <div className={ 'calamity-icon-text-grid' }>
+              <div>
+                <br/>
+                <span className={ 'calamity-icon-settings calamity-property-type' }/>
+              </div>
+              <div>
+                <GenericTextBox
+                  container={ 'calamity-container' }
+                  value={ propertyType ? propertyType : '' }
+                  onClick={
+                    () => this.setState({ showPropModal : true })
+                  }
+                  onChange={ (e) => this.setState({ propertyType: e.target.value }) }
+                  placeholder={ 'Property Type' }
+                  readOnly
+                  type={ 'text' }
+                />
+              </div>
+            </div>
+
+            <div className={ 'calamity-icon-text-grid' }>
+              <div>
+                <br/>
+                <span className={ 'calamity-icon-settings calamity-peso' }/>
+              </div>
+              <div>
+                <GenericTextBox
+                  container={ 'calamity-container' }
+                  value={ acquisitionValue ? acquisitionValue : '' }
+                  onChange={
+                    (e) =>{
+                      const re=/^[0-9\.]+$/
+                      if (e.target.value == '' || re.test(e.target.value)) {
+                        this.setState({ acquisitionValue: e.target.value })
+                      }
+                    }
+                   }
+                  placeholder={ 'Acquisition Value' }
+                  readOnly
+                  type={ 'text' }
+                />
+              </div>
+            </div>
+
+            <div className={ 'calamity-icon-text-grid' }>
+              <div>
+                <br/>
+                <span className={ 'calamity-icon-settings calamity-peso' }/>
+              </div>
+              <div>
+                <GenericTextBox
+                  container={ 'calamity-container' }
+                  value={ estimatedCost ? estimatedCost : '' }
+                  onChange={
+                    (e) =>{
+                      const re=/^[0-9\.]+$/
+                      if (e.target.value == '' || re.test(e.target.value)) {
+                        this.setState({ estimatedCost: e.target.value })
+                      }
+                    }
+                   }
+                  placeholder={ 'Estimated Cost Repair' }
+                  readOnly
+                  type={ 'text' }
+                />
+              </div>
+            </div>
+              <br/>
+              <br/>
+
+            </div>
+          </Card>
+        </div>
+        <br/>
+        <br/>
+        <div className='calamity-grid-column-2'>
+        <div></div>
+          <Card className='calamity-form-card'>
+          <h4>
+            Form Attachments
+          </h4>
+          <div className={'calamity-form-card-body '}>
+          {
+            imgPrevBC &&
+            <div>
+              <label className="calamity-form-title">Form Attachments</label>
+              <div className="calamity-attachment-form">
+                <img
+                  src={ require('../../../ub-components/Notify/images/x-circle.png') }
+                  className='close-button'
+                  onClick={
+                    () => {
+                      this.setState({ fileBC : '', imgPrevBC : null })
+                    }
+                  }
+                />
+                <div style={ styles.image1 }><h6 className="calamity-file-name">{ fileBC.name }</h6></div>
+              </div>
+            </div>
+          }
+          {
+            !imgPrevBC &&
+            <FileUploader
+              accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
+              value={ fileBC ? fileBC.name : null }
+              placeholder={ 'Barangay Certificate' }
+              onChange={
+                (e) => {
+                  e.preventDefault()
+                  const reader=new FileReader()
+                  const file=e.target.files[0]
+                  let isValid
+                  switch (this.getExtension(file.type).toLowerCase()) {
+                    case 'jpeg' :
+                      isValid=true
+                    case 'jpg' :
+                      isValid=true
+                    case 'png' :
+                      isValid=true
+                    case 'pdf' :
+                      isValid=true
+                  }
+
+                  if (isValid) {
+                    reader.onloadend=() => {
+                      this.setState({
+                        fileBC: file,
+                        imgPrevBC: reader.result
+                      })
+                    }
+                    reader.readAsDataURL(file)
+                 } else {
+                     store.dispatch(NotifyActions.addNotify({
+                         title : 'File Uploading',
+                         message : 'The accepted attachments are JPG/PNG/PDF',
+                         type : 'warning',
+                         duration : 2000
+                       })
+                     )
+                   }
+                }
+              }
+            />
+          }
+
+          {
+            imgPrevDP &&
+            <div>
+              <label className="calamity-form-title">Form Attachments</label>
+              <div className="calamity-attachment-form">
+                <img
+                  src={ require('../../../ub-components/Notify/images/x-circle.png') }
+                  className='close-button'
+                  onClick={
+                    () => {
+                      this.setState({ fileDP : '', imgPrevDP : null })
+                    }
+                  }
+                />
+                <div style={ styles.image2 }><h6 className="calamity-file-name">{ fileDP.name }</h6></div>
+              </div>
+            </div>
+          }
+          {
+            !imgPrevDP &&
+            <FileUploader
+              accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
+              value={ fileDP ? fileDP.name : null }
+              placeholder={ 'Damaged Property' }
+              onChange={
+                (e) => {
+                  e.preventDefault()
+                  const reader2=new FileReader()
+                  const file2=e.target.files[0]
+                  let isValid
+                  switch (this.getExtension(file2.type).toLowerCase()) {
+                    case 'jpeg' :
+                      isValid=true
+                    case 'jpg' :
+                      isValid=true
+                    case 'png' :
+                      isValid=true
+                    case 'pdf' :
+                      isValid=true
+                  }
+
+                  if (isValid) {
+                    reader2.onloadend=() => {
+                      this.setState({
+                        fileDP: file2,
+                        imgPrevDP: reader2.result
+                      })
+                    }
+                    reader2.readAsDataURL(file2)
+                 } else {
+                     store.dispatch(NotifyActions.addNotify({
+                         title : 'File Uploading',
+                         message : 'The accepted attachments are JPG/PNG/PDF',
+                         type : 'warning',
+                         duration : 2000
+                      })
+                    )
+                  }
+                }
+              }
+              />
+          }
+
+          <GenericButton
+            type={ 'button' }
+            text={ 'submit' }
+            onClick={ () => this.setState({ showReviewCalamityModal : true }) }
+            className={ 'calamity-submit' } />
             </div>
           </Card>
         </div>
