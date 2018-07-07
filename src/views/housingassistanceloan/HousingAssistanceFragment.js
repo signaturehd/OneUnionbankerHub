@@ -66,6 +66,10 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.setState({ purposeOfAvailment })
   }
 
+  showAdditionalFilesCount (count) {
+    console.log(count)
+  }
+
   /* Loader*/
 
   hideCircularLoader () {

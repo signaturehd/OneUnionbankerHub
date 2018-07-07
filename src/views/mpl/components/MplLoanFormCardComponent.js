@@ -32,15 +32,17 @@ class MplFormLoanCardComponent extends Component {
       termId: '',
       subCategoryId: '',
       poaId: '',
-      file: '',
+      key: '',
       imagePreviewUrl: '',
       showFileUpload: false,
       showOffsetLoanCard: false,
-      showOffsetOfLoanModal : false
+      showOffsetOfLoanModal : false,
+      imageUrlObject: [],
     }
     this.onChange=this.onChange.bind(this)
     this.validator=this.validator.bind(this)
   }
+
 
   onChange (e) {
       new MoneyValidation().isValid(e.target.value) ?
@@ -95,12 +97,13 @@ class MplFormLoanCardComponent extends Component {
       rateOfLoan,
       termId,
       subCategoryId,
-      file,
+      key,
       imagePreviewUrl,
       showFileUpload,
       response,
       showOffsetLoanCard,
-      showOffsetOfLoanModal
+      showOffsetOfLoanModal,
+      imageUrlObject
     }=this.state
 
     const {
@@ -124,7 +127,6 @@ class MplFormLoanCardComponent extends Component {
         backgroundRepeat: 'noRepeat',
       }
     }
-
     let $imagePreview=null
       $imagePreview=(<div style={ styles.image1 }></div>)
 
@@ -228,11 +230,14 @@ class MplFormLoanCardComponent extends Component {
                   this.setState({ showTerm : true }) }
                 placeholder={ 'Term of Loan' }
                 type={ 'text' }/>
-              <GenericButton
-                type={ 'button' }
-                text={ 'continue' }
-                onClick={ () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, offset) }
-                className={ 'mplview-submit' } />
+              {
+              !showFileUpload &&
+                <GenericButton
+                  type={ 'button' }
+                  text={ 'continue' }
+                  onClick={ () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, offset) }
+                  className={ 'mplview-submit' } />
+              }
             </div>
             <br/>
           </Card>
@@ -261,71 +266,108 @@ class MplFormLoanCardComponent extends Component {
           }
           <br/>
           <br/>
-          {
-            showFileUpload &&
+            {
+              showFileUpload &&
+            <div>
+              <div className={ 'brv-grid-column-2' }>
+                <div></div>
+                <Card className={ 'brv-form-card' }>
+                  <h4>
+                  Form Attachments
+                  </h4>
+                  <div className={'brv-form-card-body '}>
+                    {
+                      formAttachments.AdditionalDocuments ?
+                        formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
+                        <FileUploader
+                          accept="image/gif,image/jpeg,image/jpg,image/png,"
+                          value={ key.name }
+                          key={ key }
+                          placeholder={ attachmentsLabel }
+                          onChange={
+                            (e) => {
+                              const reader=new FileReader()
+                              const key=e.target.files[0]
+                              console.log()
+                              let isValid
+                              switch (this.getExtension(key.type).toLowerCase()) {
+                                case 'jpeg' :
+                                  isValid=true
+                                case 'jpg' :
+                                  isValid=true
+                                case 'png' :
+                                  isValid=true
+                                case 'pdf' :
+                                  isValid=true
+                              }
 
-          <div className={ 'mpl-grid-column-2' }>
-            <div></div>
-            <Card className={ 'mpl-form-preview' }>
-              <h4>
-                Form Attachments
-              </h4>
-              <div className={ 'mpl-body' }>
-              {
-                formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
-                  <FileUploader
-                    accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
-                    value={ file[key] }
-                    placeholder={ attachmentsLabel && attachmentsLabel ? attachmentsLabel : '(Not Yet Provided)' }
-                    onChange={
-                      (e) => {
-                        e.preventDefault()
-                        const reader=new FileReader()
-                        const file=e.target.files[key]
-                        let isValid
-                        switch (this.getExtension(file.type).toLowerCase()) {
-                          case 'jpeg' :
-                            isValid=true
-                          case 'jpg' :
-                            isValid=true
-                          case 'png' :
-                            isValid=true
-                          case 'pdf' :
-                            isValid=true
-                        }
+                              if (isValid) {
+                                reader.onloadend=() => {
+                                  this.setState({
+                                    key,
+                                    imagePreviewUrl: reader.result
+                                  })
+                                }
+                                reader.readAsDataURL(key)
+                             } else {
+                                 store.dispatch(NotifyActions.addNotify({
+                                     title : 'File Uploading',
+                                     message : 'The accepted attachments are JPG/PNG/PDF',
+                                     type : 'warning',
+                                     duration : 2000
+                                   })
+                                 )
+                               }
+                            }
+                          }
+                        />
+                      )
+                    :
+                      <div></div>
+                    }
+                    {
+                      imagePreviewUrl ?
+                      <div>
+                        <label className="brv-form-title">Form Attachments</label>
+                        <div className="mpl-attachment-form">
+                          <img
+                            src={ require('../../../ub-components/Notify/images/x-circle.png') }
+                            className='close-button'
+                            onClick={
+                              () => {
+                                this.setState({ key : '', imagePreviewUrl : null })
+                              }
+                            }
+                          />
+                        <div style={ {
+                            backgroundImage: `url('${imagePreviewUrl}')`,
+                            width: '-webkit-fill-available',
+                            height: '-webkit-fill-available',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'noRepeat',
+                          } }
+                        >
+                          <h6 className="mpl-file-name">
+                            { file.name }
+                          </h6>
+                        </div>
+                        </div>
+                      </div>
+                      :
+                      <div></div>
+                    }
 
-                      if (isValid) {
-                        reader.onloadend=() => {
-                          this.setState({
-                            file: file,
-                            imagePrevUrl: reader.result
-                          })
-                        }
-                        reader.readAsDataURL(file)
-                     } else {
-                         store.dispatch(NotifyActions.addNotify({
-                             title : 'File Uploading',
-                             message : 'The accepted attachments are JPG/PNG/PDF',
-                             type : 'warning',
-                             duration : 2000
-                          })
-                        )}
-                      }}
-                  />)
-                }
+                    <GenericButton
+                      type={ 'button' }
+                      text={ 'continue' }
+                      onClick={ () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, offset) }
+                      className={ 'brv-submit' } />
+                  </div>
+                </Card>
               </div>
-              <div className='mpl-main'>
-                <div className={ 'mpl-review' }>
-                 <div className={ 'mpl-image-view ' }>
-                   { $imagePreview }
-                 </div>
-                 <div className={ 'mpl-image-view ' }>
-                 </div>
-               </div>
-              </div>
-            </Card>
-          </div>
-        }
+            </div>
+            }
       </div>
     )
   }
