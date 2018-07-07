@@ -65,7 +65,6 @@ class CalamityReviewModal extends Component {
         backgroundRepeat : 'no-repeat',
       }
     }
-
     return (
       <Modal
         isDismisable={ isDismisable }
