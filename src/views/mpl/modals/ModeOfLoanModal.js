@@ -41,7 +41,10 @@ return (
 }
 MplModeOfLoanModal.propTypes={
   onClose : PropTypes.func,
-  offset : PropTypes.array,
+  offset : PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
   onSubmit : PropTypes.func
 }
 

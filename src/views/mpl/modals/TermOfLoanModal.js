@@ -41,7 +41,10 @@ return (
 }
 MplTermOfLoan.propTypes = {
   onClose : PropTypes.func,
-  term : PropTypes.array,
+  term : PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
   onSubmit : PropTypes.func
 }
 

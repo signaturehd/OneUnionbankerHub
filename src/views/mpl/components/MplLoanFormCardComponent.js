@@ -32,7 +32,7 @@ class MplFormLoanCardComponent extends Component {
       termId: '',
       subCategoryId: '',
       poaId: '',
-      key: '',
+      fileObject: [],
       imagePreviewUrl: '',
       showFileUpload: false,
       showOffsetLoanCard: false,
@@ -97,7 +97,7 @@ class MplFormLoanCardComponent extends Component {
       rateOfLoan,
       termId,
       subCategoryId,
-      key,
+      fileObject,
       imagePreviewUrl,
       showFileUpload,
       response,
@@ -114,9 +114,12 @@ class MplFormLoanCardComponent extends Component {
       offset,
       onGetPurposeOfLoan,
       formAttachments,
-      textLabel
+      AdditionalDocuments,
+      RequiredDocuments,
     }=this.props
 
+    console.log(imageUrlObject)
+    console.log(fileObject)
     const styles={
       image1 : {
         backgroundImage: `url('${imagePreviewUrl}')`,
@@ -278,7 +281,9 @@ class MplFormLoanCardComponent extends Component {
                   <div className={'brv-form-card-body '}>
                     {
                       formAttachments.AdditionalDocuments ?
-                        formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
+                      formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
+
+                      <div>
                         <FileUploader
                           accept="image/gif,image/jpeg,image/jpg,image/png,"
                           value={ key.name }
@@ -287,10 +292,9 @@ class MplFormLoanCardComponent extends Component {
                           onChange={
                             (e) => {
                               const reader=new FileReader()
-                              const key=e.target.files[0]
-                              console.log()
+                              const file=e.target.files[0]
                               let isValid
-                              switch (this.getExtension(key.type).toLowerCase()) {
+                              switch (this.getExtension(file.type).toLowerCase()) {
                                 case 'jpeg' :
                                   isValid=true
                                 case 'jpg' :
@@ -303,12 +307,16 @@ class MplFormLoanCardComponent extends Component {
 
                               if (isValid) {
                                 reader.onloadend=() => {
-                                  this.setState({
-                                    key,
-                                    imagePreviewUrl: reader.result
-                                  })
+                                  if((imageUrlObject).length <= AdditionalDocuments)
+                                  {
+                                    this.setState({
+                                        fileObject: [...fileObject, file],
+                                        imageUrlObject: [ ...imageUrlObject , reader.result ]
+                                    })
+                                  }
+                                  else {}
                                 }
-                                reader.readAsDataURL(key)
+                                reader.readAsDataURL(file)
                              } else {
                                  store.dispatch(NotifyActions.addNotify({
                                      title : 'File Uploading',
@@ -321,54 +329,64 @@ class MplFormLoanCardComponent extends Component {
                             }
                           }
                         />
-                      )
-                    :
-                      <div></div>
-                    }
-                    {
-                      imagePreviewUrl ?
-                      <div>
-                        <label className="brv-form-title">Form Attachments</label>
-                        <div className="mpl-attachment-form">
-                          <img
-                            src={ require('../../../ub-components/Notify/images/x-circle.png') }
-                            className='close-button'
-                            onClick={
-                              () => {
-                                this.setState({ key : '', imagePreviewUrl : null })
+                        {
+                          imageUrlObject ?
+
+                          <div>
+                            {
+                              imageUrlObject.map((url, key ) =>
+
+                              <div className="mpl-attachment-form">
+                                <img
+                                  src={ require('../../../ub-components/Notify/images/x-circle.png') }
+                                  className='close-button'
+                                  onClick={
+                                    () => {
+                                      this.setState({ key : '', imagePreviewUrl : null })
+                                    }
+                                  }
+                                />
+                              <div style={ {
+                                  backgroundImage: `url('${url}')`,
+                                  width: 'auto',
+                                  height: '60px',
+                                  backgroundSize: 'contain',
+                                  backgroundRepeat: 'no-repeat',
+                                } }
+                              >
+                              {
+                                fileObject.map((file, key) =>
+                                  <h6
+                                    key={ key }
+                                    className="mpl-file-name">
+                                    { file.name }
+                                  </h6>
+                                )
                               }
-                            }
-                          />
-                        <div style={ {
-                            backgroundImage: `url('${imagePreviewUrl}')`,
-                            width: '-webkit-fill-available',
-                            height: '-webkit-fill-available',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            backgroundRepeat: 'noRepeat',
-                          } }
-                        >
-                          <h6 className="mpl-file-name">
-                            { file.name }
-                          </h6>
-                        </div>
-                        </div>
+                              </div>
+                            </div>
+                          )
+                        }
                       </div>
                       :
                       <div></div>
                     }
-
-                    <GenericButton
-                      type={ 'button' }
-                      text={ 'continue' }
-                      onClick={ () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, offset) }
-                      className={ 'brv-submit' } />
                   </div>
-                </Card>
-              </div>
+                )
+                :
+                <div></div>
+              }
+              <GenericButton
+                type={ 'button' }
+                text={ 'continue' }
+                onClick={ () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, offset) }
+                className={ 'brv-submit' } />
             </div>
-            }
+          </Card>
+        </div>
       </div>
+      }
+  </div>
     )
   }
 }
@@ -390,7 +408,8 @@ MplFormLoanCardComponent.propTypes={
     PropTypes.object,
     PropTypes.array
   ]),
-  textLabel:PropTypes.string
+  AdditionalDocuments: PropTypes.number,
+  RequiredDocuments: PropTypes.number,
 }
 
 export default MplFormLoanCardComponent

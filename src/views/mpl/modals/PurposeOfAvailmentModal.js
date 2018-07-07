@@ -90,7 +90,7 @@ class MplPurposeOfAvailmentModal extends Component {
                 poa.category && poa.category.map((resp, key) =>
                 <GenericButton
                   className={ 'mpl-poa-modal-button' }
-                  key={ key ? key : '' }
+                  key={ key }
                   text={ resp.name ? resp.name : '' }
                   onClick={ () => this.onGetClicked(
                     resp,
