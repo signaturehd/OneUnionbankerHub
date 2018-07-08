@@ -8,12 +8,6 @@ class CarLeaseFragment extends Component {
 
   constructor (props) {
     super(props)
-
-    this.navigate = this.navigate.bind(this)
-  }
-
-  navigate () {
-    this.props.history.push('/mybenefits/benefits')
   }
 
   componentDidMount () {
@@ -34,7 +28,6 @@ class CarLeaseFragment extends Component {
       title: 'SECOND HAND CAR',
       path: '/mybenefits/benefits/carlease/old',
     }]
-
     return (
       <div>
         <i
