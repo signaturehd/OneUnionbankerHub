@@ -26,13 +26,14 @@ class EducationGroupAidFragment extends BaseMVPView {
       noticeResponse : null,
       showNoticeResponseModal : false,
       enabledLoader : false,
-      grantPlan : [],
-      grantId : '',
-      grantType : '',
-      grantAmount : '',
+      grantPlan : [], //meh
+      grantId : '',//meh
+      grantType : '',//meh
+      grantAmount : '',//meh
       file : null,
       imagePreviewUrl : null,
-      showBenefitFeedbackModal : false
+      showBenefitFeedbackModal : false,
+      data : ''
     }
   }
 
@@ -41,24 +42,48 @@ class EducationGroupAidFragment extends BaseMVPView {
     this.presenter.validateGroupAid()
   }
 
-  confirmation (showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl) {
-    if (grantType === '') {
+  confirmation (showConfirmation, data) {
+    if (data.dependent === '') {
       store.dispatch(NotifyActions.addNotify({
           title : 'Education Group - Plan',
-          message : 'Please double check your type of group',
+          message : 'Please double check your dependents',
           type : 'warning',
           duration : 2000
         })
       )
-    } else if (grantAmount === 0 || grantAmount === '') {
+    } else if (data.company.trim() == '') {
       store.dispatch(NotifyActions.addNotify({
           title : 'Education Group - Plan',
-          message : 'Please double check your group amount',
+          message : 'Please double check your company',
           type : 'warning',
           duration : 2000
         })
       )
-    } else if (!file) {
+    } else if (data.desiredAmount.trim() === '' || data.desiredAmount === '0') {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Education Group - Plan',
+          message : 'Please double check your desired amount',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (data.durationOfPayment === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Education Group - Plan',
+          message : 'Please double check your duration of payment',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (!data.file1 || !data.imagePreviewUrl1) {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Education Group - Plan',
+          message : 'Please double check your attachments',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (!data.file2 || !data.imagePreviewUrl2) {
       store.dispatch(NotifyActions.addNotify({
           title : 'Education Group - Plan',
           message : 'Please double check your attachments',
@@ -67,14 +92,7 @@ class EducationGroupAidFragment extends BaseMVPView {
         })
       )
     } else {
-      this.setState({
-        showConfirmation,
-        grantId,
-        grantType,
-        grantAmount,
-        file,
-        imagePreviewUrl
-      })
+      this.setState({showConfirmation, data})
     }
   }
 
@@ -98,8 +116,8 @@ class EducationGroupAidFragment extends BaseMVPView {
     this.setState({ showConfirmation: false, noticeResponse })
   }
 
-  submitForm (grantId, grantAmount, file) {
-    this.presenter.addGrantPlan(grantId, file)
+  submitForm (dependentId, desiredAmount, effectiveDate, company, durationOfPaymentId, file1, file2) {
+    this.presenter.addGroupAid(dependentId, desiredAmount, effectiveDate, company, durationOfPaymentId, file1, file2)
   }
 
   navigate () {
@@ -119,7 +137,8 @@ class EducationGroupAidFragment extends BaseMVPView {
       grantAmount,
       file,
       imagePreviewUrl,
-      showBenefitFeedbackModal
+      showBenefitFeedbackModal,
+      data
     } = this.state
 
     return (
@@ -127,14 +146,10 @@ class EducationGroupAidFragment extends BaseMVPView {
         {
           showConfirmation &&
           <ConfirmationModal
-            grantPlan = { grantPlan }
-            grantId = { grantId }
-            grantType = { grantType }
-            grantAmount = { grantAmount }
-            file = { file }
-            imagePreviewUrl = { imagePreviewUrl }
-            submitForm = { (grantId, grantAmount, file) =>
-              this.submitForm(grantId, grantAmount, file) }
+            data = { data }
+            attachments = { grantPlan.attachments }
+            submitForm = { (d1, d2, d3, d4, d5, d6, d7) =>
+              this.submitForm(d1, d2, d3, d4, d5, d6, d7) }
             onClose = { () => this.setState({ showConfirmation : false }) }
           />
         }
@@ -172,6 +187,8 @@ class EducationGroupAidFragment extends BaseMVPView {
           />
         }
 
+
+
         <div>
           <i
             className = { 'back-arrow' }
@@ -189,8 +206,8 @@ class EducationGroupAidFragment extends BaseMVPView {
           <FormComponent
             grantPlan = { grantPlan }
             onClick = {
-              (showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl) => {
-                this.confirmation(showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl)
+              (showConfirmation, data) => {
+                this.confirmation(showConfirmation, data)
               }
             }
             presenter = { this.presenter }
