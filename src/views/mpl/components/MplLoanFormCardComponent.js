@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import './styles/mplComponentStyle.css'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
-
 import { RequiredValidation, MoneyValidation } from '../../../utils/validate'
 
 import PurposeOfAvailmentModal from '../../mpl/modals/PurposeOfAvailmentModal'
@@ -120,8 +119,6 @@ class MplFormLoanCardComponent extends Component {
       RequiredDocuments,
     }=this.props
 
-    console.log(imageUrlObject)
-    console.log(fileObject)
     const styles={
       image1 : {
         backgroundImage: `url('${imagePreviewUrl}')`,

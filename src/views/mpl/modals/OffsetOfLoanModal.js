@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Modal , GenericButton } from '../../../ub-components/'
+import { format } from '../../../utils/numberUtils'
 
 import './styles/mplModalStyle.css'
 
@@ -77,7 +78,16 @@ return (
               <GenericButton
                 className={ 'mpl-poa-modal-button' }
                 key={ key }
-                text={ resp && resp.promissoryNoteNumber }
+                text={
+                  `${ resp &&
+                      resp.promissoryNoteNumber ?
+                      resp.promissoryNoteNumber  :
+                      '' } 
+                      ${ resp &&
+                        resp.outstandingBalance ?
+                        format(resp.outstandingBalance) :
+                        '' }`
+                      }
                 onClick={ () => console.log(offset) }
                 />
             :
