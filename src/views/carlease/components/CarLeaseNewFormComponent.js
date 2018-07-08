@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import './styles/carleaseStyle.css'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
+import { RequiredAlphabetValidation, RequiredNumberValidation } from '../../../utils/validate'
+
 import CarDealerQuotation from '../modals/CarDealerQuotationModal'
 import CarBrandsModal from '../modals/CarBrandsModal'
 
@@ -14,7 +16,7 @@ class CarLeaseNewFormComponent extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {
+    this.state={
       carBrand : '',
       carModel : '',
       makeYear : '',
@@ -28,66 +30,66 @@ class CarLeaseNewFormComponent extends Component {
       showCarBrands: false,
       carBrandId: ''
     }
-     this.onChange = this.onChange.bind(this)
-     this.getCarBrand = this.getCarBrand.bind(this)
-     this.getCarModel = this.getCarModel.bind(this)
-     this.getPrimaryColor = this.getPrimaryColor.bind(this)
-     this.getSecondaryColor = this.getSecondaryColor.bind(this)
-     this.handleImageChange = this.handleImageChange.bind(this)
-     this.onGetClicked = this.onGetClicked.bind(this)
-  }
-
-  getCarBrand (e) {
-    this.setState({ carBrand : e.target.value })
+     this.onChange=this.onChange.bind(this)
+     this.getCarModel=this.getCarModel.bind(this)
+     this.getPrimaryColor=this.getPrimaryColor.bind(this)
+     this.getSecondaryColor=this.getSecondaryColor.bind(this)
+     this.handleImageChange=this.handleImageChange.bind(this)
+     this.onGetClicked=this.onGetClicked.bind(this)
   }
 
   getCarModel (e) {
-    this.setState({ carModel : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+      this.setState({ carModel : e.target.value }) :
+      this.setState({ carModel : '' })
   }
 
   getPrimaryColor (e) {
-    this.setState({ primaryColor : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+      this.setState({ primaryColor : e.target.value }) :
+      this.setSTate({ primaryColor : '' })
   }
 
   getSecondaryColor (e) {
-    this.setState({ secondaryColor : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+      this.setState({ secondaryColor : e.target.value }):
+      this.setState({ secondaryColor : '' })
   }
 
   onChange (e) {
-      const re = /^[0-9\.]+$/
-      if (e.target.value === '' || re.test(e.target.value)) {
-        this.setState({ makeYear: e.target.value })
-      }
+    new RequiredNumberValidation().isValidYear(e.target.value) ?
+      this.setState({ makeYear: e.target.value })  :
+      this.setState({ makeYear: '' })
    }
 
    getExtension (filename) {
-     const parts = filename.split('/')
+     const parts=filename.split('/')
      return parts[parts.length - 1]
    }
 
    handleImageChange (e) {
      e.preventDefault()
 
-     const reader = new FileReader()
-     const [file] = e.target.files
+     const reader=new FileReader()
+     const [file]=e.target.files
      let isValid
        switch (this.getExtension(file.type).toLowerCase()) {
          case 'jpeg' :
-           isValid = true
+           isValid=true
            break
          case 'jpg' :
-           isValid = true
+           isValid=true
            break
          case 'png' :
-           isValid = true
+           isValid=true
            break
          case 'pdf' :
-           isValid = true
+           isValid=true
            break
      }
 
      if (isValid) {
-        reader.onloadend = () => {
+        reader.onloadend=() => {
           this.setState({
             file,
             imagePreviewUrl: reader.result
@@ -144,14 +146,14 @@ class CarLeaseNewFormComponent extends Component {
       showQuotation,
       navigate,
       showCarBrands
-    } = this.state
+    }=this.state
 
     const {
       loanType,
       history,
       brands,
-    } = this.props
-      const styles = {
+    }=this.props
+      const styles={
         image : {
           backgroundImage: `url('${imagePreviewUrl}')`,
           width : '-webkit-fill-available',
@@ -161,8 +163,8 @@ class CarLeaseNewFormComponent extends Component {
         }
       }
 
-      let $imagePreview = null
-        $imagePreview = (<div style = { styles.image }></div>)
+      let $imagePreview=null
+        $imagePreview=(<div style={ styles.image }></div>)
 
     return (
       <div className={'carview-container'}>
@@ -268,7 +270,7 @@ class CarLeaseNewFormComponent extends Component {
   }
 }
 
-CarLeaseNewFormComponent.propTypes = {
+CarLeaseNewFormComponent.propTypes={
   loanType : PropTypes.number,
   setSelectedNavigation: PropTypes.func,
   history: PropTypes.object,
