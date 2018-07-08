@@ -4,7 +4,10 @@ import PropTypes from 'prop-types'
 import './styles/carleaseStyle.css'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
+import { RequiredAlphabetValidation, RequiredNumberValidation } from '../../../utils/validate'
+
 import CarDealerQuotation from '../modals/CarDealerQuotationModal'
+import CarBrandsModal from '../modals/CarBrandsModal'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -13,7 +16,7 @@ class CarLeaseNewFormComponent extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {
+    this.state={
       carBrand : '',
       carModel : '',
       makeYear : '',
@@ -23,67 +26,70 @@ class CarLeaseNewFormComponent extends Component {
       imagePreviewUrl: '',
       showFileUpload: false,
       showQuotation: true,
+      navigate: false,
+      showCarBrands: false,
+      carBrandId: ''
     }
-     this.onChange = this.onChange.bind(this)
-     this.getCarBrand = this.getCarBrand.bind(this)
-     this.getCarModel = this.getCarModel.bind(this)
-     this.getPrimaryColor = this.getPrimaryColor.bind(this)
-     this.getSecondaryColor = this.getSecondaryColor.bind(this)
-     this.handleImageChange = this.handleImageChange.bind(this)
-     this.onGetClicked = this.onGetClicked.bind(this)
-  }
-
-  getCarBrand (e) {
-    this.setState({ carBrand : e.target.value })
+     this.onChange=this.onChange.bind(this)
+     this.getCarModel=this.getCarModel.bind(this)
+     this.getPrimaryColor=this.getPrimaryColor.bind(this)
+     this.getSecondaryColor=this.getSecondaryColor.bind(this)
+     this.handleImageChange=this.handleImageChange.bind(this)
+     this.onGetClicked=this.onGetClicked.bind(this)
   }
 
   getCarModel (e) {
-    this.setState({ carModel : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+      this.setState({ carModel : e.target.value }) :
+      this.setState({ carModel : '' })
   }
 
   getPrimaryColor (e) {
-    this.setState({ primaryColor : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+      this.setState({ primaryColor : e.target.value }) :
+      this.setSTate({ primaryColor : '' })
   }
 
   getSecondaryColor (e) {
-    this.setState({ secondaryColor : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+      this.setState({ secondaryColor : e.target.value }):
+      this.setState({ secondaryColor : '' })
   }
 
   onChange (e) {
-      const re = /^[0-9\.]+$/
-      if (e.target.value === '' || re.test(e.target.value)) {
-        this.setState({ makeYear: e.target.value })
-      }
+    new RequiredNumberValidation().isValid(e.target.value) ?
+      this.setState({ makeYear: e.target.value })  :
+      this.setState({ makeYear: '' })
    }
 
    getExtension (filename) {
-     const parts = filename.split('/')
+     const parts=filename.split('/')
      return parts[parts.length - 1]
    }
 
    handleImageChange (e) {
      e.preventDefault()
 
-     const reader = new FileReader()
-     const [file] = e.target.files
+     const reader=new FileReader()
+     const [file]=e.target.files
      let isValid
        switch (this.getExtension(file.type).toLowerCase()) {
          case 'jpeg' :
-           isValid = true
+           isValid=true
            break
          case 'jpg' :
-           isValid = true
+           isValid=true
            break
          case 'png' :
-           isValid = true
+           isValid=true
            break
          case 'pdf' :
-           isValid = true
+           isValid=true
            break
      }
 
      if (isValid) {
-        reader.onloadend = () => {
+        reader.onloadend=() => {
           this.setState({
             file,
             imagePreviewUrl: reader.result
@@ -122,9 +128,14 @@ class CarLeaseNewFormComponent extends Component {
     )
   }
 
+  navigateBenefits () {
+    this.props.history.push('/mybenefits/benefits')
+  }
+
   render () {
     const {
       carBrand,
+      carBrandId,
       carModel,
       makeYear,
       primaryColor,
@@ -132,14 +143,17 @@ class CarLeaseNewFormComponent extends Component {
       file,
       imagePreviewUrl,
       showFileUpload,
-      showQuotation
-    } = this.state
+      showQuotation,
+      navigate,
+      showCarBrands
+    }=this.state
 
     const {
-      loanType
-    } = this.props
-
-      const styles = {
+      loanType,
+      history,
+      brands,
+    }=this.props
+      const styles={
         image : {
           backgroundImage: `url('${imagePreviewUrl}')`,
           width : '-webkit-fill-available',
@@ -149,8 +163,8 @@ class CarLeaseNewFormComponent extends Component {
         }
       }
 
-      let $imagePreview = null
-        $imagePreview = (<div style = { styles.image }></div>)
+      let $imagePreview=null
+        $imagePreview=(<div style={ styles.image }></div>)
 
     return (
       <div className={'carview-container'}>
@@ -158,13 +172,25 @@ class CarLeaseNewFormComponent extends Component {
           {
             showQuotation &&
             <CarDealerQuotation
-              onUserConfirmation={ (showQuotation, showFileUpload, navigate) =>
-                this.setState({ showQuotation, showFileUpload }),
-                navigate ? this.props.history.push('/mybenefits/benefits/education') : null
-               }
+              history={ history }
+              backToBenefits={ this.navigateBenefits.bind(this) }
+              onUserConfirmation={ (showQuotation, showFileUpload) =>
+                this.setState({ showQuotation, showFileUpload })
+             }
               onClose={ () =>
                 this.setState({ showQuotation: false })  }
               />
+          }
+          {
+            showCarBrands &&
+            <CarBrandsModal
+              brands={ brands }
+              onGetCarBrands={ (car, hideModal) =>
+              this.setState({ carBrand : car.name, carId : car.id, showCarBrands: hideModal}) }
+              onClose={ ()=>
+                this.setState({ showCarBrands : false } )
+            }
+            />
           }
           <Card className={ 'car-form-card' }>
             <h4>
@@ -173,7 +199,7 @@ class CarLeaseNewFormComponent extends Component {
             <div className={ 'car-form-card-body' }>
               <GenericTextBox
                 value={ carBrand }
-                onChange={ this.getCarBrand }
+                onClick={ ()=> this.setState({ showCarBrands : true }) }
                 placeholder={ 'Brand' }
                 type={ 'text' }/>
               <GenericTextBox
@@ -244,9 +270,14 @@ class CarLeaseNewFormComponent extends Component {
   }
 }
 
-CarLeaseNewFormComponent.propTypes = {
+CarLeaseNewFormComponent.propTypes={
   loanType : PropTypes.number,
   setSelectedNavigation: PropTypes.func,
+  history: PropTypes.object,
+  brands: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
 }
 
 export default CarLeaseNewFormComponent
