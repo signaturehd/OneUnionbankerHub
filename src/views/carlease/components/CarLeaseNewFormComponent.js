@@ -57,7 +57,7 @@ class CarLeaseNewFormComponent extends Component {
   }
 
   onChange (e) {
-    new RequiredNumberValidation().isValidYear(e.target.value) ?
+    new RequiredNumberValidation().isValid(e.target.value) ?
       this.setState({ makeYear: e.target.value })  :
       this.setState({ makeYear: '' })
    }
