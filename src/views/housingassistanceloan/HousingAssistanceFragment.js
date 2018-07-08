@@ -32,13 +32,16 @@ class HousingAssistanceFragment extends BaseMVPView {
       showConfirmation : false,
       AdditionalDocuments: 0,
       RequiredDocuments: 0,
-      isPayeeOrDealer : ''
+      isPayeeOrDealerResp : '',
+      employeeName: [],
+      storedIsDealerOrPayee: [],
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.isManagersCheck()
+    this.presenter.getProfile()
     this.presenter.getMplTypes()
     this.presenter.getMplValidate(this.state.loanType)
     this.presenter.getMplPurposeOfAvailment(
@@ -66,8 +69,12 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.setState({ validateLoanType })
   }
 
-  isManagersCheck (isPayeeOrDealer) {
-    this.setState({ isPayeeOrDealer })
+  isManagersCheck (isPayeeOrDealerResp) {
+    this.setState({ isPayeeOrDealerResp })
+  }
+
+  getEmployeeName (employeeName) {
+    this.setState({ employeeName })
   }
 
   showPurposeOfAvailment (purposeOfAvailment) {
@@ -112,8 +119,14 @@ class HousingAssistanceFragment extends BaseMVPView {
       response,
       RequiredDocuments,
       AdditionalDocuments,
-      isPayeeOrDealer
+      isPayeeOrDealerResp,
+      employeeName,
+      storedIsDealerOrPayee
     }=this.state
+    const empName=employeeName && employeeName.fullname
+    const updateIsDealerOrPayeeName=[...storedIsDealerOrPayee]
+    updateIsDealerOrPayeeName.push(isPayeeOrDealerResp)
+    updateIsDealerOrPayeeName.push(empName)
 
     return (
       <div>
@@ -164,7 +177,7 @@ class HousingAssistanceFragment extends BaseMVPView {
              </center> :
             <FormComponent
               loanType={ loanType }
-              isPayeeOrDealer={ isPayeeOrDealer }
+              isPayeeOrDealer={ updateIsDealerOrPayeeName ? updateIsDealerOrPayeeName : '(Not yet Provided)' }
               purposeOfAvailment={ purposeOfAvailment }
               validateLoanType={ validateLoanType }
               formAttachments={ formAttachments }

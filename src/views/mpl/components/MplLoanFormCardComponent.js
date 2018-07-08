@@ -11,11 +11,13 @@ import {
 } from '../../../ub-components/'
 
 import { RequiredValidation, MoneyValidation } from '../../../utils/validate'
+import { format } from '../../../utils/numberUtils'
 
 import PurposeOfAvailmentModal from '../../mpl/modals/PurposeOfAvailmentModal'
 import ModeOfLoanModal from '../../mpl/modals/ModeOfLoanModal'
 import TermOfLoanModal from '../../mpl/modals/TermOfLoanModal'
 import OffsetOfLoanModal from '../../mpl/modals/OffsetOfLoanModal'
+import MplReviewFormModal from '../../mpl/modals/MplReviewFormModal'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -44,7 +46,8 @@ class MplFormLoanCardComponent extends Component {
       showOffsetOfLoanModal : false,
       imageUrlObject: [],
       selectedOffsetLoan: [],
-      showOffsetMessageModal: false
+      showOffsetMessageModal: false,
+      showReviewModal: false
     }
     this.onChange=this.onChange.bind(this)
     this.validator=this.validator.bind(this)
@@ -114,7 +117,8 @@ class MplFormLoanCardComponent extends Component {
       showOffsetOfLoanModal,
       imageUrlObject,
       selectedOffsetLoan,
-      showOffsetMessageModal
+      showOffsetMessageModal,
+      showReviewModal
     }=this.state
 
     const {
@@ -145,6 +149,19 @@ class MplFormLoanCardComponent extends Component {
 
     return (
       <div className={ 'mplview-container' }>
+        {
+          showReviewModal &&
+          <MplReviewFormModal
+            amountValue={ format(amountValue) }
+            imageUrlObject={ imageUrlObject ? imageUrlObject  : '' }
+            modeOfLoanText={ modeOfLoanText }
+            isPayeeOrDealer={ isPayeeOrDealer }
+            termOfLoan={ termOfLoan }
+            rateOfLoan={ rateOfLoan }
+            poaText={ poaText }
+            onClose={ () => this.setState({ showReviewModal : false }) }
+          />
+        }
         {
           showOffset &&
           <ModeOfLoanModal
@@ -233,7 +250,7 @@ class MplFormLoanCardComponent extends Component {
             <div className={ 'mpl-form-card-body' }>
               <GenericTextBox
                 type={ 'button' }
-                value={ poaText }
+                value={ poaText ? poaText : '' }
                 onClick={ () =>
                   this.setState({ showPurposeOfAvailment : true }) }
                 onChange={ poaText =>
@@ -246,16 +263,17 @@ class MplFormLoanCardComponent extends Component {
                 onClick={ () =>
                   this.setState({ showOffset : true }) }
                 placeholder={ 'Mode of Loan' }
-                value={ offset ? modeOfLoanText : 'New Loan' }
+                disabled={ modeOfLoanText ? modeOfLoanText : this.state.disabled }
+                value={ modeOfLoanText ? modeOfLoanText : 'New Loan' }
                 type={ 'text' }/>
               <GenericTextBox
-                value={ amountValue }
+                value={ amountValue ? amountValue : '' }
                 onChange={ this.onChange }
                 placeholder={ 'Desired Amount' }
                 maxLength={ 11 }
                 type={ 'text' }/>
               <GenericTextBox
-                value={ `${ termOfLoan } (${ rateOfLoan } %)` }
+                value={ `${ termOfLoan ? termOfLoan : '' } (${ rateOfLoan ? rateOfLoan : '' } %)` }
                 onChange={ (termOfLoan, rateOfLoan) =>
                   this.setState({ termOfLoan, rateOfLoan }) }
                 onClick={ () =>
@@ -267,7 +285,7 @@ class MplFormLoanCardComponent extends Component {
                 <GenericButton
                   type={ 'button' }
                   text={ 'continue' }
-                  onClick={ () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, offset) }
+                  onClick={ () => this.setState({ showReviewModal: true }) }
                   className={ 'mplview-submit' } />
               }
             </div>
@@ -438,7 +456,7 @@ class MplFormLoanCardComponent extends Component {
               <GenericButton
                 type={ 'button' }
                 text={ 'continue' }
-                onClick={ () => this.sendFormData(amountValue, modeOfLoanId, loanType, poaText, termId, offset) }
+                onClick={ () => this.setState({ showReviewModal: true }) }
                 className={ 'brv-submit' } />
             </div>
           </Card>
@@ -469,7 +487,11 @@ MplFormLoanCardComponent.propTypes={
   ]),
   AdditionalDocuments: PropTypes.number,
   RequiredDocuments: PropTypes.number,
-  isPayeeOrDealer: PropTypes.string,
+  isPayeeOrDealer: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+    PropTypes.string,
+  ]),
 }
 
 export default MplFormLoanCardComponent

@@ -34,10 +34,14 @@ export default class MultiPurposeLoanPresenter {
 
     this.getManagersCheckInteractor =
       new GetManagersCheckInteractor(container.get('HRBenefitsClient'))
+
+    this.getInformationInteractor =
+      new GetInformationInteractor(container.get('HRBenefitsClient'))
+
   }
 
   setView (view) {
-    this.view = view
+    this.view=view
   }
 
   /* Types*/
@@ -71,15 +75,9 @@ export default class MultiPurposeLoanPresenter {
     }
 
   isManagersCheck () {
-    const isManagersCheck = this.getManagersCheckInteractor.execute()
+    const isManagersCheck=this.getManagersCheckInteractor.execute()
     if (isManagersCheck !== null) {
-      if (isManagersCheck) {
-        this.view.isManagersCheck('Dealer Name')
-        // TODO get chosen releasing center then;
-        // TODO show releasing centers if there's no releasing center chosen
-      } else {
         this.view.isManagersCheck('Payee Name')
-      }
     } else {
       store.dispatch(NotifyActions.addNotify({
           title: 'Benefits',
@@ -91,22 +89,29 @@ export default class MultiPurposeLoanPresenter {
     }
   }
 
+  getProfile () {
+     this.view.getEmployeeName(this.getInformationInteractor.execute())
+     /* Get Employee Name */
+  }
+
   getMplValidate (loanTypeId) {
-    this.view.hideCircularLoader()
+    this.view.showCircularLoader()
     this.getValidateInteractor.execute(mplValidateParam(loanTypeId))
       .map(offsetLoan => {
-        const modeOfLoanStatic = {
+        const modeOfLoanStatic={
           id: 1,
           name: 'New Loan',
         } // create instance of "New Loan"
-        const modeOfLoan = {
+        const modeOfLoan={
           id: 2,
           name: 'Offset Loan',
         } // create instance of "New Loan"
 
         offsetLoan.offset ?
-        offsetLoan.offset.push(modeOfLoanStatic , modeOfLoan):
-        offsetLoan.offset.push(modeOfLoan) // add the New Loan to the offsets option
+        offsetLoan.offset.push(modeOfLoanStatic , modeOfLoan)
+        :
+        console.log('null')
+        // add the New Loan to the offsets option
 
         return offsetLoan
       })
@@ -143,7 +148,7 @@ export default class MultiPurposeLoanPresenter {
     loanTerm,
     principalLoanAmount,
     attachments) {
-      const fullname = this.getInformationInteractor.execute().fullname
+      const fullname=this.getInformationInteractor.execute().fullname
       this.view.showCircularLoader()
       this.addLoanInteractor.execute(mplPurposeLoanAddParam(
         fullname,
