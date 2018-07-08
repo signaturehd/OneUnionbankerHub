@@ -50,14 +50,15 @@ export default class BenefitsPresenter {
   }
 
   getCarValidate () {
-    this.view.showLoading()
+    this.view.showCircularLoader()
     this.getCarValidateInteractor.execute()
     .subscribe(
       validate => {
-        this.view.hideLoading()
+        this.view.hideCircularLoader()
+        this.view.showCarValidated(validate)
       }, error => {
+        this.view.hideCircularLoader()
         this.view.navigate()
-        this.view.hideLoading()
       }
     )
   }
