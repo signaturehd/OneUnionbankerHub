@@ -2,7 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import './styles/mplComponentStyle.css'
-import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
+import {
+  GenericTextBox,
+  Card,
+  GenericButton,
+  FileUploader,
+  Modal
+} from '../../../ub-components/'
 
 import { RequiredValidation, MoneyValidation } from '../../../utils/validate'
 
@@ -37,7 +43,8 @@ class MplFormLoanCardComponent extends Component {
       showOffsetLoanCard: false,
       showOffsetOfLoanModal : false,
       imageUrlObject: [],
-      selectedOffsetLoan: []
+      selectedOffsetLoan: [],
+      showOffsetMessageModal: false
     }
     this.onChange=this.onChange.bind(this)
     this.validator=this.validator.bind(this)
@@ -45,9 +52,11 @@ class MplFormLoanCardComponent extends Component {
 
 
   onChange (e) {
-      new MoneyValidation().isValid(e.target.value) ?
-        this.setState({ amountValue : e.target.value }) :
-        this.setState({ amountValue : '' })
+    let maximumAmount=parseFloat(500000)
+    new MoneyValidation().isValid(e.target.value) ?
+      this.setState({ amountValue : e.target.value })
+      :
+      this.setState({ amountValue : '' })
    }
 
    validator(input) {
@@ -104,7 +113,8 @@ class MplFormLoanCardComponent extends Component {
       showOffsetLoanCard,
       showOffsetOfLoanModal,
       imageUrlObject,
-      selectedOffsetLoan
+      selectedOffsetLoan,
+      showOffsetMessageModal
     }=this.state
 
     const {
@@ -199,6 +209,18 @@ class MplFormLoanCardComponent extends Component {
             }
             selectedOffsetLoan={ selectedOffsetLoan }
           />
+        }
+        {
+          showOffsetMessageModal &&
+          <Modal>
+            <center>
+              <h4> </h4>
+              <GenericButton
+                text={ 'Ok' }
+                onClick={ () => this.setState({ showOffsetMessageModal : false }) }
+              />
+            </center>
+          </Modal>
         }
         <div className={ 'mpl-grid-column-2' }>
           <div></div>

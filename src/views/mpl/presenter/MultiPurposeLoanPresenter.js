@@ -7,6 +7,7 @@ import GetInformationInteractor from '../../../domain/interactor/user/GetInforma
 import mplValidateParam from '../../../domain/param/MplValidateParam'
 import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
 import mplGetFormParam from '../../../domain/param/MplGetFormParam'
+import GetManagersCheckInteractor from '../../../domain/interactor/user/GetManagersCheckInteractor'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
@@ -30,6 +31,9 @@ export default class MultiPurposeLoanPresenter {
 
     this.getInformationInteractor =
       new GetInformationInteractor(container.get('HRBenefitsClient'))
+
+    this.getManagersCheckInteractor =
+      new GetManagersCheckInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -65,6 +69,27 @@ export default class MultiPurposeLoanPresenter {
           this.view.showPurposeOfAvailment(data)
       })
     }
+
+  isManagersCheck () {
+    const isManagersCheck = this.getManagersCheckInteractor.execute()
+    if (isManagersCheck !== null) {
+      if (isManagersCheck) {
+        this.view.isManagersCheck('Dealer Name')
+        // TODO get chosen releasing center then;
+        // TODO show releasing centers if there's no releasing center chosen
+      } else {
+        this.view.isManagersCheck('Payee Name')
+      }
+    } else {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Benefits',
+          message : 'Theres a Problem Getting your profile',
+          type : 'success',
+          duration : 2000
+        })
+      )
+    }
+  }
 
   getMplValidate (loanTypeId) {
     this.view.hideCircularLoader()
