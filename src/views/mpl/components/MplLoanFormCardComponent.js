@@ -127,6 +127,7 @@ class MplFormLoanCardComponent extends Component {
       formAttachments,
       AdditionalDocuments,
       RequiredDocuments,
+      isPayeeOrDealer
     }=this.props
 
     const styles={
@@ -214,7 +215,8 @@ class MplFormLoanCardComponent extends Component {
           showOffsetMessageModal &&
           <Modal>
             <center>
-              <h4> </h4>
+              <h4> `We're sorry but the selected existing loans have exceeded your principal amount.
+                  These cannot be deducted from your new loan. Kindly select within the appropriate balance.` </h4>
               <GenericButton
                 text={ 'Ok' }
                 onClick={ () => this.setState({ showOffsetMessageModal : false }) }
@@ -467,6 +469,7 @@ MplFormLoanCardComponent.propTypes={
   ]),
   AdditionalDocuments: PropTypes.number,
   RequiredDocuments: PropTypes.number,
+  isPayeeOrDealer: PropTypes.string,
 }
 
 export default MplFormLoanCardComponent

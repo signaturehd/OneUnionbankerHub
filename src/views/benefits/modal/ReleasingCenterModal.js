@@ -65,7 +65,10 @@ ReleasingCenterModal.propTypes = {
   type : PropTypes.string,
   placeholder : PropTypes.string,
   onClick : PropTypes.func,
-  releasingCenters : PropTypes.object
+  releasingCenters : PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ])
 }
 
 export default ReleasingCenterModal

@@ -31,12 +31,14 @@ class HousingAssistanceFragment extends BaseMVPView {
       showNoticeModal : false,
       showConfirmation : false,
       AdditionalDocuments: 0,
-      RequiredDocuments: 0
+      RequiredDocuments: 0,
+      isPayeeOrDealer : ''
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
+    this.presenter.isManagersCheck()
     this.presenter.getMplTypes()
     this.presenter.getMplValidate(this.state.loanType)
     this.presenter.getMplPurposeOfAvailment(
@@ -62,6 +64,10 @@ class HousingAssistanceFragment extends BaseMVPView {
 
   showValidate (validateLoanType) {
     this.setState({ validateLoanType })
+  }
+
+  isManagersCheck (isPayeeOrDealer) {
+    this.setState({ isPayeeOrDealer })
   }
 
   showPurposeOfAvailment (purposeOfAvailment) {
@@ -105,7 +111,8 @@ class HousingAssistanceFragment extends BaseMVPView {
       noticeResponse,
       response,
       RequiredDocuments,
-      AdditionalDocuments
+      AdditionalDocuments,
+      isPayeeOrDealer
     }=this.state
 
     return (
@@ -157,6 +164,7 @@ class HousingAssistanceFragment extends BaseMVPView {
              </center> :
             <FormComponent
               loanType={ loanType }
+              isPayeeOrDealer={ isPayeeOrDealer }
               purposeOfAvailment={ purposeOfAvailment }
               validateLoanType={ validateLoanType }
               formAttachments={ formAttachments }
