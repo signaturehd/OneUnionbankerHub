@@ -74,9 +74,12 @@ class MplPurposeOfAvailmentModal extends Component {
         onClose={ onClose }
         isDismisable={ true }>
           <center>
-            <h2>
+            <span className={ 'mpl-icons mpl-term-icon' }/>
+            <h2 className={ 'font-weight-normal' }>
               Purpose of Availment
             </h2>
+            <h5 className={ 'font-size-14px font-weight-lighter' }>Select your purpose of availement</h5>
+              <br/>
           </center>
           <div>
             {

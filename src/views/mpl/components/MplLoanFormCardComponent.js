@@ -38,6 +38,7 @@ class MplFormLoanCardComponent extends Component {
       showOffsetLoanCard: false,
       showOffsetOfLoanModal : false,
       imageUrlObject: [],
+      selectedOffsetLoan: []
     }
     this.onChange=this.onChange.bind(this)
     this.validator=this.validator.bind(this)
@@ -103,7 +104,8 @@ class MplFormLoanCardComponent extends Component {
       response,
       showOffsetLoanCard,
       showOffsetOfLoanModal,
-      imageUrlObject
+      imageUrlObject,
+      selectedOffsetLoan
     }=this.state
 
     const {
@@ -191,8 +193,14 @@ class MplFormLoanCardComponent extends Component {
           <OffsetOfLoanModal
             offset={ offset }
             onClose={ () => this.setState({ showOffsetOfLoanModal : false }) }
-            onSelect={ (offsetObject, showFileUpload) =>
-              console.log(offsetObject.id, offsetObject.promissoryNoteNumber) }
+            onSelect={ (offsetloan) => {
+              const updatedOffsetLoan=[...selectedOffsetLoan]
+              updatedOffsetLoan.push(offsetloan)
+
+              this.setState({ selectedOffsetLoan : updatedOffsetLoan })
+              }
+            }
+            selectedOffsetLoan={ selectedOffsetLoan }
           />
         }
         <div className={ 'mpl-grid-column-2' }>
@@ -259,10 +267,40 @@ class MplFormLoanCardComponent extends Component {
                   <div className={ 'text-align-right' }>
                     <span
                       onClick={ () => this.setState({ showOffsetOfLoanModal : true }) }
-                      className={ 'mpl-icons mpl-add-offset' }/>
+                      className={ 'mpl-icons-add mpl-add-offset' }/>
                   </div>
                 </div>
                 <div className={ 'mpl-form-card-body' }>
+                  {
+                    selectedOffsetLoan && selectedOffsetLoan.map((offset, key) => (
+                       <div key={ key } className={ 'dentalreimbursement-selected-procedure' }>
+                         <div className={'input-grid'}>
+                           <GenericTextBox
+                             value={ offset.promissoryNoteNumber ? offset.promissoryNoteNumber : '' }
+                             onChange={ e => {
+                               const updateOffset=[...selectedOffsetLoan]
+                               updateOffset[key].amount=parseInt(e.target.value) || 0
+                               this.setState({ selectedOffsetLoan: updateOffset })
+                               }
+                             }
+                             placeholder={ `${offset.promissoryNoteNumber ? offset.promissoryNoteNumber : ''} / (${offset.outstandingBalance ? offset.outstandingBalance : ''})` }
+                            />
+                           <div className={ 'dentalreimbursement-button-close' }>
+                             <img
+                               src={ require('../../../images/x-circle-global.png') }
+                               onClick={ () => {
+                                 const { selectedOffsetLoan }=this.state
+                                 selectedOffsetLoan.splice(key, 1)
+                                 this.setState({ selectedOffsetLoan })
+                               }}
+                             />
+                           </div>
+                         </div>
+                         <br/>
+                       </div>
+                       )
+                     )
+                    }
                 </div>
               </Card>
             </div>
@@ -335,36 +373,36 @@ class MplFormLoanCardComponent extends Component {
                           <div>
                             {
                               imageUrlObject.map((url, key ) =>
-
-                              <div className="mpl-attachment-form">
-                                <img
-                                  src={ require('../../../ub-components/Notify/images/x-circle.png') }
-                                  className='close-button'
-                                  onClick={
-                                    () => {
-                                      this.setState({ key : '', imagePreviewUrl : null })
+                                <div className="mpl-attachment-form">
+                                  <img
+                                    src={ require('../../../ub-components/Notify/images/x-circle.png') }
+                                    className='close-button'
+                                    onClick={
+                                      () => {
+                                      }
                                     }
-                                  }
-                                />
-                              <div style={ {
-                                  backgroundImage: `url('${url}')`,
-                                  width: 'auto',
-                                  height: '60px',
-                                  backgroundSize: 'contain',
-                                  backgroundRepeat: 'no-repeat',
-                                } }
-                              >
-                              {
-                                fileObject.map((file, key) =>
-                                  <h6
-                                    key={ key }
-                                    className="mpl-file-name">
-                                    { file.name }
-                                  </h6>
-                                )
-                              }
+                                  />
+                                <div
+                                  key={ key }
+                                  style={ {
+                                    backgroundImage: `url('${url}')`,
+                                    width: 'auto',
+                                    height: '60px',
+                                    backgroundSize: 'contain',
+                                    backgroundRepeat: 'no-repeat',
+                                  } }
+                                >
+                                {
+                                  fileObject.map((file, key) =>
+                                    <h6
+                                      key={ key }
+                                      className="mpl-file-name">
+                                      { file.name }
+                                    </h6>
+                                  )
+                                }
+                                </div>
                               </div>
-                            </div>
                           )
                         }
                       </div>

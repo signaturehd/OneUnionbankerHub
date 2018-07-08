@@ -9,10 +9,10 @@ class MplOffsetLoanModal extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {
+    this.state={
       chosenProcedure : [],
     }
-    this.getDisabledIds = this.getDisabledIds.bind(this)
+    this.getDisabledIds=this.getDisabledIds.bind(this)
 }
 
 getDisabledIds () {
@@ -23,30 +23,31 @@ setProcedure (selected) {
   const {
     onClose,
     procedures,
-    onSubmit,
-    selectedProcedure
-  } = this.props
+    onSelect,
+    offset,
+    selectedOffsetLoan
+  }=this.props
 
   if (selectedProcedure) {
-    const valueArr = this.getDisabledIds().map(item => item)
+    const valueArr=this.getDisabledIds().map(item => item)
     if (valueArr.includes(selected.id)) {
       let isExisting
-      const valueInsideArr = selectedProcedure.map(item => item.id)
-      for (const i in selectedProcedure) {
+      const valueInsideArr=selectedOffsetLoan.map(item => item.id)
+      for (const i in selectedOffsetLoan) {
         if (valueInsideArr.includes(selected.id)) {
-          isExisting = true
+          isExisting=true
         } else {
-          isExisting = false
+          isExisting=false
         }
       }
       if (!isExisting) {
-        onSubmit({ ...selected })
+        onSelect({ ...selected })
       }
     } else {
-      onSubmit({ ...selected })
+      onSelect({ ...selected })
     }
   } else {
-    onSubmit({ ...selected })
+    onSelect({ ...selected })
   }
 }
 
