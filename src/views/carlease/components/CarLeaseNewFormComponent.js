@@ -5,6 +5,7 @@ import './styles/carleaseStyle.css'
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
 
 import CarDealerQuotation from '../modals/CarDealerQuotationModal'
+import CarBrandsModal from '../modals/CarBrandsModal'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -23,6 +24,9 @@ class CarLeaseNewFormComponent extends Component {
       imagePreviewUrl: '',
       showFileUpload: false,
       showQuotation: true,
+      navigate: false,
+      showCarBrands: false,
+      carBrandId: ''
     }
      this.onChange = this.onChange.bind(this)
      this.getCarBrand = this.getCarBrand.bind(this)
@@ -122,9 +126,14 @@ class CarLeaseNewFormComponent extends Component {
     )
   }
 
+  navigateBenefits () {
+    this.props.history.push('/mybenefits/benefits')
+  }
+
   render () {
     const {
       carBrand,
+      carBrandId,
       carModel,
       makeYear,
       primaryColor,
@@ -132,13 +141,16 @@ class CarLeaseNewFormComponent extends Component {
       file,
       imagePreviewUrl,
       showFileUpload,
-      showQuotation
+      showQuotation,
+      navigate,
+      showCarBrands
     } = this.state
 
     const {
-      loanType
+      loanType,
+      history,
+      brands,
     } = this.props
-
       const styles = {
         image : {
           backgroundImage: `url('${imagePreviewUrl}')`,
@@ -158,13 +170,25 @@ class CarLeaseNewFormComponent extends Component {
           {
             showQuotation &&
             <CarDealerQuotation
-              onUserConfirmation={ (showQuotation, showFileUpload, navigate) =>
-                this.setState({ showQuotation, showFileUpload }),
-                navigate ? this.props.history.push('/mybenefits/benefits/education') : null
-               }
+              history={ history }
+              backToBenefits={ this.navigateBenefits.bind(this) }
+              onUserConfirmation={ (showQuotation, showFileUpload) =>
+                this.setState({ showQuotation, showFileUpload })
+             }
               onClose={ () =>
                 this.setState({ showQuotation: false })  }
               />
+          }
+          {
+            showCarBrands &&
+            <CarBrandsModal
+              brands={ brands }
+              onGetCarBrands={ (car, hideModal) =>
+              this.setState({ carBrand : car.name, carId : car.id, showCarBrands: hideModal}) }
+              onClose={ ()=>
+                this.setState({ showCarBrands : false } )
+            }
+            />
           }
           <Card className={ 'car-form-card' }>
             <h4>
@@ -173,7 +197,7 @@ class CarLeaseNewFormComponent extends Component {
             <div className={ 'car-form-card-body' }>
               <GenericTextBox
                 value={ carBrand }
-                onChange={ this.getCarBrand }
+                onClick={ ()=> this.setState({ showCarBrands : true }) }
                 placeholder={ 'Brand' }
                 type={ 'text' }/>
               <GenericTextBox
@@ -247,6 +271,11 @@ class CarLeaseNewFormComponent extends Component {
 CarLeaseNewFormComponent.propTypes = {
   loanType : PropTypes.number,
   setSelectedNavigation: PropTypes.func,
+  history: PropTypes.object,
+  brands: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
 }
 
 export default CarLeaseNewFormComponent

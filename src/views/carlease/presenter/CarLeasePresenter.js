@@ -1,5 +1,6 @@
 import GetCarNewValidateInteractor from '../../../domain/interactor/carlease/GetCarNewValidateInteractor'
 import GetCarNewFormSubmissionInteractor from '../../../domain/interactor/carlease/GetCarNewFormSubmissionInteractor'
+import GetCarValidateInteractor from '../../../domain/interactor/carlease/GetCarNewValidateInteractor'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
@@ -11,10 +12,28 @@ export default class CarLeasePresenter {
 
     this.carNewSubmissionInteractor =
       new GetCarNewFormSubmissionInteractor(container.get('HRBenefitsClient'))
+
+    this.getCarValidateInteractor =
+      new GetCarValidateInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
+  }
+
+
+  getCarValidate () {
+    this.view.showLoading()
+    this.getCarValidateInteractor.execute()
+    .subscribe(
+      validate => {
+        this.view.hideLoading()
+        this.view.showCarValidated(validate)
+      }, error => {
+        this.view.navigate()
+        this.view.hideLoading()
+      }
+    )
   }
 
   addCarRequest (
