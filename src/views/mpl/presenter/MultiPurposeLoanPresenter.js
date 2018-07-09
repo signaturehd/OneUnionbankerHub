@@ -129,11 +129,11 @@ export default class MultiPurposeLoanPresenter {
 
         return offsetLoan
       })
-
       .subscribe(
         data =>  {
           this.view.showOffset(data && data.offset)
           this.view.showValidate(data)
+          this.view.showComputationForOffset(data && data.offset)
           this.view.hideCircularLoader()
         },
         error => {

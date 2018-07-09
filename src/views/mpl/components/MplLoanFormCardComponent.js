@@ -10,7 +10,7 @@ import {
   Modal
 } from '../../../ub-components/'
 
-import { RequiredValidation, MoneyValidation } from '../../../utils/validate'
+import { RequiredValidation, MoneyValidation, MinMaxNumberValidation } from '../../../utils/validate'
 import { format } from '../../../utils/numberUtils'
 
 import PurposeOfAvailmentModal from '../../mpl/modals/PurposeOfAvailmentModal'
@@ -47,20 +47,11 @@ class MplFormLoanCardComponent extends Component {
       imageUrlObject: [],
       selectedOffsetLoan: [],
       showOffsetMessageModal: false,
-      showReviewModal: false
+      showReviewModal: false,
+      computationOffsetLoan: []
     }
-    this.onChange=this.onChange.bind(this)
     this.validator=this.validator.bind(this)
   }
-
-
-  onChange (e) {
-    let maximumAmount=parseFloat(500000)
-    new MoneyValidation().isValid(e.target.value) ?
-      this.setState({ amountValue : e.target.value })
-      :
-      this.setState({ amountValue : '' })
-   }
 
    validator(input) {
      return new RequiredValidation().isValid(input)
@@ -118,7 +109,8 @@ class MplFormLoanCardComponent extends Component {
       imageUrlObject,
       selectedOffsetLoan,
       showOffsetMessageModal,
-      showReviewModal
+      showReviewModal,
+      computationOffsetLoan
     }=this.state
 
     const {
@@ -147,6 +139,8 @@ class MplFormLoanCardComponent extends Component {
     let $imagePreview=null
       $imagePreview=(<div style={ styles.image1 }></div>)
 
+    const computation=computationOffsetLoan.reduce((a, b) => a + b, 0)
+
     return (
       <div className={ 'mplview-container' }>
         {
@@ -159,6 +153,7 @@ class MplFormLoanCardComponent extends Component {
             termOfLoan={ termOfLoan }
             rateOfLoan={ rateOfLoan }
             poaText={ poaText }
+            onClick={ () => console.log(success) }
             onClose={ () => this.setState({ showReviewModal : false }) }
           />
         }
@@ -219,9 +214,11 @@ class MplFormLoanCardComponent extends Component {
             onClose={ () => this.setState({ showOffsetOfLoanModal : false }) }
             onSelect={ (offsetloan) => {
               const updatedOffsetLoan=[...selectedOffsetLoan]
+              const updateComputation=[...computationOffsetLoan]
               updatedOffsetLoan.push(offsetloan)
-
+              updateComputation.push(offsetloan.outstandingBalance)
               this.setState({ selectedOffsetLoan : updatedOffsetLoan })
+              this.setState({ computationOffsetLoan : updateComputation })
               }
             }
             selectedOffsetLoan={ selectedOffsetLoan }
@@ -268,7 +265,13 @@ class MplFormLoanCardComponent extends Component {
                 type={ 'text' }/>
               <GenericTextBox
                 value={ amountValue ? amountValue : '' }
-                onChange={ this.onChange }
+                onChange={ (e) =>
+                  {
+                    new MoneyValidation().isValid(e.target.value)  ?
+                      this.setState({ amountValue : e.target.value })
+                      :
+                      this.setState({ amountValue : '' })
+                   } }
                 placeholder={ 'Desired Amount' }
                 maxLength={ 11 }
                 type={ 'text' }/>

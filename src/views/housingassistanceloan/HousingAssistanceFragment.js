@@ -65,6 +65,15 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.setState({ offset })
   }
 
+  showComputationForOffset (computationOffset) {
+    let result=
+    (computationOffset.map(off=>
+      off.id !== 1 && off.id !== 2&&
+      console.log(off.outstandingBalance)
+    ))
+    console.log(result)
+  }
+
   showValidate (validateLoanType) {
     this.setState({ validateLoanType })
   }
@@ -123,6 +132,7 @@ class HousingAssistanceFragment extends BaseMVPView {
       employeeName,
       storedIsDealerOrPayee
     }=this.state
+
     const empName=employeeName && employeeName.fullname
     const updateIsDealerOrPayeeName=[...storedIsDealerOrPayee]
     updateIsDealerOrPayeeName.push(isPayeeOrDealerResp)
