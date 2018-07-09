@@ -12,8 +12,12 @@ class BereavementDependentsModal extends Component {
 /*
   Get Dependent Data, display procedures
 */
-  sendDependents (dependentId, dependentsName, dependentRelationship) {
-    this.props.chosenDependent(dependentId, dependentsName, dependentRelationship)
+  sendDependents (dependent) {
+    this.props.chosenDependent(
+      dependent.id ? dependent.id : 0,
+      dependent.name ? dependent.name : '',
+      dependent.relationship ? dependent.relationship : ''
+    )
     this.props.onClose()
   }
 
@@ -35,11 +39,8 @@ class BereavementDependentsModal extends Component {
             className={ 'dentalloa-modal-option-button' }
             text={ dependent.name }
             onClick={ () =>
-              this.sendDependents(
-                dependent.id,
-                dependent.name,
-                dependent.relationship
-            )}
+              this.sendDependents(dependent)
+            }
           />
         )
       }
