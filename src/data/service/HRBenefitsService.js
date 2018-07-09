@@ -562,7 +562,12 @@ export default class HRBenefitsService {
     })
   }
 
-  addBereavement (token, addBereavementParam) {
+  addBereavement (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addBereavementParam) {
     const formData = new FormData()
     const bereavementObject = {
       id : addBereavementParam.dependentId,
