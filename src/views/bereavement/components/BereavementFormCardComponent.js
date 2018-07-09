@@ -27,6 +27,7 @@ class BereavementFormCardComponent extends Component {
       deceasedDate: moment(),
       funeralDate: moment(),
       internmentDate: moment(),
+      dependentId: '',
       funeralHome: '',
       funeralAddress: '',
       funeralRegion: '',
@@ -249,7 +250,7 @@ class BereavementFormCardComponent extends Component {
                   <DatePicker
                     dateFormat={ 'MM/DD/YYYY' }
                     readOnly
-                    selected={ deceasedDate }
+                    selected={ deceasedDate ? deceasedDate : '' }
                     onChange={this.getDeceasedDate }
                     className={ 'calendar' }
                     calendarClassName={ 'calendarClass' }/>
@@ -278,7 +279,7 @@ class BereavementFormCardComponent extends Component {
                   <DatePicker
                     dateFormat={ 'MM/DD/YYYY' }
                     readOnly
-                    selected={ funeralDate }
+                    selected={ funeralDate ? funeralDate : '' }
                     onChange={ this.getFuneralDate }
                     placeholder={ 'Date of Wake' }
                     className={ 'calendar' }
@@ -294,7 +295,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ funeralHome }
+                    value={ funeralHome ? funeralHome : '' }
                     onChange={ this.getFuneralHome }
                     placeholder={ 'Funeral Home' }
                     type={ 'text' }
@@ -309,7 +310,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ funeralAddress }
+                    value={ funeralAddress ? funeralAddress : '' }
                     onChange={ this.getFuneralAddress }
                     placeholder={ 'Address' }
                     type={ 'text' }
@@ -324,7 +325,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ funeralRegion }
+                    value={ funeralRegion ? funeralRegion : '' }
                     onChange={ this.getFuneralRegion }
                     placeholder={ 'Region' }
                     type={ 'text' }
@@ -339,7 +340,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ funeralProvince }
+                    value={ funeralProvince ? funeralProvince : '' }
                     onChange={ this.getFuneralProvince }
                     placeholder={ 'Province' }
                     type={ 'text' }
@@ -354,7 +355,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ funeralCity }
+                    value={ funeralCity ? funeralCity : '' }
                     onChange={ this.getFuneralCity }
                     placeholder={ 'City' }
                     type={ 'text' }
@@ -384,7 +385,7 @@ class BereavementFormCardComponent extends Component {
                     <DatePicker
                       dateFormat={ 'MM/DD/YYYY' }
                       readOnly
-                      selected={ funeralDate }
+                      selected={ funeralDate ? funeralDate : '' }
                       onChange={ this.getFuneralDate }
                       placeholder={ 'Date of Wake' }
                       className={ 'calendar' }
@@ -399,7 +400,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                 <GenericTextBox
                     container={ 'brv-container' }
-                    value={ memorialPark }
+                    value={ memorialPark ? memorialPark : '' }
                     onChange={ this.getMemorialHome }
                     placeholder={ 'Memorial Park' }
                     type={ 'text' }
@@ -414,7 +415,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ memorialAddress }
+                    value={ memorialAddress ? memorialAddress : '' }
                     onChange={ this.getMemorialAddress }
                     placeholder={ 'Address' }
                     type={ 'text' }
@@ -429,7 +430,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ memorialRegion}
+                    value={ memorialRegion ? memorialRegion : '' }
                     onChange={ this.getMemorialRegion }
                     placeholder={ 'Region' }
                     type={ 'text' }/>
@@ -443,7 +444,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ memorialProvince }
+                    value={ memorialProvince ? memorialProvince : '' }
                     onChange={ this.getMemorialProvince }
                     placeholder={ 'Province' }
                     type={ 'text' }/>
@@ -457,7 +458,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ memorialCity }
+                    value={ memorialCity ? memorialCity : '' }
                     onChange={ this.getMemorialCity }
                     placeholder={ 'City' }
                     type={ 'text' }/>
