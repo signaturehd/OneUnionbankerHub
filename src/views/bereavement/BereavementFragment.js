@@ -182,15 +182,17 @@ class BereavementFragment extends BaseMVPView {
       const objectDate={
         "death" : deceasedDate,
         "wake" : funeralDate,
-        "internment" : internmentDate
+        "interment" : internmentDate
       }
       const objectFuneral ={
+        "home" : funeralHome,
         "province" : funeralProvince,
         "address": funeralAddress,
         "city": funeralCity,
         "region": funeralRegion
       }
       const objectMemorial ={
+        "park" : memorialPark,
         "province" : memorialProvince,
         "address": memorialAddress,
         "city": memorialCity,
