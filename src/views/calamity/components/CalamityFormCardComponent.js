@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
-
 import './styles/calamityComponentStyle.css'
+
+import { RequiredValidation, MoneyValidation } from '../../../utils/validate'
+import { format } from '../../../utils/numberUtils'
 
 import CalamityModal from '../modal/CalamityModal'
 import CalamityReviewModal from '../modal/CalamityReviewModal'
@@ -211,6 +213,11 @@ class CalamityFormCardComponent extends Component {
                     imgPrevBC,
                     imgPrevDP
                     )
+                  }
+                  onClose={
+                    () => {
+                      this.setState({ showReviewCalamityModal : false })
+                    }
                   }
                 />
               }
