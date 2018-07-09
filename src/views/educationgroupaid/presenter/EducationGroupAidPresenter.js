@@ -1,5 +1,5 @@
 import validateGroupAidInteractor from '../../../domain/interactor/educationAid/validateGroupAidInteractor'
-import addGroupAidInteractor from '../../../domain/interactor/educationAid/AddEducationAidInteractor'
+import AddGroupAidInteractor from '../../../domain/interactor/educationAid/AddGroupAidInteractor'
 import groupAidParam from '../../../domain/param/GroupAidParam'
 
 export default class EducationGroupAidPresenter {
@@ -8,8 +8,8 @@ export default class EducationGroupAidPresenter {
     this.validateGroupAidInteractor =
       new validateGroupAidInteractor(container.get('HRBenefitsClient'))
 
-    this.addGroupAidInteractor =
-      new addGroupAidInteractor(container.get('HRBenefitsClient'))
+    this.AddGroupAidInteractor =
+      new AddGroupAidInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -17,10 +17,10 @@ export default class EducationGroupAidPresenter {
   }
 
   /* Add grant dependent */
-   addGroupAid (grantId, file) {
-    this.addGroupAidInteractor.execute(groupAidParam(grantId, file))
-     .subscribe(grantPlan => {
-      this.view.noticeOfUndertaking(grantPlan)
+   addGroupAid (dependentId, desiredAmount, effectiveDate, company, durationOfPaymentId, file1, file2) {
+    this.AddGroupAidInteractor.execute(groupAidParam(dependentId, desiredAmount, effectiveDate, company, durationOfPaymentId, file1, file2))
+     .subscribe(groupPlan => {
+      this.view.noticeOfUndertaking(groupPlan)
      }, e => {
       this.view.noticeResponse(e)
      })
