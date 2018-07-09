@@ -133,7 +133,7 @@ class BereavementFragment extends BaseMVPView {
         })
       )
     }
-    else if (memoriaPark === null || memoriaPark === '') {
+    else if (memorialPark === null || memorialPark === '') {
       store.dispatch(NotifyActions.addNotify({
           title: 'Warning',
           message: 'Memorial Park field is required',
@@ -196,7 +196,8 @@ class BereavementFragment extends BaseMVPView {
         "city": memorialCity,
         "region": memorialRegion
       }
-      this.presenter.addBereavement(dependentId, objectDate, objectFuneral, objectMemorial, file)
+      console.log(objectDate)
+      // this.presenter.addBereavement(dependentId, objectDate, objectFuneral, objectMemorial, file)
     }
   }
 

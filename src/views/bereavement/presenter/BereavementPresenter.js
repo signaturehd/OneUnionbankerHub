@@ -7,7 +7,7 @@ import GetBereavementValidateInteractor from '../../../domain/interactor/bereave
 import AddBereavementInteractor from '../../../domain/interactor/bereavement/AddBereavementInteractor'
 
 // Params
-import AddBereavementParam from '../../../domain/param/AddBereavementParam'
+import addBereavementParam from '../../../domain/param/AddBereavementParam'
 
 export default class BereavementPresenter {
   constructor (container) {
@@ -33,15 +33,20 @@ export default class BereavementPresenter {
       })
   }
 
-  addBereavement () {
+  addBereavement (
+    dependentId,
+    objectDate,
+    objectFuneral,
+    objectMemorial,
+    file) {
     this.view.showCircularLoader()
-    this.addBereavementInteractor.execute(AddBereavementParam(AddBereavementParam(
+    this.addBereavementInteractor.execute(addBereavementParam(
       dependentId,
       objectDate,
       objectFuneral,
       objectMemorial,
       file
-      ))
+      )
     )
       .subscribe(resp => {
         this.view.noticeOfUndertaking(resp)
