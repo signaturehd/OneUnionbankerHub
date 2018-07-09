@@ -25,7 +25,7 @@ class CalamityFormCardComponent extends Component {
       showPropModal: false,
       calamityId: '',
       calamityType: '',
-      preferredDate: '',
+      preferredDate: moment().format('MM/DD/YYYY'),
       property: '',
       propertyDesc: '',
       propertyType: '',
@@ -43,7 +43,7 @@ class CalamityFormCardComponent extends Component {
 
   handleChange(date) {
     this.setState({
-      preferredDate: date
+      preferredDate: moment(date).format('MM/DD/YYYY')
     });
   }
 
@@ -254,7 +254,7 @@ class CalamityFormCardComponent extends Component {
                   dateFormat={ 'MM/DD/YYYY' }
                   maxDate={ moment() }
                   readOnly
-                  selected={ preferredDate ? moment(preferredDate, 'DD-MM-YYYY') : moment()}
+                  selected={ moment(preferredDate, 'MM/DD/YYYY') }
                   onChange={ this.handleChange }
                   className={ 'calendar' }
                   calendarClassName={ 'calendarClass' }/>
