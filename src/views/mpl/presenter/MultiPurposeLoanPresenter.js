@@ -147,11 +147,7 @@ export default class MultiPurposeLoanPresenter {
       .do(data => this.view.showMPLFormAttachments(data))
       .map(data => this.view.showAdditionalFilesCount((data.AdditionalDocuments).length))
       .map(data => this.view.showAdRequiredFilesCount((data.RequiredDocuments).length))
-        .subscribe(
-          data => {
-            this.view.hideCircularLoader(),
-            this.view.hideCircularLoader()
-      })
+      .subscribe()
     }
 
   /* add Loa salary, housing assistance, emergency*/

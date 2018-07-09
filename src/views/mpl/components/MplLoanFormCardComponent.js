@@ -146,7 +146,7 @@ class MplFormLoanCardComponent extends Component {
     }
     let $imagePreview=null
       $imagePreview=(<div style={ styles.image1 }></div>)
-      console.log(selectedOffsetLoan)
+
     return (
       <div className={ 'mplview-container' }>
         {
@@ -347,18 +347,19 @@ class MplFormLoanCardComponent extends Component {
             </div>
           }
           <br/>
-            {
-              showFileUpload &&
+          {
             <div>
               <div className={ 'brv-grid-column-2' }>
                 <div></div>
                 <Card className={ 'brv-form-card' }>
-                  <h4>
-                  Form Attachments
-                  </h4>
+                {
+                  formAttachments.AdditionalDocuments  != 0 ?
+
                   <div className={'brv-form-card-body '}>
+                    <h4>
+                      Form Attachments
+                    </h4>
                     {
-                      formAttachments.AdditionalDocuments ?
                       formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
 
                       <div>
@@ -448,18 +449,23 @@ class MplFormLoanCardComponent extends Component {
                       </div>
                       :
                       <div></div>
-                    }
-                  </div>
-                )
-                :
-                <div></div>
-              }
+                      }
+                    </div>
+                  )
+                }
+                <GenericButton
+                  type={ 'button' }
+                  text={ 'continue' }
+                  onClick={ () => this.setState({ showReviewModal: true }) }
+                  className={ 'brv-submit' } />
+              </div>
+              :
               <GenericButton
                 type={ 'button' }
                 text={ 'continue' }
                 onClick={ () => this.setState({ showReviewModal: true }) }
                 className={ 'brv-submit' } />
-            </div>
+            }
           </Card>
         </div>
       </div>

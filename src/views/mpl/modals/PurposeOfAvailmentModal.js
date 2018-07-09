@@ -27,37 +27,49 @@ class MplPurposeOfAvailmentModal extends Component {
   }
 
   onGetClicked (resp, subcategory, closePoaModal, openFileUpload, loanType) {
-    const loanId=resp.id ? resp.id : null
-    this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
 
-    this.props.presenter.getMplFormAttachments(
-      resp.name,
-      loanType ? loanType : null)
-    this.props.presenter.getMplPurposeOfAvailment(
-      loanType && loanType,
-      loanId,
-      subcategory ? subcategory : null)
+    this.showPurposeLoader()
+      const loanId=resp.id ? resp.id : null
+        this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
+
+        this.props.presenter.getMplFormAttachments(
+          resp.name,
+          loanType)
+        this.props.presenter.getMplPurposeOfAvailment(
+          loanType && loanType,
+          loanId,
+          loanId !== null ? subcategory : 1)
     if (loanId) {
-       this.showPurposeLoader()
-       this.props.presenter.getMplPurposeOfAvailment(
-         loanType && loanType,
-         loanId,
-         subcategory ? subcategory : null)
-         this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
-       if (subcategory === 2 || subcategory === 3) {
+      this.props.presenter.getMplPurposeOfAvailment(
+        loanType && loanType,
+        loanId,
+        subcategory)
+       this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
+       if ( subcategory === 2) {
          this.props.presenter.getMplPurposeOfAvailment(
            loanType && loanType,
            loanId,
-           subcategory ? subcategory : null)
+           subcategory)
+         this.props.presenter.getMplFormAttachments(
+           resp.name,
+           loanType)
          this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
          this.hidePurposeLoader()
-       } else {
+       }
+       else if ( subcategory === 3) {
          this.props.presenter.getMplPurposeOfAvailment(
            loanType && loanType,
            loanId,
-           subcategory ? subcategory : null)
+           subcategory)
+         this.props.presenter.getMplFormAttachments(
+           resp.name,
+           loanType)
          this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
          this.hidePurposeLoader()
+      }
+      else {
+       this.props.onSubmit(resp, subcategory, closePoaModal, openFileUpload, loanType)
+       this.hidePurposeLoader()
       }
      } else {
        this.props.onClose()
