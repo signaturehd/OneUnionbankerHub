@@ -107,10 +107,13 @@ export default class MultiPurposeLoanPresenter {
           name: 'Offset Loan',
         } // create instance of "New Loan"
 
-        offsetLoan.offset ?
-        offsetLoan.offset.push(modeOfLoanStatic , modeOfLoan)
+        offsetLoan.offset === null ||
+        offsetLoan.offset === '' ||
+        offsetLoan.offset === undefined ||
+        (offsetLoan.offset).length === 0?
+          offsetLoan.offset.push(modeOfLoanStatic)
         :
-        console.log('null')
+          offsetLoan.offset.push(modeOfLoanStatic, modeOfLoan)
         // add the New Loan to the offsets option
 
         return offsetLoan
