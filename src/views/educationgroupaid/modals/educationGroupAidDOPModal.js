@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Modal, GenericButton } from '../../../ub-components/'
 import './styles/educationGroupAidModalStyle.css'
 
-class EducationGroupAidDependentModal extends Component {
+class educationGroupAidDOPModal extends Component {
   constructor (props) {
     super(props)
   }
@@ -12,13 +12,13 @@ class EducationGroupAidDependentModal extends Component {
 /*
   Get Dependent Data, display procedures
 */
-  sendDependents (dependent) {
-    this.props.chosenDependent(dependent, false)
+  sendDOP (dop) {
+    this.props.chosenDOP(dop, false)
     this.props.onClose()
   }
 
   render () {
-  const { details, onClose, showDependentModal, isDismisable } = this.props
+  const { details, onClose, isDismisable } = this.props
   return (
     <Modal
      onClose = { onClose }
@@ -29,14 +29,14 @@ class EducationGroupAidDependentModal extends Component {
       </div>
       <div className = { 'optical-modal-footer' }>
       {
-        details.recipients &&
-        details.recipients.map((recipients, key) =>
+        details.durationOfPremium &&
+        details.durationOfPremium.map((durationOfPremium, key) =>
           <GenericButton
             key = { key }
             className = { 'education-modal-option-button-' }
-            text = { recipients.name }
+            text = { durationOfPremium.paymentDuration }
             onClick = { () =>
-              this.sendDependents(recipients)
+              this.sendDOP(durationOfPremium)
             }
           />
         )
@@ -46,9 +46,9 @@ class EducationGroupAidDependentModal extends Component {
     )
   }
 }
-EducationGroupAidDependentModal.propTypes = {
+educationGroupAidDOPModal.propTypes = {
   onClose : PropTypes.func,
   onClick : PropTypes.func,
   details : PropTypes.object,
 }
-export default EducationGroupAidDependentModal
+export default educationGroupAidDOPModal
