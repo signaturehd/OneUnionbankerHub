@@ -146,7 +146,7 @@ class MplFormLoanCardComponent extends Component {
     }
     let $imagePreview=null
       $imagePreview=(<div style={ styles.image1 }></div>)
-
+      console.log(selectedOffsetLoan)
     return (
       <div className={ 'mplview-container' }>
         {
@@ -165,7 +165,7 @@ class MplFormLoanCardComponent extends Component {
         {
           showOffset &&
           <ModeOfLoanModal
-            offset ={  offset && offset }
+            offset ={  offset && offset ? offset : [] }
             onSubmit={ (changeOffsetValue, showOffsetLoanModal, closePoaModal) =>
               this.setState({
                 modeOfLoanText : changeOffsetValue.name,
@@ -216,7 +216,6 @@ class MplFormLoanCardComponent extends Component {
         {
           showOffsetOfLoanModal &&
           <OffsetOfLoanModal
-            offset={ offset }
             onClose={ () => this.setState({ showOffsetOfLoanModal : false }) }
             onSelect={ (offsetloan) => {
               const updatedOffsetLoan=[...selectedOffsetLoan]
@@ -226,6 +225,7 @@ class MplFormLoanCardComponent extends Component {
               }
             }
             selectedOffsetLoan={ selectedOffsetLoan }
+            offset={ offset ? offset : [] }
           />
         }
         {
@@ -315,14 +315,17 @@ class MplFormLoanCardComponent extends Component {
                        <div key={ key } className={ 'dentalreimbursement-selected-procedure' }>
                          <div className={'input-grid'}>
                            <GenericTextBox
-                             value={ offset.promissoryNoteNumber ? offset.promissoryNoteNumber : '' }
                              onChange={ e => {
                                const updateOffset=[...selectedOffsetLoan]
-                               updateOffset[key].amount=parseInt(e.target.value) || 0
+                               updateOffset[key].outstandingBalance=parseInt(e.target.value) || 0
                                this.setState({ selectedOffsetLoan: updateOffset })
                                }
                              }
-                             placeholder={ `${offset.promissoryNoteNumber ? offset.promissoryNoteNumber : ''} / (${offset.outstandingBalance ? offset.outstandingBalance : ''})` }
+                             value={
+                               `${offset.promissoryNoteNumber ?
+                                 offset.promissoryNoteNumber : ''}  (${offset.outstandingBalance ?
+                                     format(offset.outstandingBalance) : ''})` }
+                             type={ 'button' }
                             />
                            <div className={ 'dentalreimbursement-button-close' }>
                              <img
@@ -335,7 +338,6 @@ class MplFormLoanCardComponent extends Component {
                              />
                            </div>
                          </div>
-                         <br/>
                        </div>
                        )
                      )
@@ -344,7 +346,6 @@ class MplFormLoanCardComponent extends Component {
               </Card>
             </div>
           }
-          <br/>
           <br/>
             {
               showFileUpload &&

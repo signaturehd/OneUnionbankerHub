@@ -8,26 +8,21 @@ import './styles/mplModalStyle.css'
 
 class MplOffsetLoanModal extends Component {
 
-getDisabledIds () {
-  return [1, 2]
-}
-
 setOffsetLoan (selected) {
   const {
     onClose,
-    procedures,
     onSelect,
     offset,
     selectedOffsetLoan
   }=this.props
 
-  if (selectedProcedure) {
-    const valueArr=this.getDisabledIds().map(item => item)
-    if (valueArr.includes(selected.id)) {
+  if (selectedOffsetLoan) {
+    const valueArr=offset.map(item => item.promissoryNoteNumber)
+    if (valueArr.includes(selected.promissoryNoteNumber)) {
       let isExisting
-      const valueInsideArr=selectedOffsetLoan.map(item => item.id)
+      const valueInsideArr=selectedOffsetLoan.map(item => item.promissoryNoteNumber)
       for (const i in selectedOffsetLoan) {
-        if (valueInsideArr.includes(selected.id)) {
+        if (valueInsideArr.includes(selected.promissoryNoteNumber)) {
           isExisting=true
         } else {
           isExisting=false
@@ -47,50 +42,50 @@ setOffsetLoan (selected) {
 render () {
   const { onClose, offset, onSelect }=this.props
 
-return (
-  <Modal
-    onClose={ onClose }
-    isDismisable={ true }>
-    <div>
-      <center>
-        <span className={ 'mpl-icons mpl-offset-icon' }/>
-        <h2 className={ 'font-weight-normal' }>
-          Offsets
-        </h2>
-        <h5 className={ 'font-size-14px font-weight-lighter' }>Select your offset loans</h5>
-          <br/>
-      </center>
-    </div>
-    <div>
-      {
-        offset && offset.map((resp, key) =>
-            resp.id !== 1 &&
-            resp.id !== 2 ?
+  return (
+    <Modal
+      onClose={ onClose }
+      isDismisable={ true }>
+      <div>
+        <center>
+          <span className={ 'mpl-icons mpl-offset-icon' }/>
+          <h2 className={ 'font-weight-normal' }>
+            Offsets
+          </h2>
+          <h5 className={ 'font-size-14px font-weight-lighter' }>Select your offset loans</h5>
+            <br/>
+        </center>
+      </div>
+      <div>
+        {
+          offset && offset.map((resp, key) =>
+              resp.id !== 1 &&
+              resp.id !== 2 ?
 
-              <GenericButton
-                className={ 'mpl-poa-modal-button' }
-                key={ key }
-                text={
-                  `${ resp &&
-                      resp.promissoryNoteNumber ?
-                      resp.promissoryNoteNumber  :
-                      '' }
-                      ${ resp &&
-                        resp.outstandingBalance ?
-                        format(resp.outstandingBalance) :
-                        '' }`
-                      }
-                onClick={ () => this.setOffsetLoan({ ...resp }) }
-                />
-            :
-            <div></div>
-        )
-      }
-    </div>
-  </Modal>
-    )
+                <GenericButton
+                  className={ 'mpl-poa-modal-button' }
+                  key={ key }
+                  text={
+                    `${ resp &&
+                        resp.promissoryNoteNumber ?
+                        resp.promissoryNoteNumber  :
+                        '' }
+                        ${ resp &&
+                          resp.outstandingBalance ?
+                          format(resp.outstandingBalance) :
+                          '' }`
+                        }
+                  onClick={ () => this.setOffsetLoan({ ...resp }) }
+                  />
+              :
+              <div></div>
+          )
+        }
+      </div>
+    </Modal>
+      )
+    }
   }
-}
 MplOffsetLoanModal.propTypes={
   onClose : PropTypes.func,
   offset : PropTypes.array,
