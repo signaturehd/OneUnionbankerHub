@@ -8,19 +8,11 @@ import './styles/mplModalStyle.css'
 
 class MplOffsetLoanModal extends Component {
 
-  constructor (props) {
-    super(props)
-    this.state={
-      chosenProcedure : [],
-    }
-    this.getDisabledIds=this.getDisabledIds.bind(this)
-}
-
 getDisabledIds () {
-  return [3, 4, 5, 6]
+  return [1, 2]
 }
 
-setProcedure (selected) {
+setOffsetLoan (selected) {
   const {
     onClose,
     procedures,
@@ -82,13 +74,13 @@ return (
                   `${ resp &&
                       resp.promissoryNoteNumber ?
                       resp.promissoryNoteNumber  :
-                      '' } 
+                      '' }
                       ${ resp &&
                         resp.outstandingBalance ?
                         format(resp.outstandingBalance) :
                         '' }`
                       }
-                onClick={ () => console.log(offset) }
+                onClick={ () => this.setOffsetLoan({ ...resp }) }
                 />
             :
             <div></div>

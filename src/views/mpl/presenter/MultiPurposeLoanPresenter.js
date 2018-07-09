@@ -106,7 +106,18 @@ export default class MultiPurposeLoanPresenter {
           id: 2,
           name: 'Offset Loan',
         } // create instance of "New Loan"
+        const modeOfLoan3={
+          promissoryNoteNumber: 3,
+          name: 'Offset Loan',
+          outstandingBalance: 40000,
+        } // create instance of "New Loan"
+        const modeOfLoan4={
+          promissoryNoteNumber: 4,
+          name: 'Offset Loan',
+          outstandingBalance: 50000,
+        } // create instance of "New Loan"
 
+        offsetLoan.offset.push(modeOfLoan3, modeOfLoan4)
         offsetLoan.offset === null ||
         offsetLoan.offset === '' ||
         offsetLoan.offset === undefined ||
