@@ -17,6 +17,7 @@ import './styles/dentalReimbursement.css'
 import { CircularLoader, Checkbox } from '../../ub-components/'
 
 class DentalReimbursementFragment extends BaseMVPView {
+
   constructor (props) {
     super(props)
     this.state = {
