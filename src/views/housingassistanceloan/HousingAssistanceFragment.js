@@ -35,6 +35,7 @@ class HousingAssistanceFragment extends BaseMVPView {
       isPayeeOrDealerResp : '',
       employeeName: [],
       storedIsDealerOrPayee: [],
+      computationOffset: [],
     }
   }
 
@@ -55,6 +56,11 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.setState({ showNoticeModal : true, noticeResponse })
   }
 
+
+  noticeResponse (noticeResponse) {
+    this.setState({showConfirmation: false, noticeResponse })
+  }
+
   /* Implementation*/
 
   showMPLFormAttachments (formAttachments) {
@@ -66,12 +72,10 @@ class HousingAssistanceFragment extends BaseMVPView {
   }
 
   showComputationForOffset (computationOffset) {
-    let result=
-    (computationOffset.map(off=>
-      off.id !== 1 && off.id !== 2&&
-      console.log(off.outstandingBalance)
-    ))
-    console.log(result)
+    computationOffset.map(off=>
+      off.id === 1 && off.id === 2 &&
+      console.log(off && off.outstandingBalance)
+    )
   }
 
   showValidate (validateLoanType) {
@@ -130,7 +134,8 @@ class HousingAssistanceFragment extends BaseMVPView {
       AdditionalDocuments,
       isPayeeOrDealerResp,
       employeeName,
-      storedIsDealerOrPayee
+      storedIsDealerOrPayee,
+      computationOffset
     }=this.state
 
     const empName=employeeName && employeeName.fullname

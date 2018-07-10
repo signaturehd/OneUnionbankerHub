@@ -48,7 +48,8 @@ class MplFormLoanCardComponent extends Component {
       selectedOffsetLoan: [],
       showOffsetMessageModal: false,
       showReviewModal: false,
-      computationOffsetLoan: []
+      computationOffsetLoan: [],
+      showConfirmationView: false
     }
     this.validator=this.validator.bind(this)
   }
@@ -57,17 +58,19 @@ class MplFormLoanCardComponent extends Component {
      return new RequiredValidation().isValid(input)
    }
 
-   sendFormData (desiredAmount, modeOfLoanId, loanTypeId, poaText, termId, offset) {
+   sendFormData ( desiredAmount, modeOfLoanId, loanTypeId, poaText, termId, offset, attachments, formAttachmentsCount) {
+
      const pnNumber=[]
      const amount=parseFloat(desiredAmount)
      const id=parseInt(loanTypeId)
      const term=parseInt(termId)
-     const mode=parseInt(modeOfLoanId)
+     const mode=modeOfLoanId ? modeOfLoanId : 1
+
        if (
          !this.validator(poaText) ||
-         !this.validator(mode) ||
          !this.validator(term) ||
-         !this.validator(amount)) {
+         !this.validator(amount)
+         ) {
            store.dispatch(NotifyActions.addNotify({
               title : 'Warning' ,
               message : 'All fields are required',
@@ -77,7 +80,14 @@ class MplFormLoanCardComponent extends Component {
           )
         }
        else {
-        this.props.presenter.addLoan(id, poaText, mode ? mode : 1, term, desiredAmount)
+        this.props.presenter.addLoan(
+          id,
+          poaText,
+          mode,
+          term,
+          offset ? offset : null,
+          amount,
+          attachments ? attachments : null)
       }
    }
 
@@ -110,7 +120,8 @@ class MplFormLoanCardComponent extends Component {
       selectedOffsetLoan,
       showOffsetMessageModal,
       showReviewModal,
-      computationOffsetLoan
+      computationOffsetLoan,
+      showConfirmationView
     }=this.state
 
     const {
@@ -140,7 +151,6 @@ class MplFormLoanCardComponent extends Component {
       $imagePreview=(<div style={ styles.image1 }></div>)
 
     const computation=computationOffsetLoan.reduce((a, b) => a + b, 0)
-
     return (
       <div className={ 'mplview-container' }>
         {
@@ -153,9 +163,35 @@ class MplFormLoanCardComponent extends Component {
             termOfLoan={ termOfLoan }
             rateOfLoan={ rateOfLoan }
             poaText={ poaText }
-            onClick={ () => console.log(success) }
+            onYes={ () => this.setState({ showConfirmationView : true }) }
+            onNo={ () => this.setState({ showReviewModal : false  })}
             onClose={ () => this.setState({ showReviewModal : false }) }
           />
+        }
+        {
+          showConfirmationView &&
+          <Modal>
+            <center>
+              Are you sure you want to sumbit this form ?
+              <div className={ 'grid-global' }>
+                <GenericButton
+                  onClick={ () => this.setState({ showConfirmationView : false, showReviewModal : false }) }
+                  text={ 'No' }/>
+                <GenericButton
+                  onClick={ () => this.sendFormData(
+                    amountValue,
+                    modeOfLoanId,
+                    loanType,
+                    poaText,
+                    termId,
+                    selectedOffsetLoan,
+                    fileObject,
+                    formAttachments
+                  ) }
+                  text={ 'Yes' }/>
+              </div>
+            </center>
+          </Modal>
         }
         {
           showOffset &&
@@ -283,14 +319,6 @@ class MplFormLoanCardComponent extends Component {
                   this.setState({ showTerm : true }) }
                 placeholder={ 'Term of Loan' }
                 type={ 'text' }/>
-              {
-              !showFileUpload &&
-                <GenericButton
-                  type={ 'button' }
-                  text={ 'continue' }
-                  onClick={ () => this.setState({ showReviewModal: true }) }
-                  className={ 'mplview-submit' } />
-              }
             </div>
             <br/>
           </Card>

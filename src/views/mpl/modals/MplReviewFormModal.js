@@ -25,7 +25,9 @@ class MplReviewFormModal extends Component {
       onClose,
       onClick,
       imageUrlObject,
-      isPayeeOrDealer
+      isPayeeOrDealer,
+      onYes,
+      onNo
     }=this.props
 
     const {
@@ -124,9 +126,9 @@ class MplReviewFormModal extends Component {
           <div className={ 'mpl-review-grid' }>
             <GenericButton
               text={ 'cancel' }
-              onClick={ onClose } />
+              onClick={ () => onNo(false) } />
             <GenericButton
-              onClick={ () => onGetClicked() }
+              onClick={ () => onYes(true) }
               text={ 'confirm' }
             />
           </div>
@@ -138,6 +140,8 @@ class MplReviewFormModal extends Component {
 
 MplReviewFormModal.propTypes={
   onClose : PropTypes.func,
+  onYes : PropTypes.func,
+  onNo : PropTypes.func,
   details : PropTypes.func,
   confirm : PropTypes.string,
   confirm : PropTypes.string,
