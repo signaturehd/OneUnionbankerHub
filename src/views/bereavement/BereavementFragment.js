@@ -73,7 +73,7 @@ class BereavementFragment extends BaseMVPView {
 
   submitForm (
     funeralDate,
-    internmentDate,
+    intermentDate,
     deceasedDate,
     dependentId,
     funeralHome,
@@ -182,7 +182,7 @@ class BereavementFragment extends BaseMVPView {
       const objectDate={
         "death" : deceasedDate,
         "wake" : funeralDate,
-        "interment" : internmentDate
+        "interment" : intermentDate
       }
       const objectFuneral ={
         "home" : funeralHome,
@@ -212,7 +212,7 @@ class BereavementFragment extends BaseMVPView {
       showNoticeResponseModal,
       showBenefitFeedbackModal,
       funeralDate,
-      internmentDate,
+      intermentDate,
       deceasedDate,
       dependentId
     }=this.state
@@ -274,7 +274,7 @@ class BereavementFragment extends BaseMVPView {
             showDepedents={ showDepedents }
             sendFormData={ (
               funeralDate,
-              internmentDate,
+              intermentDate,
               deceasedDate,
               dependentId,
               funeralHome,
@@ -291,7 +291,7 @@ class BereavementFragment extends BaseMVPView {
             ) =>
               this.submitForm(
                 funeralDate,
-                internmentDate,
+                intermentDate,
                 deceasedDate,
                 dependentId,
                 funeralHome,
