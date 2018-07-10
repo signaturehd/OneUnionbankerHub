@@ -74,7 +74,11 @@ class DentalLoaView extends BaseMVPView {
       selectedProcedures.map(resp =>
         procedures.push({ id : resp.id.toString() })
       )
-      if (!this.validator(recipient) || !this.validator(branch) || !this.validator(selectedProcedures)) {
+      if (
+        !this.validator(recipient) ||
+        !this.validator(branch) ||
+        !this.validator(date) ||
+        !procedures.length === 0) {
         store.dispatch(NotifyActions.addNotify({
            title : 'Warning' ,
            message : 'All fields are required',
@@ -152,7 +156,7 @@ class DentalLoaView extends BaseMVPView {
           <BenefitFeedbackModal
             benefitId = { '7' }
             onClose = { () => {
-              this.props.history.push('/mybenfits/benefits/medical'),
+              this.navigate(),
               this.setState({ showBenefitFeedbackModal : false })
             }}
           />
