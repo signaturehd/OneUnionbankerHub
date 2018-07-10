@@ -14,13 +14,15 @@ export default class CalamityPresenter {
  }
 
  validateCalamityAssistance () {
+   this.view.showCircularLoader()
    this.calamityInteractor.execute()
      .subscribe(
        calamityAssistance => {
          this.view.setValidateCalamityAssistance(calamityAssistance)
+         this.view.hideCircularLoader()
        },
        error => {
-
+         this.view.hideCircularLoader()
       }
    )
  }

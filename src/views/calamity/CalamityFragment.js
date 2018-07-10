@@ -68,9 +68,14 @@ class CalamityFragment extends BaseMVPView {
     fileDP,
     imgPrevBC,
     imgPrevDP) {
-    if (!this.validator(calamityType) || !this.validator(property) || !this.validator(propertyDesc ||
-    !this.validator(propertyType) || !this.validator(acquisitionValue) || !this.validator(estimatedCost) || !this.validator(semesterText))) {
-      store.dispatch(NotifyActions.addNotify({
+    if (
+      !this.validator(calamityType) ||
+      !this.validator(property) ||
+      !this.validator(propertyDesc) ||
+      !this.validator(propertyType) ||
+      !this.validator(acquisitionValue) ||
+      !this.validator(estimatedCost)) {
+      !store.dispatch(NotifyActions.addNotify({
          title : 'Calamity Assistance' ,
          message : 'Please provide information to all fields',
          type : 'warning',
