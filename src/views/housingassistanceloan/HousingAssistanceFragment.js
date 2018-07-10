@@ -71,12 +71,6 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.setState({ offset })
   }
 
-  showComputationForOffset (computationOffset) {
-    computationOffset.map(off=>
-      off.id === 1 && off.id === 2 &&
-    )
-  }
-
   showValidate (validateLoanType) {
     this.setState({ validateLoanType })
   }
