@@ -73,7 +73,6 @@ class SalaryLoanFragment extends BaseMVPView {
     showComputationForOffset (computationOffset) {
       computationOffset.map(off=>
         off.id === 1 && off.id === 2 &&
-        console.log(off && off.outstandingBalance)
       )
     }
 
