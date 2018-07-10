@@ -1,7 +1,6 @@
 export default class RequiredAlphabetValidation {
-
   isValid (s) {
-    const regex = /[A-Za-z]/
+    const regex = /^[a-zA-Z]+$/
     return regex.test(String(s))
   }
 }

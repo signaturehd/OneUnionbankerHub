@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
+import { GenericTextBox,  Card, GenericButton, FileUploader, Modal } from '../../../ub-components/'
 
 import './styles/educationAidComponentStyle.css'
 
@@ -42,7 +42,8 @@ class EducationAidFormCardComponent extends Component {
       imagePrevOR: null,
       imagePrevCOG: null,
       imagePrevRegForm: null,
-      computations: ''
+      computations: '',
+      showEducationSemesterModal: false,
     }
     this.onGetClicked=this.onGetClicked.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -145,7 +146,8 @@ class EducationAidFormCardComponent extends Component {
       imagePrevOR,
       imagePrevCOG,
       imagePrevRegForm,
-      computations
+      computations,
+      showEducationSemesterModal,
       }=this.state
 
     const academicyear = ayFrom + " - " + ayTo
@@ -174,6 +176,19 @@ class EducationAidFormCardComponent extends Component {
         backgroundRepeat : 'no-repeat',
       }
     }
+
+    const semesterOptions = [{
+          id: 0,
+          name: 'First Semester',
+      },
+      {
+          id: 1,
+          name: 'Second Semester',
+      },
+      {
+          id: 2,
+          name: 'Third Semester',
+      }]
 
     return (
       <div className={'educ-container'}>
@@ -252,6 +267,29 @@ class EducationAidFormCardComponent extends Component {
                 }
               />
             }
+            {
+              showEducationSemesterModal &&
+              <Modal
+                isDismisable={ true }
+                onClose={ ()=> this.setState({ showEducationSemesterModal: false }) }
+                >
+                <div>
+                  {
+                    semesterOptions && semesterOptions.map((semester, key) =>
+                      <GenericButton
+                        className = { 'mpl-poa-modal-button' }
+                        key={ key }
+                        text={ semester.name }
+                        onClick={ () => {
+                          this.setState({ semesterText: semester.name, showEducationSemesterModal: false })
+                          }
+                        }
+                      />
+                    )
+                  }
+                </div>
+              </Modal>
+            }
             <div></div>
           <Card className={ 'educ-form-card' }>
             <h4>
@@ -326,7 +364,7 @@ class EducationAidFormCardComponent extends Component {
             </div>
             <GenericTextBox
               value={ semesterText }
-              onChange={ (e) =>  this.setState({ semesterText: e.target.value }) }
+              onClick={ () => this.setState({ showEducationSemesterModal : true }) }
               placeholder={ 'Semester' }
               type={ 'text' }/>
             <GenericTextBox

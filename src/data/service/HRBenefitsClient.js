@@ -520,13 +520,23 @@ export default class HRBenefitsClient {
   }
 
   /* Bereavement */
-  getBereveavementValidate (token) {
+  validateBereavement (token) {
     return this.service.validateBereavement(token)
       .pipe(ServiceErrorOperator())
   }
 
-  addBereavement (token, addBereavementParam) {
-    return this.service.addBereavement(token, addBereavementParam)
+  addBereavement (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addBereavementParam) {
+    return this.service.addBereavement(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      addBereavementParam)
       .pipe(ServiceErrorOperator())
   }
 

@@ -33,12 +33,18 @@ class CarLeaseNewFragment extends BaseMVPView {
       primaryColor: '',
       secondaryColor: '',
       file: '',
+      carValidate: [],
     }
     this.sendFormData = this.sendFormData.bind(this)
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
+    this.presenter.getCarValidate()
+  }
+
+  showCarValidated (carValidate) {
+    this.setState({ carValidate })
   }
 
   sendFormData (
@@ -146,10 +152,11 @@ class CarLeaseNewFragment extends BaseMVPView {
       primaryColor,
       secondaryColor,
       file,
-      leaseMode
+      leaseMode,
+      loanType,
+      carValidate
     } = this.state
-    const { onSubmit }=this.props
-
+    const { onSubmit, history }=this.props
     return (
       <div>
         {
@@ -198,6 +205,8 @@ class CarLeaseNewFragment extends BaseMVPView {
                <CircularLoader show={ this.state.enabledLoader }/>
              </center> :
             <FormComponent
+              history={ history }
+              brands={ carValidate  && carValidate.brands ? carValidate.brands : [] }
               onSubmit={ (
                 carBrand,
                 carModel,

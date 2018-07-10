@@ -23,6 +23,7 @@ import {
   Card,
   Modal,
   GenericButton,
+  CircularLoader,
   FloatingActionButton
  } from '../../ub-components'
 
@@ -43,7 +44,9 @@ class BenefitsFragment extends BaseMVPView {
       showModal: false,
       withDeathCert : false,
       isAccountNumber: null,
+      carValidated: [],
       accountNumber: '', // this is only used to handle onChange of input modal
+      enableLoader: false
     }
   }
 
@@ -56,6 +59,10 @@ class BenefitsFragment extends BaseMVPView {
   showReleasingCenters (releasingCenters) {
     this.setState({ releasingCenters })
   // TODO show to generic multilist dialog
+  }
+
+  showCarValidated (carValidated) {
+    this.setState({ carValidated })
   }
 
   showManagersCheck () {
@@ -72,6 +79,14 @@ class BenefitsFragment extends BaseMVPView {
 
   setReleasingCenter (releasingCenter) {
     this.presenter.setReleasingCenter(releasingCenter)
+  }
+
+  showCircularLoader () {
+    this.setState({ enableLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enableLoader : false })
   }
 
   isAccountNumber (bool) {
@@ -97,6 +112,8 @@ class BenefitsFragment extends BaseMVPView {
       showModal,
       withDeathCert,
       isAccountNumber,
+      carValidated,
+      enableLoader
     } = this.state
 
     const benefitsOptions = [{
@@ -257,10 +274,22 @@ class BenefitsFragment extends BaseMVPView {
                 render={ props => <MedicalFragment { ...props } />}/>
               <Route exact path='/mybenefits/benefits/loans'
                 render={ props => <LoansFragment { ...props } />}/>
-              <Route exact path='/mybenefits/benefits/carlease'
-                render={ props => <CarLeaseFragment
+              {
+                enableLoader ?
+                <Modal>
+                  <h4>Please wait while validating your Employee Number</h4>
+                  <br/>
+                  <center>
+                    <CircularLoader show={ enableLoader }/>
+                  </center>
+                </Modal>
+                :
+                <Route exact path='/mybenefits/benefits/carlease'
+                  render={ props => <CarLeaseFragment
                   { ...props }
                   presenter={ this.presenter } />}/>
+              }
+
               <Route path='/mybenefits'
                 render={ Benefits } />
               <Route exact path='/mybenefits/calamity'

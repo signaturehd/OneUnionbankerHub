@@ -21,7 +21,7 @@ class BereavementFragment extends BaseMVPView {
   constructor (props) {
     super (props)
     this.state={
-      enabledLoader : true,
+      enabledLoader : false,
       validatedBereavement: [],
       showDepedents: [],
       showNoticeModal : false,
@@ -133,7 +133,7 @@ class BereavementFragment extends BaseMVPView {
         })
       )
     }
-    else if (memoriaPark === null || memoriaPark === '') {
+    else if (memorialPark === null || memorialPark === '') {
       store.dispatch(NotifyActions.addNotify({
           title: 'Warning',
           message: 'Memorial Park field is required',
@@ -182,15 +182,17 @@ class BereavementFragment extends BaseMVPView {
       const objectDate={
         "death" : deceasedDate,
         "wake" : funeralDate,
-        "internment" : internmentDate
+        "interment" : internmentDate
       }
       const objectFuneral ={
+        "home" : funeralHome,
         "province" : funeralProvince,
         "address": funeralAddress,
         "city": funeralCity,
         "region": funeralRegion
       }
       const objectMemorial ={
+        "park" : memorialPark,
         "province" : memorialProvince,
         "address": memorialAddress,
         "city": memorialCity,

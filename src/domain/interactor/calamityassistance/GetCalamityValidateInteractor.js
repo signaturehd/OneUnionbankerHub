@@ -4,6 +4,6 @@ export default class GetCalamityValidateInteractor {
   }
 
   execute () {
-    return this.client.getCalamityAssistanceValidate(this.client.getToken())
+    return this.client.validateCalamityAssistance(this.client.getToken())
   }
 }

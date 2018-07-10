@@ -408,7 +408,7 @@ export default class HRBenefitsService {
     }
     formData.append('body', JSON.stringify(addCarleaseObject))
     formData.append('uuid', 12345)
-    formData.append('attachment1', carRequestParam.attachments)
+    formData.append('attachment1', carRequestParam.attachments ? carRequestParam.attachments : null)
     return this.apiClient.post('v1/leases/car', formData, {
       headers: { token }
     })
@@ -536,14 +536,19 @@ export default class HRBenefitsService {
 
    addGroupAid (token, accountToken, accountNumber, releasingCenter, groupAidParam) {
      const formData = new FormData()
-     const grantPlanObject = {
-       grantType : groupAidParam.grantId,
-       accountNumber,
-       releasingCenter
+     const groupPlanObject = {
+        accountNumber,
+        releasingCenter,
+        dependentId: groupAidParam.dependentId,
+        amount: groupAidParam.desiredAmount,
+        effectivityDate: groupAidParam.effectiveDate,
+        companyName: groupAidParam.company,
+        paymentDurationId: groupAidParam.durationOfPaymentId
      }
      formData.append('uuid', 12345)
-     formData.append('cert', groupAidParam.file)
-     formData.append('body', JSON.stringify(grantPlanObject))
+     formData.append('cert1', groupAidParam.file1)
+     formData.append('cert2', groupAidParam.file2)
+     formData.append('body', JSON.stringify(groupPlanObject))
      return this.apiClient.post('v2/reimbursements/education/dependent/submit', formData, {
        headers : { token }
      })
@@ -557,7 +562,12 @@ export default class HRBenefitsService {
     })
   }
 
-  addBereavement (token, addBereavementParam) {
+  addBereavement (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addBereavementParam) {
     const formData = new FormData()
     const bereavementObject = {
       id : addBereavementParam.dependentId,
@@ -599,7 +609,7 @@ export default class HRBenefitsService {
     }
 
     formData.append('uuid', 12345)
-    formData.append('file', calamityAssistanceParam.attachments ? calamityAssistanceParam.attachments : null)
+    formData.append('file', calamityAssistanceParam.attachments ? calamityAssistanceParam.attachments: null)
     formData.append('body', JSON.stringify(calamityObject))
     return this.apiClient.post('v1/calamity/availment', formData,{
       headers: { token }
