@@ -149,3 +149,8 @@ h1, h2, h3, h4, h5, h6, p{
 .unionbank-color {
   color: #ff8a00;
 }
+
+.grid-global {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
