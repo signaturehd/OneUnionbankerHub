@@ -235,17 +235,25 @@ class CalamityFormCardComponent extends Component {
             <div className={ 'calamity-icon-text-grid-date' }>
               <div>
                 <br/>
+                <br/>
                 <span className={ 'calamity-icon-settings calamity-calendar' }/>
               </div>
               <div>
-                <DatePicker
-                  dateFormat={ 'MM/DD/YYYY' }
-                  maxDate={ moment() }
-                  readOnly
-                  selected={ preferredDate ? moment(preferredDate, 'MM/DD/YYYY') : moment()}
-                  onChange={ this.handleChange }
-                  className={ 'calendar' }
-                  calendarClassName={ 'calendarClass' }/>
+                <div className={ 'grid-global-row' }>
+                  <div>
+                    <DatePicker
+                      dateFormat={ 'MM/DD/YYYY' }
+                      maxDate={ moment() }
+                      readOnly
+                      selected={ preferredDate ? moment(preferredDate, 'MM/DD/YYYY') : moment()}
+                      onChange={ this.handleChange }
+                      className={ 'calendar' }
+                      calendarClassName={ 'calendarClass' }/>
+                  </div>
+                  <div>
+                    <h4> Date of Occurrence </h4>
+                  </div>
+                </div>
               </div>
             </div>
 
