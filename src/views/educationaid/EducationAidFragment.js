@@ -75,8 +75,14 @@ class EducationAidFragment extends BaseMVPView {
     imagePrevCOG,
     imagePrevRegForm,
     totalFeeText) {
-    if (!this.validator(tuitionFeeText) || !this.validator(registrationFeeText) || !this.validator(schoolID ||
-    !this.validator(courseText) || !this.validator(academicYearText) || !this.validator(courseText) || !this.validator(semesterText))) {
+    if (
+      this.validator(tuitionFeeText) ||
+      this.validator(registrationFeeText) ||
+      this.validator(schoolID ||
+      this.validator(courseText) ||
+      this.validator(academicYearText) ||
+      this.validator(courseText) ||
+      this.validator(semesterText))) {
       store.dispatch(NotifyActions.addNotify({
          title : 'Education Aid' ,
          message : 'All fields are required',

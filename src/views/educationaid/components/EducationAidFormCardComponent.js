@@ -14,7 +14,8 @@ import { NotifyActions } from '../../../actions/'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-import { MoneyValidation } from '../../../utils/validate'
+import { MoneyValidation, RequiredNumberValidation } from '../../../utils/validate'
+import { format } from '../../../utils/numberUtils'
 
 class EducationAidFormCardComponent extends Component {
 
@@ -47,18 +48,19 @@ class EducationAidFormCardComponent extends Component {
     }
     this.onGetClicked=this.onGetClicked.bind(this)
     this.onChange = this.onChange.bind(this)
-    this.onKey=this.onKey.bind(this)
+    this.registrationValidation=this.registrationValidation.bind(this)
   }
+
   onChange (e) {
       new MoneyValidation().isValid(e.target.value) ?
         this.setState({ tuitionFeeText : e.target.value }) :
         this.setState({ tuitionFeeText : '' })
-   }
-   onKey (e) {
+  }
+  registrationValidation (e) {
      new MoneyValidation().isValid(e.target.value) ?
        this.setState({ registrationFeeText : e.target.value }) :
        this.setState({ registrationFeeText : '' })
-   }
+  }
 
   getExtension (filename) {
     const parts=filename.split('/')
@@ -120,7 +122,6 @@ class EducationAidFormCardComponent extends Component {
   render () {
     const {
       educationAid,
-      presenter,
       getFormData
     }=this.props
 
@@ -197,7 +198,6 @@ class EducationAidFormCardComponent extends Component {
             showModal &&
             <EducationAidModal
               tog={ educationAid.schools }
-              presenter={ presenter }
               onSubmit={
                 (schoolID, collegeType, computations) => {
                   this.setState({
@@ -216,56 +216,56 @@ class EducationAidFormCardComponent extends Component {
             }
             {
               showReviewEducationModal &&
-              <EducationAidReviewModal
-                collegeType={ collegeType }
-                tuitionFeeText={ tuitionFeeText }
-                courseText={ courseText }
-                registrationFeeText={ registrationFeeText }
-                academicYearText={ academicYearText }
-                semesterText={ semesterText }
-                gwaText={ gwaText }
-                totalFeeText={ totalFeeText }
-                fileOR={ fileOR }
-                fileCOG={ fileCOG }
-                fileRegForm={ fileRegForm }
-                imagePrevOR={ imagePrevOR }
-                imagePrevCOG={ imagePrevCOG }
-                imagePrevRegForm={ imagePrevRegForm }
-                totalReimbursableAmountText={ totalReimbursableAmountText }
-                onClose={ () => this.setState({ showReviewEducationModal : false }) }
-                getFormData={ ()=> this.setState({
-                  courseText,
-                  academicYearText,
-                  semesterText,
-                  gwaText,
-                  tuitionFeeText,
-                  registrationFeeText,
-                  schoolID,
-                  fileOR,
-                  fileCOG,
-                  fileRegForm,
-                  imagePrevOR,
-                  imagePrevCOG,
-                  imagePrevRegForm,
-                  totalFeeText })}
-                onClick={ () => this.onGetClicked(
-                  courseText,
-                  academicYearText,
-                  semesterText,
-                  gwaText,
-                  tuitionFeeText,
-                  registrationFeeText,
-                  schoolID,
-                  fileOR,
-                  fileCOG,
-                  fileRegForm,
-                  imagePrevOR,
-                  imagePrevCOG,
-                  imagePrevRegForm,
-                  totalFeeText
-                  )
-                }
-              />
+                <EducationAidReviewModal
+                  collegeType={ collegeType }
+                  tuitionFeeText={ tuitionFeeText }
+                  courseText={ courseText }
+                  registrationFeeText={ registrationFeeText }
+                  academicYearText={ academicYearText }
+                  semesterText={ semesterText }
+                  gwaText={ gwaText }
+                  totalFeeText={ totalFeeText }
+                  fileOR={ fileOR }
+                  fileCOG={ fileCOG }
+                  fileRegForm={ fileRegForm }
+                  imagePrevOR={ imagePrevOR }
+                  imagePrevCOG={ imagePrevCOG }
+                  imagePrevRegForm={ imagePrevRegForm }
+                  totalReimbursableAmountText={ totalReimbursableAmountText }
+                  onClose={ () => this.setState({ showReviewEducationModal : false }) }
+                  getFormData={ ()=> this.setState({
+                    courseText,
+                    academicYearText,
+                    semesterText,
+                    gwaText,
+                    tuitionFeeText,
+                    registrationFeeText,
+                    schoolID,
+                    fileOR,
+                    fileCOG,
+                    fileRegForm,
+                    imagePrevOR,
+                    imagePrevCOG,
+                    imagePrevRegForm,
+                    totalFeeText })}
+                  onClick={ () => this.onGetClicked(
+                    courseText,
+                    academicYearText,
+                    semesterText,
+                    gwaText,
+                    tuitionFeeText,
+                    registrationFeeText,
+                    schoolID,
+                    fileOR,
+                    fileCOG,
+                    fileRegForm,
+                    imagePrevOR,
+                    imagePrevCOG,
+                    imagePrevRegForm,
+                    totalFeeText
+                    )
+                  }
+                />
             }
             {
               showEducationSemesterModal &&
@@ -306,7 +306,7 @@ class EducationAidFormCardComponent extends Component {
             <GenericTextBox
               value={ registrationFeeText ? registrationFeeText : ''}
               onChange={
-                this.onKey
+                this.registrationValidation
                }
               placeholder={ 'Registration Fee' }
               type={ 'text' }/>
@@ -337,10 +337,9 @@ class EducationAidFormCardComponent extends Component {
                 value={ ayFrom }
                 onChange={
                   (e) => {
-                    const re=/^[0-9\.]+$/
-                    if (e.target.value == '' || re.test(e.target.value))  {
-                      this.setState({ayFrom : e.target.value, academicYearText : e.target.value + " - " + ayTo})
-                    }
+                    new RequiredNumberValidation().isValidWithoutDot(e.target.value) ?
+                      this.setState({ ayFrom : e.target.value, academicYearText : e.target.value + " - " + ayTo }):
+                      this.setState({ ayFrom : '', academicYearText : '' + " - " + ayTo })
                   }
                 }
                 maxLength = { 4 }
@@ -350,10 +349,9 @@ class EducationAidFormCardComponent extends Component {
                 value={ ayTo }
                 onChange={
                   (e) => {
-                    const re=/^[0-9\.]+$/
-                    if (e.target.value == '' || re.test(e.target.value))  {
-                      this.setState({ayTo:  e.target.value, academicYearText : ayFrom + " - " + e.target.value})
-                    }
+                    new RequiredNumberValidation().isValidWithoutDot(e.target.value) ?
+                      this.setState({ ayTo: e.target.value, academicYearText : ayFrom + " - " + e.target.value }):
+                      this.setState({ ayTo: '', academicYearText : ayFrom + " - " + '' })
                   }
                 }
                 maxLength = { 4 }
@@ -371,17 +369,16 @@ class EducationAidFormCardComponent extends Component {
               value={ gwaText }
               onChange={
                 (e) =>{
-                  const re=/^[0-9\.]+$/
-                  if (e.target.value == '' || re.test(e.target.value)) {
-                    this.setState({ gwaText: e.target.value })
+                  new RequiredNumberValidation().isValid(e.target.value) ?
+                    this.setState({ gwaText: e.target.value }):
+                    this.setState({ gwaText: '' })
                   }
                 }
-               }
               maxLength = { 4 }
               placeholder={ 'General Weighted Average (GWA)' }
               type={ 'text' }/>
             <GenericTextBox
-              value={ this.totalReimbursableAmount(computations, gwaText, resultTotalFee) }
+              value={ format(this.totalReimbursableAmount(computations, gwaText, resultTotalFee)) }
               disabled={ 'disabled' }
               type={ 'text' }
               placeholder={ 'Total Reimbursable Amount' }/>
