@@ -1,17 +1,19 @@
 export default (
-    payeeName,
+    fullname,
     loanId,
     purposeOfLoan,
     modeOfLoan,
     loanTerm,
+    offset,
     principalLoanAmount,
     attachments
   ) => ({
-    payeeName,
+    fullname,
     loanId,
     purposeOfLoan,
     modeOfLoan,
     loanTerm,
+    offset,
     principalLoanAmount,
     attachments
   })
