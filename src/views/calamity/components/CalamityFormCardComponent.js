@@ -12,7 +12,7 @@ import PropertyTypeModal from '../modal/PropertyTypeModal'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
-import { RequiredNumberValidation } from '../../../utils/validate'
+import { RequiredNumberValidation, RequiredAlphabetValidation } from '../../../utils/validate'
 
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
@@ -258,7 +258,12 @@ class CalamityFormCardComponent extends Component {
                 <GenericTextBox
                   container={ 'calamity-container' }
                   value={ property ? property : '' }
-                  onChange={ (e) => this.setState({ property: e.target.value }) }
+                  onChange={ (e) => {
+                    new RequiredAlphabetValidation().isValid(e.target.value) ?
+                    this.setState({ property: e.target.value }) :
+                    this.setState({ property: '' })
+                    }
+                  }
                   placeholder={ 'Property' }
                   readOnly
                   type={ 'text' }
@@ -275,7 +280,11 @@ class CalamityFormCardComponent extends Component {
                 <GenericTextBox
                   container={ 'calamity-container' }
                   value={ propertyDesc ? propertyDesc : '' }
-                  onChange={ (e) => this.setState({ propertyDesc: e.target.value }) }
+                  onChange={ (e) =>
+                    new RequiredAlphabetValidation().isValid(e.target.value) ?
+                    this.setState({ propertyDesc: e.target.value })  :
+                    this.setState({ propertyDesc: '' })
+                  }
                   placeholder={ 'Property Description' }
                   readOnly
                   type={ 'text' }
