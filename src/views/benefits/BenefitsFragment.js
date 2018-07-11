@@ -153,6 +153,7 @@ class BenefitsFragment extends BaseMVPView {
       {
         showBereavementConfirmationModal &&
         <BereavementConfirmationModal
+          history={ history }
           onYes = {
             () => {
               this.setState({ showBereavementConfirmationModal : false })
