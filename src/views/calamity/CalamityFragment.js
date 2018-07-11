@@ -16,7 +16,7 @@ import ConfirmationModal from './modal/CalamityReviewModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import FormComponent from './components/CalamityFormCardComponent'
-import { RequiredValidation, MoneyValidation } from '../../utils/validate'
+import { RequiredValidation } from '../../utils/validate'
 
 class CalamityFragment extends BaseMVPView {
 

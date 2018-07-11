@@ -337,7 +337,7 @@ class EducationAidFormCardComponent extends Component {
                 value={ ayFrom }
                 onChange={
                   (e) => {
-                    new RequiredNumberValidation().isValidWithoutDot(e.target.value) ?
+                    new RequiredNumberValidation().isValid(e.target.value) ?
                       this.setState({ ayFrom : e.target.value, academicYearText : e.target.value + " - " + ayTo }):
                       this.setState({ ayFrom : '', academicYearText : '' + " - " + ayTo })
                   }
@@ -349,7 +349,7 @@ class EducationAidFormCardComponent extends Component {
                 value={ ayTo }
                 onChange={
                   (e) => {
-                    new RequiredNumberValidation().isValidWithoutDot(e.target.value) ?
+                    new RequiredNumberValidation().isValid(e.target.value) ?
                       this.setState({ ayTo: e.target.value, academicYearText : ayFrom + " - " + e.target.value }):
                       this.setState({ ayTo: '', academicYearText : ayFrom + " - " + '' })
                   }
