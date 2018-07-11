@@ -6,6 +6,7 @@ import { Modal, GenericButton, CircularLoader } from '../../../ub-components/'
 import './styles/educationAidModalStyle.css'
 
 import imageDefault from '../../../images/profile-picture.png'
+import { format } from '../../../utils/numberUtils'
 
 class EducationAidReviewModal extends Component {
 
@@ -95,8 +96,8 @@ class EducationAidReviewModal extends Component {
           <h4>Academic Year : { academicYearText ? academicYearText  : '(Not Yet Provided)'  }</h4>
           <h4>Semester : { semesterText ? semesterText  : '(Not Yet Provided)'  }</h4>
           <h4>General Weighted Average : { gwaText ? gwaText : '(Not Yet Provided)'  }</h4>
-          <h4>Tuition Fee : { tuitionFeeText ? tuitionFeeText  : '(Not Yet Provided)'  }</h4>
-          <h4>Registration Fee : { registrationFeeText ? registrationFeeText  : '(Not Yet Provided)'  }</h4>
+          <h4>Tuition Fee : { tuitionFeeText ? format(tuitionFeeText)  : '(Not Yet Provided)'  }</h4>
+          <h4>Registration Fee : { registrationFeeText ? format(registrationFeeText)  : '(Not Yet Provided)'  }</h4>
           <h4>File OR : { fileOR.name ? fileOR.name  : '(Not Yet Provided)'  }</h4>
           <h4>File COG : { fileCOG.name ? fileCOG.name  : '(Not Yet Provided)'  }</h4>
           <h4>File Registration Form : { fileRegForm.name ? fileRegForm.name  : '(Not Yet Provided)'  }</h4>
@@ -127,6 +128,34 @@ EducationAidReviewModal.propTypes={
   details : PropTypes.func,
   confirm : PropTypes.string,
   cancel : PropTypes.string,
+  collegeID : PropTypes.string,
+  tuitionFee :PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
+  registrationFee:PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
+  collegeType: PropTypes.string,
+  course: PropTypes.string,
+  academicYear: PropTypes.string,
+  semester:  PropTypes.string,
+  gwa : PropTypes.string,
+  fileOR :  PropTypes.object,
+  fileCOG :  PropTypes.object,
+  fileRegForm :  PropTypes.object,
+  imagePrevOR :  PropTypes.object,
+  imagePrevCOG :  PropTypes.object,
+  imagePrevRegForm :  PropTypes.object,
+  submitForm :  PropTypes.object,
+  tuitionFeeText: PropTypes.string,
+  registrationFeeText: PropTypes.string,
+  totalFeeText: PropTypes.string,
+  courseText: PropTypes.string,
+  academicYearText: PropTypes.string,
+  semesterText: PropTypes.string,
+  gwaText: PropTypes.string,
 }
 EducationAidReviewModal.defaultProps={
   confirm : 'Agree',

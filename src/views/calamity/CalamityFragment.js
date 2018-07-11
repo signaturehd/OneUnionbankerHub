@@ -16,8 +16,9 @@ import ConfirmationModal from './modal/CalamityReviewModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import FormComponent from './components/CalamityFormCardComponent'
+import { RequiredValidation } from '../../utils/validate'
 
-class CalamityFragment extends BaseMVPView{
+class CalamityFragment extends BaseMVPView {
 
   constructor(props) {
     super(props)
@@ -43,12 +44,16 @@ class CalamityFragment extends BaseMVPView{
       imgPrevBC: null,
       imgPrevDP: null
     }
+    this.validator = this.validator.bind(this)
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateCalamityAssistance()
   }
+  validator (input) {
+     return new RequiredValidation().isValid(input)
+   }
 
   confirmation (
     calamityId,
@@ -62,30 +67,30 @@ class CalamityFragment extends BaseMVPView{
     fileBC,
     fileDP,
     imgPrevBC,
-    imgPrevDP)
-  {
-    if ( calamityType === "" || property === "" ||
-        propertyDesc === "" || propertyType === "" ||
-        ( acquisitionValue === 0 || acquisitionValue === "") ||
-      ( estimatedCost === 0 || estimatedCost === "")) {
+    imgPrevDP) {
+    if (
+      !this.validator(calamityType) ||
+      !this.validator(property) ||
+      !this.validator(propertyDesc) ||
+      !this.validator(propertyType) ||
+      !this.validator(acquisitionValue) ||
+      !this.validator(estimatedCost)) {
+      !store.dispatch(NotifyActions.addNotify({
+         title : 'Calamity Assistance' ,
+         message : 'Please provide information to all fields',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    } else if (!fileBC && !fileDP) {
       store.dispatch(NotifyActions.addNotify({
-          title : 'Calamity',
-          message : 'Please provide a valid information',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    }
-    else if (!fileBC && !fileDP) {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Calamity',
+          title : 'Calamity Assistance ',
           message : 'Please check your attachments',
           type : 'warning',
           duration : 2000
         })
       )
-    }
-    else {
+    } else {
       const fileBCName = {
         "name" : fileBC.name,
         "attachments" : imgPrevBC
