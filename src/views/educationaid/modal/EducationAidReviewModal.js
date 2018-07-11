@@ -48,28 +48,21 @@ class EducationAidReviewModal extends Component {
 
     const styles={
       image1 : {
-        backgroundImage: `url('${data.imagePrevOR}')`,
+        backgroundImage: `url('${ data.imagePrevOR }')`,
         width : 'auto',
         height : '150px',
         backgroundSize : 'contain',
         backgroundRepeat : 'no-repeat',
       },
       image2 : {
-        backgroundImage: `url('${data.imagePrevCOG}')`,
+        backgroundImage: `url('${ data.imagePrevCOG }')`,
         width : 'auto',
         height : '150px',
         backgroundSize : 'contain',
         backgroundRepeat : 'no-repeat',
       },
       image3 : {
-        backgroundImage: `url('${data.imagePrevRegForm}')`,
-        width : 'auto',
-        height : '150px',
-        backgroundSize : 'contain',
-        backgroundRepeat : 'no-repeat',
-      },
-      image4 : {
-        backgroundImage: `url('${imageDefault}')`,
+        backgroundImage: `url('${ data.imagePrevRegForm }')`,
         width : 'auto',
         height : '150px',
         backgroundSize : 'contain',
@@ -99,9 +92,9 @@ class EducationAidReviewModal extends Component {
           <h4>File Registration Form : { data.fileRegForm.name ? data.fileRegForm.name  : '(Not Yet Provided)'  }</h4>
           <br/>
           <div className={ 'educationAid-image-display' }>
-            <div style={ styles.image1 }></div>
-            <div style={ styles.image2 }></div>
-            <div style={ styles.image3 }></div>
+            <div style={ styles.image1 ? styles.image1 : '' }></div>
+            <div style={ styles.image2 ? styles.image2 : '' }></div>
+            <div style={ styles.image3 ? styles.image3 : '' }></div>
           </div>
           <br/>
           <center>
