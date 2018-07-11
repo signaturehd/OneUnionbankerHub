@@ -21,6 +21,7 @@ import EducGroupPlanDetailsFragment from './fragments/EducGroupPlanDetailsFragme
 import LoansDetailsFragment from './fragments/LoansDetailsFragment'
 import OpticalDetailsFragment from './fragments/OpticalDetailsFragment'
 import CarLeaseDetailsFragment from './fragments/CarLeaseDetailsFragment'
+import CalamityAssistanceDetailsFragment from './fragments/CalamityAssistanceDetailsFragment'
 
 function  TransactionDetails (props)  {
   const transactionId = props.details.benefitType.id
@@ -81,7 +82,7 @@ function  TransactionDetails (props)  {
       details = { transactionDetails } />
   } else if (transactionId === 22) {
     // Calamity Assistance
-    return <LoansDetailsFragment
+    return <CalamityAssistanceDetailsFragment
       transactionsPerson = { transactionsPerson }
       attachments = { attachments }
       details = { transactionDetails } />

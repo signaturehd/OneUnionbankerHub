@@ -93,6 +93,16 @@ export default class MultiPurposeLoanPresenter {
           this.view.hideCircularLoader()
         },
         error => {
+<<<<<<< Updated upstream
+=======
+          store.dispatch(NotifyActions.addNotify({
+              title: 'Warning',
+              message: `We're sorry, but right now, you're not yet able to avail of this benefit because if your${this.error.message}`,
+              type: 'warning',
+              duration: 2000
+            })
+          )
+>>>>>>> Stashed changes
           this.view.navigate()
         }
       )
