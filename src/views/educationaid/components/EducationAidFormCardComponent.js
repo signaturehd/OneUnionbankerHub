@@ -14,7 +14,7 @@ import { NotifyActions } from '../../../actions/'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-import { MoneyValidation, RequiredNumberValidation } from '../../../utils/validate'
+import { MoneyValidation, RequiredDecimalValidation, RequiredAlphabetValidation } from '../../../utils/validate'
 import { format } from '../../../utils/numberUtils'
 
 class EducationAidFormCardComponent extends Component {
@@ -31,8 +31,6 @@ class EducationAidFormCardComponent extends Component {
       schoolID: '',
       courseText: '',
       academicYearText: '',
-      ayFrom: '',
-      ayTo: '',
       semesterText: '',
       totalReimbursableAmount: '',
       totalReimbursableAmountText: '',
@@ -45,6 +43,7 @@ class EducationAidFormCardComponent extends Component {
       imagePrevRegForm: null,
       computations: '',
       showEducationSemesterModal: false,
+      showEducationAcademicYearModal : false
     }
     this.onGetClicked=this.onGetClicked.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -53,13 +52,11 @@ class EducationAidFormCardComponent extends Component {
 
   onChange (e) {
       new MoneyValidation().isValid(e.target.value) ?
-        this.setState({ tuitionFeeText : e.target.value }) :
-        this.setState({ tuitionFeeText : '' })
+        this.setState({ tuitionFeeText : e.target.value }) : null
   }
   registrationValidation (e) {
      new MoneyValidation().isValid(e.target.value) ?
-       this.setState({ registrationFeeText : e.target.value }) :
-       this.setState({ registrationFeeText : '' })
+       this.setState({ registrationFeeText : e.target.value }) : null
   }
 
   getExtension (filename) {
@@ -122,7 +119,8 @@ class EducationAidFormCardComponent extends Component {
   render () {
     const {
       educationAid,
-      getFormData
+      onClick,
+      presenter
     }=this.props
 
     const {
@@ -135,8 +133,6 @@ class EducationAidFormCardComponent extends Component {
       schoolID,
       courseText,
       academicYearText,
-      ayFrom,
-      ayTo,
       semesterText,
       gwaText,
       totalReimbursableAmount,
@@ -149,11 +145,11 @@ class EducationAidFormCardComponent extends Component {
       imagePrevRegForm,
       computations,
       showEducationSemesterModal,
+      showEducationAcademicYearModal,
       }=this.state
 
-    const academicyear = ayFrom + " - " + ayTo
     const resultTotalFee=tuitionFeeText && registrationFeeText ? parseFloat(tuitionFeeText) + parseFloat(registrationFeeText) : 0.00
-
+    const totalReimbursment = format(this.totalReimbursableAmount(computations, gwaText, resultTotalFee))
     const styles = {
       image1 : {
         backgroundImage: `url('${imagePrevOR}')`,
@@ -178,7 +174,8 @@ class EducationAidFormCardComponent extends Component {
       }
     }
 
-    const semesterOptions = [{
+    const semesterOptions = [
+      {
           id: 0,
           name: 'First Semester',
       },
@@ -189,7 +186,23 @@ class EducationAidFormCardComponent extends Component {
       {
           id: 2,
           name: 'Third Semester',
-      }]
+      },
+      {
+          id: 4,
+          name: 'Fourth Semester',
+      }
+    ]
+
+    const AcademicYearOptions = [
+      {
+        id: 0,
+        name: moment().subtract(1, 'years').format('YYYY') + ' - ' + moment().format('YYYY')
+      },
+      {
+        id: 1,
+        name: moment().format('YYYY') + ' - ' + moment().add(1, 'years').format('YYYY')
+      }
+    ]
 
     return (
       <div className={'educ-container'}>
@@ -290,6 +303,31 @@ class EducationAidFormCardComponent extends Component {
                 </div>
               </Modal>
             }
+
+            {
+              showEducationAcademicYearModal &&
+              <Modal
+                isDismisable={ true }
+                onClose={ ()=> this.setState({ showEducationAcademicYearModal: false }) }
+                >
+                <div>
+                  {
+                    AcademicYearOptions && AcademicYearOptions.map((academicYear, key) =>
+                      <GenericButton
+                        className = { 'mpl-poa-modal-button' }
+                        key={ key }
+                        text={ academicYear.name }
+                        onClick={ () => {
+                          this.setState({ academicYearText: academicYear.name, showEducationAcademicYearModal: false })
+                          }
+                        }
+                      />
+                    )
+                  }
+                </div>
+              </Modal>
+            }
+
             <div></div>
           <Card className={ 'educ-form-card' }>
             <h4>
@@ -325,41 +363,20 @@ class EducationAidFormCardComponent extends Component {
               type={ 'text' }/>
             <GenericTextBox
               value={ courseText }
-              onChange={ (e) => this.setState({ courseText: e.target.value }) }
+              onChange={
+                (e) => {
+                  new RequiredAlphabetValidation().isValid(e.target.value) ?
+                    this.setState({ courseText: e.target.value }) : this.setState({ courseText : '' })
+                }
+              }
+
               placeholder={ 'Course' }
               type={ 'text' }/>
-            <div>
-              <div className="educ-acad-year">
-              <div className="educ-acad-title">
-              <label className="educ-acad-label">{ 'Academic Year' }</label>
-              </div>
-              <GenericTextBox
-                value={ ayFrom }
-                onChange={
-                  (e) => {
-                    new RequiredNumberValidation().isValid(e.target.value) ?
-                      this.setState({ ayFrom : e.target.value, academicYearText : e.target.value + " - " + ayTo }):
-                      this.setState({ ayFrom : '', academicYearText : '' + " - " + ayTo })
-                  }
-                }
-                maxLength = { 4 }
-                placeholder={ 'From' }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={ ayTo }
-                onChange={
-                  (e) => {
-                    new RequiredNumberValidation().isValid(e.target.value) ?
-                      this.setState({ ayTo: e.target.value, academicYearText : ayFrom + " - " + e.target.value }):
-                      this.setState({ ayTo: '', academicYearText : ayFrom + " - " + '' })
-                  }
-                }
-                maxLength = { 4 }
-                placeholder={ 'To' }
-                type={ 'text' }/>
-
-              </div>
-            </div>
+            <GenericTextBox
+              value={ academicYearText }
+              onClick={ () => this.setState({showEducationAcademicYearModal : true}) }
+              placeholder={ 'Academic Year' }
+              type={ 'text' }/>
             <GenericTextBox
               value={ semesterText }
               onClick={ () => this.setState({ showEducationSemesterModal : true }) }
@@ -368,17 +385,16 @@ class EducationAidFormCardComponent extends Component {
             <GenericTextBox
               value={ gwaText }
               onChange={
-                (e) =>{
-                  new RequiredNumberValidation().isValid(e.target.value) ?
-                    this.setState({ gwaText: e.target.value }):
-                    this.setState({ gwaText: '' })
+                (e) => {
+                  new RequiredDecimalValidation().isValid(e.target.value) ?
+                    this.setState({ gwaText: e.target.value }) : this.setState({ gwaText: '' })
                   }
                 }
               maxLength = { 4 }
               placeholder={ 'General Weighted Average (GWA)' }
               type={ 'text' }/>
             <GenericTextBox
-              value={ format(this.totalReimbursableAmount(computations, gwaText, resultTotalFee)) }
+              value={ totalReimbursment }
               disabled={ 'disabled' }
               type={ 'text' }
               placeholder={ 'Total Reimbursable Amount' }/>
@@ -582,7 +598,28 @@ class EducationAidFormCardComponent extends Component {
               <GenericButton
                 type={ 'button' }
                 text={ 'submit' }
-                onClick={ () => this.setState({ showReviewEducationModal : true }) }
+                onClick={
+                  () => onClick(true,
+                    {
+                      tuitionFeeText,
+                      registrationFeeText,
+                      resultTotalFee,
+                      schoolID,
+                      collegeType,
+                      courseText,
+                      academicYearText,
+                      semesterText,
+                      gwaText,
+                      totalReimbursment,
+                      fileOR,
+                      fileCOG,
+                      fileRegForm,
+                      imagePrevOR,
+                      imagePrevCOG,
+                      imagePrevRegForm
+                    }
+                  )
+                }
                 className={ 'educ-submit' } />
             </div>
           </Card>

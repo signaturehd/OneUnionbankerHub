@@ -25,6 +25,7 @@ export default class EducationAidPresenter {
    registrationFeeText,
    schoolId,
    fileAttachments) {
+   this.view.showCircularLoader()
   this.addEducationAidInteractor.execute(educationAidParam(
     courseText,
     academicYearText,
@@ -36,7 +37,6 @@ export default class EducationAidPresenter {
     fileAttachments
     )
   )
-  this.view.showCircularLoader()
    .subscribe(educationAid => {
      this.view.noticeOfUndertaking(educationAid)
      this.view.hideCircularLoader()
