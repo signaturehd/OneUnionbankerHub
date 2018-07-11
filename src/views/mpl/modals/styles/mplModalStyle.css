@@ -17,3 +17,30 @@
   font-weight: 550;
   border: 0;
 }
+
+.mpl-icons {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 50px;
+  width: 30px;
+  background-repeat: no-repeat;
+}
+
+.mpl-term-icon {
+  background-image: url('../../../../images/icons/ic_transacion_date_filed.png');
+}
+
+.mpl-mode-icon {
+  background-image: url('../../../../images/icons/ic_mode_edit_grey_500_18dp.png');
+}
+
+.mpl-offset-icon {
+  background-image: url('../../../../images/icons/ic_autorenew_grey_500_18dp.png');
+}
+
+.mpl-review-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}

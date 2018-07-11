@@ -40,7 +40,7 @@ class CarLeaseNewFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.getCarValidate()
+    this.props.presenter.getCarValidate()
   }
 
   showCarValidated (carValidate) {
