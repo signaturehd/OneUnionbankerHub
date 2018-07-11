@@ -6,6 +6,8 @@ import { GenericTextBox, Card, GenericButton, FileUploader } from '../../../ub-c
 import './styles/bereavementComponentStyle.css'
 import BereavementDependentsModal from '../modals/BereavementDependentsModal'
 
+import { RequiredAlphabetValidation } from '../../../utils/validate'
+
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
@@ -26,7 +28,7 @@ class BereavementFormCardComponent extends Component {
       dependentId: '',
       deceasedDate: moment(),
       funeralDate: moment(),
-      internmentDate: moment(),
+      intermentDate: moment(),
       dependentId: '',
       funeralHome: '',
       funeralAddress: '',
@@ -64,47 +66,67 @@ class BereavementFormCardComponent extends Component {
   }
 
   getInternmentDate (e) {
-    this.setState({ internmentDate : e })
+    this.setState({ intermentDate : e })
   }
 
   getFuneralHome (e) {
-    this.setState({ funeralHome : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ funeralHome : e.target.value }):
+    this.setState({ funeralHome : '' })
   }
 
   getFuneralAddress (e) {
-    this.setState({ funeralAddress : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ funeralAddress : e.target.value }) :
+    this.setState({ funeralAddress : '' })
   }
 
   getFuneralRegion (e) {
-    this.setState({ funeralRegion : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ funeralRegion : e.target.value }) :
+    this.setState({ funeralRegion : '' })
   }
 
   getFuneralProvince (e) {
-    this.setState({ funeralProvince : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ funeralProvince : e.target.value }):
+    this.setState({ funeralProvince : '' })
   }
 
   getFuneralCity (e) {
-    this.setState({ funeralCity : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ funeralCity : e.target.value }) :
+    this.setState({ funeralCity : '' })
   }
 
   getMemorialHome (e) {
-    this.setState({ memorialPark : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ memorialPark : e.target.value }) :
+    this.setState({ memorialPark : '' })
   }
 
   getMemorialAddress (e) {
-    this.setState({ memorialAddress : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ memorialAddress : e.target.value }) :
+    this.setState({ memorialAddress : '' })
   }
 
   getMemorialRegion (e) {
-    this.setState({ memorialRegion : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ memorialRegion : e.target.value }):
+    this.setState({ memorialRegion : '' })
   }
 
   getMemorialProvince (e) {
-    this.setState({ memorialProvince : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ memorialProvince : e.target.value }) :
+    this.setState({ memorialProvince : '' })
   }
 
   getMemorialCity (e) {
-    this.setState({ memorialCity : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ memorialCity : e.target.value }):
+    this.setState({ memorialCity : '' })
   }
 
   getExtension (filename) {
@@ -114,7 +136,7 @@ class BereavementFormCardComponent extends Component {
 
   getOnClicked(
     funeralDate,
-    internmentDate,
+    intermentDate,
     deceasedDate,
     dependentId,
     funeralHome,
@@ -131,8 +153,8 @@ class BereavementFormCardComponent extends Component {
   ) {
     this.props.sendFormData(
       funeralDate && funeralDate.format('MM/DD/YYYY'),
-      internmentDate && internmentDate.format('MM/DD/YYYY'),
-      deceasedDate  && internmentDate.format('MM/DD/YYYY'),
+      intermentDate && intermentDate.format('MM/DD/YYYY'),
+      deceasedDate  && intermentDate.format('MM/DD/YYYY'),
       dependentId,
       funeralHome,
       funeralAddress,
@@ -164,7 +186,7 @@ class BereavementFormCardComponent extends Component {
       dependentsRelationship,
       deceasedDate,
       funeralDate,
-      internmentDate,
+      intermentDate,
       funeralHome,
       funeralAddress,
       funeralRegion,
@@ -472,7 +494,7 @@ class BereavementFormCardComponent extends Component {
                   onClick={
                     () => this.getOnClicked(
                       funeralDate,
-                      internmentDate,
+                      intermentDate,
                       deceasedDate,
                       dependentId,
                       funeralHome,
@@ -573,7 +595,7 @@ class BereavementFormCardComponent extends Component {
                   onClick={
                     () => this.getOnClicked(
                       funeralDate,
-                      internmentDate,
+                      intermentDate,
                       deceasedDate,
                       dependentId,
                       funeralHome,

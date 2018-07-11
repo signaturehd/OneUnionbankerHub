@@ -30,6 +30,7 @@ export default class BereavementPresenter {
           this.view.showDependentsValue(resp.dependents)
           this.view.hideCircularLoader()
         }, e => {
+          this.view.navigate()
       })
   }
 

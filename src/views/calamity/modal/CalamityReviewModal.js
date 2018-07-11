@@ -33,9 +33,9 @@ class CalamityReviewModal extends Component {
       fileDP,
       imgPrevBC,
       imgPrevDP,
-      submitForm,
       onClose,
-      onClick,
+      onCancel,
+      onClick
     }=this.props
 
     const {
@@ -84,18 +84,18 @@ class CalamityReviewModal extends Component {
           <h4>File Damage Property : { fileDP ? fileDP.name  : '(Not Yet Provided)'  }</h4>
           <br/>
           <div className={ 'calamity-image-display' }>
-            <div style={ styles.image1 ? styles.image1 : styles.image4 }></div>
-            <div style={ styles.image2 ? styles.image2 : styles.image4 }></div>
+            <div style={ styles ? styles.image1 : styles.image4 }></div>
+            <div style={ styles ? styles.image2 : styles.image4 }></div>
           </div>
           <br/>
           <center>
             <GenericButton
-              onClick={ onClick }
+              onClick={ () => onClick() }
               text={ 'confirm' }
             />
             <GenericButton
               text={ 'cancel' }
-              onClick={ onClose } />
+              onClick={ () => onCancel() } />
           </center>
         </div>
       </Modal>
@@ -105,6 +105,8 @@ class CalamityReviewModal extends Component {
 
 CalamityReviewModal.propTypes={
   onClose : PropTypes.func,
+  onClick : PropTypes.func,
+  onCancel : PropTypes.func,
   details : PropTypes.func,
   confirm : PropTypes.string,
   cancel : PropTypes.string,

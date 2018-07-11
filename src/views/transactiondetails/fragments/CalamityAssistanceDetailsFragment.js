@@ -5,9 +5,7 @@ import Accordion from '../components/AccordionComponent'
 import { Card } from '../../../ub-components'
 
 import './styles/detailsFragment.css'
-/*
-Transaction Calamity Assistance Form Agreement, Form Agreement, & File Attacment
-*/
+
 import CalamityDetailsComponent from
  '../../transaction/components/TransactionEducationComponent/CalamityDetailsComponent'
 
@@ -40,7 +38,7 @@ class CalamityAssistanceDetailsFragment extends Component {
                 Details
               </div>
               <div className={ 'body' }>
-              <EducationDetailsComponent
+              <CalamityDetailsComponent
                 details={ details }
                 transactionsPerson={ transactionsPerson }/>
               </div>
@@ -48,7 +46,7 @@ class CalamityAssistanceDetailsFragment extends Component {
             <div className={ 'accor' }>
               <div className={ 'head' }>Attachments</div>
                 <div className={ 'body' }>
-                <EducationFileComponent
+                <CalamityFileComponent
                   attachments={ attachments }
                   details={ details } />
                 <br/>
@@ -60,7 +58,7 @@ class CalamityAssistanceDetailsFragment extends Component {
                 Notice
               </div>
               <div className = { 'body' } >
-                <EducGrantPlanAgreementComponent details = { details } />
+                <CalamityAgreementComponent details = { details } />
               </div>
           </div>
         </Accordion>

@@ -27,7 +27,6 @@ class BereavementConfirmationModal extends Component {
 
     return (
       <Modal
-        isDismisable = { isDismisable }
         onClose = { onClose }>
         <div>
           <center>

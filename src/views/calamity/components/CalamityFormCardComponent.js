@@ -14,6 +14,8 @@ import PropertyTypeModal from '../modal/PropertyTypeModal'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
+import { RequiredDecimalValidation, RequiredAlphabetValidation } from '../../../utils/validate'
+
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
@@ -43,10 +45,8 @@ class CalamityFormCardComponent extends Component {
     this.handleChange=this.handleChange.bind(this)
   }
 
-  handleChange(date) {
-    this.setState({
-      preferredDate: moment(date).format('MM/DD/YYYY')
-    });
+  handleChange(data) {
+    this.setState({ preferredDate: data.format('MM/DD/YYYY') })
   }
 
   onGetClicked (
@@ -154,7 +154,6 @@ class CalamityFormCardComponent extends Component {
               showPropModal &&
               <PropertyTypeModal
                 tog={ propertyTypeValue }
-                presenter={ presenter }
                 onSubmit={
                   (propertyType) => {
                     this.setState({
@@ -185,20 +184,9 @@ class CalamityFormCardComponent extends Component {
                   fileDP={ fileDP }
                   imgPrevBC={ imgPrevBC }
                   imgPrevDP={ imgPrevDP }
-                  onClose={ () => this.setState({ showReviewEducationModal : false }) }
-                  getFormData={ ()=> this.setState({
-                    calamityId,
-                    calamityType,
-                    preferredDate,
-                    property,
-                    propertyDesc,
-                    propertyType,
-                    acquisitionValue,
-                    estimatedCost,
-                    fileBC,
-                    fileDP,
-                    imgPrevBC,
-                    imgPrevDP })}
+                  onCancel={  () => this.setState({ showReviewCalamityModal : false })  }
+                  onClose={ () => this.setState({ showReviewCalamityModal : false }) }
+
                   onClick={ () => this.onGetClicked(
                     calamityId,
                     calamityType,
@@ -254,17 +242,25 @@ class CalamityFormCardComponent extends Component {
             <div className={ 'calamity-icon-text-grid-date' }>
               <div>
                 <br/>
+                <br/>
                 <span className={ 'calamity-icon-settings calamity-calendar' }/>
               </div>
               <div>
-                <DatePicker
-                  dateFormat={ 'MM/DD/YYYY' }
-                  maxDate={ moment() }
-                  readOnly
-                  selected={ moment(preferredDate, 'MM/DD/YYYY') }
-                  onChange={ this.handleChange }
-                  className={ 'calendar' }
-                  calendarClassName={ 'calendarClass' }/>
+                <div className={ 'grid-global-row' }>
+                  <div>
+                    <DatePicker
+                      dateFormat={ 'MM/DD/YYYY' }
+                      maxDate={ moment() }
+                      readOnly
+                      selected={ preferredDate ? moment(preferredDate, 'MM/DD/YYYY') : moment()}
+                      onChange={ this.handleChange }
+                      className={ 'calendar' }
+                      calendarClassName={ 'calendarClass' }/>
+                  </div>
+                  <div>
+                    <h4> Date of Occurrence </h4>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -277,7 +273,12 @@ class CalamityFormCardComponent extends Component {
                 <GenericTextBox
                   container={ 'calamity-container' }
                   value={ property ? property : '' }
-                  onChange={ (e) => this.setState({ property: e.target.value }) }
+                  onChange={ (e) => {
+                    new RequiredAlphabetValidation().isValid(e.target.value) ?
+                    this.setState({ property: e.target.value }) :
+                    this.setState({ property: '' })
+                    }
+                  }
                   placeholder={ 'Property' }
                   readOnly
                   type={ 'text' }
@@ -294,7 +295,11 @@ class CalamityFormCardComponent extends Component {
                 <GenericTextBox
                   container={ 'calamity-container' }
                   value={ propertyDesc ? propertyDesc : '' }
-                  onChange={ (e) => this.setState({ propertyDesc: e.target.value }) }
+                  onChange={ (e) =>
+                    new RequiredAlphabetValidation().isValid(e.target.value) ?
+                    this.setState({ propertyDesc: e.target.value })  :
+                    this.setState({ propertyDesc: '' })
+                  }
                   placeholder={ 'Property Description' }
                   readOnly
                   type={ 'text' }
@@ -314,9 +319,7 @@ class CalamityFormCardComponent extends Component {
                   onClick={
                     () => this.setState({ showPropModal : true })
                   }
-                  onChange={ (e) => this.setState({ propertyType: e.target.value }) }
                   placeholder={ 'Property Type' }
-                  readOnly
                   type={ 'text' }
                 />
               </div>
@@ -333,10 +336,9 @@ class CalamityFormCardComponent extends Component {
                   value={ acquisitionValue ? acquisitionValue : '' }
                   onChange={
                     (e) =>{
-                      const re=/^[0-9\.]+$/
-                      if (e.target.value == '' || re.test(e.target.value)) {
-                        this.setState({ acquisitionValue: e.target.value })
-                      }
+                      new RequiredDecimalValidation().isValid(e.target.value) ?
+                        this.setState({ acquisitionValue: e.target.value }):
+                        this.setState({ acquisitionValue: '' })
                     }
                    }
                   placeholder={ 'Acquisition Value' }
@@ -357,10 +359,9 @@ class CalamityFormCardComponent extends Component {
                   value={ estimatedCost ? estimatedCost : '' }
                   onChange={
                     (e) =>{
-                      const re=/^[0-9\.]+$/
-                      if (e.target.value == '' || re.test(e.target.value)) {
-                        this.setState({ estimatedCost: e.target.value })
-                      }
+                      new RequiredDecimalValidation().isValid(e.target.value) ?
+                        this.setState({ estimatedCost: e.target.value }):
+                        this.setState({ estimatedCost: '' })
                     }
                    }
                   placeholder={ 'Estimated Cost Repair' }

@@ -14,13 +14,16 @@ export default class CalamityPresenter {
  }
 
  validateCalamityAssistance () {
+   this.view.showCircularLoader()
    this.calamityInteractor.execute()
      .subscribe(
        calamityAssistance => {
          this.view.setValidateCalamityAssistance(calamityAssistance)
+         this.view.hideCircularLoader()
        },
        error => {
-
+         this.view.hideCircularLoader()
+         this.view.navigate()
       }
    )
  }
@@ -49,9 +52,11 @@ export default class CalamityPresenter {
   .subscribe(calamityAssistance => {
      this.view.noticeOfUndertaking(calamityAssistance)
      this.view.hideCircularLoader()
+     this.view.navigate()
    }, e => {
      this.view.noticeResponse(e)
      this.view.hideCircularLoader()
+     this.view.navigate()
    })
  }
 
