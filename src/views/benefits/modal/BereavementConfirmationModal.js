@@ -11,15 +11,15 @@ class BereavementConfirmationModal extends Component {
     this.state = {
       disableSubmit : false,
       isDismisable : true,
-      showMessageRequiredCertificate : false
+      showMessageRequiredCertificate : false,
+      showCheckIfCertificateIsAvailable : true
     }
     this.navigate=this.navigate.bind(this)
   }
 
   navigate () {
-    console.log("awdaw")
-    this.props.history.push('/mybenefits/benefits')
     this.props.onClose()
+    this.props.history.push('/mybenefits/benefits')
   }
 
   render () {
@@ -32,12 +32,40 @@ class BereavementConfirmationModal extends Component {
     const {
        disableSubmit,
        isDismisable,
-       showMessageRequiredCertificate
+       showMessageRequiredCertificate,
+       showCheckIfCertificateIsAvailable
     } = this.state
 
     return (
-      <Modal
-        onClose = { onClose }>
+      <div>
+        {
+          showCheckIfCertificateIsAvailable &&
+          <Modal
+            onClose = { onClose }>
+            <div>
+              <center>
+                <h2>Is the death certificate available?</h2>
+                <br/>
+                <p>We're sorry to hear about your loss. Please accept our sympathies. We'd like to help you on this time of need. Has the Death certificate been prepared?
+                </p>
+              </center>
+              <div className = { 'confirmation-grid-action' } >
+                <GenericButton
+                  onClick = { () =>
+                    this.setState({
+                      showMessageRequiredCertificate : true,
+                      showCheckIfCertificateIsAvailable : false })
+                }
+                  text = { 'no' } />
+                <GenericButton
+                  onClick = { onYes }
+                  text = { 'yes' }
+                  disabled = {this.state.disabled}
+                />
+              </div>
+            </div>
+          </Modal>
+        }
         {
           showMessageRequiredCertificate &&
           <Modal onClose={ ()=>
@@ -52,27 +80,7 @@ class BereavementConfirmationModal extends Component {
               </center>
           </Modal>
         }
-        <div>
-          <center>
-            <h2>Is the death certificate available?</h2>
-            <br/>
-            <p>We're sorry to hear about your loss. Please accept our sympathies. We'd like to help you on this time of need. Has the Death certificate been prepared?
-            </p>
-          </center>
-          <div className = { 'confirmation-grid-action' } >
-            <GenericButton
-              onClick = { () =>
-                this.setState({ showMessageRequiredCertificate : true })
-            }
-              text = { 'no' } />
-            <GenericButton
-              onClick = { onYes }
-              text = { 'yes' }
-              disabled = {this.state.disabled}
-            />
-          </div>
-        </div>
-      </Modal>
+      </div>
     )
   }
 }
