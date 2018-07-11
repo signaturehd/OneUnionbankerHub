@@ -51,8 +51,10 @@ export default class MultiPurposeLoanPresenter {
       .subscribe(
         data => {
           this.view.showTypes(data)
+          this.view.hideCircularLoader()
         },
         error => {
+          this.view.hideCircularLoader()
         }
       )
     }
@@ -120,10 +122,10 @@ export default class MultiPurposeLoanPresenter {
       })
       .subscribe(
         data =>  {
+          this.view.hideCircularLoader()
           this.view.showOffset(data && data.offset)
           this.view.showValidate(data)
           this.view.showComputationForOffset(data && data.offset)
-          this.view.hideCircularLoader()
         },
         error => {
           store.dispatch(NotifyActions.addNotify({

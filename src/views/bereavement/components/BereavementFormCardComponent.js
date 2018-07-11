@@ -26,9 +26,9 @@ class BereavementFormCardComponent extends Component {
       dependentsName: '',
       dependentsRelationship: '',
       dependentId: '',
-      deceasedDate: moment(),
-      funeralDate: moment(),
-      intermentDate: moment(),
+      deceasedDate: '',
+      funeralDate: '',
+      intermentDate: '',
       dependentId: '',
       funeralHome: '',
       funeralAddress: '',
@@ -43,7 +43,7 @@ class BereavementFormCardComponent extends Component {
     }
     this.getDeceasedDate = this.getDeceasedDate.bind(this)
     this.getFuneralDate = this.getFuneralDate.bind(this)
-    this.getInternmentDate = this.getInternmentDate.bind(this)
+    this.getIntermentDate = this.getIntermentDate.bind(this)
     this.getOnClicked = this.getOnClicked.bind(this)
     this.getFuneralHome = this.getFuneralHome.bind(this)
     this.getFuneralAddress = this.getFuneralAddress.bind(this)
@@ -65,7 +65,7 @@ class BereavementFormCardComponent extends Component {
     this.setState({ funeralDate  : e })
   }
 
-  getInternmentDate (e) {
+  getIntermentDate (e) {
     this.setState({ intermentDate : e })
   }
 
@@ -271,11 +271,14 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <DatePicker
                     dateFormat={ 'MM/DD/YYYY' }
+                    maxDate={ moment() }
                     readOnly
-                    selected={ deceasedDate ? deceasedDate : '' }
-                    onChange={this.getDeceasedDate }
-                    className={ 'calendar' }
+                    value={ deceasedDate ? deceasedDate : 'Date of Death'  }
+                    selected={ deceasedDate ? moment(deceasedDate) : moment() }
+                    onChange={ this.getDeceasedDate }
+                    className={ 'calendar  font-size-12px' }
                     calendarClassName={ 'calendarClass' }/>
+                  <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
                 </div>
               </div>
               <br/>
@@ -301,12 +304,14 @@ class BereavementFormCardComponent extends Component {
                   <DatePicker
                     dateFormat={ 'MM/DD/YYYY' }
                     readOnly
-                    selected={ funeralDate ? funeralDate : '' }
+                    maxDate={ moment().subtract(29, 'days') }
+                    value={ funeralDate ? funeralDate : 'Date of Wake' }
+                    selected={ funeralDate ? moment(funeralDate) : moment().subtract(30, 'days') }
                     onChange={ this.getFuneralDate }
-                    placeholder={ 'Date of Wake' }
-                    className={ 'calendar' }
+                    className={ 'calendar  font-size-12px' }
                     calendarClassName={ 'calendarClass' }
                   />
+                <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
                 </div>
               </div>
               <div className={ 'brv-icon-text-grid' }>
@@ -395,7 +400,7 @@ class BereavementFormCardComponent extends Component {
           <div></div>
           <Card className={ 'brv-form-card' }>
             <h4>
-            Internment Detail
+            Interment Detail
             </h4>
             <div className={'brv-form-card-body '}>
               <div className={ 'brv-icon-text-grid-date' }>
@@ -404,14 +409,16 @@ class BereavementFormCardComponent extends Component {
                   <span className={ 'brv-icon-settings brv-calendar' }/>
                 </div>
                 <div>
-                    <DatePicker
-                      dateFormat={ 'MM/DD/YYYY' }
-                      readOnly
-                      selected={ funeralDate ? funeralDate : '' }
-                      onChange={ this.getFuneralDate }
-                      placeholder={ 'Date of Wake' }
-                      className={ 'calendar' }
-                      />
+                  <DatePicker
+                    dateFormat={ 'MM/DD/YYYY' }
+                    readOnly
+                    maxDate={  moment().subtract(32, 'days') }
+                    onChange={ this.getIntermentDate }
+                    value={ intermentDate ? intermentDate : 'Date of Interment'  }
+                    selected={ intermentDate ? moment(intermentDate) : moment().subtract(32, 'days') }
+                    className={ 'calendar font-size-12px' }
+                    />
+                  <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
                 </div>
               </div>
               <div className={ 'brv-icon-text-grid' }>
