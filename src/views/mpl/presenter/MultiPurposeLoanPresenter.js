@@ -106,7 +106,7 @@ export default class MultiPurposeLoanPresenter {
           id: 2,
           name: 'Offset Loan',
         } // create instance of "New Loan"
-  
+
         offsetLoan.offset === null ||
         offsetLoan.offset === '' ||
         offsetLoan.offset === undefined ||
@@ -126,8 +126,6 @@ export default class MultiPurposeLoanPresenter {
           this.view.hideCircularLoader()
         },
         error => {
-<<<<<<< Updated upstream
-=======
           store.dispatch(NotifyActions.addNotify({
               title: 'Warning',
               message: `We're sorry, but right now, you're not yet able to avail of this benefit because if your${this.error.message}`,
@@ -135,7 +133,6 @@ export default class MultiPurposeLoanPresenter {
               duration: 2000
             })
           )
->>>>>>> Stashed changes
           this.view.navigate()
         }
       )
