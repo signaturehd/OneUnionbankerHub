@@ -2,89 +2,90 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Modal , GenericButton } from '../../../ub-components/'
+import { format } from '../../../utils/numberUtils'
 
 import './styles/mplModalStyle.css'
 
 class MplOffsetLoanModal extends Component {
 
-  constructor (props) {
-    super(props)
-    this.state = {
-      chosenProcedure : [],
-    }
-    this.getDisabledIds = this.getDisabledIds.bind(this)
-}
-
-getDisabledIds () {
-  return [3, 4, 5, 6]
-}
-
-setProcedure (selected) {
+setOffsetLoan (selected) {
   const {
     onClose,
-    procedures,
-    onSubmit,
-    selectedProcedure
-  } = this.props
+    onSelect,
+    offset,
+    selectedOffsetLoan
+  }=this.props
 
-  if (selectedProcedure) {
-    const valueArr = this.getDisabledIds().map(item => item)
-    if (valueArr.includes(selected.id)) {
+  if (selectedOffsetLoan) {
+    const valueArr=offset.map(item => item.promissoryNoteNumber)
+    if (valueArr.includes(selected.promissoryNoteNumber)) {
       let isExisting
-      const valueInsideArr = selectedProcedure.map(item => item.id)
-      for (const i in selectedProcedure) {
-        if (valueInsideArr.includes(selected.id)) {
-          isExisting = true
+      const valueInsideArr=selectedOffsetLoan.map(item => item.promissoryNoteNumber)
+      for (const i in selectedOffsetLoan) {
+        if (valueInsideArr.includes(selected.promissoryNoteNumber)) {
+          isExisting=true
         } else {
-          isExisting = false
+          isExisting=false
         }
       }
       if (!isExisting) {
-        onSubmit({ ...selected })
+        onSelect({ ...selected })
       }
     } else {
-      onSubmit({ ...selected })
+      onSelect({ ...selected })
     }
   } else {
-    onSubmit({ ...selected })
+    onSelect({ ...selected })
   }
 }
 
 render () {
   const { onClose, offset, onSelect }=this.props
 
-return (
-  <Modal
-    onClose={ onClose }
-    isDismisable={ true }>
-    <div>
-      <center>
-        <h2>
-          Loan of Offsets
-        </h2>
-      </center>
-    </div>
-    <div>
-      {
-        offset && offset.map((resp, key) =>
-            resp.id !== 1 &&
-            resp.id !== 2 ?
+  return (
+    <Modal
+      onClose={ onClose }
+      isDismisable={ true }>
+      <div>
+        <center>
+          <span className={ 'mpl-icons mpl-offset-icon' }/>
+          <h2 className={ 'font-weight-normal' }>
+            Offsets
+          </h2>
+          <h5 className={ 'font-size-14px font-weight-lighter' }>Select your offset loans</h5>
+            <br/>
+        </center>
+      </div>
+      <div>
+        {
+          offset && offset.map((resp, key) =>
+              resp.id !== 1 &&
+              resp.id !== 2 ?
 
-              <GenericButton
-                className={ 'mpl-poa-modal-button' }
-                key={ key }
-                text={ resp && resp.promissoryNoteNumber }
-                onClick={ () => console.log(offset) }
-                />
-            :
-            <div></div>
-        )
-      }
-    </div>
-  </Modal>
-    )
+                <GenericButton
+                  className={ 'mpl-poa-modal-button' }
+                  key={ key }
+                  text={
+                    `${ resp &&
+                        resp.promissoryNoteNumber ?
+                        resp.promissoryNoteNumber  :
+                        '' }
+                        ${ resp &&
+                          resp.outstandingBalance ?
+                          format(resp.outstandingBalance) :
+                          '' }`
+                        }
+                  onClick={ () => this.setOffsetLoan({ ...resp }) }
+                  />
+              :
+              <div></div>
+          )
+        }
+      </div>
+    </Modal>
+      )
+    }
   }
-}
 MplOffsetLoanModal.propTypes={
   onClose : PropTypes.func,
   offset : PropTypes.array,

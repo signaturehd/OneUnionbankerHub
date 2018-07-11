@@ -343,11 +343,11 @@ export default class HRBenefitsService {
         principalAmount : mplPurposeLoanAddParam.principalLoanAmount
       },
       promissoryNoteNumbers : [],
-      distributor : mplPurposeLoanAddParam.payeeName,
+      distributor : mplPurposeLoanAddParam.fullname,
     }
-    formData.append('uuid', 12345)
-    formData.append('body', JSON.stringify(multiLoanBodyObject))
-    formData.append('MPL-cert', mplPurposeLoanAddParam.attachments)
+      formData.append('uuid', 12345)
+      formData.append('body', JSON.stringify(multiLoanBodyObject))
+      formData.append('attachments' , mplPurposeLoanAddParam.attachments)
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })

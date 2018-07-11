@@ -74,10 +74,15 @@ class BenefitFeedbackModal extends BaseMVPView {
               </center>
               <br/>
               <br/>
-              <textarea
-                className={ 'default-feedback-textarea' }
-                placeholder={ 'Your Feedback' }
-                onChange={ e => this.setState({ comment : e.target.value }) }/>
+              {
+                rating <= 3 ?
+                <textarea
+                  className={ 'default-feedback-textarea' }
+                  placeholder={ 'Your Feedback' }
+                  onChange={ e => this.setState({ comment : e.target.value }) }/>
+                :
+                <div></div>
+              }
               <br/>
               <br/>
               <div className={ 'benefit-feedback-actions-grid' }>
