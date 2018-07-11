@@ -154,8 +154,3 @@ h1, h2, h3, h4, h5, h6, p{
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-
-.grid-global-row {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-}
