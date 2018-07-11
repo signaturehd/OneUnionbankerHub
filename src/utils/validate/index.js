@@ -4,6 +4,7 @@ import MinMaxValidation from './MinMaxValidation'
 import RequiredSymbolValidation from './RequiredSymbolValidation'
 import RequiredAlphabetValidation from './RequiredAlphabetValidation'
 import RequiredNumberValidation from './RequiredNumberValidation'
+import RequiredDecimalValidation from './RequiredDecimalValidation'
 import MoneyValidation from './MoneyValidation'
 import MinMaxNumberValidation from './MinMaxNumberValidation'
 import Validator from './Validator'
@@ -15,6 +16,7 @@ export {
   RequiredSymbolValidation,
   RequiredAlphabetValidation,
   RequiredNumberValidation,
+  RequiredDecimalValidation,
   MoneyValidation,
   MinMaxNumberValidation,
   Validator,
