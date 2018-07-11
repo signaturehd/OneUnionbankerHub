@@ -160,16 +160,16 @@ class CalamityFragment extends BaseMVPView {
       }
 
       const fileAttachments = [fileBCName, fileDPName]
-      //   this.presenter.addCalamityAssistance(
-      //     calamityId,
-      //     preferredDate,
-      //     property,
-      //     propertyDesc,
-      //     propertyType,
-      //     acquisitionValue,
-      //     estimatedCost,
-      //     fileAttachments
-      // )
+         this.presenter.addCalamityAssistance(
+           calamityId,
+           preferredDate,
+           property,
+           propertyDesc,
+           propertyType,
+           acquisitionValue,
+           estimatedCost,
+           fileAttachments
+       )
     }
   }
 
