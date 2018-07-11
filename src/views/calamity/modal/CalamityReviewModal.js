@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Modal, GenericButton, CircularLoader } from '../../../ub-components/'
 
 import './styles/calamityModalStyle.css'
+import { format } from '../../../utils/numberUtils'
 
 import imageDefault from '../../../images/profile-picture.png'
 
@@ -68,8 +69,7 @@ class CalamityReviewModal extends Component {
     return (
       <Modal
         isDismisable={ isDismisable }
-        onClose={ onClose }
-      >
+        onClose={ onClose }>
         <div>
           <h2>Calamity Description</h2>
           <br/>
@@ -78,8 +78,8 @@ class CalamityReviewModal extends Component {
           <h4>Property : { property ? property  : '(Not Yet Provided)'  }</h4>
           <h4>Property Description : { propertyDesc ? propertyDesc  : '(Not Yet Provided)'  }</h4>
           <h4>Property Type : { propertyType ? propertyType : '(Not Yet Provided)'  }</h4>
-          <h4>Acquisition Value : { acquisitionValue ? acquisitionValue  : '(Not Yet Provided)'  }</h4>
-          <h4>Estimated Cost : { estimatedCost ? estimatedCost  : '(Not Yet Provided)'  }</h4>
+          <h4>Acquisition Value : { acquisitionValue ? format(acquisitionValue)  : '(Not Yet Provided)'  }</h4>
+          <h4>Estimated Cost : { estimatedCost ? format(estimatedCost)  : '(Not Yet Provided)'  }</h4>
           <h4>File Barangay Certificate : { fileBC ? fileBC.name  : '(Not Yet Provided)'  }</h4>
           <h4>File Damage Property : { fileDP ? fileDP.name  : '(Not Yet Provided)'  }</h4>
           <br/>

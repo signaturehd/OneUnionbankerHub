@@ -52,11 +52,10 @@ export default class CalamityPresenter {
   .subscribe(calamityAssistance => {
      this.view.noticeOfUndertaking(calamityAssistance)
      this.view.hideCircularLoader()
-     this.view.navigate()
+     
    }, e => {
      this.view.noticeResponse(e)
      this.view.hideCircularLoader()
-     this.view.navigate()
    })
  }
 
