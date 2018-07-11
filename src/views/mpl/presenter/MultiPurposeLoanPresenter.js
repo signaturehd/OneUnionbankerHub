@@ -128,7 +128,13 @@ export default class MultiPurposeLoanPresenter {
           this.view.showComputationForOffset(data && data.offset)
         },
         error => {
-          this.view.hideCircularLoader()
+          store.dispatch(NotifyActions.addNotify({
+              title: 'Warning',
+              message: `We're sorry, but right now, you're not yet able to avail of this benefit because if your${this.error.message}`,
+              type: 'warning',
+              duration: 2000
+            })
+          )
           this.view.navigate()
         }
       )

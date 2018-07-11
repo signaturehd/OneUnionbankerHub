@@ -17,6 +17,7 @@ import EducGrantPlanDetailsFragment from './fragments/EducGrantPlanDetailsFragme
 import EducGroupPlanDetailsFragment from './fragments/EducGroupPlanDetailsFragment'
 import LoansDetailsFragment from './fragments/LoansDetailsFragment'
 import OpticalDetailsFragment from './fragments/OpticalDetailsFragment'
+import CalamityAssistanceDetailsFragment from './fragments/CalamityAssistanceDetailsFragment'
 
 import ConfirmationModal from '../remarks/ConfirmationModal'
 import DisapproveModal from '../remarks/DisapproveModal'
@@ -75,7 +76,7 @@ function  TransactionDetails (props)  {
         details = { transactionDetails } />
     } else if (transactionId === 22) {
       // Calamity Assistance
-      return <LoansDetailsFragment
+      return <CalamityAssistanceDetailsFragment
         transactionsPerson = { transactionsPerson }
         attachments = { attachments }
         details = { transactionDetails } />
