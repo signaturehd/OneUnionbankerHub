@@ -23,15 +23,12 @@ export default class CarLeasePresenter {
 
 
   getCarValidate () {
-    this.view.showLoading()
     this.getCarValidateInteractor.execute()
     .subscribe(
       validate => {
-        this.view.hideLoading()
         this.view.showCarValidated(validate)
       }, error => {
         this.view.navigate()
-        this.view.hideLoading()
       }
     )
   }

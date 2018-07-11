@@ -7,6 +7,7 @@ import GetInformationInteractor from '../../../domain/interactor/user/GetInforma
 import mplValidateParam from '../../../domain/param/MplValidateParam'
 import mplPurposeLoanAddParam from '../../../domain/param/MultiPurposeLoanAddParam'
 import mplGetFormParam from '../../../domain/param/MplGetFormParam'
+import GetManagersCheckInteractor from '../../../domain/interactor/user/GetManagersCheckInteractor'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
@@ -30,10 +31,17 @@ export default class MultiPurposeLoanPresenter {
 
     this.getInformationInteractor =
       new GetInformationInteractor(container.get('HRBenefitsClient'))
+
+    this.getManagersCheckInteractor =
+      new GetManagersCheckInteractor(container.get('HRBenefitsClient'))
+
+    this.getInformationInteractor =
+      new GetInformationInteractor(container.get('HRBenefitsClient'))
+
   }
 
   setView (view) {
-    this.view = view
+    this.view=view
   }
 
   /* Types*/
@@ -66,30 +74,55 @@ export default class MultiPurposeLoanPresenter {
       })
     }
 
+  isManagersCheck () {
+    const isManagersCheck=this.getManagersCheckInteractor.execute()
+    if (isManagersCheck !== null) {
+        this.view.isManagersCheck('Payee Name')
+    } else {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Benefits',
+          message : 'Theres a Problem Getting your profile',
+          type : 'success',
+          duration : 2000
+        })
+      )
+    }
+  }
+
+  getProfile () {
+     this.view.getEmployeeName(this.getInformationInteractor.execute())
+     /* Get Employee Name */
+  }
+
   getMplValidate (loanTypeId) {
     this.view.showCircularLoader()
     this.getValidateInteractor.execute(mplValidateParam(loanTypeId))
       .map(offsetLoan => {
-        const modeOfLoanStatic = {
+        const modeOfLoanStatic={
           id: 1,
           name: 'New Loan',
         } // create instance of "New Loan"
-        const modeOfLoan = {
+        const modeOfLoan={
           id: 2,
           name: 'Offset Loan',
         } // create instance of "New Loan"
-
-        offsetLoan.offset ?
-        offsetLoan.offset.push(modeOfLoanStatic , modeOfLoan):
-        offsetLoan.offset.push(modeOfLoan) // add the New Loan to the offsets option
+  
+        offsetLoan.offset === null ||
+        offsetLoan.offset === '' ||
+        offsetLoan.offset === undefined ||
+        (offsetLoan.offset).length === 0?
+          offsetLoan.offset.push(modeOfLoanStatic)
+        :
+          offsetLoan.offset.push(modeOfLoanStatic, modeOfLoan)
+        // add the New Loan to the offsets option
 
         return offsetLoan
       })
-
       .subscribe(
         data =>  {
           this.view.showOffset(data && data.offset)
           this.view.showValidate(data)
+          this.view.showComputationForOffset(data && data.offset)
           this.view.hideCircularLoader()
         },
         error => {
@@ -101,11 +134,9 @@ export default class MultiPurposeLoanPresenter {
   getMplFormAttachments (formRequesting, loanId) {
     this.getFormAttachmentsInteractor.execute(mplGetFormParam(formRequesting, loanId))
       .do(data => this.view.showMPLFormAttachments(data))
-        .subscribe(
-          data => {
-            this.view.hideCircularLoader(),
-            this.view.hideCircularLoader()
-      })
+      .map(data => this.view.showAdditionalFilesCount((data.AdditionalDocuments).length))
+      .map(data => this.view.showAdRequiredFilesCount((data.RequiredDocuments).length))
+      .subscribe()
     }
 
   /* add Loa salary, housing assistance, emergency*/
@@ -114,9 +145,10 @@ export default class MultiPurposeLoanPresenter {
     purposeOfLoan,
     modeOfLoan,
     loanTerm,
+    offset,
     principalLoanAmount,
     attachments) {
-      const fullname = this.getInformationInteractor.execute().fullname
+      const fullname=this.getInformationInteractor.execute().fullname
       this.view.showCircularLoader()
       this.addLoanInteractor.execute(mplPurposeLoanAddParam(
         fullname,
@@ -124,6 +156,7 @@ export default class MultiPurposeLoanPresenter {
         purposeOfLoan,
         modeOfLoan,
         loanTerm,
+        offset,
         principalLoanAmount,
         attachments
         )
@@ -134,8 +167,9 @@ export default class MultiPurposeLoanPresenter {
           this.view.noticeOfUndertaking(data)
       },
         errors => {
-          this.view.noticeResponse(data)
           this.view.hideCircularLoader()
+          this.view.noticeResponse(errors)
+          this.view.navigate()
         }
       )
     }

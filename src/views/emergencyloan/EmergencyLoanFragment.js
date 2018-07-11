@@ -15,70 +15,98 @@ import FormComponent from '../mpl/components/MplLoanFormCardComponent'
 
 class EmergencyLoanFragment extends BaseMVPView {
 
-  constructor (props) {
-    super(props)
-    this.state = {
-      purposeOfAvailment: [],
-      selectedPoa: '',
-      formAttachments: [],
-      loanType: 2,
-      validateLoanType : [],
-      offset : [],
-      enabledLoader : false,
-      noticeResponse : null, /* notice response*/
-      showNoticeResponseModal : false,
-      showBenefitFeedbackModal : false,
-      showNoticeModal : false,
-      showConfirmation : false,
+    constructor (props) {
+      super(props)
+      this.state={
+        purposeOfAvailment: [],
+        selectedPoa: '',
+        formAttachments: [],
+        loanType: 1,
+        validateLoanType : [],
+        offset : [],
+        enabledLoader : false,
+        noticeResponse : null, /* notice response*/
+        showNoticeResponseModal : false,
+        showBenefitFeedbackModal : false,
+        showNoticeModal : false,
+        showConfirmation : false,
+        AdditionalDocuments: 0,
+        RequiredDocuments: 0,
+        isPayeeOrDealerResp : '',
+        employeeName: [],
+        storedIsDealerOrPayee: [],
+        computationOffset: [],
+      }
     }
-  }
 
-  componentDidMount () {
-    this.props.setSelectedNavigation(1)
-    this.presenter.getMplTypes()
-    this.presenter.getMplValidate(this.state.loanType)
-    this.presenter.getMplPurposeOfAvailment(
-      this.state.loanType,
-      1,
-      1)
-  }
+    componentDidMount () {
+      this.props.setSelectedNavigation(1)
+      this.presenter.isManagersCheck()
+      this.presenter.getProfile()
+      this.presenter.getMplTypes()
+      this.presenter.getMplValidate(this.state.loanType)
+      this.presenter.getMplPurposeOfAvailment(
+        this.state.loanType,
+        1,
+        1)
+    }
 
-  /* Notice Response*/
-  noticeOfUndertaking (noticeResponse) {
-    this.setState({ showNoticeModal : true, noticeResponse })
-  }
+    /* Notice Response*/
+    noticeOfUndertaking (noticeResponse) {
+      this.setState({ showNoticeModal : true, noticeResponse })
+    }
 
-  /* Implementation*/
+    noticeResponse (noticeResponse) {
+      this.setState({showConfirmation: false, noticeResponse })
+    }
+    /* Implementation*/
 
-  showMPLFormAttachments (formAttachments) {
-    this.setState({ formAttachments })
-  }
+    showMPLFormAttachments (formAttachments) {
+      this.setState({ formAttachments })
+    }
 
-  showOffset (offset) {
-    this.setState({ offset })
-  }
+    showOffset (offset) {
+      this.setState({ offset })
+    }
 
-  showValidate (validateLoanType) {
-    this.setState({ validateLoanType })
-  }
+    showValidate (validateLoanType) {
+      this.setState({ validateLoanType })
+    }
 
-  showPurposeOfAvailment (purposeOfAvailment) {
-    this.setState({ purposeOfAvailment })
-  }
+    isManagersCheck (isPayeeOrDealerResp) {
+      this.setState({ isPayeeOrDealerResp })
+    }
 
-  /* Loader*/
+    getEmployeeName (employeeName) {
+      this.setState({ employeeName })
+    }
 
-  hideCircularLoader () {
-    this.setState({ enabledLoader : false })
-  }
+    showPurposeOfAvailment (purposeOfAvailment) {
+      this.setState({ purposeOfAvailment })
+    }
 
-  showCircularLoader () {
-    this.setState({ enabledLoader : true })
-  }
-  /* Navigage back to loans Option*/
-  navigate () {
-    this.props.history.push('/mybenefits/benefits/loans')
-  }
+    showAdditionalFilesCount (AdditionalDocuments) {
+      this.setState({ AdditionalDocuments })
+    }
+
+    showAdRequiredFilesCount (RequiredDocuments) {
+      this.setState({ RequiredDocuments })
+    }
+
+    /* Loader*/
+
+    hideCircularLoader () {
+      this.setState({ enabledLoader : false })
+    }
+
+    showCircularLoader () {
+      this.setState({ enabledLoader : true })
+    }
+    /* Navigage back to loans Option*/
+    navigate () {
+      this.props.history.push('/mybenefits/benefits/loans')
+    }
+
 
   render () {
     const {
@@ -93,9 +121,15 @@ class EmergencyLoanFragment extends BaseMVPView {
       showBenefitFeedbackModal,
       showNoticeResponseModal,
       noticeResponse,
-      response
+      response,
+      RequiredDocuments,
+      AdditionalDocuments,
+      isPayeeOrDealerResp,
+      employeeName,
+      storedIsDealerOrPayee,
+      computationOffset
     } = this.state
-    
+
     return (
       <div>
         {
