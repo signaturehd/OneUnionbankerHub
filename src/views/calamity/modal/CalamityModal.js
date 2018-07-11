@@ -65,7 +65,10 @@ class CalamityModal extends Component {
 
 CalamityModal.propTypes = {
     onClose : PropTypes.func,
-    tog : PropTypes.object,
+    tog : PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array
+    ]),
     onSubmit : PropTypes.func,
 }
 

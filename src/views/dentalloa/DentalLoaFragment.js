@@ -13,6 +13,9 @@ import ResponseModal from '../notice/NoticeResponseModal'
 import { CircularLoader, Modal } from '../../ub-components/'
 import './styles/dentalloa.css'
 
+import { RequiredValidation, Validator, MoneyValidation } from '../../utils/validate'
+
+
 import { NotifyActions } from '../../actions'
 import store from '../../store'
 
@@ -37,6 +40,11 @@ class DentalLoaView extends BaseMVPView {
       selectedProcedures : [] /* Selected Procedures */
     }
     this.getDentalLoa = this.getDentalLoa.bind(this)
+    this.validator = this.validator.bind(this)
+  }
+
+  validator (input) {
+    return new RequiredValidation().isValid(input)
   }
 
   componentWillMount () {
@@ -66,21 +74,20 @@ class DentalLoaView extends BaseMVPView {
       selectedProcedures.map(resp =>
         procedures.push({ id : resp.id.toString() })
       )
-    if (
-      recipient === null ||
-      branch === null ||
-      date === null ||
-      selectedProcedures === null
-    ) {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Error',
-          message : 'Please complete all fields',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    } else {
-      this.presenter.addDentalLoa(recipient.id, branch.id, date, procedures)
+      if (
+        !this.validator(recipient) ||
+        !this.validator(branch) ||
+        !this.validator(date) ||
+        !procedures.length === 0) {
+        store.dispatch(NotifyActions.addNotify({
+           title : 'Warning' ,
+           message : 'All fields are required',
+           type : 'warning',
+           duration : 2000
+         })
+       )
+     } else {
+      this.presenter.addDentalLoa(recipient.id ? recipient.id : null , branch.id, date, procedures)
     }
   }
 
@@ -149,7 +156,7 @@ class DentalLoaView extends BaseMVPView {
           <BenefitFeedbackModal
             benefitId = { '7' }
             onClose = { () => {
-              this.props.history.push('/mybenfits/benefits/medical'),
+              this.navigate(),
               this.setState({ showBenefitFeedbackModal : false })
             }}
           />

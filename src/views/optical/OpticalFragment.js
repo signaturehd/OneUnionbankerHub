@@ -15,6 +15,9 @@ import { NotifyActions } from '../../actions'
 
 import { CircularLoader } from '../../ub-components'
 
+import { RequiredValidation, Validator, MoneyValidation } from '../../utils/validate'
+
+
 class OpticalFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -30,6 +33,11 @@ class OpticalFragment extends BaseMVPView {
     }
     this.confirmation = this.confirmation.bind(this)
     // this.noticeOfUndertaking = this.noticeOfUndertaking.bind(this)
+    this.validator = this.validator.bind(this)
+  }
+
+  validator (input) {
+    return new RequiredValidation().isValid(input)
   }
 
   componentDidMount () {
@@ -61,7 +69,7 @@ class OpticalFragment extends BaseMVPView {
           duration : 2000
         })
       )
-    } else if (!file1 || !file2) {
+    } else if (!this.validator(file1) || !this.validator(file2)) {
       store.dispatch(NotifyActions.addNotify({
           title : 'Optical Reimbursement',
           message : 'Please Check your attachments',
