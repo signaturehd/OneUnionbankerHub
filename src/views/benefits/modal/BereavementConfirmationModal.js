@@ -19,14 +19,14 @@ class BereavementConfirmationModal extends Component {
 
   navigate () {
     this.props.onClose()
-    this.props.history.push('/mybenefits/benefits')
+    this.props.navigateCall()
   }
 
   render () {
     const {
       onYes,
       onClose,
-      history
+      navigateCall
     } = this.props
 
     const {
@@ -46,7 +46,7 @@ class BereavementConfirmationModal extends Component {
               <center>
                 <h2>Is the death certificate available?</h2>
                 <br/>
-                <p>We're sorry to hear about your loss. Please accept our sympathies. We'd like to help you on this time of need. Has the Death certificate been prepared?
+                <p>We&#39;re sorry to hear about your loss. Please accept our sympathies. We&#39;d like to help you on this time of need. Has the Death certificate been prepared?
                 </p>
               </center>
               <div className = { 'confirmation-grid-action' } >
@@ -89,6 +89,7 @@ class BereavementConfirmationModal extends Component {
 BereavementConfirmationModal.propTypes = {
   onClose : PropTypes.func,
   details : PropTypes.func,
+  navigateCall : PropTypes.func,
   yes : PropTypes.string,
   no : PropTypes.string,
 }
