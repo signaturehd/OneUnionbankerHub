@@ -1,4 +1,4 @@
-export default class addEducationAidInteractor {
+export default class AddEducationAidInteractor {
   constructor (client) {
     this.client = client
   }

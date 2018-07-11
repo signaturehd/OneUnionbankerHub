@@ -21,30 +21,9 @@ class EducationAidReviewModal extends Component {
 
   render () {
     const {
-      collegeID,
-      tuitionFee,
-      registrationFee,
-      collegeType,
-      course,
-      academicYear,
-      semester,
-      gwa,
-      fileOR,
-      fileCOG,
-      fileRegForm,
-      imagePrevOR,
-      imagePrevCOG,
-      imagePrevRegForm,
-      submitForm,
+      data,
       onClose,
-      tuitionFeeText,
-      registrationFeeText,
-      totalFeeText,
-      courseText,
-      academicYearText,
-      semesterText,
-      gwaText,
-      onClick,
+      submitForm
     }=this.props
 
     const {
@@ -52,23 +31,38 @@ class EducationAidReviewModal extends Component {
        isDismisable
     }=this.state
 
+    const fileORName = {
+       "name" : data.fileOR.name,
+       "attachments" : data.imagePrevOR
+     }
+     const fileCOGName  = {
+       "name" : data.fileCOG.name,
+       "attachments" : data.imagePrevCOG
+     }
+     const fileRegFormName  = {
+       "name" : data.fileCOG.name,
+       "attachments" : data.imagePrevRegForm
+     }
+
+     const fileAttachments = [fileORName, fileCOGName, fileRegFormName]
+
     const styles={
       image1 : {
-        backgroundImage: `url('${imagePrevOR}')`,
+        backgroundImage: `url('${data.imagePrevOR}')`,
         width : 'auto',
         height : '150px',
         backgroundSize : 'contain',
         backgroundRepeat : 'no-repeat',
       },
       image2 : {
-        backgroundImage: `url('${imagePrevCOG}')`,
+        backgroundImage: `url('${data.imagePrevCOG}')`,
         width : 'auto',
         height : '150px',
         backgroundSize : 'contain',
         backgroundRepeat : 'no-repeat',
       },
       image3 : {
-        backgroundImage: `url('${imagePrevRegForm}')`,
+        backgroundImage: `url('${data.imagePrevRegForm}')`,
         width : 'auto',
         height : '150px',
         backgroundSize : 'contain',
@@ -91,27 +85,44 @@ class EducationAidReviewModal extends Component {
         <div>
           <h2>Education Aid Description</h2>
           <br/>
-          <h4>College/University : { collegeType ? collegeType : '(Not Yet Provided)' }</h4>
-          <h4>Course : { courseText ? courseText  : '(Not Yet Provided)'  }</h4>
-          <h4>Academic Year : { academicYearText ? academicYearText  : '(Not Yet Provided)'  }</h4>
-          <h4>Semester : { semesterText ? semesterText  : '(Not Yet Provided)'  }</h4>
-          <h4>General Weighted Average : { gwaText ? gwaText : '(Not Yet Provided)'  }</h4>
-          <h4>Tuition Fee : { tuitionFeeText ? format(tuitionFeeText)  : '(Not Yet Provided)'  }</h4>
-          <h4>Registration Fee : { registrationFeeText ? format(registrationFeeText)  : '(Not Yet Provided)'  }</h4>
-          <h4>File OR : { fileOR.name ? fileOR.name  : '(Not Yet Provided)'  }</h4>
-          <h4>File COG : { fileCOG.name ? fileCOG.name  : '(Not Yet Provided)'  }</h4>
-          <h4>File Registration Form : { fileRegForm.name ? fileRegForm.name  : '(Not Yet Provided)'  }</h4>
+          <h4>College/University : { data.collegeType ? data.collegeType : '(Not Yet Provided)' }</h4>
+          <h4>Course : { data.courseText ? data.courseText  : '(Not Yet Provided)'  }</h4>
+          <h4>Academic Year : { data.academicYearText ? data.academicYearText  : '(Not Yet Provided)'  }</h4>
+          <h4>Semester : { data.semesterText ? data.semesterText  : '(Not Yet Provided)'  }</h4>
+          <h4>General Weighted Average : { data.gwaText ? data.gwaText : '(Not Yet Provided)'  }</h4>
+          <h4>Tuition Fee : { data.tuitionFeeText ? format(data.tuitionFeeText)  : '(Not Yet Provided)'  }</h4>
+          <h4>Registration Fee : { data.registrationFeeText ? format(data.registrationFeeText)  : '(Not Yet Provided)'  }</h4>
+          <h4>Total Fee : { data.resultTotalFee ? format(data.resultTotalFee)  : '(Not Yet Provided)'  }</h4>
+          <h4>Total Reimbursment : { data.totalReimbursment ? format(data.totalReimbursment)  : '(Not Yet Provided)'  }</h4>
+          <h4>File OR : { data.fileOR.name ? data.fileOR.name  : '(Not Yet Provided)'  }</h4>
+          <h4>File COG : { data.fileCOG.name ? data.fileCOG.name  : '(Not Yet Provided)'  }</h4>
+          <h4>File Registration Form : { data.fileRegForm.name ? data.fileRegForm.name  : '(Not Yet Provided)'  }</h4>
           <br/>
           <div className={ 'educationAid-image-display' }>
-            <div style={ styles.image1 ? styles.image1 : styles.image4 }></div>
-            <div style={ styles.image2 ? styles.image2 : styles.image4 }></div>
-            <div style={ styles.image3 ? styles.image3 : styles.image4 }></div>
+            <div style={ styles.image1 }></div>
+            <div style={ styles.image2 }></div>
+            <div style={ styles.image3 }></div>
           </div>
           <br/>
           <center>
             <GenericButton
-              onClick={ onClick }
+
+              onClick = { () => {
+                this.setState({ disableSubmit : true, isDismisable: false })
+                submitForm(
+                  data.courseText,
+                  data.academicYearText,
+                  data.semesterText,
+                  data.gwaText,
+                  data.tuitionFeeText,
+                  data.registrationFeeText,
+                  data.schoolID,
+                  fileAttachments
+                )
+              }
+            }
               text={ 'confirm' }
+              disabled = {this.state.disabled}
             />
             <GenericButton
               text={ 'cancel' }
@@ -127,35 +138,7 @@ EducationAidReviewModal.propTypes={
   onClose : PropTypes.func,
   details : PropTypes.func,
   confirm : PropTypes.string,
-  cancel : PropTypes.string,
-  collegeID : PropTypes.string,
-  tuitionFee :PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string
-  ]),
-  registrationFee:PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string
-  ]),
-  collegeType: PropTypes.string,
-  course: PropTypes.string,
-  academicYear: PropTypes.string,
-  semester:  PropTypes.string,
-  gwa : PropTypes.string,
-  fileOR :  PropTypes.object,
-  fileCOG :  PropTypes.object,
-  fileRegForm :  PropTypes.object,
-  imagePrevOR :  PropTypes.object,
-  imagePrevCOG :  PropTypes.object,
-  imagePrevRegForm :  PropTypes.object,
-  submitForm :  PropTypes.object,
-  tuitionFeeText: PropTypes.string,
-  registrationFeeText: PropTypes.string,
-  totalFeeText: PropTypes.string,
-  courseText: PropTypes.string,
-  academicYearText: PropTypes.string,
-  semesterText: PropTypes.string,
-  gwaText: PropTypes.string,
+  cancel : PropTypes.string
 }
 EducationAidReviewModal.defaultProps={
   confirm : 'Agree',
