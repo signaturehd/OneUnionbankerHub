@@ -51,8 +51,10 @@ export default class MultiPurposeLoanPresenter {
       .subscribe(
         data => {
           this.view.showTypes(data)
+          this.view.hideCircularLoader()
         },
         error => {
+          this.view.hideCircularLoader()
         }
       )
     }
@@ -106,7 +108,7 @@ export default class MultiPurposeLoanPresenter {
           id: 2,
           name: 'Offset Loan',
         } // create instance of "New Loan"
-  
+
         offsetLoan.offset === null ||
         offsetLoan.offset === '' ||
         offsetLoan.offset === undefined ||
@@ -120,12 +122,13 @@ export default class MultiPurposeLoanPresenter {
       })
       .subscribe(
         data =>  {
+          this.view.hideCircularLoader()
           this.view.showOffset(data && data.offset)
           this.view.showValidate(data)
           this.view.showComputationForOffset(data && data.offset)
-          this.view.hideCircularLoader()
         },
         error => {
+          this.view.hideCircularLoader()
           this.view.navigate()
         }
       )

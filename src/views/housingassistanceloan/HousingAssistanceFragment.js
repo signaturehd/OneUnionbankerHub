@@ -24,7 +24,7 @@ class HousingAssistanceFragment extends BaseMVPView {
       loanType: 3,
       validateLoanType : [],
       offset : [],
-      enabledLoader : false,
+      enabledLoader : true,
       noticeResponse : null, /* notice response*/
       showNoticeResponseModal : false,
       showBenefitFeedbackModal : false,

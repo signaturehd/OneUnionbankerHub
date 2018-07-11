@@ -153,6 +153,7 @@ class BenefitsFragment extends BaseMVPView {
       {
         showBereavementConfirmationModal &&
         <BereavementConfirmationModal
+          navigateCall={ () => this.navigate() }
           onYes = {
             () => {
               this.setState({ showBereavementConfirmationModal : false })
