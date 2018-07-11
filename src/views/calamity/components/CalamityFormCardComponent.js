@@ -29,7 +29,7 @@ class CalamityFormCardComponent extends Component {
       showPropModal: false,
       calamityId: '',
       calamityType: '',
-      preferredDate: moment().format('MM/DD/YYYY'),
+      preferredDate: '',
       property: '',
       propertyDesc: '',
       propertyType: '',
@@ -227,14 +227,11 @@ class CalamityFormCardComponent extends Component {
                   container={ 'calamity-container' }
                   value={ calamityType ? calamityType : '' }
                   onClick={
-                    () => {
-                      this.setState({ showModal : true })
+                    (e) => {
+                      this.setState({ showModal : true, calamityType: e.target.value })
                    }
                   }
-                  onChange={ (e) => this.setState({ calamityType: e.target.value }) }
                   placeholder={ 'Type of Calamity' }
-                  readOnly
-                  type={ 'text' }
                 />
               </div>
             </div>
@@ -246,21 +243,18 @@ class CalamityFormCardComponent extends Component {
                 <span className={ 'calamity-icon-settings calamity-calendar' }/>
               </div>
               <div>
-                <div className={ 'grid-global-row' }>
                   <div>
                     <DatePicker
                       dateFormat={ 'MM/DD/YYYY' }
                       maxDate={ moment() }
                       readOnly
+                      value={ preferredDate ? preferredDate : 'Date of Occurrence' }
                       selected={ preferredDate ? moment(preferredDate, 'MM/DD/YYYY') : moment()}
                       onChange={ this.handleChange }
-                      className={ 'calendar' }
+                      className={ preferredDate ? 'calendar' : 'calendar font-color-gray' }
                       calendarClassName={ 'calendarClass' }/>
                   </div>
-                  <div>
-                    <h4> Date of Occurrence </h4>
-                  </div>
-                </div>
+                  <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
               </div>
             </div>
 
@@ -320,7 +314,6 @@ class CalamityFormCardComponent extends Component {
                     () => this.setState({ showPropModal : true })
                   }
                   placeholder={ 'Property Type' }
-                  type={ 'text' }
                 />
               </div>
             </div>

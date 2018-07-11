@@ -68,29 +68,88 @@ class CalamityFragment extends BaseMVPView {
     fileDP,
     imgPrevBC,
     imgPrevDP) {
-    if (
-      !this.validator(calamityType) ||
-      !this.validator(property) ||
-      !this.validator(propertyDesc) ||
-      !this.validator(propertyType) ||
-      !this.validator(acquisitionValue) ||
-      !this.validator(estimatedCost)) {
-      !store.dispatch(NotifyActions.addNotify({
+    if (!this.validator(calamityType)) {
+      store.dispatch(NotifyActions.addNotify({
          title : 'Calamity Assistance' ,
-         message : 'Please provide information to all fields',
+         message : 'Please provide information to Calamity Type field',
          type : 'warning',
          duration : 2000
        })
      )
-    } else if (!fileBC && !fileDP) {
+    }
+    else if (!this.validator(preferredDate)) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Calamity Assistance' ,
+         message : 'Please provide information to Date of Occurrence field',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    }
+    else if (!this.validator(property)) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Calamity Assistance' ,
+         message : 'Please provide information to Property field',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    }
+    else if (!this.validator(propertyDesc)) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Calamity Assistance' ,
+         message : 'Please provide information to Property description field',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    }
+    else if (!this.validator(propertyType)) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Calamity Assistance' ,
+         message : 'Please provide information to Property Type field',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    }
+    else if (!this.validator(acquisitionValue)) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Calamity Assistance' ,
+         message : 'Please provide information to Acquisition Value field',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    }
+    else if (!this.validator(estimatedCost)) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Calamity Assistance' ,
+         message : 'Please provide information to Estimated Cost field',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    }
+    else if (!fileBC) {
       store.dispatch(NotifyActions.addNotify({
           title : 'Calamity Assistance ',
-          message : 'Please check your attachments',
+          message : 'Please check your Barangay Certificate',
           type : 'warning',
           duration : 2000
         })
       )
-    } else {
+    }
+    else if (!fileDP) {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Calamity Assistance ',
+          message : 'Please check your Damaged Property',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    }
+    else {
       const fileBCName = {
         "name" : fileBC.name,
         "attachments" : imgPrevBC
@@ -101,16 +160,16 @@ class CalamityFragment extends BaseMVPView {
       }
 
       const fileAttachments = [fileBCName, fileDPName]
-        this.presenter.addCalamityAssistance(
-          calamityId,
-          preferredDate,
-          property,
-          propertyDesc,
-          propertyType,
-          acquisitionValue,
-          estimatedCost,
-          fileAttachments
-      )
+      //   this.presenter.addCalamityAssistance(
+      //     calamityId,
+      //     preferredDate,
+      //     property,
+      //     propertyDesc,
+      //     propertyType,
+      //     acquisitionValue,
+      //     estimatedCost,
+      //     fileAttachments
+      // )
     }
   }
 
