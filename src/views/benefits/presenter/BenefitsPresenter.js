@@ -95,13 +95,13 @@ export default class BenefitsPresenter {
   }
 
   validateAccountNumber (accountNumber) {
-    this.view.showLoading()
+    this.view.showLoaderValidatingAccountNumber()
     this.validateAccountNumberInteractor.execute(accountNumber)
       .subscribe(resp => {
-        this.view.hideLoading()
+        this.view.hideLoaderValidatingAccountNumber()
         this.view.onValidAccountNumber()
       }, error => {
-        this.view.hideLoading()
+        this.view.hideLoaderValidatingAccountNumber()
         // TODO prompt generic error
       })
   }
