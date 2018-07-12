@@ -73,6 +73,53 @@ class Notice extends BaseMVPView {
                 }
               }
             />
+          {
+            showCancelCofirmation &&
+            <Modal
+              >
+              <center>
+                <h4> Are you sure you want to Cancel your form ? </h4>
+                <div className={ 'grid-global' }>
+                  <GenericButton
+                    text={ 'No' }
+                    onClick={ () => this.setState({ showCancelCofirmation : false }) }/>
+                  <GenericButton
+                    text={ 'Yes' }
+                    onClick={
+                      () =>  {
+                        this.isAgree(noticeResponse.transactionId.toString(), 0, benefitId),
+                        this.setState({ isDimissable : true, disableSubmit: true })
+                        }
+                      }
+                    />
+                </div>
+              </center>
+            </Modal>
+          }
+          {
+            showValidatedCofirmation &&
+            <Modal
+              onClose={ () => this.setState({ showValidatedCofirmation: false }) }
+              isDismisable={ true }
+              >
+              <center>
+                <h4> Are you sure you want to Submit your form ? </h4>
+                <div className={ 'grid-global' }>
+                  <GenericButton
+                    text={ 'No' }
+                    onClick={ () => this.setState({ showValidatedCofirmation : false }) }/>
+                  <GenericButton
+                    text={ 'Yes' }
+                    onClick = { () => {
+                        this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId),
+                        this.setState({ isDimissable : true, disableSubmit: true })
+                      }
+                    }
+                    />
+                </div>
+              </center>
+            </Modal>
+          }
           </center>
           </div>
         }
