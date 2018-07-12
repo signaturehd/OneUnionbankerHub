@@ -42,13 +42,12 @@ class TransactionPersonalFragment extends BaseMVPView {
   }
 
   handleClick = () => {
-   let i = this.state.index < this.state.newTrans.length ? this.state.index += 1 : 0;
+   let i = this.state.index < this.state.newTrans.length ? this.state.index += 1 : 0
    this.setState({ index: i })
  }
 
   render () {
     const {
-      addMore,
       transactions,
       view,
       transaction,
@@ -80,7 +79,7 @@ class TransactionPersonalFragment extends BaseMVPView {
         transactions ?
         <div className = { 'transaction-container' }>
           {
-             newTrans.slice(0, 8).map((transaction, key) => (
+             newTrans.slice(0, 4).map((transaction, key) => (
               <TransactionCardComponent
                 detail = { transaction }
                 key = { key  }
