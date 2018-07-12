@@ -1,4 +1,4 @@
-export default class AddLoanInteractor {
+export default class AddLoanMotorLoanInteractor {
   constructor (client) {
     this.client = client
   }
