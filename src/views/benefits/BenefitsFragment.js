@@ -323,6 +323,7 @@ class BenefitsFragment extends BaseMVPView {
                 <Route exact path='/mybenefits/benefits/carlease'
                   render={ props => <CarLeaseFragment
                   { ...props }
+                  callCarBack={ () => this.navigate() }
                   />}
                 />
               }
