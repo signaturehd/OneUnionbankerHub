@@ -412,10 +412,10 @@ class BereavementFormCardComponent extends Component {
                   <DatePicker
                     dateFormat={ 'MM/DD/YYYY' }
                     readOnly
-                    maxDate={  moment().subtract(32, 'days') }
+                    minDate={ moment(deceasedDate) }
                     onChange={ this.getIntermentDate }
                     value={ intermentDate ? intermentDate : 'Date of Interment'  }
-                    selected={ intermentDate ? moment(intermentDate) : moment().subtract(32, 'days') }
+                    selected={ moment(deceasedDate) }
                     className={ 'calendar font-size-12px' }
                     />
                   <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
@@ -547,7 +547,11 @@ class BereavementFormCardComponent extends Component {
                           }
                         }
                       />
-                      <div style={ styles.image1 }><h6 className="brv-file-name">{ file.name }</h6></div>
+                      <div style={ styles.image1 }>
+                        <h6 className="brv-file-name">
+                          { file.name }
+                        </h6>
+                      </div>
                     </div>
                   </div>
                 }
