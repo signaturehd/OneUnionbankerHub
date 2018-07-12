@@ -48,7 +48,8 @@ class TransactionApprovalFragment extends BaseMVPView {
     let newTrans = transactions
     const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
-      newTrans = transactions.filter(transactions =>  transactions.benefit.toLowerCase().match(search) || transactions.referenceNumber.toLowerCase().match(search))
+      newTrans = transactions.filter(transactions =>  transactions.benefit.toLowerCase().match(search) ||
+      transactions.referenceNumber.toLowerCase().match(search))
     }
 
     const {
