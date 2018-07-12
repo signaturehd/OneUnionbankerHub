@@ -19,11 +19,17 @@ class TransactionPersonalFragment extends BaseMVPView {
       transactions: null,
       transactionResponse : null,
       transaction: null,
+      searchString : '',
     }
+    this.updateSearch = this.updateSearch.bind(this)
   }
 
   componentDidMount () {
     this.presenter.getTransactionsPersonal()
+  }
+
+  updateSearch (e) {
+    this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
   }
 
   transactions (transactions) {
@@ -42,6 +48,12 @@ class TransactionPersonalFragment extends BaseMVPView {
       transaction,
       transactionResponse,
     } = this.state
+    let newTrans = transactions
+    const search = this.state.searchString.trim().toLowerCase()
+    if (search.length > 0) {
+      newTrans = transactions.filter(transactions =>  transactions.benefit.toLowerCase().match(search) || transactions.referenceNumber.toLowerCase().match(search))
+    }
+
 
     const {
       onClick,
@@ -52,14 +64,23 @@ class TransactionPersonalFragment extends BaseMVPView {
 
     return (
       <div>
+        <input type = 'text'
+          className = 'transSearchBar'
+          ref='search'
+          placeholder = {'Search Transactions'}
+          value = { this.state.searchString }
+          onChange = { this.updateSearch } />
       {
         transactions ?
         <div className = { 'transaction-container' }>
+
           {
-            transactions.map((transaction, key) => (
+            newTrans &&
+            newTrans.map((transaction, key) => (
               <TransactionCardComponent
                 detail = { transaction }
                 key = { key }
+                transactions = {transactions}
                 onClick = { transaction =>
                   this.props.history.push(`/mybenefits/transactions/personal/${transaction.id}`) }
               />
