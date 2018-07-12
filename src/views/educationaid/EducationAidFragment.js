@@ -155,7 +155,7 @@ class EducationAidFragment extends BaseMVPView {
         })
       )
     }
-    if (courseText.match(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/)){
+    if (data.courseText.match(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/)){
       store.dispatch(NotifyActions.addNotify({
           title : 'Education Aid',
           message : 'Special Characters are not accepted',
