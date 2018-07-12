@@ -41,14 +41,6 @@ export default class DentalReimbursementPresenter {
       dentalReimbursementParam(file1, file2, dependentId, procedure))
       .subscribe(
         data => {
-          store.dispatch(NotifyActions.addNotify({
-            title: 'Dental Reimbursement',
-            message : data.message,
-            type : 'success',
-            duration : 2000
-          })
-         )
-
          this.view.hideCircularLoader()
          this.view.noticeOfUndertaking(data)
       },

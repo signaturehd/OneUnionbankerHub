@@ -112,7 +112,7 @@ class Notice extends BaseMVPView {
                 <div className={ 'grid-global' }>
                   <GenericButton
                     text={ 'No' }
-                    onClick={ () => this.setstate({ showValidatedCofirmation : false }) }/>
+                    onClick={ () => this.setState({ showValidatedCofirmation : false }) }/>
                   <GenericButton
                     text={ 'Yes' }
                     onClick = { () => {
