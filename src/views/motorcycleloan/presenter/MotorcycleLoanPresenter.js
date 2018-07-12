@@ -59,21 +59,52 @@ export default class MotorcycleLoanPresenter {
       .subscribe()
     }
 
+
   getMplValidate (loanTypeId) {
     this.view.showCircularLoader()
     this.getValidateInteractor.execute(mplValidateParam(loanTypeId))
+      .map(offsetLoan => {
+        const modeOfLoanStatic={
+          id: 1,
+          name: 'New Loan',
+        } // create instance of "New Loan"
+        const modeOfLoan={
+          id: 2,
+          name: 'Offset Loan',
+        } // create instance of "New Loan"
+
+        offsetLoan.offset === null ||
+        offsetLoan.offset === '' ||
+        offsetLoan.offset === undefined ||
+        (offsetLoan.offset).length === 0?
+          offsetLoan.offset.push(modeOfLoanStatic)
+        :
+          offsetLoan.offset.push(modeOfLoanStatic, modeOfLoan)
+        // add the New Loan to the offsets option
+
+        return offsetLoan
+      })
       .subscribe(
-        data => {
-          this.view.showOffset(os && os.offset)
-          this.view.showValidate(data)
+        data =>  {
           this.view.hideCircularLoader()
+          this.view.showOffset(data && data.offset)
+          this.view.showValidate(data)
+          this.view.showComputationForOffset(data && data.offset)
         },
         error => {
+          store.dispatch(NotifyActions.addNotify({
+              title: 'Warning',
+              message: `We're sorry, but right now, you're not yet able to avail of this benefit because if your${this.error.message}`,
+              type: 'warning',
+              duration: 2000
+            })
+          )
           this.view.navigate()
-          this.view.hideCircularLoader()
         }
       )
     }
+
+
 
   getMplFormAttachments (formRequesting, loanId) {
     this.getFormAttachmentsInteractor.execute(mplGetFormParam(formRequesting, loanId))

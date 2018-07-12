@@ -6,15 +6,18 @@ import {
   GenericTextBox,
   Card,
   GenericButton,
-  FileUploader
+  FileUploader,
+  Modal
 } from '../../../ub-components/'
+
+import { RequiredValidation, MoneyValidation, MinMaxNumberValidation } from '../../../utils/validate'
+import { format } from '../../../utils/numberUtils'
 
 import PurposeOfAvailmentModal from '../modals/MotorcyclePurposeOfAvailmentModal'
 import ModeOfLoanModal from '../modals/MotorcycleModeOfLoanModal'
 import TermOfLoanModal from '../modals/MotorcycleTermOfLoanModal'
-import OffsetOfLoanModal from '../modals/MotorcycleOffsetModal'
-import SupplierModal from '../modals/MotorcycleSupplierModal'
-import MplReviewFormModal from '../modals/MotorCycleReviewFormModal'
+import OffsetOfLoanModal from '../modals/MotorcycleOffsetLoanModal'
+import MplReviewFormModal from '../modals/MotorcycleReviewFormModal'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -48,19 +51,50 @@ class MotorcycleLoanCardComponent extends Component {
       computationOffsetLoan: [],
       showConfirmationView: false
     }
+    this.validator=this.validator.bind(this)
   }
 
-  onChange (e) {
-      const re = /^[0-9\.]+$/
-      if (e.target.value === '' ||  re.test(e.target.value)) {
-        this.setState({ amountValue: e.target.value })
+   validator(input) {
+     return new RequiredValidation().isValid(input)
+   }
+
+   sendFormData ( desiredAmount, modeOfLoanId, loanTypeId, poaText, termId, offset, attachments, formAttachmentsCount) {
+
+     const pnNumber=[]
+     const amount=parseFloat(desiredAmount)
+     const id=parseInt(loanTypeId)
+     const term=parseInt(termId)
+     const mode=modeOfLoanId ? modeOfLoanId : 1
+
+       if (
+         !this.validator(poaText) ||
+         !this.validator(term) ||
+         !this.validator(amount)
+         ) {
+           store.dispatch(NotifyActions.addNotify({
+              title : 'Warning' ,
+              message : 'All fields are required',
+              type : 'warning',
+              duration : 2000
+            })
+          )
+        }
+       else {
+        this.props.presenter.addLoan(
+          id,
+          poaText,
+          mode,
+          term,
+          offset ? offset : null,
+          amount,
+          attachments ? attachments : null)
       }
    }
 
-  getExtension (filename) {
-    const parts=filename.split('/')
-    return parts[parts.length - 1]
-  }
+   getExtension (filename) {
+     const parts=filename.split('/')
+     return parts[parts.length - 1]
+   }
 
   render () {
     const {
@@ -103,10 +137,22 @@ class MotorcycleLoanCardComponent extends Component {
       isPayeeOrDealer
     }=this.props
 
-    const computation=computationOffsetLoan.reduce((a, b) => a + b, 0)
+    const styles={
+      image1 : {
+        backgroundImage: `url('${imagePreviewUrl}')`,
+        width: '-webkit-fill-available',
+        height: '-webkit-fill-available',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'noRepeat',
+      }
+    }
+    let $imagePreview=null
+      $imagePreview=(<div style={ styles.image1 }></div>)
 
+    const computation=computationOffsetLoan.reduce((a, b) => a + b, 0)
     return (
-      <div className={ 'motor-container' }>
+      <div className={ 'mplview-container' }>
         {
           showReviewModal &&
           <MplReviewFormModal
@@ -228,164 +274,234 @@ class MotorcycleLoanCardComponent extends Component {
             </center>
           </Modal>
         }
-        {
-          showSupplier &&
-          <SupplierModal
-            supplier ={  supplier }
-            onSubmit={ (getSupplier, closePoaModal) =>
-              this.setState({
-                selectedSupplier : getSupplier,
-                showSupplier : closePoaModal
-              })
-            }
-            onClose={ () =>
-              this.setState({ showSupplier : false }) }
-          />
-        }
-        <div className={ 'motor-grid-column-2' }>
-          <Card className={ 'motor-form-card' }>
+        <div className={ 'mpl-grid-column-2' }>
+          <div></div>
+          <Card className={ 'mpl-form-card' }>
             <h4>
               Benefits Form
             </h4>
-            <div className={ 'motor-form-card-body' }>
-              <div className={ 'motor-grid-form' }>
-                <div>
-                  <br/>  <br/>
-                  <span className={ 'motor-icon-forms motorMailBoxIcon' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    type={ 'button' }
-                    value={ poaText }
-                    group={ 'motor-group-textbox' }
-                    container={ 'motor-form-icon-container' }
-                    onClick={ () =>
-                      this.setState({ showPurposeOfAvailment : true }) }
-                    onChange={ poaText =>
-                      this.setState({ poaText }) }
-                    placeholder={ 'Purpose Of Availment' }/>
-                </div>
-              </div>
-              <div className={ 'motor-grid-form' }>
-                <div>
-                  <br/>  <br/>
-                  <span className={ 'motor-icon-forms motorEditIcon' }/>
-                </div>
-                <GenericTextBox
-                  value={ payeeName }
-                  group={ 'motor-group-textbox' }
-                  container={ 'motor-form-icon-container' }
-                  onChange={ e =>
-                    this.setState({ payeeName : e.target.value }) }
-                  placeholder={ payeeNameLabel && payeeNameLabel }
-                  type={ 'text' }
-                />
-              </div>
-              <div className={ 'motor-grid-form' }>
-                  <div>
-                    <br/>  <br/>
-                    <span className={ 'motor-icon-forms motorEditIcon' }/>
+            <div className={ 'mpl-form-card-body' }>
+              <GenericTextBox
+                type={ 'button' }
+                value={ poaText ? poaText : '' }
+                onClick={ () =>
+                  this.setState({ showPurposeOfAvailment : true }) }
+                onChange={ poaText =>
+                  this.setState({ poaText }) }
+                placeholder={ 'Purpose Of Availment' }
+                type={ 'text' }/>
+              <GenericTextBox
+                onChange={ modeOfLoanText =>
+                  this.setState({ modeOfLoanText }) }
+                onClick={ () =>
+                  this.setState({ showOffset : true }) }
+                placeholder={ 'Mode of Loan' }
+                disabled={ modeOfLoanText ? modeOfLoanText : this.state.disabled }
+                value={ modeOfLoanText ? modeOfLoanText : 'New Loan' }
+                type={ 'text' }/>
+              <GenericTextBox
+                value={ amountValue ? amountValue : '' }
+                onChange={ (e) =>
+                  {
+                    new MoneyValidation().isValid(e.target.value)  ?
+                      this.setState({ amountValue : e.target.value })
+                      :
+                      this.setState({ amountValue : '' })
+                   } }
+                placeholder={ 'Desired Amount' }
+                maxLength={ 11 }
+                type={ 'text' }/>
+              <GenericTextBox
+                value={ `${ termOfLoan ? termOfLoan : '' } (${ rateOfLoan ? rateOfLoan : '' } %)` }
+                onChange={ (termOfLoan, rateOfLoan) =>
+                  this.setState({ termOfLoan, rateOfLoan }) }
+                onClick={ () =>
+                  this.setState({ showTerm : true }) }
+                placeholder={ 'Term of Loan' }
+                type={ 'text' }/>
+            </div>
+            <br/>
+          </Card>
+        </div>
+        <br/>
+          {
+            showOffsetLoanCard &&
+
+            <div className={ 'mpl-grid-column-2' }>
+              <div></div>
+              <Card className={ 'mpl-form-card' }>
+                <div className={ 'mpl-offset-grid' }>
+                  <h4 className={ 'text-align-left' }>
+                    Loans to Offset
+                  </h4>
+                  <div className={ 'text-align-right' }>
+                    <span
+                      onClick={ () => this.setState({ showOffsetOfLoanModal : true }) }
+                      className={ 'mpl-icons-add mpl-add-offset' }/>
                   </div>
-                  <GenericTextBox
-                    group={ 'motor-group-textbox' }
-                    container={ 'motor-form-icon-container' }
-                    onChange={ modeOfLoanText =>
-                      this.setState({ modeOfLoanText }) }
-                    onClick={ () =>
-                      this.setState({ showOffset : true }) }
-                    placeholder={ 'Mode of Loan' }
-                    value={ offset ? 'New Loan' : modeOoffsetfLoan }
-                    type={ 'text' }/>
+                </div>
+                <div className={ 'mpl-form-card-body' }>
+                  {
+                    selectedOffsetLoan && selectedOffsetLoan.map((offset, key) => (
+                       <div key={ key } className={ 'dentalreimbursement-selected-procedure' }>
+                         <div className={'input-grid'}>
+                           <GenericTextBox
+                             onChange={ e => {
+                               const updateOffset=[...selectedOffsetLoan]
+                               updateOffset[key].outstandingBalance=parseInt(e.target.value) || 0
+                               this.setState({ selectedOffsetLoan: updateOffset })
+                               }
+                             }
+                             value={
+                               `${offset.promissoryNoteNumber ?
+                                 offset.promissoryNoteNumber : ''}  (${offset.outstandingBalance ?
+                                     format(offset.outstandingBalance) : ''})` }
+                             type={ 'button' }
+                            />
+                           <div className={ 'dentalreimbursement-button-close' }>
+                             <img
+                               src={ require('../../../images/x-circle-global.png') }
+                               onClick={ () => {
+                                 const { selectedOffsetLoan }=this.state
+                                 selectedOffsetLoan.splice(key, 1)
+                                 this.setState({ selectedOffsetLoan })
+                               }}
+                             />
+                           </div>
+                         </div>
+                       </div>
+                       )
+                     )
+                    }
+                </div>
+              </Card>
+            </div>
+          }
+          <br/>
+          {
+            <div>
+              <div className={ 'brv-grid-column-2' }>
+                <div></div>
+                <Card className={ 'brv-form-card' }>
+                {
+                  formAttachments.AdditionalDocuments  != 0 ?
+
+                  <div className={'brv-form-card-body '}>
+                    <h4>
+                      Form Attachments
+                    </h4>
+                    {
+                      formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
+
+                      <div>
+                        <FileUploader
+                          accept="image/gif,image/jpeg,image/jpg,image/png,"
+                          value={ key.name }
+                          key={ key }
+                          placeholder={ attachmentsLabel }
+                          onChange={
+                            (e) => {
+                              const reader=new FileReader()
+                              const file=e.target.files[0]
+                              let isValid
+                              switch (this.getExtension(file.type).toLowerCase()) {
+                                case 'jpeg' :
+                                  isValid=true
+                                case 'jpg' :
+                                  isValid=true
+                                case 'png' :
+                                  isValid=true
+                                case 'pdf' :
+                                  isValid=true
+                              }
+
+                              if (isValid) {
+                                reader.onloadend=() => {
+                                  if((imageUrlObject).length <= AdditionalDocuments)
+                                  {
+                                    this.setState({
+                                        fileObject: [...fileObject, file],
+                                        imageUrlObject: [ ...imageUrlObject , reader.result ]
+                                    })
+                                  }
+                                  else {}
+                                }
+                                reader.readAsDataURL(file)
+                             } else {
+                                 store.dispatch(NotifyActions.addNotify({
+                                     title : 'File Uploading',
+                                     message : 'The accepted attachments are JPG/PNG/PDF',
+                                     type : 'warning',
+                                     duration : 2000
+                                   })
+                                 )
+                               }
+                            }
+                          }
+                        />
+                        {
+                          imageUrlObject ?
+
+                          <div>
+                            {
+                              imageUrlObject.map((url, key ) =>
+                                <div className="mpl-attachment-form">
+                                  <img
+                                    src={ require('../../../ub-components/Notify/images/x-circle.png') }
+                                    className='close-button'
+                                    onClick={
+                                      () => {
+                                      }
+                                    }
+                                  />
+                                <div
+                                  key={ key }
+                                  style={ {
+                                    backgroundImage: `url('${url}')`,
+                                    width: 'auto',
+                                    height: '60px',
+                                    backgroundSize: 'contain',
+                                    backgroundRepeat: 'no-repeat',
+                                  } }
+                                >
+                                {
+                                  fileObject.map((file, key) =>
+                                    <h6
+                                      key={ key }
+                                      className="mpl-file-name">
+                                      { file.name }
+                                    </h6>
+                                  )
+                                }
+                                </div>
+                              </div>
+                          )
+                        }
+                      </div>
+                      :
+                      <div></div>
+                      }
+                    </div>
+                  )
+                }
+                <GenericButton
+                  type={ 'button' }
+                  text={ 'continue' }
+                  onClick={ () => this.setState({ showReviewModal: true }) }
+                  className={ 'brv-submit' } />
               </div>
-              <div className={ 'motor-grid-form' }>
-                <div>
-                  <br/>  <br/>
-                  <span className={ 'motor-icon-forms pesoSign' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    group={ 'motor-group-textbox' }
-                    container={ 'motor-form-icon-container' }
-                    value={ amountValue }
-                    onChange={ this.onChange }
-                    placeholder={ 'Desired Amount' }
-                    maxLength={ validateLoanType && (`${  validateLoanType.maximumLoanableAmount}`).length }
-                    type={ 'text' }/>
-                </div>
-              </div>
-              <div className={ 'motor-grid-form' }>
-                <div>
-                  <br/>  <br/>
-                  <span className={ 'motor-icon-forms transactionDate' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    group={ 'motor-group-textbox' }
-                    container={ 'motor-form-icon-container' }
-                    value={ `${ termOfLoan } (${ rateOfLoan } %)` }
-                    onChange={ (termOfLoan, rateOfLoan) =>
-                      this.setState({ termOfLoan, rateOfLoan }) }
-                    onClick={ () =>
-                      this.setState({ showTerm : true }) }
-                    placeholder={ 'Term of Loan' }
-                    type={ 'text' }
-                  />
-                </div>
-              </div>
-              <div className={ 'motor-grid-form' }>
-                <div>
-                  <br/>  <br/>
-                  <span className={ 'motor-icon-forms personGreyIcon' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    group={ 'motor-group-textbox' }
-                    container={ 'motor-form-icon-container' }
-                    value={ selectedSupplier ? selectedSupplier : null }
-                    onChange={ supplier =>
-                      this.setState({ selectedSupplier : supplier }) }
-                    onClick={ () =>
-                      this.setState({ showSupplier : true }) }
-                    placeholder={ 'Supplier Name' }
-                    type={ 'text' }/>
-                </div>
-              </div>
+              :
               <GenericButton
                 type={ 'button' }
                 text={ 'continue' }
-                onClick={ () =>
-                  onSubmit(
-                    payeeName,
-                    poaText,
-                    modeOfLoanId,
-                    termId,
-                    amountValue,
-                    selectedSupplier,
-                    file)
-                  }
-                className={ 'motor-submit' } />
-            </div>
-          </Card>
-          {
-            showFileUpload &&
-          <Card className={ 'motor-form-preview' }>
-            <h4>
-              Form Attachments
-            </h4>
-            <div className={ 'motor-body' }>
-            {
-              formAttachments.AdditionalDocuments && formAttachments.AdditionalDocuments.map((attachmentsLabel, key) =>
-                <FileUploader
-                   onChange={ this.handleImageChange }
-                   placeholder={  attachmentsLabel ? attachmentsLabel : 0 }
-                />
-              )
+                onClick={ () => this.setState({ showReviewModal: true }) }
+                className={ 'brv-submit' } />
             }
-            </div>
           </Card>
-          }
         </div>
       </div>
+      }
+  </div>
     )
   }
 }
