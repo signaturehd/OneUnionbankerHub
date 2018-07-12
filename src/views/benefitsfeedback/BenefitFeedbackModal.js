@@ -45,10 +45,7 @@ class BenefitFeedbackModal extends BaseMVPView {
     const { onClose } = this.props
 
     return (
-      <Modal
-        isDismisable={ true }
-        onClose={ onClose }
-      >
+      <Modal>
         { super.render() }
         <div className={ 'benefit-feedback' } >
           {
