@@ -433,20 +433,25 @@ export default class HRBenefitsService {
     accountNumber,
     releasingCenter,
     educationAidParam) {
-    const educationAidObject = {
-      accountNumber,
-      releasingCenter,
-      course : educationAidParam.course,
-      academicYear : educationAidParam.academicYear,
-      semester : educationAidParam.semester,
-      generalWeightedAverage : educationAidParam.gwa,
-      tuitionFee : educationAidParam.tuitionFee,
-      registrationFee : educationAidParam.registrationFee,
-      schoolId : educationAidParam.schoolId,
-      attachments : educationAidParam.attachments
-    }
-    return this.apiClient.post('v1/reimbursements/education/personal/submit', educationAidObject, {
-      headers : { token }
+      const formData = new FormData()
+      const educationAidObject = {
+        accountNumber,
+        releasingCenter,
+        course : educationAidParam.course,
+        academicYear : educationAidParam.academicYear,
+        semester : educationAidParam.semester,
+        generalWeightedAverage : educationAidParam.gwa,
+        tuitionFee : educationAidParam.tuitionFee,
+        registrationFee : educationAidParam.registrationFee,
+        schoolId : educationAidParam.schoolId,
+      }
+      formData.append('uuid', 12345)
+      formData.append('cert1', educationAidParam.attachments[0].file)
+      formData.append('cert2', educationAidParam.attachments[1].file)
+      formData.append('cert3', educationAidParam.attachments[2].file)
+      formData.append('body', JSON.stringify(educationAidObject))
+      return this.apiClient.post('v2/reimbursements/education/personal/submit', formData, {
+        headers : { token }
       })
   }
 
