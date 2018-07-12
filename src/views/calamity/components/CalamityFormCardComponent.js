@@ -14,7 +14,7 @@ import PropertyTypeModal from '../modal/PropertyTypeModal'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
-import { RequiredDecimalValidation, RequiredAlphabetValidation } from '../../../utils/validate'
+import { RequiredDecimalValidation, RequiredAlphabetValidation, MinMaxNumberValidation } from '../../../utils/validate'
 
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
@@ -352,12 +352,13 @@ class CalamityFormCardComponent extends Component {
                   value={ estimatedCost ? estimatedCost : '' }
                   onChange={
                     (e) =>{
-                      new RequiredDecimalValidation().isValid(e.target.value) ?
+                      new RequiredDecimalValidation().isValid(e.target.value) && new MinMaxNumberValidation(0, 30000).isValid(e.target.value)  ?
                         this.setState({ estimatedCost: e.target.value }):
                         this.setState({ estimatedCost: '' })
+
                     }
                    }
-                  placeholder={ 'Estimated Cost Repair' }
+                  placeholder={ 'Estimated Repair Cost' }
                   readOnly
                   type={ 'text' }
                 />
