@@ -92,7 +92,7 @@ class Notice extends BaseMVPView {
                     text={ 'Yes' }
                     onClick={
                       () =>  {
-                        this.isAgree(noticeResponse.transactionId, 0, benefitId),
+                        this.isAgree(noticeResponse.transactionId.toString(), 0, benefitId),
                         this.setState({ isDimissable : true, disableSubmit: true })
                         }
                       }
