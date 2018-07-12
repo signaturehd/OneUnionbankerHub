@@ -44,16 +44,16 @@ class EducationAidReviewModal extends Component {
     }=this.state
 
     const fileORName = {
-       "name" : data.fileOR.name,
-       "attachments" : data.imagePrevOR
+      "file" : data.fileOR,
+      "name" : data.fileOR.name
      }
      const fileCOGName  = {
-       "name" : data.fileCOG.name,
-       "attachments" : data.imagePrevCOG
+      "file" : data.fileCOG,
+      "name" : data.fileCOG.name
      }
      const fileRegFormName  = {
-       "name" : data.fileCOG.name,
-       "attachments" : data.imagePrevRegForm
+      "file" : data.fileRegForm,
+      "name" : data.fileRegForm.name
      }
 
      const fileAttachments = [fileORName, fileCOGName, fileRegFormName]
