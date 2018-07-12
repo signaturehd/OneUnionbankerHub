@@ -23,6 +23,7 @@ import {
   Card,
   Modal,
   GenericButton,
+  GenericTextBox,
   CircularLoader,
   FloatingActionButton
  } from '../../ub-components'
@@ -46,7 +47,8 @@ class BenefitsFragment extends BaseMVPView {
       isAccountNumber: null,
       carValidated: [],
       accountNumber: '', // this is only used to handle onChange of input modal
-      enableLoader: false
+      enableLoader: false,
+      enabledAccountNumberLoader: false,
     }
   }
 
@@ -89,6 +91,15 @@ class BenefitsFragment extends BaseMVPView {
     this.setState({ enableLoader : false })
   }
 
+  /* Loader for Account Number  */
+  showLoaderValidatingAccountNumber (enabledAccountNumberLoader) {
+    this.setState({ enabledAccountNumberLoader : true })
+  }
+
+  hideLoaderValidatingAccountNumber (enabledAccountNumberLoader) {
+    this.setState({ enabledAccountNumberLoader : false })
+  }
+
   isAccountNumber (bool) {
     if (bool) {
       this.setState({ showAccountNumberModal: true, isAccountNumber : bool })
@@ -113,7 +124,8 @@ class BenefitsFragment extends BaseMVPView {
       withDeathCert,
       isAccountNumber,
       carValidated,
-      enableLoader
+      enableLoader,
+      enabledAccountNumberLoader
     } = this.state
 
     const benefitsOptions = [{
@@ -171,18 +183,41 @@ class BenefitsFragment extends BaseMVPView {
 
       {
         showAccountNumberModal &&
-        <InputModal
+        <Modal
           isDismisable={ true }
-          onClose={ () => this.setState({ showAccountNumberModal : false }) }
-          onChange={ e => this.setState({ accountNumber:   e.target.value }) }
-          placeholder={ 'Account Number' }
-          type={ 'text' }
-          onSubmit={ e => {
-                e.preventDefault()
-                this.presenter.validateAccountNumber(accountNumber)
-              }
+          onClose={ () =>
+            this.setState({ showAccountNumberModal: false }) }
+        >
+        <div>
+          {
+          enabledAccountNumberLoader ?
+            <center>
+              <h4>Please wait while validating the Account Number</h4>
+              <br/>
+              <CircularLoader show={ true }/>
+            </center>
+            :
+              <div>
+                <GenericTextBox
+                  onChange={ e => this.setState({ accountNumber:   e.target.value }) }
+                  placeholder={ 'Account Number' }
+                  type={ 'text' }
+                />
+              <br/>
+              <center>
+                <GenericButton
+                  onClick={ e => {
+                    e.preventDefault()
+                    this.presenter.validateAccountNumber(accountNumber)
+                    }
+                  }
+                  text={ 'Submit' }
+                  />
+              </center>
+            </div>
             }
-          />
+          </div>
+        </Modal>
         }
         {
           showReleasingCenterModal &&
