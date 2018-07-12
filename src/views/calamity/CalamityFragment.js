@@ -150,17 +150,7 @@ class CalamityFragment extends BaseMVPView {
       )
     }
     else {
-      const fileBCName = {
-        "name" : fileBC.name,
-        "attachments" : fileBC
-      }
-      const fileDPName  = {
-        "name" : fileDP.name,
-        "attachments" : fileDP
-      }
-
-      const fileAttachments = [fileBCName, fileDPName]
-         this.presenter.addCalamityAssistance(
+      this.presenter.addCalamityAssistance(
            calamityId,
            preferredDate,
            property,
@@ -168,7 +158,8 @@ class CalamityFragment extends BaseMVPView {
            propertyType,
            acquisitionValue,
            estimatedCost,
-           fileAttachments
+           fileBC,
+           fileDP
        )
     }
   }

@@ -58,7 +58,8 @@ class BereavementFormCardComponent extends Component {
   }
 
   getDeceasedDate (e) {
-    this.setState({ deceasedDate  : e.format('MM/DD/YYYY') })
+    this.setState({ deceasedDate  : e.format('MM/DD/YYYY'),
+                    funeralDate  : e.format('MM/DD/YYYY') })
   }
 
   getFuneralDate (e) {
@@ -306,7 +307,7 @@ class BereavementFormCardComponent extends Component {
                     readOnly
                     minDate={ moment(deceasedDate) }
                     value={ funeralDate ? funeralDate : 'Date of Wake' }
-                    selected={ moment(deceasedDate) }
+                    selected={ moment(funeralDate) }
                     onChange={ this.getFuneralDate }
                     className={ 'calendar  font-size-12px' }
                     calendarClassName={ 'calendarClass' }

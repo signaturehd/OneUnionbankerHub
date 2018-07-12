@@ -36,7 +36,8 @@ export default class CalamityPresenter {
    propertyType,
    acquisitionValue,
    estimatedCost,
-   fileAttachments) {
+   file1,
+ file2) {
   this.view.showCircularLoader()
   this.addCalamityInteractor.execute(calamityAssistanceParam(
     calamityId,
@@ -46,13 +47,14 @@ export default class CalamityPresenter {
     propertyType,
     acquisitionValue,
     estimatedCost,
-    fileAttachments
+    file1,
+    file2
     )
   )
   .subscribe(calamityAssistance => {
      this.view.noticeOfUndertaking(calamityAssistance)
      this.view.hideCircularLoader()
-     
+
    }, e => {
      this.view.noticeResponse(e)
      this.view.hideCircularLoader()

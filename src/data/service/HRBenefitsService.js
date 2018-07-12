@@ -609,7 +609,8 @@ export default class HRBenefitsService {
     }
 
     formData.append('uuid', 12345)
-    formData.append('file', calamityAssistanceParam.attachments ? calamityAssistanceParam.attachments: null)
+    formData.append('file', calamityAssistanceParam.file1)
+    formData.append('file2', calamityAssistanceParam.file2)
     formData.append('body', JSON.stringify(calamityObject))
     return this.apiClient.post('v1/calamity/availment', formData,{
       headers: { token }
