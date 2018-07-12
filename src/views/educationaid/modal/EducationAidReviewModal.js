@@ -15,8 +15,19 @@ class EducationAidReviewModal extends Component {
 
     this.state={
       disableSubmit : false,
-      isDismisable : true
+      isDismisable : true,
+      enabledLoader : false
     }
+  }
+
+
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
   }
 
   render () {
@@ -28,7 +39,8 @@ class EducationAidReviewModal extends Component {
 
     const {
        disableSubmit,
-       isDismisable
+       isDismisable,
+       enabledLoader
     }=this.state
 
     const fileORName = {
@@ -75,6 +87,13 @@ class EducationAidReviewModal extends Component {
         isDismisable={ isDismisable }
         onClose={ onClose }
       >
+      {disableSubmit ?
+      <center>
+        <h3>Please wait while we&#39;re sending your application</h3>
+        <br/>
+        <br/>
+        <CircularLoader show={true}/>
+      </center>              :
         <div>
           <h2>Education Aid Description</h2>
           <br/>
@@ -122,6 +141,7 @@ class EducationAidReviewModal extends Component {
               onClick={ onClose } />
           </center>
         </div>
+      }
       </Modal>
     )
   }
