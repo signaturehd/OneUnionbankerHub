@@ -6,7 +6,8 @@ export default (
   propertyType,
   acquisitionValue,
   estimatedCost,
-  attachments) => ({
+  file1,
+file2) => ({
     calamityId,
     date,
     property,
@@ -14,5 +15,6 @@ export default (
     propertyType,
     acquisitionValue,
     estimatedCost,
-    attachments
+    file1,
+    file2
   })
