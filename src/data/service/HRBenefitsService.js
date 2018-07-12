@@ -433,7 +433,6 @@ export default class HRBenefitsService {
     accountNumber,
     releasingCenter,
     educationAidParam) {
-      console.log(token +"\n"+accountToken+"\n"+accountNumber+"\n"+releasingCenter+"\n"+educationAidParam);
     const educationAidObject = {
       accountNumber,
       releasingCenter,
