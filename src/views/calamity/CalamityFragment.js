@@ -152,11 +152,11 @@ class CalamityFragment extends BaseMVPView {
     else {
       const fileBCName = {
         "name" : fileBC.name,
-        "attachments" : imgPrevBC
+        "attachments" : fileBC
       }
       const fileDPName  = {
         "name" : fileDP.name,
-        "attachments" : imgPrevDP
+        "attachments" : fileDP
       }
 
       const fileAttachments = [fileBCName, fileDPName]

@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
+import {
+  GenericTextBox,
+  Card,
+  GenericButton,
+  FileUploader
+} from '../../../ub-components/'
+
 import './styles/calamityComponentStyle.css'
 
 import { RequiredValidation, MoneyValidation } from '../../../utils/validate'
@@ -14,7 +20,11 @@ import PropertyTypeModal from '../modal/PropertyTypeModal'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
-import { RequiredDecimalValidation, RequiredAlphabetValidation } from '../../../utils/validate'
+import {
+  RequiredDecimalValidation,
+  RequiredAlphabetValidation,
+  MinMaxNumberValidation
+} from '../../../utils/validate'
 
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
@@ -39,7 +49,7 @@ class CalamityFormCardComponent extends Component {
       fileDP: null,
       imgPrevBC: null,
       imgPrevDP: null,
-      propertyTypeValue: [{description: 'Replaceable'},{description: 'Irreplaceable'}]
+      propertyTypeValue: [{description: 'Replaceable'}, {description: 'Irreplaceable'}]
     }
     this.onGetClicked=this.onGetClicked.bind(this)
     this.handleChange=this.handleChange.bind(this)
@@ -352,12 +362,14 @@ class CalamityFormCardComponent extends Component {
                   value={ estimatedCost ? estimatedCost : '' }
                   onChange={
                     (e) =>{
-                      new RequiredDecimalValidation().isValid(e.target.value) ?
+                      new RequiredDecimalValidation().isValid(e.target.value) &&
+                      new MinMaxNumberValidation(0, 30000).isValid(e.target.value) ?
                         this.setState({ estimatedCost: e.target.value }):
                         this.setState({ estimatedCost: '' })
+
                     }
                    }
-                  placeholder={ 'Estimated Cost Repair' }
+                  placeholder={ 'Estimated Repair Cost' }
                   readOnly
                   type={ 'text' }
                 />
@@ -392,7 +404,9 @@ class CalamityFormCardComponent extends Component {
                     }
                   }
                 />
-                <div style={ styles.image1 }><h6 className="calamity-file-name">{ fileBC.name }</h6></div>
+                <div style={ styles.image1 }>
+                <h6 className="calamity-file-name">{ fileBC.name }</h6>
+                </div>
               </div>
             </div>
           }
@@ -455,7 +469,9 @@ class CalamityFormCardComponent extends Component {
                     }
                   }
                 />
-                <div style={ styles.image2 }><h6 className="calamity-file-name">{ fileDP.name }</h6></div>
+                <div style={ styles.image2 }>
+                <h6 className="calamity-file-name">{ fileDP.name }</h6>
+                </div>
               </div>
             </div>
           }
