@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card, Line } from '../../../ub-components/'
+import { Card, Line, FloatingActionButton } from '../../../ub-components/'
 import SettingsProfileDescriptions from './SettingsProfileDescriptions'
 
 import ContactInfoModal from '../modals/ContactsModal'
@@ -198,9 +198,14 @@ class SettingsProfileCardComponent extends Component {
           <SkillsFragment
             profileSkills={ profile && profile.skills }/>
         </div>
+
       </div>
       <div className={ 'profile-settings-grid-column-mobile' }>
       </div>
+
+      <FloatingActionButton
+        text="+"
+      />
     </div>
     )
   }

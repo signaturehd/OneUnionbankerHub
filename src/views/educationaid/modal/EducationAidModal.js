@@ -66,7 +66,11 @@ class EducationAidModal extends Component {
 
 EducationAidModal.propTypes = {
     onClose : PropTypes.func,
-    tog : PropTypes.object,
+    tog : PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array,
+      PropTypes.string
+    ]),
     onSubmit : PropTypes.func,
 }
 

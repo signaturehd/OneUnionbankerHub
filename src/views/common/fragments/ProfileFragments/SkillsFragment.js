@@ -9,6 +9,8 @@ import { Card, Line } from '../../../../ub-components/'
 
 import './styles/profileFragment.css'
 
+import defaultImage from '../../../../images/updilimanDefault.png'
+
 class SkillsFragment extends Component {
 
   constructor (props) {
@@ -52,10 +54,11 @@ class SkillsFragment extends Component {
                   <img
                     className={ 'components-image' }
                     key={ key }
-                    src={ skills.imagePath }/>
+                    src={ defaultImage }/>
                 </div>
                 <div>
-                  <h2>{ skills.name }</h2>
+                  <h2>{ `Name: ${ skills.name}` }</h2>
+                  <h2>{ `Level: ${skills.level}` }</h2>
                     <Rating
                       emptySymbol = { <MdStarOutline style={{ fontSize: 35, color : '#c65e11' }} /> }
                       fullSymbol = { <MdStar style={{ fontSize: 35,  color : '#c65e11' }} /> }

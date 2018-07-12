@@ -75,7 +75,7 @@ export default class HRBenefitsService {
     const dentalRObject = {
       accountNumber,
       releasingCenter,
-      type : 1,
+      type : dentalReimbursementParam.dependentId !== 1 ? 2 : 1,
       procedures : dentalReimbursementParam.procedure
     }
 
@@ -343,11 +343,11 @@ export default class HRBenefitsService {
         principalAmount : mplPurposeLoanAddParam.principalLoanAmount
       },
       promissoryNoteNumbers : [],
-      distributor : mplPurposeLoanAddParam.payeeName,
+      distributor : mplPurposeLoanAddParam.fullname,
     }
-    formData.append('uuid', 12345)
-    formData.append('body', JSON.stringify(multiLoanBodyObject))
-    formData.append('MPL-cert', mplPurposeLoanAddParam.attachments)
+      formData.append('uuid', 12345)
+      formData.append('body', JSON.stringify(multiLoanBodyObject))
+      formData.append('attachments' , mplPurposeLoanAddParam.attachments)
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
@@ -408,7 +408,7 @@ export default class HRBenefitsService {
     }
     formData.append('body', JSON.stringify(addCarleaseObject))
     formData.append('uuid', 12345)
-    formData.append('attachment1', carRequestParam.attachments)
+    formData.append('attachment1', carRequestParam.attachments ? carRequestParam.attachments : null)
     return this.apiClient.post('v1/leases/car', formData, {
       headers: { token }
     })
@@ -433,20 +433,25 @@ export default class HRBenefitsService {
     accountNumber,
     releasingCenter,
     educationAidParam) {
-    const educationAidObject = {
-      accountNumber,
-      releasingCenter,
-      course : educationAidParam.course,
-      academicYear : educationAidParam.academicYear,
-      semester : educationAidParam.semester,
-      generalWeightedAverage : educationAidParam.gwa,
-      tuitionFee : educationAidParam.tuitionFee,
-      registrationFee : educationAidParam.registrationFee,
-      schoolId : educationAidParam.schoolId,
-      attachments : educationAidParam.attachments
-    }
-    return this.apiClient.post('v1/reimbursements/education/personal/submit', educationAidObject, {
-      headers : { token }
+      const formData = new FormData()
+      const educationAidObject = {
+        accountNumber,
+        releasingCenter,
+        course : educationAidParam.course,
+        academicYear : educationAidParam.academicYear,
+        semester : educationAidParam.semester,
+        generalWeightedAverage : educationAidParam.gwa,
+        tuitionFee : educationAidParam.tuitionFee,
+        registrationFee : educationAidParam.registrationFee,
+        schoolId : educationAidParam.schoolId,
+      }
+      formData.append('uuid', 12345)
+      formData.append('cert1', educationAidParam.attachments[0].file)
+      formData.append('cert2', educationAidParam.attachments[1].file)
+      formData.append('cert3', educationAidParam.attachments[2].file)
+      formData.append('body', JSON.stringify(educationAidObject))
+      return this.apiClient.post('v2/reimbursements/education/personal/submit', formData, {
+        headers : { token }
       })
   }
 
@@ -536,14 +541,19 @@ export default class HRBenefitsService {
 
    addGroupAid (token, accountToken, accountNumber, releasingCenter, groupAidParam) {
      const formData = new FormData()
-     const grantPlanObject = {
-       grantType : groupAidParam.grantId,
-       accountNumber,
-       releasingCenter
+     const groupPlanObject = {
+        accountNumber,
+        releasingCenter,
+        dependentId: groupAidParam.dependentId,
+        amount: groupAidParam.desiredAmount,
+        effectivityDate: groupAidParam.effectiveDate,
+        companyName: groupAidParam.company,
+        paymentDurationId: groupAidParam.durationOfPaymentId
      }
      formData.append('uuid', 12345)
-     formData.append('cert', groupAidParam.file)
-     formData.append('body', JSON.stringify(grantPlanObject))
+     formData.append('cert1', groupAidParam.file1)
+     formData.append('cert2', groupAidParam.file2)
+     formData.append('body', JSON.stringify(groupPlanObject))
      return this.apiClient.post('v2/reimbursements/education/dependent/submit', formData, {
        headers : { token }
      })
@@ -557,7 +567,12 @@ export default class HRBenefitsService {
     })
   }
 
-  addBereavement (token, addBereavementParam) {
+  addBereavement (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addBereavementParam) {
     const formData = new FormData()
     const bereavementObject = {
       id : addBereavementParam.dependentId,
@@ -577,13 +592,32 @@ export default class HRBenefitsService {
 
   /* Calamity Assitance */
   validateCalamityAssistance (token) {
-    return this.apiClient.get('v1/calamity/validate', {
+    return this.apiClient.post('v1/calamity/validate', null, {
       headers: { token }
     })
   }
 
-  addCalamityAssistance (token, calamityAssistanceParam) {
-    return this.apiClient.get('v1/calamity/availment', {
+  addCalamityAssistance (token, accountToken, accountNumber, releasingCenter, calamityAssistanceParam) {
+    const formData = new FormData()
+    const calamityObject = {
+      id: calamityAssistanceParam.calamityId,
+      accountNumber,
+      releasingCenter,
+      date: calamityAssistanceParam.date,
+      damageProperty: [{
+        propertyName: calamityAssistanceParam.property,
+        description: calamityAssistanceParam.propertyDesc,
+        propertyType: calamityAssistanceParam.propertyType,
+        acquisitionValue: calamityAssistanceParam.acquisitionValue,
+        repairCost: calamityAssistanceParam.estimatedCost
+      }]
+    }
+
+    formData.append('uuid', 12345)
+    formData.append('file', calamityAssistanceParam.file1)
+    formData.append('file2', calamityAssistanceParam.file2)
+    formData.append('body', JSON.stringify(calamityObject))
+    return this.apiClient.post('v1/calamity/availment', formData,{
       headers: { token }
     })
   }

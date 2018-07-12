@@ -5,6 +5,8 @@ import { Card, Line } from '../../../../ub-components/'
 
 import './styles/profileFragment.css'
 
+import defaultImage from '../../../../images/updilimanDefault.png'
+
 class ExperienceComponent extends Component {
 
   constructor (props) {
@@ -41,13 +43,21 @@ class ExperienceComponent extends Component {
                     <img
                       className={ 'components-image' }
                       key={ key }
-                      src={ experience.imagePath }/>
+                      src={ defaultImage }/>
                   </div>
                   <div>
-                    <h2 className={ 'font-size-18px font-weight-normal' }>{ experience.company }</h2>
-                    <h3 className={ 'font-size-17px font-weight-lighter' }>{ experience.position }</h3>
-                    <h4 className={ 'font-size-15px font-weight-lighter' }>{ experience.year }</h4>
-                    <h5 className={ 'font-size-15px font-weight-lighter' }>{ experience.location }</h5>
+                    <h2 className={ 'font-size-18px font-weight-normal' }>
+                      { experience.name }
+                    </h2>
+                    <h3 className={ 'font-size-17px font-weight-lighter' }>
+                      { experience.level }
+                    </h3>
+                    <h4 className={ 'font-size-15px font-weight-lighter' }>
+                      { `${ experience.startYear }+ ' - ' ${ experience.endYear } `  }
+                    </h4>
+                    <h5 className={ 'font-size-15px font-weight-lighter' }>
+                      { experience.address }
+                    </h5>
                   </div>
                 </div>
               )
@@ -63,10 +73,18 @@ class ExperienceComponent extends Component {
                       src={ experience.imagePath }/>
                   </div>
                   <div>
-                    <h2 className={ 'font-size-18px font-weight-normal' }>{ experience.company }</h2>
-                    <h3 className={ 'font-size-17px font-weight-lighter' }>{ experience.position }</h3>
-                    <h4 className={ 'font-size-15px font-weight-lighter' }>{ experience.year }</h4>
-                    <h5 className={ 'font-size-15px font-weight-lighter' }>{ experience.location }</h5>
+                    <h2 className={ 'font-size-18px font-weight-normal' }>
+                      { experience.company }
+                    </h2>
+                    <h3 className={ 'font-size-17px font-weight-lighter' }>
+                      { experience.position }
+                    </h3>
+                    <h4 className={ 'font-size-15px font-weight-lighter' }>
+                      { experience.year }
+                    </h4>
+                    <h5 className={ 'font-size-15px font-weight-lighter' }>
+                      { experience.location }
+                    </h5>
                   </div>
                 </div>
               )

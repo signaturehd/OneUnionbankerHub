@@ -45,10 +45,7 @@ class BenefitFeedbackModal extends BaseMVPView {
     const { onClose } = this.props
 
     return (
-      <Modal
-        isDismisable={ true }
-        onClose={ onClose }
-      >
+      <Modal>
         { super.render() }
         <div className={ 'benefit-feedback' } >
           {
@@ -74,10 +71,15 @@ class BenefitFeedbackModal extends BaseMVPView {
               </center>
               <br/>
               <br/>
-              <textarea
-                className={ 'default-feedback-textarea' }
-                placeholder={ 'Your Feedback' }
-                onChange={ e => this.setState({ comment : e.target.value }) }/>
+              {
+                rating <= 3 ?
+                <textarea
+                  className={ 'default-feedback-textarea' }
+                  placeholder={ 'Your Feedback' }
+                  onChange={ e => this.setState({ comment : e.target.value }) }/>
+                :
+                <div></div>
+              }
               <br/>
               <br/>
               <div className={ 'benefit-feedback-actions-grid' }>

@@ -132,7 +132,7 @@
   background-image: url('../../../../images/icons/ic_add_circle_outline_green_500_24dp.png');
 }
 
-.mpl-icons {
+.mpl-icons-add {
   background-size: contain;
   cursor: pointer;
   background-color: transparent;
@@ -140,4 +140,21 @@
   height: 30px;
   width: 30px;
   background-repeat: no-repeat;
+}
+
+.mpl-attachment-form {
+  padding: 10px;
+  margin: 0 30px 0 30px;
+  background-color: #f6f6f6;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: #DBDBE0;
+}
+
+.mpl-file-name {
+  margin-left: 120px;
+  line-height: 60px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: normal;
 }

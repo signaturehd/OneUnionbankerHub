@@ -17,24 +17,32 @@ class HousingAssistanceFragment extends BaseMVPView {
 
   constructor (props) {
     super(props)
-    this.state = {
+    this.state={
       purposeOfAvailment: [],
       selectedPoa: '',
       formAttachments: [],
       loanType: 3,
       validateLoanType : [],
       offset : [],
-      enabledLoader : false,
+      enabledLoader : true,
       noticeResponse : null, /* notice response*/
       showNoticeResponseModal : false,
       showBenefitFeedbackModal : false,
       showNoticeModal : false,
       showConfirmation : false,
+      AdditionalDocuments: 0,
+      RequiredDocuments: 0,
+      isPayeeOrDealerResp : '',
+      employeeName: [],
+      storedIsDealerOrPayee: [],
+      computationOffset: [],
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
+    this.presenter.isManagersCheck()
+    this.presenter.getProfile()
     this.presenter.getMplTypes()
     this.presenter.getMplValidate(this.state.loanType)
     this.presenter.getMplPurposeOfAvailment(
@@ -46,6 +54,11 @@ class HousingAssistanceFragment extends BaseMVPView {
   /* Notice Response*/
   noticeOfUndertaking (noticeResponse) {
     this.setState({ showNoticeModal : true, noticeResponse })
+  }
+
+
+  noticeResponse (noticeResponse) {
+    this.setState({showConfirmation: false, noticeResponse })
   }
 
   /* Implementation*/
@@ -62,8 +75,24 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.setState({ validateLoanType })
   }
 
+  isManagersCheck (isPayeeOrDealerResp) {
+    this.setState({ isPayeeOrDealerResp })
+  }
+
+  getEmployeeName (employeeName) {
+    this.setState({ employeeName })
+  }
+
   showPurposeOfAvailment (purposeOfAvailment) {
     this.setState({ purposeOfAvailment })
+  }
+
+  showAdditionalFilesCount (AdditionalDocuments) {
+    this.setState({ AdditionalDocuments })
+  }
+
+  showAdRequiredFilesCount (RequiredDocuments) {
+    this.setState({ RequiredDocuments })
   }
 
   /* Loader*/
@@ -93,36 +122,47 @@ class HousingAssistanceFragment extends BaseMVPView {
       showBenefitFeedbackModal,
       showNoticeResponseModal,
       noticeResponse,
-      response
-    } = this.state
+      response,
+      RequiredDocuments,
+      AdditionalDocuments,
+      isPayeeOrDealerResp,
+      employeeName,
+      storedIsDealerOrPayee,
+      computationOffset
+    }=this.state
+
+    const empName=employeeName && employeeName.fullname
+    const updateIsDealerOrPayeeName=[...storedIsDealerOrPayee]
+    updateIsDealerOrPayeeName.push(isPayeeOrDealerResp)
+    updateIsDealerOrPayeeName.push(empName)
 
     return (
       <div>
         {
           showNoticeModal &&
           <NoticeModal
-            onClose = { () => this.setState({ showNotice : false })}
-            noticeResponse = { noticeResponse }
-            benefitId = { loanType }
-            onDismiss = { (showNoticeModal, response) =>
+            onClose={ () => this.setState({ showNotice : false })}
+            noticeResponse={ noticeResponse }
+            benefitId={ loanType }
+            onDismiss={ (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
         }
         {
           showNoticeResponseModal &&
           <ResponseModal
-            onClose = { () => {
+            onClose={ () => {
               this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
             }}
-            noticeResponse = { response }
+            noticeResponse={ response }
           />
         }
 
         {
           showBenefitFeedbackModal &&
           <BenefitFeedbackModal
-            benefitId = { loanType }
-            onClose = { () => {
+            benefitId={ loanType }
+            onClose={ () => {
               this.props.history.push('/mybenefits/benefits/loans'),
               this.setState({ showBenefitFeedbackModal : false })
             }}
@@ -131,25 +171,28 @@ class HousingAssistanceFragment extends BaseMVPView {
 
         <div>
           <i
-            className = { 'back-arrow' }
-            onClick = { this.navigate.bind(this) }>
+            className={ 'back-arrow' }
+            onClick={ this.navigate.bind(this) }>
           </i>
-          <h2 className = { 'header-margin-default' }>
+          <h2 className={ 'header-margin-default' }>
             Housing Assistance Loan
           </h2>
         </div>
           {
             enabledLoader ?
-             <center className = { 'circular-loader-center' }>
-               <CircularLoader show = { this.state.enabledLoader }/>
+             <center className={ 'circular-loader-center' }>
+               <CircularLoader show={ this.state.enabledLoader }/>
              </center> :
             <FormComponent
-              loanType = { loanType }
-              purposeOfAvailment = { purposeOfAvailment }
-              validateLoanType = { validateLoanType }
-              formAttachments = { formAttachments }
-              offset = { offset }
-              presenter = { this.presenter }
+              loanType={ loanType }
+              isPayeeOrDealer={ updateIsDealerOrPayeeName ? updateIsDealerOrPayeeName : '(Not yet Provided)' }
+              purposeOfAvailment={ purposeOfAvailment }
+              validateLoanType={ validateLoanType }
+              formAttachments={ formAttachments }
+              offset={ offset }
+              AdditionalDocuments={ AdditionalDocuments }
+              RequiredDocuments={ RequiredDocuments }
+              presenter={ this.presenter }
             />
           }
       </div>

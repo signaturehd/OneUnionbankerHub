@@ -50,14 +50,15 @@ export default class BenefitsPresenter {
   }
 
   getCarValidate () {
-    this.view.showLoading()
+    this.view.showCircularLoader()
     this.getCarValidateInteractor.execute()
     .subscribe(
       validate => {
-        this.view.hideLoading()
+        this.view.hideCircularLoader()
+        this.view.showCarValidated(validate)
       }, error => {
+        this.view.hideCircularLoader()
         this.view.navigate()
-        this.view.hideLoading()
       }
     )
   }
@@ -94,13 +95,13 @@ export default class BenefitsPresenter {
   }
 
   validateAccountNumber (accountNumber) {
-    this.view.showLoading()
+    this.view.showLoaderValidatingAccountNumber()
     this.validateAccountNumberInteractor.execute(accountNumber)
       .subscribe(resp => {
-        this.view.hideLoading()
+        this.view.hideLoaderValidatingAccountNumber()
         this.view.onValidAccountNumber()
       }, error => {
-        this.view.hideLoading()
+        this.view.hideLoaderValidatingAccountNumber()
         // TODO prompt generic error
       })
   }

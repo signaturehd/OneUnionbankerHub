@@ -16,12 +16,8 @@ class EducationGroupAidReviewModal extends Component {
 
   render () {
     const {
-        grantPlan,
-        grantId,
-        grantType,
-        grantAmount,
-        file,
-        imagePreviewUrl,
+        data,
+        attachments,
         submitForm,
         onClose
     } = this.props
@@ -33,13 +29,21 @@ class EducationGroupAidReviewModal extends Component {
 
     const styles = {
       image1 : {
-        backgroundImage: `url('${imagePreviewUrl}')`,
+        backgroundImage: `url('${data.imagePreviewUrl1}')`,
+        width : 'auto',
+        height : '150px',
+        backgroundSize : 'cover',
+        backgroundRepeat : 'no-repeat',
+      },
+      image2 : {
+        backgroundImage: `url('${data.imagePreviewUrl2}')`,
         width : 'auto',
         height : '150px',
         backgroundSize : 'cover',
         backgroundRepeat : 'no-repeat',
       }
     }
+
     return (
       <Modal
         isDismisable = { isDismisable }
@@ -54,26 +58,35 @@ class EducationGroupAidReviewModal extends Component {
               <CircularLoader show={true}/>
             </center>              :
             <div>
-              <h2>Education Grant - Plan Description</h2>
+              <h2>Education Group - Plan Description</h2>
               <br/>
-              <h4>Dependentsx : { grantPlan.dependent }</h4>
-              <h4>Company : { grantPlan.company }</h4>
-              <h4>Duration of Premium Payment : { grantPlan.durationOfPremium }</h4>
-              <h4>Effectivity Date/Coverage Insurance : { grantPlan.effectivityDate }</h4>
-              <h4>Maturity : { grantPlan.maturityDate }</h4>
-              <h4>Type of Grant : { grantType }</h4>
-              <h4>Amount : { grantAmount }</h4>
-              <h4>Form Attachments : { file.name }</h4>
+              <h4>Dependent : { data.dependent.name }</h4>
+              <h4>Company : { data.company }</h4>
+              <h4>Desired Amount : { data.desiredAmount }</h4>
+              <h4>Duration of Premium Payment : { data.durationOfPayment.paymentDuration }</h4>
+              <h4>Effectivity Date : { data.effectivityDateText }</h4>
+              <h4>Maturity : { data.dependent.months }</h4>
+              <h4>{ attachments[0] } : { data.file1.name }</h4>
+              <h4>{ attachments[1] } : { data.file2.name }</h4>
               <br/>
               <div className = { 'education-image-display' }>
                 <div style = {styles.image1}></div>
+                <div style = {styles.image2}></div>
               </div>
               <br/>
             <center>
               <GenericButton
                 onClick = { () => {
                   this.setState({ disableSubmit : true, isDismisable: false })
-                  submitForm(grantId, grantAmount, file)
+                  submitForm(
+                    data.dependent.id,
+                    data.desiredAmount,
+                    data.effectiveDate.format('DD-MM-YYYY'),
+                    data.company,
+                    data.durationOfPayment.id,
+                    data.file1,
+                    data.file2
+                  )
                 }
               }
                 text = { 'confirm' }

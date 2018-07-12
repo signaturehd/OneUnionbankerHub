@@ -1,9 +1,15 @@
 export default class AddBereavementInteractor {
+
   constructor (client) {
     this.client = client
   }
 
-  execute (AddBereavementParam) {
-    return this.client.addBereavementInteractor(this.client.getToken(), AddBereavementParam)
+  execute (addBereavementParam) {
+    return this.client.addBereavement(
+      this.client.getToken(),
+      this.client.getAccountToken(),
+      this.client.getAccountNumber(),
+      this.client.getReleasingCenter(),
+      addBereavementParam)
   }
 }

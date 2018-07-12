@@ -520,24 +520,43 @@ export default class HRBenefitsClient {
   }
 
   /* Bereavement */
-  getBereveavementValidate (token) {
+  validateBereavement (token) {
     return this.service.validateBereavement(token)
       .pipe(ServiceErrorOperator())
   }
 
-  addBereavement (token, addBereavementParam) {
-    return this.service.addBereavement(token, addBereavementParam)
+  addBereavement (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addBereavementParam) {
+    return this.service.addBereavement(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      addBereavementParam)
       .pipe(ServiceErrorOperator())
   }
 
   /* Calamity Assitance */
-  getCalamityAssistanceValidate (token) {
+  validateCalamityAssistance (token) {
     return this.service.validateCalamityAssistance(token)
       .pipe(ServiceErrorOperator())
   }
 
-  addCalamityAssistance (token) {
-    return this.service.addCalamityAssistance(token)
+  addCalamityAssistance (token,
+  accountToken,
+  accountNumber,
+  releasingCenter,
+  calamityAssistanceParam) {
+  return this.service.addCalamityAssistance(
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    calamityAssistanceParam)
       .pipe(ServiceErrorOperator())
   }
 }

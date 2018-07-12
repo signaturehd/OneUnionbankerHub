@@ -18,7 +18,9 @@ class Notice extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-      disableSubmit : false
+      disableSubmit : false,
+      showValidatedCofirmation: false,
+      showCancelCofirmation: false
     }
     this.onFailed = this.onFailed.bind(this)
   }
@@ -37,7 +39,13 @@ class Notice extends BaseMVPView {
 
   render () {
     const { noticeResponse, onClose, back, benefitId, onDismiss } = this.props
-    const { isDismissable, disableSubmit } = this.state
+    const {
+      isDismissable,
+      disableSubmit,
+      showValidatedCofirmation,
+      showCancelCofirmation
+    } = this.state
+
     return (
       <Modal
         isDismissable = { isDismissable }
@@ -60,16 +68,13 @@ class Notice extends BaseMVPView {
           <div>
           <center>
             <GenericButton text = {'Agree'} className = { 'notice-button-modal' }
-              onClick = { () => {
-                  this.isAgree(noticeResponse.transactionId, 1, benefitId),
-                  this.setState({ isDimissable : true, disableSubmit: true })
-                }
+              onClick = { () =>
+                  this.setState({ showValidatedCofirmation : true  })
               }
             />
             <GenericButton text = {'Disagree'} className = { 'notice-button-modal' }
               onClick = { () => {
-                  this.isAgree(noticeResponse.transactionId, 0, benefitId),
-                  this.setState({ isDimissable : true, disableSubmit: true })
+                this.setState({ showCancelCofirmation : true  })
                 }
               }
             />

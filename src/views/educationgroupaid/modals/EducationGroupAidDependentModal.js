@@ -1,71 +1,54 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal , GenericButton, CircularLoader } from '../../../ub-components/'
-
+import { Modal, GenericButton } from '../../../ub-components/'
 import './styles/educationGroupAidModalStyle.css'
 
 class EducationGroupAidDependentModal extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      typeOfGrant : [],
-      enabledLoader : false
-    }
   }
 
-  showLoader () {
-    this.setState({ enabledLoader : true })
-  }
-
-  hideLoader () {
-    this.setState({ enabledLoader : false })
-  }
-
-  onGetClicked (id, name, amount, attachment) {
-    this.props.onSubmit(id, name, amount, attachment)
+/*
+  Get Dependent Data, display procedures
+*/
+  sendDependents (dependent) {
+    this.props.chosenDependent(dependent, false)
     this.props.onClose()
   }
 
   render () {
-    const { onClose, tog } = this.props
-    const { enabledLoader } = this.state
-    return (
-      <Modal
-        onClose = { onClose }
-        isDismisable = { true }>
-        <center>
-          <h2>
-            Types of Grant
-          </h2>
-        </center>
-        <div>
-          {
-            enabledLoader ?
-             <center>
-               <CircularLoader show = { this.state.enabledLoader }/>
-             </center> :
-            tog.map((resp, key) =>
-            <GenericButton
-              className = { 'mpl-poa-modal-button' }
-              key = { key }
-              text = { resp && resp.name }
-              onClick = {
-                () => this.onGetClicked(resp.id, resp.name, resp.amount, resp.attachments[0])
-              }
-              />
-            )
-          }
-        </div>
-      </Modal>
+  const { details, onClose, showDependentModal, isDismisable } = this.props
+  return (
+    <Modal
+     onClose = { onClose }
+     isDismisable = { true }
+    >
+      <div className = { 'education-description' }>
+        <h2 className = { 'header-default-margin' }>DEPENDENT</h2>
+      </div>
+      <div className = { 'optical-modal-footer' }>
+      {
+        details.recipients &&
+        details.recipients.map((recipients, key) =>
+          <GenericButton
+            key = { key }
+            className = { 'education-modal-option-button-' }
+            text = { recipients.name }
+            onClick = { () =>
+              this.sendDependents(recipients)
+            }
+          />
+        )
+      }
+    </div>
+  </Modal>
     )
   }
 }
-
 EducationGroupAidDependentModal.propTypes = {
-    onClose : PropTypes.func,
-    tog : PropTypes.array,
-    onSubmit : PropTypes.func,
+  onClose : PropTypes.func,
+  onClick : PropTypes.func,
+  details : PropTypes.object,
 }
-
 export default EducationGroupAidDependentModal

@@ -8,23 +8,28 @@ class CarDealerQuotation extends Component {
 
   constructor (props) {
       super(props)
+
+  }
+
+  navigateBenefits () {
+    this.props.backToBenefits()
   }
 
   render () {
-    const { onClose, onUserConfirmation } = this.props
+    const { onClose, onUserConfirmation, backToBenefits } = this.props
 
     return (
       <Modal
         onClose={ onClose }
       >
-        <center><h2>With Dealer Quotation?</h2></center>
+        <center><h2>Is the dealer quoations available ?</h2></center>
         <br/>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
         <br/>
         <br/>
         <center className={ 'car-grid-modal' }>
           <GenericButton
-            onClick={ () => onUserConfirmation(false, false) }
+            onClick={ () => this.navigateBenefits() }
             text={ 'No' }/>
           <GenericButton
             onClick={ () => onUserConfirmation(false, true) }
@@ -37,7 +42,9 @@ class CarDealerQuotation extends Component {
 
 CarDealerQuotation.propTypes = {
   onClose : PropTypes.func,
-  onUserConfirmation : PropTypes.func
+  onUserConfirmation : PropTypes.func,
+  onCloseConfirmation : PropTypes.func,
+  historu : PropTypes.object
 }
 
 export default CarDealerQuotation

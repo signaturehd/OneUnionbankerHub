@@ -6,6 +6,8 @@ import { GenericTextBox, Card, GenericButton, FileUploader } from '../../../ub-c
 import './styles/bereavementComponentStyle.css'
 import BereavementDependentsModal from '../modals/BereavementDependentsModal'
 
+import { RequiredAlphabetValidation } from '../../../utils/validate'
+
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
@@ -24,9 +26,10 @@ class BereavementFormCardComponent extends Component {
       dependentsName: '',
       dependentsRelationship: '',
       dependentId: '',
-      deceasedDate: moment(),
-      funeralDate: moment(),
-      internmentDate: moment(),
+      deceasedDate: '',
+      funeralDate: '',
+      intermentDate: '',
+      dependentId: '',
       funeralHome: '',
       funeralAddress: '',
       funeralRegion: '',
@@ -40,7 +43,7 @@ class BereavementFormCardComponent extends Component {
     }
     this.getDeceasedDate = this.getDeceasedDate.bind(this)
     this.getFuneralDate = this.getFuneralDate.bind(this)
-    this.getInternmentDate = this.getInternmentDate.bind(this)
+    this.getIntermentDate = this.getIntermentDate.bind(this)
     this.getOnClicked = this.getOnClicked.bind(this)
     this.getFuneralHome = this.getFuneralHome.bind(this)
     this.getFuneralAddress = this.getFuneralAddress.bind(this)
@@ -55,55 +58,76 @@ class BereavementFormCardComponent extends Component {
   }
 
   getDeceasedDate (e) {
-    this.setState({ deceasedDate  : e })
+    this.setState({ deceasedDate  : e.format('MM/DD/YYYY'),
+                    funeralDate  : e.format('MM/DD/YYYY') })
   }
 
   getFuneralDate (e) {
-    this.setState({ funeralDate  : e })
+    this.setState({ funeralDate  : e.format('MM/DD/YYYY') })
   }
 
-  getInternmentDate (e) {
-    this.setState({ internmentDate : e })
+  getIntermentDate (e) {
+    this.setState({ intermentDate : e.format('MM/DD/YYYY') })
   }
 
   getFuneralHome (e) {
-    this.setState({ funeralHome : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ funeralHome : e.target.value }):
+    this.setState({ funeralHome : '' })
   }
 
   getFuneralAddress (e) {
-    this.setState({ funeralAddress : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ funeralAddress : e.target.value }) :
+    this.setState({ funeralAddress : '' })
   }
 
   getFuneralRegion (e) {
-    this.setState({ funeralRegion : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ funeralRegion : e.target.value }) :
+    this.setState({ funeralRegion : '' })
   }
 
   getFuneralProvince (e) {
-    this.setState({ funeralProvince : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ funeralProvince : e.target.value }):
+    this.setState({ funeralProvince : '' })
   }
 
   getFuneralCity (e) {
-    this.setState({ funeralCity : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ funeralCity : e.target.value }) :
+    this.setState({ funeralCity : '' })
   }
 
   getMemorialHome (e) {
-    this.setState({ memorialPark : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ memorialPark : e.target.value }) :
+    this.setState({ memorialPark : '' })
   }
 
   getMemorialAddress (e) {
-    this.setState({ memorialAddress : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ memorialAddress : e.target.value }) :
+    this.setState({ memorialAddress : '' })
   }
 
   getMemorialRegion (e) {
-    this.setState({ memorialRegion : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ memorialRegion : e.target.value }):
+    this.setState({ memorialRegion : '' })
   }
 
   getMemorialProvince (e) {
-    this.setState({ memorialProvince : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ memorialProvince : e.target.value }) :
+    this.setState({ memorialProvince : '' })
   }
 
   getMemorialCity (e) {
-    this.setState({ memorialCity : e.target.value })
+    new RequiredAlphabetValidation().isValid(e.target.value) ?
+    this.setState({ memorialCity : e.target.value }):
+    this.setState({ memorialCity : '' })
   }
 
   getExtension (filename) {
@@ -113,7 +137,7 @@ class BereavementFormCardComponent extends Component {
 
   getOnClicked(
     funeralDate,
-    internmentDate,
+    intermentDate,
     deceasedDate,
     dependentId,
     funeralHome,
@@ -130,8 +154,8 @@ class BereavementFormCardComponent extends Component {
   ) {
     this.props.sendFormData(
       funeralDate && funeralDate.format('MM/DD/YYYY'),
-      internmentDate && internmentDate.format('MM/DD/YYYY'),
-      deceasedDate  && internmentDate.format('MM/DD/YYYY'),
+      intermentDate && intermentDate.format('MM/DD/YYYY'),
+      deceasedDate  && intermentDate.format('MM/DD/YYYY'),
       dependentId,
       funeralHome,
       funeralAddress,
@@ -163,7 +187,7 @@ class BereavementFormCardComponent extends Component {
       dependentsRelationship,
       deceasedDate,
       funeralDate,
-      internmentDate,
+      intermentDate,
       funeralHome,
       funeralAddress,
       funeralRegion,
@@ -248,11 +272,14 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <DatePicker
                     dateFormat={ 'MM/DD/YYYY' }
+                    maxDate={ moment().subtract(30, 'days') }
                     readOnly
-                    selected={ deceasedDate }
-                    onChange={this.getDeceasedDate }
-                    className={ 'calendar' }
+                    value={ deceasedDate ? deceasedDate : 'Date of Death'  }
+                    selected={ deceasedDate ? moment(deceasedDate) : moment().subtract(30, 'days') }
+                    onChange={ this.getDeceasedDate }
+                    className={ 'calendar  font-size-12px' }
                     calendarClassName={ 'calendarClass' }/>
+                  <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
                 </div>
               </div>
               <br/>
@@ -278,12 +305,14 @@ class BereavementFormCardComponent extends Component {
                   <DatePicker
                     dateFormat={ 'MM/DD/YYYY' }
                     readOnly
-                    selected={ funeralDate }
+                    minDate={ moment(deceasedDate) }
+                    value={ funeralDate ? funeralDate : 'Date of Wake' }
+                    selected={ moment(funeralDate) }
                     onChange={ this.getFuneralDate }
-                    placeholder={ 'Date of Wake' }
-                    className={ 'calendar' }
+                    className={ 'calendar  font-size-12px' }
                     calendarClassName={ 'calendarClass' }
                   />
+                <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
                 </div>
               </div>
               <div className={ 'brv-icon-text-grid' }>
@@ -294,7 +323,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ funeralHome }
+                    value={ funeralHome ? funeralHome : '' }
                     onChange={ this.getFuneralHome }
                     placeholder={ 'Funeral Home' }
                     type={ 'text' }
@@ -309,7 +338,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ funeralAddress }
+                    value={ funeralAddress ? funeralAddress : '' }
                     onChange={ this.getFuneralAddress }
                     placeholder={ 'Address' }
                     type={ 'text' }
@@ -324,7 +353,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ funeralRegion }
+                    value={ funeralRegion ? funeralRegion : '' }
                     onChange={ this.getFuneralRegion }
                     placeholder={ 'Region' }
                     type={ 'text' }
@@ -339,7 +368,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ funeralProvince }
+                    value={ funeralProvince ? funeralProvince : '' }
                     onChange={ this.getFuneralProvince }
                     placeholder={ 'Province' }
                     type={ 'text' }
@@ -354,7 +383,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ funeralCity }
+                    value={ funeralCity ? funeralCity : '' }
                     onChange={ this.getFuneralCity }
                     placeholder={ 'City' }
                     type={ 'text' }
@@ -372,7 +401,7 @@ class BereavementFormCardComponent extends Component {
           <div></div>
           <Card className={ 'brv-form-card' }>
             <h4>
-            Internment Detail
+            Interment Detail
             </h4>
             <div className={'brv-form-card-body '}>
               <div className={ 'brv-icon-text-grid-date' }>
@@ -381,14 +410,16 @@ class BereavementFormCardComponent extends Component {
                   <span className={ 'brv-icon-settings brv-calendar' }/>
                 </div>
                 <div>
-                    <DatePicker
-                      dateFormat={ 'MM/DD/YYYY' }
-                      readOnly
-                      selected={ funeralDate }
-                      onChange={ this.getFuneralDate }
-                      placeholder={ 'Date of Wake' }
-                      className={ 'calendar' }
-                      />
+                  <DatePicker
+                    dateFormat={ 'MM/DD/YYYY' }
+                    readOnly
+                    minDate={ moment(deceasedDate) }
+                    onChange={ this.getIntermentDate }
+                    value={ intermentDate ? intermentDate : 'Date of Interment'  }
+                    selected={ moment(deceasedDate) }
+                    className={ 'calendar font-size-12px' }
+                    />
+                  <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
                 </div>
               </div>
               <div className={ 'brv-icon-text-grid' }>
@@ -399,7 +430,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                 <GenericTextBox
                     container={ 'brv-container' }
-                    value={ memorialPark }
+                    value={ memorialPark ? memorialPark : '' }
                     onChange={ this.getMemorialHome }
                     placeholder={ 'Memorial Park' }
                     type={ 'text' }
@@ -414,7 +445,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ memorialAddress }
+                    value={ memorialAddress ? memorialAddress : '' }
                     onChange={ this.getMemorialAddress }
                     placeholder={ 'Address' }
                     type={ 'text' }
@@ -429,7 +460,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ memorialRegion}
+                    value={ memorialRegion ? memorialRegion : '' }
                     onChange={ this.getMemorialRegion }
                     placeholder={ 'Region' }
                     type={ 'text' }/>
@@ -443,7 +474,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ memorialProvince }
+                    value={ memorialProvince ? memorialProvince : '' }
                     onChange={ this.getMemorialProvince }
                     placeholder={ 'Province' }
                     type={ 'text' }/>
@@ -457,7 +488,7 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <GenericTextBox
                     container={ 'brv-container' }
-                    value={ memorialCity }
+                    value={ memorialCity ? memorialCity : '' }
                     onChange={ this.getMemorialCity }
                     placeholder={ 'City' }
                     type={ 'text' }/>
@@ -471,7 +502,7 @@ class BereavementFormCardComponent extends Component {
                   onClick={
                     () => this.getOnClicked(
                       funeralDate,
-                      internmentDate,
+                      intermentDate,
                       deceasedDate,
                       dependentId,
                       funeralHome,
@@ -517,7 +548,11 @@ class BereavementFormCardComponent extends Component {
                           }
                         }
                       />
-                      <div style={ styles.image1 }><h6 className="brv-file-name">{ file.name }</h6></div>
+                      <div style={ styles.image1 }>
+                        <h6 className="brv-file-name">
+                          { file.name }
+                        </h6>
+                      </div>
                     </div>
                   </div>
                 }
@@ -572,7 +607,7 @@ class BereavementFormCardComponent extends Component {
                   onClick={
                     () => this.getOnClicked(
                       funeralDate,
-                      internmentDate,
+                      intermentDate,
                       deceasedDate,
                       dependentId,
                       funeralHome,

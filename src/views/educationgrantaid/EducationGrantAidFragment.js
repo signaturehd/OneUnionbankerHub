@@ -17,6 +17,8 @@ import { NotifyActions } from '../../actions'
 
 import FormComponent from './components/EducationGrantAidFormCardComponent'
 
+import { RequiredValidation, MoneyValidation } from '../../utils/validate'
+
 class EducationGrantAidFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -34,7 +36,12 @@ class EducationGrantAidFragment extends BaseMVPView {
       imagePreviewUrl : null,
       showBenefitFeedbackModal : false
     }
+    this.validator = this.validator.bind(this)
   }
+
+    validator (input) {
+     return new RequiredValidation().isValid(input)
+   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
@@ -42,12 +49,12 @@ class EducationGrantAidFragment extends BaseMVPView {
   }
 
   confirmation (showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl) {
-    if (grantType === '') {
+    if (!this.validator(grantType)) {
       store.dispatch(NotifyActions.addNotify({
-          title : 'education Grant - Aid',
-          message : 'Please double check your type of grant',
-          type : 'warning',
-          duration : 2000
+        title : 'Education Grant' ,
+        message : 'Please double check your Type of Grant',
+        type : 'warning',
+        duration : 2000
         })
       )
     } else if (grantAmount === 0 || grantAmount === '') {

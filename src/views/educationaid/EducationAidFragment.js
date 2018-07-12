@@ -17,7 +17,9 @@ import { NotifyActions } from '../../actions'
 
 import FormComponent from './components/EducationAidFormCardComponent'
 
-class EducationAidFragment extends BaseMVPView{
+import { RequiredValidation, MoneyValidation } from '../../utils/validate'
+
+class EducationAidFragment extends BaseMVPView {
 
   constructor(props) {
     super(props)
@@ -25,6 +27,7 @@ class EducationAidFragment extends BaseMVPView{
     this.state={
       showNoticeModal : false,
       noticeResponse : null,
+      showConfirmation : false,
       showNoticeResponseModal : false,
       enabledLoader : false,
       tuitionFeeText: '',
@@ -44,43 +47,106 @@ class EducationAidFragment extends BaseMVPView{
       imagePrevCOG : null,
       imagePrevRegForm : null,
       showBenefitFeedbackModal : false,
+      data: '',
       educationAid: [] //education aid details
     }
+    this.validator = this.validator.bind(this)
   }
 
-  componentDidMount () {
-    this.props.setSelectedNavigation(1)
-    this.presenter.validateAid()
-  }
-
-  confirmation (
+  submitForm (
     courseText,
     academicYearText,
     semesterText,
     gwaText,
     tuitionFeeText,
     registrationFeeText,
-    schoolID,
-    fileOR,
-    fileCOG,
-    fileRegForm,
-    imagePrevOR,
-    imagePrevCOG,
-    imagePrevRegForm,
-    totalFeeText)
-  {
-    if (( tuitionFeeText === 0 || tuitionFeeText === "") || ( registrationFeeText === 0 || registrationFeeText === "") ||
-        schoolID === "" || courseText === "" || academicYearText === "" || semesterText === "" ||
-        ( gwaText === 0 || gwaText === "")) {
+    schoolId,
+    fileAttachments) {
+    this.presenter.addEducationAid(
+      courseText,
+      academicYearText,
+      semesterText,
+      gwaText,
+      tuitionFeeText,
+      registrationFeeText,
+      schoolId,
+      fileAttachments)
+  }
+
+  validator (input) {
+     return new RequiredValidation().isValid(input)
+   }
+
+  componentDidMount () {
+    this.props.setSelectedNavigation(1)
+    this.presenter.validateAid()
+  }
+
+  confirmation (showConfirmation, data) {
+    if (this.validator(!data.tuitionFeeText)) {
       store.dispatch(NotifyActions.addNotify({
-          title : 'Education Aid',
-          message : 'Please provide a valid information',
-          type : 'warning',
-          duration : 2000
-        })
-      )
+         title : 'Education Aid' ,
+         message : 'Please double check your Tuition Fee',
+         type : 'warning',
+         duration : 2000
+       })
+     )
     }
-    else if (!fileOR && !fileCOG && !fileRegForm) {
+    else if (this.validator(!data.registrationFeeText)) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Education Aid' ,
+         message : 'Please double check your Registration Fee',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    }
+    else if (this.validator(!data.schoolID)) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Education Aid' ,
+         message : 'Please double check your College/Universities',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    }
+    else if (this.validator(!data.courseText)) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Education Aid' ,
+         message : 'Please double check your Course',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    }
+    else if (this.validator(!data.academicYearText)) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Education Aid' ,
+         message : 'Please double check your Academic Year',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    }
+    else if (this.validator(!data.semesterText)) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Education Aid' ,
+         message : 'Please double check your Semester',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    }
+    else if (this.validator(!data.gwaText)) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Education Aid' ,
+         message : 'Please double check your GWA',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    }
+     else if (!(data.fileOR && data.fileCOG && data.fileRegForm)) {
       store.dispatch(NotifyActions.addNotify({
           title : 'Education Aid',
           message : 'Please check your attachments',
@@ -89,31 +155,17 @@ class EducationAidFragment extends BaseMVPView{
         })
       )
     }
-    else {
-      const fileORName = {
-        "name" : fileOR.name,
-        "attachments" : imagePrevOR
-      }
-      const fileCOGName  = {
-        "name" : fileCOG.name,
-        "attachments" : imagePrevCOG
-      }
-      const fileRegFormName  = {
-        "name" : fileCOG.name,
-        "attachments" : imagePrevRegForm
-      }
-
-      const fileAttachments = [fileORName, fileCOGName, fileRegFormName]
-        this.presenter.addEducationAid(
-          courseText,
-          academicYearText,
-          semesterText,
-          gwaText,
-          tuitionFeeText,
-          registrationFeeText,
-          schoolID,
-          fileAttachments
+    else if (data.courseText.match(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/)){
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Education Aid',
+          message : 'Special Characters are not accepted',
+          type : 'warning',
+          duration : 2000
+        })
       )
+    }
+    else {
+      this.setState({showConfirmation, data})
     }
   }
 
@@ -166,11 +218,40 @@ class EducationAidFragment extends BaseMVPView{
       showNoticeModal,
       noticeResponse,
       showNoticeResponseModal,
-      showBenefitFeedbackModal
+      showBenefitFeedbackModal,
+      showConfirmation,
+      data
     }=this.state
 
     return (
       <div>
+      {
+        showConfirmation &&
+        <ConfirmationModal
+          data = { data }
+          submitForm = { (
+            courseText,
+            academicYearText,
+            semesterText,
+            gwaText,
+            tuitionFeeText,
+            registrationFeeText,
+            schoolId,
+            fileAttachments) =>
+            this.submitForm(
+              courseText,
+              academicYearText,
+              semesterText,
+              gwaText,
+              tuitionFeeText,
+              registrationFeeText,
+              schoolId,
+              fileAttachments) }
+          onClose = { () => this.setState({ showConfirmation : false }) }
+        />
+      }
+
+
         {
           showNoticeModal &&
           <NoticeModal
@@ -219,38 +300,12 @@ class EducationAidFragment extends BaseMVPView{
            </center> :
           <FormComponent
             educationAid={ educationAid }
-            getFormData={ (
-              getCourseText,
-              getAcademicYearText,
-              getSemesterText,
-              getGwaText,
-              getTuitionFeeText,
-              getRegistrationFeeText,
-              getSchoolID,
-              getFileOR,
-              getFileCOG,
-              getFileRegForm,
-              getImagePrevOR,
-              getImagePrevCOG,
-              getImagePrevRegForm,
-              getTotalFee
-            ) => this.confirmation(
-              getCourseText,
-              getAcademicYearText,
-              getSemesterText,
-              getGwaText,
-              getTuitionFeeText,
-              getRegistrationFeeText,
-              getSchoolID,
-              getFileOR,
-              getFileCOG,
-              getFileRegForm,
-              getImagePrevOR,
-              getImagePrevCOG,
-              getImagePrevRegForm,
-              getTotalFee
-              )
+            onClick = {
+              (showConfirmation, data) => {
+                this.confirmation(showConfirmation, data)
+              }
             }
+            presenter = { this.presenter }
           />
         }
       </div>

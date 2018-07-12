@@ -1,3 +1,7 @@
+div {
+  width: -moz-available
+}
+
 .navigation-body-div {
   color: black;
   background-color: transparent;

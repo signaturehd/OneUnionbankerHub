@@ -1,16 +1,20 @@
 export default (
-  carBrand,
-  carModel,
-  year,
-  leaseMode,
-  primaryColor,
-  secondaryColor,
-  attachments) => ({
-    carBrand,
-    carModel,
-    year,
-    leaseMode,
-    primaryColor,
-    secondaryColor,
-    attachments
+  calamityId,
+  date,
+  property,
+  propertyDesc,
+  propertyType,
+  acquisitionValue,
+  estimatedCost,
+  file1,
+file2) => ({
+    calamityId,
+    date,
+    property,
+    propertyDesc,
+    propertyType,
+    acquisitionValue,
+    estimatedCost,
+    file1,
+    file2
   })

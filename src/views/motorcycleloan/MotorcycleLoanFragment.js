@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import BaseMVPView from '../common/base/BaseMVPView'
-import Presenter from './presenter/MotorcycleLoanPresenter'
+import Presenter from '../mpl/presenter/MultiPurposeLoanPresenter'
 import ConnectView from '../../utils/ConnectView'
 
 import { CircularLoader } from '../../ub-components/'
@@ -10,46 +10,55 @@ import { CircularLoader } from '../../ub-components/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
+
 import FormComponent from './components/MotorcycleLoanCardComponent'
 
-import store from '../../store'
-import { NotifyActions } from '../../actions'
-
 class MotorCycleLoanFragment extends BaseMVPView {
+
   constructor (props) {
     super(props)
     this.state = {
       purposeOfAvailment: [],
+      selectedPoa: '',
       formAttachments: [],
-      loanType: 4,
+      loanType: 3,
       validateLoanType : [],
       offset : [],
-      enabledLoader : false,
+      enabledLoader : true,
       noticeResponse : null, /* notice response*/
       showNoticeResponseModal : false,
+      showBenefitFeedbackModal : false,
       showNoticeModal : false,
       showConfirmation : false,
-      showBenefitFeedbackModal: false,
-      payeeNameLabel : '',
-      poaText : '',
-      modeOfLoanId : '',
-      termId : '',
-      amountValue : '',
-      selectedSupplier : '',
-      file : ''
+      AdditionalDocuments: 0,
+      RequiredDocuments: 0,
+      isPayeeOrDealerResp : '',
+      employeeName: [],
+      storedIsDealerOrPayee: [],
+      computationOffset: [],
     }
-    this.sendFormData = this.sendFormData.bind(this)
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
+    this.presenter.isManagersCheck()
+    this.presenter.getProfile()
     this.presenter.getMplTypes()
     this.presenter.getMplValidate(this.state.loanType)
     this.presenter.getMplPurposeOfAvailment(
       this.state.loanType,
       1,
       1)
-    this.presenter.isManagersCheck()
+  }
+
+  /* Notice Response*/
+  noticeOfUndertaking (noticeResponse) {
+    this.setState({ showNoticeModal : true, noticeResponse })
+  }
+
+
+  noticeResponse (noticeResponse) {
+    this.setState({showConfirmation: false, noticeResponse })
   }
 
   /* Implementation*/
@@ -66,8 +75,24 @@ class MotorCycleLoanFragment extends BaseMVPView {
     this.setState({ validateLoanType })
   }
 
+  isManagersCheck (isPayeeOrDealerResp) {
+    this.setState({ isPayeeOrDealerResp })
+  }
+
+  getEmployeeName (employeeName) {
+    this.setState({ employeeName })
+  }
+
   showPurposeOfAvailment (purposeOfAvailment) {
     this.setState({ purposeOfAvailment })
+  }
+
+  showAdditionalFilesCount (AdditionalDocuments) {
+    this.setState({ AdditionalDocuments })
+  }
+
+  showAdRequiredFilesCount (RequiredDocuments) {
+    this.setState({ RequiredDocuments })
   }
 
   /* Loader*/
@@ -82,19 +107,6 @@ class MotorCycleLoanFragment extends BaseMVPView {
   /* Navigage back to loans Option*/
   navigate () {
     this.props.history.push('/mybenefits/benefits/loans')
-  }
-
-    /* Notice Response*/
-  noticeOfUndertaking (noticeResponse) {
-    this.setState({ showNoticeModal : true, noticeResponse })
-  }
-
-  noticeResponse (noticeResponse) {
-    this.setState({ noticeResponse })
-  }
-
-  isManagersCheck (payeeNameLabel) {
-    this.setState({ payeeNameLabel })
   }
 
   sendFormData (
@@ -159,18 +171,22 @@ class MotorCycleLoanFragment extends BaseMVPView {
       formAttachments,
       showConfirmation,
       showNoticeModal,
+      showBenefitFeedbackModal,
       showNoticeResponseModal,
       noticeResponse,
-      showBenefitFeedbackModal,
       response,
-      poaText,
-      modeOfLoanId,
-      termId,
-      amountValue,
-      selectedSupplier,
-      payeeNameLabel,
-      file
+      RequiredDocuments,
+      AdditionalDocuments,
+      isPayeeOrDealerResp,
+      employeeName,
+      storedIsDealerOrPayee,
+      computationOffset
     } = this.state
+
+    const empName=employeeName && employeeName.fullname
+    const updateIsDealerOrPayeeName=[...storedIsDealerOrPayee]
+    updateIsDealerOrPayeeName.push(isPayeeOrDealerResp)
+    updateIsDealerOrPayeeName.push(empName)
 
     return (
       <div>
@@ -187,29 +203,29 @@ class MotorCycleLoanFragment extends BaseMVPView {
           {
             showNoticeModal &&
             <NoticeModal
-              onClose = { () => this.setState({ showNoticeModal : false })}
-              noticeResponse = { noticeResponse }
-              benefitId = { loanType }
-              onDismiss = { (showNoticeModal, noticeResponse) =>
-                this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
+              onClose={ () => this.setState({ showNotice : false })}
+              noticeResponse={ noticeResponse }
+              benefitId={ loanType }
+              onDismiss={ (showNoticeModal, response) =>
+                this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
+            />
+          }
+          {
+            showNoticeResponseModal &&
+            <ResponseModal
+              onClose={ () => {
+                this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
+              }}
+              noticeResponse={ response }
             />
           }
 
           {
-            showNoticeResponseModal &&
-            <ResponseModal
-              onClose = { () => {
-                this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
-              }}
-              noticeResponse = { noticeResponse }
-            />
-          }
-          {
             showBenefitFeedbackModal &&
             <BenefitFeedbackModal
-              benefitId = { loanType }
-              onClose = { () => {
-                this.props.history.push('/mybenefits/benefits/carlease'),
+              benefitId={ loanType }
+              onClose={ () => {
+                this.props.history.push('/mybenefits/benefits/loans'),
                 this.setState({ showBenefitFeedbackModal : false })
               }}
             />
@@ -221,11 +237,13 @@ class MotorCycleLoanFragment extends BaseMVPView {
              </center> :
             <FormComponent
               loanType={ loanType }
+              isPayeeOrDealer={ updateIsDealerOrPayeeName ? updateIsDealerOrPayeeName : '(Not yet Provided)' }
               purposeOfAvailment={ purposeOfAvailment }
               validateLoanType={ validateLoanType }
               formAttachments={ formAttachments }
               offset={ offset }
-              payeeNameLabel = { payeeNameLabel }
+              AdditionalDocuments={ AdditionalDocuments }
+              RequiredDocuments={ RequiredDocuments }
               presenter={ this.presenter }
               onSubmit={ (
                 payeeName,

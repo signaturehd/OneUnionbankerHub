@@ -10,6 +10,7 @@ import EducationFragment from './fragments/education/EducationFragment'
 import LoansFragment from './fragments/loans/LoansFragment'
 import MedicalFragment from './fragments/medical/MedicalFragment'
 import CarLeaseFragment from './fragments/carlease/CarLeaseFragment'
+import CalamityFragment from '../calamity/CalamityFragment'
 
 import TransactionPersonalFragment from '../transaction/TransactionPersonalFragment'
 import TransactionApprovalFragment from '../transaction/TransactionApprovalFragment'
@@ -22,6 +23,8 @@ import {
   Card,
   Modal,
   GenericButton,
+  GenericTextBox,
+  CircularLoader,
   FloatingActionButton
  } from '../../ub-components'
 
@@ -42,7 +45,10 @@ class BenefitsFragment extends BaseMVPView {
       showModal: false,
       withDeathCert : false,
       isAccountNumber: null,
+      carValidated: [],
       accountNumber: '', // this is only used to handle onChange of input modal
+      enableLoader: false,
+      enabledAccountNumberLoader: false,
     }
   }
 
@@ -55,6 +61,10 @@ class BenefitsFragment extends BaseMVPView {
   showReleasingCenters (releasingCenters) {
     this.setState({ releasingCenters })
   // TODO show to generic multilist dialog
+  }
+
+  showCarValidated (carValidated) {
+    this.setState({ carValidated })
   }
 
   showManagersCheck () {
@@ -71,6 +81,23 @@ class BenefitsFragment extends BaseMVPView {
 
   setReleasingCenter (releasingCenter) {
     this.presenter.setReleasingCenter(releasingCenter)
+  }
+
+  showCircularLoader () {
+    this.setState({ enableLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enableLoader : false })
+  }
+
+  /* Loader for Account Number  */
+  showLoaderValidatingAccountNumber (enabledAccountNumberLoader) {
+    this.setState({ enabledAccountNumberLoader : true })
+  }
+
+  hideLoaderValidatingAccountNumber (enabledAccountNumberLoader) {
+    this.setState({ enabledAccountNumberLoader : false })
   }
 
   isAccountNumber (bool) {
@@ -96,6 +123,9 @@ class BenefitsFragment extends BaseMVPView {
       showModal,
       withDeathCert,
       isAccountNumber,
+      carValidated,
+      enableLoader,
+      enabledAccountNumberLoader
     } = this.state
 
     const benefitsOptions = [{
@@ -123,6 +153,11 @@ class BenefitsFragment extends BaseMVPView {
       styleName: 'option-cards-5',
       title: 'BEREAVEMENT',
       path: '/mybenefits/benefits/bereavement',
+    }, {
+      id: 5,
+      styleName : 'option-cards-6',
+      title: 'CALAMITY',
+      path: '/mybenefits/benefits/calamity',
     }]
 
   const Benefits = () => (
@@ -130,6 +165,7 @@ class BenefitsFragment extends BaseMVPView {
       {
         showBereavementConfirmationModal &&
         <BereavementConfirmationModal
+          navigateCall={ () => this.navigate() }
           onYes = {
             () => {
               this.setState({ showBereavementConfirmationModal : false })
@@ -147,18 +183,41 @@ class BenefitsFragment extends BaseMVPView {
 
       {
         showAccountNumberModal &&
-        <InputModal
+        <Modal
           isDismisable={ true }
-          onClose={ () => this.setState({ showAccountNumberModal : false }) }
-          onChange={ e => this.setState({ accountNumber:   e.target.value }) }
-          placeholder={ 'Account Number' }
-          type={ 'text' }
-          onSubmit={ e => {
-                e.preventDefault()
-                this.presenter.validateAccountNumber(accountNumber)
-              }
+          onClose={ () =>
+            this.setState({ showAccountNumberModal: false }) }
+        >
+        <div>
+          {
+          enabledAccountNumberLoader ?
+            <center>
+              <h4>Please wait while validating the Account Number</h4>
+              <br/>
+              <CircularLoader show={ true }/>
+            </center>
+            :
+              <div>
+                <GenericTextBox
+                  onChange={ e => this.setState({ accountNumber:   e.target.value }) }
+                  placeholder={ 'Account Number' }
+                  type={ 'text' }
+                />
+              <br/>
+              <center>
+                <GenericButton
+                  onClick={ e => {
+                    e.preventDefault()
+                    this.presenter.validateAccountNumber(accountNumber)
+                    }
+                  }
+                  text={ 'Submit' }
+                  />
+              </center>
+            </div>
             }
-          />
+          </div>
+        </Modal>
         }
         {
           showReleasingCenterModal &&
@@ -251,12 +310,28 @@ class BenefitsFragment extends BaseMVPView {
                 render={ props => <MedicalFragment { ...props } />}/>
               <Route exact path='/mybenefits/benefits/loans'
                 render={ props => <LoansFragment { ...props } />}/>
-              <Route exact path='/mybenefits/benefits/carlease'
-                render={ props => <CarLeaseFragment
+              {
+                enableLoader ?
+                <Modal>
+                  <h4>Please wait while validating your Employee Number</h4>
+                  <br/>
+                  <center>
+                    <CircularLoader show={ enableLoader }/>
+                  </center>
+                </Modal>
+                :
+                <Route exact path='/mybenefits/benefits/carlease'
+                  render={ props => <CarLeaseFragment
                   { ...props }
-                  presenter={ this.presenter } />}/>
+                  callCarBack={ () => this.navigate() }
+                  />}
+                />
+              }
+
               <Route path='/mybenefits'
                 render={ Benefits } />
+              <Route exact path='/mybenefits/calamity'
+                render={ props => <CalamityFragment { ...props } />}/>
              </Switch>
           </section>
         </div>

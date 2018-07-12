@@ -23,7 +23,7 @@ class TransactionCardComponent extends Component {
         <div className = { 'transaction-body' }>
           <h5 className = { 'transaction-title' }>{ detail.benefit }</h5>
           <h3 className = { 'transaction-status' }>{detail.status}</h3>
-          <h4 className = { 'transaction-date' }>{moment(detail.applicationDate).format('MMMM d, YYYY')}</h4>
+          <h4 className = { 'transaction-date' }>{moment(detail.applicationDate).format('MMMM DD, YYYY')}</h4>
         </div>
       </div>
       <div className = {'column'}>

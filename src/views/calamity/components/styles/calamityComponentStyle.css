@@ -1,0 +1,166 @@
+
+.calamity-container {
+  max-width: 100%;
+}
+
+
+.calamity-form-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+  float: center;
+  padding: 20px 5px 20px 5px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.calamity-form-card-body {
+  border-color: #0a0a0a;
+  color: #090909;
+}
+
+.calamity-submit {
+  border-radius: 5px;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  background-size: 30px;
+  bottom: 0;
+  height: 35px;
+  margin-top: 20px;
+  width: 95%;
+}
+
+.calamity-grid-column-2 {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  column-gap: 2%;
+}
+
+@media (max-width : 768px) {
+  .calamity-grid-column-2 {
+    display: grid;
+    grid-template-columns: 1fr ;
+    column-gap: 2%;
+    grid-row-gap: 2%;
+  }
+  .calamity-form-card {
+    margin-top: 10px;
+  }
+}
+
+/*CARD TRANSITION*/
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+.calamity-form-preview{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+  float: center;
+  padding: 20px 5px 20px 5px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+
+  opacity: 0;
+  animation: fadeInUp 0.5s ease-in-out 0s forwards;
+}
+
+.calamity-attachment-form {
+  padding: 10px;
+  margin: 0 30px 0 30px;
+  background-color: #f6f6f6;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: #DBDBE0;
+}
+
+.calamity-form-title {
+  display: block;
+  text-align: left;
+  font-size:14px;
+  pointer-events:none;
+  color: #ff8a00 !important;
+}
+
+.close-button {
+  float: right;
+}
+
+.calamity-file-name {
+  margin-left: 120px;
+  line-height: 60px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.hr-line {
+  width: 50%;
+}
+
+.calamity-icon-text-grid {
+  display: grid;
+  grid-template-columns: .15fr 1fr;
+}
+.calamity-icon-text-grid-date {
+  display: grid;
+  grid-template-columns: .1fr .4fr .5fr .2fr;
+}
+
+.calamity-icon-settings {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 50px;
+  width: 40px;
+  margin-top: 30px;
+  margin-left: 40px;
+  background-repeat: no-repeat;
+}
+
+.calamity-container {
+  padding-left: 0%;
+  padding-right: 10%;
+  padding-top: 0%;
+}
+
+.calamity-calamity {
+  background-image: url('../../../../images/icons/ic_calamity.png');
+}
+
+.calamity-property {
+  background-image: url('../../../../images/icons/ic_property.png');
+}
+
+.calamity-calendar {
+  background-image: url('../../../../images/icons/ic_calendar.png');
+}
+
+.calamity-description {
+  background-image: url('../../../../images/icons/ic_description.png');
+}
+
+.calamity-property-type {
+  background-image: url('../../../../images/icons/ic_transaction_status_bookmark.png');
+}
+
+.calamity-peso {
+  background-image: url('../../../../images/icons/peso_sign_48.png');
+}
+
+.calamity-file {
+  background-image: url('../../../../images/icons/ic_insert_drive_file_grey_500_18dp.png');
+}
+
+.font-color-gray {
+  color: #8c8c8c;
+}

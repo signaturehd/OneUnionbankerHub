@@ -115,7 +115,7 @@ DentalReimbursementModal.propTypes = {
   imageUrl2 : PropTypes.string
 }
 DentalReimbursementModal.defaultProps = {
-  confirm : 'Agree',
-  cancel : 'Disagree',
+  confirm : 'Submit',
+  cancel : 'Cancel',
 }
 export default DentalReimbursementModal
