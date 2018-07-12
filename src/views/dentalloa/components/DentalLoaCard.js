@@ -66,12 +66,13 @@ class DentalLoaCard extends Component {
               <div className = {'dentalloa-body'}>
                 <GenericTextBox
                   onClick = { () => onClick(true, false, false) }
-                  value = { recipient && recipient }
+                  value = { recipient ? recipient : '' }
                   readOnly
                   placeholder = { text1 } />
                 <GenericTextBox
-                  value = { branch && branch }
+                  value = { branch ? branch : '' }
                   readOnly
+                  type={ 'text' }
                   onClick = { () => onClick(false, true, false) }
                   placeholder = { text2 } />
                 <div>
