@@ -15,6 +15,7 @@ import {
 import '../../../../node_modules/react-datepicker/dist/react-datepicker.css'
 
 class DentalLoaCard extends Component {
+
   constructor (props) {
     super(props)
     this.state = {
@@ -23,7 +24,7 @@ class DentalLoaCard extends Component {
       showHealthwayBranchModal : false, // Recipient Branch Modal
       showProcedureModal : false, // Recipient Procedure Modal
       datePicker : '',
-      preferredDate: moment(),
+      preferredDate: '',
     }
 
     this.onChange = this.onChange.bind(this)
@@ -79,12 +80,13 @@ class DentalLoaCard extends Component {
                   <DatePicker
                     dateFormat = { 'DD-MM-YYYY' }
                     readOnly
-                    selected = { preferredDate ? preferredDate : '' }
+                    value={  preferredDate ? preferredDate : 'Date of Occurrence' }
+                    selected = {  preferredDate ? moment(preferredDate, 'MM/DD/YYYY') : moment() }
                     onChange = { this.onChange }
-                    className = { 'calendar' }
+                    className = { 'calendar font-size-14px' }
                     calendarClassName = { 'calendarClass' }/>
-                  <label className="dentalloa-label">Date</label>
                 </div>
+                <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
               </div>
             </div>
             <div className = { 'dentalloa-footer-left' }>
