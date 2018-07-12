@@ -2,12 +2,19 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import './styles/motorComponentStyle.css'
-import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
+import {
+  GenericTextBox,
+  Card,
+  GenericButton,
+  FileUploader
+} from '../../../ub-components/'
 
 import PurposeOfAvailmentModal from '../modals/MotorcyclePurposeOfAvailmentModal'
 import ModeOfLoanModal from '../modals/MotorcycleModeOfLoanModal'
 import TermOfLoanModal from '../modals/MotorcycleTermOfLoanModal'
+import OffsetOfLoanModal from '../modals/MotorcycleOffsetModal'
 import SupplierModal from '../modals/MotorcycleSupplierModal'
+import MplReviewFormModal from '../modals/MotorCycleReviewFormModal'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -28,13 +35,19 @@ class MotorcycleLoanCardComponent extends Component {
       rateOfLoan: '',
       termId: '',
       subCategoryId: '',
+      poaId: '',
+      fileObject: [],
+      imagePreviewUrl: '',
       showFileUpload: false,
-      showSupplier : false,
-      supplier: '',
-      payeeName: '',
-      file: ''
+      showOffsetLoanCard: false,
+      showOffsetOfLoanModal : false,
+      imageUrlObject: [],
+      selectedOffsetLoan: [],
+      showOffsetMessageModal: false,
+      showReviewModal: false,
+      computationOffsetLoan: [],
+      showConfirmationView: false
     }
-     this.onChange = this.onChange.bind(this)
   }
 
   onChange (e) {
@@ -43,6 +56,11 @@ class MotorcycleLoanCardComponent extends Component {
         this.setState({ amountValue: e.target.value })
       }
    }
+
+  getExtension (filename) {
+    const parts=filename.split('/')
+    return parts[parts.length - 1]
+  }
 
   render () {
     const {
@@ -58,35 +76,87 @@ class MotorcycleLoanCardComponent extends Component {
       rateOfLoan,
       termId,
       subCategoryId,
-      showSupplier,
+      fileObject,
+      imagePreviewUrl,
       showFileUpload,
-      supplier,
-      payeeName,
-      file
-    } = this.state
+      response,
+      showOffsetLoanCard,
+      showOffsetOfLoanModal,
+      imageUrlObject,
+      selectedOffsetLoan,
+      showOffsetMessageModal,
+      showReviewModal,
+      computationOffsetLoan,
+      showConfirmationView
+    }=this.state
 
     const {
       purposeOfAvailment,
       loanType,
       validateLoanType,
+      preferredFormData,
       offset,
+      onGetPurposeOfLoan,
       formAttachments,
-      selectedSupplier,
-      payeeNameLabel,
-      onSubmit
-    } = this.props
+      AdditionalDocuments,
+      RequiredDocuments,
+      isPayeeOrDealer
+    }=this.props
+
+    const computation=computationOffsetLoan.reduce((a, b) => a + b, 0)
 
     return (
       <div className={ 'motor-container' }>
         {
+          showReviewModal &&
+          <MplReviewFormModal
+            amountValue={ format(amountValue) }
+            imageUrlObject={ imageUrlObject ? imageUrlObject  : '' }
+            modeOfLoanText={ modeOfLoanText }
+            isPayeeOrDealer={ isPayeeOrDealer }
+            termOfLoan={ termOfLoan }
+            rateOfLoan={ rateOfLoan }
+            poaText={ poaText }
+            onYes={ () => this.setState({ showConfirmationView : true }) }
+            onNo={ () => this.setState({ showReviewModal : false  })}
+            onClose={ () => this.setState({ showReviewModal : false }) }
+          />
+        }
+        {
+          showConfirmationView &&
+          <Modal>
+            <center>
+              Are you sure you want to sumbit this form ?
+              <div className={ 'grid-global' }>
+                <GenericButton
+                  onClick={ () => this.setState({ showConfirmationView : false, showReviewModal : false }) }
+                  text={ 'No' }/>
+                <GenericButton
+                  onClick={ () => this.sendFormData(
+                    amountValue,
+                    modeOfLoanId,
+                    loanType,
+                    poaText,
+                    termId,
+                    selectedOffsetLoan,
+                    fileObject,
+                    formAttachments
+                  ) }
+                  text={ 'Yes' }/>
+              </div>
+            </center>
+          </Modal>
+        }
+        {
           showOffset &&
           <ModeOfLoanModal
-            offset ={  offset && offset }
-            onSubmit={ (changeOffsetValue, closePoaModal) =>
+            offset ={  offset && offset ? offset : [] }
+            onSubmit={ (changeOffsetValue, showOffsetLoanModal, closePoaModal) =>
               this.setState({
                 modeOfLoanText : changeOffsetValue.name,
                 modeOfLoanId : changeOffsetValue.id,
-                showOffset : closePoaModal
+                showOffset : closePoaModal,
+                showOffsetLoanCard : showOffsetLoanModal
               })
             }
             onClose={ () =>
@@ -127,6 +197,36 @@ class MotorcycleLoanCardComponent extends Component {
             onClose={ () =>
               this.setState({ showTerm : false }) }
           />
+        }
+        {
+          showOffsetOfLoanModal &&
+          <OffsetOfLoanModal
+            onClose={ () => this.setState({ showOffsetOfLoanModal : false }) }
+            onSelect={ (offsetloan) => {
+              const updatedOffsetLoan=[...selectedOffsetLoan]
+              const updateComputation=[...computationOffsetLoan]
+              updatedOffsetLoan.push(offsetloan)
+              updateComputation.push(offsetloan.outstandingBalance)
+              this.setState({ selectedOffsetLoan : updatedOffsetLoan })
+              this.setState({ computationOffsetLoan : updateComputation })
+              }
+            }
+            selectedOffsetLoan={ selectedOffsetLoan }
+            offset={ offset ? offset : [] }
+          />
+        }
+        {
+          showOffsetMessageModal &&
+          <Modal>
+            <center>
+              <h4> `We're sorry but the selected existing loans have exceeded your principal amount.
+                  These cannot be deducted from your new loan. Kindly select within the appropriate balance.` </h4>
+              <GenericButton
+                text={ 'Ok' }
+                onClick={ () => this.setState({ showOffsetMessageModal : false }) }
+              />
+            </center>
+          </Modal>
         }
         {
           showSupplier &&
@@ -290,13 +390,30 @@ class MotorcycleLoanCardComponent extends Component {
   }
 }
 
-MotorcycleLoanCardComponent.propTypes = {
-  purposeOfAvailment : PropTypes.object,
-  validateLoanType : PropTypes.array,
+MotorcycleLoanCardComponent.propTypes={
+  purposeOfAvailment : PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
+  validateLoanType : PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
   loanType : PropTypes.number,
+  preferredFormData : PropTypes.func,
   offset : PropTypes.array,
   setSelectedNavigation: PropTypes.func,
-  formAttachments: PropTypes.array,
+  formAttachments : PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
+  AdditionalDocuments: PropTypes.number,
+  RequiredDocuments: PropTypes.number,
+  isPayeeOrDealer: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+    PropTypes.string,
+  ]),
 }
 
 export default MotorcycleLoanCardComponent

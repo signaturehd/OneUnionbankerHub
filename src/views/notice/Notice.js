@@ -43,7 +43,9 @@ class Notice extends BaseMVPView {
       isDismissable,
       disableSubmit,
       showValidatedCofirmation,
-      showCancelCofirmation } = this.state
+      showCancelCofirmation
+    } = this.state
+
     return (
       <Modal
         isDismissable = { isDismissable }
@@ -79,8 +81,6 @@ class Notice extends BaseMVPView {
           {
             showCancelCofirmation &&
             <Modal
-              onClose={ () => this.setState({ showCancelCofirmation: false }) }
-              isDismisable={ true }
               >
               <center>
                 <h4> Are you sure you want to Cancel your form ? </h4>
@@ -116,7 +116,7 @@ class Notice extends BaseMVPView {
                   <GenericButton
                     text={ 'Yes' }
                     onClick = { () => {
-                        this.isAgree(noticeResponse.transactionId, 1, benefitId),
+                        this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId),
                         this.setState({ isDimissable : true, disableSubmit: true })
                       }
                     }

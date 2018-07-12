@@ -75,7 +75,7 @@ export default class HRBenefitsService {
     const dentalRObject = {
       accountNumber,
       releasingCenter,
-      type : 1,
+      type : dentalReimbursementParam.dependentId !== 1 ? 2 : 1,
       procedures : dentalReimbursementParam.procedure
     }
 
