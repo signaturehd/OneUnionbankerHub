@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import BaseMVPView from '../common/base/BaseMVPView'
-import Presenter from '../mpl/presenter/MultiPurposeLoanPresenter'
+import Presenter from './presenter/MotorcycleLoanPresenter'
 import ConnectView from '../../utils/ConnectView'
 
 import { CircularLoader } from '../../ub-components/'
@@ -34,9 +34,9 @@ class MotorcycleLoanFragment extends BaseMVPView {
         RequiredDocuments: 0,
         isPayeeOrDealerResp : '',
         employeeName: [],
-        storedIsDealerOrPayee: [],
         computationOffset: [],
       }
+      this.submission=this.submission.bind(this)
     }
 
     componentDidMount () {
@@ -107,6 +107,28 @@ class MotorcycleLoanFragment extends BaseMVPView {
       this.props.history.push('/mybenefits/benefits/loans')
     }
 
+    submission (
+      dealerName,
+      amountValue,
+      modeOfLoanId,
+      loanType,
+      poaText,
+      termId,
+      selectedOffsetLoan,
+      fileObject,
+      formAttachments
+    ) {
+        this.presenter.addLoanMotor(
+          dealerName,
+          loanType,
+          poaText,
+          modeOfLoanId,
+          termId,
+          selectedOffsetLoan,
+          amountValue,
+          fileObject,
+        )
+    }
 
   render () {
     const {
@@ -126,7 +148,6 @@ class MotorcycleLoanFragment extends BaseMVPView {
       AdditionalDocuments,
       isPayeeOrDealerResp,
       employeeName,
-      storedIsDealerOrPayee,
       computationOffset
     } = this.state
 
@@ -179,12 +200,38 @@ class MotorcycleLoanFragment extends BaseMVPView {
                <CircularLoader show = { this.state.enabledLoader }/>
              </center> :
             <FormCardComponent
-              loanType = { loanType }
-              purposeOfAvailment = { purposeOfAvailment }
-              validateLoanType = { validateLoanType }
-              formAttachments = { formAttachments }
-              offset = { offset }
-              presenter = { this.presenter }
+              loanType={ loanType }
+              isPayeeOrDealer={ isPayeeOrDealerResp ? isPayeeOrDealerResp : '(Not yet Provided)' }
+              purposeOfAvailment={ purposeOfAvailment }
+              validateLoanType={ validateLoanType }
+              formAttachments={ formAttachments }
+              offset={ offset }
+              AdditionalDocuments={ AdditionalDocuments }
+              RequiredDocuments={ RequiredDocuments }
+              presenter={ this.presenter }
+              sendFormDataToPresenter={ (
+                dealerName,
+                amountValue,
+                modeOfLoanId,
+                loanType,
+                poaText,
+                termId,
+                selectedOffsetLoan,
+                fileObject,
+                formAttachments
+              ) =>
+                this.submission(
+                  dealerName,
+                  amountValue,
+                  modeOfLoanId,
+                  loanType,
+                  poaText,
+                  termId,
+                  selectedOffsetLoan,
+                  fileObject,
+                  formAttachments
+                )
+              }
             />
           }
       </div>
