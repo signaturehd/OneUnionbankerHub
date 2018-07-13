@@ -79,7 +79,7 @@ class TransactionPersonalFragment extends BaseMVPView {
         transactions ?
         <div className = { 'transaction-container' }>
           {
-             newTrans.slice(0, 4).map((transaction, key) => (
+             newTrans.map((transaction, key) => (
               <TransactionCardComponent
                 detail = { transaction }
                 key = { key  }
