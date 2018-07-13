@@ -113,7 +113,7 @@ class CalamityFragment extends BaseMVPView {
        })
      )
     }
-    else if (!this.validator(acquisitionValue)) {
+    else if (!this.validator(acquisitionValue) || acquisitionValue==0) {
       store.dispatch(NotifyActions.addNotify({
          title : 'Calamity Assistance' ,
          message : 'Please provide information to Acquisition Value field',
@@ -122,7 +122,7 @@ class CalamityFragment extends BaseMVPView {
        })
      )
     }
-    else if (!this.validator(estimatedCost)) {
+    else if (!this.validator(estimatedCost) || estimatedCost==0) {
       store.dispatch(NotifyActions.addNotify({
          title : 'Calamity Assistance' ,
          message : 'Please provide information to Estimated Cost field',
