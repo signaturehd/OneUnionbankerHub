@@ -6,6 +6,7 @@ import GetValidateInteractor from '../../../domain/interactor/mpl/GetValidateInt
 import mplValidateParam from '../../../domain/param/MplValidateParam'
 import AddMotorLoanParam from '../../../domain/param/AddMotorLoanParam'
 import mplGetFormParam from '../../../domain/param/MplGetFormParam'
+import GetInformationInteractor from '../../../domain/interactor/user/GetInformationInteractor'
 import GetManagersCheckInteractor from '../../../domain/interactor/user/GetManagersCheckInteractor'
 
 import store from '../../../store'
@@ -30,6 +31,9 @@ export default class MotorcycleLoanPresenter {
 
     this.getManagersCheckInteractor =
       new GetManagersCheckInteractor(container.get('HRBenefitsClient'))
+
+    this.getInformationInteractor =
+      new GetInformationInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -59,21 +63,70 @@ export default class MotorcycleLoanPresenter {
       .subscribe()
     }
 
+
+  getProfile () {
+     this.view.getEmployeeName(this.getInformationInteractor.execute())
+     /* Get Employee Name */
+  }
+
   getMplValidate (loanTypeId) {
     this.view.showCircularLoader()
     this.getValidateInteractor.execute(mplValidateParam(loanTypeId))
+      .map(offsetLoan => {
+        const modeOfLoanStatic={
+          id: 1,
+          name: 'New Loan',
+        } // create instance of "New Loan"
+        const modeOfLoan={
+          id: 2,
+          name: 'Offset Loan',
+        } // create instance of "New Loan"
+
+        offsetLoan.offset === null ||
+        offsetLoan.offset === '' ||
+        offsetLoan.offset === undefined ||
+        (offsetLoan.offset).length === 0?
+          offsetLoan.offset.push(modeOfLoanStatic)
+        :
+          offsetLoan.offset.push(modeOfLoanStatic, modeOfLoan)
+        // add the New Loan to the offsets option
+
+        return offsetLoan
+      })
       .subscribe(
-        data => {
-          this.view.showOffset(os && os.offset)
-          this.view.showValidate(data)
+        data =>  {
           this.view.hideCircularLoader()
+          this.view.showOffset(data && data.offset)
+          this.view.showValidate(data)
+          this.view.showComputationForOffset(data && data.offset)
         },
         error => {
+          store.dispatch(NotifyActions.addNotify({
+              title: 'Warning',
+              message: `We're sorry, but right now, you're not yet able to avail of this benefit because if your${this.error.message}`,
+              type: 'warning',
+              duration: 2000
+            })
+          )
           this.view.navigate()
-          this.view.hideCircularLoader()
         }
       )
     }
+
+  isManagersCheck () {
+    const isManagersCheck=this.getManagersCheckInteractor.execute()
+    if (isManagersCheck !== null) {
+        this.view.isManagersCheck('Dealer Name')
+    } else {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Benefits',
+          message : 'Theres a Problem Getting your profile',
+          type : 'success',
+          duration : 2000
+        })
+      )
+    }
+  }
 
   getMplFormAttachments (formRequesting, loanId) {
     this.getFormAttachmentsInteractor.execute(mplGetFormParam(formRequesting, loanId))
@@ -89,25 +142,25 @@ export default class MotorcycleLoanPresenter {
     }
 
   /* add motorloan or computer loan salary*/
-  addLoanComputerOrMotor (
-    payeeName,
-    loanId,
-    purposeOfLoan,
-    modeOfLoan,
-    loanTerm,
-    principalLoanAmount,
-    selectedSupplier,
-    attachments) {
-      this.view.hideCircularLoader()
+  addLoanMotor (
+    dealerName,
+    loanType,
+    poaText,
+    modeOfLoanId,
+    termId,
+    selectedOffsetLoan,
+    amountValue,
+    fileObject) {
+      this.view.showCircularLoader()
       this.addMotorLoanInteractor.execute(AddMotorLoanParam(
-        payeeName,
-        loanId,
-        purposeOfLoan,
-        modeOfLoan,
-        loanTerm,
-        principalLoanAmount,
-        selectedSupplier,
-        attachments
+        dealerName,
+        loanType,
+        poaText,
+        modeOfLoanId,
+        termId,
+        selectedOffsetLoan,
+        amountValue,
+        fileObject,
         )
       )
     .subscribe(
@@ -120,26 +173,5 @@ export default class MotorcycleLoanPresenter {
          this.view.noticeResponse(error)
         }
       )
-    }
-
-    isManagersCheck () {
-      const isManagersCheck = this.getManagersCheckInteractor.execute()
-      if (isManagersCheck !== null) {
-        if (isManagersCheck) {
-          this.view.isManagersCheck('Dealer Name')
-          // TODO get chosen releasing center then;
-          // TODO show releasing centers if there's no releasing center chosen
-        } else {
-          this.view.isManagersCheck('Payee Name')
-        }
-      } else {
-        store.dispatch(NotifyActions.addNotify({
-            title: 'Benefits',
-            message : 'Theres a Problem Getting your profile',
-            type : 'success',
-            duration : 2000
-          })
-        )
-      }
     }
   }
