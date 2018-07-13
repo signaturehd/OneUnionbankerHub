@@ -366,18 +366,33 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addLoanComputerOrMotor (
+  addLoanMotor (
     token,
     accountToken,
     accountNumber,
     releasingCenter,
     addMotorLoanParam) {
-    return this.service.addLoanComputerOrMotor(
+    return this.service.addLoanMotor(
       token,
       accountToken,
       accountNumber,
       releasingCenter,
       addMotorLoanParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addLoanComputer (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addComputerLoanParam) {
+    return this.service.addLoanComputer(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      addComputerLoanParam)
       .pipe(ServiceErrorOperator())
   }
 

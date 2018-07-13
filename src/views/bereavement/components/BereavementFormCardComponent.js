@@ -64,6 +64,7 @@ class BereavementFormCardComponent extends Component {
 
   getFuneralDate (e) {
     this.setState({ funeralDate  : e.format('MM/DD/YYYY') })
+    this.setState({ intermentDate  : e.format('MM/DD/YYYY') })
   }
 
   getIntermentDate (e) {
@@ -306,6 +307,7 @@ class BereavementFormCardComponent extends Component {
                     dateFormat={ 'MM/DD/YYYY' }
                     readOnly
                     minDate={ moment(deceasedDate) }
+                    maxDate={ moment(deceasedDate).add(30, 'days') }
                     value={ funeralDate ? funeralDate : 'Date of Wake' }
                     selected={ moment(funeralDate) }
                     onChange={ this.getFuneralDate }
@@ -413,7 +415,8 @@ class BereavementFormCardComponent extends Component {
                   <DatePicker
                     dateFormat={ 'MM/DD/YYYY' }
                     readOnly
-                    minDate={ moment(deceasedDate) }
+                    minDate={ moment(funeralDate) }
+                    maxDate={ moment(deceasedDate).add(30, 'days') }
                     onChange={ this.getIntermentDate }
                     value={ intermentDate ? intermentDate : 'Date of Interment'  }
                     selected={ moment(deceasedDate) }
