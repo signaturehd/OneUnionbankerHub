@@ -148,24 +148,27 @@ export default class MultiPurposeLoanPresenter {
 
   /* add Loa salary, housing assistance, emergency*/
   addLoan (
-    loanId,
-    purposeOfLoan,
-    modeOfLoan,
-    loanTerm,
-    offset,
-    principalLoanAmount,
-    attachments) {
+    dealerName,
+    amountValue,
+    modeOfLoanId,
+    loanType,
+    poaText,
+    termId,
+    selectedOffsetLoan,
+    fileObject,
+    fileObject1) {
       const fullname=this.getInformationInteractor.execute().fullname
       this.view.showCircularLoader()
       this.addLoanInteractor.execute(mplPurposeLoanAddParam(
-        fullname,
-        loanId,
-        purposeOfLoan,
-        modeOfLoan,
-        loanTerm,
-        offset,
-        principalLoanAmount,
-        attachments
+        dealerName,
+        amountValue,
+        modeOfLoanId,
+        loanType,
+        poaText,
+        termId,
+        selectedOffsetLoan,
+        fileObject,
+        fileObject1
         )
       )
       .subscribe(

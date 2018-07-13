@@ -34,7 +34,6 @@ class MplReviewFormModal extends Component {
        disableSubmit,
        isDismisable
     }=this.state
-
     return (
       <Modal
         isDismisable={ isDismisable }
@@ -105,8 +104,7 @@ class MplReviewFormModal extends Component {
           <div className={ 'calamity-image-display' }>
             {
               imageUrlObject ?
-                imageUrlObject.map((image, key) =>
-
+              imageUrlObject.map((image, key) =>
                 <div
                   key={ key }
                   style={{
