@@ -128,8 +128,14 @@ ComputerReviewModal.propTypes={
   confirm : PropTypes.string,
   confirm : PropTypes.string,
   poaText : PropTypes.string,
-  termOfLoan : PropTypes.string,
-  rateOfLoan : PropTypes.string,
+  termOfLoan : PropTypes.oneOfType([
+  PropTypes.number,
+  PropTypes.string
+]),
+  rateOfLoan : PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
   modeOfLoanText : PropTypes.string,
   isPayeeOrDealer : PropTypes.oneOfType([
     PropTypes.object,
