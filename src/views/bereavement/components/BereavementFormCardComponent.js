@@ -273,10 +273,10 @@ class BereavementFormCardComponent extends Component {
                 <div>
                   <DatePicker
                     dateFormat={ 'MM/DD/YYYY' }
-                    maxDate={ moment().subtract(30, 'days') }
+                    maxDate={ moment() }
                     readOnly
                     value={ deceasedDate ? deceasedDate : 'Date of Death'  }
-                    selected={ deceasedDate ? moment(deceasedDate) : moment().subtract(30, 'days') }
+                    selected={ deceasedDate ? moment(deceasedDate) : moment() }
                     onChange={ this.getDeceasedDate }
                     className={ 'calendar  font-size-12px' }
                     calendarClassName={ 'calendarClass' }/>
