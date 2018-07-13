@@ -47,7 +47,7 @@ class CarLeaseFragment extends Component {
           <h2>Under Development</h2>
             <br/>
           <center>
-            <h4>We’re sorry to inform you that Podcasts on One UnionBanker Hub will be available in the future releases. Apologies for the inconvenience.</h4>
+            <h4>Hi there! Unfortunately Car Lease applications will not be available until August 2018. Please come back then to avail of your Brand New Car!</h4>
             <br/>
             <GenericButton
               text={ 'OK' }

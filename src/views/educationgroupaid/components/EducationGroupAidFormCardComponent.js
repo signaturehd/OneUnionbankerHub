@@ -7,6 +7,8 @@ import DependentModal from '../modals/EducationGroupAidDependentModal'
 import DOPModal from '../modals/educationGroupAidDOPModal'
 import './styles/educationGroupAidComponentStyle.css'
 
+import { MinMaxNumberValidation, RequiredDecimalValidation } from '../../../utils/validate'
+
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
@@ -135,15 +137,18 @@ class EducationGroupAidFormCardComponent extends Component {
                 type = { 'text' }/>
               <GenericTextBox
                 value = { desiredAmount }
-                onChange = {
-                  (e) => {
-                    const re = /^[0-9\.]+$/
-                    if (e.target.value === '' ||  re.test(e.target.value)) {
-                      this.setState({ desiredAmount : e.target.value })
-                    }
+                value={ desiredAmount ? desiredAmount : '' }
+                onChange={
+                  (e) =>{
+                    new RequiredDecimalValidation().isValid(e.target.value) &&
+                    new MinMaxNumberValidation(0, 800).isValid(e.target.value) ?
+                      this.setState({ desiredAmount: e.target.value }):
+                      this.setState({ desiredAmount: '' })
+
                   }
-                }
+                 }
                 maxLength={ 20 }
+                readOnly
                 placeholder = { 'Desired Amount' }
                 type = { 'text' }/>
               <GenericTextBox
