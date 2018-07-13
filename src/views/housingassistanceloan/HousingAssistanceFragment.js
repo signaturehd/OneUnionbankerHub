@@ -21,7 +21,7 @@ class HousingAssistanceFragment extends BaseMVPView {
       purposeOfAvailment: [],
       selectedPoa: '',
       formAttachments: [],
-      loanType: 3,
+      loanType: '3',
       validateLoanType : [],
       offset : [],
       enabledLoader : true,
@@ -109,6 +109,30 @@ class HousingAssistanceFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/loans')
   }
 
+  sendFormDataToPresenter (
+    dealerName,
+    amountValue,
+    modeOfLoanId,
+    loanType,
+    poaText,
+    selectedTerm,
+    selectedOffsetLoan,
+    fileObject,
+    fileObject1
+  ) {
+    this.presenter.addLoan(
+      dealerName,
+      amountValue,
+      modeOfLoanId,
+      loanType,
+      poaText,
+      selectedTerm,
+      selectedOffsetLoan,
+      fileObject,
+      fileObject1
+    )
+  }
+
   render () {
     const {
       purposeOfAvailment,
@@ -193,6 +217,29 @@ class HousingAssistanceFragment extends BaseMVPView {
               AdditionalDocuments={ AdditionalDocuments }
               RequiredDocuments={ RequiredDocuments }
               presenter={ this.presenter }
+              sendFormDataToPresenter={ (
+                dealerName,
+                amountValue,
+                modeOfLoanId,
+                loanType,
+                poaText,
+                selectedTerm,
+                selectedOffsetLoan,
+                fileObject,
+                fileObject1
+              ) =>
+              this.sendFormDataToPresenter(
+                dealerName,
+                amountValue,
+                modeOfLoanId,
+                loanType,
+                poaText,
+                selectedTerm,
+                selectedOffsetLoan,
+                fileObject,
+                fileObject1
+              )
+               }
             />
           }
       </div>
