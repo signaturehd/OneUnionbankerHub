@@ -4,7 +4,7 @@ export default class AddLoanMotorLoanInteractor {
   }
 
   execute (addMotorLoanParam) {
-    return this.client.addLoan(
+    return this.client.addLoanMotor(
         this.client.getToken(),
         this.client.getAccountToken(),
         this.client.getAccountNumber(),
