@@ -353,7 +353,7 @@ export default class HRBenefitsService {
     })
   }
 
-  addLoanComputerOrMotor (
+  addLoanMotor (
     token,
     accountToken,
     accountNumber,
@@ -361,17 +361,45 @@ export default class HRBenefitsService {
     addMotorLoanParam) {
     const formData = new FormData()
     const multiLoanBodyObject = {
-      relesingCenter,
+      releasingCenter,
       accountNumber,
       loan : {
         id : addMotorLoanParam.loanId,
         purpose : addMotorLoanParam.purposeOfLoan,
-        mode : addMotorLoanParam.modeOfLoan,
+        mode : addMotorLoanParam.modeOfLoan ? 2 : 1,
         term : addMotorLoanParam.loanTerm,
         principalAmount : addMotorLoanParam.principalLoanAmount,
+        dealerName : addMotorLoanParam.dealerName,
       },
       promissoryNoteNumbers : [],
-      distributor : addMotorLoanParam.supplierName,
+    }
+    formData.append('uuid', 12345)
+    formData.append('body', JSON.stringify(multiLoanBodyObject))
+    formData.append('MPL-cert', addMotorLoanParam.attachments)
+    return this.apiClient.post('v2/loans/mpl/submit', formData, {
+      headers : { token }
+    })
+  }
+
+  addLoanComputer (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMotorLoanParam) {
+    const formData = new FormData()
+    const multiLoanBodyObject = {
+      releasingCenter,
+      accountNumber,
+      loan : {
+        id : addMotorLoanParam.loanId,
+        purpose : addMotorLoanParam.purposeOfLoan,
+        mode : addMotorLoanParam.modeOfLoan ? 2 : 1,
+        term : addMotorLoanParam.loanTerm,
+        principalAmount : addMotorLoanParam.principalLoanAmount,
+        supplierName : addMotorLoanParam.supplierName,
+      },
+      promissoryNoteNumbers : [],
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
