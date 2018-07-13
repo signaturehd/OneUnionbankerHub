@@ -1,6 +1,9 @@
 
 .calamity-container {
   max-width: 100%;
+  padding-left: 0%;
+  padding-right: 10%;
+  padding-top: 0%;
 }
 
 
@@ -127,12 +130,6 @@
   background-repeat: no-repeat;
 }
 
-.calamity-container {
-  padding-left: 0%;
-  padding-right: 10%;
-  padding-top: 0%;
-}
-
 .calamity-calamity {
   background-image: url('../../../../images/icons/ic_calamity.png');
 }
@@ -159,6 +156,10 @@
 
 .calamity-file {
   background-image: url('../../../../images/icons/ic_insert_drive_file_grey_500_18dp.png');
+}
+
+.calamity-dropdown {
+  background-image: url('../../../../images/icons/ic_dropdown.png');
 }
 
 .font-color-gray {

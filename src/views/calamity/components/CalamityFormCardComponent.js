@@ -5,7 +5,8 @@ import {
   GenericTextBox,
   Card,
   GenericButton,
-  FileUploader
+  FileUploader,
+  Modal
 } from '../../../ub-components/'
 
 import './styles/calamityComponentStyle.css'
@@ -37,6 +38,7 @@ class CalamityFormCardComponent extends Component {
       showModal: false,
       showReviewCalamityModal: false,
       showPropModal: false,
+      showErrorModal: false,
       calamityId: '',
       calamityType: '',
       preferredDate: '',
@@ -103,6 +105,7 @@ class CalamityFormCardComponent extends Component {
       showModal,
       showReviewCalamityModal,
       showPropModal,
+      showErrorModal,
       calamityId,
       calamityType,
       preferredDate,
@@ -277,12 +280,7 @@ class CalamityFormCardComponent extends Component {
                 <GenericTextBox
                   container={ 'calamity-container' }
                   value={ property ? property : '' }
-                  onChange={ (e) => {
-                    new RequiredAlphabetValidation().isValid(e.target.value) ?
-                    this.setState({ property: e.target.value }) :
-                    this.setState({ property: '' })
-                    }
-                  }
+                  onChange={ (e) => this.setState({ property: e.target.value.replace(/[&\/\\#,+()$~%.'":;*?<>\[\]|{}]/g, '') }) }
                   placeholder={ 'Property' }
                   readOnly
                   type={ 'text' }
@@ -299,11 +297,7 @@ class CalamityFormCardComponent extends Component {
                 <GenericTextBox
                   container={ 'calamity-container' }
                   value={ propertyDesc ? propertyDesc : '' }
-                  onChange={ (e) =>
-                    new RequiredAlphabetValidation().isValid(e.target.value) ?
-                    this.setState({ propertyDesc: e.target.value })  :
-                    this.setState({ propertyDesc: '' })
-                  }
+                  onChange={ (e) => this.setState({ propertyDesc: e.target.value.replace(/[&\/\\#,+()$~%.'":;*?<>\[\]|{}]/g, '') }) }
                   placeholder={ 'Property Description' }
                   readOnly
                   type={ 'text' }
@@ -325,6 +319,7 @@ class CalamityFormCardComponent extends Component {
                   }
                   placeholder={ 'Property Type' }
                 />
+
               </div>
             </div>
 
@@ -337,13 +332,7 @@ class CalamityFormCardComponent extends Component {
                 <GenericTextBox
                   container={ 'calamity-container' }
                   value={ acquisitionValue ? acquisitionValue : '' }
-                  onChange={
-                    (e) =>{
-                      new RequiredDecimalValidation().isValid(e.target.value) ?
-                        this.setState({ acquisitionValue: e.target.value }):
-                        this.setState({ acquisitionValue: '' })
-                    }
-                   }
+                  onChange={ (e) => this.setState({ acquisitionValue: e.target.value.replace(/[^0-9]/g, '') }) }
                   placeholder={ 'Acquisition Value' }
                   readOnly
                   type={ 'text' }
@@ -361,13 +350,11 @@ class CalamityFormCardComponent extends Component {
                   container={ 'calamity-container' }
                   value={ estimatedCost ? estimatedCost : '' }
                   onChange={
-                    (e) =>{
-                      new RequiredDecimalValidation().isValid(e.target.value) &&
+                    (e) =>
                       new MinMaxNumberValidation(0, 30000).isValid(e.target.value) ?
-                        this.setState({ estimatedCost: e.target.value }):
-                        this.setState({ estimatedCost: '' })
+                        this.setState({ estimatedCost: Number(e.target.value.replace(/[^0-9]/g, '')) }) :
+                        this.setState({ estimatedCost: '', showErrorModal: estimatedCost ? true : false })
 
-                    }
                    }
                   placeholder={ 'Estimated Repair Cost' }
                   readOnly
@@ -377,7 +364,24 @@ class CalamityFormCardComponent extends Component {
             </div>
               <br/>
               <br/>
-
+                {
+                  showErrorModal &&
+                  <Modal
+                    onClose = { () =>
+                      this.setState({ showErrorModal : false })
+                    }
+                    width={ 20 }
+                    isDismisable = { true }>
+                    <center>
+                      <h2>
+                        Note:
+                      </h2>
+                    </center>
+                    <div>
+                      <h4>Estimated Repair Cost exceeds 30,000</h4>
+                    </div>
+                  </Modal>
+                }
             </div>
           </Card>
         </div>
