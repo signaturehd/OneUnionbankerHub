@@ -5,14 +5,14 @@ import { Modal , GenericButton } from '../../../ub-components/'
 
 import './styles/computerModalStyle.css'
 
-class MplModeOfLoanModal extends Component {
+class ComputerModeOfLoanModal extends Component {
 render () {
   const { onClose, offset, onSubmit } = this.props
 
 return (
   <Modal
-    onClose = { onClose }
-    isDismisable = { true }>
+    onClose={ onClose }
+    isDismisable={ true }>
     <div>
       <center>
         <h2>
@@ -24,10 +24,10 @@ return (
       {
         offset && offset.map((resp, key) =>
         <GenericButton
-          className = { 'computer-modal-button' }
-          key = { key ? key : '' }
-          text = { resp && resp.name ? resp.name : '' }
-          onClick = { () => onSubmit(resp ? resp : '', false) }/>
+          className={ 'motor-modal-button' }
+          key={ key ? key : '' }
+          text={ resp && resp.name ? resp.name : '' }
+          onClick={ () => onSubmit(resp ? resp : '', false) }/>
         )
       }
     </div>
@@ -35,10 +35,10 @@ return (
     )
   }
 }
-MplModeOfLoanModal.propTypes = {
+ComputerModeOfLoanModal.propTypes = {
   onClose : PropTypes.func,
   offset : PropTypes.array,
   onSubmit : PropTypes.func
 }
 
-export default MplModeOfLoanModal
+export default ComputerModeOfLoanModal

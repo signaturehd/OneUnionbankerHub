@@ -5,7 +5,7 @@ import { Modal , GenericButton } from '../../../ub-components/'
 
 import './styles/computerModalStyle.css'
 
-class MplTermOfLoan extends Component {
+class ComputerTermOfLoanModal extends Component {
 render () {
   const { onClose, term, onSubmit } = this.props
 
@@ -40,10 +40,10 @@ return (
     )
   }
 }
-MplTermOfLoan.propTypes = {
+ComputerTermOfLoanModal.propTypes = {
   onClose : PropTypes.func,
   term : PropTypes.array,
   onSubmit : PropTypes.func
 }
 
-export default MplTermOfLoan
+export default ComputerTermOfLoanModal
