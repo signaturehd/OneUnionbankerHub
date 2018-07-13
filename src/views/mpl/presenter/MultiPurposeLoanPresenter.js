@@ -13,6 +13,7 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
 export default class MultiPurposeLoanPresenter {
+
   constructor (container) {
     this.getTypesInteractor =
       new GetTypesInteractor(container.get('HRBenefitsClient'))
@@ -28,9 +29,6 @@ export default class MultiPurposeLoanPresenter {
 
     this.getValidateInteractor =
       new GetValidateInteractor(container.get('HRBenefitsClient'))
-
-    this.getInformationInteractor =
-      new GetInformationInteractor(container.get('HRBenefitsClient'))
 
     this.getManagersCheckInteractor =
       new GetManagersCheckInteractor(container.get('HRBenefitsClient'))
