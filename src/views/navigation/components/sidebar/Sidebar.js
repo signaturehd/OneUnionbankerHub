@@ -52,7 +52,7 @@ class SideBar extends Component {
       },
       {
         id: 3 ,
-        title: 'My Profile',
+        title: 'My Personal Information',
         action: () => history.push('/settings'),
         className: 'settings-icon'
       },

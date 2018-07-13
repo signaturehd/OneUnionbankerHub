@@ -75,13 +75,13 @@ export default class HRBenefitsService {
     const dentalRObject = {
       accountNumber,
       releasingCenter,
-      type : dentalReimbursementParam.dependentId !== 1 ? 2 : 1,
-      procedures : dentalReimbursementParam.procedure
+      type : dentalReimbursementParam.dependentId.id !== 1 ? 2 : 1,
+      procedures : dentalReimbursementParam.procedure,
     }
 
     formData.append('uuid', 12345)
     formData.append('dentcert1', dentalReimbursementParam.file1)
-    formData.append('dependentId', dentalReimbursementParam.dependentId)
+    formData.append('dependentId', dentalReimbursementParam.dependentId.id)
     formData.append('dentcert2', dentalReimbursementParam.file2)
     formData.append('body', JSON.stringify(dentalRObject))
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {
