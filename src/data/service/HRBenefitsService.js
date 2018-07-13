@@ -224,6 +224,13 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  /* notice of undertaking for mpl */
+  updateNoticeMpl (token, noticeParamMpl) {
+    return this.apiClient.put('v1/agreements', noticeParamMpl, {
+      headers: { token }
+    })
+  }
 /* Feedback */
 
   getFeedback (token) {

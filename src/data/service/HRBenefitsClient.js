@@ -37,11 +37,6 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  notice (token, noticeParam) {
-    return this.service.notice(token, noticeParam)
-      .pipe(ServiceErrorOperator())
-  }
-
   validateTermsAndCondition (token) {
     return this.service.validateTermsAndCondition(token)
       .pipe(ServiceErrorOperator())
@@ -288,6 +283,11 @@ export default class HRBenefitsClient {
   /* Notice of Undertaking */
   updateNotice (token, noticeParam) {
     return this.service.updateNotice(token, noticeParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateNoticeMpl (token, noticeParamMpl) {
+    return this.service.updateNoticeMpl(token, noticeParamMpl)
       .pipe(ServiceErrorOperator())
   }
 
