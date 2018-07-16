@@ -333,29 +333,27 @@ class MotorcycleLoanCardComponent extends Component {
               </h4>
               <div className={ 'mpl-form-card-body' }>
                 <GenericTextBox
-                  type={ 'button' }
                   value={ poaText ? poaText : '' }
-                  onClick={ () =>
-                    this.setState({ showPurposeOfAvailment : true }) }
-                  onChange={ poaText =>
-                    this.setState({ poaText }) }
+                  onClick={ (e) =>
+                    this.setState({ poaText: e.target.value, showPurposeOfAvailment : true }) }
+                  // onChange={ poaText =>
+                  //   this.setState({ poaText }) }
                   placeholder={ 'Purpose Of Availment' }
                   type={ 'text' }/>
                 <GenericTextBox
-                  onChange={ modeOfLoanText =>
-                    this.setState({ modeOfLoanText: modeOfLoanText ? modeOfLoanText : 'New Loan' }) }
-                  onClick={ () =>
-                    this.setState({ showOffset : true }) }
+                  // onChange={ modeOfLoanText =>
+                  //   this.setState({  }) }
+                  onClick={ (e) =>
+                    this.setState({ modeOfLoanText: modeOfLoanText ? e.target.value : 'New Loan', showOffset : true }) }
                   placeholder={ 'Mode of Loan' }
-                  disabled={ modeOfLoanText ? modeOfLoanText : this.state.disabled }
                   value={ modeOfLoanText ? modeOfLoanText : 'New Loan' }
                   type={ 'text' }/>
                 <GenericTextBox
                   value={ amountValue ? amountValue : '' }
                   onChange={ (e) =>
                     {
-                      new MoneyValidation().isValid(e.target.value)  ?
-                        this.setState({ amountValue : e.target.value })
+                      e.target.value  ?
+                        this.setState({ amountValue : Number(e.target.value.replace(/[^0-9]/g, '')) })
                         :
                         this.setState({ amountValue : '' })
                      } }
@@ -364,8 +362,8 @@ class MotorcycleLoanCardComponent extends Component {
                   type={ 'text' }/>
                 <GenericTextBox
                   value={ `${ termOfLoan ? termOfLoan : '' } (${ rateOfLoan ? rateOfLoan : '' } %)` }
-                  onChange={ (termOfLoan, rateOfLoan) =>
-                    this.setState({ termOfLoan, rateOfLoan }) }
+                  // onChange={ (termOfLoan, rateOfLoan) =>
+                  //   this.setState({ termOfLoan, rateOfLoan }) }
                   onClick={ () =>
                     this.setState({ showTerm : true }) }
                   placeholder={ 'Term of Loan' }
