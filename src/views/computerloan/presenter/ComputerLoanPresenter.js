@@ -140,7 +140,7 @@ export default class MultiPurposeLoanPresenter {
     loanType,
     poaText,
     modeOfLoanId,
-    termId,
+    termOfLoan,
     selectedOffsetLoan,
     amountValue,
     fileObject) {
@@ -150,7 +150,7 @@ export default class MultiPurposeLoanPresenter {
         loanType,
         poaText,
         modeOfLoanId,
-        termId,
+        termOfLoan,
         selectedOffsetLoan,
         amountValue,
         fileObject,

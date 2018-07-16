@@ -113,7 +113,7 @@ class ComputerLoanFragment extends BaseMVPView {
       modeOfLoanId,
       loanType,
       poaText,
-      termId,
+      termOfLoan,
       selectedOffsetLoan,
       fileObject,
       formAttachments
@@ -123,7 +123,7 @@ class ComputerLoanFragment extends BaseMVPView {
           loanType,
           poaText,
           modeOfLoanId,
-          termId,
+          termOfLoan,
           selectedOffsetLoan,
           amountValue,
           fileObject,
@@ -215,7 +215,7 @@ class ComputerLoanFragment extends BaseMVPView {
                 modeOfLoanId,
                 loanType,
                 poaText,
-                termId,
+                termOfLoan,
                 selectedOffsetLoan,
                 fileObject,
                 formAttachments
@@ -226,7 +226,7 @@ class ComputerLoanFragment extends BaseMVPView {
                   modeOfLoanId,
                   loanType,
                   poaText,
-                  termId,
+                  termOfLoan,
                   selectedOffsetLoan,
                   fileObject,
                   formAttachments
