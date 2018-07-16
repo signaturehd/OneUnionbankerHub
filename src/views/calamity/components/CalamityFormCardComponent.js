@@ -95,6 +95,10 @@ class CalamityFormCardComponent extends Component {
     return parts[parts.length - 1]
   }
 
+  RepairCostValidator(value) {
+    return value ? true : false
+  }
+
   render () {
     const {
       calamityAssistance,
@@ -332,7 +336,7 @@ class CalamityFormCardComponent extends Component {
                 <GenericTextBox
                   container={ 'calamity-container' }
                   value={ acquisitionValue ? acquisitionValue : '' }
-                  onChange={ (e) => this.setState({ acquisitionValue: e.target.value.replace(/[^0-9]/g, '') }) }
+                  onChange={ (e) => this.setState({ acquisitionValue: Number(e.target.value.replace(/[^0-9]/g, '')) }) }
                   placeholder={ 'Acquisition Value' }
                   readOnly
                   type={ 'text' }
@@ -353,8 +357,7 @@ class CalamityFormCardComponent extends Component {
                     (e) =>
                       new MinMaxNumberValidation(0, 30000).isValid(e.target.value) ?
                         this.setState({ estimatedCost: Number(e.target.value.replace(/[^0-9]/g, '')) }) :
-                        this.setState({ estimatedCost: '', showErrorModal: estimatedCost ? true : false })
-
+                        this.setState({ estimatedCost: '', showErrorModal: this.RepairCostValidator(e.target.value) })
                    }
                   placeholder={ 'Estimated Repair Cost' }
                   readOnly
