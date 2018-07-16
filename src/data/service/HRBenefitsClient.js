@@ -286,11 +286,6 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  updateNoticeMpl (token, noticeParamMpl) {
-    return this.service.updateNoticeMpl(token, noticeParamMpl)
-      .pipe(ServiceErrorOperator())
-  }
-
   /* Feedback */
   getFeedback (token, FeedbackParam) {
     return this.service.getFeedback(token, FeedbackParam)
