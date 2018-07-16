@@ -51,7 +51,6 @@ export default class NavigationPresenter {
 
    this.getProfileInteractor.execute()
     .do(profile => this.view.showProfile(profile.employee))
-
     .subscribe(profile => {
      this.view.hideLoading()
     }, e => {
