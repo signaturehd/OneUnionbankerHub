@@ -69,7 +69,7 @@ class MotorcycleLoanCardComponent extends Component {
        modeOfLoanId,
        loanType,
        poaText,
-       termId,
+       termOfLoan,
        selectedOffsetLoan,
        fileObject,
        formAttachments
@@ -80,7 +80,7 @@ class MotorcycleLoanCardComponent extends Component {
          modeOfLoanId,
          loanType,
          poaText,
-         termId,
+         termOfLoan,
          selectedOffsetLoan,
          fileObject,
        )
@@ -93,7 +93,7 @@ class MotorcycleLoanCardComponent extends Component {
        modeOfLoanId,
        loanType,
        poaText,
-       termId,
+       termOfLoan,
        selectedOffsetLoan,
        fileObject,
        formAttachments) {
@@ -106,7 +106,7 @@ class MotorcycleLoanCardComponent extends Component {
               })
             )
           }
-        else if (!this.validator(termId)) {
+        else if (!this.validator(termOfLoan)) {
              store.dispatch(NotifyActions.addNotify({
                 title : 'Warning' ,
                 message : 'Please check and provide Term and Rates',
@@ -243,7 +243,7 @@ class MotorcycleLoanCardComponent extends Component {
                       modeOfLoanId,
                       loanType,
                       poaText,
-                      termId,
+                      termOfLoan,
                       selectedOffsetLoan,
                       fileObject,
                       formAttachments
@@ -533,7 +533,7 @@ class MotorcycleLoanCardComponent extends Component {
                       modeOfLoanId,
                       loanType,
                       poaText,
-                      termId,
+                      termOfLoan,
                       selectedOffsetLoan,
                       fileObject,
                       formAttachments
@@ -552,7 +552,7 @@ class MotorcycleLoanCardComponent extends Component {
                   modeOfLoanId,
                   loanType,
                   poaText,
-                  termId,
+                  termOfLoan,
                   selectedOffsetLoan,
                   fileObject,
                   formAttachments

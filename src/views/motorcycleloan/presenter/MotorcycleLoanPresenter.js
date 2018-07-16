@@ -147,7 +147,7 @@ export default class MotorcycleLoanPresenter {
     loanType,
     poaText,
     modeOfLoanId,
-    termId,
+    termOfLoan,
     selectedOffsetLoan,
     amountValue,
     fileObject) {
@@ -157,7 +157,7 @@ export default class MotorcycleLoanPresenter {
         loanType,
         poaText,
         modeOfLoanId,
-        termId,
+        termOfLoan,
         selectedOffsetLoan,
         amountValue,
         fileObject,

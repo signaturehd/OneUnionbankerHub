@@ -58,12 +58,21 @@ class MplFormLoanCardComponent extends Component {
      return new RequiredValidation().isValid(input)
    }
 
-   sendFormData ( desiredAmount, modeOfLoanId, loanTypeId, poaText, termId, offset, attachments, formAttachmentsCount) {
+   sendFormData (
+     desiredAmount,
+     modeOfLoanId,
+     loanTypeId,
+     poaText,
+     termOfLoan,
+     offset,
+     attachments,
+     formAttachmentsCount
+   ) {
 
      const pnNumber=[]
      const amount=parseFloat(desiredAmount)
      const id=parseInt(loanTypeId)
-     const term=parseInt(termId)
+     const term=parseInt(termOfLoan)
      const mode=modeOfLoanId ? modeOfLoanId : 1
 
        if (
@@ -183,7 +192,7 @@ class MplFormLoanCardComponent extends Component {
                     modeOfLoanId,
                     loanType,
                     poaText,
-                    termId,
+                    termOfLoan,
                     selectedOffsetLoan,
                     fileObject,
                     formAttachments
