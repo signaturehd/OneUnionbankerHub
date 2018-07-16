@@ -21,19 +21,19 @@ class EducationFragment extends Component {
       const educationDefault = [{
         id: 0 ,
         title: 'UP Diliman',
-        imagePath: require('../../../../images/updilimanDefault.png'),
+        imagePath: require('../../../../images/icons/ic_school_grey_500_18dp.png'),
         course: 'Bachelor of Science in Computer Studies',
         year: '2015-2018'
       }, {
         id: 1 ,
         title: 'De Lasalle University',
-        imagePath: require('../../../../images/delasalleDefault.png'),
+        imagePath: require('../../../../images/icons/ic_school_grey_500_18dp.png'),
         course: 'Bachelor of Science in Computer Studies',
         year: '2015-2018'
       }, {
         id: 2,
         title: 'STI University',
-        imagePath: require('../../../../images/stiDefault.png'),
+        imagePath: require('../../../../images/icons/ic_school_grey_500_18dp.png'),
         course: 'Bachelor of Science in Computer Studies',
         year: '2015-2018'
       }]

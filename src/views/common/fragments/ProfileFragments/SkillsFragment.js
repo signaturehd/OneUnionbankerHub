@@ -27,13 +27,13 @@ class SkillsFragment extends Component {
     {
       id: 0 ,
       name: 'React Native',
-      imagePath: require('../../../../images/reactnative.png'),
+      imagePath: require('../../../../images/icons/ic_skill.png'),
       ratings: 5,
     },
     {
       id: 0 ,
       name: 'Java',
-      imagePath: require('../../../../images/java.jpg'),
+      imagePath: require('../../../../images/icons/ic_skill.png'),
       ratings: 3,
     }
   ]

@@ -21,7 +21,7 @@ class ExperienceComponent extends Component {
     const experienceDefault = [{
       id: 0 ,
       company: 'UnionBank of the Philippines',
-      imagePath: require('../../../../images/unionbankDefault.png'),
+      imagePath: require('../../../../images/icons/ic_work.png'),
       position: 'Associate Programmer - Android Developer',
       year: '2015-2018',
       location  : 'NCR - National Capital Region, Philippines'
