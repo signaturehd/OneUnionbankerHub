@@ -6,11 +6,11 @@ import { Card } from '../../../../ub-components/'
 import moment from 'moment'
 
 class CalamityAssistanceDetailsComponent extends Component {
-    constructor (props) {
-      super(props)
-    }
+  constructor (props) {
+    super(props)
+  }
 
-    render () {
+  render () {
     const { details, transactionsPerson } = this.props
     const transactionID = details.transactionId
     return (

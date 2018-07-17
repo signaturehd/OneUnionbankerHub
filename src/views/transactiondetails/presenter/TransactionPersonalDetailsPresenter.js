@@ -71,13 +71,14 @@ export default class TransactionPersonalDetailsPresenter {
   uploadImage (transactionType, benefitId, image) {
     this.uploadTransactionImageInteractor.execute(transactionType, benefitId, image)
       .subscribe(transactions => {
-        this.view.showFileReceipt(false)
-        store.dispatch(NotifyActions.addNotify({
-            title : 'File Uploading',
-            message : 'You have submitted a file',
-            type : 'success',
-            duration : 2000
-         })
+          this.view.showFileReceipt(false)
+          store.dispatch(NotifyActions.addNotify({
+              title : 'File Uploading',
+              message : 'You\'ve successfully added your official receipt',
+              type : 'success',
+              duration : 2000
+           })
+          )
         }, e => {
 
       })

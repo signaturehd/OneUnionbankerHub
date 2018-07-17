@@ -25,6 +25,7 @@ import TransactionCalamityAssistanceFormAgreementComponenent from
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
+
 class CalamityAssistanceDetailsFragment extends Component {
   constructor (props) {
     super(props)
@@ -43,14 +44,15 @@ class CalamityAssistanceDetailsFragment extends Component {
       details,
       transactionsPerson,
       attachments,
-      uploadImage
+      uploadImage,
+      response,
     } = this.props
 
     const {
-      fileOR
+      fileOR,
+      showLoader
     } = this.state
 
-    console.log(details)
 
     return (
       <div className={ 'details-container' }>
@@ -92,56 +94,62 @@ class CalamityAssistanceDetailsFragment extends Component {
           </div>
 
           {
-            details &&
-            details.status &&
-            details.status.id === 6 &&
-            details.details.CalamityDetails.RequiredAttachment.length !== 0 &&
-            <div>
-              <FileUploader
-                accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
-                value={ fileOR && fileOR.name }
-                placeholder={ 'Official Receipt' }
-                onChange={
-                  (e) => {
-                    e.preventDefault()
-                    const reader=new FileReader()
-                    const file=e.target.files[0]
-                    let isValid
-                    switch (this.getExtension(file.type).toLowerCase()) {
-                      case 'jpeg' :
-                        isValid=true
-                      case 'jpg' :
-                        isValid=true
-                      case 'png' :
-                        isValid=true
-                      case 'pdf' :
-                        isValid=true
-                    }
+            response &&
+              showLoader ?
+                <center>
+                  <CircularLoader show = { true }/>
+                </center>
+              :
+                details &&
+                details.status &&
+                details.status.id === 6 &&
+                details.details.CalamityDetails.RequiredAttachment.length !== 0 &&
+                <div>
+                  <FileUploader
+                    accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
+                    value={ fileOR && fileOR.name }
+                    placeholder={ 'Official Receipt' }
+                    onChange={
+                      (e) => {
+                        e.preventDefault()
+                        const reader=new FileReader()
+                        const file=e.target.files[0]
+                        let isValid
+                        switch (this.getExtension(file.type).toLowerCase()) {
+                          case 'jpeg' :
+                            isValid=true
+                          case 'jpg' :
+                            isValid=true
+                          case 'png' :
+                            isValid=true
+                          case 'pdf' :
+                            isValid=true
+                        }
 
-                    if (isValid) {
-                      reader.onloadend=() => {
-                        this.setState({
-                          fileOR: file,
-                        })
+                        if (isValid) {
+                          reader.onloadend=() => {
+                            this.setState({
+                              fileOR: file,
+                            })
+                          }
+                          reader.readAsDataURL(file)
+                       } else {
+                           store.dispatch(NotifyActions.addNotify({
+                               title : 'File Uploading',
+                               message : 'The accepted attachments are JPG/PNG/PDF',
+                               type : 'warning',
+                               duration : 2000
+                            })
+                          )
+                        }
                       }
-                      reader.readAsDataURL(file)
-                   } else {
-                       store.dispatch(NotifyActions.addNotify({
-                           title : 'File Uploading',
-                           message : 'The accepted attachments are JPG/PNG/PDF',
-                           type : 'warning',
-                           duration : 2000
-                        })
-                      )
                     }
-                  }
-                }
-              />
-              <br/>
-              <GenericButton text = { 'submit attachment' }
-                onClick = { () => uploadImage(details.transactionId, fileOR) }
-              />
-            </div>
+                  />
+                  <br/>
+                  <GenericButton text = { 'submit attachment' }
+                    onClick = { () => uploadImage(details.transactionId, fileOR) }
+                  />
+                </div>
           }
         </Accordion>
       </div>

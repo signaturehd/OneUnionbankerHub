@@ -6,7 +6,7 @@ import { Card } from '../../../../ub-components'
 import moment from 'moment'
 
 class BereavementDetailCardComponent extends Component {
-  cosntructor (props) {
+  constructor (props) {
     super(props)
   }
 
@@ -17,8 +17,8 @@ class BereavementDetailCardComponent extends Component {
       <div className = { 'trasaction-card-details-form' }>
         <div>
           <h2 className = { 'transaction-detail details-bold' }> Date Filed: </h2>
-          <h2 className = { 'transaction-detail details-bold' } Reference Number: </h2>
-          <h2 className = { 'transaction-detail details-bold' } Transaction Status: </h2>
+          <h2 className = { 'transaction-detail details-bold' }> Reference Number: </h2>
+          <h2 className = { 'transaction-detail details-bold' }> Transaction Status: </h2>
           { details && details.details.AccountNo && <h2 className = { 'transaction-detail details-bold' }> Account Number: </h2> }
           <h2 className = { 'transaction-detail details-bold' }> Dependent Name: </h2>
         </div>
