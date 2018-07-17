@@ -472,6 +472,7 @@ class MotorcycleLoanCardComponent extends Component {
                                 <div className={ 'mpl-button-close' }>
                                   <br/>
                                   <br/>
+                                  <br/>
                                    <img
                                      src={ require('../../../images/x-circle-global.png') }
                                      onClick={ () => {
