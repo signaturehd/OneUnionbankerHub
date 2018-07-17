@@ -2,7 +2,7 @@ import { Observable } from 'rxjs'
 
 import GetTransactionDetailsInteractor from '../../../domain/interactor/transactions/GetTransactionDetailsInteractor'
 import GetTransactionPersonalInteractor from '../../../domain/interactor/transactions/GetTransactionPersonalInteractor'
-
+import UploadTransactionImageInteractor from '../../../domain/interactor/transactions/UploadTransactionImageInteractor'
 import GetTransactionParam from '../../../domain/param/GetTransactionParam'
 
 export default class TransactionPersonalDetailsPresenter {
@@ -14,6 +14,9 @@ export default class TransactionPersonalDetailsPresenter {
       new GetTransactionPersonalInteractor(container.get('HRBenefitsClient'))
 
     this.getTransactionImage = container.get('FileClient')
+
+    this.uploadTransactionImageInteractor =
+      new UploadTransactionImageInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -59,6 +62,15 @@ export default class TransactionPersonalDetailsPresenter {
           this.view.transactions(transactions)
         }, e => {
           this.view.hideLoading()
+      })
+  }
+
+  uploadImage (transactionType, benefitId, image) {
+    this.uploadTransactionImageInteractor.execute(transactionType, benefitId, image)
+      .subscribe(transactions => {
+
+        }, e => {
+
       })
   }
 }

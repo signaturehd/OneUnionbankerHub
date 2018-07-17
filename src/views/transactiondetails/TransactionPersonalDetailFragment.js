@@ -28,7 +28,8 @@ function  TransactionDetails (props)  {
   const transactionDetails = props.details
   const transactionsPerson = props.transactions
   const attachments = props.attachments
-
+  const uploadImage = props.uploadImage
+  console.log(props)
   if (transactionId === 6) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
@@ -78,14 +79,17 @@ function  TransactionDetails (props)  {
     // Bereavement Transaction Details
     return <LoansDetailsFragment
       transactionsPerson = { transactionsPerson }
+      uploadImage = { (transactionId, file) => uploadImage(21, transactionId, file) }
       attachments = { attachments }
       details = { transactionDetails } />
   } else if (transactionId === 22) {
     // Calamity Assistance
     return <CalamityAssistanceDetailsFragment
+    uploadImage = { (transactionId, file) => uploadImage(22, transactionId, file) }
       transactionsPerson = { transactionsPerson }
       attachments = { attachments }
-      details = { transactionDetails } />
+      details = { transactionDetails }
+     />
   }
     return <h1>No Transaction Occured please reload</h1> // No  Transaction
 }
@@ -145,6 +149,9 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
                details={ details }
                attachments={ attachments }
                transactions={ transactions }
+               uploadImage = { (transactionType, transactionId, file) => {
+                 this.presenter.uploadImage(transactionType, transactionId, file)
+               }}
               />
             </div>            :
             <div className={ 'transaction-details-loader' }>

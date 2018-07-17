@@ -20,7 +20,6 @@ class CalamityAssistanceDetailsComponent extends Component {
           <h2 className = { 'transaction-detail details-bold' }> Reference Number: </h2>
           <h2 className = { 'transaction-detail details-bold' }> Transaction Status: </h2>
           { details && details.details.AccountNo &&  <h2 className = { 'transaction-detail details-bold' }> Account Number: </h2> }
-          <h2 className = { 'transaction-detail details-bold' }> Dependent Name: </h2>
         </div>
         <div>
           <h2 className = { 'transaction-detail' }> { details && moment(details.dateFiled).format('MMMM d, YYYY') } </h2>
