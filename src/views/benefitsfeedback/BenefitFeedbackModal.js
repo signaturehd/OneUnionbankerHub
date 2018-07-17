@@ -56,7 +56,7 @@ class BenefitFeedbackModal extends BaseMVPView {
             </center>            :
             <div>
               <center>
-                <h3>Your Feedback is important to us to improve our system</h3>
+                <h3>Thank you for using 1Uhub! We'd love to know what your experience was like using the application.</h3>
                 <br/>
                 <Rating
                   emptySymbol={<MdStarOutline style={{ fontSize: 30, color : '#c65e11' }} />}

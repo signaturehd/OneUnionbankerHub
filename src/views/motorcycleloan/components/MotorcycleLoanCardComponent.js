@@ -71,8 +71,7 @@ class MotorcycleLoanCardComponent extends Component {
        poaText,
        termOfLoan,
        selectedOffsetLoan,
-       fileObject,
-       formAttachments
+       fileObject
      ) {
        this.props.sendFormDataToPresenter(
          dealerName,
@@ -82,7 +81,7 @@ class MotorcycleLoanCardComponent extends Component {
          poaText,
          termOfLoan,
          selectedOffsetLoan,
-         fileObject,
+         fileObject
        )
        this.setState({ showConfirmationView : false })
      }

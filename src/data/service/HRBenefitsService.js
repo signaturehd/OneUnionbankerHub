@@ -224,6 +224,7 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
 /* Feedback */
 
   getFeedback (token) {
@@ -336,18 +337,19 @@ export default class HRBenefitsService {
       accountNumber,
       releasingCenter,
       loan : {
-        id : mplPurposeLoanAddParam.loanId,
-        purpose : mplPurposeLoanAddParam.purposeOfLoan,
-        mode : mplPurposeLoanAddParam.modeOfLoan,
-        term : mplPurposeLoanAddParam.loanTerm,
-        principalAmount : mplPurposeLoanAddParam.principalLoanAmount
+        id : mplPurposeLoanAddParam.loanType,
+        purpose : mplPurposeLoanAddParam.poaText,
+        mode : mplPurposeLoanAddParam.modeOfLoanId === 1 ? mplPurposeLoanAddParam.modeOfLoanId : 2,
+        term : mplPurposeLoanAddParam.termId,
+        principalAmount : mplPurposeLoanAddParam.amountValue
       },
-      promissoryNoteNumbers : [],
-      distributor : mplPurposeLoanAddParam.fullname,
+      promissoryNoteNumbers : mplPurposeLoanAddParam.selectedOffsetLoan ? mplPurposeLoanAddParam.selectedOffsetLoan : null,
+      distributor : mplPurposeLoanAddParam.dealerName,
     }
       formData.append('uuid', 12345)
       formData.append('body', JSON.stringify(multiLoanBodyObject))
-      formData.append('attachments' , mplPurposeLoanAddParam.attachments)
+      formData.append('attachments' , mplPurposeLoanAddParam.fileObject ? mplPurposeLoanAddParam.fileObject : '')
+      formData.append('attachments2' , mplPurposeLoanAddParam.fileObject1 ? mplPurposeLoanAddParam.fileObject1 : '')
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
@@ -371,7 +373,7 @@ export default class HRBenefitsService {
         principalAmount : addMotorLoanParam.principalLoanAmount,
         dealerName : addMotorLoanParam.dealerName,
       },
-      promissoryNoteNumbers : [],
+      promissoryNoteNumbers : addMotorLoanParam.selectedOffsetLoan,
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
@@ -386,24 +388,24 @@ export default class HRBenefitsService {
     accountToken,
     accountNumber,
     releasingCenter,
-    addMotorLoanParam) {
+    addComputerLoanParam) {
     const formData = new FormData()
     const multiLoanBodyObject = {
       releasingCenter,
       accountNumber,
       loan : {
-        id : addMotorLoanParam.loanId,
-        purpose : addMotorLoanParam.purposeOfLoan,
-        mode : addMotorLoanParam.modeOfLoan ? 2 : 1,
-        term : addMotorLoanParam.loanTerm,
-        principalAmount : addMotorLoanParam.principalLoanAmount,
-        supplierName : addMotorLoanParam.supplierName,
+        id : addComputerLoanParam.loanId,
+        purpose : addComputerLoanParam.purposeOfLoan,
+        mode : addComputerLoanParam.modeOfLoan ? 2 : 1,
+        term : addComputerLoanParam.loanTerm,
+        principalAmount : addComputerLoanParam.principalLoanAmount,
+        supplierName : addComputerLoanParam.supplierName,
       },
-      promissoryNoteNumbers : [],
+      promissoryNoteNumbers : addComputerLoanParam.selectedOffsetLoan,
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
-    formData.append('MPL-cert', addMotorLoanParam.attachments)
+    formData.append('MPL-cert', addComputerLoanParam.attachments)
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })

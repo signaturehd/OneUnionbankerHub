@@ -39,7 +39,7 @@ class MotorcyclePurposeOfAvailmentModal extends Component {
           this.props.presenter.getMplPurposeOfAvailment(
             loanType && loanType,
             loanId,
-            loanId !== null ? subcategory : 1)
+            loanId !== null ? 1 : subcategory)
       if (loanId) {
         this.props.presenter.getMplPurposeOfAvailment(
           loanType && loanType,
