@@ -108,12 +108,7 @@ class EmergencyLoanFragment extends BaseMVPView {
   /* Validate loan Type */
   showEmergencyLoanType (loanType) {
     this.setState({ loanType })
-    if(loanType === 0 || loanType === undefined || loanType === null) {
-
-    }
-    else {
-      this.showValidatedLoanType (loanType)
-    }
+    this.showValidatedLoanType(loanType)
   }
 
   showValidatedLoanType (loanType) {

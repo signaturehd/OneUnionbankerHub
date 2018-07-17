@@ -108,12 +108,7 @@ class HousingAssistanceFragment extends BaseMVPView {
   /* Validate loan Type */
   showSalaryLoanType (loanType) {
     this.setState({ loanType })
-    if(loanType === 0 || loanType === undefined || loanType === null) {
-
-    }
-    else {
-      this.showValidatedLoanType (loanType)
-    }
+    this.showValidatedLoanType (loanType)
   }
 
   showValidatedLoanType (loanType) {

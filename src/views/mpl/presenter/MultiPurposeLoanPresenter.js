@@ -42,24 +42,22 @@ export default class MultiPurposeLoanPresenter {
     this.view=view
   }
 
+  getSalaryLoanType () {
+    this.view.showSalaryLoanType('1')
+  }
+
+  getHousingAssistanceLoanType () {
+    this.view.showHousingAssistanceLoanType('3')
+  }
+
+  getEmergencyLoanType () {
+    this.view.showEmergencyLoanType('2')
+  }
+
   /* Types*/
 
   getMplTypes () {
     this.getTypesInteractor.execute()
-    .do(data =>
-      data.map(id => {
-          if (id.id === 1) {
-            this.getSalaryLoanType(id.id)
-          } else if (id.id === 2) {
-            this.getEmergencyLoanType(id.id)
-          } else if (id.id === 3) {
-            this.getHousingAssistanceLoanType(id.id)
-          } else {
-          }
-        }
-      )
-    )
-
       .subscribe(
         data => {
           this.view.showTypes(data)
@@ -73,32 +71,20 @@ export default class MultiPurposeLoanPresenter {
 
   /* Purpose of Availment */
 
-  getSalaryLoanType (loanType) {
-    this.view.showSalaryLoanType(loanType)
-  }
-
-  getHousingAssistanceLoanType (loanType) {
-    this.view.showHousingAssistanceLoanType(loanType)
-  }
-
-  getEmergencyLoanType (loanType) {
-    this.view.showEmergencyLoanType(loanType)
-  }
-
   getMplPurposeOfAvailment (
     loanTypesId,
     purposeOfLoan,
     subcategoryLevel) {
-    this.getPurposeOfAvailmentInteractor.execute({
-      loanTypesId,
-      purposeOfLoan,
-      subcategoryLevel
+  this.getPurposeOfAvailmentInteractor.execute({
+    loanTypesId,
+    purposeOfLoan,
+    subcategoryLevel
     })
-      .subscribe(
-        data => {
-          this.view.showPurposeOfAvailment(data)
-      })
-    }
+    .subscribe(
+      data => {
+        this.view.showPurposeOfAvailment(data)
+    })
+  }
 
   isManagersCheck () {
     const isManagersCheck=this.getManagersCheckInteractor.execute()

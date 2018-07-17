@@ -41,8 +41,8 @@ class HousingAssistanceFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.getMplTypes()
     this.presenter.isManagersCheck()
+    this.presenter.getMplTypes()
     this.presenter.getProfile()
     this.presenter.getHousingAssistanceLoanType()
   }
@@ -108,16 +108,11 @@ class HousingAssistanceFragment extends BaseMVPView {
   /* Validate loan Type */
   showHousingAssistanceLoanType (loanType) {
     this.setState({ loanType })
-    if(loanType === 0 || loanType === undefined || loanType === null) {
-
-    }
-    else {
-      this.showValidatedLoanType (loanType)
-    }
+    this.showValidatedLoanType(loanType)
   }
 
   showValidatedLoanType (loanType) {
-    this.presenter.getMplValidate(loanType ? loanType : 0)
+    this.presenter.getMplValidate(loanType)
     this.presenter.getMplPurposeOfAvailment(
       loanType,
       1,
