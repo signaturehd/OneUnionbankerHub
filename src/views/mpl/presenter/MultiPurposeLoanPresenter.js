@@ -46,6 +46,20 @@ export default class MultiPurposeLoanPresenter {
 
   getMplTypes () {
     this.getTypesInteractor.execute()
+    .do(data =>
+      data.map(id => {
+          if (id.id === 1) {
+            this.getSalaryLoanType(id.id)
+          } else if (id.id === 2) {
+            this.getEmergencyLoanType(id.id)
+          } else if (id.id === 3) {
+            this.getHousingAssistanceLoanType(id.id)
+          } else {
+          }
+        }
+      )
+    )
+
       .subscribe(
         data => {
           this.view.showTypes(data)
@@ -58,6 +72,18 @@ export default class MultiPurposeLoanPresenter {
     }
 
   /* Purpose of Availment */
+
+  getSalaryLoanType (loanType) {
+    this.view.showSalaryLoanType(loanType)
+  }
+
+  getHousingAssistanceLoanType (loanType) {
+    this.view.showHousingAssistanceLoanType(loanType)
+  }
+
+  getEmergencyLoanType (loanType) {
+    this.view.showEmergencyLoanType(loanType)
+  }
 
   getMplPurposeOfAvailment (
     loanTypesId,
@@ -126,13 +152,6 @@ export default class MultiPurposeLoanPresenter {
           this.view.showComputationForOffset(data && data.offset)
         },
         error => {
-          store.dispatch(NotifyActions.addNotify({
-              title: 'Warning',
-              message: `We're sorry, but right now, you're not yet able to avail of this benefit because if your${this.error.message}`,
-              type: 'warning',
-              duration: 2000
-            })
-          )
           this.view.navigate()
         }
       )
@@ -144,7 +163,7 @@ export default class MultiPurposeLoanPresenter {
       .map(data => this.view.showAdditionalFilesCount((data.AdditionalDocuments).length))
       .map(data => this.view.showAdRequiredFilesCount((data.RequiredDocuments).length))
       .subscribe()
-    }
+  }
 
   /* add Loa salary, housing assistance, emergency*/
   addLoan (
