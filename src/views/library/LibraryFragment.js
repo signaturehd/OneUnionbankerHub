@@ -50,7 +50,7 @@ class LibraryFragment extends BaseMVPView {
   }
 
   getFilterBooks (pageNumber, find) {
-    this.setState({ books: [], pageNumber: 1 })
+    this.setState({ books: [], recommended: [], pageNumber: 1 })
     this.presenter.getBooks(pageNumber ? pageNumber : 1, find)
   }
 
@@ -59,7 +59,7 @@ class LibraryFragment extends BaseMVPView {
   }
 
   getFilterBooksBorrowed () {
-    this.setState({ borrowed: [], borrowedPageNumber: 1 })
+    this.setState({ borrowed: [], recommended: [],  borrowedPageNumber: 1 })
     this.presenter.getBooksBorrowed(borrowedPageNumber ? borrowedPageNumber : 1, find)
   }
 

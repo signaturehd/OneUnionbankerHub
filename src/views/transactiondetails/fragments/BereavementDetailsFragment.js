@@ -51,7 +51,6 @@ class BereavementDetailsFragment extends Component {
       fileOR
     } = this.state
 
-    console.log(details)
 
     return (
       <div className={ 'details-container' }>

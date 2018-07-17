@@ -651,7 +651,6 @@ export default class HRBenefitsService {
 
   uploadTransactionCalamity (token, file, id) {
     const formData = new FormData()
-    console.log(id)
     formData.append('uuid', 12345)
     formData.append('Official Receipt', file)
     formData.append('body', JSON.stringify({
@@ -663,7 +662,6 @@ export default class HRBenefitsService {
   }
 
   uploadTransactionBereavement (token, file, id) {
-    console.log(token, file, id)
     const formData = new FormData()
     formData.append('uuid', 12345)
     formData.append('Death Certificate', file)
