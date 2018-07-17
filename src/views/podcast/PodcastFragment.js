@@ -26,8 +26,8 @@ class PodcastFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.presenter.getPodcasts()
-    this.presenter.getPodcastsRecommendations()
+    // this.presenter.getPodcasts()
+    // this.presenter.getPodcastsRecommendations()
   }
 
   /* implementations */
