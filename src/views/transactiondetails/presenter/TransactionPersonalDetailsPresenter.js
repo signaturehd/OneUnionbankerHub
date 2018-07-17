@@ -5,6 +5,9 @@ import GetTransactionPersonalInteractor from '../../../domain/interactor/transac
 import UploadTransactionImageInteractor from '../../../domain/interactor/transactions/UploadTransactionImageInteractor'
 import GetTransactionParam from '../../../domain/param/GetTransactionParam'
 
+import store from '../../../store'
+import { NotifyActions } from '../../../actions/'
+
 export default class TransactionPersonalDetailsPresenter {
   constructor (container) {
     this.getTransactionDetailsInteractor =
@@ -68,7 +71,13 @@ export default class TransactionPersonalDetailsPresenter {
   uploadImage (transactionType, benefitId, image) {
     this.uploadTransactionImageInteractor.execute(transactionType, benefitId, image)
       .subscribe(transactions => {
-
+        this.view.showFileReceipt(false)
+        store.dispatch(NotifyActions.addNotify({
+            title : 'File Uploading',
+            message : 'You have submitted a file',
+            type : 'success',
+            duration : 2000
+         })
         }, e => {
 
       })

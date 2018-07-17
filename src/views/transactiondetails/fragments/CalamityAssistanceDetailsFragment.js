@@ -95,6 +95,7 @@ class CalamityAssistanceDetailsFragment extends Component {
             details &&
             details.status &&
             details.status.id === 6 &&
+            details.details.CalamityDetails.RequiredAttachment.length !== 0 &&
             <div>
               <FileUploader
                 accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
