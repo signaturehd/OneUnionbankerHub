@@ -177,6 +177,7 @@ class BereavementFormCardComponent extends Component {
     const {
       showDepedents,
       withDeathCert,
+      onFocus
     }=this.props
 
     const {
@@ -244,6 +245,7 @@ class BereavementFormCardComponent extends Component {
                     container={ 'brv-container' }
                     value={ dependentsName ? dependentsName : '' }
                     onClick={ () => this.setState({ showDeceasedDependents: true }) }
+                    onFocus={ () => this.setState({ showDeceasedDependents: true }) }
                     placeholder={ 'Deceased Name' }
                     readOnly
                     type={ 'text' }
@@ -639,7 +641,8 @@ class BereavementFormCardComponent extends Component {
 
 BereavementFormCardComponent.propTypes={
   showDepedents: PropTypes.array,
-  withDeathCert: PropTypes.bool
+  withDeathCert: PropTypes.bool,
+  onFocus: PropTypes.func
 }
 
 export default BereavementFormCardComponent
