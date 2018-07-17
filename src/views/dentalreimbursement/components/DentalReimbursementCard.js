@@ -175,7 +175,8 @@ render () {
     fileReceived,
     fileReceived2,
     onClick,
-    dependents
+    dependents,
+    onFocus
   } = this.props
 
   const {
@@ -279,6 +280,7 @@ render () {
            }
          <GenericButton
            onClick={ () => this.setState({ procedureModal: true }) }
+           onFocus={ () => this.setState({ procedureModal: true }) }
            className = {'dentalreimbursement-procedure' }
            text = { 'Open Procedures' } />
         </div>
@@ -344,6 +346,7 @@ render () {
 DentalReimbursementCard.propTypes = {
   onClose : PropTypes.func,
   onClick : PropTypes.func,
+  onFocus : PropTypes.func,
   procedure : PropTypes.string,
   dependents: PropTypes.array,
 }
