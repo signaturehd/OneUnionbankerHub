@@ -29,8 +29,6 @@ class OnboardingSummary extends Component {
       experience,
     } = this.props
 
-    console.log(this.props)
-
     return (
       <div>
 

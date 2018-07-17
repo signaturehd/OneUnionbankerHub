@@ -97,11 +97,6 @@ class TransactionPersonalFragment extends BaseMVPView {
         </div>
       }
       <center>
-    <GenericButton
-      text = {'View More'}
-      onClick = {this.handleClick}
-      type = {'button'}
-    />
   </center>
       </div>
     )
