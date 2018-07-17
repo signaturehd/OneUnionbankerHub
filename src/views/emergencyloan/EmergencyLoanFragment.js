@@ -21,7 +21,7 @@ class EmergencyLoanFragment extends BaseMVPView {
       purposeOfAvailment: [],
       selectedPoa: '',
       formAttachments: [],
-      loanType: '2',
+      loanType: '',
       validateLoanType : [],
       offset : [],
       enabledLoader : true,
@@ -44,11 +44,7 @@ class EmergencyLoanFragment extends BaseMVPView {
     this.presenter.isManagersCheck()
     this.presenter.getProfile()
     this.presenter.getMplTypes()
-    this.presenter.getMplValidate(this.state.loanType)
-    this.presenter.getMplPurposeOfAvailment(
-      this.state.loanType,
-      1,
-      1)
+    this.presenter.getEmergencyLoanType()
   }
 
   /* Notice Response*/
@@ -107,6 +103,25 @@ class EmergencyLoanFragment extends BaseMVPView {
   /* Navigage back to loans Option*/
   navigate () {
     this.props.history.push('/mybenefits/benefits/loans')
+  }
+
+  /* Validate loan Type */
+  showEmergencyLoanType (loanType) {
+    this.setState({ loanType })
+    if(loanType === 0 || loanType === undefined || loanType === null) {
+
+    }
+    else {
+      this.showValidatedLoanType (loanType)
+    }
+  }
+
+  showValidatedLoanType (loanType) {
+    this.presenter.getMplValidate(loanType)
+    this.presenter.getMplPurposeOfAvailment(
+      loanType,
+      1,
+      1)
   }
 
   sendFormDataToPresenter (

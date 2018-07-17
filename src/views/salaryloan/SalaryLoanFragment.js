@@ -21,7 +21,7 @@ class HousingAssistanceFragment extends BaseMVPView {
       purposeOfAvailment: [],
       selectedPoa: '',
       formAttachments: [],
-      loanType: '1',
+      loanType: '',
       validateLoanType : [],
       offset : [],
       enabledLoader : true,
@@ -41,21 +41,16 @@ class HousingAssistanceFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
+    this.presenter.getMplTypes()
     this.presenter.isManagersCheck()
     this.presenter.getProfile()
-    this.presenter.getMplTypes()
-    this.presenter.getMplValidate(this.state.loanType)
-    this.presenter.getMplPurposeOfAvailment(
-      this.state.loanType,
-      1,
-      1)
+    this.presenter.getSalaryLoanType()
   }
 
   /* Notice Response*/
   noticeOfUndertaking (noticeResponse) {
     this.setState({ showNoticeModal : true, noticeResponse })
   }
-
 
   noticeResponse (noticeResponse) {
     this.setState({showConfirmation: false, noticeResponse })
@@ -104,10 +99,31 @@ class HousingAssistanceFragment extends BaseMVPView {
   showCircularLoader () {
     this.setState({ enabledLoader : true })
   }
+
   /* Navigage back to loans Option*/
   navigate () {
     this.props.history.push('/mybenefits/benefits/loans')
   }
+
+  /* Validate loan Type */
+  showSalaryLoanType (loanType) {
+    this.setState({ loanType })
+    if(loanType === 0 || loanType === undefined || loanType === null) {
+
+    }
+    else {
+      this.showValidatedLoanType (loanType)
+    }
+  }
+
+  showValidatedLoanType (loanType) {
+    this.presenter.getMplValidate(loanType)
+    this.presenter.getMplPurposeOfAvailment(
+      loanType,
+      1,
+      1)
+  }
+
 
   sendFormDataToPresenter (
     dealerName,
