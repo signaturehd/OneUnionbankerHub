@@ -220,7 +220,7 @@ render () {
       {
         showReviewSubmissionModal &&
         <ReviewSubmission
-          onClose = { () => this.setState({ showReviewSubmissionModal : false }) }
+          onClose = { (result) => this.setState({ showReviewSubmissionModal : result }) }
           attachment1 = { file }
           attachment2 = { file2 }
           dependent = { selectedDependent }

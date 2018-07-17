@@ -95,7 +95,7 @@ class DentalReimbursementModal extends Component {
               text = { confirm } />
             <GenericButton
               text = { cancel }
-              onClick = { () => onClose}/>
+              onClick = { () => onClose(false) }/>
           </div>
         </div>
       </Modal>
