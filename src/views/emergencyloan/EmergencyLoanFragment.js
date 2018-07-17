@@ -36,6 +36,7 @@ class EmergencyLoanFragment extends BaseMVPView {
       employeeName: [],
       storedIsDealerOrPayee: [],
       computationOffset: [],
+      maximumAmount: 0
     }
   }
 
@@ -119,6 +120,10 @@ class EmergencyLoanFragment extends BaseMVPView {
       1)
   }
 
+  showMaximumLoanableAmount (maximumAmount) {
+    this.setState({ maximumAmount })
+  }
+
   sendFormDataToPresenter (
     dealerName,
     amountValue,
@@ -162,7 +167,8 @@ class EmergencyLoanFragment extends BaseMVPView {
       isPayeeOrDealerResp,
       employeeName,
       storedIsDealerOrPayee,
-      computationOffset
+      computationOffset,
+      maximumAmount
     }=this.state
 
     const empName=employeeName && employeeName.fullname
@@ -227,6 +233,7 @@ class EmergencyLoanFragment extends BaseMVPView {
               AdditionalDocuments={ AdditionalDocuments }
               RequiredDocuments={ RequiredDocuments }
               presenter={ this.presenter }
+              maximumAmount={ maximumAmount }
               sendFormDataToPresenter={ (
                 dealerName,
                 amountValue,

@@ -36,6 +36,7 @@ class HousingAssistanceFragment extends BaseMVPView {
       employeeName: [],
       storedIsDealerOrPayee: [],
       computationOffset: [],
+      maximumAmount: 0
     }
   }
 
@@ -119,6 +120,10 @@ class HousingAssistanceFragment extends BaseMVPView {
       1)
   }
 
+  showMaximumLoanableAmount (maximumAmount) {
+    this.setState({ maximumAmount })
+  }
+
   sendFormDataToPresenter (
     dealerName,
     amountValue,
@@ -162,7 +167,8 @@ class HousingAssistanceFragment extends BaseMVPView {
       isPayeeOrDealerResp,
       employeeName,
       storedIsDealerOrPayee,
-      computationOffset
+      computationOffset,
+      maximumAmount
     }=this.state
 
     const empName=employeeName && employeeName.fullname
@@ -226,6 +232,7 @@ class HousingAssistanceFragment extends BaseMVPView {
               offset={ offset }
               AdditionalDocuments={ AdditionalDocuments }
               RequiredDocuments={ RequiredDocuments }
+              maximumAmount={ maximumAmount }
               presenter={ this.presenter }
               sendFormDataToPresenter={ (
                 dealerName,
