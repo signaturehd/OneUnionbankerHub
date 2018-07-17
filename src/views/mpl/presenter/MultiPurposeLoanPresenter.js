@@ -134,6 +134,7 @@ export default class MultiPurposeLoanPresenter {
         data =>  {
           this.view.hideCircularLoader()
           this.view.showOffset(data && data.offset)
+          this.view.showMaximumLoanableAmount(data && data.maximumLoanableAmount)
           this.view.showValidate(data)
           this.view.showComputationForOffset(data && data.offset)
         },
@@ -179,6 +180,13 @@ export default class MultiPurposeLoanPresenter {
       .subscribe(
         data => {
           this.view.hideCircularLoader()
+          store.dispatch(NotifyActions.addNotify({
+              title: 'Success',
+              message : data.message,
+              type : 'success',
+              duration : 2000
+            })
+          )
           this.view.noticeOfUndertaking(data)
       },
         errors => {

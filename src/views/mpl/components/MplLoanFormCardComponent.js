@@ -58,7 +58,7 @@ class MotorcycleLoanCardComponent extends Component {
         computationOffsetLoan: [],
         showConfirmationView: false,
         imagePreviewArrayList: [],
-        selectedTerm: ''
+        selectedTerm: '',
       }
       this.validator=this.validator.bind(this)
     }
@@ -144,10 +144,14 @@ class MotorcycleLoanCardComponent extends Component {
         }
      }
 
-     getExtension (filename) {
-       const parts=filename.split('/')
-       return parts[parts.length - 1]
-     }
+   getExtension (filename) {
+     const parts=filename.split('/')
+     return parts[parts.length - 1]
+   }
+
+   desiredAmountValidator(value) {
+     return value ? true : false
+   }
 
     render () {
       const {
@@ -178,7 +182,7 @@ class MotorcycleLoanCardComponent extends Component {
         computationOffsetLoan,
         showConfirmationView,
         imagePreviewArrayList,
-        selectedTerm
+        selectedTerm,
       }=this.state
 
       const {
@@ -191,7 +195,8 @@ class MotorcycleLoanCardComponent extends Component {
         formAttachments,
         AdditionalDocuments,
         RequiredDocuments,
-        isPayeeOrDealer
+        isPayeeOrDealer,
+        maximumAmount
       }=this.props
 
       const computation=computationOffsetLoan.reduce((a, b) => a + b, 0)
@@ -316,8 +321,9 @@ class MotorcycleLoanCardComponent extends Component {
             showOffsetMessageModal &&
             <Modal>
               <center>
-                <h4> `We're sorry but the selected existing loans have exceeded your principal amount.
-                    These cannot be deducted from your new loan. Kindly select within the appropriate balance.` </h4>
+                <h4>We're sorry but the selected existing loans have exceeded your principal amount.
+                    These cannot be deducted from your new loan. Kindly select within the appropriate balance.</h4>
+                  <br/>
                 <GenericButton
                   text={ 'Ok' }
                   onClick={ () => this.setState({ showOffsetMessageModal : false }) }
@@ -344,22 +350,41 @@ class MotorcycleLoanCardComponent extends Component {
                   // onChange={ modeOfLoanText =>
                   //   this.setState({  }) }
                   onClick={ (e) =>
-                    this.setState({ modeOfLoanText: modeOfLoanText ? e.target.value : 'New Loan', showOffset : true }) }
+                    this.setState({
+                      modeOfLoanText: modeOfLoanText ? e.target.value : 'New Loan',
+                      showOffset : true,
+                      })
+                    }
                   placeholder={ 'Mode of Loan' }
                   value={ modeOfLoanText ? modeOfLoanText : 'New Loan' }
                   type={ 'text' }/>
-                <GenericTextBox
-                  value={ amountValue ? amountValue : '' }
-                  onChange={ (e) =>
-                    {
-                      e.target.value  ?
-                        this.setState({ amountValue : Number(e.target.value.replace(/[^0-9]/g, '')) })
-                        :
-                        this.setState({ amountValue : '' })
-                     } }
-                  placeholder={ 'Desired Amount' }
-                  maxLength={ 11 }
-                  type={ 'text' }/>
+                {
+                modeOfLoanText ?
+
+                  <GenericTextBox
+                    value={ amountValue ? amountValue : '' }
+                    onChange={
+                      (e) =>
+                        new MinMaxNumberValidation(0, 500000).isValid(e.target.value) ?
+                          this.setState({ amountValue: Number(e.target.value.replace(/[^0-9]/g, '')) }) :
+                          this.setState({
+                            amountValue: '',
+                            showOffsetMessageModal: this.desiredAmountValidator(e.target.value) })
+                     }
+                    placeholder={ 'Desired Amount' }
+                    maxLength={ 11 }
+                    type={ 'text' }/>
+                  :
+                  <GenericTextBox
+                    value={ amountValue ? amountValue : '' }
+                    onChange={
+                      (e) =>
+                          this.setState({ amountValue: Number(e.target.value.replace(/[^0-9]/g, '')) })
+                     }
+                    placeholder={ 'Desired Amount' }
+                    maxLength={ 11 }
+                    type={ 'text' }/>
+                  }
                 <GenericTextBox
                   value={ `${ termOfLoan ? termOfLoan : '' } (${ rateOfLoan ? rateOfLoan : '' } %)` }
                   // onChange={ (termOfLoan, rateOfLoan) =>
@@ -373,17 +398,19 @@ class MotorcycleLoanCardComponent extends Component {
                 {
                   showOffsetLoanCard &&
 
-                  <div className={ 'mpl-grid-column-2' }>
+                  <div>
                     <div></div>
-                    <Card className={ 'mpl-form-card' }>
+                    <div>
                       <div className={ 'mpl-offset-grid' }>
                         <h4 className={ 'text-align-left' }>
+                          <br/>
                           Loans to Offset
                         </h4>
                         <div className={ 'text-align-right' }>
                           <span
                             onClick={ () => this.setState({ showOffsetOfLoanModal : true }) }
-                            className={ 'mpl-icons-add mpl-add-offset' }/>
+                            className={ 'mpl-icons-add mpl-add-offset' }
+                          />
                         </div>
                       </div>
                       <div className={ 'mpl-form-card-body' }>
@@ -420,7 +447,7 @@ class MotorcycleLoanCardComponent extends Component {
                            )
                           }
                       </div>
-                    </Card>
+                    </div>
                   </div>
                 }
                 <br/>
@@ -634,6 +661,10 @@ MotorcycleLoanCardComponent.propTypes={
   formAttachments : PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array
+  ]),
+  maximumAmount : PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
   ]),
   AdditionalDocuments: PropTypes.number,
   RequiredDocuments: PropTypes.number,
