@@ -574,4 +574,16 @@ export default class HRBenefitsClient {
     calamityAssistanceParam)
       .pipe(ServiceErrorOperator())
   }
+
+
+  uploadTransactionImageInteractor (token, type, file, id) {
+    let service
+    if (type === 22) {
+      service = this.service.uploadTransactionCalamity( token, file, id )
+    } else if ( type === 21) {
+      service = this.service.uploadTransactionBereavement( token, file, id )
+    }
+
+    return service
+  }
 }

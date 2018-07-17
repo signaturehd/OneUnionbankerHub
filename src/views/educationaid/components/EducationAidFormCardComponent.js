@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { GenericTextBox,  Card, GenericButton, FileUploader, Modal } from '../../../ub-components/'
+import {
+  GenericTextBox,
+  Card,
+  GenericButton,
+  FileUploader,
+  Modal } from '../../../ub-components/'
 
 import './styles/educationAidComponentStyle.css'
 

@@ -648,4 +648,28 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  uploadTransactionCalamity (token, file, id) {
+    const formData = new FormData()
+    formData.append('uuid', 12345)
+    formData.append('Official Receipt', file)
+    formData.append('body', JSON.stringify({
+      transactionId : id
+    }))
+    return this.apiClient.post('v1/calamity/receipt', formData, {
+      headers: { token }
+    })
+  }
+
+  uploadTransactionBereavement (token, file, id) {
+    const formData = new FormData()
+    formData.append('uuid', 12345)
+    formData.append('Death Certificate', file)
+    formData.append('body', JSON.stringify({
+      transactionId : id
+    }))
+    return this.apiClient.post('v1/bereavement/receipt', formData, {
+      headers : { token }
+    })
+  }
 }
