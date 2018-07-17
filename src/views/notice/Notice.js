@@ -48,6 +48,7 @@ class Notice extends BaseMVPView {
 
     return (
       <Modal
+        width={ 45 }
         isDismissable = { isDismissable }
         onClose = { onClose }
       >
@@ -67,6 +68,8 @@ class Notice extends BaseMVPView {
           </center>          :
           <div>
           <center>
+            <br/>
+            <br/>
             <GenericButton text = {'Agree'} className = { 'notice-button-modal' }
               onClick = { () =>
                   this.setState({ showValidatedCofirmation : true  })

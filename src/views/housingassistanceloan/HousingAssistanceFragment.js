@@ -36,7 +36,7 @@ class HousingAssistanceFragment extends BaseMVPView {
       employeeName: [],
       storedIsDealerOrPayee: [],
       computationOffset: [],
-      maximumAmount: 0
+      maximumAmount: 0,
     }
   }
 
