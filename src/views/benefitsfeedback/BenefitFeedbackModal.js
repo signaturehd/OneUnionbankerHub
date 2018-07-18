@@ -28,7 +28,7 @@ class BenefitFeedbackModal extends BaseMVPView {
   addRating () {
     const { rating, comment } = this.state
     const { benefitId } = this.props
-    this.presenter.addFeedback(benefitId, rating, comment)
+    this.presenter.addBenefitFeedback(benefitId, rating, comment)
     this.setState({ submitLoader : true })
   }
 
