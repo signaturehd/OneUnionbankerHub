@@ -8,8 +8,6 @@ import BaseMVPView from '../common/base/BaseMVPView'
 
 import { Modal, GenericButton, CircularLoader, GenericTextBox } from '../../ub-components'
 
-import Rating from 'react-rating'
-
 import './styles/benefitFeedback.css'
 
 class BenefitsFeedbackPayslipModal extends BaseMVPView {

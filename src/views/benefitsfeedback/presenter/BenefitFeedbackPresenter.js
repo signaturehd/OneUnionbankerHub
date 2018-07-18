@@ -15,7 +15,7 @@ export default class BenefitFeedbackPresenter {
 
   constructor (container) {
     this.addBenefitFeedbackInteractor =
-      new AddPayslipFeedbackCategoriesInteractor(container.get('HRBenefitsClient'))
+      new AddBenefitFeedbackInteractor(container.get('HRBenefitsClient'))
 
     this.getPayslipFeedbackCategoriesInteractor =
       new GetPayslipFeedbackCategoriesInteractor(container.get('HRBenefitsClient'))
@@ -52,7 +52,7 @@ export default class BenefitFeedbackPresenter {
       })
   }
 
-  addFeedback (benefitId, rating, comment) {
+  addBenefitFeedback (benefitId, rating, comment) {
     this.addBenefitFeedbackInteractor.execute(addBenefitFeedbackParam(benefitId, rating, comment))
       .subscribe(resp => {
         store.dispatch(NotifyActions.addNotify({
