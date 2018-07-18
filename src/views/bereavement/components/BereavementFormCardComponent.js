@@ -78,7 +78,7 @@ class BereavementFormCardComponent extends Component {
   }
 
   getFuneralAddress (e) {
-    new RequiredAlphabetValidation().isValidAddress(e.target.value) ?
+    new RequiredAlphabetValidation().isValidAddress(e.target.value)  ?
     this.setState({ funeralAddress : e.target.value }) :
     this.setState({ funeralAddress : '' })
   }
