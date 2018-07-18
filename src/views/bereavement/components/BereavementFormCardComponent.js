@@ -528,6 +528,11 @@ class BereavementFormCardComponent extends Component {
           </Card>
         </div>
         {
+          !withDeathCert &&
+          <div></div>
+
+        }
+        {
           withDeathCert &&
           <div>
           <br/>
@@ -566,7 +571,7 @@ class BereavementFormCardComponent extends Component {
                   <FileUploader
                     accept="image/gif,image/jpeg,image/jpg,image/png,"
                     value={ file.name }
-                    placeholder='Form Attachments'
+                    placeholder='Death Certificate'
                     onChange={
                       (e) => {
                         e.preventDefault()
