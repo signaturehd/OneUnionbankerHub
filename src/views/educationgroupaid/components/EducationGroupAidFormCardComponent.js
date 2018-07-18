@@ -131,7 +131,7 @@ class EducationGroupAidFormCardComponent extends Component {
                 type = { 'text' }/>
               <GenericTextBox
                 value = { company }
-                onChange = { (e) => this.setState({ company : e.target.value }) }
+                onChange = { (e) => this.setState({ company : e.target.value.replace(/[^A-Z a-z]/g, '') }) }
                 placeholder = { 'Company' }
                 maxLength={ 120 }
                 type = { 'text' }/>

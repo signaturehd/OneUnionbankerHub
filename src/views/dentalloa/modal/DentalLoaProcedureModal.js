@@ -12,6 +12,8 @@ class DentalLoaProcedureModal extends Component {
       chosenProcedure : [],
     }
     this.getDisabledIds = this.getDisabledIds.bind(this)
+    this.setProcedure = this.setProcedure.bind(this)
+
 }
 
 getDisabledIds () {
@@ -25,6 +27,7 @@ setProcedure (selected) {
     onSubmit,
     selectedProcedure
   } = this.props
+  this.props.onClose()
 
   if (selectedProcedure) {
     const valueArr = this.getDisabledIds().map(item => item)

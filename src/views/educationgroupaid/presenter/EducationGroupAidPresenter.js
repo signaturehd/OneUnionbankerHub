@@ -36,6 +36,7 @@ export default class EducationGroupAidPresenter {
           this.view.hideCircularLoader()
         },
         error => {
+            this.view.navigate()
         }
       )
   }

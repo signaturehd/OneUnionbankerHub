@@ -11,7 +11,6 @@ class BereavementConfirmationModal extends Component {
     this.state = {
       disableSubmit : false,
       isDismisable : true,
-      showMessageRequiredCertificate : false,
       showCheckIfCertificateIsAvailable : true
     }
     this.navigate=this.navigate.bind(this)
@@ -19,7 +18,6 @@ class BereavementConfirmationModal extends Component {
 
   navigate () {
     this.props.onClose()
-    this.props.navigateCall()
   }
 
   render () {
@@ -32,7 +30,6 @@ class BereavementConfirmationModal extends Component {
     const {
        disableSubmit,
        isDismisable,
-       showMessageRequiredCertificate,
        showCheckIfCertificateIsAvailable
     } = this.state
 
@@ -51,33 +48,16 @@ class BereavementConfirmationModal extends Component {
               </center>
               <div className = { 'confirmation-grid-action' } >
                 <GenericButton
-                  onClick = { () =>
-                    this.setState({
-                      showMessageRequiredCertificate : true,
-                      showCheckIfCertificateIsAvailable : false })
+                  onClick = { () => onClose() 
                 }
                   text = { 'no' } />
                 <GenericButton
-                  onClick = { onYes }
+                  onClick = { () => onYes() }
                   text = { 'yes' }
-                  disabled = {this.state.disabled}
+                  disabled = { this.state.disabled }
                 />
               </div>
             </div>
-          </Modal>
-        }
-        {
-          showMessageRequiredCertificate &&
-          <Modal onClose={ ()=>
-              this.setState({ showMessageRequiredCertificate : false }) }>
-              <center>
-                <h2>Please prepare the death certificate first before proceeding.</h2>
-                <br/>
-                <GenericButton
-                  onClick={ () => this.navigate() }
-                  text={ 'OK' }
-                />
-              </center>
           </Modal>
         }
       </div>
