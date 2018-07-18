@@ -101,6 +101,11 @@ class BenefitsFeedbackPayslipModal extends BaseMVPView {
           </center>            :
           <div>
             <center>
+              <img
+                onClick={ () => history.push('/settings') }
+                src={ require('../../images/icons/img_message_circle.png') }
+                className= {'sidebar-img-ub-logo'}/>
+              <br/>
               <h3>Thank you for using 1Uhub! We&#39;d love to know what your experience was like using the application.</h3>
               <br/>
                 <GenericTextBox
