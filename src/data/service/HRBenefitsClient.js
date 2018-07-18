@@ -303,6 +303,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getPayslipFeedbackCategoriesDiscrepancy (token) {
+    return this.service.getPayslipFeedbackCategoriesDiscrepancy(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addPayslipFeedbackDiscrepancy (token, addPayslipFeedbackParam) {
+    return this.service.addPayslipFeedbackDiscrepancy(token, addPayslipFeedbackParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   addBenefitFeedback (token, addBenefitFeedbackParam) {
     return this.service.addBenefitFeedback(token, addBenefitFeedbackParam)
       .pipe(ServiceErrorOperator())
