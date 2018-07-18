@@ -43,7 +43,6 @@ class CalamityAssistanceDetailsFragment extends Component {
     const { RequiredAttachment } = this.props.details.details.CalamityDetails
     const updatedAttachment = [...this.state.attachmentArray]
     RequiredAttachment.map((attachment, key) => {
-      console.log(attachment)
       updatedAttachment.push({name: attachment})
     })
 
@@ -150,8 +149,12 @@ class CalamityAssistanceDetailsFragment extends Component {
                         }
 
                         if (isValid) {
-                            updatedAttachment[key].file = file
-                            this.setState({ attachmentArray : updatedAttachment })
+                            reader.onloadend=() => {
+                              updatedArray[key].base64 = reader.result
+                              updatedAttachment[key].file = file
+                              this.setState({ attachmentArray : updatedAttachment })
+                            }
+                            reader.readAsDataURL(file)
                         } else {
                           store.dispatch(NotifyActions.addNotify({
                             title : 'File Uploading',
