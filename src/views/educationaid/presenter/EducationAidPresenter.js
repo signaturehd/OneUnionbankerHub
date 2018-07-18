@@ -47,12 +47,15 @@ export default class EducationAidPresenter {
  }
 
  validateAid () {
+   this.view.showCircularLoader()
    this.validateAidInteractor.execute()
      .subscribe(
        educationAid => {
          this.view.setEducationAid(educationAid)
+         this.view.hideCircularLoader()
        },
        error => {
+         this.view.navigate()
       }
    )
  }
