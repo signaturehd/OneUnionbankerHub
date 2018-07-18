@@ -26,17 +26,33 @@ import BereavementFormAgreementCardComponenent from
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 class BereavementDetailsFragment extends Component {
+
   constructor (props) {
     super(props)
     this.state = {
-      fileOR : null,
-      showLoader : false
+      attachmentArray : []
     }
+    this.setAttachments = this.setAttachments.bind(this)
   }
+
 
   getExtension (filename) {
     const parts=filename.split('/')
     return parts[parts.length - 1]
+  }
+
+  componentDidMount () {
+    this.setAttachments()
+  }
+
+  setAttachments () {
+    const { RequiredAttachment } = this.props.details.details.BereavementDetails
+    const updatedAttachment = [...this.state.attachmentArray]
+    RequiredAttachment.map((attachment, key) => {
+      updatedAttachment.push({name: attachment})
+    })
+
+    this.setState({attachmentArray : updatedAttachment})
   }
 
   render () {
@@ -45,13 +61,13 @@ class BereavementDetailsFragment extends Component {
       transactionsPerson,
       attachments,
       uploadImage,
-      response
+      response,
     } = this.props
 
     const {
-      fileOR
+      showLoader,
+      attachmentArray,
     } = this.state
-
 
     return (
       <div className={ 'details-container' }>
@@ -101,51 +117,56 @@ class BereavementDetailsFragment extends Component {
               :
                 details &&
                 details.status &&
-                details.details.BereavementDetails.RequiredAttachment.length !== 0 &&
+                (details.status.id === 6 ||
+                details.status.id === 21) &&
+                attachmentArray.length !== 0 &&
                 <div>
-                  <FileUploader
+                {
+                  attachmentArray.map((attachment, key) => (
+                    <FileUploader
                     accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
-                    value={ fileOR && fileOR.name }
-                    placeholder={ 'Official Receipt' }
+                    value={
+                      attachment.file && attachment.file.name
+                    }
+                    placeholder={ attachment.name }
                     onChange={
                       (e) => {
                         e.preventDefault()
+                        const updatedAttachment = [...attachmentArray]
                         const reader=new FileReader()
                         const file=e.target.files[0]
                         let isValid
                         switch (this.getExtension(file.type).toLowerCase()) {
                           case 'jpeg' :
-                            isValid=true
+                          isValid=true
                           case 'jpg' :
-                            isValid=true
+                          isValid=true
                           case 'png' :
-                            isValid=true
+                          isValid=true
                           case 'pdf' :
-                            isValid=true
+                          isValid=true
                         }
 
                         if (isValid) {
-                          reader.onloadend=() => {
-                            this.setState({
-                              fileOR: file,
-                            })
-                          }
-                          reader.readAsDataURL(file)
-                       } else {
-                           store.dispatch(NotifyActions.addNotify({
-                               title : 'File Uploading',
-                               message : 'The accepted attachments are JPG/PNG/PDF',
-                               type : 'warning',
-                               duration : 2000
-                            })
-                          )
-                        }
+                            updatedAttachment[key].file = file
+                            this.setState({ attachmentArray : updatedAttachment })
+                        } else {
+                          store.dispatch(NotifyActions.addNotify({
+                            title : 'File Uploading',
+                            message : 'The accepted attachments are JPG/PNG/PDF',
+                            type : 'warning',
+                            duration : 2000
+                          })
+                        )
                       }
                     }
+                  }
                   />
+                  ))
+                }
                   <br/>
                   <GenericButton text = { 'submit attachment' }
-                    onClick = { () => { uploadImage(details.transactionId, fileOR), this.setState({ showLoader : true }) } }
+                    onClick = { () => uploadImage(details.transactionId, attachmentArray) }
                   />
                 </div>
           }
@@ -157,7 +178,8 @@ class BereavementDetailsFragment extends Component {
 }
 BereavementDetailsFragment.propTypes = {
   details : PropTypes.object,
-  transactionsPerson : PropTypes.array
+  transactionsPerson : PropTypes.array,
+  uploadImage: PropTypes.func,
 }
 
   export default BereavementDetailsFragment

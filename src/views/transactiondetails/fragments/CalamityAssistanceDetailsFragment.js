@@ -27,6 +27,7 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class CalamityAssistanceDetailsFragment extends Component {
+  
   constructor (props) {
     super(props)
     this.state = {
@@ -68,7 +69,6 @@ class CalamityAssistanceDetailsFragment extends Component {
       attachmentArray,
     } = this.state
 
-    console.log(attachmentArray)
 
     return (
       <div className={ 'details-container' }>
