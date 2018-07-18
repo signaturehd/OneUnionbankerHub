@@ -131,7 +131,7 @@ class SettingsProfileCardComponent extends Component {
                   onClick={ () => this.setState({ showPersonalInfoModal : true }) }
                   className={ 'profile-information-view-right' }>
                   <div>
-                    <span className={ 'profile-icon-settings employeeContact' }/>
+                    <span className={ 'profile-icon-settings employeeContactAddress' }/>
                   </div>
                   <div>
                     <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
@@ -167,7 +167,7 @@ class SettingsProfileCardComponent extends Component {
                   onClick={ () => this.setState({ showCompanyInfoModal : true }) }
                   className={ 'profile-information-view-right' }>
                   <div>
-                    <span className={ 'profile-icon-settings employeeDependent' }/>
+                    <span className={ 'profile-icon-settings employeeId' }/>
                   </div>
                   <div>
                     <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
