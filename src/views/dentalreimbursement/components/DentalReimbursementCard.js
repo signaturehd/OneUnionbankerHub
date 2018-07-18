@@ -68,15 +68,39 @@ submission (e) {
     selectedDependent,
     selectedProcedures
   } = this.state
-  if (!this.validator(file) || !this.validator(selectedProcedures) || !this.validator(file2) || !this.validator(selectedDependent)) {
+  if (!this.validator(file)) {
     store.dispatch(NotifyActions.addNotify({
        title : 'Warning' ,
-       message : 'All fields are required',
+       message : 'Official Receipt attachment is required',
        type : 'warning',
        duration : 2000
      })
    )
-  } else if (selectedProcedures.length !== 0) {
+  } else if (!this.validator(file2)) {
+    store.dispatch(NotifyActions.addNotify({
+       title : 'Warning' ,
+       message : 'Medical Certificate attachment is required',
+       type : 'warning',
+       duration : 2000
+     })
+   )
+ } else if (!this.validator(selectedDependent)) {
+   store.dispatch(NotifyActions.addNotify({
+      title : 'Warning' ,
+      message : 'Please select dependents',
+      type : 'warning',
+      duration : 2000
+    })
+  )
+} else if (selectedProcedures.length === 0) {
+  store.dispatch(NotifyActions.addNotify({
+     title : 'Warning' ,
+     message : 'Please select procedures',
+     type : 'warning',
+     duration : 2000
+   })
+ )
+} else if (selectedProcedures.length !== 0) {
     let validate
     let checknull
     selectedProcedures.map((procedure, key) => {

@@ -21,19 +21,19 @@ class EducationFragment extends Component {
       const educationDefault = [{
         id: 0 ,
         title: 'UP Diliman',
-        imagePath: require('../../../../images/updilimanDefault.png'),
+        imagePath: require('../../../../images/icons/ic_school_grey_500_18dp.png'),
         course: 'Bachelor of Science in Computer Studies',
         year: '2015-2018'
       }, {
         id: 1 ,
         title: 'De Lasalle University',
-        imagePath: require('../../../../images/delasalleDefault.png'),
+        imagePath: require('../../../../images/icons/ic_school_grey_500_18dp.png'),
         course: 'Bachelor of Science in Computer Studies',
         year: '2015-2018'
       }, {
         id: 2,
         title: 'STI University',
-        imagePath: require('../../../../images/stiDefault.png'),
+        imagePath: require('../../../../images/icons/ic_school_grey_500_18dp.png'),
         course: 'Bachelor of Science in Computer Studies',
         year: '2015-2018'
       }]
@@ -72,29 +72,8 @@ class EducationFragment extends Component {
               </div>
               )
               :
-              educationDefault.map((education, key)=>
-              <div
-                key={ key }
-                className={ 'components-view' }>
-                <div className={ 'text-align-center' }>
-                  <img
-                    className={ 'components-image' }
-                    key={ key }
-                    src={ education.imagePath }/>
-                </div>
-                <div>
-                  <h2 className={ 'font-size-18px font-weight-normal' }>
-                    { education.title }
-                  </h2>
-                  <h3 className={ 'font-size-17px font-weight-lighter' }>
-                    { education.course }
-                  </h3>
-                  <h4 className={ 'font-size-16px font-weight-lighter' }>
-                    { education.year }
-                  </h4>
-                </div>
-              </div>
-              )
+              <center><h3>Not yet Provided</h3></center>
+
           }
         </Card>
       </div>
