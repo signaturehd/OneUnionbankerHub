@@ -27,13 +27,13 @@ class SkillsFragment extends Component {
     {
       id: 0 ,
       name: 'React Native',
-      imagePath: require('../../../../images/reactnative.png'),
+      imagePath: require('../../../../images/icons/ic_skill.png'),
       ratings: 5,
     },
     {
       id: 0 ,
       name: 'Java',
-      imagePath: require('../../../../images/java.jpg'),
+      imagePath: require('../../../../images/icons/ic_skill.png'),
       ratings: 3,
     }
   ]
@@ -70,28 +70,7 @@ class SkillsFragment extends Component {
               </div>
             )
             :
-            skillsDefault.map((skills, key)=>
-              <div
-                key={ key }
-                className={ 'components-view' }>
-                <div>
-                  <img
-                    className={ 'components-image' }
-                    key={ key }
-                    src={ skills.imagePath }/>
-                </div>
-                <div>
-                  <h2>{ skills.name }</h2>
-                    <Rating
-                      emptySymbol = { <MdStarOutline style={{ fontSize: 35, color : '#c65e11' }} /> }
-                      fullSymbol = { <MdStar style={{ fontSize: 35,  color : '#c65e11' }} /> }
-                      fractions = { 2 }
-                      initialRating = { (skills.ratings ? skills.ratings : 0) || 0 }
-                      readonly
-                    />
-                </div>
-              </div>
-            )
+            <center><h3>Not yet Provided</h3></center>
         }
       </Card>
     )

@@ -65,29 +65,8 @@ class CertificateFragment extends Component {
               </Card>
             )
             :
-            certificateDefault.map((certificate, key)=>
-              <Card
-                key={ key }
-                className={ 'components-view' }>
-                <div>
-                  <img
-                    className={ 'components-image' }
-                    key={ key }
-                    src={ certificate.imagePath }/>
-                </div>
-                <div>
-                  <h2 className={ 'font-size-18px font-weight-normal' }>
-                    { certificate.title }
-                  </h2>
-                  <h3 className={ 'font-size-17px font-weight-lighter' }>
-                    { certificate.course }
-                  </h3>
-                  <h4 className={ 'font-size-16px font-weight-lighter' }>
-                    { certificate.year }
-                  </h4>
-                </div>
-              </Card>
-            )
+            <center><h3>Not yet Provided</h3><br/></center>
+
         }
       </div>
     )
