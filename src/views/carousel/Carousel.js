@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 
 import PropTypes from 'prop-types'
 
-import { Modal } from '../../ub-components'
+import { Modal, GenericButton } from '../../ub-components'
 
 import './styles/carousel.css'
 
 class Carousel extends Component {
   constructor (props) {
       super(props)
+      this.state = {
+        selectedSlide : 'first'
+      }
   }
 
   render () {
@@ -30,24 +33,29 @@ class Carousel extends Component {
           type={ 'radio' }
           name={ 'slider' }
           title={ 'slide1' }
+          checked={ this.state.selectedSlide === 'first' }
           defaultChecked = { true }
           className={ 'slider__nav' }/>
         <input
           type={ 'radio' }
+          checked={ this.state.selectedSlide === 'second' }
           name={ 'slider' }
           title={ 'slide2' }
           className={ 'slider__nav' }/>
         <input
           type={ 'radio' }
+          checked={ this.state.selectedSlide === 'third' }
           name={ 'slider' }
           title={ 'slide3' }
           className={ 'slider__nav' }/>
         <input
+          checked={ this.state.selectedSlide === 'fourth' }
           type={ 'radio' }
           name={ 'slider' }
           title={ 'slide4' }
           className={ 'slider__nav' }/>
         <input
+          checked={ this.state.selectedSlide === 'last' }
           type={ 'radio' }
           name={ 'slider' }
           title={ 'slide5' }
@@ -55,18 +63,61 @@ class Carousel extends Component {
         <div className={'slider__inner'}>
           <div className={'slider__contents'}>
             <img src = { require('../../images/carousel/1.jpg') }/>
+            <br/>
+            <div className={'carousel-function'}>
+              <div></div>
+              <GenericButton text = { 'Next' }
+                onClick = { () => this.setState({ selectedSlide : 'second' })}
+              />
+            </div>
           </div>
           <div className={'slider__contents'}>
             <img src = { require('../../images/carousel/2.jpg') }/>
+            <br/>
+            <div className={'carousel-function'}>
+              <GenericButton text = { 'Previous' }
+                onClick = { () => this.setState({ selectedSlide : 'first' })}
+              />
+              <GenericButton text = { 'Next' }
+                onClick = { () => this.setState({ selectedSlide : 'third' })}
+              />
+            </div>
           </div>
           <div className={'slider__contents'}>
             <img src = { require('../../images/carousel/3.jpg') }/>
+            <br/>
+            <div className={'carousel-function'}>
+              <GenericButton text = { 'Previous' }
+                onClick = { () => this.setState({ selectedSlide : 'second' })}
+              />
+              <GenericButton text = { 'Next' }
+                onClick = { () => this.setState({ selectedSlide : 'fourth' })}
+              />
+            </div>
           </div>
           <div className={'slider__contents'}>
             <img src = { require('../../images/carousel/4.jpg') }/>
+            <br/>
+            <div className={'carousel-function'}>
+              <GenericButton text = { 'Previous' }
+                onClick = { () => this.setState({ selectedSlide : 'third' })}
+              />
+              <GenericButton text = { 'Next' }
+                onClick = { () => this.setState({ selectedSlide : 'last' })}
+              />
+            </div>
           </div>
           <div className={'slider__contents'}>
             <img src = { require('../../images/carousel/5.jpg') }/>
+            <br/>
+            <div className={'carousel-function'}>
+              <GenericButton text = { 'Previous' }
+                onClick = { () => this.setState({ selectedSlide : 'fourth' })}
+              />
+              <GenericButton text = { 'Finish' }
+                onClick = { () => onClose()}
+              />
+            </div>
           </div>
         </div>
       </div>
