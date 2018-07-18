@@ -85,8 +85,8 @@ function  TransactionDetails (props)  {
   } else if (transactionId === 22) {
     // Calamity Assistance
     return <CalamityAssistanceDetailsFragment
-    uploadImage = { (transactionId, file) => uploadImage(22, transactionId, file) }
       transactionsPerson = { transactionsPerson }
+      uploadImage = { (transactionId, file) => uploadImage(22, transactionId, file) }
       attachments = { attachments }
       details = { transactionDetails }
      />
@@ -95,13 +95,15 @@ function  TransactionDetails (props)  {
 }
 
 class TransactionPersonalDetailsFragment extends BaseMVPView {
+
   constructor (props) {
     super(props)
     this.state = {
       details : null,
       transactions : null,
       attachment : null,
-      response : null
+      response : null,
+      enabledLoader: false,
     }
   }
 
@@ -132,12 +134,23 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     this.setState({ details })
   }
 
+  /* Circular Loader */
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
   render () {
     const {
       details,
       transactions,
       attachments,
-      response
+      response,
+      enabledLoader
     } = this.state
     return (
       <div  className={ 'container' }>
@@ -149,7 +162,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
           </h2>
         </div>
         {
-          details ?
+          enabledLoader ?
             <div className={ 'transaction-detail-container' }>
               <TransactionDetails
                details={ details }
@@ -157,7 +170,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
                transactions={ transactions }
                showUploading={ response }
                uploadImage = { (transactionType, transactionId, file) => {
-                 this.presenter.uploadImage(transactionType, transactionId, file)
+                 this.presenter.uploadTransactionBereavement(transactionType, transactionId, file)
                }}
               />
             </div>            :

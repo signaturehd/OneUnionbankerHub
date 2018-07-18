@@ -586,8 +586,7 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-
-  uploadTransactionImageInteractor (token, type, file, id) {
+  uploadTransactionImageInteractor (token, type, id, file) {
     let service
     if (type === 22) {
       service = this.service.uploadTransactionCalamity( token, file, id )

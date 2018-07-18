@@ -27,6 +27,7 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class CalamityAssistanceDetailsFragment extends Component {
+  
   constructor (props) {
     super(props)
     this.state = {
@@ -43,7 +44,6 @@ class CalamityAssistanceDetailsFragment extends Component {
     const { RequiredAttachment } = this.props.details.details.CalamityDetails
     const updatedAttachment = [...this.state.attachmentArray]
     RequiredAttachment.map((attachment, key) => {
-      console.log(attachment)
       updatedAttachment.push({name: attachment})
     })
 
@@ -69,7 +69,6 @@ class CalamityAssistanceDetailsFragment extends Component {
       attachmentArray,
     } = this.state
 
-    console.log(attachmentArray)
 
     return (
       <div className={ 'details-container' }>
