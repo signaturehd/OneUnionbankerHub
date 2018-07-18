@@ -103,6 +103,7 @@ class CalamityFormCardComponent extends Component {
     const {
       calamityAssistance,
       presenter,
+      onClick,
       onFocus
     }=this.props
 
@@ -228,7 +229,8 @@ class CalamityFormCardComponent extends Component {
                 />
               }
 
-            <div></div>
+          <div></div>
+          <div>
           <Card className={ 'calamity-form-card' }>
             <h4>
               Property Form
@@ -396,11 +398,8 @@ class CalamityFormCardComponent extends Component {
                 }
             </div>
           </Card>
-        </div>
-        <br/>
-        <br/>
-        <div className='calamity-grid-column-2'>
-        <div></div>
+          <br/>
+          <br/>
           <Card className='calamity-form-card'>
           <h4>
             Form Attachments
@@ -539,10 +538,28 @@ class CalamityFormCardComponent extends Component {
           <GenericButton
             type={ 'button' }
             text={ 'submit' }
-            onClick={ () => this.setState({ showReviewCalamityModal : true }) }
+            onClick={
+              () => onClick(true,
+                {
+                  calamityId,
+                  calamityType,
+                  preferredDate,
+                  property,
+                  propertyDesc,
+                  propertyType,
+                  acquisitionValue,
+                  estimatedCost,
+                  fileBC,
+                  fileDP,
+                  imgPrevBC,
+                  imgPrevDP
+                }
+              )
+            }
             className={ 'calamity-submit' } />
             </div>
           </Card>
+          </div>
         </div>
       </div>
     )
