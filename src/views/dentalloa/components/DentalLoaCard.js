@@ -67,6 +67,7 @@ class DentalLoaCard extends Component {
               <div className = {'dentalloa-body'}>
                 <GenericTextBox
                   onClick = { () => onClick(true, false, false) }
+                  onFocus = { () => onClick(true, false, false) }
                   value = { recipient ? recipient : '' }
                   readOnly
                   placeholder = { text1 } />
@@ -75,6 +76,7 @@ class DentalLoaCard extends Component {
                   readOnly
                   type={ 'text' }
                   onClick = { () => onClick(false, true, false) }
+                  onFocus = { () => onClick(false, true, false) }
                   placeholder = { text2 } />
                 <div>
                   <DatePicker
@@ -95,6 +97,7 @@ class DentalLoaCard extends Component {
               <h4 className={ 'dentalloa-procedure-list-title' }>PROCEDURES</h4>
               <GenericButton
                 onClick = { () => onClick(false, false, true) }
+                onFocus = { () => onClick(false, false, true) }
                 type = { 'button' }
                 text = { 'Add procedure' }
                 className = { 'dentalloa-procedure' }
@@ -126,7 +129,6 @@ class DentalLoaCard extends Component {
              }
              <br/>
 
-
             <div className = { 'dentalloa-button-submit' }>
               <GenericButton
                  className = { 'dentalloa-button' }
@@ -152,6 +154,7 @@ DentalLoaCard.propTypes = {
   selectedProcedures : PropTypes.array,
   branch : PropTypes.string,
   submitForm : PropTypes.func,
+  onFocus : PropTypes.func,
 }
 
 DentalLoaCard.defaultProps = {

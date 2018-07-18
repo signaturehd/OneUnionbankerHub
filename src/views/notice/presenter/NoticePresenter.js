@@ -4,6 +4,7 @@ import NoticeParam from '../../../domain/param/NoticeParam'
 export default class NoticePresenter {
   constructor (container) {
     this.updateNoticeInteractor = new UpdateNoticeInteractor(container.get('HRBenefitsClient'))
+    // this.updateNoticeMplInteractor = new UpdateNoticeMplInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {

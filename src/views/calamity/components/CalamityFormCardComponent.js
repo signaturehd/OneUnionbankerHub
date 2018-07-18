@@ -102,7 +102,8 @@ class CalamityFormCardComponent extends Component {
   render () {
     const {
       calamityAssistance,
-      presenter
+      presenter,
+      onFocus
     }=this.props
 
     const {
@@ -248,6 +249,11 @@ class CalamityFormCardComponent extends Component {
                       this.setState({ showModal : true, calamityType: e.target.value })
                    }
                   }
+                  onFocus={
+                    (e) => {
+                      this.setState({ showModal : true, calamityType: e.target.value })
+                   }
+                  }
                   placeholder={ 'Type of Calamity' }
                 />
               </div>
@@ -319,6 +325,9 @@ class CalamityFormCardComponent extends Component {
                   container={ 'calamity-container' }
                   value={ propertyType ? propertyType : '' }
                   onClick={
+                    () => this.setState({ showPropModal : true })
+                  }
+                  onFocus={
                     () => this.setState({ showPropModal : true })
                   }
                   placeholder={ 'Property Type' }
@@ -538,6 +547,10 @@ class CalamityFormCardComponent extends Component {
       </div>
     )
   }
+}
+
+CalamityFormCardComponent.propTypes={
+  onFocus: PropTypes.func,
 }
 
 export default CalamityFormCardComponent

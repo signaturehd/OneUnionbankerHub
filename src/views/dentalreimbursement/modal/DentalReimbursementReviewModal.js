@@ -44,14 +44,14 @@ class DentalReimbursementModal extends Component {
           backgroundImage: `url('${imageUrl}')`,
           width : '180px',
           height : '180px',
-          backgroundSize : 'cover',
+          backgroundSize : 'contain',
           backgroundRepeat : 'no-repeat',
         },
         image2 : {
           backgroundImage: `url('${imageUrl2}')`,
           width : '180px',
           height : '180px',
-          backgroundSize : 'cover',
+          backgroundSize : 'contain',
           backgroundRepeat : 'no-repeat',
         }
       }
@@ -71,18 +71,22 @@ class DentalReimbursementModal extends Component {
             { $imagePreview }
             { $imagePreview2 }
           </div>
-            <br/>
-          <div>DEPENDENT : { dependent && dependent.name }</div>
-          <center>
-            <h4>PROCEDURE</h4>
-            {
-              procedure && procedure.map((resp, key) =>
-                <div key = { key }>
-                  { resp.name } : &#x20B1; { resp.amount }
-                </div>
-              )
-            }
-          </center>
+          <div className = { 'dentalreimbursement-grid-image' } >
+            <div className={ 'font-weight-bold' }>DEPENDENT :</div>
+            <div className={ 'font-weight-light' }> { dependent && dependent.name } </div>
+          </div>
+          <div className = { 'dentalreimbursement-grid-image' } >
+            <div className={ 'font-weight-bold' }>PROCEDURE :</div>
+            <div className={ 'font-weight-light' }>
+              {
+                procedure && procedure.map((resp, key) =>
+                  <div key = { key }>
+                    { resp.name } : &#x20B1; { resp.amount }
+                  </div>
+                )
+              }
+            </div>
+          </div>
             <br/>
           <div className = { 'dental-reimbursement-modal-action-button' }>
             <GenericButton
@@ -95,7 +99,7 @@ class DentalReimbursementModal extends Component {
               text = { confirm } />
             <GenericButton
               text = { cancel }
-              onClick = { () => onClose}/>
+              onClick = { () => onClose(false) }/>
           </div>
         </div>
       </Modal>

@@ -1,19 +1,21 @@
 export default (
-    fullname,
-    loanId,
-    purposeOfLoan,
-    modeOfLoan,
-    loanTerm,
-    offset,
-    principalLoanAmount,
-    attachments
+  dealerName,
+  amountValue,
+  modeOfLoanId,
+  loanType,
+  poaText,
+  termId,
+  selectedOffsetLoan,
+  fileObject,
+  fileObject1
   ) => ({
-    fullname,
-    loanId,
-    purposeOfLoan,
-    modeOfLoan,
-    loanTerm,
-    offset,
-    principalLoanAmount,
-    attachments
+    dealerName,
+    amountValue,
+    modeOfLoanId,
+    loanType,
+    poaText,
+    termId,
+    selectedOffsetLoan,
+    fileObject,
+    fileObject1
   })

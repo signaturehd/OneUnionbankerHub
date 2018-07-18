@@ -5,7 +5,7 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from '../mpl/presenter/MultiPurposeLoanPresenter'
 import ConnectView from '../../utils/ConnectView'
 
-import { CircularLoader, Modal } from '../../ub-components/'
+import { CircularLoader } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
@@ -13,100 +13,140 @@ import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import FormComponent from '../mpl/components/MplLoanFormCardComponent'
 
-class SalaryLoanFragment extends BaseMVPView {
+class HousingAssistanceFragment extends BaseMVPView {
 
-    constructor (props) {
-      super(props)
-      this.state={
-        purposeOfAvailment: [],
-        selectedPoa: '',
-        formAttachments: [],
-        loanType: 1,
-        validateLoanType : [],
-        offset : [],
-        enabledLoader : false,
-        noticeResponse : null, /* notice response*/
-        showNoticeResponseModal : false,
-        showBenefitFeedbackModal : false,
-        showNoticeModal : false,
-        showConfirmation : false,
-        AdditionalDocuments: 0,
-        RequiredDocuments: 0,
-        isPayeeOrDealerResp : '',
-        employeeName: [],
-        storedIsDealerOrPayee: [],
-        computationOffset: [],
-      }
+  constructor (props) {
+    super(props)
+    this.state={
+      purposeOfAvailment: [],
+      selectedPoa: '',
+      formAttachments: [],
+      loanType: '',
+      validateLoanType : [],
+      offset : [],
+      enabledLoader : true,
+      noticeResponse : null, /* notice response*/
+      showNoticeResponseModal : false,
+      showBenefitFeedbackModal : false,
+      showNoticeModal : false,
+      showConfirmation : false,
+      AdditionalDocuments: 0,
+      RequiredDocuments: 0,
+      isPayeeOrDealerResp : '',
+      employeeName: [],
+      storedIsDealerOrPayee: [],
+      computationOffset: [],
+      maximumAmount: 0
     }
+  }
 
-    componentDidMount () {
-      this.props.setSelectedNavigation(1)
-      this.presenter.isManagersCheck()
-      this.presenter.getProfile()
-      this.presenter.getMplTypes()
-      this.presenter.getMplValidate(this.state.loanType)
-      this.presenter.getMplPurposeOfAvailment(
-        this.state.loanType,
-        1,
-        1)
-    }
+  componentDidMount () {
+    this.props.setSelectedNavigation(1)
+    this.presenter.getMplTypes()
+    this.presenter.isManagersCheck()
+    this.presenter.getProfile()
+    this.presenter.getSalaryLoanType()
+  }
 
-    /* Notice Response*/
-    noticeOfUndertaking (noticeResponse) {
-      this.setState({ showNoticeModal : true, noticeResponse })
-    }
+  /* Notice Response*/
+  noticeOfUndertaking (noticeResponse) {
+    this.setState({ showNoticeModal : true, noticeResponse })
+  }
 
-    noticeResponse (noticeResponse) {
-      this.setState({showConfirmation: false, noticeResponse })
-    }
+  noticeResponse (noticeResponse) {
+    this.setState({showConfirmation: false, noticeResponse })
+  }
 
-    /* Implementation*/
+  /* Implementation*/
 
-    showMPLFormAttachments (formAttachments) {
-      this.setState({ formAttachments })
-    }
+  showMPLFormAttachments (formAttachments) {
+    this.setState({ formAttachments })
+  }
 
-    showOffset (offset) {
-      this.setState({ offset })
-    }
+  showOffset (offset) {
+    this.setState({ offset })
+  }
 
-    showValidate (validateLoanType) {
-      this.setState({ validateLoanType })
-    }
+  showValidate (validateLoanType) {
+    this.setState({ validateLoanType })
+  }
 
-    isManagersCheck (isPayeeOrDealerResp) {
-      this.setState({ isPayeeOrDealerResp })
-    }
+  isManagersCheck (isPayeeOrDealerResp) {
+    this.setState({ isPayeeOrDealerResp })
+  }
 
-    getEmployeeName (employeeName) {
-      this.setState({ employeeName })
-    }
+  getEmployeeName (employeeName) {
+    this.setState({ employeeName })
+  }
 
-    showPurposeOfAvailment (purposeOfAvailment) {
-      this.setState({ purposeOfAvailment })
-    }
+  showPurposeOfAvailment (purposeOfAvailment) {
+    this.setState({ purposeOfAvailment })
+  }
 
-    showAdditionalFilesCount (AdditionalDocuments) {
-      this.setState({ AdditionalDocuments })
-    }
+  showAdditionalFilesCount (AdditionalDocuments) {
+    this.setState({ AdditionalDocuments })
+  }
 
-    showAdRequiredFilesCount (RequiredDocuments) {
-      this.setState({ RequiredDocuments })
-    }
+  showAdRequiredFilesCount (RequiredDocuments) {
+    this.setState({ RequiredDocuments })
+  }
 
-    /* Loader*/
+  /* Loader*/
 
-    hideCircularLoader () {
-      this.setState({ enabledLoader : false })
-    }
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
 
-    showCircularLoader () {
-      this.setState({ enabledLoader : true })
-    }
-    /* Navigage back to loans Option*/
-    navigate () {
-      this.props.history.push('/mybenefits/benefits/loans')
-    }
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  /* Navigage back to loans Option*/
+  navigate () {
+    this.props.history.push('/mybenefits/benefits/loans')
+  }
+
+  /* Validate loan Type */
+  showSalaryLoanType (loanType) {
+    this.setState({ loanType })
+    this.showValidatedLoanType (loanType)
+  }
+
+  showValidatedLoanType (loanType) {
+    this.presenter.getMplValidate(loanType)
+    this.presenter.getMplPurposeOfAvailment(
+      loanType,
+      1,
+      1)
+  }
+
+  showMaximumLoanableAmount (maximumAmount) {
+    this.setState({ maximumAmount })
+  }
+
+  sendFormDataToPresenter (
+    dealerName,
+    amountValue,
+    modeOfLoanId,
+    loanType,
+    poaText,
+    selectedTerm,
+    selectedOffsetLoan,
+    fileObject,
+    fileObject1
+  ) {
+    this.presenter.addLoan(
+      dealerName,
+      amountValue,
+      modeOfLoanId,
+      loanType,
+      poaText,
+      selectedTerm,
+      selectedOffsetLoan,
+      fileObject,
+      fileObject1
+    )
+  }
 
   render () {
     const {
@@ -127,9 +167,9 @@ class SalaryLoanFragment extends BaseMVPView {
       isPayeeOrDealerResp,
       employeeName,
       storedIsDealerOrPayee,
-      computationOffset
-    } = this.state
-
+      computationOffset,
+      maximumAmount
+    }=this.state
 
     const empName=employeeName && employeeName.fullname
     const updateIsDealerOrPayeeName=[...storedIsDealerOrPayee]
@@ -141,28 +181,28 @@ class SalaryLoanFragment extends BaseMVPView {
         {
           showNoticeModal &&
           <NoticeModal
-            onClose = { () => this.setState({ showNotice : false })}
-            noticeResponse = { noticeResponse }
-            benefitId = { loanType }
-            onDismiss = { (showNoticeModal, response) =>
+            onClose={ () => this.setState({ showNotice : false })}
+            noticeResponse={ noticeResponse }
+            benefitId={ loanType }
+            onDismiss={ (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
         }
         {
           showNoticeResponseModal &&
           <ResponseModal
-            onClose = { () => {
+            onClose={ () => {
               this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
             }}
-            noticeResponse = { response }
+            noticeResponse={ response }
           />
         }
 
         {
           showBenefitFeedbackModal &&
           <BenefitFeedbackModal
-            benefitId = { loanType }
-            onClose = { () => {
+            benefitId={ loanType }
+            onClose={ () => {
               this.props.history.push('/mybenefits/benefits/loans'),
               this.setState({ showBenefitFeedbackModal : false })
             }}
@@ -180,11 +220,11 @@ class SalaryLoanFragment extends BaseMVPView {
         </div>
           {
             enabledLoader ?
-            <center className = { 'circular-loader-center' }>
-              <CircularLoader show = { this.state.enabledLoader }/>
-            </center>              :
+             <center className={ 'circular-loader-center' }>
+               <CircularLoader show={ this.state.enabledLoader }/>
+             </center> :
             <FormComponent
-              oanType={ loanType }
+              loanType={ loanType }
               isPayeeOrDealer={ updateIsDealerOrPayeeName ? updateIsDealerOrPayeeName : '(Not yet Provided)' }
               purposeOfAvailment={ purposeOfAvailment }
               validateLoanType={ validateLoanType }
@@ -193,10 +233,34 @@ class SalaryLoanFragment extends BaseMVPView {
               AdditionalDocuments={ AdditionalDocuments }
               RequiredDocuments={ RequiredDocuments }
               presenter={ this.presenter }
+              maximumAmount={ maximumAmount }
+              sendFormDataToPresenter={ (
+                dealerName,
+                amountValue,
+                modeOfLoanId,
+                loanType,
+                poaText,
+                selectedTerm,
+                selectedOffsetLoan,
+                fileObject,
+                fileObject1
+              ) =>
+              this.sendFormDataToPresenter(
+                dealerName,
+                amountValue,
+                modeOfLoanId,
+                loanType,
+                poaText,
+                selectedTerm,
+                selectedOffsetLoan,
+                fileObject,
+                fileObject1
+              )
+               }
             />
           }
       </div>
     )
   }
 }
-export default ConnectView(SalaryLoanFragment, Presenter)
+export default ConnectView(HousingAssistanceFragment, Presenter)
