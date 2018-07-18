@@ -101,8 +101,8 @@ class CalamityAssistanceDetailsFragment extends Component {
               :
                 details &&
                 details.status &&
-                details.status.id === 6 ||
-                details.status.id === 21 &&
+                (details.status.id === 6 ||
+                details.status.id === 21) &&
                 details.details.CalamityDetails.RequiredAttachment.length !== 0 &&
                 <div>
                   <FileUploader
