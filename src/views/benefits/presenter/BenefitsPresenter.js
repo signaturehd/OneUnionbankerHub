@@ -74,14 +74,14 @@ export default class BenefitsPresenter {
         const releasingCenter = this.validateReleasingCenterInteractor.execute()
         if (!releasingCenter) {
           this.view.isAccountNumber(false)
-        }
+        } this.view.isAccountOrRelasing(false)
         // TODO get chosen releasing center then;
         // TODO show releasing centers if there's no releasing center chosen
       } else {
         const accountNumber = this.getAccountNumberInteractor.execute()
         if (!accountNumber) {
           this.view.isAccountNumber(true)
-        }
+        } this.view.isAccountOrRelasing(true)
       }
     } else {
       store.dispatch(NotifyActions.addNotify({

@@ -6,8 +6,10 @@ export default class ValidateAccountNumberInteractor {
   execute (accountNumber) {
     return this.client.validateAccountNumber(this.client.getToken(), accountNumber)
       .do(resp => {
-        // when valid, set it to session
-        this.client.setAccountNumber(accountNumber)
+        this.client.updateAccountNumber(this.client.getToken(), accountNumber)
+        .do(resp => {
+          this.client.setAccountNumber(accountNumber)
+        })
       })
   }
 }

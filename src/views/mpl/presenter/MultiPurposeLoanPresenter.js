@@ -180,13 +180,6 @@ export default class MultiPurposeLoanPresenter {
       .subscribe(
         data => {
           this.view.hideCircularLoader()
-          store.dispatch(NotifyActions.addNotify({
-              title: 'Success',
-              message : data.message,
-              type : 'success',
-              duration : 2000
-            })
-          )
           this.view.noticeOfUndertaking(data)
       },
         errors => {

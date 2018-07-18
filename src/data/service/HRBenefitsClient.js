@@ -90,6 +90,7 @@ export default class HRBenefitsClient {
   setWizardValidation (wizard) {
     this.sessionProvider.setWizardValidation(wizard)
   }
+
   /* Get Wizard*/
   getWizardValidation () {
     return this.sessionProvider.getWizardValidation()
@@ -106,6 +107,11 @@ export default class HRBenefitsClient {
   /* accounts */
   validateAccountNumber (token, accountNumber) {
     return this.service.validateAccountNumber(token, accountNumber)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateAccountNumber (token, accountNumber) {
+    return this.service.updateAccountNumber(token, accountNumber)
       .pipe(ServiceErrorOperator())
   }
 

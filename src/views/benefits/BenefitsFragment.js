@@ -44,7 +44,6 @@ class BenefitsFragment extends BaseMVPView {
       releasingCenters: null,
       showModal: false,
       withDeathCert : false,
-      isAccountNumber: null,
       carValidated: [],
       accountNumber: '', // this is only used to handle onChange of input modal
       enableLoader: false,
@@ -102,11 +101,21 @@ class BenefitsFragment extends BaseMVPView {
 
   isAccountNumber (bool) {
     if (bool) {
-      this.setState({ showAccountNumberModal: true, isAccountNumber : bool })
+      this.setState({ showAccountNumberModal: true })
     } else {
-      this.setState({ showReleasingCenterModal: true, isAccountNumber : bool })
+      this.setState({ showReleasingCenterModal: true })
     }
   }
+
+  isAccountOrRelasing (bool) {
+    if (bool) {
+      this.setState({ isAccountNumber : bool })
+    } else {
+      this.setState({ isAccountNumber : bool })
+    }
+  }
+
+
 
   navigate () {
     this.props.history.push('/mybenefits/benefits')
@@ -127,6 +136,8 @@ class BenefitsFragment extends BaseMVPView {
       enableLoader,
       enabledAccountNumberLoader
     } = this.state
+
+    console.log(isAccountNumber)
 
     const benefitsOptions = [{
       id: 0 ,
@@ -258,7 +269,7 @@ class BenefitsFragment extends BaseMVPView {
         text="+"
         onClick={ () => {
             isAccountNumber ?
-            this.setState({ showAccountNumberModal : true })            :
+            this.setState({ showAccountNumberModal : true }):
             this.setState({ showReleasingCenterModal : true })
           }
         }

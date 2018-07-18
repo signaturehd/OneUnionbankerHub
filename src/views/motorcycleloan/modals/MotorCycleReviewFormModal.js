@@ -88,10 +88,9 @@ class MotorCycleReviewFormModal extends Component {
               </div>
                 <div className={ 'mpl-review-grid' }>
                   <div>
-                    <h4 className={ 'font-weight-normal' }> { dealerName ? dealerName : ' (Not Yet Provided)'} </h4>
+                    <h4 className={ 'font-weight-normal' }> { dealerName ? dealerName : '(Not Yet Provided)' } </h4>
                   </div>
                 </div>
-              }
           <br/>
           <div className={ 'calamity-image-display' }>
             <div
