@@ -672,10 +672,12 @@ export default class HRBenefitsService {
     })
   }
 
-  uploadTransactionCalamity (token, file, id) {
+  uploadTransactionCalamity (token, files, id) {
     const formData = new FormData()
     formData.append('uuid', 12345)
-    formData.append('Official Receipt', file)
+    files.map((file, key) => (
+      formData.append(file.name, file.file)
+    ))
     formData.append('body', JSON.stringify({
       transactionId : id
     }))
@@ -684,10 +686,12 @@ export default class HRBenefitsService {
     })
   }
 
-  uploadTransactionBereavement (token, file, id) {
+  uploadTransactionBereavement (token, files, id) {
     const formData = new FormData()
     formData.append('uuid', 12345)
-    formData.append('Death Certificate', file)
+    files.map((file, key) => (
+      formData.append(file.name, file.file)
+    ))
     formData.append('body', JSON.stringify({
       transactionId : id
     }))
