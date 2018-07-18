@@ -16,6 +16,7 @@ setOffsetLoan (selected) {
     selectedOffsetLoan
   }=this.props
 
+
   if (selectedOffsetLoan) {
     const valueArr=offset.map(item => item.promissoryNoteNumber)
     if (valueArr.includes(selected.promissoryNoteNumber)) {
@@ -75,7 +76,9 @@ render () {
                           format(resp.outstandingBalance) :
                           '' }`
                         }
-                  onClick={ () => this.setOffsetLoan({ ...resp }) }
+                  onClick={ () =>
+                    this.setOffsetLoan({ ...resp })
+                  }
                   />
               :
               <div></div>

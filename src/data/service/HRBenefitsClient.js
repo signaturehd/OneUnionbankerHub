@@ -90,6 +90,7 @@ export default class HRBenefitsClient {
   setWizardValidation (wizard) {
     this.sessionProvider.setWizardValidation(wizard)
   }
+
   /* Get Wizard*/
   getWizardValidation () {
     return this.sessionProvider.getWizardValidation()
@@ -106,6 +107,11 @@ export default class HRBenefitsClient {
   /* accounts */
   validateAccountNumber (token, accountNumber) {
     return this.service.validateAccountNumber(token, accountNumber)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateAccountNumber (token, accountNumber) {
+    return this.service.updateAccountNumber(token, accountNumber)
       .pipe(ServiceErrorOperator())
   }
 
@@ -283,11 +289,6 @@ export default class HRBenefitsClient {
   /* Notice of Undertaking */
   updateNotice (token, noticeParam) {
     return this.service.updateNotice(token, noticeParam)
-      .pipe(ServiceErrorOperator())
-  }
-
-  updateNoticeMpl (token, noticeParamMpl) {
-    return this.service.updateNoticeMpl(token, noticeParamMpl)
       .pipe(ServiceErrorOperator())
   }
 
@@ -573,5 +574,17 @@ export default class HRBenefitsClient {
     releasingCenter,
     calamityAssistanceParam)
       .pipe(ServiceErrorOperator())
+  }
+
+
+  uploadTransactionImageInteractor (token, type, file, id) {
+    let service
+    if (type === 22) {
+      service = this.service.uploadTransactionCalamity( token, file, id )
+    } else if ( type === 21) {
+      service = this.service.uploadTransactionBereavement( token, file, id )
+    }
+
+    return service
   }
 }

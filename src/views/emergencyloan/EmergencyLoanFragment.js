@@ -21,7 +21,7 @@ class EmergencyLoanFragment extends BaseMVPView {
       purposeOfAvailment: [],
       selectedPoa: '',
       formAttachments: [],
-      loanType: '2',
+      loanType: '',
       validateLoanType : [],
       offset : [],
       enabledLoader : true,
@@ -36,6 +36,7 @@ class EmergencyLoanFragment extends BaseMVPView {
       employeeName: [],
       storedIsDealerOrPayee: [],
       computationOffset: [],
+      maximumAmount: 0
     }
   }
 
@@ -44,11 +45,7 @@ class EmergencyLoanFragment extends BaseMVPView {
     this.presenter.isManagersCheck()
     this.presenter.getProfile()
     this.presenter.getMplTypes()
-    this.presenter.getMplValidate(this.state.loanType)
-    this.presenter.getMplPurposeOfAvailment(
-      this.state.loanType,
-      1,
-      1)
+    this.presenter.getEmergencyLoanType()
   }
 
   /* Notice Response*/
@@ -109,6 +106,24 @@ class EmergencyLoanFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/loans')
   }
 
+  /* Validate loan Type */
+  showEmergencyLoanType (loanType) {
+    this.setState({ loanType })
+    this.showValidatedLoanType(loanType)
+  }
+
+  showValidatedLoanType (loanType) {
+    this.presenter.getMplValidate(loanType)
+    this.presenter.getMplPurposeOfAvailment(
+      loanType,
+      1,
+      1)
+  }
+
+  showMaximumLoanableAmount (maximumAmount) {
+    this.setState({ maximumAmount })
+  }
+
   sendFormDataToPresenter (
     dealerName,
     amountValue,
@@ -152,7 +167,8 @@ class EmergencyLoanFragment extends BaseMVPView {
       isPayeeOrDealerResp,
       employeeName,
       storedIsDealerOrPayee,
-      computationOffset
+      computationOffset,
+      maximumAmount
     }=this.state
 
     const empName=employeeName && employeeName.fullname
@@ -167,7 +183,7 @@ class EmergencyLoanFragment extends BaseMVPView {
           <NoticeModal
             onClose={ () => this.setState({ showNotice : false })}
             noticeResponse={ noticeResponse }
-            benefitId={ loanType }
+            benefitId={ 1 }
             onDismiss={ (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
@@ -185,7 +201,7 @@ class EmergencyLoanFragment extends BaseMVPView {
         {
           showBenefitFeedbackModal &&
           <BenefitFeedbackModal
-            benefitId={ loanType }
+            benefitId={ 1 }
             onClose={ () => {
               this.props.history.push('/mybenefits/benefits/loans'),
               this.setState({ showBenefitFeedbackModal : false })
@@ -217,6 +233,7 @@ class EmergencyLoanFragment extends BaseMVPView {
               AdditionalDocuments={ AdditionalDocuments }
               RequiredDocuments={ RequiredDocuments }
               presenter={ this.presenter }
+              maximumAmount={ maximumAmount }
               sendFormDataToPresenter={ (
                 dealerName,
                 amountValue,

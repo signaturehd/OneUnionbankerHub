@@ -21,7 +21,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
         purposeOfAvailment: [],
         selectedPoa: '',
         formAttachments: [],
-        loanType: 5,
+        loanType: 4,
         validateLoanType : [],
         offset : [],
         enabledLoader : false,
@@ -113,7 +113,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
       modeOfLoanId,
       loanType,
       poaText,
-      termId,
+      termOfLoan,
       selectedOffsetLoan,
       fileObject,
       formAttachments
@@ -123,7 +123,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
           loanType,
           poaText,
           modeOfLoanId,
-          termId,
+          termOfLoan,
           selectedOffsetLoan,
           amountValue,
           fileObject,
@@ -158,7 +158,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
           <NoticeModal
             onClose = { () => this.setState({ showNotice : false })}
             noticeResponse = { noticeResponse }
-            benefitId = { loanType }
+            benefitId = { 1 }
             onDismiss = { (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
@@ -177,7 +177,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
         {
           showBenefitFeedbackModal &&
           <BenefitFeedbackModal
-            benefitId = { loanType }
+            benefitId = { 1 }
             onClose = { () => {
               this.props.history.push('/mybenefits/benefits/loans'),
               this.setState({ showBenefitFeedbackModal : false })
@@ -215,7 +215,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
                 modeOfLoanId,
                 loanType,
                 poaText,
-                termId,
+                termOfLoan,
                 selectedOffsetLoan,
                 fileObject,
                 formAttachments
@@ -226,7 +226,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
                   modeOfLoanId,
                   loanType,
                   poaText,
-                  termId,
+                  termOfLoan,
                   selectedOffsetLoan,
                   fileObject,
                   formAttachments

@@ -58,7 +58,8 @@ class MotorcycleLoanCardComponent extends Component {
         computationOffsetLoan: [],
         showConfirmationView: false,
         imagePreviewArrayList: [],
-        selectedTerm: ''
+        selectedTerm: '',
+        selectedOffsetLoanId: []
       }
       this.validator=this.validator.bind(this)
     }
@@ -74,7 +75,7 @@ class MotorcycleLoanCardComponent extends Component {
        loanType,
        poaText,
        selectedTerm,
-       selectedOffsetLoan,
+       selectedOffsetLoanId,
        fileObject,
        fileObject1
      ) {
@@ -85,7 +86,7 @@ class MotorcycleLoanCardComponent extends Component {
          loanType,
          poaText,
          selectedTerm,
-         selectedOffsetLoan,
+         selectedOffsetLoanId,
          fileObject,
          fileObject1
        )
@@ -129,25 +130,30 @@ class MotorcycleLoanCardComponent extends Component {
               })
             )
           }
-        else if (!this.validator(fileObject) || !this.validator(fileObject1) ) {
-             store.dispatch(NotifyActions.addNotify({
-                title : 'Warning' ,
-                message : 'Please check and provide the Additional Requirements',
-                type : 'warning',
-                duration : 2000
-              })
-            )
-          }
-
+        else if (loanType === 3) {
+          if (!this.validator(fileObject) || !this.validator(fileObject1) ) {
+              store.dispatch(NotifyActions.addNotify({
+                 title : 'Warning' ,
+                 message : 'Please check and provide the Additional Requirements',
+                 type : 'warning',
+                 duration : 2000
+               })
+             )
+           }
+         }
          else {
            this.setState({ showReviewModal: true })
         }
      }
 
-     getExtension (filename) {
-       const parts=filename.split('/')
-       return parts[parts.length - 1]
-     }
+   getExtension (filename) {
+     const parts=filename.split('/')
+     return parts[parts.length - 1]
+   }
+
+   desiredAmountValidator(value) {
+     return value ? true : false
+   }
 
     render () {
       const {
@@ -178,7 +184,8 @@ class MotorcycleLoanCardComponent extends Component {
         computationOffsetLoan,
         showConfirmationView,
         imagePreviewArrayList,
-        selectedTerm
+        selectedTerm,
+        selectedOffsetLoanId
       }=this.state
 
       const {
@@ -191,13 +198,23 @@ class MotorcycleLoanCardComponent extends Component {
         formAttachments,
         AdditionalDocuments,
         RequiredDocuments,
-        isPayeeOrDealer
+        isPayeeOrDealer,
+        maximumAmount,
+        onFocus
       }=this.props
 
-      const computation=computationOffsetLoan.reduce((a, b) => a + b, 0)
       const arrayObject=[...imagePreviewArrayList]
       arrayObject.push(imageUrlObject)
       arrayObject.push(imageUrlObject1)
+
+      const computation=computationOffsetLoan.reduce((a, b) => a + b, 0)
+      let computationAmountMaximum = 0
+      if(loanType.toString() === '3') {
+        computationAmountMaximum = 100000
+      }
+      else {
+        computationAmountMaximum = 500000
+      }
 
       return (
         <div className={ 'mplview-container' }>
@@ -234,7 +251,7 @@ class MotorcycleLoanCardComponent extends Component {
                       loanType,
                       poaText,
                       selectedTerm,
-                      selectedOffsetLoan,
+                      selectedOffsetLoanId,
                       fileObject,
                       fileObject1
                     ) }
@@ -301,10 +318,13 @@ class MotorcycleLoanCardComponent extends Component {
               onClose={ () => this.setState({ showOffsetOfLoanModal : false }) }
               onSelect={ (offsetloan) => {
                 const updatedOffsetLoan=[...selectedOffsetLoan]
+                const updatedOffsetLoanId=[...selectedOffsetLoanId]
                 const updateComputation=[...computationOffsetLoan]
                 updatedOffsetLoan.push(offsetloan)
+                updatedOffsetLoanId.push(offsetloan.promissoryNoteNumber)
                 updateComputation.push(offsetloan.outstandingBalance)
                 this.setState({ selectedOffsetLoan : updatedOffsetLoan })
+                this.setState({ selectedOffsetLoanId : updatedOffsetLoanId })
                 this.setState({ computationOffsetLoan : updateComputation })
                 }
               }
@@ -316,8 +336,9 @@ class MotorcycleLoanCardComponent extends Component {
             showOffsetMessageModal &&
             <Modal>
               <center>
-                <h4> `We're sorry but the selected existing loans have exceeded your principal amount.
-                    These cannot be deducted from your new loan. Kindly select within the appropriate balance.` </h4>
+                <h4>We're sorry but the selected existing loans have exceeded your principal amount.
+                    These cannot be deducted from your new loan. Kindly select within the appropriate balance.</h4>
+                  <br/>
                 <GenericButton
                   text={ 'Ok' }
                   onClick={ () => this.setState({ showOffsetMessageModal : false }) }
@@ -333,41 +354,81 @@ class MotorcycleLoanCardComponent extends Component {
               </h4>
               <div className={ 'mpl-form-card-body' }>
                 <GenericTextBox
-                  type={ 'button' }
                   value={ poaText ? poaText : '' }
-                  onClick={ () =>
-                    this.setState({ showPurposeOfAvailment : true }) }
-                  onChange={ poaText =>
-                    this.setState({ poaText }) }
+                  onClick={ (e) =>
+                    this.setState({ poaText: e.target.value, showPurposeOfAvailment : true })
+                  }
+                  onFocus={ (e) =>
+                    this.setState({ poaText: e.target.value, showPurposeOfAvailment : true })
+                  }
+                  // onChange={ poaText =>
+                  //   this.setState({ poaText }) }
                   placeholder={ 'Purpose Of Availment' }
                   type={ 'text' }/>
                 <GenericTextBox
-                  onChange={ modeOfLoanText =>
-                    this.setState({ modeOfLoanText: modeOfLoanText ? modeOfLoanText : 'New Loan' }) }
-                  onClick={ () =>
-                    this.setState({ showOffset : true }) }
+                  // onChange={ modeOfLoanText =>
+                  //   this.setState({  }) }
+                  onClick={ (e) =>
+                    this.setState({
+                      modeOfLoanText: modeOfLoanText ? e.target.value : 'New Loan',
+                      showOffset : true,
+                      })
+                    }
+                  onFocus={ (e) =>
+                    this.setState({
+                      modeOfLoanText: modeOfLoanText ? e.target.value : 'New Loan',
+                      showOffset : true,
+                      })
+                    }
                   placeholder={ 'Mode of Loan' }
-                  disabled={ modeOfLoanText ? modeOfLoanText : this.state.disabled }
                   value={ modeOfLoanText ? modeOfLoanText : 'New Loan' }
                   type={ 'text' }/>
-                <GenericTextBox
-                  value={ amountValue ? amountValue : '' }
-                  onChange={ (e) =>
-                    {
-                      new MoneyValidation().isValid(e.target.value)  ?
-                        this.setState({ amountValue : e.target.value })
-                        :
-                        this.setState({ amountValue : '' })
-                     } }
-                  placeholder={ 'Desired Amount' }
-                  maxLength={ 11 }
-                  type={ 'text' }/>
+                {
+                  modeOfLoanText ?
+
+                    <GenericTextBox
+                      value={ amountValue ? amountValue : '' }
+                      onChange={
+                        (e) =>
+                          new MinMaxNumberValidation(-1, computationAmountMaximum).isValid(e.target.value) ||
+                          computation >= e.target.value ?
+                            this.setState({
+                              amountValue: Number(e.target.value.replace(/[^0-9]/g, ''))
+                            }) :
+                            this.setState({
+                              amountValue: '',
+                              showOffsetMessageModal: this.desiredAmountValidator(e.target.value)
+                          }
+                        )
+                      }
+                      placeholder={ 'Desired Amount' }
+                      maxLength={ 11 }
+                      type={ 'text' }/>
+                    :
+                    <GenericTextBox
+                      value={ amountValue ? amountValue : '' }
+                      onChange={
+                        (e) =>
+                            this.setState({
+                              amountValue: Number(e.target.value.replace(/[^0-9]/g, ''))
+                            }
+                          )
+                       }
+                      placeholder={ 'Desired Amount' }
+                      maxLength={ 11 }
+                      type={ 'text' }
+                    />
+                  }
                 <GenericTextBox
                   value={ `${ termOfLoan ? termOfLoan : '' } (${ rateOfLoan ? rateOfLoan : '' } %)` }
-                  onChange={ (termOfLoan, rateOfLoan) =>
-                    this.setState({ termOfLoan, rateOfLoan }) }
+                  // onChange={ (termOfLoan, rateOfLoan) =>
+                  //   this.setState({ termOfLoan, rateOfLoan }) }
                   onClick={ () =>
-                    this.setState({ showTerm : true }) }
+                    this.setState({ showTerm : true })
+                  }
+                  onFocus={ () =>
+                    this.setState({ showTerm : true })
+                  }
                   placeholder={ 'Term of Loan' }
                   type={ 'text' }/>
               </div>
@@ -375,23 +436,25 @@ class MotorcycleLoanCardComponent extends Component {
                 {
                   showOffsetLoanCard &&
 
-                  <div className={ 'mpl-grid-column-2' }>
+                  <div>
                     <div></div>
-                    <Card className={ 'mpl-form-card' }>
+                    <div>
                       <div className={ 'mpl-offset-grid' }>
                         <h4 className={ 'text-align-left' }>
+                          <br/>
                           Loans to Offset
                         </h4>
                         <div className={ 'text-align-right' }>
                           <span
                             onClick={ () => this.setState({ showOffsetOfLoanModal : true }) }
-                            className={ 'mpl-icons-add mpl-add-offset' }/>
+                            className={ 'mpl-icons-add mpl-add-offset' }
+                          />
                         </div>
                       </div>
                       <div className={ 'mpl-form-card-body' }>
                         {
                           selectedOffsetLoan && selectedOffsetLoan.map((offset, key) => (
-                             <div key={ key } className={ 'dentalreimbursement-selected-procedure' }>
+                             <div key={ key } className={ 'mpl-selected-procedure' }>
                                <div className={'input-grid'}>
                                  <GenericTextBox
                                    onChange={ e => {
@@ -406,7 +469,10 @@ class MotorcycleLoanCardComponent extends Component {
                                            format(offset.outstandingBalance) : ''})` }
                                    type={ 'button' }
                                   />
-                                 <div className={ 'dentalreimbursement-button-close' }>
+                                <div className={ 'mpl-button-close' }>
+                                  <br/>
+                                  <br/>
+                                  <br/>
                                    <img
                                      src={ require('../../../images/x-circle-global.png') }
                                      onClick={ () => {
@@ -422,7 +488,7 @@ class MotorcycleLoanCardComponent extends Component {
                            )
                           }
                       </div>
-                    </Card>
+                    </div>
                   </div>
                 }
                 <br/>
@@ -637,9 +703,14 @@ MotorcycleLoanCardComponent.propTypes={
     PropTypes.object,
     PropTypes.array
   ]),
+  maximumAmount : PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
   AdditionalDocuments: PropTypes.number,
   RequiredDocuments: PropTypes.number,
-  isPayeeOrDealerResp:  PropTypes.string
+  isPayeeOrDealerResp:  PropTypes.string,
+  onFocus: PropTypes.func,
 }
 
 export default MotorcycleLoanCardComponent

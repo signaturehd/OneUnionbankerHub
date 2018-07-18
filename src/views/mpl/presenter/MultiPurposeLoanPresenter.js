@@ -42,6 +42,18 @@ export default class MultiPurposeLoanPresenter {
     this.view=view
   }
 
+  getSalaryLoanType () {
+    this.view.showSalaryLoanType('1')
+  }
+
+  getHousingAssistanceLoanType () {
+    this.view.showHousingAssistanceLoanType('3')
+  }
+
+  getEmergencyLoanType () {
+    this.view.showEmergencyLoanType('2')
+  }
+
   /* Types*/
 
   getMplTypes () {
@@ -63,16 +75,16 @@ export default class MultiPurposeLoanPresenter {
     loanTypesId,
     purposeOfLoan,
     subcategoryLevel) {
-    this.getPurposeOfAvailmentInteractor.execute({
-      loanTypesId,
-      purposeOfLoan,
-      subcategoryLevel
+  this.getPurposeOfAvailmentInteractor.execute({
+    loanTypesId,
+    purposeOfLoan,
+    subcategoryLevel
     })
-      .subscribe(
-        data => {
-          this.view.showPurposeOfAvailment(data)
-      })
-    }
+    .subscribe(
+      data => {
+        this.view.showPurposeOfAvailment(data)
+    })
+  }
 
   isManagersCheck () {
     const isManagersCheck=this.getManagersCheckInteractor.execute()
@@ -122,17 +134,11 @@ export default class MultiPurposeLoanPresenter {
         data =>  {
           this.view.hideCircularLoader()
           this.view.showOffset(data && data.offset)
+          this.view.showMaximumLoanableAmount(data && data.maximumLoanableAmount)
           this.view.showValidate(data)
           this.view.showComputationForOffset(data && data.offset)
         },
         error => {
-          store.dispatch(NotifyActions.addNotify({
-              title: 'Warning',
-              message: `We're sorry, but right now, you're not yet able to avail of this benefit because if your${this.error.message}`,
-              type: 'warning',
-              duration: 2000
-            })
-          )
           this.view.navigate()
         }
       )
@@ -144,7 +150,7 @@ export default class MultiPurposeLoanPresenter {
       .map(data => this.view.showAdditionalFilesCount((data.AdditionalDocuments).length))
       .map(data => this.view.showAdRequiredFilesCount((data.RequiredDocuments).length))
       .subscribe()
-    }
+  }
 
   /* add Loa salary, housing assistance, emergency*/
   addLoan (

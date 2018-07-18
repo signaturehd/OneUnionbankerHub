@@ -80,7 +80,7 @@ class PayslipFragment extends BaseMVPView {
             <PayslipDetailsModal
               pdfFile = { pdfFile }
               showPayslipDetails = { showPayslipDetails }
-              onClose={ () => this.setState({ showPayslipDetails: false }) }
+              onClose={ () => this.setState({ showPayslipDetails: false, pdfFile : null }) }
             />
         }
 

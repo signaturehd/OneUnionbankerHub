@@ -1,8 +1,10 @@
 
 export default class HRBenefitsService {
-  constructor (apiClient, fileClient) {
+  constructor (apiClient, accountClient, fileClient) {
     this.apiClient = apiClient
+    this.accountClient = accountClient
     this.fileClient = fileClient
+
   }
 
   /* user */
@@ -126,6 +128,13 @@ export default class HRBenefitsService {
        }
      })
    }
+
+  updateAccountNumber (token, accountNumber) {
+    return this.accountClient.put(`v1/employees/accounts`, { accountNumber }, {
+      headers : { token }
+    })
+  }
+
   /* rds */
   getReleasingCenters (token) {
     return this.apiClient.get('v1/rds/centers', {
@@ -225,12 +234,6 @@ export default class HRBenefitsService {
     })
   }
 
-  /* notice of undertaking for mpl */
-  updateNoticeMpl (token, noticeParamMpl) {
-    return this.apiClient.put('v1/agreements', noticeParamMpl, {
-      headers: { token }
-    })
-  }
 /* Feedback */
 
   getFeedback (token) {
@@ -371,15 +374,15 @@ export default class HRBenefitsService {
     const multiLoanBodyObject = {
       releasingCenter,
       accountNumber,
+      promissoryNoteNumbers : addMotorLoanParam.selectedOffsetLoan,
+      distributor : addMotorLoanParam.dealerName,
       loan : {
         id : addMotorLoanParam.loanId,
-        purpose : addMotorLoanParam.purposeOfLoan,
         mode : addMotorLoanParam.modeOfLoan ? 2 : 1,
-        term : addMotorLoanParam.loanTerm,
         principalAmount : addMotorLoanParam.principalLoanAmount,
-        dealerName : addMotorLoanParam.dealerName,
+        purpose : addMotorLoanParam.purposeOfLoan,
+        term : addMotorLoanParam.loanTerm,
       },
-      promissoryNoteNumbers : addMotorLoanParam.selectedOffsetLoan,
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
@@ -401,13 +404,13 @@ export default class HRBenefitsService {
       accountNumber,
       loan : {
         id : addComputerLoanParam.loanId,
-        purpose : addComputerLoanParam.purposeOfLoan,
         mode : addComputerLoanParam.modeOfLoan ? 2 : 1,
-        term : addComputerLoanParam.loanTerm,
         principalAmount : addComputerLoanParam.principalLoanAmount,
-        supplierName : addComputerLoanParam.supplierName,
+        purpose : addComputerLoanParam.purposeOfLoan,
+        term : addComputerLoanParam.loanTerm,
       },
       promissoryNoteNumbers : addComputerLoanParam.selectedOffsetLoan,
+      distributor : addComputerLoanParam.supplierName,
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
@@ -654,6 +657,30 @@ export default class HRBenefitsService {
     formData.append('body', JSON.stringify(calamityObject))
     return this.apiClient.post('v1/calamity/availment', formData,{
       headers: { token }
+    })
+  }
+
+  uploadTransactionCalamity (token, file, id) {
+    const formData = new FormData()
+    formData.append('uuid', 12345)
+    formData.append('Official Receipt', file)
+    formData.append('body', JSON.stringify({
+      transactionId : id
+    }))
+    return this.apiClient.post('v1/calamity/receipt', formData, {
+      headers: { token }
+    })
+  }
+
+  uploadTransactionBereavement (token, file, id) {
+    const formData = new FormData()
+    formData.append('uuid', 12345)
+    formData.append('Death Certificate', file)
+    formData.append('body', JSON.stringify({
+      transactionId : id
+    }))
+    return this.apiClient.post('v1/bereavement/receipt', formData, {
+      headers : { token }
     })
   }
 }
