@@ -8,6 +8,11 @@ import './styles/mplModalStyle.css'
 
 class MplOffsetLoanModal extends Component {
 
+constructor (props) {
+  super(props)
+  this.setOffsetLoan = this.setOffsetLoan.bind(this)
+}
+
 setOffsetLoan (selected) {
   const {
     onClose,
@@ -16,6 +21,7 @@ setOffsetLoan (selected) {
     selectedOffsetLoan
   }=this.props
 
+  this.props.onClose()
 
   if (selectedOffsetLoan) {
     const valueArr=offset.map(item => item.promissoryNoteNumber)
