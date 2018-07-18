@@ -79,11 +79,11 @@ export default class HRBenefitsService {
       releasingCenter,
       type : dentalReimbursementParam.dependentId.id !== 1 ? 2 : 1,
       procedures : dentalReimbursementParam.procedure,
+      dependentId : dentalReimbursementParam.dependentId.id
     }
 
     formData.append('uuid', 12345)
     formData.append('dentcert1', dentalReimbursementParam.file1)
-    formData.append('dependentId', dentalReimbursementParam.dependentId.id)
     formData.append('dentcert2', dentalReimbursementParam.file2)
     formData.append('body', JSON.stringify(dentalRObject))
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {
@@ -130,7 +130,7 @@ export default class HRBenefitsService {
    }
 
   updateAccountNumber (token, accountNumber) {
-    return this.accountClient.put(`v1/employees/accounts`, { accountNumber }, {
+    return this.accountClient.post(`v1/employees/accounts`, { accountNumber }, {
       headers : { token }
     })
   }

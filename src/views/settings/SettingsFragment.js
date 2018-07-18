@@ -20,6 +20,7 @@ class SettingsFragment extends BaseMVPView {
      rank: [],
      lineManager: [],
      profileDependent: [],
+     accountNumber : 'No Account Number',
      showProfile : false,
      showRank : false,
      showEmployeeProfile : false,
@@ -46,13 +47,25 @@ class SettingsFragment extends BaseMVPView {
   showLineManager (lineManager) {
     this.setState({ lineManager })
   }
-  render () {
-    const { lineManager, profile, details, className, rank, profileDependent }=this.state
 
+  showAccountNumber (accountNumber) {
+    this.setState({accountNumber})
+  }
+  render () {
+    const {
+      lineManager,
+      profile,
+      details,
+      className,
+      rank,
+      profileDependent,
+      accountNumber
+    }=this.state
     return (
       <div className={ 'profile-container' }>
         { super.render() }
         <SettingsProfileCardComponent
+          accountNumber = { accountNumber }
            profile={ profile }
            lineManager={ lineManager }
            profileDependent={ profileDependent }

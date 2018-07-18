@@ -40,7 +40,10 @@ class SettingsProfileCardComponent extends Component {
       onClick,
       rank,
       lineManager,
-      profileImageUrl }=this.props
+      profileImageUrl,
+      profileDependent,
+      accountNumber
+    } = this.props
 
     const {
       showContactInfoModal,
@@ -71,13 +74,14 @@ class SettingsProfileCardComponent extends Component {
           showDependentModal &&
             <DependentsModal
               profileName={ profile && profile.fullname }
-              profileDependent={ profile && profile.dependents }
+              dependents={ profileDependent && profileDependent }
               onClose={ () => this.setState({ showDependentModal : false }) }
             />
         }
         {
           showPersonalInfoModal &&
             <PersonalInfoModal
+              accountNumber={ accountNumber }
               profile={ profile && profile}
               onClose={ () => this.setState({ showPersonalInfoModal : false }) }
             />

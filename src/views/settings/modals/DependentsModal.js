@@ -17,10 +17,10 @@ class DependentsModal extends Component {
   render () {
     const {
       onClose,
-      profileDependent,
+      dependents,
       profileName,
       backgroundColor }=this.props
-
+    console.log(this.props)
     const { isDismisable }=this.state
 
     return (
@@ -33,8 +33,8 @@ class DependentsModal extends Component {
             <br/>
               <div className={ 'contact-info-grid' }>
                 {
-                  profileDependent ?
-                   profileDependent.map((dependent, key) =>
+                  dependents ?
+                   dependents.map((dependent, key) =>
                       <div
                         key={ key }
                         className={ 'contact-number-grid' }>
@@ -46,9 +46,10 @@ class DependentsModal extends Component {
                             <h2>Dependent { key + 1 }</h2>
                           </div>
                           <div className={ 'font-size-16px' }>
-                            <a>{ profileEmail ? profileEmail : '(Not Yet Provided)' }</a>
+                            <h2>{dependent.firstName}  {dependent.lastName}</h2>
                           </div>
                         </div>
+                        <br/>
                       </div>
                     )
                     :

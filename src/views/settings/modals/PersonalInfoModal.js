@@ -18,7 +18,9 @@ class PersonalInfoModal extends Component {
     const {
       onClose,
       profile,
-      backgroundColor }=this.props
+      accountNumber,
+      backgroundColor
+    }=this.props
 
     const { isDismisable }=this.state
 
@@ -46,6 +48,23 @@ class PersonalInfoModal extends Component {
                   <div className={ 'font-size-16px' }>
                     <a>
                       { profile.employeeNumber ?  profile.employeeNumber : '(Not Yet Provided)' }
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div
+                className={ 'contact-number-grid' }>
+                <div>
+                  <span className={ 'contact-icon-settings employeeId' }/>
+                </div>
+                <div className={ 'contact-info-grid-row' }>
+                  <div className={ 'font-size-17px contact-title' }>
+                    <h2>Account Number </h2>
+                  </div>
+                  <div className={ 'font-size-16px' }>
+                    <a>
+                      { accountNumber && accountNumber }
                     </a>
                   </div>
                 </div>
