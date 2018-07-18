@@ -74,19 +74,39 @@ class DentalLoaView extends BaseMVPView {
       selectedProcedures.map(resp =>
         procedures.push({ id : resp.id.toString() })
       )
-      if (
-        !this.validator(recipient) ||
-        !this.validator(branch) ||
-        !this.validator(date) ||
-        !procedures.length === 0) {
+      if (!this.validator(recipient)) {
         store.dispatch(NotifyActions.addNotify({
            title : 'Warning' ,
-           message : 'All fields are required',
+           message : 'Recipient field is required',
            type : 'warning',
            duration : 2000
          })
        )
-     } else {
+     } else if (!this.validator(branch)) {
+       store.dispatch(NotifyActions.addNotify({
+          title : 'Warning' ,
+          message : 'Healthway Branch field is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (!this.validator(date)) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Warning' ,
+         message : 'Please choose the date of occurence',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    } else if (procedures.length === 0) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Warning' ,
+         message : 'Please select the procedure',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+   } else {
       this.presenter.addDentalLoa(recipient.id ? recipient.id : null , branch.id, date, procedures)
     }
   }
