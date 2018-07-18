@@ -137,7 +137,6 @@ class BenefitsFragment extends BaseMVPView {
       enabledAccountNumberLoader
     } = this.state
 
-    console.log(isAccountNumber)
 
     const benefitsOptions = [{
       id: 0 ,
