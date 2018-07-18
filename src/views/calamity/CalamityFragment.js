@@ -24,6 +24,7 @@ class CalamityFragment extends BaseMVPView {
     super(props)
 
     this.state={
+      showConfirmation : false,
       showNoticeModal : false,
       noticeResponse : null,
       showNoticeResponseModal : false,
@@ -42,7 +43,8 @@ class CalamityFragment extends BaseMVPView {
       fileBC: null,
       fileDP: null,
       imgPrevBC: null,
-      imgPrevDP: null
+      imgPrevDP: null,
+      data : ''
     }
     this.validator = this.validator.bind(this)
   }
@@ -55,20 +57,8 @@ class CalamityFragment extends BaseMVPView {
      return new RequiredValidation().isValid(input)
    }
 
-  confirmation (
-    calamityId,
-    calamityType,
-    preferredDate,
-    property,
-    propertyDesc,
-    propertyType,
-    acquisitionValue,
-    estimatedCost,
-    fileBC,
-    fileDP,
-    imgPrevBC,
-    imgPrevDP) {
-    if (!this.validator(calamityType)) {
+  confirmation (showConfirmation, data) {
+    if (!this.validator(data.calamityType)) {
       store.dispatch(NotifyActions.addNotify({
          title : 'Calamity Assistance' ,
          message : 'Please provide information to Calamity Type field',
@@ -77,7 +67,7 @@ class CalamityFragment extends BaseMVPView {
        })
      )
     }
-    else if (!this.validator(preferredDate)) {
+    else if (!this.validator(data.preferredDate)) {
       store.dispatch(NotifyActions.addNotify({
          title : 'Calamity Assistance' ,
          message : 'Please provide information to Date of Occurrence field',
@@ -86,7 +76,7 @@ class CalamityFragment extends BaseMVPView {
        })
      )
     }
-    else if (!this.validator(property)) {
+    else if (!this.validator(data.property)) {
       store.dispatch(NotifyActions.addNotify({
          title : 'Calamity Assistance' ,
          message : 'Please provide information to Property field',
@@ -95,7 +85,7 @@ class CalamityFragment extends BaseMVPView {
        })
      )
     }
-    else if (!this.validator(propertyDesc)) {
+    else if (!this.validator(data.propertyDesc)) {
       store.dispatch(NotifyActions.addNotify({
          title : 'Calamity Assistance' ,
          message : 'Please provide information to Property description field',
@@ -104,7 +94,7 @@ class CalamityFragment extends BaseMVPView {
        })
      )
     }
-    else if (!this.validator(propertyType)) {
+    else if (!this.validator(data.propertyType)) {
       store.dispatch(NotifyActions.addNotify({
          title : 'Calamity Assistance' ,
          message : 'Please provide information to Property Type field',
@@ -113,7 +103,7 @@ class CalamityFragment extends BaseMVPView {
        })
      )
     }
-    else if (!this.validator(acquisitionValue) || acquisitionValue==0) {
+    else if (!this.validator(data.acquisitionValue) || data.acquisitionValue==0) {
       store.dispatch(NotifyActions.addNotify({
          title : 'Calamity Assistance' ,
          message : 'Please provide information to Acquisition Value field',
@@ -122,7 +112,7 @@ class CalamityFragment extends BaseMVPView {
        })
      )
     }
-    else if (!this.validator(estimatedCost) || estimatedCost==0) {
+    else if (!this.validator(data.estimatedCost) || data.estimatedCost==0) {
       store.dispatch(NotifyActions.addNotify({
          title : 'Calamity Assistance' ,
          message : 'Please provide information to Estimated Cost field',
@@ -131,7 +121,7 @@ class CalamityFragment extends BaseMVPView {
        })
      )
     }
-    else if (!fileBC) {
+    else if (!data.fileBC) {
       store.dispatch(NotifyActions.addNotify({
           title : 'Calamity Assistance ',
           message : 'Please check your Barangay Certificate',
@@ -140,7 +130,7 @@ class CalamityFragment extends BaseMVPView {
         })
       )
     }
-    else if (!fileDP) {
+    else if (!data.fileDP) {
       store.dispatch(NotifyActions.addNotify({
           title : 'Calamity Assistance ',
           message : 'Please check your Damaged Property',
@@ -150,18 +140,22 @@ class CalamityFragment extends BaseMVPView {
       )
     }
     else {
-      this.presenter.addCalamityAssistance(
-           calamityId,
-           preferredDate,
-           property,
-           propertyDesc,
-           propertyType,
-           acquisitionValue,
-           estimatedCost,
-           fileBC,
-           fileDP
-       )
+      this.setState({ showConfirmation, data })
     }
+  }
+
+  submitForm (data) {
+    this.presenter.addCalamityAssistance(
+      data.calamityId,
+      data.preferredDate,
+      data.property,
+      data.propertyDesc,
+      data.propertyType,
+      data.acquisitionValue,
+      data.estimatedCost,
+      data.fileBC,
+      data.fileDP
+    )
   }
 
   setValidateCalamityAssistance(calamityAssistance) {
@@ -197,11 +191,23 @@ class CalamityFragment extends BaseMVPView {
       calamityAssistance,
       enabledLoader,
       date,
-      response
+      response,
+      showConfirmation,
+      data
     }=this.state
 
     return (
       <div>
+      {
+        showConfirmation &&
+        <ConfirmationModal
+          data = { data }
+          submitForm = { (data) =>
+            this.submitForm(data) }
+          onClose = { () => this.setState({ showConfirmation : false }) }
+        />
+      }
+
       {
         showNoticeModal &&
         <NoticeModal
@@ -248,6 +254,11 @@ class CalamityFragment extends BaseMVPView {
              <CircularLoader show={ this.state.enabledLoader }/>
            </center> :
           <FormComponent
+            onClick = {
+              (showConfirmation, data) => {
+                this.confirmation(showConfirmation, data)
+              }
+            }
             calamityAssistance={ calamityAssistance }
             getPreferredDate = { data =>
               this.setState({ date :  data })}

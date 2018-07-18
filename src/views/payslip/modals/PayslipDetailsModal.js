@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import './styles/payslipModal.css'
 import { Modal, Card, GenericButton, CircularLoader } from '../../../ub-components/'
-import Feedback from '../../benefitsfeedback/BenefitFeedbackModal'
+import Feedback from '../../benefitsfeedback/BenefitsFeedbackPayslipModal'
 
 class PayslipDetailsModal extends Component {
 

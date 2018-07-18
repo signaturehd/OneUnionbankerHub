@@ -20,7 +20,7 @@ class SettingsProfileDescriptions extends Component {
       performanceRating,
       profileDescriptions }=this.props
     const ratings = parseInt(performanceRating)
-    
+
     return (
       <div className={ 'profile-others-card' }>
         <div className={ 'profile-padding' }>
@@ -31,7 +31,7 @@ class SettingsProfileDescriptions extends Component {
           <div className={ 'font-size-14px' }>
             {
               profileDescriptions ? profileDescriptions :
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+              'Sorry, you can update this information by our August 2018 release. Thank you for bearing with us as we create a better experience, Just For U!'
             }
           </div>
           <br/>
