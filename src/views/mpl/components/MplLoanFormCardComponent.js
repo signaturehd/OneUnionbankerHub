@@ -59,7 +59,8 @@ class MotorcycleLoanCardComponent extends Component {
         showConfirmationView: false,
         imagePreviewArrayList: [],
         selectedTerm: '',
-        selectedOffsetLoanId: []
+        selectedOffsetLoanId: [],
+        showPromissoryNoteModal: false
       }
       this.validator=this.validator.bind(this)
     }
@@ -185,7 +186,8 @@ class MotorcycleLoanCardComponent extends Component {
         showConfirmationView,
         imagePreviewArrayList,
         selectedTerm,
-        selectedOffsetLoanId
+        selectedOffsetLoanId,
+        showPromissoryNoteModal
       }=this.state
 
       const {
@@ -336,12 +338,25 @@ class MotorcycleLoanCardComponent extends Component {
             showOffsetMessageModal &&
             <Modal>
               <center>
-                <h4>We're sorry but the selected existing loans have exceeded your principal amount.
+                <h4>We&#39;re sorry but the selected existing loans have exceeded your principal amount.
                     These cannot be deducted from your new loan. Kindly select within the appropriate balance.</h4>
                   <br/>
                 <GenericButton
                   text={ 'Ok' }
                   onClick={ () => this.setState({ showOffsetMessageModal : false }) }
+                />
+              </center>
+            </Modal>
+          }
+          {
+            showPromissoryNoteModal &&
+            <Modal>
+              <center>
+                <h4>Submitting promissory note is necessary for exceeded amount</h4>
+                  <br/>
+                <GenericButton
+                  text={ 'Ok' }
+                  onClick={ () => this.setState({ showPromissoryNoteModal : false }) }
                 />
               </center>
             </Modal>
@@ -395,6 +410,10 @@ class MotorcycleLoanCardComponent extends Component {
                             this.setState({
                               amountValue: Number(e.target.value.replace(/[^0-9]/g, ''))
                             }) :
+                            computationAmountMaximum === 100000 ?
+                            this.setState({
+                              amountValue: '',
+                              showPromissoryNoteModal: this.desiredAmountValidator(e.target.value) }) :
                             this.setState({
                               amountValue: '',
                               showOffsetMessageModal: this.desiredAmountValidator(e.target.value)
