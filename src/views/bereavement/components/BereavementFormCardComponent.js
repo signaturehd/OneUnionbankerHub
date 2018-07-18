@@ -40,6 +40,7 @@ class BereavementFormCardComponent extends Component {
       memorialRegion: '',
       memorialProvince: '',
       memorialCity: '',
+      addressError: false
     }
     this.getDeceasedDate = this.getDeceasedDate.bind(this)
     this.getFuneralDate = this.getFuneralDate.bind(this)
@@ -79,8 +80,12 @@ class BereavementFormCardComponent extends Component {
 
   getFuneralAddress (e) {
     new RequiredAlphabetValidation().isValidAddress(e.target.value)  ?
-    this.setState({ funeralAddress : e.target.value }) :
+    this.setState({ funeralAddress : e.target.value, addressError: this.minimumLength(e.target.value.length) }) :
     this.setState({ funeralAddress : '' })
+  }
+
+  minimumLength (e) {
+    return e < 15 ? true : false
   }
 
   getFuneralRegion (e) {
@@ -109,7 +114,7 @@ class BereavementFormCardComponent extends Component {
 
   getMemorialAddress (e) {
     new RequiredAlphabetValidation().isValidAddress(e.target.value) ?
-    this.setState({ memorialAddress : e.target.value }) :
+    this.setState({ memorialAddress : e.target.value, addressError: this.minimumLength(e.target.value.length) }) :
     this.setState({ memorialAddress : '' })
   }
 
@@ -200,6 +205,7 @@ class BereavementFormCardComponent extends Component {
       memorialRegion,
       memorialProvince,
       memorialCity,
+      addressError
     }=this.state
 
     const styles={
@@ -347,6 +353,10 @@ class BereavementFormCardComponent extends Component {
                     placeholder={ 'Address' }
                     type={ 'text' }
                   />
+                  {
+                    addressError &&
+                    <span className={ 'font-size-14px brv-error-color' }>* Address field should contain atleast 15 characters</span>
+                  }
                 </div>
               </div>
               <div className={ 'brv-icon-text-grid' }>
@@ -455,6 +465,10 @@ class BereavementFormCardComponent extends Component {
                     placeholder={ 'Address' }
                     type={ 'text' }
                   />
+                  {
+                    addressError &&
+                    <span className={ 'font-size-14px brv-error-color' }>* Address field should contain atleast 15 characters</span>
+                  }
                 </div>
               </div>
               <div className={ 'brv-icon-text-grid' }>
