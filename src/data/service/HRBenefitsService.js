@@ -1,8 +1,10 @@
 
 export default class HRBenefitsService {
-  constructor (apiClient, fileClient) {
+  constructor (apiClient, accountClient, fileClient) {
     this.apiClient = apiClient
+    this.accountClient = accountClient
     this.fileClient = fileClient
+
   }
 
   /* user */
@@ -126,6 +128,13 @@ export default class HRBenefitsService {
        }
      })
    }
+
+  updateAccountNumber (token, accountNumber) {
+    return this.accountClient.put(`v1/employees/accounts`, { accountNumber }, {
+      headers : { token }
+    })
+  }
+
   /* rds */
   getReleasingCenters (token) {
     return this.apiClient.get('v1/rds/centers', {
