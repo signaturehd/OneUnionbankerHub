@@ -17,7 +17,7 @@ module.exports = {
   commonGlobals: {
 
   },
-  https://api.unionbankph.com/ubp/prod/hr/
+
   prodGlobals: {
     IMAGE_URL: JSON.stringify('https://api.unionbankph.com/ubp/prod/hr/files/'),
     BASE_URL: JSON.stringify('https://api.unionbankph.com/ubp/prod/hr/benefits/'),
