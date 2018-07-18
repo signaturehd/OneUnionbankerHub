@@ -4,12 +4,9 @@ export default class ValidateAccountNumberInteractor {
   }
 
   execute (accountNumber) {
-    return this.client.validateAccountNumber(this.client.getToken(), accountNumber)
+    return this.client.updateAccountNumber(this.client.getToken(), accountNumber)
       .do(resp => {
-        this.client.updateAccountNumber(this.client.getToken(), accountNumber)
-        .do(resp => {
-          this.client.setAccountNumber(accountNumber)
-        })
+        this.client.setAccountNumber(accountNumber)
       })
   }
 }
