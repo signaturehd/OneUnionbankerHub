@@ -30,8 +30,24 @@ class CalamityAssistanceDetailsFragment extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      fileOR : null
+      attachmentArray : []
     }
+    this.setAttachments = this.setAttachments.bind(this)
+  }
+
+  componentDidMount () {
+    this.setAttachments()
+  }
+
+  setAttachments () {
+    const { RequiredAttachment } = this.props.details.details.CalamityDetails
+    const updatedAttachment = [...this.state.attachmentArray]
+    RequiredAttachment.map((attachment, key) => {
+      console.log(attachment)
+      updatedAttachment.push({name: attachment})
+    })
+
+    this.setState({attachmentArray : updatedAttachment})
   }
 
   getExtension (filename) {
@@ -49,9 +65,11 @@ class CalamityAssistanceDetailsFragment extends Component {
     } = this.props
 
     const {
-      fileOR,
-      showLoader
+      showLoader,
+      attachmentArray,
     } = this.state
+
+    console.log(attachmentArray)
 
     return (
       <div className={ 'details-container' }>
@@ -103,51 +121,54 @@ class CalamityAssistanceDetailsFragment extends Component {
                 details.status &&
                 (details.status.id === 6 ||
                 details.status.id === 21) &&
-                details.details.CalamityDetails.RequiredAttachment.length !== 0 &&
+                attachmentArray.length !== 0 &&
                 <div>
-                  <FileUploader
+                {
+                  attachmentArray.map((attachment, key) => (
+                    <FileUploader
                     accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
-                    value={ fileOR && fileOR.name }
-                    placeholder={ 'Official Receipt' }
+                    value={
+                      attachment.file && attachment.file.name
+                    }
+                    placeholder={ attachment.name }
                     onChange={
                       (e) => {
                         e.preventDefault()
+                        const updatedAttachment = [...attachmentArray]
                         const reader=new FileReader()
                         const file=e.target.files[0]
                         let isValid
                         switch (this.getExtension(file.type).toLowerCase()) {
                           case 'jpeg' :
-                            isValid=true
+                          isValid=true
                           case 'jpg' :
-                            isValid=true
+                          isValid=true
                           case 'png' :
-                            isValid=true
+                          isValid=true
                           case 'pdf' :
-                            isValid=true
+                          isValid=true
                         }
 
                         if (isValid) {
-                          reader.onloadend=() => {
-                            this.setState({
-                              fileOR: file,
-                            })
-                          }
-                          reader.readAsDataURL(file)
-                       } else {
-                           store.dispatch(NotifyActions.addNotify({
-                               title : 'File Uploading',
-                               message : 'The accepted attachments are JPG/PNG/PDF',
-                               type : 'warning',
-                               duration : 2000
-                            })
-                          )
-                        }
+                            updatedAttachment[key].file = file
+                            this.setState({ attachmentArray : updatedAttachment })
+                        } else {
+                          store.dispatch(NotifyActions.addNotify({
+                            title : 'File Uploading',
+                            message : 'The accepted attachments are JPG/PNG/PDF',
+                            type : 'warning',
+                            duration : 2000
+                          })
+                        )
                       }
                     }
+                  }
                   />
+                  ))
+                }
                   <br/>
                   <GenericButton text = { 'submit attachment' }
-                    onClick = { () => uploadImage(details.transactionId, fileOR) }
+                    onClick = { () => uploadImage(details.transactionId, attachmentArray) }
                   />
                 </div>
           }

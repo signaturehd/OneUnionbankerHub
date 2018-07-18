@@ -19,7 +19,7 @@ class CalamityAssistanceDetailsComponent extends Component {
           <h2 className = { 'transaction-detail details-bold' }> Date Filed: </h2>
           <h2 className = { 'transaction-detail details-bold' }> Reference Number: </h2>
           <h2 className = { 'transaction-detail details-bold' }> Transaction Status: </h2>
-          { details && details.details.AccountNo &&  <h2 className = { 'transaction-detail details-bold' }> Account Number: </h2> }
+          <h2 className = { 'transaction-detail details-bold' }> Account Number: </h2>
           { details && details.details.CalamityDetails.CalamityType.Calamity &&  <h2 className = { 'transaction-detail details-bold' }> Calamity: </h2> }
           { details && details.details.CalamityDetails.CalamityType.DateOfOccurrence &&  <h2 className = { 'transaction-detail details-bold' }> Date Of Occurance: </h2> }
         </div>
@@ -27,7 +27,7 @@ class CalamityAssistanceDetailsComponent extends Component {
           <h2 className = { 'transaction-detail' }> { details && moment(details.dateFiled).format('MMMM DD, YYYY') } </h2>
           <h2 className = { 'transaction-detail' }> { details && details.details.ReferenceNumber }</h2>
           <h2 className = { 'transaction-detail' }> { details && details.status.name } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.AccountNo } </h2>
+          <h2 className = { 'transaction-detail' }> { details ? details.details.AccountNo : 'Not Applicable' } </h2>
           <h2 className = { 'transaction-detail' }> { details && moment(details.details.CalamityDetails.DateOfOccurrence).format('MMMM DD, YYYY') } </h2>
         </div>
         <div>
