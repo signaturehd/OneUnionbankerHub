@@ -338,7 +338,7 @@ class MotorcycleLoanCardComponent extends Component {
             showOffsetMessageModal &&
             <Modal>
               <center>
-                <h4>Were sorry but the selected existing loans have exceeded your principal amount.
+                <h4>We&#39;re sorry but the selected existing loans have exceeded your principal amount.
                     These cannot be deducted from your new loan. Kindly select within the appropriate balance.</h4>
                   <br/>
                 <GenericButton
