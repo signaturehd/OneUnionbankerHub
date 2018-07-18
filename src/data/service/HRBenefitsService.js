@@ -254,6 +254,18 @@ export default class HRBenefitsService {
     })
   }
 
+  getPayslipFeedbackCategoriesDiscrepancy (token) {
+    return this.apiClient.get('v1/payroll/discrepancies/categories', {
+      headers : { token }
+    })
+  }
+
+  addPayslipFeedbackDiscrepancy (token, addPayslipFeedbackParam) {
+    return this.apiClient.post('v1/payroll/discrepancies', addPayslipFeedbackParam, {
+      headers : { token }
+    })
+  }
+
   getFaqsCategories (token) {
     return this.apiClient.get('v1/faqs/categories', {
       headers: { token }
