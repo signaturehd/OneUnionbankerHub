@@ -156,7 +156,7 @@ class BereavementFormCardComponent extends Component {
     this.props.sendFormData(
       funeralDate && moment(funeralDate).format('MM/DD/YYYY'),
       intermentDate && moment(intermentDate).format('MM/DD/YYYY'),
-      deceasedDate  && moment(intermentDate).format('MM/DD/YYYY'),
+      deceasedDate  && moment(deceasedDate).format('MM/DD/YYYY'),
       dependentId,
       funeralHome,
       funeralAddress,
