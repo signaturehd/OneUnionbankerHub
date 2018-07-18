@@ -101,7 +101,7 @@ class BereavementDetailsFragment extends Component {
               :
                 details &&
                 details.status &&
-                details.status.id === 6 &&
+                details.status.id === 6 || 21 &&
                 details.details.BereavementDetails.RequiredAttachment.length !== 0 &&
                 <div>
                   <FileUploader

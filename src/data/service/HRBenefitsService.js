@@ -371,7 +371,6 @@ export default class HRBenefitsService {
     releasingCenter,
     addMotorLoanParam) {
     const formData = new FormData()
-    console.log(addMotorLoanParam)
     const multiLoanBodyObject = {
       releasingCenter,
       accountNumber,
@@ -399,8 +398,6 @@ export default class HRBenefitsService {
     accountNumber,
     releasingCenter,
     addComputerLoanParam) {
-    //promissoryNoteMessage
-    console.log(addComputerLoanParam)
     const formData = new FormData()
     const multiLoanBodyObject = {
       releasingCenter,
