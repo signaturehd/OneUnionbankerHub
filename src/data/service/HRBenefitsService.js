@@ -130,7 +130,7 @@ export default class HRBenefitsService {
    }
 
   updateAccountNumber (token, accountNumber) {
-    return this.accountClient.put(`v1/employees/accounts`, { accountNumber }, {
+    return this.accountClient.post(`v1/employees/accounts`, { accountNumber }, {
       headers : { token }
     })
   }
