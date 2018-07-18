@@ -21,7 +21,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
         purposeOfAvailment: [],
         selectedPoa: '',
         formAttachments: [],
-        loanType: 5,
+        loanType: 4,
         validateLoanType : [],
         offset : [],
         enabledLoader : false,

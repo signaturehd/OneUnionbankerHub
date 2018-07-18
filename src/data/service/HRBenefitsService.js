@@ -371,18 +371,19 @@ export default class HRBenefitsService {
     releasingCenter,
     addMotorLoanParam) {
     const formData = new FormData()
+    console.log(addMotorLoanParam)
     const multiLoanBodyObject = {
       releasingCenter,
       accountNumber,
+      promissoryNoteNumbers : addMotorLoanParam.selectedOffsetLoan,
+      distributor : addMotorLoanParam.dealerName,
       loan : {
         id : addMotorLoanParam.loanId,
-        purpose : addMotorLoanParam.purposeOfLoan,
         mode : addMotorLoanParam.modeOfLoan ? 2 : 1,
-        term : addMotorLoanParam.loanTerm,
         principalAmount : addMotorLoanParam.principalLoanAmount,
-        dealerName : addMotorLoanParam.dealerName,
+        purpose : addMotorLoanParam.purposeOfLoan,
+        term : addMotorLoanParam.loanTerm,
       },
-      promissoryNoteNumbers : addMotorLoanParam.selectedOffsetLoan,
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
@@ -398,19 +399,21 @@ export default class HRBenefitsService {
     accountNumber,
     releasingCenter,
     addComputerLoanParam) {
+    //promissoryNoteMessage
+    console.log(addComputerLoanParam)
     const formData = new FormData()
     const multiLoanBodyObject = {
       releasingCenter,
       accountNumber,
       loan : {
         id : addComputerLoanParam.loanId,
-        purpose : addComputerLoanParam.purposeOfLoan,
         mode : addComputerLoanParam.modeOfLoan ? 2 : 1,
-        term : addComputerLoanParam.loanTerm,
         principalAmount : addComputerLoanParam.principalLoanAmount,
-        supplierName : addComputerLoanParam.supplierName,
+        purpose : addComputerLoanParam.purposeOfLoan,
+        term : addComputerLoanParam.loanTerm,
       },
       promissoryNoteNumbers : addComputerLoanParam.selectedOffsetLoan,
+      distributor : addComputerLoanParam.supplierName,
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
