@@ -44,12 +44,20 @@
   background-image: url('../../../../images/icons/DependentsOrange.png');
 }
 
+.employeeIdTransparent {
+  background-image: url('../../../../images/icons/ic_employeeid.png');
+}
+
 .employeeGender {
   background-image: url('../../../../images/icons/GenderOrange.png');
 }
 
 .employeeHomeAddress {
   background-image: url('../../../../images/icons/HomeAddress.png');
+}
+
+.employeeContactAddress {
+  background-image: url('../../../../images/icons/mobile_number_logo.png');
 }
 
 .employeeLocation {
