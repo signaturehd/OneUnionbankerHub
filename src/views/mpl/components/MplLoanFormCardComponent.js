@@ -61,7 +61,8 @@ class MotorcycleLoanCardComponent extends Component {
         selectedTerm: '',
         selectedOffsetLoanId: [],
         showPromissoryNoteModal: false,
-        attachmentArray : []
+        attachmentArray : [],
+        showErrorModal: false
       }
       this.validator=this.validator.bind(this)
       this.setAttachments = this.setAttachments.bind(this)
@@ -200,7 +201,8 @@ class MotorcycleLoanCardComponent extends Component {
         selectedTerm,
         selectedOffsetLoanId,
         showPromissoryNoteModal,
-        attachmentArray
+        attachmentArray,
+        showErrorModal
       }=this.state
 
       const {
@@ -362,14 +364,15 @@ class MotorcycleLoanCardComponent extends Component {
             </Modal>
           }
           {
-            showPromissoryNoteModal &&
-            <Modal>
+            showErrorModal &&
+            <Modal
+            width={ 20 }>
               <center>
-                <h4>Submitting promissory note is necessary for exceeded amount</h4>
+                <h4>Desired amount exceeds 100,000</h4>
                   <br/>
                 <GenericButton
                   text={ 'Ok' }
-                  onClick={ () => this.setState({ showPromissoryNoteModal : false }) }
+                  onClick={ () => this.setState({ showErrorModal : false }) }
                 />
               </center>
             </Modal>
@@ -426,12 +429,10 @@ class MotorcycleLoanCardComponent extends Component {
                             computationAmountMaximum === 100000 ?
                             this.setState({
                               amountValue: '',
-                              showPromissoryNoteModal: this.desiredAmountValidator(e.target.value) }) :
+                              showErrorModal: this.desiredAmountValidator(e.target.value) }) :
                             this.setState({
                               amountValue: '',
-                              showOffsetMessageModal: this.desiredAmountValidator(e.target.value)
-                          }
-                        )
+                              showOffsetMessageModal: this.desiredAmountValidator(e.target.value)})
                       }
                       placeholder={ 'Desired Amount' }
                       maxLength={ 11 }
