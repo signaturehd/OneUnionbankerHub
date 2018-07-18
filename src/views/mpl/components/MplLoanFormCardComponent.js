@@ -400,29 +400,29 @@ class MotorcycleLoanCardComponent extends Component {
                   value={ modeOfLoanText ? modeOfLoanText : 'New Loan' }
                   type={ 'text' }/>
                 {
-                  // modeOfLoanText ?
-                  //
-                  //   <GenericTextBox
-                  //     value={ amountValue ? amountValue : '' }
-                  //     onChange={
-                  //       (e) =>
-                  //         new MinMaxNumberValidation(-1, computationAmountMaximum).isValid(e.target.value) ||
-                  //         computation >= e.target.value ?
-                  //           this.setState({
-                  //             amountValue: Number(e.target.value.replace(/[^0-9]/g, ''))
-                  //           }) :
-                  //           computationAmountMaximum === 100000 ?
-                  //           this.setState({
-                  //             amountValue: '',
-                  //             showErrorModal: this.desiredAmountValidator(e.target.value) }) :
-                  //           this.setState({
-                  //             amountValue: '',
-                  //             showOffsetMessageModal: this.desiredAmountValidator(e.target.value)})
-                  //     }
-                  //     placeholder={ 'Desired Amount' }
-                  //     maxLength={ 11 }
-                  //     type={ 'text' }/>
-                  //   :
+                  modeOfLoanText ?
+
+                    <GenericTextBox
+                      value={ amountValue ? amountValue : '' }
+                      onChange={
+                        (e) =>
+                          new MinMaxNumberValidation(-1, computationAmountMaximum).isValid(e.target.value) ||
+                          computation >= e.target.value ?
+                            this.setState({
+                              amountValue: Number(e.target.value.replace(/[^0-9]/g, ''))
+                            }) :
+                            computationAmountMaximum === 100000 ?
+                            this.setState({
+                              amountValue: '',
+                              showErrorModal: this.desiredAmountValidator(e.target.value) }) :
+                            this.setState({
+                              amountValue: '',
+                              showOffsetMessageModal: this.desiredAmountValidator(e.target.value)})
+                      }
+                      placeholder={ 'Desired Amount' }
+                      maxLength={ 11 }
+                      type={ 'text' }/>
+                    :
                     <GenericTextBox
                       value={ amountValue ? amountValue : '' }
                       onChange={
