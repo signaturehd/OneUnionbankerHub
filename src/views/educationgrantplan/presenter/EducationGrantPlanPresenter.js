@@ -35,6 +35,7 @@ export default class EducationGrantPlanPresenter {
           this.view.hideCircularLoader()
         },
         error => {
+          this.view.navigate()
         }
       )
   }
