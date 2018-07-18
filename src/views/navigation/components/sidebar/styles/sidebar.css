@@ -161,6 +161,7 @@ ul {
   display: block;
   box-shadow: 0 5px 10px -7px #333333;
   border-radius: 50%;
+  cursor: pointer;
 }
 .sidebar-profile-name {
   margin: 10px auto 20px auto;

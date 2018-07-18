@@ -28,7 +28,7 @@ class BenefitFeedbackModal extends BaseMVPView {
   addRating () {
     const { rating, comment } = this.state
     const { benefitId } = this.props
-    this.presenter.addFeedback(benefitId, rating, comment)
+    this.presenter.addBenefitFeedback(benefitId, rating, comment)
     this.setState({ submitLoader : true })
   }
 
@@ -56,6 +56,11 @@ class BenefitFeedbackModal extends BaseMVPView {
             </center>            :
             <div>
               <center>
+                <img
+                  onClick={ () => history.push('/settings') }
+                  src={ require('../../images/icons/img_message_circle.png') }
+                  className= {'sidebar-img-ub-logo'}/>
+                <br/>
                 <h3>Thank you for using 1Uhub! We'd love to know what your experience was like using the application.</h3>
                 <br/>
                 <Rating

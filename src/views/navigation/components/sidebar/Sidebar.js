@@ -80,6 +80,7 @@ class SideBar extends Component {
       <ul className = { '_link-list ul' }>
         <div className = { 'sidebar-profile-body' }>
           <img
+            onClick={ () => history.push('/settings') }
             src={ require('../../../../images/profile-picture.png') }
             className= {'sidebar-img-ub-logo'}/>
         </div>
