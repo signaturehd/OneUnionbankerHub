@@ -19,40 +19,37 @@ class CalamityReviewModal extends Component {
     }
   }
 
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
   render () {
     const {
-      calamityId,
-      calamityType,
-      preferredDate,
-      property,
-      propertyDesc,
-      propertyType,
-      acquisitionValue,
-      estimatedCost,
-      fileBC,
-      fileDP,
-      imgPrevBC,
-      imgPrevDP,
+      data,
       onClose,
-      onCancel,
-      onClick
+      submitForm
     }=this.props
 
     const {
        disableSubmit,
-       isDismisable
+       isDismisable,
+       enabledLoader
     }=this.state
 
     const styles={
       image1 : {
-        backgroundImage: `url('${imgPrevBC}')`,
+        backgroundImage: `url('${data.imgPrevBC}')`,
         width : 'auto',
         height : '150px',
         backgroundSize : 'contain',
         backgroundRepeat : 'no-repeat',
       },
       image2 : {
-        backgroundImage: `url('${imgPrevDP}')`,
+        backgroundImage: `url('${data.imgPrevDP}')`,
         width : 'auto',
         height : '150px',
         backgroundSize : 'contain',
@@ -70,34 +67,50 @@ class CalamityReviewModal extends Component {
       <Modal
         isDismisable={ isDismisable }
         onClose={ onClose }>
-        <div>
-          <h2>Calamity Description</h2>
+        {disableSubmit ?
+        <center>
+          <h3>Please wait while we&#39;re sending your application</h3>
           <br/>
-          <h4>Calamity Type : { calamityType ? calamityType : '(Not Yet Provided)' }</h4>
-          <h4>Date : { preferredDate ? preferredDate  : '(Not Yet Provided)'  }</h4>
-          <h4>Property : { property ? property  : '(Not Yet Provided)'  }</h4>
-          <h4>Property Description : { propertyDesc ? propertyDesc  : '(Not Yet Provided)'  }</h4>
-          <h4>Property Type : { propertyType ? propertyType : '(Not Yet Provided)'  }</h4>
-          <h4>Acquisition Value : { acquisitionValue ? format(acquisitionValue)  : '(Not Yet Provided)'  }</h4>
-          <h4>Estimated Cost : { estimatedCost ? format(estimatedCost)  : '(Not Yet Provided)'  }</h4>
-          <h4>File Barangay Certificate : { fileBC ? fileBC.name  : '(Not Yet Provided)'  }</h4>
-          <h4>File Damage Property : { fileDP ? fileDP.name  : '(Not Yet Provided)'  }</h4>
           <br/>
-          <div className={ 'calamity-image-display' }>
-            <div style={ styles ? styles.image1 : styles.image4 }></div>
-            <div style={ styles ? styles.image2 : styles.image4 }></div>
+          <CircularLoader show={true}/>
+        </center>              :
+          <div>
+            <h2>Calamity Description</h2>
+            <br/>
+            <h4>Calamity Type : { data.calamityType ? data.calamityType : '(Not Yet Provided)' }</h4>
+            <h4>Date : { data.preferredDate ? data.preferredDate  : '(Not Yet Provided)'  }</h4>
+            <h4>Property : { data.property ? data.property  : '(Not Yet Provided)'  }</h4>
+            <h4>Property Description : { data.propertyDesc ? data.propertyDesc  : '(Not Yet Provided)'  }</h4>
+            <h4>Property Type : { data.propertyType ? data.propertyType : '(Not Yet Provided)'  }</h4>
+            <h4>Acquisition Value : { data.acquisitionValue ? format(data.acquisitionValue)  : '(Not Yet Provided)'  }</h4>
+            <h4>Estimated Cost : { data.estimatedCost ? format(data.estimatedCost)  : '(Not Yet Provided)'  }</h4>
+            <h4>File Barangay Certificate : { data.fileBC ? data.fileBC.name  : '(Not Yet Provided)'  }</h4>
+            <h4>File Damage Property : { data.fileDP ? data.fileDP.name  : '(Not Yet Provided)'  }</h4>
+            <br/>
+            <div className={ 'calamity-image-display' }>
+              <div style={ styles ? styles.image1 : styles.image4 }></div>
+              <div style={ styles ? styles.image2 : styles.image4 }></div>
+            </div>
+            <br/>
+            <center>
+              <GenericButton
+
+                onClick={ () =>
+                  {
+                    this.setState({ disableSubmit : true, isDismisable: false })
+                    submitForm(data)
+                  }
+                }
+
+                text={ 'confirm' }
+                disabled = {this.state.disabled}
+              />
+              <GenericButton
+                text={ 'cancel' }
+                onClick={ onClose } />
+            </center>
           </div>
-          <br/>
-          <center>
-            <GenericButton
-              onClick={ () => onClick() }
-              text={ 'confirm' }
-            />
-            <GenericButton
-              text={ 'cancel' }
-              onClick={ () => onCancel() } />
-          </center>
-        </div>
+        }
       </Modal>
     )
   }
