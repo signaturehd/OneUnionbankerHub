@@ -17,7 +17,9 @@ class TransactionMPLDetailComponent extends Component {
         <h2 className = { 'transaction-detail details-bold' }> Mode of Loan: </h2>
         <h2 className = { 'transaction-detail details-bold' }> Amortization: </h2>
         <h2 className = { 'transaction-detail details-bold' }> Desired Amount: </h2>
-        <h2 className = { 'transaction-detail details-bold' }> Name/ Credit Ratio/ Term: </h2>
+        <h2 className = { 'transaction-detail details-bold' }> Name: </h2>
+        <h2 className = { 'transaction-detail details-bold' }> Credit Ratio: </h2>
+        <h2 className = { 'transaction-detail details-bold' }> Term: </h2>
       </div>
       <div>
         <h2 className = { 'transaction-detail' }> { details && details.details.PurposeOfAvailment } </h2>
@@ -25,8 +27,12 @@ class TransactionMPLDetailComponent extends Component {
         <h2 className = { 'transaction-detail' }> &#x20b1; { details && details.details.Amortization } </h2>
         <h2 className = { 'transaction-detail' }> &#x20b1; { details && details.details.DesiredAmount } </h2>
         <h2 className = { 'transaction-detail' }>
-        { details && details.details.Term.Name }/
-        { details && details.details.Term.Rate }/
+        { details && details.details.Term.Name }
+        </h2>
+        <h2 className = { 'transaction-detail' }>
+        { details && details.details.Term.Rate }
+        </h2>
+        <h2 className = { 'transaction-detail' }>
         { details && details.details.Term.Term }
         </h2>
         </div>
