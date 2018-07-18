@@ -4,6 +4,11 @@ import PropTypes from 'prop-types'
 import { Modal , GenericButton } from '../../../ub-components/'
 
 class DentalReimbursementProcedureModal extends Component {
+constructor (props) {
+  super(props)
+  this.setProcedure = this.setProcedure.bind(this)
+}
+
 getDisabledIds () {
   return [3, 4, 5, 6]
 }
@@ -15,7 +20,7 @@ setProcedure (selected) {
     onSubmit,
     selectedProcedure
   } = this.props
-
+  this.props.onClose()
   if (selectedProcedure.length !== 0) {
     const valueArr = this.getDisabledIds().map(item => item)
     if (valueArr.includes(selected.id)) {
