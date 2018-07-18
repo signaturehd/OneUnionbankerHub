@@ -26,7 +26,7 @@ class CarLeaseDetailCardComponent extends Component {
           <h2 className = { 'transaction-detail details-bold' }> Lease Type: </h2>
         </div>
         <div>
-          <h2 className = { 'transaction-detail' }> { details && moment(details.dateFiled).format('MMMM d, YYYY') } </h2>
+          <h2 className = { 'transaction-detail' }> { details && moment(details.dateFiled).format('MMMM DD, YYYY') } </h2>
           <h2 className = { 'transaction-detail' }> { details && details.details.ReferenceNumber }</h2>
           <h2 className = { 'transaction-detail' }> { details && details.status.name } </h2>
           <h2 className = { 'transaction-detail' }> { details && details.details.AccountNo } </h2>
