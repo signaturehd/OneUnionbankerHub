@@ -113,12 +113,11 @@ export default class HRBenefitsClient {
   validateAccountNumber (token, accountNumber) {
     return this.service.validateAccountNumber(token, accountNumber)
       .pipe(ServiceErrorOperator())
-      .flatMap(resp => {
-        this.service.updateAccountNumber(token, accountNumber)
-      })
-      .flatMap(resp => {
-        this.setAccountNumber(accountNumber)
-      })
+  }
+
+  updateAccountNumber (token, accountNumber) {
+    return this.service.updateAccountNumber(token, accountNumber)
+      .pipe(ServiceErrorOperator())
   }
 
   /* rds */

@@ -70,18 +70,21 @@ export default class BenefitsPresenter {
   validateFabToShow () {
     const isManagersCheck = this.getManagersCheckInteractor.execute()
     if (isManagersCheck !== null) {
+      console.log(isManagersCheck)
       if (isManagersCheck) {
         const releasingCenter = this.validateReleasingCenterInteractor.execute()
+        console.log('releasingCenter' + releasingCenter)
         if (!releasingCenter) {
           this.view.isAccountNumber(false)
-        }
+        } this.view.isAccountOrRelasing(false)
         // TODO get chosen releasing center then;
         // TODO show releasing centers if there's no releasing center chosen
       } else {
         const accountNumber = this.getAccountNumberInteractor.execute()
+        console.log('accountNumber ' + accountNumber)
         if (!accountNumber) {
           this.view.isAccountNumber(true)
-        }
+        } this.view.isAccountOrRelasing(true)
       }
     } else {
       store.dispatch(NotifyActions.addNotify({

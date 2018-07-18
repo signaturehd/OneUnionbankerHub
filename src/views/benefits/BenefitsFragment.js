@@ -100,12 +100,22 @@ class BenefitsFragment extends BaseMVPView {
   }
 
   isAccountNumber (bool) {
-    if (!bool) {
-      this.setState({ showAccountNumberModal: true, isAccountNumber : !bool })
+    if (bool) {
+      this.setState({ showAccountNumberModal: true })
     } else {
-      this.setState({ showReleasingCenterModal: true, isAccountNumber : !bool })
+      this.setState({ showReleasingCenterModal: true })
     }
   }
+
+  isAccountOrRelasing (bool) {
+    if (bool) {
+      this.setState({ isAccountNumber : bool })
+    } else {
+      this.setState({ isAccountNumber : bool })
+    }
+  }
+
+
 
   navigate () {
     this.props.history.push('/mybenefits/benefits')
