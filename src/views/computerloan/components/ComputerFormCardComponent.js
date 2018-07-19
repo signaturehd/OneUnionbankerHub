@@ -72,7 +72,6 @@ class ComputerLoanCardComponent extends Component {
      }
 
      setAttachments () {
-       console.log('calling function')
        try {
          const { nfis } = this.props.validateLoanType
          const { AdditionalDocuments, RequiredDocuments } = this.props.formAttachments
@@ -90,7 +89,6 @@ class ComputerLoanCardComponent extends Component {
 
          this.setState({attachmentArray: updatedAttachment})
        } catch (e) {
-         console.log(e)
        }
      }
 
