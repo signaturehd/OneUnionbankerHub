@@ -41,7 +41,7 @@ class BereavementFormCardComponent extends Component {
       memorialProvince: '',
       memorialCity: '',
       addressError: false,
-      errorMessage: 'Address field should contain atleast 15 characters'
+      errorMessage: ''
     }
     this.getDeceasedDate = this.getDeceasedDate.bind(this)
     this.getFuneralDate = this.getFuneralDate.bind(this)
@@ -88,6 +88,10 @@ class BereavementFormCardComponent extends Component {
 
   minimumLength (e) {
     return e < 15 ? true : false
+  }
+
+  errorFunc (value, message) {
+    return value ? '' : message
   }
 
   getFuneralRegion (e) {
@@ -257,6 +261,7 @@ class BereavementFormCardComponent extends Component {
                     onClick={ () => this.setState({ showDeceasedDependents: true }) }
                     onFocus={ () => this.setState({ showDeceasedDependents: true }) }
                     placeholder={ 'Deceased Name' }
+                    errorMessage={ this.errorFunc (dependentsName, 'Required Field') }
                     readOnly
                     type={ 'text' }
                   />
@@ -293,6 +298,7 @@ class BereavementFormCardComponent extends Component {
                     className={ 'calendar  font-size-12px' }
                     calendarClassName={ 'calendarClass' }/>
                   <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
+                  { deceasedDate ? '' : <span className={ 'text-error' }>* Required Field</span> }
                 </div>
               </div>
               <br/>
@@ -340,6 +346,7 @@ class BereavementFormCardComponent extends Component {
                     value={ funeralHome ? funeralHome : '' }
                     onChange={ this.getFuneralHome }
                     placeholder={ 'Funeral Home' }
+                    errorMessage={ this.errorFunc (funeralHome, 'Required Field') }
                     type={ 'text' }
                   />
                 </div>
@@ -354,7 +361,10 @@ class BereavementFormCardComponent extends Component {
                     container={ 'brv-container' }
                     value={ funeralAddress ? funeralAddress : '' }
                     onChange={ this.getFuneralAddress }
-                    errorMessage={ addressError && errorMessage }
+                    errorMessage={ addressError ?
+                      'Address field should contain atleast 15 characters' :
+                      this.errorFunc (funeralAddress, 'Required Field')
+                    }
                     placeholder={ 'Address' }
                     type={ 'text' }
                   />
@@ -371,6 +381,7 @@ class BereavementFormCardComponent extends Component {
                     value={ funeralRegion ? funeralRegion : '' }
                     onChange={ this.getFuneralRegion }
                     placeholder={ 'Region' }
+                    errorMessage={ this.errorFunc (funeralRegion, 'Required Field') }
                     type={ 'text' }
                   />
                 </div>
@@ -386,6 +397,7 @@ class BereavementFormCardComponent extends Component {
                     value={ funeralProvince ? funeralProvince : '' }
                     onChange={ this.getFuneralProvince }
                     placeholder={ 'Province' }
+                    errorMessage={ this.errorFunc (funeralProvince, 'Required Field') }
                     type={ 'text' }
                   />
                 </div>
@@ -401,6 +413,7 @@ class BereavementFormCardComponent extends Component {
                     value={ funeralCity ? funeralCity : '' }
                     onChange={ this.getFuneralCity }
                     placeholder={ 'City' }
+                    errorMessage={ this.errorFunc (funeralCity, 'Required Field') }
                     type={ 'text' }
                   />
                 </div>
@@ -449,6 +462,7 @@ class BereavementFormCardComponent extends Component {
                     value={ memorialPark ? memorialPark : '' }
                     onChange={ this.getMemorialHome }
                     placeholder={ 'Memorial Park' }
+                    errorMessage={ this.errorFunc (memorialPark, 'Required Field') }
                     type={ 'text' }
                   />
                 </div>
@@ -465,7 +479,10 @@ class BereavementFormCardComponent extends Component {
                     onChange={ this.getMemorialAddress }
                     placeholder={ 'Address' }
                     type={ 'text' }
-                    errorMessage={ addressError && errorMessage }
+                    errorMessage={ addressError ?
+                      'Address field should contain atleast 15 characters' :
+                      this.errorFunc (memorialAddress, 'Required Field')
+                    }
                   />
                 </div>
               </div>
@@ -480,6 +497,7 @@ class BereavementFormCardComponent extends Component {
                     value={ memorialRegion ? memorialRegion : '' }
                     onChange={ this.getMemorialRegion }
                     placeholder={ 'Region' }
+                    errorMessage={ this.errorFunc (memorialRegion, 'Required Field') }
                     type={ 'text' }/>
                 </div>
               </div>
@@ -494,6 +512,7 @@ class BereavementFormCardComponent extends Component {
                     value={ memorialProvince ? memorialProvince : '' }
                     onChange={ this.getMemorialProvince }
                     placeholder={ 'Province' }
+                    errorMessage={ this.errorFunc (memorialProvince, 'Required Field') }
                     type={ 'text' }/>
                 </div>
               </div>
@@ -508,6 +527,7 @@ class BereavementFormCardComponent extends Component {
                     value={ memorialCity ? memorialCity : '' }
                     onChange={ this.getMemorialCity }
                     placeholder={ 'City' }
+                    errorMessage={ this.errorFunc (memorialCity, 'Required Field') }
                     type={ 'text' }/>
                 </div>
               </div>
