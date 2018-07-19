@@ -161,8 +161,7 @@ export default class MultiPurposeLoanPresenter {
     poaText,
     termId,
     selectedOffsetLoan,
-    fileObject,
-    fileObject1) {
+    formAttachments) {
       const fullname=this.getInformationInteractor.execute().fullname
       this.view.showCircularLoader()
       this.addLoanInteractor.execute(mplPurposeLoanAddParam(
@@ -173,8 +172,7 @@ export default class MultiPurposeLoanPresenter {
         poaText,
         termId,
         selectedOffsetLoan,
-        fileObject,
-        fileObject1
+        formAttachments
         )
       )
       .subscribe(

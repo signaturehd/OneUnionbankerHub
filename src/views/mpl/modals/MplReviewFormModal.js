@@ -34,6 +34,7 @@ class MplReviewFormModal extends Component {
        disableSubmit,
        isDismisable
     }=this.state
+
     return (
       <Modal
         isDismisable={ isDismisable }
@@ -82,7 +83,7 @@ class MplReviewFormModal extends Component {
               isPayeeOrDealer ?
 
               isPayeeOrDealer.map((name, key) =>
-                  <div>
+                  <div key={key}>
                     <h4
                       className={ 'font-weight-normal' }
                       key={ key }>
@@ -108,7 +109,7 @@ class MplReviewFormModal extends Component {
                 <div
                   key={ key }
                   style={{
-                    backgroundImage: `url(${ image })`,
+                    backgroundImage: `url(${ image.base64 })`,
                     width : 'auto',
                     height : '150px',
                     backgroundSize : 'contain',

@@ -132,8 +132,7 @@ class EmergencyLoanFragment extends BaseMVPView {
     poaText,
     selectedTerm,
     selectedOffsetLoan,
-    fileObject,
-    fileObject1
+    formAttachments
   ) {
     this.presenter.addLoan(
       dealerName,
@@ -143,8 +142,7 @@ class EmergencyLoanFragment extends BaseMVPView {
       poaText,
       selectedTerm,
       selectedOffsetLoan,
-      fileObject,
-      fileObject1
+      formAttachments
     )
   }
 
@@ -242,8 +240,7 @@ class EmergencyLoanFragment extends BaseMVPView {
                 poaText,
                 selectedTerm,
                 selectedOffsetLoan,
-                fileObject,
-                fileObject1
+                formAttachments
               ) =>
               this.sendFormDataToPresenter(
                 dealerName,
@@ -253,8 +250,7 @@ class EmergencyLoanFragment extends BaseMVPView {
                 poaText,
                 selectedTerm,
                 selectedOffsetLoan,
-                fileObject,
-                fileObject1
+                formAttachments
               )
                }
             />
