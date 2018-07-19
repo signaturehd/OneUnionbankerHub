@@ -353,7 +353,6 @@ export default class HRBenefitsService {
     accountNumber,
     releasingCenter,
     mplPurposeLoanAddParam) {
-    console.log(mplPurposeLoanAddParam)  
     const formData = new FormData()
     const multiLoanBodyObject = {
       accountNumber,

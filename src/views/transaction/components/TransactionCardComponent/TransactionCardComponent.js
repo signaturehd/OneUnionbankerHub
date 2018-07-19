@@ -14,7 +14,6 @@ class TransactionCardComponent extends Component {
 
   render () {
     const { detail, onClick } = this.props
-    console.log(detail)
     return (
       <Card className = { 'transaction-card'}>
       <div className = {'column'}>
