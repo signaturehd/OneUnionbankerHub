@@ -224,9 +224,6 @@ class MotorcycleLoanCardComponent extends Component {
         isPayeeOrDealer
       }=this.props
 
-      console.log(AdditionalDocuments)
-      console.log(RequiredDocuments)
-
       const styles={
         image1 : {
           backgroundImage: `url('${imagePreviewUrl}')`,
@@ -248,7 +245,7 @@ class MotorcycleLoanCardComponent extends Component {
             showReviewModal &&
             <MplReviewFormModal
               amountValue={ format(amountValue) }
-              imageUrlObject={ imageUrlObject ? imageUrlObject  : '' }
+              imageUrlObject={ attachmentArray ? attachmentArray  : '' }
               modeOfLoanText={ modeOfLoanText }
               isPayeeOrDealer={ isPayeeOrDealer }
               dealerName={ dealerName }
@@ -567,7 +564,7 @@ class MotorcycleLoanCardComponent extends Component {
                     text={ 'continue' }
                     onClick={ (
                     ) => this.sendFormData(
-                      supplierName,
+                      dealerName,
                       amountValue,
                       modeOfLoanId,
                       loanType,
@@ -586,7 +583,7 @@ class MotorcycleLoanCardComponent extends Component {
                 text={ 'continue' }
                 onClick={ (
                 ) => this.sendFormData(
-                  supplierName,
+                  dealerName,
                   amountValue,
                   modeOfLoanId,
                   loanType,

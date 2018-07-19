@@ -115,7 +115,6 @@ class ComputerLoanFragment extends BaseMVPView {
       poaText,
       termOfLoan,
       selectedOffsetLoan,
-      fileObject,
       formAttachments
     ) {
         this.presenter.addLoanComputer(
@@ -126,7 +125,7 @@ class ComputerLoanFragment extends BaseMVPView {
           termOfLoan,
           selectedOffsetLoan,
           amountValue,
-          fileObject,
+          formAttachments,
         )
     }
 
@@ -150,6 +149,8 @@ class ComputerLoanFragment extends BaseMVPView {
       employeeName,
       computationOffset
     } = this.state
+
+    console.log(formAttachments)
 
     return (
       <div>
@@ -217,7 +218,6 @@ class ComputerLoanFragment extends BaseMVPView {
                 poaText,
                 termOfLoan,
                 selectedOffsetLoan,
-                fileObject,
                 formAttachments
               ) =>
                 this.submission(
@@ -228,7 +228,6 @@ class ComputerLoanFragment extends BaseMVPView {
                   poaText,
                   termOfLoan,
                   selectedOffsetLoan,
-                  fileObject,
                   formAttachments
                 )
               }

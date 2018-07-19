@@ -66,32 +66,28 @@ class ComputerLoanCardComponent extends Component {
      }
 
      componentWillReceiveProps (nextProps) {
+       console.log('forms attachment ' + JSON.stringify(nextProps.formAttachments))
        if (nextProps.formAttachments !== [] && this.state.attachmentArray.length === 0) {
-         this.setAttachments()
+         this.setAttachments(nextProps.formAttachments)
        }
      }
 
-     setAttachments () {
-       console.log('calling function')
-       try {
-         const { nfis } = this.props.validateLoanType
-         const { AdditionalDocuments, RequiredDocuments } = this.props.formAttachments
-         const updatedAttachment = [...this.state.attachmentArray]
-         AdditionalDocuments && AdditionalDocuments.map((attachment, key) => {
-           updatedAttachment.push({name: attachment, nfis: null})
-         })
-
-         nfis && nfis.map((nfis, key) => {
+     setAttachments (attachments) {
+       const { nfis } = this.props.validateLoanType
+       const { AdditionalDocuments, RequiredDocuments } = attachments
+       const updatedAttachment = [...this.state.attachmentArray]
+       AdditionalDocuments && AdditionalDocuments.map((attachment, key) => {
+         updatedAttachment.push({name: attachment, nfis: null})
+       })
+       nfis && nfis.map((nfis, key) => {
+         if (RequiredDocuments) {
            let documentsArray = [...new Set(RequiredDocuments && RequiredDocuments)]
            documentsArray && documentsArray.map((attachment, key) => {
              updatedAttachment.push({name : attachment, nfis})
            })
-         })
-
-         this.setState({attachmentArray: updatedAttachment})
-       } catch (e) {
-         console.log(e)
-       }
+         }
+       })
+       this.setState({attachmentArray: updatedAttachment})
      }
 
      onGetClicked (
@@ -280,7 +276,6 @@ class ComputerLoanCardComponent extends Component {
                       poaText,
                       termOfLoan,
                       selectedOffsetLoan,
-                      fileObject,
                       attachmentArray
                     ) }
                     text={ 'Yes' }/>
@@ -516,7 +511,7 @@ class ComputerLoanCardComponent extends Component {
 
                                     if (isValid) {
                                         reader.onloadend=() => {
-                                          updatedArray[key].base64 = reader.result
+                                          updatedAttachment[key].base64 = reader.result
                                           updatedAttachment[key].file = file
                                           this.setState({ attachmentArray : updatedAttachment })
                                         }

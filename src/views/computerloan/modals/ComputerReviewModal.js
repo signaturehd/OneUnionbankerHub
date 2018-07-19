@@ -91,18 +91,25 @@ class ComputerReviewModal extends Component {
                     <h4 className={ 'font-weight-normal' }> { supplierName ? supplierName : ' (Not Yet Provided)'} </h4>
                   </div>
                 </div>
-              }
           <br/>
           <div className={ 'calamity-image-display' }>
-            <div
-              style={{
-                backgroundImage: `url(${ imageUrlObject })`,
-                width : '150px',
-                height : '150px',
-                backgroundSize : 'contain',
-                backgroundRepeat : 'no-repeat'
-              }}>
-            </div>
+            {
+              imageUrlObject ?
+              imageUrlObject.map((image, key) =>
+                <div
+                  key={ key }
+                  style={{
+                    backgroundImage: `url(${ image.base64 })`,
+                    width : 'auto',
+                    height : '150px',
+                    backgroundSize : 'contain',
+                    backgroundRepeat : 'no-repeat'
+                  }}>
+                </div>
+              )
+              :
+              <div></div>
+            }
           </div>
           <br/>
           <div className={ 'mpl-review-grid' }>
