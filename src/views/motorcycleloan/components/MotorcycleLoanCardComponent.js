@@ -61,15 +61,26 @@ class MotorcycleLoanCardComponent extends Component {
       this.setAttachments = this.setAttachments.bind(this)
     }
 
+    componentWillReceiveProps () {
+      this.setAttachments()
+    }
+
      validator(input) {
        return new RequiredValidation().isValid(input)
      }
 
      setAttachments () {
-       const { AdditionalDocuments } = this.props.formAttachments
+       const { nfis } = this.props.validateLoanType
+       const { AdditionalDocuments, RequiredDocuments } = this.props.formAttachments
        const updatedAttachment = [...this.state.attachmentArray]
-       AdditionalDocuments.map((attachment, key) => {
-         updatedAttachment.push({name: attachment})
+       AdditionalDocuments && AdditionalDocuments.map((attachment, key) => {
+         updatedAttachment.push({name: attachment, nfis: null})
+       })
+
+       nfis && nfis.map((nfis, key) => {
+         RequiredDocuments && RequiredDocuments.map((attachment, key) => {
+           updatedAttachment.push({name: attachment, nfis})
+         })
        })
 
        this.setState({attachmentArray : updatedAttachment})
@@ -493,7 +504,7 @@ class MotorcycleLoanCardComponent extends Component {
 
                                     if (isValid) {
                                         reader.onloadend=() => {
-                                          updatedArray[key].base64 = reader.result
+                                          updatedAttachment[key].base64 = reader.result
                                           updatedAttachment[key].file = file
                                           this.setState({ attachmentArray : updatedAttachment })
                                         }
@@ -532,7 +543,7 @@ class MotorcycleLoanCardComponent extends Component {
                                 >
                                   <h6
                                     className="mpl-file-name">
-                                    { attachment.file.name }
+                                    { attachment.file && attachment.file.name }
                                   </h6>
                                 </div>
                               </div>

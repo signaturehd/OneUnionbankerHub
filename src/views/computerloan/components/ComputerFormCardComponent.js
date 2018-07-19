@@ -65,12 +65,24 @@ class ComputerLoanCardComponent extends Component {
        return new RequiredValidation().isValid(input)
      }
 
+     componentWillReceiveProps () {
+       this.setAttachments()
+     }
+
      setAttachments () {
-       const { AdditionalDocuments } = this.props.formAttachments
+       const { nfis } = this.props.validateLoanType
+       const { AdditionalDocuments, RequiredDocuments } = this.props.formAttachments
        const updatedAttachment = [...this.state.attachmentArray]
-       AdditionalDocuments.map((attachment, key) => {
-         updatedAttachment.push({name: attachment})
+       AdditionalDocuments && AdditionalDocuments.map((attachment, key) => {
+         updatedAttachment.push({name: attachment, nfis: null})
        })
+
+       nfis && nfis.map((nfis, key) => {
+         RequiredDocuments && RequiredDocuments.map((attachment, key) => {
+           updatedAttachment.push({name: attachment, nfis})
+         })
+       })
+
 
        this.setState({attachmentArray : updatedAttachment})
      }
@@ -533,7 +545,7 @@ class ComputerLoanCardComponent extends Component {
                                 >
                                   <h6
                                     className="mpl-file-name">
-                                    { attachment.file.name }
+                                    { attachment.file && attachment.file.name }
                                   </h6>
                                 </div>
                               </div>

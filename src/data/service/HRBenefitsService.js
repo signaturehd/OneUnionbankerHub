@@ -369,9 +369,13 @@ export default class HRBenefitsService {
       }
       formData.append('uuid', 12345)
       formData.append('body', JSON.stringify(multiLoanBodyObject))
-      addMotorLoanParam.attachments.map((attachment, key) => (
-        formData.append(attachment.name, attacment.file)
-      ))
+      mplPurposeLoanAddParam.attachments.map((attachment, key) => {
+        if(attachment.nfis) {
+          formData.append(attachment.name  + ' for ' + attachment.nfis , attacment.file)
+        } else {
+          formData.append(attachment.name, attacment.file)
+        }
+      })
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
@@ -399,9 +403,13 @@ export default class HRBenefitsService {
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
-    addMotorLoanParam.attachments.map((attachment, key) => (
-      formData.append(attachment.name, attacment.file)
-    ))
+    addMotorLoanParam.attachments.map((attachment, key) => {
+      if(attachment.nfis) {
+        formData.append(attachment.name  + ' for ' + attachment.nfis , attacment.file)
+      } else {
+        formData.append(attachment.name, attacment.file)
+      }
+    })
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
@@ -429,9 +437,13 @@ export default class HRBenefitsService {
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
-    addComputerLoanParam.attachments.map((attachment, key) => (
-      formData.append(attachment.name, attacment.file)
-    ))
+    addComputerLoanParam.attachments.map((attachment, key) => {
+      if(attachment.nfis) {
+        formData.append(attachment.name  + ' for ' + attachment.nfis , attacment.file)
+      } else {
+        formData.append(attachment.name, attacment.file)
+      }
+    })
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
@@ -681,7 +693,7 @@ export default class HRBenefitsService {
     const formData = new FormData()
     formData.append('uuid', 12345)
     files.map((file, key) => (
-      formData.append(file.name, file.file)
+      formData.append(file.name , file.file)
     ))
     formData.append('body', JSON.stringify({
       transactionId : id
