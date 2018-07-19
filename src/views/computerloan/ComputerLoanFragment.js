@@ -150,8 +150,6 @@ class ComputerLoanFragment extends BaseMVPView {
       computationOffset
     } = this.state
 
-    console.log(formAttachments)
-
     return (
       <div>
         {
