@@ -115,7 +115,6 @@ class MotorcycleLoanFragment extends BaseMVPView {
       poaText,
       termOfLoan,
       selectedOffsetLoan,
-      fileObject,
       formAttachments
     ) {
         this.presenter.addLoanMotor(
@@ -126,7 +125,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
           termOfLoan,
           selectedOffsetLoan,
           amountValue,
-          fileObject,
+          formAttachments
         )
     }
 
@@ -217,7 +216,6 @@ class MotorcycleLoanFragment extends BaseMVPView {
                 poaText,
                 termOfLoan,
                 selectedOffsetLoan,
-                fileObject,
                 formAttachments
               ) =>
                 this.submission(
@@ -228,7 +226,6 @@ class MotorcycleLoanFragment extends BaseMVPView {
                   poaText,
                   termOfLoan,
                   selectedOffsetLoan,
-                  fileObject,
                   formAttachments
                 )
               }

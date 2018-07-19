@@ -93,15 +93,23 @@ class MotorCycleReviewFormModal extends Component {
                 </div>
           <br/>
           <div className={ 'calamity-image-display' }>
-            <div
-              style={{
-                backgroundImage: `url(${ imageUrlObject })`,
-                width : '150px',
-                height : '150px',
-                backgroundSize : 'contain',
-                backgroundRepeat : 'no-repeat'
-              }}>
-            </div>
+            {
+              imageUrlObject ?
+              imageUrlObject.map((image, key) =>
+                <div
+                  key={ key }
+                  style={{
+                    backgroundImage: `url(${ image.base64 })`,
+                    width : 'auto',
+                    height : '150px',
+                    backgroundSize : 'contain',
+                    backgroundRepeat : 'no-repeat'
+                  }}>
+                </div>
+              )
+              :
+              <div></div>
+            }
           </div>
           <br/>
           <div className={ 'mpl-review-grid' }>
