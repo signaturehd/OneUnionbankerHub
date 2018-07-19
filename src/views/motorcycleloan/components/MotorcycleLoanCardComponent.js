@@ -224,9 +224,6 @@ class MotorcycleLoanCardComponent extends Component {
         isPayeeOrDealer
       }=this.props
 
-      console.log(AdditionalDocuments)
-      console.log(RequiredDocuments)
-
       const styles={
         image1 : {
           backgroundImage: `url('${imagePreviewUrl}')`,
