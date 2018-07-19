@@ -6,8 +6,7 @@ export default (
   poaText,
   termId,
   selectedOffsetLoan,
-  fileObject,
-  fileObject1
+  attachments
   ) => ({
     dealerName,
     amountValue,
@@ -16,6 +15,5 @@ export default (
     poaText,
     termId,
     selectedOffsetLoan,
-    fileObject,
-    fileObject1
+    attachments
   })

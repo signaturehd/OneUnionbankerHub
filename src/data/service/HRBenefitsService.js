@@ -364,13 +364,14 @@ export default class HRBenefitsService {
         term : mplPurposeLoanAddParam.termId,
         principalAmount : mplPurposeLoanAddParam.amountValue
       },
-      promissoryNoteNumbers : mplPurposeLoanAddParam.selectedOffsetLoan ? mplPurposeLoanAddParam.selectedOffsetLoan : null,
-      distributor : mplPurposeLoanAddParam.dealerName,
-    }
+        promissoryNoteNumbers : mplPurposeLoanAddParam.selectedOffsetLoan ? mplPurposeLoanAddParam.selectedOffsetLoan : null,
+        distributor : mplPurposeLoanAddParam.dealerName,
+      }
       formData.append('uuid', 12345)
       formData.append('body', JSON.stringify(multiLoanBodyObject))
-      formData.append('attachments' , mplPurposeLoanAddParam.fileObject ? mplPurposeLoanAddParam.fileObject : '')
-      formData.append('attachments2' , mplPurposeLoanAddParam.fileObject1 ? mplPurposeLoanAddParam.fileObject1 : '')
+      addMotorLoanParam.attachments.map((attachment, key) => (
+        formData.append(attachment.name, attacment.file)
+      ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
@@ -398,7 +399,9 @@ export default class HRBenefitsService {
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
-    formData.append('MPL-cert', addMotorLoanParam.attachments)
+    addMotorLoanParam.attachments.map((attachment, key) => (
+      formData.append(attachment.name, attacment.file)
+    ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
@@ -426,7 +429,9 @@ export default class HRBenefitsService {
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
-    formData.append('MPL-cert', addComputerLoanParam.attachments)
+    addComputerLoanParam.attachments.map((attachment, key) => (
+      formData.append(attachment.name, attacment.file)
+    ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
@@ -672,10 +677,12 @@ export default class HRBenefitsService {
     })
   }
 
-  uploadTransactionCalamity (token, file, id) {
+  uploadTransactionCalamity (token, id, files) {
     const formData = new FormData()
     formData.append('uuid', 12345)
-    formData.append('Official Receipt', file)
+    files.map((file, key) => (
+      formData.append(file.name, file.file)
+    ))
     formData.append('body', JSON.stringify({
       transactionId : id
     }))
@@ -684,10 +691,12 @@ export default class HRBenefitsService {
     })
   }
 
-  uploadTransactionBereavement (token, file, id) {
+  uploadTransactionBereavement (token, id, files) {
     const formData = new FormData()
     formData.append('uuid', 12345)
-    formData.append('Death Certificate', file)
+    files.map((file, key) => (
+      formData.append(file.name, file.file)
+    ))
     formData.append('body', JSON.stringify({
       transactionId : id
     }))
