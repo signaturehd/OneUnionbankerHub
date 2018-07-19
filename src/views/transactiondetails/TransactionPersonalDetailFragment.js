@@ -30,6 +30,7 @@ function  TransactionDetails (props)  {
   const transactionsPerson = props.transactions
   const attachments = props.attachments
   const uploadImage = props.uploadImage
+  const showFileReceipt = props.showFileReceipt
   if (transactionId === 6) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
@@ -88,6 +89,7 @@ function  TransactionDetails (props)  {
       transactionsPerson = { transactionsPerson }
       uploadImage = { (transactionId, file) => uploadImage(22, transactionId, file) }
       attachments = { attachments }
+      showFileReceipt = { showFileReceipt }
       details = { transactionDetails }
      />
   }
@@ -102,7 +104,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
       details : null,
       transactions : null,
       attachment : null,
-      response : null,
+      response : true,
       enabledLoader: false,
     }
   }
@@ -169,6 +171,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
                attachments={ attachments }
                transactions={ transactions }
                showUploading={ response }
+               showFileReceipt={ response }
                uploadImage = { (transactionType, transactionId, file) => {
                  this.presenter.uploadTransactionBereavement(transactionType, transactionId, file)
                }}

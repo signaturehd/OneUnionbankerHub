@@ -85,7 +85,6 @@ export default class TransactionPersonalDetailsPresenter {
               duration : 2000
            })
           )
-
           this.view.showCircularLoader()
         }, e => {
           this.view.showCircularLoader()
@@ -93,7 +92,7 @@ export default class TransactionPersonalDetailsPresenter {
   }
 
   uploadTransactionCalamity (transactionType, benefitId, image) {
-    this.view.hideCircularLoader()
+    this.view.showCircularLoader()
     this.uploadTransactionImageInteractor.execute(transactionType, benefitId, image)
       .subscribe(transactions => {
           this.view.showFileReceipt(false)
@@ -104,9 +103,9 @@ export default class TransactionPersonalDetailsPresenter {
               duration : 2000
            })
           )
-          this.view.showCircularLoader()
+          this.view.hideCircularLoader()
         }, e => {
-          this.view.showCircularLoader()
+          this.view.hideCircularLoader()
       })
   }
 }

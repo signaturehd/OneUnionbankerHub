@@ -408,7 +408,7 @@ class CalamityFormCardComponent extends Component {
           {
             imgPrevBC &&
             <div>
-              <label className="calamity-form-title">Form Attachments</label>
+              <label className="calamity-form-title">Barangay Certificate</label>
               <div className="calamity-attachment-form">
                 <img
                   src={ require('../../../ub-components/Notify/images/x-circle.png') }
