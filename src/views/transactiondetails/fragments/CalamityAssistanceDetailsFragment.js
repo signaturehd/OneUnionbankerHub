@@ -27,13 +27,27 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class CalamityAssistanceDetailsFragment extends Component {
-  
+
   constructor (props) {
     super(props)
     this.state = {
-      attachmentArray : []
+      attachmentArray : [],
+      showAttachment : true
     }
     this.setAttachments = this.setAttachments.bind(this)
+    this.showFileReceipt = this.showFileReceipt.bind(this)
+  }
+
+  showFileReceipt (show) {
+
+    this.setState({ showAttachment : false })
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!nextProps.showFileReceipt) {
+      this.setState({ showAttachment : false })
+      window.location.reload()
+    }
   }
 
   componentDidMount () {
@@ -62,13 +76,17 @@ class CalamityAssistanceDetailsFragment extends Component {
       attachments,
       uploadImage,
       response,
+      showFileReceipt
     } = this.props
 
     const {
       showLoader,
       attachmentArray,
+      showAttachment
     } = this.state
-
+    if (!showFileReceipt) {
+      window.location.reload()
+    }
 
     return (
       <div className={ 'details-container' }>
@@ -110,12 +128,14 @@ class CalamityAssistanceDetailsFragment extends Component {
           </div>
 
           {
-            response &&
+
+            showFileReceipt &&
               showLoader ?
                 <center>
                   <CircularLoader show = { true }/>
                 </center>
               :
+                showAttachment &&
                 details &&
                 details.status &&
                 (details.status.id === 6 ||
@@ -150,7 +170,7 @@ class CalamityAssistanceDetailsFragment extends Component {
 
                         if (isValid) {
                             reader.onloadend=() => {
-                              updatedArray[key].base64 = reader.result
+                              updatedAttachment[key].base64 = reader.result
                               updatedAttachment[key].file = file
                               this.setState({ attachmentArray : updatedAttachment })
                             }
