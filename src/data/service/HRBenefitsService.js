@@ -353,6 +353,7 @@ export default class HRBenefitsService {
     accountNumber,
     releasingCenter,
     mplPurposeLoanAddParam) {
+    console.log(mplPurposeLoanAddParam)  
     const formData = new FormData()
     const multiLoanBodyObject = {
       accountNumber,
@@ -371,9 +372,9 @@ export default class HRBenefitsService {
       formData.append('body', JSON.stringify(multiLoanBodyObject))
       mplPurposeLoanAddParam.attachments.map((attachment, key) => {
         if(attachment.nfis) {
-          formData.append(attachment.name  + ' for ' + attachment.nfis , attacment.file)
+          formData.append(`${attachment.name} for ${attachment.nfis}` , attachment.file)
         } else {
-          formData.append(attachment.name, attacment.file)
+          formData.append(attachment.name, attachment.file)
         }
       })
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
@@ -405,9 +406,9 @@ export default class HRBenefitsService {
     formData.append('body', JSON.stringify(multiLoanBodyObject))
     addMotorLoanParam.attachments.map((attachment, key) => {
       if(attachment.nfis) {
-        formData.append(attachment.name  + ' for ' + attachment.nfis , attacment.file)
+        formData.append(attachment.name  + ' for ' + attachment.nfis , attachment.file)
       } else {
-        formData.append(attachment.name, attacment.file)
+        formData.append(attachment.name, attachment.file)
       }
     })
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
@@ -439,9 +440,9 @@ export default class HRBenefitsService {
     formData.append('body', JSON.stringify(multiLoanBodyObject))
     addComputerLoanParam.attachments.map((attachment, key) => {
       if(attachment.nfis) {
-        formData.append(attachment.name  + ' for ' + attachment.nfis , attacment.file)
+        formData.append(attachment.name  + ' for ' + attachment.nfis , attachment.file)
       } else {
-        formData.append(attachment.name, attacment.file)
+        formData.append(attachment.name, attachment.file)
       }
     })
     return this.apiClient.post('v2/loans/mpl/submit', formData, {

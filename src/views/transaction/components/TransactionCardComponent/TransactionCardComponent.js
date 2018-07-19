@@ -14,7 +14,7 @@ class TransactionCardComponent extends Component {
 
   render () {
     const { detail, onClick } = this.props
-
+    console.log(detail)
     return (
       <Card className = { 'transaction-card'}>
       <div className = {'column'}>
@@ -23,6 +23,7 @@ class TransactionCardComponent extends Component {
         <div className = { 'transaction-body' }>
           <h5 className = { 'transaction-title' }>{ detail.benefit }</h5>
           <h3 className = { 'transaction-status' }>{detail.status}</h3>
+          <h3 className = { 'transaction-status' }>{detail.referenceNumber}</h3>
           <h4 className = { 'transaction-date' }>{moment(detail.applicationDate).format('MMMM DD, YYYY')}</h4>
         </div>
       </div>

@@ -62,18 +62,23 @@ class MotorcycleLoanCardComponent extends Component {
         selectedOffsetLoanId: [],
         showPromissoryNoteModal: false,
         attachmentArray : [],
-        showErrorModal: false
+        showErrorModal: false,
       }
       this.validator=this.validator.bind(this)
       this.setAttachments = this.setAttachments.bind(this)
     }
 
-    componentWillReceiveProps (nextProps) {
-      this.setAttachments()
-    }
+
 
      validator(input) {
        return new RequiredValidation().isValid(input)
+     }
+
+     componentWillReceiveProps (nextProps) {
+       if (nextProps.formAttachments !== []
+         && this.state.attachmentArray.length === 0) {
+         this.setAttachments()
+       }
      }
 
      setAttachments () {
@@ -85,11 +90,11 @@ class MotorcycleLoanCardComponent extends Component {
        })
 
        nfis && nfis.map((nfis, key) => {
-         RequiredDocuments && RequiredDocuments.map((attachment, key) => {
-           updatedAttachment.push({name: attachment, nfis})
+         const documentsArray = [...new Set(RequiredDocuments && RequiredDocuments)]
+         documentsArray && documentsArray.map((attachment, key) => {
+           updatedAttachment.push({name : attachment, nfis})
          })
        })
-
        this.setState({attachmentArray: updatedAttachment})
      }
 
@@ -101,8 +106,7 @@ class MotorcycleLoanCardComponent extends Component {
        poaText,
        selectedTerm,
        selectedOffsetLoanId,
-       fileObject,
-       fileObject1
+       attachmentArray
      ) {
        this.props.sendFormDataToPresenter(
          dealerName,
@@ -112,8 +116,7 @@ class MotorcycleLoanCardComponent extends Component {
          poaText,
          selectedTerm,
          selectedOffsetLoanId,
-         fileObject,
-         fileObject1
+         attachmentArray,
        )
        this.setState({ showConfirmationView : false })
      }
@@ -126,8 +129,8 @@ class MotorcycleLoanCardComponent extends Component {
        poaText,
        selectedTerm,
        selectedOffsetLoan,
-       fileObject,
-       fileObject1) {
+       attachmentArray,
+       ) {
          if (!this.validator(poaText)) {
              store.dispatch(NotifyActions.addNotify({
                 title : 'Warning' ,
@@ -156,15 +159,17 @@ class MotorcycleLoanCardComponent extends Component {
             )
           }
         else if (loanType === 3) {
-          if (!this.validator(fileObject) || !this.validator(fileObject1) ) {
-              store.dispatch(NotifyActions.addNotify({
-                 title : 'Warning' ,
-                 message : 'Please check and provide the Additional Requirements',
-                 type : 'warning',
-                 duration : 2000
-               })
-             )
-           }
+          attachmentArray.map((attachment, key) => {
+              if (!attachment.file) {
+                store.dispatch(NotifyActions.addNotify({
+                  title : 'Warning' ,
+                  message : 'Please check and provide attachment for ' + attachment.name,
+                  type : 'warning',
+                  duration : 2000
+                })
+              )
+            }
+          })
          }
          else {
            this.setState({ showReviewModal: true })
@@ -230,7 +235,6 @@ class MotorcycleLoanCardComponent extends Component {
         maximumAmount,
         onFocus
       }=this.props
-
       const arrayObject=[...imagePreviewArrayList]
       arrayObject.push(imageUrlObject)
       arrayObject.push(imageUrlObject1)
@@ -250,7 +254,7 @@ class MotorcycleLoanCardComponent extends Component {
             showReviewModal &&
             <MplReviewFormModal
               amountValue={ format(amountValue) }
-              imageUrlObject={ arrayObject ? arrayObject  : '' }
+              imageUrlObject={ attachmentArray ? attachmentArray  : '' }
               modeOfLoanText={ modeOfLoanText }
               isPayeeOrDealer={ isPayeeOrDealer }
               dealerName={ dealerName }
@@ -280,8 +284,7 @@ class MotorcycleLoanCardComponent extends Component {
                       poaText,
                       selectedTerm,
                       selectedOffsetLoanId,
-                      fileObject,
-                      fileObject1
+                      attachmentArray
                     ) }
                     text={ 'Yes' }/>
                 </div>
@@ -310,14 +313,15 @@ class MotorcycleLoanCardComponent extends Component {
               poa ={ purposeOfAvailment }
               loanType={ loanType }
               presenter={ this.props.presenter }
-              onSubmit={ (changePoaText, subcategory, closePoaModal, openFileUpload, loanType) =>
-                this.setState({
-                  poaText : changePoaText.name,
-                  poaId : changePoaText.id,
-                  subCategoryId: subcategory,
-                  showPurposeOfAvailment : closePoaModal,
-                  showFileUpload : openFileUpload
-                })
+              onSubmit={ (changePoaText, subcategory, closePoaModal, openFileUpload, loanType) => {
+                  this.setState({
+                    poaText : changePoaText.name,
+                    poaId : changePoaText.id,
+                    subCategoryId: subcategory,
+                    showPurposeOfAvailment : closePoaModal,
+                    showFileUpload : openFileUpload
+                  })
+                }
               }
               onClose={ () =>
                 this.setState({ showPurposeOfAvailment : false }) }
@@ -538,7 +542,8 @@ class MotorcycleLoanCardComponent extends Component {
                 <br/>
                 <br/>
                 {
-                  AdditionalDocuments ?
+                  AdditionalDocuments.length !== 0 ||
+                  RequiredDocuments.length !== 0 ?
                   <div>
                     <div className={'brv-form-card-body '}>
                       <h4>
@@ -553,7 +558,7 @@ class MotorcycleLoanCardComponent extends Component {
                                 value={
                                   attachment.file && attachment.file.name
                                 }
-                                placeholder={ attachment.name }
+                                placeholder={ attachment.nfis ? attachment.name + ' for ' + attachment.nfis : attachment.name  }
                                 onChange={
                                   (e) => {
                                     e.preventDefault()
@@ -626,15 +631,14 @@ class MotorcycleLoanCardComponent extends Component {
                     type={ 'button' }
                     text={ 'continue' }
                     onClick={ () => this.sendFormData(
-                      supplierName,
+                      dealerName,
                       amountValue,
                       modeOfLoanId,
                       loanType,
                       poaText,
-                      termOfLoan,
+                      selectedTerm,
                       selectedOffsetLoan,
-                      fileObject,
-                      formAttachments
+                      attachmentArray,
                     ) }
                     className={ 'brv-submit' } />
                 </div>
@@ -645,15 +649,14 @@ class MotorcycleLoanCardComponent extends Component {
                 type={ 'button' }
                 text={ 'continue' }
                 onClick={ () => this.sendFormData(
-                  supplierName,
+                  dealerName,
                   amountValue,
                   modeOfLoanId,
                   loanType,
                   poaText,
-                  termOfLoan,
-                  selectedOffsetLoan,
-                  fileObject,
-                  formAttachments
+                  selectedTerm,
+                  selectedOffsetLoanId,
+                  attachmentArray
                 ) }
                 className={ 'brv-submit' } />
               }

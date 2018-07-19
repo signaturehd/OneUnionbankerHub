@@ -65,26 +65,33 @@ class ComputerLoanCardComponent extends Component {
        return new RequiredValidation().isValid(input)
      }
 
-     componentWillReceiveProps () {
-       this.setAttachments()
+     componentWillReceiveProps (nextProps) {
+       if (nextProps.formAttachments !== [] && this.state.attachmentArray.length === 0) {
+         this.setAttachments()
+       }
      }
 
      setAttachments () {
-       const { nfis } = this.props.validateLoanType
-       const { AdditionalDocuments, RequiredDocuments } = this.props.formAttachments
-       const updatedAttachment = [...this.state.attachmentArray]
-       AdditionalDocuments && AdditionalDocuments.map((attachment, key) => {
-         updatedAttachment.push({name: attachment, nfis: null})
-       })
-
-       nfis && nfis.map((nfis, key) => {
-         RequiredDocuments && RequiredDocuments.map((attachment, key) => {
-           updatedAttachment.push({name: attachment, nfis})
+       console.log('calling function')
+       try {
+         const { nfis } = this.props.validateLoanType
+         const { AdditionalDocuments, RequiredDocuments } = this.props.formAttachments
+         const updatedAttachment = [...this.state.attachmentArray]
+         AdditionalDocuments && AdditionalDocuments.map((attachment, key) => {
+           updatedAttachment.push({name: attachment, nfis: null})
          })
-       })
 
+         nfis && nfis.map((nfis, key) => {
+           let documentsArray = [...new Set(RequiredDocuments && RequiredDocuments)]
+           documentsArray && documentsArray.map((attachment, key) => {
+             updatedAttachment.push({name : attachment, nfis})
+           })
+         })
 
-       this.setState({attachmentArray : updatedAttachment})
+         this.setState({attachmentArray: updatedAttachment})
+       } catch (e) {
+         console.log(e)
+       }
      }
 
      onGetClicked (
@@ -95,8 +102,7 @@ class ComputerLoanCardComponent extends Component {
        poaText,
        termOfLoan,
        selectedOffsetLoan,
-       fileObject,
-       formAttachments
+       attachmentArray
      ) {
        this.props.sendFormDataToPresenter(
          supplierName,
@@ -106,7 +112,7 @@ class ComputerLoanCardComponent extends Component {
          poaText,
          termOfLoan,
          selectedOffsetLoan,
-         fileObject,
+         attachmentArray,
        )
        this.setState({ showConfirmationView : false })
      }
@@ -119,8 +125,7 @@ class ComputerLoanCardComponent extends Component {
        poaText,
        termOfLoan,
        selectedOffsetLoan,
-       fileObject,
-       formAttachments) {
+       attachmentArray) {
          if (!this.validator(poaText)) {
              store.dispatch(NotifyActions.addNotify({
                 title : 'Warning' ,
@@ -157,14 +162,18 @@ class ComputerLoanCardComponent extends Component {
               })
             )
           }
-        else if (!this.validator(fileObject)) {
-             store.dispatch(NotifyActions.addNotify({
-                title : 'Warning' ,
-                message : 'Please check and provide the Additional Requirements',
-                type : 'warning',
-                duration : 2000
-              })
-            )
+        else if (!this.validator(attachmentArray)) {
+            attachmentArray.map((attachment, key) => {
+                if (!attachment.file) {
+                  store.dispatch(NotifyActions.addNotify({
+                    title : 'Warning' ,
+                    message : 'Please check and provide attachment for ' + attachment.name,
+                    type : 'warning',
+                    duration : 2000
+                  })
+                )
+              }
+            })
           }
 
          else {
@@ -220,6 +229,7 @@ class ComputerLoanCardComponent extends Component {
         isPayeeOrDealer
       }=this.props
 
+
       const styles={
         image1 : {
           backgroundImage: `url('${imagePreviewUrl}')`,
@@ -240,7 +250,7 @@ class ComputerLoanCardComponent extends Component {
             showReviewModal &&
             <ReviewModal
               amountValue={ format(amountValue) }
-              imageUrlObject={ imageUrlObject ? imageUrlObject  : '' }
+              imageUrlObject={ attachmentArray ? attachmentArray  : '' }
               modeOfLoanText={ modeOfLoanText }
               isPayeeOrDealer={ isPayeeOrDealer }
               supplierName={ supplierName }
@@ -271,7 +281,7 @@ class ComputerLoanCardComponent extends Component {
                       termOfLoan,
                       selectedOffsetLoan,
                       fileObject,
-                      formAttachments
+                      attachmentArray
                     ) }
                     text={ 'Yes' }/>
                 </div>
@@ -470,7 +480,7 @@ class ComputerLoanCardComponent extends Component {
                 }
                 <br/>
                 {
-                  formAttachments.AdditionalDocuments ?
+                  attachmentArray.length !== 0 ?
                   <div>
                     <div className={'brv-form-card-body '}>
                       <h4>
@@ -485,7 +495,7 @@ class ComputerLoanCardComponent extends Component {
                                 value={
                                   attachment.file && attachment.file.name
                                 }
-                                placeholder={ attachment.name }
+                                placeholder={ attachment.nfis ? attachment.name + ' for ' + attachment.nfis : attachment.name  }
                                 onChange={
                                   (e) => {
                                     e.preventDefault()
@@ -565,8 +575,7 @@ class ComputerLoanCardComponent extends Component {
                       poaText,
                       termOfLoan,
                       selectedOffsetLoan,
-                      fileObject,
-                      formAttachments
+                      attachmentArray
                     ) }
                     className={ 'brv-submit' } />
                 </div>
@@ -584,8 +593,7 @@ class ComputerLoanCardComponent extends Component {
                   poaText,
                   termOfLoan,
                   selectedOffsetLoan,
-                  fileObject,
-                  formAttachments
+                  attachmentArray
                 ) }
                 className={ 'brv-submit' } />
               }
