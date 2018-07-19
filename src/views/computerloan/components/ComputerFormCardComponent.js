@@ -66,7 +66,6 @@ class ComputerLoanCardComponent extends Component {
      }
 
      componentWillReceiveProps (nextProps) {
-       console.log('forms attachment ' + JSON.stringify(nextProps.formAttachments))
        if (nextProps.formAttachments !== [] && this.state.attachmentArray.length === 0) {
          this.setAttachments(nextProps.formAttachments)
        }
