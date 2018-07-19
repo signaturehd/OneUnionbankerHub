@@ -40,7 +40,8 @@ class BereavementFormCardComponent extends Component {
       memorialRegion: '',
       memorialProvince: '',
       memorialCity: '',
-      addressError: false
+      addressError: false,
+      errorMessage: 'Address field should contain atleast 15 characters'
     }
     this.getDeceasedDate = this.getDeceasedDate.bind(this)
     this.getFuneralDate = this.getFuneralDate.bind(this)
@@ -80,7 +81,8 @@ class BereavementFormCardComponent extends Component {
 
   getFuneralAddress (e) {
     new RequiredAlphabetValidation().isValidAddress(e.target.value)  ?
-    this.setState({ funeralAddress : e.target.value, addressError: this.minimumLength(e.target.value.length) }) :
+    this.setState({ funeralAddress : e.target.value,
+      addressError: this.minimumLength(e.target.value.length) }) :
     this.setState({ funeralAddress : '' })
   }
 
@@ -114,7 +116,8 @@ class BereavementFormCardComponent extends Component {
 
   getMemorialAddress (e) {
     new RequiredAlphabetValidation().isValidAddress(e.target.value) ?
-    this.setState({ memorialAddress : e.target.value, addressError: this.minimumLength(e.target.value.length) }) :
+    this.setState({ memorialAddress : e.target.value,
+      addressError: this.minimumLength(e.target.value.length) }) :
     this.setState({ memorialAddress : '' })
   }
 
@@ -205,7 +208,8 @@ class BereavementFormCardComponent extends Component {
       memorialRegion,
       memorialProvince,
       memorialCity,
-      addressError
+      addressError,
+      errorMessage
     }=this.state
 
     const styles={
@@ -350,13 +354,10 @@ class BereavementFormCardComponent extends Component {
                     container={ 'brv-container' }
                     value={ funeralAddress ? funeralAddress : '' }
                     onChange={ this.getFuneralAddress }
+                    errorMessage={ addressError && errorMessage }
                     placeholder={ 'Address' }
                     type={ 'text' }
                   />
-                  {
-                    addressError &&
-                    <span className={ 'font-size-14px brv-error-color' }>* Address field should contain atleast 15 characters</span>
-                  }
                 </div>
               </div>
               <div className={ 'brv-icon-text-grid' }>
@@ -464,11 +465,8 @@ class BereavementFormCardComponent extends Component {
                     onChange={ this.getMemorialAddress }
                     placeholder={ 'Address' }
                     type={ 'text' }
+                    errorMessage={ addressError && errorMessage }
                   />
-                  {
-                    addressError &&
-                    <span className={ 'font-size-14px brv-error-color' }>* Address field should contain atleast 15 characters</span>
-                  }
                 </div>
               </div>
               <div className={ 'brv-icon-text-grid' }>
