@@ -369,13 +369,9 @@ export default class HRBenefitsService {
       }
       formData.append('uuid', 12345)
       formData.append('body', JSON.stringify(multiLoanBodyObject))
-      mplPurposeLoanAddParam.attachments.map((attachment, key) => {
-        if(attachment.nfis) {
-          formData.append(`${attachment.name} for ${attachment.nfis}` , attachment.file)
-        } else {
-          formData.append(attachment.name, attachment.file)
-        }
-      })
+      addMotorLoanParam.attachments.map((attachment, key) => (
+        formData.append(attachment.name, attacment.file)
+      ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
@@ -403,13 +399,9 @@ export default class HRBenefitsService {
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
-    addMotorLoanParam.attachments.map((attachment, key) => {
-      if(attachment.nfis) {
-        formData.append(attachment.name  + ' for ' + attachment.nfis , attachment.file)
-      } else {
-        formData.append(attachment.name, attachment.file)
-      }
-    })
+    addMotorLoanParam.attachments.map((attachment, key) => (
+      formData.append(attachment.name, attacment.file)
+    ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
@@ -437,13 +429,9 @@ export default class HRBenefitsService {
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
-    addComputerLoanParam.attachments.map((attachment, key) => {
-      if(attachment.nfis) {
-        formData.append(attachment.name  + ' for ' + attachment.nfis , attachment.file)
-      } else {
-        formData.append(attachment.name, attachment.file)
-      }
-    })
+    addComputerLoanParam.attachments.map((attachment, key) => (
+      formData.append(attachment.name, attacment.file)
+    ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
@@ -681,8 +669,8 @@ export default class HRBenefitsService {
     }
 
     formData.append('uuid', 12345)
-    formData.append('file', calamityAssistanceParam.file1)
-    formData.append('file2', calamityAssistanceParam.file2)
+    formData.append('Barangay Certificate', calamityAssistanceParam.file1)
+    formData.append('Damaged Property', calamityAssistanceParam.file2)
     formData.append('body', JSON.stringify(calamityObject))
     return this.apiClient.post('v1/calamity/availment', formData,{
       headers: { token }
@@ -693,7 +681,7 @@ export default class HRBenefitsService {
     const formData = new FormData()
     formData.append('uuid', 12345)
     files.map((file, key) => (
-      formData.append(file.name , file.file)
+      formData.append(file.name, file.file)
     ))
     formData.append('body', JSON.stringify({
       transactionId : id
