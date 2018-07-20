@@ -278,7 +278,7 @@ class MotorcycleLoanCardComponent extends Component {
             showConfirmationView &&
             <Modal>
               <center>
-                Are you sure you want to sumbit this form ?
+                Are you sure you want to submit this form ?
                 <div className={ 'grid-global' }>
                   <GenericButton
                     onClick={ () => this.setState({ showConfirmationView : false, showReviewModal : false }) }
