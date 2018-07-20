@@ -369,7 +369,7 @@ export default class HRBenefitsService {
       }
       formData.append('uuid', 12345)
       formData.append('body', JSON.stringify(multiLoanBodyObject))
-      addMotorLoanParam.attachments.map((attachment, key) => (
+      mplPurposeLoanAddParam.attachments.map((attachment, key) => (
         formData.append(attachment.name, attachment.file)
       ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
