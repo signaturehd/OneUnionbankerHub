@@ -38,7 +38,7 @@ class MotorcycleLoanCardComponent extends Component {
         poaText : '',
         amountValue: '',
         modeOfLoanText: '',
-        modeOfLoanId : '',
+        modeOfLoanId : 1,
         termOfLoan: '',
         rateOfLoan: '',
         termId: '',
@@ -438,7 +438,7 @@ class MotorcycleLoanCardComponent extends Component {
                   value={ modeOfLoanText ? modeOfLoanText : 'New Loan' }
                   type={ 'text' }/>
                 {
-                  modeOfLoanText ?
+                  modeOfLoanId === 2 ?
 
                     <GenericTextBox
                       value={ amountValue ? amountValue : '' }
