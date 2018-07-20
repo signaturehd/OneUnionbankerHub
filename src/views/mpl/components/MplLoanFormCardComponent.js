@@ -68,8 +68,6 @@ class MotorcycleLoanCardComponent extends Component {
       this.setAttachments = this.setAttachments.bind(this)
     }
 
-
-
      validator(input) {
        return new RequiredValidation().isValid(input)
      }
@@ -172,7 +170,16 @@ class MotorcycleLoanCardComponent extends Component {
           })
          }
          else {
-           this.setState({ showReviewModal: true })
+           if (modeOfLoanId === '') {
+             if(this.props.offset[0].name && this.props.offset[0].id) {
+               let offsetId = this.props.offset[0].id
+               let offsetName = this.props.offset[0].name
+               this.setState({ modeOfLoanId : offsetId, modeOfLoanText : offsetName, showReviewModal: true  })
+             }
+          }
+           else {
+             this.setState({ showReviewModal: true })
+           }
         }
      }
 
@@ -235,6 +242,7 @@ class MotorcycleLoanCardComponent extends Component {
         maximumAmount,
         onFocus
       }=this.props
+
       const arrayObject=[...imagePreviewArrayList]
       arrayObject.push(imageUrlObject)
       arrayObject.push(imageUrlObject1)

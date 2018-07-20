@@ -44,7 +44,7 @@ class TermsModal extends BaseMVPView {
           <CircularLoader show={true}/>
         </center>        :
         <div>
-          <h3>{ terms }</h3>
+          <div dangerouslySetInnerHTML = {{ __html: terms }}/>
           <br/>
           <br/>
           <GenericButton text= "Agree"

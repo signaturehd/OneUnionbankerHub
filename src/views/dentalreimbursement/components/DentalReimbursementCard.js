@@ -263,7 +263,7 @@ render () {
           <FileUploader
             accept="image/gif,image/jpeg,image/jpg,image/png,"
             onChange = { this.handleImageChange }
-            placeholder = 'Official Certificate'
+            placeholder = 'Official Receipt'
             value = { this.state.file.name } />
           <FileUploader
             accept="image/gif,image/jpeg,image/jpg,image/png,"

@@ -55,3 +55,8 @@
   padding: 1% 0 1% 0;
   cursor: pointer;
 }
+
+.transaction-details-grid-row {
+  display: grid;
+  grid-template-rows: .005fr 1fr;
+}
