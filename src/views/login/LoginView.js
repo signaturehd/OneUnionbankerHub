@@ -80,7 +80,7 @@ class LoginView extends BaseMVPView {
   }
 
   downloadAndroid () {
-    window.open('https://ubptest.appiancloud.com/suite/sites/hrb-calamity-assistance-dashboard')
+    window.open('https://play.google.com/store/apps/details?id=com.unionbankph.oneuhub')
   }
 
 
