@@ -208,6 +208,7 @@ class BenefitsFragment extends BaseMVPView {
             </center>
             :
               <div>
+              <h2> All benefit requests and claims will be credited to this account. Payroll accounts will not be accepted. </h2>
                 <GenericTextBox
                   onChange={ e => this.setState({ accountNumber:   e.target.value }) }
                   placeholder={ 'Account Number' }
