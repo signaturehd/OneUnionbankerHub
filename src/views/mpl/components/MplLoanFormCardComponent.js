@@ -27,7 +27,7 @@ import MplReviewFormModal from '../modals/MplReviewFormModal'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
-class MplLoanFormCardComponent extends Component {
+class MotorcycleLoanCardComponent extends Component {
 
     constructor (props) {
       super(props)
@@ -120,6 +120,7 @@ class MplLoanFormCardComponent extends Component {
      }
 
      sendFormData (
+       computation,
        dealerName,
        amountValue,
        modeOfLoanId,
@@ -138,6 +139,30 @@ class MplLoanFormCardComponent extends Component {
               })
             )
           }
+        else if (modeOfLoanId === 2) {
+          if (selectedOffsetLoan.length === 0) {
+            store.dispatch(NotifyActions.addNotify({
+                title : 'Warning' ,
+                message : 'Please select your Offset Loan',
+                type : 'warning',
+                duration : 2000
+              })
+            )
+          } else {
+            if ( amountValue < computation) {
+              store.dispatch(NotifyActions.addNotify({
+                  title : 'Warning' ,
+                  message : `We're sorry but the selected existing loans have exceeded your principal amount.
+                      These cannot be deducted from your new loan. Kindly select within the appropriate balance.`,
+                  type : 'warning',
+                  duration : 2000
+                })
+              )
+            } else {
+               this.setState({ showReviewModal: true })
+            }
+          }
+        }
         else if (!this.validator(selectedTerm)) {
              store.dispatch(NotifyActions.addNotify({
                 title : 'Warning' ,
@@ -247,7 +272,7 @@ class MplLoanFormCardComponent extends Component {
       arrayObject.push(imageUrlObject)
       arrayObject.push(imageUrlObject1)
 
-      const computation=computationOffsetLoan.reduce((a, b) => a + b, 0)
+      const computation = computationOffsetLoan.reduce((a, b) => a + b, 0)
       let computationAmountMaximum = 0
       if(loanType.toString() === '3') {
         computationAmountMaximum = 100000
@@ -442,21 +467,7 @@ class MplLoanFormCardComponent extends Component {
 
                     <GenericTextBox
                       value={ amountValue ? amountValue : '' }
-                      onChange={
-                        (e) =>
-                          new MinMaxNumberValidation(-1, computationAmountMaximum).isValid(e.target.value) ||
-                          computation >= e.target.value ?
-                            this.setState({
-                              amountValue: Number(e.target.value.replace(/[^0-9]/g, ''))
-                            }) :
-                            computationAmountMaximum === 100000 ?
-                            this.setState({
-                              amountValue: '',
-                              showErrorModal: this.desiredAmountValidator(e.target.value) }) :
-                            this.setState({
-                              amountValue: '',
-                              showOffsetMessageModal: this.desiredAmountValidator(e.target.value)})
-                      }
+                      onChange={ (e) => this.setState({amountValue : parseInt(e.target.value)}) }
                       placeholder={ 'Desired Amount' }
                       maxLength={ 7 }
                       type={ 'text' }/>
@@ -639,6 +650,7 @@ class MplLoanFormCardComponent extends Component {
                     type={ 'button' }
                     text={ 'continue' }
                     onClick={ () => this.sendFormData(
+                      computation,
                       dealerName,
                       amountValue,
                       modeOfLoanId,
@@ -675,7 +687,7 @@ class MplLoanFormCardComponent extends Component {
     }
   }
 
-MplLoanFormCardComponent.propTypes={
+MotorcycleLoanCardComponent.propTypes={
   purposeOfAvailment : PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array
@@ -702,4 +714,4 @@ MplLoanFormCardComponent.propTypes={
   onFocus: PropTypes.func,
 }
 
-export default MplLoanFormCardComponent
+export default MotorcycleLoanCardComponent
