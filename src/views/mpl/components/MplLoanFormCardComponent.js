@@ -27,7 +27,7 @@ import MplReviewFormModal from '../modals/MplReviewFormModal'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
-class MotorcycleLoanCardComponent extends Component {
+class MplLoanFormCardComponent extends Component {
 
     constructor (props) {
       super(props)
@@ -675,7 +675,7 @@ class MotorcycleLoanCardComponent extends Component {
     }
   }
 
-MotorcycleLoanCardComponent.propTypes={
+MplLoanFormCardComponent.propTypes={
   purposeOfAvailment : PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array
@@ -702,4 +702,4 @@ MotorcycleLoanCardComponent.propTypes={
   onFocus: PropTypes.func,
 }
 
-export default MotorcycleLoanCardComponent
+export default MplLoanFormCardComponent
