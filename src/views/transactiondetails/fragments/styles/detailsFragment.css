@@ -1,24 +1,35 @@
-.details-container {
+.transaction-details-container {
   display: grid;
-  padding:3%;
 }
+
 .transaction-card-details {
   padding : 20px 40px;
 }
+
 .transaction-card-details-form {
   padding : 10px 50px;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: .4fr 1fr;
   display: grid;
 }
+
 .transaction-detail {
   margin-bottom: 10px;
 }
+
 .transaction-attachments-container {
   display: grid;
-  column-gap: 2%;
+  height: 250px;
   text-align: center;
   grid-template-columns: 1fr 1fr;
 }
+
+.transaction-header-contains {
+  display: grid;
+  height: 250px;
+  grid-template-rows: 1fr 1fr;
+  position: bottom;
+}
+
 .transaction-attachments {
   margin: auto;
   background-size: contain;
@@ -26,45 +37,82 @@
   height: 150px;
   width: auto;
 }
+
 .details-bold {
   font-weight: bold;
 }
 
-/* added style for accordion */
-.html,
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0px;
-  padding: 0px;
+.transaction-banner {
+  background-size: cover;
+  display: block;
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  height: 250px;
 }
 
-.html {
-  border: 15px solid #000;
+.transaction-optical {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/optical_reimbursement.jpg');
 }
-.accor {
-  margin: 10px;
-  border: 1px solid #ddd;
-  transition: 0.4s;
-  background: #fff;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
+
+.transaction-dentalreimbursement {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/dental_reimbursement.jpg');
+}
+
+.transaction-dentalloa {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/dental_bg.jpg');
+}
+
+.transaction-mpl {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/mpl_bg.jpg');
+}
+
+.transaction-details-grid-row {
+  display: grid;
+  grid-template-columns: .5fr .5fr;
+}
+
+.transaction-banner-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: absolute;
+  margin-left: 25px;
+  margin-top: 157px;
+}
+
+.transaction-details-status {
+  -webkit-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width: max-content;
+  padding: 11px;
+  box-shadow: crimson;
+  -webkit-border-radius: 50px;
   border-radius: 5px;
-  border: 0px transparent;
+  font: normal 14px/1;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  border-color: 1px black;
+  -o-text-overflow: ellipsis;
+  background: #ff8a00;
 }
-.accor .head {
-  padding: 10px 20px;
-  cursor: pointer;
-  font-weight:bold;
+
+.transaction-details-name{
+  color: #000000;
 }
-.accor .body {
-  padding: 0 20px;
-  max-height: 0;
-  overflow: hidden;
-  transition: 200ms ease-in-out;
+
+.transaction-details-name1{
+  color: #000000;
 }
-.accor.active > .body {
-  padding: 10px 20px;
-  max-height: 600px;
-  color: black;
+
+.transaction-header-container{
+  display: grid;
+  column-gap: 2%;
+  grid-template-columns: 1fr 1fr;
 }
-/* end of accordion style */
+
+.transaction-title-margin {
+  margin-left: 30px;
+  margin-top: 30px;
+}

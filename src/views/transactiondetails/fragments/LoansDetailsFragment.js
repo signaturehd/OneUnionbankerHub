@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Accordion from '../components/AccordionComponent'
+import moment from 'moment'
 
 import './styles/detailsFragment.css'
-
 import { Card } from '../../../ub-components'
 /*
 Transaction MPL Form Agreement, Form Agreement, & File Attacment
@@ -20,64 +19,83 @@ import MPLPurposeComponent
 from '../../transaction/components/TransactionMPLDetailComponent/TransactionMPLPurposeComponent'
 
 class LoansDetailsFragment extends Component {
+
   constructor (props) {
     super(props)
   }
 
   render () {
-    const { details, transactionsPerson, attachments } = this.props
+    const {
+      details,
+      transactionsPerson,
+      attachments
+    } = this.props
+
     return (
-      <div className={'optical-details-container'}>
-        <center>
-          <h2 className={ 'transaction-detail details-bold' }>
-            Transaction Information
-          </h2>
-        </center>
-          <br/>
-        <div>
-          <Accordion>
-            <div className={ 'accor' } >
-              <div className={ 'head' } >
-                Details
-              </div>
-              <div className={ 'body' } >
-                <MPLDetailsComponent
-                  transactionsPerson={ transactionsPerson }
-                  details={ details } />
-                <br/>
+      <div className={ 'transaction-details-global-x3' }>
+        <div></div>
+          <Card>
+            <div className={ 'transaction-details-container' }>
+              <div className = { 'transaction-banner transaction-mpl' }>
+                <div className={ 'transaction-banner-card' }>
+                   <div>
+                     <h1 className = { 'transaction-details-name font-weight-normal'}>
+                       {
+                         details &&
+                         details.benefitType &&
+                         details.benefitType.name ?
+                         details.benefitType.name :
+                         '(Not Yet Provided)'
+                       }
+                      </h1>
+                      <h4 className = { 'transaction-details-name1' }>
+                        { details && moment(details.dateFiled).format('dddd, MMMM d, YYYY, h:MM:ss A') }
+                      </h4>
+                   </div>
+                   <div className={ 'transaction-details-grid-row' }>
+                     <div></div>
+                     <div className = { 'transaction-details-status font-weight-bold' }>
+                        {
+                          details &&
+                          details.status.name ?
+                          details.status.name :
+                          '(Not Yet Provided)'
+                        }
+                      </div>
+                   </div>
+                </div>
               </div>
             </div>
-            <div className={ 'accor' } >
-              <div className={ 'head' } >
-                Attachements
-              </div>
-              <div className={ 'body' } >
-                <MPLFileComponent
-                  details={ details }
-                  attachments={ attachments } />
-                <br/>
-              </div>
+            <br/>
+            <br/>
+            <div>
+              <MPLDetailsComponent
+                transactionsPerson={ transactionsPerson }
+                details={ details }
+              />
             </div>
-          <div className={ 'accor' } >
-            <div className={ 'head' } >
-              Purpose
-            </div>
-            <div className={ 'body' } >
+            <br/>
+            <br/>
+            <div>
               <MPLPurposeComponent details={ details } />
-                <br/>
             </div>
-          </div>
-          <div className={ 'accor' } >
-            <div className={ 'head' } >
-              Notice
+            <br/>
+            <br/>
+            <div>
+              <MPLFileComponent
+                 details={ details }
+                 attachments={ attachments } />
             </div>
-            <div className={ 'body' } >
+            <br/>
+            <br/>
+            <div>
               <MPLAgreementComponent details={ details } />
             </div>
-          </div>
-        </Accordion>
+            <br/>
+            <br/>
+          </Card>
+        <div></div>
       </div>
-    </div>
     )
   }
 }

@@ -1,5 +1,3 @@
-
-
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -10,7 +8,6 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import { CircularLoader } from '../../ub-components'
 
 import './styles/transactionDetails.css'
-
 
 import DentalLoaDetailsFragment from './fragments/DentalLoaDetailsFragment'
 import DentalRDetailsFragment from './fragments/DentalRDetailsFragment'
@@ -159,9 +156,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
         <div>
         <i className={ 'back-arrow' } onClick = {
             this.navigate.bind(this) }></i>
-          <h2 className={ 'header-margin-default' }>
-            { details ? details.benefitType.name : 'Transaction' }
-          </h2>
+
         </div>
         {
           enabledLoader ?
