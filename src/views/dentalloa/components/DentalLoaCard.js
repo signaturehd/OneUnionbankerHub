@@ -82,7 +82,7 @@ class DentalLoaCard extends Component {
                   <DatePicker
                     dateFormat = { 'DD-MM-YYYY' }
                     readOnly
-                    value={  preferredDate ? preferredDate : 'Preferrred Schedule' }
+                    value={  preferredDate ? preferredDate : 'Preferred Schedule' }
                     selected = {  preferredDate ? moment(preferredDate, 'MM/DD/YYYY') : moment() }
                     onChange = { this.onChange }
                     className = { 'calendar font-size-14px' }

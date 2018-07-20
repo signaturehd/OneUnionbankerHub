@@ -9,7 +9,8 @@ import {
   Modal,
   GenericTextBox,
   GenericButton,
-  CircularLoader
+  CircularLoader,
+  Card,
 } from '../../ub-components/'
 
 import './styles/notice-styles.css'
@@ -58,6 +59,14 @@ class Notice extends BaseMVPView {
           noticeResponse.forms.map((form, key) =>
             <div key = { key }>
               <div dangerouslySetInnerHTML = {{ __html : form.form }}></div>
+              <br/>
+              {  
+              form.aggregateMessage ?
+                <Card>
+                  <div dangerouslySetInnerHTML = {{ __html : form.aggregateMessage }}></div>
+                </Card> :
+                <div></div>
+              }
             </div>
           )
         }

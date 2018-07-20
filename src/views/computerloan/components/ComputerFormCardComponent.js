@@ -398,7 +398,7 @@ class ComputerLoanCardComponent extends Component {
                         this.setState({ amountValue : '' })
                      } }
                   placeholder={ 'Desired Amount' }
-                  maxLength={ 11 }
+                  maxLength={ 7 }
                   type={ 'text' }/>
                 <GenericTextBox
                   value={ `${ termOfLoan ? termOfLoan : '' } (${ rateOfLoan ? rateOfLoan : '' } %)` }
