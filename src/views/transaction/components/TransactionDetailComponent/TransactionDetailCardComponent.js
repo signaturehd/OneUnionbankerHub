@@ -24,7 +24,7 @@ class TransactionDetailCardComponent extends Component {
             <span></span>
           </div>
           <div>
-            <div>
+            <div className={ '' }>
               <h2> Date Filed: </h2>
             </div>
             <div>
