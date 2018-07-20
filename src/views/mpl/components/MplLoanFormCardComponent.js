@@ -38,7 +38,7 @@ class MotorcycleLoanCardComponent extends Component {
         poaText : '',
         amountValue: '',
         modeOfLoanText: '',
-        modeOfLoanId : '',
+        modeOfLoanId : 1,
         termOfLoan: '',
         rateOfLoan: '',
         termId: '',
@@ -120,6 +120,7 @@ class MotorcycleLoanCardComponent extends Component {
      }
 
      sendFormData (
+       computation,
        dealerName,
        amountValue,
        modeOfLoanId,
@@ -138,6 +139,30 @@ class MotorcycleLoanCardComponent extends Component {
               })
             )
           }
+        else if (modeOfLoanId === 2) {
+          if (selectedOffsetLoan.length === 0) {
+            store.dispatch(NotifyActions.addNotify({
+                title : 'Warning' ,
+                message : 'Please select your Offset Loan',
+                type : 'warning',
+                duration : 2000
+              })
+            )
+          } else {
+            if ( amountValue < computation) {
+              store.dispatch(NotifyActions.addNotify({
+                  title : 'Warning' ,
+                  message : `We're sorry but the selected existing loans have exceeded your principal amount.
+                      These cannot be deducted from your new loan. Kindly select within the appropriate balance.`,
+                  type : 'warning',
+                  duration : 2000
+                })
+              )
+            } else {
+               this.setState({ showReviewModal: true })
+            }
+          }
+        }
         else if (!this.validator(selectedTerm)) {
              store.dispatch(NotifyActions.addNotify({
                 title : 'Warning' ,
@@ -245,7 +270,7 @@ class MotorcycleLoanCardComponent extends Component {
       arrayObject.push(imageUrlObject)
       arrayObject.push(imageUrlObject1)
 
-      const computation=computationOffsetLoan.reduce((a, b) => a + b, 0)
+      const computation = computationOffsetLoan.reduce((a, b) => a + b, 0)
       let computationAmountMaximum = 0
       if(loanType.toString() === '3') {
         computationAmountMaximum = 100000
@@ -276,7 +301,7 @@ class MotorcycleLoanCardComponent extends Component {
             showConfirmationView &&
             <Modal>
               <center>
-                Are you sure you want to sumbit this form ?
+                Are you sure you want to submit this form ?
                 <div className={ 'grid-global' }>
                   <GenericButton
                     onClick={ () => this.setState({ showConfirmationView : false, showReviewModal : false }) }
@@ -436,27 +461,13 @@ class MotorcycleLoanCardComponent extends Component {
                   value={ modeOfLoanText ? modeOfLoanText : 'New Loan' }
                   type={ 'text' }/>
                 {
-                  modeOfLoanText ?
+                  modeOfLoanId === 2 ?
 
                     <GenericTextBox
                       value={ amountValue ? amountValue : '' }
-                      onChange={
-                        (e) =>
-                          new MinMaxNumberValidation(-1, computationAmountMaximum).isValid(e.target.value) ||
-                          computation >= e.target.value ?
-                            this.setState({
-                              amountValue: Number(e.target.value.replace(/[^0-9]/g, ''))
-                            }) :
-                            computationAmountMaximum === 100000 ?
-                            this.setState({
-                              amountValue: '',
-                              showErrorModal: this.desiredAmountValidator(e.target.value) }) :
-                            this.setState({
-                              amountValue: '',
-                              showOffsetMessageModal: this.desiredAmountValidator(e.target.value)})
-                      }
+                      onChange={ (e) => this.setState({amountValue : parseInt(e.target.value)}) }
                       placeholder={ 'Desired Amount' }
-                      maxLength={ 11 }
+                      maxLength={ 7 }
                       type={ 'text' }/>
                     :
                     <GenericTextBox
@@ -469,7 +480,7 @@ class MotorcycleLoanCardComponent extends Component {
                           )
                        }
                       placeholder={ 'Desired Amount' }
-                      maxLength={ 11 }
+                      maxLength={ 7 }
                       type={ 'text' }
                     />
                   }
@@ -637,6 +648,7 @@ class MotorcycleLoanCardComponent extends Component {
                     type={ 'button' }
                     text={ 'continue' }
                     onClick={ () => this.sendFormData(
+                      computation,
                       dealerName,
                       amountValue,
                       modeOfLoanId,
