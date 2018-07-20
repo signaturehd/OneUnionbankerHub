@@ -70,20 +70,16 @@ class EducationAidFormCardComponent extends Component {
   }
 
   totalReimbursableAmount (computations, gwa, totalFee) {
-    let result
-    computations &&
-    computations.map(
-      (value, key) => {
-        if (gwa >= value.minimum && gwa <= value.maximum) {
-          result=parseFloat(totalFee) * parseFloat(value.percent)
-        }
-        else if (gwa <= value.minimum && gwa >= value.maximum) {
-          result=parseFloat(totalFee) * parseFloat(value.percent)
+    if (computations) {
+      for (const i in computations) {
+        if ((gwa >= computations[i].maximum && gwa <= computations[i].minimum) ||
+            (gwa >= computations[i].minimum && gwa <= computations[i].maximum)) {
+          return parseFloat(totalFee) * parseFloat(computations[i].percent)
         }
       }
-    )
-    return result ? parseFloat(result).toFixed(2) : 0.00
-
+    } else {
+      return 0
+    }
   }
 
   onGetClicked (
