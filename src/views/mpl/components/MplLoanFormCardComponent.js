@@ -171,11 +171,9 @@ class MotorcycleLoanCardComponent extends Component {
          }
          else {
            if (modeOfLoanId === '') {
-             if(this.props.offset[0].name && this.props.offset[0].id) {
-               let offsetId = this.props.offset[0].id
-               let offsetName = this.props.offset[0].name
-               this.setState({ modeOfLoanId : offsetId, modeOfLoanText : offsetName, showReviewModal: true  })
-             }
+             let offsetId = this.props.offset[0].id
+             let offsetName = this.props.offset[0].name
+             this.setState({ modeOfLoanId : offsetId, modeOfLoanText : offsetName, showReviewModal: true  })
           }
            else {
              this.setState({ showReviewModal: true })

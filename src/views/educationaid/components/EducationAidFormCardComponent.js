@@ -392,6 +392,7 @@ class EducationAidFormCardComponent extends Component {
                   }
                 }
               maxLength = { 4 }
+              errorMessage = { ((parseInt(totalReimbursment) ===0) && gwaText) ? 'Invalid GWA' : '' }
               placeholder={ 'General Weighted Average (GWA)' }
               type={ 'text' }/>
             <GenericTextBox
