@@ -458,7 +458,7 @@ class MotorcycleLoanCardComponent extends Component {
                               showOffsetMessageModal: this.desiredAmountValidator(e.target.value)})
                       }
                       placeholder={ 'Desired Amount' }
-                      maxLength={ 11 }
+                      maxLength={ 7 }
                       type={ 'text' }/>
                     :
                     <GenericTextBox
@@ -471,7 +471,7 @@ class MotorcycleLoanCardComponent extends Component {
                           )
                        }
                       placeholder={ 'Desired Amount' }
-                      maxLength={ 11 }
+                      maxLength={ 7 }
                       type={ 'text' }
                     />
                   }
