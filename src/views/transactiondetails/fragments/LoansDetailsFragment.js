@@ -39,15 +39,14 @@ class LoansDetailsFragment extends Component {
               <div className = { 'transaction-banner transaction-mpl' }>
                 <div className={ 'transaction-banner-card' }>
                    <div>
-                     <h1 className = { 'transaction-details-name font-weight-normal'}>
+                     <h4 className = { 'transaction-details-name font-weight-normal'}>
                        {
-                         details &&
-                         details.benefitType &&
-                         details.benefitType.name ?
-                         details.benefitType.name :
-                         '(Not Yet Provided)'
+                         details ?
+                           details.benefitType &&
+                           details.benefitType.name :
+                          '(Not Yet Provided)'
                        }
-                      </h1>
+                     </h4>
                       <h4 className = { 'transaction-details-name1' }>
                         { details && moment(details.dateFiled).format('dddd, MMMM d, YYYY, h:MM:ss A') }
                       </h4>

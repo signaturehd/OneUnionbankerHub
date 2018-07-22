@@ -13,35 +13,65 @@ class TransactionCardComponent extends Component {
     super(props)
   }
 
+
   render () {
     const { detail, onClick, className } = this.props
+
+    let statusStylePattern = ''
+    const detailStatus = detail && detail.status.toLowerCase()
+    if(detailStatus === 'cancelled') {
+      statusStylePattern = 'cancel'
+    } else if (detailStatus === 'for crediting') {
+      statusStylePattern = 'crediting'
+    } else if (detailStatus === 'credited') {
+      statusStylePattern = 'credited'
+    } else if (detailStatus === 'for reconciliation') {
+      statusStylePattern = 'reconciliation'
+    } else if (detailStatus === 'cleared') {
+      statusStylePattern = 'clear'
+    } else {
+
+    }
 
     return (
       <Card className = { 'transaction-component' }>
         <div>
           <div className = { 'text-align-justify' }>
-            <br/>
             <h4>
               { detail.benefit }
             </h4>
-            <h4>
-              { detail.referenceNumber }
-            </h4>
-            <h4 className = { 'transaction-component-date' }>
-              {
-                moment(detail.applicationDate).format('MMMM DD, YYYY')
-              }
-            </h4>
+            <br/>
+            <div className = { 'transaction-icons-details-grid' }>
+              <div>
+                <span className = { 'transaction-card-icon-settings global-icons-referenceNumber' }></span>
+              </div>
+              <div>
+                <h4>
+                  { detail.referenceNumber }
+                </h4>
+              </div>
+            </div>
+            <div className = { 'transaction-icons-details-grid' }>
+              <div>
+                <span className = { 'transaction-card-icon-settings global-icons-referenceNumber' }></span>
+              </div>
+              <div>
+                <h4 className = { 'transaction-component-date' }>
+                  {
+                    moment(detail.applicationDate).format('MMMM DD, YYYY')
+                  }
+                </h4>
+              </div>
+            </div>
           </div>
-          <div>
-              <center>
-                <GenericButton
-                  text={ detail.status }
-                />
-                <GenericButton className = { 'transaction-component-button' }
-                  text = { 'View Details' }
-                  onClick = { () => onClick(detail, true) }/>
-              </center>
+          <div className = { 'grid-global' }>
+            <GenericButton
+              className = { `transaction-component-status-${ statusStylePattern }` }
+              text = { detail.status }
+              />
+            <GenericButton className = { 'transaction-component-button' }
+              text = { 'View Details' }
+              onClick = { () => onClick(detail, true) }/>
           </div>
         </div>
       </Card>

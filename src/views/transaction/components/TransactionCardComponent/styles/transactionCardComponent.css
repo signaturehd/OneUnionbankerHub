@@ -16,9 +16,9 @@
   transition: box-shadow .3s;
   border: 1px solid #ccc;
   box-shadow: none;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
   padding-bottom: 10px;
 }
 
@@ -36,6 +36,11 @@
   grid-template-columns: 1fr 1fr;
 }
 
+.transaction-icons-details-grid {
+  display: grid;
+  grid-template-columns: .13fr 1fr;
+}
+
 @media screen and (max-width: 768px) {
     .transaction-component-column {
         width: 100%;
@@ -45,7 +50,6 @@
   font-weight: bold;
 }
 .transaction-component-button{
-  margin-top: 30px;
   border-radius: 0px;
   color: #ff8a00;
   border: 0px;
@@ -56,4 +60,77 @@
 
 .transaction-component-button:hover{
   font-size: 12px;
+}
+
+.transaction-component-status {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #09af00;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-component-status-credited {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #00c853;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-component-status-cancel {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #d50000;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-component-status-reconciliation {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #ff8a00;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-component-status-crediting {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #09af00;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-component-status-process {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #ffd600;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-component-status-clear {
+  border-radius: 1px;
+  color: #ff8a00;
+  border: 0px;
+  background: #fff;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-card-icon-settings {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 20px;
+  width: 20px;
+  background-repeat: no-repeat;
 }
