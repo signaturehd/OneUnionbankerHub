@@ -52,6 +52,7 @@ class TransactionPersonalFragment extends BaseMVPView {
       view,
       transaction,
       transactionResponse,
+      index
     } = this.state
     const search = this.state.searchString.trim().toLowerCase()
     if (search.length > 0) {
@@ -67,36 +68,39 @@ class TransactionPersonalFragment extends BaseMVPView {
     } = this.props
 
     return (
-      <div>
-        <input type = 'text'
-          className = 'transSearchBar'
-          ref='search'
-          placeholder = {'Search Transactions'}
-          value = { this.state.searchString }
-          onChange = { this.updateSearch } />
-      {
-        transactions ?
-        <div className = { 'transaction-container' }>
-          {
-             this.state.transactions.slice(0, this.state.index).map((transaction, key) => (
-              <TransactionCardComponent
-                detail = { transaction }
-                key = { key >= this.state.index }
-                transactions = {transactions}
-                onClick = { transaction =>
-                  this.props.history.push(`/mybenefits/transactions/personal/${transaction.id}`) }
-              />
-            ))
-          }
-        </div>        :
-        <div className = {'transactions-loader'}>
-          <center>
-            <CircularLoader show = {true} />
-          </center>
+      <div className = { 'transaction-details-personal-grid-row' }>
+        <div className = { 'grid-global' }>
+          <div></div>
+          <div>
+            <input type = { 'text' }
+              className = { 'transaction-search-bar' }
+              ref = { 'search' }
+              placeholder = { 'Search Transactions' }
+              value = { this.state.searchString }
+              onChange = { this.updateSearch } />
+          </div>
         </div>
-      }
-      <center>
-  </center>
+        {
+          transactions ?
+          <div className = { 'transaction-details-container-grid' }>
+            {
+               this.state.transactions.slice(0, index).map((transaction, key) => (
+                <TransactionCardComponent
+                  detail = { transaction }
+                  key = { key >= index }
+                  transactions = {transactions}
+                  onClick = { transaction =>
+                    this.props.history.push(`/mybenefits/transactions/personal/${transaction.id}`) }
+                />
+              ))
+            }
+          </div>        :
+          <div className = { 'transactions-loader' }>
+            <center>
+              <CircularLoader show = { true } />
+            </center>
+          </div>
+        }
       </div>
     )
   }

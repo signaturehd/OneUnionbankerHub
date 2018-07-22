@@ -8,33 +8,42 @@ import moment from 'moment'
 import './styles/transactionCardComponent.css'
 
 class TransactionCardComponent extends Component {
+
   constructor (props) {
     super(props)
   }
 
   render () {
-    const { detail, onClick } = this.props
+    const { detail, onClick, className } = this.props
+
     return (
-      <Card className = { 'transaction-card'}>
-      <div className = {'column'}>
-        <div className = {'transaction-header'} >
+      <Card className = { 'transaction-component' }>
+        <div>
+          <div className = { 'text-align-justify' }>
+            <br/>
+            <h4>
+              { detail.benefit }
+            </h4>
+            <h4>
+              { detail.referenceNumber }
+            </h4>
+            <h4 className = { 'transaction-component-date' }>
+              {
+                moment(detail.applicationDate).format('MMMM DD, YYYY')
+              }
+            </h4>
+          </div>
+          <div>
+              <center>
+                <GenericButton
+                  text={ detail.status }
+                />
+                <GenericButton className = { 'transaction-component-button' }
+                  text = { 'View Details' }
+                  onClick = { () => onClick(detail, true) }/>
+              </center>
+          </div>
         </div>
-        <div className = { 'transaction-body' }>
-          <h5 className = { 'transaction-title' }>{ detail.benefit }</h5>
-          <h3 className = { 'transaction-status' }>{detail.status}</h3>
-          <h3 className = { 'transaction-status' }>{detail.referenceNumber}</h3>
-          <h4 className = { 'transaction-date' }>{moment(detail.applicationDate).format('MMMM DD, YYYY')}</h4>
-        </div>
-      </div>
-      <div className = {'column'}>
-        <div className = {'transaction-footer'}>
-          <center>
-            <GenericButton className = {'trans-button'}
-              text = {'View Details'}
-              onClick = { () => onClick(detail, true) }/>
-          </center>
-        </div>
-      </div>
       </Card>
     )
   }
@@ -43,6 +52,7 @@ class TransactionCardComponent extends Component {
 TransactionCardComponent.propTypes = {
   detail : PropTypes.object,
   onClick : PropTypes.func,
+  className : PropTypes.string,
 }
 
 export default TransactionCardComponent
