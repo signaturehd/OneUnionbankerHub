@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
+
 import PropTypes from 'prop-types'
 import BaseMVPView from '../common/base/BaseMVPView'
+
 import './styles/transaction.css'
 import { Card, CircularLoader, GenericButton } from '../../ub-components/'
+
+import TransactionPersonalFunctional from './controller/TransactionPersonalController'
+
 import Presenter from './presenter/TransactionPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 
@@ -11,16 +16,15 @@ import TransactionCardComponent
 from './components/TransactionCardComponent/TransactionCardComponent'
 
 class TransactionPersonalFragment extends BaseMVPView {
+
   constructor (props) {
     super(props)
     this.state = {
-      view : false,
       transactionId : null,
       transactions: null,
-      transactionResponse : null,
       transaction: null,
       searchString : '',
-      index: 100,
+      index: 4,
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
@@ -29,7 +33,7 @@ class TransactionPersonalFragment extends BaseMVPView {
     this.presenter.getTransactionsPersonal()
   }
 
-  updateSearch (e) {
+  updateSearch () {
     this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
   }
 
@@ -37,46 +41,38 @@ class TransactionPersonalFragment extends BaseMVPView {
     this.setState({ transactions })
   }
 
-  transacitonDetails (transactionResponse) {
-    this.setState({ transactionResponse })
-  }
-
-  handleClick = () => {
-   let i = this.state.index < this.state.transactions.length ? this.state.index += 4 : 4
-   this.setState({ index: i })
- }
-
   render () {
     const {
       transactions,
-      view,
       transaction,
-      transactionResponse,
+      searchString,
       index
     } = this.state
-    const search = this.state.searchString.trim().toLowerCase()
+
+    let transactionSearch = transactions
+    const search = searchString.trim().toLowerCase()
     if (search.length > 0) {
-      this.state.transactions = transactions.filter(transactions =>  transactions.benefit.toLowerCase().match(search) ||
-      transactions.referenceNumber.toLowerCase().match(search))
+          transactionSearch = transactions.filter(transactions =>
+         transactions.benefit.toLowerCase().match(search) ||
+         transactions.referenceNumber.toLowerCase().match(search))
     }
 
     const {
       onClick,
-      text,
-      path,
-      icon
     } = this.props
 
     return (
+    <div>
       <div className = { 'transaction-details-personal-grid-row' }>
         <div className = { 'grid-global' }>
           <div></div>
           <div>
-            <input type = { 'text' }
+            <input
+              type = { 'text' }
               className = { 'transaction-search-bar' }
               ref = { 'search' }
               placeholder = { 'Search Transactions' }
-              value = { this.state.searchString }
+              value = { searchString }
               onChange = { this.updateSearch } />
           </div>
         </div>
@@ -84,14 +80,14 @@ class TransactionPersonalFragment extends BaseMVPView {
           transactions ?
           <div className = { 'transaction-details-container-grid' }>
             {
-               this.state.transactions.slice(0, index).map((transaction, key) => (
-                <TransactionCardComponent
+               transactionSearch.slice(0, index).map((transaction, key) => (
+               <TransactionCardComponent
                   detail = { transaction }
-                  key = { key >= index }
-                  transactions = {transactions}
+                  key = { key  }
+                  transactions = { transactions }
                   onClick = { transaction =>
                     this.props.history.push(`/mybenefits/transactions/personal/${transaction.id}`) }
-                />
+                  />
               ))
             }
           </div>        :
@@ -102,6 +98,27 @@ class TransactionPersonalFragment extends BaseMVPView {
           </div>
         }
       </div>
+      <div className = { 'grid-global' }>
+        <GenericButton
+          className = { 'transaction-component-button' }
+          text = { 'View Less' }
+          onClick = { () =>
+            this.setState({
+              index : new TransactionPersonalFunctional().indexDecreased(index)
+              })
+            }
+          />
+        <GenericButton
+          className = { 'transaction-component-button' }
+          text = { 'View More' }
+          onClick = { () =>
+            this.setState({
+              index : new TransactionPersonalFunctional().indexIncreased(index)
+              })
+            }
+          />
+      </div>
+    </div>
     )
   }
 }

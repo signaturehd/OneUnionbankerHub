@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
 import Presenter from '../../presenter/TransactionPresenter'
 import BaseMVPView from '../../../common/base/BaseMVPView'
+
+import TransactionPersonalController from '../../controller/TransactionPersonalController'
+
 import { Card, GenericButton } from '../../../../ub-components'
+import './styles/transactionCardComponent.css'
 import moment from 'moment'
 
-import './styles/transactionCardComponent.css'
 
 class TransactionCardComponent extends Component {
 
@@ -13,25 +17,14 @@ class TransactionCardComponent extends Component {
     super(props)
   }
 
-
   render () {
-    const { detail, onClick, className } = this.props
+    const {
+      detail,
+      onClick,
+      className
+    } = this.props
 
-    let statusStylePattern = ''
     const detailStatus = detail && detail.status.toLowerCase()
-    if(detailStatus === 'cancelled') {
-      statusStylePattern = 'cancel'
-    } else if (detailStatus === 'for crediting') {
-      statusStylePattern = 'crediting'
-    } else if (detailStatus === 'credited') {
-      statusStylePattern = 'credited'
-    } else if (detailStatus === 'for reconciliation') {
-      statusStylePattern = 'reconciliation'
-    } else if (detailStatus === 'cleared') {
-      statusStylePattern = 'clear'
-    } else if (detailStatus === 'for processing') {
-      statusStylePattern = 'process'
-    }
 
     return (
       <Card className = { 'transaction-component' }>
@@ -68,7 +61,7 @@ class TransactionCardComponent extends Component {
           <div className = { 'grid-global' }>
             <div>
               <GenericButton
-                className = { `transaction-component-status-${ statusStylePattern }` }
+                className = { `transaction-component-status-${ new TransactionPersonalController().checkedBenefitStatus(detailStatus) }` }
                 text = { detail.status }
                 />
             </div>
