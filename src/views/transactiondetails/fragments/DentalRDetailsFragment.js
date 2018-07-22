@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import moment from 'moment'
-
 import { Card } from '../../../ub-components'
-
 import './styles/detailsFragment.css'
 /*
 Transaction DentalR Form Agreement, Form Agreement, & File Attacment
@@ -15,6 +13,8 @@ import DentalRFileComponent from
   '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
 import DentalRAgreementComponent from
   '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
+
+import TransactionDetailsController from '../controller/TransactionDetailsController'
 
 class DentalRDetailsFragment extends Component {
 
@@ -27,6 +27,11 @@ class DentalRDetailsFragment extends Component {
       transactionsPerson,
       attachments
     } = this.props
+
+    const detailStatus =
+      details &&
+      details.status &&
+      details.status.name.toLowerCase()
 
     return (
       <div className={ 'transaction-details-global-x3' }>
@@ -51,7 +56,10 @@ class DentalRDetailsFragment extends Component {
                    </div>
                    <div className={ 'transaction-details-grid-row' }>
                      <div></div>
-                     <div className = { 'transaction-details-status font-weight-bold' }>
+                     <div></div>
+                     <div className =
+                       { `font-weight-bolder transaction-details-status-${ new TransactionDetailsController().checkedBenefitStatus(detailStatus) }` }
+                      >
                         {
                           details &&
                           details.status.name ?
@@ -59,10 +67,10 @@ class DentalRDetailsFragment extends Component {
                           '(Not Yet Provided)'
                         }
                       </div>
-                   </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
             <br/>
             <br/>
             <div>

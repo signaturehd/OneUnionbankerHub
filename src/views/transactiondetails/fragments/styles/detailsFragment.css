@@ -69,7 +69,11 @@
 
 .transaction-details-grid-row {
   display: grid;
-  grid-template-columns: .5fr .5fr;
+  grid-template-columns: .2fr .2fr .6fr;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .transaction-banner-card {
@@ -78,24 +82,6 @@
   position: absolute;
   margin-left: 25px;
   margin-top: 157px;
-}
-
-.transaction-details-status {
-  -webkit-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  width: max-content;
-  padding: 11px;
-  box-shadow: crimson;
-  -webkit-border-radius: 50px;
-  border-radius: 5px;
-  font: normal 14px/1;
-  color: rgb(255, 255, 255);
-  text-align: center;
-  border-color: 1px black;
-  -o-text-overflow: ellipsis;
-  background: #ff8a00;
 }
 
 .transaction-details-name{
@@ -115,4 +101,67 @@
 .transaction-title-margin {
   margin-left: 30px;
   margin-top: 30px;
+}
+
+.transaction-details-status {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #09af00;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-status-credited {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #00c853;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-status-cancel {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #d50000;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-status-reconciliation {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #ff8a00;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-status-crediting {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #09af00;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-status-process {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #00a1ff;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-status-clear {
+  border-radius: 1px;
+  color: #ff8a00;
+  border: 0px;
+  background: #fff;
+  cursor: initial;
+  height: 35px;
 }
