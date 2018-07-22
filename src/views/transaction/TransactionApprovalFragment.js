@@ -74,7 +74,8 @@ class TransactionApprovalFragment extends BaseMVPView {
             newTrans &&
             newTrans.map((transaction, key) => (
               <TransactionCardComponent
-                detail = { transaction } key = { key }
+                detail = { transaction }
+                key = { key }
                 onClick = { transaction =>
                   this.props.history.push(`/mybenefits/transactions/approval/${transaction.id}`) }
               />

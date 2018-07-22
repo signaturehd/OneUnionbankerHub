@@ -29,15 +29,15 @@ class TransactionCardComponent extends Component {
       statusStylePattern = 'reconciliation'
     } else if (detailStatus === 'cleared') {
       statusStylePattern = 'clear'
-    } else {
-
+    } else if (detailStatus === 'for processing') {
+      statusStylePattern = 'process'
     }
 
     return (
       <Card className = { 'transaction-component' }>
-        <div>
-          <div className = { 'text-align-justify' }>
-            <h4>
+        <div className= { 'transaction-component-cards-row' }>
+          <div className = { 'text-align-justify font-size-14px font-weight-normal' }>
+            <h4 className = { 'font-weight-bolder' }>
               { detail.benefit }
             </h4>
             <br/>
@@ -53,7 +53,7 @@ class TransactionCardComponent extends Component {
             </div>
             <div className = { 'transaction-icons-details-grid' }>
               <div>
-                <span className = { 'transaction-card-icon-settings global-icons-referenceNumber' }></span>
+                <span className = { 'transaction-card-icon-settings global-icons-calendar' }></span>
               </div>
               <div>
                 <h4 className = { 'transaction-component-date' }>
@@ -63,15 +63,20 @@ class TransactionCardComponent extends Component {
                 </h4>
               </div>
             </div>
+              <br/>
           </div>
           <div className = { 'grid-global' }>
-            <GenericButton
-              className = { `transaction-component-status-${ statusStylePattern }` }
-              text = { detail.status }
-              />
-            <GenericButton className = { 'transaction-component-button' }
-              text = { 'View Details' }
-              onClick = { () => onClick(detail, true) }/>
+            <div>
+              <GenericButton
+                className = { `transaction-component-status-${ statusStylePattern }` }
+                text = { detail.status }
+                />
+            </div>
+            <div>
+              <GenericButton className = { 'transaction-component-button' }
+                text = { 'View Details' }
+                onClick = { () => onClick(detail, true) }/>
+            </div>
           </div>
         </div>
       </Card>

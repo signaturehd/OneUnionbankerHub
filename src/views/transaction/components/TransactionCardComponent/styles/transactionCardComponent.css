@@ -26,9 +26,9 @@
   box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 
-.transaction-component-row {
-    display: table;
-    clear: both;
+.transaction-component-cards-row{
+  display: grid;
+  grid-template-rows: 1fr .3fr;
 }
 
 .transaction-component-column-grid {
@@ -56,6 +56,7 @@
   box-shadow: none;
   background: transparent;
   cursor: pointer;
+  min-width: 80px;
 }
 
 .transaction-component-button:hover{
@@ -111,7 +112,7 @@
   border-radius: 1px;
   color: #fff;
   border: 0px;
-  background: #ffd600;
+  background: #00a1ff;
   cursor: initial;
   height: 35px;
 }
