@@ -20,7 +20,6 @@ class DependentsModal extends Component {
       dependents,
       profileName,
       backgroundColor }=this.props
-    console.log(this.props)
     const { isDismisable }=this.state
 
     return (

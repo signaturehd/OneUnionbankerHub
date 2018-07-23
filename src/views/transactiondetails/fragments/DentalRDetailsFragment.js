@@ -21,6 +21,7 @@ class DentalRDetailsFragment extends Component {
   constructor (props) {
     super(props)
   }
+
   render () {
     const {
       details,
@@ -28,10 +29,10 @@ class DentalRDetailsFragment extends Component {
       attachments
     } = this.props
 
-    const detailStatus =
-      details &&
-      details.status &&
-      details.status.name.toLowerCase()
+    const detailStatus = new TransactionDetailsController().checkedBenefitStatus(details.status)
+    const benefitType = new TransactionDetailsController().checkedBenefitType(details.benefitType)
+    const dateFiled = new TransactionDetailsController().checkedDateFilled(details)
+    const benefitLabel = new TransactionDetailsController().getBenefitLabelStatus(details.status)
 
     return (
       <div className={ 'transaction-details-global-x3' }>
@@ -42,36 +43,24 @@ class DentalRDetailsFragment extends Component {
                 <div className={ 'transaction-banner-card' }>
                    <div>
                      <h1 className = { 'transaction-details-name font-weight-normal'}>
-                       {
-                         details &&
-                         details.benefitType &&
-                         details.benefitType.name ?
-                         details.benefitType.name :
-                         '(Not Yet Provided)'
-                       }
+                       { benefitType }
                       </h1>
                       <h4 className = { 'transaction-details-name1' }>
-                        { details && moment(details.dateFiled).format('dddd, MMMM d, YYYY, h:MM:ss A') }
+                        { dateFiled }
                       </h4>
                    </div>
                    <div className={ 'transaction-details-grid-row' }>
                      <div></div>
                      <div></div>
                      <div className =
-                       { `font-weight-bolder transaction-details-status-${ new TransactionDetailsController().checkedBenefitStatus(detailStatus) }` }
+                       { `font-weight-bolder transaction-details-status-${ detailStatus }` }
                       >
-                        {
-                          details &&
-                          details.status.name ?
-                          details.status.name :
-                          '(Not Yet Provided)'
-                        }
+                        Transaction Status: { benefitLabel }
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            <br/>
             <br/>
             <div>
               <DentalRDetailsComponent
@@ -80,7 +69,6 @@ class DentalRDetailsFragment extends Component {
               />
             </div>
             <br/>
-            <br/>
             <div>
               <DentalRFileComponent
                 details = { details }
@@ -88,23 +76,7 @@ class DentalRDetailsFragment extends Component {
               />
             </div>
             <br/>
-            <br/>
-            <div>
-             <center>
-               <h2 className = { 'details-bold' }>
-                 Procedures
-               </h2>
-             </center>
-             <br/>
-             {
-               details && details.details.Procedures.map((procedure, key) =>
-                 <center key>
-                   <h2>{ procedure.Name }</h2>
-                   <h2>&#x20b1;{ procedure.Amount }</h2>
-                 </center>
-               )
-             }
-            </div>
+
           </Card>
         <div></div>
       </div>

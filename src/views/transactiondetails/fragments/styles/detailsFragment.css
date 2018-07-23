@@ -7,8 +7,7 @@
 }
 
 .transaction-card-details-form {
-  padding : 10px 50px;
-  grid-template-columns: .4fr 1fr;
+  grid-template-columns: .1fr 1fr;
   display: grid;
 }
 
@@ -164,4 +163,9 @@
   background: #fff;
   cursor: initial;
   height: 35px;
+}
+
+.transaction-details-grid-row-x2 {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
 }
