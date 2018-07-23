@@ -172,3 +172,15 @@ h1, h2, h3, h4, h5, h6, p{
 .global-icons-next {
   background-image: url('../images/icons/ic_next.png');
 }
+
+.global-icons-accountNumber {
+  background-image: url('../images/icons/ic_account_balance_wallet_grey_600_36dp.png');
+}
+
+.global-icons-patient-name {
+  background-image: url('../images/icons/ic_transacion_patient.png');
+}
+
+.global-icons-patient-procedure {
+  background-image: url('../images/icons/ic_insert_drive_file_grey_500_18dp.png');
+}
