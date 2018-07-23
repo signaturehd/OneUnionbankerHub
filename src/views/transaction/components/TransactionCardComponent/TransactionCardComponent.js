@@ -7,7 +7,7 @@ import BaseMVPView from '../../../common/base/BaseMVPView'
 import TransactionPersonalController from '../../controller/TransactionPersonalController'
 
 import { Card, GenericButton } from '../../../../ub-components'
-import './styles/transactionCardComponent.css'
+import '../styles/transactionCardComponent.css'
 import moment from 'moment'
 
 
