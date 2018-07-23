@@ -10,7 +10,9 @@ import {
   GenericTextBox,
   Card,
   CircularLoader,
-  Notify
+  Notify,
+  GenericInput,
+  GenericFileInput
 } from '../../ub-components'
 
 import './styles/login.css'
@@ -112,15 +114,17 @@ class LoginView extends BaseMVPView {
         <Card className = {'login-form'}>
           <div className={ 'login-version' }>v 3.1</div>
           <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
-            <GenericTextBox
+            <br/>
+            <GenericInput
               autocomplete='off'
               onChange = { e => this.setState({ username: e.target.value }) }
-              placeholder = { 'Employee ID' }
+              text = { 'Employee ID' }
               type = { 'text' }/>
-            <GenericTextBox
+            <br/>
+            <GenericInput
               autocomplete='off'
               onChange = { e => this.setState({ password: e.target.value }) }
-              placeholder = { 'Password' }
+              text = { 'Password' }
               type = { this.state.type }
               className={ 'password__input' }/>
               <span className={'password__show'} onClick={this.showHide}>{this.state.type === 'input' ? '' : ''}</span>

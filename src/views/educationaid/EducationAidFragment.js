@@ -146,6 +146,15 @@ class EducationAidFragment extends BaseMVPView {
        })
      )
     }
+    else if (parseInt(data.totalReimbursment) === 0) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Education Aid' ,
+         message : 'Invalid GWA',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    }
      else if (!(data.fileOR && data.fileCOG && data.fileRegForm)) {
       store.dispatch(NotifyActions.addNotify({
           title : 'Education Aid',

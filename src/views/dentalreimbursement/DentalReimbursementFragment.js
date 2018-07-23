@@ -29,7 +29,7 @@ class DentalReimbursementFragment extends BaseMVPView {
       showBenefitFeedbackModal : false,
       showNoticeModal : false,
       showConfirmation : false,
-
+      attachmentArray : [],
     }
   }
 
@@ -60,6 +60,14 @@ class DentalReimbursementFragment extends BaseMVPView {
     this.setState({
       dependents: validateDentalReimbursementResp.dependents,
     })
+
+    const { attachments } = validateDentalReimbursementResp
+    const updatedAttachment = [...this.state.attachmentArray]
+    attachments && attachments.map((attachment, key) => {
+      updatedAttachment.push({name: attachment})
+    })
+
+    this.setState({ attachmentArray : updatedAttachment })
   }
 
   render () {
@@ -75,6 +83,7 @@ class DentalReimbursementFragment extends BaseMVPView {
       showBenefitFeedbackModal,
       noticeResponse,
       response,
+      attachmentArray,
     } = this.state
 
     return (
@@ -124,6 +133,7 @@ class DentalReimbursementFragment extends BaseMVPView {
                 <CircularLoader show = {this.state.disabled}/>
                </center>               :
               <DentalReimbursementCard
+                attachments = { attachmentArray }
                 presenter = { this.presenter }
                 dependents = { dependents }/>
             }
