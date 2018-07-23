@@ -9,7 +9,8 @@ import {
   Modal,
   GenericTextBox,
   GenericButton,
-  CircularLoader
+  CircularLoader,
+  Card,
 } from '../../ub-components/'
 
 import './styles/notice-styles.css'
@@ -58,6 +59,14 @@ class Notice extends BaseMVPView {
           noticeResponse.forms.map((form, key) =>
             <div key = { key }>
               <div dangerouslySetInnerHTML = {{ __html : form.form }}></div>
+              <br/>
+              {  
+              form.aggregateMessage ?
+                <Card>
+                  <div dangerouslySetInnerHTML = {{ __html : form.aggregateMessage }}></div>
+                </Card> :
+                <div></div>
+              }
             </div>
           )
         }
@@ -86,7 +95,7 @@ class Notice extends BaseMVPView {
             <Modal
               >
               <center>
-                <h4> Are you sure you want to Cancel your form ? </h4>
+                <h4> By not confirming, your application will not proceed. Are you sure you want to cancel ? </h4>
                 <div className={ 'grid-global' }>
                   <GenericButton
                     text={ 'No' }

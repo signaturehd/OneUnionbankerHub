@@ -199,3 +199,11 @@ label:hover {
   border-radius: 5px !important;
   grid-area: card !important;
 }
+
+.benefits-container-text {
+  padding: 0%;
+}
+
+.benefits-container-group{
+  margin-top: 15px;
+}
