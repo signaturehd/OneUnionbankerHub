@@ -140,11 +140,12 @@ class LoginView extends BaseMVPView {
               </center>              :
               <div>
                 <br/>
+                <br/>
                   <GenericButton
                     disabled = {this.state.disabled}
-                    className = { 'login-button' }
                     text="Login"
                     onClick = { () => this.presenter.login(this.state.username, this.state.password)}/>
+                <br/>
                 <br/>
               </div>
 
