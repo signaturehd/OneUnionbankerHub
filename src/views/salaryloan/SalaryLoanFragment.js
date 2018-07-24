@@ -159,6 +159,8 @@ class SalaryLoanFragment extends BaseMVPView {
       purposeOfAvailmentLabel,
       fileAttachments,
       modeOfLoan,
+      modeOfLoanId,
+      modeOfLoanLabel,
       termOfLoan,
       termOfLoanId,
       termOfLoanLabel,
