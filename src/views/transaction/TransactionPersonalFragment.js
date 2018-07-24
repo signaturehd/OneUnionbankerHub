@@ -7,7 +7,7 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import './styles/transaction.css'
 import { Card, CircularLoader, GenericButton } from '../../ub-components/'
 
-import TransactionPersonalFunctional from './controller/TransactionPersonalController'
+import * as TransactionPersonalFunction from './controller/TransactionPersonalFunction'
 
 import Presenter from './presenter/TransactionPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
@@ -104,7 +104,7 @@ class TransactionPersonalFragment extends BaseMVPView {
           text = { 'View Less' }
           onClick = { () =>
             this.setState({
-              index : new TransactionPersonalFunctional().indexDecreased(index)
+              index : TransactionPersonalFunction.indexDecreased(index)
               })
             }
           />
@@ -113,7 +113,7 @@ class TransactionPersonalFragment extends BaseMVPView {
           text = { 'View More' }
           onClick = { () =>
             this.setState({
-              index : new TransactionPersonalFunctional().indexIncreased(index)
+              index : TransactionPersonalFunction.indexIncreased(index)
               })
             }
           />

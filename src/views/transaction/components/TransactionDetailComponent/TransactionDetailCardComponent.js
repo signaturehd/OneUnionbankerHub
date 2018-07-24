@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Card, GenericButton } from '../../../../ub-components/'
 
-import TransactionPersonalController from '../../controller/TransactionPersonalController'
+import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
 import TransactionProcedureCardComponent from './TransactionProcedureCardComponent'
 
 import moment from 'moment'
@@ -19,11 +19,10 @@ class TransactionDetailCardComponent extends Component {
   const { details, onClickAttachments, onClickAgreements } = this.props
 
   const transactionID = details.transactionId
-  const controller = new TransactionPersonalController()
-  const dateFilled = controller.checkedDateFilled(details)
-  const acccountNumber = controller.checkedAccountNumber(details.details)
-  const referenceNumber = controller.checkedReferenceNumber(details.details)
-  const patient = controller.checkedPatient(details.details)
+  const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
+  const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
+  const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details)
+  const patient = TransactionPersonalFunction.checkedPatient(details.details)
 
   return (
     <div className = { 'transaction-component-details-form' }>
@@ -41,7 +40,7 @@ class TransactionDetailCardComponent extends Component {
           <span className = { ' transaction-card-icon-settings global-icons-referenceNumber' }></span>
           <div>
             <h2>
-              { referenceNumber }
+              { acccountNumber }
             </h2>
             <br/>
           </div>
@@ -50,7 +49,7 @@ class TransactionDetailCardComponent extends Component {
           <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
           <div>
             <h2>
-              { acccountNumber }
+              { referenceNumber }
             </h2>
             <br/>
           </div>

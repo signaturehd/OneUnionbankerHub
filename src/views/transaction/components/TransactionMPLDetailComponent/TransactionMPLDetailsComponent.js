@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Card, GenericButton } from '../../../../ub-components/'
 
-import TransactionPersonalController from '../../controller/TransactionPersonalController'
+import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
 import TransactionMPLPurposeComponent from './TransactionMPLPurposeComponent'
 
 import moment from 'moment'
@@ -17,11 +17,10 @@ class TransactionMPLDetailComponent extends Component {
   const { details, onClickAttachments, onClickAgreements } = this.props
 
   const transactionID = details.transactionId
-  const controller = new TransactionPersonalController()
-  const dateFilled = controller.checkedDateFilled(details)
-  const acccountNumber = controller.checkedAccountNumber(details.details)
-  const referenceNumber = controller.checkedReferenceNumber(details.details)
-  const patient = controller.checkedPatient(details.details)
+  const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
+  const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
+  const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details)
+  const patient = TransactionPersonalFunction.checkedPatient(details.details)
 
   return (
     <div className = { 'transaction-component-details-form' }>
@@ -75,20 +74,21 @@ class TransactionMPLDetailComponent extends Component {
             <div></div>
         }
         <br/>
-        <br/>
       </div>
       <div>
-        {
-          details &&
-          details.details &&
-          details.details.Attachments ?
+        <br/>
+        <br/>
+          {
+            details &&
+            details.details &&
+            details.details.Attachments ?
 
-          <GenericButton className = { 'transaction-details-button' }
-            text = { 'View Attachments' }
-            onClick = { () => onClickAttachments(true) }
-          /> :
-          <div></div>
-        }
+            <GenericButton className = { 'transaction-details-button' }
+              text = { 'View Attachments' }
+              onClick = { () => onClickAttachments(true) }
+            /> :
+            <div></div>
+          }
         <br/>
         <br/>
         <GenericButton className = { 'transaction-details-button' }

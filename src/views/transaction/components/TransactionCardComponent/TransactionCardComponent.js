@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Presenter from '../../presenter/TransactionPresenter'
 import BaseMVPView from '../../../common/base/BaseMVPView'
 
-import TransactionPersonalController from '../../controller/TransactionPersonalController'
+import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
 
 import { Card, GenericButton } from '../../../../ub-components'
 import '../styles/transactionCardComponent.css'
@@ -25,6 +25,7 @@ class TransactionCardComponent extends Component {
     } = this.props
 
     const detailStatus = detail && detail.status.toLowerCase()
+    const benefitStatus = TransactionPersonalFunction.checkedBenefitStatus(detailStatus)
 
     return (
       <Card className = { 'transaction-component' }>
@@ -61,9 +62,11 @@ class TransactionCardComponent extends Component {
           <div className = { 'grid-global' }>
             <div>
               <GenericButton
-                className = { `transaction-component-status-${ new TransactionPersonalController().checkedBenefitStatus(detailStatus) }` }
+                className = { `transaction-component-status-${
+                  benefitStatus
+                }` }
                 text = { detail.status }
-                />
+              />
             </div>
             <div>
               <GenericButton className = { 'transaction-component-button' }
