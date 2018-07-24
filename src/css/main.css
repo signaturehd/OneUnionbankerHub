@@ -159,6 +159,11 @@ h1, h2, h3, h4, h5, h6, p{
   grid-template-columns: 1fr 1fr;
 }
 
+.grid-global-row-x3 {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
 /* global icons default */
 
 .global-icons-referenceNumber {
@@ -181,6 +186,6 @@ h1, h2, h3, h4, h5, h6, p{
   background-image: url('../images/icons/ic_transacion_patient.png');
 }
 
-.global-icons-patient-procedure {
+.global-icons-procedure {
   background-image: url('../images/icons/ic_insert_drive_file_grey_500_18dp.png');
 }
