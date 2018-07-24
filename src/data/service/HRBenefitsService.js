@@ -704,4 +704,29 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Medical Scheduling */
+
+  validateMedicalScheduling (token) {
+    return this.apiClient.get('v1/medical/validate', {
+      headers: { token }
+    })
+  }
+
+  addMedicalScheduling (
+    token,
+    accounToken,
+    accountNumber,
+    releasingCenter,
+    addMedicalSchedulingParam
+  ) {
+    const medicalSchedulingObject = {
+      preferredDate : addMedicalSchedulingParam.preferredDate,
+      clinicId : addMedicalSchedulingParam.clinicId,
+      packageId : addMedicalSchedulingParam.packageId,
+    }
+    return this.apiClient.post('v1/medical/submit', medicalSchedulingObject, {
+      headers : { token }
+    })
+  }
 }
