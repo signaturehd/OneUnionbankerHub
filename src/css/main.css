@@ -189,3 +189,7 @@ h1, h2, h3, h4, h5, h6, p{
 .global-icons-procedure {
   background-image: url('../images/icons/ic_insert_drive_file_grey_500_18dp.png');
 }
+
+.global-icons-payslip {
+  background-image: url('../images/icons/ic_payslip.png');
+}
