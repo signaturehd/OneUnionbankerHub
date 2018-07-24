@@ -229,29 +229,13 @@ class BereavementFormCardComponent extends Component {
     return (
       <div className={'brv-container'}>
         <div className={ 'brv-grid-column-2' }>
-          {
-            showDeceasedDependents &&
-            <BereavementDependentsModal
-              showDepedents={ showDepedents }
-              chosenDependent={ (dependentId, dependentsName, dependentsRelationship) =>
-                this.setState({
-                  dependentId,
-                  dependentsName,
-                  dependentsRelationship
-               })
-             }
-              onClose={ () => this.setState({ showDeceasedDependents: false }) }
-            />
-          }
           <div></div>
           <div className={ 'brv-form-div' }>
             <h4>
             Deceased Detail
             </h4>
-            <div className={'brv-form-div-body '}>
-              <div>
+            <div>
                 <GenericTextBox
-                  container={ 'brv-container' }
                   value={ dependentsName ? dependentsName : '' }
                   onClick={ () => this.setState({ showDeceasedDependents: true }) }
                   onFocus={ () => this.setState({ showDeceasedDependents: true }) }
@@ -286,7 +270,6 @@ class BereavementFormCardComponent extends Component {
                   { deceasedDate ? '' : <span className={ 'text-error' }>* Required Field</span> }
               </div>
               <br/>
-            </div>
           </div>
         </div>
         <br/>
@@ -296,7 +279,6 @@ class BereavementFormCardComponent extends Component {
             <h4>
             Funeral Detail
             </h4>
-            <div className={'brv-form-div-body '}>
               <div>
                 <DatePicker
                   dateFormat={ 'MM/DD/YYYY' }
@@ -370,7 +352,6 @@ class BereavementFormCardComponent extends Component {
                 />
               </div>
               <br/>
-            </div>
           </div>
         </div>
         <br/>
@@ -380,7 +361,6 @@ class BereavementFormCardComponent extends Component {
             <h4>
             Interment Detail
             </h4>
-            <div className={'brv-form-div-body '}>
               <div>
                 <DatePicker
                   dateFormat={ 'MM/DD/YYYY' }
@@ -474,7 +454,6 @@ class BereavementFormCardComponent extends Component {
                   }
                   className={ 'brv-submit' } />
               }
-            </div>
           </div>
         </div>
         {
@@ -492,7 +471,6 @@ class BereavementFormCardComponent extends Component {
               <h4>
               Form Attachments
               </h4>
-              <div className={'brv-form-div-body '}>
                 {
                   imagePreviewUrl &&
                   <div>
@@ -585,7 +563,6 @@ class BereavementFormCardComponent extends Component {
                   className={ 'brv-submit' } />
               </div>
             </div>
-          </div>
         </div>
         }
       </div>
