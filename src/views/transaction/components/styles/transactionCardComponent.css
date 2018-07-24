@@ -45,7 +45,7 @@
 
 .transaction-icons-details-grid {
   display: grid;
-  grid-template-columns: .05fr 1fr;
+  grid-template-columns: .09fr 1fr;
 }
 
 @media screen and (max-width: 768px) {
@@ -56,6 +56,7 @@
 .transaction-component-title{
   font-weight: bold;
 }
+
 .transaction-component-button{
   border-radius: 0px;
   color: #ff8a00;
@@ -66,8 +67,21 @@
   min-width: 80px;
 }
 
-.transaction-component-button:hover{
+.transaction-details-button{
+  border-radius: 0px;
+  color: #ff8a00;
+  border: 1px;
+  background: #fff;
+  cursor: pointer;
+  min-width: 80px;
+}
+
+.transaction-component-button:hover {
   font-size: 12px;
+}
+
+.transaction-details-button:hover {
+  box-shadow: 1px 2px 6px rgba(0,0,0,0.24), 1px 2px 4px rgba(0,0,0,0.40);
 }
 
 .transaction-component-status {

@@ -4,19 +4,21 @@ import moment from 'moment'
 class TransactionPersonalController {
 
   checkedDateFilled (details) {
-    return details ? details && moment(details && details.dateFiled).format('MMMM d, YYYY') : '(Not Yet Provided)'
+    return details ?
+           details &&
+           moment(details && details.dateFiled).format('dddd, MMMM d, YYYY, h:MM:ss A') : '(Not Yet Provided)'
   }
 
   checkedAccountNumber (details) {
-    return details ? details && details.AccountNo : '(Not Yet Provided)'
+    return details && details.AccountNo ? details && details.AccountNo : '(Not Yet Provided)'
   }
 
   checkedReferenceNumber (details) {
-    return details ? details && details.ReferenceNumber : '(Not Yet Provided)'
+    return details && details.ReferenceNumber ? details && details.ReferenceNumber : '(Not Yet Provided)'
   }
 
   checkedPatient (patient) {
-    return patient ? patient && patient.Recipient : '(Not Yet Provided)'
+    return patient && patient.Recipient ? patient && patient.Recipient : '(Not Yet Provided)'
   }
 
   indexDecreased (index) {

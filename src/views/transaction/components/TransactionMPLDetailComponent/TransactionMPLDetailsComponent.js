@@ -1,33 +1,103 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card } from '../../../../ub-components/'
+import { Card, GenericButton } from '../../../../ub-components/'
+
+import TransactionPersonalController from '../../controller/TransactionPersonalController'
+import TransactionMPLPurposeComponent from './TransactionMPLPurposeComponent'
 
 import moment from 'moment'
 
 class TransactionMPLDetailComponent extends Component {
-    constructor (props) {
-      super(props)
-    }
+  constructor (props) {
+    super(props)
+  }
 
-    render () {
-    const { details, transactionsPerson } = this.props
-    const transactionID = details.transactionId
-    return (
-      <div className = { 'transaction-card-details-form' }>
-        <div>
-          <h2 className = { 'transaction-detail details-bold' }> Date Filed: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Reference Number: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Transaction Status: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Account Number: </h2>
+  render () {
+  const { details, onClickAttachments, onClickAgreements } = this.props
+
+  const transactionID = details.transactionId
+  const controller = new TransactionPersonalController()
+  const dateFilled = controller.checkedDateFilled(details)
+  const acccountNumber = controller.checkedAccountNumber(details.details)
+  const referenceNumber = controller.checkedReferenceNumber(details.details)
+  const patient = controller.checkedPatient(details.details)
+
+  return (
+    <div className = { 'transaction-component-details-form' }>
+      <div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+          <div>
+            <h2>
+              { dateFilled }
+            </h2>
+            <br/>
+          </div>
         </div>
-        <div>
-          <h2 className = { 'transaction-detail' }> { details && moment(details.dateFiled).format('MMMM DD, YYYY') } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.ReferenceNumber }</h2>
-          <h2 className = { 'transaction-detail' }> { details && details.status.name } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.AccountNo } </h2>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings global-icons-referenceNumber' }></span>
+          <div>
+            <h2>
+              { referenceNumber }
+            </h2>
+            <br/>
+          </div>
         </div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
+          <div>
+            <h2>
+              { acccountNumber }
+            </h2>
+            <br/>
+          </div>
+        </div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings global-icons-patient-name' }></span>
+          <div>
+            <h2>
+              { patient }
+            </h2>
+            <h4  className = { 'font-size-14px unionbank-color' }>
+            </h4>
+            <br/>
+          </div>
+        </div>
+        {
+          details &&
+          details.details &&
+          details.details.Procedures ?
+            <TransactionMPLPurposeComponent
+              procedure = { details && details.details }
+            />
+            :
+            <div></div>
+        }
+        <br/>
+        <br/>
       </div>
+      <div>
+        {
+          details &&
+          details.details &&
+          details.details.Attachments ?
+
+          <GenericButton className = { 'transaction-details-button' }
+            text = { 'View Attachments' }
+            onClick = { () => onClickAttachments(true) }
+          /> :
+          <div></div>
+        }
+        <br/>
+        <br/>
+        <GenericButton className = { 'transaction-details-button' }
+          text = { 'View Agreements' }
+          onClick = { () => onClickAgreements(true) }
+        />
+        <br/>
+      </div>
+    </div>
     )
   }
 }

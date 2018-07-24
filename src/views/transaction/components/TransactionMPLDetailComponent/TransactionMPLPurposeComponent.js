@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Card } from '../../../../ub-components/'
 
-class TransactionMPLDetailComponent extends Component {
+class TransactionMPLPurposeComponent extends Component {
     constructor (props) {
       super(props)
     }
@@ -41,4 +41,4 @@ class TransactionMPLDetailComponent extends Component {
   }
 }
 
-export default TransactionMPLDetailComponent
+export default TransactionMPLPurposeComponent
