@@ -1,18 +1,15 @@
-import PropTypes from 'prop-types'
 import moment from 'moment'
 
-class TransactionDetailsController {
-
-  checkedBenefitType (details) {
+  export function checkedBenefitType (details) {
     return  details ? details.name : '(Not Yet Provided)'
   }
 
-  checkedDateFilled (details) {
+  export function checkedDateFilled (details) {
     return details ?
            moment(details && details.dateFiled).format('dddd, MMMM d, YYYY, h:MM:ss A') : '(Not Yet Provided)'
   }
 
-  checkedBenefitStatus (detailStatus) {
+  export function checkedBenefitStatus (detailStatus) {
     let status =
       detailStatus &&
       detailStatus.name.toLowerCase()
@@ -31,13 +28,10 @@ class TransactionDetailsController {
     }
   }
 
-  checkedReferenceNumber (details) {
+  export function checkedReferenceNumber (details) {
     return details ? details && details.ReferenceNumber  : '(Not Yet Provided)'
   }
 
-  getBenefitLabelStatus (label) {
+  export function getBenefitLabelStatus (label) {
     return label ? label.name : '(Not Yet Provided)'
   }
-}
-
-export default TransactionDetailsController

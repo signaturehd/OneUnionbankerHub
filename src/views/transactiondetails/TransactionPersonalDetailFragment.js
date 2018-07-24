@@ -73,6 +73,8 @@ function  TransactionDetails (props)  {
   } else if (transactionId === 1) {
     return <LoansDetailsFragment
       transactionsPerson = { transactionsPerson }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       details = { transactionDetails } />
   } else if (transactionId === 21) {
     // Bereavement Transaction Details

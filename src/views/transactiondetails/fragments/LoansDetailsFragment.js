@@ -15,8 +15,8 @@ from '../../transaction/components/TransactionMPLDetailComponent/TransactionMPLD
 import MPLPurposeComponent
 from '../../transaction/components/TransactionMPLDetailComponent/TransactionMPLPurposeComponent'
 
-import TransactionDetailsController
-from '../../transactiondetails/controller/TransactionDetailsController'
+import * as TransactionDetailsFunction
+from '../../transactiondetails/controller/TransactionDetailsFunction'
 
 class LoansDetailsFragment extends Component {
   constructor (props) {
@@ -31,10 +31,10 @@ class LoansDetailsFragment extends Component {
     agreementsMethod
   } = this.props
 
-  const detailStatus = new TransactionDetailsController().checkedBenefitStatus(details.status)
-  const benefitType = new TransactionDetailsController().checkedBenefitType(details.benefitType)
-  const dateFiled = new TransactionDetailsController().checkedDateFilled(details)
-  const benefitLabel = new TransactionDetailsController().getBenefitLabelStatus(details.status)
+  const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
+  const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
+  const dateFiled = TransactionDetailsFunction.checkedDateFilled(details)
+  const benefitLabel = TransactionDetailsFunction.getBenefitLabelStatus(details.status)
 
   return (
     <div className={ 'transaction-details-global-x3' }>
@@ -66,15 +66,14 @@ class LoansDetailsFragment extends Component {
               </div>
             </div>
           </div>
-          <br/>
           <div>
             <MPLDetailsComponent
               transactionsPerson={ transactionsPerson }
               details={ details }
+              onClickAttachments = { (resp) => attachmentsMethod(resp) }
+              onClickAgreements = { (resp) => agreementsMethod(resp) }
             />
           </div>
-          <br/>
-          <br/>
           <div>
             <MPLPurposeComponent details={ details } />
           </div>
@@ -90,6 +89,8 @@ class LoansDetailsFragment extends Component {
 LoansDetailsFragment.propTypes = {
   details : PropTypes.object,
   transactionsPerson : PropTypes.array,
+  attachmentsMethod: PropTypes.func,
+  agreementsMethod: PropTypes.func ,
 }
 
 export default LoansDetailsFragment

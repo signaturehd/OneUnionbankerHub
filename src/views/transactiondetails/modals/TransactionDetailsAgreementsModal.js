@@ -10,13 +10,14 @@ class TransactionDetailsFormAttachmentsModal extends Component {
 
   render () {
   const { onClose, agreements } = this.props
+  const arrayLength = agreements.length
+  
   return (
     <Modal
       isDismisable = { true }
       width = { 50 }
       onClose = { onClose }
     >
-    <center> Attachments </center>
       {
         agreements && agreements.FormAgreements.map ((formAgreement, key) =>
         <center key = { key }>
@@ -31,7 +32,10 @@ class TransactionDetailsFormAttachmentsModal extends Component {
 
 TransactionDetailsFormAttachmentsModal.propTypes = {
   onClose: PropTypes.func,
-  agreements: PropTypes.array,
+  agreements: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
 }
 
 export default TransactionDetailsFormAttachmentsModal

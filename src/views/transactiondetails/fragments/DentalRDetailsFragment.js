@@ -10,7 +10,7 @@ Transaction DentalR
 import DentalRDetailsComponent from
   '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
 
-import TransactionDetailsController from '../controller/TransactionDetailsController'
+import * as TransactionDetailsFunction from '../controller/TransactionDetailsFunction'
 
 class DentalRDetailsFragment extends Component {
 
@@ -26,10 +26,10 @@ class DentalRDetailsFragment extends Component {
       agreementsMethod
     } = this.props
 
-    const detailStatus = new TransactionDetailsController().checkedBenefitStatus(details.status)
-    const benefitType = new TransactionDetailsController().checkedBenefitType(details.benefitType)
-    const dateFiled = new TransactionDetailsController().checkedDateFilled(details)
-    const benefitLabel = new TransactionDetailsController().getBenefitLabelStatus(details.status)
+    const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
+    const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
+    const dateFiled = TransactionDetailsFunction.checkedDateFilled(details)
+    const benefitLabel = TransactionDetailsFunction.getBenefitLabelStatus(details.status)
 
     return (
       <div className={ 'transaction-details-global-x3' }>
