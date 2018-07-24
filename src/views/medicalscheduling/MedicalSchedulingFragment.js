@@ -27,6 +27,10 @@ class MedicalSchedulingFragment extends BaseMVPView {
     }
   }
 
+  componentDidMount () {
+    this.presenter.validateMedicalScheduling()
+  }
+
   /* Loader*/
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
