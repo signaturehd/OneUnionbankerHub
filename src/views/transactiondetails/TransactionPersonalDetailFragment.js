@@ -5,7 +5,7 @@ import Presenter from './presenter/TransactionPersonalDetailsPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { CircularLoader } from '../../ub-components'
+import { CircularLoader, Modal } from '../../ub-components'
 
 import './styles/transactionDetails.css'
 
@@ -21,71 +21,70 @@ import CarLeaseDetailsFragment from './fragments/CarLeaseDetailsFragment'
 import CalamityAssistanceDetailsFragment from './fragments/CalamityAssistanceDetailsFragment'
 import BereavementDetailsFragment from './fragments/BereavementDetailsFragment'
 
+import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreementsModal'
+import TransactionDetailsFormAttachmentsModal from './modals/TransactionDetailsFormAttachmentsModal'
+
 function  TransactionDetails (props)  {
   const transactionId = props.details.benefitType.id
   const transactionDetails = props.details
   const transactionsPerson = props.transactions
-  const attachments = props.attachments
   const uploadImage = props.uploadImage
   const showFileReceipt = props.showFileReceipt
+  const attachmentsMethod = props.attachmentsMethod
+  const agreementsMethod = props.agreementsMethod
+
   if (transactionId === 6) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
-      attachments = { attachments }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 7) {
     return <DentalLoaDetailsFragment
       details = { transactionDetails }
-      attachments = { attachments }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       transactionsPerson = { transactionsPerson } />
   } else if (transactionId === 8) {
     return <OpticalDetailsFragment
       details = { transactionDetails }
-      attachments = { attachments }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 15) {
     return <CarLeaseDetailsFragment
       details = { transactionDetails }
-      attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 13) {
     return <EducGrantAidDetailsFragment
       details = { transactionDetails }
-      attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 12) {
     return <EducGroupPlanDetailsFragment
       details = { transactionDetails }
-      attachments = { attachments }
       transactionsPerson = { transactionsPerson } />
   } else if (transactionId === 11) {
     return <EducAidDetailsFragment
       details = { transactionDetails }
-      attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 32) {
     return <EducGrantPlanDetailsFragment
       details = { transactionDetails }
-      attachments = { attachments }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 1) {
     return <LoansDetailsFragment
       transactionsPerson = { transactionsPerson }
-      attachments = { attachments }
       details = { transactionDetails } />
   } else if (transactionId === 21) {
     // Bereavement Transaction Details
     return <BereavementDetailsFragment
       transactionsPerson = { transactionsPerson }
       uploadImage = { (transactionId, file) => uploadImage(21, transactionId, file) }
-      attachments = { attachments }
       details = { transactionDetails } />
   } else if (transactionId === 22) {
     // Calamity Assistance
     return <CalamityAssistanceDetailsFragment
       transactionsPerson = { transactionsPerson }
       uploadImage = { (transactionId, file) => uploadImage(22, transactionId, file) }
-      attachments = { attachments }
       showFileReceipt = { showFileReceipt }
       details = { transactionDetails }
      />
@@ -103,11 +102,9 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
       attachment : null,
       response : true,
       enabledLoader: false,
+      showAttachmentsModal: false,
+      showAgreementsModal: false,
     }
-  }
-
-  navigate () {
-    this.props.history.push('/mybenefits/transactions/personal')
   }
 
   componentDidMount () {
@@ -115,6 +112,18 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     const id = this.props.match.params.id
     this.presenter.getTransactionDetails(id)
     this.presenter.getTransactionsPersonal()
+  }
+
+  navigate () {
+    this.props.history.push('/mybenefits/transactions/personal')
+  }
+
+  showAttachmentsMethod (e) {
+    this.setState({ showAttachmentsModal : e })
+  }
+
+  showAgreementsMethod (e) {
+    this.setState({ showAgreementsModal : e })
   }
 
   showAttachments (attachments) {
@@ -144,41 +153,71 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
   }
 
   render () {
-    const {
-      details,
-      transactions,
-      attachments,
-      response,
-      enabledLoader
-    } = this.state
-    return (
-      <div  className={ 'container' }>
-        <div>
-        <i className={ 'back-arrow' } onClick = {
-            this.navigate.bind(this) }></i>
 
-        </div>
-        {
-          enabledLoader ?
-            <div className={ 'transaction-detail-container' }>
-              <TransactionDetails
-               details={ details }
-               attachments={ attachments }
-               transactions={ transactions }
-               showUploading={ response }
-               showFileReceipt={ response }
-               uploadImage = { (transactionType, transactionId, file) => {
-                 this.presenter.uploadTransactionBereavement(transactionType, transactionId, file)
-               }}
-              />
-            </div>            :
-            <div className={ 'transaction-details-loader' }>
-              <center>
-                <CircularLoader show={ true }/>
-              </center>
-            </div>
-        }
+  const {
+    details,
+    transactions,
+    attachments,
+    response,
+    enabledLoader,
+    showAttachmentsModal,
+    showAgreementsModal
+  } = this.state
+
+  return (
+    <div  className={ 'container' }>
+      {
+        showAgreementsModal &&
+        <TransactionDetailsAgreementsModal
+          agreements = { details && details.details }
+          isDismisable = { true }
+          onClose = { () =>
+            this.setState({ showAgreementsModal : false }) }
+          />
+      }
+      {
+        showAttachmentsModal &&
+        <TransactionDetailsFormAttachmentsModal
+          fileAttachments = { attachments }
+          isDismisable = { true }
+          onClose = { () =>
+            this.setState({ showAttachmentsModal : false }) }
+          />
+      }
+      <div>
+        <i className={ 'back-arrow' }
+          onClick = {
+            this.navigate.bind(this) }>
+        </i>
       </div>
+      {
+        enabledLoader ?
+          <div className = { 'transaction-detail-container' }>
+            <TransactionDetails
+             details = { details }
+             attachments = { attachments }
+             transactions = { transactions }
+             showUploading = { response }
+             attachmentsMethod = { (resp) =>
+               this.showAttachmentsMethod(resp)
+             }
+             agreementsMethod = { (resp) =>
+               this.showAgreementsMethod(resp)
+             }
+             showFileReceipt = { response }
+             uploadImage = { (transactionType, transactionId, file) => {
+               this.presenter.uploadTransactionBereavement(transactionType, transactionId, file)
+                }
+              }
+            />
+          </div>            :
+          <div className = { 'transaction-details-loader' }>
+            <center>
+              <CircularLoader show = { true }/>
+            </center>
+          </div>
+        }
+    </div>
     )
   }
 }

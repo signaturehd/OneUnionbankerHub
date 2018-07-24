@@ -11,90 +11,78 @@ content - TransactionMPLDetailComponent
 */
 import MPLDetailsComponent
 from '../../transaction/components/TransactionMPLDetailComponent/TransactionMPLDetailsComponent'
-import MPLFileComponent
-from '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
-import MPLAgreementComponent
-from '../../transaction/components/TransactionMPLDetailComponent/TransactionMPLFormAgreementComponent'
+
 import MPLPurposeComponent
 from '../../transaction/components/TransactionMPLDetailComponent/TransactionMPLPurposeComponent'
 
-class LoansDetailsFragment extends Component {
+import TransactionDetailsController
+from '../../transactiondetails/controller/TransactionDetailsController'
 
+class LoansDetailsFragment extends Component {
   constructor (props) {
     super(props)
   }
 
   render () {
-    const {
-      details,
-      transactionsPerson,
-      attachments
-    } = this.props
+  const {
+    details,
+    transactionsPerson,
+    attachmentsMethod,
+    agreementsMethod
+  } = this.props
 
-    return (
-      <div className={ 'transaction-details-global-x3' }>
-        <div></div>
-          <Card>
-            <div className={ 'transaction-details-container' }>
-              <div className = { 'transaction-banner transaction-mpl' }>
-                <div className={ 'transaction-banner-card' }>
-                   <div>
-                     <h4 className = { 'transaction-details-name font-weight-normal'}>
-                       {
-                         details ?
-                           details.benefitType &&
-                           details.benefitType.name :
-                          '(Not Yet Provided)'
-                       }
-                     </h4>
-                      <h4 className = { 'transaction-details-name1' }>
-                        { details && moment(details.dateFiled).format('dddd, MMMM d, YYYY, h:MM:ss A') }
-                      </h4>
+  const detailStatus = new TransactionDetailsController().checkedBenefitStatus(details.status)
+  const benefitType = new TransactionDetailsController().checkedBenefitType(details.benefitType)
+  const dateFiled = new TransactionDetailsController().checkedDateFilled(details)
+  const benefitLabel = new TransactionDetailsController().getBenefitLabelStatus(details.status)
+
+  return (
+    <div className={ 'transaction-details-global-x3' }>
+      <div></div>
+        <Card>
+          <div className={ 'transaction-details-container' }>
+            <div className = { 'transaction-banner transaction-mpl' }>
+              <div className={ 'transaction-banner-card' }>
+                 <div>
+                   <h1 className = { 'transaction-details-name font-weight-normal'}>
+                      { benefitType }
+                   </h1>
+                   <div></div>
+                 </div>
+                 <div className={ 'transaction-details-grid-row' }>
+                   <div></div>
+                   <div className = { 'transaction-details-status-grid' }>
+                     <div className =
+                       { `font-weight-bolder grid-global-row-x3 transaction-details-status-${ detailStatus }` }
+                       >
+                       <div></div>
+                         { benefitLabel }
+                       <div></div>
+                     </div>
+                     <div className = { 'font-size-14px' }>Transaction Status</div>
                    </div>
-                   <div className={ 'transaction-details-grid-row' }>
-                     <div></div>
-                     <div className = { 'transaction-details-status font-weight-bold' }>
-                        {
-                          details &&
-                          details.status.name ?
-                          details.status.name :
-                          '(Not Yet Provided)'
-                        }
-                      </div>
-                   </div>
-                </div>
+                   <div></div>
+                 </div>
               </div>
             </div>
-            <br/>
-            <br/>
-            <div>
-              <MPLDetailsComponent
-                transactionsPerson={ transactionsPerson }
-                details={ details }
-              />
-            </div>
-            <br/>
-            <br/>
-            <div>
-              <MPLPurposeComponent details={ details } />
-            </div>
-            <br/>
-            <br/>
-            <div>
-              <MPLFileComponent
-                 details={ details }
-                 attachments={ attachments } />
-            </div>
-            <br/>
-            <br/>
-            <div>
-              <MPLAgreementComponent details={ details } />
-            </div>
-            <br/>
-            <br/>
-          </Card>
-        <div></div>
-      </div>
+          </div>
+          <br/>
+          <div>
+            <MPLDetailsComponent
+              transactionsPerson={ transactionsPerson }
+              details={ details }
+            />
+          </div>
+          <br/>
+          <br/>
+          <div>
+            <MPLPurposeComponent details={ details } />
+          </div>
+          <br/>
+          <br/>
+        </Card>
+      <div></div>
+    </div>
     )
   }
 }

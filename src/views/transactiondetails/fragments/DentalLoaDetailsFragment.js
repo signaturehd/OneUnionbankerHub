@@ -6,13 +6,13 @@ import { Card } from '../../../ub-components'
 
 import './styles/detailsFragment.css'
 /*
-Transaction DentalLOA Form Agreement, Form Agreement, & File Attacment
+Transaction DentalLOA
 */
 import DentalLOADetailsComponent
 from '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
 
-import DentalLOAgreementComponent
-from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
+import TransactionDetailsController
+from '../../transactiondetails/controller/TransactionDetailsController'
 
 class DentalLoaDetailsFragment extends Component {
 
@@ -21,76 +21,60 @@ class DentalLoaDetailsFragment extends Component {
   }
 
   render () {
-    const { details, transactionsPerson } = this.props
-    return (
-      <div className={ 'transaction-details-global-x3' }>
-        <div></div>
-          <Card>
-            <div className={ 'transaction-details-container' }>
-              <div className = { 'transaction-banner transaction-dentalloa' }>
-                <div className={ 'transaction-banner-card' }>
-                   <div>
-                     <h1 className = { 'transaction-details-name font-weight-normal'}>
-                       {
-                         details &&
-                         details.benefitType &&
-                         details.benefitType.name ?
-                         details.benefitType.name :
-                         '(Not Yet Provided)'
-                       }
-                      </h1>
-                      <h4 className = { 'transaction-details-name1' }>
-                        { details && moment(details.dateFiled).format('dddd, MMMM d, YYYY, h:MM:ss A') }
-                      </h4>
-                   </div>
-                   <div className={ 'transaction-details-grid-row' }>
-                     <div></div>
-                     <div className = { 'transaction-details-status font-weight-bold' }>
-                        {
-                          details &&
-                          details.status.name ?
-                          details.status.name :
-                          '(Not Yet Provided)'
-                        }
-                      </div>
-                   </div>
+  const {
+    details,
+    transactionsPerson,
+    attachmentsMethod,
+    agreementsMethod
+  } = this.props
+
+  const detailStatus = new TransactionDetailsController().checkedBenefitStatus(details.status)
+  const benefitType = new TransactionDetailsController().checkedBenefitType(details.benefitType)
+  const dateFiled = new TransactionDetailsController().checkedDateFilled(details)
+  const benefitLabel = new TransactionDetailsController().getBenefitLabelStatus(details.status)
+
+  return (
+    <div className={ 'transaction-details-global-x3' }>
+      <div></div>
+        <Card>
+          <div className={ 'transaction-details-container' }>
+            <div className = { 'transaction-banner transaction-dentalloa' }>
+              <div className={ 'transaction-banner-card' }>
+                <div>
+                  <h1 className = { 'transaction-details-name font-weight-normal'}>
+                     { benefitType }
+                  </h1>
+                  <div></div>
+                </div>
+                <div className={ 'transaction-details-grid-row' }>
+                  <div></div>
+                  <div className = { 'transaction-details-status-grid' }>
+                    <div className =
+                      { `font-weight-bolder grid-global-row-x3 transaction-details-status-${ detailStatus }` }
+                      >
+                      <div></div>
+                        { benefitLabel }
+                      <div></div>
+                    </div>
+                    <div className = { 'font-size-14px' }>Transaction Status</div>
+                  </div>
+                  <div></div>
                 </div>
               </div>
             </div>
-            <br/>
-            <br/>
-            <div>
-              <DentalLOADetailsComponent
-                 details = { details }
-                 transactionsPerson = { transactionsPerson }
-              />
-            </div>
-            <br/>
-            <br/>
-            <div>
-             <center>
-               <h2 className = { 'details-bold' }>
-                 Procedures
-               </h2>
-             </center>
-             <br/>
-             {
-               details && details.details.Procedures.map((procedure, key) =>
-                 <center key>
-                   <h2>{ procedure.Name }</h2>
-                   <h2>&#x20b1;{ procedure.Amount }</h2>
-                 </center>
-               )
-             }
-            </div>
-            <br/>
-            <br/>
-            <div>
-              <DentalLOAgreementComponent details={ details } />
-            </div>
-          </Card>
-        <div></div>
-      </div>
+          </div>
+          <br/>
+          <div>
+            <DentalLOADetailsComponent
+              transactionsPerson = { transactionsPerson }
+              details = { details }
+              onClickAttachments = { (resp) => attachmentsMethod(resp) }
+              onClickAgreements = { (resp) => agreementsMethod(resp) }
+            />
+          </div>
+        </Card>
+      <div></div>
+    </div>
     )
   }
 }

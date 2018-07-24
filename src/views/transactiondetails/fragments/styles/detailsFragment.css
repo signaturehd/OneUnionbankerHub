@@ -19,6 +19,7 @@
   display: grid;
   height: 250px;
   text-align: center;
+  grid-gap: 2%;  
   grid-template-columns: 1fr 1fr;
 }
 
@@ -68,11 +69,12 @@
 
 .transaction-details-grid-row {
   display: grid;
-  grid-template-columns: .2fr .2fr .6fr;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  grid-template-columns: .3fr auto .3fr;
+}
+
+.transaction-details-status-grid {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
 }
 
 .transaction-banner-card {

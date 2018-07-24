@@ -5,14 +5,10 @@ import moment from 'moment'
 import { Card } from '../../../ub-components'
 import './styles/detailsFragment.css'
 /*
-Transaction DentalR Form Agreement, Form Agreement, & File Attacment
+Transaction DentalR
 */
 import DentalRDetailsComponent from
   '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
-import DentalRFileComponent from
-  '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
-import DentalRAgreementComponent from
-  '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
 
 import TransactionDetailsController from '../controller/TransactionDetailsController'
 
@@ -26,7 +22,8 @@ class DentalRDetailsFragment extends Component {
     const {
       details,
       transactionsPerson,
-      attachments
+      attachmentsMethod,
+      agreementsMethod
     } = this.props
 
     const detailStatus = new TransactionDetailsController().checkedBenefitStatus(details.status)
@@ -41,52 +38,50 @@ class DentalRDetailsFragment extends Component {
             <div className={ 'transaction-details-container' }>
               <div className = { 'transaction-banner transaction-dentalreimbursement' }>
                 <div className={ 'transaction-banner-card' }>
-                   <div>
-                     <h1 className = { 'transaction-details-name font-weight-normal'}>
-                       { benefitType }
-                      </h1>
-                      <h4 className = { 'transaction-details-name1' }>
-                        { dateFiled }
-                      </h4>
-                   </div>
-                   <div className={ 'transaction-details-grid-row' }>
-                     <div></div>
-                     <div></div>
-                     <div className =
-                       { `font-weight-bolder transaction-details-status-${ detailStatus }` }
+                  <div>
+                    <h1 className = { 'transaction-details-name font-weight-normal'}>
+                      { benefitType }
+                    </h1>
+                    <div></div>
+                  </div>
+                  <div className={ 'transaction-details-grid-row' }>
+                    <div></div>
+                    <div className = { 'transaction-details-status-grid' }>
+                      <div className =
+                        { `font-weight-bolder grid-global-row-x3 transaction-details-status-${ detailStatus }` }
                       >
-                        Transaction Status: { benefitLabel }
+                        <div></div>
+                          { benefitLabel }
+                        <div></div>
                       </div>
+                      <div className = { 'font-size-14px' }>Transaction Status</div>
                     </div>
+                    <div></div>
                   </div>
                 </div>
               </div>
+            </div>
             <br/>
             <div>
               <DentalRDetailsComponent
                 transactionsPerson = { transactionsPerson }
                 details = { details }
+                onClickAttachments = { (resp) => attachmentsMethod(resp) }
+                onClickAgreements = { (resp) => agreementsMethod(resp) }
               />
             </div>
-            <br/>
-            <div>
-              <DentalRFileComponent
-                details = { details }
-                attachments = { attachments }
-              />
-            </div>
-            <br/>
-
           </Card>
-        <div></div>
-      </div>
-    )
+          <div></div>
+        </div>
+      )
+    }
   }
-}
 
 DentalRDetailsFragment.propTypes = {
   details : PropTypes.object,
-  transactionsPerson : PropTypes.array
+  transactionsPerson : PropTypes.array,
+  attachmentsMethod : PropTypes.func,
+  agreementsMethod : PropTypes.func
 }
 
 export default DentalRDetailsFragment

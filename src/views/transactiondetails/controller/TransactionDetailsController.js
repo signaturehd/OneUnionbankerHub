@@ -8,7 +8,8 @@ class TransactionDetailsController {
   }
 
   checkedDateFilled (details) {
-    return details ? moment(details && details.dateFiled).format('dddd, MMMM d, YYYY, h:MM:ss A') : '(Not Yet Provided)'
+    return details ?
+           moment(details && details.dateFiled).format('dddd, MMMM d, YYYY, h:MM:ss A') : '(Not Yet Provided)'
   }
 
   checkedBenefitStatus (detailStatus) {
