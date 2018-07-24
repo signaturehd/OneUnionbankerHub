@@ -452,7 +452,6 @@ class BereavementFormCardComponent extends Component {
                   hint={ 'City' }
                   errorMessage={ this.errorFunc (memorialCity, '* Required Field') }
                   type={ 'text' }/>
-                </div>
               </div>
               {
                 !withDeathCert &&
