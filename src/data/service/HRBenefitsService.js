@@ -369,8 +369,8 @@ export default class HRBenefitsService {
       }
       formData.append('uuid', 12345)
       formData.append('body', JSON.stringify(multiLoanBodyObject))
-      addMotorLoanParam.attachments.map((attachment, key) => (
-        formData.append(attachment.name, attacment.file)
+      mplPurposeLoanAddParam.attachments.map((attachment, key) => (
+        formData.append(attachment.name, attachment.file)
       ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
@@ -400,7 +400,7 @@ export default class HRBenefitsService {
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
     addMotorLoanParam.attachments.map((attachment, key) => (
-      formData.append(attachment.name, attacment.file)
+      formData.append(attachment.name, attachment.file)
     ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
@@ -430,7 +430,7 @@ export default class HRBenefitsService {
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
     addComputerLoanParam.attachments.map((attachment, key) => (
-      formData.append(attachment.name, attacment.file)
+      formData.append(attachment.name, attachment.file)
     ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }

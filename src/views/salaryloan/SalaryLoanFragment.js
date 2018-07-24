@@ -2,50 +2,50 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import BaseMVPView from '../common/base/BaseMVPView'
-import Presenter from '../mpl/presenter/MultiPurposeLoanPresenter'
+import Presenter from './presenter/SalaryLoanPresenter'
 import ConnectView from '../../utils/ConnectView'
 
-import { CircularLoader } from '../../ub-components/'
+import {
+  CircularLoader,
+  SingleInputModal,
+} from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
-import FormComponent from '../mpl/components/MplLoanFormCardComponent'
+import SalaryLoanCardComponent from './components/SalaryLoanCardComponent'
 
-class HousingAssistanceFragment extends BaseMVPView {
-
+class SalaryLoanFragment extends BaseMVPView {
   constructor (props) {
     super(props)
-    this.state={
-      purposeOfAvailment: [],
-      selectedPoa: '',
-      formAttachments: [],
-      loanType: '',
-      validateLoanType : [],
-      offset : [],
-      enabledLoader : true,
-      noticeResponse : null, /* notice response*/
-      showNoticeResponseModal : false,
-      showBenefitFeedbackModal : false,
+
+    this.state = {
       showNoticeModal : false,
-      showConfirmation : false,
-      AdditionalDocuments: 0,
-      RequiredDocuments: 0,
-      isPayeeOrDealerResp : '',
-      employeeName: [],
-      storedIsDealerOrPayee: [],
-      computationOffset: [],
-      maximumAmount: 0
+      showNoticeResponseModal : false,
+      showModeOfLoan : false,
+      showTermOfLoan : false,
+      showPurposeOfAvailment : false,
+      showBenefitFeedbackModal : false,
+      purposeOfAvailmentId : null,
+      purposeOfAvailmentLabel : null,
+      modeOfLoanId : null,
+      modeOfLoanLabel : null,
+      termOfLoanId : null,
+      termOfLoanLabel : null,
+      purposeOfAvailment : [],
+      modeOfLoan : [],
+      termOfLoan : [],
+      fileAttachments : [],
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.getMplTypes()
-    this.presenter.isManagersCheck()
-    this.presenter.getProfile()
-    this.presenter.getSalaryLoanType()
+    // this.presenter.getMplTypes()
+    // this.presenter.isManagersCheck()
+    // this.presenter.getProfile()
+    // this.presenter.getSalaryLoanType()
   }
 
   /* Notice Response*/
@@ -113,11 +113,11 @@ class HousingAssistanceFragment extends BaseMVPView {
   }
 
   showValidatedLoanType (loanType) {
-    this.presenter.getMplValidate(loanType)
-    this.presenter.getMplPurposeOfAvailment(
-      loanType,
-      1,
-      1)
+    // this.presenter.getMplValidate(loanType)
+    // this.presenter.getMplPurposeOfAvailment(
+    //   loanType,
+    //   1,
+    //   1)
   }
 
   showMaximumLoanableAmount (maximumAmount) {
@@ -148,31 +148,28 @@ class HousingAssistanceFragment extends BaseMVPView {
 
   render () {
     const {
-      purposeOfAvailment,
-      loanType,
-      validateLoanType,
-      offset,
-      enabledLoader,
-      formAttachments,
-      showConfirmation,
       showNoticeModal,
-      showBenefitFeedbackModal,
       showNoticeResponseModal,
-      noticeResponse,
-      response,
-      RequiredDocuments,
-      AdditionalDocuments,
-      isPayeeOrDealerResp,
-      employeeName,
-      storedIsDealerOrPayee,
-      computationOffset,
-      maximumAmount
-    }=this.state
+      showModeOfLoan,
+      showTermOfLoan,
+      showPurposeOfAvailment,
+      showBenefitFeedbackModal,
+      purposeOfAvailment,
+      purposeOfAvailmentId,
+      purposeOfAvailmentLabel,
+      fileAttachments,
+      modeOfLoan,
+      modeOfLoanId,
+      modeOfLoanLabel,
+      termOfLoan,
+      termOfLoanId,
+      termOfLoanLabel,
+    } = this.state
 
-    const empName=employeeName && employeeName.fullname
-    const updateIsDealerOrPayeeName=[...storedIsDealerOrPayee]
-    updateIsDealerOrPayeeName.push(isPayeeOrDealerResp)
-    updateIsDealerOrPayeeName.push(empName)
+    // const empName=employeeName && employeeName.fullname
+    // const updateIsDealerOrPayeeName=[...storedIsDealerOrPayee]
+    // updateIsDealerOrPayeeName.push(isPayeeOrDealerResp)
+    // updateIsDealerOrPayeeName.push(empName)
 
     return (
       <div>
@@ -197,6 +194,33 @@ class HousingAssistanceFragment extends BaseMVPView {
         }
 
         {
+          showPurposeOfAvailment &&
+          <SingleInputModal
+            inputArray = { purposeOfAvailment }
+            selectedArray = { (purposeOfAvailmentId, purposeOfAvailmentLabel) =>
+              this.setState({ purposeOfAvailmentId, purposeOfAvailmentLabel }) } //response
+            onClose = { () => this.setState({showPurposeOfAvailment : false}) }
+          />
+        }
+        {
+          showModeOfLoan &&
+          <SingleInputModal
+            inputArray = { modeOfLoan }
+            selectedArray = { (modeOfLoanId, modeOfLoanLabel) =>
+              this.setState({ modeOfLoanId, modeOfLoanLabel }) }
+            onClose = { () => this.setState({showModeOfLoan : false}) }
+          />
+        }
+        {
+          showTermOfLoan &&
+          <SingleInputModal
+            inputArray = { termOfLoan }
+            selectedArray = { (termOfLoanId, termOfLoanLabel) =>
+              this.setState({ termOfLoanId, termOfLoanLabel }) }
+            onClose = { () => this.setState({showTermOfLoan : false}) }
+          />
+        }
+        {
           showBenefitFeedbackModal &&
           <BenefitFeedbackModal
             benefitId={ 1 }
@@ -216,47 +240,20 @@ class HousingAssistanceFragment extends BaseMVPView {
             Salary Loan
           </h2>
         </div>
-          {
-            enabledLoader ?
-             <center className={ 'circular-loader-center' }>
-               <CircularLoader show={ this.state.enabledLoader }/>
-             </center> :
-            <FormComponent
-              loanType={ loanType }
-              isPayeeOrDealer={ updateIsDealerOrPayeeName ? updateIsDealerOrPayeeName : '(Not yet Provided)' }
-              purposeOfAvailment={ purposeOfAvailment }
-              validateLoanType={ validateLoanType }
-              formAttachments={ formAttachments }
-              offset={ offset }
-              AdditionalDocuments={ AdditionalDocuments }
-              RequiredDocuments={ RequiredDocuments }
-              presenter={ this.presenter }
-              maximumAmount={ maximumAmount }
-              sendFormDataToPresenter={ (
-                dealerName,
-                amountValue,
-                modeOfLoanId,
-                loanType,
-                poaText,
-                selectedTerm,
-                selectedOffsetLoan,
-                formAttachments
-              ) =>
-              this.sendFormDataToPresenter(
-                dealerName,
-                amountValue,
-                modeOfLoanId,
-                loanType,
-                poaText,
-                selectedTerm,
-                selectedOffsetLoan,
-                formAttachments
-              )
-               }
-            />
-          }
+        <br/>
+        <SalaryLoanCardComponent
+          showTermOfLoan = { () => this.setState({ showTermOfLoan : true }) }
+          showModeOfLoan = { () => this.setState({ showModeOfLoan : true }) }
+          showPurposeOfAvailment = { () => this.setState({ showPurposeOfAvailment : true }) }
+          fileAttachments = { fileAttachments }
+          termOfLoan = { termOfLoanLabel }
+          purposeOfAvailment = { purposeOfAvailmentLabel }
+          modeOfLoan = { modeOfLoanLabel }
+          desiredAmount = { (desiredAmount) => this.setState({ desiredAmount : parseInt(desiredAmount) }) }
+          onClick = { () => this.submitForm() }
+        />
       </div>
     )
   }
 }
-export default ConnectView(HousingAssistanceFragment, Presenter)
+export default ConnectView(SalaryLoanFragment, Presenter)

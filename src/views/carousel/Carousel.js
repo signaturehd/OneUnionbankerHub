@@ -62,7 +62,7 @@ class Carousel extends Component {
           className={ 'slider__nav' }/>
         <div className={'slider__inner'}>
           <div className={'slider__contents'}>
-            <img src = { require('../../images/carousel/1.jpg') }/>
+            <img src = { require('../../images/carousel/Slide1.PNG') } style = {{height : '450px'}}/>
             <br/>
             <div className={'carousel-function'}>
               <div></div>
@@ -72,7 +72,7 @@ class Carousel extends Component {
             </div>
           </div>
           <div className={'slider__contents'}>
-            <img src = { require('../../images/carousel/2.jpg') }/>
+            <img src = { require('../../images/carousel/Slide2.PNG') } style = {{height : '450px'}}/>
             <br/>
             <div className={'carousel-function'}>
               <GenericButton text = { 'Previous' }
@@ -84,7 +84,7 @@ class Carousel extends Component {
             </div>
           </div>
           <div className={'slider__contents'}>
-            <img src = { require('../../images/carousel/3.jpg') }/>
+            <img src = { require('../../images/carousel/Slide3.PNG') } style = {{height : '450px'}}/>
             <br/>
             <div className={'carousel-function'}>
               <GenericButton text = { 'Previous' }
@@ -96,7 +96,7 @@ class Carousel extends Component {
             </div>
           </div>
           <div className={'slider__contents'}>
-            <img src = { require('../../images/carousel/4.jpg') }/>
+            <img src = { require('../../images/carousel/Slide4.PNG') } style = {{height : '450px'}}/>
             <br/>
             <div className={'carousel-function'}>
               <GenericButton text = { 'Previous' }
@@ -108,7 +108,7 @@ class Carousel extends Component {
             </div>
           </div>
           <div className={'slider__contents'}>
-            <img src = { require('../../images/carousel/5.jpg') }/>
+            <img src = { require('../../images/carousel/Slide5.PNG') } style = {{height : '450px'}}/>
             <br/>
             <div className={'carousel-function'}>
               <GenericButton text = { 'Previous' }

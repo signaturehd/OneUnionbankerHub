@@ -11,6 +11,7 @@ import TransactionCardComponent
 from './components/TransactionCardComponent/TransactionCardComponent'
 
 class TransactionPersonalFragment extends BaseMVPView {
+
   constructor (props) {
     super(props)
     this.state = {
@@ -68,36 +69,38 @@ class TransactionPersonalFragment extends BaseMVPView {
     } = this.props
 
     return (
-      <div>
-        <input type = 'text'
-          className = 'transSearchBar'
-          ref='search'
-          placeholder = {'Search Transactions'}
-          value = { this.state.searchString }
-          onChange = { this.updateSearch } />
-      {
-        transactions ?
-        <div className = { 'transaction-container' }>
-          {
-             newTrans.map((transaction, key) => (
-              <TransactionCardComponent
-                detail = { transaction }
-                key = { key  }
-                transactions = {transactions}
-                onClick = { transaction =>
-                  this.props.history.push(`/mybenefits/transactions/personal/${transaction.id}`) }
-              />
-            ))
-          }
-        </div>        :
-        <div className = {'transactions-loader'}>
-          <center>
-            <CircularLoader show = {true} />
-          </center>
+      <div className={ 'transaction-details-grid-row' }>
+        <div>
+          <input type = 'text'
+            className = 'transSearchBar'
+            ref='search'
+            placeholder = {'Search Transactions'}
+            value = { this.state.searchString }
+            onChange = { this.updateSearch } />
         </div>
-      }
-      <center>
-  </center>
+        <div>
+          {
+            transactions ?
+            <div className = { 'transaction-container' }>
+              {
+                 newTrans.map((transaction, key) => (
+                  <TransactionCardComponent
+                    detail = { transaction }
+                    key = { key  }
+                    transactions = {transactions}
+                    onClick = { transaction =>
+                      this.props.history.push(`/mybenefits/transactions/personal/${transaction.id}`) }
+                  />
+                ))
+              }
+            </div>        :
+            <div className = {'transactions-loader'}>
+              <center>
+                <CircularLoader show = {true} />
+              </center>
+            </div>
+          }
+        </div>
       </div>
     )
   }
