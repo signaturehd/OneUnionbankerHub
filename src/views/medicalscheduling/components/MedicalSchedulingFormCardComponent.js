@@ -1,47 +1,24 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { GenericInput, GenericButton, FileUploader } from '../../../ub-components/'
-//import EducationGrantPersonalModal from '../modal/EducationGrantPersonalModal'
-import ClinicModal from '../modals/MedicalSchedulingClinicModal'
 import './styles/medicalSchedulingComponentStyle.css'
-import store from '../../../store'
-import { NotifyActions } from '../../../actions/'
-import DatePicker from 'react-datepicker'
-import moment from 'moment'
 
 export default class MedicalSchedulingFormCardComponent extends Component {
   constructor (props) {
     super (props)
-    this.state = {
-      showClinics : false,
-      clinics : '',
-      packages : '',
-      prefferedDate : ''
-    }
   }
 
   render () {
     const {
+      showPackages,
       showClinics,
-      clinics,
-      packages,
-      prefferedDate
-    } = this.state
-
-    const clinicsObject = ["clinic 1", "clinic 2", "clinic 3"]
-
+      clinicLabel,
+      packageLabel,
+      prefferedDate,
+      onChangePrefferedDate
+    } = this.props
     return (
       <div className={ 'medsched-container' }>
-
-        {
-          showClinics &&
-          <ClinicModal
-            clinics = { clinicsObject }
-            onSubmit = {(clinics) => this.setState({ clinics })}
-            onClose = {() => this.setState({ showClinics : false})}
-          />
-        }
-
         <h4>
           Benefits Form
         </h4>
@@ -50,25 +27,25 @@ export default class MedicalSchedulingFormCardComponent extends Component {
           <div className = { 'medsched-input' }>
             <h6>Clinics</h6>
             <GenericInput
-              value = { clinics }
-              onClick = {() => this.setState({ showClinics : true })}
-              placeholder = { 'something' }
+              value = { clinicLabel }
+              onClick = { () => showClinics() }
+              placeholder = { '' }
               type = { 'text' }/>
           </div>
           <div className = { 'medsched-input' }>
             <h6>Packages</h6>
             <GenericInput
-              value = { null }
-              onChange = {() => {}}
-              placeholder = { 'something' }
+              value = { packageLabel }
+              onClick = { () => showPackages() }
+              placeholder = { '' }
               type = { 'text' }/>
           </div>
           <div className = { 'medsched-input' }>
             <h6>Preffered Schedule</h6>
             <GenericInput
-              value = { null }
-              onChange = {() => {}}
-              placeholder = { 'something' }
+              value = { prefferedDate }
+              onChange = { (e) => onChangePrefferedDate(e.target.value) }
+              placeholder = { '' }
               type = { 'text' }/>
           </div>
           <div className = { 'medsched-input' }>
