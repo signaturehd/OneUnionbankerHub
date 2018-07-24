@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { GenericInput, Card, GenericButton, FileUploader } from '../../../ub-components/'
+import { GenericTextBox, GenericInput, Card, GenericButton, FileUploader } from '../../../ub-components/'
 
 import './styles/bereavementComponentStyle.css'
 import BereavementDependentsModal from '../modals/BereavementDependentsModal'
@@ -244,20 +244,20 @@ class BereavementFormCardComponent extends Component {
             />
           }
           <div></div>
-          <Card className={ 'brv-form-card' }>
+          <div className={ 'brv-form-div' }>
             <h4>
             Deceased Detail
             </h4>
-            <div className={'brv-form-card-body '}>
+            <div className={'brv-form-div-body '}>
               <div>
-                <GenericInput
+                <GenericTextBox
                   container={ 'brv-container' }
                   value={ dependentsName ? dependentsName : '' }
                   onClick={ () => this.setState({ showDeceasedDependents: true }) }
                   onFocus={ () => this.setState({ showDeceasedDependents: true }) }
                   hint={ 'Deceased Name' }
                   text={ 'Deceased Name' }
-                  errorMessage={ this.errorFunc (dependentsName, '* Required Field') }
+                  errorMessage={ this.errorFunc (dependentsName, 'Required Field') }
                   readOnly
                   type={ 'text' }
                 />
@@ -286,19 +286,17 @@ class BereavementFormCardComponent extends Component {
                   { deceasedDate ? '' : <span className={ 'text-error' }>* Required Field</span> }
               </div>
               <br/>
-              <br/>
             </div>
-          </Card>
+          </div>
         </div>
-        <br/>
         <br/>
         <div className={ 'brv-grid-column-2' }>
           <div></div>
-          <Card className={ 'brv-form-card' }>
+          <div className={ 'brv-form-div' }>
             <h4>
             Funeral Detail
             </h4>
-            <div className={'brv-form-card-body '}>
+            <div className={'brv-form-div-body '}>
               <div>
                 <DatePicker
                   dateFormat={ 'MM/DD/YYYY' }
@@ -372,19 +370,17 @@ class BereavementFormCardComponent extends Component {
                 />
               </div>
               <br/>
-              <br/>
             </div>
-          </Card>
+          </div>
         </div>
-        <br/>
         <br/>
         <div className={ 'brv-grid-column-2' }>
           <div></div>
-          <Card className={ 'brv-form-card' }>
+          <div className={ 'brv-form-div' }>
             <h4>
             Interment Detail
             </h4>
-            <div className={'brv-form-card-body '}>
+            <div className={'brv-form-div-body '}>
               <div>
                 <DatePicker
                   dateFormat={ 'MM/DD/YYYY' }
@@ -479,7 +475,7 @@ class BereavementFormCardComponent extends Component {
                   className={ 'brv-submit' } />
               }
             </div>
-          </Card>
+          </div>
         </div>
         {
           !withDeathCert &&
@@ -490,14 +486,13 @@ class BereavementFormCardComponent extends Component {
           withDeathCert &&
           <div>
           <br/>
-          <br/>
           <div className={ 'brv-grid-column-2' }>
             <div></div>
-            <Card className={ 'brv-form-card' }>
+            <div className={ 'brv-form-div' }>
               <h4>
               Form Attachments
               </h4>
-              <div className={'brv-form-card-body '}>
+              <div className={'brv-form-div-body '}>
                 {
                   imagePreviewUrl &&
                   <div>
@@ -589,7 +584,7 @@ class BereavementFormCardComponent extends Component {
                   }
                   className={ 'brv-submit' } />
               </div>
-            </Card>
+            </div>
           </div>
         </div>
         }
