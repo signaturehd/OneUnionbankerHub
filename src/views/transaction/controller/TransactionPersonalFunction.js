@@ -37,16 +37,31 @@ import { format } from '../../../utils/numberUtils'
     return desiredAmount && desiredAmount.DesiredAmount ? format(desiredAmount && desiredAmount.DesiredAmount) : '(Not Yet Provided)'
   }
 
-  export function checkedCreditRatio (details) {
-    return details && details.Term ? details && details.Term && details.Term.Rate : '(Not Yet Provided)'
+  export function checkedCreditRatio (ration) {
+    return ration && ration.CreditRatio ? ration && ration.CreditRatio : '(Not Yet Provided)'
   }
 
-  export function checkPurposeName (details) {
-    return details && details.Term ? details && details.Term && details.Term.Name : '(Not Yet Provided)'
+  export function checkPurposeName (purposeTerm) {
+    return purposeTerm && purposeTerm.Term ? purposeTerm && purposeTerm.Term && purposeTerm.Term.Name : '(Not Yet Provided)'
   }
 
-  export function checkedTerm (details) {
-    return details && details.Term ? details && details.Term && details.Term.Term : '(Not Yet Provided)'
+  export function checkedTerm (term) {
+    return term && term.Term ? term && term.Term && term.Term.Term : '(Not Yet Provided)'
+  }
+
+  /* Calamity Assistance  */
+
+  export function checkedCalamityType (type) {
+    return type && type.CalamityType ? type && type.CalamityType && type.CalamityType.Calamity : '(Not Yet Provided)'
+  }
+
+  export function checkedProperty (property) {
+    return property &&
+           property.DamageProperty.PropertyName ?
+              property &&
+              property.DamageProperty &&
+              property.DamageProperty.PropertyName
+              : '(Not Yet Provided)'
   }
 
   export function indexDecreased (index) {

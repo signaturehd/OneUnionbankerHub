@@ -25,7 +25,7 @@ import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreem
 import TransactionDetailsFormAttachmentsModal from './modals/TransactionDetailsFormAttachmentsModal'
 
 function  TransactionDetails (props)  {
-  const transactionId = props.details.benefitType.id
+  const transactionId = props.details ? props.details.benefitType.id : 0
   const transactionDetails = props.details
   const transactionsPerson = props.transactions
   const uploadImage = props.uploadImage
@@ -90,8 +90,9 @@ function  TransactionDetails (props)  {
       showFileReceipt = { showFileReceipt }
       details = { transactionDetails }
      />
-  }
-    return <h1>No Transaction Occured please reload</h1> // No  Transaction
+ } else {
+   return <h1>No Transaction Occured please reload</h1> // No  Transaction
+   }
 }
 
 class TransactionPersonalDetailsFragment extends BaseMVPView {

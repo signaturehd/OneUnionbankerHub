@@ -5,7 +5,12 @@ import PropTypes from 'prop-types'
 import BaseMVPView from '../common/base/BaseMVPView'
 
 import './styles/transaction.css'
-import { Card, CircularLoader, GenericButton } from '../../ub-components/'
+import {
+  Card,
+  CircularLoader,
+  GenericButton,
+  GenericInput
+} from '../../ub-components/'
 
 import * as TransactionPersonalFunction from './controller/TransactionPersonalFunction'
 
@@ -33,8 +38,8 @@ class TransactionPersonalFragment extends BaseMVPView {
     this.presenter.getTransactionsPersonal()
   }
 
-  updateSearch () {
-    this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
+  updateSearch (e) {
+    this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
 
   transactions (transactions) {
@@ -63,21 +68,22 @@ class TransactionPersonalFragment extends BaseMVPView {
 
     return (
     <div>
-      <div className = { 'transaction-details-personal-grid-row' }>
-        <div className = { 'grid-global' }>
-          <div></div>
-          <div>
-            <input
-              type = { 'text' }
-              className = { 'transaction-search-bar' }
-              ref = { 'search' }
-              placeholder = { 'Search Transactions' }
-              value = { searchString }
-              onChange = { this.updateSearch } />
-          </div>
-        </div>
         {
           transactions ?
+        <div className = { 'transaction-details-personal-grid-row' }>
+
+          <div className = { 'grid-global' }>
+            <div></div>
+            <div>
+              <GenericInput
+                type = { 'text' }
+                className = { 'transaction-search-bar' }
+                refCallback = { 'search' }
+                hint = { 'Search Transactions' }
+                value = { searchString }
+                onChange = { this.updateSearch } />
+            </div>
+          </div>
           <div className = { 'transaction-details-container-grid' }>
             {
                transactionSearch.slice(0, index).map((transaction, key) => (
@@ -90,34 +96,36 @@ class TransactionPersonalFragment extends BaseMVPView {
                   />
               ))
             }
-          </div>        :
-          <div className = { 'transactions-loader' }>
-            <center>
-              <CircularLoader show = { true } />
-            </center>
           </div>
-        }
-      </div>
-      <div className = { 'grid-global' }>
-        <GenericButton
-          className = { 'transaction-component-button' }
-          text = { 'View Less' }
-          onClick = { () =>
-            this.setState({
-              index : TransactionPersonalFunction.indexDecreased(index)
-              })
-            }
-          />
-        <GenericButton
-          className = { 'transaction-component-button' }
-          text = { 'View More' }
-          onClick = { () =>
-            this.setState({
-              index : TransactionPersonalFunction.indexIncreased(index)
-              })
-            }
-          />
-      </div>
+
+          <div className = { 'grid-global' }>
+            <GenericButton
+              className = { 'transaction-component-button' }
+              text = { 'View Less' }
+              onClick = { () =>
+                this.setState({
+                  index : TransactionPersonalFunction.indexDecreased(index)
+                  })
+                }
+              />
+            <GenericButton
+              className = { 'transaction-component-button' }
+              text = { 'View More' }
+              onClick = { () =>
+                this.setState({
+                  index : TransactionPersonalFunction.indexIncreased(index)
+                  })
+                }
+              />
+          </div>
+        </div>
+            :
+        <div className = { 'transactions-loader' }>
+          <center>
+            <CircularLoader show = { true } />
+          </center>
+        </div>
+      }
     </div>
     )
   }

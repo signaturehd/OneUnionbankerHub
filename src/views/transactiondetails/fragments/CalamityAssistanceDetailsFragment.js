@@ -12,16 +12,12 @@ import {
 
 import './styles/detailsFragment.css'
 /*
-Transaction Education Grant Aid Form Agreement, Form Agreement, & File Attacment
+Transaction Calamity
 */
 import CalamityAssistanceDetailsComponent from
 '../../transaction/components/TransactionCalamityAssistanceComponent/CalamityAssistanceDetailsComponent'
 
-import CalamityAssistanceFileComponent from
- '../../transaction/components/TransactionCalamityAssistanceComponent/CalamityAssistanceFileAttachmentComponent'
-
-import TransactionCalamityAssistanceFormAgreementComponenent from
-  '../../transaction/components/TransactionCalamityAssistanceComponent/TransactionCalamityAssistanceFormAgreementComponent'
+import * as TransactionDetailsFunction from '../controller/TransactionDetailsFunction'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -70,63 +66,72 @@ class CalamityAssistanceDetailsFragment extends Component {
   }
 
   render () {
-    const {
-      details,
-      transactionsPerson,
-      attachments,
-      uploadImage,
-      response,
-      showFileReceipt
-    } = this.props
+  const {
+    details,
+    transactionsPerson,
+    attachments,
+    uploadImage,
+    response,
+    showFileReceipt,
+    attachmentsMethod,
+    agreementsMethod
+  } = this.props
 
-    const {
-      showLoader,
-      attachmentArray,
-      showAttachment
-    } = this.state
-    if (!showFileReceipt) {
-      window.location.reload()
-    }
+  const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
+  const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
+  const dateFiled = TransactionDetailsFunction.checkedDateFilled(details)
+  const benefitLabel = TransactionDetailsFunction.getBenefitLabelStatus(details.status)
 
-    return (
-      <div className={ 'details-container' }>
-        <center>
-          <h2 className={ 'transaction-detail details-bold' }>
-            Transaction Information
-          </h2>
-        </center>
-        <br/>
-        <div>
-          <Accordion>
-            <div className={ 'accor' }>
-              <div className={ 'head' }>
-                Details
-              </div>
-              <div className={ 'body' }>
-                <CalamityAssistanceDetailsComponent
-                  details={ details }
-                  transactionsPerson={ transactionsPerson }/>
+  const {
+    showLoader,
+    attachmentArray,
+    showAttachment
+  } = this.state
+
+  if (!showFileReceipt) {
+    window.location.reload()
+  }
+
+  return (
+    <div className={ 'transaction-details-global-x3' }>
+      <div></div>
+        <Card>
+          <div className={ 'transaction-details-container' }>
+            <div className = { 'transaction-banner transaction-calamity' }>
+              <div className={ 'transaction-banner-card' }>
+                <div>
+                  <h1 className = { 'transaction-details-name font-weight-normal'}>
+                    { benefitType }
+                  </h1>
+                  <div></div>
+                </div>
+                <div className={ 'transaction-details-grid-row' }>
+                  <div></div>
+                  <div className = { 'transaction-details-status-grid' }>
+                    <div className =
+                      { `font-weight-bolder grid-global-row-x3 transaction-details-status-${ detailStatus }` }
+                    >
+                      <div></div>
+                        { benefitLabel }
+                      <div></div>
+                    </div>
+                    <div className = { 'font-size-14px' }>Transaction Status</div>
+                  </div>
+                  <div></div>
+                </div>
               </div>
             </div>
-            <div className={ 'accor' }>
-              <div className={ 'head' }>Attachments</div>
-                <div className={ 'body' }>
-                <CalamityAssistanceFileComponent
-                  attachments={ attachments }
-                  details={ details } />
-                <br/>
-              </div>
-            </div>
-
-            <div className={ 'accor' }>
-              <div className={ 'head' }>
-                Notice
-              </div>
-              <div className = { 'body' } >
-                  <TransactionCalamityAssistanceFormAgreementComponenent details = { details } />
-              </div>
           </div>
-
+          <br/>
+          <div>
+            <CalamityAssistanceDetailsComponent
+              transactionsPerson = { transactionsPerson }
+              details = { details }
+              onClickAttachments = { (resp) => attachmentsMethod(resp) }
+              onClickAgreements = { (resp) => agreementsMethod(resp) }
+            />
+          </div>
+          <div>
           {
 
             showFileReceipt &&
@@ -187,17 +192,18 @@ class CalamityAssistanceDetailsFragment extends Component {
                     }
                   }
                   />
-                  ))
-                }
-                  <br/>
-                  <GenericButton text = { 'submit attachment' }
-                    onClick = { () => uploadImage(details.transactionId, attachmentArray) }
-                  />
-                </div>
-          }
-        </Accordion>
+                ))
+              }
+              <br/>
+              <GenericButton text = { 'submit attachment' }
+                onClick = { () => uploadImage(details.transactionId, attachmentArray) }
+              />
+            </div>
+            }
+          </div>
+        </Card>
+        <div></div>
       </div>
-    </div>
     )
   }
 }
