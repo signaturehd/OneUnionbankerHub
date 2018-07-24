@@ -1,0 +1,19 @@
+.salary-form-card {
+  max-width: 100%;
+  float: center;
+  padding: 10px 20% 10px 20%;
+  margin: auto;
+  text-align: center;
+}
+
+.salary-grid {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 5px;
+}
+
+@media (max-width : 768px) {
+  .salary-form-card {
+    padding: 10px;
+  }
+}
