@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { GenericTextBox, Card, GenericButton, FileUploader } from '../../../ub-components/'
+import { GenericInput, Card, GenericButton, FileUploader } from '../../../ub-components/'
 
 import './styles/bereavementComponentStyle.css'
 import BereavementDependentsModal from '../modals/BereavementDependentsModal'
@@ -249,44 +249,29 @@ class BereavementFormCardComponent extends Component {
             Deceased Detail
             </h4>
             <div className={'brv-form-card-body '}>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-dependents' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ dependentsName ? dependentsName : '' }
-                    onClick={ () => this.setState({ showDeceasedDependents: true }) }
-                    onFocus={ () => this.setState({ showDeceasedDependents: true }) }
-                    placeholder={ 'Deceased Name' }
-                    errorMessage={ this.errorFunc (dependentsName, 'Required Field') }
-                    readOnly
-                    type={ 'text' }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ dependentsName ? dependentsName : '' }
+                  onClick={ () => this.setState({ showDeceasedDependents: true }) }
+                  onFocus={ () => this.setState({ showDeceasedDependents: true }) }
+                  hint={ 'Deceased Name' }
+                  text={ 'Deceased Name' }
+                  errorMessage={ this.errorFunc (dependentsName, '* Required Field') }
+                  readOnly
+                  type={ 'text' }
+                />
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-relationship' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ dependentsRelationship ? dependentsRelationship : '' }
-                    placeholder={ 'Relationship' }
-                    type={ 'text' }
-                    readOnly
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ dependentsRelationship ? dependentsRelationship : '' }
+                  hint={ 'Relationship' }
+                  text={ 'Relationship' }
+                  type={ 'text' }
+                  readOnly
+                />
               </div>
-              <div className={ 'brv-icon-text-grid-date' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-calendar' }/>
-                </div>
                 <div>
                   <DatePicker
                     dateFormat={ 'MM/DD/YYYY' }
@@ -299,7 +284,6 @@ class BereavementFormCardComponent extends Component {
                     calendarClassName={ 'calendarClass' }/>
                   <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
                   { deceasedDate ? '' : <span className={ 'text-error' }>* Required Field</span> }
-                </div>
               </div>
               <br/>
               <br/>
@@ -315,108 +299,77 @@ class BereavementFormCardComponent extends Component {
             Funeral Detail
             </h4>
             <div className={'brv-form-card-body '}>
-              <div className={ 'brv-icon-text-grid-date' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-calendar' }/>
-                </div>
-                <div>
-                  <DatePicker
-                    dateFormat={ 'MM/DD/YYYY' }
-                    readOnly
-                    minDate={ moment(deceasedDate) }
-                    maxDate={ moment(deceasedDate).add(30, 'days') }
-                    value={ funeralDate ? funeralDate : 'Date of Wake' }
-                    selected={ moment(funeralDate) }
-                    onChange={ this.getFuneralDate }
-                    className={ 'calendar  font-size-12px' }
-                    calendarClassName={ 'calendarClass' }
-                  />
+              <div>
+                <DatePicker
+                  dateFormat={ 'MM/DD/YYYY' }
+                  readOnly
+                  minDate={ moment(deceasedDate) }
+                  maxDate={ moment(deceasedDate).add(30, 'days') }
+                  value={ funeralDate ? funeralDate : 'Date of Wake' }
+                  selected={ moment(funeralDate) }
+                  onChange={ this.getFuneralDate }
+                  className={ 'calendar  font-size-12px' }
+                  calendarClassName={ 'calendarClass' }
+                />
                 <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
-                </div>
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-school' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ funeralHome ? funeralHome : '' }
-                    onChange={ this.getFuneralHome }
-                    placeholder={ 'Funeral Home' }
-                    errorMessage={ this.errorFunc (funeralHome, 'Required Field') }
-                    type={ 'text' }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ funeralHome ? funeralHome : '' }
+                  onChange={ this.getFuneralHome }
+                  text={ 'Funeral Home' }
+                  hint={ 'Funeral Home' }
+                  errorMessage={ this.errorFunc (funeralHome, '* Required Field') }
+                  type={ 'text' }
+                />
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-address' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ funeralAddress ? funeralAddress : '' }
-                    onChange={ this.getFuneralAddress }
-                    errorMessage={ addressError ?
-                      'Address field should contain atleast 15 characters' :
-                      this.errorFunc (funeralAddress, 'Required Field')
-                    }
-                    placeholder={ 'Address' }
-                    type={ 'text' }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ funeralAddress ? funeralAddress : '' }
+                  onChange={ this.getFuneralAddress }
+                  errorMessage={ addressError ?
+                    'Address field should contain atleast 15 characters' :
+                    this.errorFunc (funeralAddress, '* Required Field')
+                  }
+                  text={ 'Address' }
+                  hint={ 'Address' }
+                  type={ 'text' }
+                />
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-region' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ funeralRegion ? funeralRegion : '' }
-                    onChange={ this.getFuneralRegion }
-                    placeholder={ 'Region' }
-                    errorMessage={ this.errorFunc (funeralRegion, 'Required Field') }
-                    type={ 'text' }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ funeralRegion ? funeralRegion : '' }
+                  onChange={ this.getFuneralRegion }
+                  text={ 'Region' }
+                  hint={ 'Region' }
+                  errorMessage={ this.errorFunc (funeralRegion, '* Required Field') }
+                  type={ 'text' }
+                />
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-province' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ funeralProvince ? funeralProvince : '' }
-                    onChange={ this.getFuneralProvince }
-                    placeholder={ 'Province' }
-                    errorMessage={ this.errorFunc (funeralProvince, 'Required Field') }
-                    type={ 'text' }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ funeralProvince ? funeralProvince : '' }
+                  onChange={ this.getFuneralProvince }
+                  text={ 'Province' }
+                  hint={ 'Province' }
+                  errorMessage={ this.errorFunc (funeralProvince, '* Required Field') }
+                  type={ 'text' }
+                />
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-city' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ funeralCity ? funeralCity : '' }
-                    onChange={ this.getFuneralCity }
-                    placeholder={ 'City' }
-                    errorMessage={ this.errorFunc (funeralCity, 'Required Field') }
-                    type={ 'text' }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ funeralCity ? funeralCity : '' }
+                  onChange={ this.getFuneralCity }
+                  text={ 'City' }
+                  hint={ 'City' }
+                  errorMessage={ this.errorFunc (funeralCity, '* Required Field') }
+                  type={ 'text' }
+                />
               </div>
               <br/>
               <br/>
@@ -432,103 +385,73 @@ class BereavementFormCardComponent extends Component {
             Interment Detail
             </h4>
             <div className={'brv-form-card-body '}>
-              <div className={ 'brv-icon-text-grid-date' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-calendar' }/>
-                </div>
-                <div>
-                  <DatePicker
-                    dateFormat={ 'MM/DD/YYYY' }
-                    readOnly
-                    minDate={ moment(funeralDate) }
-                    maxDate={ moment(deceasedDate).add(30, 'days') }
-                    onChange={ this.getIntermentDate }
-                    value={ intermentDate ? intermentDate : 'Date of Interment'  }
-                    selected={ moment(deceasedDate) }
-                    className={ 'calendar font-size-12px' }
-                    />
-                  <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
-                </div>
+              <div>
+                <DatePicker
+                  dateFormat={ 'MM/DD/YYYY' }
+                  readOnly
+                  minDate={ moment(funeralDate) }
+                  maxDate={ moment(deceasedDate).add(30, 'days') }
+                  onChange={ this.getIntermentDate }
+                  value={ intermentDate ? intermentDate : 'Date of Interment'  }
+                  selected={ moment(deceasedDate) }
+                  className={ 'calendar font-size-12px' }
+                />
+                <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-memorial-park' }/>
-                </div>
-                <div>
-                <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ memorialPark ? memorialPark : '' }
-                    onChange={ this.getMemorialHome }
-                    placeholder={ 'Memorial Park' }
-                    errorMessage={ this.errorFunc (memorialPark, 'Required Field') }
-                    type={ 'text' }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ memorialPark ? memorialPark : '' }
+                  onChange={ this.getMemorialHome }
+                  text={ 'Memorial Park' }
+                  hint={ 'Memorial Park' }
+                  errorMessage={ this.errorFunc (memorialPark, '* Required Field') }
+                  type={ 'text' }
+                />
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-address' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ memorialAddress ? memorialAddress : '' }
-                    onChange={ this.getMemorialAddress }
-                    placeholder={ 'Address' }
-                    type={ 'text' }
-                    errorMessage={ addressError ?
-                      'Address field should contain atleast 15 characters' :
-                      this.errorFunc (memorialAddress, 'Required Field')
-                    }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ memorialAddress ? memorialAddress : '' }
+                  onChange={ this.getMemorialAddress }
+                  text={ 'Address' }
+                  hint={ 'Address' }
+                  type={ 'text' }
+                  errorMessage={ addressError ?
+                    'Address field should contain atleast 15 characters' :
+                    this.errorFunc (memorialAddress, '* Required Field')
+                  }
+                />
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-region' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ memorialRegion ? memorialRegion : '' }
-                    onChange={ this.getMemorialRegion }
-                    placeholder={ 'Region' }
-                    errorMessage={ this.errorFunc (memorialRegion, 'Required Field') }
-                    type={ 'text' }/>
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ memorialRegion ? memorialRegion : '' }
+                  onChange={ this.getMemorialRegion }
+                  text={ 'Region' }
+                  hint={ 'Region' }
+                  errorMessage={ this.errorFunc (memorialRegion, '* Required Field') }
+                  type={ 'text' }/>
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-province' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ memorialProvince ? memorialProvince : '' }
-                    onChange={ this.getMemorialProvince }
-                    placeholder={ 'Province' }
-                    errorMessage={ this.errorFunc (memorialProvince, 'Required Field') }
-                    type={ 'text' }/>
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ memorialProvince ? memorialProvince : '' }
+                  onChange={ this.getMemorialProvince }
+                  text={ 'Province' }
+                  hint={ 'Province' }
+                  errorMessage={ this.errorFunc (memorialProvince, '* Required Field') }
+                  type={ 'text' }/>
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-city' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ memorialCity ? memorialCity : '' }
-                    onChange={ this.getMemorialCity }
-                    placeholder={ 'City' }
-                    errorMessage={ this.errorFunc (memorialCity, 'Required Field') }
-                    type={ 'text' }/>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ memorialCity ? memorialCity : '' }
+                  onChange={ this.getMemorialCity }
+                  text={ 'City' }
+                  hint={ 'City' }
+                  errorMessage={ this.errorFunc (memorialCity, '* Required Field') }
+                  type={ 'text' }/>
                 </div>
               </div>
               {

@@ -7,12 +7,10 @@ import BaseMVPView from '../common/base/BaseMVPView'
 
 import {
   GenericButton,
-  GenericTextBox,
   Card,
   CircularLoader,
   Notify,
-  GenericInput,
-  GenericFileInput
+  GenericInput
 } from '../../ub-components'
 
 import './styles/login.css'
