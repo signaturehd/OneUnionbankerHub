@@ -35,7 +35,6 @@ export default class MultiPurposeLoanPresenter {
 
     this.getInformationInteractor =
       new GetInformationInteractor(container.get('HRBenefitsClient'))
-
   }
 
   setView (view) {
@@ -75,7 +74,7 @@ export default class MultiPurposeLoanPresenter {
     loanTypesId,
     purposeOfLoan,
     subcategoryLevel) {
-  this.getPurposeOfAvailmentInteractor.execute({
+    this.getPurposeOfAvailmentInteractor.execute({
     loanTypesId,
     purposeOfLoan,
     subcategoryLevel
