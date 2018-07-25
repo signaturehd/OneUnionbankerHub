@@ -9,16 +9,26 @@ import { Card } from '../../../../ub-components/'
 import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
 
 class CalamityOtherDetailsComponent extends Component {
-    constructor (props) {
-      super(props)
-    }
+  constructor (props) {
+    super(props)
+  }
 
-    render () {
-    const { detailsCalamity, detailsCalamityDetails } = this.props
-    const property = TransactionPersonalFunction.checkedCalamityType(detailsCalamityDetails)
+  render () {
+  const {
+    detailsCalamity,
+    detailsCalamityDetails
+  } = this.props
 
-    return (
-      <div>
+  const property = TransactionPersonalFunction.checkedCalamityType(detailsCalamityDetails)
+
+  return (
+    <div>
+      {
+       detailsCalamity &&
+       detailsCalamity.CalamityDetails &&
+       detailsCalamity.CalamityDetails.DamageProperty &&
+       detailsCalamity.CalamityDetails.DamageProperty.map((detail, key) =>
+      <div className = { 'transaction-component-otherdetails-form' }>
         <div>
           <div>
             <h2 className = { 'font-weight-bolder' }> Details </h2>
@@ -37,92 +47,106 @@ class CalamityOtherDetailsComponent extends Component {
              </h2>
            </div>
          </div>
-          {
-           detailsCalamity &&
-           detailsCalamity.CalamityDetails &&
-           detailsCalamity.CalamityDetails.DamageProperty &&
-           detailsCalamity.CalamityDetails.DamageProperty.map((detail, key) =>
-            <div>
-             <div
-               key = { key }
-               className = { 'transaction-icons-details-grid' }>
-               <span className = { ' transaction-card-icon-settings global-icons-property' }></span>
-               <div>
-                 <h2 className = { 'font-weight-ligter' }>
-                   { detail.PropertyName }
-                 </h2>
-                 <h2 className = { 'unionbank-color font-size-12px' }>
-                   Property Name
-                   <br/>
-                   <br/>
-                 </h2>
-               </div>
-             </div>
-             <div
-               key = { key }
-               className = { 'transaction-icons-details-grid' }>
-               <span></span>
-               <div>
-                 <h2 className = { 'font-weight-ligter' }>
-                   { moment(detail.DateOfOccurrence).format('MMMM DD, YYYY') }
-                 </h2>
-                 <h2 className = { 'unionbank-color font-size-12px' }>
-                   Date of Occurence
-                   <br/>
-                   <br/>
-                 </h2>
-               </div>
-             </div>
-             <div
-               key = { key }
-               className = { 'transaction-icons-details-grid' }>
-               <span></span>
-               <div>
-                 <h2 className = { 'font-weight-ligter' }>
-                   { detail.PropertyType }
-                 </h2>
-                 <h2 className = { 'unionbank-color font-size-12px' }>
-                   Property Type
-                   <br/>
-                   <br/>
-                 </h2>
-               </div>
-             </div>
-             <div
-               key = { key }
-               className = { 'transaction-icons-details-grid' }>
-               <span></span>
-               <div>
-                 <h2 className = { 'font-weight-ligter' }>
-                   &#8369; { format(detail.AcquisitionValue) }
-                 </h2>
-                 <h2 className = { 'unionbank-color font-size-12px' }>
-                   Estimated Value
-                   <br/>
-                   <br/>
-                 </h2>
-               </div>
-             </div>
-             <div
-               key = { key }
-               className = { 'transaction-icons-details-grid' }>
-               <span></span>
-               <div>
-                 <h2 className = { 'font-weight-ligter' }>
-                   &#8369; { format(detail.RepairCost) }
-                 </h2>
-                 <h2 className = { 'unionbank-color font-size-12px' }>
-                   Estimated Repair Cost
-                   <br/>
-                   <br/>
-                 </h2>
-               </div>
-             </div>
+         <div
+           key = { key }
+           className = { 'transaction-icons-details-grid' }>
+           <span className = { ' transaction-card-icon-settings global-icons-property' }></span>
+           <div>
+             <h2 className = { 'font-weight-ligter' }>
+               { detail.PropertyName }
+             </h2>
+             <h2 className = { 'unionbank-color font-size-12px' }>
+               Property Name
+               <br/>
+               <br/>
+             </h2>
            </div>
-           )
-         }
+         </div>
+         <div
+           key = { key }
+           className = { 'transaction-icons-details-grid' }>
+           <span className = { ' transaction-card-icon-settings global-icons-property' }></span>
+           <div>
+             <h2 className = { 'font-weight-ligter' }>
+               { detail && detail.Description ? detail && detail.Description : '(Not Yet Provided)' }
+             </h2>
+             <h2 className = { 'unionbank-color font-size-12px' }>
+               Description
+               <br/>
+               <br/>
+             </h2>
+           </div>
+         </div>
+        </div>
+        <div>
+          <div>
+            <h2 className = { 'font-weight-bolder' }> Damage Property </h2>
+            <br/>
+          </div>
+          <div
+            key = { key }
+            className = { 'transaction-icons-details-grid' }>
+            <span></span>
+            <div>
+              <h2 className = { 'font-weight-ligter' }>
+                { moment(detail.DateOfOccurrence).format('MMMM DD, YYYY') }
+              </h2>
+              <h2 className = { 'unionbank-color font-size-12px' }>
+                Date of Occurence
+                <br/>
+                <br/>
+              </h2>
+            </div>
+          </div>
+          <div
+            key = { key }
+            className = { 'transaction-icons-details-grid' }>
+            <span></span>
+            <div>
+              <h2 className = { 'font-weight-ligter' }>
+                { detail.PropertyType }
+              </h2>
+              <h2 className = { 'unionbank-color font-size-12px' }>
+                Property Type
+                <br/>
+                <br/>
+              </h2>
+            </div>
+          </div>
+          <div
+            key = { key }
+            className = { 'transaction-icons-details-grid' }>
+            <span></span>
+            <div>
+              <h2 className = { 'font-weight-ligter' }>
+                &#8369; { format(detail.AcquisitionValue) }
+              </h2>
+              <h2 className = { 'unionbank-color font-size-12px' }>
+                Estimated Value
+                <br/>
+                <br/>
+              </h2>
+            </div>
+          </div>
+          <div
+            key = { key }
+            className = { 'transaction-icons-details-grid' }>
+            <span></span>
+            <div>
+              <h2 className = { 'font-weight-ligter' }>
+                &#8369; { format(detail.RepairCost) }
+              </h2>
+              <h2 className = { 'unionbank-color font-size-12px' }>
+                Estimated Repair Cost
+                <br/>
+                <br/>
+              </h2>
+            </div>
+          </div>
         </div>
       </div>
+      )}
+    </div>
     )
   }
 }

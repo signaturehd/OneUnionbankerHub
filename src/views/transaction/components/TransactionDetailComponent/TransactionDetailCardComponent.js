@@ -16,7 +16,11 @@ class TransactionDetailCardComponent extends Component {
   }
 
   render () {
-  const { details, onClickAttachments, onClickAgreements } = this.props
+  const {
+    details,
+    onClickAttachments,
+    onClickAgreements
+  } = this.props
 
   const transactionID = details.transactionId
   const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
@@ -102,7 +106,9 @@ class TransactionDetailCardComponent extends Component {
     )
   }
 }
+
 TransactionDetailCardComponent.propTypes = {
+  details : PropTypes.object,
   onClickAttachments: PropTypes.func,
   onClickAgreements: PropTypes.func,
 }

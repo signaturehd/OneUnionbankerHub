@@ -14,7 +14,11 @@ class TransactionMPLDetailComponent extends Component {
   }
 
   render () {
-  const { details, onClickAttachments, onClickAgreements } = this.props
+  const {
+    details,
+    onClickAttachments,
+    onClickAgreements
+  } = this.props
 
   const transactionID = details.transactionId
   const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
@@ -100,6 +104,12 @@ class TransactionMPLDetailComponent extends Component {
     </div>
     )
   }
+}
+
+TransactionMPLDetailComponent.propTypes = {
+  details : PropTypes.object,
+  onClickAttachments : PropTypes.func,
+  onClickAgreements : PropTypes.func
 }
 
 export default TransactionMPLDetailComponent

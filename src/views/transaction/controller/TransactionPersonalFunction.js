@@ -1,13 +1,27 @@
 import moment from 'moment'
 import { format } from '../../../utils/numberUtils'
 
-  /* Medical */
+  /* Default Amount View (e.g) P 2,000.00 */
+
+  export function checkedAmountFormat (amount) {
+    return amount && amount ? format(amount) :  'Not Yet Provided'
+  }
+
+  /* (e.g) Friday, July 5, 2018, 1:07:18 PM*/
   export function checkedDateFilled (details) {
     return details ?
            details &&
            moment(details && details.dateFiled).format('dddd, MMMM d, YYYY, h:MM:ss A') : '(Not Yet Provided)'
   }
 
+  /* (e.g) July 5, 2018 */
+  export function checkedMDYDate (date) {
+    return date ?
+           date &&
+           moment(date).format('MMM DD, YYYY') : '(Not Yet Provided)'
+  }
+
+  /* Medical */
   export function checkedAccountNumber (details) {
     return details && details.AccountNo ? details && details.AccountNo : '(Not Yet Provided)'
   }
@@ -62,6 +76,57 @@ import { format } from '../../../utils/numberUtils'
               property.DamageProperty &&
               property.DamageProperty.PropertyName
               : '(Not Yet Provided)'
+  }
+
+  /* Bereavement Assistance */
+
+  export function checkedDependent (dependent) {
+    return dependent &&
+           dependent.BereavementDetails &&
+           dependent.BereavementDetails.Dependent &&
+           dependent.BereavementDetails.Dependent.Name ?
+           dependent.BereavementDetails.Dependent.Name :
+           '(Not Yet Provided)'
+  }
+
+  export function checkedRelationship (relationship) {
+    return relationship &&
+           relationship.BereavementDetails &&
+           relationship.BereavementDetails.Dependent &&
+           relationship.BereavementDetails.Dependent.Relationship ?
+           relationship.BereavementDetails.Dependent.Relationship :
+           '(Not Yet Provided)'
+  }
+
+  export function checkedHome (funeral) {
+    return funeral &&
+           funeral ?
+           funeral :
+           '(Not Yet Provided)'
+  }
+
+  export function checkedAddress (address) {
+    return address &&
+           address ?
+           address : '(Not Yet Provided)'
+  }
+
+  export function checkRegion (region) {
+    return region &&
+           region ?
+           region : '(Not Yet Provided)'
+  }
+
+  export function checkCity (city) {
+    return city &&
+           city ?
+           city : '(Not Yet Provided)'
+  }
+
+  export function checkProvince (province) {
+    return province &&
+           province ?
+           province : '(Not Yet Provided)'
   }
 
   export function indexDecreased (index) {
