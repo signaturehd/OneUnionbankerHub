@@ -82,25 +82,32 @@ class TransactionDetailCardComponent extends Component {
         <br/>
         <br/>
       </div>
-      <div>
-        {
-          details &&
-          details.details &&
-          details.details.Attachments ?
+      <div className = { 'transaction-attachments-agreements-grid' }>
+        <div>
+          <br/>
+            {
+              details &&
+              details.details &&
+              details.details.Attachments ?
 
-          <GenericButton className = { 'transaction-details-button' }
-            text = { 'View Attachments' }
-            onClick = { () => onClickAttachments(true) }
-          /> :
-          <div></div>
-        }
-        <br/>
-        <br/>
-        <GenericButton className = { 'transaction-details-button' }
-          text = { 'View Agreements' }
-          onClick = { () => onClickAgreements(true) }
-        />
-        <br/>
+              <GenericButton
+                className = { 'transaction-details-button' }
+                text = { 'View Attachments' }
+                onClick = { () => onClickAttachments(true) }
+              /> :
+              <div></div>
+            }
+            <br/>
+        </div>
+        <div>
+          <br/>
+          <GenericButton
+            className = { 'transaction-details-button' }
+            text = { 'View Agreements' }
+            onClick = { () => onClickAgreements(true) }
+          />
+          <br/>
+        </div>
       </div>
     </div>
     )

@@ -93,6 +93,20 @@
   margin-top: 157px;
 }
 
+@media screen and (max-width: 768px) {
+    .transaction-banner-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      position: absolute;
+      margin-top: 100px;
+      margin-left: 0px;
+      font-size: 12px;
+    }
+    .transaction-details-grid-row {
+      margin-top: 10px;
+    }
+}
+
 .transaction-details-name{
   color: #000000;
 }

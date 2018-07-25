@@ -23,10 +23,10 @@ class BereavementOtherDetailCardComponent extends Component {
 
   const dateOfDeath = TransactionPersonalFunction.checkedMDYDate(detailsBereavement.BereavementDetails.DateOfDeath)
   const dateOfWake = TransactionPersonalFunction.checkedMDYDate(detailsBereavement.BereavementDetails.DateOfWake)
-  const dateOfInternment = TransactionPersonalFunction.checkedMDYDate(detailsBereavement.BereavementDetails.InternmentDate)
+  const dateOfInterment = TransactionPersonalFunction.checkedMDYDate(detailsBereavement.BereavementDetails.IntermentDate)
   const deceasedDependent = TransactionPersonalFunction.checkedDependent(detailsBereavement)
   const relationship = TransactionPersonalFunction.checkedRelationship(detailsBereavement)
-  const funeralHome = TransactionPersonalFunction.checkedHome(memorialDetails.FuneralHome)
+  const funeralHome = TransactionPersonalFunction.checkedHome(funeralDetails.FuneralHome)
   const memorialHome = TransactionPersonalFunction.checkedHome(memorialDetails.MemorialHome)
   const memorialAddress = TransactionPersonalFunction.checkedAddress(memorialDetails.MemorialAddress)
   const funeralAddress = TransactionPersonalFunction.checkedAddress(funeralDetails.FuneralAddress)
@@ -168,7 +168,7 @@ class BereavementOtherDetailCardComponent extends Component {
           <span></span>
           <div>
             <h2 className = { 'font-weight-ligter' }>
-              { dateOfInternment }
+              { dateOfInterment }
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
               Interment Date

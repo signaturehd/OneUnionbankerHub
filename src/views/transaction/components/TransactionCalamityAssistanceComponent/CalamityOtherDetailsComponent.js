@@ -65,7 +65,7 @@ class CalamityOtherDetailsComponent extends Component {
          <div
            key = { key }
            className = { 'transaction-icons-details-grid' }>
-           <span className = { ' transaction-card-icon-settings global-icons-property' }></span>
+           <span></span>
            <div>
              <h2 className = { 'font-weight-ligter' }>
                { detail && detail.Description ? detail && detail.Description : '(Not Yet Provided)' }

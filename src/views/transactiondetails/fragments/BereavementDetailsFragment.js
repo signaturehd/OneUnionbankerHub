@@ -59,8 +59,8 @@ class BereavementDetailsFragment extends Component {
       attachments,
       uploadImage,
       response,
-      onClickAttachments,
-      onClickAgreements,
+      attachmentsMethod,
+      agreementsMethod,
     } = this.props
 
     const {

@@ -43,6 +43,25 @@
   grid-template-columns: 1fr 1fr;
 }
 
+@media screen and (max-width: 768px) {
+    .transaction-component-otherdetails-form {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .transaction-component-details-form {
+      padding-left: 30px;
+      padding-right: 30px;
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .transaction-attachments-agreements-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 1%;
+      padding-bottom: 20px;
+    }
+}
+
 .transaction-component-column-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
