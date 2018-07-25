@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { GenericTextBox, GenericInput, Card, GenericButton, FileUploader } from '../../../ub-components/'
 
 import './styles/bereavementComponentStyle.css'
-import BereavementDependentsModal from '../modals/BereavementDependentsModal'
 
 import { RequiredAlphabetValidation } from '../../../utils/validate'
 
@@ -23,14 +22,9 @@ class BereavementFormCardComponent extends Component {
       file: '',
       imagePreviewUrl: null,
       showDeceasedDependents: false,
-      dependentsName: '',
-      dependentsRelationship: '',
-      dependentId: '',
       deceasedDate: '',
       funeralDate: '',
       intermentDate: '',
-      dependentId: '',
-      funeralHome: '',
       funeralAddress: '',
       funeralRegion: '',
       funeralProvince: '',
@@ -47,7 +41,6 @@ class BereavementFormCardComponent extends Component {
     this.getFuneralDate = this.getFuneralDate.bind(this)
     this.getIntermentDate = this.getIntermentDate.bind(this)
     this.getOnClicked = this.getOnClicked.bind(this)
-    this.getFuneralHome = this.getFuneralHome.bind(this)
     this.getFuneralAddress = this.getFuneralAddress.bind(this)
     this.getFuneralRegion = this.getFuneralRegion.bind(this)
     this.getFuneralProvince = this.getFuneralProvince.bind(this)
@@ -71,12 +64,6 @@ class BereavementFormCardComponent extends Component {
 
   getIntermentDate (e) {
     this.setState({ intermentDate : e.format('MM/DD/YYYY') })
-  }
-
-  getFuneralHome (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ funeralHome : e.target.value }):
-    this.setState({ funeralHome : '' })
   }
 
   getFuneralAddress (e) {
@@ -189,20 +176,20 @@ class BereavementFormCardComponent extends Component {
     const {
       showDepedents,
       withDeathCert,
-      onFocus
+      onFocus,
+      showDeceasedDependents,
+      dependentId,
+      dependentsName,
+      dependentsRelationship,
+      funeralHome,
     }=this.props
 
     const {
       file,
-      showDeceasedDependents,
       imagePreviewUrl,
-      dependentId,
-      dependentsName,
-      dependentsRelationship,
       deceasedDate,
       funeralDate,
       intermentDate,
-      funeralHome,
       funeralAddress,
       funeralRegion,
       funeralProvince,
@@ -229,16 +216,17 @@ class BereavementFormCardComponent extends Component {
     return (
       <div className={'brv-container'}>
         <div className={ 'brv-grid-column-2' }>
+
           <div></div>
           <div className={ 'brv-form-div' }>
             <h4>
             Deceased Detail
             </h4>
             <div>
-                <GenericTextBox
+                <GenericInput
                   value={ dependentsName ? dependentsName : '' }
-                  onClick={ () => this.setState({ showDeceasedDependents: true }) }
-                  onFocus={ () => this.setState({ showDeceasedDependents: true }) }
+                  onClick={ () => showDeceasedDependents() }
+                  onFocus={ () => showDeceasedDependents() }
                   hint={ 'Deceased Name' }
                   text={ 'Deceased Name' }
                   errorMessage={ this.errorFunc (dependentsName, 'Required Field') }
@@ -296,8 +284,8 @@ class BereavementFormCardComponent extends Component {
               <div>
                 <GenericInput
                   container={ 'brv-container' }
-                  value={ funeralHome ? funeralHome : '' }
-                  onChange={ this.getFuneralHome }
+                  value={ funeralHome }
+                  onChange={ () => checkFuneralHome() }
                   text={ 'Funeral Home' }
                   hint={ 'Funeral Home' }
                   errorMessage={ this.errorFunc (funeralHome, '* Required Field') }
@@ -310,7 +298,7 @@ class BereavementFormCardComponent extends Component {
                   value={ funeralAddress ? funeralAddress : '' }
                   onChange={ this.getFuneralAddress }
                   errorMessage={ addressError ?
-                    'Address field should contain atleast 15 characters' :
+                    '* Address field should contain atleast 15 characters' :
                     this.errorFunc (funeralAddress, '* Required Field')
                   }
                   text={ 'Address' }
@@ -394,7 +382,7 @@ class BereavementFormCardComponent extends Component {
                   hint={ 'Address' }
                   type={ 'text' }
                   errorMessage={ addressError ?
-                    'Address field should contain atleast 15 characters' :
+                    '* Address field should contain atleast 15 characters' :
                     this.errorFunc (memorialAddress, '* Required Field')
                   }
                 />
@@ -573,7 +561,11 @@ class BereavementFormCardComponent extends Component {
 BereavementFormCardComponent.propTypes={
   showDepedents: PropTypes.array,
   withDeathCert: PropTypes.bool,
-  onFocus: PropTypes.func
+  onFocus: PropTypes.func,
+  showDeceasedDependents: PropTypes.func,
+  showDepedents: PropTypes.string,
+  funeralHome: PropTypes.string,
+  checkFuneralHome: PropTypes.func
 }
 
 export default BereavementFormCardComponent

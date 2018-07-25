@@ -10,11 +10,13 @@ import { CircularLoader } from '../../ub-components/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
+import BereavementDependentsModal from './modals/BereavementDependentsModal'
 
 import store from '../../store'
 import { NotifyActions } from '../../actions'
 
 import FormComponent from  './components/BereavementFormCardComponent'
+import * as BereavementFunction from './controller/BereavementFunction'
 
 class BereavementFragment extends BaseMVPView {
 
@@ -28,6 +30,11 @@ class BereavementFragment extends BaseMVPView {
       noticeResponse : null,
       showBenefitFeedbackModal : false,
       showNoticeResponseModal : false,
+      dependentsName: '',
+      dependentsRelationship: '',
+      dependentId: '',
+      showDeceasedDependents : false,
+      funeralHome: ''
     }
     this.submitForm = this.submitForm.bind(this)
   }
@@ -35,6 +42,15 @@ class BereavementFragment extends BaseMVPView {
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateBereavement()
+  }
+
+  validateFuneralHome (value) {
+    const validator = BereavementFunction.checkRequiredAlphabet(value)
+    this.setState({ funeralHome : validator })
+  }
+
+  showDeceasedDependents (showDepedents) {
+    this.setState({ showDepedents })
   }
 
   isEligible (bool) {
@@ -214,7 +230,11 @@ class BereavementFragment extends BaseMVPView {
       funeralDate,
       intermentDate,
       deceasedDate,
-      dependentId
+      dependentId,
+      dependentsName,
+      dependentsRelationship,
+      showDeceasedDependents,
+      funeralHome
     }=this.state
 
     const { type }=this.props.match.params
@@ -253,6 +273,21 @@ class BereavementFragment extends BaseMVPView {
           />
         }
 
+        {
+          showDeceasedDependents &&
+          <BereavementDependentsModal
+            showDepedents={ showDepedents }
+            chosenDependent={ (dependentId, dependentsName, dependentsRelationship) =>
+              this.setState({
+                dependentId,
+                dependentsName,
+                dependentsRelationship
+             })
+           }
+            onClose={ () => this.setState({ showDeceasedDependents: false }) }
+          />
+        }
+
         <div>
           <i
             className={ 'back-arrow' }
@@ -272,6 +307,11 @@ class BereavementFragment extends BaseMVPView {
             withDeathCert={ type === "certified" ? true : false  }
             validatedBereavement={ validatedBereavement }
             showDepedents={ showDepedents }
+            dependentId={ dependentId }
+            dependentsName={ dependentsName }
+            checkFuneralHome={ (resp) => validateFuneralHome(resp) }
+            dependentsRelationship={ dependentsRelationship }
+            showDeceasedDependents={ () => this.setState({ showDeceasedDependents : true }) }
             sendFormData={ (
               funeralDate,
               intermentDate,
