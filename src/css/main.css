@@ -195,9 +195,21 @@ h1, h2, h3, h4, h5, h6, p{
 }
 
 .global-icons-calamity {
-  background-image: url('../images/icons/ic_calamity.png');
+  background-image: url('../images/calamity_transaction.jpg');
 }
 
 .global-icons-property {
   background-image: url('../images/icons/ic_property.png');
+}
+
+.global-icons-deceased {
+  background-image: url('../images/icons/ic_deceased_name.png');
+}
+
+.global-icons-funeral {
+  background-image: url('../images/icons/ic_school.png');
+}
+
+.global-icons-memorial {
+  background-image: url('../images/icons/ic_memorial_park.png');
 }
