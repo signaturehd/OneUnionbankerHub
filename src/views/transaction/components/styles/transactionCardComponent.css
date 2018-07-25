@@ -1,0 +1,182 @@
+.transaction-component-header {
+  height:auto;
+  width:auto;
+}
+
+.transaction-component-body {
+  padding: 10px;
+}
+
+.transaction-component-card {
+  margin-bottom : 6px;
+}
+
+.transaction-component {
+  border-radius: 1px;
+  transition: box-shadow .3s;
+  border: 1px solid #ccc;
+  box-shadow: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.transaction-component:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
+
+.transaction-component-cards-row{
+  display: grid;
+  grid-template-rows: 1fr .3fr;
+}
+
+.transaction-component-details-form {
+  padding-left: 60px;
+  padding-right: 10px;
+  display: grid;
+  grid-template-columns: 1fr .3fr;
+}
+
+.transaction-component-otherdetails-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media screen and (max-width: 768px) {
+    .transaction-component-otherdetails-form {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .transaction-component-details-form {
+      padding-left: 30px;
+      padding-right: 30px;
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .transaction-attachments-agreements-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 1%;
+      padding-bottom: 20px;
+    }
+}
+
+.transaction-component-column-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.transaction-icons-details-grid {
+  display: grid;
+  grid-template-columns: .09fr 1fr;
+}
+
+@media screen and (max-width: 768px) {
+    .transaction-component-column {
+        width: 100%;
+    }
+}
+.transaction-component-title{
+  font-weight: bold;
+}
+
+.transaction-component-button{
+  border-radius: 0px;
+  color: #ff8a00;
+  border: 0px;
+  box-shadow: none;
+  background: transparent;
+  cursor: pointer;
+  min-width: 80px;
+}
+
+.transaction-details-button{
+  border-radius: 0px;
+  color: #ff8a00;
+  border: 1px;
+  background: #fff;
+  cursor: pointer;
+  min-width: 80px;
+}
+
+.transaction-component-button:hover {
+  font-size: 12px;
+}
+
+.transaction-details-button:hover {
+  box-shadow: 1px 2px 6px rgba(0,0,0,0.24), 1px 2px 4px rgba(0,0,0,0.40);
+}
+
+.transaction-component-status {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #09af00;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-component-status-credited {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #00c853;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-component-status-cancel {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #d50000;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-component-status-reconciliation {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #ff8a00;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-component-status-crediting {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #09af00;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-component-status-process {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #00a1ff;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-component-status-clear {
+  border-radius: 1px;
+  color: #ff8a00;
+  border: 0px;
+  background: #fff;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-card-icon-settings {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 20px;
+  width: 20px;
+  background-repeat: no-repeat;
+}
