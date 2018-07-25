@@ -704,4 +704,27 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Outpatient Reimbursement */
+
+  validateOutPatientReimbursement (token) {
+    return this.apiClient.get('v1/outpatient/validate?type=1', null, {
+      header : { token }
+    })
+  }
+
+  addOutPatientReimbursement (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    outPatientParam
+  ) {
+    const formData = new FormData()
+    const objectOutPatient = {
+
+    }
+    return this.apiClient.post('v1/', formData)
+      headers : { token }
+  }
 }
