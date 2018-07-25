@@ -209,7 +209,10 @@ class CalamityAssistanceDetailsFragment extends Component {
 }
 CalamityAssistanceDetailsFragment.propTypes = {
   details : PropTypes.object,
-  transactionsPerson : PropTypes.array
+  transactionsPerson : PropTypes.array,
+  uploadImage : PropTypes.func,
+  attachmentsMethod : PropTypes.func,
+  agreementsMethod : PropTypes.func,
 }
 
   export default CalamityAssistanceDetailsFragment

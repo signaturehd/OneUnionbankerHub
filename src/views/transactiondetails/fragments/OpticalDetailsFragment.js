@@ -81,7 +81,9 @@ class OpticalDetailsFragment extends Component {
 
 OpticalDetailsFragment.propTypes = {
   details: PropTypes.object,
-  transactionsPerson : PropTypes.array
+  transactionsPerson : PropTypes.array,
+  onClickAttachments : PropTypes.func,
+  onClickAgreements : PropTypes.func,
 }
 
 export default OpticalDetailsFragment

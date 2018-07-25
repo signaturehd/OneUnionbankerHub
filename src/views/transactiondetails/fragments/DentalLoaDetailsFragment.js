@@ -81,7 +81,9 @@ class DentalLoaDetailsFragment extends Component {
 }
 DentalLoaDetailsFragment.propTypes = {
   details : PropTypes.object,
-  transactionsPerson : PropTypes.array
+  transactionsPerson : PropTypes.array,
+  onClickAttachments : PropTypes.func,
+  onClickAgreements : PropTypes.func,
 }
 
 export default DentalLoaDetailsFragment

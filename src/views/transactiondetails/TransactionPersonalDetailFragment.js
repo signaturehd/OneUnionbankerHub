@@ -80,12 +80,16 @@ function  TransactionDetails (props)  {
     // Bereavement Transaction Details
     return <BereavementDetailsFragment
       transactionsPerson = { transactionsPerson }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       uploadImage = { (transactionId, file) => uploadImage(21, transactionId, file) }
       details = { transactionDetails } />
   } else if (transactionId === 22) {
     // Calamity Assistance
     return <CalamityAssistanceDetailsFragment
       transactionsPerson = { transactionsPerson }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       uploadImage = { (transactionId, file) => uploadImage(22, transactionId, file) }
       showFileReceipt = { showFileReceipt }
       details = { transactionDetails }

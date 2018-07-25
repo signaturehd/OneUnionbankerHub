@@ -68,7 +68,11 @@
 }
 
 .transaction-calamity {
-  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/calamity_assistance.jpg');
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/calamity_transaction.jpg');
+}
+
+.transaction-bereavement {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/bereavement_bg.jpg');
 }
 
 .transaction-details-grid-row {
