@@ -25,11 +25,9 @@ export default class OutPatientReimbursementPresenter {
             name : procedure.procedures
           })
         })
-        console.log(procedureArray)
-        return procedureArray
+        this.view.showValidatedOutPatient(data)
+        this.view.showProcedureMap(procedureArray)
       })
-      .subscribe(response => {
-      }, error => {
-      })
+      .subscribe()
     }
   }

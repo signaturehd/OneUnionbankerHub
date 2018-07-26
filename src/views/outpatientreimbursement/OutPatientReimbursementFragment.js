@@ -7,7 +7,8 @@ import BaseMVPView from '../common/base/BaseMVPView'
 
 import {
   CircularLoader,
-  SingleInputModal
+  SingleInputModal,
+  MultipleInputModal,
 } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
@@ -28,6 +29,8 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       this.state = {
         enabledLoader : false,
         outpatientData : [],
+        procedureData : [],
+        procedureArray : [],
         dependentId: null,
         dependentName: null,
         procedureNameId: null,
@@ -35,7 +38,8 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         showDepedendent: false,
         showProcedure: false,
         amount: '',
-        diagnosisText : ''
+        diagnosisText : '',
+        orNumberText: '',
     }
   }
 
@@ -54,6 +58,10 @@ class OutPatientReimbursementFragment extends BaseMVPView {
 
   showValidatedOutPatient (outpatientData) {
     this.setState({ outpatientData })
+  }
+
+  showProcedureMap (procedureData) {
+    this.setState({ procedureData })
   }
 
   navigate () {
@@ -82,18 +90,26 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     this.setState({ diagnosisText : validate })
   }
 
+  validateSymbol (e) {
+    const validate = OutPatientReimbursementFunction.checkedValidateSymbol(e)
+    this.setState({ orNumberText : validate.toUpperCase() })
+  }
+
   render () {
     const {
       enabledLoader,
       showDepedendent,
       showProcedure,
       outpatientData,
+      procedureData,
+      procedureArray,
       dependentId,
       dependentName,
       procedureId,
       procedureName,
       amount,
-      diagnosisText
+      diagnosisText,
+      orNumberText
     } = this.state
 
     const {
@@ -115,11 +131,16 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         }
         {
           showProcedure &&
-          <SingleInputModal
+          <MultipleInputModal
             label = { 'Procedure' }
-            inputArray = { outpatientData && outpatientData.procedures }
-            selectedArray = { (dependentId, dependentName) =>
-              this.setState({ dependentId, dependentName, showDepedendent : false }) }
+            inputArray = { procedureData }
+            onSelect = { (object) =>{
+              const updateProcedure = [...procedureArray]
+              updateProcedure.push(object)
+              this.setState({ procedureArray : updateProcedure, showProcedure : false })
+            }
+          }
+            procedureArray = { procedureArray }
             onClose = { () => this.setState({ showProcedure : false }) }
           />
         }
@@ -138,14 +159,17 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             <CircularLoader show = { enabledLoader }/>
           </center> :
           <FormComponent
-            requestDepdentModal = { (resp) => this.showDependentModal(resp) }
+            oRNumberFunc = { (resp) => this.validateSymbol(resp) }
+            procedureModalFunc = { (resp) => this.showProcedureModal(resp) }
+            diagnosisValueFunc = { (resp) => this.validateText(resp) }
+            desiredAmountFunc = { (resp) => this.validateAmount(resp) }
+            requestDepdentModalFunc = { (resp) => this.showDependentModal(resp) }
             dependentName = { dependentName }
             procedureName = { procedureName }
-            desiredAmount = { (resp) => this.validateAmount(resp) }
             amount = { amount }
-            diagnosisValue = { (resp) => this.validateText(resp) }
             diagnosisText = { diagnosisText }
-            procedureModal = { (resp) => this.showProcedureModal(resp) }
+            orNumberText = { orNumberText }
+            procedureArray = { procedureArray }
           />
         }
       </div>

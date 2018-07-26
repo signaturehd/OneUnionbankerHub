@@ -100,3 +100,7 @@
   display: grid;
   grid-template-columns: 1fr .2fr;
 }
+
+.react-datepicker__input-container {
+  margin-top: 0px!important;
+}
