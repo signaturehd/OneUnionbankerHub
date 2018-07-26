@@ -9,6 +9,12 @@
   margin: auto;
 }
 
+.outpatient-form-review {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
+}
+
 .outpatient-form-card-body {
   border-color: #0a0a0a;
   color: #090909;
@@ -24,6 +30,12 @@
   height: 35px;
   margin-top: 20px;
   width: 100%;
+}
+
+.outpatient-submit:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
 }
 
 .outpatient-grid-column-2 {

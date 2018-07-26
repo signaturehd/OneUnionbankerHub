@@ -28,6 +28,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
     desiredAmountFunc,
     oRNumberFunc,
     procedureModalFunc,
+    setAttachmentArrayFunc,
     dateFunc,
     preferredDate,
     dependentName,
@@ -38,7 +39,19 @@ class OutPatientReimbursementFormCardComponent extends Component {
     orNumberText,
     selectedProcedureAmount,
     showProcedureInput,
-    attachmentsData
+    attachmentsData,
+    showFormReview,
+    diagnosisTextErrorMessage,
+    dependentErrorMessage,
+    procedureErrorMessage,
+    orNumberTextErrorMessage,
+    amountErrorMessage,
+    dateErrorMessage,
+    attachmentErrorMessage,
+    errorMessageRequiredProcedure,
+    showEditSubmitButton,
+    onSubmitFunc,
+    editFormDataFunc
   } = this.props
 
   return (
@@ -52,9 +65,11 @@ class OutPatientReimbursementFormCardComponent extends Component {
               value = { dependentName }
               hint = { 'Recipient' }
               readOnly
+              disabled = { showEditSubmitButton }
               text = { 'Recipient' }
               onClick = { () => requestDepdentModalFunc(true) }
               type = { 'text' }
+              errorMessage = { dependentErrorMessage }
               />
             <br/>
             <GenericInput
@@ -62,25 +77,31 @@ class OutPatientReimbursementFormCardComponent extends Component {
               onChange = { (e) => diagnosisValueFunc(e.target.value) }
               hint = { 'Diagnosis' }
               text = { 'Diagnosis' }
+              disabled = { showEditSubmitButton }
+              errorMessage = { diagnosisTextErrorMessage }
               type = { 'text' }/>
               <br/>
             <DatePicker
               selected = { preferredDate }
+              disabled = { showEditSubmitButton }
               onChange = { (e) => dateFunc(e) }
               hint = { 'Official Receipt Date' }
               text = { 'Official Receipt Date' }
+              errorMessage = { dateErrorMessage }
               />
               <br/>
             <GenericInput
               value = { orNumberText }
+              disabled = { showEditSubmitButton }
               onChange = { (e) => oRNumberFunc(e.target.value) }
               hint = { 'Official Receipt Number' }
               text = { 'Official Receipt Number' }
+              errorMessage = { orNumberTextErrorMessage }
               type = { 'text' }/>
               <br/>
               <div className = { 'outpatient-grid-procedure' }>
                 <div>
-                  <h2 className = { 'unionbank-color' }></h2>
+                  <h2 className = { 'unionbank-color' }>{ errorMessageRequiredProcedure }</h2>
                 </div>
                 <div>
                   <GenericButton
@@ -94,6 +115,8 @@ class OutPatientReimbursementFormCardComponent extends Component {
                 <GenericInput
                   hint = { procedureName }
                   text = { procedureName }
+                  errorMessage = { amountErrorMessage }
+                  disabled = { showEditSubmitButton }
                   onChange = { e => {
                       selectedProcedureAmount(parseInt(e.target.value) || 0)
                     }
@@ -104,26 +127,46 @@ class OutPatientReimbursementFormCardComponent extends Component {
             </div>
             <br/>
               {
-                attachmentsData.length === 0  ?
+                attachmentsData.length !== 0  ?
                 <div>
                   <MultipleFileUploader
                     placeholder = { 'Form Attachments' }
                     fileArray = { attachmentsData }
-                    disabled = { false }
+                    getFile = { (resp) => setAttachmentArrayFunc(resp) }
+                    disabled = { showEditSubmitButton }
+                    errorMessage = { attachmentErrorMessage }
                   />
                 </div>
                 :
                 <div></div>
               }
-            <div className={ 'outpatient-form-card-body' }>
-            </div>
-            <GenericButton
-              type = { 'button' }
-              text = { 'continue' }
-              onClick = {
-                () => {  }
+              {
+                showEditSubmitButton ?
+                <div className = { 'outpatient-form-review' }>
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Edit' }
+                    onClick = { () =>
+                      editFormDataFunc()
+                      }
+                    />
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Submit' }
+                    onClick = { () => onSubmitFunc() }
+                    />
+                </div>
+                :
+                <div>
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'continue' }
+                    onClick = {
+                      () => showFormReview(true)
+                    }
+                    className = { 'outpatient-submit' } />
+                </div>
               }
-              className = { 'outpatient-submit' } />
           </div>
         </div>
       </div>
@@ -146,8 +189,21 @@ OutPatientReimbursementFormCardComponent.propTypes = {
   diagnosisText: PropTypes.string,
   procedureName: PropTypes.string,
   selectedProcedureAmount: PropTypes.func,
+  setAttachmentArrayFunc: PropTypes.func,
   showProcedureInput: PropTypes.bool,
-  attachments: PropTypes.array
+  attachments: PropTypes.array,
+  showFormReview: PropTypes.func,
+  dependentErrorMessage: PropTypes.string,
+  diagnosisTextErrorMessage: PropTypes.string,
+  procedureErrorMessage: PropTypes.string,
+  orNumberTextErrorMessage: PropTypes.string,
+  amountErrorMessage: PropTypes.string,
+  dateErrorMessage: PropTypes.string,
+  attachmentErrorMessage: PropTypes.string,
+  errorMessageRequiredProcedure: PropTypes.string,
+  showEditSubmitButton: PropTypes.bool,
+  onSubmitFunc : PropTypes.func,
+  editFormDataFunc : PropTypes.func
 }
 
 export default OutPatientReimbursementFormCardComponent

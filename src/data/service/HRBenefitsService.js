@@ -722,9 +722,16 @@ export default class HRBenefitsService {
   ) {
     const formData = new FormData()
     const objectOutPatient = {
-
+      applicationMode : outPatientParam.applicationMode,
+      dependentId : outPatientParam.dependentId,
+      orNumber : outPatientParam.orNumber,
+      orDate : outPatientParam.orDate,
     }
-    return this.apiClient.post('v1/outpatient/submit', formData)
-      headers : { token }
-  }
+    outPatientParam.attachments.map((file, key) =>
+      formData.append(file.name, file.file)
+    )
+    formData.append('body', JSON.stringify(objectOutPatient))
+      return this.apiClient.post('v1/outpatient/submit', formData)
+        headers : { token }
+    }
 }

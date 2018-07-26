@@ -29,6 +29,10 @@ class OutPatientReimbursementFragment extends BaseMVPView {
   constructor (props) {
     super (props)
       this.state = {
+        showNoticeModal : false,
+        showNoticeResponseModal : false,
+        showBenefitFeedbackModal : false,
+        noticeResponse : '',
         enabledLoader : false,
         outpatientData : [],
         procedureData : [],
@@ -42,15 +46,33 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         amount: '',
         diagnosisText : '',
         orNumberText: '',
+        diagnosisTextErrorMessage : null,
+        dependentErrorMessage: null,
+        procedureErrorMessage: null,
+        orNumberTextErrorMessage: null,
+        amountErrorMessage: null,
+        dateErrorMessage: null,
+        attachmentErrorMessage: null,
+        errorMessageRequiredProcedure: null,
         preferredDate: '',
         showProcedureInput: false,
-        attachmentsData: []
+        attachmentsData: [],
+        attachmentArray: [],
+        showEditSubmitButton: false
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateOutPatientReimbursement()
+  }
+
+  noticeOfUndertaking (noticeResponse) {
+   this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
+  }
+
+  noticeResponse (noticeResponse) {
+    this.setState({showConfirmation: false, noticeResponse })
   }
 
   hideCircularLoader () {
@@ -77,16 +99,16 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/medical')
   }
 
-  submitForm () {
-    /*submission*/
-  }
-
   showDependentModal (showDepedendent) {
     this.setState({ showDepedendent })
   }
 
   showProcedureModal (showProcedure) {
     this.setState({ showProcedure })
+  }
+
+  getFileAttachments (attachmentArray) {
+    this.setState({ attachmentArray })
   }
 
   validateAmount (e) {
@@ -109,8 +131,62 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     this.setState({ preferredDate : validate })
   }
 
+  validateRequired (e) {
+    return OutPatientReimbursementFunction.checkedValidateInput(e)
+  }
+
+  editFormReview (e) {
+    this.setState({ showEditSubmitButton : false })
+  }
+
+  submitForm () {
+    /*submission*/
+  }
+
+  showFormReviewFieldDisabled (e) {
+    const {
+      dependentName,
+      procedureName,
+      diagnosisText,
+      orNumberText,
+      preferredDate,
+      amount,
+      attachmentArray
+    } = this.state
+
+    if(this.validateRequired(!dependentName)) {
+      this.setState({ dependentErrorMessage : 'Please select recipient' })
+    } else if (this.validateRequired(!diagnosisText)) {
+      this.setState({ diagnosisTextErrorMessage : 'Please enter the diagnosis' })
+    } else if (this.validateRequired(!orNumberText)) {
+      this.setState({ orNumberTextErrorMessage : 'Please enter the Official Receipt Number' })
+    } else if (this.validateRequired(!procedureName)) {
+      this.setState({ errorMessageRequiredProcedure : 'Please select a Procedure' })
+    } else if (this.validateRequired(!amount)) {
+      this.setState({ amountErrorMessage : 'Please enter the amount for the selected procedure'})
+    } else if (this.validateRequired(!preferredDate)) {
+      this.setState({ dateErrorMessage : 'Date field is required' })
+    } else {
+      this.setState({
+        diagnosisTextErrorMessage: '',
+        dependentErrorMessage: '',
+        procedureErrorMessage: '',
+        orNumberTextErrorMessage: '',
+        dateErrorMessage: '',
+        attachmentErrorMessage: '',
+        amountErrorMessage: '',
+        errorMessageRequiredProcedure: '',
+        showEditSubmitButton: true,
+      })
+    }
+  }
+
   render () {
     const {
+      showNoticeModal,
+      showNoticeResponseModal,
+      showBenefitFeedbackModal,
+      noticeResponse,
       enabledLoader,
       showDepedendent,
       showProcedure,
@@ -125,7 +201,17 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       preferredDate,
       amount,
       showProcedureInput,
-      attachmentsData
+      attachmentsData,
+      attachmentArray,
+      diagnosisTextErrorMessage,
+      dependentErrorMessage,
+      procedureErrorMessage,
+      orNumberTextErrorMessage,
+      amountErrorMessage,
+      dateErrorMessage,
+      attachmentErrorMessage,
+      errorMessageRequiredProcedure,
+      showEditSubmitButton
     } = this.state
 
     const {
@@ -135,6 +221,35 @@ class OutPatientReimbursementFragment extends BaseMVPView {
 
     return (
       <div>
+        {
+          showNoticeModal &&
+          <NoticeModal
+            onClose={ () => this.setState({ showNoticeModal : false })}
+            noticeResponse={ noticeResponse }
+            benefitId={ '41' }
+            onDismiss={ (showNoticeModal, noticeResponse) =>
+              this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
+          />
+        }
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
+            }}
+            noticeResponse={ noticeResponse }
+          />
+        }
+        {
+          showBenefitFeedbackModal &&
+          <BenefitFeedbackModal
+            benefitId={ '41' }
+            onClose={ () => {
+              this.props.history.push('/mybenefits/benefits/medical'),
+              this.setState({ showBenefitFeedbackModal : false })
+            }}
+          />
+        }
         {
           showDepedendent &&
           <SingleInputModal
@@ -174,7 +289,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         {
           enabledLoader ?
           <center className = { 'circular-loader-center' }>
-            <CircularLoader show = { enabledLoader }/>
+            <CircularLoader show = { true }/>
           </center> :
           <FormComponent
             oRNumberFunc = { (resp) => this.validateSymbol(resp) }
@@ -183,6 +298,10 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             requestDepdentModalFunc = { (resp) => this.showDependentModal(resp) }
             dateFunc = { (resp) => this.validateDate(resp) }
             selectedProcedureAmount = { (resp) => this.validateAmount(resp) }
+            showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
+            setAttachmentArrayFunc = { (resp) => this.getFileAttachments(resp) }
+            onSubmitFunc = { () => this.submitForm() }
+            editFormDataFunc = { () => this.editFormReview() }
             dependentName = { dependentName }
             amount = { amount }
             diagnosisText = { diagnosisText }
@@ -191,6 +310,15 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             procedureName = { procedureName }
             showProcedureInput = { showProcedureInput }
             attachmentsData = { attachmentsData }
+            diagnosisTextErrorMessage = { diagnosisTextErrorMessage }
+            dependentErrorMessage = { dependentErrorMessage }
+            procedureErrorMessage = { procedureErrorMessage }
+            orNumberTextErrorMessage = { orNumberTextErrorMessage }
+            amountErrorMessage = { amountErrorMessage }
+            dateErrorMessage = { dateErrorMessage }
+            attachmentErrorMessage = { attachmentErrorMessage }
+            showEditSubmitButton = { showEditSubmitButton }
+            errorMessageRequiredProcedure = { errorMessageRequiredProcedure }
           />
         }
       </div>

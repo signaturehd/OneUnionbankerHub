@@ -4,10 +4,19 @@ import { NotifyActions } from '../../../actions'
 import ValidateOutPatientReimbursementInteractor from
 '../../../domain/interactor/outPatientReimbursement/ValidateOutPatientReimbursementInteractor'
 
+import AddOutPatientReimbursementInteractor from
+'../../../domain/interactor/outPatientReimbursement/AddOutPatientReimbursementInteractor'
+
+import addOutPatientReimbursementParam from '../../../domain/param/AddOutPatientReimbursementParam'
+
 export default class OutPatientReimbursementPresenter {
   constructor (container) {
     this.validateOutPatientReimbursementInteractor =
       new ValidateOutPatientReimbursementInteractor(container.get('HRBenefitsClient'))
+
+    this.addOutPatientReimbursementInteractor =
+      new AddOutPatientReimbursementInteractor(container.get('HRBenefitsClient'))
+
   }
 
   setView (view) {
@@ -15,6 +24,7 @@ export default class OutPatientReimbursementPresenter {
   }
 
   validateOutPatientReimbursement () {
+    this.view.showCircularLoader()
     this.validateOutPatientReimbursementInteractor.execute()
       .map(data => {
         let procedureArray = []
@@ -36,6 +46,42 @@ export default class OutPatientReimbursementPresenter {
         this.view.showValidatedOutPatient(data)
         this.view.showProcedureMap(procedureArray)
       })
-      .subscribe()
+      .subscribe(data => {
+        this.view.hideCircularLoader()
+      }, error => {
+        this.view.navigate()
+      })
     }
+
+    addOutPatientReimbursement (
+      applicationMode,
+      dependendenId,
+      procedureId,
+      orNumber,
+      orDate,
+      attachments
+      ) {
+        this.view.showCircularLoader()
+        this.addOutPatientReimbursementInteractor.execute(
+          addOutPatientReimbursementParam(
+            applicationMode,
+            dependendenId,
+            procedureId,
+            orNumber,
+            orDate,
+            attachments
+          )
+        )
+        .subscribe(
+          data => {
+            this.view.hideCircularLoader()
+            this.view.noticeOfUndertaking(data)
+        },
+          errors => {
+            this.view.hideCircularLoader()
+            this.view.noticeResponse(errors)
+            this.view.navigate()
+          }
+        )
+      }
   }

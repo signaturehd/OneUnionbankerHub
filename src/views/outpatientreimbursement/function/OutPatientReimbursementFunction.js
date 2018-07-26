@@ -3,7 +3,8 @@ import { format } from '../../../utils/numberUtils'
 import {
   MoneyValidation,
   RequiredAlphabetValidation,
-  RequiredSymbolValidation
+  RequiredSymbolValidation,
+  RequiredValidation
 } from '../../../utils/validate'
 
 export function checkedAmount (amount) {
@@ -19,6 +20,10 @@ export function checkedValidateText (text) {
 export function checkedValidateSymbol (symbol) {
   return !new RequiredSymbolValidation().isValid(symbol) ?
     symbol : ''
+}
+
+export function checkedValidateInput (input) {
+  return new RequiredValidation().isValid(input)
 }
 
 /* (e.g) July 5, 2018 */
