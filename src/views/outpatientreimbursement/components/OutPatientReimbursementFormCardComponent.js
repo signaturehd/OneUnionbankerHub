@@ -5,8 +5,9 @@ import {
   GenericInput,
   Card,
   GenericButton,
-  FileUploader,
-  DatePicker
+  MultipleFileUploader,
+  DatePicker,
+  Line
 } from '../../../ub-components/'
 
 import './styles/outpatientComponentStyle.css'
@@ -17,20 +18,9 @@ import { NotifyActions } from '../../../actions/'
 class OutPatientReimbursementFormCardComponent extends Component {
   constructor (props) {
     super (props)
-    this.state = {
-      attachments : '',
-    }
-  }
-
-  getExtension (filename) {
-    const parts = filename.split('/')
-    return parts[parts.length - 1]
   }
 
   render () {
-  const {
-    attachments,
-  } = this.state
 
   const {
     requestDepdentModalFunc,
@@ -38,22 +28,18 @@ class OutPatientReimbursementFormCardComponent extends Component {
     desiredAmountFunc,
     oRNumberFunc,
     procedureModalFunc,
+    dateFunc,
+    preferredDate,
     dependentName,
+    procedureName,
+    procedureArray,
     amount,
     diagnosisText,
     orNumberText,
-    procedureArray,
+    selectedProcedureAmount,
+    showProcedureInput,
+    attachmentsData
   } = this.props
-
-  const styles = {
-    image1 : {
-      backgroundImage: `url('${attachments.image}')`,
-      width : 'auto',
-      height : '60px',
-      backgroundSize : 'contain',
-      backgroundRepeat : 'no-repeat',
-    }
-  }
 
   return (
     <div className={ 'outpatient-container' }>
@@ -68,14 +54,8 @@ class OutPatientReimbursementFormCardComponent extends Component {
               readOnly
               text = { 'Recipient' }
               onClick = { () => requestDepdentModalFunc(true) }
-              type = { 'text' }/>
-            <br/>
-            <GenericInput
-              value = { amount }
-              onChange = { (e) => desiredAmountFunc(e.target.value) }
-              hint = { 'Amount' }
-              text = { 'Amount' }
-              type = { 'text' }/>
+              type = { 'text' }
+              />
             <br/>
             <GenericInput
               value = { diagnosisText }
@@ -85,7 +65,8 @@ class OutPatientReimbursementFormCardComponent extends Component {
               type = { 'text' }/>
               <br/>
             <DatePicker
-              onChange = {() => {}}
+              selected = { preferredDate }
+              onChange = { (e) => dateFunc(e) }
               hint = { 'Official Receipt Date' }
               text = { 'Official Receipt Date' }
               />
@@ -108,18 +89,32 @@ class OutPatientReimbursementFormCardComponent extends Component {
                 </div>
               </div>
               {
-                procedureArray && procedureArray.map((item, key) =>
+                showProcedureInput ?
+
                 <GenericInput
-                  hint = { item.name }
-                  text = { item.name }
-                  value = { '' }
-                  onChange = { () => {} }
-                  key = { key }
+                  hint = { procedureName }
+                  text = { procedureName }
+                  onChange = { e => {
+                      selectedProcedureAmount(parseInt(e.target.value) || 0)
+                    }
+                  }
                   type = { 'text' } />
-                )
+                : <div></div>
               }
             </div>
             <br/>
+              {
+                attachmentsData.length === 0  ?
+                <div>
+                  <MultipleFileUploader
+                    placeholder = { 'Form Attachments' }
+                    fileArray = { attachmentsData }
+                    disabled = { false }
+                  />
+                </div>
+                :
+                <div></div>
+              }
             <div className={ 'outpatient-form-card-body' }>
             </div>
             <GenericButton
@@ -144,10 +139,15 @@ OutPatientReimbursementFormCardComponent.propTypes = {
   procedureModalFunc : PropTypes.func,
   amount : PropTypes.string,
   orNumberText : PropTypes.string,
+  preferredDate : PropTypes.string,
   diagnosisValueFunc : PropTypes.func,
+  dateFunc : PropTypes.func,
   oRNumberFunc : PropTypes.func,
   diagnosisText: PropTypes.string,
-  procedureArray: PropTypes.array
+  procedureName: PropTypes.string,
+  selectedProcedureAmount: PropTypes.func,
+  showProcedureInput: PropTypes.bool,
+  attachments: PropTypes.array
 }
 
 export default OutPatientReimbursementFormCardComponent

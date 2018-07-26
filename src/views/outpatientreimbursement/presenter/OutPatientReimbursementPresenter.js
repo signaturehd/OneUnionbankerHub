@@ -18,6 +18,7 @@ export default class OutPatientReimbursementPresenter {
     this.validateOutPatientReimbursementInteractor.execute()
       .map(data => {
         let procedureArray = []
+        let attachmentArray = []
         data &&
         data.procedures.map((procedure, key) => {
           procedureArray.push({
@@ -25,6 +26,13 @@ export default class OutPatientReimbursementPresenter {
             name : procedure.procedures
           })
         })
+        data &&
+        data.attachments.map((attachment, key) => {
+          attachmentArray.push({
+            name : attachment
+          })
+        })
+        this.view.showAttachmentsMap(attachmentArray)
         this.view.showValidatedOutPatient(data)
         this.view.showProcedureMap(procedureArray)
       })

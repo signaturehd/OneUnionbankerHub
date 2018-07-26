@@ -23,6 +23,8 @@ import FormComponent from './components/OutPatientReimbursementFormCardComponent
 import * as OutPatientReimbursementFunction from
 './function/OutPatientReimbursementFunction'
 
+import moment from 'moment'
+
 class OutPatientReimbursementFragment extends BaseMVPView {
   constructor (props) {
     super (props)
@@ -30,16 +32,19 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         enabledLoader : false,
         outpatientData : [],
         procedureData : [],
-        procedureArray : [],
         dependentId: null,
         dependentName: null,
-        procedureNameId: null,
-        procedureNameName: null,
+        procedureId: null,
+        procedureName: null,
+        procedureArray: [],
         showDepedendent: false,
         showProcedure: false,
         amount: '',
         diagnosisText : '',
         orNumberText: '',
+        preferredDate: '',
+        showProcedureInput: false,
+        attachmentsData: []
     }
   }
 
@@ -62,6 +67,10 @@ class OutPatientReimbursementFragment extends BaseMVPView {
 
   showProcedureMap (procedureData) {
     this.setState({ procedureData })
+  }
+
+  showAttachmentsMap (attachmentsData) {
+    this.setState({ attachmentsData })
   }
 
   navigate () {
@@ -95,6 +104,11 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     this.setState({ orNumberText : validate.toUpperCase() })
   }
 
+  validateDate (e) {
+    const validate = OutPatientReimbursementFunction.checkedMDYDate(e)
+    this.setState({ preferredDate : validate })
+  }
+
   render () {
     const {
       enabledLoader,
@@ -102,14 +116,16 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       showProcedure,
       outpatientData,
       procedureData,
-      procedureArray,
       dependentId,
       dependentName,
       procedureId,
       procedureName,
-      amount,
       diagnosisText,
-      orNumberText
+      orNumberText,
+      preferredDate,
+      amount,
+      showProcedureInput,
+      attachmentsData
     } = this.state
 
     const {
@@ -131,16 +147,18 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         }
         {
           showProcedure &&
-          <MultipleInputModal
+          <SingleInputModal
             label = { 'Procedure' }
             inputArray = { procedureData }
-            onSelect = { (object) =>{
-              const updateProcedure = [...procedureArray]
-              updateProcedure.push(object)
-              this.setState({ procedureArray : updateProcedure, showProcedure : false })
+            selectedArray = { (procedureId, procedureName) => {
+              this.setState({
+                procedureName,
+                procedureId,
+                showProcedure : false,
+                showProcedureInput : true
+                })
+              }
             }
-          }
-            procedureArray = { procedureArray }
             onClose = { () => this.setState({ showProcedure : false }) }
           />
         }
@@ -162,14 +180,17 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             oRNumberFunc = { (resp) => this.validateSymbol(resp) }
             procedureModalFunc = { (resp) => this.showProcedureModal(resp) }
             diagnosisValueFunc = { (resp) => this.validateText(resp) }
-            desiredAmountFunc = { (resp) => this.validateAmount(resp) }
             requestDepdentModalFunc = { (resp) => this.showDependentModal(resp) }
+            dateFunc = { (resp) => this.validateDate(resp) }
+            selectedProcedureAmount = { (resp) => this.validateAmount(resp) }
             dependentName = { dependentName }
-            procedureName = { procedureName }
             amount = { amount }
             diagnosisText = { diagnosisText }
             orNumberText = { orNumberText }
-            procedureArray = { procedureArray }
+            preferredDate = { preferredDate }
+            procedureName = { procedureName }
+            showProcedureInput = { showProcedureInput }
+            attachmentsData = { attachmentsData }
           />
         }
       </div>

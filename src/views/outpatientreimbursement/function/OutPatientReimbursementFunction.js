@@ -20,3 +20,9 @@ export function checkedValidateSymbol (symbol) {
   return !new RequiredSymbolValidation().isValid(symbol) ?
     symbol : ''
 }
+
+/* (e.g) July 5, 2018 */
+export function checkedMDYDate (date) {
+  return date ?
+         moment(date.format('MM/DD/YYYY')) : '(Not Yet Provided)'
+}
