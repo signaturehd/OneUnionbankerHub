@@ -59,14 +59,14 @@ export default class SalaryLoanPresenter {
       const fullname = this.getInformationInteractor.execute().fullname
       this.view.showCircularLoader()
       this.addLoanInteractor.execute(MplPurposeLoanAddParam(
-        dealerName,
-        amountValue,
-        modeOfLoanId,
-        loanType,
-        poaText,
-        termId,
-        selectedOffsetLoan,
-        formAttachments
+          fullname,
+          amountValue,
+          modeOfLoanId,
+          loanType,
+          poaText,
+          termId,
+          selectedOffsetLoan,
+          formAttachments
         )
       )
       .subscribe(
