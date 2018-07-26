@@ -52,6 +52,7 @@ class SalaryLoanFragment extends BaseMVPView {
     this.updateOffsetLoan = this.updateOffsetLoan.bind(this)
     this.updateModeOfLoan = this.updateModeOfLoan.bind(this)
     this.addLoan = this.addLoan.bind(this)
+    this.noticeResponse = this.noticeResponse.bind(this)
   }
 
   componentDidMount () {
@@ -64,11 +65,11 @@ class SalaryLoanFragment extends BaseMVPView {
 
   /* Notice Response*/
   noticeOfUndertaking (noticeResponse) {
-    this.setState({ showNoticeModal : true, noticeResponse })
+    this.setState({ showNoticeModal : true, noticeResponse, showConfirmationModal: false })
   }
 
   noticeResponse (noticeResponse) {
-    this.setState({showConfirmation: false, noticeResponse })
+    this.setState({ showConfirmationModal: false, noticeResponse })
   }
 
   /* Implementation*/
@@ -271,7 +272,10 @@ class SalaryLoanFragment extends BaseMVPView {
       status,
       review,
       response,
+      noticeResponse,
     } = this.state
+
+    console.log(showConfirmationModal)
 
     // const empName=employeeName && employeeName.fullname
     // const updateIsDealerOrPayeeName=[...storedIsDealerOrPayee]
