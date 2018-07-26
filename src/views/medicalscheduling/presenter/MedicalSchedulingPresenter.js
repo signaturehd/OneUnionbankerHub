@@ -22,18 +22,34 @@ export default class MedicalSchedulingPresenter {
   }
 
   validateMedicalScheduling () {
+    this.view.showCircularLoader()
     this.validateMedicalSchedulingInteractor.execute()
       .subscribe (
         resp => {
-          store.dispatch(NotifyActions.addNotify({
-              title: 'Medical Scheduling',
-              message : resp.message,
-              type : 'success',
-              duration : 2000
-            })
+          let clinics = []
+          let packages = []
+          resp.hospitalPackage.map (
+            (clinic, i) => {
+              clinics.push ({
+                id : clinic.id,
+                name : clinic.name
+              })
+              clinic.packages.map (
+                (pack, j) => {
+                  packages.push({
+                    clinicId : clinic.id,
+                    id : pack.id,
+                    name : pack.name
+                  })
+                }
+              )
+            }
           )
+          this.view.setClinics (clinics)
+          this.view.setPackages(packages)
+          this.view.hideCircularLoader()
         } , error => {
-
+          this.view.navigate()
         }
       )
     }

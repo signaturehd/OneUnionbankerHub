@@ -722,11 +722,11 @@ export default class HRBenefitsService {
     addMedicalSchedulingParam
   ) {
     const medicalSchedulingObject = {
-      preferredDate : addMedicalSchedulingParam.preferredDate,
+      date : addMedicalSchedulingParam.preferredDate,
       clinicId : addMedicalSchedulingParam.clinicId,
       packageId : addMedicalSchedulingParam.packageId,
     }
-    return this.apiClient.post('v1/medical/submit', medicalSchedulingObject, {
+    return this.apiClient.post('v1/medical/schedule', medicalSchedulingObject, {
       headers : { token }
     })
   }

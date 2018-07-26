@@ -7,23 +7,29 @@ import { CircularLoader, SingleInputModal } from '../../ub-components/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
-import store from '../../store'
-import { NotifyActions } from '../../actions'
 import FormComponent from './components/MedicalSchedulingFormCardComponent'
-import { RequiredValidation, MoneyValidation } from '../../utils/validate'
+import * as func from './controller/MedicalSchedulingFunction'
+import { RequiredValidation } from '../../utils/validate'
 
 class MedicalSchedulingFragment extends BaseMVPView {
   constructor (props) {
     super (props)
     this.state = {
       enabledLoader : false,
+      isFormReview : false,
       showClinics : false,
       showPackages : false,
+      showNoticeModal : false,
+      showNoticeResponseModal : false,
+      showBenefitFeedbackModal : false,
+      noticeResponse : '',
+      clinics : null,
+      packages : null,
       clinicId : null,
       clinicLabel : '',
       packageId : null,
       packageLabel : '',
-      prefferedDate : ''
+      preferredDate : ''
     }
   }
 
@@ -31,7 +37,14 @@ class MedicalSchedulingFragment extends BaseMVPView {
     this.presenter.validateMedicalScheduling()
   }
 
-  /* Loader*/
+  setClinics (clinics) {
+    this.setState({ clinics })
+  }
+
+  setPackages (packages) {
+    this.setState({ packages })
+  }
+
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
   }
@@ -40,52 +53,59 @@ class MedicalSchedulingFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  noticeOfUndertaking (noticeResponse) {
+  this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
+  }
+
+  noticeResponse (noticeResponse) {
+    this.setState({showConfirmation: false, noticeResponse })
+  }
+
   navigate () {
     this.props.history.push('/mybenefits/benefits/medical')
+  }
+
+  validator (input) {
+    return new RequiredValidation().isValid(input)
+  }
+
+  confirmation (isFormReview) {
+    const { clinicId, packageId, preferredDate } = this.state
+    if (isFormReview) {
+      if (this.validator(!clinicId)) {
+        func.notification ('Please double check your Clinic')
+      } else if (this.validator(!packageId)) {
+        func.notification ('Please double check your Packages')
+      } else if (this.validator(!preferredDate)) {
+        func.notification ('Please double check your Preferred Date')
+      } else {
+        this.setState({ isFormReview })
+      }
+    }
+    else {
+      this.setState({ isFormReview })
+    }
   }
 
   render () {
     const {
       enabledLoader,
+      isFormReview,
       showClinics,
       showPackages,
+      showNoticeModal,
+      showNoticeResponseModal,
+      showBenefitFeedbackModal,
+      noticeResponse,
+      clinics,
+      packages,
       clinicId,
       clinicLabel,
+      clicnicKey,
       packageId,
       packageLabel,
-      prefferedDate
+      preferredDate
     } = this.state
-
-    const clinics =
-    [
-      {
-        id : 0,
-        name : 'clinic 1'
-      },
-      {
-        id : 1,
-        name : 'clinic 2'
-      },
-      {
-        id : 2,
-        name : 'clinic 3'
-      }
-    ]
-    const packages =
-    [
-      {
-        id : 0,
-        name : 'package 1'
-      },
-      {
-        id : 1,
-        name : 'package 2'
-      },
-      {
-        id : 2,
-        name : 'package 3'
-      }
-    ]
 
     return (
       <div>
@@ -94,17 +114,46 @@ class MedicalSchedulingFragment extends BaseMVPView {
           <SingleInputModal
             inputArray = { clinics }
             selectedArray = { (clinicId, clinicLabel) =>
-              this.setState({ clinicId, clinicLabel }) }
+              this.setState({ clinicId, clinicLabel, showClinics : false, packageId : null, packageLabel : '' }) }
             onClose = { () => this.setState({showClinics : false}) }
           />
         }
         {
           showPackages &&
           <SingleInputModal
-            inputArray = { packages }
+            inputArray = { packages.filter(pack => pack.clinicId === clinicId) }
             selectedArray = { (packageId, packageLabel) =>
-              this.setState({ packageId, packageLabel }) }
+              this.setState({ packageId, packageLabel, showPackages : false }) }
             onClose = { () => this.setState({showPackages : false}) }
+          />
+        }
+        {
+          showNoticeModal &&
+          <NoticeModal
+            onClose={ () => this.setState({ showNoticeModal : false })}
+            noticeResponse={ noticeResponse }
+            benefitId={ '10' }
+            onDismiss={ (showNoticeModal, noticeResponse) =>
+              this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
+          />
+        }
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
+            }}
+            noticeResponse={ noticeResponse }
+          />
+        }
+        {
+          showBenefitFeedbackModal &&
+          <BenefitFeedbackModal
+            benefitId={ '10' }
+            onClose={ () => {
+              this.props.history.push('/mybenefits/benefits/medical'),
+              this.setState({ showBenefitFeedbackModal : false })
+            }}
           />
         }
         <div>
@@ -113,7 +162,7 @@ class MedicalSchedulingFragment extends BaseMVPView {
             onClick = { this.navigate.bind(this) }>
           </i>
           <h2 className = { 'header-margin-default' }>
-            Medical Scheduling
+            { func.checkedTitle(isFormReview) }
           </h2>
         </div>
         {
@@ -122,12 +171,19 @@ class MedicalSchedulingFragment extends BaseMVPView {
               <CircularLoader show = { enabledLoader }/>
             </center> :
             <FormComponent
+              showFormReview = { (isFormReview) => this.confirmation(isFormReview) }
               showClinics = { () => this.setState({ showClinics : true }) }
               showPackages = { () => this.setState({ showPackages : true }) }
-              cliniclabel = { clinicLabel }
+              isFormReview = { isFormReview }
+              clinicLabel = { clinicLabel }
               packageLabel = { packageLabel }
-              prefferedDate = { prefferedDate }
-              onChangePrefferedDate = { (prefferedDate) => this.setState({ prefferedDate }) }
+              preferredDate = { preferredDate }
+              onChangePreferredDate = { (preferredDate) => this.setState({ preferredDate }) }
+              onSubmit = { () => {
+                this.setState({ isFormReview : false })
+                this.presenter.addMedicalScheduling(preferredDate.format('MM/DD/YYYY'), clinicId, packageId)
+                }
+              }
             />
         }
       </div>
