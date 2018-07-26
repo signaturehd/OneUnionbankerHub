@@ -108,8 +108,9 @@ class BereavementFragment extends BaseMVPView {
   }
 
   validateMemorialAddress (value) {
-    const validator = BereavementFunction.checkRequiredAlphabet(value)
-    this.setState({ memorialAddress : validator })
+    const validator = BereavementFunction.checkRequiredAlphabet('',value)
+    this.setState({ memorialAddress : validator,
+    addressError: BereavementFunction.minimumLength(validator.length) })
   }
 
   validateMemorialRegion (value) {

@@ -5,7 +5,9 @@ import PropTypes from 'prop-types'
 import {
   GenericInput,
   MultipleFileUploader,
-  Card
+  Card,
+  GenericButton,
+  Line,
 } from '../../../ub-components/'
 
 import './styles/salaryLoanCard.css'
@@ -19,12 +21,18 @@ class SalaryLoanCardComponent extends Component {
     const {
       showPurpose,
       showModeOfLoan,
+      showTermOfLoan,
+      showOffsetLoan,
+      showPurposeOfAvailment,
       desiredAmount,
       showTerm,
       termOfLoan,
       purposeOfAvailment,
       modeOfLoan,
+      modeOfLoanId,
       fileAttachments,
+      offsetLoan,
+      onClick
     } = this.props
 
     return (
@@ -52,15 +60,44 @@ class SalaryLoanCardComponent extends Component {
         <br/>
         <GenericInput
           text = { 'Desired Amount' }
+          maxLength = { 7 }
           onChange = { (e) => desiredAmount(e.target.value) }
         />
+        <br/>
+        
+        {
+          modeOfLoanId === 2 &&
+          <div>
+            <h2>Promissorry Note &nbsp;
+              <GenericButton text = { 'Add Promissorry Note' }
+                onClick = { () => showOffsetLoan() }
+              />
+            </h2>
+            <br/>
+              {
+                offsetLoan.length !== 0 &&
+                offsetLoan.map((offset, key) => (
+                  <h4>{ offset.name }</h4>
+                ))
+              }
+            <Line/>
+          </div>
+        }
         {
           fileAttachments.length !== 0 &&
-          <MultipleFileUploader
-            placeholder = { 'Form Attachments' }
-            fileArray = { fileAttachments }
-          />
+          <div>
+              <MultipleFileUploader
+              placeholder = { 'Form Attachments' }
+              fileArray = { fileAttachments }
+              />
+            <Line/>
+          </div>
         }
+        <br/>
+        <GenericButton
+          text = { 'Submit' }
+          onClick = { () => onClick() }
+        />
       </div>
     )
   }
@@ -70,7 +107,10 @@ SalaryLoanCardComponent.propTypes = {
   showTermOfLoan : PropTypes.func,
   showModeOfLoan : PropTypes.func,
   showPurposeOfAvailment : PropTypes.func,
+  showOffsetLoan : PropTypes.func,
   desiredAmount : PropTypes.func,
+  onClick : PropTypes.func,
+  modeOfLoanId : PropTypes.number,
   termOfLoan : PropTypes.string,
   modeOfLoan : PropTypes.string,
   purposeOfAvailment : PropTypes.string,
@@ -83,6 +123,7 @@ SalaryLoanCardComponent.propTypes = {
       })
     )
   ),
+  offsetLoan : PropTypes.array,
 }
 
 SalaryLoanCardComponent.defaultProps = {

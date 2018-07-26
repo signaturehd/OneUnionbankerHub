@@ -25,6 +25,7 @@ class SalaryLoanFragment extends BaseMVPView {
       showNoticeResponseModal : false,
       showModeOfLoan : false,
       showTermOfLoan : false,
+      showOffsetLoan : false,
       showPurposeOfAvailment : false,
       showBenefitFeedbackModal : false,
       purposeOfAvailmentId : null,
@@ -33,19 +34,27 @@ class SalaryLoanFragment extends BaseMVPView {
       modeOfLoanLabel : null,
       termOfLoanId : null,
       termOfLoanLabel : null,
+      offsetLoanArray : [],
+      offsetLoanFormArray : [],
       purposeOfAvailment : [],
       modeOfLoan : [],
+      offsetLoan : [],
       termOfLoan : [],
+      nfis : [],
       fileAttachments : [],
     }
+
+    this.setPurposeOfAvailment = this.setPurposeOfAvailment.bind(this)
+    this.updateOffsetLoan = this.updateOffsetLoan.bind(this)
+    this.updateModeOfLoan = this.updateModeOfLoan.bind(this)
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    // this.presenter.getMplTypes()
     // this.presenter.isManagersCheck()
     // this.presenter.getProfile()
-    // this.presenter.getSalaryLoanType()
+    this.presenter.getMplValidate()
+    this.presenter.getMplPurposeOfAvailment()
   }
 
   /* Notice Response*/
@@ -58,17 +67,24 @@ class SalaryLoanFragment extends BaseMVPView {
   }
 
   /* Implementation*/
-
-  showMPLFormAttachments (formAttachments) {
-    this.setState({ formAttachments })
+  showMplFormAttachments (fileAttachments) {
+    this.setState({ fileAttachments })
   }
 
-  showOffset (offset) {
-    this.setState({ offset })
+  setOffset (offsetLoan) {
+    this.setState({ offsetLoan })
+  }
+
+  setModeOfLoan (modeOfLoan) {
+    this.setState({ modeOfLoan })
   }
 
   showValidate (validateLoanType) {
     this.setState({ validateLoanType })
+  }
+
+  setNfis (nfis) {
+    this.setState({ nfis })
   }
 
   isManagersCheck (isPayeeOrDealerResp) {
@@ -83,6 +99,10 @@ class SalaryLoanFragment extends BaseMVPView {
     this.setState({ purposeOfAvailment })
   }
 
+  setTermOfLoan (termOfLoan) {
+    this.setState({ termOfLoan })
+  }
+
   showAdditionalFilesCount (AdditionalDocuments) {
     this.setState({ AdditionalDocuments })
   }
@@ -92,7 +112,6 @@ class SalaryLoanFragment extends BaseMVPView {
   }
 
   /* Loader*/
-
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
   }
@@ -113,37 +132,98 @@ class SalaryLoanFragment extends BaseMVPView {
   }
 
   showValidatedLoanType (loanType) {
-    // this.presenter.getMplValidate(loanType)
-    // this.presenter.getMplPurposeOfAvailment(
-    //   loanType,
-    //   1,
-    //   1)
+    this.presenter.getMplValidate(loanType)
+    this.presenter.getMplPurposeOfAvailment(loanType, 1, 1)
   }
 
   showMaximumLoanableAmount (maximumAmount) {
     this.setState({ maximumAmount })
   }
 
-  sendFormDataToPresenter (
-    dealerName,
-    amountValue,
-    modeOfLoanId,
-    loanType,
-    poaText,
-    selectedTerm,
-    selectedOffsetLoan,
-    formAttachments
-  ) {
+  updateModeOfLoan (modeOfLoanId, modeOfLoanLabel) {
+    if (modeOfLoanId === 1) {
+      this.setState({
+        modeOfLoanId,
+        modeOfLoanLabel,
+        offsetLoanFormArray: [],
+        offsetLoanArray: [],
+        showModeOfLoan: false
+      })
+    } else {
+      this.setState({
+        modeOfLoanId,
+        modeOfLoanLabel,
+        showModeOfLoan: false
+      })
+    }
+  }
+
+  submitForm () {
+    const {
+      dealerName,
+      desiredAmount,
+      modeOfLoanId,
+      purposeOfAvailmentLabel,
+      offsetLoanFormArray,
+      termOfLoanId,
+      formAttachments,
+      termOfLoan
+    } = this.state
+
+    let termsValue
+
+    termOfLoan.map((terms, key) => {
+      if (terms.id === termOfLoanId) {
+        termsValue = terms.value
+      }
+    })
+
     this.presenter.addLoan(
       dealerName,
-      amountValue,
+      desiredAmount,
       modeOfLoanId,
-      loanType,
-      poaText,
-      selectedTerm,
-      selectedOffsetLoan,
+      1,
+      purposeOfAvailmentLabel,
+      termsValue,
+      offsetLoanFormArray,
       formAttachments
     )
+  }
+
+  setPurposeOfAvailment (purposeOfAvailmentId, subCategoryId, purposeOfAvailmentLabel, nfis) {
+    if (purposeOfAvailmentId) {
+      this.presenter.getMplPurposeOfAvailment(purposeOfAvailmentId, subCategoryId)
+    } else {
+      this.setState({
+        purposeOfAvailmentId,
+        purposeOfAvailmentLabel,
+        showPurposeOfAvailment : false
+      })
+      this.presenter.getMplFormAttachments(purposeOfAvailmentLabel)
+    }
+  }
+
+  updateOffsetLoan (id, name) {
+    const {
+      offsetLoanArray,
+      offsetLoan,
+      showOffsetList,
+      offsetLoanFormArray,
+    } = this.state
+
+    const valueArr = offsetLoanArray.map(function(item) { return item.id } )
+    const updatedOffsetLoan = [...offsetLoanArray]
+    const updatedOffsetLoanId = [...offsetLoanFormArray]
+    if (!valueArr.includes(id)) {
+      updatedOffsetLoan.push({id, name})
+      updatedOffsetLoanId.push(id)
+    }
+
+    this.setState({
+      showOffsetLoan : false,
+      offsetLoanArray : updatedOffsetLoan,
+      offsetLoanFormArray : updatedOffsetLoanId
+    })
   }
 
   render () {
@@ -152,6 +232,7 @@ class SalaryLoanFragment extends BaseMVPView {
       showNoticeResponseModal,
       showModeOfLoan,
       showTermOfLoan,
+      showOffsetLoan,
       showPurposeOfAvailment,
       showBenefitFeedbackModal,
       purposeOfAvailment,
@@ -164,6 +245,8 @@ class SalaryLoanFragment extends BaseMVPView {
       termOfLoan,
       termOfLoanId,
       termOfLoanLabel,
+      offsetLoan,
+      offsetLoanArray,
     } = this.state
 
     // const empName=employeeName && employeeName.fullname
@@ -196,28 +279,42 @@ class SalaryLoanFragment extends BaseMVPView {
         {
           showPurposeOfAvailment &&
           <SingleInputModal
-            inputArray = { purposeOfAvailment }
+            label = { 'Purpose of Availment' }
+            inputArray = { purposeOfAvailment && purposeOfAvailment.category }
             selectedArray = { (purposeOfAvailmentId, purposeOfAvailmentLabel) =>
-              this.setState({ purposeOfAvailmentId, purposeOfAvailmentLabel }) } //response
+              this.setPurposeOfAvailment(purposeOfAvailmentId, purposeOfAvailment.subCategoryLvl,purposeOfAvailmentLabel) } //response
             onClose = { () => this.setState({showPurposeOfAvailment : false}) }
+
           />
         }
         {
           showModeOfLoan &&
           <SingleInputModal
+            label = { 'Mode of Loan' }
             inputArray = { modeOfLoan }
             selectedArray = { (modeOfLoanId, modeOfLoanLabel) =>
-              this.setState({ modeOfLoanId, modeOfLoanLabel }) }
+              this.updateModeOfLoan(modeOfLoanId, modeOfLoanLabel) }
             onClose = { () => this.setState({showModeOfLoan : false}) }
           />
         }
         {
           showTermOfLoan &&
           <SingleInputModal
+            label = { 'Term of Loan' }
             inputArray = { termOfLoan }
             selectedArray = { (termOfLoanId, termOfLoanLabel) =>
-              this.setState({ termOfLoanId, termOfLoanLabel }) }
+              this.setState({ termOfLoanId, termOfLoanLabel, showTermOfLoan : false }) }
             onClose = { () => this.setState({showTermOfLoan : false}) }
+          />
+        }
+        {
+          showOffsetLoan &&
+          <SingleInputModal
+            label = { 'Promissory Notes' }
+            inputArray = { offsetLoan }
+            selectedArray = { (offsetLoanId, offsetLoanValue) =>
+              this.updateOffsetLoan(offsetLoanId, offsetLoanValue) }
+            onClose = { () => this.setState({showOffsetLoan : false}) }
           />
         }
         {
@@ -245,10 +342,13 @@ class SalaryLoanFragment extends BaseMVPView {
           showTermOfLoan = { () => this.setState({ showTermOfLoan : true }) }
           showModeOfLoan = { () => this.setState({ showModeOfLoan : true }) }
           showPurposeOfAvailment = { () => this.setState({ showPurposeOfAvailment : true }) }
+          showOffsetLoan = { () => this.setState({ showOffsetLoan : true }) }
           fileAttachments = { fileAttachments }
           termOfLoan = { termOfLoanLabel }
           purposeOfAvailment = { purposeOfAvailmentLabel }
           modeOfLoan = { modeOfLoanLabel }
+          modeOfLoanId = { modeOfLoanId }
+          offsetLoan = { offsetLoanArray }
           desiredAmount = { (desiredAmount) => this.setState({ desiredAmount : parseInt(desiredAmount) }) }
           onClick = { () => this.submitForm() }
         />

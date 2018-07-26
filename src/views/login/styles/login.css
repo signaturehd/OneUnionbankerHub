@@ -106,6 +106,7 @@
   .login-form {
     box-shadow: none !important;
     overflow-y: scroll;
+    background: transparent;
   }
 
   .login-logo {

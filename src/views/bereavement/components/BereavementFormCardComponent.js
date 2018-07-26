@@ -226,10 +226,7 @@ class BereavementFormCardComponent extends Component {
                 <GenericInput
                   container={ 'brv-container' }
                   value={ funeralAddress }
-                  onChange={ (e) => {
-                    checkFuneralAddress(e.target.value)
-                    }
-                  }
+                  onChange={ (e) => checkFuneralAddress(e.target.value) }
                   errorMessage={ addressError ?
                     BereavementFunction.errorMessage(funeralAddress, '', '* Address field should contain atleast 15 characters') :
                     BereavementFunction.errorMessage(funeralAddress, '* Required field', '') }
@@ -313,7 +310,9 @@ class BereavementFormCardComponent extends Component {
                   text={ 'Address' }
                   hint={ 'Address' }
                   type={ 'text' }
-                  errorMessage={ BereavementFunction.errorMessage(memorialAddress, '* Required field', '') }
+                  errorMessage={ addressError ?
+                    BereavementFunction.errorMessage(memorialAddress, '', '* Address field should contain atleast 15 characters') :
+                    BereavementFunction.errorMessage(memorialAddress, '* Required field', '') }
                 />
               </div>
               <div>

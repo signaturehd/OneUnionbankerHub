@@ -360,15 +360,16 @@ export default class HRBenefitsService {
       loan : {
         id : mplPurposeLoanAddParam.loanType,
         purpose : mplPurposeLoanAddParam.poaText,
-        mode : mplPurposeLoanAddParam.modeOfLoanId === 1 ? mplPurposeLoanAddParam.modeOfLoanId : 2,
+        mode : mplPurposeLoanAddParam.modeOfLoanId,
         term : mplPurposeLoanAddParam.termId,
         principalAmount : mplPurposeLoanAddParam.amountValue
       },
-        promissoryNoteNumbers : mplPurposeLoanAddParam.selectedOffsetLoan ? mplPurposeLoanAddParam.selectedOffsetLoan : null,
+        promissoryNoteNumbers : mplPurposeLoanAddParam.selectedOffsetLoan,
         distributor : mplPurposeLoanAddParam.dealerName,
       }
       formData.append('uuid', 12345)
       formData.append('body', JSON.stringify(multiLoanBodyObject))
+      mplPurposeLoanAddParam.attachments &&
       mplPurposeLoanAddParam.attachments.map((attachment, key) => (
         formData.append(attachment.name, attachment.file)
       ))
