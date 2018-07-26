@@ -77,14 +77,119 @@ export default class SalaryLoanPresenter {
         errors => {
           this.view.hideCircularLoader()
           this.view.noticeResponse(errors)
-          this.view.navigate()
         }
       )
     }
-  getMplPurposeOfAvailment (loanTypesId, purposeOfLoan, subcategoryLevel) {
+
+  getMplPurposeOfAvailment (purposeOfLoanId, subCategoryLevelId) {
+    let purposeOfLoan = purposeOfLoanId ? purposeOfLoanId : 1
+    let subcategoryLevel = subCategoryLevelId ? subCategoryLevelId : 1
+    const loanTypesId = 1
     this.getPurposeOfAvailmentInteractor.execute({loanTypesId, purposeOfLoan, subcategoryLevel})
     .subscribe(data => {
       this.view.showPurposeOfAvailment(data)
     })
+  }
+
+  getMplFormAttachments (formRequesting, nfisArray) {
+    this.getFormAttachmentsInteractor.execute(MplGetFormParam(formRequesting, 1))
+      .map(data => {
+        let attachments = []
+        data.AdditionalDocuments &&
+        data.AdditionalDocuments.map((attachment, key) => {
+          attachments.push({
+            name : attachment,
+          })
+        })
+
+        let requiredAttachments = [...new Set(data.RequiredDocuments && data.RequiredDocuments)]
+        nfisArray &&
+        nfisArray.map((nfis, key) => {
+          requiredAttachments &&
+          requiredDocuments.map((attachment, key) => {
+            attachments.push({
+              name : attachment + ' for ' + nfis
+            })
+          })
+        })
+
+        return attachments
+      })
+      .subscribe(data => this.view.showMplFormAttachments(data))
+  }
+
+  getMplValidate () {
+    this.view.showCircularLoader()
+    this.getValidateInteractor.execute(MplValidateParam(1))
+     .map(resp => {
+        resp.modeOfLoan = []
+        const modeOfLoanStatic = {
+          id: 1,
+          name: 'New Loan',
+        } // create instance of "New Loan"
+        const modeOfLoan = {
+          id: 2,
+          name: 'Offset Loan',
+        } // create instance of "New Loan"
+
+        resp.offset.length === 0 ?
+        resp.modeOfLoan.push(modeOfLoanStatic)
+        :
+        resp.modeOfLoan.push(modeOfLoanStatic, modeOfLoan)
+      // add the New Loan to the offsets option
+      return resp
+    })
+    .map(resp => {
+      resp.termsArray = []
+      resp.terms.map((terms, key) => {
+        resp.termsArray.push({
+          id : terms.id,
+          name : terms.term + ' MONTHS, (' + terms.rate + '%) INTEREST',
+          value : terms.term
+        })
+      })
+      return resp
+    })
+    .map(resp => {
+      resp.offsetArray = []
+      resp.offset.map((offset, key) => {
+        resp.offsetArray.push({
+          id : offset.promissoryNoteNumber,
+          name : offset.promissoryNoteNumber + ' ' + offset.outstandingBalance
+        })
+      })
+
+      return resp
+    })
+    .subscribe(
+      data =>  {
+        this.view.hideCircularLoader()
+        this.view.setOffset(data && data.offsetArray)
+        this.view.setModeOfLoan(data && data.modeOfLoan)
+        this.view.showMaximumLoanableAmount(data && data.maximumLoanableAmount)
+        this.view.showValidate(data)
+        // this.view.showComputationForOffset(data && data.offset)
+        this.view.setTermOfLoan(data && data.termsArray)
+      },
+      error => {
+        console.log(error)
+        // this.view.navigate()
+      }
+    )
+  }
+
+  isManagersCheck () {
+    const isManagersCheck = this.getManagersCheckInteractor.execute()
+    if (isManagersCheck !== null) {
+        this.view.isManagersCheck('Payee Name')
+    } else {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Benefits',
+          message : 'Theres a Problem Getting your profile',
+          type : 'success',
+          duration : 2000
+        })
+      )
+    }
   }
 }
