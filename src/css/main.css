@@ -144,6 +144,10 @@ h1, h2, h3, h4, h5, h6, p{
   text-align: right;
 }
 
+.text-align-justify {
+  text-align: justify;
+}
+
 /* Default color */
 
 .unionbank-color {
@@ -153,4 +157,59 @@ h1, h2, h3, h4, h5, h6, p{
 .grid-global {
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+.grid-global-row-x3 {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+/* global icons default */
+
+.global-icons-referenceNumber {
+  background-image: url('../images/icons/ic_transacion_reference_number.png');
+}
+
+.global-icons-calendar {
+  background-image: url('../images/icons/ic_date_range_grey_500_18dp.png');
+}
+
+.global-icons-next {
+  background-image: url('../images/icons/ic_next.png');
+}
+
+.global-icons-accountNumber {
+  background-image: url('../images/icons/ic_account_balance_wallet_grey_600_36dp.png');
+}
+
+.global-icons-patient-name {
+  background-image: url('../images/icons/ic_transacion_patient.png');
+}
+
+.global-icons-procedure {
+  background-image: url('../images/icons/ic_insert_drive_file_grey_500_18dp.png');
+}
+
+.global-icons-payslip {
+  background-image: url('../images/icons/ic_payslip.png');
+}
+
+.global-icons-calamity {
+  background-image: url('../images/icons/ic_calamity.png');
+}
+
+.global-icons-property {
+  background-image: url('../images/icons/ic_property.png');
+}
+
+.global-icons-deceased {
+  background-image: url('../images/icons/ic_deceased_name.png');
+}
+
+.global-icons-funeral {
+  background-image: url('../images/icons/ic_school.png');
+}
+
+.global-icons-memorial {
+  background-image: url('../images/icons/ic_memorial_park.png');
 }
