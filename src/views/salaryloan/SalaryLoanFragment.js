@@ -275,8 +275,6 @@ class SalaryLoanFragment extends BaseMVPView {
       noticeResponse,
     } = this.state
 
-    console.log(showConfirmationModal)
-
     // const empName=employeeName && employeeName.fullname
     // const updateIsDealerOrPayeeName=[...storedIsDealerOrPayee]
     // updateIsDealerOrPayeeName.push(isPayeeOrDealerResp)
