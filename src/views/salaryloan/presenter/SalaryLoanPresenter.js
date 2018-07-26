@@ -172,7 +172,6 @@ export default class SalaryLoanPresenter {
         this.view.setTermOfLoan(data && data.termsArray)
       },
       error => {
-        console.log(error)
         // this.view.navigate()
       }
     )
