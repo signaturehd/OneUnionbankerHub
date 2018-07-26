@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
-import { Card } from '../../../../ub-components'
+import { Card, GenericButton } from '../../../../ub-components/'
 
 import moment from 'moment'
+
+import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
+import BereavementOtherDetailCardComponent from './BereavementOtherDetailCardComponent'
 
 class BereavementDetailCardComponent extends Component {
   constructor (props) {
@@ -11,35 +14,99 @@ class BereavementDetailCardComponent extends Component {
   }
 
   render() {
-    const { details, transactionsPerson } = this.props
-    const transactionID = details.transactionId
+    const {
+      details,
+      transactionsPerson,
+      onClickAttachments,
+      onClickAgreements,
+     } = this.props
+
+   const transactionID = details.transactionId
+   const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
+   const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
+   const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details)
+   const amountValue = TransactionPersonalFunction.checkedAmountFormat(details.details.BereavementDetails.Amount)
+
     return (
-      <div className = { 'transaction-card-details-form' }>
+      <div className = { 'transaction-component-details-form' }>
         <div>
-          <h2 className = { 'transaction-detail details-bold' }> Date Filed: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Reference Number: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Transaction Status: </h2>
-          { details && details.details.AccountNo && <h2 className = { 'transaction-detail details-bold' }> Account Number: </h2> }
-          <h2 className = { 'transaction-detail details-bold' }> Date of Death: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Date of Wake: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Internment Date: </h2>
-          { details && details.details.BereavementDetails.Dependent.Name && <h2 className = { 'transaction-detail details-bold' }> Dependent Name: </h2> }
-          { details && details.details.BereavementDetails.Amount && <h2 className = { 'transaction-detail details-bold' }> Amount: </h2> }
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+            <div>
+              <h2>
+                { dateFilled }
+              </h2>
+              <br/>
+            </div>
+          </div>
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { ' transaction-card-icon-settings global-icons-referenceNumber' }></span>
+            <div>
+              <h2>
+                { referenceNumber }
+              </h2>
+              <br/>
+            </div>
+          </div>
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
+            <div>
+              <h2>
+                { acccountNumber }
+              </h2>
+            </div>
+          </div>
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { ' transaction-card-icon-settings' }></span>
+            <div>
+              <h2>
+                &#8369; { amountValue }
+              </h2>
+              <br/>
+              <br/>
+            </div>
+          </div>
+          <BereavementOtherDetailCardComponent
+            detailsBereavement = { details && details.details }
+          />
         </div>
-        <div>
-          <h2 className = { 'transaction-detail' }> { details && moment(details.dateFiled).format('MMM DD, YYYY') } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.ReferenceNumber } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.status.name } </h2>
-          <h2 className = { 'transaction-detail' }> { details && moment(details.details.BereavementDetails.DateOfDeath).format('MMM DD, YYYY') } </h2>
-          <h2 className = { 'transaction-detail' }> { details && moment(details.details.BereavementDetails.DateOfWake).format('MMM DD, YYYY') } </h2>
-          <h2 className = { 'transaction-detail' }> { details && moment(details.details.BereavementDetails.InternmentDate).format('MMM DD, YYYY') } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.AccountNo } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.BereavementDetails.Dependent.Name } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.BereavementDetails.Amount } </h2>
+        <div className = { 'transaction-attachments-agreements-grid' }>
+          <div>
+            <br/>
+              {
+                details &&
+                details.details &&
+                details.details.Attachments ?
+
+                <GenericButton
+                  className = { 'transaction-details-button' }
+                  text = { 'View Attachments' }
+                  onClick = { () => onClickAttachments(true) }
+                /> :
+                <div></div>
+              }
+              <br/>
+          </div>
+          <div>
+            <br/>
+            <GenericButton
+              className = { 'transaction-details-button' }
+              text = { 'View Agreements' }
+              onClick = { () => onClickAgreements(true) }
+            />
+            <br/>
+          </div>
         </div>
       </div>
     )
   }
+}
+
+BereavementDetailCardComponent.propTypes = {
+  details : PropTypes.object,
+  transactionsPerson : PropTypes.array,
+  onClickAttachments : PropTypes.func,
+  onClickAgreements : PropTypes.func,
 }
 
 export default BereavementDetailCardComponent

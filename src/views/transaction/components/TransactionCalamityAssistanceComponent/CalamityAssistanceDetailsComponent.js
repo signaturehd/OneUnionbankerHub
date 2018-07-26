@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card } from '../../../../ub-components/'
+import { Card, GenericButton } from '../../../../ub-components/'
 
-import moment from 'moment'
+import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
+import CalamityOtherDetails from './CalamityOtherDetailsComponent'
 
 class CalamityAssistanceDetailsComponent extends Component {
   constructor (props) {
@@ -11,54 +12,95 @@ class CalamityAssistanceDetailsComponent extends Component {
   }
 
   render () {
-    const { details, transactionsPerson } = this.props
+    const {
+      details,
+      transactionsPerson,
+      onClickAttachments,
+      onClickAgreements,
+     } = this.props
+
     const transactionID = details.transactionId
+    const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
+    const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
+    const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details)
+    const calamityType = TransactionPersonalFunction.checkedCalamityType(details.details.CalamityDetails)
+
     return (
-      <div className = { 'transaction-card-details-form' }>
+      <div className = { 'transaction-component-details-form' }>
         <div>
-          <h2 className = { 'transaction-detail details-bold' }> Date Filed: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Reference Number: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Transaction Status: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Account Number: </h2>
-          { details && details.details.CalamityDetails.CalamityType.Calamity &&  <h2 className = { 'transaction-detail details-bold' }> Calamity: </h2> }
-          { details && details.details.CalamityDetails.CalamityType.DateOfOccurrence &&  <h2 className = { 'transaction-detail details-bold' }> Date Of Occurance: </h2> }
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+            <div>
+              <h2>
+                { dateFilled }
+              </h2>
+              <br/>
+            </div>
+          </div>
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { ' transaction-card-icon-settings global-icons-referenceNumber' }></span>
+            <div>
+              <h2>
+                { referenceNumber }
+              </h2>
+              <br/>
+            </div>
+          </div>
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
+            <div>
+              <h2>
+                { acccountNumber }
+              </h2>
+              <br/>
+              <br/>
+            </div>
+          </div>
+          <CalamityOtherDetails
+            detailsCalamity = { details && details.details }
+            detailsCalamityDetails = { details && details.details.CalamityDetails }
+          />
         </div>
-        <div>
-          <h2 className = { 'transaction-detail' }> { details && moment(details.dateFiled).format('MMMM DD, YYYY') } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.ReferenceNumber }</h2>
-          <h2 className = { 'transaction-detail' }> { details && details.status.name } </h2>
-          <h2 className = { 'transaction-detail' }> { details ? details.details.AccountNo : 'Not Applicable' } </h2>
-          <h2 className = { 'transaction-detail' }> { details && moment(details.details.CalamityDetails.DateOfOccurrence).format('MMMM DD, YYYY') } </h2>
-        </div>
-        <div>
-          <h2>Damage Property</h2>
-          {
-            details &&
-            details.details.CalamityDetails &&
-            details.details.CalamityDetails.DamageProperty &&
-            details.details.CalamityDetails.DamageProperty.map((damage, key) =>
-              <div className = {'transaction-card-details-form'}>
-                <div>
-                  <h3>Acquisition Value</h3>
-                  <h3>Description</h3>
-                  <h3>Property Name</h3>
-                  <h3>Property Type</h3>
-                  <h3>Repair Cost</h3>
-                </div>
-                <div>
-                  <h3>{damage.AcquisitionValue}</h3>
-                  <h3>{damage.Description}</h3>
-                  <h3>{damage.PropertyName}</h3>
-                  <h3>{damage.PropertyType}</h3>
-                  <h3>{damage.RepairCost}</h3>
-                </div>
-              </div>
-            )
-          }
+        <div className = { 'transaction-attachments-agreements-grid' }>
+          <div>
+            <br/>
+              {
+                details &&
+                details.details &&
+                details.details.Attachments ?
+
+                <GenericButton
+                  className = { 'transaction-details-button' }
+                  text = { 'View Attachments' }
+                  onClick = { () => onClickAttachments(true) }
+                /> :
+                <div></div>
+              }
+              <br/>
+          </div>
+          <div>
+            <br/>
+            <GenericButton
+              className = { 'transaction-details-button' }
+              text = { 'View Agreements' }
+              onClick = { () => onClickAgreements(true) }
+            />
+            <br/>
+          </div>
         </div>
       </div>
     )
   }
+}
+
+CalamityAssistanceDetailsComponent.propTypes = {
+  onClickAgreements : PropTypes.func,
+  onClickAttachments : PropTypes.func,
+  details : PropTypes.object,
+  transactionsPerson : PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
 }
 
 export default CalamityAssistanceDetailsComponent
