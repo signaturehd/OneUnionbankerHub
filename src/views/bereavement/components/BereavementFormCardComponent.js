@@ -14,6 +14,8 @@ import DatePicker from 'react-datepicker'
 import '../../../../node_modules/react-datepicker/dist/react-datepicker.css'
 import moment from 'moment'
 
+import * as BereavementFunction from '../controller/BereavementFunction'
+
 class BereavementFormCardComponent extends Component {
 
   constructor (props) {
@@ -22,34 +24,11 @@ class BereavementFormCardComponent extends Component {
       file: '',
       imagePreviewUrl: null,
       showDeceasedDependents: false,
-      deceasedDate: '',
-      funeralDate: '',
-      intermentDate: '',
-      funeralAddress: '',
-      funeralRegion: '',
-      funeralProvince: '',
-      funeralCity: '',
-      memorialPark: '',
-      memorialAddress: '',
-      memorialRegion: '',
-      memorialProvince: '',
-      memorialCity: '',
-      addressError: false,
-      errorMessage: ''
     }
     this.getDeceasedDate = this.getDeceasedDate.bind(this)
     this.getFuneralDate = this.getFuneralDate.bind(this)
     this.getIntermentDate = this.getIntermentDate.bind(this)
     this.getOnClicked = this.getOnClicked.bind(this)
-    this.getFuneralAddress = this.getFuneralAddress.bind(this)
-    this.getFuneralRegion = this.getFuneralRegion.bind(this)
-    this.getFuneralProvince = this.getFuneralProvince.bind(this)
-    this.getFuneralCity = this.getFuneralCity.bind(this)
-    this.getMemorialHome = this.getMemorialHome.bind(this)
-    this.getMemorialAddress = this.getMemorialAddress.bind(this)
-    this.getMemorialRegion = this.getMemorialRegion.bind(this)
-    this.getMemorialProvince = this.getMemorialProvince.bind(this)
-    this.getMemorialCity = this.getMemorialCity.bind(this)
   }
 
   getDeceasedDate (e) {
@@ -64,70 +43,6 @@ class BereavementFormCardComponent extends Component {
 
   getIntermentDate (e) {
     this.setState({ intermentDate : e.format('MM/DD/YYYY') })
-  }
-
-  getFuneralAddress (e) {
-    new RequiredAlphabetValidation().isValidAddress(e.target.value)  ?
-    this.setState({ funeralAddress : e.target.value,
-      addressError: this.minimumLength(e.target.value.length) }) :
-    this.setState({ funeralAddress : '' })
-  }
-
-  minimumLength (e) {
-    return e < 15 ? true : false
-  }
-
-  errorFunc (value, message) {
-    return value ? '' : message
-  }
-
-  getFuneralRegion (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ funeralRegion : e.target.value }) :
-    this.setState({ funeralRegion : '' })
-  }
-
-  getFuneralProvince (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ funeralProvince : e.target.value }):
-    this.setState({ funeralProvince : '' })
-  }
-
-  getFuneralCity (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ funeralCity : e.target.value }) :
-    this.setState({ funeralCity : '' })
-  }
-
-  getMemorialHome (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ memorialPark : e.target.value }) :
-    this.setState({ memorialPark : '' })
-  }
-
-  getMemorialAddress (e) {
-    new RequiredAlphabetValidation().isValidAddress(e.target.value) ?
-    this.setState({ memorialAddress : e.target.value,
-      addressError: this.minimumLength(e.target.value.length) }) :
-    this.setState({ memorialAddress : '' })
-  }
-
-  getMemorialRegion (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ memorialRegion : e.target.value }):
-    this.setState({ memorialRegion : '' })
-  }
-
-  getMemorialProvince (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ memorialProvince : e.target.value }) :
-    this.setState({ memorialProvince : '' })
-  }
-
-  getMemorialCity (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ memorialCity : e.target.value }):
-    this.setState({ memorialCity : '' })
   }
 
   getExtension (filename) {
@@ -182,14 +97,19 @@ class BereavementFormCardComponent extends Component {
       dependentsName,
       dependentsRelationship,
       funeralHome,
-    }=this.props
-
-    const {
-      file,
-      imagePreviewUrl,
-      deceasedDate,
-      funeralDate,
-      intermentDate,
+      checkFuneralHome,
+      checkFuneralAddress,
+      checkFuneralRegion,
+      checkFuneralProvince,
+      checkFuneralCity,
+      checkMemorialPark,
+      checkMemorialAddress,
+      checkMemorialRegion,
+      checkMemorialProvince,
+      checkMemorialCity,
+      checkFuneralDate,
+      checkDeceasedDate,
+      checkIntermentDate,
       funeralAddress,
       funeralRegion,
       funeralProvince,
@@ -199,8 +119,15 @@ class BereavementFormCardComponent extends Component {
       memorialRegion,
       memorialProvince,
       memorialCity,
-      addressError,
-      errorMessage
+      addressError
+    }=this.props
+
+    const {
+      file,
+      imagePreviewUrl,
+      deceasedDate,
+      funeralDate,
+      intermentDate
     }=this.state
 
     const styles={
@@ -229,7 +156,7 @@ class BereavementFormCardComponent extends Component {
                   onFocus={ () => showDeceasedDependents() }
                   hint={ 'Deceased Name' }
                   text={ 'Deceased Name' }
-                  errorMessage={ this.errorFunc (dependentsName, 'Required Field') }
+                  errorMessage={ BereavementFunction.errorMessage(dependentsName, '* Required field', '') }
                   readOnly
                   type={ 'text' }
                 />
@@ -285,22 +212,27 @@ class BereavementFormCardComponent extends Component {
                 <GenericInput
                   container={ 'brv-container' }
                   value={ funeralHome }
-                  onChange={ () => checkFuneralHome() }
+                  onChange={ (e) => {
+                      checkFuneralHome(e.target.value)
+                    }
+                  }
                   text={ 'Funeral Home' }
                   hint={ 'Funeral Home' }
-                  errorMessage={ this.errorFunc (funeralHome, '* Required Field') }
+                  errorMessage={ BereavementFunction.errorMessage(funeralHome, '* Required field', '') }
                   type={ 'text' }
                 />
               </div>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
-                  value={ funeralAddress ? funeralAddress : '' }
-                  onChange={ this.getFuneralAddress }
-                  errorMessage={ addressError ?
-                    '* Address field should contain atleast 15 characters' :
-                    this.errorFunc (funeralAddress, '* Required Field')
+                  value={ funeralAddress }
+                  onChange={ (e) => {
+                    checkFuneralAddress(e.target.value)
+                    }
                   }
+                  errorMessage={ addressError ?
+                    BereavementFunction.errorMessage(funeralAddress, '', '* Address field should contain atleast 15 characters') :
+                    BereavementFunction.errorMessage(funeralAddress, '* Required field', '') }
                   text={ 'Address' }
                   hint={ 'Address' }
                   type={ 'text' }
@@ -309,33 +241,33 @@ class BereavementFormCardComponent extends Component {
               <div>
                 <GenericInput
                   container={ 'brv-container' }
-                  value={ funeralRegion ? funeralRegion : '' }
-                  onChange={ this.getFuneralRegion }
+                  value={ funeralRegion }
+                  onChange={ (e) => checkFuneralRegion(e.target.value) }
                   text={ 'Region' }
                   hint={ 'Region' }
-                  errorMessage={ this.errorFunc (funeralRegion, '* Required Field') }
+                  errorMessage={ BereavementFunction.errorMessage(funeralRegion, '* Required field', '') }
                   type={ 'text' }
                 />
               </div>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
-                  value={ funeralProvince ? funeralProvince : '' }
-                  onChange={ this.getFuneralProvince }
+                  value={ funeralProvince }
+                  onChange={ (e) => checkFuneralProvince(e.target.value) }
                   text={ 'Province' }
                   hint={ 'Province' }
-                  errorMessage={ this.errorFunc (funeralProvince, '* Required Field') }
+                  errorMessage={ BereavementFunction.errorMessage(funeralProvince, '* Required field', '') }
                   type={ 'text' }
                 />
               </div>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
-                  value={ funeralCity ? funeralCity : '' }
-                  onChange={ this.getFuneralCity }
+                  value={ funeralCity }
+                  onChange={ (e) => checkFuneralCity(e.target.value) }
                   text={ 'City' }
                   hint={ 'City' }
-                  errorMessage={ this.errorFunc (funeralCity, '* Required Field') }
+                  errorMessage={ BereavementFunction.errorMessage(funeralCity, '* Required field', '') }
                   type={ 'text' }
                 />
               </div>
@@ -365,56 +297,53 @@ class BereavementFormCardComponent extends Component {
               <div>
                 <GenericInput
                   container={ 'brv-container' }
-                  value={ memorialPark ? memorialPark : '' }
-                  onChange={ this.getMemorialHome }
+                  value={ memorialPark }
+                  onChange={ (e) => checkMemorialPark(e.target.value) }
                   text={ 'Memorial Park' }
                   hint={ 'Memorial Park' }
-                  errorMessage={ this.errorFunc (memorialPark, '* Required Field') }
+                  errorMessage={ BereavementFunction.errorMessage(memorialPark, '* Required field', '') }
                   type={ 'text' }
                 />
               </div>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
-                  value={ memorialAddress ? memorialAddress : '' }
-                  onChange={ this.getMemorialAddress }
+                  value={ memorialAddress }
+                  onChange={ (e) => checkMemorialAddress(e.target.value) }
                   text={ 'Address' }
                   hint={ 'Address' }
                   type={ 'text' }
-                  errorMessage={ addressError ?
-                    '* Address field should contain atleast 15 characters' :
-                    this.errorFunc (memorialAddress, '* Required Field')
-                  }
+                  errorMessage={ BereavementFunction.errorMessage(memorialAddress, '* Required field', '') }
                 />
               </div>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
-                  value={ memorialRegion ? memorialRegion : '' }
-                  onChange={ this.getMemorialRegion }
+                  value={ memorialRegion }
+                  onChange={ (e) => checkMemorialRegion(e.target.value) }
                   text={ 'Region' }
                   hint={ 'Region' }
-                  errorMessage={ this.errorFunc (memorialRegion, '* Required Field') }
+                  errorMessage={ BereavementFunction.errorMessage(memorialRegion, '* Required field', '') }
                   type={ 'text' }/>
               </div>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
-                  value={ memorialProvince ? memorialProvince : '' }
-                  onChange={ this.getMemorialProvince }
+                  value={ memorialProvince }
+                  onChange={ (e) => checkMemorialProvince(e.target.value) }
                   text={ 'Province' }
                   hint={ 'Province' }
-                  errorMessage={ this.errorFunc (memorialProvince, '* Required Field') }
+                  errorMessage={ BereavementFunction.errorMessage(memorialProvince, '* Required field', '') }
                   type={ 'text' }/>
               </div>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
-                  value={ memorialCity ? memorialCity : '' }
-                  onChange={ this.getMemorialCity }
+                  value={ memorialCity }
+                  onChange={ (e) => checkMemorialCity(e.target.value) }
                   text={ 'City' }
                   hint={ 'City' }
-                  errorMessage={ this.errorFunc (memorialCity, '* Required Field') }
+                  errorMessage={ BereavementFunction.errorMessage(memorialCity, '* Required field', '') }
                   type={ 'text' }/>
               </div>
               {
@@ -565,7 +494,29 @@ BereavementFormCardComponent.propTypes={
   showDeceasedDependents: PropTypes.func,
   showDepedents: PropTypes.string,
   funeralHome: PropTypes.string,
-  checkFuneralHome: PropTypes.func
+  funeralAddress: PropTypes.string,
+  funeralRegion: PropTypes.string,
+  funeralProvince: PropTypes.string,
+  funeralCity: PropTypes.string,
+  memorialPark: PropTypes.string,
+  memorialAddress: PropTypes.string,
+  memorialRegion: PropTypes.string,
+  memorialProvince: PropTypes.string,
+  memorialCity: PropTypes.string,
+  checkFuneralHome: PropTypes.func,
+  checkFuneralAddress: PropTypes.func,
+  checkFuneralRegion: PropTypes.func,
+  checkFuneralProvince: PropTypes.func,
+  checkFuneralCity: PropTypes.func,
+  checkMemorialPark: PropTypes.func,
+  checkMemorialAddress: PropTypes.func,
+  checkMemorialRegion: PropTypes.func,
+  checkMemorialProvince: PropTypes.func,
+  checkMemorialCity: PropTypes.func,
+  checkFuneralDate: PropTypes.func,
+  checkDeceasedDate: PropTypes.func,
+  checkIntermentDate: PropTypes.func,
+  addressError: PropTypes.bool
 }
 
 export default BereavementFormCardComponent

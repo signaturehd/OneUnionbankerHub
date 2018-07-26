@@ -34,9 +34,24 @@ class BereavementFragment extends BaseMVPView {
       dependentsRelationship: '',
       dependentId: '',
       showDeceasedDependents : false,
-      funeralHome: ''
+      deceasedDate: '',
+      funeralDate: '',
+      intermentDate: '',
+      funeralHome: '',
+      funeralAddress: '',
+      funeralRegion: '',
+      funeralProvince: '',
+      funeralCity: '',
+      memorialPark: '',
+      memorialAddress: '',
+      memorialRegion: '',
+      memorialProvince: '',
+      memorialCity: '',
+      addressError: false,
+      errorMessage: ''
     }
     this.submitForm = this.submitForm.bind(this)
+    this.validateFuneralHome = this.validateFuneralHome.bind(this)
   }
 
   componentDidMount () {
@@ -44,9 +59,72 @@ class BereavementFragment extends BaseMVPView {
     this.presenter.validateBereavement()
   }
 
+  formatDeceasedDate (value) {
+    const validator = BereavementFunction.dateFormat(value)
+    this.setState({ deceasedDate : validator,
+                    funeralDate : validator })
+  }
+
+  formatFuneralDate (value) {
+    const validator = BereavementFunction.dateFormat(value)
+    this.setState({ funeralDate : validator,
+                    intermentDate : validator })
+  }
+
+  formatIntermentDate (value) {
+    const validator = BereavementFunction.dateFormat(value)
+    this.setState({ intermentDate : validator })
+  }
+
   validateFuneralHome (value) {
     const validator = BereavementFunction.checkRequiredAlphabet(value)
     this.setState({ funeralHome : validator })
+  }
+
+  validateFuneralAddress (value) {
+    const validator = BereavementFunction.checkRequiredAlphabet('',value)
+    this.setState({ funeralAddress : validator,
+    addressError: BereavementFunction.minimumLength(validator.length) })
+  }
+
+  validateFuneralRegion (value) {
+    const validator = BereavementFunction.checkRequiredAlphabet(value)
+    this.setState({ funeralRegion : validator })
+  }
+
+  validateFuneralProvince (value) {
+    const validator = BereavementFunction.checkRequiredAlphabet(value)
+    this.setState({ funeralProvince : validator })
+  }
+
+  validateFuneralCity (value) {
+    const validator = BereavementFunction.checkRequiredAlphabet(value)
+    this.setState({ funeralCity : validator })
+  }
+
+  validateMemorialPark (value) {
+    const validator = BereavementFunction.checkRequiredAlphabet(value)
+    this.setState({ memorialPark : validator })
+  }
+
+  validateMemorialAddress (value) {
+    const validator = BereavementFunction.checkRequiredAlphabet(value)
+    this.setState({ memorialAddress : validator })
+  }
+
+  validateMemorialRegion (value) {
+    const validator = BereavementFunction.checkRequiredAlphabet(value)
+    this.setState({ memorialRegion : validator })
+  }
+
+  validateMemorialProvince (value) {
+    const validator = BereavementFunction.checkRequiredAlphabet(value)
+    this.setState({ memorialProvince : validator })
+  }
+
+  validateMemorialCity (value) {
+    const validator = BereavementFunction.checkRequiredAlphabet(value)
+    this.setState({ memorialCity : validator })
   }
 
   showDeceasedDependents (showDepedents) {
@@ -234,7 +312,18 @@ class BereavementFragment extends BaseMVPView {
       dependentsName,
       dependentsRelationship,
       showDeceasedDependents,
-      funeralHome
+      funeralHome,
+      funeralAddress,
+      funeralRegion,
+      funeralProvince,
+      funeralCity,
+      memorialPark,
+      memorialAddress,
+      memorialRegion,
+      memorialProvince,
+      memorialCity,
+      addressError,
+      errorMessage
     }=this.state
 
     const { type }=this.props.match.params
@@ -307,11 +396,37 @@ class BereavementFragment extends BaseMVPView {
             withDeathCert={ type === "certified" ? true : false  }
             validatedBereavement={ validatedBereavement }
             showDepedents={ showDepedents }
-            dependentId={ dependentId }
-            dependentsName={ dependentsName }
-            checkFuneralHome={ (resp) => validateFuneralHome(resp) }
-            dependentsRelationship={ dependentsRelationship }
-            showDeceasedDependents={ () => this.setState({ showDeceasedDependents : true }) }
+            funeralHome = { funeralHome }
+            funeralAddress = { funeralAddress }
+            funeralRegion = { funeralRegion }
+            funeralProvince = { funeralProvince }
+            funeralCity = { funeralCity }
+            memorialPark = { memorialPark }
+            memorialAddress = { memorialAddress }
+            memorialRegion = { memorialRegion }
+            memorialProvince = { memorialProvince }
+            memorialCity = { memorialCity }
+            deceasedDate = { deceasedDate }
+            funeralDate = { funeralDate }
+            intermentDate = { intermentDate }
+            addressError = { addressError }
+            dependentId = { dependentId }
+            dependentsName = { dependentsName }
+            checkFuneralHome = { (resp) => this.validateFuneralHome(resp) }
+            checkFuneralAddress = { (resp) => this.validateFuneralAddress(resp) }
+            checkFuneralRegion = { (resp) => this.validateFuneralRegion(resp) }
+            checkFuneralProvince = { (resp) => this.validateFuneralProvince(resp) }
+            checkFuneralCity = { (resp) => this.validateFuneralCity(resp) }
+            checkMemorialPark = { (resp) => this.validateMemorialPark(resp) }
+            checkMemorialAddress = { (resp) => this.validateMemorialAddress(resp) }
+            checkMemorialRegion = { (resp) => this.validateMemorialRegion(resp) }
+            checkMemorialProvince = { (resp) => this.validateMemorialProvince(resp) }
+            checkMemorialCity = { (resp) => this.validateMemorialCity(resp) }
+            checkFuneralDate = { (resp) => this.formatFuneralDate(resp) }
+            checkDeceasedDate = { (resp) => this.formatDeceasedDate(resp) }
+            checkIntermentDate = { (resp) => this.formatIntermentDate(resp) }
+            dependentsRelationship = { dependentsRelationship }
+            showDeceasedDependents = { () => this.setState({ showDeceasedDependents : true }) }
             sendFormData={ (
               funeralDate,
               intermentDate,
