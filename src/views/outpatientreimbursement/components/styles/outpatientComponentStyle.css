@@ -3,15 +3,10 @@
   max-width: 100%;
 }
 
-
 .outpatient-form-card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 100%;
-  float: center;
   padding: 20px 5px 20px 5px;
   margin: auto;
-  text-align: center;
-  font-family: arial;
 }
 
 .outpatient-form-card-body {
@@ -28,7 +23,7 @@
   bottom: 0;
   height: 35px;
   margin-top: 20px;
-  width: 95%;
+  width: 100%;
 }
 
 .outpatient-grid-column-2 {
@@ -100,4 +95,8 @@
   text-align: left;
   font-size: 14px;
   font-weight: normal;
+}
+.outpatient-grid-procedure {
+  display: grid;
+  grid-template-columns: 1fr .2fr;
 }

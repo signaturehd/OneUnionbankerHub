@@ -17,7 +17,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
   constructor (props) {
     super (props)
     this.state = {
-      attachments : ''
+      attachments : '',
     }
   }
 
@@ -28,8 +28,18 @@ class OutPatientReimbursementFormCardComponent extends Component {
 
   render () {
   const {
-    attachments
+    attachments,
   } = this.state
+
+  const {
+    requestDepdentModal,
+    desiredAmount,
+    dependentName,
+    amount,
+    diagnosisText,
+    diagnosisValue,
+    procedureModal
+  } = this.props
 
   const styles = {
     image1 : {
@@ -46,28 +56,54 @@ class OutPatientReimbursementFormCardComponent extends Component {
       <div className={ 'outpatient-grid-column-2' }>
         <div></div>
         <div>
-          <Card className={ 'outpatient-form-card' }>
+          <div className={ 'outpatient-form-card' }>
             <div className={ 'outpatient-form-card-body' }>
             <GenericInput
-              value = { '' }
-              onChange = {() => {}}
+              value = { dependentName }
               hint = { 'Recipient' }
+              readOnly
+              text = { 'Recipient' }
+              onClick = { () => requestDepdentModal(true) }
               type = { 'text' }/>
+            <br/>
+            <GenericInput
+              value = { amount }
+              onChange = { (e) => desiredAmount(e.target.value) }
+              hint = { 'Amount' }
+              text = { 'Amount' }
+              type = { 'text' }/>
+            <br/>
+            <GenericInput
+              value = { diagnosisText }
+              onChange = { (e) => diagnosisValue(e.target.value) }
+              hint = { 'Diagnosis' }
+              text = { 'Diagnosis' }
+              type = { 'text' }/>
+              <br/>
             <GenericInput
               value = { '' }
               onChange = {() => {}}
               hint = { 'Official Receipt Date' }
+              text = { 'Official Receipt Date' }
               type = { 'text' }/>
+              <br/>
             <GenericInput
               value = { '' }
               onChange = {() => {}}
               hint = { 'Official Receipt Number' }
+              text = { 'Official Receipt Number' }
               type = { 'text' }/>
-            <GenericInput
-              value = { '' }
-              onChange = {() => {}}
-              hint = { 'Diagnosis' }
-              type = { 'text' }/>
+              <br/>
+              <div className = { 'outpatient-grid-procedure' }>
+                <div>
+                  <h2 className = { 'unionbank-color' }></h2>
+                </div>
+                <div>
+                  <GenericButton
+                    onClick = { () => procedureModal(true) }
+                    text = { 'Procedure' }/>
+                </div>
+              </div>
             </div>
             {
               attachments && attachments ?
@@ -131,24 +167,31 @@ class OutPatientReimbursementFormCardComponent extends Component {
             }
             <br/>
             <br/>
-            <h4>
-              Procedures
-            </h4>
             <div className={ 'outpatient-form-card-body' }>
             </div>
             <GenericButton
               type = { 'button' }
               text = { 'continue' }
               onClick = {
-                () => {}
+                () => {  }
               }
               className = { 'outpatient-submit' } />
-          </Card>
+          </div>
         </div>
       </div>
     </div>
     )
   }
+}
+
+OutPatientReimbursementFormCardComponent.propTypes = {
+  requestDepdentModal : PropTypes.func,
+  dependentName : PropTypes.string,
+  desiredAmount : PropTypes.func,
+  procedureModal : PropTypes.func,
+  amount : PropTypes.string,
+  diagnosisValue : PropTypes.func,
+  diagnosisText: PropTypes.string
 }
 
 export default OutPatientReimbursementFormCardComponent
