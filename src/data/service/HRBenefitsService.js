@@ -706,6 +706,31 @@ export default class HRBenefitsService {
     })
   }
 
+  /* Medical Scheduling */
+
+  validateMedicalScheduling (token) {
+    return this.apiClient.get('v1/medical/validate', {
+      headers: { token }
+    })
+  }
+
+  addMedicalScheduling (
+    token,
+    accounToken,
+    accountNumber,
+    releasingCenter,
+    addMedicalSchedulingParam
+  ) {
+    const medicalSchedulingObject = {
+      date : addMedicalSchedulingParam.preferredDate,
+      clinicId : addMedicalSchedulingParam.clinicId,
+      packageId : addMedicalSchedulingParam.packageId,
+    }
+    return this.apiClient.post('v1/medical/schedule', medicalSchedulingObject, {
+      headers : { token }
+    })
+  }
+
   /* Outpatient Reimbursement */
 
   validateOutPatientReimbursement (token) {
