@@ -722,8 +722,9 @@ export default class HRBenefitsService {
     outPatientParam
   ) {
     const formData = new FormData()
-    formData.append('uuid', 12345)
     const objectOutPatient = {
+      accountNumber,
+      releasingCenter,
       type : outPatientParam.type,
       dependentId : outPatientParam.dependentId,
       diagnosis : outPatientParam.diagnosisText,
@@ -732,8 +733,10 @@ export default class HRBenefitsService {
       officialReceiptDate : outPatientParam.orDate,
       amount : outPatientParam.amount,
     }
-      outPatientParam.attachments.map((resp, key) => {
-        formData.append(resp.name, resp.file)
+    formData.append('uuid', 12345)
+
+    outPatientParam.attachments.map((resp, key) => {
+      formData.append(resp.name, resp.file)
       }
     )
     formData.append('body', JSON.stringify(objectOutPatient))
