@@ -722,12 +722,15 @@ export default class HRBenefitsService {
     outPatientParam
   ) {
     const formData = new FormData()
+    formData.append('uuid', 12345)
     const objectOutPatient = {
       type : outPatientParam.type,
       dependentId : outPatientParam.dependentId,
       diagnosis : outPatientParam.diagnosisText,
+      procedureId : outPatientParam.procedureId,
       officialReceiptNumber : outPatientParam.orNumber,
       officialReceiptDate : outPatientParam.orDate,
+      amount : outPatientParam.amount,
     }
       outPatientParam.attachments.map((resp, key) => {
         formData.append(resp.name, resp.file)

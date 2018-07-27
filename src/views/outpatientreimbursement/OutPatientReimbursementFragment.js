@@ -148,6 +148,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       type,
       dependentId,
       procedureId,
+      amount,
       diagnosisText,
       orNumberText,
       moment(preferredDate).format('MM/DD/YYYY'),

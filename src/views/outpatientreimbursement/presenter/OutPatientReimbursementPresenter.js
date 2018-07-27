@@ -55,8 +55,9 @@ export default class OutPatientReimbursementPresenter {
 
     addOutPatientReimbursement (
       type,
-      dependendenId,
+      dependentId,
       procedureId,
+      amount,
       diagnosisText,
       orNumber,
       orDate,
@@ -66,8 +67,9 @@ export default class OutPatientReimbursementPresenter {
         this.addOutPatientReimbursementInteractor.execute(
           addOutPatientReimbursementParam(
             type,
-            dependendenId,
+            dependentId,
             procedureId,
+            amount,
             diagnosisText,
             orNumber,
             orDate,

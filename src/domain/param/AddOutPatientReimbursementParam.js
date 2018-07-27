@@ -1,15 +1,17 @@
 export default (
   type,
-  dependendenId,
+  dependentId,
   procedureId,
+  amount,
   diagnosisText,
   orNumber,
   orDate,
   attachments
 ) => ({
   type,
-  dependendenId,
+  dependentId,
   procedureId,
+  amount,
   diagnosisText,
   orNumber,
   orDate,
