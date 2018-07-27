@@ -1,14 +1,16 @@
 export default (
-  applicationMode,
+  type,
   dependendenId,
   procedureId,
+  diagnosisText,
   orNumber,
   orDate,
   attachments
 ) => ({
-  applicationMode,
+  type,
   dependendenId,
   procedureId,
+  diagnosisText,
   orNumber,
   orDate,
   attachments
