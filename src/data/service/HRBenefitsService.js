@@ -730,4 +730,39 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Outpatient Reimbursement */
+
+  validateOutPatientReimbursement (token) {
+    return this.apiClient.get('v1/outpatient/validate?type=1', {
+      headers: { token }
+    })
+  }
+
+  addOutPatientReimbursement (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    outPatientParam
+  ) {
+    const formData = new FormData()
+    formData.append('uuid', 12345)
+    const objectOutPatient = {
+      type : outPatientParam.type,
+      dependentId : outPatientParam.dependentId,
+      diagnosis : outPatientParam.diagnosisText,
+      procedureId : outPatientParam.procedureId,
+      officialReceiptNumber : outPatientParam.orNumber,
+      officialReceiptDate : outPatientParam.orDate,
+      amount : outPatientParam.amount,
+    }
+      outPatientParam.attachments.map((resp, key) => {
+        formData.append(resp.name, resp.file)
+      }
+    )
+    formData.append('body', JSON.stringify(objectOutPatient))
+      return this.apiClient.post('v1/outpatient/submit', formData)
+        headers : { token }
+    }
 }

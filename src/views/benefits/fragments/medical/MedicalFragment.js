@@ -33,6 +33,10 @@ class MedicalFragment extends Component {
       styleName: 'medical-cards-3',
       title: 'MEDICAL SCHEDULING',
       path: '/mybenefits/benefits/medical/scheduling',
+    }, {
+      styleName: 'medical-cards-3',
+      title: 'OUTPATIENT REIMBURSEMENT',
+      path: '/mybenefits/benefits/medical/reimbursement/outpatient',
     }]
 
     const MedicalHome = () => (
