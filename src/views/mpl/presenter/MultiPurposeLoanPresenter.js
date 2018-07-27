@@ -86,7 +86,7 @@ export default class MultiPurposeLoanPresenter {
   }
 
   isManagersCheck () {
-    const isManagersCheck=this.getManagersCheckInteractor.execute()
+    const isManagersCheck = this.getManagersCheckInteractor.execute()
     if (isManagersCheck !== null) {
         this.view.isManagersCheck('Payee Name')
     } else {
@@ -160,18 +160,19 @@ export default class MultiPurposeLoanPresenter {
     poaText,
     termId,
     selectedOffsetLoan,
-    formAttachments) {
+    formAttachments
+      ) {
       const fullname=this.getInformationInteractor.execute().fullname
       this.view.showCircularLoader()
       this.addLoanInteractor.execute(mplPurposeLoanAddParam(
-        dealerName,
-        amountValue,
-        modeOfLoanId,
-        loanType,
-        poaText,
-        termId,
-        selectedOffsetLoan,
-        formAttachments
+          dealerName,
+          amountValue,
+          modeOfLoanId,
+          loanType,
+          poaText,
+          termId,
+          selectedOffsetLoan,
+          formAttachments
         )
       )
       .subscribe(
