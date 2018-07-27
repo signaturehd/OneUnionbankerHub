@@ -596,4 +596,27 @@ export default class HRBenefitsClient {
 
     return service
   }
+
+  /* Outpatient Reimbursement */
+  validateOutPatientReimbursement (token) {
+    return this.service.validateOutPatientReimbursement(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addOutPatientReimbursement (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    outPatientParam
+  ) {
+      return this.service.addOutPatientReimbursement(
+        token,
+        accountToken,
+        accountNumber,
+        releasingCenter,
+        outPatientParam
+      )
+      .pipe(ServiceErrorOperator())
+  }
 }

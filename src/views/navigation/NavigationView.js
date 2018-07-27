@@ -33,6 +33,7 @@ import EducationGroupAidFragment from  '../educationgroupaid/EducationGroupAidFr
 import DentalReimbursement from '../dentalreimbursement/DentalReimbursementFragment'
 import DentalLoaView from '../dentalloa/DentalLoaFragment'
 import OpticalFragment from '../optical/OpticalFragment'
+import OutPatientReimbursementFragment from '../outpatientreimbursement/OutPatientReimbursementFragment'
 /* MPL */
 import HousingAssistanceFragment from '../housingassistanceloan/HousingAssistanceFragment'
 import EmergencyLoanFragment from '../emergencyloan/EmergencyLoanFragment'
@@ -204,6 +205,9 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation }/>}/>
                   <Route path = '/mybenefits/benefits/medical/loa/dental' render = { props =>
                     <DentalLoaView { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                  <Route path = '/mybenefits/benefits/medical/reimbursement/outpatient' render = { props =>
+                    <OutPatientReimbursementFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation }/>}/>
                   <Route path = '/mybenefits/benefits/loans/housingassistance' render = { props =>
                     <HousingAssistanceFragment { ...props }
