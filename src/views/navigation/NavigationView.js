@@ -58,6 +58,10 @@ import Payslip from '../payslip/PayslipFragment'
 
 import OnboardingView from '../onboarding/OnboardingView'
 import Carousel from '../carousel/Carousel'
+
+/* My Training View */
+import MyTrainingFragment from '../trainings/MyTrainingFragment'
+
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
@@ -254,6 +258,9 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mylearning' render = { props =>
                     <MyLearningView { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mylearning/trainings' render = { props =>
+                    <MyTrainingFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/feedback' render = { props =>
                     <FeedbackFragment { ...props }

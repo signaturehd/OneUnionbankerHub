@@ -28,7 +28,7 @@ class MyLearningView extends BaseMVPView {
     const { accountNumber, showAccountNumberModal } = this.state
     const mylearning = [{
       id: 0 ,
-      styleName: 'mylearning-cards-2',
+      styleName: 'mylearning-cards-1',
       title: 'BOOKS',
       path: '/mylearning/books',
     }, {
@@ -36,6 +36,11 @@ class MyLearningView extends BaseMVPView {
       styleName: 'mylearning-cards-1',
       title: 'PODCASTS',
       path: '/mylearning/podcasts',
+    }, {
+      id: 2 ,
+      styleName: 'mylearning-cards-1',
+      title: 'TRAININGS',
+      path: '/mylearning/trainings',
     }]
     const MyLearning = () => (
       <div className = { 'mylearning-container' }>
