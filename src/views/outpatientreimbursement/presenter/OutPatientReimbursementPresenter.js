@@ -54,9 +54,10 @@ export default class OutPatientReimbursementPresenter {
     }
 
     addOutPatientReimbursement (
-      applicationMode,
+      type,
       dependendenId,
       procedureId,
+      diagnosisText,
       orNumber,
       orDate,
       attachments
@@ -64,9 +65,10 @@ export default class OutPatientReimbursementPresenter {
         this.view.showCircularLoader()
         this.addOutPatientReimbursementInteractor.execute(
           addOutPatientReimbursementParam(
-            applicationMode,
+            type,
             dependendenId,
             procedureId,
+            diagnosisText,
             orNumber,
             orDate,
             attachments

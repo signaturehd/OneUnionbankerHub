@@ -38,6 +38,24 @@
   color: #fff;
 }
 
+.outpatient-submit-form-button:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
+}
+
+.outpatient-procedure:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
+}
+
+.outpatient-edit-form:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
+}
+
 .outpatient-grid-column-2 {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;

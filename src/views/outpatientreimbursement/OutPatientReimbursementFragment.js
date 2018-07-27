@@ -46,14 +46,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         amount: '',
         diagnosisText : '',
         orNumberText: '',
-        diagnosisTextErrorMessage : null,
-        dependentErrorMessage: null,
-        procedureErrorMessage: null,
-        orNumberTextErrorMessage: null,
-        amountErrorMessage: null,
-        dateErrorMessage: null,
         attachmentErrorMessage: null,
-        errorMessageRequiredProcedure: null,
         preferredDate: '',
         showProcedureInput: false,
         attachmentsData: [],
@@ -140,7 +133,25 @@ class OutPatientReimbursementFragment extends BaseMVPView {
   }
 
   submitForm () {
-    /*submission*/
+    const {
+      dependentId,
+      diagnosisText,
+      procedureId,
+      preferredDate,
+      orNumberText,
+      amount,
+      attachmentArray
+    } = this.state
+
+    const type = dependentId !== 1 ? 2 : 1
+    this.presenter.addOutPatientReimbursement(
+      type,
+      dependentId,
+      procedureId,
+      diagnosisText,
+      orNumberText,
+      moment(preferredDate).format('MM/DD/YYYY'),
+      attachmentArray)
   }
 
   showFormReviewFieldDisabled (e) {
@@ -153,28 +164,25 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       amount,
       attachmentArray
     } = this.state
-
-    if(this.validateRequired(!dependentName)) {
-      this.setState({ dependentErrorMessage : 'Please select recipient' })
-    } else if (this.validateRequired(!diagnosisText)) {
-      this.setState({ diagnosisTextErrorMessage : 'Please enter the diagnosis' })
-    } else if (this.validateRequired(!orNumberText)) {
-      this.setState({ orNumberTextErrorMessage : 'Please enter the Official Receipt Number' })
-    } else if (this.validateRequired(!procedureName)) {
-      this.setState({ errorMessageRequiredProcedure : 'Please select a Procedure' })
-    } else if (this.validateRequired(!amount)) {
-      this.setState({ amountErrorMessage : 'Please enter the amount for the selected procedure'})
-    } else if (this.validateRequired(!preferredDate)) {
-      this.setState({ dateErrorMessage : 'Date field is required' })
+    if (
+      this.validateRequired(!procedureName) ||
+      this.validateRequired(!dependentName) ||
+      this.validateRequired(!diagnosisText) ||
+      this.validateRequired(!preferredDate) ||
+      this.validateRequired(!amount) ||
+      this.validateRequired(!attachmentArray) ||
+      this.validateRequired(!orNumberText)
+    ) {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'OutPatient Reimbursement',
+          message : 'Please enter the required fields and attachments',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+      this.setState({ errorMessageRequiredProcedure : 'Please select a procedure and enter amount required' })
     } else {
       this.setState({
-        diagnosisTextErrorMessage: '',
-        dependentErrorMessage: '',
-        procedureErrorMessage: '',
-        orNumberTextErrorMessage: '',
-        dateErrorMessage: '',
-        attachmentErrorMessage: '',
-        amountErrorMessage: '',
         errorMessageRequiredProcedure: '',
         showEditSubmitButton: true,
       })
@@ -203,12 +211,6 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       showProcedureInput,
       attachmentsData,
       attachmentArray,
-      diagnosisTextErrorMessage,
-      dependentErrorMessage,
-      procedureErrorMessage,
-      orNumberTextErrorMessage,
-      amountErrorMessage,
-      dateErrorMessage,
       attachmentErrorMessage,
       errorMessageRequiredProcedure,
       showEditSubmitButton
@@ -310,12 +312,6 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             procedureName = { procedureName }
             showProcedureInput = { showProcedureInput }
             attachmentsData = { attachmentsData }
-            diagnosisTextErrorMessage = { diagnosisTextErrorMessage }
-            dependentErrorMessage = { dependentErrorMessage }
-            procedureErrorMessage = { procedureErrorMessage }
-            orNumberTextErrorMessage = { orNumberTextErrorMessage }
-            amountErrorMessage = { amountErrorMessage }
-            dateErrorMessage = { dateErrorMessage }
             attachmentErrorMessage = { attachmentErrorMessage }
             showEditSubmitButton = { showEditSubmitButton }
             errorMessageRequiredProcedure = { errorMessageRequiredProcedure }

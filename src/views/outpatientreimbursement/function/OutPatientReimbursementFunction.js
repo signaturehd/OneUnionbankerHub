@@ -31,3 +31,28 @@ export function checkedMDYDate (date) {
   return date ?
          moment(date.format('MM/DD/YYYY')) : '(Not Yet Provided)'
 }
+
+export function checkedAmountRequired (amount) {
+  return !new RequiredValidation().isValid(diagnosis) ?
+    'Please enter the amount' : ''
+}
+
+export function checkedDiagnosisRequired (diagnosis) {
+  return !new RequiredValidation().isValid(diagnosis) ?
+    'Please enter the diagnosis' : ''
+}
+
+export function checkedDependentRequired (recipient) {
+  return !new RequiredValidation().isValid(recipient) ?
+    'Please select your recipient' : ''
+}
+
+export function checkedOrDateRequired (recipient) {
+  return !new RequiredValidation().isValid(recipient) ?
+    'Please enter the date' : ''
+}
+
+export function checkedOrNumberRequired (recipient) {
+  return !new RequiredValidation().isValid(recipient) ?
+    'Please enter the Official Receipt Number' : ''
+}
