@@ -17,6 +17,8 @@ import { NotifyActions } from '../../../actions/'
 
 import * as controller from '../function/OutPatientReimbursementFunction'
 
+import moment from 'moment'
+
 class OutPatientReimbursementFormCardComponent extends Component {
   constructor (props) {
     super (props)
@@ -81,6 +83,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
               disabled = { showEditSubmitButton }
               onChange = { (e) => dateFunc(e) }
               hint = { 'Official Receipt Date' }
+              maxDate = { moment() }
               text = { 'Official Receipt Date' }
               errorMessage = { controller.checkedOrDateRequired(preferredDate) }
               />
