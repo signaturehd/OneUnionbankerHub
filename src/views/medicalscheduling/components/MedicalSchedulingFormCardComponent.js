@@ -19,6 +19,7 @@ export default class MedicalSchedulingFormCardComponent extends Component {
       isFormReview,
       clinicLabel,
       packageLabel,
+      procedureList,
       preferredDate,
       onChangePreferredDate,
       onSubmit
@@ -49,6 +50,26 @@ export default class MedicalSchedulingFormCardComponent extends Component {
             minDate = { moment(Date.now()).add(3, 'weeks') }
             selected = { func.checkedDate(preferredDate) }
             onChange = { (data) => onChangePreferredDate(data) }/>
+
+            <br/>
+            <div className={ 'medsched-package-procedure' }>
+              <table>
+                <tr>
+                  <th>Package Procedures<p>Procedures that are marked with asterisk(*) are required.</p></th>
+
+                </tr>
+                {
+                    packageLabel && procedureList.map(
+                    (proc, key) => (
+                      <tr>
+                        <td>{ proc.name }{ !proc.optional && '*' }</td>
+                      </tr>
+                    )
+                  )
+                }
+              </table>
+            </div>
+            <br/>
           {
             isFormReview ?
             <div className={ 'form-review' }>

@@ -25,6 +25,7 @@ class MedicalSchedulingFragment extends BaseMVPView {
       noticeResponse : '',
       clinics : null,
       packages : null,
+      procedures : null,
       clinicId : null,
       clinicLabel : '',
       packageId : null,
@@ -43,6 +44,10 @@ class MedicalSchedulingFragment extends BaseMVPView {
 
   setPackages (packages) {
     this.setState({ packages })
+  }
+
+  setProcedures (procedures) {
+    this.setState({ procedures })
   }
 
   hideCircularLoader () {
@@ -99,13 +104,20 @@ class MedicalSchedulingFragment extends BaseMVPView {
       noticeResponse,
       clinics,
       packages,
+      procedures,
       clinicId,
       clinicLabel,
-      clicnicKey,
       packageId,
       packageLabel,
       preferredDate
     } = this.state
+
+    let procedureList = []
+    try {
+      procedureList = procedures.filter(proc => proc.packageId == packageId)
+    }
+    catch (e) {
+    }
 
     return (
       <div>
@@ -122,8 +134,9 @@ class MedicalSchedulingFragment extends BaseMVPView {
           showPackages &&
           <SingleInputModal
             inputArray = { packages.filter(pack => pack.clinicId === clinicId) }
-            selectedArray = { (packageId, packageLabel) =>
+            selectedArray = { (packageId, packageLabel) =>{
               this.setState({ packageId, packageLabel, showPackages : false }) }
+            }
             onClose = { () => this.setState({showPackages : false}) }
           />
         }
@@ -177,6 +190,7 @@ class MedicalSchedulingFragment extends BaseMVPView {
               isFormReview = { isFormReview }
               clinicLabel = { clinicLabel }
               packageLabel = { packageLabel }
+              procedureList = { procedureList }
               preferredDate = { preferredDate }
               onChangePreferredDate = { (preferredDate) => this.setState({ preferredDate }) }
               onSubmit = { () => {

@@ -14,6 +14,35 @@
   font-size: 18px;
 }
 
+.medsched-package-procedure {
+
+}
+
+.medsched-package-procedure table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.medsched-package-procedure th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.medsched-package-procedure h1 {
+  font-size: 18px;
+}
+
+
+.medsched-package-procedure p {
+  font-size: 12px!important;
+  font-weight: normal;
+  color: #444;
+  margin: 0px!important;
+  padding: 0px!important;
+}
+
 .medsched-form-card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 100%;

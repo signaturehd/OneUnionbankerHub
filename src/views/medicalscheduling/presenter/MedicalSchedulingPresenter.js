@@ -28,6 +28,7 @@ export default class MedicalSchedulingPresenter {
         resp => {
           let clinics = []
           let packages = []
+          let procedures = []
           resp.hospitalPackage.map (
             (clinic, i) => {
               clinics.push ({
@@ -41,12 +42,23 @@ export default class MedicalSchedulingPresenter {
                     id : pack.id,
                     name : pack.name
                   })
+                  pack.procedure.map (
+                    (proc, k) => {
+                      procedures.push({
+                        packageId : pack.id,
+                        id : proc.id,
+                        name : proc.name,
+                        optional : proc.optional
+                      })
+                    }
+                  )
                 }
               )
             }
           )
           this.view.setClinics (clinics)
           this.view.setPackages(packages)
+          this.view.setProcedures(procedures)
           this.view.hideCircularLoader()
         } , error => {
           this.view.navigate()
