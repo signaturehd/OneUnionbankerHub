@@ -597,6 +597,29 @@ export default class HRBenefitsClient {
     return service
   }
 
+/* Medical Scheduling */
+
+  validateMedicalScheduling (token) {
+    return this.service.validateMedicalScheduling(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addMedicalScheduling (
+    token,
+    accounToken,
+    accountNumber,
+    releasingCenter,
+    addMedicalSchedulingParam
+  ) {
+    return this.service.addMedicalScheduling (
+      token,
+      accounToken,
+      accountNumber,
+      releasingCenter,
+      addMedicalSchedulingParam)
+    .pipe(ServiceErrorOperator())
+  }
+
   /* Outpatient Reimbursement */
   validateOutPatientReimbursement (token) {
     return this.service.validateOutPatientReimbursement(token)
