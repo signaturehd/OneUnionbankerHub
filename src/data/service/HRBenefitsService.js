@@ -747,25 +747,25 @@ export default class HRBenefitsService {
     outPatientParam
   ) {
     const formData = new FormData()
-    const objectOutPatient = {
-      accountNumber,
-      releasingCenter,
-      type : outPatientParam.type,
-      dependentId : outPatientParam.dependentId,
-      diagnosis : outPatientParam.diagnosisText,
-      procedureId : outPatientParam.procedureId,
-      officialReceiptNumber : outPatientParam.orNumber,
-      officialReceiptDate : outPatientParam.orDate,
-      amount : outPatientParam.amount,
-    }
     formData.append('uuid', 12345)
-
-    outPatientParam.attachments.map((resp, key) => {
-      formData.append(resp.name, resp.file)
+      const objectOutPatient = {
+        accountNumber,
+        releasingCenter,
+        type : outPatientParam.type,
+        amount : outPatientParam.amount,
+        dependentId : outPatientParam.dependentId,
+        diagnosis : outPatientParam.diagnosisText,
+        procedureId : outPatientParam.procedureId,
+        officialReceiptNumber : outPatientParam.orNumber,
+        officialReceiptDate : outPatientParam.orDate,
       }
-    )
+      outPatientParam.attachments.map((resp, key) => (
+        formData.append(resp.name, resp.file)
+        )
+      )
     formData.append('body', JSON.stringify(objectOutPatient))
-      return this.apiClient.post('v1/outpatient/submit', formData)
+      return this.apiClient.post('v1/outpatient/submit', formData, {
         headers : { token }
-    }
+    })
+  }
 }

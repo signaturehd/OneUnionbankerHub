@@ -146,11 +146,11 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     const type = dependentId !== 1 ? 2 : 1
     this.presenter.addOutPatientReimbursement(
       type,
-      dependentId,
-      procedureId,
+      dependentId.toString(),
+      procedureId.toString(),
       amount,
-      diagnosisText,
-      orNumberText,
+      diagnosisText.toString(),
+      orNumberText.toString(),
       moment(preferredDate).format('MM/DD/YYYY'),
       attachmentArray)
   }
