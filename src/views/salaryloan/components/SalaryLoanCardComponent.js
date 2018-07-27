@@ -105,7 +105,7 @@ class SalaryLoanCardComponent extends Component {
           </div>
         }
         <br/>
-        <div>
+        <div className = { 'salary-function' } >
           {
             review &&
             <GenericButton

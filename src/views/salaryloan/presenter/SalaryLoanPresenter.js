@@ -75,7 +75,7 @@ export default class SalaryLoanPresenter {
           this.view.noticeOfUndertaking(data)
       },
         errors => {
-          this.view.hideCircularLoader()
+          this.view.hideLoading(false)
           this.view.noticeResponse(errors)
         }
       )
@@ -170,6 +170,7 @@ export default class SalaryLoanPresenter {
         this.view.showValidate(data)
         // this.view.showComputationForOffset(data && data.offset)
         this.view.setTermOfLoan(data && data.termsArray)
+        this.view.isValid(true)
       },
       error => {
         // this.view.navigate()
