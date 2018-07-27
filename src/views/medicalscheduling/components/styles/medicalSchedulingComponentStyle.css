@@ -1,0 +1,175 @@
+
+.medsched-container {
+  max-width: 100%;
+}
+
+.medsched-form-title {
+  padding: 0px 20px 20px 20px;
+}
+
+.medsched-form-title h4 {
+  text-align: center;
+  font-weight: bold;
+  color: #121212;
+  font-size: 18px;
+}
+
+.medsched-package-procedure {
+
+}
+
+.medsched-package-procedure table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.medsched-package-procedure th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.medsched-package-procedure h1 {
+  font-size: 18px;
+}
+
+
+.medsched-package-procedure p {
+  font-size: 12px!important;
+  font-weight: normal;
+  color: #444;
+  margin: 0px!important;
+  padding: 0px!important;
+}
+
+.medsched-form-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+  float: center;
+  padding: 20px 5px 20px 5px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.form-review {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
+}
+
+.medsched-form-card-body {
+  border-color: #0a0a0a;
+  color: #090909;
+  padding : 0 15px 10px 15px;
+  margin : 0 auto;
+  width: 50%;
+}
+
+.medsched-submit {
+  border-radius: 5px;
+  text-align: center;
+  border: 1px solid #ff8A00;
+  background-color: #0000;
+  color: #ff8A00;
+  cursor: pointer;
+  bottom: 0;
+  height: 38px;
+  margin-top: 25px;
+  width: 100%;
+}
+
+
+.medsched-submit:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
+}
+
+.medsched-grid-column-2 {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  column-gap: 2%;
+}
+
+@media (max-width : 768px) {
+  .medsched-grid-column-2 {
+    display: grid;
+    grid-template-columns: 1fr ;
+    column-gap: 2%;
+    grid-row-gap: 2%;
+  }
+  .medsched-form-card {
+    margin-top: 10px;
+  }
+  .medsched-form-card-body {
+    width: 100%;
+  }
+
+  .medsched-form-title h4 {
+    font-size: 16px;
+  }
+}
+
+/*CARD TRANSITION*/
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+.medsched-form-preview{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+  float: center;
+  padding: 20px 5px 20px 5px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+
+  opacity: 0;
+  animation: fadeInUp 0.5s ease-in-out 0s forwards;
+}
+
+.medsched-attachment-form {
+  padding: 10px;
+  margin: 0 30px 0 30px;
+  background-color: #f6f6f6;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: #DBDBE0;
+}
+
+.medsched-form-title {
+  display: block;
+  text-align: left;
+  font-size:14px;
+  pointer-events:none;
+  color: #ff8a00 !important;
+}
+
+.close-button {
+  float: right;
+}
+
+.medsched-file-name {
+  margin-left: 120px;
+  line-height: 60px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.input {
+  padding-top: 5px!important;
+  margin-top: 5px!important;
+}
+
+.react-datepicker__input-container {
+  margin-top: 0px!important;
+}
