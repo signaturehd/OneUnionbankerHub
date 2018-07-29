@@ -9,6 +9,7 @@ import Presenter from './presenter/MyLearningPresenter'
 import PodcastFragment from '../podcast/PodcastFragment'
 import PodcastPlayerFragment from '../podcastplayer/PodcastPlayerFragment'
 import LibraryView from '../library/LibraryFragment'
+import MyTrainingFragment from '../trainings/MyTrainingFragment'
 
 import { InputModal, Card, GenericButton } from '../../ub-components'
 
@@ -82,6 +83,8 @@ class MyLearningView extends BaseMVPView {
     return (
       <div>
         <Switch>
+          <Route path = '/mylearning/trainings' render = { props =>
+            <MyTrainingFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts' render = { props =>
             <PodcastFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts/:id' render = { props =>
