@@ -12,37 +12,85 @@ class MyTrainingListCardComponent extends Component {
 
   render () {
     const {
-      trainingList,
       venue,
       startDate,
+      title,
+      startTime,
+      endTime,
+      status,
+      endDate
     } = this.props
     return (
 
-      <div
-         className="blog-card spring-fever">
-        <div className="title-content">
-          <h4 className = { 'h3r' }>{ venue }</h4>
-          <hr className = { 'hr' } />
-          <div className="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
+      <Card
+         className = { 'mytrainings-card-list mytrainings-card-list-part' }>
+
+        <div className = { 'mytrainings-card-content' }>
+          <h2 className = { 'mytrainings-program-title font-weight-bold' }>
+            { title }
+          </h2>
+          <h4 className = { 'mytrainings-label font-weight-bold font-size-11px' }>
+            Program Title
+          </h4>
         </div>
-        <div className="card-info">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
+
+        <div className = { 'mytrainings-card-info' }>
+          <div
+            className = { 'mytrainings-information-status-hover font-size-12px' }>
+            <div className = { 'mytrainings-information-status' }>
+              <div className = { 'mytrainings-program-title font-weight-bold  font-size-11px' }>
+              { venue }
+              </div>
+              <div className = { 'mytrainings-label font-weight-bold  font-size-10px' }>
+                Venue Type
+              </div>
+            </div>
+            <div >
+              <div className = { 'mytrainings-program-title font-weight-bold  font-size-11px' }>
+              { status }
+              </div>
+              <div className = { 'mytrainings-label font-weight-bold  font-size-10px' }>
+                Status
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="utility-info">
-          <ul className="utility-list">
-            <li className="comments">12</li>
-            <li className="date">{ startDate }</li>
-          </ul>
+
+        <div className = { 'mytrainings-grid-x3' }>
+          <div></div>
+          <div>
+            <div
+              className = { 'mytrainings-information-status font-size-12px' }>
+              <div className = { 'mytrainings-icon-grid' }>
+                <span className = { 'mytrainings-icon mytrainings-time' } />
+                <div className = { 'font-weight-bold font-size-10px' }>
+                  { startTime } - { endTime }
+                </div>
+              </div>
+              <div className = { 'mytrainings-icon-grid' }>
+                <span className = { 'mytrainings-icon mytrainings-calendar' } />
+                <div className = { 'font-weight-bold font-size-10px' }>
+                  { startDate } - { endDate }
+                </div>
+              </div>
+            </div>
+          </div>
+          <div></div>
         </div>
-        <div className="gradient-overlay"></div>
-        <div className="color-overlay"></div>
-      </div>
+
+      </Card>
     )
   }
 }
 
 MyTrainingListCardComponent.propTypes = {
-  selectedTraining : PropTypes.object
+  title : PropTypes.string,
+  venue : PropTypes.string,
+  startDate : PropTypes.string,
+  endDate : PropTypes.string,
+  endTime : PropTypes.string,
+  status : PropTypes.string,
+  startTime : PropTypes.string,
 }
 
 export default MyTrainingListCardComponent

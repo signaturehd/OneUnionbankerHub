@@ -11,10 +11,14 @@ import MyTrainingCardComponent from
 import MyTrainingListCardComponent from
 './components/MyTrainingListCardComponent'
 
+import * as MyTrainingFunctions from
+'./functions/MyTrainingFunctions'
+
 import {
   CircularLoader,
   Line,
-  GenericInput
+  GenericInput,
+  GenericButton
 } from '../../ub-components/'
 
 import './styles/myTrainingStyle.css'
@@ -28,6 +32,7 @@ class MyTrainingFragment extends BaseMVPView {
       searchString : '',
       index: 3,
     }
+    this.programSearch = this.programSearch.bind(this)
   }
 
   componentDidMount () {
@@ -46,8 +51,8 @@ class MyTrainingFragment extends BaseMVPView {
     this.setState({ enabledLoader })
   }
 
-  updateSearch () {
-
+  programSearch (e) {
+    this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
 
   render () {
@@ -60,10 +65,10 @@ class MyTrainingFragment extends BaseMVPView {
   } = this.state
 
 
-  let trainingSearch = trainingList
+  let training = trainingList
   const search = searchString.trim().toLowerCase()
   if (search.length > 0) {
-        trainingSearch = trainingList.filter(trainingList =>
+        training = trainingList.filter(trainingList =>
        trainingList.venue.toLowerCase().match(search) ||
        trainingList.title.toLowerCase().match(search))
   }
@@ -71,8 +76,11 @@ class MyTrainingFragment extends BaseMVPView {
   return (
     <div>
       { super.render() }
+
       <div className={ 'header-margin-container' }>
-        <i className = { 'back-arrow' } onClick = { () =>
+        <i
+          className = { 'back-arrow' }
+          onClick = { () =>
             history.push('/mylearning') }>
         </i>
         <h2 className = { 'header-margin-default' }>My Trainings</h2>
@@ -93,26 +101,54 @@ class MyTrainingFragment extends BaseMVPView {
               refCallback = { 'search' }
               hint = { 'Search ( e.g Venue, Title of Trainings )' }
               value = { searchString }
-              onChange = { this.updateSearch } />
+              onChange = { this.programSearch } />
+            <br/>
           </div>
         </div>
+
         <div className = { 'mytrainings-list-card' }>
           <div>
             <Line/>
+            <br/>
           </div>
           <div className = { 'mytrainings-list' }>
           {
-           trainingSearch &&
-           trainingSearch.map((resp, key) =>
+           training &&
+           training.slice(0, index).map((resp, key) =>
              <MyTrainingListCardComponent
                key = { key }
                venue = { resp.venue }
+               title = { resp.title }
+               startTime = { resp.startTime }
+               endTime = { resp.endTime }
+               status = { resp.status }
                startDate = { resp.startDate }
+               endDate = { resp.endDate }
              />
            )
           }
           </div>
           <div>
+            <div className = { 'grid-global' }>
+              <GenericButton
+                className = { 'transaction-component-button' }
+                text = { 'View Less' }
+                onClick = { () =>
+                  this.setState({
+                    index : MyTrainingFunctions.indexDecreased(index)
+                    })
+                  }
+                />
+              <GenericButton
+                className = { 'transaction-component-button' }
+                text = { 'View More' }
+                onClick = { () =>
+                  this.setState({
+                    index : MyTrainingFunctions.indexIncreased(index)
+                    })
+                  }
+                />
+            </div>
             <Line/>
           </div>
         </div>

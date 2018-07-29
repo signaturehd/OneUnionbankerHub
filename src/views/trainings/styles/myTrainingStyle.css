@@ -12,8 +12,8 @@
 
 .mytrainings-list {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 1%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 2%;
 }
 
 .mytrainings-list-card {
@@ -27,7 +27,30 @@
 }
 
 
+@media (max-width: 1024px) {
+  .mytrainings-list {
+    display: grid;
+    column-gap: 2%;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-bottom: 40px;
+  }
+}
+
 @media (max-width: 768px) {
+  .mytrainings-grid-container-column {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .mytrainings-list {
+    display: grid;
+    column-gap: 2%;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 480px) {
   .mytrainings-grid-container-column {
     display: grid;
     grid-template-columns: 1fr;
