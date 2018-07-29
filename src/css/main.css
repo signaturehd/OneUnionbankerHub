@@ -71,6 +71,10 @@ p {
   font-weight: bolder;
 }
 
+.font-weight-bold {
+  font-weight: bold;
+}
+
 .font-weight-initial {
   font-weight: initial;
 }
