@@ -5,11 +5,9 @@
 
 
 .optical-card {
-  background: #ffffff;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.5);
-  border-radius: 1px;
   padding : 5%;
 }
+
 .optical-header {
   float:left;
   width: 480px;
@@ -18,21 +16,23 @@
 .optical-body {
   display: inline-flex;
   margin: auto;
-  width: 100%;
   margin: auto auto auto -8px;
 }
+
 .text-icon {
   width: 100% !important;
 }
+
 .optical-image-view {
-position: relative;
-background: url('../../../../images/uploadicon-grey.jpg') no-repeat center center;
-background-size: 50px;
-width: 225px;
-height: 240px;
-object-fit: cover;
-border-radius: 20px;
+  position: relative;
+  background: url('../../../../images/uploadicon-grey.jpg') no-repeat center center;
+  background-size: 50px;
+  width: 225px;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 20px;
 }
+
 .optical-image {
   background: url('../../../../images/uploadicon-grey.jpg')  no-repeat center center;
   width: 225px;
@@ -40,20 +40,23 @@ border-radius: 20px;
   object-fit: cover;
   background-size: 85%;
 }
+
 .optical-image-layer {
-background-color: rgba(0, 0, 0, 0.5);
-position: absolute;
-bottom: 0;
-left: 0;
-width: 100%;
-height: 50%;
-border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  border-radius: 5px;
 }
+
 .optical-warning-display {
   color: red;
   font-size: 14px;
   align-items: center;
 }
+
 .optical-text {margin-left: 15px; z-index: 1;}
 
 .optical-footer-left {
@@ -62,6 +65,7 @@ border-radius: 5px;
    width: auto;
    min-height: 300px;
  }
+
  @media screen and (max-width: 720px) {
     .optical-header {
      float: none;
@@ -71,11 +75,13 @@ border-radius: 5px;
      border-bottom:2px solid #000;
    }
  }
+
 .optical-button-submit {
     bottom: 0;
     margin-top: 40px;
     display: inline-flex;
 }
+
 .optical-texbox-container {
   padding:0px 15px 0px 15px;
 }
@@ -85,6 +91,7 @@ border-radius: 5px;
   width:100%;
   margin-top:45px;
 }
+
 .text-icon {
   font-size:16px;
   padding:10px 5px 10px 5px;
@@ -97,6 +104,7 @@ border-radius: 5px;
   background-position: right;
   cursor: pointer;
 }
+
 .text-icon {
    position: relative;
    filter:alpha(opacity: 0);

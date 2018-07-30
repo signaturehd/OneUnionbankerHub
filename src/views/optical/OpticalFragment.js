@@ -48,10 +48,15 @@ class OpticalFragment extends BaseMVPView {
   }
 
   isEligible (resp) {
-    this.setState({ attachmentsData : resp.attachments })
-    if (resp) {
-      this.setState({ isVisible : true })
+    if(resp.isValid) {
+      this.setState({ isVisible : resp })
+    } else {
+      this.navigate()
     }
+  }
+
+  showAttachmentsMap (attachmentsData) {
+    this.setState({ attachmentsData })
   }
 
   noticeOfUndertaking (noticeResponse) {
@@ -160,39 +165,45 @@ class OpticalFragment extends BaseMVPView {
             }}
           />
         }
-
-        <div>
-          <i className = { 'back-arrow' } onClick = {
-              this.navigate.bind(this) }></i>
-            <h2 className = { 'header-margin-default' }>Optical Reimbursement</h2>
-        </div>
-        {
-          isVisible ?
-          <div className = { 'optical-container' }>
-            <Card
-              attachmentsData = { attachmentsData }
-              showEditSubmitButton = { showEditSubmitButton }
-              onClick = {
-                (showConfirmation,
-                  file1,
-                  file2,
-                  amount,
-                  imagePreviewUrl,
-                  imagePreviewUrl2) =>
-            this.confirmation(
-                  showConfirmation,
-                  file1,
-                  file2,
-                  amount,
-                  imagePreviewUrl,
-                  imagePreviewUrl2)  }/>
-          </div>          :
-          <div className = { 'optical-loader' }>
-            <center>
-              <CircularLoader show = {true} />
-            </center>
+        <div className = { 'optical-grid-x3' }>
+          <div>
+            <div>
+              <i className = { 'back-arrow' } onClick = {
+                  this.navigate.bind(this) }></i>
+            </div>
           </div>
-        }
+          <div>
+            <h2 className = { 'header-margin-default' }>Optical Reimbursement</h2>
+            {
+              isVisible ?
+              <div className = { 'optical-container' }>
+                <Card
+                  attachmentsData = { attachmentsData }
+                  showEditSubmitButton = { showEditSubmitButton }
+                  onClick = {
+                    (showConfirmation,
+                      file1,
+                      file2,
+                      amount,
+                      imagePreviewUrl,
+                      imagePreviewUrl2) =>
+                this.confirmation(
+                      showConfirmation,
+                      file1,
+                      file2,
+                      amount,
+                      imagePreviewUrl,
+                      imagePreviewUrl2)  }/>
+              </div>          :
+              <div className = { 'optical-loader' }>
+                <center>
+                  <CircularLoader show = {true} />
+                </center>
+              </div>
+            }
+          </div>
+          <div></div>
+        </div>
       </div>
     )
   }

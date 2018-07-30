@@ -5,7 +5,7 @@ import Button from './OpticalButton'
 
 import ConnectView from '../../../utils/ConnectView'
 import Presenter from '../presenter/OpticalPresenter'
-import { GenericTextBox, MultipleFileUploader } from  '../../../ub-components/'
+import { GenericInput, MultipleFileUploader } from  '../../../ub-components/'
 
 import staticImage from '../../../images/uploadicon-grey.jpg'
 import store from '../../../store'
@@ -24,94 +24,7 @@ class OpticalCard extends Component {
       warning: null,
       amount : 0
     }
-
-    this.handleImageChange = this.handleImageChange.bind(this)
-    this.handleImageChange2 = this.handleImageChange2.bind(this)
   }
-
-  getExtension (filename) {
-    const parts = filename.split('/')
-    return parts[parts.length - 1]
-  }
-
-
-  handleImageChange (e) {
-    e.preventDefault()
-
-    const reader = new FileReader()
-    const [file] = e.target.files
-    let isValid
-      switch (this.getExtension(file.type).toLowerCase()) {
-        case 'jpeg' :
-          isValid = true
-          break
-        case 'jpg' :
-          isValid = true
-          break
-        case 'png' :
-          isValid = true
-          break
-        case 'pdf' :
-          isValid = true
-          break
-    }
-
-    if (isValid) {
-       reader.onloadend = () => {
-         this.setState({
-           file,
-           imagePreviewUrl: reader.result
-         })
-       }
-       reader.readAsDataURL(file)
-     } else {
-       store.dispatch(NotifyActions.addNotify({
-           title : 'File Uploading',
-           message : 'The accepted attachments are JPG/PNG/PDF',
-           type : 'warning',
-           duration : 2000
-         })
-       )
-     }
-   }
-
-  handleImageChange2 (e1) {
-    e1.preventDefault()
-    const reader2 = new FileReader()
-    const [file2] = e1.target.files
-    let isValid
-      switch (this.getExtension(file2.type).toLowerCase()) {
-        case 'jpeg' :
-          isValid = true
-          break
-        case 'jpg' :
-          isValid = true
-          break
-        case 'png' :
-          isValid = true
-          break
-        case 'pdf' :
-          isValid = true
-          break
-    }
-      if (isValid) {
-         reader2.onloadend = () => {
-           this.setState({
-             file2,
-             imagePreviewUrl2: reader2.result
-           })
-         }
-         reader2.readAsDataURL(file2)
-      } else {
-        store.dispatch(NotifyActions.addNotify({
-            title : 'File Uploading',
-            message : 'The accepted attachments are JPG/PNG/PDF',
-            type : 'warning',
-            duration : 2000
-          })
-        )
-      }
-    }
 
   render () {
     const {
@@ -141,12 +54,14 @@ class OpticalCard extends Component {
           <div>
             <div className = {'optical-header'} >
               <div className = { 'optical-amount-field' }>
-                <GenericTextBox
+                <GenericInput
+                  text = { 'Amount' }
                   value = { amount }
                   placeholder = { 'Enter Amount' }
                   maxLength = { 4 }
                   onChange = { e => this.setState({ amount: parseInt(e.target.value, 10) || 0 }) }
                 />
+              <br/>
               </div>
               <div className = {'optical-body'}>
                 <br/>
@@ -155,7 +70,7 @@ class OpticalCard extends Component {
                       <MultipleFileUploader
                         placeholder = { 'Form Attachments' }
                         fileArray = { attachmentsData }
-                        getFile = { (resp) => setAttachmentArrayFunc(resp) }
+                        setFile = { (resp) => setAttachmentArrayFunc(resp) }
                         disabled = { showEditSubmitButton }
                         errorMessage = { 'Please include required attachment' }
                       />
@@ -177,7 +92,7 @@ class OpticalCard extends Component {
   OpticalCard.propTypes = {
     onClose : PropTypes.func,
     details : PropTypes.func,
-    attachmentsData : PropTypes.func,
+    attachmentsData : PropTypes.array,
     confirm : PropTypes.string,
     cancel : PropTypes.string,
     warning : PropTypes.string,

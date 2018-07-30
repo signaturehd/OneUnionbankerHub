@@ -27,10 +27,20 @@ export default class OpticalPresenter {
 
   getOptical () {
     this.getOpticalInteractor.execute()
+      .map(data => {
+        let attachmentsArray = []
+          data &&
+          data.attachments.map((resp, key) => {
+          attachmentsArray.push({
+            name : resp
+          })
+        })
+        this.view.showAttachmentsMap(attachmentArray)
+      })
       .subscribe(response => {
         this.view.isEligible(response)
       }, e => {
-        // TODO notify
+        this.view.navigate()
       })
   }
 }
