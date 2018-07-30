@@ -1,4 +1,4 @@
-.salary-form-card {
+.housing-loan-form-card {
   max-width: 100%;
   float: center;
   padding: 10px 20% 10px 20%;
@@ -6,7 +6,7 @@
   text-align: center;
 }
 
-.salary-grid {
+.housing-loan-grid {
   display:grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 5px;

@@ -10,9 +10,9 @@ import {
   Line,
 } from '../../../ub-components/'
 
-import './styles/salaryLoanCard.css'
+import './styles/housingAssistanceLoanCard.css'
 
-class SalaryLoanCardComponent extends Component {
+class HousingAssistanceCardComponent extends Component {
   constructor (props) {
     super(props)
   }
@@ -35,11 +35,13 @@ class SalaryLoanCardComponent extends Component {
       onClick,
       status,
       updateForm,
+      setAttachments,
       review
     } = this.props
 
+
     return (
-      <div className = { 'salary-form-card' } >
+      <div className = { 'housing-loan-form-card' } >
         <GenericInput
           text = { 'Purpose of Availment' }
           onClick = { () => showPurposeOfAvailment() }
@@ -100,12 +102,13 @@ class SalaryLoanCardComponent extends Component {
                 placeholder = { 'Form Attachments' }
                 fileArray = { fileAttachments }
                 disabled = { review }
+                setFile = { (updatedFile) => setAttachments(updatedFile) }
               />
             <Line/>
           </div>
         }
         <br/>
-        <div className = { 'salary-function' } >
+        <div className = { 'housing-loan-function' } >
           {
             review &&
             <GenericButton
@@ -123,13 +126,14 @@ class SalaryLoanCardComponent extends Component {
   }
 }
 
-SalaryLoanCardComponent.propTypes = {
+HousingAssistanceCardComponent.propTypes = {
   showTermOfLoan : PropTypes.func,
   showModeOfLoan : PropTypes.func,
   showPurposeOfAvailment : PropTypes.func,
   showOffsetLoan : PropTypes.func,
   desiredAmount : PropTypes.func,
   onClick : PropTypes.func,
+  setAttachments : PropTypes.func,
   updateForm : PropTypes.func,
   modeOfLoanId : PropTypes.number,
   status : PropTypes.string,
@@ -149,10 +153,10 @@ SalaryLoanCardComponent.propTypes = {
   review : PropTypes.bool,
 }
 
-SalaryLoanCardComponent.defaultProps = {
+HousingAssistanceCardComponent.defaultProps = {
   termOfLoan : '',
   modeOfLoan : '',
   purposeOfAvailment : '',
 }
 
-export default SalaryLoanCardComponent
+export default HousingAssistanceCardComponent
