@@ -15,8 +15,15 @@ import { NotifyActions } from '../../actions'
 
 import { CircularLoader } from '../../ub-components'
 
-import { RequiredValidation, Validator, MoneyValidation } from '../../utils/validate'
+import { format } from '../../utils/numberUtils'
 
+import {
+  RequiredValidation,
+  Validator,
+  MoneyValidation
+} from '../../utils/validate'
+
+import * as func from './functions/OpticalFunctions'
 
 class OpticalFragment extends BaseMVPView {
   constructor (props) {
@@ -31,10 +38,12 @@ class OpticalFragment extends BaseMVPView {
       file1 : null,
       file2 : null,
       attachmentsData: [],
-      showEditSubmitButton : false
+      showEditSubmitButton : false,
+      amountErrorMessage : '',
+      amount: '',
+      limit: 0
     }
     this.confirmation = this.confirmation.bind(this)
-    // this.noticeOfUndertaking = this.noticeOfUndertaking.bind(this)
     this.validator = this.validator.bind(this)
   }
 
@@ -48,35 +57,51 @@ class OpticalFragment extends BaseMVPView {
   }
 
   isEligible (resp) {
-    if(resp.isValid === 1) {
-      this.setState({ isVisible : true })
-    } else {
-      this.navigate()
-    }
+    this.setState({ isVisible : resp})
   }
 
-  showAttachmentsMap (attachmentsData) {
-    this.setState({ attachmentsData })
+  showAttachmentsMap (attachmentsData, limit) {
+    this.setState({ attachmentsData, limit })
   }
 
   noticeOfUndertaking (noticeResponse) {
-    this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
+    this.setState({ showNoticeModal : true, noticeResponse })
   }
 
   navigate () {
     this.props.history.push('/mybenefits/benefits/medical')
   }
 
-  confirmation (showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2) {
-    if (amount > 3500 || amount === 0) {
+  validateDesiredAmount (e) {
+    const validate = func.checkedAmount(e)
+    this.setState({ amount : validate, amountErrorMessage : '' })
+  }
+
+  confirmation () {
+    const {
+      amount,
+      limit,
+      attachmentsData
+    } = this.state
+
+    if (parseInt(amount) === 0 || amount === '') {
       store.dispatch(NotifyActions.addNotify({
           title : 'Optical Reimbursement',
-          message : 'Please double check the amount',
+          message : 'Please enter an amount not equal to 0',
           type : 'warning',
           duration : 2000
         })
       )
-    } else if (!this.validator(file1) || !this.validator(file2)) {
+    } else if (parseInt(amount) > parseInt(limit)) {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Optical Reimbursement',
+          message : `Please double check amount must not exceeded to ${ format(limit) }`,
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    }
+     else if (!this.validator(attachmentsData)) {
       store.dispatch(NotifyActions.addNotify({
           title : 'Optical Reimbursement',
           message : 'Please Check your attachments',
@@ -85,23 +110,25 @@ class OpticalFragment extends BaseMVPView {
         })
       )
     } else {
-      this.setState({
-        showConfirmation,
-        file1,
-        file2,
-        amount,
-        imagePreviewUrl,
-        imagePreviewUrl2
-      })
+      this.setState({ showEditSubmitButton : true })
     }
+  }
+
+  editMode (resp) {
+    this.setState({ showEditSubmitButton : false })
   }
 
   getAttachmentsArray (attachmentsData) {
     this.setState({ attachmentsData })
   }
 
-  submitForm (amount, finalFile1, finalFile2) {
-      this.presenter.addOptical(amount, finalFile1, finalFile2)
+  submitFormFunc () {
+    const {
+      amount,
+      attachmentsData,
+    } = this.state
+
+      this.presenter.addOptical(amount, attachmentsData)
   }
 
   render () {
@@ -112,32 +139,16 @@ class OpticalFragment extends BaseMVPView {
       showNoticeResponseModal,
       showEditSubmitButton,
       noticeResponse,
-      file1,
-      file2,
       amount,
       response,
-      imagePreviewUrl,
-      imagePreviewUrl2,
       isVisible,
-      attachmentsData
+      attachmentsData,
+      amountErrorMessage,
+      limit
     } = this.state
 
     return (
       <div>
-        {
-          showConfirmation &&
-          <ConfirmationModal
-            fileReceived = { file1 }
-            fileReceived2 = { file2 }
-            imagePreviewUrl = { imagePreviewUrl }
-            imagePreviewUrl2 = { imagePreviewUrl2 }
-            amount = { amount }
-            submitForm = { (finalFile1, finalFile2, amount) =>
-              this.submitForm(amount, finalFile1, finalFile2) }
-            onClose = { () => this.setState({ showConfirmation : false }) }
-          />
-        }
-
         {
           showNoticeModal &&
           <NoticeModal
@@ -183,23 +194,15 @@ class OpticalFragment extends BaseMVPView {
               <div className = { 'optical-container' }>
                 <Card
                   attachmentsData = { attachmentsData }
+                  amount = { amount }
                   showEditSubmitButton = { showEditSubmitButton }
+                  onEditSubmissionFunc = { (resp) =>  this.editMode(resp) }
+                  onCheckedSubmissionFunc = { () => this.confirmation() }
+                  desiredAmount = { (resp) => this.validateDesiredAmount(resp) }
+                  onSubmitFunc = { () => this.submitFormFunc()}
                   setAttachmentArrayFunc = { (resp) =>
                     this.getAttachmentsArray(resp) }
-                  onClick = {
-                    (showConfirmation,
-                      file1,
-                      file2,
-                      amount,
-                      imagePreviewUrl,
-                      imagePreviewUrl2) =>
-                this.confirmation(
-                      showConfirmation,
-                      file1,
-                      file2,
-                      amount,
-                      imagePreviewUrl,
-                      imagePreviewUrl2)  }/>
+                  />
               </div>          :
               <div className = { 'optical-loader' }>
                 <center>

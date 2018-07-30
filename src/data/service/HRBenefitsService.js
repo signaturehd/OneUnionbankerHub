@@ -107,8 +107,10 @@ export default class HRBenefitsService {
       distributor: 'distributorTest'
     }
     formData.append('uuid', 123345)
-    formData.append('med', opticalParam.medCert)
-    formData.append('opt', opticalParam.optCert)
+    opticalParam.attachmentData.map((resp) => (
+      formData.append(resp.name, resp.file)
+      )
+    )
     formData.append('body', JSON.stringify(opticalObject))
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
       headers : { token }

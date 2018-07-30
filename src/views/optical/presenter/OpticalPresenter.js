@@ -14,16 +14,18 @@ export default class OpticalPresenter {
     this.view = view
   }
 
-  addOptical (amount, form1, form2) {
-    this.addOpticalInteractior.execute(OpticalParam(amount, form1, form2))
+  addOptical (amount, attachmentData) {
+    this.view.isEligible(false)
+    this.addOpticalInteractior.execute(OpticalParam(amount, attachmentData))
       .subscribe(optical => {
         this.view.noticeOfUndertaking(optical)
+        this.view.isEligible(true)
         // this.view.showOptical(optical)
       }, e => {
         this.view.noticeResponse(e)
         // TODO prompt generic error
       })
-  }
+    }
 
   getOptical () {
     this.getOpticalInteractor.execute()
@@ -35,9 +37,9 @@ export default class OpticalPresenter {
             name : resp
           })
         })
-        this.view.showAttachmentsMap(attachmentsArray)
-        this.view.isEligible(data)
+        this.view.showAttachmentsMap(attachmentsArray, data.limit)
+        this.view.isEligible(data ? true : false)
       })
       .subscribe()
+    }
   }
-}

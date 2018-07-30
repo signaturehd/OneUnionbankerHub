@@ -1,5 +1,4 @@
-export default (amount, medCert, optCert) => ({
+export default (amount, attachmentData) => ({
     amount,
-    medCert,
-    optCert,
+    attachmentData
   })
