@@ -1,5 +1,5 @@
 export default (
-    supplierName,
+    dealerName,
     amountValue,
     modeOfLoanId,
     loanType,
@@ -8,7 +8,7 @@ export default (
     selectedOffsetLoan,
     attachments
   ) => ({
-    supplierName,
+    dealerName,
     amountValue,
     modeOfLoanId,
     loanType,

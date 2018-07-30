@@ -5,179 +5,381 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/MotorcycleLoanPresenter'
 import ConnectView from '../../utils/ConnectView'
 
-import { CircularLoader } from '../../ub-components/'
+import {
+  CircularLoader,
+  SingleInputModal,
+  ConfirmationModal,
+  LoaderModal,
+} from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
-import FormCardComponent from './components/MotorcycleLoanCardComponent'
+import MotorcycleLoanCardComponent from './components/MotorcycleLoanCardComponent'
 
 class MotorcycleLoanFragment extends BaseMVPView {
+  constructor (props) {
+    super(props)
 
-    constructor (props) {
-      super(props)
-      this.state={
-        purposeOfAvailment: [],
-        selectedPoa: '',
-        formAttachments: [],
-        loanType: 4,
-        validateLoanType : [],
-        offset : [],
-        enabledLoader : false,
-        noticeResponse : null, /* notice response*/
-        showNoticeResponseModal : false,
-        showBenefitFeedbackModal : false,
-        showNoticeModal : false,
-        showConfirmation : false,
-        AdditionalDocuments: 0,
-        RequiredDocuments: 0,
-        isPayeeOrDealerResp : '',
-        employeeName: [],
-        computationOffset: [],
-      }
-      this.submission=this.submission.bind(this)
+    this.state = {
+      showNoticeModal : false,
+      showNoticeResponseModal : false,
+      showModeOfLoan : false,
+      showTermOfLoan : false,
+      showOffsetLoan : false,
+      showConfirmationModal : false,
+      showPurposeOfAvailment : false,
+      showBenefitFeedbackModal : false,
+      showLoading : false,
+      review : false,
+      purposeOfAvailmentId : null,
+      purposeOfAvailmentLabel : null,
+      modeOfLoanId : null,
+      modeOfLoanLabel : null,
+      termOfLoanId : null,
+      termOfLoanLabel : null,
+      offsetLoanArray : [],
+      offsetLoanFormArray : [],
+      purposeOfAvailment : [],
+      modeOfLoan : [],
+      offsetLoan : [],
+      termOfLoan : [],
+      nfis : [],
+      fileAttachments : [],
+      dealer : null,
+      status : 'Next',
     }
 
-    componentDidMount () {
-      this.props.setSelectedNavigation(1)
-      this.presenter.isManagersCheck()
-      this.presenter.getProfile()
-      this.presenter.getMplTypes()
-      this.presenter.getMplValidate(this.state.loanType)
-      this.presenter.getMplPurposeOfAvailment(
-        this.state.loanType,
-        1,
-        1)
-    }
+    this.setPurposeOfAvailment = this.setPurposeOfAvailment.bind(this)
+    this.updateOffsetLoan = this.updateOffsetLoan.bind(this)
+    this.updateModeOfLoan = this.updateModeOfLoan.bind(this)
+    this.addLoan = this.addLoan.bind(this)
+    this.setFileAttachments = this.setFileAttachments.bind(this)
+    this.noticeResponse = this.noticeResponse.bind(this)
+  }
 
-    /* Notice Response*/
-    noticeOfUndertaking (noticeResponse) {
-      this.setState({ showNoticeModal : true, noticeResponse })
-    }
+  componentDidMount () {
+    this.props.setSelectedNavigation(1)
+    // this.presenter.isManagersCheck()
+    // this.presenter.getProfile()
+    this.presenter.getMplValidate()
+    this.presenter.getMplPurposeOfAvailment()
+  }
 
-    noticeResponse (noticeResponse) {
-      this.setState({showConfirmation: false, noticeResponse })
-    }
-    /* Implementation*/
+  /* Notice Response*/
+  noticeOfUndertaking (noticeResponse) {
+    this.setState({ showNoticeModal : true, noticeResponse, showLoading: false })
+  }
 
-    showMPLFormAttachments (formAttachments) {
-      this.setState({ formAttachments })
-    }
+  noticeResponse (noticeResponse) {
+    this.setState({ showConfirmationModal: false, noticeResponse })
+  }
 
-    showOffset (offset) {
-      this.setState({ offset })
-    }
+  /* Implementation*/
+  showMplFormAttachments (fileAttachments) {
+    this.setState({ fileAttachments })
+  }
 
-    showValidate (validateLoanType) {
-      this.setState({ validateLoanType })
-    }
+  setFileAttachments (fileAttachments) {
+    this.setState({ fileAttachments })
+  }
 
-    isManagersCheck (isPayeeOrDealerResp) {
-      this.setState({ isPayeeOrDealerResp })
-    }
+  setOffset (offsetLoan) {
+    this.setState({ offsetLoan })
+  }
 
-    getEmployeeName (employeeName) {
-      this.setState({ employeeName })
-    }
+  isValid (isValid) {
+    this.setState({ isValid })
+  }
 
-    showPurposeOfAvailment (purposeOfAvailment) {
-      this.setState({ purposeOfAvailment })
-    }
+  setModeOfLoan (modeOfLoan) {
+    this.setState({ modeOfLoan })
+  }
 
-    showAdditionalFilesCount (AdditionalDocuments) {
-      this.setState({ AdditionalDocuments })
-    }
+  showValidate (validateLoanType) {
+    this.setState({ validateLoanType })
+  }
 
-    showAdRequiredFilesCount (RequiredDocuments) {
-      this.setState({ RequiredDocuments })
-    }
+  setNfis (nfis) {
+    this.setState({ nfis })
+  }
 
-    /* Loader*/
+  isManagersCheck (isPayeeOrDealerResp) {
+    this.setState({ isPayeeOrDealerResp })
+  }
 
-    hideCircularLoader () {
-      this.setState({ enabledLoader : false })
-    }
+  getEmployeeName (employeeName) {
+    this.setState({ employeeName })
+  }
 
-    showCircularLoader () {
-      this.setState({ enabledLoader : true })
-    }
-    /* Navigage back to loans Option*/
-    navigate () {
-      this.props.history.push('/mybenefits/benefits/loans')
-    }
+  showPurposeOfAvailment (purposeOfAvailment) {
+    this.setState({ purposeOfAvailment })
+  }
 
-    submission (
-      dealerName,
-      amountValue,
+  setTermOfLoan (termOfLoan) {
+    this.setState({ termOfLoan })
+  }
+
+  showAdditionalFilesCount (AdditionalDocuments) {
+    this.setState({ AdditionalDocuments })
+  }
+
+  showAdRequiredFilesCount (RequiredDocuments) {
+    this.setState({ RequiredDocuments })
+  }
+
+  /* Loader*/
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  /* Navigage back to loans Option*/
+  navigate () {
+    this.props.history.push('/mybenefits/benefits/loans')
+  }
+
+  /* Validate loan Type */
+  showSalaryLoanType (loanType) {
+    this.setState({ loanType })
+    this.showValidatedLoanType (loanType)
+  }
+
+  showValidatedLoanType (loanType) {
+    this.presenter.getMplValidate(loanType)
+    this.presenter.getMplPurposeOfAvailment(loanType, 1, 1)
+  }
+
+  showMaximumLoanableAmount (maximumAmount) {
+    this.setState({ maximumAmount })
+  }
+
+  updateModeOfLoan (modeOfLoanId, modeOfLoanLabel) {
+    if (modeOfLoanId === 3) {
+      this.setState({
+        modeOfLoanId,
+        modeOfLoanLabel,
+        offsetLoanFormArray: [],
+        offsetLoanArray: [],
+        showModeOfLoan: false
+      })
+    } else {
+      this.setState({
+        modeOfLoanId,
+        modeOfLoanLabel,
+        showModeOfLoan: false
+      })
+    }
+  }
+
+  hideLoading (showLoading) {
+    this.setState({ showLoading, review : false, status : 'Next' })
+  }
+
+  addLoan () {
+    this.setState({ showLoading : true, showConfirmationModal : false })
+    const {
+      dealer,
+      desiredAmount,
       modeOfLoanId,
-      loanType,
-      poaText,
+      purposeOfAvailmentLabel,
+      offsetLoanFormArray,
+      termOfLoanId,
+      fileAttachments,
       termOfLoan,
-      selectedOffsetLoan,
-      formAttachments
-    ) {
-        this.presenter.addLoanMotor(
-          dealerName,
-          loanType,
-          poaText,
-          modeOfLoanId,
-          termOfLoan,
-          selectedOffsetLoan,
-          amountValue,
-          formAttachments
-        )
+    } = this.state
+
+    let termsValue
+
+    termOfLoan.map((terms, key) => {
+      if (terms.id === termOfLoanId) {
+        termsValue = terms.value
+      }
+    })
+
+    this.presenter.addLoan(
+      dealer,
+      desiredAmount,
+      modeOfLoanId,
+      4,
+      purposeOfAvailmentLabel,
+      termsValue,
+      offsetLoanFormArray,
+      fileAttachments,
+    )
+
+  }
+
+  submitForm () {
+    const {
+      review,
+      showConfirmationModal
+    } = this.state
+
+    if (review) {
+      this.setState({showConfirmationModal : true})
+    } else {
+      this.setState({review : true, status: 'Submit'})
     }
+  }
+
+
+
+  setPurposeOfAvailment (purposeOfAvailmentId, subCategoryId, purposeOfAvailmentLabel, nfis) {
+    if (purposeOfAvailmentId) {
+      this.presenter.getMplPurposeOfAvailment(purposeOfAvailmentId, subCategoryId)
+    } else {
+      this.setState({
+        purposeOfAvailmentId,
+        purposeOfAvailmentLabel,
+        showPurposeOfAvailment : false
+      })
+      this.presenter.getMplFormAttachments(purposeOfAvailmentLabel)
+    }
+  }
+
+  updateOffsetLoan (id, name) {
+    const {
+      offsetLoanArray,
+      offsetLoan,
+      showOffsetList,
+      offsetLoanFormArray,
+    } = this.state
+
+    const valueArr = offsetLoanArray.map(function(item) { return item.id } )
+    const updatedOffsetLoan = [...offsetLoanArray]
+    const updatedOffsetLoanId = [...offsetLoanFormArray]
+    if (!valueArr.includes(id)) {
+      updatedOffsetLoan.push({id, name})
+      updatedOffsetLoanId.push(id)
+    }
+
+    this.setState({
+      showOffsetLoan : false,
+      offsetLoanArray : updatedOffsetLoan,
+      offsetLoanFormArray : updatedOffsetLoanId
+    })
+  }
 
   render () {
     const {
-      purposeOfAvailment,
-      loanType,
-      validateLoanType,
-      offset,
-      enabledLoader,
-      formAttachments,
-      showConfirmation,
       showNoticeModal,
-      showBenefitFeedbackModal,
       showNoticeResponseModal,
-      noticeResponse,
+      showModeOfLoan,
+      showTermOfLoan,
+      showOffsetLoan,
+      showPurposeOfAvailment,
+      showConfirmationModal,
+      showBenefitFeedbackModal,
+      purposeOfAvailment,
+      purposeOfAvailmentId,
+      purposeOfAvailmentLabel,
+      fileAttachments,
+      modeOfLoan,
+      modeOfLoanId,
+      modeOfLoanLabel,
+      termOfLoan,
+      termOfLoanId,
+      termOfLoanLabel,
+      offsetLoan,
+      offsetLoanArray,
+      status,
+      review,
       response,
-      RequiredDocuments,
-      AdditionalDocuments,
-      isPayeeOrDealerResp,
-      employeeName,
-      computationOffset
+      noticeResponse,
+      isValid,
+      showLoading,
+      dealer
     } = this.state
+
+    // const empName=employeeName && employeeName.fullname
+    // const updateIsDealerOrPayeeName=[...storedIsDealerOrPayee]
+    // updateIsDealerOrPayeeName.push(isPayeeOrDealerResp)
+    // updateIsDealerOrPayeeName.push(empName)
 
     return (
       <div>
         {
           showNoticeModal &&
           <NoticeModal
-            onClose = { () => this.setState({ showNotice : false })}
-            noticeResponse = { noticeResponse }
-            benefitId = { 1 }
-            onDismiss = { (showNoticeModal, response) =>
+            onClose={ () => this.setState({ showNotice : false })}
+            noticeResponse={ noticeResponse }
+            benefitId={ 1 }
+            onDismiss={ (showNoticeModal, response) =>
               this.setState({ showNoticeModal, response, showNoticeResponseModal : true })  }
           />
         }
-
+        {
+          showLoading &&
+          <LoaderModal text = { 'Please wait while we\'re submitting your application' }/>
+        }
+        {
+          showConfirmationModal &&
+          <ConfirmationModal
+            onClose = { () => this.setState({ showConfirmationModal : false }) }
+            onYes = { () => this.addLoan() }
+            text = { 'Are you sure you want to submit this application?' }
+          />
+        }
         {
           showNoticeResponseModal &&
           <ResponseModal
-            onClose = { () => {
+            onClose={ () => {
               this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
             }}
-            noticeResponse = { response }
+            noticeResponse={ response }
           />
         }
+        {
+          showPurposeOfAvailment &&
+          <SingleInputModal
+            label = { 'Purpose of Availment' }
+            inputArray = { purposeOfAvailment && purposeOfAvailment.category }
+            selectedArray = { (purposeOfAvailmentId, purposeOfAvailmentLabel) =>
+              this.setPurposeOfAvailment(purposeOfAvailmentId, purposeOfAvailment.subCategoryLvl,purposeOfAvailmentLabel) } //response
+            onClose = { () => this.setState({showPurposeOfAvailment : false}) }
 
+          />
+        }
+        {
+          showModeOfLoan &&
+          <SingleInputModal
+            label = { 'Mode of Loan' }
+            inputArray = { modeOfLoan }
+            selectedArray = { (modeOfLoanId, modeOfLoanLabel) =>
+              this.updateModeOfLoan(modeOfLoanId, modeOfLoanLabel) }
+            onClose = { () => this.setState({showModeOfLoan : false}) }
+          />
+        }
+        {
+          showTermOfLoan &&
+          <SingleInputModal
+            label = { 'Term of Loan' }
+            inputArray = { termOfLoan }
+            selectedArray = { (termOfLoanId, termOfLoanLabel) =>
+              this.setState({ termOfLoanId, termOfLoanLabel, showTermOfLoan : false }) }
+            onClose = { () => this.setState({showTermOfLoan : false}) }
+          />
+        }
+        {
+          showOffsetLoan &&
+          <SingleInputModal
+            label = { 'Promissory Notes' }
+            inputArray = { offsetLoan }
+            selectedArray = { (offsetLoanId, offsetLoanValue) =>
+              this.updateOffsetLoan(offsetLoanId, offsetLoanValue) }
+            onClose = { () => this.setState({showOffsetLoan : false}) }
+          />
+        }
         {
           showBenefitFeedbackModal &&
           <BenefitFeedbackModal
-            benefitId = { 1 }
-            onClose = { () => {
+            benefitId={ 1 }
+            onClose={ () => {
               this.props.history.push('/mybenefits/benefits/loans'),
               this.setState({ showBenefitFeedbackModal : false })
             }}
@@ -186,52 +388,41 @@ class MotorcycleLoanFragment extends BaseMVPView {
 
         <div>
           <i
-            className = { 'back-arrow' }
-            onClick = { this.navigate.bind(this) }>
+            className={ 'back-arrow' }
+            onClick={ this.navigate.bind(this) }>
           </i>
-          <h2 className = { 'header-margin-default' }>
+          <h2 className={ 'header-margin-default' }>
             Motorcycle Loan
           </h2>
         </div>
-          {
-            enabledLoader ?
-             <center className = { 'circular-loader-center' }>
-               <CircularLoader show = { this.state.enabledLoader }/>
-             </center> :
-            <FormCardComponent
-              loanType={ loanType }
-              isPayeeOrDealer={ isPayeeOrDealerResp ? isPayeeOrDealerResp : '(Not yet Provided)' }
-              purposeOfAvailment={ purposeOfAvailment }
-              validateLoanType={ validateLoanType }
-              formAttachments={ formAttachments }
-              offset={ offset }
-              AdditionalDocuments={ AdditionalDocuments }
-              RequiredDocuments={ RequiredDocuments }
-              presenter={ this.presenter }
-              sendFormDataToPresenter={ (
-                dealerName,
-                amountValue,
-                modeOfLoanId,
-                loanType,
-                poaText,
-                termOfLoan,
-                selectedOffsetLoan,
-                formAttachments
-              ) =>
-                this.submission(
-                  dealerName,
-                  amountValue,
-                  modeOfLoanId,
-                  loanType,
-                  poaText,
-                  termOfLoan,
-                  selectedOffsetLoan,
-                  formAttachments
-                )
-              }
+        <br/>
+        {
+          isValid ?
+            <MotorcycleLoanCardComponent
+              showTermOfLoan = { () => this.setState({ showTermOfLoan : true }) }
+              showModeOfLoan = { () => this.setState({ showModeOfLoan : true }) }
+              showPurposeOfAvailment = { () => this.setState({ showPurposeOfAvailment : true }) }
+              showOffsetLoan = { () => this.setState({ showOffsetLoan : true }) }
+              fileAttachments = { fileAttachments }
+              termOfLoan = { termOfLoanLabel }
+              purposeOfAvailment = { purposeOfAvailmentLabel }
+              modeOfLoan = { modeOfLoanLabel }
+              modeOfLoanId = { modeOfLoanId }
+              offsetLoan = { offsetLoanArray }
+              desiredAmount = { (desiredAmount) => this.setState({ desiredAmount : parseInt(desiredAmount) }) }
+              onClick = { () => this.submitForm() }
+              dealerName = { (dealer) => this.setState({ dealer }) }
+              status = { status }
+              review = { review }
+              setAttachments = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
+              updateForm = { () => this.setState({ review : false, status : 'Next' }) }
             />
-          }
-      </div>
+            :
+            <center>
+              <CircularLoader show = { true }/>
+            </center>
+        }
+        </div>
     )
   }
 }
