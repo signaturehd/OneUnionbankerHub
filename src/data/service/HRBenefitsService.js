@@ -391,11 +391,11 @@ export default class HRBenefitsService {
       promissoryNoteNumbers : addMotorLoanParam.selectedOffsetLoan,
       distributor : addMotorLoanParam.dealerName,
       loan : {
-        id : addMotorLoanParam.loanId,
-        mode : addMotorLoanParam.modeOfLoan ? 2 : 1,
-        principalAmount : addMotorLoanParam.principalLoanAmount,
-        purpose : addMotorLoanParam.purposeOfLoan,
-        term : addMotorLoanParam.loanTerm,
+        id : addMotorLoanParam.loanType,
+        mode : addMotorLoanParam.modeOfLoanId ? 2 : 1,
+        principalAmount : addMotorLoanParam.amountValue,
+        purpose : addMotorLoanParam.poaText,
+        term : addMotorLoanParam.termId,
       },
     }
     formData.append('uuid', 12345)
