@@ -35,12 +35,9 @@ export default class OpticalPresenter {
             name : resp
           })
         })
-        this.view.showAttachmentsMap(attachmentArray)
+        this.view.showAttachmentsMap(attachmentsArray)
+        this.view.isEligible(data)
       })
-      .subscribe(response => {
-        this.view.isEligible(response)
-      }, e => {
-        this.view.navigate()
-      })
+      .subscribe()
   }
 }

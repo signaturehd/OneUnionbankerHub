@@ -34,7 +34,8 @@ class OpticalCard extends Component {
       fileReceived2,
       onClick,
       attachmentsData,
-      showEditSubmitButton
+      showEditSubmitButton,
+      setAttachmentArrayFunc
     } = this.props
 
     const {
@@ -92,6 +93,7 @@ class OpticalCard extends Component {
   OpticalCard.propTypes = {
     onClose : PropTypes.func,
     details : PropTypes.func,
+    setAttachmentArrayFunc : PropTypes.func,
     attachmentsData : PropTypes.array,
     confirm : PropTypes.string,
     cancel : PropTypes.string,

@@ -48,8 +48,8 @@ class OpticalFragment extends BaseMVPView {
   }
 
   isEligible (resp) {
-    if(resp.isValid) {
-      this.setState({ isVisible : resp })
+    if(resp.isValid === 1) {
+      this.setState({ isVisible : true })
     } else {
       this.navigate()
     }
@@ -94,6 +94,10 @@ class OpticalFragment extends BaseMVPView {
         imagePreviewUrl2
       })
     }
+  }
+
+  getAttachmentsArray (attachmentsData) {
+    this.setState({ attachmentsData })
   }
 
   submitForm (amount, finalFile1, finalFile2) {
@@ -180,6 +184,8 @@ class OpticalFragment extends BaseMVPView {
                 <Card
                   attachmentsData = { attachmentsData }
                   showEditSubmitButton = { showEditSubmitButton }
+                  setAttachmentArrayFunc = { (resp) =>
+                    this.getAttachmentsArray(resp) }
                   onClick = {
                     (showConfirmation,
                       file1,
