@@ -10,9 +10,9 @@ import {
   Line,
 } from '../../../ub-components/'
 
-import './styles/salaryLoanCard.css'
+import './styles/emergencyLoanCard.css'
 
-class SalaryLoanCardComponent extends Component {
+class EmergencyLoanCardComponent extends Component {
   constructor (props) {
     super(props)
   }
@@ -100,6 +100,7 @@ class SalaryLoanCardComponent extends Component {
                 placeholder = { 'Form Attachments' }
                 fileArray = { fileAttachments }
                 disabled = { review }
+                setFile = { (updatedFile) => setAttachments(updatedFile) }
               />
             <Line/>
           </div>
@@ -123,7 +124,7 @@ class SalaryLoanCardComponent extends Component {
   }
 }
 
-SalaryLoanCardComponent.propTypes = {
+EmergencyLoanCardComponent.propTypes = {
   showTermOfLoan : PropTypes.func,
   showModeOfLoan : PropTypes.func,
   showPurposeOfAvailment : PropTypes.func,
@@ -131,6 +132,7 @@ SalaryLoanCardComponent.propTypes = {
   desiredAmount : PropTypes.func,
   onClick : PropTypes.func,
   updateForm : PropTypes.func,
+  setAttachments : PropTypes.func,
   modeOfLoanId : PropTypes.number,
   status : PropTypes.string,
   termOfLoan : PropTypes.string,
@@ -149,10 +151,10 @@ SalaryLoanCardComponent.propTypes = {
   review : PropTypes.bool,
 }
 
-SalaryLoanCardComponent.defaultProps = {
+EmergencyLoanCardComponent.defaultProps = {
   termOfLoan : '',
   modeOfLoan : '',
   purposeOfAvailment : '',
 }
 
-export default SalaryLoanCardComponent
+export default EmergencyLoanCardComponent
