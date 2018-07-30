@@ -296,8 +296,6 @@ class MotorcycleLoanFragment extends BaseMVPView {
       dealer
     } = this.state
 
-    console.log(dealer)
-
     // const empName=employeeName && employeeName.fullname
     // const updateIsDealerOrPayeeName=[...storedIsDealerOrPayee]
     // updateIsDealerOrPayeeName.push(isPayeeOrDealerResp)
