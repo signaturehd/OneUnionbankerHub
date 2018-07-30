@@ -20,6 +20,7 @@ import OpticalDetailsFragment from './fragments/OpticalDetailsFragment'
 import CarLeaseDetailsFragment from './fragments/CarLeaseDetailsFragment'
 import CalamityAssistanceDetailsFragment from './fragments/CalamityAssistanceDetailsFragment'
 import BereavementDetailsFragment from './fragments/BereavementDetailsFragment'
+import MedicalSchedulingDetailsFragment from './fragments/MedicalSchedulingDetailsFragment'
 
 import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreementsModal'
 import TransactionDetailsFormAttachmentsModal from './modals/TransactionDetailsFormAttachmentsModal'
@@ -94,6 +95,13 @@ function  TransactionDetails (props)  {
       showFileReceipt = { showFileReceipt }
       details = { transactionDetails }
      />
+ } else if (transactionId === 10) {
+   // Medical Scheduling Transaction Details
+   return <MedicalSchedulingDetailsFragment
+    transactionsPerson = { transactionsPerson }
+    agreementsMethod = { (resp) => agreementsMethod(resp) }
+    details = { transactionDetails }
+    />
  } else {
    return <h1>No Transaction Occured please reload</h1> // No  Transaction
    }
