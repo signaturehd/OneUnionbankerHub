@@ -7,13 +7,15 @@ import Presenter from '../presenter/OpticalPresenter'
 import {
   GenericButton,
   GenericInput,
-  MultipleFileUploader
+  MultipleFileUploader,
+  DatePicker
 } from  '../../../ub-components/'
 
 import staticImage from '../../../images/uploadicon-grey.jpg'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
+import moment from 'moment'
 
 class OpticalCard extends Component {
   constructor (props) {
@@ -25,12 +27,18 @@ class OpticalCard extends Component {
       onClick,
       attachmentsData,
       amount,
+      preferredDate,
       showEditSubmitButton,
       setAttachmentArrayFunc,
       onCheckedSubmissionFunc,
+      dateErrorMessage,
+      orNumberErrorMessage,
+      orNumberText,
       onSubmitFunc,
+      dateFunc,
       desiredAmount,
-      onEditSubmissionFunc
+      onEditSubmissionFunc,
+      oRNumberFunc
     } = this.props
 
     return (
@@ -49,15 +57,25 @@ class OpticalCard extends Component {
             <br/>
             </div>
             <div>
-              <GenericInput
-                text = { 'Date of Official Receipt' }
-                value = { orDate }
+              <DatePicker
+                selected = { preferredDate }
                 disabled = { showEditSubmitButton }
-                placeholder = { 'Enter Amount' }
-                maxLength = { 4 }
-                onChange = { e => desiredAmount(e.target.value) || 0 }
-              />
-            <br/>
+                onChange = { (e) => dateFunc(e) }
+                maxDate = { moment() }
+                text = { 'Date of Official Receipt' }
+                errorMessage = { dateErrorMessage }
+                />
+                <br/>
+            </div>
+            <div>
+              <GenericInput
+                value = { orNumberText }
+                disabled = { showEditSubmitButton }
+                onChange = { (e) => oRNumberFunc(e.target.value) }
+                text = { 'Official Receipt Number' }
+                errorMessage = { orNumberErrorMessage }
+                type = { 'text' }/>
+                <br/>
             </div>
             <div className = { 'optical-body' }>
             <br/>
@@ -107,10 +125,15 @@ class OpticalCard extends Component {
 
   OpticalCard.propTypes = {
     onClose : PropTypes.func,
-    details : PropTypes.func,
+    dateErrorMessage : PropTypes.string,
+    orNumberErrorMessage : PropTypes.string,
+    orNumberText : PropTypes.string,
     setAttachmentArrayFunc : PropTypes.func,
     onCheckedSubmissionFunc : PropTypes.func,
+    oRNumberFunc : PropTypes.func,
     onEditSubmissionFunc : PropTypes.func,
+    dateFunc : PropTypes.func,
+    preferredDate: PropTypes.object,
     desiredAmount : PropTypes.func,
     onSubmitFunc : PropTypes.func,
     attachmentsData : PropTypes.array,

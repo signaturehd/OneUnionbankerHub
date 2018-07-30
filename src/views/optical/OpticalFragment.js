@@ -41,6 +41,8 @@ class OpticalFragment extends BaseMVPView {
       showEditSubmitButton : false,
       amountErrorMessage : '',
       amount: '',
+      orNumberText: '',
+      preferredDate: '',
       limit: 0
     }
     this.confirmation = this.confirmation.bind(this)
@@ -75,6 +77,16 @@ class OpticalFragment extends BaseMVPView {
   validateDesiredAmount (e) {
     const validate = func.checkedAmount(e)
     this.setState({ amount : validate, amountErrorMessage : '' })
+  }
+
+  validateSymbol (e) {
+    const validate = func.checkedValidateSymbol(e)
+    this.setState({ orNumberText : validate.toUpperCase(), orNumberErrorMessage : '' })
+  }
+
+  validateDate (e) {
+    const validate = func.checkedMDYDate(e)
+    this.setState({ preferredDate : validate, dateErrorMessage : '' })
   }
 
   confirmation () {
@@ -144,6 +156,8 @@ class OpticalFragment extends BaseMVPView {
       isVisible,
       attachmentsData,
       amountErrorMessage,
+      orNumberText,
+      preferredDate,
       limit
     } = this.state
 
@@ -195,11 +209,16 @@ class OpticalFragment extends BaseMVPView {
                 <Card
                   attachmentsData = { attachmentsData }
                   amount = { amount }
+                  orNumberText = { orNumberText }
                   showEditSubmitButton = { showEditSubmitButton }
+                  preferredDate = { preferredDate }
+                  dateFunc = { (resp) => this.validateDate(resp) }
                   onEditSubmissionFunc = { (resp) =>  this.editMode(resp) }
                   onCheckedSubmissionFunc = { () => this.confirmation() }
+                  oRNumberFunc = { (resp) => this.validateSymbol(resp) }
                   desiredAmount = { (resp) => this.validateDesiredAmount(resp) }
-                  onSubmitFunc = { () => this.submitFormFunc()}
+                  onSubmitFunc = { () => this.submitFormFunc() }
+
                   setAttachmentArrayFunc = { (resp) =>
                     this.getAttachmentsArray(resp) }
                   />
