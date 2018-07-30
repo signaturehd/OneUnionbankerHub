@@ -54,6 +54,7 @@ class SalaryLoanFragment extends BaseMVPView {
     this.updateOffsetLoan = this.updateOffsetLoan.bind(this)
     this.updateModeOfLoan = this.updateModeOfLoan.bind(this)
     this.addLoan = this.addLoan.bind(this)
+    this.setFileAttachments = this.setFileAttachments.bind(this)
     this.noticeResponse = this.noticeResponse.bind(this)
   }
 
@@ -76,6 +77,10 @@ class SalaryLoanFragment extends BaseMVPView {
 
   /* Implementation*/
   showMplFormAttachments (fileAttachments) {
+    this.setState({ fileAttachments })
+  }
+
+  setFileAttachments (fileAttachments) {
     this.setState({ fileAttachments })
   }
 
@@ -402,6 +407,7 @@ class SalaryLoanFragment extends BaseMVPView {
               modeOfLoan = { modeOfLoanLabel }
               modeOfLoanId = { modeOfLoanId }
               offsetLoan = { offsetLoanArray }
+              setAttachments = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
               desiredAmount = { (desiredAmount) => this.setState({ desiredAmount : parseInt(desiredAmount) }) }
               onClick = { () => this.submitForm() }
               status = { status }
