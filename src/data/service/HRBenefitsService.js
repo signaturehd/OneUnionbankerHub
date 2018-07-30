@@ -768,4 +768,12 @@ export default class HRBenefitsService {
         headers : { token }
     })
   }
+
+  /* Employee Trainings */
+
+  getEmployeeTraining (token) {
+    return this.apiClient.get('v1/training/programs', {
+      headers : { token }
+    })
+  }
 }

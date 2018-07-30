@@ -17,19 +17,26 @@ h1, h2, h3, h4, h5, h6, p{
   font-size: 100%;
   width: -webkit-fill-available;
   font: inherit;
-  vertical-align: baseline; }
+  vertical-align: baseline;
+}
 
-  h1 {
-    font-weight: 350;
-    text-align: -webkit-auto;
-    display: inline-block;
-    margin: 0;
-  }
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
 
-  p {
-    margin: 0 0 20px;
-    line-height: 1.5;
-  }
+h1 {
+  font-weight: 350;
+  text-align: -webkit-auto;
+  display: inline-block;
+  margin: 0;
+}
+
+p {
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
 .back-arrow {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
@@ -62,6 +69,10 @@ h1, h2, h3, h4, h5, h6, p{
 
 .font-weight-bolder {
   font-weight: bolder;
+}
+
+.font-weight-bold {
+  font-weight: bold;
 }
 
 .font-weight-initial {
