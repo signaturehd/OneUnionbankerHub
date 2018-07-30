@@ -58,6 +58,7 @@ import Payslip from '../payslip/PayslipFragment'
 
 import OnboardingView from '../onboarding/OnboardingView'
 import Carousel from '../carousel/Carousel'
+
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'

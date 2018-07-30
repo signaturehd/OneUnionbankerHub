@@ -29,9 +29,9 @@ class OutPatientReimbursementFormCardComponent extends Component {
   const {
     requestDepdentModalFunc,
     diagnosisValueFunc,
-    desiredAmountFunc,
     oRNumberFunc,
     procedureModalFunc,
+    selectedProcedureAmountFunc,
     setAttachmentArrayFunc,
     dateFunc,
     preferredDate,
@@ -41,14 +41,18 @@ class OutPatientReimbursementFormCardComponent extends Component {
     amount,
     diagnosisText,
     orNumberText,
-    selectedProcedureAmount,
     showProcedureInput,
-    errorMessageRequiredProcedure,
     attachmentsData,
     showFormReview,
     showEditSubmitButton,
     onSubmitFunc,
-    editFormDataFunc
+    editFormDataFunc,
+    dependentErrorMessage,
+    diagnosisErrorMessage,
+    errorMessageRequiredProcedure,
+    dateErrorMessage,
+    orNumberErrorMessage,
+    amountErrorMessage
   } = this.props
 
   return (
@@ -60,47 +64,43 @@ class OutPatientReimbursementFormCardComponent extends Component {
             <div className={ 'outpatient-form-card-body' }>
             <GenericInput
               value = { dependentName }
-              hint = { 'Recipient' }
               readOnly
               disabled = { showEditSubmitButton }
               text = { 'Recipient' }
               onClick = { () => requestDepdentModalFunc(true) }
               type = { 'text' }
-              errorMessage = { controller.checkedDiagnosisRequired(dependentName) }
+              errorMessage = { dependentErrorMessage }
               />
             <br/>
             <GenericInput
               value = { diagnosisText }
               onChange = { (e) => diagnosisValueFunc(e.target.value) }
-              hint = { 'Diagnosis' }
               text = { 'Diagnosis' }
               disabled = { showEditSubmitButton }
-              errorMessage = { controller.checkedDiagnosisRequired(diagnosisText) }
+              errorMessage = { diagnosisErrorMessage }
               type = { 'text' }/>
               <br/>
             <DatePicker
               selected = { preferredDate }
               disabled = { showEditSubmitButton }
               onChange = { (e) => dateFunc(e) }
-              hint = { 'Official Receipt Date' }
               maxDate = { moment() }
               text = { 'Official Receipt Date' }
-              errorMessage = { controller.checkedOrDateRequired(preferredDate) }
+              errorMessage = { dateErrorMessage }
               />
               <br/>
             <GenericInput
               value = { orNumberText }
               disabled = { showEditSubmitButton }
               onChange = { (e) => oRNumberFunc(e.target.value) }
-              hint = { 'Official Receipt Number' }
               text = { 'Official Receipt Number' }
-              errorMessage = { controller.checkedOrNumberRequired(orNumberText) }
+              errorMessage = { orNumberErrorMessage }
               type = { 'text' }/>
               <br/>
               <div className = { 'outpatient-grid-procedure' }>
                 <div>
                   <h2 className = { 'unionbank-color font-size-12px' }>
-                    { errorMessageRequiredProcedure ? errorMessageRequiredProcedure : '' }
+                    { errorMessageRequiredProcedure }
                   </h2>
                 </div>
                 <div>
@@ -114,12 +114,13 @@ class OutPatientReimbursementFormCardComponent extends Component {
                 showProcedureInput ?
 
                 <GenericInput
-                  hint = { procedureName }
+                  hint = { 'Enter Amount' }
                   text = { procedureName }
-                  errorMessage = { '' }
+                  value = { amount }
+                  errorMessage = { amountErrorMessage }
                   disabled = { showEditSubmitButton }
                   onChange = { e => {
-                      selectedProcedureAmount(parseInt(e.target.value) || 0)
+                      selectedProcedureAmountFunc(e.target.value)
                     }
                   }
                   type = { 'text' } />
@@ -135,7 +136,10 @@ class OutPatientReimbursementFormCardComponent extends Component {
                     fileArray = { attachmentsData }
                     getFile = { (resp) => setAttachmentArrayFunc(resp) }
                     disabled = { showEditSubmitButton }
-                    errorMessage = { 'Please include required attachment' }
+                    errorMessage = {
+                      showEditSubmitButton ?
+                      '' :
+                      `Please upload the required attachments`  }
                   />
                 </div>
                 :
@@ -183,26 +187,31 @@ class OutPatientReimbursementFormCardComponent extends Component {
 
 OutPatientReimbursementFormCardComponent.propTypes = {
   requestDepdentModalFunc : PropTypes.func,
-  dependentName : PropTypes.string,
   desiredAmount : PropTypes.func,
   procedureModalFunc : PropTypes.func,
+  editFormDataFunc : PropTypes.func,
+  diagnosisValueFunc : PropTypes.func,
+  selectedProcedureAmountFunc: PropTypes.func,
+  showFormReview: PropTypes.func,
+  setAttachmentArrayFunc: PropTypes.func,
+  dependentName : PropTypes.string,
   amount : PropTypes.string,
   orNumberText : PropTypes.string,
   preferredDate : PropTypes.string,
-  diagnosisValueFunc : PropTypes.func,
   dateFunc : PropTypes.func,
   oRNumberFunc : PropTypes.func,
   diagnosisText: PropTypes.string,
   procedureName: PropTypes.string,
+  dependentErrorMessage: PropTypes.string,
   errorMessageRequiredProcedure: PropTypes.string,
-  selectedProcedureAmount: PropTypes.func,
-  setAttachmentArrayFunc: PropTypes.func,
+  diagnosisErrorMessage: PropTypes.string,
+  amountErrorMessage: PropTypes.string,
+  dateErrorMessage: PropTypes.string,
+  orNumberErrorMessage: PropTypes.string,
   showProcedureInput: PropTypes.bool,
   attachments: PropTypes.array,
-  showFormReview: PropTypes.func,
   showEditSubmitButton: PropTypes.bool,
   onSubmitFunc : PropTypes.func,
-  editFormDataFunc : PropTypes.func
 }
 
 export default OutPatientReimbursementFormCardComponent

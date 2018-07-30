@@ -642,4 +642,11 @@ export default class HRBenefitsClient {
       )
       .pipe(ServiceErrorOperator())
   }
+
+  /* Employee Trainings */
+
+  getEmployeeTraining (token) {
+    return this.service.getEmployeeTraining (token)
+      .pipe(ServiceErrorOperator())
+  }
 }
