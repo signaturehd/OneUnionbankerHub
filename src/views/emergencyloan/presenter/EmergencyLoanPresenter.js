@@ -84,7 +84,7 @@ export default class EmergencyLoanPresenter {
   getMplPurposeOfAvailment (purposeOfLoanId, subCategoryLevelId) {
     let purposeOfLoan = purposeOfLoanId ? purposeOfLoanId : 1
     let subcategoryLevel = subCategoryLevelId ? subCategoryLevelId : 1
-    const loanTypesId = 2
+    const loanTypesId = 3
     this.getPurposeOfAvailmentInteractor.execute({loanTypesId, purposeOfLoan, subcategoryLevel})
     .subscribe(data => {
       this.view.showPurposeOfAvailment(data)
@@ -92,7 +92,7 @@ export default class EmergencyLoanPresenter {
   }
 
   getMplFormAttachments (formRequesting, nfisArray) {
-    this.getFormAttachmentsInteractor.execute(MplGetFormParam(formRequesting, 2))
+    this.getFormAttachmentsInteractor.execute(MplGetFormParam(formRequesting, 3))
       .map(data => {
         let attachments = []
         data.AdditionalDocuments &&

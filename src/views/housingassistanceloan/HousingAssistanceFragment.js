@@ -410,7 +410,6 @@ class HousingAssistanceFragment extends BaseMVPView {
               offsetLoan = { offsetLoanArray }
               desiredAmount = { (desiredAmount) => this.setState({ desiredAmount : parseInt(desiredAmount) }) }
               onClick = { () => this.submitForm() }
-              setAttachment
               status = { status }
               review = { review }
               setAttachments = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }

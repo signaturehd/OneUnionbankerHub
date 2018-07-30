@@ -1,19 +1,19 @@
 export default (
     supplierName,
-    loanId,
-    purposeOfLoan,
-    modeOfLoan,
-    loanTerm,
-    offset,
-    principalLoanAmount,
+    amountValue,
+    modeOfLoanId,
+    loanType,
+    poaText,
+    termId,
+    selectedOffsetLoan,
     attachments
   ) => ({
     supplierName,
-    loanId,
-    purposeOfLoan,
-    modeOfLoan,
-    loanTerm,
-    offset,
-    principalLoanAmount,
+    amountValue,
+    modeOfLoanId,
+    loanType,
+    poaText,
+    termId,
+    selectedOffsetLoan,
     attachments
   })

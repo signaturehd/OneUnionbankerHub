@@ -100,6 +100,7 @@ class EmergencyLoanCardComponent extends Component {
                 placeholder = { 'Form Attachments' }
                 fileArray = { fileAttachments }
                 disabled = { review }
+                setFile = { (updatedFile) => setAttachments(updatedFile) }
               />
             <Line/>
           </div>
@@ -131,6 +132,7 @@ EmergencyLoanCardComponent.propTypes = {
   desiredAmount : PropTypes.func,
   onClick : PropTypes.func,
   updateForm : PropTypes.func,
+  setAttachments : PropTypes.func,
   modeOfLoanId : PropTypes.number,
   status : PropTypes.string,
   termOfLoan : PropTypes.string,

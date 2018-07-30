@@ -204,7 +204,7 @@ class EmergencyLoanFragment extends BaseMVPView {
       dealerName,
       desiredAmount,
       modeOfLoanId,
-      1,
+      2,
       purposeOfAvailmentLabel,
       termsValue,
       offsetLoanFormArray,
