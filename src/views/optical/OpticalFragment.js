@@ -30,6 +30,8 @@ class OpticalFragment extends BaseMVPView {
       isVisible : false,
       file1 : null,
       file2 : null,
+      attachmentsData: [],
+      showEditSubmitButton : false
     }
     this.confirmation = this.confirmation.bind(this)
     // this.noticeOfUndertaking = this.noticeOfUndertaking.bind(this)
@@ -46,7 +48,7 @@ class OpticalFragment extends BaseMVPView {
   }
 
   isEligible (resp) {
-    // check if eligible
+    this.setState({ attachmentsData : resp.attachments })
     if (resp) {
       this.setState({ isVisible : true })
     }
@@ -99,6 +101,7 @@ class OpticalFragment extends BaseMVPView {
       showNoticeModal,
       showBenefitFeedbackModal,
       showNoticeResponseModal,
+      showEditSubmitButton,
       noticeResponse,
       file1,
       file2,
@@ -107,10 +110,11 @@ class OpticalFragment extends BaseMVPView {
       imagePreviewUrl,
       imagePreviewUrl2,
       isVisible,
+      attachmentsData
     } = this.state
 
     return (
-      <div  className = { 'benefits-container' }>
+      <div>
         {
           showConfirmation &&
           <ConfirmationModal
@@ -165,7 +169,10 @@ class OpticalFragment extends BaseMVPView {
         {
           isVisible ?
           <div className = { 'optical-container' }>
-            <Card onClick = {
+            <Card
+              attachmentsData = { attachmentsData }
+              showEditSubmitButton = { showEditSubmitButton }
+              onClick = {
                 (showConfirmation,
                   file1,
                   file2,
@@ -181,7 +188,9 @@ class OpticalFragment extends BaseMVPView {
                   imagePreviewUrl2)  }/>
           </div>          :
           <div className = { 'optical-loader' }>
-            <center><CircularLoader show = {true} /></center>
+            <center>
+              <CircularLoader show = {true} />
+            </center>
           </div>
         }
       </div>

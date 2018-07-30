@@ -5,7 +5,7 @@ import Button from './OpticalButton'
 
 import ConnectView from '../../../utils/ConnectView'
 import Presenter from '../presenter/OpticalPresenter'
-import { GenericTextBox, FileUploader } from  '../../../ub-components/'
+import { GenericTextBox, MultipleFileUploader } from  '../../../ub-components/'
 
 import staticImage from '../../../images/uploadicon-grey.jpg'
 import store from '../../../store'
@@ -119,7 +119,9 @@ class OpticalCard extends Component {
       props,
       fileReceived,
       fileReceived2,
-      onClick
+      onClick,
+      attachmentsData,
+      showEditSubmitButton
     } = this.props
 
     const {
@@ -134,32 +136,10 @@ class OpticalCard extends Component {
       acceptNumber,
     } = this.state
 
-    const styles = {
-      image1 : {
-        backgroundImage: `url('${imagePreviewUrl}')`,
-        width : '225px',
-        height : '240px',
-        backgroundSize : 'cover',
-        backgroundRepeat : 'no-repeat',
-      },
-      image2 : {
-        backgroundImage: `url('${imagePreviewUrl2}')`,
-        width : '225px',
-        height : '240px',
-        backgroundSize : 'cover',
-        backgroundRepeat : 'no-repeat',
-      }
-    }
-
-    let $imagePreview = null
-    let $imagePreview2 = null
-      $imagePreview = (<div style = {styles.image1}></div>)
-      $imagePreview2 = (<div style = {styles.image2}></div>)
     return (
         <div className = { 'optical-card' } >
           <div>
             <div className = {'optical-header'} >
-              <h5 >Form Attachments</h5>
               <div className = { 'optical-amount-field' }>
                 <GenericTextBox
                   value = { amount }
@@ -170,33 +150,22 @@ class OpticalCard extends Component {
               </div>
               <div className = {'optical-body'}>
                 <br/>
-                <FileUploader
-                  onChange = { this.handleImageChange }
-                  placeholder = 'Optical Certificate'
-                  value = { file && this.state.file.name }
-                />
-                <FileUploader
-                  onChange = { this.handleImageChange2 }
-                  placeholder = 'Medical Certificate'
-                  value = { file2 && this.state.file2.name }
-                />
+                  {
+                    attachmentsData.length !== 0  ?
+                      <MultipleFileUploader
+                        placeholder = { 'Form Attachments' }
+                        fileArray = { attachmentsData }
+                        getFile = { (resp) => setAttachmentArrayFunc(resp) }
+                        disabled = { showEditSubmitButton }
+                        errorMessage = { 'Please include required attachment' }
+                      />
+                    :
+                    <div></div>
+                  }
               </div>
               <div className = { 'optical-button-submit' }>
                 <Button onClick = { () => onClick(
                   true, file, file2, amount, imagePreviewUrl, imagePreviewUrl2)}/>
-              </div>
-            </div>
-            <div className = {'optical-footer-left'}>
-              <h2 className = { 'optical-warning-display' }>{warning}</h2>
-              <div className = { 'optical-grid' }>
-                <div className = { 'optical-image-view' }>
-                  {$imagePreview}
-                  <div className = { 'optical-image-layer' }></div>
-                </div>
-                <div className = { 'optical-image-view' }>
-                  {$imagePreview2}
-                  <div className = {  'optical-image-layer' }></div>
-                </div>
               </div>
             </div>
           </div>
@@ -208,9 +177,11 @@ class OpticalCard extends Component {
   OpticalCard.propTypes = {
     onClose : PropTypes.func,
     details : PropTypes.func,
+    attachmentsData : PropTypes.func,
     confirm : PropTypes.string,
     cancel : PropTypes.string,
     warning : PropTypes.string,
+    showEditSubmitButton : PropTypes.bool,
   }
 
   OpticalCard.defaultProps = {
