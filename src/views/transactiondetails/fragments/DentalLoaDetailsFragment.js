@@ -15,7 +15,6 @@ import * as TransactionDetailsFunction
 from '../../transactiondetails/controller/TransactionDetailsFunction'
 
 class DentalLoaDetailsFragment extends Component {
-
   constructor (props) {
     super(props)
   }

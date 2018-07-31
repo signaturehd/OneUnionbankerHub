@@ -10,6 +10,7 @@ class TransactionProcedureCardComponent extends Component {
 
   render () {
   const { procedure } = this.props
+  console.log('success')
 
   return (
     <div>
