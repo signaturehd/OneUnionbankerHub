@@ -19,12 +19,15 @@ class FaqFragment extends BaseMVPView {
     super(props)
     this.state = {
         faqs: [],
+        categoryId: '',
+        categoryName: '',
+        categoryPath: '',
         selectedFaqCategory: null,
         selectedQuestion: null,
         showFaqModal : false,
         faqDetail: null,
         imageResponse: null,
-        isCategoryLoading : true,
+        isCategoryLoading : true
     }
 
     this.setSelectedFaqCategory = this.setSelectedFaqCategory.bind(this)
@@ -41,7 +44,8 @@ class FaqFragment extends BaseMVPView {
   * props: FaqCategoryFragment
   */
   setSelectedFaqCategory (selectedFaqCategory) {
-    this.setState({ selectedFaqCategory })
+    this.setPathCategory(selectedFaqCategory.id, selectedFaqCategory.category)
+    this.setState({ selectedFaqCategory, categoryId: selectedFaqCategory.id })
     this.props.history.push(`/faqs/${  selectedFaqCategory.category}`)
   }
 
@@ -64,10 +68,32 @@ class FaqFragment extends BaseMVPView {
     this.setState({ faqs, isCategoryLoading : false })
   }
 
+  setPathCategory(id, category) {
+    if(id===2) {
+      this.setState({ categoryName: category, categoryPath: 'medical' })
+    }
+    else if (id===3) {
+      this.setState({ categoryName: category, categoryPath: 'education' })
+    }
+    else if (id===5) {
+      this.setState({ categoryName: category, categoryPath: 'loans' })
+    }
+    else if (id===6) {
+      this.setState({ categoryName: category, categoryPath: 'loans' })
+    }
+  }
+
+  onClick() {
+    this.props.history.push(`/mybenefits/benefits/${this.state.categoryPath}`)
+  }
+
   render () {
     const { history } = this.props
     const {
       faqs,
+      categoryId,
+      categoryName,
+      categoryPath,
       selectedFaqCategory,
       selectedQuestion,
       showFaqModal,
@@ -75,7 +101,6 @@ class FaqFragment extends BaseMVPView {
       isCategoryLoading,
       imageResponse
     } = this.state
-
 
     return (
       <div>
@@ -96,8 +121,12 @@ class FaqFragment extends BaseMVPView {
         {
           showFaqModal &&
           <FaqModal
+            categoryId = { categoryId }
+            categoryName = { categoryName }
+            categoryPath = { categoryPath }
             title = { faqDetail && faqDetail.title }
             details = { faqDetail && faqDetail.details }
+            onClick = { () => this.onClick() }
             onClose = { () => this.setState({ showFaqModal : false, faqDetail: null }) } />
         }
       </div>
