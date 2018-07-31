@@ -32,7 +32,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
     oRNumberFunc,
     procedureModalFunc,
     selectedProcedureAmountFunc,
-    setAttachmentArrayFunc,
+    setAttachments,
     dateFunc,
     preferredDate,
     dependentName,
@@ -134,7 +134,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
                   <MultipleFileUploader
                     placeholder = { 'Form Attachments' }
                     fileArray = { attachmentsData }
-                    getFile = { (resp) => setAttachmentArrayFunc(resp) }
+                    setFile = { (resp) => setAttachments(resp) }
                     disabled = { showEditSubmitButton }
                     errorMessage = {
                       showEditSubmitButton ?
@@ -193,7 +193,7 @@ OutPatientReimbursementFormCardComponent.propTypes = {
   diagnosisValueFunc : PropTypes.func,
   selectedProcedureAmountFunc: PropTypes.func,
   showFormReview: PropTypes.func,
-  setAttachmentArrayFunc: PropTypes.func,
+  setAttachments: PropTypes.func,
   dependentName : PropTypes.string,
   amount : PropTypes.string,
   orNumberText : PropTypes.string,
