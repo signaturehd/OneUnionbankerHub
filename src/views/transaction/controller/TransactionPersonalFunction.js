@@ -154,5 +154,11 @@ import { format } from '../../../utils/numberUtils'
       return 'clear'
     } else if (detailStatus === 'for processing') {
       return 'process'
+    } else if (detailStatus === 'confirmed') {
+      return 'confirmed'
+    } else if (detailStatus === 'for confirmation') {
+      return 'confirmation'
+    } else {
+      return 'not transaction'
     }
   }
