@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Modal, GenericButton, CircularLoader } from '../../../ub-components/'
-import Button from '../components/OpticalButton'
 import BaseMVPView from '../../common/base/BaseMVPView'
 
 import './styles/opticalModal.css'

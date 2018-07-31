@@ -134,7 +134,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
                   <MultipleFileUploader
                     placeholder = { 'Form Attachments' }
                     fileArray = { attachmentsData }
-                    setFile = { (resp) => setAttachments(resp) }
+                    setFile = { (resp) => setAttachmentArrayFunc(resp) }
                     disabled = { showEditSubmitButton }
                     errorMessage = {
                       showEditSubmitButton ?
