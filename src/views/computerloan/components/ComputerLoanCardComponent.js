@@ -10,9 +10,9 @@ import {
   Line,
 } from '../../../ub-components/'
 
-import './styles/motorcycleLoanCard.css'
+import './styles/computerLoanCard.css'
 
-class MotorcycleLoanCardComponent extends Component {
+class ComputerLoanCardComponent extends Component {
   constructor (props) {
     super(props)
   }
@@ -25,7 +25,7 @@ class MotorcycleLoanCardComponent extends Component {
       showOffsetLoan,
       showPurposeOfAvailment,
       desiredAmount,
-      dealerName,
+      supplierName,
       showTerm,
       termOfLoan,
       purposeOfAvailment,
@@ -67,8 +67,8 @@ class MotorcycleLoanCardComponent extends Component {
         />
         <br/>
         <GenericInput
-          text = { 'Dealer Name' }
-          onChange = { (e) => dealerName(e.target.value) }
+          text = { 'Supplier Name' }
+          onClick = { (e) => supplierName(e.target.value) }
           maxLength = { 20 }
           disabled = { review }
         />
@@ -133,7 +133,7 @@ class MotorcycleLoanCardComponent extends Component {
   }
 }
 
-MotorcycleLoanCardComponent.propTypes = {
+ComputerLoanCardComponent.propTypes = {
   showTermOfLoan : PropTypes.func,
   showModeOfLoan : PropTypes.func,
   showPurposeOfAvailment : PropTypes.func,
@@ -141,7 +141,7 @@ MotorcycleLoanCardComponent.propTypes = {
   desiredAmount : PropTypes.func,
   onClick : PropTypes.func,
   updateForm : PropTypes.func,
-  dealerName : PropTypes.func,
+  supplierName : PropTypes.func,
   setAttachments : PropTypes.func,
   modeOfLoanId : PropTypes.number,
   status : PropTypes.string,
@@ -161,10 +161,10 @@ MotorcycleLoanCardComponent.propTypes = {
   review : PropTypes.bool,
 }
 
-MotorcycleLoanCardComponent.defaultProps = {
+ComputerLoanCardComponent.defaultProps = {
   termOfLoan : '',
   modeOfLoan : '',
   purposeOfAvailment : '',
 }
 
-export default MotorcycleLoanCardComponent
+export default ComputerLoanCardComponent

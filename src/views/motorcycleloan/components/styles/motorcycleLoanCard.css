@@ -1,0 +1,24 @@
+.computer-form-card {
+  max-width: 100%;
+  float: center;
+  padding: 10px 20% 10px 20%;
+  margin: auto;
+  text-align: center;
+}
+
+.computer-grid {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 5px;
+}
+
+.computer-function {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width : 768px) {
+  .computer-form-card {
+    padding: 10px;
+  }
+}

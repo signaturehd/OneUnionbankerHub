@@ -17,7 +17,7 @@ import MplGetFormParam from '../../../domain/param/MplGetFormParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
-export default class SalaryLoanPresenter {
+export default class HousingAssitancePresenter {
   constructor (container) {
     this.getTypesInteractor =
       new GetTypesInteractor(container.get('HRBenefitsClient'))
@@ -84,7 +84,7 @@ export default class SalaryLoanPresenter {
   getMplPurposeOfAvailment (purposeOfLoanId, subCategoryLevelId) {
     let purposeOfLoan = purposeOfLoanId ? purposeOfLoanId : 1
     let subcategoryLevel = subCategoryLevelId ? subCategoryLevelId : 1
-    const loanTypesId = 1
+    const loanTypesId = 3
     this.getPurposeOfAvailmentInteractor.execute({loanTypesId, purposeOfLoan, subcategoryLevel})
     .subscribe(data => {
       this.view.showPurposeOfAvailment(data)
@@ -92,7 +92,7 @@ export default class SalaryLoanPresenter {
   }
 
   getMplFormAttachments (formRequesting, nfisArray) {
-    this.getFormAttachmentsInteractor.execute(MplGetFormParam(formRequesting, 1))
+    this.getFormAttachmentsInteractor.execute(MplGetFormParam(formRequesting, 3))
       .map(data => {
         let attachments = []
         data.AdditionalDocuments &&
@@ -120,7 +120,7 @@ export default class SalaryLoanPresenter {
 
   getMplValidate () {
     this.view.showCircularLoader()
-    this.getValidateInteractor.execute(MplValidateParam(1))
+    this.getValidateInteractor.execute(MplValidateParam(3))
      .map(resp => {
         resp.modeOfLoan = []
         const modeOfLoanStatic = {

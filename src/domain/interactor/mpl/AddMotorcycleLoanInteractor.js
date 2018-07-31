@@ -1,14 +1,14 @@
-export default class AddLoanComputerInteractor {
+export default class AddMotorcycleLoanInteractor {
   constructor (client) {
     this.client = client
   }
 
-  execute (addComputerLoanParam) {
-    return this.client.addLoanComputer(
+  execute (addMotorLoanParam) {
+    return this.client.addLoanMotor(
         this.client.getToken(),
         this.client.getAccountToken(),
         this.client.getAccountNumber(),
         this.client.getReleasingCenter(),
-        addComputerLoanParam)
+        addMotorLoanParam)
   }
 }
