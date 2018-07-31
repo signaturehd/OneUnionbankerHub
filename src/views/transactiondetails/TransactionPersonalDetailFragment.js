@@ -27,8 +27,6 @@ import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreem
 import TransactionDetailsFormAttachmentsModal from './modals/TransactionDetailsFormAttachmentsModal'
 
 function  TransactionDetails (props)  {
-  console.log(props.details);
-  console.log(props.showFileReceipt);
   const transactionId = props.details ? props.details.benefitType.id : 0
   const transactionDetails = props.details
   const transactionsPerson = props.transactions
