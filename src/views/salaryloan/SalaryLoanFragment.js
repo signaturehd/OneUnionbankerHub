@@ -8,6 +8,8 @@ import ConnectView from '../../utils/ConnectView'
 import {
   CircularLoader,
   SingleInputModal,
+  ConfirmationModal,
+  LoaderModal,
 } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
@@ -26,8 +28,11 @@ class SalaryLoanFragment extends BaseMVPView {
       showModeOfLoan : false,
       showTermOfLoan : false,
       showOffsetLoan : false,
+      showConfirmationModal : false,
       showPurposeOfAvailment : false,
       showBenefitFeedbackModal : false,
+      showLoading : false,
+      review : false,
       purposeOfAvailmentId : null,
       purposeOfAvailmentLabel : null,
       modeOfLoanId : null,
@@ -42,11 +47,15 @@ class SalaryLoanFragment extends BaseMVPView {
       termOfLoan : [],
       nfis : [],
       fileAttachments : [],
+      status : 'Next',
     }
 
     this.setPurposeOfAvailment = this.setPurposeOfAvailment.bind(this)
     this.updateOffsetLoan = this.updateOffsetLoan.bind(this)
     this.updateModeOfLoan = this.updateModeOfLoan.bind(this)
+    this.addLoan = this.addLoan.bind(this)
+    this.setFileAttachments = this.setFileAttachments.bind(this)
+    this.noticeResponse = this.noticeResponse.bind(this)
   }
 
   componentDidMount () {
@@ -59,11 +68,11 @@ class SalaryLoanFragment extends BaseMVPView {
 
   /* Notice Response*/
   noticeOfUndertaking (noticeResponse) {
-    this.setState({ showNoticeModal : true, noticeResponse })
+    this.setState({ showNoticeModal : true, noticeResponse, showLoading: false })
   }
 
   noticeResponse (noticeResponse) {
-    this.setState({showConfirmation: false, noticeResponse })
+    this.setState({ showConfirmationModal: false, noticeResponse })
   }
 
   /* Implementation*/
@@ -71,8 +80,16 @@ class SalaryLoanFragment extends BaseMVPView {
     this.setState({ fileAttachments })
   }
 
+  setFileAttachments (fileAttachments) {
+    this.setState({ fileAttachments })
+  }
+
   setOffset (offsetLoan) {
     this.setState({ offsetLoan })
+  }
+
+  isValid (isValid) {
+    this.setState({ isValid })
   }
 
   setModeOfLoan (modeOfLoan) {
@@ -158,7 +175,12 @@ class SalaryLoanFragment extends BaseMVPView {
     }
   }
 
-  submitForm () {
+  hideLoading (showLoading) {
+    this.setState({ showLoading, review : false, status : 'Next' })
+  }
+
+  addLoan () {
+    this.setState({ showLoading : true, showConfirmationModal : false })
     const {
       dealerName,
       desiredAmount,
@@ -167,7 +189,7 @@ class SalaryLoanFragment extends BaseMVPView {
       offsetLoanFormArray,
       termOfLoanId,
       formAttachments,
-      termOfLoan
+      termOfLoan,
     } = this.state
 
     let termsValue
@@ -188,7 +210,23 @@ class SalaryLoanFragment extends BaseMVPView {
       offsetLoanFormArray,
       formAttachments
     )
+
   }
+
+  submitForm () {
+    const {
+      review,
+      showConfirmationModal
+    } = this.state
+
+    if (review) {
+      this.setState({showConfirmationModal : true})
+    } else {
+      this.setState({review : true, status: 'Submit'})
+    }
+  }
+
+
 
   setPurposeOfAvailment (purposeOfAvailmentId, subCategoryId, purposeOfAvailmentLabel, nfis) {
     if (purposeOfAvailmentId) {
@@ -234,6 +272,7 @@ class SalaryLoanFragment extends BaseMVPView {
       showTermOfLoan,
       showOffsetLoan,
       showPurposeOfAvailment,
+      showConfirmationModal,
       showBenefitFeedbackModal,
       purposeOfAvailment,
       purposeOfAvailmentId,
@@ -247,6 +286,12 @@ class SalaryLoanFragment extends BaseMVPView {
       termOfLoanLabel,
       offsetLoan,
       offsetLoanArray,
+      status,
+      review,
+      response,
+      noticeResponse,
+      isValid,
+      showLoading,
     } = this.state
 
     // const empName=employeeName && employeeName.fullname
@@ -267,6 +312,18 @@ class SalaryLoanFragment extends BaseMVPView {
           />
         }
         {
+          showLoading &&
+          <LoaderModal text = { 'Please wait while we\'re submitting your application' }/>
+        }
+        {
+          showConfirmationModal &&
+          <ConfirmationModal
+            onClose = { () => this.setState({ showConfirmationModal : false }) }
+            onYes = { () => this.addLoan() }
+            text = { 'Are you sure you want to submit this application?' }
+          />
+        }
+        {
           showNoticeResponseModal &&
           <ResponseModal
             onClose={ () => {
@@ -275,7 +332,6 @@ class SalaryLoanFragment extends BaseMVPView {
             noticeResponse={ response }
           />
         }
-
         {
           showPurposeOfAvailment &&
           <SingleInputModal
@@ -338,21 +394,32 @@ class SalaryLoanFragment extends BaseMVPView {
           </h2>
         </div>
         <br/>
-        <SalaryLoanCardComponent
-          showTermOfLoan = { () => this.setState({ showTermOfLoan : true }) }
-          showModeOfLoan = { () => this.setState({ showModeOfLoan : true }) }
-          showPurposeOfAvailment = { () => this.setState({ showPurposeOfAvailment : true }) }
-          showOffsetLoan = { () => this.setState({ showOffsetLoan : true }) }
-          fileAttachments = { fileAttachments }
-          termOfLoan = { termOfLoanLabel }
-          purposeOfAvailment = { purposeOfAvailmentLabel }
-          modeOfLoan = { modeOfLoanLabel }
-          modeOfLoanId = { modeOfLoanId }
-          offsetLoan = { offsetLoanArray }
-          desiredAmount = { (desiredAmount) => this.setState({ desiredAmount : parseInt(desiredAmount) }) }
-          onClick = { () => this.submitForm() }
-        />
-      </div>
+        {
+          isValid ?
+            <SalaryLoanCardComponent
+              showTermOfLoan = { () => this.setState({ showTermOfLoan : true }) }
+              showModeOfLoan = { () => this.setState({ showModeOfLoan : true }) }
+              showPurposeOfAvailment = { () => this.setState({ showPurposeOfAvailment : true }) }
+              showOffsetLoan = { () => this.setState({ showOffsetLoan : true }) }
+              fileAttachments = { fileAttachments }
+              termOfLoan = { termOfLoanLabel }
+              purposeOfAvailment = { purposeOfAvailmentLabel }
+              modeOfLoan = { modeOfLoanLabel }
+              modeOfLoanId = { modeOfLoanId }
+              offsetLoan = { offsetLoanArray }
+              setAttachments = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
+              desiredAmount = { (desiredAmount) => this.setState({ desiredAmount : parseInt(desiredAmount) }) }
+              onClick = { () => this.submitForm() }
+              status = { status }
+              review = { review }
+              updateForm = { () => this.setState({ review : false, status : 'Next' }) }
+            />
+            :
+            <center>
+              <CircularLoader show = { true }/>
+            </center>
+        }
+        </div>
     )
   }
 }

@@ -75,6 +75,10 @@
   background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/bereavement_bg.jpg');
 }
 
+.transaction-medical-scheduling {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/medical_bg.jpg');
+}
+
 .transaction-details-grid-row {
   display: grid;
   grid-template-columns: .3fr auto .3fr;
