@@ -9,19 +9,43 @@ import {
   FileUploader
 } from '../../../ub-components'
 import './styles/detailsFragment.css'
-import MedicalSchedulingDetailCardComponent from
-'../../transaction/components/TransactionMedicalSchedulingComponent/MedicalSchedulingDetailCardComponent'
+import OutpatientDetailCardComponent from
+'../../transaction/components/TransactionOutpatientComponent/OutpatientDetailCardComponent'
 import * as TransactionDetailsFunction from '../controller/TransactionDetailsFunction'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
-class MedicalSchedulingDetailsFragment extends Component {
+class OutpatientDetailsFragment extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      attachmentArray : []
+    }
+    this.setAttachments = this.setAttachments.bind(this)
+  }
+
+  getExtension (filename) {
+    const parts=filename.split('/')
+    return parts[parts.length - 1]
+  }
+
+  componentDidMount () {
+    this.setAttachments()
+  }
+
+  setAttachments () {
+    const { RequiredAttachment } = this.props.details.details.OutpatientDetails
+    const updatedAttachment = [...this.state.attachmentArray]
+    RequiredAttachment.map((attachment, key) => {
+      updatedAttachment.push({name: attachment})
+    })
+
+    this.setState({attachmentArray : updatedAttachment})
   }
 
   render () {
-    const { details, transactionsPerson, agreementsMethod } = this.props
+    const { details, transactionsPerson, agreementsMethod, attachmentsMethod } = this.props
+    const { attachmentArray } = this.state
 
     const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
     const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
@@ -60,10 +84,11 @@ class MedicalSchedulingDetailsFragment extends Component {
             </div>
             <br/>
             <div>
-              <MedicalSchedulingDetailCardComponent
-                details={ details }
-                transactionsPerson={ transactionsPerson }
+              <OutpatientDetailCardComponent
+                details = { details }
+                transactionsPerson = { transactionsPerson }
                 onClickAgreements = { (resp) => agreementsMethod(resp) }
+                onClickAttachments = { (resp) => attachmentsMethod(resp) }
               />
             </div>
           </Card>
@@ -72,9 +97,11 @@ class MedicalSchedulingDetailsFragment extends Component {
     )
   }
 }
-MedicalSchedulingDetailsFragment.propTypes = {
+OutpatientDetailsFragment.propTypes = {
   details : PropTypes.object,
-  transactionsPerson : PropTypes.array
+  transactionsPerson : PropTypes.array,
+  attachmentsMethod : PropTypes.func,
+  agreementsMethod : PropTypes.func,
 }
 
-export default MedicalSchedulingDetailsFragment
+export default OutpatientDetailsFragment

@@ -21,6 +21,7 @@ import CarLeaseDetailsFragment from './fragments/CarLeaseDetailsFragment'
 import CalamityAssistanceDetailsFragment from './fragments/CalamityAssistanceDetailsFragment'
 import BereavementDetailsFragment from './fragments/BereavementDetailsFragment'
 import MedicalSchedulingDetailsFragment from './fragments/MedicalSchedulingDetailsFragment'
+import OutpatientDetailsFragment from './fragments/OutpatientDetailsFragment'
 
 import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreementsModal'
 import TransactionDetailsFormAttachmentsModal from './modals/TransactionDetailsFormAttachmentsModal'
@@ -102,7 +103,16 @@ function  TransactionDetails (props)  {
     agreementsMethod = { (resp) => agreementsMethod(resp) }
     details = { transactionDetails }
     />
- } else {
+ } else if (transactionId === 41) {
+   // Outpatient Reimbursement Transaction Details
+   return <OutpatientDetailsFragment
+     transactionsPerson = { transactionsPerson }
+     attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+     agreementsMethod = { (resp) => agreementsMethod(resp) }
+     details = { transactionDetails }
+    />
+ }
+  else {
    return <h1>No Transaction Occured please reload</h1> // No  Transaction
    }
 }
