@@ -22,7 +22,6 @@ class MedicalSchedulingOtherDetailCardComponent extends Component {
   const hospital = detailsMedicalScheduling.MedicalScheduleDetails.HospitalPackage.Clinic.Hospital
   const packages = detailsMedicalScheduling.MedicalScheduleDetails.HospitalPackage.Package
   const procedures = detailsMedicalScheduling.MedicalScheduleDetails.HospitalPackage.Procedures
-  console.log(procedures.length);
 
   return (
     <div  className = { 'transaction-component-otherdetails-form' }>
@@ -39,9 +38,9 @@ class MedicalSchedulingOtherDetailCardComponent extends Component {
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
               Hospital
-            <br/>
-            <br/>
             </h2>
+            <br/>
+            <br/>
           </div>
         </div>
         <br/>
@@ -57,9 +56,9 @@ class MedicalSchedulingOtherDetailCardComponent extends Component {
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
               Package
-            <br/>
-            <br/>
             </h2>
+            <br/>
+            <br/>
           </div>
         </div>
       </div>
@@ -70,10 +69,10 @@ class MedicalSchedulingOtherDetailCardComponent extends Component {
         </div>
         {
           procedures && procedures.slice(0, index).map( (resp ,key) => (
-            <div className = { 'transaction-icons-details-grid' }>
+            <div className = { 'transaction-icons-details-grid' } key = {key}>
               <div>
-                <h2 className = { 'font-size-13px font-weight-lighter' }>
-                  { resp }
+                <h2 className = { 'font-size-13px font-weight-lighter' } >
+                  { resp.Procedure }
                 </h2>
               </div>
             </div>
