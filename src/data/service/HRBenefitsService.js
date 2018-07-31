@@ -103,6 +103,8 @@ export default class HRBenefitsService {
     const opticalObject = {
       accountNumber,
       amount: opticalParam.amount,
+      officialReceiptDate: opticalParam.oRDate,
+      officialReceiptNumber : opticalParam.orNumber,
       releasingCenter,
       distributor: 'distributorTest'
     }

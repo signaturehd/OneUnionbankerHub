@@ -40,6 +40,8 @@ class OpticalFragment extends BaseMVPView {
       attachmentsData: [],
       showEditSubmitButton : false,
       amountErrorMessage : '',
+      dateErrorMessage : '',
+      orNumberErrorMessage: '',
       amount: '',
       orNumberText: '',
       preferredDate: '',
@@ -93,34 +95,19 @@ class OpticalFragment extends BaseMVPView {
     const {
       amount,
       limit,
-      attachmentsData
+      attachmentsData,
+      orNumberText,
+      preferredDate,
     } = this.state
 
     if (parseInt(amount) === 0 || amount === '') {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Optical Reimbursement',
-          message : 'Please enter an amount not equal to 0',
-          type : 'warning',
-          duration : 2000
-        })
-      )
+      this.setState({ amountErrorMessage : 'Please enter an amount not equal to 0' })
     } else if (parseInt(amount) > parseInt(limit)) {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Optical Reimbursement',
-          message : `Please double check amount must not exceeded to ${ format(limit) }`,
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    }
-     else if (!this.validator(attachmentsData)) {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Optical Reimbursement',
-          message : 'Please Check your attachments',
-          type : 'warning',
-          duration : 2000
-        })
-      )
+      this.setState({ amountErrorMessage : `Please double check amount must not exceeded to ${ format(limit) }` })
+    } else if (!this.validator(preferredDate)) {
+      this.setState({ dateErrorMessage :  'Please select the required date' })
+    } else if (!this.validator(orNumberText)) {
+      this.setState({ orNumberErrorMessage :  'Please enter the official receipt number' })
     } else {
       this.setState({ showEditSubmitButton : true })
     }
@@ -137,10 +124,12 @@ class OpticalFragment extends BaseMVPView {
   submitFormFunc () {
     const {
       amount,
+      preferredDate,
+      orNumberText,
       attachmentsData,
     } = this.state
 
-      this.presenter.addOptical(amount, attachmentsData)
+      this.presenter.addOptical(amount, preferredDate, orNumberText, attachmentsData)
   }
 
   render () {
@@ -156,6 +145,8 @@ class OpticalFragment extends BaseMVPView {
       isVisible,
       attachmentsData,
       amountErrorMessage,
+      dateErrorMessage,
+      orNumberErrorMessage,
       orNumberText,
       preferredDate,
       limit
@@ -218,7 +209,9 @@ class OpticalFragment extends BaseMVPView {
                   oRNumberFunc = { (resp) => this.validateSymbol(resp) }
                   desiredAmount = { (resp) => this.validateDesiredAmount(resp) }
                   onSubmitFunc = { () => this.submitFormFunc() }
-
+                  amountErrorMessage = { amountErrorMessage }
+                  dateErrorMessage = { dateErrorMessage }
+                  orNumberErrorMessage = { orNumberErrorMessage }
                   setAttachmentArrayFunc = { (resp) =>
                     this.getAttachmentsArray(resp) }
                   />

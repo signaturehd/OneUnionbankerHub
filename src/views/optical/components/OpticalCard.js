@@ -32,6 +32,7 @@ class OpticalCard extends Component {
       setAttachmentArrayFunc,
       onCheckedSubmissionFunc,
       dateErrorMessage,
+      amountErrorMessage,
       orNumberErrorMessage,
       orNumberText,
       onSubmitFunc,
@@ -50,9 +51,9 @@ class OpticalCard extends Component {
                 text = { 'Amount' }
                 value = { amount }
                 disabled = { showEditSubmitButton }
+                errorMessage = { amountErrorMessage }
                 placeholder = { 'Enter Amount' }
-                maxLength = { 4 }
-                onChange = { e => desiredAmount(e.target.value) || 0 }
+                onChange = { e => desiredAmount(e.target.value) }
               />
             <br/>
             </div>
@@ -86,7 +87,6 @@ class OpticalCard extends Component {
                   fileArray = { attachmentsData }
                   setFile = { (resp) => setAttachmentArrayFunc(resp) }
                   disabled = { showEditSubmitButton }
-                  errorMessage = { 'Please include required attachment' }
                 />
               :
               <div></div>
@@ -127,13 +127,14 @@ class OpticalCard extends Component {
     onClose : PropTypes.func,
     dateErrorMessage : PropTypes.string,
     orNumberErrorMessage : PropTypes.string,
+    amountErrorMessage : PropTypes.string,
     orNumberText : PropTypes.string,
     setAttachmentArrayFunc : PropTypes.func,
     onCheckedSubmissionFunc : PropTypes.func,
     oRNumberFunc : PropTypes.func,
     onEditSubmissionFunc : PropTypes.func,
     dateFunc : PropTypes.func,
-    preferredDate: PropTypes.object,
+    preferredDate: PropTypes.string,
     desiredAmount : PropTypes.func,
     onSubmitFunc : PropTypes.func,
     attachmentsData : PropTypes.array,

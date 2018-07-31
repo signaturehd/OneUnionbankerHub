@@ -14,9 +14,18 @@ export default class OpticalPresenter {
     this.view = view
   }
 
-  addOptical (amount, attachmentData) {
+  addOptical (
+    amount,
+    orDate,
+    orNumber,
+    attachmentData
+  ) {
     this.view.isEligible(false)
-    this.addOpticalInteractior.execute(OpticalParam(amount, attachmentData))
+    this.addOpticalInteractior.execute(OpticalParam(
+      amount,
+      orDate,
+      orNumber,
+      attachmentData))
       .subscribe(optical => {
         this.view.noticeOfUndertaking(optical)
         this.view.isEligible(true)
