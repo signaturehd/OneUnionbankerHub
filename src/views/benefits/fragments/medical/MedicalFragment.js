@@ -30,15 +30,15 @@ class MedicalFragment extends Component {
       title: 'OPTICAL REIMBURSEMENT',
       path: '/mybenefits/benefits/medical/optical',
     }, {
-      styleName: 'medical-cards-3',
+      styleName: 'medical-cards-4',
       title: 'MEDICAL SCHEDULING',
       path: '/mybenefits/benefits/medical/scheduling',
     }, {
-      styleName: 'medical-cards-3',
+      styleName: 'medical-cards-5',
       title: 'OUTPATIENT REIMBURSEMENT',
       path: '/mybenefits/benefits/medical/reimbursement/outpatient',
     }, {
-      styleName: 'medical-cards-3',
+      styleName: 'medical-cards-6',
       title: 'MATERNITY ASSISTANCE',
       path: '/mybenefits/benefits/medical/assistance/maternity',
     }]

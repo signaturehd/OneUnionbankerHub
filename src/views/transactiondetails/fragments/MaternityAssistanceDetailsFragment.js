@@ -15,7 +15,7 @@ import * as TransactionDetailsFunction from '../controller/TransactionDetailsFun
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
-class OutpatientDetailsFragment extends Component {
+class MaternityAssistanceDetailsFragment extends Component {
   constructor (props) {
     super(props)
   }
@@ -37,7 +37,7 @@ class OutpatientDetailsFragment extends Component {
         <div></div>
           <Card>
             <div className={ 'transaction-details-container' }>
-              <div className = { 'transaction-banner transaction-medical-scheduling' }>
+              <div className = { 'transaction-banner transaction-maternity-assistance' }>
                 <div className={ 'transaction-banner-card' }>
                   <div>
                     <h1 className = { 'transaction-details-name font-weight-normal'}>
@@ -77,11 +77,11 @@ class OutpatientDetailsFragment extends Component {
     )
   }
 }
-OutpatientDetailsFragment.propTypes = {
+MaternityAssistanceDetailsFragment.propTypes = {
   details : PropTypes.object,
   transactionsPerson : PropTypes.array,
   attachmentsMethod : PropTypes.func,
   agreementsMethod : PropTypes.func,
 }
 
-export default OutpatientDetailsFragment
+export default MaternityAssistanceDetailsFragment
