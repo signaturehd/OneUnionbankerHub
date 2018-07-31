@@ -22,7 +22,6 @@ class MedicalSchedulingOtherDetailCardComponent extends Component {
   const hospital = detailsMedicalScheduling.MedicalScheduleDetails.HospitalPackage.Clinic.Hospital
   const packages = detailsMedicalScheduling.MedicalScheduleDetails.HospitalPackage.Package
   const procedures = detailsMedicalScheduling.MedicalScheduleDetails.HospitalPackage.Procedures
-  console.log(procedures.length);
 
   return (
     <div  className = { 'transaction-component-otherdetails-form' }>

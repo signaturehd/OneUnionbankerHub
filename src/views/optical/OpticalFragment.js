@@ -61,7 +61,11 @@ class OpticalFragment extends BaseMVPView {
   }
 
   isEligible (resp) {
-    this.setState({ isVisible : resp})
+    if(resp === true) {
+      this.setState({ isVisible : resp})
+    } else {
+      this.navigate()
+    }
   }
 
   showAttachmentsMap (attachmentsData, limit) {
