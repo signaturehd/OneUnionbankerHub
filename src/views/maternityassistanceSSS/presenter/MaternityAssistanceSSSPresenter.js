@@ -1,21 +1,21 @@
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
-import ValidateMaternityAssistanceInteractor from
-'../../../domain/interactor/maternityassistance/ValidateMaternityAssistanceInteractor'
+import ValidateMaternityAssistanceSSSInteractor from
+'../../../domain/interactor/maternityassistancesss/ValidateMaternityAssistanceSSSInteractor'
 
-import AddMaternityAssistanceInteractor from
-'../../../domain/interactor/maternityassistance/AddMaternityAssistanceInteractor'
+import AddMaternityAssistanceSSSInteractor from
+'../../../domain/interactor/maternityassistancesss/AddMaternityAssistanceSSSInteractor'
 
-import addParam from '../../../domain/param/AddMaternityAssistanceParam'
+import addParam from '../../../domain/param/AddMaternityAssistanceSSSParam'
 
 export default class MaternityAssistanceSSSPresenter {
   constructor (container) {
-    this.validateMaternityAssistanceInteractor =
-      new ValidateMaternityAssistanceInteractor(container.get('HRBenefitsClient'))
+    this.validateMaternityAssistanceSSSInteractor =
+      new ValidateMaternityAssistanceSSSInteractor(container.get('HRBenefitsClient'))
 
-    this.addMaternityAssistanceInteractor =
-      new AddMaternityAssistanceInteractor(container.get('HRBenefitsClient'))
+    this.addMaternityAssistanceSSSInteractor =
+      new AddMaternityAssistanceSSSInteractor(container.get('HRBenefitsClient'))
 
   }
 
@@ -23,9 +23,9 @@ export default class MaternityAssistanceSSSPresenter {
     this.view = view
   }
 
-  validateMaternityAssistance () {
+  validateMaternityAssistanceSSS () {
     this.view.showCircularLoader()
-    this.validateMaternityAssistanceInteractor.execute()
+    this.validateMaternityAssistanceSSSInteractor.execute()
       .map(data => {
         let attachmentArray = []
         const typeOfDelivery = [
@@ -55,23 +55,35 @@ export default class MaternityAssistanceSSSPresenter {
       })
     }
 
-    addMaternityAssistance (
-      typeOfDelivery,
-      dateOfDelivery,
-      amount,
-      orNumber,
-      orDate,
-      attachments
+    addMaternityAssistanceSSS (
+      roomNumber,
+      houseNumber,
+      street,
+      subdivision,
+      barangay,
+      city,
+      province,
+      zipCode,
+      noOfPregnancy,
+      expectedDateOfDelivery,
+      noOfDelivery,
+      noOfMiscarriage,
       ) {
         this.view.showCircularLoader()
-        this.addMaternityAssistanceInteractor.execute(
+        this.addMaternityAssistanceSSSInteractor.execute(
           addParam(
-            typeOfDelivery,
-            dateOfDelivery,
-            amount,
-            orNumber,
-            orDate,
-            attachments
+            roomNumber,
+            houseNumber,
+            street,
+            subdivision,
+            barangay,
+            city,
+            province,
+            zipCode,
+            noOfPregnancy,
+            expectedDateOfDelivery,
+            noOfDelivery,
+            noOfMiscarriage,
           )
         )
 

@@ -58,7 +58,7 @@ class MaternityAssistanceSSSFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.validateMaternityAssistance()
+    this.presenter.validateMaternityAssistanceSSS()
   }
 
   noticeOfUndertaking (noticeResponse) {
@@ -131,21 +131,27 @@ class MaternityAssistanceSSSFragment extends BaseMVPView {
 
   submitForm () {
     const {
-      typeDeliveryId,
-      deliveryDate,
-      amount,
-      preferredDate,
-      orNumberText,
-      attachmentArray
+      roomNumber,
+      houseNumber,
+      street,
+      subdivision,
+      barangay,
+      city,
+      province,
+      zipCode,
+      noOfPregnancy,
+      expectedDateOfDelivery,
+      noOfDelivery,
+      noOfMiscarriage,
     } = this.state
 
-    this.presenter.addMaternityAssistance(
-      typeDeliveryId,
-      moment(deliveryDate).format('MM/DD/YYYY'),
-      amount,
-      moment(preferredDate).format('MM/DD/YYYY'),
-      orNumberText.toString(),
-      attachmentArray)
+    // this.presenter.addMaternityAssistance(
+    //   typeDeliveryId,
+    //   moment(deliveryDate).format('MM/DD/YYYY'),
+    //   amount,
+    //   moment(preferredDate).format('MM/DD/YYYY'),
+    //   orNumberText.toString(),
+    //   attachmentArray)
   }
 
   showFormReviewFieldDisabled (e) {
