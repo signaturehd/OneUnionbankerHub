@@ -31,47 +31,42 @@ class MaternityAssistanceFragment extends BaseMVPView {
       this.state = {
         showNoticeModal : false,
         showNoticeResponseModal : false,
-        showBenefitFeedbackModal : false,
-        noticeResponse : '',
         enabledLoader : false,
-        outpatientData : [],
-        procedureData : [],
-        dependentId: null,
-        dependentName: '',
-        procedureId: null,
-        procedureName: '',
-        procedureArray: [],
-        showDepedendent: false,
-        showProcedure: false,
+        showTypeOfDeliveryModalResp: false,
+        showEditSubmitButton: false,
+        titleChange: true,
+        showBenefitFeedbackModal : false,
+        attachmentsData: [],
+        maternityData : [],
+        attachmentArray: [],
+        typeOfDeliveryData : [],
+        typeDeliveryId: '',
+        typeDeliveryName: '',
         amount: '',
-        diagnosisText : '',
         orNumberText: '',
         preferredDate: '',
-        showProcedureInput: false,
-        attachmentsData: [],
-        attachmentArray: [],
-        showEditSubmitButton: false,
+        deliveryDate: '',
+        noticeResponse : '',
         attachmentErrorMessage: '',
-        dependentErrorMessage: '',
-        diagnosisErrorMessage: '',
         dateErrorMessage: '',
         orNumberErrorMessage: '',
         amountErrorMessage : '',
-        titleChange: true,
+        typeOfDeliveryErrorMessage : '',
+        dateOfDeliveryErrorMessage : '',
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.validateOutPatientReimbursement()
+    this.presenter.validateMaternityAssistance()
   }
 
   noticeOfUndertaking (noticeResponse) {
-   this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
+   this.setState({ showNoticeModal : true, noticeResponse })
   }
 
-  noticeResponse (noticeResponse) {
-    this.setState({showConfirmation: false, noticeResponse })
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse })
   }
 
   hideCircularLoader () {
@@ -82,28 +77,24 @@ class MaternityAssistanceFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
-  showValidatedOutPatient (outpatientData) {
-    this.setState({ outpatientData })
-  }
-
-  showProcedureMap (procedureData) {
-    this.setState({ procedureData })
+  showValidatedMaternity (maternityData) {
+    this.setState({ maternityData })
   }
 
   showAttachmentsMap (attachmentsData) {
     this.setState({ attachmentsData })
   }
 
+  showTypeOfDeliveryMap (typeOfDeliveryData) {
+    this.setState({ typeOfDeliveryData })
+  }
+
   navigate () {
     this.props.history.push('/mybenefits/benefits/medical')
   }
 
-  showDependentModal (showDepedendent) {
-    this.setState({ showDepedendent })
-  }
-
-  showProcedureModal (showProcedure) {
-    this.setState({ showProcedure })
+  showTypeOfDeliveryModal (showTypeOfDeliveryModalResp) {
+    this.setState({ showTypeOfDeliveryModalResp })
   }
 
   setFileAttachments (attachmentArray) {
@@ -113,11 +104,6 @@ class MaternityAssistanceFragment extends BaseMVPView {
   validateAmount (e) {
     const validate = MaternityAssistanceFunction.checkedAmount(e)
     this.setState({ amount : validate, amountErrorMessage : '' })
-  }
-
-  validateText (e) {
-    const validate = MaternityAssistanceFunction.checkedValidateText(e)
-    this.setState({ diagnosisText : validate , diagnosisErrorMessage : '' })
   }
 
   validateSymbol (e) {
@@ -130,6 +116,11 @@ class MaternityAssistanceFragment extends BaseMVPView {
     this.setState({ preferredDate : validate, dateErrorMessage : '' })
   }
 
+  validateDeliveryDate (e) {
+    const validate = MaternityAssistanceFunction.checkedMDYDate(e)
+    this.setState({ deliveryDate : validate, dateOfDeliveryErrorMessage : '' })
+  }
+
   validateRequired (e) {
     return MaternityAssistanceFunction.checkedValidateInput(e)
   }
@@ -140,50 +131,43 @@ class MaternityAssistanceFragment extends BaseMVPView {
 
   submitForm () {
     const {
-      dependentId,
-      diagnosisText,
-      procedureId,
+      typeDeliveryId,
+      deliveryDate,
+      amount,
       preferredDate,
       orNumberText,
-      amount,
       attachmentArray
     } = this.state
 
-    const type = dependentId !== 1 ? 2 : 1
-    this.presenter.addOutPatientReimbursement(
-      type,
-      dependentId.toString(),
-      procedureId.toString(),
+    this.presenter.addMaternityAssistance(
+      typeDeliveryId,
+      moment(deliveryDate).format('MM/DD/YYYY'),
       amount,
-      diagnosisText.toString(),
-      orNumberText.toString(),
       moment(preferredDate).format('MM/DD/YYYY'),
+      orNumberText.toString(),
       attachmentArray)
   }
 
   showFormReviewFieldDisabled (e) {
     const {
-      dependentName,
-      procedureName,
-      diagnosisText,
-      orNumberText,
-      preferredDate,
+      typeDeliveryName,
+      deliveryDate,
       amount,
+      preferredDate,
+      orNumberText,
       attachmentArray
     } = this.state
 
-    if(!this.validateRequired(dependentName)) {
-     this.setState({ dependentErrorMessage : 'Please select your recipient' })
-    } else if (!this.validateRequired(diagnosisText)) {
-      this.setState({ diagnosisErrorMessage : 'Please enter the diagnosis' })
+    if(!this.validateRequired(typeDeliveryName)){
+      this.setState({ typeOfDeliveryErrorMessage : 'Please provide the type of delivery' })
+    } else if (!this.validateRequired(deliveryDate)) {
+      this.setState({ dateOfDeliveryErrorMessage : 'Please provide the date of delivery' })
+    } else if (!this.validateRequired(amount)) {
+      this.setState({ amountErrorMessage : 'Please enter an amount' })
     } else if (!this.validateRequired(preferredDate)) {
       this.setState({ dateErrorMessage : 'Please provide the Official Receipt Date' })
     } else if (!this.validateRequired(orNumberText)) {
       this.setState({ orNumberErrorMessage : 'Please provide the Official Receipt Number' })
-    } else if (!this.validateRequired(procedureName)) {
-      this.setState({ errorMessageRequiredProcedure : 'Please select a procedure and enter amount required' })
-    } else if (!this.validateRequired(amount)) {
-      this.setState({ amountErrorMessage : 'Please enter an amount for the selected procedure' })
     } else {
       this.setState({
         showEditSubmitButton: true,
@@ -197,32 +181,27 @@ class MaternityAssistanceFragment extends BaseMVPView {
       showNoticeModal,
       showNoticeResponseModal,
       showBenefitFeedbackModal,
-      noticeResponse,
+      showTypeOfDeliveryModalResp,
       enabledLoader,
-      showDepedendent,
-      showProcedure,
-      outpatientData,
-      procedureData,
-      dependentId,
-      dependentName,
-      procedureId,
-      procedureName,
-      diagnosisText,
+      maternityData,
+      attachmentsData,
+      typeOfDeliveryData,
+      typeDeliveryId,
+      typeDeliveryName,
       orNumberText,
       preferredDate,
+      deliveryDate,
+      noticeResponse,
       amount,
-      showProcedureInput,
-      attachmentsData,
       attachmentArray,
+      showEditSubmitButton,
+      titleChange,
       attachmentErrorMessage,
-      dependentErrorMessage,
-      diagnosisErrorMessage,
       dateErrorMessage,
       amountErrorMessage,
-      errorMessageRequiredProcedure,
       orNumberErrorMessage,
-      showEditSubmitButton,
-      titleChange
+      typeOfDeliveryErrorMessage,
+      dateOfDeliveryErrorMessage
     } = this.state
 
     const {
@@ -237,7 +216,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
           <NoticeModal
             onClose={ () => this.setState({ showNoticeModal : false })}
             noticeResponse={ noticeResponse }
-            benefitId={ '41' }
+            benefitId={ '9' }
             onDismiss={ (showNoticeModal, noticeResponse) =>
               this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
           />
@@ -254,7 +233,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
         {
           showBenefitFeedbackModal &&
           <BenefitFeedbackModal
-            benefitId={ '41' }
+            benefitId={ '9' }
             onClose={ () => {
               this.props.history.push('/mybenefits/benefits/medical'),
               this.setState({ showBenefitFeedbackModal : false })
@@ -262,37 +241,19 @@ class MaternityAssistanceFragment extends BaseMVPView {
           />
         }
         {
-          showDepedendent &&
+          showTypeOfDeliveryModalResp &&
           <SingleInputModal
             label = { 'Dependents' }
-            inputArray = { outpatientData && outpatientData.dependents }
-            selectedArray = { (dependentId, dependentName) =>
+            inputArray = { typeOfDeliveryData && typeOfDeliveryData }
+            selectedArray = { (typeDeliveryId, typeDeliveryName) =>
               this.setState({
-                dependentId,
-                dependentName,
-                showDepedendent : false,
-                dependentErrorMessage : ''
+                typeDeliveryId,
+                typeDeliveryName,
+                showTypeOfDeliveryModalResp : false,
+                typeOfDeliveryErrorMessage : ''
               })
             }
-            onClose = { () => this.setState({ showDepedendent : false }) }
-          />
-        }
-        {
-          showProcedure &&
-          <SingleInputModal
-            label = { 'Procedure' }
-            inputArray = { procedureData }
-            selectedArray = { (procedureId, procedureName) => {
-              this.setState({
-                procedureName,
-                procedureId,
-                showProcedure : false,
-                showProcedureInput : true,
-                errorMessageRequiredProcedure : ''
-                })
-              }
-            }
-            onClose = { () => this.setState({ showProcedure : false }) }
+            onClose = { () => this.setState({ showDepedendentModalResp : false }) }
           />
         }
         <div>
@@ -318,31 +279,27 @@ class MaternityAssistanceFragment extends BaseMVPView {
           </center> :
           <FormComponent
             oRNumberFunc = { (resp) => this.validateSymbol(resp) }
-            procedureModalFunc = { (resp) => this.showProcedureModal(resp) }
-            diagnosisValueFunc = { (resp) => this.validateText(resp) }
-            requestDepdentModalFunc = { (resp) => this.showDependentModal(resp) }
             dateFunc = { (resp) => this.validateDate(resp) }
-            selectedProcedureAmountFunc = { (resp) => this.validateAmount(resp) }
             showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
-            setAttachments = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
+            setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
             onSubmitFunc = { () => this.submitForm() }
             editFormDataFunc = { () => this.editFormReview() }
-            dependentName = { dependentName }
+            requestTypeOfDeliveryFunc = { (resp) => this.showTypeOfDeliveryModal(resp) }
+            dateOfDelivertFunc = { (resp) => this.validateDeliveryDate(resp) }
+            desiredAmountFunc = { (resp) => this.validateAmount(resp) }
+            typeDeliveryName = { typeDeliveryName }
             amount = { amount }
-            diagnosisText = { diagnosisText }
             orNumberText = { orNumberText }
             preferredDate = { preferredDate }
-            procedureName = { procedureName }
-            showProcedureInput = { showProcedureInput }
+            deliveryDate = { deliveryDate }
             attachmentsData = { attachmentsData }
             showEditSubmitButton = { showEditSubmitButton }
-            errorMessageRequiredProcedure = { errorMessageRequiredProcedure }
             attachmentErrorMessage = { attachmentErrorMessage }
-            dependentErrorMessage = { dependentErrorMessage }
-            diagnosisErrorMessage = { diagnosisErrorMessage }
             dateErrorMessage = { dateErrorMessage }
             orNumberErrorMessage = { orNumberErrorMessage }
             amountErrorMessage = { amountErrorMessage }
+            typeOfDeliveryErrorMessage = { typeOfDeliveryErrorMessage }
+            dateOfDeliveryErrorMessage = { dateOfDeliveryErrorMessage }
           />
         }
       </div>

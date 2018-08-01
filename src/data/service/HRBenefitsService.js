@@ -780,4 +780,39 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Maternity Assistance */
+  validateMaternityAssistance (token) {
+    return this.apiClient.get('v1/maternity/validate', {
+      headers : { token }
+    })
+  }
+
+  addMaternityAssistance (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMaternityAssistanceParam
+  ) {
+    const formData = new FormData()
+    formData.append('uuid', 12345)
+    const objectMaternity = {
+      accountNumber,
+      releasingCenter,
+      deliveryType : addMaternityAssistanceParam.typeOfDelivery,
+      deliveryDate : addMaternityAssistanceParam.dateOfDelivery,
+      amount : addMaternityAssistanceParam.amount,
+      orNumber : addMaternityAssistanceParam.orNumber,
+      orDate : addMaternityAssistanceParam.orDate
+    }
+    addMaternityAssistanceParam.attachments.map((resp, key) => (
+        formData.append(resp.name, resp.file)
+      )
+    )
+    formData.append("body", JSON.stringify(objectMaternity))
+    return this.apiClient.post('v1/maternity/submit', formData, {
+      headers : { token }
+    })
+  }
 }

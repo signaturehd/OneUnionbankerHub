@@ -1,21 +1,21 @@
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
-import ValidateOutPatientReimbursementInteractor from
-'../../../domain/interactor/outPatientReimbursement/ValidateOutPatientReimbursementInteractor'
+import ValidateMaternityAssistanceInteractor from
+'../../../domain/interactor/maternityassistance/ValidateMaternityAssistanceInteractor'
 
-import AddOutPatientReimbursementInteractor from
-'../../../domain/interactor/outPatientReimbursement/AddOutPatientReimbursementInteractor'
+import AddMaternityAssistanceInteractor from
+'../../../domain/interactor/maternityassistance/AddMaternityAssistanceInteractor'
 
-import addOutPatientReimbursementParam from '../../../domain/param/AddOutPatientReimbursementParam'
+import addParam from '../../../domain/param/AddMaternityAssistanceParam'
 
 export default class MaternityAssistancePresenter {
   constructor (container) {
-    this.validateOutPatientReimbursementInteractor =
-      new ValidateOutPatientReimbursementInteractor(container.get('HRBenefitsClient'))
+    this.validateMaternityAssistanceInteractor =
+      new ValidateMaternityAssistanceInteractor(container.get('HRBenefitsClient'))
 
-    this.addOutPatientReimbursementInteractor =
-      new AddOutPatientReimbursementInteractor(container.get('HRBenefitsClient'))
+    this.addMaternityAssistanceInteractor =
+      new AddMaternityAssistanceInteractor(container.get('HRBenefitsClient'))
 
   }
 
@@ -23,28 +23,30 @@ export default class MaternityAssistancePresenter {
     this.view = view
   }
 
-  validateOutPatientReimbursement () {
+  validateMaternityAssistance () {
     this.view.showCircularLoader()
-    this.validateOutPatientReimbursementInteractor.execute()
+    this.validateMaternityAssistanceInteractor.execute()
       .map(data => {
-        let procedureArray = []
         let attachmentArray = []
-        data &&
-        data.procedures.map((procedure, key) => {
-          procedureArray.push({
-            id : procedure.id,
-            name : procedure.procedures
-          })
-        })
+        const typeOfDelivery = [
+          {
+            id: 1,
+            name: 'Normal'
+          },
+          {
+            id: 2,
+            name: 'Cesarean'
+          }
+        ]
         data &&
         data.attachments.map((attachment, key) => {
           attachmentArray.push({
             name : attachment
           })
         })
+        this.view.showTypeOfDeliveryMap(typeOfDelivery)
         this.view.showAttachmentsMap(attachmentArray)
-        this.view.showValidatedOutPatient(data)
-        this.view.showProcedureMap(procedureArray)
+        this.view.showValidatedMaternity(data)
       })
       .subscribe(data => {
         this.view.hideCircularLoader()
@@ -53,37 +55,33 @@ export default class MaternityAssistancePresenter {
       })
     }
 
-    addOutPatientReimbursement (
-      type,
-      dependentId,
-      procedureId,
+    addMaternityAssistance (
+      typeOfDelivery,
+      dateOfDelivery,
       amount,
-      diagnosisText,
       orNumber,
       orDate,
       attachments
       ) {
         this.view.showCircularLoader()
-        this.addOutPatientReimbursementInteractor.execute(
-          addOutPatientReimbursementParam(
-            type,
-            dependentId,
-            procedureId,
+        this.addMaternityAssistanceInteractor.execute(
+          addParam(
+            typeOfDelivery,
+            dateOfDelivery,
             amount,
-            diagnosisText,
             orNumber,
             orDate,
             attachments
           )
         )
-        .subscribe(
-          data => {
+
+      .subscribe(
+        data => {
+          this.view.hideCircularLoader()
+          this.view.noticeOfUndertaking(data)
+        },  errors => {
+            this.view.noticeResponseResp(errors)
             this.view.hideCircularLoader()
-            this.view.noticeOfUndertaking(data)
-        },
-          errors => {
-            this.view.hideCircularLoader()
-            this.view.noticeResponse(errors)
             // this.view.navigate()
           }
         )

@@ -68,6 +68,14 @@ class OpticalFragment extends BaseMVPView {
     }
   }
 
+  showCircularLoader () {
+    this.setState({ isVisible : false })
+  }
+
+  hideCircularLoader () {
+    this.setState({ isVisible : false })
+  }
+
   showAttachmentsMap (attachmentsData, limit) {
     this.setState({ attachmentsData, limit })
   }

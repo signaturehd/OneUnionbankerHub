@@ -20,7 +20,7 @@ export default class OpticalPresenter {
     orNumber,
     attachmentData
   ) {
-    this.view.isEligible(false)
+    this.view.showCircularLoader()
     this.addOpticalInteractior.execute(OpticalParam(
       amount,
       orDate,
@@ -28,7 +28,7 @@ export default class OpticalPresenter {
       attachmentData))
       .subscribe(optical => {
         this.view.noticeOfUndertaking(optical)
-        this.view.isEligible(true)
+        this.view.hideCircularLoader()
         // this.view.showOptical(optical)
       }, e => {
         this.view.noticeResponse(e)

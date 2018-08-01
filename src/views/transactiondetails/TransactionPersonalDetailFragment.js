@@ -44,8 +44,9 @@ function  TransactionDetails (props)  {
   } else if (transactionId === 7) {
     return <DentalLoaDetailsFragment
       details = { transactionDetails }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
       agreementsMethod = { (resp) => agreementsMethod(resp) }
-      transactionsPerson = { transactionsPerson } />
+      transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 8) {
     return <OpticalDetailsFragment
       details = { transactionDetails }
@@ -85,6 +86,7 @@ function  TransactionDetails (props)  {
       attachmentsMethod = { (resp) => attachmentsMethod(resp) }
       agreementsMethod = { (resp) => agreementsMethod(resp) }
       uploadImage = { (transactionId, file) => uploadImage(21, transactionId, file) }
+      showFileReceipt = { showFileReceipt }
       details = { transactionDetails } />
   } else if (transactionId === 22) {
     // Calamity Assistance

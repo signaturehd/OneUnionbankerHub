@@ -25,8 +25,6 @@ class OutpatientDetailsFragment extends Component {
 
   render () {
     const { details, transactionsPerson, agreementsMethod, attachmentsMethod } = this.props
-    const { attachmentArray } = this.state
-
     const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
     const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
     const dateFiled = TransactionDetailsFunction.checkedDateFilled(details)
