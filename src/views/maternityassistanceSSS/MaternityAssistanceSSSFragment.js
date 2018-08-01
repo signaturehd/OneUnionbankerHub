@@ -264,7 +264,7 @@ class MaternityAssistanceSSSFragment extends BaseMVPView {
           {
             titleChange ?
             <h2 className = { 'header-margin-default' }>
-              Maternity Assistance
+              Maternity Assistance SSS
             </h2>
             :
             <h2 className = { 'header-margin-default' }>
