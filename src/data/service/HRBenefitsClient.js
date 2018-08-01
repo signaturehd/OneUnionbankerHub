@@ -673,4 +673,27 @@ export default class HRBenefitsClient {
     )
       .pipe(ServiceErrorOperator())
   }
+
+  /* Maternity Assistance SSS */
+  validateMaternityAssistanceSSS (token) {
+    return this.service.validateMaternityAssistanceSSS(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addMaternityAssistanceSSS (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMaternityAssistanceSSSParam
+  ) {
+    return this.service.addMaternityAssistanceSSS(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      addMaternityAssistanceSSSParam
+    )
+      .pipe(ServiceErrorOperator())
+  }
 }

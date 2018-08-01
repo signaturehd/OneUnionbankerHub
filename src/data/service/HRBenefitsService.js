@@ -815,4 +815,46 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Maternity Assistance SSS */
+  validateMaternityAssistanceSSS (token) {
+    return this.apiClient.get('v1/maternity/validate/sss', {
+      headers : { token }
+    })
+  }
+
+  addMaternityAssistanceSSS (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMaternityAssistanceSSSParam
+  ) {
+    const formData = new FormData()
+    formData.append('uuid', 12345)
+    const objectMaternity = {
+      address : {
+        room : addMaternityAssistanceSSSParam.roomNumber,
+        house : addMaternityAssistanceSSSParam.houseNumber,
+        street: addMaternityAssistanceSSSParam.street,
+        subdivision: addMaternityAssistanceSSSParam.subdivision,
+        barangay: addMaternityAssistanceSSSParam.barangay,
+        city : addMaternityAssistanceSSSParam.city,
+        province : addMaternityAssistanceSSSParam.province,
+        zipCode : addMaternityAssistanceSSSParam.zipCode,
+      },
+      numberOfPregnancy : addMaternityAssistanceSSSParam.noOfPregnancy,
+      expectedDateOfDelivery : addMaternityAssistanceSSSParam.expectedDateOfDelivery,
+      numberOfDelivery: addMaternityAssistanceSSSParam.noOfDelivery,
+      numberOfMiscarriage : addMaternityAssistanceSSSParam.noOfMiscarriage ,
+    }
+    addMaternityAssistanceSSSParam.attachments.map((resp, key) => (
+        formData.append(resp.name, resp.file)
+      )
+    )
+    formData.append("body", JSON.stringify(objectMaternity))
+    return this.apiClient.post('v1/maternity/submit/sss', formData, {
+      headers : { token }
+    })
+  }
 }
