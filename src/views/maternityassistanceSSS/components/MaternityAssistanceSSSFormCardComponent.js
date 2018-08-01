@@ -10,7 +10,7 @@ import {
   Line
 } from '../../../ub-components/'
 
-import './styles/maternityComponentStyle.css'
+import './styles/maternitySSSComponentStyle.css'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
