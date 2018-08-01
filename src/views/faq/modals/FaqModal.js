@@ -34,12 +34,11 @@ class FaqModal extends Component {
               <h4>{ title }</h4>
               <div dangerouslySetInnerHTML = {{ __html: details }}/>
             </div>
-
-                   :
-            <center>
-              <h3>Please wait...</h3>
-              <CircularLoader show = { true } />
-            </center>
+          :
+          <center>
+            <h3>Please wait...</h3>
+            <CircularLoader show = { true } />
+          </center>
         }
       </Modal>
     )
