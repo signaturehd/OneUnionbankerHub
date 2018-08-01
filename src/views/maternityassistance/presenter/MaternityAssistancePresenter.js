@@ -31,11 +31,11 @@ export default class MaternityAssistancePresenter {
         const typeOfDelivery = [
           {
             id: 1,
-            name: 'Store Payment'
+            name: 'Normal'
           },
           {
             id: 2,
-            name: 'Cash on Delivery'
+            name: 'Cesarean'
           }
         ]
         data &&
