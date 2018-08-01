@@ -9,10 +9,6 @@ import moment from 'moment'
 export default class MedicalSchedulingFormCardComponent extends Component {
   constructor (props) {
     super (props)
-    this.state = {
-      index : 4,
-      viewMoreText : 'View more'
-    }
   }
 
   render () {
@@ -26,10 +22,14 @@ export default class MedicalSchedulingFormCardComponent extends Component {
       procedureList,
       preferredDate,
       onChangePreferredDate,
-      onSubmit
+      onSubmit,
+      index,
+      viewMoreText,
+      viewMore,
+      viewLess
     } = this.props
 
-    const { index, viewMoreText } = this.state
+    const isVisible = (packageLabel && procedureList && procedureList.length > 4) ? '' : 'hide'
 
     return (
       <div className={ 'medsched-container' }>
@@ -74,19 +74,20 @@ export default class MedicalSchedulingFormCardComponent extends Component {
                 }
               </table>
             </div>
-            <ViewMoreButton
-              text = { viewMoreText }
+            <button
               type = { 'button' }
-              visible = { packageLabel && procedureList && (procedureList.length > 4) }
+              className = { `viewmore tooltip ${isVisible}` }
               onClick = {
                 () => {
                   if(index === procedureList.length)
-                    this.setState({ index : 4, viewMoreText : 'View more' })
+                    viewLess()
                   else
-                    this.setState({ index : procedureList.length, viewMoreText : 'View less' })
+                    viewMore()
                 }
-              }
-            />
+              }>
+              <img src={ require('../../../images/icons/horizontal.png') } />
+              <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+            </button>
             <br/>
           {
             isFormReview ?
