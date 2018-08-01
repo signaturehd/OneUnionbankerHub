@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import ConnectView from '../../utils/ConnectView'
-import Presenter from './presenter/MaternityAssistancePresenter'
+import Presenter from './presenter/MaternityAssistanceSSSPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 
 import {
