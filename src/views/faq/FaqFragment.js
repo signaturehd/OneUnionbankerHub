@@ -19,7 +19,6 @@ class FaqFragment extends BaseMVPView {
     super(props)
     this.state = {
         faqs: [],
-        categoryId: '',
         categoryName: '',
         categoryPath: '',
         selectedFaqCategory: null,
@@ -81,6 +80,9 @@ class FaqFragment extends BaseMVPView {
     else if (id===6) {
       this.setState({ categoryName: category, categoryPath: 'loans' })
     }
+    else {
+      this.setState({ categoryName: '', categoryPath: '' })
+    }
   }
 
   onClick() {
@@ -91,7 +93,6 @@ class FaqFragment extends BaseMVPView {
     const { history } = this.props
     const {
       faqs,
-      categoryId,
       categoryName,
       categoryPath,
       selectedFaqCategory,
@@ -121,7 +122,6 @@ class FaqFragment extends BaseMVPView {
         {
           showFaqModal &&
           <FaqModal
-            categoryId = { categoryId }
             categoryName = { categoryName }
             categoryPath = { categoryPath }
             title = { faqDetail && faqDetail.title }

@@ -3,24 +3,22 @@ import PropTypes from 'prop-types'
 
 import { Modal, GenericButton, CircularLoader } from '../../../ub-components/'
 
+import './styles/faqModal.css'
+
 class FaqModal extends Component {
   constructor (props) {
     super(props)
   }
 
   render () {
-    const { categoryId, categoryName, details, onClick, onClose, title } = this.props
+    const { categoryName, details, onClick, onClose, title } = this.props
     return (
       <Modal
         isDismisable = { true }
         onClose = { onClose }>
         {
           details ?
-            categoryId===1 ?
-            <div>
-              <h4>{ title }</h4>
-              <div dangerouslySetInnerHTML = {{ __html: details }}/>
-            </div> :
+            categoryName ?
             <div>
               <h4>{ title }</h4>
               <div dangerouslySetInnerHTML = {{ __html: details }}/>
@@ -28,7 +26,13 @@ class FaqModal extends Component {
                 type = { 'button' }
                 text = { `Proceed to ${categoryName} Benefits` }
                 onClick = { onClick }
+                className = { 'faqs-button' }
               />
+            </div>
+            :
+            <div>
+              <h4>{ title }</h4>
+              <div dangerouslySetInnerHTML = {{ __html: details }}/>
             </div>
 
                    :
@@ -43,8 +47,7 @@ class FaqModal extends Component {
 }
 
 FaqModal.propTypes = {
-  categoryId: PropTypes.number,
-  categoryPath: PropTypes.string,
+  categoryName: PropTypes.string,
   title: PropTypes.string,
   details: PropTypes.string,
   onClick: PropTypes.func,
