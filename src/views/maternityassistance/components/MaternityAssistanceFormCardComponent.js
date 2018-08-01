@@ -27,32 +27,29 @@ class MaternityAssistanceCardComponent extends Component {
   render () {
 
   const {
-    requestDepdentModalFunc,
-    diagnosisValueFunc,
     oRNumberFunc,
-    procedureModalFunc,
-    selectedProcedureAmountFunc,
-    setAttachments,
+    setAttachmentArrayFunc,
+    onSubmitFunc,
     dateFunc,
-    preferredDate,
-    dependentName,
-    procedureName,
-    procedureArray,
-    amount,
-    diagnosisText,
-    orNumberText,
-    showProcedureInput,
-    attachmentsData,
+    requestTypeOfDeliveryFunc,
+    editFormDataFunc,
+    dateOfDelivertFunc,
     showFormReview,
     showEditSubmitButton,
-    onSubmitFunc,
-    editFormDataFunc,
-    dependentErrorMessage,
-    diagnosisErrorMessage,
-    errorMessageRequiredProcedure,
+    setAttachments,
+    typeDeliveryName,
+    preferredDate,
+    deliveryDate,
+    amount,
+    desiredAmountFunc,
+    diagnosisText,
+    orNumberText,
+    attachmentsData,
     dateErrorMessage,
     orNumberErrorMessage,
-    amountErrorMessage
+    amountErrorMessage,
+    typeOfDeliveryErrorMessage,
+    dateOfDeliveryErrorMessage
   } = this.props
 
   return (
@@ -63,23 +60,34 @@ class MaternityAssistanceCardComponent extends Component {
           <div className={ 'outpatient-form-card' }>
             <div className={ 'outpatient-form-card-body' }>
               <GenericInput
-                value = { dependentName }
-                readOnly
+                value = { typeDeliveryName }
+                onClick = { () => requestTypeOfDeliveryFunc(true) }
+                text = { 'Type of Delivery' }
                 disabled = { showEditSubmitButton }
-                text = { 'Recipient' }
-                onClick = { () => requestDepdentModalFunc(true) }
-                type = { 'text' }
-                errorMessage = { dependentErrorMessage }
-                />
-              <br/>
-              <GenericInput
-                value = { diagnosisText }
-                onChange = { (e) => diagnosisValueFunc(e.target.value) }
-                text = { 'Diagnosis' }
-                disabled = { showEditSubmitButton }
-                errorMessage = { diagnosisErrorMessage }
+                errorMessage = { typeOfDeliveryErrorMessage }
                 type = { 'text' }/>
                 <br/>
+              <DatePicker
+                selected = { deliveryDate }
+                disabled = { showEditSubmitButton }
+                onChange = { (e) => dateOfDelivertFunc(e) }
+                minDate = { moment() }
+                text = { 'Date of Delivery' }
+                errorMessage = { dateOfDeliveryErrorMessage }
+                />
+                <br/>
+              <GenericInput
+                hint = { 'Enter Amount' }
+                text = { 'Amount' }
+                value = { amount }
+                errorMessage = { amountErrorMessage }
+                disabled = { showEditSubmitButton }
+                onChange = { e => {
+                    desiredAmountFunc(e.target.value)
+                  }
+                }
+                type = { 'text' } />
+              <br/>
               <DatePicker
                 selected = { preferredDate }
                 disabled = { showEditSubmitButton }
@@ -96,18 +104,6 @@ class MaternityAssistanceCardComponent extends Component {
                 text = { 'Official Receipt Number' }
                 errorMessage = { orNumberErrorMessage }
                 type = { 'text' }/>
-                <br/>
-              <GenericInput
-                hint = { 'Enter Amount' }
-                text = { 'Amount' }
-                value = { amount }
-                errorMessage = { amountErrorMessage }
-                disabled = { showEditSubmitButton }
-                onChange = { e => {
-                    selectedProcedureAmountFunc(e.target.value)
-                  }
-                }
-                type = { 'text' } />
             </div>
             <br/>
               {
@@ -168,29 +164,24 @@ class MaternityAssistanceCardComponent extends Component {
 }
 
 MaternityAssistanceCardComponent.propTypes = {
-  requestDepdentModalFunc : PropTypes.func,
-  desiredAmount : PropTypes.func,
-  procedureModalFunc : PropTypes.func,
+  desiredAmountFunc : PropTypes.func,
   editFormDataFunc : PropTypes.func,
-  diagnosisValueFunc : PropTypes.func,
-  selectedProcedureAmountFunc: PropTypes.func,
   showFormReview: PropTypes.func,
+  requestTypeOfDeliveryFunc: PropTypes.func,
+  dateOfDelivertFunc: PropTypes.func,
   setAttachments: PropTypes.func,
-  dependentName : PropTypes.string,
+  typeDeliveryName : PropTypes.string,
   amount : PropTypes.string,
   orNumberText : PropTypes.string,
   preferredDate : PropTypes.string,
+  deliveryDate : PropTypes.string,
   dateFunc : PropTypes.func,
   oRNumberFunc : PropTypes.func,
-  diagnosisText: PropTypes.string,
-  procedureName: PropTypes.string,
-  dependentErrorMessage: PropTypes.string,
-  errorMessageRequiredProcedure: PropTypes.string,
-  diagnosisErrorMessage: PropTypes.string,
   amountErrorMessage: PropTypes.string,
   dateErrorMessage: PropTypes.string,
   orNumberErrorMessage: PropTypes.string,
-  showProcedureInput: PropTypes.bool,
+  typeOfDeliveryErrorMessage: PropTypes.string,
+  dateOfDeliveryErrorMessage: PropTypes.string,
   attachments: PropTypes.array,
   showEditSubmitButton: PropTypes.bool,
   onSubmitFunc : PropTypes.func,

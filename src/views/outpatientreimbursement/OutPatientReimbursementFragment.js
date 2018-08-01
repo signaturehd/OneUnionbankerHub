@@ -324,7 +324,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             dateFunc = { (resp) => this.validateDate(resp) }
             selectedProcedureAmountFunc = { (resp) => this.validateAmount(resp) }
             showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
-            setAttachments = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
+            setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
             onSubmitFunc = { () => this.submitForm() }
             editFormDataFunc = { () => this.editFormReview() }
             dependentName = { dependentName }
