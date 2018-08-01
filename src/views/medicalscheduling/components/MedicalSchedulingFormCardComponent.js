@@ -99,6 +99,7 @@ export default class MedicalSchedulingFormCardComponent extends Component {
                 className = { 'medsched-submit' }/>
               <GenericButton
                 type = { 'button' }
+                text = { 'Submit' }
                 viewmore = { true }
                 onClick = { () => onSubmit() }
                 className = { 'medsched-submit' }/>
