@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { GenericInput, GenericButton, FileUploader, DatePicker } from '../../../ub-components/'
+import { GenericInput, GenericButton, FileUploader, DatePicker, ViewMoreButton } from '../../../ub-components/'
 import * as func from '../controller/MedicalSchedulingFunction'
 import './styles/medicalSchedulingComponentStyle.css'
 import '../../../ub-components/TextBox/styles/input.css'
@@ -9,6 +9,10 @@ import moment from 'moment'
 export default class MedicalSchedulingFormCardComponent extends Component {
   constructor (props) {
     super (props)
+    this.state = {
+      index : 4,
+      viewMoreText : 'View more'
+    }
   }
 
   render () {
@@ -24,6 +28,8 @@ export default class MedicalSchedulingFormCardComponent extends Component {
       onChangePreferredDate,
       onSubmit
     } = this.props
+
+    const { index, viewMoreText } = this.state
 
     return (
       <div className={ 'medsched-container' }>
@@ -56,10 +62,9 @@ export default class MedicalSchedulingFormCardComponent extends Component {
               <table>
                 <tr>
                   <th>Package Procedures<p>Procedures that are marked with asterisk(*) are required.</p></th>
-
                 </tr>
                 {
-                    packageLabel && procedureList.map(
+                    packageLabel && procedureList.slice(0, index).map(
                     (proc, key) => (
                       <tr>
                         <td>{ proc.name }{ !proc.optional && '*' }</td>
@@ -69,6 +74,19 @@ export default class MedicalSchedulingFormCardComponent extends Component {
                 }
               </table>
             </div>
+            <ViewMoreButton
+              text = { viewMoreText }
+              type = { 'button' }
+              visible = { packageLabel && procedureList && (procedureList.length > 4) }
+              onClick = {
+                () => {
+                  if(index === procedureList.length)
+                    this.setState({ index : 4, viewMoreText : 'View more' })
+                  else
+                    this.setState({ index : procedureList.length, viewMoreText : 'View less' })
+                }
+              }
+            />
             <br/>
           {
             isFormReview ?
@@ -80,7 +98,7 @@ export default class MedicalSchedulingFormCardComponent extends Component {
                 className = { 'medsched-submit' }/>
               <GenericButton
                 type = { 'button' }
-                text = { 'Submit' }
+                viewmore = { true }
                 onClick = { () => onSubmit() }
                 className = { 'medsched-submit' }/>
             </div> :
