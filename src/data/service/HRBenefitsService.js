@@ -781,6 +781,18 @@ export default class HRBenefitsService {
     })
   }
 
+  getEmployeeTrainingDetails (token, id) {
+    return this.apiClient.get(`v1/training/details/${id}`, {
+      headers : { token }
+    })
+  }
+
+  enrollEmployee (token, id) {
+    return this.apiClient.get(`v1/training/enroll/${id}`, {
+      headers : { token }
+    })
+  }
+
   /* Maternity Assistance */
   validateMaternityAssistance (token) {
     return this.apiClient.get('v1/maternity/validate', {

@@ -1,0 +1,66 @@
+.training-modal-container {
+  display:grid;
+  grid-template-rows: 1fr 1fr;
+  min-height:500px;
+}
+
+.training-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  margin : 20px 0px 20px 0px;
+  padding : 10px;
+}
+
+
+@media (max-width: 768px) {
+  .training-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.training-components h4 {
+  font-size: 18px!important;
+  color: #333!important;
+  font-weight: bold!important;
+}
+
+.training-components p {
+  font-size: 16px!important;
+  margin : 0!important;
+}
+
+.training-status {
+  background-color: #ffa800;
+  position: relative;
+  top: 10px;
+  left: 0px;
+  width: 100px;
+
+}
+
+.training-status p {
+  color: white;
+  padding: 5px;
+  text-align: center;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.status-button {
+  border: 1px solid #ff8a00;
+  width: 100%;
+  margin: 20px 5px 20px 5px;
+  padding: 10px;
+  border-radius: 0px!important;
+}
+
+
+.status-button:hover {
+  color: white;
+  background-color: #ffa800;
+}
