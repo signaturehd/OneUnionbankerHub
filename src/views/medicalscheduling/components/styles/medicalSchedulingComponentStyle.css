@@ -14,10 +14,6 @@
   font-size: 18px;
 }
 
-.medsched-package-procedure {
-
-}
-
 .medsched-package-procedure table {
     border-collapse: collapse;
     width: 100%;
@@ -172,4 +168,38 @@
 
 .react-datepicker__input-container {
   margin-top: 0px!important;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.hide {
+  display: none!important;
+}
+
+.viewmore {
+  padding: 2px 0 2px 0;
+  background-color: rgba(0, 0, 0, 0);
+  width: 100%;
+  border: 0;
 }
