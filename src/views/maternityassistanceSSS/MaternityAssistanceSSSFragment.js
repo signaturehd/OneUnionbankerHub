@@ -154,7 +154,7 @@ class MaternityAssistanceSSSFragment extends BaseMVPView {
       province,
       zipCode,
       noOfPregnancy,
-      moment(expectedDateOfDelivery).format('MM/DD/YYYY')
+      moment(expectedDateOfDelivery).format('MM/DD/YYYY'),
       noOfDelivery,
       noOfMiscarriage,
     )
