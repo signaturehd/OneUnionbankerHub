@@ -4,7 +4,7 @@ import { format } from '../../../utils/numberUtils'
   /* Default Amount View (e.g) P 2,000.00 */
 
   export function checkedAmountFormat (amount) {
-    return amount && amount ? format(amount) :  'Not Yet Provided'
+    return amount && amount ? format(amount) :  '(Not Yet Provided)'
   }
 
   /* (e.g) Friday, July 5, 2018, 1:07:18 PM*/
@@ -139,6 +139,40 @@ import { format } from '../../../utils/numberUtils'
 
   export function indexIncreased (index) {
     return index + 4
+  }
+
+  /* Education  */
+  export function checkedCourse (course) {
+    return course && course.Course ? course.Course: '(Not Yet Provided)'
+  }
+
+  export function checkedCollege (school) {
+    return school &&
+           school.College ?
+           school.College :
+           '(Not Yet Provided)'
+  }
+
+  export function checkedAcademicyear (year) {
+    return year &&
+           year.AcademicYear ?
+           year.AcademicYear :
+           '(Not Yet Provided)'
+  }
+
+  export function checkedSemester (semester) {
+    return semester &&
+           semester.Semester ?
+           semester.Semester :
+           '(Not Yet Provided)'
+  }
+
+  export function checkedGrant (grant) {
+    return grant &&
+           grant.Grant &&
+           grant.Grant.Name ?
+           grant.Grant.Name :
+           '(Not Yet Provided)'
   }
 
   export function checkedBenefitStatus (detailStatus) {

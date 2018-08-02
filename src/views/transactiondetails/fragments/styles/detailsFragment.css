@@ -95,7 +95,7 @@
 
 .transaction-banner-card {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr .5fr;
   position: absolute;
   margin-left: 25px;
   margin-top: 157px;
