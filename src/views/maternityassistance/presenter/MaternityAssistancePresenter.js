@@ -14,7 +14,7 @@ export default class MaternityAssistancePresenter {
     this.validateMaternityAssistanceInteractor =
       new ValidateMaternityAssistanceInteractor(container.get('HRBenefitsClient'))
 
-    this.addMaternityAssistanceInteractor =
+    this.addMaternity =
       new AddMaternityAssistanceInteractor(container.get('HRBenefitsClient'))
 
   }
@@ -57,18 +57,18 @@ export default class MaternityAssistancePresenter {
     typeOfDelivery,
     dateOfDelivery,
     amount,
-    orNumber,
     orDate,
+    orNumber,
     attachments
     ) {
       this.view.showCircularLoader()
-      this.addMaternityAssistanceInteractor.execute(
+      this.addMaternity.execute(
         addMaternityAssistanceParam(
           typeOfDelivery,
           dateOfDelivery,
           amount,
-          orNumber,
           orDate,
+          orNumber,
           attachments
         )
       )
@@ -79,7 +79,7 @@ export default class MaternityAssistancePresenter {
       },  errors => {
           this.view.noticeResponseResp(errors)
           this.view.hideCircularLoader()
-          this.view.navigate()
+          // this.view.navigate()
         }
       )
     }

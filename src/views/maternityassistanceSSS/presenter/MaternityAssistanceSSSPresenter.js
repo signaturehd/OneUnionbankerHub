@@ -23,7 +23,7 @@ export default class MaternityAssistanceSSSPresenter {
     this.view = view
   }
 
-  validateMaternityAssistanceSSS () {
+  validateMaternityAssistance () {
     this.view.showCircularLoader()
     this.validateMaternityAssistanceSSSInteractor.execute()
       .map(data => {

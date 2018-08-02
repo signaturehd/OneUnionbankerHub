@@ -4,7 +4,7 @@ export default class ValidateMaternityAssistanceSSSInteractor {
   }
 
   execute () {
-    return this.client.validateMaternityAssistanceSSS(
+    return this.client.validateMaternityAssistance(
       this.client.getToken()
     )
   }

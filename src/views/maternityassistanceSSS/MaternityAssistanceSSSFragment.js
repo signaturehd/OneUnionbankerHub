@@ -58,7 +58,7 @@ class MaternityAssistanceSSSFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.validateMaternityAssistanceSSS()
+    this.presenter.validateMaternityAssistance()
   }
 
   noticeOfUndertaking (noticeResponse) {
@@ -270,7 +270,7 @@ class MaternityAssistanceSSSFragment extends BaseMVPView {
           {
             titleChange ?
             <h2 className = { 'header-margin-default' }>
-              Maternity Assistance SSS
+              Maternity Notifications - SSS
             </h2>
             :
             <h2 className = { 'header-margin-default' }>
