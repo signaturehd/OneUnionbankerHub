@@ -103,12 +103,16 @@ export default class HRBenefitsService {
     const opticalObject = {
       accountNumber,
       amount: opticalParam.amount,
+      officialReceiptDate: opticalParam.oRDate,
+      officialReceiptNumber : opticalParam.orNumber,
       releasingCenter,
       distributor: 'distributorTest'
     }
     formData.append('uuid', 123345)
-    formData.append('med', opticalParam.medCert)
-    formData.append('opt', opticalParam.optCert)
+    opticalParam.attachmentData.map((resp) => (
+      formData.append(resp.name, resp.file)
+      )
+    )
     formData.append('body', JSON.stringify(opticalObject))
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
       headers : { token }
@@ -773,6 +777,41 @@ export default class HRBenefitsService {
 
   getEmployeeTraining (token) {
     return this.apiClient.get('v1/training/programs', {
+      headers : { token }
+    })
+  }
+
+  /* Maternity Assistance */
+  validateMaternityAssistance (token) {
+    return this.apiClient.get('v1/maternity/validate', {
+      headers : { token }
+    })
+  }
+
+  addMaternityAssistance (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMaternityAssistanceParam
+  ) {
+    const formData = new FormData()
+    formData.append('uuid', 12345)
+    const objectMaternity = {
+      accountNumber,
+      releasingCenter,
+      deliveryType : addMaternityAssistanceParam.typeOfDelivery,
+      deliveryDate : addMaternityAssistanceParam.dateOfDelivery,
+      amount : addMaternityAssistanceParam.amount,
+      orNumber : addMaternityAssistanceParam.orNumber,
+      orDate : addMaternityAssistanceParam.orDate
+    }
+    addMaternityAssistanceParam.attachments.map((resp, key) => (
+        formData.append(resp.name, resp.file)
+      )
+    )
+    formData.append("body", JSON.stringify(objectMaternity))
+    return this.apiClient.post('v1/maternity/submit', formData, {
       headers : { token }
     })
   }

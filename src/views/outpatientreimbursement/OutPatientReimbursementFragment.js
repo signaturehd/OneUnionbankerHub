@@ -106,7 +106,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     this.setState({ showProcedure })
   }
 
-  getFileAttachments (attachmentArray) {
+  setFileAttachments (attachmentArray) {
     this.setState({ attachmentArray })
   }
 
@@ -324,7 +324,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             dateFunc = { (resp) => this.validateDate(resp) }
             selectedProcedureAmountFunc = { (resp) => this.validateAmount(resp) }
             showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
-            setAttachmentArrayFunc = { (resp) => this.getFileAttachments(resp) }
+            setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
             onSubmitFunc = { () => this.submitForm() }
             editFormDataFunc = { () => this.editFormReview() }
             dependentName = { dependentName }

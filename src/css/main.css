@@ -25,6 +25,11 @@ h1, h2, h3, h4, h5, h6, p{
     background: transparent; /* make scrollbar transparent */
 }
 
+::-moz-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
 h1 {
   font-weight: 350;
   text-align: -webkit-auto;
@@ -141,6 +146,30 @@ p {
   font-size: 24px;
 }
 
+.font-size-25px{
+  font-size: 25px;
+}
+
+.font-size-26px{
+  font-size: 26px;
+}
+
+.font-size-27px{
+  font-size: 27px;
+}
+
+.font-size-28px{
+  font-size: 28px;
+}
+
+.font-size-29px{
+  font-size: 29px;
+}
+
+.font-size-30px{
+  font-size: 30px;
+}
+
 /* text-align*/
 
 .text-align-center {
@@ -223,4 +252,8 @@ p {
 
 .global-icons-memorial {
   background-image: url('../images/icons/ic_memorial_park.png');
+}
+
+.global-icons-school {
+  background-image: url('../images/icons/ic_school_grey_500_18dp.png');
 }
