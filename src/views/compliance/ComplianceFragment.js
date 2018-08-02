@@ -21,8 +21,8 @@ import {
 class ComplianceFragment extends BaseMVPView {
   constructor (props) {
     super(props)
-
     this.state = {
+      compliancesData : []
     }
   }
 
@@ -38,13 +38,17 @@ class ComplianceFragment extends BaseMVPView {
     this.setState({ enableLoader : false })
   }
 
+  showCompliancesData (compliancesData) {
+    this.setState({ compliancesData })
+  }
+
   navigate () {
     this.props.history.push('/')
   }
 
   render () {
     const { history, onClick } = this.props
-    const { } = this.state
+    const { compliancesData } = this.state
 
     return (
       <div>

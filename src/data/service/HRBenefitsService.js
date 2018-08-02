@@ -853,4 +853,12 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Code of Conduct  */
+
+  getCompliances (token) {
+    return this.apiClient.get('v1/compliances/coc', {
+      headers : { token }
+    })
+  }
 }
