@@ -798,19 +798,19 @@ export default class HRBenefitsService {
     const formData = new FormData()
     formData.append('uuid', 12345)
     const objectMaternity = {
-      accountNumber,
-      releasingCenter,
       deliveryType : addMaternityAssistanceParam.typeOfDelivery,
       deliveryDate : addMaternityAssistanceParam.dateOfDelivery,
       amount : addMaternityAssistanceParam.amount,
       orNumber : addMaternityAssistanceParam.orNumber,
-      orDate : addMaternityAssistanceParam.orDate
+      orDate : addMaternityAssistanceParam.orDate,
+      accountNumber,
+      releasingCenter,
     }
     addMaternityAssistanceParam.attachments.map((resp, key) => (
         formData.append(resp.name, resp.file)
       )
     )
-    formData.append("body", JSON.stringify(objectMaternity))
+    formData.append('body', JSON.stringify(objectMaternity))
     return this.apiClient.post('v1/maternity/submit', formData, {
       headers : { token }
     })
@@ -832,7 +832,7 @@ export default class HRBenefitsService {
   ) {
     const formData = new FormData()
     formData.append('uuid', 12345)
-    const objectMaternity = {
+    const objectMaternitySSS = {
       address : {
         room : addMaternityAssistanceSSSParam.roomNumber,
         house : addMaternityAssistanceSSSParam.houseNumber,
@@ -852,7 +852,7 @@ export default class HRBenefitsService {
         formData.append(resp.name, resp.file)
       )
     )
-    formData.append("body", JSON.stringify(objectMaternity))
+    formData.append('body', JSON.stringify(objectMaternitySSS))
     return this.apiClient.post('v1/maternity/submit/sss', formData, {
       headers : { token }
     })
