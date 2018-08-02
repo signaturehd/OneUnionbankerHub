@@ -1,4 +1,4 @@
-import store from '../../../store'
+import { store } from '../../../store'
 import { NotifyActions } from '../../../actions'
 
 import ValidateMaternityAssistanceInteractor from
@@ -74,11 +74,10 @@ export default class MaternityAssistancePresenter {
             attachments
           )
         )
-
-      .subscribe(
+        .subscribe(
         data => {
-          this.view.hideCircularLoader()
           this.view.noticeOfUndertaking(data)
+          this.view.hideCircularLoader()
         },  errors => {
             this.view.noticeResponseResp(errors)
             this.view.hideCircularLoader()

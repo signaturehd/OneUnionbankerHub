@@ -138,13 +138,12 @@ class MaternityAssistanceFragment extends BaseMVPView {
       orNumberText,
       attachmentArray
     } = this.state
-
     this.presenter.addMaternityAssistance(
       typeDeliveryId,
       moment(deliveryDate).format('MM/DD/YYYY'),
       amount,
-      moment(preferredDate).format('MM/DD/YYYY'),
       orNumberText.toString(),
+      moment(preferredDate).format('MM/DD/YYYY'),
       attachmentArray)
   }
 
@@ -253,7 +252,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
                 typeOfDeliveryErrorMessage : ''
               })
             }
-            onClose = { () => this.setState({ showDepedendentModalResp : false }) }
+            onClose = { () => this.setState({ showTypeOfDeliveryModalResp : false }) }
           />
         }
         <div>

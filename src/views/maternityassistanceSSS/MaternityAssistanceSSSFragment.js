@@ -253,7 +253,7 @@ class MaternityAssistanceSSSFragment extends BaseMVPView {
                 typeOfDeliveryErrorMessage : ''
               })
             }
-            onClose = { () => this.setState({ showDepedendentModalResp : false }) }
+            onClose = { () => this.setState({ showTypeOfDeliveryModalResp : false }) }
           />
         }
         <div>

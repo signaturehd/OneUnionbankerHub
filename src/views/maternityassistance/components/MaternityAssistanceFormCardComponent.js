@@ -53,12 +53,12 @@ class MaternityAssistanceCardComponent extends Component {
   } = this.props
 
   return (
-    <div className={ 'outpatient-container' }>
-      <div className={ 'outpatient-grid-column-2' }>
+    <div className={ 'maternity-container' }>
+      <div className={ 'maternity-grid-column-2' }>
         <div></div>
         <div>
-          <div className={ 'outpatient-form-card' }>
-            <div className={ 'outpatient-form-card-body' }>
+          <div className={ 'maternity-form-card' }>
+            <div className={ 'maternity-form-card-body' }>
               <GenericInput
                 value = { typeDeliveryName }
                 onClick = { () => requestTypeOfDeliveryFunc(true) }
@@ -80,6 +80,7 @@ class MaternityAssistanceCardComponent extends Component {
                 hint = { 'Enter Amount' }
                 text = { 'Amount' }
                 value = { amount }
+                onFocus = { true }
                 errorMessage = { amountErrorMessage }
                 disabled = { showEditSubmitButton }
                 onChange = { e => {
@@ -128,11 +129,11 @@ class MaternityAssistanceCardComponent extends Component {
               <br/>
               {
                 showEditSubmitButton ?
-                <div className = { 'outpatient-form-review' }>
+                <div className = { 'maternity-form-review' }>
                   <GenericButton
                     type = { 'button' }
                     text = { 'Edit' }
-                    className = { 'outpatient-edit-form' }
+                    className = { 'maternity-edit-form' }
                     onClick = { () =>
                       editFormDataFunc()
                       }
@@ -141,7 +142,7 @@ class MaternityAssistanceCardComponent extends Component {
                     type = { 'button' }
                     text = { 'Submit' }
                     onClick = { () => onSubmitFunc() }
-                    className = { 'outpatient-submit-form-button' }
+                    className = { 'maternity-submit-form-button' }
                     />
                 </div>
                 :
@@ -152,7 +153,7 @@ class MaternityAssistanceCardComponent extends Component {
                     onClick = {
                       () => showFormReview(true)
                     }
-                    className = { 'outpatient-submit' } />
+                    className = { 'maternity-submit' } />
                 </div>
               }
           </div>
