@@ -26,6 +26,10 @@ class ComplianceFragment extends BaseMVPView {
     }
   }
 
+  componentDidMount () {
+    this.props.setSelectedNavigation(9)
+  }
+
   showCircularLoader () {
     this.setState({ enableLoader : true })
   }

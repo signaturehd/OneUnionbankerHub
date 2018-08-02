@@ -81,6 +81,7 @@ class SideBar extends Component {
         className: 'logout-icon'
       },
     ]
+
   return (
     <div className = { '_sidebar-overlay' }>
       <ul className = { '_link-list ul' }>
