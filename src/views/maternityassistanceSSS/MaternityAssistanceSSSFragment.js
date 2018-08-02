@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import ConnectView from '../../utils/ConnectView'
-import Presenter from './presenter/MaternityAssistancePresenter'
+import Presenter from './presenter/MaternityAssistanceSSSPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 
 import {
@@ -18,14 +18,14 @@ import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 import store from '../../store'
 import { NotifyActions } from '../../actions'
 
-import FormComponent from './components/MaternityAssistanceFormCardComponent'
+import FormComponent from './components/MaternityAssistanceSSSFormCardComponent'
 
 import * as MaternityAssistanceFunction from
 './function/MaternityAssistanceFunction'
 
 import moment from 'moment'
 
-class MaternityAssistanceFragment extends BaseMVPView {
+class MaternityAssistanceSSSFragment extends BaseMVPView {
   constructor (props) {
     super (props)
       this.state = {
@@ -131,24 +131,33 @@ class MaternityAssistanceFragment extends BaseMVPView {
 
   submitForm () {
     const {
-      typeDeliveryId,
-      deliveryDate,
-      amount,
-      preferredDate,
-      orNumberText,
-      attachmentArray
+      roomNumber,
+      houseNumber,
+      street,
+      subdivision,
+      barangay,
+      city,
+      province,
+      zipCode,
+      noOfPregnancy,
+      expectedDateOfDelivery,
+      noOfDelivery,
+      noOfMiscarriage,
     } = this.state
-
-    let dateOfDelivery = moment(deliveryDate).format('MM/DD/YYYY')
-    let preferDate = moment(preferredDate).format('MM/DD/YYYY')
-
-    this.presenter.addMaternityAssistance(
-      typeDeliveryId,
-      dateOfDelivery,
-      amount,
-      preferDate,
-      orNumberText.toString(),
-      attachmentArray)
+    this.presenter.addMaternityAssistanceSSS(
+      roomNumber,
+      houseNumber,
+      street,
+      subdivision,
+      barangay,
+      city,
+      province,
+      zipCode,
+      noOfPregnancy,
+      moment(expectedDateOfDelivery).format('MM/DD/YYYY')
+      noOfDelivery,
+      noOfMiscarriage,
+    )
   }
 
   showFormReviewFieldDisabled (e) {
@@ -267,7 +276,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
           {
             titleChange ?
             <h2 className = { 'header-margin-default' }>
-              Maternity Assistance
+              Maternity Notifications - SSS
             </h2>
             :
             <h2 className = { 'header-margin-default' }>
@@ -310,9 +319,9 @@ class MaternityAssistanceFragment extends BaseMVPView {
   }
 }
 
-MaternityAssistanceFragment.propTypes = {
+MaternityAssistanceSSSFragment.propTypes = {
   selectedArray : PropTypes.func,
   classProp : PropTypes.string,
 }
 
-export default ConnectView(MaternityAssistanceFragment, Presenter)
+export default ConnectView(MaternityAssistanceSSSFragment, Presenter)

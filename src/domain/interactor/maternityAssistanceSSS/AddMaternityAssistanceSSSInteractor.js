@@ -1,15 +1,15 @@
-export default class AddMedicalSchedulingInteractor {
+export default class AddMaternityAssistanceSSSInteractor {
   constructor (client) {
     this.client = client
   }
-  
-  execute (addMedicalSchedulingParam) {
-    return this.client.addMedicalScheduling(
+
+  execute (addMaternityAssistanceSSSParam) {
+    this.client.addMaternityAssistance(
       this.client.getToken(),
       this.client.getAccountToken(),
       this.client.getAccountNumber(),
       this.client.getReleasingCenter(),
-      addMedicalSchedulingParam
+      addMaternityAssistanceSSSParam
     )
   }
 }

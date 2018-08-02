@@ -10,7 +10,7 @@ import {
   Line
 } from '../../../ub-components/'
 
-import './styles/maternityComponentStyle.css'
+import './styles/maternitySSSComponentStyle.css'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -60,11 +60,75 @@ class MaternityAssistanceCardComponent extends Component {
           <div className={ 'outpatient-form-card' }>
             <div className={ 'outpatient-form-card-body' }>
               <GenericInput
-                value = { typeDeliveryName }
-                onClick = { () => requestTypeOfDeliveryFunc(true) }
-                text = { 'Type of Delivery' }
+                value = { '' }
+                onClick = { () => {} }
+                text = { 'Room Number' }
                 disabled = { showEditSubmitButton }
-                errorMessage = { typeOfDeliveryErrorMessage }
+                errorMessage = { '' }
+                type = { 'text' }/>
+                <br/>
+              <GenericInput
+                value = { '' }
+                onClick = { () => {} }
+                text = { 'House Number' }
+                disabled = { showEditSubmitButton }
+                errorMessage = { '' }
+                type = { 'text' }/>
+                <br/>
+              <GenericInput
+                value = { '' }
+                onClick = { () => {} }
+                text = { 'Street Name' }
+                disabled = { showEditSubmitButton }
+                errorMessage = { '' }
+                type = { 'text' }/>
+                <br/>
+              <GenericInput
+                value = { '' }
+                onClick = { () => {} }
+                text = { 'Subdivision' }
+                disabled = { showEditSubmitButton }
+                errorMessage = { '' }
+                type = { 'text' }/>
+                <br/>
+              <GenericInput
+                value = { '' }
+                onClick = { () => {} }
+                text = { 'Barangay' }
+                disabled = { showEditSubmitButton }
+                errorMessage = { '' }
+                type = { 'text' }/>
+                <br/>
+              <GenericInput
+                value = { '' }
+                onClick = { () => {} }
+                text = { 'City' }
+                disabled = { showEditSubmitButton }
+                errorMessage = { '' }
+                type = { 'text' }/>
+                <br/>
+              <GenericInput
+                value = { '' }
+                onClick = { () => {} }
+                text = { 'Province' }
+                disabled = { showEditSubmitButton }
+                errorMessage = { '' }
+                type = { 'text' }/>
+                <br/>
+              <GenericInput
+                value = { '' }
+                onClick = { () => {} }
+                text = { 'Zip Code' }
+                disabled = { showEditSubmitButton }
+                errorMessage = { '' }
+                type = { 'text' }/>
+                <br/>
+              <GenericInput
+                value = { '' }
+                onClick = { () => {} }
+                text = { 'Number Of Pregnancy' }
+                disabled = { showEditSubmitButton }
+                errorMessage = { '' }
                 type = { 'text' }/>
                 <br/>
               <DatePicker
@@ -72,60 +136,29 @@ class MaternityAssistanceCardComponent extends Component {
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateOfDelivertFunc(e) }
                 minDate = { moment() }
-                text = { 'Date of Delivery' }
+                text = { 'Expected Date of Delivery' }
                 errorMessage = { dateOfDeliveryErrorMessage }
                 />
                 <br/>
               <GenericInput
-                hint = { 'Enter Amount' }
-                text = { 'Amount' }
-                value = { amount }
-                errorMessage = { amountErrorMessage }
+                value = { '' }
                 disabled = { showEditSubmitButton }
-                onChange = { e => {
-                    desiredAmountFunc(e.target.value)
-                  }
-                }
-                type = { 'text' } />
-              <br/>
-              <DatePicker
-                selected = { preferredDate }
-                disabled = { showEditSubmitButton }
-                onChange = { (e) => dateFunc(e) }
-                maxDate = { moment() }
-                text = { 'Official Receipt Date' }
-                errorMessage = { dateErrorMessage }
-                />
+                onChange = { (e) => {} }
+                text = { 'Number of Delivery' }
+                errorMessage = { '' }
+                type = { 'text' }/>
                 <br/>
               <GenericInput
-                value = { orNumberText }
+                value = { '' }
                 disabled = { showEditSubmitButton }
-                onChange = { (e) => oRNumberFunc(e.target.value) }
-                text = { 'Official Receipt Number' }
-                errorMessage = { orNumberErrorMessage }
+                onChange = { (e) => {} }
+                text = { 'Number of Miscarriage' }
+                errorMessage = { '' }
                 type = { 'text' }/>
             </div>
             <br/>
-              {
-                attachmentsData.length !== 0  ?
-                <div>
-                  <MultipleFileUploader
-                    placeholder = { 'Form Attachments' }
-                    fileArray = { attachmentsData }
-                    setFile = { (resp) => setAttachmentArrayFunc(resp) }
-                    disabled = { showEditSubmitButton }
-                    errorMessage = {
-                      showEditSubmitButton ?
-                      '' :
-                      `Please upload the required attachments`  }
-                  />
-                </div>
-                :
-                <div></div>
-              }
-              <br/>
-              <Line/>
-              <br/>
+            <Line/>
+            <br/>
               {
                 showEditSubmitButton ?
                 <div className = { 'outpatient-form-review' }>
