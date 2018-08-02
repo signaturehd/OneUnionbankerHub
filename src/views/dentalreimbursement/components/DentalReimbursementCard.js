@@ -217,7 +217,6 @@ render () {
     file,
     file2
   } = this.state
-  console.log(this.state.fileAttachments)
 
   const { imagePreviewUrl, imagePreviewUrl2 } = this.state
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { GenericInput, GenericButton, FileUploader, DatePicker } from '../../../ub-components/'
+import { GenericInput, GenericButton, FileUploader, DatePicker, ViewMoreButton } from '../../../ub-components/'
 import * as func from '../controller/MedicalSchedulingFunction'
 import './styles/medicalSchedulingComponentStyle.css'
 import '../../../ub-components/TextBox/styles/input.css'
@@ -22,8 +22,14 @@ export default class MedicalSchedulingFormCardComponent extends Component {
       procedureList,
       preferredDate,
       onChangePreferredDate,
-      onSubmit
+      onSubmit,
+      index,
+      viewMoreText,
+      viewMore,
+      viewLess
     } = this.props
+
+    const isVisible = (packageLabel && procedureList && procedureList.length > 4) ? '' : 'hide'
 
     return (
       <div className={ 'medsched-container' }>
@@ -56,10 +62,9 @@ export default class MedicalSchedulingFormCardComponent extends Component {
               <table>
                 <tr>
                   <th>Package Procedures<p>Procedures that are marked with asterisk(*) are required.</p></th>
-
                 </tr>
                 {
-                    packageLabel && procedureList.map(
+                    packageLabel && procedureList.slice(0, index).map(
                     (proc, key) => (
                       <tr>
                         <td>{ proc.name }{ !proc.optional && '*' }</td>
@@ -69,6 +74,20 @@ export default class MedicalSchedulingFormCardComponent extends Component {
                 }
               </table>
             </div>
+            <button
+              type = { 'button' }
+              className = { `viewmore tooltip ${isVisible}` }
+              onClick = {
+                () => {
+                  if(index === procedureList.length)
+                    viewLess()
+                  else
+                    viewMore()
+                }
+              }>
+              <img src={ require('../../../images/icons/horizontal.png') } />
+              <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+            </button>
             <br/>
           {
             isFormReview ?
@@ -81,6 +100,7 @@ export default class MedicalSchedulingFormCardComponent extends Component {
               <GenericButton
                 type = { 'button' }
                 text = { 'Submit' }
+                viewmore = { true }
                 onClick = { () => onSubmit() }
                 className = { 'medsched-submit' }/>
             </div> :

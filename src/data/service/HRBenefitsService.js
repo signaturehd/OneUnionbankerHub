@@ -796,22 +796,60 @@ export default class HRBenefitsService {
     addMaternityAssistanceParam
   ) {
     const formData = new FormData()
-    formData.append('uuid', 12345)
     const objectMaternity = {
-      accountNumber,
-      releasingCenter,
       deliveryType : addMaternityAssistanceParam.typeOfDelivery,
       deliveryDate : addMaternityAssistanceParam.dateOfDelivery,
       amount : addMaternityAssistanceParam.amount,
       orNumber : addMaternityAssistanceParam.orNumber,
-      orDate : addMaternityAssistanceParam.orDate
+      orDate : addMaternityAssistanceParam.orDate,
+      accountNumber,
+      releasingCenter,
     }
+    formData.append('uuid', 12345)
     addMaternityAssistanceParam.attachments.map((resp, key) => (
         formData.append(resp.name, resp.file)
       )
     )
-    formData.append("body", JSON.stringify(objectMaternity))
+
+    formData.append('body', JSON.stringify(objectMaternity))
     return this.apiClient.post('v1/maternity/submit', formData, {
+      headers : { token }
+    })
+  }
+
+  /* Maternity Assistance SSS */
+
+  addMaternityAssistanceSSS (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMaternityAssistanceSSSParam
+  ) {
+    const formData = new FormData()
+    formData.append('uuid', 12345)
+    const objectMaternitySSS = {
+      address : {
+        room : addMaternityAssistanceSSSParam.roomNumber,
+        house : addMaternityAssistanceSSSParam.houseNumber,
+        street: addMaternityAssistanceSSSParam.street,
+        subdivision: addMaternityAssistanceSSSParam.subdivision,
+        barangay: addMaternityAssistanceSSSParam.barangay,
+        city : addMaternityAssistanceSSSParam.city,
+        province : addMaternityAssistanceSSSParam.province,
+        zipCode : addMaternityAssistanceSSSParam.zipCode,
+      },
+      numberOfPregnancy : addMaternityAssistanceSSSParam.noOfPregnancy,
+      expectedDateOfDelivery : addMaternityAssistanceSSSParam.expectedDateOfDelivery,
+      numberOfDelivery: addMaternityAssistanceSSSParam.noOfDelivery,
+      numberOfMiscarriage : addMaternityAssistanceSSSParam.noOfMiscarriage ,
+    }
+    addMaternityAssistanceSSSParam.attachments.map((resp, key) => (
+        formData.append(resp.name, resp.file)
+      )
+    )
+    formData.append('body', JSON.stringify(objectMaternitySSS))
+    return this.apiClient.post('v1/maternity/submit/sss', formData, {
       headers : { token }
     })
   }
