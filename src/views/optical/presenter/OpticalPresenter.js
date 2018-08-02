@@ -49,6 +49,10 @@ export default class OpticalPresenter {
         this.view.showAttachmentsMap(attachmentsArray, data.limit)
         this.view.isEligible(data ? true : false)
       })
-      .subscribe()
+      .subscribe(data => {
+        // this.view.isEligible(data ? true : false)
+      }, errors => {
+        this.view.isEligible(false)
+      })
     }
   }
