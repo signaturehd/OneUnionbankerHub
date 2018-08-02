@@ -818,11 +818,6 @@ export default class HRBenefitsService {
   }
 
   /* Maternity Assistance SSS */
-  validateMaternityAssistanceSSS (token) {
-    return this.apiClient.get('v1/maternity/validate/sss', {
-      headers : { token }
-    })
-  }
 
   addMaternityAssistanceSSS (
     token,
