@@ -144,14 +144,20 @@ class MaternityAssistanceSSSFragment extends BaseMVPView {
       noOfDelivery,
       noOfMiscarriage,
     } = this.state
-
-    // this.presenter.addMaternityAssistance(
-    //   typeDeliveryId,
-    //   moment(deliveryDate).format('MM/DD/YYYY'),
-    //   amount,
-    //   moment(preferredDate).format('MM/DD/YYYY'),
-    //   orNumberText.toString(),
-    //   attachmentArray)
+    this.presenter.addMaternityAssistanceSSS(
+      roomNumber,
+      houseNumber,
+      street,
+      subdivision,
+      barangay,
+      city,
+      province,
+      zipCode,
+      noOfPregnancy,
+      moment(expectedDateOfDelivery).format('MM/DD/YYYY')
+      noOfDelivery,
+      noOfMiscarriage,
+    )
   }
 
   showFormReviewFieldDisabled (e) {
