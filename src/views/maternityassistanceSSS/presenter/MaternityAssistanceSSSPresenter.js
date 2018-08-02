@@ -44,7 +44,6 @@ export default class MaternityAssistanceSSSPresenter {
             name : attachment
           })
         })
-        this.view.showTypeOfDeliveryMap(typeOfDelivery)
         this.view.showAttachmentsMap(attachmentArray)
         this.view.showValidatedMaternity(data)
       })
