@@ -642,4 +642,35 @@ export default class HRBenefitsClient {
       )
       .pipe(ServiceErrorOperator())
   }
+
+  /* Employee Trainings */
+
+  getEmployeeTraining (token) {
+    return this.service.getEmployeeTraining (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+
+  /* Maternity Assistance */
+  validateMaternityAssistance (token) {
+    return this.service.validateMaternityAssistance(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addMaternityAssistance (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMaternityAssistanceParam
+  ) {
+    return this.service.addMaternityAssistance(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      addMaternityAssistanceParam
+    )
+      .pipe(ServiceErrorOperator())
+  }
 }

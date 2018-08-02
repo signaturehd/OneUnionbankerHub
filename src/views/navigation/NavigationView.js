@@ -35,6 +35,7 @@ import DentalLoaView from '../dentalloa/DentalLoaFragment'
 import OpticalFragment from '../optical/OpticalFragment'
 import MedicalSchedulingFragment from '../medicalscheduling/MedicalSchedulingFragment'
 import OutPatientReimbursementFragment from '../outpatientreimbursement/OutPatientReimbursementFragment'
+import MaternityAssistanceFragment from '../maternityassistance/MaternityAssistanceFragment'
 /* MPL */
 import HousingAssistanceFragment from '../housingassistanceloan/HousingAssistanceFragment'
 import EmergencyLoanFragment from '../emergencyloan/EmergencyLoanFragment'
@@ -58,6 +59,7 @@ import Payslip from '../payslip/PayslipFragment'
 
 import OnboardingView from '../onboarding/OnboardingView'
 import Carousel from '../carousel/Carousel'
+
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
@@ -212,6 +214,9 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation }/>}/>
                   <Route path = '/mybenefits/benefits/medical/reimbursement/outpatient' render = { props =>
                     <OutPatientReimbursementFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                  <Route path = '/mybenefits/benefits/medical/assistance/maternity' render = { props =>
+                    <MaternityAssistanceFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation }/>}/>
                   <Route path = '/mybenefits/benefits/loans/housingassistance' render = { props =>
                     <HousingAssistanceFragment { ...props }

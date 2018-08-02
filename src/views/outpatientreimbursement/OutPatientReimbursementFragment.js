@@ -37,21 +37,27 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         outpatientData : [],
         procedureData : [],
         dependentId: null,
-        dependentName: null,
+        dependentName: '',
         procedureId: null,
-        procedureName: null,
+        procedureName: '',
         procedureArray: [],
         showDepedendent: false,
         showProcedure: false,
         amount: '',
         diagnosisText : '',
         orNumberText: '',
-        attachmentErrorMessage: null,
         preferredDate: '',
         showProcedureInput: false,
         attachmentsData: [],
         attachmentArray: [],
-        showEditSubmitButton: false
+        showEditSubmitButton: false,
+        attachmentErrorMessage: '',
+        dependentErrorMessage: '',
+        diagnosisErrorMessage: '',
+        dateErrorMessage: '',
+        orNumberErrorMessage: '',
+        amountErrorMessage : '',
+        titleChange: true,
     }
   }
 
@@ -100,28 +106,28 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     this.setState({ showProcedure })
   }
 
-  getFileAttachments (attachmentArray) {
+  setFileAttachments (attachmentArray) {
     this.setState({ attachmentArray })
   }
 
   validateAmount (e) {
     const validate = OutPatientReimbursementFunction.checkedAmount(e)
-    this.setState({ amount : validate })
+    this.setState({ amount : validate, amountErrorMessage : '' })
   }
 
   validateText (e) {
     const validate = OutPatientReimbursementFunction.checkedValidateText(e)
-    this.setState({ diagnosisText : validate })
+    this.setState({ diagnosisText : validate , diagnosisErrorMessage : '' })
   }
 
   validateSymbol (e) {
     const validate = OutPatientReimbursementFunction.checkedValidateSymbol(e)
-    this.setState({ orNumberText : validate.toUpperCase() })
+    this.setState({ orNumberText : validate.toUpperCase(), orNumberErrorMessage : '' })
   }
 
   validateDate (e) {
     const validate = OutPatientReimbursementFunction.checkedMDYDate(e)
-    this.setState({ preferredDate : validate })
+    this.setState({ preferredDate : validate, dateErrorMessage : '' })
   }
 
   validateRequired (e) {
@@ -129,7 +135,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
   }
 
   editFormReview (e) {
-    this.setState({ showEditSubmitButton : false })
+    this.setState({ showEditSubmitButton : false, titleChange : true })
   }
 
   submitForm () {
@@ -165,27 +171,23 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       amount,
       attachmentArray
     } = this.state
-    if (
-      this.validateRequired(!procedureName) ||
-      this.validateRequired(!dependentName) ||
-      this.validateRequired(!diagnosisText) ||
-      this.validateRequired(!preferredDate) ||
-      this.validateRequired(!amount) ||
-      this.validateRequired(!attachmentArray) ||
-      this.validateRequired(!orNumberText)
-    ) {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'OutPatient Reimbursement',
-          message : 'Please enter the required fields and attachments',
-          type: 'warning',
-          duration: 2000
-        })
-      )
+
+    if(!this.validateRequired(dependentName)) {
+     this.setState({ dependentErrorMessage : 'Please select your recipient' })
+    } else if (!this.validateRequired(diagnosisText)) {
+      this.setState({ diagnosisErrorMessage : 'Please enter the diagnosis' })
+    } else if (!this.validateRequired(preferredDate)) {
+      this.setState({ dateErrorMessage : 'Please provide the Official Receipt Date' })
+    } else if (!this.validateRequired(orNumberText)) {
+      this.setState({ orNumberErrorMessage : 'Please provide the Official Receipt Number' })
+    } else if (!this.validateRequired(procedureName)) {
       this.setState({ errorMessageRequiredProcedure : 'Please select a procedure and enter amount required' })
+    } else if (!this.validateRequired(amount)) {
+      this.setState({ amountErrorMessage : 'Please enter an amount for the selected procedure' })
     } else {
       this.setState({
-        errorMessageRequiredProcedure: '',
         showEditSubmitButton: true,
+        titleChange: false,
       })
     }
   }
@@ -213,8 +215,14 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       attachmentsData,
       attachmentArray,
       attachmentErrorMessage,
+      dependentErrorMessage,
+      diagnosisErrorMessage,
+      dateErrorMessage,
+      amountErrorMessage,
       errorMessageRequiredProcedure,
-      showEditSubmitButton
+      orNumberErrorMessage,
+      showEditSubmitButton,
+      titleChange
     } = this.state
 
     const {
@@ -259,7 +267,13 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             label = { 'Dependents' }
             inputArray = { outpatientData && outpatientData.dependents }
             selectedArray = { (dependentId, dependentName) =>
-              this.setState({ dependentId, dependentName, showDepedendent : false }) }
+              this.setState({
+                dependentId,
+                dependentName,
+                showDepedendent : false,
+                dependentErrorMessage : ''
+              })
+            }
             onClose = { () => this.setState({ showDepedendent : false }) }
           />
         }
@@ -273,7 +287,8 @@ class OutPatientReimbursementFragment extends BaseMVPView {
                 procedureName,
                 procedureId,
                 showProcedure : false,
-                showProcedureInput : true
+                showProcedureInput : true,
+                errorMessageRequiredProcedure : ''
                 })
               }
             }
@@ -285,9 +300,16 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             className = { 'back-arrow' }
             onClick = { this.navigate.bind(this) }>
           </i>
-          <h2 className = { 'header-margin-default' }>
-            OUTPATIENT REIMBURSEMENT
-          </h2>
+          {
+            titleChange ?
+            <h2 className = { 'header-margin-default' }>
+              Outpatient Reimbursement
+            </h2>
+            :
+            <h2 className = { 'header-margin-default' }>
+              Form Summary
+            </h2>
+          }
         </div>
         {
           enabledLoader ?
@@ -300,9 +322,9 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             diagnosisValueFunc = { (resp) => this.validateText(resp) }
             requestDepdentModalFunc = { (resp) => this.showDependentModal(resp) }
             dateFunc = { (resp) => this.validateDate(resp) }
-            selectedProcedureAmount = { (resp) => this.validateAmount(resp) }
+            selectedProcedureAmountFunc = { (resp) => this.validateAmount(resp) }
             showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
-            setAttachmentArrayFunc = { (resp) => this.getFileAttachments(resp) }
+            setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
             onSubmitFunc = { () => this.submitForm() }
             editFormDataFunc = { () => this.editFormReview() }
             dependentName = { dependentName }
@@ -313,9 +335,14 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             procedureName = { procedureName }
             showProcedureInput = { showProcedureInput }
             attachmentsData = { attachmentsData }
-            attachmentErrorMessage = { attachmentErrorMessage }
             showEditSubmitButton = { showEditSubmitButton }
             errorMessageRequiredProcedure = { errorMessageRequiredProcedure }
+            attachmentErrorMessage = { attachmentErrorMessage }
+            dependentErrorMessage = { dependentErrorMessage }
+            diagnosisErrorMessage = { diagnosisErrorMessage }
+            dateErrorMessage = { dateErrorMessage }
+            orNumberErrorMessage = { orNumberErrorMessage }
+            amountErrorMessage = { amountErrorMessage }
           />
         }
       </div>

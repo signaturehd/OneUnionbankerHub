@@ -32,7 +32,10 @@ class SalaryLoanCardComponent extends Component {
       modeOfLoanId,
       fileAttachments,
       offsetLoan,
-      onClick
+      onClick,
+      status,
+      updateForm,
+      review
     } = this.props
 
     return (
@@ -40,6 +43,7 @@ class SalaryLoanCardComponent extends Component {
         <GenericInput
           text = { 'Purpose of Availment' }
           onClick = { () => showPurposeOfAvailment() }
+          disabled = { review }
           value = { purposeOfAvailment }
           readOnly
         />
@@ -48,6 +52,7 @@ class SalaryLoanCardComponent extends Component {
           text = { 'Mode of Loan' }
           onClick = { () => showModeOfLoan() }
           value = { modeOfLoan }
+          disabled = { review }
           readOnly
         />
         <br/>
@@ -55,23 +60,28 @@ class SalaryLoanCardComponent extends Component {
           text = { 'Term of Loan' }
           onClick = { () => showTermOfLoan() }
           value = { termOfLoan }
+          disabled = { review }
           readOnly
         />
         <br/>
         <GenericInput
           text = { 'Desired Amount' }
           maxLength = { 7 }
+          disabled = { review }
           onChange = { (e) => desiredAmount(e.target.value) }
         />
         <br/>
-        
+
         {
           modeOfLoanId === 2 &&
           <div>
             <h2>Promissorry Note &nbsp;
-              <GenericButton text = { 'Add Promissorry Note' }
-                onClick = { () => showOffsetLoan() }
-              />
+              {
+                review &&
+                <GenericButton text = { 'Add Promissorry Note' }
+                  onClick = { () => showOffsetLoan() }
+                />
+              }
             </h2>
             <br/>
               {
@@ -87,17 +97,27 @@ class SalaryLoanCardComponent extends Component {
           fileAttachments.length !== 0 &&
           <div>
               <MultipleFileUploader
-              placeholder = { 'Form Attachments' }
-              fileArray = { fileAttachments }
+                placeholder = { 'Form Attachments' }
+                fileArray = { fileAttachments }
+                disabled = { review }
               />
             <Line/>
           </div>
         }
         <br/>
-        <GenericButton
-          text = { 'Submit' }
-          onClick = { () => onClick() }
-        />
+        <div className = { 'salary-function' } >
+          {
+            review &&
+            <GenericButton
+              text = { 'Back' }
+              onClick = { () => updateForm() }
+            />
+          }
+          <GenericButton
+            text = { status }
+            onClick = { () => onClick() }
+          />
+        </div>
       </div>
     )
   }
@@ -110,7 +130,9 @@ SalaryLoanCardComponent.propTypes = {
   showOffsetLoan : PropTypes.func,
   desiredAmount : PropTypes.func,
   onClick : PropTypes.func,
+  updateForm : PropTypes.func,
   modeOfLoanId : PropTypes.number,
+  status : PropTypes.string,
   termOfLoan : PropTypes.string,
   modeOfLoan : PropTypes.string,
   purposeOfAvailment : PropTypes.string,
@@ -124,6 +146,7 @@ SalaryLoanCardComponent.propTypes = {
     )
   ),
   offsetLoan : PropTypes.array,
+  review : PropTypes.bool,
 }
 
 SalaryLoanCardComponent.defaultProps = {

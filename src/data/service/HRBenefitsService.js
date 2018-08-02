@@ -103,12 +103,16 @@ export default class HRBenefitsService {
     const opticalObject = {
       accountNumber,
       amount: opticalParam.amount,
+      officialReceiptDate: opticalParam.oRDate,
+      officialReceiptNumber : opticalParam.orNumber,
       releasingCenter,
       distributor: 'distributorTest'
     }
     formData.append('uuid', 123345)
-    formData.append('med', opticalParam.medCert)
-    formData.append('opt', opticalParam.optCert)
+    opticalParam.attachmentData.map((resp) => (
+      formData.append(resp.name, resp.file)
+      )
+    )
     formData.append('body', JSON.stringify(opticalObject))
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
       headers : { token }
@@ -391,11 +395,11 @@ export default class HRBenefitsService {
       promissoryNoteNumbers : addMotorLoanParam.selectedOffsetLoan,
       distributor : addMotorLoanParam.dealerName,
       loan : {
-        id : addMotorLoanParam.loanId,
-        mode : addMotorLoanParam.modeOfLoan ? 2 : 1,
-        principalAmount : addMotorLoanParam.principalLoanAmount,
-        purpose : addMotorLoanParam.purposeOfLoan,
-        term : addMotorLoanParam.loanTerm,
+        id : addMotorLoanParam.loanType,
+        mode : addMotorLoanParam.modeOfLoanId ? 2 : 1,
+        principalAmount : addMotorLoanParam.amountValue,
+        purpose : addMotorLoanParam.poaText,
+        term : addMotorLoanParam.termId,
       },
     }
     formData.append('uuid', 12345)
@@ -419,11 +423,11 @@ export default class HRBenefitsService {
       releasingCenter,
       accountNumber,
       loan : {
-        id : addComputerLoanParam.loanId,
-        mode : addComputerLoanParam.modeOfLoan ? 2 : 1,
-        principalAmount : addComputerLoanParam.principalLoanAmount,
-        purpose : addComputerLoanParam.purposeOfLoan,
-        term : addComputerLoanParam.loanTerm,
+        id : addComputerLoanParam.loanType,
+        mode : addComputerLoanParam.modeOfLoanId ? 2 : 1,
+        principalAmount : addComputerLoanParam.amountValue,
+        purpose : addComputerLoanParam.poaText,
+        term : addComputerLoanParam.termId,
       },
       promissoryNoteNumbers : addComputerLoanParam.selectedOffsetLoan,
       distributor : addComputerLoanParam.supplierName,
@@ -766,6 +770,49 @@ export default class HRBenefitsService {
     formData.append('body', JSON.stringify(objectOutPatient))
       return this.apiClient.post('v1/outpatient/submit', formData, {
         headers : { token }
+    })
+  }
+
+  /* Employee Trainings */
+
+  getEmployeeTraining (token) {
+    return this.apiClient.get('v1/training/programs', {
+      headers : { token }
+    })
+  }
+
+  /* Maternity Assistance */
+  validateMaternityAssistance (token) {
+    return this.apiClient.get('v1/maternity/validate', {
+      headers : { token }
+    })
+  }
+
+  addMaternityAssistance (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMaternityAssistanceParam
+  ) {
+    const formData = new FormData()
+    formData.append('uuid', 12345)
+    const objectMaternity = {
+      accountNumber,
+      releasingCenter,
+      deliveryType : addMaternityAssistanceParam.typeOfDelivery,
+      deliveryDate : addMaternityAssistanceParam.dateOfDelivery,
+      amount : addMaternityAssistanceParam.amount,
+      orNumber : addMaternityAssistanceParam.orNumber,
+      orDate : addMaternityAssistanceParam.orDate
+    }
+    addMaternityAssistanceParam.attachments.map((resp, key) => (
+        formData.append(resp.name, resp.file)
+      )
+    )
+    formData.append("body", JSON.stringify(objectMaternity))
+    return this.apiClient.post('v1/maternity/submit', formData, {
+      headers : { token }
     })
   }
 }

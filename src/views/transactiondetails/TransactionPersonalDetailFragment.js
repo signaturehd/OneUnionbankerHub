@@ -20,6 +20,8 @@ import OpticalDetailsFragment from './fragments/OpticalDetailsFragment'
 import CarLeaseDetailsFragment from './fragments/CarLeaseDetailsFragment'
 import CalamityAssistanceDetailsFragment from './fragments/CalamityAssistanceDetailsFragment'
 import BereavementDetailsFragment from './fragments/BereavementDetailsFragment'
+import MedicalSchedulingDetailsFragment from './fragments/MedicalSchedulingDetailsFragment'
+import OutpatientDetailsFragment from './fragments/OutpatientDetailsFragment'
 
 import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreementsModal'
 import TransactionDetailsFormAttachmentsModal from './modals/TransactionDetailsFormAttachmentsModal'
@@ -42,8 +44,9 @@ function  TransactionDetails (props)  {
   } else if (transactionId === 7) {
     return <DentalLoaDetailsFragment
       details = { transactionDetails }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
       agreementsMethod = { (resp) => agreementsMethod(resp) }
-      transactionsPerson = { transactionsPerson } />
+      transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 8) {
     return <OpticalDetailsFragment
       details = { transactionDetails }
@@ -83,6 +86,7 @@ function  TransactionDetails (props)  {
       attachmentsMethod = { (resp) => attachmentsMethod(resp) }
       agreementsMethod = { (resp) => agreementsMethod(resp) }
       uploadImage = { (transactionId, file) => uploadImage(21, transactionId, file) }
+      showFileReceipt = { showFileReceipt }
       details = { transactionDetails } />
   } else if (transactionId === 22) {
     // Calamity Assistance
@@ -94,7 +98,23 @@ function  TransactionDetails (props)  {
       showFileReceipt = { showFileReceipt }
       details = { transactionDetails }
      />
- } else {
+ } else if (transactionId === 10) {
+   // Medical Scheduling Transaction Details
+   return <MedicalSchedulingDetailsFragment
+    transactionsPerson = { transactionsPerson }
+    agreementsMethod = { (resp) => agreementsMethod(resp) }
+    details = { transactionDetails }
+    />
+ } else if (transactionId === 41) {
+   // Outpatient Reimbursement Transaction Details
+   return <OutpatientDetailsFragment
+     transactionsPerson = { transactionsPerson }
+     attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+     agreementsMethod = { (resp) => agreementsMethod(resp) }
+     details = { transactionDetails }
+    />
+ }
+  else {
    return <h1>No Transaction Occured please reload</h1> // No  Transaction
    }
 }
