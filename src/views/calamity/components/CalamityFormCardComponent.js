@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import {
-  GenericTextBox,
+  GenericInput,
   Card,
   GenericButton,
   FileUploader,
@@ -146,8 +146,7 @@ class CalamityFormCardComponent extends Component {
       }
 
     return (
-      <div className={'calamity-container'}>
-        <div className={ 'calamity-grid-column-2' }>
+      <div className={'calamity-form'}>
           {
             showModal &&
             <CalamityModal
@@ -229,22 +228,10 @@ class CalamityFormCardComponent extends Component {
                 />
               }
 
-          <div></div>
-          <div>
-          <Card className={ 'calamity-form-card' }>
             <h4>
               Property Form
             </h4>
-            <div className={'calamity-form-card-body '}>
-
-            <div className={ 'calamity-icon-text-grid' }>
-              <div>
-                <br/>
-                <span className={ 'calamity-icon-settings calamity-calamity' }/>
-              </div>
-              <div>
-                <GenericTextBox
-                  container={ 'calamity-container' }
+                <GenericInput
                   value={ calamityType ? calamityType : '' }
                   onClick={
                     (e) => {
@@ -256,127 +243,63 @@ class CalamityFormCardComponent extends Component {
                       this.setState({ showModal : true, calamityType: e.target.value })
                    }
                   }
-                  placeholder={ 'Type of Calamity' }
+                  text={ 'Type of Calamity' }
                 />
-              </div>
-            </div>
-
-            <div className={ 'calamity-icon-text-grid-date' }>
-              <div>
                 <br/>
+                  <DatePicker
+                    dateFormat={ 'MM/DD/YYYY' }
+                    maxDate={ moment() }
+                    readOnly
+                    value={ preferredDate ? preferredDate : 'Date of Occurrence' }
+                    selected={ preferredDate ? moment(preferredDate, 'MM/DD/YYYY') : moment()}
+                    onChange={ this.handleChange }
+                    className={ preferredDate ? 'calendar' : 'calendar font-color-gray' }
+                    calendarClassName={ 'calendarClass' }/>
+                <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
                 <br/>
-                <span className={ 'calamity-icon-settings calamity-calendar' }/>
-              </div>
-              <div>
-                  <div>
-                    <DatePicker
-                      dateFormat={ 'MM/DD/YYYY' }
-                      maxDate={ moment() }
-                      readOnly
-                      value={ preferredDate ? preferredDate : 'Date of Occurrence' }
-                      selected={ preferredDate ? moment(preferredDate, 'MM/DD/YYYY') : moment()}
-                      onChange={ this.handleChange }
-                      className={ preferredDate ? 'calendar' : 'calendar font-color-gray' }
-                      calendarClassName={ 'calendarClass' }/>
-                  </div>
-                  <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
-              </div>
-            </div>
-
-            <div className={ 'calamity-icon-text-grid' }>
-              <div>
+              <GenericInput
+                value={ property ? property : '' }
+                onChange={ (e) => this.setState({ property: e.target.value.replace(/[&\/\\#,+()$~%.'":;*?<>\[\]|{}]/g, '') }) }
+                text={ 'Property' }
+                readOnly
+                type={ 'text' }/>
                 <br/>
-                <span className={ 'calamity-icon-settings calamity-property' }/>
-              </div>
-              <div>
-                <GenericTextBox
-                  container={ 'calamity-container' }
-                  value={ property ? property : '' }
-                  onChange={ (e) => this.setState({ property: e.target.value.replace(/[&\/\\#,+()$~%.'":;*?<>\[\]|{}]/g, '') }) }
-                  placeholder={ 'Property' }
-                  readOnly
-                  type={ 'text' }
-                />
-              </div>
-            </div>
-
-            <div className={ 'calamity-icon-text-grid' }>
-              <div>
+              <GenericInput
+                value={ propertyDesc ? propertyDesc : '' }
+                onChange={ (e) => this.setState({ propertyDesc: e.target.value.replace(/[&\/\\#,+()$~%.'":;*?<>\[\]|{}]/g, '') }) }
+                text={ 'Property Description' }
+                readOnly
+                type={ 'text' }/>
                 <br/>
-                <span className={ 'calamity-icon-settings calamity-description' }/>
-              </div>
-              <div>
-                <GenericTextBox
-                  container={ 'calamity-container' }
-                  value={ propertyDesc ? propertyDesc : '' }
-                  onChange={ (e) => this.setState({ propertyDesc: e.target.value.replace(/[&\/\\#,+()$~%.'":;*?<>\[\]|{}]/g, '') }) }
-                  placeholder={ 'Property Description' }
-                  readOnly
-                  type={ 'text' }
-                />
-              </div>
-            </div>
+              <GenericInput
+                value={ propertyType ? propertyType : '' }
+                onClick={
+                  () => this.setState({ showPropModal : true })
+                }
+                onFocus={
+                  () => this.setState({ showPropModal : true })
+                }
+                text={ 'Property Type' }/>
+            <br/>
+              <GenericInput
+                value={ acquisitionValue ? acquisitionValue : '' }
+                onChange={ (e) => this.setState({ acquisitionValue: Number(e.target.value.replace(/[^0-9]/g, '')) }) }
+                text={ 'Acquisition Value' }
+                readOnly
+                type={ 'text' }/>
+            <br/>
+              <GenericInput
+                value={ estimatedCost ? estimatedCost : '' }
+                onChange={
+                  (e) =>
+                    new MinMaxNumberValidation(0, 30000).isValid(e.target.value) ?
+                      this.setState({ estimatedCost: Number(e.target.value.replace(/[^0-9]/g, '')) }) :
+                      this.setState({ estimatedCost: '', showErrorModal: this.RepairCostValidator(e.target.value) })
+                 }
+                text={ 'Estimated Repair Cost' }
+                readOnly
+                type={ 'text' }/>
 
-            <div className={ 'calamity-icon-text-grid' }>
-              <div>
-                <br/>
-                <span className={ 'calamity-icon-settings calamity-property-type' }/>
-              </div>
-              <div>
-                <GenericTextBox
-                  container={ 'calamity-container' }
-                  value={ propertyType ? propertyType : '' }
-                  onClick={
-                    () => this.setState({ showPropModal : true })
-                  }
-                  onFocus={
-                    () => this.setState({ showPropModal : true })
-                  }
-                  placeholder={ 'Property Type' }
-                />
-
-              </div>
-            </div>
-
-            <div className={ 'calamity-icon-text-grid' }>
-              <div>
-                <br/>
-                <span className={ 'calamity-icon-settings calamity-peso' }/>
-              </div>
-              <div>
-                <GenericTextBox
-                  container={ 'calamity-container' }
-                  value={ acquisitionValue ? acquisitionValue : '' }
-                  onChange={ (e) => this.setState({ acquisitionValue: Number(e.target.value.replace(/[^0-9]/g, '')) }) }
-                  placeholder={ 'Acquisition Value' }
-                  readOnly
-                  type={ 'text' }
-                />
-              </div>
-            </div>
-
-            <div className={ 'calamity-icon-text-grid' }>
-              <div>
-                <br/>
-                <span className={ 'calamity-icon-settings calamity-peso' }/>
-              </div>
-              <div>
-                <GenericTextBox
-                  container={ 'calamity-container' }
-                  value={ estimatedCost ? estimatedCost : '' }
-                  onChange={
-                    (e) =>
-                      new MinMaxNumberValidation(0, 30000).isValid(e.target.value) ?
-                        this.setState({ estimatedCost: Number(e.target.value.replace(/[^0-9]/g, '')) }) :
-                        this.setState({ estimatedCost: '', showErrorModal: this.RepairCostValidator(e.target.value) })
-                   }
-                  placeholder={ 'Estimated Repair Cost' }
-                  readOnly
-                  type={ 'text' }
-                />
-              </div>
-            </div>
-              <br/>
               <br/>
                 {
                   showErrorModal &&
@@ -396,15 +319,11 @@ class CalamityFormCardComponent extends Component {
                     </div>
                   </Modal>
                 }
-            </div>
-          </Card>
+
           <br/>
-          <br/>
-          <Card className='calamity-form-card'>
           <h4>
             Form Attachments
           </h4>
-          <div className={'calamity-form-card-body '}>
           {
             imgPrevBC &&
             <div>
@@ -534,7 +453,7 @@ class CalamityFormCardComponent extends Component {
               }
               />
           }
-
+          <br/>
           <GenericButton
             type={ 'button' }
             text={ 'submit' }
@@ -557,10 +476,7 @@ class CalamityFormCardComponent extends Component {
               )
             }
             className={ 'calamity-submit' } />
-            </div>
-          </Card>
-          </div>
-        </div>
+
       </div>
     )
   }
