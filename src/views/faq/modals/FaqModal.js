@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal, CircularLoader } from '../../../ub-components/'
+import { Modal, GenericButton, CircularLoader } from '../../../ub-components/'
+
+import './styles/faqModal.css'
 
 class FaqModal extends Component {
   constructor (props) {
@@ -9,21 +11,34 @@ class FaqModal extends Component {
   }
 
   render () {
-    const { details, onClose, title } = this.props
+    const { categoryName, details, onClick, onClose, title } = this.props
     return (
       <Modal
         isDismisable = { true }
         onClose = { onClose }>
         {
           details ?
+            categoryName ?
             <div>
               <h4>{ title }</h4>
               <div dangerouslySetInnerHTML = {{ __html: details }}/>
-            </div>          :
-            <center>
-              <h3>Please wait...</h3>
-              <CircularLoader show = { true } />
-            </center>
+              <GenericButton
+                type = { 'button' }
+                text = { `Proceed to ${categoryName} Benefits` }
+                onClick = { onClick }
+                className = { 'faqs-button' }
+              />
+            </div>
+            :
+            <div>
+              <h4>{ title }</h4>
+              <div dangerouslySetInnerHTML = {{ __html: details }}/>
+            </div>
+          :
+          <center>
+            <h3>Please wait...</h3>
+            <CircularLoader show = { true } />
+          </center>
         }
       </Modal>
     )
@@ -31,9 +46,11 @@ class FaqModal extends Component {
 }
 
 FaqModal.propTypes = {
+  categoryName: PropTypes.string,
   title: PropTypes.string,
   details: PropTypes.string,
-  onClose: PropTypes.func,
+  onClick: PropTypes.func,
+  onClose: PropTypes.func
 }
 
 export default FaqModal
