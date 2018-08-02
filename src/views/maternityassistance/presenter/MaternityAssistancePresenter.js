@@ -7,7 +7,7 @@ import ValidateMaternityAssistanceInteractor from
 import AddMaternityAssistanceInteractor from
 '../../../domain/interactor/maternityassistance/AddMaternityAssistanceInteractor'
 
-import addParam from '../../../domain/param/AddMaternityAssistanceParam'
+import addMaternityAssistanceParam from '../../../domain/param/AddMaternityAssistanceParam'
 
 export default class MaternityAssistancePresenter {
   constructor (container) {
@@ -28,20 +28,18 @@ export default class MaternityAssistancePresenter {
     this.validateMaternityAssistanceInteractor.execute()
       .map(data => {
         let attachmentArray = []
-        const typeOfDelivery = [
-          {
-            id: 1,
-            name: 'Normal'
-          },
-          {
-            id: 2,
-            name: 'Cesarean'
-          }
-        ]
+        let typeOfDelivery = []
         data &&
         data.attachments.map((attachment, key) => {
           attachmentArray.push({
             name : attachment
+          })
+        })
+        data &&
+        data.typeOfDelivery.map((resp, key) => {
+          typeOfDelivery.push({
+            id : key,
+            name : resp
           })
         })
         this.view.showTypeOfDeliveryMap(typeOfDelivery)
@@ -55,35 +53,34 @@ export default class MaternityAssistancePresenter {
       })
     }
 
-    addMaternityAssistance (
-      typeOfDelivery,
-      dateOfDelivery,
-      amount,
-      orNumber,
-      orDate,
-      attachments
-      ) {
-        this.view.showCircularLoader()
-        this.addMaternityAssistanceInteractor.execute(
-          addParam(
-            typeOfDelivery,
-            dateOfDelivery,
-            amount,
-            orNumber,
-            orDate,
-            attachments
-          )
+  addMaternityAssistance (
+    typeOfDelivery,
+    dateOfDelivery,
+    amount,
+    orNumber,
+    orDate,
+    attachments
+    ) {
+      this.view.showCircularLoader()
+      this.addMaternityAssistanceInteractor.execute(
+        addMaternityAssistanceParam(
+          typeOfDelivery,
+          dateOfDelivery,
+          amount,
+          orNumber,
+          orDate,
+          attachments
         )
-
-      .subscribe(
-        data => {
+      )
+    .subscribe(
+      data => {
+        this.view.hideCircularLoader()
+        this.view.noticeOfUndertaking(data)
+      },  errors => {
+          this.view.noticeResponseResp(errors)
           this.view.hideCircularLoader()
-          this.view.noticeOfUndertaking(data)
-        },  errors => {
-            this.view.noticeResponseResp(errors)
-            this.view.hideCircularLoader()
-            // this.view.navigate()
-          }
-        )
-      }
+          this.view.navigate()
+        }
+      )
+    }
   }

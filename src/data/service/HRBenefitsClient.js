@@ -657,6 +657,7 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+
   addMaternityAssistance (
     token,
     accountToken,
@@ -664,14 +665,13 @@ export default class HRBenefitsClient {
     releasingCenter,
     addMaternityAssistanceParam
   ) {
-    return this.service.addMaternityAssistance(
+    return this.service.addMaternityAssistance (
       token,
       accountToken,
       accountNumber,
       releasingCenter,
-      addMaternityAssistanceParam
-    )
-      .pipe(ServiceErrorOperator())
+      addMaternityAssistanceParam)
+    .pipe(ServiceErrorOperator())
   }
 
   /* Maternity Assistance SSS */

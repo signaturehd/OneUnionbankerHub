@@ -796,7 +796,6 @@ export default class HRBenefitsService {
     addMaternityAssistanceParam
   ) {
     const formData = new FormData()
-    formData.append('uuid', 12345)
     const objectMaternity = {
       deliveryType : addMaternityAssistanceParam.typeOfDelivery,
       deliveryDate : addMaternityAssistanceParam.dateOfDelivery,
@@ -806,10 +805,12 @@ export default class HRBenefitsService {
       accountNumber,
       releasingCenter,
     }
+    formData.append('uuid', 12345)
     addMaternityAssistanceParam.attachments.map((resp, key) => (
         formData.append(resp.name, resp.file)
       )
     )
+
     formData.append('body', JSON.stringify(objectMaternity))
     return this.apiClient.post('v1/maternity/submit', formData, {
       headers : { token }
