@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import {
   GenericInput,
-  Card,
+  DatePicker,
   GenericButton,
   FileUploader,
   Modal
@@ -27,7 +27,6 @@ import {
   MinMaxNumberValidation
 } from '../../../utils/validate'
 
-import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
 class CalamityFormCardComponent extends Component {
