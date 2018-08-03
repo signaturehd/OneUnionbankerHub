@@ -3,7 +3,7 @@ export default class GetCompliancesInteractor {
     this.client = client
   }
 
-  execute () {
-    return this.client.getCompliances(this.client.getToken())
+  execute (file) {
+    return this.client.getCompliancesPdf(this.client.getToken(), file)
   }
 }

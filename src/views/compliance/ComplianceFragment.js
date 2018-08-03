@@ -28,6 +28,7 @@ class ComplianceFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(9)
+    this.presenter.getCompliancesPdf()
   }
 
   showCircularLoader () {
@@ -38,7 +39,7 @@ class ComplianceFragment extends BaseMVPView {
     this.setState({ enableLoader : false })
   }
 
-  showCompliancesData (compliancesData) {
+  setCompliancesPdf (compliancesData) {
     this.setState({ compliancesData })
   }
 
@@ -54,17 +55,6 @@ class ComplianceFragment extends BaseMVPView {
       <div>
         <h2 className={'header-margin-default' }>MY COMPLIANCE</h2>
         <div className={ 'tabs-container' }>
-
-          {
-            // TODO uncomment if required the for approval module
-
-            // <input
-            //    className = { 'input-tab' }
-            //    id='tab3'  type='radio'
-            //    name='tabs'
-            //    onClick = { () => this.props.history.push('/mybenefits/transactions/approval') } />
-            //    <label className = { 'approval-icon' } htmlFor = 'tab3' >For Approval</label>
-          }
 
           <section id='content1'>
             <h1>HELLO COMPLIANCE</h1>

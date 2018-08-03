@@ -694,8 +694,8 @@ export default class HRBenefitsClient {
 
   /* Code of Conduct  */
 
-  getCompliances (token) {
-    return this.service.getCompliances(token)
+  getCompliancesPdf (token, file) {
+    return this.service.getCompliancesPdf(token, file)
       .pipe(ServiceErrorOperator())
   }
 }
