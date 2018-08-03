@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
-import './styles/trainingComponentStyle.css'
+import './styles/myTrainingComponentStyle.css'
 
-import { Card } from '../../../ub-components'
+import { Card, GenericButton } from '../../../ub-components'
+import moment from 'moment'
 
 class MyTrainingListCardComponent extends Component {
   constructor (props) {
@@ -12,72 +13,45 @@ class MyTrainingListCardComponent extends Component {
 
   render () {
     const {
+      id,
       venue,
       startDate,
       title,
       startTime,
       endTime,
       status,
-      endDate
+      endDate,
+      onClick
     } = this.props
+
     return (
 
-      <Card
-         className = { 'mytrainings-card-list mytrainings-card-list-part' }>
+      <Card className = { 'mytrainings-card-list' }>
 
-        <div className = { 'mytrainings-card-content' }>
-          <h2 className = { 'mytrainings-program-title font-weight-bold' }>
-            { title }
-          </h2>
-          <h4 className = { 'mytrainings-label font-weight-bold font-size-11px' }>
-            Program Title
-          </h4>
+        <div className = { 'mytrainings-card-background' }>
         </div>
-
-        <div className = { 'mytrainings-card-info' }>
-          <div
-            className = { 'mytrainings-information-status-hover font-size-12px' }>
-            <div className = { 'mytrainings-information-status' }>
-              <div className = { 'mytrainings-program-title font-weight-bold  font-size-11px' }>
-              { venue }
-              </div>
-              <div className = { 'mytrainings-label font-weight-bold  font-size-10px' }>
-                Venue Type
-              </div>
-            </div>
-            <div >
-              <div className = { 'mytrainings-program-title font-weight-bold  font-size-11px' }>
-              { status }
-              </div>
-              <div className = { 'mytrainings-label font-weight-bold  font-size-10px' }>
-                Status
-              </div>
-            </div>
+        <div className={ 'mytrainings-card-description' }>
+          <div className={ 'mytrainings-title' }>
+            <h4>{ title }</h4>
+          </div>
+          <div className={ 'mytrainings-venue' }>
+            <div></div>
+            <div className={'location-icon'}></div>
+            <h5>{ venue }</h5>
+          </div>
+          <br/>
+          <div className={ 'mytrainings-view-details' }>
+            <GenericButton
+              className={ 'mytrainings-button' }
+              text = { 'View Details' }
+              onClick = { () => onClick(id) }
+            />
           </div>
         </div>
-
-        <div className = { 'mytrainings-grid-x3' }>
-          <div></div>
-          <div>
-            <div
-              className = { 'mytrainings-information-status font-size-12px' }>
-              <div className = { 'mytrainings-icon-grid' }>
-                <span className = { 'mytrainings-icon mytrainings-time' } />
-                <div className = { 'font-weight-bold font-size-10px' }>
-                  { startTime } - { endTime }
-                </div>
-              </div>
-              <div className = { 'mytrainings-icon-grid' }>
-                <span className = { 'mytrainings-icon mytrainings-calendar' } />
-                <div className = { 'font-weight-bold font-size-10px' }>
-                  { startDate } - { endDate }
-                </div>
-              </div>
-            </div>
-          </div>
-          <div></div>
+        <div className={ 'mytrainings-datetime' }>
+          <p>{ moment(startDate).format('LL') } - { moment(endDate).format('LL') }</p>
+          <p>{ startTime } - { endTime }</p>
         </div>
-
       </Card>
     )
   }
@@ -91,6 +65,7 @@ MyTrainingListCardComponent.propTypes = {
   endTime : PropTypes.string,
   status : PropTypes.string,
   startTime : PropTypes.string,
+  onClick : PropTypes.func,
 }
 
 export default MyTrainingListCardComponent
