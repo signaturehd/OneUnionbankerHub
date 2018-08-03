@@ -2,14 +2,14 @@ export default (
   typeOfDelivery,
   dateOfDelivery,
   amount,
-  orNumber,
   orDate,
+  orNumber,
   attachments
   ) => ({
     typeOfDelivery,
     dateOfDelivery,
     amount,
-    orNumber,
     orDate,
+    orNumber,
     attachments
   })

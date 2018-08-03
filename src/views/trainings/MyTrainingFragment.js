@@ -61,6 +61,10 @@ class MyTrainingFragment extends BaseMVPView {
     this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
 
+  navigate () {
+    this.props.history.push('/mylearning')
+  }
+
   render () {
   const { history, presenter } = this.props
   const {

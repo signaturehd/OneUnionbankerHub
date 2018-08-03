@@ -18,8 +18,6 @@ export default class TrainingCardModal extends Component {
       width: '-webkit-fill-available',
     }
 
-    console.log(details);
-
     return (
       <Modal
         isDismisable = { true }

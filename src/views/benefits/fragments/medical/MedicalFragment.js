@@ -41,6 +41,10 @@ class MedicalFragment extends Component {
       styleName: 'medical-cards-6',
       title: 'MATERNITY ASSISTANCE',
       path: '/mybenefits/benefits/medical/assistance/maternity',
+    }, {
+      styleName: 'medical-cards-6',
+      title: 'MATERNITY ASSISTANCE SSS',
+      path: '/mybenefits/benefits/medical/assistance/maternitysss',
     }]
 
     const MedicalHome = () => (

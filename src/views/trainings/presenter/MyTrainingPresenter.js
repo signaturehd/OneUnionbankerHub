@@ -48,16 +48,17 @@ export default class MyTrainingPresenter {
       this.view.setTrainingDetails(data)
     }, error => {
       this.view.hideCircularLoader(false)
-      console.log('error in consuming training details api.')
     })
   }
 
   enrollEmployee (id) {
     this.enrollEmployeeInteractor.execute(id)
     .subscribe(data => {
-        console.log(data);
+      console.log(data);
+      this.view.navigate()
     }, error => {
-      console.log('error in enrollemtn submission');
+      console.log(error);
+      this.view.navigate()
     })
   }
 }

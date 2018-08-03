@@ -53,7 +53,7 @@ class LoansDetailsFragment extends Component {
                    <div></div>
                    <div className = { 'transaction-details-status-grid' }>
                      <div className =
-                       { `font-weight-bolder grid-global-row-x3 transaction-details-status-${ detailStatus }` }
+                       { `font-weight-bolder grid-global-row-x3 transaction-default-status transaction-details-status-${ detailStatus }` }
                        >
                        <div></div>
                          { benefitLabel }
