@@ -31,6 +31,8 @@ class CalamityFragment extends BaseMVPView {
       showBenefitFeedbackModal : false,
       enabledLoader:false,
       calamityAssistance: [],
+      attachmentArray: [],
+      attachmentsData: [],
       date: null,
       calamityId: '',
       calamityType: '',
@@ -53,6 +55,15 @@ class CalamityFragment extends BaseMVPView {
     this.props.setSelectedNavigation(1)
     this.presenter.validateCalamityAssistance()
   }
+
+  showAttachmentsMap (attachmentsData) {
+    this.setState({ attachmentsData })
+  }
+
+  setFileAttachments (attachmentArray) {
+    this.setState({ attachmentArray })
+  }
+
   validator (input) {
      return new RequiredValidation().isValid(input)
    }
@@ -193,7 +204,9 @@ class CalamityFragment extends BaseMVPView {
       date,
       response,
       showConfirmation,
-      data
+      data,
+      attachmentArray,
+      attachmentsData
     }=this.state
 
     return (
@@ -260,6 +273,8 @@ class CalamityFragment extends BaseMVPView {
               }
             }
             calamityAssistance={ calamityAssistance }
+            attachmentsData = { attachmentsData }
+            setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
             getPreferredDate = { data =>
               this.setState({ date :  data })}
 
