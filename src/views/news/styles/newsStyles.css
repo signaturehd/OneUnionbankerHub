@@ -40,3 +40,8 @@
   padding-right: 5%;
   padding-top: 1%
 }
+
+.news-grid-header {
+  display: grid;
+  grid-template-columns: .5fr  1fr 1fr;
+}

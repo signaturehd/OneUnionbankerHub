@@ -43,7 +43,7 @@ class MedicalFragment extends Component {
       path: '/mybenefits/benefits/medical/assistance/maternity',
     }, {
       styleName: 'medical-cards-6',
-      title: 'MATERNITY ASSISTANCE SSS',
+      title: 'MATERNITY NOTIFICATION SSS',
       path: '/mybenefits/benefits/medical/assistance/maternitysss',
     }]
 
