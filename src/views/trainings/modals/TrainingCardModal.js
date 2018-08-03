@@ -63,7 +63,7 @@ export default class TrainingCardModal extends Component {
               <GenericButton
                 text = { 'Enroll' }
                 className = { 'status-button' }
-                onClick = { () => setConfirmation(false) }
+                onClick = { () => setConfirmation(true) }
               />
             </div>
           </div>
