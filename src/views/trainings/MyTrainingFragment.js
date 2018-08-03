@@ -5,8 +5,8 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/MyTrainingPresenter'
 
-import MyTrainingCardComponent from
-'./components/MyTrainingCardComponent'
+import TrainingCardModal from
+'./modals/TrainingCardModal'
 
 import MyTrainingListCardComponent from
 './components/MyTrainingListCardComponent'
@@ -30,13 +30,19 @@ class MyTrainingFragment extends BaseMVPView {
       trainingList : [],
       enabledLoader: false,
       searchString : '',
-      index: 3,
+      index: 8,
+      trainingDetails: null,
+      showConfirmation : false,
     }
     this.programSearch = this.programSearch.bind(this)
   }
 
   componentDidMount () {
     this.presenter.getEmployeeTraining()
+  }
+
+  setTrainingDetails (trainingDetails) {
+    this.setState({ trainingDetails })
   }
 
   showTrainingList (trainingList) {
@@ -55,13 +61,19 @@ class MyTrainingFragment extends BaseMVPView {
     this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
 
+  navigate () {
+    this.props.history.push('/mylearning')
+  }
+
   render () {
-  const { history } = this.props
+  const { history, presenter } = this.props
   const {
     trainingList,
     enabledLoader,
     searchString,
-    index
+    index,
+    trainingDetails,
+    showConfirmation,
   } = this.state
 
 
@@ -76,7 +88,16 @@ class MyTrainingFragment extends BaseMVPView {
   return (
     <div>
       { super.render() }
-
+      {
+        trainingDetails &&
+        <TrainingCardModal
+          onClose = { () => this.setState({ trainingDetails : '' }) }
+          details = { trainingDetails }
+          onEnroll = { (id) => this.presenter.enrollEmployee(id) }
+          showConfirmation = { showConfirmation }
+          setConfirmation = { (showConfirmation) => this.setState({showConfirmation}) }
+        />
+      }
       <div className={ 'header-margin-container' }>
         <i
           className = { 'back-arrow' }
@@ -117,6 +138,7 @@ class MyTrainingFragment extends BaseMVPView {
            training.slice(0, index).map((resp, key) =>
              <MyTrainingListCardComponent
                key = { key }
+               id = { resp.id }
                venue = { resp.venue }
                title = { resp.title }
                startTime = { resp.startTime }
@@ -124,6 +146,7 @@ class MyTrainingFragment extends BaseMVPView {
                status = { resp.status }
                startDate = { resp.startDate }
                endDate = { resp.endDate }
+               onClick = { (id) => this.presenter.getEmployeeTrainingDetails(id) }
              />
            )
           }

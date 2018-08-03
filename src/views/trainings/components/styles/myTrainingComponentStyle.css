@@ -1,0 +1,125 @@
+.mytrainings-card-list {
+  width: -webkit-fill-available;
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 0px;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.mytrainings-card-background {
+  background-image: url('../../../../images/training_img.jpg');
+  background-size: cover;
+  display: block;
+  z-index: -1;
+  background-repeat: no-repeat;
+  height: 280px;
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+
+.mytrainings-card-description {
+  height: 120px;
+  position: absolute;
+  bottom: 0px;
+  background-color: #fff;
+  -webkit-transition: height .3s;
+  transition: height .3s;
+}
+
+.mytrainings-view-details {
+  position: relative;
+  bottom: 0px;
+}
+
+
+.mytrainings-button {
+  border: 1px solid #ff8a00;
+  width: 90%;
+  margin: 20px 5px 5px 5px;
+  border-radius: 0px!important;
+  -webkit-transition: .4s;
+  transition: .4s;
+  opacity: 0;
+}
+
+.mytrainings-button:hover {
+  background-color: #ff8a00;
+  color: white;
+}
+
+.mytrainings-card-list:hover .mytrainings-card-description {
+  height: 180px;
+}
+
+.mytrainings-card-list:hover .mytrainings-card-background {
+  -webkit-filter: blur(1px); /* Safari 6.0 - 9.0 */
+  filter: blur(2px);
+  transform: scale(1.05)
+}
+
+.mytrainings-card-list:hover .mytrainings-button {
+  opacity: 1;
+}
+/*
+.mytrainings-card-list:hover .mytrainings-datetime {
+  top: 50px;
+}*/
+
+.mytrainings-card-list:hover .mytrainings-datetime p {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.mytrainings-title {
+  padding: 20px 0 10px 0;
+}
+
+.mytrainings-title h4 {
+  color: #333;
+  font-size: 24px;
+  font-family: 'Roboto' sans-serif;
+  font-weight: 300;
+}
+
+.mytrainings-datetime {
+  z-index: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+
+.mytrainings-datetime p {
+  color: white;
+  font-size: 16px;
+  text-align: left;
+  padding: 10px 0 10px 5px;
+  margin: 10px 0 10px 0!important;
+  background-color: rgba(0,0,0,0.5);
+  -webkit-transition: .3s;
+  transition: .3s;
+
+}
+
+.location-icon {
+  background-image: url('../../../../images/icons/location_logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 24px;
+  width: 28px;
+}
+
+.mytrainings-venue {
+  display: grid;
+  grid-template-columns: 1fr auto auto 1fr;
+  margin-top: 5px;
+}
+
+.mytrainings-venue h5 {
+  font-size: 16px;
+  text-align: left;
+}
