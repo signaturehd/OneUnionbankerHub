@@ -30,17 +30,17 @@ class MyLearningView extends BaseMVPView {
     const mylearning = [{
       id: 0 ,
       styleName: 'mylearning-cards-1',
-      title: 'BOOKS',
+      title: 'Borrow Books',
       path: '/mylearning/books',
     }, {
       id: 1 ,
       styleName: 'mylearning-cards-1',
-      title: 'PODCASTS',
+      title: 'Listen Podcasts',
       path: '/mylearning/podcasts',
     }, {
       id: 2 ,
       styleName: 'mylearning-cards-1',
-      title: 'TRAININGS',
+      title: 'Enroll to Trainings',
       path: '/mylearning/trainings',
     }]
     const MyLearning = () => (
