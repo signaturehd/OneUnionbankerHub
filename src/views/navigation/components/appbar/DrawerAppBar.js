@@ -31,6 +31,12 @@ class DrawerAppBar extends Component {
         margin: '10px',
         display: 'block',
         height: '35px',
+      },
+      infoLogo: {
+        width: '25px',
+        margin: '20px',
+        display: 'block',
+        height: '25px',
       }
     }
 
@@ -47,6 +53,12 @@ class DrawerAppBar extends Component {
               style={ style.navbar }
               src={ require('../../../../images/union-logo.png') }
               className={'_img-ub-logo'}/>
+          </div>
+          <div>
+            <img
+              style={ style.infoLogo }
+              className = { '_img-ub-info-logo' }
+              src={ require('../../../../images/icons/ic__info_temp.png') }/>
           </div>
         </div>
       </AppBar>
