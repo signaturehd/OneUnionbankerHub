@@ -4,3 +4,8 @@
   margin-top: 20%;
   vertical-align: middle;
 }
+
+.faqlist-grid-header {
+  display: grid;
+  grid-template-columns: 1fr .5fr 1fr;
+}
