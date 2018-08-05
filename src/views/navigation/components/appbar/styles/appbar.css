@@ -7,7 +7,6 @@
 
 .icon-header {
   text-align: left;
-  margin: auto;
   display: grid;
   grid-template-columns: .6fr 1fr;
 }
@@ -33,6 +32,7 @@
   height: 20px;
   width: auto;
   margin-top: 2%;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1201px) {

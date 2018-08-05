@@ -19,7 +19,14 @@ class DrawerAppBar extends Component {
   }
 
   render () {
-    const { onClick, displayNavIcon, onToggleShow, displayShow } = this.props
+    const {
+      onClick,
+      displayNavIcon,
+      onToggleShow,
+      displayShow,
+      onCallWizard
+    } = this.props
+
     const style = {
       show: {
         display : displayNavIcon,
@@ -54,15 +61,17 @@ class DrawerAppBar extends Component {
               src={ require('../../../../images/union-logo.png') }
               className={'_img-ub-logo'}/>
           </div>
-          <div>
-            <img
-              style={ style.infoLogo }
-              className = { '_img-ub-info-logo' }
-              src={ require('../../../../images/icons/ic__info_temp.png') }/>
-          </div>
         </div>
       </AppBar>
     )
   }
+}
+
+DrawerAppBar.propTypes = {
+  onClick : PropTypes.func,
+  displayNavIcon: PropTypes.string,
+  onToggleShow : PropTypes.string,
+  displayShow : PropTypes.string,
+  onCallWizard : PropTypes.func,
 }
 export default DrawerAppBar

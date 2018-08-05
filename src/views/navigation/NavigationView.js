@@ -72,7 +72,7 @@ class NavigationView extends BaseMVPView {
     this.state = {
       selected: 0,
       profile: [],
-      showLogoutModal: false
+      showLogoutModal: false,
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -106,7 +106,6 @@ class NavigationView extends BaseMVPView {
     store.dispatch(NotifyActions.resetNotify())
     this.presenter.getLibraries()
     this.presenter.getProfile()
-    this.presenter.getWizard()
   }
 
   setSelectedNavigation (id) {
@@ -115,10 +114,6 @@ class NavigationView extends BaseMVPView {
 
   callLogout () {
     this.presenter.logout()
-  }
-
-  showWizard (wizard) {
-    this.setState({ wizard })
   }
 
   relogin () {
@@ -133,35 +128,32 @@ class NavigationView extends BaseMVPView {
       selected,
       onClick,
       profile,
-      wizard,
       showLogoutModal
     } = this.state
-      const { history, login } = this.props
+    const { history, login } = this.props
     const style = {
       show: {
           display : displayShow
       }
     }
-
     const locationPath = history.location.pathname
+
     return (
       <div className = { 'navigation-body-div' }>
         { super.render() }
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
+            onCallWizard = { () => this.callWizard() }
             onClick = { onClick }
             displayNavIcon = { displayNavIcon } displayShow = { displayShow }
             hide = { () => this.setState({ displayShow : 'block' })}
             show = { () => this.setState({ displayShow : 'none' })} />
         </header>
         <div className="navigation-panels">
-          <main className ="navigation-panel navigation-content" role="main" id="navPanId">
-          {
-            !wizard &&
-            <Carousel
-              onClose = { () => this.presenter.setWizard('false') }
-            />
-          }
+          <main
+            className = { 'navigation-panel navigation-content' }
+            role = { 'main' }
+            id = { 'navPanId' }>
           {
             showLogoutModal &&
             <NavigationViewModal
