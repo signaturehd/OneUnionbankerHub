@@ -14,7 +14,7 @@ export default class MaternityAssistancePresenter {
     this.validateMaternityAssistanceInteractor =
       new ValidateMaternityAssistanceInteractor(container.get('HRBenefitsClient'))
 
-    this.addMaternity =
+    this.addMaternityAssistanceInteractor =
       new AddMaternityAssistanceInteractor(container.get('HRBenefitsClient'))
 
   }
@@ -38,8 +38,8 @@ export default class MaternityAssistancePresenter {
         data &&
         data.typeOfDelivery.map((resp, key) => {
           typeOfDelivery.push({
-            id : key,
-            name : resp
+            id : resp.id,
+            name : resp.Delivery
           })
         })
         this.view.showTypeOfDeliveryMap(typeOfDelivery)
@@ -62,7 +62,7 @@ export default class MaternityAssistancePresenter {
     attachments
     ) {
       this.view.showCircularLoader()
-      this.addMaternity.execute(
+      this.addMaternityAssistanceInteractor.execute(
         addMaternityAssistanceParam(
           typeOfDelivery,
           dateOfDelivery,
@@ -77,9 +77,9 @@ export default class MaternityAssistancePresenter {
         this.view.hideCircularLoader()
         this.view.noticeOfUndertaking(data)
       },  errors => {
-          this.view.noticeResponseResp(errors)
           this.view.hideCircularLoader()
-          // this.view.navigate()
+          this.view.noticeResponseResp(errors)
+          this.view.navigate()
         }
       )
     }

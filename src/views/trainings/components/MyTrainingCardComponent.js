@@ -14,9 +14,7 @@ class MyTrainingCardComponent extends Component {
 
     return (
       <div>
-        <Card>
-          dawda
-        </Card>
+      XBi
       </div>
     )
   }

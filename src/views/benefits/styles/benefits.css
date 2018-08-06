@@ -138,63 +138,63 @@ label:hover {
     padding: 15px;
   }
 }
-.option-cards-1 {
-  padding: 21% 0 20% 0 !important;
-  cursor: pointer !important;
-  background-image: url('../../../images/education_bg.jpg') !important;
-  background-repeat: round !important;
-  border-radius: 5px !important;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3) !important;
-  grid-area: card!important;
+
+.benefits-option-cards-1 {
+  background-image: url('../../../images/drawer/GROUP EDUCATIONAL PROGRAM.png') ;
 }
 
-.option-cards-2 {
-  padding: 21% 0 20% 0 !important;
-  cursor: pointer !important;
-  background-image: url('../../../images/medical_bg.jpg') !important;
-  background-repeat: round !important;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3) !important;
-  border-radius: 5px !important;
-  grid-area: card !important;
+.benefits-option-cards-2 {
+  background-image: url('../../../images/drawer/GROUP EDUCATIONAL PROGRAM.png') ;
 }
 
-.option-cards-3 {
-  padding: 21% 0 20% 0 !important;
-  cursor: pointer !important;
-  background-image: url('../../../images/mpl_bg.jpg') !important;
-  background-repeat: round !important;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3) !important;
-  border-radius: 5px !important;
-  grid-area: card !important;
+.benefits-option-cards-3 {
+  background-image: url('../../../images/drawer/GROUP EDUCATIONAL PROGRAM.png') ;
 }
 
-.option-cards-4 {
-  padding: 21% 0 20% 0 !important;
-  cursor: pointer !important;
-  background-image: url('../../../images/car_bg.jpg') !important;
-  background-repeat: round !important;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3) !important;
-  border-radius: 5px !important;
-  grid-area: card !important;
+.benefits-option-cards-4 {
+  background-image: url('../../../images/drawer/GROUP EDUCATIONAL PROGRAM.png');
 }
 
-.option-cards-5 {
-  padding: 21% 0 20% 0 !important;
-  cursor: pointer !important;
-  background-image: url('../../../images/bereavement_bg.jpg') !important;
-  background-repeat: round !important;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3) !important;
-  border-radius: 5px !important;
-  grid-area: card !important;
+.benefits-option-cards-5 {
+  background-image: url('../../../images/drawer/GROUP EDUCATIONAL PROGRAM.png');
 }
-.option-cards-6 {
-  padding: 21% 0 20% 0 !important;
-  cursor: pointer !important;
-  background-image: url('../../../images/calamity_assistance.jpg') !important;
-  background-repeat: round !important;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3) !important;
-  border-radius: 5px !important;
-  grid-area: card !important;
+
+.benefits-option-cards-6 {
+  background-image: url('../../../images/drawer/GROUP EDUCATIONAL PROGRAM.png');
+}
+
+.benefits-option-cards-1:hover {
+  box-shadow: 5px 7px 10px 0px rgba(0,0,0,0.3);
+}
+
+.benefits-option-cards-2:hover {
+  box-shadow: 5px 7px 10px 0px rgba(0,0,0,0.3);
+}
+
+.benefits-option-cards-3:hover {
+  box-shadow: 5px 7px 10px 0px rgba(0,0,0,0.3);
+}
+
+.benefits-option-cards-4:hover {
+  box-shadow: 5px 7px 10px 0px rgba(0,0,0,0.3);
+}
+
+.benefits-option-cards-5:hover {
+  box-shadow: 5px 7px 10px 0px rgba(0,0,0,0.3);
+}
+
+.benefits-option-cards-6:hover {
+  box-shadow: 5px 7px 10px 0px rgba(0,0,0,0.3);
+}
+
+.benefits-option-default {
+  padding: 21% 0 0 0;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
+  grid-area: card;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .benefits-container-text {

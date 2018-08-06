@@ -9,6 +9,7 @@
 
 .default-feedback-textarea {
   width: 100%;
+  font-size: 12px;
 }
 
 .payslip-button {

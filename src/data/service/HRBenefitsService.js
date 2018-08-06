@@ -781,6 +781,18 @@ export default class HRBenefitsService {
     })
   }
 
+  getEmployeeTrainingDetails (token, id) {
+    return this.apiClient.get(`v1/training/details/${id}`, {
+      headers : { token }
+    })
+  }
+
+  enrollEmployee (token, id) {
+    return this.apiClient.get(`v1/training/enroll/${id}`, {
+      headers : { token }
+    })
+  }
+
   /* Maternity Assistance */
   validateMaternityAssistance (token) {
     return this.apiClient.get('v1/maternity/validate', {
@@ -796,6 +808,7 @@ export default class HRBenefitsService {
     addMaternityAssistanceParam
   ) {
     const formData = new FormData()
+    formData.append('uuid', 12345)
     const objectMaternity = {
       deliveryType : addMaternityAssistanceParam.typeOfDelivery,
       deliveryDate : addMaternityAssistanceParam.dateOfDelivery,
@@ -805,8 +818,7 @@ export default class HRBenefitsService {
       accountNumber,
       releasingCenter,
     }
-    formData.append('uuid', 12345)
-    addMaternityAssistanceParam.attachments.map((resp, key) => (
+    addMaternityAssistanceParam.attachments.map((resp) => (
         formData.append(resp.name, resp.file)
       )
     )
