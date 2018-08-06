@@ -9,6 +9,7 @@ import {
   CircularLoader,
   SingleInputModal,
   MultipleInputModal,
+  RequiredNumberValidation
 } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
@@ -19,6 +20,7 @@ import store from '../../store'
 import { NotifyActions } from '../../actions'
 
 import FormComponent from './components/MaternityAssistanceFormCardComponent'
+import FormComponentSSS from './components/MaternityAssistanceSSSFormCardComponent'
 
 import * as MaternityAssistanceFunction from
 './function/MaternityAssistanceFunction'
@@ -53,6 +55,34 @@ class MaternityAssistanceFragment extends BaseMVPView {
         amountErrorMessage : '',
         typeOfDeliveryErrorMessage : '',
         dateOfDeliveryErrorMessage : '',
+        roomNumberText: '',
+        roomNumberErrorMessage: '',
+        houseNumberText: '',
+        houseNumberErrorMessage: '',
+        streetNameText : '',
+        streetNameErrorMessage : '',
+        streetNameFunc : '',
+        barangayText : '',
+        barangayErrorMessage : '',
+        barangayFunc : '',
+        cityText : '',
+        cityErrorMessage : '',
+        cityFunc: '',
+        provinceText : '',
+        provinceErrorMessage : '',
+        provinceFunc: '',
+        zipCodeText : '',
+        zipCodeErrorMessage : '',
+        zipCodeFunc: '',
+        noPregnancyText : '',
+        noPregnancyErrorMessage: '',
+        noPregnancyFunc : '',
+        noDeliveryText : '',
+        noDeliveryErrorMessage: '',
+        noDeliveryFunc : '',
+        noMiscarriageText : '',
+        noMiscarriageErrorMessage: '',
+        noMiscarriageFunc: ''
     }
   }
 
@@ -125,6 +155,61 @@ class MaternityAssistanceFragment extends BaseMVPView {
     return MaternityAssistanceFunction.checkedValidateInput(e)
   }
 
+  validateRequiredRoomNumber (e) {
+    const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
+    this.setState({ roomNumberText : validate, roomNumberErrorMessage : '' })
+  }
+
+  validateRequiredHouseNumber (e) {
+    const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
+    this.setState({ houseNumberText : validate, houseNumberErrorMessage : '' })
+  }
+
+  validateRequiredAddress (e) {
+    const validate = MaternityAssistanceFunction.checkedValidateAddress(e)
+    this.setState({ streetNameText : validate, streetNameErrorMessage : '' })
+  }
+
+  validateRequiredSubdivision (e) {
+    const validate = MaternityAssistanceFunction.checkedValidateAddress(e)
+    this.setState({ subdivisionText : validate, subdivisionTextErrorMessage : '' })
+  }
+
+  validateRequiredBarangay (e) {
+    const validate = MaternityAssistanceFunction.checkedValidateAddress(e)
+    this.setState({ barangayText : validate, barangayErrorMessage : '' })
+  }
+
+  validateRequiredCity (e) {
+    const validate = MaternityAssistanceFunction.checkedValidateText(e)
+    this.setState({ cityText : validate, cityErrorMessage : '' })
+  }
+
+  validateRequiredProvince (e) {
+    const validate = MaternityAssistanceFunction.checkedValidateText(e)
+    this.setState({ provinceText : validate, provinceErrorMessage : '' })
+  }
+
+  validateRequiredZipCode (e) {
+    const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
+    this.setState({ zipCodeText : validate, zipCodeErrorMessage : '' })
+  }
+
+  validateRequiredNoPregnancy (e) {
+    const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
+    this.setState({ noPregnancyText : validate, noPregnancyErrorMessage : '' })
+  }
+
+  validateRequiredNoDelivery (e) {
+    const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
+    this.setState({ noDeliveryText : validate, noPregnancyErrorMessage : '' })
+  }
+
+  validateRequiredNoMiscarriage (e) {
+    const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
+    this.setState({ noMiscarriageText : validate, noMiscarriageErrorMessage : '' })
+  }
+
   editFormReview (e) {
     this.setState({ showEditSubmitButton : false, titleChange : true })
   }
@@ -148,7 +233,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
       attachmentArray)
   }
 
-  showFormReviewFieldDisabled (e) {
+  showFormReviewFieldDisabled () {
     const {
       typeDeliveryName,
       deliveryDate,
@@ -176,6 +261,83 @@ class MaternityAssistanceFragment extends BaseMVPView {
     }
   }
 
+  showFormReviewFieldDisabledSSS () {
+    const {
+      roomNumberText,
+      houseNumberText,
+      streetNameText,
+      subdivisionText,
+      barangayText,
+      cityText,
+      provinceText,
+      zipCodeText,
+      noPregnancyText,
+      deliveryDate,
+      noDeliveryText,
+      noMiscarriageText,
+    } = this.state
+
+    if(!this.validateRequired(roomNumberText)){
+      this.setState({ roomNumberErrorMessage : 'Room number filed is required' })
+    } else if (!this.validateRequired(houseNumberText)) {
+      this.setState({ houseNumberErrorMessage : 'House number field is required' })
+    } else if (!this.validateRequired(streetNameText)) {
+      this.setState({ streetNameErrorMessage : 'Street name field is required' })
+    } else if (!this.validateRequired(subdivisionText)) {
+      this.setState({ subdivisionErrorMessage : 'Subdivision field is required' })
+    } else if (!this.validateRequired(barangayText)) {
+      this.setState({ barangayErrorMessage : 'Barangay field is required' })
+    } else if (!this.validateRequired(provinceText)) {
+      this.setState({ provinceErrorMessage : 'Province field is required' })
+    } else if (!this.validateRequired(zipCodeText)) {
+      this.setState({ zipCodeErrorMessage : 'Zip Code field is required' })
+    } else if (!this.validateRequired(noPregnancyText)) {
+      this.setState({ noPregnancyErrorMessage : 'No of Pregnancy field is required' })
+    } else if (!this.validateRequired(deliveryDate)) {
+      this.setState({ dateOfDeliveryErrorMessage : 'Date of delivery is required' })
+    } else if (!this.validateRequired(noDeliveryText)) {
+      this.setState({ noDeliveryErrorMessage : 'Number of delivery is required' })
+    } else if (!this.validateRequired(noMiscarriageText)) {
+      this.setState({ noMiscarriageErrorMessage : 'Number of Miscarriage is required' })
+    } else {
+      this.setState({
+        showEditSubmitButton: true,
+        titleChange: false,
+      })
+    }
+  }
+
+  submitFormSSS () {
+    const {
+      roomNumberText,
+      houseNumberText,
+      streetNameText,
+      subdivisionText,
+      barangayText,
+      cityText,
+      provinceText,
+      zipCodeText,
+      noPregnancyText,
+      deliveryDate,
+      noDeliveryText,
+      noMiscarriageText,
+    } = this.state
+
+    this.presenter.addMaternityAssistanceSSS(
+      roomNumberText,
+      houseNumberText,
+      streetNameText,
+      subdivisionText,
+      barangayText,
+      cityText,
+      provinceText,
+      zipCodeText,
+      noPregnancyText,
+      moment(deliveryDate).format('MM/DD/YYYY'),
+      noDeliveryText,
+      noMiscarriageText)
+  }
+
   render () {
     const {
       showNoticeModal,
@@ -201,7 +363,38 @@ class MaternityAssistanceFragment extends BaseMVPView {
       amountErrorMessage,
       orNumberErrorMessage,
       typeOfDeliveryErrorMessage,
-      dateOfDeliveryErrorMessage
+      dateOfDeliveryErrorMessage,
+      roomNumberText,
+      roomNumberErrorMessage,
+      houseNumberText,
+      houseNumberErrorMessage,
+      streetNameText,
+      streetNameErrorMessage,
+      streetNameFunc,
+      subdivisionText,
+      subdivisionErrorMessage,
+      subdivisionFunc,
+      barangayText,
+      barangayErrorMessage,
+      barangayFunc,
+      cityText,
+      cityErrorMessage,
+      cityFunc,
+      provinceText,
+      provinceErrorMessage,
+      provinceFunc,
+      zipCodeText,
+      zipCodeErrorMessage,
+      zipCodeFunc,
+      noPregnancyText,
+      noPregnancyErrorMessage,
+      noPregnancyFunc,
+      noDeliveryText,
+      noDeliveryErrorMessage,
+      noDeliveryFunc,
+      noMiscarriageText,
+      noMiscarriageErrorMessage,
+      noMiscarriageFunc
     } = this.state
 
     const {
@@ -253,55 +446,109 @@ class MaternityAssistanceFragment extends BaseMVPView {
                 typeOfDeliveryErrorMessage : ''
               })
             }
-            onClose = { () => this.setState({ showDepedendentModalResp : false }) }
+            onClose = { () => this.setState({ showTypeOfDeliveryModalResp : false }) }
           />
         }
         <div>
-          <i
-            className = { 'back-arrow' }
-            onClick = { this.navigate.bind(this) }>
-          </i>
           {
-            titleChange ?
-            <h2 className = { 'header-margin-default' }>
-              Maternity Assistance
-            </h2>
-            :
-            <h2 className = { 'header-margin-default' }>
-              Form Summary
-            </h2>
+          enabledLoader ?
+            <center className = { 'circular-loader-center' }>
+              <CircularLoader show = { true }/>
+            </center> :
+            <div>
+            <i
+              className = { 'back-arrow' }
+              onClick = { this.navigate.bind(this) }>
+            </i>
+            {
+              titleChange ?
+              <h2 className = { 'header-margin-default' }>
+                { maternityData &&
+                  maternityData.hasMat1 === 1 ?
+                  'Maternity Assistance' :
+                  'Maternity Notification SSS' }
+              </h2>
+              :
+              <h2 className = { 'header-margin-default' }>
+                Form Summary
+              </h2>
+            }
+            {
+              maternityData &&
+              maternityData.hasMat1 === 1 ||
+              maternityData.isValid === 1 ?
+              <FormComponent
+                oRNumberFunc = { (resp) => this.validateSymbol(resp) }
+                dateFunc = { (resp) => this.validateDate(resp) }
+                showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
+                setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
+                onSubmitFunc = { () => this.submitFormSSS() }
+                editFormDataFunc = { () => this.editFormReview() }
+                requestTypeOfDeliveryFunc = { (resp) => this.showTypeOfDeliveryModal(resp) }
+                dateOfDelivertFunc = { (resp) => this.validateDeliveryDate(resp) }
+                desiredAmountFunc = { (resp) => this.validateAmount(resp) }
+                typeDeliveryName = { typeDeliveryName }
+                amount = { amount }
+                orNumberText = { orNumberText }
+                preferredDate = { preferredDate }
+                deliveryDate = { deliveryDate }
+                attachmentsData = { attachmentsData }
+                showEditSubmitButton = { showEditSubmitButton }
+                attachmentErrorMessage = { attachmentErrorMessage }
+                dateErrorMessage = { dateErrorMessage }
+                orNumberErrorMessage = { orNumberErrorMessage }
+                amountErrorMessage = { amountErrorMessage }
+                typeOfDeliveryErrorMessage = { typeOfDeliveryErrorMessage }
+                dateOfDeliveryErrorMessage = { dateOfDeliveryErrorMessage }
+              /> :
+              <FormComponentSSS
+                dateFunc = { (resp) => this.validateDate(resp) }
+                showFormReviewSSS = { () => this.showFormReviewFieldDisabledSSS() }
+                onSubmitFunc = { () => this.submitForm() }
+                editFormDataFunc = { () => this.editFormReview() }
+                dateOfDelivertFunc = { (resp) => this.validateDeliveryDate(resp) }
+                deliveryDate = { deliveryDate }
+                showEditSubmitButton = { showEditSubmitButton }
+                dateErrorMessage = { dateErrorMessage }
+                dateOfDeliveryErrorMessage = { dateOfDeliveryErrorMessage }
+                roomNumberText = { roomNumberText }
+                roomNumberErrorMessage = { roomNumberErrorMessage }
+                roomNumberFunc = { (resp) => this.validateRequiredRoomNumber(resp) }
+                houseNumberText = { houseNumberText }
+                houseNumberErrorMessage = { houseNumberErrorMessage }
+                houseNumberFunc = { (resp) => this.validateRequiredHouseNumber(resp) }
+                streetNameText = { streetNameText }
+                streetNameErrorMessage = { streetNameErrorMessage }
+                streetNameFunc = { (resp) => this.validateRequiredAddress(resp) }
+                subdivisionText = { subdivisionText }
+                subdivisionErrorMessage = { subdivisionErrorMessage }
+                subdivisionFunc = { (resp) => this.validateRequiredSubdivision(resp) }
+                barangayText = { barangayText }
+                barangayErrorMessage = { barangayErrorMessage }
+                barangayFunc = { (resp) => this.validateRequiredBarangay(resp) }
+                cityText = { cityText }
+                cityErrorMessage = { cityErrorMessage }
+                cityFunc = { (resp) => this.validateRequiredCity(resp) }
+                provinceText = { provinceText }
+                provinceErrorMessage = { provinceErrorMessage }
+                provinceFunc = { (resp) => this.validateRequiredProvince(resp) }
+                zipCodeText = { zipCodeText }
+                zipCodeErrorMessage = { zipCodeErrorMessage }
+                zipCodeFunc = { (resp) => this.validateRequiredZipCode(resp) }
+                noPregnancyText = { noPregnancyText }
+                noPregnancyErrorMessage = { noPregnancyErrorMessage }
+                noPregnancyFunc = { (resp) => this.validateRequiredNoPregnancy(resp) }
+                noDeliveryText = { noDeliveryText }
+                noDeliveryErrorMessage = { noDeliveryErrorMessage }
+                noDeliveryFunc = { (resp) => this.validateRequiredNoDelivery(resp) }
+                noMiscarriageText = { noMiscarriageText }
+                noMiscarriageErrorMessage = { noMiscarriageErrorMessage }
+                noMiscarriageFunc = { (resp) => this.validateRequiredNoMiscarriage(resp) }
+              />
+            }
+          </div>
           }
         </div>
-        {
-          enabledLoader ?
-          <center className = { 'circular-loader-center' }>
-            <CircularLoader show = { true }/>
-          </center> :
-          <FormComponent
-            oRNumberFunc = { (resp) => this.validateSymbol(resp) }
-            dateFunc = { (resp) => this.validateDate(resp) }
-            showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
-            setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
-            onSubmitFunc = { () => this.submitForm() }
-            editFormDataFunc = { () => this.editFormReview() }
-            requestTypeOfDeliveryFunc = { (resp) => this.showTypeOfDeliveryModal(resp) }
-            dateOfDelivertFunc = { (resp) => this.validateDeliveryDate(resp) }
-            desiredAmountFunc = { (resp) => this.validateAmount(resp) }
-            typeDeliveryName = { typeDeliveryName }
-            amount = { amount }
-            orNumberText = { orNumberText }
-            preferredDate = { preferredDate }
-            deliveryDate = { deliveryDate }
-            attachmentsData = { attachmentsData }
-            showEditSubmitButton = { showEditSubmitButton }
-            attachmentErrorMessage = { attachmentErrorMessage }
-            dateErrorMessage = { dateErrorMessage }
-            orNumberErrorMessage = { orNumberErrorMessage }
-            amountErrorMessage = { amountErrorMessage }
-            typeOfDeliveryErrorMessage = { typeOfDeliveryErrorMessage }
-            dateOfDeliveryErrorMessage = { dateOfDeliveryErrorMessage }
-          />
-        }
       </div>
     )
   }
