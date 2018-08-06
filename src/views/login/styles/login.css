@@ -38,14 +38,15 @@
 }
 
 .download-container {
-  display:grid;
+  display: grid;
+  column-gap: 5%;
   grid-template-columns: repeat(2, 1fr);
 }
 
 .link-googleplay {
   cursor: pointer;
   background: url('../../../images/Googleplay.png') no-repeat center;
-  background-size: 100px;
+  background-size: cover;
   vertical-align: middle;
   border-radius: 10px;
   height: 45px;
@@ -58,7 +59,7 @@
   user-select: none;
   cursor: pointer;
   background: url('../../../images/APPLE.png') no-repeat center;
-  background-size: 100px;
+  background-size: cover;
   vertical-align: middle;
   border-radius: 10px;
   height: 45px;
