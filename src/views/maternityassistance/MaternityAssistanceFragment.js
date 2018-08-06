@@ -139,14 +139,11 @@ class MaternityAssistanceFragment extends BaseMVPView {
       attachmentArray
     } = this.state
 
-    let dateOfDelivery = moment(deliveryDate).format('MM/DD/YYYY')
-    let preferDate = moment(preferredDate).format('MM/DD/YYYY')
-
     this.presenter.addMaternityAssistance(
       typeDeliveryId,
-      dateOfDelivery,
+      moment(deliveryDate).format('MM/DD/YYYY'),
       amount,
-      preferDate,
+      moment(preferredDate).format('MM/DD/YYYY'),
       orNumberText.toString(),
       attachmentArray)
   }

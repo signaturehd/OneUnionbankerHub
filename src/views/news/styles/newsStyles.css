@@ -31,7 +31,7 @@
     column-count : 1;
   }
 }
-.title-view {
+.news-title-view {
   margin: 25px auto;
 }
 
@@ -39,4 +39,9 @@
   padding-left: 5%;
   padding-right: 5%;
   padding-top: 1%
+}
+
+.news-grid-header {
+  display: grid;
+  grid-template-columns: 1fr .5fr 1fr;
 }

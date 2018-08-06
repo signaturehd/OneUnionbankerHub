@@ -117,7 +117,7 @@ class BenefitsFeedbackPayslipModal extends BaseMVPView {
               <br/>
               <textarea
                 className={ 'default-feedback-textarea' }
-                placeholder={ 'Your Feedback' }
+                placeholder={ 'Tell us why' }
                 onChange={ e => this.setState({ comment : e.target.value }) }/>
             </center>
             <br/>
