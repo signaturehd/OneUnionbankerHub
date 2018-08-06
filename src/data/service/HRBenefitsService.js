@@ -854,12 +854,8 @@ export default class HRBenefitsService {
       numberOfPregnancy : addMaternityAssistanceSSSParam.noOfPregnancy,
       expectedDateOfDelivery : addMaternityAssistanceSSSParam.expectedDateOfDelivery,
       numberOfDelivery: addMaternityAssistanceSSSParam.noOfDelivery,
-      numberOfMiscarriage : addMaternityAssistanceSSSParam.noOfMiscarriage ,
+      numberOfMiscarriage : addMaternityAssistanceSSSParam.noOfMiscarriage
     }
-    addMaternityAssistanceSSSParam.attachments.map((resp, key) => (
-        formData.append(resp.name, resp.file)
-      )
-    )
     formData.append('body', JSON.stringify(objectMaternitySSS))
     return this.apiClient.post('v1/maternity/submit/sss', formData, {
       headers : { token }
