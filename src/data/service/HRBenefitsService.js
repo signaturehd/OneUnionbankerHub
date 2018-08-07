@@ -776,7 +776,6 @@ export default class HRBenefitsService {
   /* Employee Trainings */
 
   getEmployeeTraining (token) {
-    console.log(token);
     return this.apiClient.get('v1/trainings', {
       headers : { token }
     })
