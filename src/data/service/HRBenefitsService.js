@@ -776,19 +776,22 @@ export default class HRBenefitsService {
   /* Employee Trainings */
 
   getEmployeeTraining (token) {
-    return this.apiClient.get('v1/training/programs', {
+    console.log(token);
+    return this.apiClient.get('v1/trainings', {
       headers : { token }
     })
   }
 
   getEmployeeTrainingDetails (token, id) {
-    return this.apiClient.get(`v1/training/details/${id}`, {
+    return this.apiClient.get(`v1/trainings/${id}`, {
       headers : { token }
     })
   }
 
   enrollEmployee (token, id) {
-    return this.apiClient.get(`v1/training/enroll/${id}`, {
+    return this.apiClient.post('v1/trainings/enroll', {
+      id : { id }
+    }, {
       headers : { token }
     })
   }
