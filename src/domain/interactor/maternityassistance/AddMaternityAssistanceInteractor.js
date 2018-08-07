@@ -3,13 +3,12 @@ export default class AddMaternityAssistanceInteractor {
     this.client = client
   }
 
-  execute (addMaternityAssistanceParam) {
-    this.client.addMaternityAssistance(
+  execute (maternityAssistanceParam) {
+    return this.client.addMaternityAssistance(
       this.client.getToken(),
       this.client.getAccountToken(),
       this.client.getAccountNumber(),
       this.client.getReleasingCenter(),
-      addMaternityAssistanceParam
-    )
+      maternityAssistanceParam)
   }
 }

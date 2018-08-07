@@ -9,7 +9,7 @@ import {
   CircularLoader,
   SingleInputModal,
   MultipleInputModal,
-  RequiredNumberValidation
+  Line
 } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
@@ -31,6 +31,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
   constructor (props) {
     super (props)
       this.state = {
+        showConfirmationModal : false,
         showNoticeModal : false,
         showNoticeResponseModal : false,
         enabledLoader : false,
@@ -38,6 +39,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
         showEditSubmitButton: false,
         titleChange: true,
         showBenefitFeedbackModal : false,
+        respMat1Confirmation: '',
         attachmentsData: [],
         maternityData : [],
         attachmentArray: [],
@@ -89,6 +91,10 @@ class MaternityAssistanceFragment extends BaseMVPView {
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateMaternityAssistance()
+  }
+
+  confirmationMat1Response (respMat1Confirmation) {
+    this.setState({ respMat1Confirmation, showConfirmationModal : true })
   }
 
   noticeOfUndertaking (noticeResponse) {
@@ -156,12 +162,12 @@ class MaternityAssistanceFragment extends BaseMVPView {
   }
 
   validateRequiredRoomNumber (e) {
-    const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
+    const validate = MaternityAssistanceFunction.checkedValidateSymbol(e)
     this.setState({ roomNumberText : validate, roomNumberErrorMessage : '' })
   }
 
   validateRequiredHouseNumber (e) {
-    const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
+    const validate = MaternityAssistanceFunction.checkedValidateSymbol(e)
     this.setState({ houseNumberText : validate, houseNumberErrorMessage : '' })
   }
 
@@ -223,7 +229,6 @@ class MaternityAssistanceFragment extends BaseMVPView {
       orNumberText,
       attachmentArray
     } = this.state
-    console.log("awda")
     this.presenter.addMaternityAssistance(
       typeDeliveryId,
       moment(deliveryDate).format('MM/DD/YYYY'),
@@ -278,9 +283,9 @@ class MaternityAssistanceFragment extends BaseMVPView {
     } = this.state
 
     if(!this.validateRequired(roomNumberText)){
-      this.setState({ roomNumberErrorMessage : 'Room number filed is required' })
+      this.setState({ roomNumberErrorMessage : 'Field is required' })
     } else if (!this.validateRequired(houseNumberText)) {
-      this.setState({ houseNumberErrorMessage : 'House number field is required' })
+      this.setState({ houseNumberErrorMessage : 'Field is required' })
     } else if (!this.validateRequired(streetNameText)) {
       this.setState({ streetNameErrorMessage : 'Street name field is required' })
     } else if (!this.validateRequired(subdivisionText)) {
@@ -340,6 +345,8 @@ class MaternityAssistanceFragment extends BaseMVPView {
 
   render () {
     const {
+      respMat1Confirmation,
+      showConfirmationModal,
       showNoticeModal,
       showNoticeResponseModal,
       showBenefitFeedbackModal,
@@ -405,6 +412,19 @@ class MaternityAssistanceFragment extends BaseMVPView {
     return (
       <div>
         {
+          showConfirmationModal &&
+          <Modal>
+            <center>
+              <h2>{ respMat1Confirmation.message }</h2>
+              <br/>
+              <GenericButton
+                text = { 'Ok' }
+                onClick = { () => this.setState({ showConfirmation : false }) }
+                />
+            </center>
+          </Modal>
+        }
+        {
           showNoticeModal &&
           <NoticeModal
             onClose={ () => this.setState({ showNoticeModal : false })}
@@ -462,16 +482,26 @@ class MaternityAssistanceFragment extends BaseMVPView {
             </i>
             {
               titleChange ?
-              <h2 className = { 'header-margin-default' }>
-                { maternityData &&
-                  maternityData.hasMat1 === 1 ?
-                  'Maternity Assistance' :
-                  'Maternity Notification SSS' }
-              </h2>
+              <div>
+                <h2 className = { 'header-margin-default' }>
+                  { maternityData &&
+                    maternityData.hasMat1 === 1 ?
+                    'Maternity Assistance' :
+                    'Maternity Notification SSS' }
+                </h2>
+                <Line/>
+                <br/>
+                <br/>
+              </div>
               :
-              <h2 className = { 'header-margin-default' }>
-                Form Summary
-              </h2>
+              <div>
+                <h2 className = { 'header-margin-default' }>
+                  Form Summary
+                </h2>
+                <Line/>
+                <br/>
+                <br/>
+              </div>
             }
             {
               maternityData &&

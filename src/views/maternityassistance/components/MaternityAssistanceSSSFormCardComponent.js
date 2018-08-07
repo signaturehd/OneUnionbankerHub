@@ -72,13 +72,13 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
     } = this.props
 
   return (
-    <div className={ 'outpatient-container' }>
+    <div className={ 'maternitySSS-container' }>
       <div className={ 'outpatient-grid-column-2' }>
         <div></div>
         <div>
-          <div className={ 'outpatient-form-card' }>
-            <div className={ 'outpatient-form-card-body' }>
-              <div className = { 'grid-global' }>
+          <div className={ 'maternitySSS-form-card' }>
+            <div className={ 'maternitySSS-form-card-body' }>
+              <div className = { 'maternitySSS-grid-address' }>
                 <div>
                   <GenericInput
                     value = { roomNumberText }
@@ -97,16 +97,17 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                     errorMessage = { houseNumberErrorMessage }
                     type = { 'text' }/>
                 </div>
+                <div>
+                  <GenericInput
+                    value = { streetNameText }
+                    onChange = { e => streetNameFunc(e.target.value) }
+                    text = { 'Street Name' }
+                    disabled = { showEditSubmitButton }
+                    errorMessage = { streetNameErrorMessage }
+                    type = { 'text' }/>
+                </div>
               </div>
               <br/>
-              <GenericInput
-                value = { streetNameText }
-                onChange = { e => streetNameFunc(e.target.value) }
-                text = { 'Street Name' }
-                disabled = { showEditSubmitButton }
-                errorMessage = { streetNameErrorMessage }
-                type = { 'text' }/>
-                <br/>
               <GenericInput
                 value = { subdivisionText }
                 onChange = { e => subdivisionFunc(e.target.value) }
@@ -196,11 +197,11 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
             <br/>
               {
                 showEditSubmitButton ?
-                <div className = { 'outpatient-form-review' }>
+                <div className = { 'maternitySSS-form-review' }>
                   <GenericButton
                     type = { 'button' }
                     text = { 'Edit' }
-                    className = { 'outpatient-edit-form' }
+                    className = { 'maternitySSS-edit-form' }
                     onClick = { () =>
                       editFormDataFunc()
                       }
@@ -209,7 +210,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                     type = { 'button' }
                     text = { 'Submit' }
                     onClick = { () => onSubmitFuncSSS() }
-                    className = { 'outpatient-submit-form-button' }
+                    className = { 'maternitySSS-submit-form-button' }
                     />
                 </div>
                 :
@@ -220,7 +221,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                     onClick = {
                       () => showFormReviewSSS()
                     }
-                    className = { 'outpatient-submit' } />
+                    className = { 'maternitySSS-submit' } />
                 </div>
               }
           </div>

@@ -11,7 +11,7 @@ import AddMaternityAssistanceInteractor from
 '../../../domain/interactor/maternityassistance/AddMaternityAssistanceInteractor'
 
 import addMaternityAssistanceParam from '../../../domain/param/AddMaternityAssistanceParam'
-import addParam from '../../../domain/param/AddMaternityAssistanceSSSParam'
+import addMaternityAssistanceSSSParam from '../../../domain/param/AddMaternityAssistanceSSSParam'
 
 export default class MaternityAssistancePresenter {
   constructor (container) {
@@ -23,7 +23,6 @@ export default class MaternityAssistancePresenter {
 
     this.addMaternityAssistanceInteractor =
       new AddMaternityAssistanceInteractor(container.get('HRBenefitsClient'))
-
   }
 
   setView (view) {
@@ -79,14 +78,12 @@ export default class MaternityAssistancePresenter {
           attachmentArray
         )
       )
-      console.log(attachmentArray)
     .subscribe(
       data => {
         this.view.hideCircularLoader()
         this.view.noticeOfUndertaking(data)
       }, errors => {
         this.view.hideCircularLoader()
-        this.view.navigate()
         this.view.noticeResponseResp(errors)
       }
     )
@@ -108,7 +105,7 @@ export default class MaternityAssistancePresenter {
     ) {
       this.view.showCircularLoader()
       this.addMaternityAssistanceSSSInteractor.execute(
-        addParam(
+        addMaternityAssistanceSSSParam(
           roomNumber,
           houseNumber,
           street,
@@ -123,15 +120,12 @@ export default class MaternityAssistancePresenter {
           noOfMiscarriage,
         )
       )
-
     .subscribe(
       data => {
         this.view.hideCircularLoader()
-        this.view.noticeOfUndertaking(data)
+        this.view.confirmationMat1Response(data)
       },  errors => {
-          this.view.noticeResponseResp(errors)
           this.view.hideCircularLoader()
-          this.view.navigate()
         }
       )
     }
