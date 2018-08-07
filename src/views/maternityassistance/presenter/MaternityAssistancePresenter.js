@@ -45,7 +45,7 @@ export default class MaternityAssistancePresenter {
         data &&
         data.typeOfDelivery.map((resp, key) => {
           typeOfDelivery.push({
-            id : resp.id,
+            id : key+1,
             name : resp.Delivery
           })
         })
@@ -61,30 +61,32 @@ export default class MaternityAssistancePresenter {
     }
 
   addMaternityAssistance (
-    typeOfDelivery,
-    dateOfDelivery,
+    typeDeliveryId,
+    deliveryDate,
     amount,
-    orDate,
-    orNumber,
-    attachments
+    preferredDate,
+    orNumberText,
+    attachmentArray
     ) {
       this.view.showCircularLoader()
       this.addMaternityAssistanceInteractor.execute(
         addMaternityAssistanceParam(
-          typeOfDelivery,
-          dateOfDelivery,
+          typeDeliveryId,
+          deliveryDate,
           amount,
-          orDate,
-          orNumber,
-          attachments
+          preferredDate,
+          orNumberText,
+          attachmentArray
         )
       )
+      console.log(attachmentArray)
     .subscribe(
       data => {
         this.view.hideCircularLoader()
         this.view.noticeOfUndertaking(data)
       }, errors => {
         this.view.hideCircularLoader()
+        this.view.navigate()
         this.view.noticeResponseResp(errors)
       }
     )
@@ -129,7 +131,7 @@ export default class MaternityAssistancePresenter {
       },  errors => {
           this.view.noticeResponseResp(errors)
           this.view.hideCircularLoader()
-          // this.view.navigate()
+          this.view.navigate()
         }
       )
     }

@@ -27,11 +27,11 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
   render () {
 
     const {
-      onSubmitFunc,
+      onSubmitFuncSSS,
       dateFunc,
       editFormDataFunc,
       dateOfDelivertFunc,
-      showFormReview,
+      showFormReviewSSS,
       showEditSubmitButton,
       deliveryDate,
       dateErrorMessage,
@@ -69,7 +69,6 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
       noMiscarriageText,
       noMiscarriageErrorMessage,
       noMiscarriageFunc,
-      showFormReviewSSS
     } = this.props
 
   return (
@@ -209,7 +208,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                   <GenericButton
                     type = { 'button' }
                     text = { 'Submit' }
-                    onClick = { () => onSubmitFunc() }
+                    onClick = { () => onSubmitFuncSSS() }
                     className = { 'outpatient-submit-form-button' }
                     />
                 </div>
@@ -234,14 +233,14 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
 
 MaternityAssistanceSSSFormCardComponent.propTypes = {
   editFormDataFunc : PropTypes.func,
-  showFormReview: PropTypes.func,
+  showFormReviewSSS: PropTypes.func,
   dateOfDeliveryFunc: PropTypes.func,
   deliveryDate : PropTypes.string,
   dateFunc : PropTypes.func,
   dateErrorMessage: PropTypes.string,
   dateOfDeliveryErrorMessage: PropTypes.string,
   showEditSubmitButton: PropTypes.bool,
-  onSubmitFunc : PropTypes.func,
+  onSubmitFuncSSS : PropTypes.func,
   roomNumberText : PropTypes.string,
   roomNumberErrorMessage : PropTypes.string,
   roomNumberFunc: PropTypes.func,
@@ -271,7 +270,6 @@ MaternityAssistanceSSSFormCardComponent.propTypes = {
   noMiscarriageText: PropTypes.string,
   noMiscarriageErrorMessage: PropTypes.string,
   noMiscarriageFunc: PropTypes.func,
-  showFormReviewSSS: PropTypes.func,
 }
 
 export default MaternityAssistanceSSSFormCardComponent

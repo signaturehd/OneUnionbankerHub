@@ -223,13 +223,13 @@ class MaternityAssistanceFragment extends BaseMVPView {
       orNumberText,
       attachmentArray
     } = this.state
-
+    console.log("awda")
     this.presenter.addMaternityAssistance(
       typeDeliveryId,
       moment(deliveryDate).format('MM/DD/YYYY'),
       amount,
       moment(preferredDate).format('MM/DD/YYYY'),
-      orNumberText.toString(),
+      orNumberText,
       attachmentArray)
   }
 
@@ -436,7 +436,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
         {
           showTypeOfDeliveryModalResp &&
           <SingleInputModal
-            label = { 'Dependents' }
+            label = { 'Type of Delivery' }
             inputArray = { typeOfDeliveryData && typeOfDeliveryData }
             selectedArray = { (typeDeliveryId, typeDeliveryName) =>
               this.setState({
@@ -475,14 +475,13 @@ class MaternityAssistanceFragment extends BaseMVPView {
             }
             {
               maternityData &&
-              maternityData.hasMat1 === 1 ||
-              maternityData.isValid === 1 ?
+              maternityData.hasMat1 === 1 ?
               <FormComponent
                 oRNumberFunc = { (resp) => this.validateSymbol(resp) }
                 dateFunc = { (resp) => this.validateDate(resp) }
-                showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
+                showFormReview = { () => this.showFormReviewFieldDisabled() }
                 setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
-                onSubmitFunc = { () => this.submitFormSSS() }
+                onSubmitFunc = { () => this.submitForm() }
                 editFormDataFunc = { () => this.editFormReview() }
                 requestTypeOfDeliveryFunc = { (resp) => this.showTypeOfDeliveryModal(resp) }
                 dateOfDelivertFunc = { (resp) => this.validateDeliveryDate(resp) }
@@ -504,7 +503,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
               <FormComponentSSS
                 dateFunc = { (resp) => this.validateDate(resp) }
                 showFormReviewSSS = { () => this.showFormReviewFieldDisabledSSS() }
-                onSubmitFunc = { () => this.submitForm() }
+                onSubmitFuncSSS = { () => this.submitFormSSS() }
                 editFormDataFunc = { () => this.editFormReview() }
                 dateOfDelivertFunc = { (resp) => this.validateDeliveryDate(resp) }
                 deliveryDate = { deliveryDate }

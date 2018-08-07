@@ -810,15 +810,16 @@ export default class HRBenefitsService {
     const formData = new FormData()
     formData.append('uuid', 12345)
     const objectMaternity = {
-      deliveryType : addMaternityAssistanceParam.typeOfDelivery,
-      deliveryDate : addMaternityAssistanceParam.dateOfDelivery,
-      amount : addMaternityAssistanceParam.amount,
-      orNumber : addMaternityAssistanceParam.orNumber,
-      orDate : addMaternityAssistanceParam.orDate,
       accountNumber,
       releasingCenter,
+      deliveryType : addMaternityAssistanceParam.typeDeliveryId,
+      deliveryDate : addMaternityAssistanceParam.deliveryDate,
+      amount : addMaternityAssistanceParam.amount,
+      orNumber : addMaternityAssistanceParam.orNumberText,
+      orDate : addMaternityAssistanceParam.preferredDate,
     }
-    addMaternityAssistanceParam.attachments.map((resp) => (
+    addMaternityAssistanceParam.attachmentArray.map((resp) =>
+      (
         formData.append(resp.name, resp.file)
       )
     )
@@ -854,7 +855,7 @@ export default class HRBenefitsService {
       numberOfPregnancy : addMaternityAssistanceSSSParam.noOfPregnancy,
       expectedDateOfDelivery : addMaternityAssistanceSSSParam.expectedDateOfDelivery,
       numberOfDelivery: addMaternityAssistanceSSSParam.noOfDelivery,
-      numberOfMiscarriage : addMaternityAssistanceSSSParam.noOfMiscarriage
+      numberOfMiscarriage : addMaternityAssistanceSSSParam.noOfMiscarriage,
     }
     formData.append('body', JSON.stringify(objectMaternitySSS))
     return this.apiClient.post('v1/maternity/submit/sss', formData, {
