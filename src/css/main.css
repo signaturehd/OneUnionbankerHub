@@ -197,11 +197,18 @@ p {
 .grid-global {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
+}
+.grid-global-columns-x3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 2%;
 }
 
 .grid-global-row-x3 {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
+  column-gap: 2%;
 }
 
 /* global icons default */

@@ -19,36 +19,32 @@ class MedicalFragment extends Component {
 
     const benefitsOptions = [{
       styleName: 'medical-cards-1',
-      title: 'DENTAL LOA ISSUANCE',
+      title: 'Dental Loan Issuance',
       path: '/mybenefits/benefits/medical/loa/dental',
     }, {
       styleName: 'medical-cards-2',
-      title: 'DENTAL REIMBURSEMENT',
+      title: 'Dental Reimbursement',
       path: '/mybenefits/benefits/medical/reimbursement/dental',
     }, {
       styleName: 'medical-cards-3',
-      title: 'OPTICAL REIMBURSEMENT',
+      title: 'Optical Reimbursement',
       path: '/mybenefits/benefits/medical/optical',
     }, {
       styleName: 'medical-cards-4',
-      title: 'MEDICAL SCHEDULING',
+      title: 'Medical Scheduling',
       path: '/mybenefits/benefits/medical/scheduling',
     }, {
       styleName: 'medical-cards-5',
-      title: 'OUTPATIENT REIMBURSEMENT',
+      title: 'Outpatient Reimbursement',
       path: '/mybenefits/benefits/medical/reimbursement/outpatient',
     }, {
       styleName: 'medical-cards-6',
-      title: 'MATERNITY ASSISTANCE',
+      title: 'Maternity Assistance',
       path: '/mybenefits/benefits/medical/assistance/maternity',
-    }, {
-      styleName: 'medical-cards-6',
-      title: 'MATERNITY NOTIFICATION SSS',
-      path: '/mybenefits/benefits/medical/assistance/maternitysss',
     }]
 
     const MedicalHome = () => (
-        <div  >
+        <div>
             <i className = { 'back-arrow' } onClick = { () => this.navigate() }></i>
             <h1>MEDICAL</h1>
           <div className = { 'adjustment' }>
@@ -62,7 +58,7 @@ class MedicalFragment extends Component {
                   className = { value.styleName}
                   text = { value.title }
                   onClick = { () => history.push(value.path) } >
-                  <p className = { 'benefits-option-cards' }> { value.title } </p></div>
+                  <p className = { 'benefits-option-cards font-weight-bold' }> { value.title } </p></div>
               </Card>
             ))
           }

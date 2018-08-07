@@ -1,5 +1,5 @@
 
-.outpatient-container {
+.maternitySSS-container {
   max-width: 100%;
 }
 
@@ -9,18 +9,24 @@
   margin: auto;
 }
 
-.outpatient-form-review {
+.maternitySSS-form-review {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 2%;
 }
 
-.outpatient-form-card-body {
+.maternitySSS-grid-address {
+  display: grid;
+  grid-template-columns: .3fr .3fr 1fr;
+  column-gap: 2%;
+}
+
+.maternitySSS-form-card-body {
   border-color: #0a0a0a;
   color: #090909;
 }
 
-.outpatient-submit {
+.maternitySSS-submit {
   border-radius: 5px;
   text-align: center;
   outline: none;
@@ -32,13 +38,13 @@
   width: 100%;
 }
 
-.outpatient-submit:hover {
+.maternitySSS-submit:hover {
   border: 1px solid #FF7200;
   background-color: #ff8A00;
   color: #fff;
 }
 
-.outpatient-submit-form-button:hover {
+.maternitySSS-submit-form-button:hover {
   border: 1px solid #FF7200;
   background-color: #ff8A00;
   color: #fff;
@@ -50,20 +56,20 @@
   color: #fff;
 }
 
-.outpatient-edit-form:hover {
+.maternitySSS-edit-form:hover {
   border: 1px solid #FF7200;
   background-color: #ff8A00;
   color: #fff;
 }
 
-.outpatient-grid-column-2 {
+.maternitySSS-grid-column-2 {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   column-gap: 2%;
 }
 
 @media (max-width : 768px) {
-  .outpatient-grid-column-2 {
+  .maternitySSS-grid-column-2 {
     display: grid;
     grid-template-columns: 1fr ;
     column-gap: 2%;
@@ -85,7 +91,7 @@
     transform: translate3d(0, 0, 0);
   }
 }
-.outpatient-form-preview{
+.maternitySSS-form-preview {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 100%;
   float: center;
@@ -125,10 +131,6 @@
   text-align: left;
   font-size: 14px;
   font-weight: normal;
-}
-.outpatient-grid-procedure {
-  display: grid;
-  grid-template-columns: 1fr .2fr;
 }
 
 .react-datepicker__input-container {
