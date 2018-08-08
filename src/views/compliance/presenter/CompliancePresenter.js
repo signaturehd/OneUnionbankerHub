@@ -5,21 +5,22 @@ import GetCompliancesInteractor from '../../../domain/interactor/compliances/Get
 
 export default class CompliancePresenter {
   constructor (container) {
-    this.getCompliancesInteractor = new GetCompliancesInteractor(container.get('FileClient'))
+    this.getCompliancesInteractor = new GetCompliancesInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
   }
 
-  getCompliancesPdf () {
-    this.getCompliancesInteractor.execute('/2018-08-02/12345-coc_v2-1533200541537.pdf')
+  getCompliancesPdf (page) {
+    this.view.showCircularLoader()
+    this.getCompliancesInteractor.execute(page)
       .subscribe(
         data => {
-          console.log(data)
           this.view.setCompliancesPdf(data)
+          this.view.hideCircularLoader()
         }, error => {
-
+          console.log(error);
     })
   }
 }
