@@ -14,14 +14,13 @@ class MaternityOtherDetailCardComponent extends Component {
   }
 
   render () {
-  const { detailsOutpatient } = this.props
+  const { detailsMaternity } = this.props
 
   return (
     <div  className = { 'transaction-component-otherdetails-form' }>
       <div>
         <div>
           <h2 className = { 'font-weight-bolder' }> Personal Data </h2>
-          <br/>
           <br/>
         </div>
         <br/>

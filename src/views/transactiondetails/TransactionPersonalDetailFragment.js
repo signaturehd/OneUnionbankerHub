@@ -126,6 +126,7 @@ function  TransactionDetails (props)  {
     // Maternity Assistance
     return <MaternityAssistanceDetailsFragment
       transactionsPerson = { transactionsPerson }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
       agreementsMethod = { (resp) => agreementsMethod(resp) }
       details = { transactionDetails }
      />

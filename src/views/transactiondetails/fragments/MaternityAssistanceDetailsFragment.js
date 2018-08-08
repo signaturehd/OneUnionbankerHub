@@ -25,7 +25,13 @@ class MaternityAssistanceDetailsFragment extends Component {
   }
 
   render () {
-    const { details, transactionsPerson, agreementsMethod, attachmentsMethod } = this.props
+    const {
+      details,
+      transactionsPerson,
+      agreementsMethod,
+      attachmentsMethod
+    } = this.props
+
     const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
     const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
     const dateFiled = TransactionDetailsFunction.checkedDateFilled(details)
@@ -63,8 +69,6 @@ class MaternityAssistanceDetailsFragment extends Component {
             </div>
             <br/>
             <div>
-            <br/>
-            <br/>
               <MaternityDetailCardComponent
                 details = { details }
                 transactionsPerson = { transactionsPerson }

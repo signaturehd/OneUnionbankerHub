@@ -18,6 +18,7 @@ class MaternityDetailCardComponent extends Component {
       details,
       transactionsPerson,
       onClickAgreements,
+      onClickAttachments
      } = this.props
 
    const transactionID = details.transactionId
@@ -54,11 +55,28 @@ class MaternityDetailCardComponent extends Component {
               </h2>
             </div>
           </div>
+          <br/>
             <MaternityOtherDetailCardComponent
-              detailsOutpatient = { details && details.details }
+              detailsMaternity = { details && details.details }
             />
         </div>
         <div className = { 'transaction-attachments-agreements-grid' }>
+          <div>
+            <br/>
+              {
+                details &&
+                details.details &&
+                details.details.Attachments ?
+
+                <GenericButton
+                  className = { 'transaction-details-button' }
+                  text = { 'View Attachments' }
+                  onClick = { () => onClickAttachments(true) }
+                /> :
+                <div></div>
+              }
+              <br/>
+          </div>
           <div>
             <br/>
             <GenericButton
