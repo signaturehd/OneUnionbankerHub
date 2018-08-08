@@ -37,7 +37,6 @@ class MyExistingLoansFragment extends BaseMVPView {
   }
 
   render () {
-    const { history } = this.props
     const { existingLoans, enabledLoader } = this.state
     return (
       <div>
@@ -69,12 +68,6 @@ class MyExistingLoansFragment extends BaseMVPView {
       </div>
     )
   }
-}
-
-MyExistingLoansFragment.propTypes = {
-}
-
-MyExistingLoansFragment.defaultProps = {
 }
 
 export default ConnectPartial(MyExistingLoansFragment, Presenter)

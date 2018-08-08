@@ -7,7 +7,6 @@ export function checkedDesiredAmount (balance) {
 
 /* (e.g) July 5, 2018 */
 export function checkedMDYDate (date) {
-  return date ?
-         date &&
+  return date && date ?
          moment(date).format('MMMM DD, YYYY') : '(Not Yet Provided)'
 }

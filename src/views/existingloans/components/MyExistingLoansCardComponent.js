@@ -54,9 +54,11 @@ class MyExistingLoansCardComponent extends Component {
 }
 
 MyExistingLoansCardComponent.propTypes = {
-  detail : PropTypes.object,
-  onClick : PropTypes.func,
-  className : PropTypes.string,
+  description : PropTypes.string,
+  amortization : PropTypes.string,
+  balance : PropTypes.string,
+  promissoryNote : PropTypes.string,
+  date: PropTypes.object
 }
 
 export default MyExistingLoansCardComponent
