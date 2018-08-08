@@ -14,41 +14,26 @@ class MaternityOtherDetailCardComponent extends Component {
   }
 
   render () {
-  const { detailsOutpatient } = this.props
-
-  const recipient = detailsOutpatient.OutpatientDetails.Recipient
-  const procedure = detailsOutpatient.OutpatientDetails.Procedure
+  const { detailsMaternity } = this.props
 
   return (
     <div  className = { 'transaction-component-otherdetails-form' }>
       <div>
         <div>
-          <h2 className = { 'font-weight-bolder' }> Recipient Details </h2>
+          <h2 className = { 'font-weight-bolder' }> Personal Data </h2>
           <br/>
-        </div>
-        <div>
-          <div>
-            <h2 className = { 'font-weight-ligter' }>
-              { recipient.Name }
-            </h2>
-            <h2 className = { 'unionbank-color font-size-12px' }>
-              { recipient.Relationship }
-            </h2>
-            <br/>
-            <br/>
-          </div>
         </div>
         <br/>
       </div>
       <div>
         <div>
-          <h2 className = { 'font-weight-bolder' }> Procedure Details </h2>
+          <h2 className = { 'font-weight-bolder' }> Certification </h2>
           <br/>
         </div>
         <div>
           <div>
             <h2 className = { 'font-weight-ligter' }>
-              { procedure }
+
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
               Procedure

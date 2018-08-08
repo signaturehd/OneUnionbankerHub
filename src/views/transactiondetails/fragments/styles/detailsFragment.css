@@ -99,6 +99,7 @@
   position: absolute;
   margin-left: 25px;
   margin-top: 157px;
+  padding-left: 35px;
 }
 
 @media screen and (max-width: 768px) {

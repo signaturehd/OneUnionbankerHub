@@ -123,7 +123,8 @@ export default class MaternityAssistancePresenter {
     .subscribe(
       data => {
         this.view.hideCircularLoader()
-        this.view.confirmationMat1Response(data)
+        this.view.confirmationMat1Response(true)
+        this.view.showConfirmationModal(data.message)
       },  errors => {
           this.view.hideCircularLoader()
         }
