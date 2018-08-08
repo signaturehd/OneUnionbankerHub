@@ -2,14 +2,10 @@
   max-width: 100%;
 }
 
-.dentalloa-card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+.dentalloa-form-card {
   max-width: 100%;
-  float: center;
   padding: 20px 5px 20px 5px;
   margin: auto;
-  text-align: center;
-  font-family: arial;
 }
 
 .dentalloa-body {
@@ -113,6 +109,24 @@
   height: 35px;
   margin-top: 20px;
   width: 95%;
+}
+
+.dentalloa-button:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
+}
+
+.dentalloa-submit-form-button:hover {
+  order: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
+}
+
+.dentalloa-edit-form:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
 }
 
 .dentalloa-body-group {

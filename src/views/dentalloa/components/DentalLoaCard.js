@@ -4,13 +4,14 @@ import './styles/dentalloaComponentStyle.css'
 import DentalLoaBranchModal from '../modal/DentalLoaBranchModal'
 import DentalLoaDependentModal from '../modal/DentalLoaDependentModal'
 import DentalLoaProcedureModal from '../modal/DentalLoaProcedureModal'
-import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import {
-  GenericTextBox,
+  GenericInput,
   GenericButton,
+  DatePicker,
   Card,
-  List
+  List,
+  Line
 } from '../../../ub-components'
 import '../../../../node_modules/react-datepicker/dist/react-datepicker.css'
 
@@ -45,11 +46,19 @@ class DentalLoaCard extends Component {
       text4,
       onClose,
       submit,
+      cntinue,
+      edit,
       recipient,
       branch,
       onClick,
       submitForm,
-      selectedProcedures
+      selectedProcedures,
+      showEditSubmitButton,
+      recipientErrorMessage,
+      healthwayBranchErrorMessage,
+      dateErrorMessage,
+      errorMessageRequiredProcedure,
+      showFormReview
     } = this.props
 
     const {
@@ -62,31 +71,35 @@ class DentalLoaCard extends Component {
       <div className = { 'dentalloa-container' }>
         <div className = { 'dentalloa-grid-column-2' }>
           <div></div>
-          <Card className = { 'dentalloa-card' }>
-            <div className = { 'dentalloa-header' }>
+          <div>
+            <div className = { 'dentalloa-form-card' }>
               <div className = {'dentalloa-body'}>
-                <GenericTextBox
+                <GenericInput
                   onClick = { () => onClick(true, false, false) }
                   onFocus = { () => onClick(true, false, false) }
                   value = { recipient ? recipient : '' }
                   readOnly
-                  placeholder = { text1 } />
-                <GenericTextBox
+                  text = { text1 }
+                  errorMessage = { recipientErrorMessage } />
+                  <br/>
+                <GenericInput
                   value = { branch ? branch : '' }
                   readOnly
                   type={ 'text' }
                   onClick = { () => onClick(false, true, false) }
                   onFocus = { () => onClick(false, true, false) }
-                  placeholder = { text2 } />
+                  text = { text2 }
+                  errorMessage = { healthwayBranchErrorMessage } />
+                  <br/>
                 <div>
                   <DatePicker
                     dateFormat = { 'DD-MM-YYYY' }
-                    readOnly
                     value={  preferredDate ? preferredDate : 'Preferred Schedule' }
                     selected = {  preferredDate ? moment(preferredDate, 'MM/DD/YYYY') : moment() }
                     onChange = { this.onChange }
                     className = { 'calendar font-size-14px' }
-                    calendarClassName = { 'calendarClass' }/>
+                    calendarClassName = { 'calendarClass' }
+                    errorMessage = { dateErrorMessage }/>
                 </div>
                 <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
               </div>
@@ -128,15 +141,42 @@ class DentalLoaCard extends Component {
                  ))
              }
              <br/>
-
+             <Line/>
+             <br/>
+             {
+               showEditSubmitButton ?
+               <div className = { 'dentalloa-form-review' }>
+                 <GenericButton
+                   type = { 'button' }
+                   text = { edit }
+                   className = { 'dentalloa-edit-form' }
+                   onClick = { () =>
+                     editFormDataFunc()
+                     }
+                   />
+                 <GenericButton
+                   type = { 'button' }
+                   text = { submit }
+                   onClick = { () => onSubmitFunc() }
+                   className = { 'dentalloa-submit-form-button' }
+                   />
+               </div>
+               :
+               <div>
+                 <GenericButton
+                   type = { 'button' }
+                   text = { cntinue }
+                   onClick = {
+                     () => showFormReview(true)
+                   }
+                   className = { 'dentalloa-submit' } />
+               </div>
+             }
             <div className = { 'dentalloa-button-submit' }>
-              <GenericButton
-                 className = { 'dentalloa-button' }
-                 onClick = { submitForm }
-                 text = { submit }/>
+
             </div>
           </div>
-        </Card>
+        </div>
       </div>
     </div>
     )
@@ -150,15 +190,23 @@ DentalLoaCard.propTypes = {
   text2   : PropTypes.string,
   text3   : PropTypes.string,
   submit  : PropTypes.string,
-  text4  : PropTypes.string,
+  text4   : PropTypes.string,
+  recipientErrorMessage : PropTypes.string,
+  healthwayBranchErrorMessage : PropTypes.string,
+  dateErrorMessage : PropTypes.string,
+  errorMessageRequiredProcedure : PropTypes.string,
   selectedProcedures : PropTypes.array,
+  showEditSubmitButton : PropTypes.bool,
   branch : PropTypes.string,
+  showFormReview : PropTypes.func,
   submitForm : PropTypes.func,
   onFocus : PropTypes.func,
 }
 
 DentalLoaCard.defaultProps = {
   submit  : 'Submit',
+  cntinue : 'Continue',
+  edit    : 'Edit',
   text1   : 'Recipient',
   text2   : 'Healthway Branch',
   text3   : 'Preferred Schedule',

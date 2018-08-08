@@ -19,10 +19,16 @@ import { RequiredValidation, Validator, MoneyValidation } from '../../utils/vali
 import { NotifyActions } from '../../actions'
 import store from '../../store'
 
+import * as DentalLoaFunction from './function/DentalLoaFunction'
+
 class DentalLoaView extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
+      recipientErrorMessage: '',
+      healthwayBranchErrorMessage: '',
+      dateErrorMessage: '',
+      errorMessageRequiredProcedure: '',
       dentalloa : null, /* Dental LOA details*/
       disabled : false, /* Loader Change State*/
       showProcedureModal : false,/* First Modal for Procedures*/
@@ -31,6 +37,7 @@ class DentalLoaView extends BaseMVPView {
       showBenefitFeedbackModal : false,
       showNoticeResponseModal: false, /* Display Notice Response Modal*/
       showNoticeResponseApprovalModal : false,/* Display Notice Approval Response Modal*/
+      showEditSubmitButton : false,
       recipient : null,
       procedures : null, /* Get Procedures List*/
       procedure : null,
@@ -65,6 +72,11 @@ class DentalLoaView extends BaseMVPView {
   showCircularLoader (disabled) {
     this.setState({ disabled : true })
   }
+
+  validateRequired (e) {
+    return DentalLoaFunction.checkedValidateInput(e)
+  }
+
   /*
     Submission of DentalLOA Form
   */
@@ -74,31 +86,7 @@ class DentalLoaView extends BaseMVPView {
       selectedProcedures.map(resp =>
         procedures.push({ id : resp.id.toString() })
       )
-      if (!this.validator(recipient)) {
-        store.dispatch(NotifyActions.addNotify({
-           title : 'Warning' ,
-           message : 'Recipient field is required',
-           type : 'warning',
-           duration : 2000
-         })
-       )
-     } else if (!this.validator(branch)) {
-       store.dispatch(NotifyActions.addNotify({
-          title : 'Warning' ,
-          message : 'Healthway Branch field is required',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    } else if (!this.validator(date)) {
-      store.dispatch(NotifyActions.addNotify({
-         title : 'Warning' ,
-         message : 'Please choose the date of occurence',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-    } else if (procedures.length === 0) {
+      if (procedures.length === 0) {
       store.dispatch(NotifyActions.addNotify({
          title : 'Warning' ,
          message : 'Please select the procedure',
@@ -107,7 +95,29 @@ class DentalLoaView extends BaseMVPView {
        })
      )
    } else {
-      this.presenter.addDentalLoa(recipient.id ? recipient.id : null , branch.id, date, procedures)
+     this.setState({ showEditSubmitButton: true })
+     this.presenter.addDentalLoa(recipient.id ? recipient.id : null , branch.id, date, procedures)
+    }
+  }
+
+  showFormReviewFieldDisabled (e) {
+    const {
+      recipient,
+      branchText,
+      preferredDate,
+      procedure
+    } = this.state
+
+    if(!this.validateRequired(recipient)) {
+     this.setState({ recipientErrorMessage : 'Please select your Recipient' })
+   } else if (!this.validateRequired(branchText)) {
+      this.setState({ healthwayBranchErrorMessage : 'Please select your Healthway Branch' })
+    } else if (!this.validateRequired(preferredDate)) {
+      this.setState({ dateErrorMessage : 'Please provide the date of occurence' })
+    } else if (!this.validateRequired(procedure)) {
+      this.setState({ errorMessageRequiredProcedure : 'Please select a procedure' })
+    } else {
+      this.setState({ showEditSubmitButton: true })
     }
   }
 
@@ -136,6 +146,11 @@ class DentalLoaView extends BaseMVPView {
       showNoticeResponseModal,
       showBenefitFeedbackModal,
       showNoticeResponseApprovalModal,
+      showEditSubmitButton,
+      recipientErrorMessage,
+      healthwayBranchErrorMessage,
+      dateErrorMessage,
+      errorMessageRequiredProcedure,
       recipient,
       procedures,
       procedure,
@@ -246,6 +261,12 @@ class DentalLoaView extends BaseMVPView {
           procedure = { procedure }
           branch = { branchText }
           selectedProcedures = { selectedProcedures }
+          showEditSubmitButton = { showEditSubmitButton }
+          recipientErrorMessage = { recipientErrorMessage }
+          healthwayBranchErrorMessage = { healthwayBranchErrorMessage }
+          dateErrorMessage = { dateErrorMessage }
+          errorMessageRequiredProcedure = { errorMessageRequiredProcedure }
+          showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
           getPreferredDate = { data =>
             this.setState({ date :  data })}
           submitForm = { () =>
