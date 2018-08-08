@@ -9,7 +9,9 @@ import {
   CircularLoader,
   SingleInputModal,
   MultipleInputModal,
-  Line
+  Line,
+  Modal,
+  GenericButton
 } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
@@ -93,8 +95,12 @@ class MaternityAssistanceFragment extends BaseMVPView {
     this.presenter.validateMaternityAssistance()
   }
 
-  confirmationMat1Response (respMat1Confirmation) {
-    this.setState({ respMat1Confirmation, showConfirmationModal : true })
+  confirmationMat1Response (resp) {
+    this.setState({ showConfirmationModal : resp })
+  }
+
+  showConfirmationModal (respMat1Confirmation) {
+    this.setState({ respMat1Confirmation })
   }
 
   noticeOfUndertaking (noticeResponse) {
@@ -415,7 +421,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
           showConfirmationModal &&
           <Modal>
             <center>
-              <h2>{ respMat1Confirmation.message }</h2>
+              <h2>{ respMat1Confirmation }</h2>
               <br/>
               <GenericButton
                 text = { 'Ok' }

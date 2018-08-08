@@ -119,21 +119,20 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
               <GenericInput
                 value = { barangayText }
                 onChange = { e => barangayFunc(e.target.value) }
-                text = { 'Barangay' }
+                text = { 'Barangay/City/Locality' }
                 disabled = { showEditSubmitButton }
                 errorMessage = { barangayErrorMessage }
                 type = { 'text' }/>
                 <br/>
+              <GenericInput
+                value = { cityText }
+                onChange = { e => cityFunc(e.target.value) }
+                text = { 'City/Municipality' }
+                disabled = { showEditSubmitButton }
+                errorMessage = { cityErrorMessage }
+                type = { 'text' }/>
+                <br/>
               <div className = { 'grid-global' }>
-                <div>
-                  <GenericInput
-                    value = { cityText }
-                    onChange = { e => cityFunc(e.target.value) }
-                    text = { 'City' }
-                    disabled = { showEditSubmitButton }
-                    errorMessage = { cityErrorMessage }
-                    type = { 'text' }/>
-                </div>
                 <div>
                   <GenericInput
                     value = { provinceText }
@@ -143,24 +142,16 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                     errorMessage = { provinceErrorMessage }
                     type = { 'text' }/>
                 </div>
+                <div>
+                  <GenericInput
+                    value = { zipCodeText }
+                    onChange = { e => zipCodeFunc(e.target.value) }
+                    text = { 'Zip Code' }
+                    disabled = { showEditSubmitButton }
+                    errorMessage = { zipCodeErrorMessage }
+                    type = { 'text' }/>
+                </div>
               </div>
-              <br/>
-              <GenericInput
-                value = { zipCodeText }
-                onChange = { e => zipCodeFunc(e.target.value) }
-                text = { 'Zip Code' }
-                disabled = { showEditSubmitButton }
-                errorMessage = { zipCodeErrorMessage }
-                type = { 'text' }/>
-              <br/>
-              <DatePicker
-                selected = { deliveryDate }
-                disabled = { showEditSubmitButton }
-                onChange = { (e) => dateOfDelivertFunc(e) }
-                minDate = { moment() }
-                text = { 'Expected Date of Delivery' }
-                errorMessage = { dateOfDeliveryErrorMessage }
-                />
               <br/>
               <div className = { 'grid-global-columns-x3' }>
                 <div>
@@ -191,6 +182,16 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                     type = { 'text' }/>
                 </div>
               </div>
+              <br/>
+              <DatePicker
+                selected = { deliveryDate }
+                disabled = { showEditSubmitButton }
+                onChange = { (e) => dateOfDelivertFunc(e) }
+                minDate = { moment() }
+                text = { 'Expected Date of Delivery' }
+                errorMessage = { dateOfDeliveryErrorMessage }
+                />
+              <br/>
             </div>
             <br/>
             <Line/>
