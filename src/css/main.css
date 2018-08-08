@@ -199,6 +199,13 @@ p {
   grid-template-columns: 1fr 1fr;
   column-gap: 2%;
 }
+
+.grid-global-rows {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  column-gap: 2%;
+}
+
 .grid-global-columns-x3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -263,4 +270,8 @@ p {
 
 .global-icons-school {
   background-image: url('../images/icons/ic_school_grey_500_18dp.png');
+}
+
+.global-icons-promissoryNote {
+  background-image: url('../images/icons/ic_account_balance_wallet_grey_600_36dp.png')
 }

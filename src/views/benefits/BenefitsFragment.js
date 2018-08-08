@@ -14,6 +14,7 @@ import CalamityFragment from '../calamity/CalamityFragment'
 
 import TransactionPersonalFragment from '../transaction/TransactionPersonalFragment'
 import TransactionApprovalFragment from '../transaction/TransactionApprovalFragment'
+import MyExistingLoansFragment from '../existingloans/MyExistingLoansFragment'
 import OpticalFragment from '../optical/OpticalFragment'
 import BereavementFragment from '../bereavement/BereavementFragment'
 
@@ -301,6 +302,14 @@ class BenefitsFragment extends BaseMVPView {
            name = { 'tabs' }
            onClick={ () => this.props.history.push('/mybenefits/transactions/personal') } />
          <label className={ 'transaction-icon-tab' } htmlFor='tab2'>My Transactions</label>
+
+         <input
+           className = { 'input-tab' }
+           id = { 'tab3' }
+           type = { 'radio' }
+           name = { 'tabs' }
+           onClick={ () => this.props.history.push('/mybenefits/loan/existing') } />
+         <label className={ 'transaction-icon-tab' } htmlFor='tab3'>My Existing Loans</label>
           {
             // TODO uncomment if required the for approval module
 
@@ -317,6 +326,8 @@ class BenefitsFragment extends BaseMVPView {
                 render={ props => <TransactionPersonalFragment { ...props } /> } />
               <Route path='/mybenefits/transactions/approval'
                 render={ props => <TransactionApprovalFragment { ...props }/> } />
+              <Route path='/mybenefits/loan/existing'
+                render={ props => <MyExistingLoansFragment { ...props }/> } />
               <Route path='/mybenefits/benefits/education'
                 render={ props => <EducationFragment { ...props } />}/>
               <Route exact path='/mybenefits/benefits/medical'
