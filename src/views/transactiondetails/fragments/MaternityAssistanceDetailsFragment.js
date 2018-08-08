@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Accordion from '../components/AccordionComponent'
 import {
   Card,
   GenericButton,
@@ -9,9 +8,11 @@ import {
   FileUploader
 } from '../../../ub-components'
 import './styles/detailsFragment.css'
-import OutpatientDetailCardComponent from
-'../../transaction/components/TransactionOutpatientComponent/OutpatientDetailCardComponent'
+
+import MaternityDetailCardComponent from
+'../../transaction/components/TransactionMaternityDetailsComponent/MaternityDetailCardComponent'
 import * as TransactionDetailsFunction from '../controller/TransactionDetailsFunction'
+
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
@@ -25,8 +26,6 @@ class MaternityAssistanceDetailsFragment extends Component {
 
   render () {
     const { details, transactionsPerson, agreementsMethod, attachmentsMethod } = this.props
-    const { attachmentArray } = this.state
-
     const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
     const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
     const dateFiled = TransactionDetailsFunction.checkedDateFilled(details)
@@ -39,7 +38,7 @@ class MaternityAssistanceDetailsFragment extends Component {
             <div className={ 'transaction-details-container' }>
               <div className = { 'transaction-banner transaction-maternity-assistance' }>
                 <div className={ 'transaction-banner-card' }>
-                  <div>
+                  <div className = { 'text-align-left' }>
                     <h1 className = { 'transaction-details-name font-weight-normal'}>
                       { benefitType }
                     </h1>
@@ -64,7 +63,9 @@ class MaternityAssistanceDetailsFragment extends Component {
             </div>
             <br/>
             <div>
-              <OutpatientDetailCardComponent
+            <br/>
+            <br/>
+              <MaternityDetailCardComponent
                 details = { details }
                 transactionsPerson = { transactionsPerson }
                 onClickAgreements = { (resp) => agreementsMethod(resp) }

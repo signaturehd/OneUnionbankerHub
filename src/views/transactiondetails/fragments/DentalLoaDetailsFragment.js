@@ -40,7 +40,7 @@ class DentalLoaDetailsFragment extends Component {
           <div className={ 'transaction-details-container' }>
             <div className = { 'transaction-banner transaction-dentalloa' }>
               <div className={ 'transaction-banner-card' }>
-                <div>
+                <div className = { 'text-align-left' }>
                   <h1 className = { 'transaction-details-name font-weight-normal'}>
                      { benefitType }
                   </h1>

@@ -40,7 +40,7 @@ class OpticalDetailsFragment extends Component {
           <div className={ 'transaction-details-container' }>
             <div className = { 'transaction-banner transaction-optical' }>
               <div className={ 'transaction-banner-card' }>
-                 <div>
+                <div className = { 'text-align-left' }>
                    <h1 className = { 'transaction-details-name font-weight-normal'}>
                       { benefitType }
                    </h1>
