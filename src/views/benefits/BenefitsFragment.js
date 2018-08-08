@@ -243,7 +243,7 @@ class BenefitsFragment extends BaseMVPView {
           />
         }
         <div className={ 'adjustment' }>
-          <div className={ 'card-container' }>
+          <div className={ 'benefits-card-container' }>
             {
             benefitsOptions.map((value, idx) => (
 

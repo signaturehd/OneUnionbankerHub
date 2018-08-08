@@ -18,53 +18,58 @@ class MedicalFragment extends Component {
     const { history } = this.props
 
     const benefitsOptions = [{
-      styleName: 'medical-cards-1',
+      styleName: 'medical-cards-1 medical-option-default',
       title: 'Dental Loan Issuance',
       path: '/mybenefits/benefits/medical/loa/dental',
     }, {
-      styleName: 'medical-cards-2',
+      styleName: 'medical-cards-1 medical-option-default',
       title: 'Dental Reimbursement',
       path: '/mybenefits/benefits/medical/reimbursement/dental',
     }, {
-      styleName: 'medical-cards-3',
+      styleName: 'medical-cards-1 medical-option-default',
       title: 'Optical Reimbursement',
       path: '/mybenefits/benefits/medical/optical',
     }, {
-      styleName: 'medical-cards-4',
+      styleName: 'medical-cards-1 medical-option-default',
       title: 'Medical Scheduling',
       path: '/mybenefits/benefits/medical/scheduling',
     }, {
-      styleName: 'medical-cards-5',
+      styleName: 'medical-cards-1 medical-option-default',
       title: 'Outpatient Reimbursement',
       path: '/mybenefits/benefits/medical/reimbursement/outpatient',
     }, {
-      styleName: 'medical-cards-6',
+      styleName: 'medical-cards-1 medical-option-default',
       title: 'Maternity Assistance',
       path: '/mybenefits/benefits/medical/assistance/maternity',
     }]
 
     const MedicalHome = () => (
-        <div>
-            <i className = { 'back-arrow' } onClick = { () => this.navigate() }></i>
-            <h1>MEDICAL</h1>
-          <div className = { 'adjustment' }>
-          <div className = { 'card-container' }>
-            {
-            benefitsOptions.map((value, idx) => (
-              <Card
-                className = { 'benefits-card' }
-                key={ idx }>
+      <div>
+          <i className = { 'back-arrow' } onClick = { () => this.navigate() }></i>
+          <h1>Medical</h1>
+        <div className = { 'adjustment' }>
+        <div className = { 'medical-card-container' }>
+          {
+          benefitsOptions.map((value, idx) => (
+            <Card
+              onClick = { () => history.push(value.path) }
+              className={ 'medical-card' }
+              key={ idx }>
+              <div className = { 'medical-column-grid' }>
                 <div
-                  className = { value.styleName}
-                  text = { value.title }
-                  onClick = { () => history.push(value.path) } >
-                  <p className = { 'benefits-option-cards font-weight-bold' }> { value.title } </p></div>
-              </Card>
-            ))
-          }
-          </div>
+                  className={ value.styleName }
+                  text={ value.title }
+                  />
+                <p className={ 'medical-option-cards font-weight-normal font-size-15px' }>
+                  { value.title }
+                </p>
+              </div>
+            </Card>
+          ))
+        }
         </div>
       </div>
+    </div>
     )
 
     return (

@@ -18,53 +18,54 @@ class LoansFragment extends Component {
 
     const benefitsOptions = [{
       id: 2,
-      styleName: 'loans-cards-1',
-      title: 'EMERGENCY LOAN',
+      styleName: 'loans-cards-1 loans-option-default',
+      title: 'Emergency Loan',
       path: '/mybenefits/benefits/loans/emergency',
     }, {
       id: 3,
-      styleName: 'loans-cards-2',
-      title: 'HOUSING ASSISTANCE LOAN',
+      styleName: 'loans-cards-1 loans-option-default',
+      title: 'Housing Assistance Loan',
       path: '/mybenefits/benefits/loans/housingassistance',
     }, {
       id: 1,
-      styleName: 'loans-cards-3',
-      title: 'SALARY LOAN',
+      styleName: 'loans-cards-1 loans-option-default',
+      title: 'Salary Loan',
       path: '/mybenefits/benefits/loans/salary',
     }, {
       id: 4,
-      styleName: 'loans-cards-4',
-      title: 'COMPUTER LOAN',
+      styleName: 'loans-cards-1 loans-option-default',
+      title: 'Computer Loan',
       path: '/mybenefits/benefits/loans/computer',
     }, {
       id: 5,
-      styleName: 'loans-cards-5',
-      title: 'MOTORCYCLE LOAN',
+      styleName: 'loans-cards-1 loans-option-default',
+      title: 'Motorcycle Loan',
       path: '/mybenefits/benefits/loans/motorcycle',
     }]
 
     const LoansHome = () => (
-        <div>
-            <i
-              className = { 'back-arrow' }
-              onClick = { () => this.navigate() }></i>
-            <h1>MULTI PURPOSE LOAN</h1>
-          <div className = { 'adjustment' }>
-          <div className = { 'card-container' }>
-            {
-            benefitsOptions.map((value, idx) => (
-              <Card
-                className = { 'benefits-card' }
-                key = { idx }>
+      <div>
+        <i
+          className = { 'back-arrow' }
+          onClick = { () => this.navigate() }></i>
+        <h1>Multi Purpose Loan</h1>
+        <div className = { 'adjustment' }>
+        <div className = { 'loans-card-container' }>
+        {
+          benefitsOptions.map((value, idx) => (
+            <Card
+              className = { 'loans-card' }
+              onClick = { () => history.push(value.path) }
+              key = { idx }>
+              <div className = { 'loans-column-grid' }>
                 <div
-                  className = { value.styleName}
-                  text = { value.title }
-                  onClick = { () => history.push(value.path) } >
-                  <p className = { 'benefits-option-cards font-weight-bold' }>
-                    { value.title }
-                  </p>
-                </div>
-              </Card>
+                  className = { value.styleName }
+                  text = { value.title } />
+                <p className = { 'loans-option-cards font-weight-bold font-size-15px' }>
+                  { value.title }
+                </p>
+              </div>
+            </Card>
             ))
           }
           </div>
