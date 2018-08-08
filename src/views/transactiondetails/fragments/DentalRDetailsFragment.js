@@ -54,7 +54,7 @@ class DentalRDetailsFragment extends Component {
                           { benefitLabel }
                         <div></div>
                       </div>
-                      <div className = { 'font-size-14px' }>Transaction Status</div>
+                      <div className = { 'font-size-14px' }></div>
                     </div>
                     <div></div>
                   </div>
