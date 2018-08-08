@@ -3,13 +3,12 @@ export default class AddMaternityAssistanceSSSInteractor {
     this.client = client
   }
 
-  execute (addMaternityAssistanceSSSParam) {
-    this.client.addMaternityAssistance(
+  execute (maternityAssistanceSSSParam) {
+    return this.client.addMaternityAssistanceSSS(
       this.client.getToken(),
       this.client.getAccountToken(),
       this.client.getAccountNumber(),
       this.client.getReleasingCenter(),
-      addMaternityAssistanceSSSParam
-    )
+      maternityAssistanceSSSParam)
   }
 }

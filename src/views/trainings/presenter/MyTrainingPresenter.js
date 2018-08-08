@@ -54,10 +54,8 @@ export default class MyTrainingPresenter {
   enrollEmployee (id) {
     this.enrollEmployeeInteractor.execute(id)
     .subscribe(data => {
-      console.log(data);
       this.view.navigate()
     }, error => {
-      console.log(error);
       this.view.navigate()
     })
   }

@@ -1,6 +1,16 @@
 /* benefits */
 .benefits-card {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.benefits-column-grid {
+  display: grid;
+  grid-template-columns: .5fr 1fr;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .app-countdown {
@@ -45,15 +55,15 @@
 
 .card-container {
   display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: 1fr 1fr 1fr;
   margin-bottom: 10px;
   text-align: center;
 }
 
 
 .benefits-option-cards {
-  background: rgba(0,0,0,0.5);
-  color: #fff;
+  background: transparent;
+  color: #ff8a00;
   margin-top: 5%;
   padding: 12px 0 12px 0;
 }
@@ -140,19 +150,19 @@ label:hover {
 }
 
 .benefits-option-cards-1 {
-  background-image: url('../../../images/drawer/GROUP EDUCATIONAL PROGRAM.png') ;
+  background-image: url('../../../images/icons/EDUCATION AID PROGRAM.png') ;
 }
 
 .benefits-option-cards-2 {
-  background-image: url('../../../images/drawer/GROUP EDUCATIONAL PROGRAM.png') ;
+  background-image: url('../../../images/icons/Medical.png') ;
 }
 
 .benefits-option-cards-3 {
-  background-image: url('../../../images/drawer/GROUP EDUCATIONAL PROGRAM.png') ;
+  background-image: url('../../../images/icons/LOANS.png') ;
 }
 
 .benefits-option-cards-4 {
-  background-image: url('../../../images/drawer/GROUP EDUCATIONAL PROGRAM.png');
+  background-image: url('../../../images/icons/CAR LEASE.png');
 }
 
 .benefits-option-cards-5 {
@@ -163,36 +173,10 @@ label:hover {
   background-image: url('../../../images/drawer/GROUP EDUCATIONAL PROGRAM.png');
 }
 
-.benefits-option-cards-1:hover {
-  box-shadow: 5px 7px 10px 0px rgba(0,0,0,0.3);
-}
-
-.benefits-option-cards-2:hover {
-  box-shadow: 5px 7px 10px 0px rgba(0,0,0,0.3);
-}
-
-.benefits-option-cards-3:hover {
-  box-shadow: 5px 7px 10px 0px rgba(0,0,0,0.3);
-}
-
-.benefits-option-cards-4:hover {
-  box-shadow: 5px 7px 10px 0px rgba(0,0,0,0.3);
-}
-
-.benefits-option-cards-5:hover {
-  box-shadow: 5px 7px 10px 0px rgba(0,0,0,0.3);
-}
-
-.benefits-option-cards-6:hover {
-  box-shadow: 5px 7px 10px 0px rgba(0,0,0,0.3);
-}
-
 .benefits-option-default {
   padding: 21% 0 0 0;
   cursor: pointer;
   border-radius: 5px;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
-  grid-area: card;
   background-repeat: no-repeat;
   background-size: contain;
 }
