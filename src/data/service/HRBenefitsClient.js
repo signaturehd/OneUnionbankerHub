@@ -700,4 +700,10 @@ export default class HRBenefitsClient {
     )
       .pipe(ServiceErrorOperator())
   }
+
+  /* My Existing Loans */
+  getExistingLoans (token) {
+    return this.service.getExistingLoans(token)
+      .pipe(ServiceErrorOperator())
+  }
 }
