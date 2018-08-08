@@ -121,6 +121,14 @@ function  TransactionDetails (props)  {
        agreementsMethod = { (resp) => agreementsMethod(resp) }
        details = { transactionDetails }
       />
+  } else if (transactionId === 41) {
+    // Maternity Assistance
+    return <OutpatientDetailsFragment
+      transactionsPerson = { transactionsPerson }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
+      details = { transactionDetails }
+     />
  }
   else {
    return <h1>No Transaction Occured please reload</h1> // No  Transaction
