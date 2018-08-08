@@ -865,4 +865,15 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Code of Conduct  */
+
+  // getCompliancesPdf (token, file) {
+  //   return this.fileClient.get('v1/uploads?folder=documents', file, {
+  //     headers : {
+  //       token
+  //     },
+  //     responseType : 'blob'
+  //   })
+  // }
 }
