@@ -17,7 +17,6 @@ import TransactionApprovalFragment from '../transaction/TransactionApprovalFragm
 import OpticalFragment from '../optical/OpticalFragment'
 import BereavementFragment from '../bereavement/BereavementFragment'
 
-
 import {
   InputModal,
   Card,

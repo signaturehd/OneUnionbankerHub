@@ -60,7 +60,7 @@ class MedicalFragment extends Component {
                   className={ value.styleName }
                   text={ value.title }
                   />
-                <p className={ 'medical-option-cards font-weight-normal font-size-15px' }>
+                <p className={ 'medical-option-cards font-weight-bold font-size-14px' }>
                   { value.title }
                 </p>
               </div>

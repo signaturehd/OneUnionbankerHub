@@ -425,7 +425,10 @@ class MaternityAssistanceFragment extends BaseMVPView {
               <br/>
               <GenericButton
                 text = { 'Ok' }
-                onClick = { () => this.setState({ showConfirmation : false }) }
+                onClick = { () => {
+                  this.setState({ showConfirmationModal : false })
+                  this.navigate()
+                }}
                 />
             </center>
           </Modal>

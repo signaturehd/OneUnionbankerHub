@@ -43,7 +43,7 @@ class EducationFragment extends Component {
             <i
               className = { 'back-arrow' }
               onClick = { () => this.navigate() }></i>
-            <h1>EDUCATION</h1>
+            <h1>Education</h1>
           <div className = { 'adjustment' }>
           <div className = { 'education-card-container' }>
             {
