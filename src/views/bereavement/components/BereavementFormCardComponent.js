@@ -53,11 +53,6 @@ class BereavementFormCardComponent extends Component {
     this.setState({ intermentDate : e.format('MM/DD/YYYY') })
   }
 
-  getExtension (filename) {
-    const parts=filename.split('/')
-    return parts[parts.length - 1]
-  }
-
   getOnClicked(
     funeralDate,
     intermentDate,

@@ -9,6 +9,12 @@
 .text {
   width: 100%;
 }
+
+.login-loader {
+  padding-top: 42px;
+  padding-bottom: 42px;
+}
+
 .login-form {
   background-color: #ffffff;
   width: 380px;
@@ -142,7 +148,7 @@
 
 .password_icon {
   float: right;
-  margin-top: -28px;
+  margin-top: -45px;
   margin-right: 6px;
   position: relative;
   z-index: 2;
