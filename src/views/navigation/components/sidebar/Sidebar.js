@@ -51,6 +51,12 @@ class SideBar extends Component {
         className: 'payslip-icon'
       },
       {
+        id: 9 ,
+        title: 'My Compliance',
+        action: () => history.push('/mycompliance'),
+        className: 'logout-icon'
+      },
+      {
         id: 3 ,
         title: 'My Personal Information',
         action: () => history.push('/settings'),
@@ -75,6 +81,7 @@ class SideBar extends Component {
         className: 'logout-icon'
       },
     ]
+
   return (
     <div className = { '_sidebar-overlay' }>
       <ul className = { '_link-list ul' }>
@@ -89,7 +96,7 @@ class SideBar extends Component {
         </h5>
           {
             modules.map((d, idx) =>
-            d.id === 8 ?
+            d.id === 9 ?
             <div
               key = { idx }
             >

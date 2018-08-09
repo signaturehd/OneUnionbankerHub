@@ -73,6 +73,7 @@ class PayslipFragment extends BaseMVPView {
     const empId = employeeId && employeeId.employeeNumber
 
     return (
+
       <div className={ 'payslip-container' }>
         { super.render() }
         {
