@@ -43,7 +43,7 @@ class LoansDetailsFragment extends Component {
           <div className={ 'transaction-details-container' }>
             <div className = { 'transaction-banner transaction-mpl' }>
               <div className={ 'transaction-banner-card' }>
-                 <div>
+                <div className = { 'text-align-left' }>
                    <h1 className = { 'transaction-details-name font-weight-normal'}>
                       { benefitType }
                    </h1>
@@ -59,7 +59,7 @@ class LoansDetailsFragment extends Component {
                          { benefitLabel }
                        <div></div>
                      </div>
-                     <div className = { 'font-size-14px' }>Transaction Status</div>
+                     <div className = { 'font-size-14px' }></div>
                    </div>
                    <div></div>
                  </div>

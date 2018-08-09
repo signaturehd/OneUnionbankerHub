@@ -148,9 +148,9 @@ class MaternityAssistanceCardComponent extends Component {
                 <div>
                   <GenericButton
                     type = { 'button' }
-                    text = { 'continue' }
+                    text = { 'Continue' }
                     onClick = {
-                      () => showFormReview(true)
+                      () => showFormReview()
                     }
                     className = { 'outpatient-submit' } />
                 </div>

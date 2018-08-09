@@ -689,15 +689,21 @@ export default class HRBenefitsClient {
     accountToken,
     accountNumber,
     releasingCenter,
-    addMaternityAssistanceSSSParam
+    maternityAssistanceSSSParam
   ) {
     return this.service.addMaternityAssistanceSSS(
       token,
       accountToken,
       accountNumber,
       releasingCenter,
-      addMaternityAssistanceSSSParam
+      maternityAssistanceSSSParam
     )
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* My Existing Loans */
+  getExistingLoans (token) {
+    return this.service.getExistingLoans(token)
       .pipe(ServiceErrorOperator())
   }
 }

@@ -14,9 +14,9 @@ import CalamityFragment from '../calamity/CalamityFragment'
 
 import TransactionPersonalFragment from '../transaction/TransactionPersonalFragment'
 import TransactionApprovalFragment from '../transaction/TransactionApprovalFragment'
+import MyExistingLoansFragment from '../existingloans/MyExistingLoansFragment'
 import OpticalFragment from '../optical/OpticalFragment'
 import BereavementFragment from '../bereavement/BereavementFragment'
-
 
 import {
   InputModal,
@@ -141,32 +141,32 @@ class BenefitsFragment extends BaseMVPView {
     const benefitsOptions = [{
       id: 0 ,
       styleName: 'benefits-option-cards-1 benefits-option-default font-weight-bold',
-      title: 'EDUCATION',
+      title: 'Education',
       path: '/mybenefits/benefits/education',
     }, {
       id: 1 ,
       styleName: 'benefits-option-cards-2 benefits-option-default font-weight-bold',
-      title: 'MEDICAL',
+      title: 'Medical',
       path: '/mybenefits/benefits/medical',
     }, {
       id: 2,
       styleName: 'benefits-option-cards-3 benefits-option-default font-weight-bold',
-      title: 'MULTI PURPOSE LOAN',
+      title: 'Multi Purpose Loan',
       path: '/mybenefits/benefits/loans',
     }, {
       id: 3,
       styleName: 'benefits-option-cards-4 benefits-option-default font-weight-bold',
-      title: 'CAR LEASE',
+      title: 'Car Lease',
       path: '/mybenefits/benefits/carlease',
     }, {
       id: 4,
       styleName: 'benefits-option-cards-5 benefits-option-default font-weight-bold',
-      title: 'BEREAVEMENT',
+      title: 'Bereavement',
       path: '/mybenefits/benefits/bereavement',
     }, {
       id: 5,
       styleName : 'benefits-option-cards-6 benefits-option-default font-weight-bold',
-      title: 'CALAMITY',
+      title: 'Calamity',
       path: '/mybenefits/benefits/calamity',
     }]
 
@@ -243,24 +243,27 @@ class BenefitsFragment extends BaseMVPView {
           />
         }
         <div className={ 'adjustment' }>
-          <div className={ 'card-container' }>
+          <div className={ 'benefits-card-container' }>
             {
             benefitsOptions.map((value, idx) => (
 
-              <Card className={ 'benefits-card' } key={ idx }>
-                <div
-                  className={ value.styleName }
-                  text={ value.title }
-                  onClick={ () => {
-                    if(value.id == 4) {
-                      this.setState({ showBereavementConfirmationModal : true })
-                    } else {
-                      history.push(value.path)
-                    }
+              <Card
+                className={ 'benefits-card' }
+                onClick={ () => {
+                  if(value.id == 4) {
+                    this.setState({ showBereavementConfirmationModal : true })
+                  } else {
+                    history.push(value.path)
                   }
-                } >
-
-                  <p className={ 'benefits-option-cards' }> { value.title } </p>
+                }
+              }
+                key={ idx }>
+                <div className = { 'benefits-column-grid' }>
+                  <div
+                    className={ value.styleName }
+                    text={ value.title } >
+                  </div>
+                  <p className={ 'benefits-option-cards font-weight-bold' }> { value.title } </p>
                 </div>
               </Card>
             ))
@@ -299,6 +302,14 @@ class BenefitsFragment extends BaseMVPView {
            name = { 'tabs' }
            onClick={ () => this.props.history.push('/mybenefits/transactions/personal') } />
          <label className={ 'transaction-icon-tab' } htmlFor='tab2'>My Transactions</label>
+
+         <input
+           className = { 'input-tab' }
+           id = { 'tab3' }
+           type = { 'radio' }
+           name = { 'tabs' }
+           onClick={ () => this.props.history.push('/mybenefits/loan/existing') } />
+         <label className={ 'transaction-icon-tab' } htmlFor='tab3'>My Existing Loans</label>
           {
             // TODO uncomment if required the for approval module
 
@@ -315,6 +326,8 @@ class BenefitsFragment extends BaseMVPView {
                 render={ props => <TransactionPersonalFragment { ...props } /> } />
               <Route path='/mybenefits/transactions/approval'
                 render={ props => <TransactionApprovalFragment { ...props }/> } />
+              <Route path='/mybenefits/loan/existing'
+                render={ props => <MyExistingLoansFragment { ...props }/> } />
               <Route path='/mybenefits/benefits/education'
                 render={ props => <EducationFragment { ...props } />}/>
               <Route exact path='/mybenefits/benefits/medical'
