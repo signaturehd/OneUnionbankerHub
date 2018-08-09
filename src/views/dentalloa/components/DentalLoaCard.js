@@ -88,11 +88,9 @@ class DentalLoaCard extends Component {
                   errorMessage = { branch ? '' : healthwayBranchErrorMessage } />
                   <br/>
                 <DatePicker
-                  dateFormat = { 'MM-DD-YYYY' }
                   minDate = { moment() }
                   disabled = { showEditSubmitButton }
-                  value={  preferredDate ? preferredDate : 'Preferred Schedule' }
-                  selected = {  preferredDate ? moment(preferredDate, 'MM/DD/YYYY') : moment() }
+                  selected = {  preferredDate && moment() }
                   onChange = { (e) => dateFunc(e) }
                   errorMessage = { preferredDate ? '' : dateErrorMessage }/>
                 <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
