@@ -861,4 +861,26 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /*  My Existing Loans */
+
+  getExistingLoans (token) {
+    return this.apiClient.get('v1/loans/outstanding', {
+      headers : { token }
+    })
+  }
+
+  /* Code of Conduct  */
+
+  getCompliancesPdf (token, page) {
+    return this.apiClient.get(`v1/compliances/coc?page=${page}`, {
+      headers : { token }
+    })
+  }
+
+  submitPin (token, code) {
+    return this.apiClient.post('v1/compliances/coc', { code }, {
+      headers : { token }
+    })
+  }
 }

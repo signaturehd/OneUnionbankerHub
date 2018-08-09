@@ -1,70 +1,123 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Card, GenericButton } from '../../../../ub-components'
+import { Card, GenericButton, Modal } from '../../../../ub-components'
 import './styles/medical.css'
 import DentalReimbursementFragment from '../../../dentalreimbursement/DentalReimbursementFragment'
 
 class MedicalFragment extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      showConfirmationModal : false,
+      checkedpath : ''
+    }
+    this.onCheckedProceed = this.onCheckedProceed.bind(this)
   }
 
   navigate () {
       this.props.history.push('/mybenefits/benefits')
   }
 
+  onCheckedProceed (path) {
+    console.log(path)
+    this.setState({ showConfirmationModal : true, checkedpath : path })
+  }
+
   render () {
     const { history } = this.props
+    const { showConfirmationModal, checkedpath } =this.state
 
     const benefitsOptions = [{
-      styleName: 'medical-cards-1',
+      id: 1,
+      styleName: 'medical-cards-1 medical-option-default',
       title: 'Dental Loan Issuance',
       path: '/mybenefits/benefits/medical/loa/dental',
     }, {
-      styleName: 'medical-cards-2',
+      id: 2,
+      styleName: 'medical-cards-1 medical-option-default',
       title: 'Dental Reimbursement',
       path: '/mybenefits/benefits/medical/reimbursement/dental',
     }, {
-      styleName: 'medical-cards-3',
+      id: 3,
+      styleName: 'medical-cards-1 medical-option-default',
       title: 'Optical Reimbursement',
       path: '/mybenefits/benefits/medical/optical',
     }, {
-      styleName: 'medical-cards-4',
+      id: 4,
+      styleName: 'medical-cards-1 medical-option-default',
       title: 'Medical Scheduling',
       path: '/mybenefits/benefits/medical/scheduling',
     }, {
-      styleName: 'medical-cards-5',
+      id: 5,
+      styleName: 'medical-cards-1 medical-option-default',
       title: 'Outpatient Reimbursement',
       path: '/mybenefits/benefits/medical/reimbursement/outpatient',
     }, {
-      styleName: 'medical-cards-6',
+      id: 6,
+      styleName: 'medical-cards-1 medical-option-default',
       title: 'Maternity Assistance',
       path: '/mybenefits/benefits/medical/assistance/maternity',
     }]
 
     const MedicalHome = () => (
-        <div>
-            <i className = { 'back-arrow' } onClick = { () => this.navigate() }></i>
-            <h1>MEDICAL</h1>
-          <div className = { 'adjustment' }>
-          <div className = { 'card-container' }>
-            {
-            benefitsOptions.map((value, idx) => (
-              <Card
-                className = { 'benefits-card' }
-                key={ idx }>
-                <div
-                  className = { value.styleName}
-                  text = { value.title }
-                  onClick = { () => history.push(value.path) } >
-                  <p className = { 'benefits-option-cards font-weight-bold' }> { value.title } </p></div>
-              </Card>
-            ))
+      <div>
+        <i className = { 'back-arrow' } onClick = { () => this.navigate() }></i>
+        <h1>Medical</h1>
+        <div className = { 'adjustment' }>
+          {
+            showConfirmationModal &&
+            <Modal>
+              <center>
+                <h2>We’d like to help you in your labor expenses but this benefit requires post-submission of multiple documents. Would you like to proceed?</h2>
+                <br/>
+                <div className = { 'grid-global' }>
+                  <GenericButton
+                    text = { 'No' }
+                    onClick = { () => {
+                      this.setState({ showConfirmationModal : false})
+                    } }
+                    />
+                  <GenericButton
+                    onClick = { () => {
+                      this.setState({ showConfirmationModal : false})
+                      this.props.history.push(checkedpath)
+                      }
+                    }
+                    text = { 'Yes' }/>
+                </div>
+              </center>
+            </Modal>
           }
-          </div>
+        <div className = { 'medical-card-container' }>
+          {
+          benefitsOptions.map((value, idx) => (
+            <Card
+              onClick = { () => {
+                if(value.id == 6) {
+                  this.onCheckedProceed(value.path)
+                } else {
+                  history.push(value.path)
+                  }
+                }
+              }
+              className={ 'medical-card' }
+              key={ idx }>
+              <div className = { 'medical-column-grid' }>
+                <div
+                  className={ value.styleName }
+                  text={ value.title }
+                  />
+                <p className={ 'medical-option-cards font-weight-bold font-size-14px' }>
+                  { value.title }
+                </p>
+              </div>
+            </Card>
+          ))
+        }
         </div>
       </div>
+    </div>
     )
 
     return (

@@ -1,0 +1,72 @@
+.compliance-container {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding-top: 18px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 18px;
+}
+
+.compliance-body {
+  display: grid;
+  grid-template-columns: 1fr 8fr 1fr;
+  column-gap: 2%;
+}
+
+.compliance-buttons {
+  width: 100%;
+}
+
+.compliance-submit {
+  border: 1px solid #ff8a00;
+}
+
+.compliance-submit:hover {
+  background-color: #ff8a00;
+  color: white;
+}
+
+.compliance-submit:active {
+  background-color: #ee7900;
+  color: white;
+}
+
+.compliance-page {
+  margin: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.buttons-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
+  width: 100%;
+}
+
+.ic-next {
+  height: 100%;
+  background-image: url('../../../images/icons/ic_next.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-transition: width 2s; /* Safari */
+  transition: width 2s;
+}
+
+.ic-previous {
+  height: 100&;
+  background-image: url('../../../images/icons/ic_previous.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-transition: width 2s; /* Safari */
+  transition: width 2s;
+}
+
+.pin-label {
+  text-align: center;
+}
+
+.font-12 {
+  font-size: 12px;
+}
