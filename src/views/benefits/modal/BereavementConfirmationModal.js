@@ -48,12 +48,12 @@ class BereavementConfirmationModal extends Component {
               </center>
               <div className = { 'confirmation-grid-action' } >
                 <GenericButton
-                  onClick = { () => onClose() 
+                  onClick = { () => onClose()
                 }
-                  text = { 'no' } />
+                  text = { 'No' } />
                 <GenericButton
                   onClick = { () => onYes() }
-                  text = { 'yes' }
+                  text = { 'Yes' }
                   disabled = { this.state.disabled }
                 />
               </div>
