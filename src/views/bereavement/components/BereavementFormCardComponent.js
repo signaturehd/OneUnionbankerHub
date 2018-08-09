@@ -6,8 +6,8 @@ import {
   GenericInput,
   Card,
   GenericButton,
-  FileUploader,
-  DatePicker
+  DatePicker,
+  MultipleFileUploader
 } from '../../../ub-components/'
 
 import './styles/bereavementComponentStyle.css'
@@ -96,6 +96,7 @@ class BereavementFormCardComponent extends Component {
   render () {
 
     const {
+      showEditSubmitButton,
       showDepedents,
       withDeathCert,
       onFocus,
@@ -126,7 +127,9 @@ class BereavementFormCardComponent extends Component {
       memorialRegion,
       memorialProvince,
       memorialCity,
-      addressError
+      addressError,
+      attachmentArray,
+      setAttachmentArrayFunc
     }=this.props
 
     const {
@@ -167,45 +170,46 @@ class BereavementFormCardComponent extends Component {
                 readOnly
                 type={ 'text' }
               />
-              </div>
-              <br/>
-              <div>
-                <GenericInput
-                  container={ 'brv-container' }
-                  value={ dependentsRelationship ? dependentsRelationship : '' }
-                  hint={ 'Relationship' }
-                  text={ 'Relationship' }
-                  type={ 'text' }
-                  readOnly
-                />
-              </div>
-              <br/>
+            </div>
+            <br/>
+            <div>
+              <GenericInput
+                container={ 'brv-container' }
+                value={ dependentsRelationship ? dependentsRelationship : '' }
+                hint={ 'Relationship' }
+                text={ 'Relationship' }
+                type={ 'text' }
+                readOnly
+              />
+            </div>
+            <br/>
+            <div>
               <DatePicker
                 maxDate={ moment() }
                 hint = {  deceasedDate ? deceasedDate : 'Date of Death (eg. MM/DD/YYYY)' }
                 onChange = { this.getDeceasedDate }
                 text = { 'Date of Death' }
                 errorMessage = { deceasedDate ? '' :  '* Required Field' }/>
-              <br/>
+            </div>
           </div>
         </div>
         <div className={ 'brv-grid-column-2' }>
           <div></div>
           <div className={ 'brv-form-div' }>
             <h4 className = { 'text-align-center' }>
-            Funeral Detail
+              Funeral Detail
             </h4>
-            <br/>
-              <div>
-                <DatePicker
-                  minDate = { moment(deceasedDate) }
-                  maxDate = { moment(deceasedDate).add(30, 'days') }
-                  hint = { funeralDate ? funeralDate : 'Date of Wake (eg. MM/DD/YYYY)' }
-                  text = { 'Date of Wake' }
-                  onChange = { this.getFuneralDate }
-                />
-                <br/>
-              </div>
+              <br/>
+            <div>
+              <DatePicker
+                minDate = { moment(deceasedDate) }
+                maxDate = { moment(deceasedDate).add(30, 'days') }
+                hint = { funeralDate ? funeralDate : 'Date of Wake (eg. MM/DD/YYYY)' }
+                text = { 'Date of Wake' }
+                onChange = { this.getFuneralDate }
+              />
+              <br/>
+            </div>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
@@ -388,34 +392,44 @@ class BereavementFormCardComponent extends Component {
             <div></div>
             <div className={ 'brv-form-div' }>
               {
-
+                <div>
+                  <MultipleFileUploader
+                    placeholder = { 'Form Attachments' }
+                    fileArray = { attachmentArray }
+                    setFile = { (resp) => setAttachmentArrayFunc(resp) }
+                    disabled = { showEditSubmitButton }
+                    errorMessage = {
+                     showEditSubmitButton ?
+                     '' :
+                     `Please upload the required attachments`  }
+                    />
+                </div>
               }
-
-                <GenericButton
-                  type={ 'button' }
-                  text={ 'Continue' }
-                  onClick={
-                    () => this.getOnClicked(
-                      funeralDate,
-                      intermentDate,
-                      deceasedDate,
-                      dependentId,
-                      funeralHome,
-                      funeralAddress,
-                      funeralRegion,
-                      funeralProvince,
-                      funeralCity,
-                      memorialPark,
-                      memorialAddress,
-                      memorialRegion,
-                      memorialProvince,
-                      memorialCity,
-                      file
-                    )
-                  }
-                  className={ 'brv-submit' } />
-              </div>
+              <GenericButton
+                type={ 'button' }
+                text={ 'Continue' }
+                onClick={
+                  () => this.getOnClicked(
+                    funeralDate,
+                    intermentDate,
+                    deceasedDate,
+                    dependentId,
+                    funeralHome,
+                    funeralAddress,
+                    funeralRegion,
+                    funeralProvince,
+                    funeralCity,
+                    memorialPark,
+                    memorialAddress,
+                    memorialRegion,
+                    memorialProvince,
+                    memorialCity,
+                    file
+                  )
+                }
+                className={ 'brv-submit' } />
             </div>
+          </div>
         </div>
         }
       </div>
@@ -452,7 +466,10 @@ BereavementFormCardComponent.propTypes={
   checkFuneralDate: PropTypes.func,
   checkDeceasedDate: PropTypes.func,
   checkIntermentDate: PropTypes.func,
-  addressError: PropTypes.bool
+  addressError: PropTypes.bool,
+  attachmentArray: PropTypes.array,
+  setAttachmentArrayFunc: PropTypes.func,
+  showEditSubmitButton : PropTypes.bool,
 }
 
 export default BereavementFormCardComponent

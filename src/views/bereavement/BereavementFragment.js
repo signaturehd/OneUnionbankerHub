@@ -23,17 +23,20 @@ class BereavementFragment extends BaseMVPView {
   constructor (props) {
     super (props)
     this.state={
-      enabledLoader : false,
       validatedBereavement: [],
+      attachmentArray : [],
+      attachmentData: [],
       showDepedents: [],
+      showEditSubmitButton : false,
+      enabledLoader : false,
       showNoticeModal : false,
       noticeResponse : null,
       showBenefitFeedbackModal : false,
       showNoticeResponseModal : false,
+      showDeceasedDependents : false,
       dependentsName: '',
       dependentsRelationship: '',
       dependentId: '',
-      showDeceasedDependents : false,
       deceasedDate: '',
       funeralDate: '',
       intermentDate: '',
@@ -160,6 +163,10 @@ class BereavementFragment extends BaseMVPView {
 
   noticeResponse (noticeResponse) {
     this.setState({showConfirmation: false, noticeResponse })
+  }
+
+  showAttachmentsMap (attachmentArray) {
+    this.setState({ attachmentArray })
   }
 
   navigate () {
@@ -300,8 +307,10 @@ class BereavementFragment extends BaseMVPView {
 
   render () {
     const {
+      showEditSubmitButton,
       enabledLoader,
       validatedBereavement,
+      attachmentArray,
       showDepedents,
       showNoticeModal,
       noticeResponse,
@@ -325,7 +334,8 @@ class BereavementFragment extends BaseMVPView {
       memorialProvince,
       memorialCity,
       addressError,
-      errorMessage
+      errorMessage,
+      attachmentData
     }=this.state
 
     const { type }=this.props.match.params
@@ -396,6 +406,7 @@ class BereavementFragment extends BaseMVPView {
           :
           <FormComponent
             withDeathCert={ type === "certified" ? true : false  }
+            attachmentArray = { attachmentArray }
             validatedBereavement={ validatedBereavement }
             showDepedents={ showDepedents }
             funeralHome = { funeralHome }
@@ -414,6 +425,7 @@ class BereavementFragment extends BaseMVPView {
             addressError = { addressError }
             dependentId = { dependentId }
             dependentsName = { dependentsName }
+            showEditSubmitButton = { showEditSubmitButton }
             checkFuneralHome = { (resp) => this.validateFuneralHome(resp) }
             checkFuneralAddress = { (resp) => this.validateFuneralAddress(resp) }
             checkFuneralRegion = { (resp) => this.validateFuneralRegion(resp) }
@@ -429,6 +441,7 @@ class BereavementFragment extends BaseMVPView {
             checkIntermentDate = { (resp) => this.formatIntermentDate(resp) }
             dependentsRelationship = { dependentsRelationship }
             showDeceasedDependents = { () => this.setState({ showDeceasedDependents : true }) }
+            setAttachmentArrayFunc = { (attachmentData) => this.setState({ attachmentData }) }
             sendFormData={ (
               funeralDate,
               intermentDate,
