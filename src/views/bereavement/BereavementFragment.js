@@ -293,7 +293,8 @@ class BereavementFragment extends BaseMVPView {
         "city": memorialCity,
         "region": memorialRegion
       }
-      this.presenter.addBereavement(dependentId, objectDate, objectFuneral, objectMemorial, file)
+      console.log(dependentId, objectDate, objectFuneral, objectMemorial, file)
+      // this.presenter.addBereavement(dependentId, objectDate, objectFuneral, objectMemorial, file)
     }
   }
 

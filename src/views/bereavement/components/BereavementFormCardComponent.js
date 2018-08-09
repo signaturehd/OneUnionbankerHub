@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { GenericTextBox, GenericInput, Card, GenericButton, FileUploader } from '../../../ub-components/'
+import {
+  GenericTextBox,
+  GenericInput,
+  Card,
+  GenericButton,
+  FileUploader,
+  DatePicker
+} from '../../../ub-components/'
 
 import './styles/bereavementComponentStyle.css'
 
@@ -10,7 +17,7 @@ import { RequiredAlphabetValidation } from '../../../utils/validate'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
-import DatePicker from 'react-datepicker'
+import DatePickers from 'react-datepicker'
 import '../../../../node_modules/react-datepicker/dist/react-datepicker.css'
 import moment from 'moment'
 
@@ -146,21 +153,22 @@ class BereavementFormCardComponent extends Component {
 
           <div></div>
           <div className={ 'brv-form-div' }>
-            <h4>
+            <h4 className = { 'text-align-center' }>
             Deceased Detail
             </h4>
             <div>
-                <GenericInput
-                  value={ dependentsName ? dependentsName : '' }
-                  onClick={ () => showDeceasedDependents() }
-                  onFocus={ () => showDeceasedDependents() }
-                  hint={ 'Deceased Name' }
-                  text={ 'Deceased Name' }
-                  errorMessage={ BereavementFunction.errorMessage(dependentsName, '* Required field', '') }
-                  readOnly
-                  type={ 'text' }
-                />
+              <GenericInput
+                value={ dependentsName ? dependentsName : '' }
+                onClick={ () => showDeceasedDependents() }
+                onFocus={ () => showDeceasedDependents() }
+                hint={ 'Deceased Name' }
+                text={ 'Deceased Name' }
+                errorMessage={ BereavementFunction.errorMessage(dependentsName, '* Required field', '') }
+                readOnly
+                type={ 'text' }
+              />
               </div>
+              <br/>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
@@ -171,42 +179,32 @@ class BereavementFormCardComponent extends Component {
                   readOnly
                 />
               </div>
-                <div>
-                  <DatePicker
-                    dateFormat={ 'MM/DD/YYYY' }
-                    maxDate={ moment() }
-                    readOnly
-                    value={ deceasedDate ? deceasedDate : 'Date of Death'  }
-                    selected={ deceasedDate ? moment(deceasedDate) : moment() }
-                    onChange={ this.getDeceasedDate }
-                    className={ 'calendar  font-size-12px' }
-                    calendarClassName={ 'calendarClass' }/>
-                  <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
-                  { deceasedDate ? '' : <span className={ 'text-error' }>* Required Field</span> }
-              </div>
+              <br/>
+              <DatePicker
+                maxDate={ moment() }
+                hint = {  deceasedDate ? deceasedDate : 'Date of Death (eg. MM/DD/YYYY)' }
+                onChange = { this.getDeceasedDate }
+                text = { 'Date of Death' }
+                errorMessage = { deceasedDate ? '' :  '* Required Field' }/>
               <br/>
           </div>
         </div>
-        <br/>
         <div className={ 'brv-grid-column-2' }>
           <div></div>
           <div className={ 'brv-form-div' }>
-            <h4>
+            <h4 className = { 'text-align-center' }>
             Funeral Detail
             </h4>
+            <br/>
               <div>
                 <DatePicker
-                  dateFormat={ 'MM/DD/YYYY' }
-                  readOnly
-                  minDate={ moment(deceasedDate) }
-                  maxDate={ moment(deceasedDate).add(30, 'days') }
-                  value={ funeralDate ? funeralDate : 'Date of Wake' }
-                  selected={ moment(funeralDate) }
-                  onChange={ this.getFuneralDate }
-                  className={ 'calendar  font-size-12px' }
-                  calendarClassName={ 'calendarClass' }
+                  minDate = { moment(deceasedDate) }
+                  maxDate = { moment(deceasedDate).add(30, 'days') }
+                  hint = { funeralDate ? funeralDate : 'Date of Wake (eg. MM/DD/YYYY)' }
+                  text = { 'Date of Wake' }
+                  onChange = { this.getFuneralDate }
                 />
-                <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
+                <br/>
               </div>
               <div>
                 <GenericInput
@@ -222,6 +220,7 @@ class BereavementFormCardComponent extends Component {
                   type={ 'text' }
                 />
               </div>
+              <br/>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
@@ -235,6 +234,7 @@ class BereavementFormCardComponent extends Component {
                   type={ 'text' }
                 />
               </div>
+              <br/>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
@@ -246,6 +246,7 @@ class BereavementFormCardComponent extends Component {
                   type={ 'text' }
                 />
               </div>
+              <br/>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
@@ -257,6 +258,7 @@ class BereavementFormCardComponent extends Component {
                   type={ 'text' }
                 />
               </div>
+              <br/>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
@@ -271,15 +273,14 @@ class BereavementFormCardComponent extends Component {
               <br/>
           </div>
         </div>
-        <br/>
         <div className={ 'brv-grid-column-2' }>
           <div></div>
           <div className={ 'brv-form-div' }>
-            <h4>
+            <h4 className = { 'text-align-center' }>
             Interment Detail
             </h4>
               <div>
-                <DatePicker
+                <DatePickers
                   dateFormat={ 'MM/DD/YYYY' }
                   readOnly
                   minDate={ moment(funeralDate) }
@@ -289,8 +290,8 @@ class BereavementFormCardComponent extends Component {
                   selected={ moment(deceasedDate) }
                   className={ 'calendar font-size-12px' }
                 />
-                <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
               </div>
+              <br/>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
@@ -302,6 +303,7 @@ class BereavementFormCardComponent extends Component {
                   type={ 'text' }
                 />
               </div>
+              <br/>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
@@ -315,6 +317,7 @@ class BereavementFormCardComponent extends Component {
                     BereavementFunction.errorMessage(memorialAddress, '* Required field', '') }
                 />
               </div>
+              <br/>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
@@ -325,6 +328,7 @@ class BereavementFormCardComponent extends Component {
                   errorMessage={ BereavementFunction.errorMessage(memorialRegion, '* Required field', '') }
                   type={ 'text' }/>
               </div>
+              <br/>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
@@ -335,6 +339,7 @@ class BereavementFormCardComponent extends Component {
                   errorMessage={ BereavementFunction.errorMessage(memorialProvince, '* Required field', '') }
                   type={ 'text' }/>
               </div>
+              <br/>
               <div>
                 <GenericInput
                   container={ 'brv-container' }
@@ -349,7 +354,7 @@ class BereavementFormCardComponent extends Component {
                 !withDeathCert &&
                 <GenericButton
                   type={ 'button' }
-                  text={ 'continue' }
+                  text={ 'Continue' }
                   onClick={
                     () => this.getOnClicked(
                       funeralDate,
@@ -375,12 +380,10 @@ class BereavementFormCardComponent extends Component {
         {
           !withDeathCert &&
           <div></div>
-
         }
         {
           withDeathCert &&
           <div>
-          <br/>
           <div className={ 'brv-grid-column-2' }>
             <div></div>
             <div className={ 'brv-form-div' }>
@@ -456,7 +459,7 @@ class BereavementFormCardComponent extends Component {
 
                 <GenericButton
                   type={ 'button' }
-                  text={ 'continue' }
+                  text={ 'Continue' }
                   onClick={
                     () => this.getOnClicked(
                       funeralDate,
