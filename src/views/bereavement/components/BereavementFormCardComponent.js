@@ -387,75 +387,9 @@ class BereavementFormCardComponent extends Component {
           <div className={ 'brv-grid-column-2' }>
             <div></div>
             <div className={ 'brv-form-div' }>
-              <h4>
-              Form Attachments
-              </h4>
-                {
-                  imagePreviewUrl &&
-                  <div>
-                    <label className="brv-form-title">Form Attachments</label>
-                    <div className="brv-attachment-form">
-                      <img
-                        src={ require('../../../ub-components/Notify/images/x-circle.png') }
-                        className='close-button'
-                        onClick={
-                          () => {
-                            this.setState({ file : '', imagePreviewUrl : null })
-                          }
-                        }
-                      />
-                      <div style={ styles.image1 }>
-                        <h6 className="brv-file-name">
-                          { file.name }
-                        </h6>
-                      </div>
-                    </div>
-                  </div>
-                }
-                {
-                  !imagePreviewUrl &&
-                  <FileUploader
-                    accept="image/gif,image/jpeg,image/jpg,image/png,"
-                    value={ file.name }
-                    placeholder='Death Certificate'
-                    onChange={
-                      (e) => {
-                        e.preventDefault()
-                        const reader=new FileReader()
-                        const file=e.target.files[0]
-                        let isValid
-                        switch (this.getExtension(file.type).toLowerCase()) {
-                          case 'jpeg' :
-                            isValid=true
-                          case 'jpg' :
-                            isValid=true
-                          case 'png' :
-                            isValid=true
-                          case 'pdf' :
-                            isValid=true
-                        }
+              {
 
-                        if (isValid) {
-                          reader.onloadend=() => {
-                            this.setState({
-                              file,
-                              imagePreviewUrl: reader.result
-                            })
-                          }
-                          reader.readAsDataURL(file)
-                       } else {
-                           store.dispatch(NotifyActions.addNotify({
-                               title : 'File Uploading',
-                               message : 'The accepted attachments are JPG/PNG/PDF',
-                               type : 'warning',
-                               duration : 2000
-                             })
-                           )
-                         }
-                      }
-                    }
-                  />
-                }
+              }
 
                 <GenericButton
                   type={ 'button' }
