@@ -388,15 +388,11 @@ class BereavementFragment extends BaseMVPView {
             onClose={ () => this.setState({ showDeceasedDependents: false }) }
           />
         }
-
         <div>
           <i
             className={ 'back-arrow' }
             onClick={ this.navigate.bind(this) }>
           </i>
-          <h2 className={ 'header-margin-default' }>
-            Bereavement
-          </h2>
         </div>
         {
           enabledLoader ?
