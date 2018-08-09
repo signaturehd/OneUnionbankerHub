@@ -701,6 +701,18 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+
+  /* Code of Conduct  */
+
+  getCompliancesPdf (token, page) {
+    return this.service.getCompliancesPdf(token, page)
+      .pipe(ServiceErrorOperator())
+  }
+
+  submitPin (token, code) {
+    return this.service.submitPin(token, code)
+      .pipe(ServiceErrorOperator())
+  }
   /* My Existing Loans */
   getExistingLoans (token) {
     return this.service.getExistingLoans(token)
