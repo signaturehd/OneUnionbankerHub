@@ -141,6 +141,7 @@ class ComplianceFragment extends BaseMVPView {
                   let pn = parseInt(e.target.value)
                   if (!pn) {
                     this.setState({ page : 0 })
+                    this.jumpToPage(1)
                   } else {
                     this.setState({ page : pn })
                     this.jumpToPage(pn)
