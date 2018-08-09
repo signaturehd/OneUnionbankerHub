@@ -21,6 +21,8 @@ import store from '../../store'
 
 import * as DentalLoaFunction from './function/DentalLoaFunction'
 
+import moment from 'moment'
+
 class DentalLoaView extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -29,6 +31,7 @@ class DentalLoaView extends BaseMVPView {
       healthwayBranchErrorMessage: '',
       dateErrorMessage: '',
       errorMessageRequiredProcedure: '',
+      preferredDate: '',
       dentalloa : null, /* Dental LOA details*/
       disabled : false, /* Loader Change State*/
       showProcedureModal : false,/* First Modal for Procedures*/
@@ -38,6 +41,7 @@ class DentalLoaView extends BaseMVPView {
       showNoticeResponseModal: false, /* Display Notice Response Modal*/
       showNoticeResponseApprovalModal : false,/* Display Notice Approval Response Modal*/
       showEditSubmitButton : false,
+      titleChange : true,
       recipient : null,
       procedures : null, /* Get Procedures List*/
       procedure : null,
@@ -47,7 +51,13 @@ class DentalLoaView extends BaseMVPView {
       selectedProcedures : [] /* Selected Procedures */
     }
     this.getDentalLoa = this.getDentalLoa.bind(this)
+    this.dateFunc = this.dateFunc.bind(this)
     this.validator = this.validator.bind(this)
+  }
+
+  /* store the date */
+  dateFunc (data) {
+    this.setState({ preferredDate: data.format('MM-DD-YYYY') })
   }
 
   validator (input) {
@@ -77,27 +87,26 @@ class DentalLoaView extends BaseMVPView {
     return DentalLoaFunction.checkedValidateInput(e)
   }
 
+  editFormReview (e) {
+    this.setState({ showEditSubmitButton : false, titleChange : true })
+  }
+
   /*
     Submission of DentalLOA Form
   */
-  submitForm (recipient, branch, date, selectedProcedures) {
-    const procedures = []
-    const selectedProcedureIds =  [...selectedProcedures]
-      selectedProcedures.map(resp =>
-        procedures.push({ id : resp.id.toString() })
-      )
-      if (procedures.length === 0) {
-      store.dispatch(NotifyActions.addNotify({
-         title : 'Warning' ,
-         message : 'Please select the procedure',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-   } else {
-     this.setState({ showEditSubmitButton: true })
-     this.presenter.addDentalLoa(recipient.id ? recipient.id : null , branch.id, date, procedures)
-    }
+  submitForm () {
+    const {
+      recipient,
+      branchId,
+      preferredDate,
+      selectedProcedures
+    } = this.state
+
+    this.presenter.addDentalLoa(
+     recipient.id,
+     branchId.id,
+     moment(preferredDate).format('MM/DD/YYYY'),
+     selectedProcedures)
   }
 
   showFormReviewFieldDisabled (e) {
@@ -105,7 +114,7 @@ class DentalLoaView extends BaseMVPView {
       recipient,
       branchText,
       preferredDate,
-      procedure
+      selectedProcedures
     } = this.state
 
     if(!this.validateRequired(recipient)) {
@@ -114,10 +123,13 @@ class DentalLoaView extends BaseMVPView {
       this.setState({ healthwayBranchErrorMessage : 'Please select your Healthway Branch' })
     } else if (!this.validateRequired(preferredDate)) {
       this.setState({ dateErrorMessage : 'Please provide the date of occurence' })
-    } else if (!this.validateRequired(procedure)) {
+    } else if (selectedProcedures.length===0) {
       this.setState({ errorMessageRequiredProcedure : 'Please select a procedure' })
     } else {
-      this.setState({ showEditSubmitButton: true })
+      this.setState({
+        showEditSubmitButton: true,
+        titleChange: false,
+      })
     }
   }
 
@@ -160,10 +172,11 @@ class DentalLoaView extends BaseMVPView {
       branchText,
       response,
       date,
+      preferredDate,
       noticeResponse,
-      selectedProcedures
+      selectedProcedures,
+      titleChange
     } = this.state
-
     return (
       <div  className = { 'benefits-container' }>
         {
@@ -247,7 +260,16 @@ class DentalLoaView extends BaseMVPView {
         }
       <div>
         <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) } />
-        <h2 className = { 'header-margin-default' }>DENTAL LOA ISSUANCE</h2>
+        {
+          titleChange ?
+          <h2 className = { 'header-margin-default' }>
+            Dental LOA Issuance
+          </h2>
+          :
+          <h2 className = { 'header-margin-default' }>
+            Form Summary
+          </h2>
+        }
       </div>
       <div className = { 'dentalloa-container' }>
       {
@@ -260,21 +282,17 @@ class DentalLoaView extends BaseMVPView {
           recipient = { recipientText }
           procedure = { procedure }
           branch = { branchText }
+          preferredDate = { preferredDate }
           selectedProcedures = { selectedProcedures }
           showEditSubmitButton = { showEditSubmitButton }
           recipientErrorMessage = { recipientErrorMessage }
           healthwayBranchErrorMessage = { healthwayBranchErrorMessage }
           dateErrorMessage = { dateErrorMessage }
           errorMessageRequiredProcedure = { errorMessageRequiredProcedure }
+          dateFunc = { (resp) => this.dateFunc(resp) }
+          editFormDataFunc = { (resp) => this.editFormReview(resp) }
+          onSubmitFunc = { () => this.submitForm() }
           showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
-          getPreferredDate = { data =>
-            this.setState({ date :  data })}
-          submitForm = { () =>
-            this.submitForm(
-              recipient,
-              branchId,
-              date,
-              selectedProcedures) }
           onClick = { (
             showRecipientModal,
             showHealthwayBranchModal,

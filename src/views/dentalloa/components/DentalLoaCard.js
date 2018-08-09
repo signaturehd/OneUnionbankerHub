@@ -25,17 +25,8 @@ class DentalLoaCard extends Component {
       showHealthwayBranchModal : false, // Recipient Branch Modal
       showProcedureModal : false, // Recipient Procedure Modal
       datePicker : '',
-      preferredDate: '',
     }
 
-    this.onChange = this.onChange.bind(this)
-  }
-
-  /* store the date */
-  onChange (data) {
-    this.setState({ preferredDate: data })
-    this.props.getPreferredDate(
-      data && data.format('DD-MM-YYYY')) /* date format*/
   }
 
   render () {
@@ -52,17 +43,20 @@ class DentalLoaCard extends Component {
       branch,
       onClick,
       submitForm,
+      preferredDate,
       selectedProcedures,
       showEditSubmitButton,
+      editFormDataFunc,
       recipientErrorMessage,
       healthwayBranchErrorMessage,
       dateErrorMessage,
       errorMessageRequiredProcedure,
-      showFormReview
+      showFormReview,
+      dateFunc,
+      onSubmitFunc
     } = this.props
 
     const {
-      preferredDate,
       showRecipientModal,
       showHealthwayBranchModal,
       showProcedureModal } = this.state
@@ -77,30 +71,30 @@ class DentalLoaCard extends Component {
                 <GenericInput
                   onClick = { () => onClick(true, false, false) }
                   onFocus = { () => onClick(true, false, false) }
-                  value = { recipient ? recipient : '' }
+                  value = { recipient }
+                  disabled = { showEditSubmitButton }
                   readOnly
                   text = { text1 }
-                  errorMessage = { recipientErrorMessage } />
+                  errorMessage = { recipient ? '' : recipientErrorMessage } />
                   <br/>
                 <GenericInput
                   value = { branch ? branch : '' }
+                  disabled = { showEditSubmitButton }
                   readOnly
                   type={ 'text' }
                   onClick = { () => onClick(false, true, false) }
                   onFocus = { () => onClick(false, true, false) }
                   text = { text2 }
-                  errorMessage = { healthwayBranchErrorMessage } />
+                  errorMessage = { branch ? '' : healthwayBranchErrorMessage } />
                   <br/>
-                <div>
-                  <DatePicker
-                    dateFormat = { 'DD-MM-YYYY' }
-                    value={  preferredDate ? preferredDate : 'Preferred Schedule' }
-                    selected = {  preferredDate ? moment(preferredDate, 'MM/DD/YYYY') : moment() }
-                    onChange = { this.onChange }
-                    className = { 'calendar font-size-14px' }
-                    calendarClassName = { 'calendarClass' }
-                    errorMessage = { dateErrorMessage }/>
-                </div>
+                <DatePicker
+                  dateFormat = { 'MM-DD-YYYY' }
+                  minDate = { moment() }
+                  disabled = { showEditSubmitButton }
+                  value={  preferredDate ? preferredDate : 'Preferred Schedule' }
+                  selected = {  preferredDate ? moment(preferredDate, 'MM/DD/YYYY') : moment() }
+                  onChange = { (e) => dateFunc(e) }
+                  errorMessage = { preferredDate ? '' : dateErrorMessage }/>
                 <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
               </div>
             </div>
@@ -111,10 +105,14 @@ class DentalLoaCard extends Component {
               <GenericButton
                 onClick = { () => onClick(false, false, true) }
                 onFocus = { () => onClick(false, false, true) }
+                disabled = { showEditSubmitButton }
                 type = { 'button' }
                 text = { 'Add procedure' }
                 className = { 'dentalloa-procedure' }
                 value = { 'Procedures' } />
+                  <div className = { 'text-error' }>
+                      { selectedProcedures.lenght ===0 ? '' : errorMessageRequiredProcedure }
+                  </div>
               </div>
             </div>
             {
@@ -191,6 +189,7 @@ DentalLoaCard.propTypes = {
   text3   : PropTypes.string,
   submit  : PropTypes.string,
   text4   : PropTypes.string,
+  preferredDate : PropTypes.string,
   recipientErrorMessage : PropTypes.string,
   healthwayBranchErrorMessage : PropTypes.string,
   dateErrorMessage : PropTypes.string,
@@ -198,6 +197,9 @@ DentalLoaCard.propTypes = {
   selectedProcedures : PropTypes.array,
   showEditSubmitButton : PropTypes.bool,
   branch : PropTypes.string,
+  dateFunc : PropTypes.func,
+  editFormDataFunc : PropTypes.func,
+  onSubmitFunc : PropTypes.func,
   showFormReview : PropTypes.func,
   submitForm : PropTypes.func,
   onFocus : PropTypes.func,

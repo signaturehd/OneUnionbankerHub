@@ -287,3 +287,8 @@
   display: grid;
   grid-template-columns: 4fr 1fr;
 }
+
+.text-error {
+  font-size: 12px;
+  color: #ff4336;
+}
