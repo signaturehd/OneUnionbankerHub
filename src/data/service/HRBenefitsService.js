@@ -873,4 +873,11 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  submitPin (token, code) {
+    console.log(token);
+    return this.apiClient.post('v1/pin', { code }, {
+      headers : { token }
+    })
+  }
 }

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/CompliancePresenter'
-
+import ResponseModal from '../notice/NoticeResponseModal'
 import {
   InputModal,
   Card,
@@ -27,6 +27,8 @@ class ComplianceFragment extends BaseMVPView {
       compliancesData : null,
       showEnterPin : false,
       pin : '',
+      noticeResponse : null,
+      showNoticeResponseModal : false,
     }
   }
 
@@ -56,41 +58,71 @@ class ComplianceFragment extends BaseMVPView {
     this.setState({ compliancesData })
   }
 
+  noticeResponse (noticeResponse, showNoticeResponseModal) {
+    this.setState({ noticeResponse, showNoticeResponseModal, showEnterPin : false })
+  }
+
   navigate () {
     this.props.history.push('/')
   }
 
   render () {
     const { history, onClick, inputProps } = this.props
-    const { compliancesData, page, enabledLoader, showEnterPin, pin } = this.state
+    const {
+      compliancesData,
+      page,
+      enabledLoader,
+      showEnterPin,
+      pin,
+      noticeResponse,
+      showNoticeResponseModal,
+    } = this.state
     const pageNumber = compliancesData ? compliancesData[0].page : 1
     const pageTotal = compliancesData ? compliancesData[0].total : 1
 
     return (
       <div>
       {
+        showNoticeResponseModal &&
+        <ResponseModal
+          onClose = { () => {
+            this.setState({ showNoticeResponseModal : false })
+            this.navigate()
+          }}
+          noticeResponse = { noticeResponse }
+        />
+      }
+      {
         showEnterPin &&
-        <Modal>
-          <p className = { 'pin-label' }>Please enter your registered digital signature (PIN).</p>
-          <GenericInput
-            autocomplete = { 'off' }
-            value = { pin }
-            onChange = { e => this.setState({ pin : parseInt(e.target.value) || '' }) }
-            text = { 'Password' }
-            type = { 'password' }
-            maxLength = { 5 }
-            inputProps = { 'pin-label' }
-          />
-          <p className={ 'pin-label font-12' }>Please enter your 5-digits code</p>
-          <br/>
-          <GenericButton
-            type = { 'button' }
-            text = { 'Submit' }
-            onClick = {
-              () => console.log('submitted')
-            }
-            className={ 'compliance-buttons compliance-submit' }
+        <Modal
+          onClose={ () => this.setState({ showEnterPin : false }) }
+          isDismisable={ true }
+          >
+          <div>
+            <p className = { 'pin-label' }>Please enter your registered digital signature (PIN).</p>
+            <GenericInput
+              autocomplete = { 'off' }
+              value = { pin }
+              onChange = { e => this.setState({ pin : parseInt(e.target.value) || '' }) }
+              text = { 'Password' }
+              type = { 'password' }
+              maxLength = { 5 }
+              inputProps = { 'pin-label' }
             />
+            <p className={ 'pin-label font-12' }>Please enter your 5-digits code</p>
+            <br/>
+            <GenericButton
+              type = { 'button' }
+              text = { 'Submit' }
+              onClick = {
+                () => {
+                  this.presenter.submitPin(String(pin))
+                  this.setState({ showEnterPin : false, pin : '' })
+                }
+              }
+              className={ 'compliance-buttons compliance-submit' }
+              />
+          </div>
         </Modal>
       }
 

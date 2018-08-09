@@ -708,4 +708,9 @@ export default class HRBenefitsClient {
     return this.service.getCompliancesPdf(token, page)
       .pipe(ServiceErrorOperator())
   }
+
+  submitPin (token, code) {
+    return this.service.submitPin(token, code)
+      .pipe(ServiceErrorOperator())
+  }
 }
