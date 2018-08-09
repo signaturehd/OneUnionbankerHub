@@ -5,6 +5,7 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/MyTrainingPresenter'
 
+import ResponseModal from '../notice/NoticeResponseModal'
 import TrainingCardModal from
 './modals/TrainingCardModal'
 
@@ -18,7 +19,8 @@ import {
   CircularLoader,
   Line,
   GenericInput,
-  GenericButton
+  GenericButton,
+  Modal
 } from '../../ub-components/'
 
 import './styles/myTrainingStyle.css'
@@ -33,6 +35,9 @@ class MyTrainingFragment extends BaseMVPView {
       index: 8,
       trainingDetails: null,
       showConfirmation : false,
+      loadingModal : false,
+      noticeResponse : null,
+      showNoticeResponseModal : false,
     }
     this.programSearch = this.programSearch.bind(this)
   }
@@ -57,12 +62,20 @@ class MyTrainingFragment extends BaseMVPView {
     this.setState({ enabledLoader })
   }
 
+  setLoadingModal(loadingModal) {
+    this.setState({ loadingModal })
+  }
+
   programSearch (e) {
     this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
 
   navigate () {
     this.props.history.push('/mylearning')
+  }
+
+  noticeResponse (noticeResponse) {
+    this.setState({ noticeResponse, showNoticeResponseModal : true })
   }
 
   render () {
@@ -74,6 +87,9 @@ class MyTrainingFragment extends BaseMVPView {
     index,
     trainingDetails,
     showConfirmation,
+    loadingModal,
+    noticeResponse,
+    showNoticeResponseModal,
   } = this.state
 
 
@@ -93,11 +109,35 @@ class MyTrainingFragment extends BaseMVPView {
         <TrainingCardModal
           onClose = { () => this.setState({ trainingDetails : '' }) }
           details = { trainingDetails }
-          onEnroll = { (id) => this.presenter.enrollEmployee(id) }
+          onEnroll = { (id) => this.presenter.enrollEmployee(String(id)) }
           showConfirmation = { showConfirmation }
           setConfirmation = { (showConfirmation) => this.setState({showConfirmation}) }
         />
       }
+
+      {
+        loadingModal &&
+        <Modal>
+          <center>
+            <h3>Please wait while Loading...</h3>
+            <br/>
+            <br/>
+            <CircularLoader show={true}/>
+           </center>
+         </Modal>
+      }
+
+      {
+        showNoticeResponseModal &&
+        <ResponseModal
+          onClose = { () => {
+            this.setState({ showNoticeResponseModal : false })
+            this.navigate()
+          }}
+          noticeResponse = { noticeResponse }
+        />
+      }
+
       <div className={ 'header-margin-container' }>
         <i
           className = { 'back-arrow' }

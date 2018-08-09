@@ -41,20 +41,21 @@ export default class MyTrainingPresenter {
   }
 
   getEmployeeTrainingDetails (id) {
-    this.view.showCircularLoader(true)
+    this.view.setLoadingModal(true)
     this.getEmployeeTrainingDetailsInteractor.execute(id)
     .subscribe(data => {
-      this.view.hideCircularLoader(false)
+      this.view.setLoadingModal(false)
       this.view.setTrainingDetails(data)
     }, error => {
-      this.view.hideCircularLoader(false)
+      this.view.setLoadingModal(false)
     })
   }
 
   enrollEmployee (id) {
     this.enrollEmployeeInteractor.execute(id)
     .subscribe(data => {
-      this.view.navigate()
+      this.view.noticeResponse(data)
+      //this.view.navigate()
     }, error => {
       this.view.navigate()
     })

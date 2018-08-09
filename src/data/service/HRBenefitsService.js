@@ -789,7 +789,7 @@ export default class HRBenefitsService {
 
   enrollEmployee (token, id) {
     return this.apiClient.post('v1/trainings/enroll', {
-      id : { id }
+      id
     }, {
       headers : { token }
     })
