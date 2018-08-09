@@ -13,6 +13,12 @@
   color: #090909;
 }
 
+.dentalloa-form-review {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
+}
+
 .dentalloa-grid-column-2 {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
@@ -118,7 +124,7 @@
 }
 
 .dentalloa-submit-form-button:hover {
-  order: 1px solid #FF7200;
+  border: 1px solid #FF7200;
   background-color: #ff8A00;
   color: #fff;
 }

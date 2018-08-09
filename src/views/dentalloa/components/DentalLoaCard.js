@@ -167,12 +167,9 @@ class DentalLoaCard extends Component {
                    onClick = {
                      () => showFormReview(true)
                    }
-                   className = { 'dentalloa-submit' } />
+                   className = { 'dentalloa-button' } />
                </div>
              }
-            <div className = { 'dentalloa-button-submit' }>
-
-            </div>
           </div>
         </div>
       </div>
