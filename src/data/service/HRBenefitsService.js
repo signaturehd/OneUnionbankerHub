@@ -879,7 +879,7 @@ export default class HRBenefitsService {
   }
 
   submitPin (token, code) {
-    return this.apiClient.post('v1/pin', { code }, {
+    return this.apiClient.post('v1/compliances/coc', { code }, {
       headers : { token }
     })
   }
