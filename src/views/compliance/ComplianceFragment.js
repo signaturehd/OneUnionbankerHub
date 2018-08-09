@@ -17,7 +17,7 @@ import {
 
 import './styles/compliancesStyle.css'
 
-let page = 22;
+let page = 1;
 
 class ComplianceFragment extends BaseMVPView {
   constructor (props) {

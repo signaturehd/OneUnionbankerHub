@@ -713,7 +713,7 @@ export default class HRBenefitsService {
   /* Medical Scheduling */
 
   validateMedicalScheduling (token) {
-    return this.apiClient.get('v1/medical/validate', {
+    return this.apiClient.get('v1/medical/exam/validate', {
       headers: { token }
     })
   }
@@ -730,7 +730,7 @@ export default class HRBenefitsService {
       clinicId : addMedicalSchedulingParam.clinicId,
       packageId : addMedicalSchedulingParam.packageId,
     }
-    return this.apiClient.post('v1/medical/schedule', medicalSchedulingObject, {
+    return this.apiClient.post('v1/medical/exam/submit', medicalSchedulingObject, {
       headers : { token }
     })
   }
@@ -776,13 +776,13 @@ export default class HRBenefitsService {
   /* Employee Trainings */
 
   getEmployeeTraining (token) {
-    return this.apiClient.get('v1/training/programs', {
+    return this.apiClient.get('v1/trainings', {
       headers : { token }
     })
   }
 
   getEmployeeTrainingDetails (token, id) {
-    return this.apiClient.get(`v1/training/details/${id}`, {
+    return this.apiClient.get(`v1/trainings/${id}`, {
       headers : { token }
     })
   }
@@ -810,15 +810,16 @@ export default class HRBenefitsService {
     const formData = new FormData()
     formData.append('uuid', 12345)
     const objectMaternity = {
-      deliveryType : addMaternityAssistanceParam.typeOfDelivery,
-      deliveryDate : addMaternityAssistanceParam.dateOfDelivery,
-      amount : addMaternityAssistanceParam.amount,
-      orNumber : addMaternityAssistanceParam.orNumber,
-      orDate : addMaternityAssistanceParam.orDate,
       accountNumber,
       releasingCenter,
+      deliveryType : addMaternityAssistanceParam.typeDeliveryId,
+      deliveryDate : addMaternityAssistanceParam.deliveryDate,
+      amount : addMaternityAssistanceParam.amount,
+      orNumber : addMaternityAssistanceParam.orNumberText,
+      orDate : addMaternityAssistanceParam.preferredDate,
     }
-    addMaternityAssistanceParam.attachments.map((resp) => (
+    addMaternityAssistanceParam.attachmentArray.map((resp) =>
+      (
         formData.append(resp.name, resp.file)
       )
     )
@@ -836,32 +837,35 @@ export default class HRBenefitsService {
     accountToken,
     accountNumber,
     releasingCenter,
-    addMaternityAssistanceSSSParam
+    maternityAssistanceSSSParam
   ) {
-    const formData = new FormData()
-    formData.append('uuid', 12345)
     const objectMaternitySSS = {
+      accountNumber,
+      releasingCenter,
       address : {
-        room : addMaternityAssistanceSSSParam.roomNumber,
-        house : addMaternityAssistanceSSSParam.houseNumber,
-        street: addMaternityAssistanceSSSParam.street,
-        subdivision: addMaternityAssistanceSSSParam.subdivision,
-        barangay: addMaternityAssistanceSSSParam.barangay,
-        city : addMaternityAssistanceSSSParam.city,
-        province : addMaternityAssistanceSSSParam.province,
-        zipCode : addMaternityAssistanceSSSParam.zipCode,
+        room : maternityAssistanceSSSParam.roomNumber,
+        house : maternityAssistanceSSSParam.houseNumber,
+        street: maternityAssistanceSSSParam.street,
+        subdivision: maternityAssistanceSSSParam.subdivision,
+        barangay: maternityAssistanceSSSParam.barangay,
+        city : maternityAssistanceSSSParam.city,
+        province : maternityAssistanceSSSParam.province,
+        zipCode : maternityAssistanceSSSParam.zipCode,
       },
-      numberOfPregnancy : addMaternityAssistanceSSSParam.noOfPregnancy,
-      expectedDateOfDelivery : addMaternityAssistanceSSSParam.expectedDateOfDelivery,
-      numberOfDelivery: addMaternityAssistanceSSSParam.noOfDelivery,
-      numberOfMiscarriage : addMaternityAssistanceSSSParam.noOfMiscarriage ,
+      numberOfPregnancy : maternityAssistanceSSSParam.noOfPregnancy,
+      numberOfMiscarriage : maternityAssistanceSSSParam.noOfMiscarriage,
+      numberOfDelivery: maternityAssistanceSSSParam.noOfDelivery,
+      expectedDateOfDelivery : maternityAssistanceSSSParam.expectedDateOfDelivery,
     }
-    addMaternityAssistanceSSSParam.attachments.map((resp, key) => (
-        formData.append(resp.name, resp.file)
-      )
-    )
-    formData.append('body', JSON.stringify(objectMaternitySSS))
-    return this.apiClient.post('v1/maternity/submit/sss', formData, {
+    return this.apiClient.post('v1/maternity/submit/sss/mat1', objectMaternitySSS, {
+      headers : { token }
+    })
+  }
+
+  /*  My Existing Loans */
+
+  getExistingLoans (token) {
+    return this.apiClient.get('v1/loans/outstanding', {
       headers : { token }
     })
   }
@@ -875,7 +879,6 @@ export default class HRBenefitsService {
   }
 
   submitPin (token, code) {
-    console.log(token);
     return this.apiClient.post('v1/pin', { code }, {
       headers : { token }
     })

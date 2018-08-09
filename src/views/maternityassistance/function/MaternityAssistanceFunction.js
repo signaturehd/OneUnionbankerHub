@@ -4,7 +4,8 @@ import {
   MoneyValidation,
   RequiredAlphabetValidation,
   RequiredSymbolValidation,
-  RequiredValidation
+  RequiredValidation,
+  RequiredNumberValidation
 } from '../../../utils/validate'
 
 export function checkedAmount (amount) {
@@ -30,4 +31,12 @@ export function checkedValidateInput (input) {
 export function checkedMDYDate (date) {
   return date ?
          moment(date.format('MM/DD/YYYY')) : '(Not Yet Provided)'
+}
+
+export function checkedValidateInputNumber (number) {
+  return new RequiredNumberValidation().isValid(number) ? number : ''
+}
+
+export function checkedValidateAddress (address) {
+  return new RequiredAlphabetValidation().isValidAddress(address) ? address : ''
 }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Accordion from '../components/AccordionComponent'
 import {
   Card,
   GenericButton,
@@ -99,7 +98,7 @@ class CalamityAssistanceDetailsFragment extends Component {
           <div className={ 'transaction-details-container' }>
             <div className = { 'transaction-banner transaction-calamity' }>
               <div className={ 'transaction-banner-card' }>
-                <div>
+                <div className = { 'text-align-left' }>
                   <h1 className = { 'transaction-details-name font-weight-normal'}>
                     { benefitType }
                   </h1>
@@ -115,7 +114,7 @@ class CalamityAssistanceDetailsFragment extends Component {
                         { benefitLabel }
                       <div></div>
                     </div>
-                    <div className = { 'font-size-14px' }>Transaction Status</div>
+                    <div className = { 'font-size-14px' }></div>
                   </div>
                   <div></div>
                 </div>

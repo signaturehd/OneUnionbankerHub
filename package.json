@@ -22,6 +22,7 @@
     "react-dom": "^16.2.0",
     "react-icons": "^2.2.7",
     "react-image-file": "^0.3.0",
+    "react-input-mask": "^2.0.3",
     "react-media-player": "^0.7.1",
     "react-rating": "^1.1.2",
     "react-redux": "^5.0.6",
