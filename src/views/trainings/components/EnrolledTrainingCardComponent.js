@@ -25,9 +25,9 @@ class EnrolledTrainingCardComponent extends Component {
     return (
       <Card>
         <div className = { 'enrolled-list' }>
-          <h3>{ name }</h3>
-          <p>{ title }</p>
-          <p>{ date ? moment(date).format('LL') : 'not available' }</p>
+          <h3>{ name ? name : '(no name)' }</h3>
+          <p className={ 'enrolled-title' }>{ title ? title : '(no title)' }</p>
+          <p className={ 'enrolled-date' }>{ date ? moment(date).format('LL') : '(no date)' }</p>
         </div>
       </Card>
     )

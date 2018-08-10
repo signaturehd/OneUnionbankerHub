@@ -128,8 +128,16 @@
   margin: 20px;
 }
 
-.enrolled-list p {
+.enrolled-title {
+  text-align: left;
+  margin: 0!important;
+  color: #ff8a00;
+  font-size: 16px;
+}
+
+.enrolled-date {
   text-align: left;
   margin: 0!important;
   color: #555;
+  font-size: 16px;
 }
