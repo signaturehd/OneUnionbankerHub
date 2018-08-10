@@ -6,7 +6,7 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectPartial from '../../utils/ConnectPartial'
 
 import MyTrainingFragment from './fragments/MyTrainingFragment'
-//import BookBorrowedFragment from './fragments/BookBorrowedFragment'
+import EnrolledTrainingFragment from './fragments/EnrolledTrainingFragment'
 //import BookRecommendationFragment from './fragments/BookRecommendationFragment'
 
 import {
@@ -81,7 +81,7 @@ class TrainingFragment extends BaseMVPView {
             className = { 'input-tab' }
             id='tab2'
             type='radio'
-            onClick = { () => null }
+            onClick = { () => history.push('/mylearning/trainings/enrolledtrainings') }
             name='tabs' />
           <label  htmlFor='tab2'>Enrolled Trainings</label>
 
@@ -103,12 +103,13 @@ class TrainingFragment extends BaseMVPView {
                   }
                 />
                 <Route path = '/mylearning/trainings/enrolledtrainings'
-                  render = { props => <BookBorrowedFragment
-                    presenter = { this.presenter } borrowed = { borrowed }  /> } />
-                <Route path = '/mylearning/forapproval'
-                  render = { props => <BookListFragment
-                    page = { pageNumber => this.getBooks(pageNumber) } presenter = { this.presenter } filteredBooks = { filteredBooks } /> } />
-             </Switch>
+                  render = { props => <EnrolledTrainingFragment
+                    presenter = { this.presenter }
+                    searchString = { searchString }
+                    />
+                  }
+                />
+            </Switch>
           </section>
         </div>
       </div>

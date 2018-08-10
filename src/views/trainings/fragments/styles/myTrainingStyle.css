@@ -1,6 +1,6 @@
 .mytrainings-grid-container-row {
   display: grid;
-  grid-template-rows: .03fr 1fr;
+  grid-template-rows: .03fr auto;
   padding-left: 20px;
   padding-right: 20px;
 }
