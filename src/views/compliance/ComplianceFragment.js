@@ -17,8 +17,6 @@ import {
 
 import './styles/compliancesStyle.css'
 
-let page = 1;
-
 class ComplianceFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -29,21 +27,27 @@ class ComplianceFragment extends BaseMVPView {
       pin : '',
       noticeResponse : null,
       showNoticeResponseModal : false,
+      page : 1,
     }
   }
 
   componentDidMount () {
+    const { page } = this.state
     this.props.setSelectedNavigation(9)
     this.presenter.getCompliancesPdf(page)
   }
 
-  onNextPage () {
-    this.presenter.getCompliancesPdf(++page)
+  onNextPage (p) {
+    this.presenter.getCompliancesPdf(++p)
   }
 
-  onPreviousPage () {
-    if (page > 1)
-      this.presenter.getCompliancesPdf(--page)
+  onPreviousPage (p) {
+    if (p > 1)
+      this.presenter.getCompliancesPdf(--p)
+  }
+
+  jumpToPage (p) {
+    this.presenter.getCompliancesPdf(p)
   }
 
   showCircularLoader () {
@@ -67,15 +71,15 @@ class ComplianceFragment extends BaseMVPView {
   }
 
   render () {
-    const { history, onClick, inputProps } = this.props
+    const { history, onClick } = this.props
     const {
       compliancesData,
-      page,
       enabledLoader,
       showEnterPin,
       pin,
       noticeResponse,
       showNoticeResponseModal,
+      page,
     } = this.state
     const pageNumber = compliancesData ? compliancesData[0].page : 1
     const pageTotal = compliancesData ? compliancesData[0].total : 1
@@ -125,7 +129,31 @@ class ComplianceFragment extends BaseMVPView {
           </div>
         </Modal>
       }
-
+      <div>
+        <div className={ 'compliance-page' }>
+          <h6>Jump to page : </h6>
+          <GenericInput
+            autocomplete = { 'off' }
+            value = { page }
+            onChange = {
+              e => {
+                if( pageTotal >= e.target.value ) {
+                  let pn = parseInt(e.target.value)
+                  if (!pn) {
+                    this.setState({ page : 0 })
+                    this.jumpToPage(1)
+                  } else {
+                    this.setState({ page : pn })
+                    this.jumpToPage(pn)
+                  }
+                }
+              }
+            }
+            type = { 'text' }
+            maxLength = { 3 }
+          />
+        </div>
+      </div>
       {
         enabledLoader ?
         <center className = { 'circular-loader-center' }>
@@ -151,7 +179,7 @@ class ComplianceFragment extends BaseMVPView {
                   type = { 'button' }
                   text = { 'Previous' }
                   onClick = {
-                    () => this.onPreviousPage()
+                    () => this.onPreviousPage(page)
                   }
                   className={ 'compliance-buttons' }
                   /> :
@@ -171,7 +199,7 @@ class ComplianceFragment extends BaseMVPView {
                   type = { 'button' }
                   text = { 'Next' }
                   onClick = {
-                    () => this.onNextPage()
+                    () => this.onNextPage(page)
                   }
                   className={ 'compliance-buttons' }
                   />
@@ -192,9 +220,3 @@ ComplianceFragment.propTypes = {
 }
 
 export default ConnectView(ComplianceFragment, Presenter)
-
-
-/*
-  <div className={ `ic-previous` } onClick = {() => this.onPreviousPage()}></div>
-  <div className={ `ic-next` } onClick = {() => this.onNextPage()}></div>
-*/
