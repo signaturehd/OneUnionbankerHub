@@ -91,9 +91,15 @@ class SideBar extends Component {
             src={ require('../../../../images/profile-picture.png') }
             className= {'sidebar-img-ub-logo'}/>
         </div>
-        <h5 className = { 'sidebar-profile-name' }>
-          { profile && profile.fullname }
-        </h5>
+          {
+            profile && profile.fullname ?
+            <h5 className = { 'sidebar-profile-name' }>
+              { profile && profile.fullname }
+            </h5> :
+            <h5 className = { 'sidebar-profile-name' }>
+              ( Employee Name Retrieving.... )
+            </h5>
+          }
           {
             modules.map((d, idx) =>
             d.id === 9 ?

@@ -873,7 +873,7 @@ export default class HRBenefitsService {
   /*  My Existing Loans */
 
   getExistingLoans (token) {
-    return this.apiClient.get('v1/loans/outstanding', {
+    return this.apiClient.get('v1/loans/mpl/outstanding', {
       headers : { token }
     })
   }

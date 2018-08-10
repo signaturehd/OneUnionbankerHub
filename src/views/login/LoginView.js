@@ -165,7 +165,6 @@ class LoginView extends BaseMVPView {
                 this.setState({ username: e.target.value }) }
               text = { 'Employee ID' }
               type = { 'text' }/>
-            <br/>
             <GenericInput
               autocomplete = { 'off' }
               onChange = { e =>
@@ -178,15 +177,10 @@ class LoginView extends BaseMVPView {
               onClick = { this.showHide }>
               { type === 'input' ? '' : ''}
             </span>
-              <br/>
             {
               disabled ?
-              <center>
-              <br/>
-              <br/>
+              <center className = { 'login-loader' }>
                 <CircularLoader show = { true }/>
-              <br/>
-              <br/>
               </center>              :
               <div>
                 <br/>
@@ -197,6 +191,7 @@ class LoginView extends BaseMVPView {
                     onClick = { () =>
                       this.proceedToValidation( username, password )
                     }/>
+                <br/>
                 <br/>
                 <br/>
               </div>
