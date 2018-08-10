@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import {
-  GenericTextBox,
-  Card,
+  GenericInput,
   GenericButton,
-  FileUploader,
+  MultipleFileUploader,
+  DatePicker,
+  Line,
   Modal } from '../../../ub-components/'
 
 import './styles/educationAidComponentStyle.css'
@@ -16,7 +17,6 @@ import EducationAidReviewModal from '../modal/EducationAidReviewModal'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
-import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
 import { MoneyValidation, RequiredDecimalValidation, RequiredAlphabetValidation } from '../../../utils/validate'
@@ -27,41 +27,14 @@ class EducationAidFormCardComponent extends Component {
   constructor (props) {
     super (props)
     this.state={
-      showModal: false,
       showReviewEducationModal: false,
-      tuitionFeeText: '',
-      registrationFeeText: '',
-      totalFeeText: '',
-      collegeType: '',
-      schoolID: '',
-      courseText: '',
-      academicYearText: '',
-      semesterText: '',
       totalReimbursableAmount: '',
       totalReimbursableAmountText: '',
       gwaText: '',
-      fileOR: '',
-      fileCOG: '',
-      fileRegForm: '',
-      imagePrevOR: null,
-      imagePrevCOG: null,
-      imagePrevRegForm: null,
-      computations: '',
       showEducationSemesterModal: false,
       showEducationAcademicYearModal : false
     }
     this.onGetClicked=this.onGetClicked.bind(this)
-    this.onChange = this.onChange.bind(this)
-    this.registrationValidation=this.registrationValidation.bind(this)
-  }
-
-  onChange (e) {
-      new MoneyValidation().isValid(e.target.value) ?
-        this.setState({ tuitionFeeText : e.target.value }) : null
-  }
-  registrationValidation (e) {
-     new MoneyValidation().isValid(e.target.value) ?
-       this.setState({ registrationFeeText : e.target.value }) : null
   }
 
   getExtension (filename) {
@@ -121,113 +94,48 @@ class EducationAidFormCardComponent extends Component {
     const {
       educationAid,
       onClick,
-      presenter
+      presenter,
+      tuitionFeeText,
+      tuitionFeeFunc,
+      tuitionFeeErrorMessage,
+      registrationFeeText,
+      registrationFeeFunc,
+      registrationErrorMessage,
+      totalFeeText,
+      schoolName,
+      schoolErrorMessage,
+      computations,
+      showSchoolsFunc,
+      courseText,
+      courseTextFunc,
+      courseTextErrorMessage,
+      academicYearText,
+      showAcademicYearFunc,
+      academicYearTextErrorMessage,
+      semesterText,
+      semesterErrorMessage,
+      showSemesterFunc,
+      gwaText,
+      gwaErrorMessage,
+      gwaFunc,
+      attachmentsData,
+      showEditSubmitButton
     }=this.props
 
     const {
-      showModal,
       showReviewEducationModal,
-      tuitionFeeText,
-      registrationFeeText,
-      totalFeeText,
-      collegeType,
-      schoolID,
-      courseText,
-      academicYearText,
-      semesterText,
-      gwaText,
       totalReimbursableAmount,
       totalReimbursableAmountText,
-      fileOR,
-      fileCOG,
-      fileRegForm,
-      imagePrevOR,
-      imagePrevCOG,
-      imagePrevRegForm,
-      computations,
       showEducationSemesterModal,
       showEducationAcademicYearModal,
       }=this.state
 
-    const resultTotalFee=tuitionFeeText && registrationFeeText ? parseFloat(tuitionFeeText) + parseFloat(registrationFeeText) : 0.00
-    const totalReimbursment = format(this.totalReimbursableAmount(computations, gwaText, resultTotalFee))
-    const styles = {
-      image1 : {
-        backgroundImage: `url('${imagePrevOR}')`,
-        width : 'auto',
-        height : '60px',
-        backgroundSize : 'contain',
-        backgroundRepeat : 'no-repeat',
-      },
-      image2 : {
-        backgroundImage: `url('${imagePrevCOG}')`,
-        width : 'auto',
-        height : '60px',
-        backgroundSize : 'contain',
-        backgroundRepeat : 'no-repeat',
-      },
-      image3 : {
-        backgroundImage: `url('${imagePrevRegForm}')`,
-        width : 'auto',
-        height : '60px',
-        backgroundSize : 'contain',
-        backgroundRepeat : 'no-repeat',
-      }
-    }
-
-    const semesterOptions = [
-      {
-          id: 0,
-          name: 'First Semester',
-      },
-      {
-          id: 1,
-          name: 'Second Semester',
-      },
-      {
-          id: 2,
-          name: 'Third Semester',
-      },
-      {
-          id: 4,
-          name: 'Fourth Semester',
-      }
-    ]
-
-    const AcademicYearOptions = [
-      {
-        id: 0,
-        name: moment().subtract(1, 'years').format('YYYY') + ' - ' + moment().format('YYYY')
-      },
-      {
-        id: 1,
-        name: moment().format('YYYY') + ' - ' + moment().add(1, 'years').format('YYYY')
-      }
-    ]
+    const totalReimbursment = format(this.totalReimbursableAmount(computations, gwaText, totalFeeText))
 
     return (
       <div className={'educ-container'}>
         <div className={ 'educ-grid-column-2' }>
-          {
-            showModal &&
-            <EducationAidModal
-              tog={ educationAid.schools }
-              onSubmit={
-                (schoolID, collegeType, computations) => {
-                  this.setState({
-                    schoolID,
-                    collegeType,
-                    computations
-                  })
-                }
-              }
-              onClose={
-                () => {
-                  this.setState({ showModal : false })
-                }
-              }
-              />
-            }
+
             {
               showReviewEducationModal &&
                 <EducationAidReviewModal
@@ -330,272 +238,90 @@ class EducationAidFormCardComponent extends Component {
             }
 
             <div></div>
-          <Card className={ 'educ-form-card' }>
-            <h4>
-              Benefits Details
-            </h4>
+          <div className={ 'educaid-form-card' }>
             <div className={'educ-form-card-body '}>
-            <GenericTextBox
-              value={ tuitionFeeText ? tuitionFeeText : '' }
-              onChange={
-                this.onChange
-              }
-              placeholder={ 'Tuition Fee' }
+            <GenericInput
+              value={ tuitionFeeText }
+              onChange={ (e) => tuitionFeeFunc(e.target.value) }
+              text={ 'Tuition Fee' }
+              errorMessage = { tuitionFeeErrorMessage }
               type={ 'text' }/>
-            <GenericTextBox
+              <br/>
+            <GenericInput
               value={ registrationFeeText ? registrationFeeText : ''}
-              onChange={
-                this.registrationValidation
-               }
-              placeholder={ 'Registration Fee' }
+              onChange={ (e) => registrationFeeFunc(e.target.value) }
+              text={ 'Registration Fee' }
+              errorMessage = { registrationErrorMessage }
               type={ 'text' }/>
-            <GenericTextBox
-              value={ resultTotalFee && parseFloat(resultTotalFee).toFixed(2) }
+              <br/>
+            <GenericInput
+              value={ totalFeeText && parseFloat(totalFeeText).toFixed(2) }
               disabled={ 'disabled' }
-              placeholder={ 'Total Fee' }
+              text={ 'Total Fee' }
               type={ 'text' }/>
-            <GenericTextBox
-              value={ collegeType }
-              onClick={
-                () => this.setState({ showModal : true })
-              }
-              placeholder={ 'Colleges/Universities' }
-              /*onChange={ (e) => this.setState({ collegeType : e.target.value }) }*/
+              <br/>
+            <GenericInput
+              value={ schoolName }
+              onClick={ () => showSchoolsFunc() }
+              text={ 'Colleges/Universities' }
+              errorMessage = { schoolErrorMessage }
               type={ 'text' }/>
-            <GenericTextBox
+              <br/>
+            <GenericInput
               value={ courseText }
-              onChange={
-                (e) => {
-                  new RequiredAlphabetValidation().isValid(e.target.value) ?
-                    this.setState({ courseText: e.target.value }) : this.setState({ courseText : '' })
-                }
-              }
-
-              placeholder={ 'Course' }
+              onChange={ (e) => courseTextFunc(e.target.value) }
+              errorMessage = { courseTextErrorMessage }
+              text={ 'Course' }
               type={ 'text' }/>
-            <GenericTextBox
+              <br/>
+            <GenericInput
               value={ academicYearText }
-              onClick={ () => this.setState({showEducationAcademicYearModal : true}) }
-              placeholder={ 'Academic Year' }
+              onClick={ () => showAcademicYearFunc() }
+              text={ 'Academic Year' }
+              errorMessage = { academicYearTextErrorMessage }
               type={ 'text' }/>
-            <GenericTextBox
+              <br/>
+            <GenericInput
               value={ semesterText }
-              onClick={ () => this.setState({ showEducationSemesterModal : true }) }
-              placeholder={ 'Semester' }
+              onClick={ () => showSemesterFunc() }
+              text={ 'Semester' }
               type={ 'text' }/>
-            <GenericTextBox
+              <br/>
+            <GenericInput
               value={ gwaText }
-              onChange={
-                (e) => {
-                  new RequiredDecimalValidation().isValid(e.target.value) ?
-                    this.setState({ gwaText: e.target.value }) : this.setState({ gwaText: '' })
-                  }
-                }
+              onChange={ (e) => gwaFunc(e.target.value) }
               maxLength = { 4 }
               errorMessage = { ((parseInt(totalReimbursment) ===0) && gwaText) ? 'Invalid GWA' : '' }
-              placeholder={ 'General Weighted Average (GWA)' }
+              text={ 'General Weighted Average (GWA)' }
               type={ 'text' }/>
-            <GenericTextBox
+              <br/>
+            <GenericInput
               value={ totalReimbursment }
               disabled={ 'disabled' }
               type={ 'text' }
-              placeholder={ 'Total Reimbursable Amount' }/>
+              text={ 'Total Reimbursable Amount' }/>
               <br/>
+
+              {
+                attachmentsData.length !== 0  ?
+                <div>
+                <MultipleFileUploader
+                    placeholder = { 'Form Attachments' }
+                    fileArray = { attachmentsData }
+                    setFile = { (resp) => setAttachmentArrayFunc(resp) }
+                    disabled = { showEditSubmitButton }
+                    errorMessage = {
+                      showEditSubmitButton ?
+                      '' :
+                      `Please upload the required attachments`  }
+                  />
+                </div>
+                :
+                <div></div>
+              }
               <br/>
-              <h4>
-                Form Attachments
-              </h4>
-              {
-                imagePrevOR &&
-                <div>
-                  <label className="educ-form-title">{ 'Official Receipt of Tuition Fee' }</label>
-                  <div className="educ-attachment-form">
-                    <img
-                      src={ require('../../../ub-components/Notify/images/x-circle.png') }
-                      className='close-button'
-                      onClick={
-                        () => {
-                          this.setState({ fileOR : '', imagePrevOR : null })
-                        }
-                      }
-                    />
-                    <div style = {styles.image1}><h6 className="educ-file-name">{ fileOR.name }</h6></div>
-                  </div>
-                </div>
-              }
-
-              {
-                !imagePrevOR &&
-                <FileUploader
-                  accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
-                  value={ fileOR.name }
-                  placeholder={ 'Official Receipt of Tuition Fee' }
-                  onChange={
-                    (e) => {
-                      e.preventDefault()
-                      const reader=new FileReader()
-                      const file=e.target.files[0]
-                      let isValid
-                      switch (this.getExtension(file.type).toLowerCase()) {
-                        case 'jpeg' :
-                          isValid=true
-                        case 'jpg' :
-                          isValid=true
-                        case 'png' :
-                          isValid=true
-                        case 'pdf' :
-                          isValid=true
-                      }
-
-                      if (isValid) {
-                        reader.onloadend=() => {
-                          this.setState({
-                            fileOR: file,
-                            imagePrevOR: reader.result
-                          })
-                        }
-                        reader.readAsDataURL(file)
-                     } else {
-                         store.dispatch(NotifyActions.addNotify({
-                             title : 'File Uploading',
-                             message : 'The accepted attachments are JPG/PNG/PDF',
-                             type : 'warning',
-                             duration : 2000
-                          })
-                        )
-                      }
-                    }
-                  }
-                />
-              }
-
-              {
-                imagePrevCOG &&
-                <div>
-                  <label className="educ-form-title">{ 'Certification of Grades' }</label>
-                  <div className="educ-attachment-form">
-                    <img
-                      src={ require('../../../ub-components/Notify/images/x-circle.png') }
-                      className='close-button'
-                      onClick={
-                        () => {
-                          this.setState({ fileCOG : '', imagePrevCOG : null })
-                        }
-                      }
-                    />
-                    <div style = {styles.image2}><h6 className="educ-file-name">{ fileCOG.name }</h6></div>
-                  </div>
-                </div>
-              }
-
-              {
-                !imagePrevCOG &&
-                <FileUploader
-                  accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
-                  value={ fileCOG.name }
-                  placeholder={ 'Certification of Grades' }
-                  onChange={
-                    (e) => {
-                      e.preventDefault()
-                      const reader2=new FileReader()
-                      const file2=e.target.files[0]
-                      let isValid
-                      switch (this.getExtension(file2.type).toLowerCase()) {
-                        case 'jpeg' :
-                          isValid=true
-                        case 'jpg' :
-                          isValid=true
-                        case 'png' :
-                          isValid=true
-                        case 'pdf' :
-                          isValid=true
-                      }
-
-                      if (isValid) {
-                        reader2.onloadend=() => {
-                          this.setState({
-                            fileCOG: file2,
-                            imagePrevCOG : reader2.result
-                          })
-                        }
-                        reader2.readAsDataURL(file2)
-                     } else {
-                         store.dispatch(NotifyActions.addNotify({
-                             title : 'File Uploading',
-                             message : 'The accepted attachments are JPG/PNG/PDF',
-                             type : 'warning',
-                             duration : 2000
-                           })
-                         )
-                       }
-                    }
-                  }
-                />
-              }
-
-              {
-                imagePrevRegForm &&
-                <div>
-                  <label className="educ-form-title">{ 'Registration Form/Official Breakdown of Fees' }</label>
-                  <div className="educ-attachment-form">
-                    <img
-                      src={ require('../../../ub-components/Notify/images/x-circle.png') }
-                      className='close-button'
-                      onClick={
-                        () => {
-                          this.setState({ fileRegForm : '', imagePrevRegForm : null })
-                        }
-                      }
-                    />
-                    <div style = {styles.image3}><h6 className="educ-file-name">{ fileRegForm.name }</h6></div>
-                  </div>
-                </div>
-              }
-
-              {
-                !imagePrevRegForm &&
-                <FileUploader
-                  accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
-                  value={ fileRegForm.name }
-                  placeholder={ 'Registration Form/Official Breakdown of Fees' }
-                  onChange={
-                    (e) => {
-                      e.preventDefault()
-                      const reader3=new FileReader()
-                      const file3=e.target.files[0]
-                      let isValid
-                      switch (this.getExtension(file3.type).toLowerCase()) {
-                        case 'jpeg' :
-                          isValid=true
-                        case 'jpg' :
-                          isValid=true
-                        case 'png' :
-                          isValid=true
-                        case 'pdf' :
-                          isValid=true
-                      }
-
-                      if (isValid) {
-                        reader3.onloadend=() => {
-                          this.setState({
-                            fileRegForm: file3,
-                            imagePrevRegForm: reader3.result
-                          })
-                        }
-                        reader3.readAsDataURL(file3)
-                     } else {
-                         store.dispatch(NotifyActions.addNotify({
-                             title : 'File Uploading',
-                             message : 'The accepted attachments are JPG/PNG/PDF',
-                             type : 'warning',
-                             duration : 2000
-                           })
-                         )
-                       }
-                    }
-                  }
-                />
-              }
+              <Line/>
+              <br/>
 
               <GenericButton
                 type={ 'button' }
@@ -624,11 +350,37 @@ class EducationAidFormCardComponent extends Component {
                 }
                 className={ 'educ-submit' } />
             </div>
-          </Card>
+          </div>
         </div>
       </div>
     )
   }
+}
+
+EducationAidFormCardComponent.propTypes = {
+  tuitionFeeText : PropTypes.string,
+  tuitionFeeErrorMessage : PropTypes.string,
+  tuitionFeeFunc : PropTypes.func,
+  registrationFeeText : PropTypes.string,
+  registrationErrorMessage : PropTypes.string,
+  registrationFeeFunc : PropTypes.func,
+  totalFeeText : PropTypes.string,
+  schoolName : PropTypes.string,
+  showSchoolsFunc : PropTypes.func,
+  schoolErrorMessage : PropTypes.string,
+  courseText : PropTypes.string,
+  courseTextFunc : PropTypes.func,
+  courseTextErrorMessage : PropTypes.string,
+  academicYearText : PropTypes.string,
+  academicYearTextErrorMessage : PropTypes.string,
+  showAcademicYearFunc : PropTypes.func,
+  semesterText : PropTypes.string,
+  showSemesterFunc : PropTypes.func,
+  semesterErrorMessage : PropTypes.string,
+  gwaText : PropTypes.string,
+  gwaErrorMessage : PropTypes.toString,
+  gwaFunc : PropTypes.func,
+  showEditSubmitButton : PropTypes.bool
 }
 
 export default EducationAidFormCardComponent

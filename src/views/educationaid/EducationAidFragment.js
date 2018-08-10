@@ -5,7 +5,9 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/EducationAidPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { CircularLoader } from '../../ub-components/'
+import { CircularLoader, SingleInputModal } from '../../ub-components/'
+
+import SchoolsModal from './modal/SchoolsModal'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
@@ -19,6 +21,10 @@ import FormComponent from './components/EducationAidFormCardComponent'
 
 import { RequiredValidation, MoneyValidation } from '../../utils/validate'
 
+import * as EducationAidFunction from './function/EducationAidFunction'
+
+import moment from 'moment'
+
 class EducationAidFragment extends BaseMVPView {
 
   constructor(props) {
@@ -30,16 +36,32 @@ class EducationAidFragment extends BaseMVPView {
       showConfirmation : false,
       showNoticeResponseModal : false,
       enabledLoader : false,
+      showEditSubmitButton : false,
+      showSchools : false,
+      showEducationAcademicYearModal : false,
+      showEducationSemesterModal : false,
       tuitionFeeText: '',
+      tuitionFeeErrorMessage: '',
       registrationFeeText: '',
+      registrationFeeErrorMessage: '',
       totalFeeText: '',
-      collegeType: '',
-      schoolID: '',
+      schoolId: '',
+      schoolName: '',
+      computations: '',
+      schoolErrorMessage: '',
+      computations: '',
       courseText: '',
+      courseTextErrorMessage: '',
+      academicYearId: '',
       academicYearText: '',
+      academicYearTextErrorMessage: '',
+      semesterId: '',
       semesterText: '',
+      semesterErrorMessage: '',
       totalReimbursableAmount: '',
+      totalReimbursableAmountText: '',
       gwaText: '',
+      gwaErrorMessage: '',
       fileOR: '',
       fileCOG: '',
       fileRegForm: '',
@@ -48,9 +70,65 @@ class EducationAidFragment extends BaseMVPView {
       imagePrevRegForm : null,
       showBenefitFeedbackModal : false,
       data: '',
-      educationAid: [] //education aid details
+      educationAid: [], //education aid details
+      schoolsData: [],
+      attachmentsData : [],
+      attachmentArray : []
     }
     this.validator = this.validator.bind(this)
+    this.tuitionFeeFunc = this.tuitionFeeFunc.bind(this)
+    this.registrationFeeFunc = this.registrationFeeFunc.bind(this)
+    this.courseTextFunc = this.courseTextFunc.bind(this)
+    this.showAcademicYearFunc = this.showAcademicYearFunc.bind(this)
+    this.showSemesterFunc = this.showSemesterFunc.bind(this)
+  }
+
+  tuitionFeeFunc (e) {
+    const validate = EducationAidFunction.checkedAmount(e)
+        this.setState({ tuitionFeeText : validate, tuitionFeeErrorMessage : '' })
+  }
+
+  registrationFeeFunc (e) {
+    const validate = EducationAidFunction.checkedAmount(e)
+        this.setState({ registrationFeeText : validate, registrationFeeErrorMessage : '' })
+  }
+
+  showSchoolsFunc () {
+    this.setState({ showSchools : true })
+  }
+
+  courseTextFunc (e) {
+    const validate = EducationAidFunction.checkedValidateText(e)
+    this.setState({ courseText : validate , courseTextErrorMessage : '' })
+  }
+
+  gwaFunc (e) {
+    const validate = EducationAidFunction.checkedValidateDecimal(e)
+    this.setState({ gwaText : validate , gwaErrorMessage : '' })
+  }
+
+  showAcademicYearFunc () {
+    this.setState({ showEducationAcademicYearModal : true })
+  }
+
+  showSemesterFunc () {
+    this.setState({ showEducationSemesterModal : true })
+  }
+
+  showValidatedAid (educationAid) {
+    this.setState({ educationAid })
+  }
+
+  setFileAttachments (attachmentArray) {
+    this.setState({ attachmentArray })
+  }
+
+  showAttachmentsMap (attachmentsData) {
+    this.setState({ attachmentsData })
+  }
+
+  showSchoolsMap (schoolsData) {
+    this.setState({ schoolsData })
   }
 
   submitForm (
@@ -208,46 +286,85 @@ class EducationAidFragment extends BaseMVPView {
 
   render () {
     const {
-      courseText,
-      academicYearText,
-      semesterText,
-      gwaText,
       tuitionFeeText,
+      tuitionFeeErrorMessage,
       registrationFeeText,
+      registrationFeeErrorMessage,
       schoolID,
-      fileOR,
-      fileCOG,
-      fileRegForm,
-      imagePrevOR,
-      imagePrevCOG,
-      imagePrevRegForm,
+      schoolName,
+      schoolErrorMessage,
+      computations,
+      courseText,
+      courseTextErrorMessage,
+      academicYearId,
+      academicYearText,
+      academicYearTextErrorMessage,
+      semesterId,
+      semesterText,
+      semesterErrorMessage,
       totalFeeText,
+      gwaText,
+      gwaErrorMessage,
       educationAid,
       enabledLoader,
+      showSchools,
       showNoticeModal,
       noticeResponse,
       showNoticeResponseModal,
       showBenefitFeedbackModal,
       showConfirmation,
-      data
+      showEditSubmitButton,
+      showEducationAcademicYearModal,
+      showEducationSemesterModal,
+      data,
+      schoolsData,
+      attachmentArray,
+      attachmentsData
     }=this.state
+
+    const resultTotalFee =
+    tuitionFeeText &&
+    registrationFeeText ?
+    parseFloat(tuitionFeeText) + parseFloat(registrationFeeText)
+    : 0.00
+
+    const AcademicYearOptions = [
+      {
+        id: 0,
+        name: moment().subtract(1, 'years').format('YYYY') + ' - ' + moment().format('YYYY')
+      },
+      {
+        id: 1,
+        name: moment().format('YYYY') + ' - ' + moment().add(1, 'years').format('YYYY')
+      }
+    ]
+
+    const semesterOptions = [
+      {
+          id: 0,
+          name: 'First Semester',
+      },
+      {
+          id: 1,
+          name: 'Second Semester',
+      },
+      {
+          id: 2,
+          name: 'Third Semester',
+      },
+      {
+          id: 4,
+          name: 'Fourth Semester',
+      }
+    ]
 
     return (
       <div>
-      {
-        showConfirmation &&
-        <ConfirmationModal
-          data = { data }
-          submitForm = { (
-            courseText,
-            academicYearText,
-            semesterText,
-            gwaText,
-            tuitionFeeText,
-            registrationFeeText,
-            schoolId,
-            fileAttachments) =>
-            this.submitForm(
+        {
+          showConfirmation &&
+          <ConfirmationModal
+            data = { data }
+            submitForm = { (
               courseText,
               academicYearText,
               semesterText,
@@ -255,11 +372,19 @@ class EducationAidFragment extends BaseMVPView {
               tuitionFeeText,
               registrationFeeText,
               schoolId,
-              fileAttachments) }
-          onClose = { () => this.setState({ showConfirmation : false }) }
-        />
-      }
-
+              fileAttachments) =>
+              this.submitForm(
+                courseText,
+                academicYearText,
+                semesterText,
+                gwaText,
+                tuitionFeeText,
+                registrationFeeText,
+                schoolId,
+                fileAttachments) }
+            onClose = { () => this.setState({ showConfirmation : false }) }
+          />
+        }
 
         {
           showNoticeModal &&
@@ -293,6 +418,61 @@ class EducationAidFragment extends BaseMVPView {
           />
         }
 
+        {
+          showSchools &&
+          <SchoolsModal
+            label = { 'College/Universities' }
+            inputArray = { schoolsData }
+            selectedArray = { (schoolId, schoolName, computations) => {
+              this.setState({
+                schoolId,
+                schoolName,
+                computations,
+                showSchools : false,
+                schoolErrorMessage : ''
+                })
+              }
+            }
+            onClose = { () => this.setState({ showSchools : false }) }
+          />
+        }
+
+        {
+          showEducationAcademicYearModal &&
+          <SingleInputModal
+            label = { 'Academic Year' }
+            inputArray = { AcademicYearOptions }
+            selectedArray = { (academicYearId, academicYearText) => {
+              this.setState({
+                academicYearId,
+                academicYearText,
+                showEducationAcademicYearModal : false,
+                academicYearTextErrorMessage : ''
+                })
+              }
+            }
+            onClose = { () => this.setState({ showEducationAcademicYearModal : false }) }
+          />
+        }
+
+        {
+          showEducationSemesterModal &&
+          <SingleInputModal
+            label = { 'Semester' }
+            inputArray = { semesterOptions }
+            selectedArray = { (semesterId, semesterText) => {
+              this.setState({
+                semesterId,
+                semesterText,
+                showEducationSemesterModal : false,
+                semesterErrorMessage : ''
+                })
+              }
+            }
+            onClose = { () => this.setState({ showEducationSemesterModal : false }) }
+          />
+        }
+
         <div>
           <i
             className={ 'back-arrow' }
@@ -308,7 +488,31 @@ class EducationAidFragment extends BaseMVPView {
              <CircularLoader show={ this.state.enabledLoader }/>
            </center> :
           <FormComponent
-            educationAid={ educationAid }
+            educationAid = { educationAid }
+            tuitionFeeText = { tuitionFeeText }
+            tuitionFeeErrorMessage = { tuitionFeeErrorMessage }
+            tuitionFeeFunc = { (resp) => this.tuitionFeeFunc(resp) }
+            registrationFeeText = { registrationFeeText }
+            registrationFeeErrorMessage = { registrationFeeErrorMessage }
+            registrationFeeFunc = { (resp) => this.registrationFeeFunc(resp) }
+            totalFeeText = { resultTotalFee }
+            attachmentsData = { attachmentsData }
+            showEditSubmitButton = { showEditSubmitButton }
+            schoolName = { schoolName }
+            showSchools = { showSchools }
+            computations = { computations }
+            showSchoolsFunc = { () => this.showSchoolsFunc() }
+            schoolErrorMessage = { schoolErrorMessage }
+            courseText = { courseText }
+            courseTextFunc = { (resp) => this.courseTextFunc(resp) }
+            courseTextErrorMessage = { courseTextErrorMessage }
+            academicYearText = { academicYearText }
+            showAcademicYearFunc = { (resp) => this.showAcademicYearFunc(resp) }
+            academicYearTextErrorMessage = { academicYearTextErrorMessage }
+            semesterText = { semesterText }
+            showSemesterFunc = { (resp) => this.showSemesterFunc(resp) }
+            gwaText = { gwaText }
+            gwaFunc = { (resp) => this.gwaFunc(resp) }
             onClick = {
               (showConfirmation, data) => {
                 this.confirmation(showConfirmation, data)
