@@ -1,25 +1,25 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import BaseMVPView from '../common/base/BaseMVPView'
-import ConnectView from '../../utils/ConnectView'
-import Presenter from './presenter/MyTrainingPresenter'
+import BaseMVPView from '../../common/base/BaseMVPView'
+import ConnectView from '../../../utils/ConnectView'
 
-import TrainingCardModal from
-'./modals/TrainingCardModal'
+import ResponseModal from '../../notice/NoticeResponseModal'
+import TrainingCardModal from '../modals/TrainingCardModal'
 
 import MyTrainingListCardComponent from
-'./components/MyTrainingListCardComponent'
+'../components/MyTrainingListCardComponent'
 
 import * as MyTrainingFunctions from
-'./functions/MyTrainingFunctions'
+'../functions/MyTrainingFunctions'
 
 import {
   CircularLoader,
   Line,
   GenericInput,
-  GenericButton
-} from '../../ub-components/'
+  GenericButton,
+  Modal
+} from '../../../ub-components/'
 
 import './styles/myTrainingStyle.css'
 
@@ -33,12 +33,15 @@ class MyTrainingFragment extends BaseMVPView {
       index: 8,
       trainingDetails: null,
       showConfirmation : false,
+      loadingModal : false,
+      noticeResponse : null,
+      showNoticeResponseModal : false,
     }
     this.programSearch = this.programSearch.bind(this)
   }
 
   componentDidMount () {
-    this.presenter.getEmployeeTraining()
+    this.props.presenter.getEmployeeTraining()
   }
 
   setTrainingDetails (trainingDetails) {
@@ -57,6 +60,14 @@ class MyTrainingFragment extends BaseMVPView {
     this.setState({ enabledLoader })
   }
 
+  clearTraining () {
+    this.setState({ trainingDetails : '', loadingModal : false })
+  }
+
+  setLoadingModal(loadingModal) {
+    this.setState({ loadingModal })
+  }
+
   programSearch (e) {
     this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
@@ -65,15 +76,21 @@ class MyTrainingFragment extends BaseMVPView {
     this.props.history.push('/mylearning')
   }
 
+  noticeResponse (noticeResponse) {
+    this.setState({ noticeResponse, showNoticeResponseModal : true })
+  }
+
   render () {
-  const { history, presenter } = this.props
+  const { history, presenter, searchString } = this.props
   const {
     trainingList,
     enabledLoader,
-    searchString,
     index,
     trainingDetails,
     showConfirmation,
+    loadingModal,
+    noticeResponse,
+    showNoticeResponseModal,
   } = this.state
 
 
@@ -93,19 +110,35 @@ class MyTrainingFragment extends BaseMVPView {
         <TrainingCardModal
           onClose = { () => this.setState({ trainingDetails : '' }) }
           details = { trainingDetails }
-          onEnroll = { (id) => this.presenter.enrollEmployee(id) }
+          onEnroll = { (id) => presenter.enrollEmployee(String(id)) }
           showConfirmation = { showConfirmation }
           setConfirmation = { (showConfirmation) => this.setState({showConfirmation}) }
         />
       }
-      <div className={ 'header-margin-container' }>
-        <i
-          className = { 'back-arrow' }
-          onClick = { () =>
-            history.push('/mylearning') }>
-        </i>
-        <h2 className = { 'header-margin-default' }>My Trainings</h2>
-      </div>
+
+      {
+        loadingModal &&
+        <Modal>
+          <center>
+            <h3>Please wait while Loading...</h3>
+            <br/>
+            <br/>
+            <CircularLoader show={true}/>
+           </center>
+         </Modal>
+      }
+
+      {
+        showNoticeResponseModal &&
+        <ResponseModal
+          onClose = { () => {
+            this.setState({ showNoticeResponseModal : false, trainingDetails : '' })
+
+          }}
+          noticeResponse = { noticeResponse }
+        />
+      }
+
       {
         enabledLoader ?
         <center className = { 'circular-loader-center' }>
@@ -113,20 +146,6 @@ class MyTrainingFragment extends BaseMVPView {
          </center>
        :
       <div className = { 'mytrainings-grid-container-row' }>
-        <div className = { 'mytrainings-grid-container-column' }>
-          <div></div>
-          <div>
-            <GenericInput
-              type = { 'text' }
-              className = { 'transaction-search-bar' }
-              refCallback = { 'search' }
-              hint = { 'Search ( e.g Venue, Title of Trainings )' }
-              value = { searchString }
-              onChange = { this.programSearch } />
-            <br/>
-          </div>
-        </div>
-
         <div className = { 'mytrainings-list-card' }>
           <div>
             <Line/>
@@ -146,7 +165,7 @@ class MyTrainingFragment extends BaseMVPView {
                status = { resp.status }
                startDate = { resp.startDate }
                endDate = { resp.endDate }
-               onClick = { (id) => this.presenter.getEmployeeTrainingDetails(id) }
+               onClick = { (id) => presenter.getEmployeeTrainingDetails(id) }
              />
            )
           }
@@ -182,8 +201,4 @@ class MyTrainingFragment extends BaseMVPView {
   }
 }
 
-MyTrainingFragment.propTypes={
-  setSelectedNavigation: PropTypes.func,
-}
-
-export default ConnectView(MyTrainingFragment, Presenter)
+export default MyTrainingFragment
