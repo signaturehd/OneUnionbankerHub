@@ -7,7 +7,7 @@ import ConnectPartial from '../../utils/ConnectPartial'
 
 import MyTrainingFragment from './fragments/MyTrainingFragment'
 import EnrolledTrainingFragment from './fragments/EnrolledTrainingFragment'
-//import BookRecommendationFragment from './fragments/BookRecommendationFragment'
+import ApprovalTrainingFragment from './fragments/ApprovalTrainingFragment'
 
 import {
   CircularLoader,
@@ -88,7 +88,7 @@ class TrainingFragment extends BaseMVPView {
           <input
             className = { 'input-tab' }
             id='tab3'
-            onClick = { () => null }
+            onClick = { () => history.push('/mylearning/trainings/approvaltrainings') }
             type='radio'
             name='tabs' />
           <label  htmlFor = 'tab3' >For Approval</label>
@@ -104,6 +104,13 @@ class TrainingFragment extends BaseMVPView {
                 />
                 <Route path = '/mylearning/trainings/enrolledtrainings'
                   render = { props => <EnrolledTrainingFragment
+                    presenter = { this.presenter }
+                    searchString = { searchString }
+                    />
+                  }
+                />
+                <Route path = '/mylearning/trainings/approvaltrainings'
+                  render = { props => <ApprovalTrainingFragment
                     presenter = { this.presenter }
                     searchString = { searchString }
                     />
