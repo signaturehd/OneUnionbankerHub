@@ -35,7 +35,7 @@ class EnrolledTrainingCardComponent extends Component {
 }
 
 EnrolledTrainingCardComponent.propTypes = {
-  id :  PropTypes.string,
+  id :  PropTypes.number,
   name : PropTypes.string,
   title : PropTypes.string,
   date : PropTypes.string,
