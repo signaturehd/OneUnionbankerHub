@@ -303,6 +303,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getPayslipFeedbackCategoriesDiscrepancy (token) {
+    return this.service.getPayslipFeedbackCategoriesDiscrepancy(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addPayslipFeedbackDiscrepancy (token, addPayslipFeedbackParam) {
+    return this.service.addPayslipFeedbackDiscrepancy(token, addPayslipFeedbackParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   addBenefitFeedback (token, addBenefitFeedbackParam) {
     return this.service.addBenefitFeedback(token, addBenefitFeedbackParam)
       .pipe(ServiceErrorOperator())
@@ -576,8 +586,7 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-
-  uploadTransactionImageInteractor (token, type, file, id) {
+  uploadTransactionImageInteractor (token, type, id, file) {
     let service
     if (type === 22) {
       service = this.service.uploadTransactionCalamity( token, file, id )
@@ -586,5 +595,127 @@ export default class HRBenefitsClient {
     }
 
     return service
+  }
+
+/* Medical Scheduling */
+
+  validateMedicalScheduling (token) {
+    return this.service.validateMedicalScheduling(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addMedicalScheduling (
+    token,
+    accounToken,
+    accountNumber,
+    releasingCenter,
+    addMedicalSchedulingParam
+  ) {
+    return this.service.addMedicalScheduling (
+      token,
+      accounToken,
+      accountNumber,
+      releasingCenter,
+      addMedicalSchedulingParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  /* Outpatient Reimbursement */
+  validateOutPatientReimbursement (token) {
+    return this.service.validateOutPatientReimbursement(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addOutPatientReimbursement (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    outPatientParam
+  ) {
+      return this.service.addOutPatientReimbursement(
+        token,
+        accountToken,
+        accountNumber,
+        releasingCenter,
+        outPatientParam
+      )
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Employee Trainings */
+
+  getEmployeeTraining (token) {
+    return this.service.getEmployeeTraining (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getEmployeeTrainingDetails (token, id) {
+    return this.service.getEmployeeTrainingDetails (token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  enrollEmployee (token, id) {
+    return this.service.enrollEmployee(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Maternity Assistance */
+  validateMaternityAssistance (token) {
+    return this.service.validateMaternityAssistance(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addMaternityAssistance (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMaternityAssistanceParam
+  ) {
+    return this.service.addMaternityAssistance (
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      addMaternityAssistanceParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  /* Maternity Assistance SSS */
+
+  addMaternityAssistanceSSS (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    maternityAssistanceSSSParam
+  ) {
+    return this.service.addMaternityAssistanceSSS(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      maternityAssistanceSSSParam
+    )
+      .pipe(ServiceErrorOperator())
+  }
+
+
+  /* Code of Conduct  */
+
+  getCompliancesPdf (token, page) {
+    return this.service.getCompliancesPdf(token, page)
+      .pipe(ServiceErrorOperator())
+  }
+
+  submitPin (token, code) {
+    return this.service.submitPin(token, code)
+      .pipe(ServiceErrorOperator())
+  }
+  /* My Existing Loans */
+  getExistingLoans (token) {
+    return this.service.getExistingLoans(token)
+      .pipe(ServiceErrorOperator())
   }
 }

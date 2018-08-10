@@ -103,12 +103,16 @@ export default class HRBenefitsService {
     const opticalObject = {
       accountNumber,
       amount: opticalParam.amount,
+      officialReceiptDate: opticalParam.oRDate,
+      officialReceiptNumber : opticalParam.orNumber,
       releasingCenter,
       distributor: 'distributorTest'
     }
     formData.append('uuid', 123345)
-    formData.append('med', opticalParam.medCert)
-    formData.append('opt', opticalParam.optCert)
+    opticalParam.attachmentData.map((resp) => (
+      formData.append(resp.name, resp.file)
+      )
+    )
     formData.append('body', JSON.stringify(opticalObject))
     return this.apiClient.post('v2/reimbursements/optical/submit', formData, {
       headers : { token }
@@ -254,6 +258,18 @@ export default class HRBenefitsService {
     })
   }
 
+  getPayslipFeedbackCategoriesDiscrepancy (token) {
+    return this.apiClient.get('v1/payroll/discrepancies/categories', {
+      headers : { token }
+    })
+  }
+
+  addPayslipFeedbackDiscrepancy (token, addPayslipFeedbackParam) {
+    return this.apiClient.post('v1/payroll/discrepancies', addPayslipFeedbackParam, {
+      headers : { token }
+    })
+  }
+
   getFaqsCategories (token) {
     return this.apiClient.get('v1/faqs/categories', {
       headers: { token }
@@ -348,17 +364,19 @@ export default class HRBenefitsService {
       loan : {
         id : mplPurposeLoanAddParam.loanType,
         purpose : mplPurposeLoanAddParam.poaText,
-        mode : mplPurposeLoanAddParam.modeOfLoanId === 1 ? mplPurposeLoanAddParam.modeOfLoanId : 2,
+        mode : mplPurposeLoanAddParam.modeOfLoanId,
         term : mplPurposeLoanAddParam.termId,
         principalAmount : mplPurposeLoanAddParam.amountValue
       },
-      promissoryNoteNumbers : mplPurposeLoanAddParam.selectedOffsetLoan ? mplPurposeLoanAddParam.selectedOffsetLoan : null,
-      distributor : mplPurposeLoanAddParam.dealerName,
-    }
+        promissoryNoteNumbers : mplPurposeLoanAddParam.selectedOffsetLoan,
+        distributor : mplPurposeLoanAddParam.dealerName,
+      }
       formData.append('uuid', 12345)
       formData.append('body', JSON.stringify(multiLoanBodyObject))
-      formData.append('attachments' , mplPurposeLoanAddParam.fileObject ? mplPurposeLoanAddParam.fileObject : '')
-      formData.append('attachments2' , mplPurposeLoanAddParam.fileObject1 ? mplPurposeLoanAddParam.fileObject1 : '')
+      mplPurposeLoanAddParam.attachments &&
+      mplPurposeLoanAddParam.attachments.map((attachment, key) => (
+        formData.append(attachment.name, attachment.file)
+      ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
@@ -377,16 +395,18 @@ export default class HRBenefitsService {
       promissoryNoteNumbers : addMotorLoanParam.selectedOffsetLoan,
       distributor : addMotorLoanParam.dealerName,
       loan : {
-        id : addMotorLoanParam.loanId,
-        mode : addMotorLoanParam.modeOfLoan ? 2 : 1,
-        principalAmount : addMotorLoanParam.principalLoanAmount,
-        purpose : addMotorLoanParam.purposeOfLoan,
-        term : addMotorLoanParam.loanTerm,
+        id : addMotorLoanParam.loanType,
+        mode : addMotorLoanParam.modeOfLoanId ? 2 : 1,
+        principalAmount : addMotorLoanParam.amountValue,
+        purpose : addMotorLoanParam.poaText,
+        term : addMotorLoanParam.termId,
       },
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
-    formData.append('MPL-cert', addMotorLoanParam.attachments)
+    addMotorLoanParam.attachments.map((attachment, key) => (
+      formData.append(attachment.name, attachment.file)
+    ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
@@ -403,18 +423,20 @@ export default class HRBenefitsService {
       releasingCenter,
       accountNumber,
       loan : {
-        id : addComputerLoanParam.loanId,
-        mode : addComputerLoanParam.modeOfLoan ? 2 : 1,
-        principalAmount : addComputerLoanParam.principalLoanAmount,
-        purpose : addComputerLoanParam.purposeOfLoan,
-        term : addComputerLoanParam.loanTerm,
+        id : addComputerLoanParam.loanType,
+        mode : addComputerLoanParam.modeOfLoanId ? 2 : 1,
+        principalAmount : addComputerLoanParam.amountValue,
+        purpose : addComputerLoanParam.poaText,
+        term : addComputerLoanParam.termId,
       },
       promissoryNoteNumbers : addComputerLoanParam.selectedOffsetLoan,
       distributor : addComputerLoanParam.supplierName,
     }
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
-    formData.append('MPL-cert', addComputerLoanParam.attachments)
+    addComputerLoanParam.attachments.map((attachment, key) => (
+      formData.append(attachment.name, attachment.file)
+    ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
     })
@@ -652,18 +674,20 @@ export default class HRBenefitsService {
     }
 
     formData.append('uuid', 12345)
-    formData.append('file', calamityAssistanceParam.file1)
-    formData.append('file2', calamityAssistanceParam.file2)
+    formData.append('Barangay Certificate', calamityAssistanceParam.file1)
+    formData.append('Damaged Property', calamityAssistanceParam.file2)
     formData.append('body', JSON.stringify(calamityObject))
     return this.apiClient.post('v1/calamity/availment', formData,{
       headers: { token }
     })
   }
 
-  uploadTransactionCalamity (token, file, id) {
+  uploadTransactionCalamity (token, id, files) {
     const formData = new FormData()
     formData.append('uuid', 12345)
-    formData.append('Official Receipt', file)
+    files.map((file, key) => (
+      formData.append(file.name, file.file)
+    ))
     formData.append('body', JSON.stringify({
       transactionId : id
     }))
@@ -672,14 +696,190 @@ export default class HRBenefitsService {
     })
   }
 
-  uploadTransactionBereavement (token, file, id) {
+  uploadTransactionBereavement (token, id, files) {
     const formData = new FormData()
     formData.append('uuid', 12345)
-    formData.append('Death Certificate', file)
+    files.map((file, key) => (
+      formData.append(file.name, file.file)
+    ))
     formData.append('body', JSON.stringify({
       transactionId : id
     }))
     return this.apiClient.post('v1/bereavement/receipt', formData, {
+      headers : { token }
+    })
+  }
+
+  /* Medical Scheduling */
+
+  validateMedicalScheduling (token) {
+    return this.apiClient.get('v1/medical/exam/validate', {
+      headers: { token }
+    })
+  }
+
+  addMedicalScheduling (
+    token,
+    accounToken,
+    accountNumber,
+    releasingCenter,
+    addMedicalSchedulingParam
+  ) {
+    const medicalSchedulingObject = {
+      date : addMedicalSchedulingParam.preferredDate,
+      clinicId : addMedicalSchedulingParam.clinicId,
+      packageId : addMedicalSchedulingParam.packageId,
+    }
+    return this.apiClient.post('v1/medical/exam/submit', medicalSchedulingObject, {
+      headers : { token }
+    })
+  }
+
+  /* Outpatient Reimbursement */
+
+  validateOutPatientReimbursement (token) {
+    return this.apiClient.get('v1/outpatient/validate?type=1', {
+      headers: { token }
+    })
+  }
+
+  addOutPatientReimbursement (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    outPatientParam
+  ) {
+    const formData = new FormData()
+    formData.append('uuid', 12345)
+      const objectOutPatient = {
+        accountNumber,
+        releasingCenter,
+        type : outPatientParam.type,
+        amount : outPatientParam.amount,
+        dependentId : outPatientParam.dependentId,
+        diagnosis : outPatientParam.diagnosisText,
+        procedureId : outPatientParam.procedureId,
+        officialReceiptNumber : outPatientParam.orNumber,
+        officialReceiptDate : outPatientParam.orDate,
+      }
+      outPatientParam.attachments.map((resp, key) => (
+        formData.append(resp.name, resp.file)
+        )
+      )
+    formData.append('body', JSON.stringify(objectOutPatient))
+      return this.apiClient.post('v1/outpatient/submit', formData, {
+        headers : { token }
+    })
+  }
+
+  /* Employee Trainings */
+
+  getEmployeeTraining (token) {
+    return this.apiClient.get('v1/trainings', {
+      headers : { token }
+    })
+  }
+
+  getEmployeeTrainingDetails (token, id) {
+    return this.apiClient.get(`v1/trainings/${id}`, {
+      headers : { token }
+    })
+  }
+
+  enrollEmployee (token, id) {
+    return this.apiClient.get(`v1/training/enroll/${id}`, {
+      headers : { token }
+    })
+  }
+
+  /* Maternity Assistance */
+  validateMaternityAssistance (token) {
+    return this.apiClient.get('v1/maternity/validate', {
+      headers : { token }
+    })
+  }
+
+  addMaternityAssistance (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMaternityAssistanceParam
+  ) {
+    const formData = new FormData()
+    formData.append('uuid', 12345)
+    const objectMaternity = {
+      accountNumber,
+      releasingCenter,
+      deliveryType : addMaternityAssistanceParam.typeDeliveryId,
+      deliveryDate : addMaternityAssistanceParam.deliveryDate,
+      amount : addMaternityAssistanceParam.amount,
+      orNumber : addMaternityAssistanceParam.orNumberText,
+      orDate : addMaternityAssistanceParam.preferredDate,
+    }
+    addMaternityAssistanceParam.attachmentArray.map((resp) =>
+      (
+        formData.append(resp.name, resp.file)
+      )
+    )
+
+    formData.append('body', JSON.stringify(objectMaternity))
+    return this.apiClient.post('v1/maternity/submit', formData, {
+      headers : { token }
+    })
+  }
+
+  /* Maternity Assistance SSS */
+
+  addMaternityAssistanceSSS (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    maternityAssistanceSSSParam
+  ) {
+    const objectMaternitySSS = {
+      accountNumber,
+      releasingCenter,
+      address : {
+        room : maternityAssistanceSSSParam.roomNumber,
+        house : maternityAssistanceSSSParam.houseNumber,
+        street: maternityAssistanceSSSParam.street,
+        subdivision: maternityAssistanceSSSParam.subdivision,
+        barangay: maternityAssistanceSSSParam.barangay,
+        city : maternityAssistanceSSSParam.city,
+        province : maternityAssistanceSSSParam.province,
+        zipCode : maternityAssistanceSSSParam.zipCode,
+      },
+      numberOfPregnancy : maternityAssistanceSSSParam.noOfPregnancy,
+      numberOfMiscarriage : maternityAssistanceSSSParam.noOfMiscarriage,
+      numberOfDelivery: maternityAssistanceSSSParam.noOfDelivery,
+      expectedDateOfDelivery : maternityAssistanceSSSParam.expectedDateOfDelivery,
+    }
+    return this.apiClient.post('v1/maternity/submit/sss/mat1', objectMaternitySSS, {
+      headers : { token }
+    })
+  }
+
+  /*  My Existing Loans */
+
+  getExistingLoans (token) {
+    return this.apiClient.get('v1/loans/outstanding', {
+      headers : { token }
+    })
+  }
+
+  /* Code of Conduct  */
+
+  getCompliancesPdf (token, page) {
+    return this.apiClient.get(`v1/compliances/coc?page=${page}`, {
+      headers : { token }
+    })
+  }
+
+  submitPin (token, code) {
+    return this.apiClient.post('v1/compliances/coc', { code }, {
       headers : { token }
     })
   }
