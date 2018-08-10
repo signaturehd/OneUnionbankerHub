@@ -788,7 +788,15 @@ export default class HRBenefitsService {
   }
 
   enrollEmployee (token, id) {
-    return this.apiClient.get(`v1/training/enroll/${id}`, {
+    return this.apiClient.post('v1/trainings/enroll', {
+      id
+    }, {
+      headers : { token }
+    })
+  }
+
+  getEnrolledTrainings (token) {
+    return this.apiClient.get('v1/trainings/learners/enrolled', {
       headers : { token }
     })
   }
