@@ -5,8 +5,10 @@ import calamityAssistanceParam from '../../../domain/param/AddCalamityAssistance
 export default class CalamityPresenter {
 
  constructor (container) {
-   this.calamityInteractor = new CalamityInteractor(container.get('HRBenefitsClient'))
-   this.addCalamityInteractor = new AddCalamityInteractor(container.get('HRBenefitsClient'))
+   this.calamityInteractor =
+   new CalamityInteractor(container.get('HRBenefitsClient'))
+   this.addCalamityInteractor =
+   new AddCalamityInteractor(container.get('HRBenefitsClient'))
  }
 
  setView (view) {
@@ -16,14 +18,32 @@ export default class CalamityPresenter {
  validateCalamityAssistance () {
    this.view.showCircularLoader()
    this.calamityInteractor.execute()
+   .map(data => {
+     let attachmentArray = []
+     let calamityType = []
+     // data &&
+     // data.attachments.map((attachment, key) => {
+     //   attachmentArray.push({
+     //     name : attachment
+     //   })
+     // })
+     data &&
+     data.map((resp, key) => {
+       calamityType.push({
+         id : resp.id,
+         name : resp.description
+       })
+     })
+     this.view.showCalamityTypeMap(calamityType)
+     this.view.showAttachmentsMap(attachmentArray)
+     this.view.showValidatedCalamity(data)
+   })
      .subscribe(
-       calamityAssistance => {
-         this.view.setValidateCalamityAssistance(calamityAssistance)
+       data => {
          this.view.hideCircularLoader()
        },
        error => {
          this.view.hideCircularLoader()
-         this.view.navigate()
       }
    )
  }
