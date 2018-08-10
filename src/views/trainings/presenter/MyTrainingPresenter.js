@@ -8,6 +8,9 @@ import GetEmployeeTrainingDetailsInteractor from
 import EnrollEmployeeInteractor from
 '../../../domain/interactor/training/EnrollEmployeeInteractor'
 
+import EnrolledTrainingInteractor from
+'../../../domain/interactor/training/EnrolledTrainingInteractor'
+
 
 
 import moment from 'moment'
@@ -22,6 +25,9 @@ export default class MyTrainingPresenter {
 
     this.enrollEmployeeInteractor =
       new EnrollEmployeeInteractor(container.get('HRBenefitsClient'))
+
+    this.getEnrolledTrainingInteractor =
+      new EnrolledTrainingInteractor(container.get('HRBenefitsClient'))
 
   }
 
@@ -40,23 +46,34 @@ export default class MyTrainingPresenter {
     })
   }
 
+  getEnrolledTraining () {
+    this.view.circularLoader(true)
+    this.getEnrolledTrainingInteractor.execute()
+    .subscribe(data => {
+      this.view.circularLoader(false)
+      this.view.setEnrolledTrainingList(data)
+    }, error => {
+      this.view.navigate()
+    })
+  }
+
   getEmployeeTrainingDetails (id) {
-    this.view.showCircularLoader(true)
+    this.view.setLoadingModal(true)
     this.getEmployeeTrainingDetailsInteractor.execute(id)
     .subscribe(data => {
-      this.view.hideCircularLoader(false)
+      this.view.setLoadingModal(false)
       this.view.setTrainingDetails(data)
     }, error => {
-      this.view.hideCircularLoader(false)
+      this.view.setLoadingModal(false)
     })
   }
 
   enrollEmployee (id) {
     this.enrollEmployeeInteractor.execute(id)
     .subscribe(data => {
-      this.view.navigate()
+      this.view.noticeResponse(data)
     }, error => {
-      this.view.navigate()
+      this.view.clearTraining()
     })
   }
 }

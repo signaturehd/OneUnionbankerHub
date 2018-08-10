@@ -123,3 +123,13 @@
   font-size: 16px;
   text-align: left;
 }
+
+.enrolled-list {
+  margin: 20px;
+}
+
+.enrolled-list p {
+  text-align: left;
+  margin: 0!important;
+  color: #555;
+}
