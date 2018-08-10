@@ -1,77 +1,87 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Accordion from '../components/AccordionComponent'
+import moment from 'moment'
 import { Card } from '../../../ub-components'
-
 import './styles/detailsFragment.css'
 /*
-Transaction Education Grant Aid Form Agreement, Form Agreement, & File Attacment
+Transaction DentalR
 */
 import EducationDetailsComponent from
- '../../transaction/components/TransactionEducationComponent/EducationDetailsComponent'
+  '../../transaction/components/TransactionEducationGroupPlanComponent/EducationDetailsComponent'
 
-import EducationFileComponent from
- '../../transaction/components/TransactionEducationComponent/EducationFileAttachmentComponent'
-
-import EducGrantAidAgreementComponent from
- '../../transaction/components/TransactionEducationComponent/TransactionEducationFormAgreementComponent'
-
+import * as TransactionDetailsFunction from '../controller/TransactionDetailsFunction'
 
 class EducGrantAidDetailsFragment extends Component {
+
   constructor (props) {
     super(props)
   }
 
   render () {
-    const { details, transactionsPerson, attachments } = this.props
-    return (
-      <div className={ 'details-container' }>
-        <center>
-          <h2 className={ 'transaction-detail details-bold' }>
-            Transaction Information
-          </h2>
-        </center>
-        <br/>
-        <div>
-          <Accordion>
-            <div className={ 'accor' }>
-              <div className={ 'head' }>
-                Details
-              </div>
-              <div className={ 'body' }>
-              <EducationDetailsComponent
-                details={ details }
-                transactionsPerson={ transactionsPerson }/>
-              </div>
-            </div>
-            <div className={ 'accor' }>
-              <div className={ 'head' }>Attachments</div>
-                <div className={ 'body' }>
-                <EducationFileComponent
-                  attachments={ attachments }
-                  details={ details } />
-                <br/>
-              </div>
-            </div>
+    const {
+      details,
+      transactionsPerson,
+      attachmentsMethod,
+      agreementsMethod
+    } = this.props
 
-            <div className={ 'accor' }>
-              <div className={ 'head' }>
-                Notice
+    const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
+    const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
+    const dateFiled = TransactionDetailsFunction.checkedDateFilled(details)
+    const benefitLabel = TransactionDetailsFunction.getBenefitLabelStatus(details.status)
+
+    return (
+      <div className={ 'transaction-details-global-x3' }>
+        <div></div>
+          <Card>
+            <div className={ 'transaction-details-container' }>
+              <div className = { 'transaction-banner transaction-dentalreimbursement' }>
+                <div className={ 'transaction-banner-card' }>
+                  <div className = { 'text-align-left' }>
+                    <h1 className = { 'transaction-details-name font-weight-normal'}>
+                      { benefitType }
+                    </h1>
+                    <div></div>
+                  </div>
+                  <div className={ 'transaction-details-grid-row' }>
+                    <div></div>
+                    <div className = { 'transaction-details-status-grid' }>
+                      <div className =
+                        { `font-weight-bolder grid-global-row-x3 transaction-default-status transaction-details-status-${ detailStatus }` }
+                      >
+                        <div></div>
+                          { benefitLabel }
+                        <div></div>
+                      </div>
+                      <div className = { 'font-size-14px' }></div>
+                    </div>
+                    <div></div>
+                  </div>
+                </div>
               </div>
-              <div className = { 'body' } >
-                <EducGrantAidAgreementComponent details = { details } />
-              </div>
-          </div>
-        </Accordion>
-      </div>
-    </div>
-    )
+            </div>
+            <br/>
+            <div>
+              <EducationDetailsComponent
+                transactionsPerson = { transactionsPerson }
+                details = { details }
+                onClickAttachments = { (resp) => attachmentsMethod(resp) }
+                onClickAgreements = { (resp) => agreementsMethod(resp) }
+              />
+            </div>
+          </Card>
+          <div></div>
+        </div>
+      )
+    }
   }
-}
+
 EducGrantAidDetailsFragment.propTypes = {
   details : PropTypes.object,
-  transactionsPerson : PropTypes.array
+  transactionsPerson : PropTypes.array,
+  attachmentsMethod : PropTypes.func,
+  agreementsMethod : PropTypes.func
 }
 
 export default EducGrantAidDetailsFragment

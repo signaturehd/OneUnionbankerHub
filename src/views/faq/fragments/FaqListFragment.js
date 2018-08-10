@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import FaqCardComponent from '../components/FaqCardComponent'
 import './styles/faqsFragment.css'
 
+import { GenericInput } from '../../../ub-components'
+
 class FaqListFragment extends Component {
   constructor (props) {
     super(props)
@@ -11,10 +13,15 @@ class FaqListFragment extends Component {
     this.state = {
       searchString: '',
     }
+    this.updateSearch = this.updateSearch.bind(this)
   }
 
   search (searchString) {
     this.setState({ searchString })
+  }
+
+  updateSearch (e) {
+    this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
 
   render () {
@@ -38,17 +45,24 @@ class FaqListFragment extends Component {
     }
     return (
       <div className = {'container'}>
-        <i className = { 'left' } onClick = { () =>
-            history.push('/faqs') }>
-        </i>
-        <h1 className = { 'title-view' }>
-          {selectedFaqCategory && selectedFaqCategory.category }
-        </h1>
-        <input type = 'text'
-          className = 'faqsSearchBar'
-          placeholder = 'Search FAQs'
-          value = { this.state.searchString }
-          onChange = { e => this.search(e.target.value) } />
+        <div className = { 'faqlist-grid-header' }>
+          <div className = { 'text-align-left' } >
+            <i className = { 'back-arrow' } onClick = { () =>
+                history.push('/faqs') }>
+            </i>
+            <h1 className = { 'title-view' }>
+              { selectedFaqCategory && selectedFaqCategory.category }
+            </h1>
+          </div>
+          <div></div>
+          <GenericInput
+            className = { 'faqsSearchBar' }
+            refCallback = { 'search' }
+            type = { 'text' }
+            hint = { 'Search FAQs' }
+            value = { searchString }
+            onChange = { this.updateSearch } />
+        </div>
         <div className = {'card-container'}>
         {
           searchQuestions ?

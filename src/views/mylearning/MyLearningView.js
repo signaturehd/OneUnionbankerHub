@@ -9,6 +9,7 @@ import Presenter from './presenter/MyLearningPresenter'
 import PodcastFragment from '../podcast/PodcastFragment'
 import PodcastPlayerFragment from '../podcastplayer/PodcastPlayerFragment'
 import LibraryView from '../library/LibraryFragment'
+import MyTrainingFragment from '../trainings/MyTrainingFragment'
 
 import { InputModal, Card, GenericButton } from '../../ub-components'
 
@@ -28,14 +29,19 @@ class MyLearningView extends BaseMVPView {
     const { accountNumber, showAccountNumberModal } = this.state
     const mylearning = [{
       id: 0 ,
-      styleName: 'mylearning-cards-2',
-      title: 'BOOKS',
+      styleName: 'mylearning-cards-1 font-weight-bold',
+      title: 'Borrow Books',
       path: '/mylearning/books',
     }, {
       id: 1 ,
-      styleName: 'mylearning-cards-1',
-      title: 'PODCASTS',
+      styleName: 'mylearning-cards-2 font-weight-bold',
+      title: 'Listen Podcasts',
       path: '/mylearning/podcasts',
+    }, {
+      id: 2 ,
+      styleName: 'mylearning-cards-3 font-weight-bold',
+      title: 'Enroll to Trainings',
+      path: '/mylearning/trainings',
     }]
     const MyLearning = () => (
       <div className = { 'mylearning-container' }>
@@ -77,6 +83,8 @@ class MyLearningView extends BaseMVPView {
     return (
       <div>
         <Switch>
+          <Route path = '/mylearning/trainings' render = { props =>
+            <MyTrainingFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts' render = { props =>
             <PodcastFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts/:id' render = { props =>

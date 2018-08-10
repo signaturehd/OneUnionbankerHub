@@ -5,33 +5,54 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
 export default class OpticalPresenter {
- constructor (container) {
-   this.addOpticalInteractior = new AddOpticalInteractor(container.get('HRBenefitsClient'))
-   this.getOpticalInteractor = new GetOpticalInteractor(container.get('HRBenefitsClient'))
- }
+  constructor (container) {
+    this.addOpticalInteractior = new AddOpticalInteractor(container.get('HRBenefitsClient'))
+    this.getOpticalInteractor = new GetOpticalInteractor(container.get('HRBenefitsClient'))
+  }
 
- setView (view) {
-  this.view = view
- }
+  setView (view) {
+    this.view = view
+  }
 
- addOptical (amount, form1, form2) {
-  this.addOpticalInteractior.execute(OpticalParam(amount, form1, form2))
-   .subscribe(optical => {
-    this.view.noticeOfUndertaking(optical)
-    // this.view.showOptical(optical)
-   }, e => {
-    this.view.noticeResponse(e)
-    // TODO prompt generic error
-   })
- }
+  addOptical (
+    amount,
+    orDate,
+    orNumber,
+    attachmentData
+  ) {
+    this.view.showCircularLoader()
+    this.addOpticalInteractior.execute(OpticalParam(
+      amount,
+      orDate,
+      orNumber,
+      attachmentData))
+      .subscribe(optical => {
+        this.view.noticeOfUndertaking(optical)
+        this.view.hideCircularLoader()
+        // this.view.showOptical(optical)
+      }, e => {
+        this.view.noticeResponse(e)
+        // TODO prompt generic error
+      })
+    }
 
- getOptical () {
-   this.getOpticalInteractor.execute()
-    .subscribe(response => {
-      this.view.isEligible(response)
-    }, e => {
-
-      // TODO notify
-    })
- }
-}
+  getOptical () {
+    this.getOpticalInteractor.execute()
+      .map(data => {
+        let attachmentsArray = []
+          data &&
+          data.attachments.map((resp, key) => {
+          attachmentsArray.push({
+            name : resp
+          })
+        })
+        this.view.showAttachmentsMap(attachmentsArray, data.limit)
+        this.view.isEligible(data ? true : false)
+      })
+      .subscribe(data => {
+        // this.view.isEligible(data ? true : false)
+      }, errors => {
+        this.view.isEligible(false)
+      })
+    }
+  }

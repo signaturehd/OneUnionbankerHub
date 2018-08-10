@@ -15,7 +15,7 @@
   position: absolute;
   padding: 5px 20px 5px 20px;
   margin: auto;
-  height: 570px;
+  height: 575px;
   border-radius: 8px;
   left: 0;
   overflow: hidden;
@@ -38,14 +38,15 @@
 }
 
 .download-container {
-  display:grid;
+  display: grid;
+  column-gap: 5%;
   grid-template-columns: repeat(2, 1fr);
 }
 
 .link-googleplay {
   cursor: pointer;
   background: url('../../../images/Googleplay.png') no-repeat center;
-  background-size: 140px;
+  background-size: cover;
   vertical-align: middle;
   border-radius: 10px;
   height: 45px;
@@ -58,7 +59,7 @@
   user-select: none;
   cursor: pointer;
   background: url('../../../images/APPLE.png') no-repeat center;
-  background-size: 140px;
+  background-size: cover;
   vertical-align: middle;
   border-radius: 10px;
   height: 45px;
@@ -82,7 +83,7 @@
     height: auto;
     width: auto;
     padding: 0 20px 20px 20px;
-    margin: 100px 20px 50px 20px;
+    margin: 50px 20px 0px 20px;
   }
   .login-input {
     font-size: 8px;
@@ -95,7 +96,6 @@
 @media screen and (max-height: 550px) {
   .login-form {
     height: auto;
-    margin-bottom: 100px;
   }
 }
 
@@ -106,6 +106,8 @@
 
   .login-form {
     box-shadow: none !important;
+    overflow-y: scroll;
+    background: transparent;
   }
 
   .login-logo {
@@ -134,19 +136,33 @@
   border: 0px #e2d3d300;
 }
 
-.password__show{
-    background-image: url('../../../images/icons/eye2.png');
-    float: right;
-    margin-left: -32px;
-    margin-top: -32px;
-    margin-right: 20px;
-    position: relative;
-    z-index: 2;
-    cursor: pointer;
-    color: transparent;
-    text-decoration:none;
-    display: block;
-    width: 20px;
-    height: 20px;
-    background-repeat: no-repeat;
+.password_show {
+  background-image: url('../../../images/icons/eye2.png');
+}
+
+.password_icon {
+  float: right;
+  margin-top: -28px;
+  margin-right: 6px;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  color: transparent;
+  text-decoration: none;
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+}
+
+.password_hide{
+  background-image: url('../../../images/icons/eye1.png');
+}
+
+.login-version {
+  font-weight: lighter;
+  font-size: 12px;
+  color: gray;
+  text-align: right;
+  position: relative;
 }

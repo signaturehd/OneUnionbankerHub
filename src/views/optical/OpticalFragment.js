@@ -15,8 +15,15 @@ import { NotifyActions } from '../../actions'
 
 import { CircularLoader } from '../../ub-components'
 
-import { RequiredValidation, Validator, MoneyValidation } from '../../utils/validate'
+import { format } from '../../utils/numberUtils'
 
+import {
+  RequiredValidation,
+  Validator,
+  MoneyValidation
+} from '../../utils/validate'
+
+import * as func from './functions/OpticalFunctions'
 
 class OpticalFragment extends BaseMVPView {
   constructor (props) {
@@ -30,9 +37,17 @@ class OpticalFragment extends BaseMVPView {
       isVisible : false,
       file1 : null,
       file2 : null,
+      attachmentsData: [],
+      showEditSubmitButton : false,
+      amountErrorMessage : '',
+      dateErrorMessage : '',
+      orNumberErrorMessage: '',
+      amount: '',
+      orNumberText: '',
+      preferredDate: '',
+      limit: 0
     }
     this.confirmation = this.confirmation.bind(this)
-    // this.noticeOfUndertaking = this.noticeOfUndertaking.bind(this)
     this.validator = this.validator.bind(this)
   }
 
@@ -46,51 +61,87 @@ class OpticalFragment extends BaseMVPView {
   }
 
   isEligible (resp) {
-    // check if eligible
-    if (resp) {
-      this.setState({ isVisible : true })
+    if(resp === true) {
+      this.setState({ isVisible : resp})
+    } else {
+      this.navigate()
     }
   }
 
+  showCircularLoader () {
+    this.setState({ isVisible : false })
+  }
+
+  hideCircularLoader () {
+    this.setState({ isVisible : false })
+  }
+
+  showAttachmentsMap (attachmentsData, limit) {
+    this.setState({ attachmentsData, limit })
+  }
+
   noticeOfUndertaking (noticeResponse) {
-    this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
+    this.setState({ showNoticeModal : true, noticeResponse })
   }
 
   navigate () {
     this.props.history.push('/mybenefits/benefits/medical')
   }
 
-  confirmation (showConfirmation, file1, file2, amount, imagePreviewUrl, imagePreviewUrl2) {
-    if (amount > 3500 || amount === 0) {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Optical Reimbursement',
-          message : 'Please double check the amount',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    } else if (!this.validator(file1) || !this.validator(file2)) {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Optical Reimbursement',
-          message : 'Please Check your attachments',
-          type : 'warning',
-          duration : 2000
-        })
-      )
+  validateDesiredAmount (e) {
+    const validate = func.checkedAmount(e)
+    this.setState({ amount : validate, amountErrorMessage : '' })
+  }
+
+  validateSymbol (e) {
+    const validate = func.checkedValidateSymbol(e)
+    this.setState({ orNumberText : validate.toUpperCase(), orNumberErrorMessage : '' })
+  }
+
+  validateDate (e) {
+    const validate = func.checkedMDYDate(e)
+    this.setState({ preferredDate : validate, dateErrorMessage : '' })
+  }
+
+  confirmation () {
+    const {
+      amount,
+      limit,
+      attachmentsData,
+      orNumberText,
+      preferredDate,
+    } = this.state
+
+    if (parseInt(amount) === 0 || amount === '') {
+      this.setState({ amountErrorMessage : 'Please enter an amount not equal to 0' })
+    } else if (parseInt(amount) > parseInt(limit)) {
+      this.setState({ amountErrorMessage : `Please double check amount must not exceeded to ${ format(limit) }` })
+    } else if (!this.validator(preferredDate)) {
+      this.setState({ dateErrorMessage :  'Please select the required date' })
+    } else if (!this.validator(orNumberText)) {
+      this.setState({ orNumberErrorMessage :  'Please enter the official receipt number' })
     } else {
-      this.setState({
-        showConfirmation,
-        file1,
-        file2,
-        amount,
-        imagePreviewUrl,
-        imagePreviewUrl2
-      })
+      this.setState({ showEditSubmitButton : true })
     }
   }
 
-  submitForm (amount, finalFile1, finalFile2) {
-      this.presenter.addOptical(amount, finalFile1, finalFile2)
+  editMode (resp) {
+    this.setState({ showEditSubmitButton : false })
+  }
+
+  getAttachmentsArray (attachmentsData) {
+    this.setState({ attachmentsData })
+  }
+
+  submitFormFunc () {
+    const {
+      amount,
+      preferredDate,
+      orNumberText,
+      attachmentsData,
+    } = this.state
+
+      this.presenter.addOptical(amount, preferredDate, orNumberText, attachmentsData)
   }
 
   render () {
@@ -99,32 +150,22 @@ class OpticalFragment extends BaseMVPView {
       showNoticeModal,
       showBenefitFeedbackModal,
       showNoticeResponseModal,
+      showEditSubmitButton,
       noticeResponse,
-      file1,
-      file2,
       amount,
       response,
-      imagePreviewUrl,
-      imagePreviewUrl2,
       isVisible,
+      attachmentsData,
+      amountErrorMessage,
+      dateErrorMessage,
+      orNumberErrorMessage,
+      orNumberText,
+      preferredDate,
+      limit
     } = this.state
 
     return (
-      <div  className = { 'benefits-container' }>
-        {
-          showConfirmation &&
-          <ConfirmationModal
-            fileReceived = { file1 }
-            fileReceived2 = { file2 }
-            imagePreviewUrl = { imagePreviewUrl }
-            imagePreviewUrl2 = { imagePreviewUrl2 }
-            amount = { amount }
-            submitForm = { (finalFile1, finalFile2, amount) =>
-              this.submitForm(amount, finalFile1, finalFile2) }
-            onClose = { () => this.setState({ showConfirmation : false }) }
-          />
-        }
-
+      <div>
         {
           showNoticeModal &&
           <NoticeModal
@@ -156,34 +197,46 @@ class OpticalFragment extends BaseMVPView {
             }}
           />
         }
-
-        <div>
-          <i className = { 'back-arrow' } onClick = {
-              this.navigate.bind(this) }></i>
-            <h2 className = { 'header-margin-default' }>Optical Reimbursement</h2>
-        </div>
-        {
-          isVisible ?
-          <div className = { 'optical-container' }>
-            <Card onClick = {
-                (showConfirmation,
-                  file1,
-                  file2,
-                  amount,
-                  imagePreviewUrl,
-                  imagePreviewUrl2) =>
-            this.confirmation(
-                  showConfirmation,
-                  file1,
-                  file2,
-                  amount,
-                  imagePreviewUrl,
-                  imagePreviewUrl2)  }/>
-          </div>          :
-          <div className = { 'optical-loader' }>
-            <center><CircularLoader show = {true} /></center>
+        <div className = { 'optical-grid-x3' }>
+          <div>
+            <div>
+              <i className = { 'back-arrow' } onClick = {
+                  this.navigate.bind(this) }></i>
+            </div>
           </div>
-        }
+          <div>
+            <h2 className = { 'header-margin-default' }>Optical Reimbursement</h2>
+            {
+              isVisible ?
+              <div className = { 'optical-container' }>
+                <Card
+                  attachmentsData = { attachmentsData }
+                  amount = { amount }
+                  orNumberText = { orNumberText }
+                  showEditSubmitButton = { showEditSubmitButton }
+                  preferredDate = { preferredDate }
+                  dateFunc = { (resp) => this.validateDate(resp) }
+                  onEditSubmissionFunc = { (resp) =>  this.editMode(resp) }
+                  onCheckedSubmissionFunc = { () => this.confirmation() }
+                  oRNumberFunc = { (resp) => this.validateSymbol(resp) }
+                  desiredAmount = { (resp) => this.validateDesiredAmount(resp) }
+                  onSubmitFunc = { () => this.submitFormFunc() }
+                  amountErrorMessage = { amountErrorMessage }
+                  dateErrorMessage = { dateErrorMessage }
+                  orNumberErrorMessage = { orNumberErrorMessage }
+                  setAttachmentArrayFunc = { (resp) =>
+                    this.getAttachmentsArray(resp) }
+                  />
+              </div>          :
+              <div className = { 'optical-loader' }>
+                <center>
+                  <CircularLoader show = {true} />
+                </center>
+              </div>
+            }
+          </div>
+          <div></div>
+        </div>
       </div>
     )
   }

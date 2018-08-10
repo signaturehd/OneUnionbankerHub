@@ -13,6 +13,7 @@ import PodcastFragment from '../podcast/PodcastFragment'
 import LibraryFragment from '../library/LibraryFragment'
 import MyLearningView from '../mylearning/MyLearningView'
 import FeedbackFragment from '../Feedback/FeedbackFragment'
+import ComplianceFragment from '../compliance/ComplianceFragment'
 /* Navigation Drawer Component*/
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
@@ -33,6 +34,9 @@ import EducationGroupAidFragment from  '../educationgroupaid/EducationGroupAidFr
 import DentalReimbursement from '../dentalreimbursement/DentalReimbursementFragment'
 import DentalLoaView from '../dentalloa/DentalLoaFragment'
 import OpticalFragment from '../optical/OpticalFragment'
+import MedicalSchedulingFragment from '../medicalscheduling/MedicalSchedulingFragment'
+import OutPatientReimbursementFragment from '../outpatientreimbursement/OutPatientReimbursementFragment'
+import MaternityAssistanceFragment from '../maternityassistance/MaternityAssistanceFragment'
 /* MPL */
 import HousingAssistanceFragment from '../housingassistanceloan/HousingAssistanceFragment'
 import EmergencyLoanFragment from '../emergencyloan/EmergencyLoanFragment'
@@ -56,6 +60,7 @@ import Payslip from '../payslip/PayslipFragment'
 
 import OnboardingView from '../onboarding/OnboardingView'
 import Carousel from '../carousel/Carousel'
+
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
@@ -67,7 +72,7 @@ class NavigationView extends BaseMVPView {
     this.state = {
       selected: 0,
       profile: [],
-      showLogoutModal: false
+      showLogoutModal: false,
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -101,7 +106,6 @@ class NavigationView extends BaseMVPView {
     store.dispatch(NotifyActions.resetNotify())
     this.presenter.getLibraries()
     this.presenter.getProfile()
-    this.presenter.getWizard()
   }
 
   setSelectedNavigation (id) {
@@ -110,10 +114,6 @@ class NavigationView extends BaseMVPView {
 
   callLogout () {
     this.presenter.logout()
-  }
-
-  showWizard (wizard) {
-    this.setState({ wizard })
   }
 
   relogin () {
@@ -128,35 +128,32 @@ class NavigationView extends BaseMVPView {
       selected,
       onClick,
       profile,
-      wizard,
       showLogoutModal
     } = this.state
-      const { history, login } = this.props
+    const { history, login } = this.props
     const style = {
       show: {
           display : displayShow
       }
     }
-
     const locationPath = history.location.pathname
+
     return (
       <div className = { 'navigation-body-div' }>
         { super.render() }
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
+            onCallWizard = { () => this.callWizard() }
             onClick = { onClick }
             displayNavIcon = { displayNavIcon } displayShow = { displayShow }
             hide = { () => this.setState({ displayShow : 'block' })}
             show = { () => this.setState({ displayShow : 'none' })} />
         </header>
         <div className="navigation-panels">
-          <main className ="navigation-panel navigation-content" role="main" id="navPanId">
-          {
-            !wizard &&
-            <Carousel
-              onClose = { () => this.presenter.setWizard('false') }
-            />
-          }
+          <main
+            className = { 'navigation-panel navigation-content' }
+            role = { 'main' }
+            id = { 'navPanId' }>
           {
             showLogoutModal &&
             <NavigationViewModal
@@ -205,6 +202,15 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mybenefits/benefits/medical/loa/dental' render = { props =>
                     <DentalLoaView { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                  <Route path = '/mybenefits/benefits/medical/scheduling' render = { props =>
+                    <MedicalSchedulingFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                  <Route path = '/mybenefits/benefits/medical/reimbursement/outpatient' render = { props =>
+                    <OutPatientReimbursementFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                  <Route path = '/mybenefits/benefits/medical/assistance/maternity' render = { props =>
+                    <MaternityAssistanceFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation }/>}/>
                   <Route path = '/mybenefits/benefits/loans/housingassistance' render = { props =>
                     <HousingAssistanceFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
@@ -252,6 +258,9 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/onboard' render = { props =>
                     <OnboardingView { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mycompliance' render = { props =>
+                    <ComplianceFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>

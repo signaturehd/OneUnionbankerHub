@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Accordion from '../components/AccordionComponent'
 import {
   Card,
   GenericButton,
@@ -12,26 +11,52 @@ import {
 
 import './styles/detailsFragment.css'
 /*
-Transaction Education Grant Aid Form Agreement, Form Agreement, & File Attacment
+Transaction Calamity
 */
 import CalamityAssistanceDetailsComponent from
 '../../transaction/components/TransactionCalamityAssistanceComponent/CalamityAssistanceDetailsComponent'
 
-import CalamityAssistanceFileComponent from
- '../../transaction/components/TransactionCalamityAssistanceComponent/CalamityAssistanceFileAttachmentComponent'
-
-import TransactionCalamityAssistanceFormAgreementComponenent from
-  '../../transaction/components/TransactionCalamityAssistanceComponent/TransactionCalamityAssistanceFormAgreementComponent'
+import * as TransactionDetailsFunction from '../controller/TransactionDetailsFunction'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 class CalamityAssistanceDetailsFragment extends Component {
+
   constructor (props) {
     super(props)
     this.state = {
-      fileOR : null
+      attachmentArray : [],
+      showAttachment : true
     }
+    this.setAttachments = this.setAttachments.bind(this)
+    this.showFileReceipt = this.showFileReceipt.bind(this)
+  }
+
+  showFileReceipt (show) {
+
+    this.setState({ showAttachment : false })
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!nextProps.showFileReceipt) {
+      this.setState({ showAttachment : false })
+      window.location.reload()
+    }
+  }
+
+  componentDidMount () {
+    this.setAttachments()
+  }
+
+  setAttachments () {
+    const { RequiredAttachment } = this.props.details.details.CalamityDetails
+    const updatedAttachment = [...this.state.attachmentArray]
+    RequiredAttachment.map((attachment, key) => {
+      updatedAttachment.push({name: attachment})
+    })
+
+    this.setState({attachmentArray : updatedAttachment})
   }
 
   getExtension (filename) {
@@ -40,126 +65,153 @@ class CalamityAssistanceDetailsFragment extends Component {
   }
 
   render () {
-    const {
-      details,
-      transactionsPerson,
-      attachments,
-      uploadImage,
-      response,
-    } = this.props
+  const {
+    details,
+    transactionsPerson,
+    attachments,
+    uploadImage,
+    response,
+    showFileReceipt,
+    attachmentsMethod,
+    agreementsMethod
+  } = this.props
 
-    const {
-      fileOR,
-      showLoader
-    } = this.state
+  const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
+  const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
+  const dateFiled = TransactionDetailsFunction.checkedDateFilled(details)
+  const benefitLabel = TransactionDetailsFunction.getBenefitLabelStatus(details.status)
 
-    return (
-      <div className={ 'details-container' }>
-        <center>
-          <h2 className={ 'transaction-detail details-bold' }>
-            Transaction Information
-          </h2>
-        </center>
-        <br/>
-        <div>
-          <Accordion>
-            <div className={ 'accor' }>
-              <div className={ 'head' }>
-                Details
-              </div>
-              <div className={ 'body' }>
-                <CalamityAssistanceDetailsComponent
-                  details={ details }
-                  transactionsPerson={ transactionsPerson }/>
+  const {
+    showLoader,
+    attachmentArray,
+    showAttachment
+  } = this.state
+
+  if (!showFileReceipt) {
+    window.location.reload()
+  }
+
+  return (
+    <div className={ 'transaction-details-global-x3' }>
+      <div></div>
+        <Card>
+          <div className={ 'transaction-details-container' }>
+            <div className = { 'transaction-banner transaction-calamity' }>
+              <div className={ 'transaction-banner-card' }>
+                <div className = { 'text-align-left' }>
+                  <h1 className = { 'transaction-details-name font-weight-normal'}>
+                    { benefitType }
+                  </h1>
+                  <div></div>
+                </div>
+                <div className={ 'transaction-details-grid-row' }>
+                  <div></div>
+                  <div className = { 'transaction-details-status-grid' }>
+                    <div className =
+                      { `font-weight-bolder grid-global-row-x3 transaction-default-status transaction-details-status-${ detailStatus }` }
+                    >
+                      <div></div>
+                        { benefitLabel }
+                      <div></div>
+                    </div>
+                    <div className = { 'font-size-14px' }></div>
+                  </div>
+                  <div></div>
+                </div>
               </div>
             </div>
-            <div className={ 'accor' }>
-              <div className={ 'head' }>Attachments</div>
-                <div className={ 'body' }>
-                <CalamityAssistanceFileComponent
-                  attachments={ attachments }
-                  details={ details } />
-                <br/>
-              </div>
-            </div>
-
-            <div className={ 'accor' }>
-              <div className={ 'head' }>
-                Notice
-              </div>
-              <div className = { 'body' } >
-                  <TransactionCalamityAssistanceFormAgreementComponenent details = { details } />
-              </div>
           </div>
-
+          <br/>
+          <div>
+            <CalamityAssistanceDetailsComponent
+              transactionsPerson = { transactionsPerson }
+              details = { details }
+              onClickAttachments = { (resp) => attachmentsMethod(resp) }
+              onClickAgreements = { (resp) => agreementsMethod(resp) }
+            />
+          </div>
+          <div>
           {
-            response &&
+
+            showFileReceipt &&
               showLoader ?
                 <center>
                   <CircularLoader show = { true }/>
                 </center>
               :
+                showAttachment &&
                 details &&
                 details.status &&
-                details.status.id === 6 ||
-                details.status.id === 21 &&
-                details.details.CalamityDetails.RequiredAttachment.length !== 0 &&
+                (details.status.id === 6 ||
+                details.status.id === 21) &&
+                attachmentArray.length !== 0 &&
                 <div>
-                  <FileUploader
+                {
+                  attachmentArray.map((attachment, key) => (
+                    <FileUploader
                     accept={ 'image/gif,image/jpeg,image/jpg,image/png,' }
-                    value={ fileOR && fileOR.name }
-                    placeholder={ 'Official Receipt' }
+                    value={
+                      attachment.file && attachment.file.name
+                    }
+                    placeholder={ attachment.name }
                     onChange={
                       (e) => {
                         e.preventDefault()
+                        const updatedAttachment = [...attachmentArray]
                         const reader=new FileReader()
                         const file=e.target.files[0]
                         let isValid
                         switch (this.getExtension(file.type).toLowerCase()) {
                           case 'jpeg' :
-                            isValid=true
+                          isValid=true
                           case 'jpg' :
-                            isValid=true
+                          isValid=true
                           case 'png' :
-                            isValid=true
+                          isValid=true
                           case 'pdf' :
-                            isValid=true
+                          isValid=true
                         }
 
                         if (isValid) {
-                          reader.onloadend=() => {
-                            this.setState({
-                              fileOR: file,
-                            })
-                          }
-                          reader.readAsDataURL(file)
-                       } else {
-                           store.dispatch(NotifyActions.addNotify({
-                               title : 'File Uploading',
-                               message : 'The accepted attachments are JPG/PNG/PDF',
-                               type : 'warning',
-                               duration : 2000
-                            })
-                          )
-                        }
+                            reader.onloadend=() => {
+                              updatedAttachment[key].base64 = reader.result
+                              updatedAttachment[key].file = file
+                              this.setState({ attachmentArray : updatedAttachment })
+                            }
+                            reader.readAsDataURL(file)
+                        } else {
+                          store.dispatch(NotifyActions.addNotify({
+                            title : 'File Uploading',
+                            message : 'The accepted attachments are JPG/PNG/PDF',
+                            type : 'warning',
+                            duration : 2000
+                          })
+                        )
                       }
                     }
+                  }
                   />
-                  <br/>
-                  <GenericButton text = { 'submit attachment' }
-                    onClick = { () => uploadImage(details.transactionId, fileOR) }
-                  />
-                </div>
-          }
-        </Accordion>
+                ))
+              }
+              <br/>
+              <GenericButton text = { 'submit attachment' }
+                onClick = { () => uploadImage(details.transactionId, attachmentArray) }
+              />
+            </div>
+            }
+          </div>
+        </Card>
+        <div></div>
       </div>
-    </div>
     )
   }
 }
 CalamityAssistanceDetailsFragment.propTypes = {
   details : PropTypes.object,
-  transactionsPerson : PropTypes.array
+  transactionsPerson : PropTypes.array,
+  uploadImage : PropTypes.func,
+  attachmentsMethod : PropTypes.func,
+  agreementsMethod : PropTypes.func,
 }
 
   export default CalamityAssistanceDetailsFragment

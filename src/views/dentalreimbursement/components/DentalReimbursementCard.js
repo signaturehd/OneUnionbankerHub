@@ -12,7 +12,8 @@ import {
   FileUploader,
   Checkbox,
   GenericTextBox,
-  List
+  List,
+  MultipleFileUploader,
  } from '../../../ub-components/'
 
  import store from '../../../store'
@@ -38,6 +39,7 @@ class DentalReimbursementCard extends Component {
     submit: '',
     procedure: '',
     showReviewSubmissionModal : false,
+    fileAttachments : [],
   }
   this.handleImageChange = this.handleImageChange.bind(this)
   this.handleImageChange2 = this.handleImageChange2.bind(this)
@@ -200,7 +202,8 @@ render () {
     fileReceived2,
     onClick,
     dependents,
-    onFocus
+    onFocus,
+    attachments
   } = this.props
 
   const {
@@ -258,19 +261,23 @@ render () {
       }
       <div>
         <Card className = { 'dentalreimbursement-card' }>
-           <h4>FORM ATTACHMENTS</h4>
          <div className = 'dentalreimbursement-main'>
-          <FileUploader
-            accept="image/gif,image/jpeg,image/jpg,image/png,"
-            onChange = { this.handleImageChange }
-            placeholder = 'Official Certificate'
-            value = { this.state.file.name } />
-          <FileUploader
-            accept="image/gif,image/jpeg,image/jpg,image/png,"
-            onChange = { this.handleImageChange2 }
-            placeholder = 'Medical Certificate'
-            value = { this.state.file2.name } />
-        </div>
+           <MultipleFileUploader
+              placeholder = 'attachments'
+              fileArray = { attachments }
+              setFile = { (attachment, base64, index) => {
+                  // spread attachments
+                  // set attachments file via attachment
+                  // set base64 base64 via base64
+                  // indicator via index
+                  // send to main view
+                  // setFileAttachment(attachment,base64,index)
+                  // fileAttachment[index].file = attachment
+                  // fileAttachment[index].base64 = base64
+                }
+              }
+           />
+         </div>
         <div className = {'dentalreimbursement-footer-left'}>
           {
             procedureModal &&

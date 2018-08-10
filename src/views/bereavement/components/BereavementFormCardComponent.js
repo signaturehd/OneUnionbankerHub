@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { GenericTextBox, Card, GenericButton, FileUploader } from '../../../ub-components/'
+import { GenericTextBox, GenericInput, Card, GenericButton, FileUploader } from '../../../ub-components/'
 
 import './styles/bereavementComponentStyle.css'
-import BereavementDependentsModal from '../modals/BereavementDependentsModal'
 
 import { RequiredAlphabetValidation } from '../../../utils/validate'
 
@@ -15,6 +14,8 @@ import DatePicker from 'react-datepicker'
 import '../../../../node_modules/react-datepicker/dist/react-datepicker.css'
 import moment from 'moment'
 
+import * as BereavementFunction from '../controller/BereavementFunction'
+
 class BereavementFormCardComponent extends Component {
 
   constructor (props) {
@@ -23,38 +24,11 @@ class BereavementFormCardComponent extends Component {
       file: '',
       imagePreviewUrl: null,
       showDeceasedDependents: false,
-      dependentsName: '',
-      dependentsRelationship: '',
-      dependentId: '',
-      deceasedDate: '',
-      funeralDate: '',
-      intermentDate: '',
-      dependentId: '',
-      funeralHome: '',
-      funeralAddress: '',
-      funeralRegion: '',
-      funeralProvince: '',
-      funeralCity: '',
-      memorialPark: '',
-      memorialAddress: '',
-      memorialRegion: '',
-      memorialProvince: '',
-      memorialCity: '',
     }
     this.getDeceasedDate = this.getDeceasedDate.bind(this)
     this.getFuneralDate = this.getFuneralDate.bind(this)
     this.getIntermentDate = this.getIntermentDate.bind(this)
     this.getOnClicked = this.getOnClicked.bind(this)
-    this.getFuneralHome = this.getFuneralHome.bind(this)
-    this.getFuneralAddress = this.getFuneralAddress.bind(this)
-    this.getFuneralRegion = this.getFuneralRegion.bind(this)
-    this.getFuneralProvince = this.getFuneralProvince.bind(this)
-    this.getFuneralCity = this.getFuneralCity.bind(this)
-    this.getMemorialHome = this.getMemorialHome.bind(this)
-    this.getMemorialAddress = this.getMemorialAddress.bind(this)
-    this.getMemorialRegion = this.getMemorialRegion.bind(this)
-    this.getMemorialProvince = this.getMemorialProvince.bind(this)
-    this.getMemorialCity = this.getMemorialCity.bind(this)
   }
 
   getDeceasedDate (e) {
@@ -69,66 +43,6 @@ class BereavementFormCardComponent extends Component {
 
   getIntermentDate (e) {
     this.setState({ intermentDate : e.format('MM/DD/YYYY') })
-  }
-
-  getFuneralHome (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ funeralHome : e.target.value }):
-    this.setState({ funeralHome : '' })
-  }
-
-  getFuneralAddress (e) {
-    new RequiredAlphabetValidation().isValidAddress(e.target.value)  ?
-    this.setState({ funeralAddress : e.target.value }) :
-    this.setState({ funeralAddress : '' })
-  }
-
-  getFuneralRegion (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ funeralRegion : e.target.value }) :
-    this.setState({ funeralRegion : '' })
-  }
-
-  getFuneralProvince (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ funeralProvince : e.target.value }):
-    this.setState({ funeralProvince : '' })
-  }
-
-  getFuneralCity (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ funeralCity : e.target.value }) :
-    this.setState({ funeralCity : '' })
-  }
-
-  getMemorialHome (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ memorialPark : e.target.value }) :
-    this.setState({ memorialPark : '' })
-  }
-
-  getMemorialAddress (e) {
-    new RequiredAlphabetValidation().isValidAddress(e.target.value) ?
-    this.setState({ memorialAddress : e.target.value }) :
-    this.setState({ memorialAddress : '' })
-  }
-
-  getMemorialRegion (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ memorialRegion : e.target.value }):
-    this.setState({ memorialRegion : '' })
-  }
-
-  getMemorialProvince (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ memorialProvince : e.target.value }) :
-    this.setState({ memorialProvince : '' })
-  }
-
-  getMemorialCity (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-    this.setState({ memorialCity : e.target.value }):
-    this.setState({ memorialCity : '' })
   }
 
   getExtension (filename) {
@@ -177,20 +91,25 @@ class BereavementFormCardComponent extends Component {
     const {
       showDepedents,
       withDeathCert,
-      onFocus
-    }=this.props
-
-    const {
-      file,
+      onFocus,
       showDeceasedDependents,
-      imagePreviewUrl,
       dependentId,
       dependentsName,
       dependentsRelationship,
-      deceasedDate,
-      funeralDate,
-      intermentDate,
       funeralHome,
+      checkFuneralHome,
+      checkFuneralAddress,
+      checkFuneralRegion,
+      checkFuneralProvince,
+      checkFuneralCity,
+      checkMemorialPark,
+      checkMemorialAddress,
+      checkMemorialRegion,
+      checkMemorialProvince,
+      checkMemorialCity,
+      checkFuneralDate,
+      checkDeceasedDate,
+      checkIntermentDate,
       funeralAddress,
       funeralRegion,
       funeralProvince,
@@ -200,6 +119,15 @@ class BereavementFormCardComponent extends Component {
       memorialRegion,
       memorialProvince,
       memorialCity,
+      addressError
+    }=this.props
+
+    const {
+      file,
+      imagePreviewUrl,
+      deceasedDate,
+      funeralDate,
+      intermentDate
     }=this.state
 
     const styles={
@@ -215,63 +143,34 @@ class BereavementFormCardComponent extends Component {
     return (
       <div className={'brv-container'}>
         <div className={ 'brv-grid-column-2' }>
-          {
-            showDeceasedDependents &&
-            <BereavementDependentsModal
-              showDepedents={ showDepedents }
-              chosenDependent={ (dependentId, dependentsName, dependentsRelationship) =>
-                this.setState({
-                  dependentId,
-                  dependentsName,
-                  dependentsRelationship
-               })
-             }
-              onClose={ () => this.setState({ showDeceasedDependents: false }) }
-            />
-          }
+
           <div></div>
-          <Card className={ 'brv-form-card' }>
+          <div className={ 'brv-form-div' }>
             <h4>
             Deceased Detail
             </h4>
-            <div className={'brv-form-card-body '}>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-dependents' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ dependentsName ? dependentsName : '' }
-                    onClick={ () => this.setState({ showDeceasedDependents: true }) }
-                    onFocus={ () => this.setState({ showDeceasedDependents: true }) }
-                    placeholder={ 'Deceased Name' }
-                    readOnly
-                    type={ 'text' }
-                  />
-                </div>
+            <div>
+                <GenericInput
+                  value={ dependentsName ? dependentsName : '' }
+                  onClick={ () => showDeceasedDependents() }
+                  onFocus={ () => showDeceasedDependents() }
+                  hint={ 'Deceased Name' }
+                  text={ 'Deceased Name' }
+                  errorMessage={ BereavementFunction.errorMessage(dependentsName, '* Required field', '') }
+                  readOnly
+                  type={ 'text' }
+                />
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-relationship' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ dependentsRelationship ? dependentsRelationship : '' }
-                    placeholder={ 'Relationship' }
-                    type={ 'text' }
-                    readOnly
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ dependentsRelationship ? dependentsRelationship : '' }
+                  hint={ 'Relationship' }
+                  text={ 'Relationship' }
+                  type={ 'text' }
+                  readOnly
+                />
               </div>
-              <div className={ 'brv-icon-text-grid-date' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-calendar' }/>
-                </div>
                 <div>
                   <DatePicker
                     dateFormat={ 'MM/DD/YYYY' }
@@ -283,221 +182,168 @@ class BereavementFormCardComponent extends Component {
                     className={ 'calendar  font-size-12px' }
                     calendarClassName={ 'calendarClass' }/>
                   <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
-                </div>
+                  { deceasedDate ? '' : <span className={ 'text-error' }>* Required Field</span> }
               </div>
               <br/>
-              <br/>
-            </div>
-          </Card>
+          </div>
         </div>
-        <br/>
         <br/>
         <div className={ 'brv-grid-column-2' }>
           <div></div>
-          <Card className={ 'brv-form-card' }>
+          <div className={ 'brv-form-div' }>
             <h4>
             Funeral Detail
             </h4>
-            <div className={'brv-form-card-body '}>
-              <div className={ 'brv-icon-text-grid-date' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-calendar' }/>
-                </div>
-                <div>
-                  <DatePicker
-                    dateFormat={ 'MM/DD/YYYY' }
-                    readOnly
-                    minDate={ moment(deceasedDate) }
-                    maxDate={ moment(deceasedDate).add(30, 'days') }
-                    value={ funeralDate ? funeralDate : 'Date of Wake' }
-                    selected={ moment(funeralDate) }
-                    onChange={ this.getFuneralDate }
-                    className={ 'calendar  font-size-12px' }
-                    calendarClassName={ 'calendarClass' }
-                  />
+              <div>
+                <DatePicker
+                  dateFormat={ 'MM/DD/YYYY' }
+                  readOnly
+                  minDate={ moment(deceasedDate) }
+                  maxDate={ moment(deceasedDate).add(30, 'days') }
+                  value={ funeralDate ? funeralDate : 'Date of Wake' }
+                  selected={ moment(funeralDate) }
+                  onChange={ this.getFuneralDate }
+                  className={ 'calendar  font-size-12px' }
+                  calendarClassName={ 'calendarClass' }
+                />
                 <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
-                </div>
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-school' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ funeralHome ? funeralHome : '' }
-                    onChange={ this.getFuneralHome }
-                    placeholder={ 'Funeral Home' }
-                    type={ 'text' }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ funeralHome }
+                  onChange={ (e) => {
+                      checkFuneralHome(e.target.value)
+                    }
+                  }
+                  text={ 'Funeral Home' }
+                  hint={ 'Funeral Home' }
+                  errorMessage={ BereavementFunction.errorMessage(funeralHome, '* Required field', '') }
+                  type={ 'text' }
+                />
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-address' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ funeralAddress ? funeralAddress : '' }
-                    onChange={ this.getFuneralAddress }
-                    placeholder={ 'Address' }
-                    type={ 'text' }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ funeralAddress }
+                  onChange={ (e) => checkFuneralAddress(e.target.value) }
+                  errorMessage={ addressError ?
+                    BereavementFunction.errorMessage(funeralAddress, '', '* Address field should contain atleast 15 characters') :
+                    BereavementFunction.errorMessage(funeralAddress, '* Required field', '') }
+                  text={ 'Address' }
+                  hint={ 'Address' }
+                  type={ 'text' }
+                />
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-region' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ funeralRegion ? funeralRegion : '' }
-                    onChange={ this.getFuneralRegion }
-                    placeholder={ 'Region' }
-                    type={ 'text' }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ funeralRegion }
+                  onChange={ (e) => checkFuneralRegion(e.target.value) }
+                  text={ 'Region' }
+                  hint={ 'Region' }
+                  errorMessage={ BereavementFunction.errorMessage(funeralRegion, '* Required field', '') }
+                  type={ 'text' }
+                />
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-province' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ funeralProvince ? funeralProvince : '' }
-                    onChange={ this.getFuneralProvince }
-                    placeholder={ 'Province' }
-                    type={ 'text' }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ funeralProvince }
+                  onChange={ (e) => checkFuneralProvince(e.target.value) }
+                  text={ 'Province' }
+                  hint={ 'Province' }
+                  errorMessage={ BereavementFunction.errorMessage(funeralProvince, '* Required field', '') }
+                  type={ 'text' }
+                />
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-city' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ funeralCity ? funeralCity : '' }
-                    onChange={ this.getFuneralCity }
-                    placeholder={ 'City' }
-                    type={ 'text' }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ funeralCity }
+                  onChange={ (e) => checkFuneralCity(e.target.value) }
+                  text={ 'City' }
+                  hint={ 'City' }
+                  errorMessage={ BereavementFunction.errorMessage(funeralCity, '* Required field', '') }
+                  type={ 'text' }
+                />
               </div>
               <br/>
-              <br/>
-            </div>
-          </Card>
+          </div>
         </div>
-        <br/>
         <br/>
         <div className={ 'brv-grid-column-2' }>
           <div></div>
-          <Card className={ 'brv-form-card' }>
+          <div className={ 'brv-form-div' }>
             <h4>
             Interment Detail
             </h4>
-            <div className={'brv-form-card-body '}>
-              <div className={ 'brv-icon-text-grid-date' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-calendar' }/>
-                </div>
-                <div>
-                  <DatePicker
-                    dateFormat={ 'MM/DD/YYYY' }
-                    readOnly
-                    minDate={ moment(funeralDate) }
-                    maxDate={ moment(deceasedDate).add(30, 'days') }
-                    onChange={ this.getIntermentDate }
-                    value={ intermentDate ? intermentDate : 'Date of Interment'  }
-                    selected={ moment(deceasedDate) }
-                    className={ 'calendar font-size-12px' }
-                    />
-                  <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
-                </div>
+              <div>
+                <DatePicker
+                  dateFormat={ 'MM/DD/YYYY' }
+                  readOnly
+                  minDate={ moment(funeralDate) }
+                  maxDate={ moment(deceasedDate).add(30, 'days') }
+                  onChange={ this.getIntermentDate }
+                  value={ intermentDate ? intermentDate : 'Date of Interment'  }
+                  selected={ moment(deceasedDate) }
+                  className={ 'calendar font-size-12px' }
+                />
+                <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-memorial-park' }/>
-                </div>
-                <div>
-                <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ memorialPark ? memorialPark : '' }
-                    onChange={ this.getMemorialHome }
-                    placeholder={ 'Memorial Park' }
-                    type={ 'text' }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ memorialPark }
+                  onChange={ (e) => checkMemorialPark(e.target.value) }
+                  text={ 'Memorial Park' }
+                  hint={ 'Memorial Park' }
+                  errorMessage={ BereavementFunction.errorMessage(memorialPark, '* Required field', '') }
+                  type={ 'text' }
+                />
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-address' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ memorialAddress ? memorialAddress : '' }
-                    onChange={ this.getMemorialAddress }
-                    placeholder={ 'Address' }
-                    type={ 'text' }
-                  />
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ memorialAddress }
+                  onChange={ (e) => checkMemorialAddress(e.target.value) }
+                  text={ 'Address' }
+                  hint={ 'Address' }
+                  type={ 'text' }
+                  errorMessage={ addressError ?
+                    BereavementFunction.errorMessage(memorialAddress, '', '* Address field should contain atleast 15 characters') :
+                    BereavementFunction.errorMessage(memorialAddress, '* Required field', '') }
+                />
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-region' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ memorialRegion ? memorialRegion : '' }
-                    onChange={ this.getMemorialRegion }
-                    placeholder={ 'Region' }
-                    type={ 'text' }/>
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ memorialRegion }
+                  onChange={ (e) => checkMemorialRegion(e.target.value) }
+                  text={ 'Region' }
+                  hint={ 'Region' }
+                  errorMessage={ BereavementFunction.errorMessage(memorialRegion, '* Required field', '') }
+                  type={ 'text' }/>
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-province' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ memorialProvince ? memorialProvince : '' }
-                    onChange={ this.getMemorialProvince }
-                    placeholder={ 'Province' }
-                    type={ 'text' }/>
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ memorialProvince }
+                  onChange={ (e) => checkMemorialProvince(e.target.value) }
+                  text={ 'Province' }
+                  hint={ 'Province' }
+                  errorMessage={ BereavementFunction.errorMessage(memorialProvince, '* Required field', '') }
+                  type={ 'text' }/>
               </div>
-              <div className={ 'brv-icon-text-grid' }>
-                <div>
-                  <br/>
-                  <span className={ 'brv-icon-settings brv-city' }/>
-                </div>
-                <div>
-                  <GenericTextBox
-                    container={ 'brv-container' }
-                    value={ memorialCity ? memorialCity : '' }
-                    onChange={ this.getMemorialCity }
-                    placeholder={ 'City' }
-                    type={ 'text' }/>
-                </div>
+              <div>
+                <GenericInput
+                  container={ 'brv-container' }
+                  value={ memorialCity }
+                  onChange={ (e) => checkMemorialCity(e.target.value) }
+                  text={ 'City' }
+                  hint={ 'City' }
+                  errorMessage={ BereavementFunction.errorMessage(memorialCity, '* Required field', '') }
+                  type={ 'text' }/>
               </div>
               {
                 !withDeathCert &&
@@ -524,8 +370,7 @@ class BereavementFormCardComponent extends Component {
                   }
                   className={ 'brv-submit' } />
               }
-            </div>
-          </Card>
+          </div>
         </div>
         {
           !withDeathCert &&
@@ -536,14 +381,12 @@ class BereavementFormCardComponent extends Component {
           withDeathCert &&
           <div>
           <br/>
-          <br/>
           <div className={ 'brv-grid-column-2' }>
             <div></div>
-            <Card className={ 'brv-form-card' }>
+            <div className={ 'brv-form-div' }>
               <h4>
               Form Attachments
               </h4>
-              <div className={'brv-form-card-body '}>
                 {
                   imagePreviewUrl &&
                   <div>
@@ -635,8 +478,7 @@ class BereavementFormCardComponent extends Component {
                   }
                   className={ 'brv-submit' } />
               </div>
-            </Card>
-          </div>
+            </div>
         </div>
         }
       </div>
@@ -647,7 +489,33 @@ class BereavementFormCardComponent extends Component {
 BereavementFormCardComponent.propTypes={
   showDepedents: PropTypes.array,
   withDeathCert: PropTypes.bool,
-  onFocus: PropTypes.func
+  onFocus: PropTypes.func,
+  showDeceasedDependents: PropTypes.func,
+  showDepedents: PropTypes.string,
+  funeralHome: PropTypes.string,
+  funeralAddress: PropTypes.string,
+  funeralRegion: PropTypes.string,
+  funeralProvince: PropTypes.string,
+  funeralCity: PropTypes.string,
+  memorialPark: PropTypes.string,
+  memorialAddress: PropTypes.string,
+  memorialRegion: PropTypes.string,
+  memorialProvince: PropTypes.string,
+  memorialCity: PropTypes.string,
+  checkFuneralHome: PropTypes.func,
+  checkFuneralAddress: PropTypes.func,
+  checkFuneralRegion: PropTypes.func,
+  checkFuneralProvince: PropTypes.func,
+  checkFuneralCity: PropTypes.func,
+  checkMemorialPark: PropTypes.func,
+  checkMemorialAddress: PropTypes.func,
+  checkMemorialRegion: PropTypes.func,
+  checkMemorialProvince: PropTypes.func,
+  checkMemorialCity: PropTypes.func,
+  checkFuneralDate: PropTypes.func,
+  checkDeceasedDate: PropTypes.func,
+  checkIntermentDate: PropTypes.func,
+  addressError: PropTypes.bool
 }
 
 export default BereavementFormCardComponent

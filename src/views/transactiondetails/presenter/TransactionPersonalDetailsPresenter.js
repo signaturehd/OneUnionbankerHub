@@ -9,6 +9,7 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
 export default class TransactionPersonalDetailsPresenter {
+
   constructor (container) {
     this.getTransactionDetailsInteractor =
       new GetTransactionDetailsInteractor(container.get('HRBenefitsClient'))
@@ -27,6 +28,7 @@ export default class TransactionPersonalDetailsPresenter {
   }
 
   getTransactionDetails (id) {
+    this.view.hideCircularLoader()
     this.getTransactionDetailsInteractor.execute(GetTransactionParam(id))
     .do(resp => this.view.getTransactionDetails(resp))
       .flatMap(resp =>
@@ -54,21 +56,26 @@ export default class TransactionPersonalDetailsPresenter {
       )
       .subscribe(attachments => {
         this.view.showAttachments(attachments)
+        this.view.showCircularLoader()
         }, e => {
-          this.view.hideLoading()
+          this.view.showCircularLoader()
+          this.view.navigate()
       })
   }
 
   getTransactionsPersonal () {
+    this.view.hideCircularLoader()
     this.getTransactionPersonalInteractor.execute()
       .subscribe(transactions => {
           this.view.transactions(transactions)
+          this.view.hideCircularLoader()
         }, e => {
-          this.view.hideLoading()
+          this.view.showCircularLoader()
       })
   }
 
-  uploadImage (transactionType, benefitId, image) {
+  uploadTransactionBereavement (transactionType, benefitId, image) {
+    this.view.hideCircularLoader()
     this.uploadTransactionImageInteractor.execute(transactionType, benefitId, image)
       .subscribe(transactions => {
           this.view.showFileReceipt(false)
@@ -79,8 +86,27 @@ export default class TransactionPersonalDetailsPresenter {
               duration : 2000
            })
           )
+          this.view.showCircularLoader()
         }, e => {
+          this.view.showCircularLoader()
+      })
+  }
 
+  uploadTransactionCalamity (transactionType, benefitId, image) {
+    this.view.showCircularLoader()
+    this.uploadTransactionImageInteractor.execute(transactionType, benefitId, image)
+      .subscribe(transactions => {
+          this.view.showFileReceipt(false)
+          store.dispatch(NotifyActions.addNotify({
+              title : 'File Uploading',
+              message : 'You\'ve successfully added your official receipt',
+              type : 'success',
+              duration : 2000
+           })
+          )
+          this.view.hideCircularLoader()
+        }, e => {
+          this.view.hideCircularLoader()
       })
   }
 }

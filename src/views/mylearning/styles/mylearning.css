@@ -1,18 +1,13 @@
 /* benefits */
-.mylearning-container {
-  display:grid;
-  grid-column-gap: 5px;
-  font-weight: lighter;
-  grid-template-columns : repeat(300px);
-}
 
 .mylearning-card-adjustment {
-  margin: 10px 20px;
+  margin: 3px 3px;
 }
 
 .mylearning-card-container {
   display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(365px, 1fr));
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 2%;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -25,7 +20,7 @@
   background: rgba(0,0,0,0.5);
   color: #fff;
   margin-top: 5%;
-  padding: 12px 0 12px 0;
+  padding: 5px 0 5px 0;
 }
 
 .mylearning-adjustment {
@@ -33,23 +28,48 @@
 }
 
 .mylearning-cards-1 {
-  padding: 21% 0 20% 0 !important;
-  cursor: pointer !important;
-  background-image: url('../../../images/podcast.jpg') !important;
-  background-repeat: round !important;
-  border-radius: 5px !important;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3) !important;
-  grid-area: card!important;
+  padding: 21% 0 0 0;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
+  grid-area: card;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url('../../../images/icons/Book.png');
+}
+
+.mylearning-cards-1:hover {
+  box-shadow: 2px 6px 10px 0px rgba(0,0,0,0.3);
+}
+
+.mylearning-cards-2:hover {
+  box-shadow: 2px 6px 10px 0px rgba(0,0,0,0.3);
+}
+
+.mylearning-cards-3:hover {
+  box-shadow: 2px 6px 10px 0px rgba(0,0,0,0.3);
 }
 
 .mylearning-cards-2 {
-  padding: 21% 0 20% 0 !important;
-  cursor: pointer !important;
-  background-image: url('../../../images/books.jpg') !important;
-  background-repeat: round !important;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3) !important;
-  border-radius: 5px !important;
-  grid-area: card !important;
+  padding: 21% 0 0 0;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
+  grid-area: card;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url('../../../images/icons/Training.png');
+}
+
+.mylearning-cards-3 {
+  padding: 21% 0 0 0;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
+  grid-area: card;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url('../../../images/icons/Podcast.png');
 }
 
 .mylearning-title-view {

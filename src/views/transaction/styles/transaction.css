@@ -1,4 +1,11 @@
-.transaction-container {
+.transaction-details-container {
+  display: grid;
+  margin: auto;
+  position: relative;
+  text-align: center;
+}
+
+.transaction-details-container-grid {
   display: grid;
   grid-column-gap: 1%;
   padding: 1%;
@@ -6,9 +13,9 @@
   position: relative;
   margin:5px;
   text-align: center;
-  grid-template-rows: 1fr 1fr;
-  grid-template-areas: "cards cards";
+  grid-template-columns: 1fr 1fr 1fr;
 }
+
 .transaction-modal {
   text-align: justify;
 }
@@ -20,16 +27,14 @@
 }
 /* added style */
 @media (max-width: 768px){
-  .transaction-container{
+  .transaction-details-container{
     display: grid;
     grid-gap: 5px;
-    grid-template-rows: 1fr;
-    grid-template-areas: "cards";
-
+    grid-template-columns: 1fr;
   }
 }
-.transSearchBar{
-  width: 40%;
+.transaction-search-bar{
+  width: -webkit-fill-available;
   border-left: 0;
   border-right: 0;
   border-top: 0;
@@ -54,4 +59,9 @@
 .transaction-cards {
   padding: 1% 0 1% 0;
   cursor: pointer;
+}
+
+.transaction-details-personal-grid-row {
+  display: grid;
+  grid-template-rows: .005fr 1fr;
 }

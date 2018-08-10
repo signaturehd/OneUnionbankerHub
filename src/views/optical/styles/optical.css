@@ -11,3 +11,8 @@
   margin-top: 20%;
   vertical-align: middle;
 }
+
+.optical-grid-x3 {
+  display: grid;
+  grid-template-columns: .5fr 1fr .5fr;
+}

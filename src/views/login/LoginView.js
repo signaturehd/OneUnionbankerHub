@@ -5,12 +5,14 @@ import LoginPresenter from './presenter/LoginPresenter'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 
+import { RequiredValidation } from '../../utils/validate'
+
 import {
   GenericButton,
-  GenericTextBox,
   Card,
   CircularLoader,
-  Notify
+  Notify,
+  GenericInput
 } from '../../ub-components'
 
 import './styles/login.css'
@@ -28,23 +30,34 @@ class LoginView extends BaseMVPView {
     super(props)
 
     this.state = {
-      username: '',
-      password: '',
       showTermsAndCondition : false,
       showOtpModal: false,
       disabled : false,
-      terms : null,
+      username: '',
+      password: '',
       type: 'password',
+      status : 'hide',
+      terms : null,
     }
     this.showHide = this.showHide.bind(this)
     this.onLoginSuccess = this.onLoginSuccess.bind(this)
+    this.proceedToValidation = this.proceedToValidation.bind(this)
   }
    showHide (e) {
     e.preventDefault()
     e.stopPropagation()
-    this.setState({
-      type: this.state.type === 'input' ? 'password' : 'input'
-    })
+
+    if(this.state.status === 'hide') {
+      this.setState({
+        status : 'show',
+        type: this.state.type === 'input' ? 'password' : 'input'
+      })
+    } else if (this.state.status === 'show') {
+      this.setState({
+        status : 'hide',
+        type: this.state.type === 'password' ? 'input' : 'password'
+      })
+    }
   }
 
   componentDidMount () {
@@ -80,13 +93,46 @@ class LoginView extends BaseMVPView {
   }
 
   downloadAndroid () {
-    window.open('https://play.google.com/store/apps/details?id=com.unionbankph.oneunionbankerhub')
+    window.open('https://play.google.com/store/apps/details?id=com.unionbankph.oneuhub')
+  }
+
+  proceedToValidation (user, pass) {
+    if(!new RequiredValidation().isValid(user)) {
+      store.dispatch(NotifyActions.addNotify({
+        title : 'Login Credentials',
+        message : 'Employee ID is required',
+        type: 'warning',
+        duration : 2000,
+      })
+    )
+    } else if (!new RequiredValidation().isValid(pass)) {
+        store.dispatch(NotifyActions.addNotify({
+          title : 'Login Credentials',
+          message : 'Password is required',
+          type: 'warning',
+          duration : 2000,
+        })
+      )
+    }
+    else {
+      this.presenter.login(this.state.username, this.state.password)
+    }
   }
 
 
   render () {
-    const { showOtpModal, username, terms, showTermsAndCondition } = this.state
+    const {
+      showOtpModal,
+      username,
+      password,
+      terms,
+      showTermsAndCondition,
+      status,
+      disabled,
+      type,
+    } = this.state
     const { notify } = this.props
+
     return (
       <div>
         { super.render() }
@@ -94,7 +140,7 @@ class LoginView extends BaseMVPView {
           // TODO properly show otp modal as 'modal', not by just swapping views lol
           showOtpModal &&
           <OtpModal
-            show = { this.state.showOtpModal }
+            show = { showOtpModal }
             onClose = { () => this.setState({ showOtpModal : false }) }
             parent = { this }
             username = { username }
@@ -110,22 +156,31 @@ class LoginView extends BaseMVPView {
         }
 
         <Card className = {'login-form'}>
+          <div className={ 'login-version' }>v 3.1</div>
           <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
-            <GenericTextBox
+            <br/>
+            <GenericInput
               autocomplete='off'
-              onChange = { e => this.setState({ username: e.target.value }) }
-              placeholder = { 'Employee ID' }
+              onChange = { e =>
+                this.setState({ username: e.target.value }) }
+              text = { 'Employee ID' }
               type = { 'text' }/>
-            <GenericTextBox
-              autocomplete='off'
-              onChange = { e => this.setState({ password: e.target.value }) }
-              placeholder = { 'Password' }
-              type = { this.state.type }
-              className={ 'password__input' }/>
-              <span className={'password__show'} onClick={this.showHide}>{this.state.type === 'input' ? '' : ''}</span>
+            <br/>
+            <GenericInput
+              autocomplete = { 'off' }
+              onChange = { e =>
+                this.setState({ password: e.target.value }) }
+              text = { 'Password' }
+              type = { type }
+              className = { 'password__input' }/>
+            <span
+              className = { `password_icon password_${ status }` }
+              onClick = { this.showHide }>
+              { type === 'input' ? '' : ''}
+            </span>
               <br/>
             {
-              this.state.disabled ?
+              disabled ?
               <center>
               <br/>
               <br/>
@@ -135,11 +190,14 @@ class LoginView extends BaseMVPView {
               </center>              :
               <div>
                 <br/>
+                <br/>
                   <GenericButton
-                    disabled = {this.state.disabled}
-                    className = { 'login-button' }
-                    text="Login"
-                    onClick = { () => this.presenter.login(this.state.username, this.state.password)}/>
+                    disabled = { disabled }
+                    text = { 'LOGIN' }
+                    onClick = { () =>
+                      this.proceedToValidation( username, password )
+                    }/>
+                <br/>
                 <br/>
               </div>
 
@@ -169,8 +227,8 @@ class LoginView extends BaseMVPView {
             </div>
             <br/>
             <div className = {'download-container'}>
-              <span className = {'link-googleplay'} onClick = { () => this.downloadAndroid() } />
-              <span className = {'link-appstore'} onClick = { () => this.downloadIOS() } />
+              <button className = {'link-googleplay'} onClick = { () => this.downloadAndroid() } />
+              <button className = {'link-appstore'} onClick = { () => this.downloadIOS() } />
             </div>
         </Card>
 

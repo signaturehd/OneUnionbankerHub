@@ -1,22 +1,11 @@
 
-.brv-container {
-  max-width: 100%;
-}
-
-
-.brv-form-card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+.brv-form-div {
   max-width: 100%;
   float: center;
   padding: 20px 5px 20px 5px;
   margin: auto;
   text-align: center;
   font-family: arial;
-}
-
-.brv-form-card-body {
-  border-color: #0a0a0a;
-  color: #090909;
 }
 
 .brv-submit {

@@ -1,42 +1,120 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card } from '../../../../ub-components/'
+import { Card, GenericButton } from '../../../../ub-components/'
+
+import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
+import TransactionMPLPurposeComponent from './TransactionMPLPurposeComponent'
 
 import moment from 'moment'
 
 class TransactionMPLDetailComponent extends Component {
-    constructor (props) {
-      super(props)
-    }
+  constructor (props) {
+    super(props)
+  }
 
-    render () {
-    const { details, transactionsPerson } = this.props
-    const transactionID = details.transactionId
-    return (
-      <div className = { 'transaction-card-details-form' }>
+  render () {
+  const {
+    details,
+    onClickAttachments,
+    onClickAgreements
+  } = this.props
+
+  const transactionID = details.transactionId
+  const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
+  const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
+  const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details)
+  const patient = TransactionPersonalFunction.checkedPatient(details.details)
+
+  return (
+    <div>
+      <div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+          <div>
+            <h2>
+              { dateFilled }
+            </h2>
+            <br/>
+          </div>
+        </div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings global-icons-referenceNumber' }></span>
+          <div>
+            <h2>
+              { referenceNumber }
+            </h2>
+            <br/>
+          </div>
+        </div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
+          <div>
+            <h2>
+              { acccountNumber }
+            </h2>
+            <br/>
+          </div>
+        </div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings global-icons-patient-name' }></span>
+          <div>
+            <h2>
+              { patient }
+            </h2>
+            <h4  className = { 'font-size-14px unionbank-color' }>
+            </h4>
+            <br/>
+          </div>
+        </div>
+        {
+          details &&
+          details.details &&
+          details.details.Procedures ?
+            <TransactionMPLPurposeComponent
+              procedure = { details && details.details }
+            />
+            :
+            <div></div>
+        }
+        <br/>
+      </div>
+      <div className = { 'transaction-attachments-agreements-grid' }>
         <div>
-          <h2 className = { 'transaction-detail details-bold' }> Date Filed: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Reference Number: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Transaction Status: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Account Number: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Patient Name: </h2>
+          <br/>
+            {
+              details &&
+              details.details &&
+              details.details.Attachments ?
+
+              <GenericButton
+                className = { 'transaction-details-button' }
+                text = { 'View Attachments' }
+                onClick = { () => onClickAttachments(true) }
+              /> :
+              <div></div>
+            }
+            <br/>
         </div>
         <div>
-          <h2 className = { 'transaction-detail' }> { details && moment(details.dateFiled).format('MMMM DD, YYYY') } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.ReferenceNumber }</h2>
-          <h2 className = { 'transaction-detail' }> { details && details.status.name } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.AccountNo } </h2>
-          {
-            transactionsPerson && transactionsPerson.map(person =>
-                transactionID === person.id &&
-                <h2 key = {person.id} > { person.fullName } </h2>
-            )
-          }
+          <br/>
+          <GenericButton
+            className = { 'transaction-details-button' }
+            text = { 'View Agreements' }
+            onClick = { () => onClickAgreements(true) }
+          />
+          <br/>
         </div>
       </div>
+    </div>
     )
   }
+}
+
+TransactionMPLDetailComponent.propTypes = {
+  details : PropTypes.object,
+  onClickAttachments : PropTypes.func,
+  onClickAgreements : PropTypes.func
 }
 
 export default TransactionMPLDetailComponent
