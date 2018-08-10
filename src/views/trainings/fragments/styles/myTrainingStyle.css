@@ -18,7 +18,7 @@
 
 .mytrainings-list-card {
   display: grid;
-  grid-template-rows: .01fr 1fr .01fr;
+  grid-template-rows: 0fr 1fr 0fr;
 }
 
 .mytraining-list-grid-row-container {

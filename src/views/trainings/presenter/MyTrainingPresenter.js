@@ -55,9 +55,8 @@ export default class MyTrainingPresenter {
     this.enrollEmployeeInteractor.execute(id)
     .subscribe(data => {
       this.view.noticeResponse(data)
-      //this.view.navigate()
     }, error => {
-      this.view.navigate()
+      this.view.clearTraining()
     })
   }
 }
