@@ -53,6 +53,7 @@ class BereavementFragment extends BaseMVPView {
       addressError: false,
       errorMessage: ''
     }
+    this.editForm = this.editForm.bind(this)
     this.submitForm = this.submitForm.bind(this)
     this.validateFuneralHome = this.validateFuneralHome.bind(this)
   }
@@ -173,7 +174,7 @@ class BereavementFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits')
   }
 
-  submitForm (
+  editForm (
     funeralDate,
     intermentDate,
     deceasedDate,
@@ -188,30 +189,40 @@ class BereavementFragment extends BaseMVPView {
     memorialRegion,
     memorialProvince,
     memorialCity,
-    file
+    attachmentData
   ) {
-    if (funeralHome === null || funeralHome === '') {
+
+    if (dependentId === null || dependentId === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Dependent field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (deceasedDate === null || deceasedDate === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Deceased Date field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (funeralDate === null || funeralDate === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Funeral Date field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (funeralHome === null || funeralHome === '') {
       store.dispatch(NotifyActions.addNotify({
           title: 'Warning',
           message: 'Funeral Home field is required',
-          type: 'warning',
-          duration: 2000
-        })
-      )
-    }
-    else if (funeralRegion === null || funeralRegion === '') {
-      store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
-          message: 'Funeral Region field is required',
-          type: 'warning',
-          duration: 2000
-        })
-      )
-    }
-    else if (funeralCity === null || funeralCity === '') {
-      store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
-          message: 'Funeral City field is required',
           type: 'warning',
           duration: 2000
         })
@@ -226,10 +237,37 @@ class BereavementFragment extends BaseMVPView {
         })
       )
     }
+    else if (funeralRegion === null || funeralRegion === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Funeral Region field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
     else if (funeralProvince === null || funeralProvince === '') {
       store.dispatch(NotifyActions.addNotify({
           title: 'Warning',
           message: 'Funeral Province field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (funeralCity === null || funeralCity === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Funeral City field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (intermentDate === null || intermentDate === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Interment Date field is required',
           type: 'warning',
           duration: 2000
         })
@@ -244,10 +282,10 @@ class BereavementFragment extends BaseMVPView {
         })
       )
     }
-    else if (memorialCity === null || memorialCity === '') {
+    else if (memorialAddress === null || memorialAddress === '') {
       store.dispatch(NotifyActions.addNotify({
           title: 'Warning',
-          message: 'Memorial City field is required',
+          message: 'Memorial Address field is required',
           type: 'warning',
           duration: 2000
         })
@@ -271,38 +309,58 @@ class BereavementFragment extends BaseMVPView {
         })
       )
     }
-    else if (dependentId === null || dependentId === 0) {
+    else if (memorialCity === null || memorialCity === '') {
       store.dispatch(NotifyActions.addNotify({
           title: 'Warning',
-          message: 'Dependent field is required',
+          message: 'Memorial City field is required',
           type: 'warning',
           duration: 2000
         })
       )
     }
     else {
-      const objectDate={
-        "death" : deceasedDate,
-        "wake" : funeralDate,
-        "interment" : intermentDate
-      }
-      const objectFuneral ={
-        "home" : funeralHome,
-        "province" : funeralProvince,
-        "address": funeralAddress,
-        "city": funeralCity,
-        "region": funeralRegion
-      }
-      const objectMemorial ={
-        "park" : memorialPark,
-        "province" : memorialProvince,
-        "address": memorialAddress,
-        "city": memorialCity,
-        "region": memorialRegion
-      }
-      console.log(dependentId, objectDate, objectFuneral, objectMemorial, file)
-      // this.presenter.addBereavement(dependentId, objectDate, objectFuneral, objectMemorial, file)
+      // console.log(dependentId, objectDate, objectFuneral, objectMemorial, attachmentData)
+      this.setState({ showEditSubmitButton : true })
     }
+  }
+
+  submitForm (
+    funeralDate,
+    intermentDate,
+    deceasedDate,
+    dependentId,
+    funeralHome,
+    funeralAddress,
+    funeralRegion,
+    funeralProvince,
+    funeralCity,
+    memorialPark,
+    memorialAddress,
+    memorialRegion,
+    memorialProvince,
+    memorialCity,
+    attachmentData
+  ) {
+    const objectDate={
+      "death" : deceasedDate,
+      "wake" : funeralDate,
+      "interment" : intermentDate
+    }
+    const objectFuneral ={
+      "home" : funeralHome,
+      "province" : funeralProvince,
+      "address": funeralAddress,
+      "city": funeralCity,
+      "region": funeralRegion
+    }
+    const objectMemorial ={
+      "park" : memorialPark,
+      "province" : memorialProvince,
+      "address": memorialAddress,
+      "city": memorialCity,
+      "region": memorialRegion
+    }
+    this.presenter.addBereavement(dependentId, objectDate, objectFuneral, objectMemorial, attachmentData)
   }
 
   render () {
@@ -403,6 +461,7 @@ class BereavementFragment extends BaseMVPView {
           <FormComponent
             withDeathCert={ type === "certified" ? true : false  }
             attachmentArray = { attachmentArray }
+            attachmentData = { attachmentData }
             validatedBereavement={ validatedBereavement }
             showDepedents={ showDepedents }
             funeralHome = { funeralHome }
@@ -438,7 +497,8 @@ class BereavementFragment extends BaseMVPView {
             dependentsRelationship = { dependentsRelationship }
             showDeceasedDependents = { () => this.setState({ showDeceasedDependents : true }) }
             setAttachmentArrayFunc = { (attachmentData) => this.setState({ attachmentData }) }
-            sendFormData={ (
+            changeStateEditToFalse = { () => this.setState({ showEditSubmitButton : false }) }
+            editFormData={ (
               funeralDate,
               intermentDate,
               deceasedDate,
@@ -453,7 +513,42 @@ class BereavementFragment extends BaseMVPView {
               memorialRegion,
               memorialProvince,
               memorialCity,
-              file
+              attachmentData
+            ) =>
+              this.editForm(
+                funeralDate,
+                intermentDate,
+                deceasedDate,
+                dependentId,
+                funeralHome,
+                funeralAddress,
+                funeralRegion,
+                funeralProvince,
+                funeralCity,
+                memorialPark,
+                memorialAddress,
+                memorialRegion,
+                memorialProvince,
+                memorialCity,
+                attachmentData
+              )
+            }
+            submitFormData={ (
+              funeralDate,
+              intermentDate,
+              deceasedDate,
+              dependentId,
+              funeralHome,
+              funeralAddress,
+              funeralRegion,
+              funeralProvince,
+              funeralCity,
+              memorialPark,
+              memorialAddress,
+              memorialRegion,
+              memorialProvince,
+              memorialCity,
+              attachmentData
             ) =>
               this.submitForm(
                 funeralDate,
@@ -470,7 +565,7 @@ class BereavementFragment extends BaseMVPView {
                 memorialRegion,
                 memorialProvince,
                 memorialCity,
-                file
+                attachmentData
               )
             }
           />
