@@ -180,10 +180,6 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       this.setState({ dateErrorMessage : 'Please provide the Official Receipt Date' })
     } else if (!this.validateRequired(orNumberText)) {
       this.setState({ orNumberErrorMessage : 'Please provide the Official Receipt Number' })
-    } else if (!this.validateRequired(procedureName)) {
-      this.setState({ errorMessageRequiredProcedure : 'Please select a procedure and enter amount required' })
-    } else if (!this.validateRequired(amount)) {
-      this.setState({ amountErrorMessage : 'Please enter an amount for the selected procedure' })
     } else {
       this.setState({
         showEditSubmitButton: true,
@@ -347,6 +343,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             orNumberErrorMessage = { orNumberErrorMessage }
             amountErrorMessage = { amountErrorMessage }
             procedureArray = { procedureArray }
+            employeeName = { outpatientData.name }
           />
         }
       </div>

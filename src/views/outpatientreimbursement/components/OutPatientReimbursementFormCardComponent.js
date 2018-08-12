@@ -52,7 +52,8 @@ class OutPatientReimbursementFormCardComponent extends Component {
     dateErrorMessage,
     orNumberErrorMessage,
     amountErrorMessage,
-    procedureArray
+    procedureArray,
+    employeeName
   } = this.props
 
   return (
@@ -62,75 +63,87 @@ class OutPatientReimbursementFormCardComponent extends Component {
         <div>
           <div className={ 'outpatient-form-card' }>
             <div className={ 'outpatient-form-card-body' }>
-            <GenericInput
-              value = { dependentName }
-              readOnly
-              disabled = { showEditSubmitButton }
-              text = { 'Recipient' }
-              onClick = { () => requestDepdentModalFunc(true) }
-              type = { 'text' }
-              errorMessage = { dependentErrorMessage }
-              />
-            <GenericInput
-              value = { diagnosisText }
-              onChange = { (e) => diagnosisValueFunc(e.target.value) }
-              text = { 'Diagnosis' }
-              disabled = { showEditSubmitButton }
-              errorMessage = { diagnosisErrorMessage }
-              type = { 'text' }/>
-            <DatePicker
-              selected = { preferredDate }
-              disabled = { showEditSubmitButton }
-              onChange = { (e) => dateFunc(e) }
-              maxDate = { moment() }
-              text = { 'Official Receipt Date' }
-              errorMessage = { dateErrorMessage }
-              />
-            <GenericInput
-              value = { orNumberText }
-              disabled = { showEditSubmitButton }
-              onChange = { (e) => oRNumberFunc(e.target.value) }
-              text = { 'Official Receipt Number' }
-              errorMessage = { orNumberErrorMessage }
-              type = { 'text' }/>
-              <div className = { 'outpatient-grid-procedure' }>
-                <div>
-                  <h2 className = { 'unionbank-color font-size-12px' }>
-                    { errorMessageRequiredProcedure }
-                  </h2>
-                </div>
-                <div>
-                  <GenericButton
-                    className = { 'outpatient-procedure' }
-                    onClick = { () => procedureModalFunc(true) }
-                    text = { 'Procedure' }/>
-                </div>
-              </div>
               {
-                showProcedureInput ?
-                  procedureArray.map((resp, key) =>
-                    <GenericInput
-                      hint = { 'Enter Amount' }
-                      text = { resp.name }
-                      value = { resp.amount ? resp.amount : 0 }
-                      errorMessage = {
-                        resp.amount === 0  ?
-                        'Please enter an amount for the selected procedure' :
-                        ''
-                      }
-                      disabled = { showEditSubmitButton }
-                      onChange = { e =>
-                        {
-                         const updatedProcedures = [...procedureArray]
-                         updatedProcedures[key].amount = parseInt(e.target.value) || 0
-                         selectedProcedureAmountFunc(updatedProcedures)
-                        }
-                      }
-                      type = { 'text' } />
-                  )
-                : <div></div>
+                showEditSubmitButton ?
+                <GenericInput
+                  value = { employeeName }
+                  readOnly
+                  disabled = { showEditSubmitButton }
+                  text = { 'Employee Name' }
+                  type = { 'text' }
+                  />
+                :
+                <div></div>
               }
-            </div>
+              <GenericInput
+                value = { dependentName }
+                readOnly
+                disabled = { showEditSubmitButton }
+                text = { 'Recipient' }
+                onClick = { () => requestDepdentModalFunc(true) }
+                type = { 'text' }
+                errorMessage = { dependentErrorMessage }
+                />
+              <GenericInput
+                value = { diagnosisText }
+                onChange = { (e) => diagnosisValueFunc(e.target.value) }
+                text = { 'Diagnosis' }
+                disabled = { showEditSubmitButton }
+                errorMessage = { diagnosisErrorMessage }
+                type = { 'text' }/>
+              <DatePicker
+                selected = { preferredDate }
+                disabled = { showEditSubmitButton }
+                onChange = { (e) => dateFunc(e) }
+                maxDate = { moment() }
+                text = { 'Official Receipt Date' }
+                errorMessage = { dateErrorMessage }
+                />
+              <GenericInput
+                value = { orNumberText }
+                disabled = { showEditSubmitButton }
+                onChange = { (e) => oRNumberFunc(e.target.value) }
+                text = { 'Official Receipt Number' }
+                errorMessage = { orNumberErrorMessage }
+                type = { 'text' }/>
+                <div className = { 'outpatient-grid-procedure' }>
+                  <div>
+                    <h2 className = { 'unionbank-color font-size-12px' }>
+                      { errorMessageRequiredProcedure }
+                    </h2>
+                  </div>
+                  <div>
+                    <GenericButton
+                      className = { 'outpatient-procedure' }
+                      onClick = { () => procedureModalFunc(true) }
+                      text = { 'Procedure' }/>
+                  </div>
+                </div>
+                {
+                  showProcedureInput ?
+                    procedureArray.map((resp, key) =>
+                      <GenericInput
+                        hint = { 'Enter Amount' }
+                        text = { resp.name }
+                        value = { resp.amount ? resp.amount : 0 }
+                        errorMessage = {
+                          resp.amount === 0  ?
+                          'Please enter an amount for the selected procedure' :
+                          ''
+                        }
+                        disabled = { showEditSubmitButton }
+                        onChange = { e =>
+                          {
+                           const updatedProcedures = [...procedureArray]
+                           updatedProcedures[key].amount = parseInt(e.target.value) || 0
+                           selectedProcedureAmountFunc(updatedProcedures)
+                          }
+                        }
+                        type = { 'text' } />
+                    )
+                  : <div></div>
+                }
+              </div>
               {
                 attachmentsData.length !== 0  ?
                 <div>
@@ -173,7 +186,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
                 <div>
                   <GenericButton
                     type = { 'button' }
-                    text = { 'continue' }
+                    text = { 'Continue' }
                     onClick = {
                       () => showFormReview(true)
                     }
@@ -216,6 +229,7 @@ OutPatientReimbursementFormCardComponent.propTypes = {
   showEditSubmitButton: PropTypes.bool,
   onSubmitFunc : PropTypes.func,
   procedureArray : PropTypes.array,
+  employeeName : PropTypes.string,
 }
 
 export default OutPatientReimbursementFormCardComponent
