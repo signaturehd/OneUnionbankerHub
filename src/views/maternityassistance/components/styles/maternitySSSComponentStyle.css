@@ -3,10 +3,8 @@
   max-width: 100%;
 }
 
-.outpatient-form-card {
-  max-width: 100%;
-  padding: 20px 5px 20px 5px;
-  margin: auto;
+.maternity-grid-location {
+
 }
 
 .maternitySSS-form-review {
@@ -50,10 +48,10 @@
   color: #fff;
 }
 
-.outpatient-procedure:hover {
-  border: 1px solid #FF7200;
-  background-color: #ff8A00;
-  color: #fff;
+.maternity-grid-location {
+  display: grid;
+  grid-template-columns: 1fr .5fr .2fr;
+  column-gap: 2%;
 }
 
 .maternitySSS-edit-form:hover {
@@ -74,9 +72,6 @@
     grid-template-columns: 1fr ;
     column-gap: 2%;
     grid-row-gap: 2%;
-  }
-  .outpatient-form-card {
-    margin-top: 10px;
   }
 }
 
@@ -104,33 +99,8 @@
   animation: fadeInUp 0.5s ease-in-out 0s forwards;
 }
 
-.outpatient-attachment-form {
-  padding: 10px;
-  margin: 0 30px 0 30px;
-  background-color: #f6f6f6;
-  border-style: solid;
-  border-width: 0 0 1px 0;
-  border-color: #DBDBE0;
-}
-
-.outpatient-form-title {
-  display: block;
-  text-align: left;
-  font-size:14px;
-  pointer-events:none;
-  color: #ff8a00 !important;
-}
-
 .close-button {
   float: right;
-}
-
-.outpatient-file-name {
-  margin-left: 120px;
-  line-height: 60px;
-  text-align: left;
-  font-size: 14px;
-  font-weight: normal;
 }
 
 .react-datepicker__input-container {

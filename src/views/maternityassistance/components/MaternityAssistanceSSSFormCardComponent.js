@@ -27,6 +27,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
   render () {
 
     const {
+      recipient,
       onSubmitFuncSSS,
       dateFunc,
       editFormDataFunc,
@@ -74,10 +75,26 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
   return (
     <div className={ 'maternitySSS-container' }>
       <div className={ 'outpatient-grid-column-2' }>
-        <div></div>
         <div>
+        </div>
+        <div>
+          <Line/>
+          <br/>
           <div className={ 'maternitySSS-form-card' }>
             <div className={ 'maternitySSS-form-card-body' }>
+              {
+                showEditSubmitButton ?
+                <div>
+                  <GenericInput
+                    value = { recipient }
+                    text = { 'Recipient' }
+                    readOnly
+                    disabled = { showEditSubmitButton }
+                    type = { 'text' }/>
+                </div>
+                :
+                <div></div>
+              }
               <div className = { 'maternitySSS-grid-address' }>
                 <div>
                   <GenericInput
@@ -107,7 +124,6 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                     type = { 'text' }/>
                 </div>
               </div>
-              <br/>
               <GenericInput
                 value = { subdivisionText }
                 onChange = { e => subdivisionFunc(e.target.value) }
@@ -115,7 +131,6 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 disabled = { showEditSubmitButton }
                 errorMessage = { subdivisionErrorMessage }
                 type = { 'text' }/>
-                <br/>
               <GenericInput
                 value = { barangayText }
                 onChange = { e => barangayFunc(e.target.value) }
@@ -123,16 +138,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 disabled = { showEditSubmitButton }
                 errorMessage = { barangayErrorMessage }
                 type = { 'text' }/>
-                <br/>
-              <GenericInput
-                value = { cityText }
-                onChange = { e => cityFunc(e.target.value) }
-                text = { 'City/Municipality' }
-                disabled = { showEditSubmitButton }
-                errorMessage = { cityErrorMessage }
-                type = { 'text' }/>
-                <br/>
-              <div className = { 'grid-global' }>
+              <div className = { 'maternity-grid-location' }>
                 <div>
                   <GenericInput
                     value = { provinceText }
@@ -144,15 +150,24 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 </div>
                 <div>
                   <GenericInput
+                    value = { cityText }
+                    onChange = { e => cityFunc(e.target.value) }
+                    text = { 'City/Municipality' }
+                    disabled = { showEditSubmitButton }
+                    errorMessage = { cityErrorMessage }
+                    type = { 'text' }/>
+                </div>
+                <div>
+                  <GenericInput
                     value = { zipCodeText }
                     onChange = { e => zipCodeFunc(e.target.value) }
                     text = { 'Zip Code' }
                     disabled = { showEditSubmitButton }
                     errorMessage = { zipCodeErrorMessage }
+                    maxLength = { 5 }
                     type = { 'text' }/>
                 </div>
               </div>
-              <br/>
               <div className = { 'grid-global-columns-x3' }>
                 <div>
                   <GenericInput
@@ -165,24 +180,37 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 </div>
                 <div>
                   <GenericInput
-                    value = { noDeliveryText }
-                    disabled = { showEditSubmitButton }
-                    onChange = { e => noDeliveryFunc(e.target.value) }
+                    value = {
+                      parseInt(noDeliveryText) > parseInt(noPregnancyText) ?
+                      '' : noDeliveryText
+                    }
+                    disabled = { noPregnancyText ? showEditSubmitButton : true }
+                    onChange = { e => noDeliveryFunc(e.target.value)  }
                     text = { 'Number of Delivery' }
-                    errorMessage = { noDeliveryErrorMessage }
+                    errorMessage = {
+                      parseInt(noDeliveryText) > parseInt(noPregnancyText) ?
+                      'Error count of delivery' :
+                      noDeliveryErrorMessage
+                    }
                     type = { 'text' }/>
                 </div>
                 <div>
                   <GenericInput
-                    value = { noMiscarriageText }
-                    disabled = { showEditSubmitButton }
+                    value = {
+                      parseInt(noMiscarriageText) > parseInt(noPregnancyText) ?
+                      '' : noMiscarriageText
+                    }
+                    disabled = { noDeliveryText ? showEditSubmitButton : true }
                     onChange = { e => noMiscarriageFunc(e.target.value) }
                     text = { 'Number of Miscarriage' }
-                    errorMessage = { noMiscarriageErrorMessage }
+                    errorMessage = {
+                      parseInt(noMiscarriageText) > parseInt(noPregnancyText) ?
+                      'Error count of delivery' :
+                      noDeliveryErrorMessage
+                    }
                     type = { 'text' }/>
                 </div>
               </div>
-              <br/>
               <DatePicker
                 selected = { deliveryDate }
                 disabled = { showEditSubmitButton }
@@ -191,11 +219,9 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 text = { 'Expected Date of Delivery' }
                 errorMessage = { dateOfDeliveryErrorMessage }
                 />
-              <br/>
             </div>
             <br/>
             <Line/>
-            <br/>
               {
                 showEditSubmitButton ?
                 <div className = { 'maternitySSS-form-review' }>
@@ -234,6 +260,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
 }
 
 MaternityAssistanceSSSFormCardComponent.propTypes = {
+  recipient : PropTypes.string,
   editFormDataFunc : PropTypes.func,
   showFormReviewSSS: PropTypes.func,
   dateOfDeliveryFunc: PropTypes.func,
