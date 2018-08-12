@@ -70,3 +70,23 @@
 .font-12 {
   font-size: 12px;
 }
+
+.compliance-page {
+  display :grid;
+  grid-template-columns: 8fr 1fr 1fr;
+  column-gap: 2%;
+}
+
+@media (max-width : 768px) {
+  .compliance-page {
+  grid-template-columns: 6fr 3fr 1fr;
+  }
+}
+
+.compliance-page h6 {
+  text-align: right;
+  line-height: 48px;
+  font-size: 18px;
+  font-weight: normal;
+  margin-right: 10px;
+}
