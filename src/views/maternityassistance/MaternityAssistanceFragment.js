@@ -498,24 +498,19 @@ class MaternityAssistanceFragment extends BaseMVPView {
                     'Maternity Assistance' :
                     'Maternity Notification SSS' }
                 </h2>
-                <Line/>
-                <br/>
-                <br/>
               </div>
               :
               <div>
                 <h2 className = { 'header-margin-default' }>
                   Form Summary
                 </h2>
-                <Line/>
-                <br/>
-                <br/>
               </div>
             }
             {
               maternityData &&
               maternityData.hasMat1 === 1 ?
               <FormComponent
+                recipient = { maternityData.recepient }
                 oRNumberFunc = { (resp) => this.validateSymbol(resp) }
                 dateFunc = { (resp) => this.validateDate(resp) }
                 showFormReview = { () => this.showFormReviewFieldDisabled() }
@@ -540,6 +535,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
                 dateOfDeliveryErrorMessage = { dateOfDeliveryErrorMessage }
               /> :
               <FormComponentSSS
+                recipient = { maternityData.recepient }
                 dateFunc = { (resp) => this.validateDate(resp) }
                 showFormReviewSSS = { () => this.showFormReviewFieldDisabledSSS() }
                 onSubmitFuncSSS = { () => this.submitFormSSS() }
