@@ -37,7 +37,6 @@ class OutPatientReimbursementFormCardComponent extends Component {
     preferredDate,
     dependentName,
     procedureName,
-    procedureArray,
     amount,
     diagnosisText,
     orNumberText,
@@ -52,7 +51,8 @@ class OutPatientReimbursementFormCardComponent extends Component {
     errorMessageRequiredProcedure,
     dateErrorMessage,
     orNumberErrorMessage,
-    amountErrorMessage
+    amountErrorMessage,
+    procedureArray
   } = this.props
 
   return (
@@ -71,7 +71,6 @@ class OutPatientReimbursementFormCardComponent extends Component {
               type = { 'text' }
               errorMessage = { dependentErrorMessage }
               />
-            <br/>
             <GenericInput
               value = { diagnosisText }
               onChange = { (e) => diagnosisValueFunc(e.target.value) }
@@ -79,7 +78,6 @@ class OutPatientReimbursementFormCardComponent extends Component {
               disabled = { showEditSubmitButton }
               errorMessage = { diagnosisErrorMessage }
               type = { 'text' }/>
-              <br/>
             <DatePicker
               selected = { preferredDate }
               disabled = { showEditSubmitButton }
@@ -88,7 +86,6 @@ class OutPatientReimbursementFormCardComponent extends Component {
               text = { 'Official Receipt Date' }
               errorMessage = { dateErrorMessage }
               />
-              <br/>
             <GenericInput
               value = { orNumberText }
               disabled = { showEditSubmitButton }
@@ -96,7 +93,6 @@ class OutPatientReimbursementFormCardComponent extends Component {
               text = { 'Official Receipt Number' }
               errorMessage = { orNumberErrorMessage }
               type = { 'text' }/>
-              <br/>
               <div className = { 'outpatient-grid-procedure' }>
                 <div>
                   <h2 className = { 'unionbank-color font-size-12px' }>
@@ -112,22 +108,29 @@ class OutPatientReimbursementFormCardComponent extends Component {
               </div>
               {
                 showProcedureInput ?
-
-                <GenericInput
-                  hint = { 'Enter Amount' }
-                  text = { procedureName }
-                  value = { amount }
-                  errorMessage = { amountErrorMessage }
-                  disabled = { showEditSubmitButton }
-                  onChange = { e => {
-                      selectedProcedureAmountFunc(e.target.value)
-                    }
-                  }
-                  type = { 'text' } />
+                  procedureArray.map((resp, key) =>
+                    <GenericInput
+                      hint = { 'Enter Amount' }
+                      text = { resp.name }
+                      value = { resp.amount ? resp.amount : 0 }
+                      errorMessage = {
+                        resp.amount === 0  ?
+                        'Please enter an amount for the selected procedure' :
+                        ''
+                      }
+                      disabled = { showEditSubmitButton }
+                      onChange = { e =>
+                        {
+                         const updatedProcedures = [...procedureArray]
+                         updatedProcedures[key].amount = parseInt(e.target.value) || 0
+                         selectedProcedureAmountFunc(updatedProcedures)
+                        }
+                      }
+                      type = { 'text' } />
+                  )
                 : <div></div>
               }
             </div>
-            <br/>
               {
                 attachmentsData.length !== 0  ?
                 <div>
@@ -212,6 +215,7 @@ OutPatientReimbursementFormCardComponent.propTypes = {
   attachments: PropTypes.array,
   showEditSubmitButton: PropTypes.bool,
   onSubmitFunc : PropTypes.func,
+  procedureArray : PropTypes.array,
 }
 
 export default OutPatientReimbursementFormCardComponent

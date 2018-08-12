@@ -110,9 +110,9 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     this.setState({ attachmentArray })
   }
 
-  validateAmount (e) {
-    const validate = OutPatientReimbursementFunction.checkedAmount(e)
-    this.setState({ amount : validate, amountErrorMessage : '' })
+  validateAmount (procedureArray) {
+    // const validate = OutPatientReimbursementFunction.checkedAmount(e)
+    this.setState({ procedureArray, amountErrorMessage : '' })
   }
 
   validateText (e) {
@@ -205,6 +205,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       procedureData,
       dependentId,
       dependentName,
+      procedureArray,
       procedureId,
       procedureName,
       diagnosisText,
@@ -279,19 +280,21 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         }
         {
           showProcedure &&
-          <SingleInputModal
+          <MultipleInputModal
             label = { 'Procedure' }
             inputArray = { procedureData }
-            selectedArray = { (procedureId, procedureName) => {
+            onSelect = { (procedure) => {
+              const updateProcedure = [...procedureArray]
+              updateProcedure.push(procedure)
               this.setState({
-                procedureName,
-                procedureId,
+                procedureArray: updateProcedure,
                 showProcedure : false,
                 showProcedureInput : true,
                 errorMessageRequiredProcedure : ''
                 })
               }
             }
+            procedureArray = { procedureArray }
             onClose = { () => this.setState({ showProcedure : false }) }
           />
         }
@@ -343,6 +346,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             dateErrorMessage = { dateErrorMessage }
             orNumberErrorMessage = { orNumberErrorMessage }
             amountErrorMessage = { amountErrorMessage }
+            procedureArray = { procedureArray }
           />
         }
       </div>
