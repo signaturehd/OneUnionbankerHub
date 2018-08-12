@@ -43,6 +43,10 @@ class TrainingFragment extends BaseMVPView {
     this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
 
+  onClickEnrollToTraining (resp) {
+    this.presenter.enrollEmployee(resp)
+  }
+
   render () {
     const { history, presenter } = this.props
     const {
@@ -98,6 +102,7 @@ class TrainingFragment extends BaseMVPView {
                 <Route path = '/mylearning/trainings/mytrainings'
                   render = { props => <MyTrainingFragment
                       presenter = { this.presenter }
+                      presenterFunc = { (resp) => this.onClickEnrollToTraining(resp) }
                       searchString = { searchString }
                     />
                   }

@@ -81,7 +81,13 @@ class MyTrainingFragment extends BaseMVPView {
   }
 
   render () {
-  const { history, presenter, searchString } = this.props
+  const {
+    history,
+    presenter,
+    presenterFunc,
+    searchString
+  } = this.props
+
   const {
     trainingList,
     enabledLoader,
@@ -110,7 +116,7 @@ class MyTrainingFragment extends BaseMVPView {
         <TrainingCardModal
           onClose = { () => this.setState({ trainingDetails : '' }) }
           details = { trainingDetails }
-          onEnroll = { (id) => presenter.enrollEmployee(String(id)) }
+          onEnroll = { (id) => presenterFunc(String(id)) }
           showConfirmation = { showConfirmation }
           setConfirmation = { (showConfirmation) => this.setState({showConfirmation}) }
         />
@@ -199,6 +205,10 @@ class MyTrainingFragment extends BaseMVPView {
     </div>
     )
   }
+}
+
+MyTrainingFragment.propTypes = {
+  presenterFunc : PropTypes.func,
 }
 
 export default MyTrainingFragment

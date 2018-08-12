@@ -37,6 +37,7 @@ class MyTrainingListCardComponent extends Component {
         endDate = { moment(endDate).format('LL') }
         startTime = { startTime }
         endTime = { endTime }
+        status = { status }
       />
     )
   }
