@@ -11,6 +11,9 @@ import EnrollEmployeeInteractor from
 import EnrolledTrainingInteractor from
 '../../../domain/interactor/training/EnrolledTrainingInteractor'
 
+import ApprovalTrainingInteractor from
+'../../../domain/interactor/training/ApprovalTrainingInteractor'
+
 
 
 import moment from 'moment'
@@ -29,6 +32,9 @@ export default class MyTrainingPresenter {
     this.getEnrolledTrainingInteractor =
       new EnrolledTrainingInteractor(container.get('HRBenefitsClient'))
 
+    this.approvalTrainingInteractor =
+      new ApprovalTrainingInteractor(container.get('HRBenefitsClient'))
+
   }
 
   setView (view) {
@@ -41,6 +47,17 @@ export default class MyTrainingPresenter {
     .subscribe(data => {
       this.view.hideCircularLoader(false)
       this.view.showTrainingList(data)
+    }, error => {
+      this.view.navigate()
+    })
+  }
+
+  getNeedApprovalTrainings () {
+    this.view.circularLoader(true)
+    this.approvalTrainingInteractor.execute()
+    .subscribe(data => {
+      this.view.circularLoader(false)
+      this.view.showApprovalList(data)
     }, error => {
       this.view.navigate()
     })

@@ -801,6 +801,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getNeedApprovalTrainings (token) {
+    return this.apiClient.get('v1/trainings/learners/requests', {
+      headers : { token }
+    })
+  }
+
   /* Maternity Assistance */
   validateMaternityAssistance (token) {
     return this.apiClient.get('v1/maternity/validate', {
