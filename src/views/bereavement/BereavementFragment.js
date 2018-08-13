@@ -11,11 +11,13 @@ import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 import BereavementDependentsModal from './modals/BereavementDependentsModal'
+import BereavementLeaveModal from  './modals/BereavementLeaveModal'
 
 import store from '../../store'
 import { NotifyActions } from '../../actions'
 
 import FormComponent from  './components/BereavementFormCardComponent'
+import BereavementLeaveCardComponent from  './components/BereavementLeaveCardComponent'
 import * as BereavementFunction from './controller/BereavementFunction'
 
 class BereavementFragment extends BaseMVPView {
@@ -28,6 +30,8 @@ class BereavementFragment extends BaseMVPView {
       attachmentData: [],
       showDepedents: [],
       showEditSubmitButton : false,
+      showBereavementLeaveComponent : false,
+      showBereavementLeaveModal : false,
       enabledLoader : false,
       showNoticeModal : false,
       noticeResponse : null,
@@ -365,6 +369,8 @@ class BereavementFragment extends BaseMVPView {
 
   render () {
     const {
+      showBereavementLeaveModal,
+      showBereavementLeaveComponent,
       showEditSubmitButton,
       enabledLoader,
       validatedBereavement,
@@ -401,174 +407,193 @@ class BereavementFragment extends BaseMVPView {
     return (
       <div>
         {
-          showNoticeModal &&
-          <NoticeModal
-            onClose={ () => this.setState({ showNoticeModal : false })}
-            noticeResponse={ noticeResponse }
-            benefitId={ '21' }
-            onDismiss={ (showNoticeModal, noticeResponse) =>
-              this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
-          />
-        }
-
-        {
-          showNoticeResponseModal &&
-          <ResponseModal
-            onClose={ () => {
-              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
-            }}
-            noticeResponse={ noticeResponse }
-          />
-        }
-
-        {
-          showBenefitFeedbackModal &&
-          <BenefitFeedbackModal
-            benefitId={ '21' }
-            onClose={ () => {
-              this.props.history.push('/mybenefits/benefits'),
-              this.setState({ showBenefitFeedbackModal : false })
-            }}
-          />
-        }
-
-        {
-          showDeceasedDependents &&
-          <BereavementDependentsModal
-            showDepedents={ showDepedents }
-            chosenDependent={ (dependentId, dependentsName, dependentsRelationship) =>
+          showBereavementLeaveModal &&
+          <BereavementLeaveModal
+            onLoadBereavementLeave = { (resp) =>
               this.setState({
-                dependentId,
-                dependentsName,
-                dependentsRelationship
-             })
-           }
-            onClose={ () => this.setState({ showDeceasedDependents: false }) }
-          />
+                showBereavementLeaveModal: false,
+                showBereavementLeaveComponent : resp })
+              }
+            onLoadNavigateBenefits = { () => this.navigate() }
+            />
         }
-        <div>
-          <i
-            className={ 'back-arrow' }
-            onClick={ this.navigate.bind(this) }>
-          </i>
-        </div>
         {
-          enabledLoader ?
-          <center className={ 'circular-loader-center' }>
-            <CircularLoader show={ enabledLoader }/>
-          </center>
+          showBereavementLeaveComponent ?
+          <BereavementLeaveCardComponent
+            navigateBenefits = { () => this.navigate() }
+            />
           :
-          <FormComponent
-            withDeathCert={ type === "certified" ? true : false  }
-            attachmentArray = { attachmentArray }
-            attachmentData = { attachmentData }
-            validatedBereavement={ validatedBereavement }
-            showDepedents={ showDepedents }
-            funeralHome = { funeralHome }
-            funeralAddress = { funeralAddress }
-            funeralRegion = { funeralRegion }
-            funeralProvince = { funeralProvince }
-            funeralCity = { funeralCity }
-            memorialPark = { memorialPark }
-            memorialAddress = { memorialAddress }
-            memorialRegion = { memorialRegion }
-            memorialProvince = { memorialProvince }
-            memorialCity = { memorialCity }
-            deceasedDate = { deceasedDate }
-            funeralDate = { funeralDate }
-            intermentDate = { intermentDate }
-            addressError = { addressError }
-            dependentId = { dependentId }
-            dependentsName = { dependentsName }
-            showEditSubmitButton = { showEditSubmitButton }
-            checkFuneralHome = { (resp) => this.validateFuneralHome(resp) }
-            checkFuneralAddress = { (resp) => this.validateFuneralAddress(resp) }
-            checkFuneralRegion = { (resp) => this.validateFuneralRegion(resp) }
-            checkFuneralProvince = { (resp) => this.validateFuneralProvince(resp) }
-            checkFuneralCity = { (resp) => this.validateFuneralCity(resp) }
-            checkMemorialPark = { (resp) => this.validateMemorialPark(resp) }
-            checkMemorialAddress = { (resp) => this.validateMemorialAddress(resp) }
-            checkMemorialRegion = { (resp) => this.validateMemorialRegion(resp) }
-            checkMemorialProvince = { (resp) => this.validateMemorialProvince(resp) }
-            checkMemorialCity = { (resp) => this.validateMemorialCity(resp) }
-            checkFuneralDate = { (resp) => this.formatFuneralDate(resp) }
-            checkDeceasedDate = { (resp) => this.formatDeceasedDate(resp) }
-            checkIntermentDate = { (resp) => this.formatIntermentDate(resp) }
-            dependentsRelationship = { dependentsRelationship }
-            showDeceasedDependents = { () => this.setState({ showDeceasedDependents : true }) }
-            setAttachmentArrayFunc = { (attachmentData) => this.setState({ attachmentData }) }
-            changeStateEditToFalse = { () => this.setState({ showEditSubmitButton : false }) }
-            editFormData={ (
-              funeralDate,
-              intermentDate,
-              deceasedDate,
-              dependentId,
-              funeralHome,
-              funeralAddress,
-              funeralRegion,
-              funeralProvince,
-              funeralCity,
-              memorialPark,
-              memorialAddress,
-              memorialRegion,
-              memorialProvince,
-              memorialCity,
-              attachmentData
-            ) =>
-              this.editForm(
-                funeralDate,
-                intermentDate,
-                deceasedDate,
-                dependentId,
-                funeralHome,
-                funeralAddress,
-                funeralRegion,
-                funeralProvince,
-                funeralCity,
-                memorialPark,
-                memorialAddress,
-                memorialRegion,
-                memorialProvince,
-                memorialCity,
-                attachmentData
-              )
+          <div>
+            {
+              showNoticeModal &&
+              <NoticeModal
+                onClose={ () => this.setState({ showNoticeModal : false })}
+                noticeResponse={ noticeResponse }
+                benefitId={ '21' }
+                onDismiss={ (showNoticeModal, noticeResponse) =>
+                  this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
+              />
             }
-            submitFormData={ (
-              funeralDate,
-              intermentDate,
-              deceasedDate,
-              dependentId,
-              funeralHome,
-              funeralAddress,
-              funeralRegion,
-              funeralProvince,
-              funeralCity,
-              memorialPark,
-              memorialAddress,
-              memorialRegion,
-              memorialProvince,
-              memorialCity,
-              attachmentData
-            ) =>
-              this.submitForm(
-                funeralDate,
-                intermentDate,
-                deceasedDate,
-                dependentId,
-                funeralHome,
-                funeralAddress,
-                funeralRegion,
-                funeralProvince,
-                funeralCity,
-                memorialPark,
-                memorialAddress,
-                memorialRegion,
-                memorialProvince,
-                memorialCity,
-                attachmentData
-              )
+
+            {
+              showNoticeResponseModal &&
+              <ResponseModal
+                onClose={ () => {
+                  this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
+                }}
+                noticeResponse={ noticeResponse }
+              />
             }
-          />
+
+            {
+              showBenefitFeedbackModal &&
+              <BenefitFeedbackModal
+                benefitId={ '21' }
+                onClose={ () => {
+                  this.setState({ showBereavementLeaveModal : true  }),
+                  this.setState({ showBenefitFeedbackModal : false })
+                }}
+              />
+            }
+            {
+              showDeceasedDependents &&
+              <BereavementDependentsModal
+                showDepedents={ showDepedents }
+                chosenDependent={ (dependentId, dependentsName, dependentsRelationship) =>
+                  this.setState({
+                    dependentId,
+                    dependentsName,
+                    dependentsRelationship
+                 })
+               }
+                onClose={ () => this.setState({ showDeceasedDependents: false }) }
+              />
+            }
+            <div>
+              <i
+                className={ 'back-arrow' }
+                onClick={ this.navigate.bind(this) }>
+              </i>
+            </div>
+            {
+              enabledLoader ?
+              <center className={ 'circular-loader-center' }>
+                <CircularLoader show={ enabledLoader }/>
+              </center>
+              :
+              <FormComponent
+                withDeathCert={ type === "certified" ? true : false  }
+                attachmentArray = { attachmentArray }
+                attachmentData = { attachmentData }
+                validatedBereavement={ validatedBereavement }
+                showDepedents={ showDepedents }
+                funeralHome = { funeralHome }
+                funeralAddress = { funeralAddress }
+                funeralRegion = { funeralRegion }
+                funeralProvince = { funeralProvince }
+                funeralCity = { funeralCity }
+                memorialPark = { memorialPark }
+                memorialAddress = { memorialAddress }
+                memorialRegion = { memorialRegion }
+                memorialProvince = { memorialProvince }
+                memorialCity = { memorialCity }
+                deceasedDate = { deceasedDate }
+                funeralDate = { funeralDate }
+                intermentDate = { intermentDate }
+                addressError = { addressError }
+                dependentId = { dependentId }
+                dependentsName = { dependentsName }
+                showEditSubmitButton = { showEditSubmitButton }
+                checkFuneralHome = { (resp) => this.validateFuneralHome(resp) }
+                checkFuneralAddress = { (resp) => this.validateFuneralAddress(resp) }
+                checkFuneralRegion = { (resp) => this.validateFuneralRegion(resp) }
+                checkFuneralProvince = { (resp) => this.validateFuneralProvince(resp) }
+                checkFuneralCity = { (resp) => this.validateFuneralCity(resp) }
+                checkMemorialPark = { (resp) => this.validateMemorialPark(resp) }
+                checkMemorialAddress = { (resp) => this.validateMemorialAddress(resp) }
+                checkMemorialRegion = { (resp) => this.validateMemorialRegion(resp) }
+                checkMemorialProvince = { (resp) => this.validateMemorialProvince(resp) }
+                checkMemorialCity = { (resp) => this.validateMemorialCity(resp) }
+                checkFuneralDate = { (resp) => this.formatFuneralDate(resp) }
+                checkDeceasedDate = { (resp) => this.formatDeceasedDate(resp) }
+                checkIntermentDate = { (resp) => this.formatIntermentDate(resp) }
+                dependentsRelationship = { dependentsRelationship }
+                showDeceasedDependents = { () => this.setState({ showDeceasedDependents : true }) }
+                setAttachmentArrayFunc = { (attachmentData) => this.setState({ attachmentData }) }
+                changeStateEditToFalse = { () => this.setState({ showEditSubmitButton : false }) }
+                editFormData={ (
+                  funeralDate,
+                  intermentDate,
+                  deceasedDate,
+                  dependentId,
+                  funeralHome,
+                  funeralAddress,
+                  funeralRegion,
+                  funeralProvince,
+                  funeralCity,
+                  memorialPark,
+                  memorialAddress,
+                  memorialRegion,
+                  memorialProvince,
+                  memorialCity,
+                  attachmentData
+                ) =>
+                  this.editForm(
+                    funeralDate,
+                    intermentDate,
+                    deceasedDate,
+                    dependentId,
+                    funeralHome,
+                    funeralAddress,
+                    funeralRegion,
+                    funeralProvince,
+                    funeralCity,
+                    memorialPark,
+                    memorialAddress,
+                    memorialRegion,
+                    memorialProvince,
+                    memorialCity,
+                    attachmentData
+                  )
+                }
+                submitFormData={ (
+                  funeralDate,
+                  intermentDate,
+                  deceasedDate,
+                  dependentId,
+                  funeralHome,
+                  funeralAddress,
+                  funeralRegion,
+                  funeralProvince,
+                  funeralCity,
+                  memorialPark,
+                  memorialAddress,
+                  memorialRegion,
+                  memorialProvince,
+                  memorialCity,
+                  attachmentData
+                ) =>
+                  this.submitForm(
+                    funeralDate,
+                    intermentDate,
+                    deceasedDate,
+                    dependentId,
+                    funeralHome,
+                    funeralAddress,
+                    funeralRegion,
+                    funeralProvince,
+                    funeralCity,
+                    memorialPark,
+                    memorialAddress,
+                    memorialRegion,
+                    memorialProvince,
+                    memorialCity,
+                    attachmentData
+                  )
+                }
+              />
+            }
+          </div>
         }
       </div>
     )
