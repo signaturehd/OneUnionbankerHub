@@ -9,7 +9,7 @@ import {
 } from '../../../ub-components'
 import moment from 'moment'
 
-class EnrolledTrainingCardComponent extends Component {
+class ApprovalTrainingCardComponent extends Component {
   constructor (props) {
     super(props)
   }
@@ -19,7 +19,7 @@ class EnrolledTrainingCardComponent extends Component {
       id,
       name,
       title,
-      date,
+      status,
     } = this.props
 
     return (
@@ -27,18 +27,18 @@ class EnrolledTrainingCardComponent extends Component {
         <div className = { 'enrolled-list' }>
           <h3>{ name ? name : '(no name)' }</h3>
           <p className={ 'enrolled-title' }>{ title ? title : '(no title)' }</p>
-          <p className={ 'enrolled-date' }>{ date ? moment(date).format('LL') : '(no date)' }</p>
+          <p className={ 'enrolled-date' }>{ status }</p>
         </div>
       </Card>
     )
   }
 }
 
-EnrolledTrainingCardComponent.propTypes = {
+ApprovalTrainingCardComponent.propTypes = {
   id :  PropTypes.number,
   name : PropTypes.string,
   title : PropTypes.string,
   date : PropTypes.string,
 }
 
-export default EnrolledTrainingCardComponent
+export default ApprovalTrainingCardComponent

@@ -46,7 +46,12 @@ class EnrolledTrainingFragment extends BaseMVPView {
   }
 
   render () {
-  const { history, presenter, searchString } = this.props
+  const {
+    history,
+    presenter,
+    searchString
+  } = this.props
+
   const {
     enrolledTrainingList,
     enabledLoader,
@@ -91,17 +96,23 @@ class EnrolledTrainingFragment extends BaseMVPView {
            )
           }
           </div>
+        {
+          enrolledTrainingList ?
           <div>
             <div className = { 'grid-global' }>
-              <GenericButton
-                className = { 'transaction-component-button' }
-                text = { 'View Less' }
-                onClick = { () =>
-                  this.setState({
-                    index : MyTrainingFunctions.indexDecreased(index)
-                    })
-                  }
-                />
+              {
+                index === 8 ?
+                <div></div> :
+                <GenericButton
+                  className = { 'transaction-component-button' }
+                  text = { 'View Less' }
+                  onClick = { () =>
+                    this.setState({
+                      index : MyTrainingFunctions.indexDecreased(index)
+                      })
+                    }
+                  />
+              }
               <GenericButton
                 className = { 'transaction-component-button' }
                 text = { 'View More' }
@@ -114,6 +125,9 @@ class EnrolledTrainingFragment extends BaseMVPView {
             </div>
             <Line/>
           </div>
+          :
+          <div></div>
+        }
         </div>
       </div>
       }
