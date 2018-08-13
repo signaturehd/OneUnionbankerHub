@@ -91,7 +91,7 @@ class DentalReimbursementFragment extends BaseMVPView {
         { super.render() }
         <div>
           <i className = { 'back-arrow' } onClick = { () => this.navigate() }></i>
-          <h4 className = { 'header-margin-default' } >DENTAL REIMBURSEMENT</h4>
+          <h4 className = { 'header-margin-default' } >Dental Reimbursement</h4>
         </div>
           <div className = { 'dentalreimbursement-container' }>
             {
