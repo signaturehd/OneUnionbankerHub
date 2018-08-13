@@ -1,11 +1,24 @@
 .phenom-fragment {
   display: grid;
-  grid-template-rows: .5fr 1fr;
+  grid-template-rows: .1fr 1fr;
   column-gap: 2%;
 }
 
 .phenom-container-component {
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
   padding-top: 20px;
+}
+
+.phenom-container-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  column-gap: 2%;
+}
+
+.phenom-card-style {
+  background-image: url('../../../images/phenomtest.jpg');
+  height: 200px;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

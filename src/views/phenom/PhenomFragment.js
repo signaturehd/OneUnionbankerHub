@@ -8,6 +8,13 @@ import Presenter from './presenter/PhenomPresenter'
 
 /*Phenom Component*/
 import { PhenomCardComponent } from '../../components/'
+import {
+  Card,
+  GenericButton,
+  Line
+} from '../../ub-components/'
+
+import * as PhenomFunction from './functions/PhenomFunction'
 
 import './styles/phenomStyle.css'
 
@@ -16,6 +23,7 @@ class PhenomFragment extends BaseMVPView {
     super (props)
     this.state = {
       phenomDataList : [],
+      index: 6,
     }
   }
 
@@ -30,32 +38,79 @@ class PhenomFragment extends BaseMVPView {
   render () {
     const mylearning = [{
       id: 0 ,
-      styleName: 'mylearning-cards-1 font-weight-bold',
+      styleName: 'phenom-card-style',
       title: 'Borrow Books',
       description: 'Lorem ipsum dolor',
       path: '/mylearning/books',
     }, {
       id: 1 ,
-      styleName: 'mylearning-cards-2 font-weight-bold',
+      styleName: 'phenom-card-style',
       title: 'Listen Podcasts',
       description: 'Lorem ipsum dolor',
       path: '/mylearning/podcasts',
     }, {
       id: 2 ,
-      styleName: 'mylearning-cards-3 font-weight-bold',
+      styleName: 'phenom-card-style',
       title: 'Enroll to Trainings',
       description: 'Lorem ipsum dolor',
       path: '/mylearning/trainings',
     }]
 
-    const { phenomDataList } = this.state
+    const {
+      phenomDataList,
+      index
+    } = this.state
+
     const { setSelectedNavigation } = this.props
+
     return (
       <div className = { 'phenom-fragment' }>
         <h2 className = { 'header-margin-default ' }>Phenom</h2>
-        <div className = { 'phenom-container-component' }>
-          
-        </div>
+        {
+          mylearning &&
+          <div className = { 'phenom-container-component' }>
+            <div className = { 'phenom-container-grid' }>
+              {
+                mylearning.map((resp, key) =>
+                  <Card
+                    className = { `${ resp.styleName }` }
+                    key = { key }>
+                    <h2>{ resp.title }</h2>
+                  </Card>
+                )
+              }
+            </div>
+            <div>
+              <div>
+                <div className = { 'grid-global' }>
+                  {
+                    index === 6 ?
+                    <div></div> :
+                    <GenericButton
+                      className = { 'transaction-component-button' }
+                      text = { 'View Less' }
+                      onClick = { () =>
+                        this.setState({
+                          index : PhenomFunction.indexDecreased(index)
+                          })
+                        }
+                      />
+                  }
+                  <GenericButton
+                    className = { 'transaction-component-button' }
+                    text = { 'View More' }
+                    onClick = { () =>
+                      this.setState({
+                        index : PhenomFunction.indexIncreased(index)
+                        })
+                      }
+                    />
+                </div>
+                <Line/>
+              </div>
+            </div>
+          </div>
+        }
       </div>
     )
   }
