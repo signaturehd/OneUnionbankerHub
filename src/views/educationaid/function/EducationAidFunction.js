@@ -1,5 +1,6 @@
 import {
   MoneyValidation,
+  RequiredValidation,
   RequiredAlphabetValidation,
   RequiredDecimalValidation
 } from '../../../utils/validate'
@@ -17,4 +18,21 @@ export function checkedValidateText (text) {
 export function checkedValidateDecimal (num) {
   return new RequiredDecimalValidation().isValid(num) ?
    num : ''
+}
+
+export function checkedValidateInput (input) {
+  return new RequiredValidation().isValid(input) ? true : false
+}
+
+export function totalReimbursableAmount (computations, gwa, totalFee) {
+  if (computations) {
+    for (const i in computations) {
+      if ((gwa >= computations[i].maximum && gwa <= computations[i].minimum) ||
+          (gwa >= computations[i].minimum && gwa <= computations[i].maximum)) {
+        return parseFloat(totalFee) * parseFloat(computations[i].percent)
+      }
+    }
+  } else {
+    return 0
+  }
 }

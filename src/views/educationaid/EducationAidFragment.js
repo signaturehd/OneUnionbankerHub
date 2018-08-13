@@ -24,6 +24,8 @@ import { RequiredValidation, MoneyValidation } from '../../utils/validate'
 import * as EducationAidFunction from './function/EducationAidFunction'
 
 import moment from 'moment'
+import { format } from '../../utils/numberUtils'
+
 
 class EducationAidFragment extends BaseMVPView {
 
@@ -40,42 +42,32 @@ class EducationAidFragment extends BaseMVPView {
       showSchools : false,
       showEducationAcademicYearModal : false,
       showEducationSemesterModal : false,
-      tuitionFeeText: '',
-      tuitionFeeErrorMessage: '',
-      registrationFeeText: '',
-      registrationFeeErrorMessage: '',
-      totalFeeText: '',
+      showBenefitFeedbackModal : false,
       schoolId: '',
+      academicYearId: '',
+      semesterId: '',
+      tuitionFeeText: '',
+      registrationFeeText: '',
       schoolName: '',
       computations: '',
-      schoolErrorMessage: '',
-      computations: '',
       courseText: '',
-      courseTextErrorMessage: '',
-      academicYearId: '',
       academicYearText: '',
-      academicYearTextErrorMessage: '',
-      semesterId: '',
       semesterText: '',
-      semesterErrorMessage: '',
-      totalReimbursableAmount: '',
-      totalReimbursableAmountText: '',
       gwaText: '',
+      totalReimbursableAmount: '',
+      tuitionFeeErrorMessage: '',
+      registrationFeeErrorMessage: '',
+      schoolErrorMessage: '',
+      courseTextErrorMessage: '',
+      academicYearTextErrorMessage: '',
+      semesterErrorMessage: '',
       gwaErrorMessage: '',
-      fileOR: '',
-      fileCOG: '',
-      fileRegForm: '',
-      imagePrevOR : null,
-      imagePrevCOG : null,
-      imagePrevRegForm : null,
-      showBenefitFeedbackModal : false,
       data: '',
-      educationAid: [], //education aid details
       schoolsData: [],
       attachmentsData : [],
       attachmentArray : []
     }
-    this.validator = this.validator.bind(this)
+    this.validateRequired = this.validateRequired.bind(this)
     this.tuitionFeeFunc = this.tuitionFeeFunc.bind(this)
     this.registrationFeeFunc = this.registrationFeeFunc.bind(this)
     this.courseTextFunc = this.courseTextFunc.bind(this)
@@ -107,6 +99,10 @@ class EducationAidFragment extends BaseMVPView {
     this.setState({ gwaText : validate , gwaErrorMessage : '' })
   }
 
+  validateRequired (e) {
+    return EducationAidFunction.checkedValidateInput(e)
+  }
+
   showAcademicYearFunc () {
     this.setState({ showEducationAcademicYearModal : true })
   }
@@ -131,15 +127,22 @@ class EducationAidFragment extends BaseMVPView {
     this.setState({ schoolsData })
   }
 
-  submitForm (
-    courseText,
-    academicYearText,
-    semesterText,
-    gwaText,
-    tuitionFeeText,
-    registrationFeeText,
-    schoolId,
-    fileAttachments) {
+  editFormReview (e) {
+    this.setState({ showEditSubmitButton : false, titleChange : true })
+  }
+
+  submitForm () {
+    const {
+      courseText,
+      academicYearText,
+      semesterText,
+      gwaText,
+      tuitionFeeText,
+      registrationFeeText,
+      schoolId,
+      attachmentArray
+    } = this.state
+
     this.presenter.addEducationAid(
       courseText,
       academicYearText,
@@ -148,111 +151,45 @@ class EducationAidFragment extends BaseMVPView {
       tuitionFeeText,
       registrationFeeText,
       schoolId,
-      fileAttachments)
+      attachmentArray)
   }
-
-  validator (input) {
-     return new RequiredValidation().isValid(input)
-   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateAid()
   }
 
-  confirmation (showConfirmation, data) {
-    if (this.validator(!data.tuitionFeeText)) {
-      store.dispatch(NotifyActions.addNotify({
-         title : 'Education Aid' ,
-         message : 'Please double check your Tuition Fee',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-    }
-    else if (this.validator(!data.registrationFeeText)) {
-      store.dispatch(NotifyActions.addNotify({
-         title : 'Education Aid' ,
-         message : 'Please double check your Registration Fee',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-    }
-    else if (this.validator(!data.schoolID)) {
-      store.dispatch(NotifyActions.addNotify({
-         title : 'Education Aid' ,
-         message : 'Please double check your College/Universities',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-    }
-    else if (this.validator(!data.courseText)) {
-      store.dispatch(NotifyActions.addNotify({
-         title : 'Education Aid' ,
-         message : 'Please double check your Course',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-    }
-    else if (this.validator(!data.academicYearText)) {
-      store.dispatch(NotifyActions.addNotify({
-         title : 'Education Aid' ,
-         message : 'Please double check your Academic Year',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-    }
-    else if (this.validator(!data.semesterText)) {
-      store.dispatch(NotifyActions.addNotify({
-         title : 'Education Aid' ,
-         message : 'Please double check your Semester',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-    }
-    else if (this.validator(!data.gwaText)) {
-      store.dispatch(NotifyActions.addNotify({
-         title : 'Education Aid' ,
-         message : 'Please double check your GWA',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-    }
-    else if (parseInt(data.totalReimbursment) === 0) {
-      store.dispatch(NotifyActions.addNotify({
-         title : 'Education Aid' ,
-         message : 'Invalid GWA',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-    }
-     else if (!(data.fileOR && data.fileCOG && data.fileRegForm)) {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Education Aid',
-          message : 'Please check your attachments',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    }
-    else if (data.courseText.match(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/)){
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Education Aid',
-          message : 'Special Characters are not accepted',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    }
-    else {
-      this.setState({showConfirmation, data})
+  showFormReviewFieldDisabled (e) {
+    const {
+      tuitionFeeText,
+      registrationFeeText,
+      schoolName,
+      courseText,
+      academicYearText,
+      semesterText,
+      gwaText,
+      attachmentArray
+    } = this.state
+
+    if(!this.validateRequired(tuitionFeeText)) {
+     this.setState({ tuitionFeeErrorMessage : 'Please enter an amount' })
+    } else if (!this.validateRequired(registrationFeeText)) {
+      this.setState({ registrationFeeErrorMessage : 'Please enter an amount' })
+    } else if (!this.validateRequired(schoolName)) {
+      this.setState({ schoolErrorMessage : 'Please select a Colleges/Universities' })
+    } else if (!this.validateRequired(courseText)) {
+      this.setState({ courseTextErrorMessage : 'Please enter a Course' })
+    } else if (!this.validateRequired(academicYearText)) {
+      this.setState({ academicYearTextErrorMessage : 'Please select an Academic Year' })
+    } else if (!this.validateRequired(semesterText)) {
+      this.setState({ semesterErrorMessage : 'Please select a Semester' })
+    } else if (!this.validateRequired(gwaText)) {
+      this.setState({ gwaErrorMessage : 'Please enter an amount' })
+    } else {
+      this.setState({
+        showEditSubmitButton: true,
+        titleChange: false,
+      })
     }
   }
 
@@ -302,9 +239,9 @@ class EducationAidFragment extends BaseMVPView {
       semesterId,
       semesterText,
       semesterErrorMessage,
-      totalFeeText,
       gwaText,
       gwaErrorMessage,
+      totalReimbursableAmount,
       educationAid,
       enabledLoader,
       showSchools,
@@ -357,6 +294,8 @@ class EducationAidFragment extends BaseMVPView {
           name: 'Fourth Semester',
       }
     ]
+
+    const totalReimbursment = format(EducationAidFunction.totalReimbursableAmount(computations, gwaText, resultTotalFee))
 
     return (
       <div>
@@ -491,28 +430,35 @@ class EducationAidFragment extends BaseMVPView {
             educationAid = { educationAid }
             tuitionFeeText = { tuitionFeeText }
             tuitionFeeErrorMessage = { tuitionFeeErrorMessage }
-            tuitionFeeFunc = { (resp) => this.tuitionFeeFunc(resp) }
             registrationFeeText = { registrationFeeText }
-            registrationFeeErrorMessage = { registrationFeeErrorMessage }
-            registrationFeeFunc = { (resp) => this.registrationFeeFunc(resp) }
             totalFeeText = { resultTotalFee }
-            attachmentsData = { attachmentsData }
-            showEditSubmitButton = { showEditSubmitButton }
             schoolName = { schoolName }
             showSchools = { showSchools }
             computations = { computations }
-            showSchoolsFunc = { () => this.showSchoolsFunc() }
-            schoolErrorMessage = { schoolErrorMessage }
             courseText = { courseText }
-            courseTextFunc = { (resp) => this.courseTextFunc(resp) }
-            courseTextErrorMessage = { courseTextErrorMessage }
             academicYearText = { academicYearText }
-            showAcademicYearFunc = { (resp) => this.showAcademicYearFunc(resp) }
-            academicYearTextErrorMessage = { academicYearTextErrorMessage }
             semesterText = { semesterText }
-            showSemesterFunc = { (resp) => this.showSemesterFunc(resp) }
             gwaText = { gwaText }
+            totalReimbursment = { totalReimbursment }
+            schoolErrorMessage = { schoolErrorMessage }
+            registrationFeeErrorMessage = { registrationFeeErrorMessage }
+            academicYearTextErrorMessage = { academicYearTextErrorMessage }
+            courseTextErrorMessage = { courseTextErrorMessage }
+            semesterErrorMessage = { semesterErrorMessage }
+            gwaErrorMessage = { gwaErrorMessage }
+            attachmentsData = { attachmentsData }
+            showEditSubmitButton = { showEditSubmitButton }
+            tuitionFeeFunc = { (resp) => this.tuitionFeeFunc(resp) }
+            registrationFeeFunc = { (resp) => this.registrationFeeFunc(resp) }
+            showSchoolsFunc = { () => this.showSchoolsFunc() }
+            courseTextFunc = { (resp) => this.courseTextFunc(resp) }
+            showAcademicYearFunc = { (resp) => this.showAcademicYearFunc(resp) }
+            showSemesterFunc = { (resp) => this.showSemesterFunc(resp) }
             gwaFunc = { (resp) => this.gwaFunc(resp) }
+            showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
+            onSubmitFunc = { () => this.submitForm() }
+            editFormDataFunc = { () => this.editFormReview() }
+            setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
             onClick = {
               (showConfirmation, data) => {
                 this.confirmation(showConfirmation, data)

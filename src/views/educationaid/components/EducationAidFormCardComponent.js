@@ -26,14 +26,6 @@ class EducationAidFormCardComponent extends Component {
 
   constructor (props) {
     super (props)
-    this.state={
-      showReviewEducationModal: false,
-      totalReimbursableAmount: '',
-      totalReimbursableAmountText: '',
-      gwaText: '',
-      showEducationSemesterModal: false,
-      showEducationAcademicYearModal : false
-    }
     this.onGetClicked=this.onGetClicked.bind(this)
   }
 
@@ -100,7 +92,7 @@ class EducationAidFormCardComponent extends Component {
       tuitionFeeErrorMessage,
       registrationFeeText,
       registrationFeeFunc,
-      registrationErrorMessage,
+      registrationFeeErrorMessage,
       totalFeeText,
       schoolName,
       schoolErrorMessage,
@@ -118,125 +110,19 @@ class EducationAidFormCardComponent extends Component {
       gwaText,
       gwaErrorMessage,
       gwaFunc,
+      totalReimbursment,
       attachmentsData,
-      showEditSubmitButton
+      showEditSubmitButton,
+      showFormReview,
+      onSubmitFunc,
+      editFormDataFunc,
+      setAttachmentArrayFunc
     }=this.props
 
-    const {
-      showReviewEducationModal,
-      totalReimbursableAmount,
-      totalReimbursableAmountText,
-      showEducationSemesterModal,
-      showEducationAcademicYearModal,
-      }=this.state
-
-    const totalReimbursment = format(this.totalReimbursableAmount(computations, gwaText, totalFeeText))
 
     return (
       <div className={'educ-container'}>
         <div className={ 'educ-grid-column-2' }>
-
-            {
-              showReviewEducationModal &&
-                <EducationAidReviewModal
-                  collegeType={ collegeType }
-                  tuitionFeeText={ tuitionFeeText }
-                  courseText={ courseText }
-                  registrationFeeText={ registrationFeeText }
-                  academicYearText={ academicYearText }
-                  semesterText={ semesterText }
-                  gwaText={ gwaText }
-                  totalFeeText={ totalFeeText }
-                  fileOR={ fileOR }
-                  fileCOG={ fileCOG }
-                  fileRegForm={ fileRegForm }
-                  imagePrevOR={ imagePrevOR }
-                  imagePrevCOG={ imagePrevCOG }
-                  imagePrevRegForm={ imagePrevRegForm }
-                  totalReimbursableAmountText={ totalReimbursableAmountText }
-                  onClose={ () => this.setState({ showReviewEducationModal : false }) }
-                  getFormData={ ()=> this.setState({
-                    courseText,
-                    academicYearText,
-                    semesterText,
-                    gwaText,
-                    tuitionFeeText,
-                    registrationFeeText,
-                    schoolID,
-                    fileOR,
-                    fileCOG,
-                    fileRegForm,
-                    imagePrevOR,
-                    imagePrevCOG,
-                    imagePrevRegForm,
-                    totalFeeText })}
-                  onClick={ () => this.onGetClicked(
-                    courseText,
-                    academicYearText,
-                    semesterText,
-                    gwaText,
-                    tuitionFeeText,
-                    registrationFeeText,
-                    schoolID,
-                    fileOR,
-                    fileCOG,
-                    fileRegForm,
-                    imagePrevOR,
-                    imagePrevCOG,
-                    imagePrevRegForm,
-                    totalFeeText
-                    )
-                  }
-                />
-            }
-            {
-              showEducationSemesterModal &&
-              <Modal
-                isDismisable={ true }
-                onClose={ ()=> this.setState({ showEducationSemesterModal: false }) }
-                >
-                <div>
-                  {
-                    semesterOptions && semesterOptions.map((semester, key) =>
-                      <GenericButton
-                        className = { 'mpl-poa-modal-button' }
-                        key={ key }
-                        text={ semester.name }
-                        onClick={ () => {
-                          this.setState({ semesterText: semester.name, showEducationSemesterModal: false })
-                          }
-                        }
-                      />
-                    )
-                  }
-                </div>
-              </Modal>
-            }
-
-            {
-              showEducationAcademicYearModal &&
-              <Modal
-                isDismisable={ true }
-                onClose={ ()=> this.setState({ showEducationAcademicYearModal: false }) }
-                >
-                <div>
-                  {
-                    AcademicYearOptions && AcademicYearOptions.map((academicYear, key) =>
-                      <GenericButton
-                        className = { 'mpl-poa-modal-button' }
-                        key={ key }
-                        text={ academicYear.name }
-                        onClick={ () => {
-                          this.setState({ academicYearText: academicYear.name, showEducationAcademicYearModal: false })
-                          }
-                        }
-                      />
-                    )
-                  }
-                </div>
-              </Modal>
-            }
-
             <div></div>
           <div className={ 'educaid-form-card' }>
             <div className={'educ-form-card-body '}>
@@ -245,62 +131,61 @@ class EducationAidFormCardComponent extends Component {
               onChange={ (e) => tuitionFeeFunc(e.target.value) }
               text={ 'Tuition Fee' }
               errorMessage = { tuitionFeeErrorMessage }
+              disabled = { showEditSubmitButton }
               type={ 'text' }/>
-              <br/>
             <GenericInput
               value={ registrationFeeText ? registrationFeeText : ''}
               onChange={ (e) => registrationFeeFunc(e.target.value) }
               text={ 'Registration Fee' }
-              errorMessage = { registrationErrorMessage }
+              disabled = { showEditSubmitButton }
+              errorMessage = { registrationFeeErrorMessage }
               type={ 'text' }/>
-              <br/>
             <GenericInput
               value={ totalFeeText && parseFloat(totalFeeText).toFixed(2) }
               disabled={ 'disabled' }
               text={ 'Total Fee' }
               type={ 'text' }/>
-              <br/>
             <GenericInput
               value={ schoolName }
               onClick={ () => showSchoolsFunc() }
               text={ 'Colleges/Universities' }
+              disabled = { showEditSubmitButton }
               errorMessage = { schoolErrorMessage }
               type={ 'text' }/>
-              <br/>
             <GenericInput
               value={ courseText }
               onChange={ (e) => courseTextFunc(e.target.value) }
               errorMessage = { courseTextErrorMessage }
+              disabled = { showEditSubmitButton }
               text={ 'Course' }
               type={ 'text' }/>
-              <br/>
             <GenericInput
               value={ academicYearText }
               onClick={ () => showAcademicYearFunc() }
               text={ 'Academic Year' }
+              disabled = { showEditSubmitButton }
               errorMessage = { academicYearTextErrorMessage }
               type={ 'text' }/>
-              <br/>
             <GenericInput
               value={ semesterText }
               onClick={ () => showSemesterFunc() }
+              disabled = { showEditSubmitButton }
+              errorMessage = { semesterErrorMessage }
               text={ 'Semester' }
               type={ 'text' }/>
-              <br/>
             <GenericInput
               value={ gwaText }
               onChange={ (e) => gwaFunc(e.target.value) }
+              disabled = { showEditSubmitButton }
               maxLength = { 4 }
-              errorMessage = { ((parseInt(totalReimbursment) ===0) && gwaText) ? 'Invalid GWA' : '' }
+              errorMessage = { ((parseInt(totalReimbursment) ===0) && gwaText) ? 'Invalid GWA' : gwaErrorMessage }
               text={ 'General Weighted Average (GWA)' }
               type={ 'text' }/>
-              <br/>
             <GenericInput
               value={ totalReimbursment }
               disabled={ 'disabled' }
               type={ 'text' }
               text={ 'Total Reimbursable Amount' }/>
-              <br/>
 
               {
                 attachmentsData.length !== 0  ?
@@ -321,34 +206,34 @@ class EducationAidFormCardComponent extends Component {
               }
               <br/>
               <Line/>
-              <br/>
 
-              <GenericButton
-                type={ 'button' }
-                text={ 'submit' }
-                onClick={
-                  () => onClick(true,
-                    {
-                      tuitionFeeText,
-                      registrationFeeText,
-                      resultTotalFee,
-                      schoolID,
-                      collegeType,
-                      courseText,
-                      academicYearText,
-                      semesterText,
-                      gwaText,
-                      totalReimbursment,
-                      fileOR,
-                      fileCOG,
-                      fileRegForm,
-                      imagePrevOR,
-                      imagePrevCOG,
-                      imagePrevRegForm
+              {
+                showEditSubmitButton ?
+                <div className = { 'educ-form-review' }>
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Edit' }
+                    className = { 'educ-edit-form' }
+                    onClick = { () =>
+                      editFormDataFunc()
+                      }
+                    />
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Submit' }
+                    onClick = { () => onSubmitFunc() }
+                    className = { 'educ-submit-form-button' }
+                    />
+                </div>
+                :
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Continue' }
+                    onClick = {
+                      () => showFormReview(true)
                     }
-                  )
-                }
-                className={ 'educ-submit' } />
+                    className = { 'educ-submit' } />
+              }
             </div>
           </div>
         </div>
@@ -362,9 +247,9 @@ EducationAidFormCardComponent.propTypes = {
   tuitionFeeErrorMessage : PropTypes.string,
   tuitionFeeFunc : PropTypes.func,
   registrationFeeText : PropTypes.string,
-  registrationErrorMessage : PropTypes.string,
+  registrationFeeErrorMessage : PropTypes.string,
   registrationFeeFunc : PropTypes.func,
-  totalFeeText : PropTypes.string,
+  totalFeeText : PropTypes.number,
   schoolName : PropTypes.string,
   showSchoolsFunc : PropTypes.func,
   schoolErrorMessage : PropTypes.string,
@@ -378,9 +263,14 @@ EducationAidFormCardComponent.propTypes = {
   showSemesterFunc : PropTypes.func,
   semesterErrorMessage : PropTypes.string,
   gwaText : PropTypes.string,
-  gwaErrorMessage : PropTypes.toString,
+  gwaErrorMessage : PropTypes.string,
   gwaFunc : PropTypes.func,
-  showEditSubmitButton : PropTypes.bool
+  totalReimbursment : PropTypes.string,
+  showEditSubmitButton : PropTypes.bool,
+  showFormReview : PropTypes.func,
+  setAttachmentArrayFunc : PropTypes.func,
+  onSubmitFunc : PropTypes.func,
+  editFormDataFunc : PropTypes.func
 }
 
 export default EducationAidFormCardComponent
