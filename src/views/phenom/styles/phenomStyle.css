@@ -1,0 +1,11 @@
+.phenom-fragment {
+  display: grid;
+  grid-template-rows: .5fr 1fr;
+  column-gap: 2%;
+}
+
+.phenom-container-component {
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 20px;
+}

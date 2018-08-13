@@ -14,6 +14,7 @@ import LibraryFragment from '../library/LibraryFragment'
 import MyLearningView from '../mylearning/MyLearningView'
 import FeedbackFragment from '../Feedback/FeedbackFragment'
 import ComplianceFragment from '../compliance/ComplianceFragment'
+import PhenomFragment from '../phenom/PhenomFragment'
 /* Navigation Drawer Component*/
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
@@ -261,6 +262,10 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mycompliance' render = { props =>
                     <ComplianceFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                    <Route path = '/phenom' render = { props =>
+                    <PhenomFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>
