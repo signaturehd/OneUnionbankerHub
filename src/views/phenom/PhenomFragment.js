@@ -24,6 +24,7 @@ class PhenomFragment extends BaseMVPView {
     this.state = {
       phenomDataList : [],
       index: 6,
+      activeSelect : ''
     }
   }
 
@@ -58,14 +59,19 @@ class PhenomFragment extends BaseMVPView {
 
     const {
       phenomDataList,
-      index
+      index,
+      activeSelect
     } = this.state
 
-    const { setSelectedNavigation } = this.props
+    const {
+      setSelectedNavigation,
+      base64,
+      selected
+    } = this.props
 
     return (
       <div className = { 'phenom-fragment' }>
-        <h2 className = { 'header-margin-default ' }>Phenom</h2>
+        <h2 className = { 'header-margin-default' }>Phenom</h2>
         {
           mylearning &&
           <div className = { 'phenom-container-component' }>
@@ -75,7 +81,22 @@ class PhenomFragment extends BaseMVPView {
                   <Card
                     className = { `${ resp.styleName }` }
                     key = { key }>
-                    <h2>{ resp.title }</h2>
+                    <div className = { 'phenom-content-card' }>
+                      <div className = { 'phenom-content-grid-column-right' }>
+                        <span className = { `${ base64 ? base64 : 'phenom-logo-icon' } phenom-logo-icon-default` }/>
+                        <div>
+                          <h2 className = { 'phenom-label-reward' }>
+                            Mc Donald's
+                          </h2>
+                        </div>
+                      </div>
+                      <div className = { 'phenom-content-grid-column-left' }>
+                        <span
+                          onClick = { () =>
+                            this.setState({ activeSelect : 'phenom-clicked' }) }
+                          className = { `${ selected === resp.id ? activeSelect : 'phenom-status-icon' } phenom-icon` }/>
+                      </div>
+                    </div>
                   </Card>
                 )
               }
@@ -118,6 +139,11 @@ class PhenomFragment extends BaseMVPView {
 
 PhenomFragment.propTypes = {
   setSelectedNavigation : PropTypes.func,
+  selected : PropTypes.number
+}
+
+PhenomFragment.defaultProps = {
+  selected : -1
 }
 
 export default ConnectView (PhenomFragment, Presenter)
