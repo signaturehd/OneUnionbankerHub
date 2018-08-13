@@ -17,6 +17,7 @@ import {
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
+import MaternityTypeOfDeliveryModals from './modals/MaternityTypeOfDeliveryModals'
 
 import store from '../../store'
 import { NotifyActions } from '../../actions'
@@ -48,6 +49,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
         typeOfDeliveryData : [],
         typeDeliveryId: '',
         typeDeliveryName: '',
+        typeOfDeliveryLimit: '',
         amount: '',
         orNumberText: '',
         preferredDate: '',
@@ -144,8 +146,17 @@ class MaternityAssistanceFragment extends BaseMVPView {
   }
 
   validateAmount (e) {
+    const {
+      typeOfDeliveryLimit,
+      amount
+    } = this.state
+
     const validate = MaternityAssistanceFunction.checkedAmount(e)
-    this.setState({ amount : validate, amountErrorMessage : '' })
+    if(parseInt(validate) > parseInt(typeOfDeliveryLimit)) {
+      this.setState({ amountErrorMessage : `reimbursable amount should not exceed to ${ typeOfDeliveryLimit }` })
+    } else {
+      this.setState({ amount : validate, amountErrorMessage : '' })
+    }
   }
 
   validateSymbol (e) {
@@ -464,13 +475,14 @@ class MaternityAssistanceFragment extends BaseMVPView {
         }
         {
           showTypeOfDeliveryModalResp &&
-          <SingleInputModal
+          <MaternityTypeOfDeliveryModals
             label = { 'Type of Delivery' }
             inputArray = { typeOfDeliveryData && typeOfDeliveryData }
-            selectedArray = { (typeDeliveryId, typeDeliveryName) =>
+            selectedArray = { (typeDeliveryId, typeDeliveryName, typeOfDeliveryLimit) =>
               this.setState({
                 typeDeliveryId,
                 typeDeliveryName,
+                typeOfDeliveryLimit,
                 showTypeOfDeliveryModalResp : false,
                 typeOfDeliveryErrorMessage : ''
               })

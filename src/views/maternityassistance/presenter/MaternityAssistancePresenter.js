@@ -44,8 +44,9 @@ export default class MaternityAssistancePresenter {
         data &&
         data.typeOfDelivery.map((resp, key) => {
           typeOfDelivery.push({
-            id : key+1,
-            name : resp.Delivery
+            id : resp.Id,
+            name : resp.DeliveryType,
+            limit : resp.AmountLimit
           })
         })
         this.view.showTypeOfDeliveryMap(typeOfDelivery)
