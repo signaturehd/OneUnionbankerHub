@@ -81,7 +81,14 @@ class MyTrainingFragment extends BaseMVPView {
   }
 
   render () {
-  const { history, presenter, searchString } = this.props
+  const {
+    history,
+    presenter,
+    presenterEnrollFunc,
+    presenterEmployeeDetails,
+    searchString
+  } = this.props
+
   const {
     trainingList,
     enabledLoader,
@@ -110,7 +117,7 @@ class MyTrainingFragment extends BaseMVPView {
         <TrainingCardModal
           onClose = { () => this.setState({ trainingDetails : '' }) }
           details = { trainingDetails }
-          onEnroll = { (id) => presenter.enrollEmployee(String(id)) }
+          onEnroll = { (id) => presenterEnrollFunc(String(id)) }
           showConfirmation = { showConfirmation }
           setConfirmation = { (showConfirmation) => this.setState({showConfirmation}) }
         />
@@ -165,40 +172,54 @@ class MyTrainingFragment extends BaseMVPView {
                status = { resp.status }
                startDate = { resp.startDate }
                endDate = { resp.endDate }
-               onClick = { (id) => presenter.getEmployeeTrainingDetails(id) }
+               onClick = { (id) => presenterEmployeeDetails(id) }
              />
            )
           }
           </div>
-          <div>
-            <div className = { 'grid-global' }>
-              <GenericButton
-                className = { 'transaction-component-button' }
-                text = { 'View Less' }
-                onClick = { () =>
-                  this.setState({
-                    index : MyTrainingFunctions.indexDecreased(index)
-                    })
-                  }
-                />
-              <GenericButton
-                className = { 'transaction-component-button' }
-                text = { 'View More' }
-                onClick = { () =>
-                  this.setState({
-                    index : MyTrainingFunctions.indexIncreased(index)
-                    })
-                  }
-                />
+          {
+            trainingList ?
+            <div>
+              <div className = { 'grid-global' }>
+                {
+                  index === 8 ?
+                  <div></div> :
+                  <GenericButton
+                    className = { 'transaction-component-button' }
+                    text = { 'View Less' }
+                    onClick = { () =>
+                      this.setState({
+                        index : MyTrainingFunctions.indexDecreased(index)
+                        })
+                      }
+                    />
+                }
+                <GenericButton
+                  className = { 'transaction-component-button' }
+                  text = { 'View More' }
+                  onClick = { () =>
+                    this.setState({
+                      index : MyTrainingFunctions.indexIncreased(index)
+                      })
+                    }
+                  />
+              </div>
+              <Line/>
             </div>
-            <Line/>
-          </div>
+            :
+            <div></div>
+          }
         </div>
       </div>
       }
     </div>
     )
   }
+}
+
+MyTrainingFragment.propTypes = {
+  presenterEnrollFunc : PropTypes.func,
+  presenterEmployeeDetails : PropTypes.func,
 }
 
 export default MyTrainingFragment
