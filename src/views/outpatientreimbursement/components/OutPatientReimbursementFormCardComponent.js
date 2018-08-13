@@ -120,29 +120,28 @@ class OutPatientReimbursementFormCardComponent extends Component {
                   </div>
                 </div>
                 {
-                  showProcedureInput ?
-                    procedureArray.map((resp, key) =>
-                      <GenericInput
-                        hint = { 'Enter Amount' }
-                        text = { resp.name }
-                        value = { resp.amount ? resp.amount : 0 }
-                        errorMessage = {
-                          resp.amount === 0  ?
-                          'Please enter an amount for the selected procedure' :
-                          ''
+                  showProcedureInput &&
+                  procedureArray.map((resp, key) =>
+                    <GenericInput
+                      hint = { 'Enter Amount' }
+                      text = { resp.name }
+                      value = { resp.amount ? resp.amount : 0 }
+                      errorMessage = {
+                        resp.amount === 0  ?
+                        'Please enter an amount for the selected procedure' :
+                        ''
+                      }
+                      disabled = { showEditSubmitButton }
+                      onChange = { e =>
+                        {
+                         const updatedProcedures = [...procedureArray]
+                         updatedProcedures[key].amount = parseInt(e.target.value) || 0
+                         selectedProcedureAmountFunc(updatedProcedures)
                         }
-                        disabled = { showEditSubmitButton }
-                        onChange = { e =>
-                          {
-                           const updatedProcedures = [...procedureArray]
-                           updatedProcedures[key].amount = parseInt(e.target.value) || 0
-                           selectedProcedureAmountFunc(updatedProcedures)
-                          }
-                        }
-                        type = { 'text' } />
+                      }
+                      type = { 'text' } />
                     )
-                  : <div></div>
-                }
+                  }
               </div>
               {
                 attachmentsData.length !== 0  ?
