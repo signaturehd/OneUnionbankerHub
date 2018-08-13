@@ -20,7 +20,6 @@ class MedicalFragment extends Component {
   }
 
   onCheckedProceed (path) {
-    console.log(path)
     this.setState({ showConfirmationModal : true, checkedpath : path })
   }
 
@@ -46,7 +45,7 @@ class MedicalFragment extends Component {
     }, {
       id: 4,
       styleName: 'medical-cards-1 medical-option-default',
-      title: 'Medical Scheduling',
+      title: 'Annual Physicacl Exam',
       path: '/mybenefits/benefits/medical/scheduling',
     }, {
       id: 5,
