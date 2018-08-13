@@ -4,7 +4,6 @@
   float: center;
   padding: 20px 5px 20px 5px;
   margin: auto;
-  text-align: center;
   font-family: arial;
 }
 
@@ -17,7 +16,7 @@
   bottom: 0;
   height: 35px;
   margin-top: 20px;
-  width: 95%;
+  width: 100%;
 }
 
 .brv-grid-column-2 {
@@ -118,7 +117,7 @@
 
 .brv-container {
   padding-left: 0%;
-  padding-right: 10%;
+  padding-right: 0%;
   padding-top: 0%;
 }
 
@@ -160,4 +159,14 @@
 
 .brv-file {
   background-image: url('../../../../images/icons/ic_insert_drive_file_grey_500_18dp.png');
+}
+
+/* Bereavement leave */
+.bereavement-leave-card {
+  padding: 20px;
+}
+
+.bereavement-leave-submit:hover {
+  background-color: #ff8a00;
+  color: #fff;
 }

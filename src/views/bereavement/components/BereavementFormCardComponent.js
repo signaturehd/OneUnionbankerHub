@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { GenericTextBox, GenericInput, Card, GenericButton, FileUploader } from '../../../ub-components/'
+import {
+  GenericInput,
+  Card,
+  GenericButton,
+  DatePicker,
+  MultipleFileUploader,
+  Line
+} from '../../../ub-components/'
 
 import './styles/bereavementComponentStyle.css'
 
@@ -10,7 +17,7 @@ import { RequiredAlphabetValidation } from '../../../utils/validate'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
-import DatePicker from 'react-datepicker'
+import DatePickers from 'react-datepicker'
 import '../../../../node_modules/react-datepicker/dist/react-datepicker.css'
 import moment from 'moment'
 
@@ -20,34 +27,44 @@ class BereavementFormCardComponent extends Component {
 
   constructor (props) {
     super (props)
-    this.state={
-      file: '',
-      imagePreviewUrl: null,
-      showDeceasedDependents: false,
-    }
-    this.getDeceasedDate = this.getDeceasedDate.bind(this)
-    this.getFuneralDate = this.getFuneralDate.bind(this)
-    this.getIntermentDate = this.getIntermentDate.bind(this)
     this.getOnClicked = this.getOnClicked.bind(this)
+    this.submitFormOnClicked = this.submitFormOnClicked.bind(this)
   }
 
-  getDeceasedDate (e) {
-    this.setState({ deceasedDate  : e.format('MM/DD/YYYY'),
-                    funeralDate  : e.format('MM/DD/YYYY') })
-  }
-
-  getFuneralDate (e) {
-    this.setState({ funeralDate  : e.format('MM/DD/YYYY') })
-    this.setState({ intermentDate  : e.format('MM/DD/YYYY') })
-  }
-
-  getIntermentDate (e) {
-    this.setState({ intermentDate : e.format('MM/DD/YYYY') })
-  }
-
-  getExtension (filename) {
-    const parts=filename.split('/')
-    return parts[parts.length - 1]
+  submitFormOnClicked (
+    funeralDate,
+    intermentDate,
+    deceasedDate,
+    dependentId,
+    funeralHome,
+    funeralAddress,
+    funeralRegion,
+    funeralProvince,
+    funeralCity,
+    memorialPark,
+    memorialAddress,
+    memorialRegion,
+    memorialProvince,
+    memorialCity,
+    attachmentData
+  ) {
+    this.props.submitFormData(
+      funeralDate,
+      intermentDate,
+      deceasedDate,
+      dependentId,
+      funeralHome,
+      funeralAddress,
+      funeralRegion,
+      funeralProvince,
+      funeralCity,
+      memorialPark,
+      memorialAddress,
+      memorialRegion,
+      memorialProvince,
+      memorialCity,
+      attachmentData
+    )
   }
 
   getOnClicked(
@@ -65,9 +82,9 @@ class BereavementFormCardComponent extends Component {
     memorialRegion,
     memorialProvince,
     memorialCity,
-    file
+    attachmentData
   ) {
-    this.props.sendFormData(
+    this.props.editFormData(
       funeralDate && moment(funeralDate).format('MM/DD/YYYY'),
       intermentDate && moment(intermentDate).format('MM/DD/YYYY'),
       deceasedDate  && moment(deceasedDate).format('MM/DD/YYYY'),
@@ -82,19 +99,24 @@ class BereavementFormCardComponent extends Component {
       memorialRegion,
       memorialProvince,
       memorialCity,
-      file
+      attachmentData
     )
   }
 
   render () {
 
     const {
+      showEditSubmitButton,
+      changeStateEditToFalse,
       showDepedents,
       withDeathCert,
       onFocus,
       showDeceasedDependents,
       dependentId,
       dependentsName,
+      deceasedDate,
+      funeralDate,
+      intermentDate,
       dependentsRelationship,
       funeralHome,
       checkFuneralHome,
@@ -119,104 +141,91 @@ class BereavementFormCardComponent extends Component {
       memorialRegion,
       memorialProvince,
       memorialCity,
-      addressError
+      addressError,
+      attachmentArray,
+      attachmentData,
+      setAttachmentArrayFunc
     }=this.props
 
-    const {
-      file,
-      imagePreviewUrl,
-      deceasedDate,
-      funeralDate,
-      intermentDate
-    }=this.state
-
-    const styles={
-      image1 : {
-        backgroundImage: `url('${imagePreviewUrl}')`,
-        width : 'auto',
-        height : '60px',
-        backgroundSize : 'contain',
-        backgroundRepeat : 'no-repeat',
-      }
-    }
-
     return (
-      <div className={'brv-container'}>
+      <div className={ 'brv-container' }>
         <div className={ 'brv-grid-column-2' }>
-
           <div></div>
           <div className={ 'brv-form-div' }>
-            <h4>
+            <div>
+              <h2 className={ 'header-margin-default' }>
+                Bereavement
+              </h2>
+              <Line/>
+              <br/>
+            </div>
+            <h4 className = { 'text-align-center font-size-14px' }>
             Deceased Detail
             </h4>
+            <br/>
             <div>
-                <GenericInput
-                  value={ dependentsName ? dependentsName : '' }
-                  onClick={ () => showDeceasedDependents() }
-                  onFocus={ () => showDeceasedDependents() }
-                  hint={ 'Deceased Name' }
-                  text={ 'Deceased Name' }
-                  errorMessage={ BereavementFunction.errorMessage(dependentsName, '* Required field', '') }
-                  readOnly
-                  type={ 'text' }
-                />
-              </div>
-              <div>
-                <GenericInput
-                  container={ 'brv-container' }
-                  value={ dependentsRelationship ? dependentsRelationship : '' }
-                  hint={ 'Relationship' }
-                  text={ 'Relationship' }
-                  type={ 'text' }
-                  readOnly
-                />
-              </div>
-                <div>
-                  <DatePicker
-                    dateFormat={ 'MM/DD/YYYY' }
-                    maxDate={ moment() }
-                    readOnly
-                    value={ deceasedDate ? deceasedDate : 'Date of Death'  }
-                    selected={ deceasedDate ? moment(deceasedDate) : moment() }
-                    onChange={ this.getDeceasedDate }
-                    className={ 'calendar  font-size-12px' }
-                    calendarClassName={ 'calendarClass' }/>
-                  <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
-                  { deceasedDate ? '' : <span className={ 'text-error' }>* Required Field</span> }
-              </div>
-              <br/>
+              <GenericInput
+                value={ dependentsName ? dependentsName : '' }
+                onClick={ () => showDeceasedDependents() }
+                onFocus={ () => showDeceasedDependents() }
+                hint={ 'Deceased Name' }
+                text={ 'Deceased Name' }
+                errorMessage={ BereavementFunction.errorMessage(dependentsName, '* Required field', '') }
+                disabled = { showEditSubmitButton }
+                type={ 'text' }
+              />
+            </div>
+            <div>
+              <GenericInput
+                container = { 'brv-container' }
+                value = { dependentsRelationship ? dependentsRelationship : '' }
+                hint = { 'Relationship' }
+                text = { 'Relationship' }
+                type = { 'text' }
+                disabled = { showEditSubmitButton }
+              />
+            </div>
+            <div>
+              <DatePicker
+                maxDate = { moment() }
+                hint = {  deceasedDate ? deceasedDate : '(eg. MM/DD/YYYY)' }
+                onChange = { (e) => checkDeceasedDate(e) }
+                selected = { deceasedDate ? moment(deceasedDate) : '' }
+                text = { 'Date of Death' }
+                disabled = { showEditSubmitButton }
+                errorMessage = { deceasedDate ? '' :  '* Required Field' }/>
+            </div>
           </div>
         </div>
-        <br/>
-        <div className={ 'brv-grid-column-2' }>
+        <div className = { 'brv-grid-column-2' }>
           <div></div>
-          <div className={ 'brv-form-div' }>
-            <h4>
-            Funeral Detail
+          <div className = { 'brv-form-div' }>
+            <h4 className = { 'text-align-center font-size-14px' }>
+              Funeral Detail
             </h4>
-              <div>
-                <DatePicker
-                  dateFormat={ 'MM/DD/YYYY' }
-                  readOnly
-                  minDate={ moment(deceasedDate) }
-                  maxDate={ moment(deceasedDate).add(30, 'days') }
-                  value={ funeralDate ? funeralDate : 'Date of Wake' }
-                  selected={ moment(funeralDate) }
-                  onChange={ this.getFuneralDate }
-                  className={ 'calendar  font-size-12px' }
-                  calendarClassName={ 'calendarClass' }
-                />
-                <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
-              </div>
+            <br/>
+            <div>
+              <DatePicker
+                minDate = { moment(deceasedDate) }
+                maxDate = { moment(deceasedDate).add(30, 'days') }
+                hint = { funeralDate ? funeralDate : '(eg. MM/DD/YYYY)' }
+                text = { 'Date of Wake' }
+                selected = { funeralDate ? moment(funeralDate) : '' }
+                onChange = { (e) => checkFuneralDate(e) }
+                disabled = { showEditSubmitButton }
+                errorMessage = { funeralDate ? '' :  '* Required Field' }
+              />
+            </div>
               <div>
                 <GenericInput
-                  container={ 'brv-container' }
-                  value={ funeralHome }
-                  onChange={ (e) => {
+                  container = { 'brv-container' }
+                  value = { funeralHome }
+                  onChange = { (e) => {
                       checkFuneralHome(e.target.value)
                     }
                   }
-                  text={ 'Funeral Home' }
+                  text = { 'Funeral Home' }
+                  disabled = { showEditSubmitButton }
                   hint={ 'Funeral Home' }
                   errorMessage={ BereavementFunction.errorMessage(funeralHome, '* Required field', '') }
                   type={ 'text' }
@@ -226,6 +235,7 @@ class BereavementFormCardComponent extends Component {
                 <GenericInput
                   container={ 'brv-container' }
                   value={ funeralAddress }
+                  disabled = { showEditSubmitButton }
                   onChange={ (e) => checkFuneralAddress(e.target.value) }
                   errorMessage={ addressError ?
                     BereavementFunction.errorMessage(funeralAddress, '', '* Address field should contain atleast 15 characters') :
@@ -241,6 +251,7 @@ class BereavementFormCardComponent extends Component {
                   value={ funeralRegion }
                   onChange={ (e) => checkFuneralRegion(e.target.value) }
                   text={ 'Region' }
+                  disabled = { showEditSubmitButton }
                   hint={ 'Region' }
                   errorMessage={ BereavementFunction.errorMessage(funeralRegion, '* Required field', '') }
                   type={ 'text' }
@@ -253,6 +264,7 @@ class BereavementFormCardComponent extends Component {
                   onChange={ (e) => checkFuneralProvince(e.target.value) }
                   text={ 'Province' }
                   hint={ 'Province' }
+                  disabled = { showEditSubmitButton }
                   errorMessage={ BereavementFunction.errorMessage(funeralProvince, '* Required field', '') }
                   type={ 'text' }
                 />
@@ -263,33 +275,32 @@ class BereavementFormCardComponent extends Component {
                   value={ funeralCity }
                   onChange={ (e) => checkFuneralCity(e.target.value) }
                   text={ 'City' }
+                  disabled = { showEditSubmitButton }
                   hint={ 'City' }
                   errorMessage={ BereavementFunction.errorMessage(funeralCity, '* Required field', '') }
                   type={ 'text' }
                 />
               </div>
-              <br/>
           </div>
         </div>
-        <br/>
         <div className={ 'brv-grid-column-2' }>
           <div></div>
           <div className={ 'brv-form-div' }>
-            <h4>
+            <h4 className = { 'text-align-center font-size-14px' }>
             Interment Detail
             </h4>
+            <br/>
               <div>
                 <DatePicker
-                  dateFormat={ 'MM/DD/YYYY' }
-                  readOnly
-                  minDate={ moment(funeralDate) }
-                  maxDate={ moment(deceasedDate).add(30, 'days') }
-                  onChange={ this.getIntermentDate }
-                  value={ intermentDate ? intermentDate : 'Date of Interment'  }
-                  selected={ moment(deceasedDate) }
-                  className={ 'calendar font-size-12px' }
+                  minDate = { moment(funeralDate) }
+                  maxDate = { moment(deceasedDate).add(30, 'days') }
+                  onChange =  { (e) => checkIntermentDate(e) }
+                  disabled = { showEditSubmitButton }
+                  selected = { intermentDate ? moment(intermentDate) : '' }
+                  hint = { intermentDate ? intermentDate : '(eg. MM/DD/YYYY)'  }
+                  text = { 'Date of Interment' }
+                  errorMessage = { intermentDate ? '' :  '* Required Field' }
                 />
-                <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
               </div>
               <div>
                 <GenericInput
@@ -297,6 +308,7 @@ class BereavementFormCardComponent extends Component {
                   value={ memorialPark }
                   onChange={ (e) => checkMemorialPark(e.target.value) }
                   text={ 'Memorial Park' }
+                  disabled = { showEditSubmitButton }
                   hint={ 'Memorial Park' }
                   errorMessage={ BereavementFunction.errorMessage(memorialPark, '* Required field', '') }
                   type={ 'text' }
@@ -309,6 +321,7 @@ class BereavementFormCardComponent extends Component {
                   onChange={ (e) => checkMemorialAddress(e.target.value) }
                   text={ 'Address' }
                   hint={ 'Address' }
+                  disabled = { showEditSubmitButton }
                   type={ 'text' }
                   errorMessage={ addressError ?
                     BereavementFunction.errorMessage(memorialAddress, '', '* Address field should contain atleast 15 characters') :
@@ -321,6 +334,7 @@ class BereavementFormCardComponent extends Component {
                   value={ memorialRegion }
                   onChange={ (e) => checkMemorialRegion(e.target.value) }
                   text={ 'Region' }
+                  disabled = { showEditSubmitButton }
                   hint={ 'Region' }
                   errorMessage={ BereavementFunction.errorMessage(memorialRegion, '* Required field', '') }
                   type={ 'text' }/>
@@ -332,6 +346,7 @@ class BereavementFormCardComponent extends Component {
                   onChange={ (e) => checkMemorialProvince(e.target.value) }
                   text={ 'Province' }
                   hint={ 'Province' }
+                  disabled = { showEditSubmitButton }
                   errorMessage={ BereavementFunction.errorMessage(memorialProvince, '* Required field', '') }
                   type={ 'text' }/>
               </div>
@@ -342,121 +357,61 @@ class BereavementFormCardComponent extends Component {
                   onChange={ (e) => checkMemorialCity(e.target.value) }
                   text={ 'City' }
                   hint={ 'City' }
+                  disabled = { showEditSubmitButton }
                   errorMessage={ BereavementFunction.errorMessage(memorialCity, '* Required field', '') }
                   type={ 'text' }/>
               </div>
+              <div>
+                {
+                  withDeathCert &&
+                  <MultipleFileUploader
+                    placeholder = { 'Form Attachments' }
+                    fileArray = { attachmentArray }
+                    setFile = { (resp) => setAttachmentArrayFunc(resp) }
+                    disabled = { showEditSubmitButton }
+                    errorMessage = {
+                     showEditSubmitButton ?
+                     '' :
+                     `Please upload the required attachments`  }
+                    />
+                }
+              </div>
               {
-                !withDeathCert &&
+                showEditSubmitButton ?
+
+                <div className = { 'grid-global' }>
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Edit' }
+                    onClick = { () => changeStateEditToFalse() }
+                    />
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Submit' }
+                    onClick={
+                      () => this.submitFormOnClicked(
+                        funeralDate,
+                        intermentDate,
+                        deceasedDate,
+                        dependentId,
+                        funeralHome,
+                        funeralAddress,
+                        funeralRegion,
+                        funeralProvince,
+                        funeralCity,
+                        memorialPark,
+                        memorialAddress,
+                        memorialRegion,
+                        memorialProvince,
+                        memorialCity,
+                        attachmentData
+                      )
+                    }/>
+                </div>
+                :
                 <GenericButton
                   type={ 'button' }
-                  text={ 'continue' }
-                  onClick={
-                    () => this.getOnClicked(
-                      funeralDate,
-                      intermentDate,
-                      deceasedDate,
-                      dependentId,
-                      funeralHome,
-                      funeralAddress,
-                      funeralRegion,
-                      funeralProvince,
-                      funeralCity,
-                      memorialPark,
-                      memorialAddress,
-                      memorialRegion,
-                      memorialProvince,
-                      memorialCity
-                    )
-                  }
-                  className={ 'brv-submit' } />
-              }
-          </div>
-        </div>
-        {
-          !withDeathCert &&
-          <div></div>
-
-        }
-        {
-          withDeathCert &&
-          <div>
-          <br/>
-          <div className={ 'brv-grid-column-2' }>
-            <div></div>
-            <div className={ 'brv-form-div' }>
-              <h4>
-              Form Attachments
-              </h4>
-                {
-                  imagePreviewUrl &&
-                  <div>
-                    <label className="brv-form-title">Form Attachments</label>
-                    <div className="brv-attachment-form">
-                      <img
-                        src={ require('../../../ub-components/Notify/images/x-circle.png') }
-                        className='close-button'
-                        onClick={
-                          () => {
-                            this.setState({ file : '', imagePreviewUrl : null })
-                          }
-                        }
-                      />
-                      <div style={ styles.image1 }>
-                        <h6 className="brv-file-name">
-                          { file.name }
-                        </h6>
-                      </div>
-                    </div>
-                  </div>
-                }
-                {
-                  !imagePreviewUrl &&
-                  <FileUploader
-                    accept="image/gif,image/jpeg,image/jpg,image/png,"
-                    value={ file.name }
-                    placeholder='Death Certificate'
-                    onChange={
-                      (e) => {
-                        e.preventDefault()
-                        const reader=new FileReader()
-                        const file=e.target.files[0]
-                        let isValid
-                        switch (this.getExtension(file.type).toLowerCase()) {
-                          case 'jpeg' :
-                            isValid=true
-                          case 'jpg' :
-                            isValid=true
-                          case 'png' :
-                            isValid=true
-                          case 'pdf' :
-                            isValid=true
-                        }
-
-                        if (isValid) {
-                          reader.onloadend=() => {
-                            this.setState({
-                              file,
-                              imagePreviewUrl: reader.result
-                            })
-                          }
-                          reader.readAsDataURL(file)
-                       } else {
-                           store.dispatch(NotifyActions.addNotify({
-                               title : 'File Uploading',
-                               message : 'The accepted attachments are JPG/PNG/PDF',
-                               type : 'warning',
-                               duration : 2000
-                             })
-                           )
-                         }
-                      }
-                    }
-                  />
-                }
-
-                <GenericButton
-                  type={ 'button' }
-                  text={ 'continue' }
+                  text={ 'Continue' }
                   onClick={
                     () => this.getOnClicked(
                       funeralDate,
@@ -473,20 +428,21 @@ class BereavementFormCardComponent extends Component {
                       memorialRegion,
                       memorialProvince,
                       memorialCity,
-                      file
+                      attachmentData
                     )
                   }
                   className={ 'brv-submit' } />
-              </div>
-            </div>
+              }
+          </div>
         </div>
-        }
       </div>
     )
   }
 }
 
 BereavementFormCardComponent.propTypes={
+  deceasedDate : PropTypes.object,
+  funeralDate : PropTypes.object,
   showDepedents: PropTypes.array,
   withDeathCert: PropTypes.bool,
   onFocus: PropTypes.func,
@@ -515,7 +471,12 @@ BereavementFormCardComponent.propTypes={
   checkFuneralDate: PropTypes.func,
   checkDeceasedDate: PropTypes.func,
   checkIntermentDate: PropTypes.func,
-  addressError: PropTypes.bool
+  addressError: PropTypes.bool,
+  attachmentArray: PropTypes.array,
+  attachmentData: PropTypes.array,
+  setAttachmentArrayFunc: PropTypes.func,
+  showEditSubmitButton : PropTypes.bool,
+  changeStateEditToFalse : PropTypes.func,
 }
 
 export default BereavementFormCardComponent
