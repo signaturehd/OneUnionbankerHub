@@ -90,7 +90,7 @@ class MaternityAssistanceCardComponent extends Component {
                 selected = { preferredDate }
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateFunc(e) }
-                maxDate = { moment() }
+                maxDate = { moment(deliveryDate) }
                 text = { 'Official Receipt Date' }
                 errorMessage = { dateErrorMessage }
                 />
