@@ -57,6 +57,7 @@ class MaternityAssistanceCardComponent extends Component {
       <div className={ 'outpatient-grid-column-2' }>
         <div></div>
         <div>
+          <Line/>
           <div className={ 'outpatient-form-card' }>
             <div className={ 'outpatient-form-card-body' }>
               <GenericInput
@@ -66,7 +67,6 @@ class MaternityAssistanceCardComponent extends Component {
                 disabled = { showEditSubmitButton }
                 errorMessage = { typeOfDeliveryErrorMessage }
                 type = { 'text' }/>
-                <br/>
               <DatePicker
                 selected = { deliveryDate }
                 disabled = { showEditSubmitButton }
@@ -75,28 +75,25 @@ class MaternityAssistanceCardComponent extends Component {
                 text = { 'Date of Delivery' }
                 errorMessage = { dateOfDeliveryErrorMessage }
                 />
-                <br/>
               <GenericInput
                 hint = { 'Enter Amount' }
                 text = { 'Amount' }
                 value = { amount }
                 errorMessage = { amountErrorMessage }
-                disabled = { showEditSubmitButton }
+                disabled = { typeDeliveryName ? showEditSubmitButton : true }
                 onChange = { e => {
                     desiredAmountFunc(e.target.value)
                   }
                 }
                 type = { 'text' } />
-              <br/>
               <DatePicker
                 selected = { preferredDate }
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateFunc(e) }
-                maxDate = { moment() }
+                maxDate = { moment(deliveryDate) }
                 text = { 'Official Receipt Date' }
                 errorMessage = { dateErrorMessage }
                 />
-                <br/>
               <GenericInput
                 value = { orNumberText }
                 disabled = { showEditSubmitButton }
@@ -105,7 +102,6 @@ class MaternityAssistanceCardComponent extends Component {
                 errorMessage = { orNumberErrorMessage }
                 type = { 'text' }/>
             </div>
-            <br/>
               {
                 attachmentsData.length !== 0  ?
                 <div>
@@ -123,7 +119,6 @@ class MaternityAssistanceCardComponent extends Component {
                 :
                 <div></div>
               }
-              <br/>
               <Line/>
               <br/>
               {
