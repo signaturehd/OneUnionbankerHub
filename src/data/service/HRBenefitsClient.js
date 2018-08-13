@@ -723,9 +723,16 @@ export default class HRBenefitsClient {
     return this.service.submitPin(token, code)
       .pipe(ServiceErrorOperator())
   }
+
   /* My Existing Loans */
   getExistingLoans (token) {
     return this.service.getExistingLoans(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Phenom Loans */
+  getPhenom (token) {
+    return this.service.getPhenom(token)
       .pipe(ServiceErrorOperator())
   }
 }
