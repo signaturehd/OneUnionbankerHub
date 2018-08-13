@@ -14,7 +14,16 @@ import EnrolledTrainingInteractor from
 import ApprovalTrainingInteractor from
 '../../../domain/interactor/training/ApprovalTrainingInteractor'
 
+import ApprovedTrainingInteractor from
+'../../../domain/interactor/training/ApprovedTrainingInteractor'
 
+import ApprovalTrainingDetailsInteractor from
+'../../../domain/interactor/training/ApprovalTrainingDetailsInteractor'
+
+import ApprovalTrainingRequestInteractor from
+'../../../domain/interactor/training/ApprovalTrainingRequestInteractor'
+
+import ApprovalTrainingParam from '../../../domain/param/ApprovalTrainingParam'
 
 import moment from 'moment'
 
@@ -34,6 +43,15 @@ export default class MyTrainingPresenter {
 
     this.approvalTrainingInteractor =
       new ApprovalTrainingInteractor(container.get('HRBenefitsClient'))
+
+    this.approvedTrainingInteractor =
+      new ApprovedTrainingInteractor(container.get('HRBenefitsClient'))
+
+    this.approvalTrainingDetailsInteractor =
+      new ApprovalTrainingDetailsInteractor(container.get('HRBenefitsClient'))
+
+    this.approvalTrainingRequestInteractor =
+      new ApprovalTrainingRequestInteractor(container.get('HRBenefitsClient'))
 
   }
 
@@ -58,6 +76,17 @@ export default class MyTrainingPresenter {
     .subscribe(data => {
       this.view.circularLoader(false)
       this.view.showApprovalList(data)
+    }, error => {
+      this.view.navigate()
+    })
+  }
+
+  getApprovedTrainings () {
+    this.view.circularLoader(true)
+    this.approvedTrainingInteractor.execute()
+    .subscribe(data => {
+      this.view.circularLoader(false)
+      this.view.showApprovedList(data)
     }, error => {
       this.view.navigate()
     })
@@ -91,6 +120,31 @@ export default class MyTrainingPresenter {
       this.view.noticeResponse(data)
     }, error => {
       this.view.clearTraining()
+    })
+  }
+
+  getApprovalTrainingDetails (id) {
+    this.view.modalLoader(true)
+    this.approvalTrainingDetailsInteractor.execute(id)
+    .subscribe(data => {
+      this.view.modalLoader(false)
+      this.view.setApprovalTrainingDetails(data)
+    }, error => {
+      this.view.modalLoader(false)
+    })
+  }
+
+  trainingRequest (
+    trainingId,
+    employeeId,
+    status,
+    rejectionReason
+  ) {
+    this.approvalTrainingRequestInteractor.execute(trainingId, ApprovalTrainingParam(employeeId, status, rejectionReason))
+    .subscribe(data => {
+      console.log(data);
+    }, error => {
+      console.log(error);
     })
   }
 }

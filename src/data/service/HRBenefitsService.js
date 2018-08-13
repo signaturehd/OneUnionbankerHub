@@ -807,6 +807,24 @@ export default class HRBenefitsService {
     })
   }
 
+  getApprovedTrainings (token) {
+    return this.apiClient.get('v1/trainings/learners/approved', {
+      headers : { token }
+    })
+  }
+
+  getApprovalTrainingDetails (id, token) {
+    return this.apiClient.get(`v1/trainings/learners/enrollments/${id}`, {
+      headers : { token }
+    })
+  }
+
+  trainingRequest (trainingId, ApprovalTrainingParam, token) {
+    return this.apiClient.post(`v1/trainings/${trainingId}/requests`, ApprovalTrainingParam, {
+      headers : { token }
+    })
+  }
+
   /* Maternity Assistance */
   validateMaternityAssistance (token) {
     return this.apiClient.get('v1/maternity/validate', {

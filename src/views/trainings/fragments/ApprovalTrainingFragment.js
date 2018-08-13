@@ -5,6 +5,9 @@ import BaseMVPView from '../../common/base/BaseMVPView'
 import ConnectView from '../../../utils/ConnectView'
 
 import ApprovalTrainingCardComponent from '../components/ApprovalTrainingCardComponent'
+import ApprovedTrainingCardComponent from '../components/ApprovedTrainingCardComponent'
+
+import ApprovalTrainingModal from '../modals/ApprovalTrainingModal'
 
 import * as MyTrainingFunctions from
 '../functions/MyTrainingFunctions'
@@ -14,6 +17,7 @@ import {
   Line,
   GenericInput,
   GenericButton,
+  ConfirmationModal,
   Modal
 } from '../../../ub-components/'
 
@@ -24,21 +28,49 @@ class ApprovalTrainingFragment extends BaseMVPView {
     super(props)
     this.state = {
       approvalTrainingList : [],
-      enabledLoader: false,
-      index: 8,
+      approvedTrainingList : [],
+      approvalTrainingDetails : null,
+      enabledLoader : false,
+      loadingModal : false,
+      approvalIndex : 8,
+      approvedIndex : 8,
+      rejectionReason : '',
+      showRejectModal : false,
+      showApproveModal : false,
     }
   }
 
   componentDidMount () {
     this.props.presenter.getNeedApprovalTrainings()
+    this.props.presenter.getApprovedTrainings()
   }
 
   showApprovalList (approvalTrainingList) {
     this.setState({ approvalTrainingList })
   }
 
+  showApprovedList (approvedTrainingList) {
+    this.setState({ approvedTrainingList })
+  }
+
+  setApprovalTrainingDetails (approvalTrainingDetails) {
+    this.setState({ approvalTrainingDetails })
+  }
+
   circularLoader (enabledLoader) {
     this.setState({ enabledLoader })
+  }
+
+  modalLoader (loadingModal) {
+    this.setState({ loadingModal })
+  }
+
+  submitTrainingRequest(status) {
+    const {
+      approvalTrainingDetails,
+      rejectionReason
+    } = this.state
+    this.presenter.trainingRequest(approvalTrainingDetails.training.id, approvalTrainingDetails.employeeId, status, rejectionReason)
   }
 
   navigate () {
@@ -54,21 +86,86 @@ class ApprovalTrainingFragment extends BaseMVPView {
 
   const {
     approvalTrainingList,
+    approvedTrainingList,
+    approvalTrainingDetails,
     enabledLoader,
-    index,
+    loadingModal,
+    approvalIndex,
+    approvedIndex,
+    rejectionReason,
+    showRejectModal,
+    showApproveModal,
   } = this.state
 
-  let training = approvalTrainingList
   const search = searchString.trim().toLowerCase()
+
+  let approvalTraining = approvalTrainingList
   if (search.length > 0) {
-        training = approvalTrainingList.filter(approvalTrainingList =>
+        approvalTraining = approvalTrainingList.filter(approvalTrainingList =>
        approvalTrainingList.name.toLowerCase().match(search) ||
        approvalTrainingList.title.toLowerCase().match(search))
+  }
+  let approvedTraining = approvedTrainingList
+  if (search.length > 0) {
+        approvedTraining = approvedTrainingList.filter(approvedTrainingList =>
+       approvedTrainingList.employeeName.toLowerCase().match(search) ||
+       approvedTrainingList.training.title.toLowerCase().match(search))
   }
 
   return (
     <div>
       { super.render() }
+      {
+        approvalTrainingDetails &&
+        <ApprovalTrainingModal
+          onClose = { () => this.setState({ approvalTrainingDetails : null }) }
+          details = { approvalTrainingDetails }
+          showApproveModal = { (showApproveModal) => this.setState({ showApproveModal }) }
+          showRejectModal = { (showRejectModal) => this.setState({ showRejectModal }) }
+        />
+      }
+      {
+        showRejectModal &&
+        <Modal
+          isDismisable = { true }
+          onClose = { () => this.setState({ showRejectModal : false, rejectionReason : '' }) }>
+          <h3><b>Training Rejection</b></h3>
+          <p className={'subtitle'}>Please indicate the reason for rejection of this training, Thank you!</p>
+          <GenericInput
+            type = { 'text' }
+            value = { rejectionReason }
+            hint = { 'Enter you remarks here' }
+            onChange = { (e) => this.setState({ rejectionReason : e.target.value }) }
+            maxLength = { 255 }
+            />
+          <div className={ 'button-position' }>
+            <div></div>
+            <GenericButton
+              type = { 'button' }
+              text = { 'Ok' }
+              />
+          </div>
+        </Modal>
+      }
+      {
+        showApproveModal &&
+        <ConfirmationModal
+          text = { 'Are you sure you want to approve this training?' }
+          onClose = { () => this.setState({ showApproveModal : false }) }
+          onYes = { () => this.submitTrainingRequest(5) }
+        />
+      }
+      {
+        loadingModal &&
+        <Modal>
+          <center>
+            <h3>Please wait while Loading...</h3>
+            <br/>
+            <br/>
+            <CircularLoader show={true}/>
+           </center>
+         </Modal>
+      }
       {
         enabledLoader ?
         <center className = { 'circular-loader-center' }>
@@ -77,36 +174,39 @@ class ApprovalTrainingFragment extends BaseMVPView {
        :
       <div className = { 'mytrainings-grid-container-row' }>
         <div className = { 'mytrainings-list-card' }>
-          <div>
-            <Line/>
+          <div className={ 'mytrainings-group-grid' }>
+            <h3>For Approval</h3>
+            <Line className={ 'group-line' }/>
             <br/>
           </div>
           <div className = { 'mytrainings-list' }>
             {
-              approvalTrainingList &&
-              approvalTrainingList.slice(0, index).map((resp, key) =>
-                <ApprovalTrainingCardComponent
-                  id = { key }
-                  name = { resp.name }
-                  status = { resp.status }
-                  title = { resp.title }
-                  />
+              approvalTraining &&
+              approvalTraining.slice(0, approvalIndex).map((resp, key) =>
+              <ApprovalTrainingCardComponent
+                key = { key }
+                id = { resp.id }
+                name = { resp.name }
+                status = { resp.status }
+                title = { resp.title }
+                onClick = { (id) => presenter.getApprovalTrainingDetails(id) }
+                />
               )
             }
           </div>
-            {
-              approvalTrainingList ?
+          {
+            !!approvalTraining.length ?
             <div>
               <div className = { 'grid-global' }>
                   {
-                    index === 8 ?
+                    approvalIndex === 8 ?
                     <div></div> :
                     <GenericButton
                       className = { 'transaction-component-button' }
                       text = { 'View Less' }
                       onClick = { () =>
                         this.setState({
-                          index : MyTrainingFunctions.indexDecreased(index)
+                          approvalIndex : MyTrainingFunctions.indexDecreased(approvalIndex)
                           })
                         }
                       />
@@ -116,16 +216,65 @@ class ApprovalTrainingFragment extends BaseMVPView {
                     text = { 'View More' }
                     onClick = { () =>
                       this.setState({
-                        index : MyTrainingFunctions.indexIncreased(index)
+                        approvalIndex : MyTrainingFunctions.indexIncreased(approvalIndex)
                         })
                       }
                     />
               </div>
-              <Line/>
+              <br/>
+              <br/>
             </div>
             :
             <div></div>
           }
+          <div className={ 'mytrainings-group-grid' }>
+            <h3>Recently Approved Training</h3>
+            <Line className={ 'group-line' }/>
+            <br/>
+          </div>
+          <div className = { 'mytrainings-list' }>
+            {
+              approvedTraining &&
+              approvedTraining.slice(0, approvedIndex).map((resp, key) =>
+                <ApprovedTrainingCardComponent
+                  id = { key }
+                  name = { resp.employeeName }
+                  title = { resp.training.title }
+                  />
+              )
+            }
+          </div>
+            {
+              !!approvedTraining.length ?
+              <div>
+                <div className = { 'grid-global' }>
+                    {
+                      approvedIndex === 8 ?
+                      <div></div> :
+                      <GenericButton
+                        className = { 'transaction-component-button' }
+                        text = { 'View Less' }
+                        onClick = { () =>
+                          this.setState({
+                            approvedIndex : MyTrainingFunctions.indexDecreased(approvedIndex)
+                            })
+                          }
+                        />
+                    }
+                    <GenericButton
+                      className = { 'transaction-component-button' }
+                      text = { 'View More' }
+                      onClick = { () =>
+                        this.setState({
+                          approvedIndex : MyTrainingFunctions.indexIncreased(approvedIndex)
+                          })
+                        }
+                      />
+                </div>
+              </div>
+              :
+              <div></div>
+            }
         </div>
       </div>
       }
