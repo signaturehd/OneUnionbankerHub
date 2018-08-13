@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import {
-  GenericTextBox,
   GenericInput,
   Card,
   GenericButton,
@@ -149,7 +148,7 @@ class BereavementFormCardComponent extends Component {
     }=this.props
 
     return (
-      <div className={'brv-container'}>
+      <div className={ 'brv-container' }>
         <div className={ 'brv-grid-column-2' }>
           <div></div>
           <div className={ 'brv-form-div' }>
@@ -436,7 +435,6 @@ class BereavementFormCardComponent extends Component {
               }
           </div>
         </div>
-
       </div>
     )
   }
