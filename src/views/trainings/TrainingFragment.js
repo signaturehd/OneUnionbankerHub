@@ -7,7 +7,7 @@ import ConnectPartial from '../../utils/ConnectPartial'
 
 import MyTrainingFragment from './fragments/MyTrainingFragment'
 import EnrolledTrainingFragment from './fragments/EnrolledTrainingFragment'
-//import BookRecommendationFragment from './fragments/BookRecommendationFragment'
+import ApprovalTrainingFragment from './fragments/ApprovalTrainingFragment'
 
 import {
   CircularLoader,
@@ -24,6 +24,7 @@ class TrainingFragment extends BaseMVPView {
     this.state = {
       trainingList : [],
       enrolledTrainingList : [],
+      approvalTrainingList : [],
       forApprovalList : [],
       enabledLoader : false,
       searchString : '',
@@ -43,10 +44,23 @@ class TrainingFragment extends BaseMVPView {
     this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
 
+  onClickEnrollToTraining (resp) {
+    this.presenter.enrollEmployee(resp)
+  }
+
+  onClickEmployeeTrainingDetails (resp) {
+    this.presenter.getEmployeeTrainingDetails(resp)
+  }
+
   render () {
-    const { history, presenter } = this.props
     const {
-      searchString
+      history,
+    } = this.props
+
+    const {
+      searchString,
+      enrolledTrainingList,
+      approvalTrainingList
     } = this.state
 
     const search = searchString.trim().toLowerCase()
@@ -70,34 +84,36 @@ class TrainingFragment extends BaseMVPView {
         <div className = { 'tabs-container' }>
           <input
             className = { 'input-tab' }
-            id='tab1'
-            type='radio'
-            name='tabs'
+            id = { 'tab1' }
+            type = { 'radio' }
+            name = { 'tabs' }
             onClick = { () => history.push('/mylearning/trainings/mytrainings') }
             defaultChecked />
           <label  htmlFor = 'tab1'>Trainings</label>
 
           <input
             className = { 'input-tab' }
-            id='tab2'
-            type='radio'
+            id = { 'tab2' }
+            type = { 'radio' }
             onClick = { () => history.push('/mylearning/trainings/enrolledtrainings') }
-            name='tabs' />
-          <label  htmlFor='tab2'>Enrolled Trainings</label>
+            name = { 'tabs' } />
+          <label  htmlFor = { 'tab2' }>Enrolled Trainings</label>
 
           <input
             className = { 'input-tab' }
             id='tab3'
-            onClick = { () => null }
-            type='radio'
-            name='tabs' />
+            onClick = { () => history.push('/mylearning/trainings/approvaltrainings') }
+            type = { 'radio' }
+            name = { 'tabs' }/>
           <label  htmlFor = 'tab3' >For Approval</label>
 
-          <section id='content1'>
+          <section id = { 'content1' }>
               <Switch>
                 <Route path = '/mylearning/trainings/mytrainings'
                   render = { props => <MyTrainingFragment
                       presenter = { this.presenter }
+                      presenterEmployeeDetails = { (resp) => this.onClickEmployeeTrainingDetails(resp) }
+                      presenterEnrollFunc = { (resp) => this.onClickEnrollToTraining(resp) }
                       searchString = { searchString }
                     />
                   }
@@ -105,6 +121,15 @@ class TrainingFragment extends BaseMVPView {
                 <Route path = '/mylearning/trainings/enrolledtrainings'
                   render = { props => <EnrolledTrainingFragment
                     presenter = { this.presenter }
+                    enrolledTrainingList = { enrolledTrainingList }
+                    searchString = { searchString }
+                    />
+                  }
+                />
+                <Route path = '/mylearning/trainings/approvaltrainings'
+                  render = { props => <ApprovalTrainingFragment
+                    presenter = { this.presenter }
+                    approvalTrainingList = { approvalTrainingList }
                     searchString = { searchString }
                     />
                   }
