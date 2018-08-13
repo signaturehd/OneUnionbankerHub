@@ -45,7 +45,7 @@ class MedicalFragment extends Component {
     }, {
       id: 4,
       styleName: 'medical-cards-1 medical-option-default',
-      title: 'Annual Physicacl Exam',
+      title: 'Annual Physical Exam',
       path: '/mybenefits/benefits/medical/scheduling',
     }, {
       id: 5,
@@ -68,7 +68,7 @@ class MedicalFragment extends Component {
             showConfirmationModal &&
             <Modal>
               <center>
-                <h2>Weâ€™d like to help you in your labor expenses but this benefit requires post-submission of multiple documents. Would you like to proceed?</h2>
+                <h2>We’d like to help you in your labor expenses but this benefit requires post-submission of multiple documents. Would you like to proceed?</h2>
                 <br/>
                 <div className = { 'grid-global' }>
                   <GenericButton
