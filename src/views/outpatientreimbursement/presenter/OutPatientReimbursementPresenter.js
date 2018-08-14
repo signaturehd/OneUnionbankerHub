@@ -33,7 +33,7 @@ export default class OutPatientReimbursementPresenter {
         data.procedures.map((procedure, key) => {
           procedureArray.push({
             id : procedure.id,
-            name : procedure.procedures
+            name : procedure.name
           })
         })
         data &&
@@ -43,7 +43,7 @@ export default class OutPatientReimbursementPresenter {
           })
         })
         this.view.showAttachmentsMap(attachmentArray)
-        this.view.showValidatedOutPatient(data)
+        this.view.showValidatedOutPatient(data, data.limit)
         this.view.showProcedureMap(procedureArray)
       })
       .subscribe(data => {

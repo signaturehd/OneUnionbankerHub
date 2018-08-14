@@ -32,32 +32,33 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         showNoticeModal : false,
         showNoticeResponseModal : false,
         showBenefitFeedbackModal : false,
-        noticeResponse : '',
-        enabledLoader : false,
-        outpatientData : [],
-        procedureData : [],
-        dependentId: null,
-        dependentName: '',
-        procedureId: null,
-        procedureName: '',
-        procedureArray: [],
         showDepedendent: false,
         showProcedure: false,
+        enabledLoader : false,
+        dependentId: null,
+        procedureId: null,
+        showProcedureInput: false,
+        showEditSubmitButton: false,
+        titleChange: true,
+        attachmentsData: [],
+        attachmentArray: [],
+        procedureArray: [],
+        outpatientData : [],
+        procedureData : [],
+        limit: '',
+        procedureName: '',
         amount: '',
+        noticeResponse : '',
+        dependentName: '',
         diagnosisText : '',
         orNumberText: '',
         preferredDate: '',
-        showProcedureInput: false,
-        attachmentsData: [],
-        attachmentArray: [],
-        showEditSubmitButton: false,
         attachmentErrorMessage: '',
         dependentErrorMessage: '',
         diagnosisErrorMessage: '',
         dateErrorMessage: '',
         orNumberErrorMessage: '',
         amountErrorMessage : '',
-        titleChange: true,
     }
   }
 
@@ -82,8 +83,8 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
-  showValidatedOutPatient (outpatientData) {
-    this.setState({ outpatientData })
+  showValidatedOutPatient (outpatientData, limit) {
+    this.setState({ outpatientData, limit })
   }
 
   showProcedureMap (procedureData) {
@@ -219,13 +220,16 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       errorMessageRequiredProcedure,
       orNumberErrorMessage,
       showEditSubmitButton,
-      titleChange
+      titleChange,
+      limit
     } = this.state
 
     const {
       selectedArray,
       classProp
     } = this.props
+
+    console.log(procedureArray)
 
     return (
       <div>

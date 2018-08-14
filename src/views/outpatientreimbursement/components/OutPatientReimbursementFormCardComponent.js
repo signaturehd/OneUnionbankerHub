@@ -53,7 +53,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
     orNumberErrorMessage,
     amountErrorMessage,
     procedureArray,
-    employeeName
+    employeeName,
   } = this.props
 
   return (
