@@ -59,7 +59,8 @@ class ComplianceFragment extends BaseMVPView {
   }
 
   setCompliancesPdf (compliancesData) {
-    this.setState({ compliancesData })
+    let page = compliancesData ? compliancesData[0].page : 1
+    this.setState({ compliancesData, page })
   }
 
   noticeResponse (noticeResponse, showNoticeResponseModal) {
@@ -135,6 +136,9 @@ class ComplianceFragment extends BaseMVPView {
           <GenericInput
             autocomplete = { 'off' }
             value = { page }
+            onClick = {
+              () => this.setState({ page : '' })
+            }
             onChange = {
               e => {
                 if( pageTotal >= e.target.value ) {
