@@ -56,11 +56,11 @@ export default class OutPatientReimbursementPresenter {
     addOutPatientReimbursement (
       type,
       dependentId,
-      procedureId,
-      amount,
       diagnosisText,
+      procedure,
       orNumber,
       orDate,
+      amount,
       attachments
       ) {
         this.view.showCircularLoader()
@@ -68,11 +68,11 @@ export default class OutPatientReimbursementPresenter {
           addOutPatientReimbursementParam(
             type,
             dependentId,
-            procedureId,
-            amount,
             diagnosisText,
+            procedure,
             orNumber,
             orDate,
+            amount,
             attachments
           )
         )
