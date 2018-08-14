@@ -756,12 +756,12 @@ export default class HRBenefitsService {
         accountNumber,
         releasingCenter,
         type : outPatientParam.type,
-        amount : outPatientParam.amount,
         dependentId : outPatientParam.dependentId,
         diagnosis : outPatientParam.diagnosisText,
-        procedureId : outPatientParam.procedureId,
+        procedure : outPatientParam.procedure,
         officialReceiptNumber : outPatientParam.orNumber,
         officialReceiptDate : outPatientParam.orDate,
+        amount : outPatientParam.amount,
       }
       outPatientParam.attachments.map((resp, key) => (
         formData.append(resp.name, resp.file)
