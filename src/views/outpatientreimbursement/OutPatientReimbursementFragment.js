@@ -160,7 +160,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       procedureArray,
       orNumberText.toString(),
       moment(preferredDate).format('MM/DD/YYYY'),
-      200,
+      amount,
       attachmentArray)
   }
 
