@@ -670,6 +670,21 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getApprovedTrainings (token) {
+    return this.service.getApprovedTrainings (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getApprovalTrainingDetails (id, token) {
+    return this.service.getApprovalTrainingDetails (id, token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  trainingRequest (trainingId, ApprovalTrainingParam, token) {
+    return this.service.trainingRequest (trainingId, ApprovalTrainingParam, token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Maternity Assistance */
   validateMaternityAssistance (token) {
     return this.service.validateMaternityAssistance(token)
