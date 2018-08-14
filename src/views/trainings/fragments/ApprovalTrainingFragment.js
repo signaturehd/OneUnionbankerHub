@@ -219,7 +219,7 @@ class ApprovalTrainingFragment extends BaseMVPView {
             }
           </div>
           {
-            !!approvalTraining.length ?
+            !!approvalTraining.length &&
             <div>
               <div className = { 'grid-global' }>
                   {
@@ -248,8 +248,6 @@ class ApprovalTrainingFragment extends BaseMVPView {
               <br/>
               <br/>
             </div>
-            :
-            <div></div>
           }
           <div className={ 'mytrainings-group-grid' }>
             <h3>Recently Approved Training</h3>
@@ -269,7 +267,7 @@ class ApprovalTrainingFragment extends BaseMVPView {
             }
           </div>
             {
-              !!approvedTraining.length ?
+              !!approvedTraining.length &&
               <div>
                 <div className = { 'grid-global' }>
                     {
@@ -296,8 +294,6 @@ class ApprovalTrainingFragment extends BaseMVPView {
                       />
                 </div>
               </div>
-              :
-              <div></div>
             }
         </div>
       </div>
