@@ -232,6 +232,10 @@ p {
   background-image: url('../images/icons/ic_next.png');
 }
 
+.global-icons-dropdown {
+  background-image: url('../images/icons/ic_dropdown.png');
+}
+
 .global-icons-accountNumber {
   background-image: url('../images/icons/ic_account_balance_wallet_grey_600_36dp.png');
 }

@@ -15,3 +15,12 @@
   color: #555;
   font-size: 16px;
 }
+
+.clickable-card:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 4px #888;
+}
+
+.clickable-card:active {
+  box-shadow: 0px 0px 4px #ffa800;
+}
