@@ -140,11 +140,13 @@ export default class MyTrainingPresenter {
     status,
     rejectionReason
   ) {
+    this.view.modalLoader(true)
     this.approvalTrainingRequestInteractor.execute(trainingId, ApprovalTrainingParam(employeeId, status, rejectionReason))
     .subscribe(data => {
-      console.log(data);
+      this.view.modalLoader(false)
+      this.view.setNoticeResponse(data)
     }, error => {
-      console.log(error);
+      this.view.modalLoader(false)
     })
   }
 }

@@ -8,6 +8,7 @@ import ApprovalTrainingCardComponent from '../components/ApprovalTrainingCardCom
 import ApprovedTrainingCardComponent from '../components/ApprovedTrainingCardComponent'
 
 import ApprovalTrainingModal from '../modals/ApprovalTrainingModal'
+import ResponseModal from '../../notice/NoticeResponseModal'
 
 import * as MyTrainingFunctions from
 '../functions/MyTrainingFunctions'
@@ -37,6 +38,8 @@ class ApprovalTrainingFragment extends BaseMVPView {
       rejectionReason : '',
       showRejectModal : false,
       showApproveModal : false,
+      showNoticeResponseModal : false,
+      noticeResponse : '',
     }
   }
 
@@ -68,9 +71,18 @@ class ApprovalTrainingFragment extends BaseMVPView {
   submitTrainingRequest(status) {
     const {
       approvalTrainingDetails,
-      rejectionReason
+      rejectionReason,
+      showRejectModal,
+      showApproveModal,
     } = this.state
-    this.presenter.trainingRequest(approvalTrainingDetails.training.id, approvalTrainingDetails.employeeId, status, rejectionReason)
+    this.setState({ showRejectModal : false, showApproveModal : false })
+    this.props.presenter.trainingRequest(approvalTrainingDetails.training.id, approvalTrainingDetails.employeeId, status, rejectionReason)
+  }
+
+  setNoticeResponse (noticeResponse) {
+  this.setState({ noticeResponse, showNoticeResponseModal : true, approvalTrainingList : [], approvedTrainingList : [], rejectionReason : '' })
+    this.props.presenter.getNeedApprovalTrainings()
+    this.props.presenter.getApprovedTrainings()
   }
 
   navigate () {
@@ -95,6 +107,8 @@ class ApprovalTrainingFragment extends BaseMVPView {
     rejectionReason,
     showRejectModal,
     showApproveModal,
+    showNoticeResponseModal,
+    noticeResponse,
   } = this.state
 
   const search = searchString.trim().toLowerCase()
@@ -143,6 +157,7 @@ class ApprovalTrainingFragment extends BaseMVPView {
             <GenericButton
               type = { 'button' }
               text = { 'Ok' }
+              onClick = { () => this.submitTrainingRequest(6) }
               />
           </div>
         </Modal>
@@ -165,6 +180,15 @@ class ApprovalTrainingFragment extends BaseMVPView {
             <CircularLoader show={true}/>
            </center>
          </Modal>
+      }
+      {
+        showNoticeResponseModal &&
+        <ResponseModal
+          onClose = { () => {
+            this.setState({ showNoticeResponseModal : false, noticeResponse : '', approvalTrainingDetails : null })
+          }}
+          noticeResponse = { noticeResponse }
+        />
       }
       {
         enabledLoader ?
