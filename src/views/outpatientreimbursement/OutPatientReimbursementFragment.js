@@ -112,10 +112,28 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     this.setState({ attachmentArray })
   }
 
-  validateAmount (procedureArray, updateTotalAmount) {
-    console.log(updateTotalAmount)
-    // const validate = OutPatientReimbursementFunction.checkedAmount(e)
-    this.setState({ procedureArray, amountErrorMessage : '' })
+  validateAmount (procedureArray) {
+    const {
+      updateTotalAmount,
+      limit,
+    } = this.state
+    const newValueArray = procedureArray.map(function(resp) {
+      return resp.amount
+    })
+    const totalAmount = newValueArray.reduce((a, b) => a + b, 0)
+
+    if(parseInt(totalAmount) >= parseInt(limit)) {
+      this.setState({
+        errorMessageRequiredProcedure : `The amount you entered must not exceed to ${ limit }`
+      })
+    } else {
+      this.setState({
+        procedureArray,
+        amountErrorMessage : '',
+        amount: totalAmount,
+        errorMessageRequiredProcedure : ''
+      })
+    }
   }
 
   validateText (e) {
@@ -167,7 +185,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
   showFormReviewFieldDisabled (e) {
     const {
       dependentName,
-      procedureName,
+      procedureArray,
       diagnosisText,
       orNumberText,
       preferredDate,
@@ -182,10 +200,16 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       this.setState({ diagnosisErrorMessage : 'Please enter the diagnosis' })
     } else if (!this.validateRequired(preferredDate)) {
       this.setState({ dateErrorMessage : 'Please provide the Official Receipt Date' })
-    } else if (12000 > parseInt(limit)) {
-
     } else if (!this.validateRequired(orNumberText)) {
       this.setState({ orNumberErrorMessage : 'Please provide the Official Receipt Number' })
+    } else if (parseInt(amount) > parseInt(limit)) {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Outpatient Reimbursement',
+          message : `The amount you entered exceed to the limit of ${ limit }`,
+          type : 'warning',
+          duration : 2000
+        })
+      )
     } else {
       this.setState({
         showEditSubmitButton: true,
@@ -234,8 +258,6 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       selectedArray,
       classProp
     } = this.props
-
-    console.log(procedureArray)
 
     return (
       <div>
@@ -331,7 +353,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             diagnosisValueFunc = { (resp) => this.validateText(resp) }
             requestDepdentModalFunc = { (resp) => this.showDependentModal(resp) }
             dateFunc = { (resp) => this.validateDate(resp) }
-            selectedProcedureAmountFunc = { (resp, updateTotalAmount) => this.validateAmount(resp, updateTotalAmount) }
+            selectedProcedureAmountFunc = { (resp) => this.validateAmount(resp) }
             showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
             setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
             onSubmitFunc = { () => this.submitForm() }
