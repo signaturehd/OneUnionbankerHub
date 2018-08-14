@@ -45,6 +45,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         procedureArray: [],
         outpatientData : [],
         procedureData : [],
+        updateTotalAmount : [],
         limit: '',
         procedureName: '',
         amount: '',
@@ -111,7 +112,8 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     this.setState({ attachmentArray })
   }
 
-  validateAmount (procedureArray) {
+  validateAmount (procedureArray, updateTotalAmount) {
+    console.log(updateTotalAmount)
     // const validate = OutPatientReimbursementFunction.checkedAmount(e)
     this.setState({ procedureArray, amountErrorMessage : '' })
   }
@@ -181,7 +183,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     } else if (!this.validateRequired(preferredDate)) {
       this.setState({ dateErrorMessage : 'Please provide the Official Receipt Date' })
     } else if (12000 > parseInt(limit)) {
-      
+
     } else if (!this.validateRequired(orNumberText)) {
       this.setState({ orNumberErrorMessage : 'Please provide the Official Receipt Number' })
     } else {
@@ -224,7 +226,8 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       orNumberErrorMessage,
       showEditSubmitButton,
       titleChange,
-      limit
+      limit,
+      updateTotalAmount
     } = this.state
 
     const {
@@ -328,7 +331,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             diagnosisValueFunc = { (resp) => this.validateText(resp) }
             requestDepdentModalFunc = { (resp) => this.showDependentModal(resp) }
             dateFunc = { (resp) => this.validateDate(resp) }
-            selectedProcedureAmountFunc = { (resp) => this.validateAmount(resp) }
+            selectedProcedureAmountFunc = { (resp, updateTotalAmount) => this.validateAmount(resp, updateTotalAmount) }
             showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
             setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
             onSubmitFunc = { () => this.submitForm() }
@@ -351,6 +354,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             amountErrorMessage = { amountErrorMessage }
             procedureArray = { procedureArray }
             employeeName = { outpatientData.name }
+            updateTotalAmount = { updateTotalAmount }
           />
         }
       </div>
