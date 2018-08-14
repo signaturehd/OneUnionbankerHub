@@ -9,7 +9,7 @@ import {
 } from '../../../ub-components'
 import moment from 'moment'
 
-class ApprovalTrainingCardComponent extends Component {
+class ApprovedTrainingCardComponent extends Component {
   constructor (props) {
     super(props)
   }
@@ -19,27 +19,23 @@ class ApprovalTrainingCardComponent extends Component {
       id,
       name,
       title,
-      status,
-      onClick,
     } = this.props
 
     return (
-      <Card className={ 'clickable-card' } onClick = { () => onClick(id) }>
+      <Card>
         <div className = { 'enrolled-list' }>
           <h3>{ name ? name : '(no name)' }</h3>
           <p className={ 'enrolled-title' }>{ title ? title : '(no title)' }</p>
-          <p className={ 'enrolled-date' }>{ status }</p>
         </div>
       </Card>
     )
   }
 }
 
-ApprovalTrainingCardComponent.propTypes = {
+ApprovedTrainingCardComponent.propTypes = {
   id :  PropTypes.number,
   name : PropTypes.string,
   title : PropTypes.string,
-  date : PropTypes.string,
 }
 
-export default ApprovalTrainingCardComponent
+export default ApprovedTrainingCardComponent
