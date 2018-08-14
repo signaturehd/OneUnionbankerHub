@@ -170,6 +170,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       orNumberText,
       preferredDate,
       amount,
+      limit,
       attachmentArray
     } = this.state
 
@@ -179,6 +180,8 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       this.setState({ diagnosisErrorMessage : 'Please enter the diagnosis' })
     } else if (!this.validateRequired(preferredDate)) {
       this.setState({ dateErrorMessage : 'Please provide the Official Receipt Date' })
+    } else if (12000 > parseInt(limit)) {
+      
     } else if (!this.validateRequired(orNumberText)) {
       this.setState({ orNumberErrorMessage : 'Please provide the Official Receipt Number' })
     } else {
