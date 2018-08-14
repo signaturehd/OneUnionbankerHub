@@ -1,9 +1,11 @@
 import UpdateNoticeInteractor from '../../../domain/interactor/notice/UpdateNoticeInteractor'
 import NoticeParam from '../../../domain/param/NoticeParam'
+import SubmitPinInteractor from '../../../domain/interactor/compliances/SubmitPinInteractor'
 
 export default class NoticePresenter {
   constructor (container) {
     this.updateNoticeInteractor = new UpdateNoticeInteractor(container.get('HRBenefitsClient'))
+    this.submitPinInteractor = new SubmitPinInteractor(container.get('HRBenefitsClient'))
     // this.updateNoticeMplInteractor = new UpdateNoticeMplInteractor(container.get('HRBenefitsClient'))
   }
 
@@ -21,5 +23,17 @@ export default class NoticePresenter {
       this.view.hideLoading()
       // TODO prompt generic error
      })
+  }
+
+  submitPin (code) {
+    this.view.showCircularLoader()
+    this.submitPinInteractor.execute(code)
+      .subscribe(
+        data => {
+          this.view.hideCircularLoader()
+          this.view.noticeResponse(data, true)
+        }, error => {
+        this.view.hideCircularLoader()
+    })
   }
 }

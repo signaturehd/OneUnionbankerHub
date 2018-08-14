@@ -60,7 +60,7 @@ class Notice extends BaseMVPView {
             <div key = { key }>
               <div dangerouslySetInnerHTML = {{ __html : form.form }}></div>
               <br/>
-              {  
+              {
               form.aggregateMessage ?
                 <Card>
                   <div dangerouslySetInnerHTML = {{ __html : form.aggregateMessage }}></div>
