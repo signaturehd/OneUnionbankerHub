@@ -71,7 +71,6 @@ class MaternityAssistanceCardComponent extends Component {
                 selected = { deliveryDate }
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateOfDelivertFunc(e) }
-                minDate = { moment() }
                 text = { 'Date of Delivery' }
                 errorMessage = { dateOfDeliveryErrorMessage }
                 />
@@ -86,21 +85,28 @@ class MaternityAssistanceCardComponent extends Component {
                   }
                 }
                 type = { 'text' } />
-              <DatePicker
-                selected = { preferredDate }
-                disabled = { showEditSubmitButton }
-                onChange = { (e) => dateFunc(e) }
-                maxDate = { moment(deliveryDate) }
-                text = { 'Official Receipt Date' }
-                errorMessage = { dateErrorMessage }
-                />
-              <GenericInput
-                value = { orNumberText }
-                disabled = { showEditSubmitButton }
-                onChange = { (e) => oRNumberFunc(e.target.value) }
-                text = { 'Official Receipt Number' }
-                errorMessage = { orNumberErrorMessage }
-                type = { 'text' }/>
+              {
+                moment(deliveryDate).format('MM DD YYYY') <=
+                moment().format('MM DD YYYY') &&
+              <div>
+                <DatePicker
+                  selected = { preferredDate }
+                  disabled = { showEditSubmitButton }
+                  onChange = { (e) => dateFunc(e) }
+                  maxDate = { moment(deliveryDate) }
+                  text = { 'Official Receipt Date' }
+                  errorMessage = { dateErrorMessage }
+                  />
+                <GenericInput
+                  value = { orNumberText }
+                  disabled = { showEditSubmitButton }
+                  maxLength = { 20 }
+                  onChange = { (e) => oRNumberFunc(e.target.value) }
+                  text = { 'Official Receipt Number' }
+                  errorMessage = { orNumberErrorMessage }
+                  type = { 'text' }/>
+              </div>
+              }
             </div>
               {
                 attachmentsData.length !== 0  ?
