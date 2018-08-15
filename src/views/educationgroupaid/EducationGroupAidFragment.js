@@ -5,7 +5,9 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/EducationGroupAidPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { CircularLoader } from '../../ub-components/'
+import {
+  CircularLoader,
+  SingleInputModal } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
@@ -16,6 +18,7 @@ import store from '../../store'
 import { NotifyActions } from '../../actions'
 
 import FormComponent from './components/EducationGroupAidFormCardComponent'
+import moment from 'moment'
 
 class EducationGroupAidFragment extends BaseMVPView {
   constructor (props) {
@@ -23,18 +26,30 @@ class EducationGroupAidFragment extends BaseMVPView {
     this.state = {
       showNoticeModal : false,
       showConfirmation : false,
-      noticeResponse : null,
+      showDependentModal : false,
+      showDOPModal : false,
       showNoticeResponseModal : false,
       enabledLoader : false,
-      grantPlan : [], //meh
-      grantId : '',//meh
-      grantType : '',//meh
-      grantAmount : '',//meh
-      file : null,
-      imagePreviewUrl : null,
       showBenefitFeedbackModal : false,
-      data : ''
+      data : '',
+      grantId : '',
+      grantType : '',
+      grantAmount : '',
+      dependent : '',
+      company : '',
+      desiredAmount : '',
+      durationOfPayment : '',
+      grantPlan : [],
+      attachmentsData : [],
+      attachmentArray : [],
+      effectivityDate : moment(),
+      noticeResponse : null,
+      attachment : null
     }
+  }
+
+  showDependentModal (showDepedendent) {
+    this.setState({ showDepedendent })
   }
 
   componentDidMount () {
@@ -128,6 +143,8 @@ class EducationGroupAidFragment extends BaseMVPView {
     const {
       showNoticeModal,
       showConfirmation,
+      showDependentModal,
+      showDOPModal,
       noticeResponse,
       showNoticeResponseModal,
       enabledLoader,
@@ -135,10 +152,15 @@ class EducationGroupAidFragment extends BaseMVPView {
       grantId,
       grantType,
       grantAmount,
-      file,
-      imagePreviewUrl,
+      attachment,
       showBenefitFeedbackModal,
-      data
+      data,
+      dependent,
+      company,
+      desiredAmount,
+      durationOfPayment,
+      effectivityDate,
+      attachmentsData
     } = this.state
 
     return (
@@ -187,7 +209,21 @@ class EducationGroupAidFragment extends BaseMVPView {
           />
         }
 
-
+        {
+          showDependentModal &&
+          <SingleInputModal
+            label = { 'Dependents' }
+            inputArray = { grantPlan }
+            selectedArray = { (dependent) =>
+              this.setState({
+                dependent,
+                showDependentModal : false,
+                dependentErrorMessage : ''
+              })
+            }
+            onClose = { () => this.setState({ showDependentModal : false }) }
+          />
+        }
 
         <div>
           <i
@@ -205,6 +241,8 @@ class EducationGroupAidFragment extends BaseMVPView {
            </center> :
           <FormComponent
             grantPlan = { grantPlan }
+            showDepedendentFunc = { (resp) => this.showDependentModal(resp) }
+            attachmentsData = { attachmentsData }
             onClick = {
               (showConfirmation, data) => {
                 this.confirmation(showConfirmation, data)

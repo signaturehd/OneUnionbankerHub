@@ -47,11 +47,11 @@ p {
   -webkit-transform: rotate(135deg);
 }
 .header-margin-default {
-  display: flex;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   font-size: 35px;
-  margin-left: 30px;
+  text-align: center;
+  margin-left: 15px;
 }
 
 @media (max-width: 768px) {
@@ -230,6 +230,10 @@ p {
 
 .global-icons-next {
   background-image: url('../images/icons/ic_next.png');
+}
+
+.global-icons-dropdown {
+  background-image: url('../images/icons/ic_dropdown.png');
 }
 
 .global-icons-accountNumber {

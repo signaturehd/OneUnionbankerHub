@@ -17,6 +17,10 @@ import {
 
 import './styles/compliancesStyle.css'
 
+
+import store from '../../store'
+import { NotifyActions } from '../../actions'
+
 class ComplianceFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -35,6 +39,31 @@ class ComplianceFragment extends BaseMVPView {
     const { page } = this.state
     this.props.setSelectedNavigation(9)
     this.presenter.getCompliancesPdf(page)
+  }
+
+  onSubmit () {
+    const { pin, showEnterPin } = this.state
+
+    if (pin === null || pin === '') {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Code of Conduct' ,
+         message : 'Pin is empty',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+   } else if (String(pin).length < 5) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Code of Conduct' ,
+         message : 'Please enter your 5-digits code',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    } else {
+      this.presenter.submitPin(String(pin))
+      this.setState({ showEnterPin : false, pin : '' })
+    }
   }
 
   onNextPage (p) {
@@ -59,7 +88,8 @@ class ComplianceFragment extends BaseMVPView {
   }
 
   setCompliancesPdf (compliancesData) {
-    this.setState({ compliancesData })
+    let page = compliancesData ? compliancesData[0].page : 1
+    this.setState({ compliancesData, page })
   }
 
   noticeResponse (noticeResponse, showNoticeResponseModal) {
@@ -120,8 +150,7 @@ class ComplianceFragment extends BaseMVPView {
               text = { 'Submit' }
               onClick = {
                 () => {
-                  this.presenter.submitPin(String(pin))
-                  this.setState({ showEnterPin : false, pin : '' })
+                  this.onSubmit()
                 }
               }
               className={ 'compliance-buttons compliance-submit' }
@@ -135,6 +164,9 @@ class ComplianceFragment extends BaseMVPView {
           <GenericInput
             autocomplete = { 'off' }
             value = { page }
+            onClick = {
+              () => this.setState({ page : '' })
+            }
             onChange = {
               e => {
                 if( pageTotal >= e.target.value ) {

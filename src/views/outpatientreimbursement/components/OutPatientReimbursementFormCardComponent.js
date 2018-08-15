@@ -53,7 +53,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
     orNumberErrorMessage,
     amountErrorMessage,
     procedureArray,
-    employeeName
+    employeeName,
   } = this.props
 
   return (
@@ -101,6 +101,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
                 />
               <GenericInput
                 value = { orNumberText }
+                maxLength = { 20 }
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => oRNumberFunc(e.target.value) }
                 text = { 'Official Receipt Number' }
@@ -125,7 +126,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
                     <GenericInput
                       hint = { 'Enter Amount' }
                       text = { resp.name }
-                      value = { resp.amount ? resp.amount : 0 }
+                      value = { resp.amount ? resp.amount : '' }
                       errorMessage = {
                         resp.amount === 0  ?
                         'Please enter an amount for the selected procedure' :

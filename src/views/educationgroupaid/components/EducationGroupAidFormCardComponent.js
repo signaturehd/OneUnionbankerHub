@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
+import {
+  GenericInput,
+  Card,
+  GenericButton,
+  FileUploader,
+  DatePicker } from '../../../ub-components/'
 
 import DependentModal from '../modals/EducationGroupAidDependentModal'
 import DOPModal from '../modals/educationGroupAidDOPModal'
@@ -12,7 +17,6 @@ import { MinMaxNumberValidation, RequiredDecimalValidation } from '../../../util
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
-import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
 class EducationGroupAidFormCardComponent extends Component {
@@ -48,11 +52,12 @@ class EducationGroupAidFormCardComponent extends Component {
     const {
       grantPlan,
       presenter,
-      onClick
+      onClick,
+      showDependentModal,
+      showDepedendentFunc
     } = this.props
 
     const {
-      showDependentModal,
       showDOPModal,
       grantId,
       grantType,
@@ -92,16 +97,6 @@ class EducationGroupAidFormCardComponent extends Component {
 
     return (
       <div className = {'educ-container'}>
-        {
-          showDependentModal &&
-          <DependentModal
-            details = { grantPlan }
-            chosenDependent = {
-              (dependent, showDependentModal) => this.setState({ dependent, showDependentModal })
-            }
-            onClose = { () =>
-              this.setState({ showDependentModal : false }) } />
-        }
 
         {
           showDOPModal &&
@@ -116,26 +111,24 @@ class EducationGroupAidFormCardComponent extends Component {
 
         <div className = { 'educ-grid-column-2' }>
           <div></div>
-          <Card className = { 'educ-form-card' }>
+          <div className = { 'educ-form-card' }>
             <h4>
               Benefits Form
             </h4>
             <div className = {'educ-form-card-body '}>
-              <GenericTextBox
+              <GenericInput
                 value = { dependent.name ? dependent.name : '' }
-                placeholder = { 'Dependents' }
-                onClick = {
-                  () => this.setState({ showDependentModal : true })
-                }
+                text = { 'Dependents' }
+                onClick = { () => showDepedendentFunc(true)}
                 readOnly
                 type = { 'text' }/>
-              <GenericTextBox
+              <GenericInput
                 value = { company }
                 onChange = { (e) => this.setState({ company : e.target.value.replace(/[^A-Z a-z]/g, '') }) }
-                placeholder = { 'Company' }
+                text = { 'Company' }
                 maxLength={ 120 }
                 type = { 'text' }/>
-              <GenericTextBox
+              <GenericInput
                 value = { desiredAmount }
                 value={ desiredAmount ? desiredAmount : '' }
                 onChange={
@@ -144,36 +137,32 @@ class EducationGroupAidFormCardComponent extends Component {
                     new MinMaxNumberValidation(0, 800).isValid(e.target.value) ?
                       this.setState({ desiredAmount: e.target.value }):
                       this.setState({ desiredAmount: '' })
-
                   }
                  }
                 maxLength={ 20 }
                 readOnly
-                placeholder = { 'Desired Amount' }
+                text = { 'Desired Amount' }
                 type = { 'text' }/>
-              <GenericTextBox
+              <GenericInput
                 value = { durationOfPayment.paymentDuration ? durationOfPayment.paymentDuration : '' }
                 onClick = {
                   () => this.setState({ showDOPModal : true })
                 }
-                placeholder = { 'Duration of Premium Payment' }
+                text = { 'Duration of Premium Payment' }
                 type = { 'text' }/>
-                <div>
-                  <DatePicker
-                    selected = { effectivityDate }
-                    value = { effectivityDateText }
-                    onChange = {
-                      (data) => {
-                        this.setState({ effectivityDate : data })
-                      }
+                <DatePicker
+                  selected = { effectivityDate }
+                  value = { effectivityDateText }
+                  text = { 'Effectivity Date/Coverage of Insurance' }
+                  onChange = {
+                    (data) => {
+                      this.setState({ effectivityDate : data })
                     }
-                    className = { 'educ-calendar' }
-                    calendarClassName = { 'calendarClass' }/>
-                  <label className={ 'calendar-label' }>Effectivity Date/Coverage of Insurance</label>
-                </div>
-              <GenericTextBox
+                  }
+                />
+              <GenericInput
                 value = { dependent.months ? dependent.months : '' }
-                placeholder = { 'Maturity Date' }
+                text = { 'Maturity Date' }
                 type = { 'text' }/>
 
               {
@@ -201,7 +190,7 @@ class EducationGroupAidFormCardComponent extends Component {
                 !imagePreviewUrl1 &&
                 <FileUploader
                   accept="image/gif,image/jpeg,image/jpg,image/png,"
-                  placeholder = { grantPlan.attachments ? grantPlan.attachments[0] : '' }
+                  text = { grantPlan.attachments ? grantPlan.attachments[0] : '' }
                   value = { file1.name }
                   onChange = {
                     e => {
@@ -267,7 +256,7 @@ class EducationGroupAidFormCardComponent extends Component {
                 !imagePreviewUrl2 &&
                 <FileUploader
                   accept="image/gif,image/jpeg,image/jpg,image/png,"
-                  placeholder = { grantPlan.attachments ? grantPlan.attachments[1] : '' }
+                  text = { grantPlan.attachments ? grantPlan.attachments[1] : '' }
                   value = { file2.name }
                   onChange = {
                     e => {
@@ -330,11 +319,15 @@ class EducationGroupAidFormCardComponent extends Component {
                 }
                 className = { 'educ-submit' } />
             </div>
-          </Card>
+          </div>
         </div>
       </div>
     )
   }
+}
+
+EducationGroupAidFormCardComponent.propTypes = {
+  showDepedendentFunc : PropTypes.func
 }
 
 export default EducationGroupAidFormCardComponent
