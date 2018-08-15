@@ -179,12 +179,12 @@ class MaternityAssistanceFragment extends BaseMVPView {
   }
 
   validateRequiredRoomNumber (e) {
-    const validate = MaternityAssistanceFunction.checkedValidateSymbol(e)
+    const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
     this.setState({ roomNumberText : validate, roomNumberErrorMessage : '' })
   }
 
   validateRequiredHouseNumber (e) {
-    const validate = MaternityAssistanceFunction.checkedValidateSymbol(e)
+    const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
     this.setState({ houseNumberText : validate, houseNumberErrorMessage : '' })
   }
 

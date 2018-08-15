@@ -49,7 +49,8 @@ class MaternityAssistanceCardComponent extends Component {
     orNumberErrorMessage,
     amountErrorMessage,
     typeOfDeliveryErrorMessage,
-    dateOfDeliveryErrorMessage
+    dateOfDeliveryErrorMessage,
+    recipient
   } = this.props
 
   return (
@@ -60,6 +61,12 @@ class MaternityAssistanceCardComponent extends Component {
           <Line/>
           <div className={ 'outpatient-form-card' }>
             <div className={ 'outpatient-form-card-body' }>
+              <GenericInput
+                value = { recipient }
+                text = { 'Recipient' }
+                readOnly
+                disabled = { true }
+                type = { 'text' }/>
               <GenericInput
                 value = { typeDeliveryName }
                 onClick = { () => requestTypeOfDeliveryFunc(true) }
@@ -109,7 +116,7 @@ class MaternityAssistanceCardComponent extends Component {
               }
             </div>
               {
-                attachmentsData.length !== 0  ?
+                attachmentsData.length !== 0  &&
                 <div>
                   <MultipleFileUploader
                     placeholder = { 'Form Attachments' }
@@ -122,8 +129,6 @@ class MaternityAssistanceCardComponent extends Component {
                       `Please upload the required attachments`  }
                   />
                 </div>
-                :
-                <div></div>
               }
               <Line/>
               <br/>
@@ -183,6 +188,7 @@ MaternityAssistanceCardComponent.propTypes = {
   orNumberErrorMessage: PropTypes.string,
   typeOfDeliveryErrorMessage: PropTypes.string,
   dateOfDeliveryErrorMessage: PropTypes.string,
+  recipient: PropTypes.string,
   attachments: PropTypes.array,
   showEditSubmitButton: PropTypes.bool,
   onSubmitFunc : PropTypes.func,
