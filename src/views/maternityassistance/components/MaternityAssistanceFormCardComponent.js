@@ -79,6 +79,7 @@ class MaternityAssistanceCardComponent extends Component {
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateOfDelivertFunc(e) }
                 text = { 'Date of Delivery' }
+                maxDate = { moment().add(9, 'months') }
                 errorMessage = { dateOfDeliveryErrorMessage }
                 />
               <GenericInput
