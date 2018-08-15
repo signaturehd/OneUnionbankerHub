@@ -68,7 +68,7 @@ class MedicalFragment extends Component {
             showConfirmationModal &&
             <Modal>
               <center>
-                <h2>We’d like to help you in your labor expenses but this benefit requires post-submission of multiple documents. Would you like to proceed?</h2>
+                <h2>We&#39;d like to help you in your labor expenses but this benefit requires post-submission of multiple documents. Would you like to proceed?</h2>
                 <br/>
                 <div className = { 'grid-global' }>
                   <GenericButton

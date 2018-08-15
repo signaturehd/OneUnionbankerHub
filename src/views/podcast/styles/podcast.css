@@ -114,11 +114,6 @@ and (min-width : 321px) {
     margin: 0;
     font-size: 14px;
   }
-  .header-margin-default {
-    margin: auto auto 25px auto !important;
-    text-align: center !important;
-    display: block !important;
-  }
   .podcastsSearchBar {
     font-size: 12px;
   }
@@ -135,11 +130,6 @@ and (max-width : 320px) {
   label:before {
     margin: 0;
     font-size: 16px;
-  }
-  .header-margin-default {
-    margin: auto auto 25px auto !important;
-    text-align: center !important;
-    display: block !important;
   }
   .podcastsSearchBar {
     font-size: 12px;
@@ -158,11 +148,6 @@ and (max-device-width : 1024px) {
   label:before {
     margin: 0;
     font-size: 20px;
-  }
-  .header-margin-default {
-    margin: auto auto 30px auto !important;
-    text-align: center !important;
-    display: block !important;
   }
   .podcastsSearchBar {
     font-size: 16px;
@@ -183,11 +168,6 @@ and (orientation : landscape) {
     margin: 0;
     font-size: 20px;
   }
-  .header-margin-default {
-    margin: auto auto 30px auto !important;
-    text-align: center !important;
-    display: block !important;
-  }
   .podcastsSearchBar {
     font-size: 16px;
   }
@@ -207,11 +187,6 @@ and (orientation : portrait) {
     margin: 0;
     font-size: 20px;
   }
-  .header-margin-default {
-    margin: auto auto 30px auto !important;
-    text-align: center !important;
-    display: block !important;
-  }
   .podcastsSearchBar {
     font-size: 16px;
   }
@@ -228,11 +203,6 @@ and (min-width : 1224px) {
   label:before {
     margin: 0;
     font-size: 18px;
-  }
-  .header-margin-default {
-    margin: auto auto 30px auto !important;
-    text-align: center !important;
-    display: block !important;
   }
   .podcastsSearchBar {
     font-size: 14px;
@@ -251,11 +221,6 @@ and (min-width : 1824px) {
     margin: 0;
     font-size: 20px;
   }
-  .header-margin-default {
-    margin: auto auto 30px auto !important;
-    text-align: center !important;
-    display: block !important;
-  }
   .podcastsSearchBar {
     font-size: 18px;
   }
@@ -273,11 +238,6 @@ and (max-device-width : 568px) {
   label:before {
     margin: 0;
     font-size: 14px;
-  }
-  .header-margin-default {
-    margin: auto auto 25px auto !important;
-    text-align: center !important;
-    display: block !important;
   }
   .podcastsSearchBar {
     font-size: 12px;
@@ -298,11 +258,6 @@ and (orientation : landscape) {
     margin: 0;
     font-size: 14px;
   }
-  .header-margin-default {
-    margin: auto auto 25px auto !important;
-    text-align: center !important;
-    display: block !important;
-  }
   .podcastsSearchBar {
     font-size: 12px;
   }
@@ -321,11 +276,6 @@ and (orientation : portrait) {
   label:before {
     margin: 0;
     font-size: 12px;
-  }
-  .header-margin-default {
-    margin: auto auto 20px auto !important;
-    text-align: center !important;
-    display: block !important;
   }
   .podcastsSearchBar {
     font-size: 10px;

@@ -61,7 +61,7 @@ class BenefitFeedbackModal extends BaseMVPView {
                   src={ require('../../images/icons/img_message_circle.png') }
                   className= {'sidebar-img-ub-logo'}/>
                 <br/>
-                <h3>Thank you for using 1Uhub! We'd love to know what your experience was like using the application.</h3>
+                <h3>Thank you for using 1Uhub! We&#39;d love to know what your experience was like using the application.</h3>
                 <br/>
                 <Rating
                   emptySymbol={<MdStarOutline style={{ fontSize: 30, color : '#c65e11' }} />}
