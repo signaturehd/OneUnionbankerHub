@@ -11,8 +11,9 @@ import {
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
-import ConfirmationModal from './modals/EducationGroupAidReviewModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
+import DependentModal from './modals/DependentsModal'
+import DurationOfPremium from './modals/DurationOfPremium'
 
 import store from '../../store'
 import { NotifyActions } from '../../actions'
@@ -20,36 +21,89 @@ import { NotifyActions } from '../../actions'
 import FormComponent from './components/EducationGroupAidFormCardComponent'
 import moment from 'moment'
 
+import * as EducationGroupAidFunction from './function/EducationGroupAidFunction'
+
 class EducationGroupAidFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
       showNoticeModal : false,
       showConfirmation : false,
-      showDependentModal : false,
+      showDependent : false,
       showDOPModal : false,
       showNoticeResponseModal : false,
       enabledLoader : false,
       showBenefitFeedbackModal : false,
+      showEditSubmitButton : false,
+      titleChange : true,
+      noticeResponse : null,
       data : '',
-      grantId : '',
-      grantType : '',
-      grantAmount : '',
-      dependent : '',
+      dependentId : '',
+      dependentName : '',
+      dependentMonths : '',
+      dependentErrorMessage : '',
       company : '',
+      companyErrorMessage : '',
       desiredAmount : '',
-      durationOfPayment : '',
+      desiredAmountErrorMessage : '',
+      premiumId : '',
+      premiumMonths : '',
+      premiumDuration : '',
+      DOPErrorMessage : '',
+      effectiveDate : '',
+      effectivityDateText : '',
       grantPlan : [],
+      dependentArray : [],
+      durationOfPremium : [],
       attachmentsData : [],
       attachmentArray : [],
       effectivityDate : moment(),
-      noticeResponse : null,
-      attachment : null
     }
   }
 
-  showDependentModal (showDepedendent) {
-    this.setState({ showDepedendent })
+  showDependentMap (dependentArray) {
+    this.setState({ dependentArray })
+  }
+
+  showPremiumMap (durationOfPremium) {
+    this.setState({ durationOfPremium })
+  }
+
+  showAttachmentsMap (attachmentsData) {
+    this.setState({ attachmentsData })
+  }
+
+  showValidatedGroupAid (grantPlan) {
+    this.setState({ grantPlan })
+  }
+
+  showDependentModal (showDependent) {
+    this.setState({ showDependent })
+  }
+
+  showPremiumModal (showDOPModal) {
+    this.setState({ showDOPModal })
+  }
+
+  setFileAttachments (attachmentArray) {
+    this.setState({ attachmentArray })
+  }
+
+  companyFunc (e) {
+    const validate = EducationGroupAidFunction.checkedValidateText(e)
+    this.setState({ company : validate , companyErrorMessage : '' })
+  }
+
+  desiredAmountFunc (e) {
+    const validate = EducationGroupAidFunction.checkedDesiredAmountFunc(e)
+    this.setState({ desiredAmount: validate ,  desiredAmountErrorMessage: '' })
+  }
+
+  dateFunc (date) {
+    const { premiumMonths } = this.state
+    const eDate = (premiumMonths ? moment(date).add(premiumMonths, 'months') : '')
+    const eDateText = date.format('LL') + ( eDate ? ' - ' + eDate.format('LL') : '' )
+    this.setState({ effectivityDate : date, effectiveDate: eDate.format('MM-DD-YYYY'), effectivityDateText: eDateText })
   }
 
   componentDidMount () {
@@ -57,62 +111,37 @@ class EducationGroupAidFragment extends BaseMVPView {
     this.presenter.validateGroupAid()
   }
 
-  confirmation (showConfirmation, data) {
-    if (data.dependent === '') {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Education Group - Plan',
-          message : 'Please double check your dependents',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    } else if (data.company.trim() == '') {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Education Group - Plan',
-          message : 'Please double check your company',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    } else if (data.desiredAmount.trim() === '' || data.desiredAmount === '0') {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Education Group - Plan',
-          message : 'Please double check your desired amount',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    } else if (data.durationOfPayment === '') {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Education Group - Plan',
-          message : 'Please double check your duration of payment',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    } else if (!data.file1 || !data.imagePreviewUrl1) {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Education Group - Plan',
-          message : 'Please double check your attachments',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    } else if (!data.file2 || !data.imagePreviewUrl2) {
-      store.dispatch(NotifyActions.addNotify({
-          title : 'Education Group - Plan',
-          message : 'Please double check your attachments',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    } else {
-      this.setState({showConfirmation, data})
-    }
+  editFormReview (e) {
+    this.setState({ showEditSubmitButton : false, titleChange : true })
   }
 
-  setGrantPlan (grantPlan) {
-    this.setState({ grantPlan })
+  validateRequired (e) {
+    return EducationGroupAidFunction.checkedValidateInput(e)
+  }
+
+  showFormReviewFieldDisabled (e) {
+    const {
+      dependentId,
+      desiredAmount,
+      company,
+      premiumId,
+      attachmentArray
+    } = this.state
+
+    if(!this.validateRequired(dependentId)) {
+     this.setState({ dependentErrorMessage : 'Please select your dependent' })
+    } else if (!this.validateRequired(company)) {
+      this.setState({ companyErrorMessage : 'Please enter a company' })
+    } else if (!this.validateRequired(desiredAmount)) {
+      this.setState({ desiredAmountErrorMessage : 'Please enter desired amount' })
+    } else if (!this.validateRequired(premiumId)) {
+      this.setState({ DOPErrorMessage : 'Please select a duration of premium payment' })
+    } else {
+      this.setState({
+        showEditSubmitButton: true,
+        titleChange: false,
+      })
+    }
   }
 
   hideCircularLoader () {
@@ -131,8 +160,23 @@ class EducationGroupAidFragment extends BaseMVPView {
     this.setState({ showConfirmation: false, noticeResponse })
   }
 
-  submitForm (dependentId, desiredAmount, effectiveDate, company, durationOfPaymentId, file1, file2) {
-    this.presenter.addGroupAid(dependentId, desiredAmount, effectiveDate, company, durationOfPaymentId, file1, file2)
+  submitForm () {
+    const {
+      dependentId,
+      desiredAmount,
+      company,
+      premiumId,
+      effectiveDate,
+      attachmentArray
+    } = this.state
+
+    this.presenter.addGroupAid(
+      dependentId,
+      desiredAmount,
+      effectiveDate,
+      company,
+      premiumId,
+      attachmentArray)
   }
 
   navigate () {
@@ -141,40 +185,41 @@ class EducationGroupAidFragment extends BaseMVPView {
 
   render () {
     const {
+      titleChange,
+      showEditSubmitButton,
       showNoticeModal,
       showConfirmation,
-      showDependentModal,
+      showDependent,
       showDOPModal,
       noticeResponse,
       showNoticeResponseModal,
       enabledLoader,
       grantPlan,
-      grantId,
-      grantType,
-      grantAmount,
-      attachment,
+      dependentArray,
       showBenefitFeedbackModal,
       data,
-      dependent,
+      dependentId,
+      dependentName,
+      dependentMonths,
+      dependentErrorMessage,
       company,
+      companyErrorMessage,
       desiredAmount,
-      durationOfPayment,
+      desiredAmountErrorMessage,
+      premiumId,
+      premiumMonths,
+      premiumDuration,
+      DOPErrorMessage,
+      durationOfPremium,
+      effectiveDate,
+      effectivityDateText,
       effectivityDate,
-      attachmentsData
+      attachmentsData,
+      attachmentArray
     } = this.state
 
     return (
       <div>
-        {
-          showConfirmation &&
-          <ConfirmationModal
-            data = { data }
-            attachments = { grantPlan.attachments }
-            submitForm = { (d1, d2, d3, d4, d5, d6, d7) =>
-              this.submitForm(d1, d2, d3, d4, d5, d6, d7) }
-            onClose = { () => this.setState({ showConfirmation : false }) }
-          />
-        }
 
         {
           showNoticeModal &&
@@ -210,18 +255,38 @@ class EducationGroupAidFragment extends BaseMVPView {
         }
 
         {
-          showDependentModal &&
-          <SingleInputModal
+          showDependent &&
+          <DependentModal
             label = { 'Dependents' }
-            inputArray = { grantPlan }
-            selectedArray = { (dependent) =>
+            inputArray = { dependentArray }
+            selectedArray = { (dependentId, dependentName, dependentMonths) =>
               this.setState({
-                dependent,
-                showDependentModal : false,
+                dependentId,
+                dependentName,
+                dependentMonths,
+                showDependent : false,
                 dependentErrorMessage : ''
               })
             }
-            onClose = { () => this.setState({ showDependentModal : false }) }
+            onClose = { () => this.setState({ showDependent : false }) }
+          />
+        }
+
+        {
+          showDOPModal &&
+          <DurationOfPremium
+            label = { 'Dependents' }
+            inputArray = { durationOfPremium }
+            selectedArray = { (premiumId, premiumMonths, premiumDuration) =>
+              this.setState({
+                premiumId,
+                premiumMonths,
+                premiumDuration,
+                showDOPModal : false,
+                DOPErrorMessage : ''
+              })
+            }
+            onClose = { () => this.setState({ showDOPModal : false }) }
           />
         }
 
@@ -230,9 +295,18 @@ class EducationGroupAidFragment extends BaseMVPView {
             className = { 'back-arrow' }
             onClick = { this.navigate.bind(this) }>
           </i>
-          <h2 className = { 'header-margin-default' }>
-            Education Group - Plan
-          </h2>
+
+          {
+            titleChange ?
+            <h2 className = { 'header-margin-default' }>
+              Education Group - Plan
+            </h2>
+            :
+            <h2 className = { 'header-margin-default' }>
+              Form Summary
+            </h2>
+          }
+
         </div>
         {
           enabledLoader ?
@@ -241,14 +315,29 @@ class EducationGroupAidFragment extends BaseMVPView {
            </center> :
           <FormComponent
             grantPlan = { grantPlan }
-            showDepedendentFunc = { (resp) => this.showDependentModal(resp) }
+            dependentName = { dependentName }
+            dependentMonths = { dependentMonths }
+            dependentErrorMessage = { dependentErrorMessage }
+            desiredAmount = { desiredAmount }
+            desiredAmountErrorMessage = { desiredAmountErrorMessage }
+            company = { company }
+            companyErrorMessage = { companyErrorMessage }
+            premiumMonths = { premiumMonths }
+            premiumDuration = { premiumDuration }
+            DOPErrorMessage = { DOPErrorMessage }
+            effectivityDate = { effectivityDate }
+            effectivityDateText = { effectivityDateText }
+            showEditSubmitButton = { showEditSubmitButton }
+            showDependentFunc = { (resp) => this.showDependentModal(resp) }
+            showPremiumFunc = { (resp) => this.showPremiumModal(resp) }
+            companyFunc = { (resp) => this.companyFunc(resp) }
+            desiredAmountFunc = { (resp) => this.desiredAmountFunc(resp) }
+            dateFunc = { (resp) => this.dateFunc(resp) }
+            setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
+            showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
+            onSubmitFunc = { () => this.submitForm() }
+            editFormDataFunc = { () => this.editFormReview() }
             attachmentsData = { attachmentsData }
-            onClick = {
-              (showConfirmation, data) => {
-                this.confirmation(showConfirmation, data)
-              }
-            }
-            presenter = { this.presenter }
           />
         }
       </div>

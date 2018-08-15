@@ -1,21 +1,27 @@
 
-.educ-container {
+.educG-container {
   max-width: 100%;
 }
 
 
-.educ-form-card {
+.educG-form-card {
   max-width: 100%;
   padding: 20px 5px 20px 5px;
   margin: auto;
 }
 
-.educ-form-card-body {
+.educG-form-review {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
+}
+
+.educG-form-card-body {
   border-color: #0a0a0a;
   color: #090909;
 }
 
-.educ-submit {
+.educG-submit {
   border-radius: 5px;
   text-align: center;
   outline: none;
@@ -27,39 +33,39 @@
   width: 100%;
 }
 
-.educ-submit:hover {
+.educG-submit:hover {
   border: 1px solid #FF7200;
   background-color: #ff8A00;
   color: #fff;
 }
 
-.educ-submit-form-button:hover {
+.educG-submit-form-button:hover {
   border: 1px solid #FF7200;
   background-color: #ff8A00;
   color: #fff;
 }
 
-.educ-edit-form:hover {
+.educG-edit-form:hover {
   border: 1px solid #FF7200;
   background-color: #ff8A00;
   color: #fff;
 }
 
 
-.educ-grid-column-2 {
+.educG-grid-column-2 {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   column-gap: 2%;
 }
 
 @media (max-width : 768px) {
-  .educ-grid-column-2 {
+  .educG-grid-column-2 {
     display: grid;
     grid-template-columns: 1fr ;
     column-gap: 2%;
     grid-row-gap: 2%;
   }
-  .educ-form-card {
+  .educG-form-card {
     margin-top: 10px;
   }
 }
@@ -75,7 +81,7 @@
     transform: translate3d(0, 0, 0);
   }
 }
-.educ-form-preview{
+.educG-form-preview{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 100%;
   float: center;
@@ -88,7 +94,7 @@
   animation: fadeInUp 0.5s ease-in-out 0s forwards;
 }
 
-.educ-attachment-form {
+.educG-attachment-form {
   padding: 10px;
   margin: 0 30px 0 30px;
   background-color: #f6f6f6;
@@ -97,7 +103,7 @@
   border-color: #DBDBE0;
 }
 
-.educ-form-title {
+.educG-form-title {
   display: block;
   text-align: left;
   font-size:14px;
@@ -109,7 +115,7 @@
   float: right;
 }
 
-.educ-file-name {
+.educG-file-name {
   margin-left: 120px;
   line-height: 60px;
   text-align: left;
@@ -118,7 +124,7 @@
 }
 
 
-.educ-calendar {
+.educG-calendar {
   border-bottom: 1px solid #757575;
   border-top: 0px;
   border-left:0px;
@@ -141,7 +147,7 @@
   color: #ff8a00 !important;
 }
 
-.educ-calendar-grid {
+.educG-calendar-grid {
   display: grid;
   grid-template-columns: 1fr 5fr 1fr 5fr 1fr
 }
