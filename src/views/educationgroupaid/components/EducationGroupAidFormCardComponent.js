@@ -29,9 +29,6 @@ class EducationGroupAidFormCardComponent extends Component {
 
   render () {
     const {
-      grantPlan,
-      presenter,
-      onClick,
       dependentName,
       dependentMonths,
       dependentErrorMessage,

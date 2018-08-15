@@ -28,7 +28,6 @@ class EducationGroupAidFragment extends BaseMVPView {
     super(props)
     this.state = {
       showNoticeModal : false,
-      showConfirmation : false,
       showDependent : false,
       showDOPModal : false,
       showNoticeResponseModal : false,
@@ -37,7 +36,6 @@ class EducationGroupAidFragment extends BaseMVPView {
       showEditSubmitButton : false,
       titleChange : true,
       noticeResponse : null,
-      data : '',
       dependentId : '',
       dependentName : '',
       dependentMonths : '',
@@ -52,7 +50,6 @@ class EducationGroupAidFragment extends BaseMVPView {
       DOPErrorMessage : '',
       effectiveDate : '',
       effectivityDateText : '',
-      grantPlan : [],
       dependentArray : [],
       durationOfPremium : [],
       attachmentsData : [],
@@ -71,10 +68,6 @@ class EducationGroupAidFragment extends BaseMVPView {
 
   showAttachmentsMap (attachmentsData) {
     this.setState({ attachmentsData })
-  }
-
-  showValidatedGroupAid (grantPlan) {
-    this.setState({ grantPlan })
   }
 
   showDependentModal (showDependent) {
@@ -188,16 +181,13 @@ class EducationGroupAidFragment extends BaseMVPView {
       titleChange,
       showEditSubmitButton,
       showNoticeModal,
-      showConfirmation,
       showDependent,
       showDOPModal,
       noticeResponse,
       showNoticeResponseModal,
       enabledLoader,
-      grantPlan,
       dependentArray,
       showBenefitFeedbackModal,
-      data,
       dependentId,
       dependentName,
       dependentMonths,
@@ -314,7 +304,6 @@ class EducationGroupAidFragment extends BaseMVPView {
              <CircularLoader show = { enabledLoader }/>
            </center> :
           <FormComponent
-            grantPlan = { grantPlan }
             dependentName = { dependentName }
             dependentMonths = { dependentMonths }
             dependentErrorMessage = { dependentErrorMessage }
