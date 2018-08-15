@@ -915,4 +915,18 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Phenom */
+
+  getPhenomDiscounts (token) {
+    return this.apiClient.get('v1/phenom/discounts?type=corporate', {
+      headers : { token }
+    })
+  }
+
+  getPhenomSelectedDiscounts (token, id) {
+    return this.apiClient.get(`v1/phenom/discounts/${ id }`, {
+      headers : { token }
+    })
+  }
 }

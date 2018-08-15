@@ -54,7 +54,13 @@ class SideBar extends Component {
         id: 9 ,
         title: 'My Compliance',
         action: () => history.push('/mycompliance'),
-        className: 'logout-icon'
+        className: 'compliance-icon'
+      },
+      {
+        id: 10 ,
+        title: 'Phenom',
+        action: () => history.push('/phenom'),
+        className: 'payslip-icon'
       },
       {
         id: 3 ,
@@ -102,7 +108,7 @@ class SideBar extends Component {
           }
           {
             modules.map((d, idx) =>
-            d.id === 9 ?
+            d.id === 10 ?
             <div
               key = { idx }
             >
