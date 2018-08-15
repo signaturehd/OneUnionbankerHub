@@ -24,15 +24,21 @@ class PhenomFragment extends BaseMVPView {
     this.state = {
       phenomDataList : [],
       index: 6,
-      activeSelect : ''
+      activeSelect : '',
+      loader : false
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(10)
+    this.presenter.getPhenomDiscounts()
   }
 
-  showPhenomData (phenomDataList) {
+  showCircularLoader (loader) {
+    this.setState({ loader })
+  }
+
+  showPhenomDiscountList (phenomDataList) {
     this.setState({ phenomDataList })
   }
 
@@ -68,7 +74,7 @@ class PhenomFragment extends BaseMVPView {
       base64,
       selected
     } = this.props
-
+    console.log(phenomDataList)
     return (
       <div className = { 'phenom-fragment' }>
         <h2 className = { 'header-margin-default' }>Phenom</h2>
@@ -102,33 +108,6 @@ class PhenomFragment extends BaseMVPView {
               }
             </div>
             <div>
-              <div>
-                <div className = { 'grid-global' }>
-                  {
-                    index === 6 ?
-                    <div></div> :
-                    <GenericButton
-                      className = { 'transaction-component-button' }
-                      text = { 'View Less' }
-                      onClick = { () =>
-                        this.setState({
-                          index : PhenomFunction.indexDecreased(index)
-                          })
-                        }
-                      />
-                  }
-                  <GenericButton
-                    className = { 'transaction-component-button' }
-                    text = { 'View More' }
-                    onClick = { () =>
-                      this.setState({
-                        index : PhenomFunction.indexIncreased(index)
-                        })
-                      }
-                    />
-                </div>
-                <Line/>
-              </div>
             </div>
           </div>
         }

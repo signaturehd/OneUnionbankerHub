@@ -746,8 +746,8 @@ export default class HRBenefitsClient {
   }
 
   /* Phenom Loans */
-  getPhenom (token) {
-    return this.service.getPhenom(token)
+  getPhenomDiscounts (token) {
+    return this.service.getPhenomDiscounts(token)
       .pipe(ServiceErrorOperator())
   }
 }

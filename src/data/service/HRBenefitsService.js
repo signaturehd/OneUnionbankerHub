@@ -918,10 +918,9 @@ export default class HRBenefitsService {
 
   /* Phenom */
 
-  getPhenom (token) {
-    return this.apiClient.get('v1/phenom', {
+  getPhenomDiscounts (token) {
+    return this.apiClient.get('v1/phenom/discounts', {
       headers : { token }
     })
   }
-
 }
