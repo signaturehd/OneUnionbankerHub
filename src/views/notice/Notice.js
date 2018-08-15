@@ -13,6 +13,8 @@ import {
   Card,
 } from '../../ub-components/'
 
+
+
 import './styles/notice-styles.css'
 
 class Notice extends BaseMVPView {
@@ -48,7 +50,7 @@ class Notice extends BaseMVPView {
     } = this.state
 
     return (
-      <Modal
+    <Modal
         width={ 45 }
         isDismissable = { isDismissable }
         onClose = { onClose }
@@ -60,7 +62,7 @@ class Notice extends BaseMVPView {
             <div key = { key }>
               <div dangerouslySetInnerHTML = {{ __html : form.form }}></div>
               <br/>
-              {  
+              {
               form.aggregateMessage ?
                 <Card>
                   <div dangerouslySetInnerHTML = {{ __html : form.aggregateMessage }}></div>
@@ -116,17 +118,17 @@ class Notice extends BaseMVPView {
           {
             showValidatedCofirmation &&
             <Modal
-              onClose={ () => this.setState({ showValidatedCofirmation: false }) }
-              isDismisable={ true }
+              onClose = { () => this.setState({ showValidatedCofirmation: false }) }
+              isDismisable = { true }
               >
               <center>
                 <h4> Are you sure you want to Submit your form ? </h4>
-                <div className={ 'grid-global' }>
+                <div className = { 'grid-global' }>
                   <GenericButton
-                    text={ 'No' }
-                    onClick={ () => this.setState({ showValidatedCofirmation : false }) }/>
+                    text = { 'No' }
+                    onClick = { () => this.setState({ showValidatedCofirmation : false }) }/>
                   <GenericButton
-                    text={ 'Yes' }
+                    text = { 'Yes' }
                     onClick = { () => {
                         this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId),
                         this.setState({ isDimissable : true, disableSubmit: true })
@@ -138,11 +140,9 @@ class Notice extends BaseMVPView {
             </Modal>
           }
           </center>
-          </div>
-        }
-
-
-      </Modal>
+        </div>
+      }
+    </Modal>
     )
   }
 }
