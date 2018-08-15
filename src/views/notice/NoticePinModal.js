@@ -101,7 +101,6 @@ class NoticePinModal extends BaseMVPView {
 }
 
 NoticePinModal.propTypes = {
-  setSelectedNavigation: PropTypes.func,
   onClick: PropTypes.func,
   history: PropTypes.object,
 }
