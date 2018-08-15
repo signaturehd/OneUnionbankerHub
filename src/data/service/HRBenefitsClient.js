@@ -750,4 +750,9 @@ export default class HRBenefitsClient {
     return this.service.getPhenomDiscounts(token)
       .pipe(ServiceErrorOperator())
   }
+
+  getPhenomSelectedDiscounts (token, id) {
+    return this.service.getPhenomSelectedDiscounts(token, id)
+      .pipe(ServiceErrorOperator())
+  }
 }

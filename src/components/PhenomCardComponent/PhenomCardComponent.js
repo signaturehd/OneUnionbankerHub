@@ -8,35 +8,65 @@ import GenericButton from '../../ub-components/UButton/GenericButton'
 
 import moment from 'moment'
 
+import defaultImageIcon from '../../images/mcdologo.jpg'
+import defaultImageBackground from '../../images/phenomtest.jpg'
+
 class PhenomCardComponent extends Component {
   constructor (props) {
     super(props)
   }
 
   render () {
+
     const {
       onClick,
-      className,
+      onChangeHeart,
+      selected,
+      id,
+      vendor,
+      rewardImage,
+      isHeart,
+      style,
+      endDate,
+      startDate,
+      selectedDetails
     } = this.props
 
     return (
       <Card
-        className = { `${ resp.styleName }` }
-        key = { key }>
-        <div className = { 'phenom-content-card' }>
-          <div className = { 'phenom-content-grid-column-right' }>
-            <span className = { `${ base64 ? base64 : 'phenom-logo-icon' } phenom-logo-icon-default` }/>
-            <div>
-              <h2 className = { 'phenom-label-reward' }>
-                Mc Donald's
-              </h2>
+        onClick = { () => onClick(selectedDetails) }
+        style = {{
+          backgroundImage : `url(${ rewardImage ? rewardImage : defaultImageBackground })`,
+          height: '200px',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          cursor: 'pointer',
+        }} >
+        <div className = { 'phenom-card-grid-content' }>
+          <div className = { 'phenom-content-card' }>
+            <div
+              className = { 'phenom-content-grid-column-right' }>
+              <img
+                className = { 'phenom-logo-icon-default' }
+                src = { `${ vendor.image ? vendor.image : defaultImageIcon }` }/>
+              <div>
+                <h2 className = { 'phenom-label-reward' }>
+                  { vendor.name }
+                </h2>
+              </div>
+            </div>
+            <div className = { 'phenom-content-grid-column-left' }>
+              <span
+                onClick = { () => onChangeHeart(id) }
+                className = { 'phenom-status-icon phenom-icon' }/>
             </div>
           </div>
-          <div className = { 'phenom-content-grid-column-left' }>
-            <span
-              onClick = { () =>
-                this.setState({ activeSelect : 'phenom-clicked' }) }
-              className = { `${ selected === resp.id ? activeSelect : 'phenom-status-icon' } phenom-icon` }/>
+          <div></div>
+          <div></div>
+          <div>
+            <h2 className = { 'phenom-date-validity' }>
+             { moment(startDate).format('MMM DD') } - { moment(endDate).format('MMM DD YYYY') }
+            </h2>
           </div>
         </div>
       </Card>
@@ -46,12 +76,21 @@ class PhenomCardComponent extends Component {
 
 PhenomCardComponent.propTypes = {
   onClick : PropTypes.func,
-  className : PropTypes.string,
+  onChangeHeart : PropTypes.func,
+  selected : PropTypes.number,
+  id : PropTypes.string,
+  vendor : PropTypes.object,
+  rewardImage : PropTypes.string,
+  isHeart : PropTypes.string,
+  style : PropTypes.string,
+  endDate : PropTypes.string,
+  startDate : PropTypes.string,
+  selectedDetails : PropTypes.array,
 }
 
 PhenomCardComponent.defaultProps = {
   children : null,
-  className : 'card',
+  selected : -1,
 }
 
 export default PhenomCardComponent

@@ -1,0 +1,108 @@
+.phenom-fragment {
+  display: grid;
+  grid-template-rows: .1fr 1fr;
+  column-gap: 2%;
+}
+
+.phenom-container-component {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+}
+
+.phenom-container-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  column-gap: 2%;
+}
+
+.phenom-card-style {
+}
+
+.phenom-heart-icon {
+  -webkit-mask-image: url('../../../images/heart@2x.png');
+  mask-image: url('../../../images/heart@2x.png');
+}
+
+.phenom-status-icon {
+  -webkit-mask-image: url('../../../images/icons/ic_cstatus.png');
+  mask-image: url('../../../images/icons/ic_cstatus.png');
+}
+
+.phenom-logo-icon {
+  background-image: url('../../../images/mcdologo.jpg');
+}
+
+.phenom-logo-icon-default {
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+}
+
+.phenom-icon {
+  height: 30px;
+  width: 30px;
+  -webkit-mask-size: auto 100%;
+  -webkit-mask-repeat: no-repeat;
+  background-color: #ff8a00;
+}
+
+.phenom-status-icon:hover {
+  background-color: #ff4436;
+  height: 25px;
+  width: 30px;
+  -webkit-mask-size: auto 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-image: url('../../../images/heart@2x.png');
+  mask-image: url('../../../images/heart@2x.png');
+}
+
+.phenom-content-card {
+  display: grid;
+  grid-template-columns: 1fr .115fr;
+}
+
+.phenom-content-grid-column-left {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 5px 0px 0px 0px;
+}
+
+.phenom-content-grid-column-right {
+  display: grid;
+  grid-template-columns: .2fr 1fr;
+  padding: 8px 0px 0px 10px;
+}
+
+.phenom-content-grid-rows-left {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.phenom-label-reward {
+  padding-top: 8px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.phenom-card-grid-content {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+.phenom-date-validity {
+  font-size: 12px;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 18px;
+  width: 150px;
+  padding-left: 10px;
+  padding-top: 3px;
+  background-color: #ff7200;
+  padding-bottom: 3px;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}

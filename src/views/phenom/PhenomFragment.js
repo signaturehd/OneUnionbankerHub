@@ -8,10 +8,10 @@ import Presenter from './presenter/PhenomPresenter'
 
 /*Phenom Component*/
 import { PhenomCardComponent } from '../../components/'
+import PhenomCardDetailsComponent from './components/PhenomCardDetailsComponent'
+
 import {
-  Card,
-  GenericButton,
-  Line
+  CircularLoader
 } from '../../ub-components/'
 
 import * as PhenomFunction from './functions/PhenomFunction'
@@ -23,9 +23,11 @@ class PhenomFragment extends BaseMVPView {
     super (props)
     this.state = {
       phenomDataList : [],
-      index: 6,
+      phenomDetails : [],
+      selectedDetails : [],
       activeSelect : '',
-      loader : false
+      loader : false,
+      showPhenomCardDetails : false
     }
   }
 
@@ -42,72 +44,61 @@ class PhenomFragment extends BaseMVPView {
     this.setState({ phenomDataList })
   }
 
+  showPhenomDetails (phenomDetails, showPhenomCardDetails) {
+    this.setState({ phenomDetails, showPhenomCardDetails })
+  }
+
   render () {
-    const mylearning = [{
-      id: 0 ,
-      styleName: 'phenom-card-style',
-      title: 'Borrow Books',
-      description: 'Lorem ipsum dolor',
-      path: '/mylearning/books',
-    }, {
-      id: 1 ,
-      styleName: 'phenom-card-style',
-      title: 'Listen Podcasts',
-      description: 'Lorem ipsum dolor',
-      path: '/mylearning/podcasts',
-    }, {
-      id: 2 ,
-      styleName: 'phenom-card-style',
-      title: 'Enroll to Trainings',
-      description: 'Lorem ipsum dolor',
-      path: '/mylearning/trainings',
-    }]
 
     const {
       phenomDataList,
       index,
-      activeSelect
+      activeSelect,
+      phenomDetails,
+      loader,
+      selectedDetails,
+      showPhenomCardDetails
     } = this.state
 
     const {
       setSelectedNavigation,
-      base64,
-      selected
+      selected,
     } = this.props
-    console.log(phenomDataList)
+
     return (
       <div className = { 'phenom-fragment' }>
         <h2 className = { 'header-margin-default' }>Phenom</h2>
         {
-          mylearning &&
+          loader ?
+         <center className = { 'circular-loader-center' }>
+           <CircularLoader show = { true }/>
+         </center>
+         :
           <div className = { 'phenom-container-component' }>
             <div className = { 'phenom-container-grid' }>
               {
-                mylearning.map((resp, key) =>
-                  <Card
-                    className = { `${ resp.styleName }` }
-                    key = { key }>
-                    <div className = { 'phenom-content-card' }>
-                      <div className = { 'phenom-content-grid-column-right' }>
-                        <span className = { `${ base64 ? base64 : 'phenom-logo-icon' } phenom-logo-icon-default` }/>
-                        <div>
-                          <h2 className = { 'phenom-label-reward' }>
-                            Mc Donald's
-                          </h2>
-                        </div>
-                      </div>
-                      <div className = { 'phenom-content-grid-column-left' }>
-                        <span
-                          onClick = { () =>
-                            this.setState({ activeSelect : 'phenom-clicked' }) }
-                          className = { `${ selected === resp.id ? activeSelect : 'phenom-status-icon' } phenom-icon` }/>
-                      </div>
-                    </div>
-                  </Card>
-                )
+                showPhenomCardDetails ?
+
+                 <PhenomCardDetailsComponent
+                   selectedDetails = { selectedDetails }
+                   />
+                 :
+                  phenomDataList.map((resp, key) =>
+                  <PhenomCardComponent
+                    key = { key }
+                    selectedDetails = { resp }
+                    vendor = { resp.vendor }
+                    id = { resp.id }
+                    rewardImage = { resp.rewardImage }
+                    startDate = { resp.startDate }
+                    endDate = { resp.endDate }
+                    isHeart = { resp.isHeart }
+                    onClick = { (selectedDetails) => {}
+                    }
+                    onChangeHeart = { (id) => {} }
+                    />
+                  )
               }
-            </div>
-            <div>
             </div>
           </div>
         }
@@ -118,7 +109,7 @@ class PhenomFragment extends BaseMVPView {
 
 PhenomFragment.propTypes = {
   setSelectedNavigation : PropTypes.func,
-  selected : PropTypes.number
+  selected : PropTypes.number,
 }
 
 PhenomFragment.defaultProps = {
