@@ -47,9 +47,10 @@ p {
   -webkit-transform: rotate(135deg);
 }
 .header-margin-default {
-  align-items: left;
+  align-items: center;
   margin-bottom: 20px;
   font-size: 35px;
+  text-align: center;
   margin-left: 15px;
 }
 

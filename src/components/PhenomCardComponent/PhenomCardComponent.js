@@ -20,7 +20,26 @@ class PhenomCardComponent extends Component {
     } = this.props
 
     return (
-      <div>adwad</div>
+      <Card
+        className = { `${ resp.styleName }` }
+        key = { key }>
+        <div className = { 'phenom-content-card' }>
+          <div className = { 'phenom-content-grid-column-right' }>
+            <span className = { `${ base64 ? base64 : 'phenom-logo-icon' } phenom-logo-icon-default` }/>
+            <div>
+              <h2 className = { 'phenom-label-reward' }>
+                Mc Donald's
+              </h2>
+            </div>
+          </div>
+          <div className = { 'phenom-content-grid-column-left' }>
+            <span
+              onClick = { () =>
+                this.setState({ activeSelect : 'phenom-clicked' }) }
+              className = { `${ selected === resp.id ? activeSelect : 'phenom-status-icon' } phenom-icon` }/>
+          </div>
+        </div>
+      </Card>
     )
   }
 }
