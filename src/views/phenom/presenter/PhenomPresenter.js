@@ -34,4 +34,15 @@ export default class PhenomPresenter {
       this.view.showCircularLoader(false)
     })
   }
+
+  addPhenomIsHeart (like) {
+    this.view.showCircularLoader(true)
+    this.addPhenomIsHeartInteractor.execute(like)
+    .subscribe(data => {
+      this.view.showDataUponClickingLike(data)
+    }, error => {
+      this.view.showCircularLoader(false)
+    })
+  }
+
 }

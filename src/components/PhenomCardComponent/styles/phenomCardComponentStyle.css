@@ -13,7 +13,7 @@
 .phenom-container-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  column-gap: 2%;
+  column-gap: 3%;
 }
 
 .phenom-card-style {
@@ -73,7 +73,20 @@
 .phenom-content-grid-column-right {
   display: grid;
   grid-template-columns: .2fr 1fr;
-  padding: 8px 0px 0px 10px;
+  padding: 7px;
+  width: 230px;
+  margin-left: -22px;
+  border-bottom-right-radius: 100px;
+  border-bottom-left-radius: 64px;
+  background-color: #555555c4;
+  border-top-left-radius: 60px;
+}
+
+.phenom-content-grid-column-right::after {
+  transform: rotate(225deg);
+}
+.phenom-content-grid-column-right::before {
+  transform: rotate(225deg);
 }
 
 .phenom-content-grid-rows-left {
@@ -84,8 +97,9 @@
 .phenom-label-reward {
   padding-top: 8px;
   color: #fff;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bold;
+  padding-left: 9px;
 }
 
 .phenom-card-grid-content {
@@ -97,12 +111,12 @@
   font-size: 12px;
   color: #fff;
   font-weight: bold;
-  margin-top: 18px;
-  width: 150px;
+  width: 140px;
   padding-left: 10px;
   padding-top: 3px;
-  background-color: #ff7200;
+  background-color: #555;
   padding-bottom: 3px;
-  border-bottom-right-radius: 5px;
-  border-top-right-radius: 5px;
+  margin-left: -10px;
+  border-bottom-right-radius: 15px;
+  border-top-right-radius: 15px;
 }
