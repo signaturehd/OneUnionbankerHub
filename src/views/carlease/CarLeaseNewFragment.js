@@ -5,10 +5,16 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/CarLeasePresenter'
 import ConnectView from '../../utils/ConnectView'
 
-import { CircularLoader } from '../../ub-components/'
+import * as CarLeaseFunctions from './functions/CarLeaseFunctions'
+
+import {
+  CircularLoader,
+  SingleInputModal
+} from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
+import CarDealerQuotation from './modals/CarDealerQuotationModal'
 
 import FormComponent from './components/CarLeaseNewFormComponent'
 
@@ -22,14 +28,18 @@ class CarLeaseNewFragment extends BaseMVPView {
     this.state = {
       enabledLoader : false,
       showNoticeModal : false,
+      showFileUpload: false,
+      showQuotation: true,
       noticeResponse : null,
       showNoticeResponseModal : false,
       showBenefitFeedbackModal : false,
+      showCarBrands: false,
       loanType: 15,
       leaseMode: 1,
       carBrand: '',
+      carId: '',
       carModel: '',
-      makeYear: 0,
+      makeYear: '',
       primaryColor: '',
       secondaryColor: '',
       file: '',
@@ -45,6 +55,26 @@ class CarLeaseNewFragment extends BaseMVPView {
 
   showCarValidated (carValidate) {
     this.setState({ carValidate })
+  }
+
+  validateInputCarModelValue (e) {
+    const validate = CarLeaseFunctions.checkedValidatedInput(e)
+    this.setState({ carModel : validate })
+  }
+
+  validateInputPrimaryColor (e) {
+    const validate = CarLeaseFunctions.checkedValidateAlphabet(e)
+    this.setState({ primaryColor : validate })
+  }
+
+  validateInputSecondaryColor (e) {
+    const validate = CarLeaseFunctions.checkedValidateAlphabet(e)
+    this.setState({ secondaryColor : validate })
+  }
+
+  validateYear (e) {
+    const validate = CarLeaseFunctions.checkedValidateInputNumber(e)
+    this.setState({ makeYear : validate })
   }
 
   sendFormData (
@@ -139,6 +169,9 @@ class CarLeaseNewFragment extends BaseMVPView {
 
   render () {
     const {
+      showCarBrands,
+      showQuotation,
+      showFileUpload,
       enabledLoader,
       formAttachments,
       showNoticeModal,
@@ -156,9 +189,22 @@ class CarLeaseNewFragment extends BaseMVPView {
       loanType,
       carValidate
     } = this.state
+
     const { onSubmit, history }=this.props
     return (
       <div>
+        {
+          showQuotation &&
+          <CarDealerQuotation
+            history = { history }
+            backToBenefits = { this.navigate.bind(this) }
+            onUserConfirmation = { (showQuotation, showFileUpload) =>
+              this.setState({ showQuotation, showFileUpload })
+           }
+            onClose = { () =>
+              this.setState({ showQuotation: false })  }
+            />
+        }
         {
           showNoticeModal &&
           <NoticeModal
@@ -169,7 +215,22 @@ class CarLeaseNewFragment extends BaseMVPView {
               this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
           />
         }
-
+        {
+          showCarBrands &&
+          <SingleInputModal
+            label = { 'Brands' }
+            inputArray = { carValidate && carValidate.brands }
+            selectedArray = { (carId, carBrand) =>
+              this.setState({
+                carId,
+                carBrand,
+                showCarBrands : false,
+                carBrandErrorMessage : ''
+              })
+            }
+            onClose = { () => this.setState({ showCarBrands : false }) }
+          />
+        }
         {
           showNoticeResponseModal &&
           <ResponseModal
@@ -205,8 +266,20 @@ class CarLeaseNewFragment extends BaseMVPView {
                <CircularLoader show={ this.state.enabledLoader }/>
              </center> :
             <FormComponent
-              history={ history }
-              brands={ carValidate  && carValidate.brands ? carValidate.brands : [] }
+              history = { history }
+              carBrand = { carBrand }
+              carModel = { carModel }
+              makeYear = { makeYear }
+              showQuotation = { showQuotation }
+              showFileUpload = { showFileUpload }
+              secondaryColor = { secondaryColor }
+              primaryColor = { primaryColor }
+              onGetCarBrandsFunc = { () => this.setState({ showCarBrands : true }) }
+              onCarModelValidateFunc = { (resp) => this.validateInputCarModelValue(resp) }
+              onValidateyearFunc = { (resp) => this.validateYear(resp) }
+              onValidatePrimaryColor = { (resp) => this.validateInputPrimaryColor(resp) }
+              onValidateSecondaryColor = { (resp) => this.validateInputSecondaryColor(resp) }
+              onValidateSolRC = { (resp) => this.validate(resp) }
               onSubmit={ (
                 carBrand,
                 carModel,
