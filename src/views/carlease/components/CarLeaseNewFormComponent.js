@@ -2,7 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import './styles/carleaseStyle.css'
-import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
+import {
+  GenericTextBox,
+  Card,
+  GenericButton,
+  FileUploader,
+  Line
+} from '../../../ub-components/'
 
 import { RequiredAlphabetValidation, RequiredNumberValidation } from '../../../utils/validate'
 
@@ -169,6 +175,7 @@ class CarLeaseNewFormComponent extends Component {
     return (
       <div className={'carview-container'}>
         <div className={ 'car-grid-column-2' }>
+          <div></div>
           {
             showQuotation &&
             <CarDealerQuotation
@@ -193,9 +200,7 @@ class CarLeaseNewFormComponent extends Component {
             />
           }
           <Card className={ 'car-form-card' }>
-            <h4>
-              Car Lease Form (New)
-            </h4>
+            <Line/>
             <div className={ 'car-form-card-body' }>
               <GenericTextBox
                 value={ carBrand }
@@ -223,47 +228,40 @@ class CarLeaseNewFormComponent extends Component {
                 onChange={ this.getSecondaryColor }
                 placeholder={ 'Secondary Color' }
                 type={ 'text' }/>
-              <GenericButton
-                type={ 'button' }
-                text={ 'continue' }
-                onClick={ () =>
-                  this.onGetClicked(
-                    carBrand,
-                    carModel,
-                    makeYear,
-                    primaryColor,
-                    secondaryColor,
-                    file,
-                    imagePreviewUrl)
-                  }
-                className={ 'carview-submit' } />
-            </div>
-          </Card>
-          {
-            showFileUpload &&
-          <Card className={ 'car-form-preview' }>
-            <h4>
-              Dealer Quotation Attachment
-            </h4>
-            <div className={ 'optical-body' }>
-             <FileUploader
-                onChange={ this.handleImageChange }
-                placeholder={ 'File Attachments' }
-                value={ file.name }
-              />
-            </div>
-            <div className={ 'car-form-card-body' }>
-              <div className={ 'car-footer-left' }>
-                <div className={ 'car-grid' }>
-                  <div className={ 'car-image-view' }>
-                    { $imagePreview }
-                    <div className={ 'car-image-layer' }></div>
+
+                {
+                  showFileUpload &&
+                <div>
+                  <h4>
+                    Dealer Quotation Attachment
+                  </h4>
+                  <div className={ 'optical-body' }>
+                   <FileUploader
+                      onChange = { this.handleImageChange }
+                      placeholder = { 'File Attachments' }
+                      value = { file.name }
+                      base64 = { $imagePreview }
+                    />
                   </div>
                 </div>
-              </div>
+                }
+                <GenericButton
+                  type={ 'button' }
+                  text={ 'continue' }
+                  onClick={ () =>
+                    this.onGetClicked(
+                      carBrand,
+                      carModel,
+                      makeYear,
+                      primaryColor,
+                      secondaryColor,
+                      file,
+                      imagePreviewUrl)
+                    }
+                  className={ 'carview-submit' } />
             </div>
           </Card>
-          }
+          <div></div>
         </div>
       </div>
     )
