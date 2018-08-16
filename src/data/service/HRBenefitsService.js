@@ -756,12 +756,12 @@ export default class HRBenefitsService {
         accountNumber,
         releasingCenter,
         type : outPatientParam.type,
-        amount : outPatientParam.amount,
         dependentId : outPatientParam.dependentId,
         diagnosis : outPatientParam.diagnosisText,
-        procedureId : outPatientParam.procedureId,
+        procedure : outPatientParam.procedure,
         officialReceiptNumber : outPatientParam.orNumber,
         officialReceiptDate : outPatientParam.orDate,
+        amount : outPatientParam.amount,
       }
       outPatientParam.attachments.map((resp, key) => (
         formData.append(resp.name, resp.file)
@@ -803,6 +803,24 @@ export default class HRBenefitsService {
 
   getNeedApprovalTrainings (token) {
     return this.apiClient.get('v1/trainings/learners/requests', {
+      headers : { token }
+    })
+  }
+
+  getApprovedTrainings (token) {
+    return this.apiClient.get('v1/trainings/learners/approved', {
+      headers : { token }
+    })
+  }
+
+  getApprovalTrainingDetails (id, token) {
+    return this.apiClient.get(`v1/trainings/learners/enrollments/${id}`, {
+      headers : { token }
+    })
+  }
+
+  trainingRequest (trainingId, ApprovalTrainingParam, token) {
+    return this.apiClient.post(`v1/trainings/${trainingId}/requests`, ApprovalTrainingParam, {
       headers : { token }
     })
   }
@@ -894,6 +912,20 @@ export default class HRBenefitsService {
 
   submitPin (token, code) {
     return this.apiClient.post('v1/compliances/coc', { code }, {
+      headers : { token }
+    })
+  }
+
+  /* Phenom */
+
+  getPhenomDiscounts (token) {
+    return this.apiClient.get('v1/phenom/discounts?type=corporate', {
+      headers : { token }
+    })
+  }
+
+  getPhenomSelectedDiscounts (token, id) {
+    return this.apiClient.get(`v1/phenom/discounts/${ id }`, {
       headers : { token }
     })
   }

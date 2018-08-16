@@ -48,6 +48,11 @@
     grid-template-columns: 1fr 1fr;
     margin-bottom: 40px;
   }
+
+  .button-position {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 480px) {
@@ -62,4 +67,34 @@
     grid-template-columns: 1fr;
     margin-bottom: 40px;
   }
+
+  .button-position {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+}
+
+.mytrainings-group-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 2%;
+}
+
+.mytrainings-group-grid h3 {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.group-line {
+  margin-top: 10px;
+}
+
+.subtitle {
+  font-size: 14px;
+}
+
+.button-position {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
 }

@@ -670,6 +670,21 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getApprovedTrainings (token) {
+    return this.service.getApprovedTrainings (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getApprovalTrainingDetails (id, token) {
+    return this.service.getApprovalTrainingDetails (id, token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  trainingRequest (trainingId, ApprovalTrainingParam, token) {
+    return this.service.trainingRequest (trainingId, ApprovalTrainingParam, token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Maternity Assistance */
   validateMaternityAssistance (token) {
     return this.service.validateMaternityAssistance(token)
@@ -723,9 +738,21 @@ export default class HRBenefitsClient {
     return this.service.submitPin(token, code)
       .pipe(ServiceErrorOperator())
   }
+
   /* My Existing Loans */
   getExistingLoans (token) {
     return this.service.getExistingLoans(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Phenom Loans */
+  getPhenomDiscounts (token) {
+    return this.service.getPhenomDiscounts(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPhenomSelectedDiscounts (token, id) {
+    return this.service.getPhenomSelectedDiscounts(token, id)
       .pipe(ServiceErrorOperator())
   }
 }

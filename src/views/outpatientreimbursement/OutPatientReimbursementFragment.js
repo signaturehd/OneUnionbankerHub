@@ -32,32 +32,34 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         showNoticeModal : false,
         showNoticeResponseModal : false,
         showBenefitFeedbackModal : false,
-        noticeResponse : '',
-        enabledLoader : false,
-        outpatientData : [],
-        procedureData : [],
-        dependentId: null,
-        dependentName: '',
-        procedureId: null,
-        procedureName: '',
-        procedureArray: [],
         showDepedendent: false,
         showProcedure: false,
+        enabledLoader : false,
+        dependentId: null,
+        procedureId: null,
+        showProcedureInput: false,
+        showEditSubmitButton: false,
+        titleChange: true,
+        attachmentsData: [],
+        attachmentArray: [],
+        procedureArray: [],
+        outpatientData : [],
+        procedureData : [],
+        updateTotalAmount : [],
+        limit: '',
+        procedureName: '',
         amount: '',
+        noticeResponse : '',
+        dependentName: '',
         diagnosisText : '',
         orNumberText: '',
         preferredDate: '',
-        showProcedureInput: false,
-        attachmentsData: [],
-        attachmentArray: [],
-        showEditSubmitButton: false,
         attachmentErrorMessage: '',
         dependentErrorMessage: '',
         diagnosisErrorMessage: '',
         dateErrorMessage: '',
         orNumberErrorMessage: '',
         amountErrorMessage : '',
-        titleChange: true,
     }
   }
 
@@ -82,8 +84,8 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
-  showValidatedOutPatient (outpatientData) {
-    this.setState({ outpatientData })
+  showValidatedOutPatient (outpatientData, limit) {
+    this.setState({ outpatientData, limit })
   }
 
   showProcedureMap (procedureData) {
@@ -111,8 +113,27 @@ class OutPatientReimbursementFragment extends BaseMVPView {
   }
 
   validateAmount (procedureArray) {
-    // const validate = OutPatientReimbursementFunction.checkedAmount(e)
-    this.setState({ procedureArray, amountErrorMessage : '' })
+    const {
+      updateTotalAmount,
+      limit,
+    } = this.state
+    const newValueArray = procedureArray.map(function(resp) {
+      return resp.amount
+    })
+    const totalAmount = newValueArray.reduce((a, b) => a + b, 0)
+
+    if(parseInt(totalAmount) >= parseInt(limit)) {
+      this.setState({
+        errorMessageRequiredProcedure : `The amount you entered must not exceed to ${ limit }`
+      })
+    } else {
+      this.setState({
+        procedureArray,
+        amountErrorMessage : '',
+        amount: totalAmount,
+        errorMessageRequiredProcedure : ''
+      })
+    }
   }
 
   validateText (e) {
@@ -142,7 +163,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     const {
       dependentId,
       diagnosisText,
-      procedureId,
+      procedureArray,
       preferredDate,
       orNumberText,
       amount,
@@ -151,24 +172,25 @@ class OutPatientReimbursementFragment extends BaseMVPView {
 
     const type = dependentId !== 1 ? 2 : 1
     this.presenter.addOutPatientReimbursement(
-      type,
+      type.toString(),
       dependentId.toString(),
-      procedureId.toString(),
-      amount,
       diagnosisText.toString(),
+      procedureArray,
       orNumberText.toString(),
       moment(preferredDate).format('MM/DD/YYYY'),
+      amount,
       attachmentArray)
   }
 
   showFormReviewFieldDisabled (e) {
     const {
       dependentName,
-      procedureName,
+      procedureArray,
       diagnosisText,
       orNumberText,
       preferredDate,
       amount,
+      limit,
       attachmentArray
     } = this.state
 
@@ -180,6 +202,14 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       this.setState({ dateErrorMessage : 'Please provide the Official Receipt Date' })
     } else if (!this.validateRequired(orNumberText)) {
       this.setState({ orNumberErrorMessage : 'Please provide the Official Receipt Number' })
+    } else if (parseInt(amount) > parseInt(limit)) {
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Outpatient Reimbursement',
+          message : `The amount you entered exceed to the limit of ${ limit }`,
+          type : 'warning',
+          duration : 2000
+        })
+      )
     } else {
       this.setState({
         showEditSubmitButton: true,
@@ -219,7 +249,9 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       errorMessageRequiredProcedure,
       orNumberErrorMessage,
       showEditSubmitButton,
-      titleChange
+      titleChange,
+      limit,
+      updateTotalAmount
     } = this.state
 
     const {
@@ -344,6 +376,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             amountErrorMessage = { amountErrorMessage }
             procedureArray = { procedureArray }
             employeeName = { outpatientData.name }
+            updateTotalAmount = { updateTotalAmount }
           />
         }
       </div>
