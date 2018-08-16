@@ -45,7 +45,7 @@ class MedicalFragment extends Component {
     }, {
       id: 4,
       styleName: 'medical-cards-1 medical-option-default',
-      title: 'Annual Physical Exam',
+      title: 'Medical Scheduling',
       path: '/mybenefits/benefits/medical/scheduling',
     }, {
       id: 5,

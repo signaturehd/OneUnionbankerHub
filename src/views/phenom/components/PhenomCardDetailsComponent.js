@@ -66,7 +66,6 @@ class PhenomCardDetailsComponent extends Component {
                 }}/>
               </div>
               <div>
-awdawdawd
               </div>
             </Card>
           </div>
