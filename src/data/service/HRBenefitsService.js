@@ -904,8 +904,8 @@ export default class HRBenefitsService {
 
   /* Code of Conduct  */
 
-  getCompliancesPdf (token, page) {
-    return this.apiClient.get(`v1/compliances/coc?page=${page}`, {
+  getCompliancesPdf (token) {
+    return this.apiClient.get(`v1/compliances/coc`, {
       headers : { token }
     })
   }
