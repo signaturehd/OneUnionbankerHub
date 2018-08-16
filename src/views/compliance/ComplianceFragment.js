@@ -12,7 +12,8 @@ import {
   GenericButton,
   GenericInput,
   CircularLoader,
-  FloatingActionButton
+  FloatingActionButton,
+  Line
  } from '../../ub-components'
 
 import './styles/compliancesStyle.css'
@@ -31,14 +32,13 @@ class ComplianceFragment extends BaseMVPView {
       pin : '',
       noticeResponse : null,
       showNoticeResponseModal : false,
-      page : 1,
+      loadingModal : false,
     }
   }
 
   componentDidMount () {
-    const { page } = this.state
     this.props.setSelectedNavigation(9)
-    this.presenter.getCompliancesPdf(page)
+    this.presenter.getCompliancesPdf()
   }
 
   onSubmit () {
@@ -66,30 +66,16 @@ class ComplianceFragment extends BaseMVPView {
     }
   }
 
-  onNextPage (p) {
-    this.presenter.getCompliancesPdf(++p)
+  circularLoader (enabledLoader) {
+    this.setState({ enabledLoader })
   }
 
-  onPreviousPage (p) {
-    if (p > 1)
-      this.presenter.getCompliancesPdf(--p)
-  }
-
-  jumpToPage (p) {
-    this.presenter.getCompliancesPdf(p)
-  }
-
-  showCircularLoader () {
-    this.setState({ enabledLoader : true })
-  }
-
-  hideCircularLoader () {
-    this.setState({ enabledLoader : false })
+  modalLoader (loadingModal) {
+    this.setState({ loadingModal })
   }
 
   setCompliancesPdf (compliancesData) {
-    let page = compliancesData ? compliancesData[0].page : 1
-    this.setState({ compliancesData, page })
+    this.setState({ compliancesData })
   }
 
   noticeResponse (noticeResponse, showNoticeResponseModal) {
@@ -109,13 +95,25 @@ class ComplianceFragment extends BaseMVPView {
       pin,
       noticeResponse,
       showNoticeResponseModal,
-      page,
+      loadingModal,
     } = this.state
-    const pageNumber = compliancesData ? compliancesData[0].page : 1
-    const pageTotal = compliancesData ? compliancesData[0].total : 1
 
     return (
       <div>
+      <h2 className = { 'header-margin-default' }>My Compliance</h2>
+      <br/>
+      <br/>
+      {
+        loadingModal &&
+        <Modal>
+          <center>
+            <h3>Please wait while Loading...</h3>
+            <br/>
+            <br/>
+            <CircularLoader show={true}/>
+           </center>
+         </Modal>
+      }
       {
         showNoticeResponseModal &&
         <ResponseModal
@@ -148,44 +146,17 @@ class ComplianceFragment extends BaseMVPView {
             <GenericButton
               type = { 'button' }
               text = { 'Submit' }
+              disabled = { (String(pin).length < 5) }
               onClick = {
                 () => {
                   this.onSubmit()
                 }
               }
-              className={ 'compliance-buttons compliance-submit' }
+              className={ (String(pin).length < 5) ? 'compliance-disabled' : 'compliance-submit' }
               />
           </div>
         </Modal>
       }
-      <div>
-        <div className={ 'compliance-page' }>
-          <h6>Jump to page : </h6>
-          <GenericInput
-            autocomplete = { 'off' }
-            value = { page }
-            onClick = {
-              () => this.setState({ page : '' })
-            }
-            onChange = {
-              e => {
-                if( pageTotal >= e.target.value ) {
-                  let pn = parseInt(e.target.value)
-                  if (!pn) {
-                    this.setState({ page : 0 })
-                    this.jumpToPage(1)
-                  } else {
-                    this.setState({ page : pn })
-                    this.jumpToPage(pn)
-                  }
-                }
-              }
-            }
-            type = { 'text' }
-            maxLength = { 3 }
-          />
-        </div>
-      </div>
       {
         enabledLoader ?
         <center className = { 'circular-loader-center' }>
@@ -194,48 +165,21 @@ class ComplianceFragment extends BaseMVPView {
         <div className={ 'compliance-body' }>
           <div></div>
           <div>
-            <div className={ 'compliance-container' }>
               {
                 compliancesData &&
                 compliancesData.map((compliance, key) => <div key = { key } dangerouslySetInnerHTML = {{ __html : compliance.content }}></div>)
               }
-              <div>
-                <h6 className={ 'compliance-page' }>Page { pageNumber } - {pageTotal}</h6>
-              </div>
-            </div>
             <br/>
-            <div className={ 'buttons-grid-2' }>
-              {
-                ( pageNumber > 1 ) ?
-                <GenericButton
-                  type = { 'button' }
-                  text = { 'Previous' }
-                  onClick = {
-                    () => this.onPreviousPage(page)
-                  }
-                  className={ 'compliance-buttons' }
-                  /> :
-                  <div></div>
-              }
-              {
-                ( pageNumber >= pageTotal ) ?
-                <GenericButton
-                  type = { 'button' }
-                  text = { 'I Acknowledge' }
-                  onClick = {
-                    () => this.setState({ showEnterPin : true })
-                  }
-                  className={ 'compliance-buttons' }
-                  /> :
-                <GenericButton
-                  type = { 'button' }
-                  text = { 'Next' }
-                  onClick = {
-                    () => this.onNextPage(page)
-                  }
-                  className={ 'compliance-buttons' }
-                  />
-              }
+            <div className={ 'compliance-body' }>
+              <div></div>
+              <GenericButton
+                type = { 'button' }
+                text = { 'I Acknowledge' }
+                onClick = {
+                  () => this.setState({ showEnterPin : true })
+                }
+                className={ 'compliance-submit' }
+                />
             </div>
           </div>
         </div>

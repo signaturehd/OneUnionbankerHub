@@ -14,26 +14,26 @@ export default class CompliancePresenter {
     this.view = view
   }
 
-  getCompliancesPdf (page) {
-    this.view.showCircularLoader()
-    this.getCompliancesInteractor.execute(page)
+  getCompliancesPdf () {
+    this.view.circularLoader(true)
+    this.getCompliancesInteractor.execute()
       .subscribe(
         data => {
           this.view.setCompliancesPdf(data)
-          this.view.hideCircularLoader()
+          this.view.circularLoader(false)
         }, error => {
     })
   }
 
   submitPin (code) {
-    this.view.showCircularLoader()
+    this.view.modalLoader(true)
     this.submitPinInteractor.execute(code)
       .subscribe(
         data => {
-          this.view.hideCircularLoader()
+          this.view.modalLoader(false)
           this.view.noticeResponse(data, true)
         }, error => {
-        this.view.hideCircularLoader()
+          this.view.modalLoader(false)
     })
   }
 }
