@@ -46,6 +46,7 @@ class MyExistingLoansFragment extends BaseMVPView {
     const { existingLoans, enabledLoader } = this.state
     return (
       <div>
+        <br/>
         {
           enabledLoader ?
 
@@ -56,24 +57,29 @@ class MyExistingLoansFragment extends BaseMVPView {
           </div>
           :
           <div className = { 'existing-loans-grid-container' }>
-            <div>
-              {
-                existingLoans.map((resp, key) =>
-                <div className = { 'text-align-center' }>
-                  <h2>
-                    &#8369; { format(resp.balance) }
-                  </h2>
-                  <h2>
-                    Outstanding Balance
-                  </h2>
-                  <h2>
-                    { moment(resp.date).format('DD MMM YYYY') }
-                  </h2>
-                </div>
-                )
-              }
+            <div className = { 'existing-loans-grid-header' }>
+              <div>
+                {
+                  existingLoans.map((resp, key) =>
+                  <div className = { 'text-align-right' }>
+                    <h2 className = { 'existing-loan-title-header' }>
+                      &#8369; { format(resp.balance) }
+                    </h2>
+                    <br/>
+                    <h2>
+                      Outstanding Balance
+                    </h2>
+                    <h2>
+                      { moment(resp.date).format('DD MMM YYYY') }
+                    </h2>
+                  </div>
+                  )
+                }
+              </div>
+              <div></div>
             </div>
             <div>
+              <br/>
               <div className = { 'existing-loan-summary-grid-x2' }>
                 <div>
                   Existing Loans Summary

@@ -28,5 +28,14 @@
 
 .existing-loans-grid-label {
   display: grid;
-  grid-template-rows: 1fr .5fr;
+  grid-template-rows: .35fr 1fr;
+}
+
+.existing-loan-title-header {
+  font-size: 50px;
+}
+
+.existing-loans-grid-header {
+  display: grid;
+  grid-template-columns: .5fr 1fr;
 }
