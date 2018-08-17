@@ -7,12 +7,12 @@ export function checkedDate (date) {
 }
 
 export function checkedTitle (isFormReview) {
-  return isFormReview ? 'Form Summary' : 'Annual Physical Exam'
+  return isFormReview ? 'Form Summary' : 'Medical Scheduling'
 }
 
 export function notification (msg) {
   store.dispatch(NotifyActions.addNotify({
-    title : 'Annual Physical Exam' ,
+    title : 'Medical Scheduling' ,
     message : msg,
     type : 'warning',
     duration : 2000

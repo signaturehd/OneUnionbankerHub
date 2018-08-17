@@ -167,7 +167,14 @@ class ComplianceFragment extends BaseMVPView {
           <div>
               {
                 compliancesData &&
-                compliancesData.map((compliance, key) => <div key = { key } dangerouslySetInnerHTML = {{ __html : compliance.content }}></div>)
+                compliancesData.map((compliance, key) =>
+                <Card
+                  className = { 'compliance-card-content' }
+                  key = { key } >
+                  <div dangerouslySetInnerHTML = {{ __html : compliance.content }}>
+                  </div>
+                </Card>
+                )
               }
             <br/>
             <div className={ 'compliance-body' }>

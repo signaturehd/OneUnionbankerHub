@@ -929,4 +929,14 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  addPhenomIsHeart (token, id, isHeart) {
+    const objectPhenomIsHeart = {
+      phenomId : id,
+      isLiked : isHeart
+    }
+    return this.apiClient.get(`v1/phenom/reactions?type=corporate`, objectPhenomIsHeart, {
+      headers : { token }
+    })
+  }
 }
