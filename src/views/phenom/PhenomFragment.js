@@ -114,7 +114,7 @@ class PhenomFragment extends BaseMVPView {
                           this.setState({ showPhenomCardDetails : true })
                         }
                       }
-                      onChangeHeart = { (id) => {} }
+                      onChangeHeart = { (id) => this.presenter.addPhenomIsHeart(id) }
                       />
                     )
                   }

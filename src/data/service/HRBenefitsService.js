@@ -930,8 +930,12 @@ export default class HRBenefitsService {
     })
   }
 
-  addPhenomIsHeart (token, like) {
-    return this.apiClient.get(`v1/phenom/reactions?type=corporate${ like }`, {
+  addPhenomIsHeart (token, id, isHeart) {
+    const objectPhenomIsHeart = {
+      phenomId : id,
+      isLiked : isHeart
+    }
+    return this.apiClient.get(`v1/phenom/reactions?type=corporate`, objectPhenomIsHeart, {
       headers : { token }
     })
   }

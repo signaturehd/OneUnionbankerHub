@@ -40,6 +40,7 @@ export default class PhenomPresenter {
     this.addPhenomIsHeartInteractor.execute(like)
     .subscribe(data => {
       this.view.showDataUponClickingLike(data)
+      this.getPhenomDiscounts()
     }, error => {
       this.view.showCircularLoader(false)
     })

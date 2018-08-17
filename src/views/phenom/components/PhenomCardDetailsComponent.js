@@ -53,6 +53,7 @@ class PhenomCardDetailsComponent extends Component {
               <div style = {{
                   backgroundImage : `url(${ rewardImage ? rewardImage : defaultImageBackground })`,
                   height: '200px',
+                  paddingTop: '135px',
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: 'cover',
                   cursor: 'pointer',
