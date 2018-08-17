@@ -1,0 +1,36 @@
+.phenom-card-grid-container {
+  display: grid;
+  grid-template-columns: .2fr 2fr .2fr;
+}
+
+.phenom-grid-column {
+  display: grid;
+  grid-template-rows: .0001fr 1fr;
+}
+
+.phenom-header-icon {
+  height: 200px;
+}
+
+.phenom-details-row-content {
+  padding: 20px;
+}
+
+.phenom-details-contact-grid {
+  display: grid;
+  grid-template-rows: 1fr .5fr;
+}
+
+.phenom-details-row-container-x2 {
+  display: grid;
+  grid-template-rows: .3fr 1fr 1fr;
+}
+
+.phenom-padding {
+  padding-top: 80px;
+  padding-bottom: 40px
+}
+
+.phenom-icon-header-icon {
+
+}
