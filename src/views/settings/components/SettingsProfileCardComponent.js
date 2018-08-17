@@ -8,6 +8,7 @@ import ContactInfoModal from '../modals/ContactsModal'
 import DependentsModal from '../modals/DependentsModal'
 import CompanyInfoModal from '../modals/CompanyInformationModal'
 import PersonalInfoModal from '../modals/PersonalInfoModal'
+import StaffAccountsModal from '../modals/StaffAccountsModal'
 
 import SkillsFragment from '../../common/fragments/ProfileFragments/SkillsFragment'
 import ExperienceFragment from '../../common/fragments/ProfileFragments/ExperienceFragment'
@@ -24,7 +25,8 @@ class SettingsProfileCardComponent extends Component {
         showContactInfoModal : false,
         showDependentModal : false,
         showCompanyInfoModal : false,
-        showPersonalInfoModal : false
+        showPersonalInfoModal : false,
+        showStaffAccountsModal : false,
       }
   }
 
@@ -49,7 +51,9 @@ class SettingsProfileCardComponent extends Component {
       showContactInfoModal,
       showDependentModal,
       showCompanyInfoModal,
-      showPersonalInfoModal }=this.state
+      showPersonalInfoModal,
+      showStaffAccountsModal,
+     }=this.state
 
     let genderPartial
     if (profile.gender === 'M') {
@@ -94,6 +98,12 @@ class SettingsProfileCardComponent extends Component {
               rank={ rank && rank.rank }
               onClose={ () => this.setState({ showCompanyInfoModal : false }) }
             />
+        }
+        {
+          showStaffAccountsModal &&
+          <StaffAccountsModal
+            onClose={ () => this.setState({  showStaffAccountsModal : false }) }
+          />
         }
         <div>
           <Card className={ 'profile-settings-card-view' }>
@@ -172,6 +182,18 @@ class SettingsProfileCardComponent extends Component {
                   <div>
                     <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
                       { 'See company info'  }
+                    </h5>
+                  </div>
+                </div>
+                <div
+                  onClick={ () => this.setState({ showStaffAccountsModal : true }) }
+                  className={ 'profile-information-view-right' }>
+                  <div>
+                    <span className={ 'profile-icon-settings staffAccount' }/>
+                  </div>
+                  <div>
+                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
+                      { 'View Staff Accounts'  }
                     </h5>
                   </div>
                 </div>
