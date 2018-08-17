@@ -729,8 +729,8 @@ export default class HRBenefitsClient {
 
   /* Code of Conduct  */
 
-  getCompliancesPdf (token, page) {
-    return this.service.getCompliancesPdf(token, page)
+  getCompliancesPdf (token) {
+    return this.service.getCompliancesPdf(token)
       .pipe(ServiceErrorOperator())
   }
 
@@ -738,9 +738,26 @@ export default class HRBenefitsClient {
     return this.service.submitPin(token, code)
       .pipe(ServiceErrorOperator())
   }
+
   /* My Existing Loans */
   getExistingLoans (token) {
     return this.service.getExistingLoans(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Phenom Loans */
+  getPhenomDiscounts (token) {
+    return this.service.getPhenomDiscounts(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPhenomSelectedDiscounts (token, id) {
+    return this.service.getPhenomSelectedDiscounts(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addPhenomIsHeart (token, like) {
+    return this.service.addPhenomIsHeart(token, like)
       .pipe(ServiceErrorOperator())
   }
 }

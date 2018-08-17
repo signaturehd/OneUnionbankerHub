@@ -906,14 +906,38 @@ export default class HRBenefitsService {
 
   /* Code of Conduct  */
 
-  getCompliancesPdf (token, page) {
-    return this.apiClient.get(`v1/compliances/coc?page=${page}`, {
+  getCompliancesPdf (token) {
+    return this.apiClient.get(`v1/compliances/coc`, {
       headers : { token }
     })
   }
 
   submitPin (token, code) {
     return this.apiClient.post('v1/compliances/coc', { code }, {
+      headers : { token }
+    })
+  }
+
+  /* Phenom */
+
+  getPhenomDiscounts (token) {
+    return this.apiClient.get('v1/phenom/discounts?type=corporate', {
+      headers : { token }
+    })
+  }
+
+  getPhenomSelectedDiscounts (token, id) {
+    return this.apiClient.get(`v1/phenom/discounts/${ id }`, {
+      headers : { token }
+    })
+  }
+
+  addPhenomIsHeart (token, id, isHeart) {
+    const objectPhenomIsHeart = {
+      phenomId : id,
+      isLiked : isHeart
+    }
+    return this.apiClient.get(`v1/phenom/reactions?type=corporate`, objectPhenomIsHeart, {
       headers : { token }
     })
   }
