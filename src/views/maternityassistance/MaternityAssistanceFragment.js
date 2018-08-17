@@ -283,6 +283,28 @@ class MaternityAssistanceFragment extends BaseMVPView {
     }
   }
 
+  showFormReviewFieldDisabledOR () {
+    const {
+      typeDeliveryName,
+      deliveryDate,
+      amount,
+      attachmentArray
+    } = this.state
+
+    if(!this.validateRequired(typeDeliveryName)){
+      this.setState({ typeOfDeliveryErrorMessage : 'Please provide the type of delivery' })
+    } else if (!this.validateRequired(deliveryDate)) {
+      this.setState({ dateOfDeliveryErrorMessage : 'Please provide the date of delivery' })
+    } else if (!this.validateRequired(amount)) {
+      this.setState({ amountErrorMessage : 'Please enter an amount' })
+    } else {
+      this.setState({
+        showEditSubmitButton: true,
+        titleChange: false,
+      })
+    }
+  }
+
   showFormReviewFieldDisabledSSS () {
     const {
       roomNumberText,
@@ -526,6 +548,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
                 oRNumberFunc = { (resp) => this.validateSymbol(resp) }
                 dateFunc = { (resp) => this.validateDate(resp) }
                 showFormReview = { () => this.showFormReviewFieldDisabled() }
+                showFormReviewDisabledORFunc = { () => this.showFormReviewFieldDisabledOR() }
                 setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
                 onSubmitFunc = { () => this.submitForm() }
                 editFormDataFunc = { () => this.editFormReview() }
