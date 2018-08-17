@@ -121,7 +121,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       return resp.amount
     })
     const totalAmount = newValueArray.reduce((a, b) => a + b, 0)
-
+    const validate = MaternityAssistanceFunction.checkedAmount(totalAmount)
     if(parseInt(totalAmount) >= parseInt(limit)) {
       this.setState({
         errorMessageRequiredProcedure : `The amount you entered must not exceed to ${ limit }`
