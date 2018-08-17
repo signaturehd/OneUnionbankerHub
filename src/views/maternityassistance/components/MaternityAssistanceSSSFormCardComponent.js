@@ -94,7 +94,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 <div>
                   <GenericInput
                     value = { roomNumberText }
-                    maxLength = { 20 }
+                    maxLength = { 10 }
                     onChange = { e => roomNumberFunc(e.target.value) }
                     text = { 'Room Number' }
                     disabled = { showEditSubmitButton }
@@ -104,7 +104,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 <div>
                   <GenericInput
                     value = { houseNumberText }
-                    maxLength = { 20 }
+                    maxLength = { 10 }
                     onChange = { e => houseNumberFunc(e.target.value) }
                     text = { 'House Number' }
                     disabled = { showEditSubmitButton }
@@ -161,7 +161,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                     text = { 'Zip Code' }
                     disabled = { showEditSubmitButton }
                     errorMessage = { zipCodeErrorMessage }
-                    maxLength = { 20 }
+                    maxLength = { 12 }
                     type = { 'text' }/>
                 </div>
               </div>
