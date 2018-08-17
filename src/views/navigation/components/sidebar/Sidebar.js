@@ -58,9 +58,9 @@ class SideBar extends Component {
       },
       {
         id: 10 ,
-        title: 'Phenom',
+        title: 'Phenom Prime',
         action: () => history.push('/phenom'),
-        className: 'payslip-icon'
+        className: 'phenom-sidebar-icon'
       },
       {
         id: 3 ,

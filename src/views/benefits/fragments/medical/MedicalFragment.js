@@ -30,7 +30,7 @@ class MedicalFragment extends Component {
     const benefitsOptions = [{
       id: 1,
       styleName: 'medical-cards-1 medical-option-default',
-      title: 'Dental Loan Issuance',
+      title: 'Dental Loa Issuance',
       path: '/mybenefits/benefits/medical/loa/dental',
     }, {
       id: 2,

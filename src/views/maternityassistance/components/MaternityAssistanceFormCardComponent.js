@@ -29,6 +29,7 @@ class MaternityAssistanceCardComponent extends Component {
   const {
     oRNumberFunc,
     setAttachmentArrayFunc,
+    showFormReviewDisabledORFunc,
     onSubmitFunc,
     dateFunc,
     requestTypeOfDeliveryFunc,
@@ -101,7 +102,6 @@ class MaternityAssistanceCardComponent extends Component {
                   selected = { preferredDate }
                   disabled = { showEditSubmitButton }
                   onChange = { (e) => dateFunc(e) }
-                  maxDate = { moment(deliveryDate) }
                   text = { 'Official Receipt Date' }
                   errorMessage = { dateErrorMessage }
                   />
@@ -168,13 +168,24 @@ class MaternityAssistanceCardComponent extends Component {
                 </div>
                 :
                 <div>
-                  <GenericButton
-                    type = { 'button' }
-                    text = { 'Continue' }
-                    onClick = {
-                      () => showFormReview()
-                    }
-                    className = { 'outpatient-submit' } />
+                  {
+                      moment(deliveryDate).format('MM DD YYYY') <=
+                      moment().format('MM DD YYYY') ?
+                      <GenericButton
+                        type = { 'button' }
+                        text = { 'Continue' }
+                        onClick = {
+                          () => showFormReview()
+                        }
+                        className = { 'outpatient-submit' } /> :
+                      <GenericButton
+                        type = { 'button' }
+                        text = { 'Continue' }
+                        onClick = {
+                          () => showFormReviewDisabledORFunc()
+                        }
+                        className = { 'outpatient-submit' } />
+                  }
                 </div>
               }
           </div>
@@ -188,6 +199,7 @@ class MaternityAssistanceCardComponent extends Component {
 MaternityAssistanceCardComponent.propTypes = {
   desiredAmountFunc : PropTypes.func,
   editFormDataFunc : PropTypes.func,
+  showFormReviewDisabledORFunc : PropTypes.func,
   showFormReview: PropTypes.func,
   requestTypeOfDeliveryFunc: PropTypes.func,
   dateOfDelivertFunc: PropTypes.func,
