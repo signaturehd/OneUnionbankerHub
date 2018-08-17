@@ -611,8 +611,10 @@ export default class HRBenefitsService {
         paymentDurationId: groupAidParam.durationOfPaymentId
      }
      formData.append('uuid', 12345)
-     formData.append('cert1', groupAidParam.file1)
-     formData.append('cert2', groupAidParam.file2)
+     groupAidParam.attachments.map((resp, key) =>
+      (
+        formData.append(resp.name, resp.file)
+      ))
      formData.append('body', JSON.stringify(groupPlanObject))
      return this.apiClient.post('v2/reimbursements/education/dependent/submit', formData, {
        headers : { token }
