@@ -85,6 +85,11 @@ class PhenomFragment extends BaseMVPView {
                 selectedDetails = { selectedDetails }
                 rewardImage = { phenomDetails.rewardImage }
                 rewardLogo = { phenomDetails.rewardLogo }
+                contactInfo = { phenomDetails.contactInfo }
+                highlights = { phenomDetails.highLights }
+                rewardName = { phenomDetails.rewardName }
+                rewardSubHeader = { phenomDetails.rewardSubHeader }
+                terms = { phenomDetails.termsAndConditions }
                 onNavigate = { () =>
                   this.setState({ showPhenomCardDetails : false })
                 }
