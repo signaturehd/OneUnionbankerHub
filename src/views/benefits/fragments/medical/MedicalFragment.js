@@ -110,6 +110,7 @@ class MedicalFragment extends Component {
                 <p className={ 'medical-option-cards font-weight-bold font-size-14px' }>
                   { value.title }
                 </p>
+                <h2 className = { 'font-size-14px' }> Lorem ipsum dolor </h2>
               </div>
             </Card>
           ))
