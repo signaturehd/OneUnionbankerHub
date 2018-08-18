@@ -93,6 +93,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
                 type = { 'text' }/>
               <DatePicker
                 selected = { preferredDate }
+                readOnly
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateFunc(e) }
                 maxDate = { moment() }

@@ -52,6 +52,7 @@ export default class MedicalSchedulingFormCardComponent extends Component {
             type = { 'text' }/>
           <DatePicker
             text = { 'Preferred Schedule' }
+            readOnly
             disabled = { isFormReview }
             minDate = { moment(Date.now()).add(3, 'weeks') }
             selected = { func.checkedDate(preferredDate) }
