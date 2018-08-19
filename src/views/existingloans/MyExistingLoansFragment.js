@@ -5,15 +5,21 @@ import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/MyExistingLoansPresenter'
 
-import MyExistingLoansCardComponent from './components/MyExistingLoansCardComponent'
+import ExistingLoansSummaryCardComponent from './components/ExistingLoansSummaryCardComponent'
+import ExistingLoansHistoryCardComponent from './components/ExistingLoansHistoryCardComponent'
 
 import {
   CircularLoader,
   Card,
   GenericButton,
+  Line
 } from '../../ub-components/'
 
+import { format } from '../../utils/numberUtils'
+
 import './styles/myExistingLoanStyle.css'
+
+import moment from 'moment'
 
 class MyExistingLoansFragment extends BaseMVPView {
   constructor (props) {
@@ -40,6 +46,7 @@ class MyExistingLoansFragment extends BaseMVPView {
     const { existingLoans, enabledLoader } = this.state
     return (
       <div>
+        <br/>
         {
           enabledLoader ?
 
@@ -50,19 +57,57 @@ class MyExistingLoansFragment extends BaseMVPView {
           </div>
           :
           <div className = { 'existing-loans-grid-container' }>
-          {
-            existingLoans.map((resp, key) => (
-              <MyExistingLoansCardComponent
-                key = { key }
-                description = { resp.description }
-                amortization = { resp.amortization }
-                balance = { resp.balance }
-                promissoryNote = { resp.promissoryNote }
-                date = { resp.date }
+            <div className = { 'existing-loans-grid-header' }>
+              <div>
+                {
+                  existingLoans.map((resp, key) =>
+                  <div className = { 'text-align-right' }>
+                    <h2 className = { 'existing-loan-title-header' }>
+                      &#8369; { format(resp.balance) }
+                    </h2>
+                    <br/>
+                    <h2>
+                      Outstanding Balance
+                    </h2>
+                    <h2>
+                      { moment(resp.date).format('DD MMM YYYY') }
+                    </h2>
+                  </div>
+                  )
+                }
+              </div>
+              <div></div>
+            </div>
+            <div>
+              <br/>
+              <div className = { 'existing-loan-summary-grid-x2' }>
+                <div>
+                  Existing Loans Summary
+                </div>
+                <div>
+                  <Line/>
+                </div>
+              </div>
+              <br/>
+              <ExistingLoansSummaryCardComponent
+                existingLoans = { existingLoans }
                 />
-              )
-            )
-          }
+              <br/>
+            </div>
+            <div>
+              <div className = { 'existing-loan-summary-grid-x2' }>
+                <div>
+                  Loans History
+                </div>
+                <div>
+                  <Line/>
+                </div>
+              </div>
+              <br/>
+              <ExistingLoansHistoryCardComponent
+                existingLoans = { existingLoans }
+                />
+            </div>
           </div>
         }
       </div>

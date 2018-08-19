@@ -23,6 +23,9 @@
   background-image: url('../../../../images/icons/IdCardOrange.png');
 }
 
+.staffAccount {
+  background-image: url('../../../../images/icons/ic_uassess.png');
+}
 
 .employeeContact {
   background-image: url('../../../../images/My Profile.png');
@@ -244,4 +247,8 @@
   display: none;
   grid-template-columns: 1fr .5fr;
   column-gap: 20px;
+}
+
+.staff-account-card {
+  border: 1px solid #efefef;
 }

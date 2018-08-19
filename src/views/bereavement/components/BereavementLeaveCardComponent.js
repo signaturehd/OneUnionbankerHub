@@ -28,11 +28,13 @@ class BereavementLeaveCardComponent extends Component {
             <div className = { 'grid-global' }>
               <div>
                 <DatePicker
+                  readOnly
                   text = { 'From Date' }/>
               </div>
               <div>
                 <div></div>
                 <DatePicker
+                  readOnly
                   text = { 'To Date' }/>
               </div>
             </div>

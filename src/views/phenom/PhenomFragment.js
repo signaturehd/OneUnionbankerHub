@@ -48,6 +48,10 @@ class PhenomFragment extends BaseMVPView {
     this.setState({ phenomDetails, showPhenomCardDetails })
   }
 
+  navigate () {
+    this.props.history.push('/phenom')
+  }
+
   render () {
 
     const {
@@ -67,40 +71,57 @@ class PhenomFragment extends BaseMVPView {
 
     return (
       <div className = { 'phenom-fragment' }>
-        <h2 className = { 'header-margin-default' }>Phenom</h2>
         {
           loader ?
          <center className = { 'circular-loader-center' }>
            <CircularLoader show = { true }/>
          </center>
          :
-          <div className = { 'phenom-container-component' }>
-            <div className = { 'phenom-container-grid' }>
-              {
-                showPhenomCardDetails ?
+         <div>
+           {
+             showPhenomCardDetails ?
 
-                 <PhenomCardDetailsComponent
-                   selectedDetails = { selectedDetails }
-                   />
-                 :
-                  phenomDataList.map((resp, key) =>
-                  <PhenomCardComponent
-                    key = { key }
-                    selectedDetails = { resp }
-                    vendor = { resp.vendor }
-                    id = { resp.id }
-                    rewardImage = { resp.rewardImage }
-                    startDate = { resp.startDate }
-                    endDate = { resp.endDate }
-                    isHeart = { resp.isHeart }
-                    onClick = { (selectedDetails) => {}
-                    }
-                    onChangeHeart = { (id) => {} }
-                    />
-                  )
-              }
-            </div>
-          </div>
+              <PhenomCardDetailsComponent
+                selectedDetails = { selectedDetails }
+                rewardImage = { phenomDetails.rewardImage }
+                rewardLogo = { phenomDetails.rewardLogo }
+                contactInfo = { phenomDetails.contactInfo }
+                highlights = { phenomDetails.highLights }
+                rewardName = { phenomDetails.rewardName }
+                rewardSubHeader = { phenomDetails.rewardSubHeader }
+                terms = { phenomDetails.termsAndConditions }
+                onNavigate = { () =>
+                  this.setState({ showPhenomCardDetails : false })
+                }
+              />
+              :
+              <div className = { 'phenom-container-component' }>
+                <h2 className = { 'header-margin-default' }>Phenom Prime</h2>
+                <div className = { 'phenom-container-grid' }>
+                  {
+                    phenomDataList.map((resp, key) =>
+                    <PhenomCardComponent
+                      key = { key }
+                      selectedDetails = { resp }
+                      vendor = { resp.vendor }
+                      id = { resp.id }
+                      rewardImage = { resp.rewardImage }
+                      startDate = { resp.startDate }
+                      endDate = { resp.endDate }
+                      isHeart = { resp.isHeart }
+                      onClick = { (selectedDetails) => {
+                          this.presenter.getPhenomSelectedDiscounts(resp.id)
+                          this.setState({ showPhenomCardDetails : true })
+                        }
+                      }
+                      onChangeHeart = { (id) => this.presenter.addPhenomIsHeart(id) }
+                      />
+                    )
+                  }
+                </div>
+              </div>
+            }
+         </div>
         }
       </div>
     )

@@ -82,23 +82,19 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
           <br/>
           <div className={ 'maternitySSS-form-card' }>
             <div className={ 'maternitySSS-form-card-body' }>
-              {
-                showEditSubmitButton ?
-                <div>
-                  <GenericInput
-                    value = { recipient }
-                    text = { 'Recipient' }
-                    readOnly
-                    disabled = { showEditSubmitButton }
-                    type = { 'text' }/>
-                </div>
-                :
-                <div></div>
-              }
+              <div>
+                <GenericInput
+                  value = { recipient }
+                  text = { 'Recipient' }
+                  readOnly
+                  disabled = { true }
+                  type = { 'text' }/>
+              </div>
               <div className = { 'maternitySSS-grid-address' }>
                 <div>
                   <GenericInput
                     value = { roomNumberText }
+                    maxLength = { 10 }
                     onChange = { e => roomNumberFunc(e.target.value) }
                     text = { 'Room Number' }
                     disabled = { showEditSubmitButton }
@@ -108,6 +104,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 <div>
                   <GenericInput
                     value = { houseNumberText }
+                    maxLength = { 10 }
                     onChange = { e => houseNumberFunc(e.target.value) }
                     text = { 'House Number' }
                     disabled = { showEditSubmitButton }
@@ -164,7 +161,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                     text = { 'Zip Code' }
                     disabled = { showEditSubmitButton }
                     errorMessage = { zipCodeErrorMessage }
-                    maxLength = { 5 }
+                    maxLength = { 12 }
                     type = { 'text' }/>
                 </div>
               </div>
@@ -175,6 +172,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                     onChange = { e => noPregnancyFunc(e.target.value) }
                     text = { 'Number Of Pregnancy' }
                     disabled = { showEditSubmitButton }
+                    maxLength = { 2 }
                     errorMessage = { noPregnancyErrorMessage }
                     type = { 'text' }/>
                 </div>
@@ -187,6 +185,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                     disabled = { noPregnancyText ? showEditSubmitButton : true }
                     onChange = { e => noDeliveryFunc(e.target.value)  }
                     text = { 'Number of Delivery' }
+                    maxLength = { 2 }
                     errorMessage = {
                       parseInt(noDeliveryText) > parseInt(noPregnancyText) ?
                       'Error count of delivery' :
@@ -203,6 +202,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                     disabled = { noDeliveryText ? showEditSubmitButton : true }
                     onChange = { e => noMiscarriageFunc(e.target.value) }
                     text = { 'Number of Miscarriage' }
+                    maxLength = { 2 }
                     errorMessage = {
                       parseInt(noMiscarriageText) > parseInt(noPregnancyText) ?
                       'Error count of delivery' :

@@ -264,7 +264,7 @@ class NavigationView extends BaseMVPView {
                     <ComplianceFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                    <Route path = '/phenom' render = { props =>
+                  <Route path = '/phenom' render = { props =>
                     <PhenomFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
