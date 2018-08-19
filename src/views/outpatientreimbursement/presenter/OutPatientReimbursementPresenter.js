@@ -29,6 +29,7 @@ export default class OutPatientReimbursementPresenter {
       .map(data => {
         let procedureArray = []
         let attachmentArray = []
+
         data &&
         data.procedures.map((procedure, key) => {
           procedureArray.push({
