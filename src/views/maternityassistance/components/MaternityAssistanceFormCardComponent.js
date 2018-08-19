@@ -77,6 +77,7 @@ class MaternityAssistanceCardComponent extends Component {
                 type = { 'text' }/>
               <DatePicker
                 selected = { deliveryDate }
+                readOnly
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateOfDelivertFunc(e) }
                 text = { 'Date of Delivery' }
@@ -103,6 +104,7 @@ class MaternityAssistanceCardComponent extends Component {
                   disabled = { showEditSubmitButton }
                   onChange = { (e) => dateFunc(e) }
                   text = { 'Official Receipt Date' }
+                  readOnly
                   errorMessage = { dateErrorMessage }
                   />
                 <GenericInput

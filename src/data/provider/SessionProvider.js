@@ -15,6 +15,7 @@ export default class SessionProvider {
     this.storage.setItem(TOKEN, token)
   }
 
+
   getToken () {
     return this.storage.getItem(TOKEN) || ''
   }

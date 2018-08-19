@@ -8,6 +8,12 @@
   position: relative !important;
   width: 100% !important;
 }
+
+.dentailreimbursement-grid-x3 {
+  display: grid;
+  grid-template-columns: .2fr 2fr .2fr;
+}
+
 .dentalreimbursement-image-view {
   position: relative;
   background: url('../../../../images/uploadicon-grey.jpg') no-repeat center center;
@@ -27,13 +33,10 @@
   border-radius: 5px;
 }
 .dentalreimbursement-card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 40%;
-  float : left;
+  box-shadow: none;
   padding: 20px 5px 20px 5px;
   margin: 50px 0 auto 0;
   text-align: center;
-  font-family: arial;
 }
 .dentalreimbursement-secondary {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -43,7 +46,6 @@
   padding: 0 5px 0 25px;
   margin: 50px 0 auto 0;
   text-align: center;
-  font-family: arial;
   float: right;
 }
 

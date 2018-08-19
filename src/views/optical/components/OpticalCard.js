@@ -63,6 +63,7 @@ class OpticalCard extends Component {
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateFunc(e) }
                 maxDate = { moment() }
+                readOnly
                 text = { 'Date of Official Receipt' }
                 errorMessage = { dateErrorMessage }
                 />
