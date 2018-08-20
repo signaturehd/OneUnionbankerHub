@@ -130,9 +130,8 @@ class OutPatientReimbursementFormCardComponent extends Component {
                         text = { resp.name }
                         value = { resp.amount ? resp.amount : '' }
                         errorMessage = {
-                          resp.amount === 0  ?
-                          'Please enter an amount for the selected procedure' :
-                          ''
+                          resp.amount === 0  &&
+                          'Please enter an amount for the selected procedure' 
                         }
                         disabled = { showEditSubmitButton }
                         onChange = { e =>
@@ -159,7 +158,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
                 }
               </div>
               {
-                attachmentsData.length !== 0  ?
+                attachmentsData.length !== 0  &&
                 <div>
                   <MultipleFileUploader
                     placeholder = { 'Form Attachments' }
@@ -172,8 +171,6 @@ class OutPatientReimbursementFormCardComponent extends Component {
                       `Please upload the required attachments`  }
                   />
                 </div>
-                :
-                <div></div>
               }
               <br/>
               <Line/>
