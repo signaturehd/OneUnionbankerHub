@@ -131,7 +131,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
                         value = { resp.amount ? resp.amount : '' }
                         errorMessage = {
                           resp.amount === 0  &&
-                          'Please enter an amount for the selected procedure' 
+                          'Please enter an amount for the selected procedure'
                         }
                         disabled = { showEditSubmitButton }
                         onChange = { e =>
