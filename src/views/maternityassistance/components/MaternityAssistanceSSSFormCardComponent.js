@@ -159,7 +159,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                     text = { 'Zip Code' }
                     disabled = { showEditSubmitButton }
                     errorMessage = { zipCodeErrorMessage }
-                    maxLength = { 12 }
+                    maxLength = { 4 }
                     type = { 'text' }/>
                 </div>
               </div>
