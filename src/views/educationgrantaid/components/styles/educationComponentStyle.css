@@ -101,3 +101,23 @@
   font-size: 14px;
   font-weight: normal;
 }
+
+.multiple-font-weight-bolder {
+  font-weight: bolder;
+  font-size: 14px;
+}
+
+.multiple-attachment-name {
+  font-size: 11px;
+}
+
+.multiple-file-attachment-form {
+  padding: 5px;
+}
+
+.multiple-fileuploader-name {
+  text-align: center;
+  font-size: 10px;
+  font-weight: bold;
+  color: #ff8a00;
+}

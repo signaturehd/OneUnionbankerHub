@@ -11,6 +11,7 @@ import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import ConfirmationModal from './modal/EducationGrantAidReviewModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
+import GrantTypesModal from './modal/GrantTypesModal'
 
 import store from '../../store'
 import { NotifyActions } from '../../actions'
@@ -27,14 +28,19 @@ class EducationGrantAidFragment extends BaseMVPView {
       showConfirmation : false,
       noticeResponse : null,
       showNoticeResponseModal : false,
+      showGrantTypes : false,
       enabledLoader : false,
+      showBenefitFeedbackModal : false,
+      attachmentsData : [],
+      attachmentArray : [],
       grantAid : [],
       grantId : '',
       grantType : '',
       grantAmount : '',
+      grantTypeErrorMessage : '',
+      attachment : '',
       file : null,
       imagePreviewUrl : null,
-      showBenefitFeedbackModal : false
     }
     this.validator = this.validator.bind(this)
   }
@@ -42,6 +48,18 @@ class EducationGrantAidFragment extends BaseMVPView {
     validator (input) {
      return new RequiredValidation().isValid(input)
    }
+
+  showValidateGrantAidMap (grantAid) {
+    this.setState({ grantAid })
+  }
+
+  grantTypeFunc () {
+    this.setState({ showGrantTypes : true })
+  }
+
+  setFileAttachments (attachmentArray) {
+    this.setState({ attachmentArray })
+  }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
@@ -85,10 +103,6 @@ class EducationGrantAidFragment extends BaseMVPView {
     }
   }
 
-  setGrantAid (grantAid) {
-    this.setState({ grantAid })
-  }
-
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
   }
@@ -119,11 +133,15 @@ class EducationGrantAidFragment extends BaseMVPView {
       showConfirmation,
       noticeResponse,
       showNoticeResponseModal,
+      showGrantTypes,
       enabledLoader,
       grantAid,
       grantId,
-      grantType,
+      grantName,
       grantAmount,
+      attachment,
+      attachmentsData,
+      attachmentArray,
       file,
       imagePreviewUrl,
       showBenefitFeedbackModal
@@ -179,6 +197,26 @@ class EducationGrantAidFragment extends BaseMVPView {
           />
         }
 
+        {
+          showGrantTypes &&
+          <GrantTypesModal
+          label = { 'Types of Grant' }
+          inputArray = { grantAid.grants }
+          selectedArray = { (grantId, grantName, grantAmount, attachment) => {
+            this.setState({
+              grantId,
+              grantName,
+              grantAmount,
+              attachment,
+              showGrantTypes : false,
+              grantTypeErrorMessage : ''
+              })
+            }
+          }
+          onClose = { () => this.setState({ showGrantTypes : false }) }
+        />
+        }
+
         <div>
           <i
             className = { 'back-arrow' }
@@ -195,6 +233,12 @@ class EducationGrantAidFragment extends BaseMVPView {
            </center> :
           <FormComponent
             grantAid = { grantAid }
+            grantName = { grantName }
+            grantAmount = { grantAmount }
+            attachment = { attachment }
+            attachmentsData = { attachmentsData }
+            grantTypeFunc = { () => this.grantTypeFunc() }
+            setAttachmentArrayFunc = { (resp) => this.setFileAttachments(resp) }
             onClick = {
               (showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl) => {
                 this.confirmation(showConfirmation, grantId, grantType, grantAmount, file, imagePreviewUrl)

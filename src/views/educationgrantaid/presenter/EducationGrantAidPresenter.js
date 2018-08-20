@@ -29,9 +29,22 @@ export default class EducationGrantAidPresenter {
   validateGrantAid () {
     this.view.showCircularLoader()
     this.validateGrantAidInteractor.execute()
+    .map(data => {
+      let grantArray = []
+
+      data &&
+      data.grants.map((grant, key) => {
+        grantArray.push({
+          id : grant.id,
+          name : grant.name,
+          amount : grant.amount,
+          attachment : grant.attachments
+        })
+      })
+      this.view.showValidateGrantAidMap(data)
+    })
       .subscribe(
         grantAid => {
-          this.view.setGrantAid(grantAid)
           this.view.hideCircularLoader()
         },
         error => {

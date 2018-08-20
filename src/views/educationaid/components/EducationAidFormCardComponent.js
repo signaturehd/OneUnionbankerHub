@@ -119,7 +119,7 @@ class EducationAidFormCardComponent extends Component {
       setAttachmentArrayFunc
     }=this.props
 
-
+console.log(attachmentsData)
     return (
       <div className={'educ-container'}>
         <div className={ 'educ-grid-column-2' }>
