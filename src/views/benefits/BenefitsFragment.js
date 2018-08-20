@@ -264,6 +264,7 @@ class BenefitsFragment extends BaseMVPView {
                     text={ value.title } >
                   </div>
                   <p className={ 'benefits-option-cards font-weight-bold' }> { value.title } </p>
+                  <h2 className = { 'font-size-14px' }> Lorem ipsum dolor </h2>
                 </div>
               </Card>
             ))

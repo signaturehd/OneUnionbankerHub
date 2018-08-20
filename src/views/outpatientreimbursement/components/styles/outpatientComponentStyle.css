@@ -134,3 +134,9 @@
 .react-datepicker__input-container {
   margin-top: 0px!important;
 }
+
+.outpatient-card-procedure-grid {
+  grid-template-columns: 1fr .1fr;
+  display: grid;
+  margin: 0px auto;
+}

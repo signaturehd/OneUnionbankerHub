@@ -3,10 +3,6 @@
   max-width: 100%;
 }
 
-.maternity-grid-location {
-
-}
-
 .maternitySSS-form-review {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -50,7 +46,7 @@
 
 .maternity-grid-location {
   display: grid;
-  grid-template-columns: 1fr .5fr .2fr;
+  grid-template-columns: 1fr 1fr;
   column-gap: 2%;
 }
 

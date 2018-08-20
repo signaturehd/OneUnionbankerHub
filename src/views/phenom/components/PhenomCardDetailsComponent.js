@@ -5,7 +5,6 @@ import {
   GenericInput,
   Card,
   GenericButton,
-  DatePicker,
   Line
 } from '../../../ub-components/'
 

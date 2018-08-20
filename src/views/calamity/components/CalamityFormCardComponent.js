@@ -107,6 +107,7 @@ class CalamityFormCardComponent extends Component {
                 <br/>
                   <DatePicker
                     maxDate={ moment() }
+                    readOnly
                     selected={ preferredDate}
                     onChange={ (e) => handleChange(e) }
                     text = { 'Date of Occurrence' }
