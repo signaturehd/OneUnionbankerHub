@@ -35,7 +35,6 @@ class EducationGrantAidFragment extends BaseMVPView {
       attachmentArray : [],
       grantAid : [],
       grantId : '',
-      grantType : '',
       grantAmount : '',
       grantTypeErrorMessage : '',
       attachment : '',
@@ -51,6 +50,10 @@ class EducationGrantAidFragment extends BaseMVPView {
 
   showValidateGrantAidMap (grantAid) {
     this.setState({ grantAid })
+  }
+
+  showGrantTypesMap (grantTypes) {
+    this.setState({ grantTypes })
   }
 
   grantTypeFunc () {

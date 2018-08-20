@@ -5,8 +5,7 @@ import {
   GenericInput,
   Card,
   Line,
-  GenericButton,
-  MultipleFileUploader } from '../../../ub-components/'
+  GenericButton } from '../../../ub-components/'
 
 import './styles/educationComponentStyle.css'
 import EducationGrantAidFileUploader from './EducationGrantAidFileUploader'
@@ -41,15 +40,15 @@ class EducationGrantAidFormCardComponent extends Component {
     } = this.props
 
     return (
-      <div className = {'educ-container'}>
+      <div className = {'educGrant-container'}>
 
-        <div className = { 'educ-grid-column-2' }>
+        <div className = { 'educGrant-grid-column-2' }>
           <div></div>
-          <Card className = { 'educ-form-card' }>
+          <div className = { 'educGrant-form-card' }>
             <h4>
               Benefits Form
             </h4>
-            <div className = {'educ-form-card-body '}>
+            <div className = {'educGrant-form-card-body '}>
               <GenericInput
                 value = { grantAid.college }
                 onChange = {() => {}}
@@ -83,7 +82,7 @@ class EducationGrantAidFormCardComponent extends Component {
               <br/>
 
               {
-                attachment.lenght !==0 ?
+                attachment ?
                 <div>
                 <EducationGrantAidFileUploader
                     placeholder = { 'Form Attachments' }
@@ -104,13 +103,13 @@ class EducationGrantAidFormCardComponent extends Component {
 
               <GenericButton
                 type = { 'button' }
-                text = { 'continue' }
+                text = { 'Continue' }
                 onClick = {
                   () => onClick(true, grantId, grantType, grantAmount, file, imagePreviewUrl)
                 }
-                className = { 'educ-submit' } />
+                className = { 'educGrant-submit' } />
             </div>
-          </Card>
+          </div>
         </div>
       </div>
     )

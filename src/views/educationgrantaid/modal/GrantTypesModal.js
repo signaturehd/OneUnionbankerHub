@@ -10,6 +10,19 @@ class GrantTypesModal extends Component {
     super(props)
   }
 
+  // setFileAttachment (data) {
+  //   let attachmentArray = []
+  //
+  //   data &&
+  //   data.map((attachment, key) => {
+  //     attachmentArray.push({
+  //       name : attachment
+  //     })
+  //   })
+  //
+  //   return attachmentArray
+  // }
+
   render () {
     const {
       inputArray,
