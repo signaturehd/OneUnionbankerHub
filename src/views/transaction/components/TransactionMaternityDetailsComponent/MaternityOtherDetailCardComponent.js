@@ -38,9 +38,9 @@ class MaternityOtherDetailCardComponent extends Component {
               </h2>
               <h2 className = { 'unionbank-color font-size-12px' }>
                 Recipient
-              <br/>
-              <br/>
               </h2>
+              <br/>
+              <br/>
             </div>
         </div>
 
@@ -52,9 +52,9 @@ class MaternityOtherDetailCardComponent extends Component {
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
               Delivery type
-            <br/>
-            <br/>
             </h2>
+            <br/>
+            <br/>
           </div>
         </div>
 
@@ -71,9 +71,9 @@ class MaternityOtherDetailCardComponent extends Component {
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
               Delivery date
-            <br/>
-            <br/>
             </h2>
+            <br/>
+            <br/>
           </div>
         </div>
 
@@ -85,9 +85,9 @@ class MaternityOtherDetailCardComponent extends Component {
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
               Amount
-            <br/>
-            <br/>
             </h2>
+            <br/>
+            <br/>
           </div>
         </div>
         <br/>
