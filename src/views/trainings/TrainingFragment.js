@@ -74,8 +74,8 @@ class TrainingFragment extends BaseMVPView {
         </div>
         <div>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }> Trainings </h2>
-            <h2>How would you want to develop yourself today?</h2>
+            <h2 className={ 'header-margin-default text-align-left' }> Phenom Prime </h2>
+            <h2>We &#39;ve got these special deals, Just for U!</h2>
             <br/>
           </div>
         </div>
