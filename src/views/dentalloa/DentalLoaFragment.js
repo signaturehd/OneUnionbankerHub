@@ -177,6 +177,7 @@ class DentalLoaView extends BaseMVPView {
       selectedProcedures,
       titleChange
     } = this.state
+
     return (
       <div  className = { 'benefits-container' }>
         {
@@ -189,6 +190,7 @@ class DentalLoaView extends BaseMVPView {
               this.setState({ showNoticeResponseModal, response, showNoticeResponseApprovalModal : true })  }
             />
         }
+
         {
           showNoticeResponseApprovalModal &&
           <ResponseModal
@@ -210,7 +212,6 @@ class DentalLoaView extends BaseMVPView {
           />
         }
 
-
         {
           showRecipientModal &&
           <DentalLoaDependentModal
@@ -229,6 +230,7 @@ class DentalLoaView extends BaseMVPView {
           onClose = { () =>
             this.setState({ showRecipientModal : false }) } />
         }
+
         {
           showHealthwayBranchModal &&
           <DentalLoaBranchModal
@@ -241,6 +243,7 @@ class DentalLoaView extends BaseMVPView {
             onClose = { () =>
               this.setState({ showHealthwayBranchModal : false }) } />
         }
+
         {
           showProcedureModal &&
           <DentalLoaProcedureModal
@@ -258,6 +261,7 @@ class DentalLoaView extends BaseMVPView {
               this.setState({ procedure }) }
             onClose = { () => this.setState({ showProcedureModal : false }) }/>
         }
+
       <div>
         <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) } />
         {
@@ -271,6 +275,7 @@ class DentalLoaView extends BaseMVPView {
           </h2>
         }
       </div>
+
       <div className = { 'dentalloa-container' }>
       {
         disabled ?
