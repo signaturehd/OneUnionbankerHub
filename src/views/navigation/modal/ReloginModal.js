@@ -21,7 +21,7 @@ class ReloginModal extends Component {
       >
         <div>
           <center>
-            <h3>Your current Session is Expired, please re login</h3>
+            <h3>Your session has expired, please log&#45;in again to One UnionBanker Hub!</h3>
           </center>
           <br/>
           <br/>
