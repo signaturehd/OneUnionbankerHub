@@ -72,7 +72,13 @@ class TrainingFragment extends BaseMVPView {
         <div className={ 'header-margin-container' }>
           <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) }></i>
         </div>
-        <div></div>
+        <div>
+          <div>
+            <h2 className={ 'header-margin-default text-align-left' }> Trainings </h2>
+            <h2>How would you want to develop yourself today?</h2>
+            <br/>
+          </div>
+        </div>
         <GenericInput
           type = { 'text' }
           className = { 'transaction-search-bar' }
@@ -81,61 +87,67 @@ class TrainingFragment extends BaseMVPView {
           value = { searchString }
           onChange = { this.programSearch } />
         </div>
-        <div className = { 'tabs-container' }>
-          <input
-            className = { 'input-tab' }
-            id = { 'tab1' }
-            type = { 'radio' }
-            name = { 'tabs' }
-            onClick = { () => history.push('/mylearning/trainings/mytrainings') }
-            defaultChecked />
-          <label  htmlFor = 'tab1'>Trainings</label>
+        <div className = { 'grid-tab-area' }>
+          <div></div>
+          <div>
+            <div className = { 'tabs-container' }>
+              <input
+                className = { 'input-tab text-align-left' }
+                id = { 'tab1' }
+                type = { 'radio' }
+                name = { 'tabs' }
+                onClick = { () => history.push('/mylearning/trainings/mytrainings') }
+                defaultChecked />
+              <label  htmlFor = 'tab1'>Trainings</label>
 
-          <input
-            className = { 'input-tab' }
-            id = { 'tab2' }
-            type = { 'radio' }
-            onClick = { () => history.push('/mylearning/trainings/enrolledtrainings') }
-            name = { 'tabs' } />
-          <label  htmlFor = { 'tab2' }>Enrolled Trainings</label>
+              <input
+                className = { 'input-tab' }
+                id = { 'tab2' }
+                type = { 'radio' }
+                onClick = { () => history.push('/mylearning/trainings/enrolledtrainings') }
+                name = { 'tabs' } />
+              <label  htmlFor = { 'tab2' }>Enrolled Trainings</label>
 
-          <input
-            className = { 'input-tab' }
-            id='tab3'
-            onClick = { () => history.push('/mylearning/trainings/approvaltrainings') }
-            type = { 'radio' }
-            name = { 'tabs' }/>
-          <label  htmlFor = 'tab3' >For Approval</label>
+              <input
+                className = { 'input-tab' }
+                id='tab3'
+                onClick = { () => history.push('/mylearning/trainings/approvaltrainings') }
+                type = { 'radio' }
+                name = { 'tabs' }/>
+              <label  htmlFor = 'tab3' >For Approval</label>
 
-          <section id = { 'content1' }>
-              <Switch>
-                <Route path = '/mylearning/trainings/mytrainings'
-                  render = { props => <MyTrainingFragment
-                      presenter = { this.presenter }
-                      presenterEmployeeDetails = { (resp) => this.onClickEmployeeTrainingDetails(resp) }
-                      presenterEnrollFunc = { (resp) => this.onClickEnrollToTraining(resp) }
-                      searchString = { searchString }
+              <section id = { 'content1' }>
+                  <Switch>
+                    <Route path = '/mylearning/trainings/mytrainings'
+                      render = { props => <MyTrainingFragment
+                          presenter = { this.presenter }
+                          presenterEmployeeDetails = { (resp) => this.onClickEmployeeTrainingDetails(resp) }
+                          presenterEnrollFunc = { (resp) => this.onClickEnrollToTraining(resp) }
+                          searchString = { searchString }
+                        />
+                      }
                     />
-                  }
-                />
-                <Route path = '/mylearning/trainings/enrolledtrainings'
-                  render = { props => <EnrolledTrainingFragment
-                    presenter = { this.presenter }
-                    enrolledTrainingList = { enrolledTrainingList }
-                    searchString = { searchString }
+                    <Route path = '/mylearning/trainings/enrolledtrainings'
+                      render = { props => <EnrolledTrainingFragment
+                        presenter = { this.presenter }
+                        enrolledTrainingList = { enrolledTrainingList }
+                        searchString = { searchString }
+                        />
+                      }
                     />
-                  }
-                />
-                <Route path = '/mylearning/trainings/approvaltrainings'
-                  render = { props => <ApprovalTrainingFragment
-                    presenter = { this.presenter }
-                    approvalTrainingList = { approvalTrainingList }
-                    searchString = { searchString }
+                    <Route path = '/mylearning/trainings/approvaltrainings'
+                      render = { props => <ApprovalTrainingFragment
+                        presenter = { this.presenter }
+                        approvalTrainingList = { approvalTrainingList }
+                        searchString = { searchString }
+                        />
+                      }
                     />
-                  }
-                />
-            </Switch>
-          </section>
+                </Switch>
+              </section>
+            </div>
+          </div>
+          <div></div>
         </div>
       </div>
     )

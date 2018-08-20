@@ -84,8 +84,11 @@ class PayslipFragment extends BaseMVPView {
               onClose={ () => this.setState({ showPayslipDetails: false, pdfFile : null }) }
             />
         }
-
-        <h2 className={ 'header-margin-default ' }> My Pay </h2>
+        <div>
+          <h2 className={ 'header-margin-default text-align-left' }> My Pay </h2>
+          <h2>View your most recent payslip</h2>
+        </div>
+        <br/>
           <PayslipCardComponent
             payslipList={ payslipList }
             showPayslipDetails={showPayslipDetails}
