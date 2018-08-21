@@ -10,8 +10,8 @@ import {
   SingleInputModal,
   MultipleInputModal,
   Line,
-  Modal,
-  GenericButton
+  GenericButton,
+  Modal
 } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
@@ -88,21 +88,15 @@ class MaternityAssistanceFragment extends BaseMVPView {
         noDeliveryFunc : '',
         noMiscarriageText : '',
         noMiscarriageErrorMessage: '',
-        noMiscarriageFunc: ''
+        noMiscarriageFunc: '',
+        showErrorMesageModal: false,
+        showErrorMessageValidate: '',
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateMaternityAssistance()
-  }
-
-  confirmationMat1Response (resp) {
-    this.setState({ showConfirmationModal : resp })
-  }
-
-  showConfirmationModal (respMat1Confirmation) {
-    this.setState({ respMat1Confirmation })
   }
 
   noticeOfUndertaking (noticeResponse) {
@@ -131,6 +125,10 @@ class MaternityAssistanceFragment extends BaseMVPView {
 
   showTypeOfDeliveryMap (typeOfDeliveryData) {
     this.setState({ typeOfDeliveryData })
+  }
+
+  showErrorMessage (showErrorMesageModal, showErrorMessageValidate) {
+    this.setState({ showErrorMesageModal, showErrorMessageValidate })
   }
 
   navigate () {
@@ -462,6 +460,23 @@ class MaternityAssistanceFragment extends BaseMVPView {
                   this.setState({ showConfirmationModal : false })
                   this.navigate()
                 }}
+                />
+            </center>
+          </Modal>
+        }
+        {
+          showErrorMessageModal &&
+          <Modal>
+            <center>
+              <h2>{ showErrorMessageValue.message }</h2>
+              <br/>
+              <GenericButton
+                text = { 'Ok' }
+                onClick = { () =>  {
+                  this.setState({ showErrorMessageModal : false })
+                  this.navigate()
+                }
+              }
                 />
             </center>
           </Modal>
