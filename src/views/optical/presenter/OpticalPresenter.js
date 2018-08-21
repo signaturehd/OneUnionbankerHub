@@ -52,7 +52,7 @@ export default class OpticalPresenter {
       .subscribe(data => {
         // this.view.isEligible(data ? true : false)
       }, errors => {
-        this.view.isEligible(false)
+        this.view.isEligible(false, errors)
       })
     }
   }
