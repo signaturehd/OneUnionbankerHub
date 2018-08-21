@@ -9,6 +9,8 @@ import {
   CircularLoader,
   SingleInputModal,
   MultipleInputModal,
+  Modal,
+  GenericButton
 } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
@@ -60,6 +62,8 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         dateErrorMessage: '',
         orNumberErrorMessage: '',
         amountErrorMessage : '',
+        showErrorMessageModal: false,
+        showErrorMessageValidate: ''
     }
   }
 
@@ -94,6 +98,10 @@ class OutPatientReimbursementFragment extends BaseMVPView {
 
   showAttachmentsMap (attachmentsData) {
     this.setState({ attachmentsData })
+  }
+
+  showErrorMessage (showErrorMessageModal, showErrorMessageValidate) {
+    this.setState({ showErrorMessageModal, showErrorMessageValidate })
   }
 
   navigate () {
@@ -251,7 +259,9 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       showEditSubmitButton,
       titleChange,
       limit,
-      updateTotalAmount
+      updateTotalAmount,
+      showErrorMessageModal,
+      showErrorMessageValidate
     } = this.state
 
     const {
@@ -261,6 +271,23 @@ class OutPatientReimbursementFragment extends BaseMVPView {
 
     return (
       <div>
+        {
+          showErrorMessageModal &&
+          <Modal>
+            <center>
+              <h2>{ showErrorMessageValue.message }</h2>
+              <br/>
+              <GenericButton
+                text = { 'Ok' }
+                onClick = { () =>  {
+                  this.setState({ showErrorMessageModal : false })
+                  this.navigate()
+                }
+              }
+                />
+            </center>
+          </Modal>
+        }
         {
           showNoticeModal &&
           <NoticeModal
