@@ -110,6 +110,9 @@ class CarLeaseNewFormComponent extends Component {
       carBrand,
       makeYear,
       primaryColor,
+      solRC,
+      solRCDefault,
+      cmUnit,
       secondaryColor,
       showQuotation,
       showFileUpload,
@@ -117,7 +120,9 @@ class CarLeaseNewFormComponent extends Component {
       onCarModelValidateFunc,
       onValidateyearFunc,
       onValidatePrimaryColor,
-      onValidateSecondaryColor
+      onValidateSecondaryColor,
+      onValidateSolRC,
+      onShowEnterSolRCModalFunc
     }=this.props
 
       const styles={
@@ -152,15 +157,15 @@ class CarLeaseNewFormComponent extends Component {
               <GenericInput
                 placeholder = { 'Model' }
                 errorMessage = { '' }
-                text = { 'Brands' }
+                text = { 'Model' }
                 onChange = { (e) => onCarModelValidateFunc(e.target.value) }
                 value = { carModel }
                 />
               <GenericInput
                 value = { makeYear }
                 hint = { '(e.g) 2001... 2017, 2018' }
-                onChange = { (e) => onValidateyearFunc(e.target.value) }
                 maxLength = { 4 }
+                onChange = { (e) => onValidateyearFunc(e.target.value) }
                 text = { 'Year' }
                 errorMessage = { '' }
                 />
@@ -181,11 +186,17 @@ class CarLeaseNewFormComponent extends Component {
                 text = { 'Secondary Color' }
               />
               <GenericInput
-                value = { solRC }
-                onChange = { (e) => onValidateSolRC(e.target.value)  }
+                value = { solRC ? solRC : solRCDefault }
+                onClick = { () => onShowEnterSolRCModalFunc() }
                 maxLength = { 20 }
+                onClick = { () => onShowEnterSolRCModalFunc }
                 errorMessage = { '' }
                 text = { 'Sol RC' }
+              />
+              <GenericInput
+                value = { cmUnit }
+                readOnly
+                text = { 'CM Unit' }
               />
               {
                 showFileUpload &&
@@ -193,7 +204,7 @@ class CarLeaseNewFormComponent extends Component {
                   <h4>
                     Dealer Quotation Attachment
                   </h4>
-                  <div className={ 'optical-body' }>
+                  <div>
                    <FileUploader
                       onChange = { this.handleImageChange }
                       placeholder = { 'File Attachments' }
@@ -233,6 +244,9 @@ CarLeaseNewFormComponent.propTypes = {
   setSelectedNavigation: PropTypes.func,
   history: PropTypes.object,
   carBrand: PropTypes.string,
+  solRC: PropTypes.string,
+  solRCDefault: PropTypes.string,
+  cmUnit: PropTypes.string,
   carModel: PropTypes.string,
   primaryColor: PropTypes.string,
   secondaryColor: PropTypes.string,
@@ -243,6 +257,8 @@ CarLeaseNewFormComponent.propTypes = {
   onValidateyearFunc: PropTypes.func,
   onValidatePrimaryColor: PropTypes.func,
   onValidateSecondaryColor: PropTypes.func,
+  onValidateSolRC: PropTypes.func,
+  onShowEnterSolRCModalFunc: PropTypes.func,
 }
 
 export default CarLeaseNewFormComponent
