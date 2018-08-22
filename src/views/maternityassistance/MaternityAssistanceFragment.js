@@ -145,6 +145,10 @@ class MaternityAssistanceFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/medical')
   }
 
+  confirmationMat1Response (showConfirmationModal, respMat1Confirmation) {
+    this.setState({ showConfirmationModal, respMat1Confirmation })
+  }
+
   showTypeOfDeliveryModal (showTypeOfDeliveryModalResp) {
     this.setState({ showTypeOfDeliveryModalResp })
   }
@@ -351,7 +355,9 @@ class MaternityAssistanceFragment extends BaseMVPView {
       this.setState({ subdivisionErrorMessage : 'Subdivision field is required' })
     } else if (!this.validateRequired(barangayText)) {
       this.setState({ barangayErrorMessage : 'Barangay field is required' })
-    } else if (!this.validateRequired(provinceText)) {
+    } else if (!this.validateRequired(cityText)) {
+      this.setState({ cityErrorMessage : 'Barangay field is required' })
+    }  else if (!this.validateRequired(provinceText)) {
       this.setState({ provinceErrorMessage : 'Province field is required' })
     } else if (!this.validateRequired(zipCodeText)) {
       this.setState({ zipCodeErrorMessage : 'Zip Code field is required' })
