@@ -36,7 +36,27 @@
 }
 
 .loans-cards-1 {
-  background-image: url('../../../../../images/icons/LOANS.png');
+  background-image: url('../../../../../images/outstandingloans/Emergency Loan.png');
+}
+
+.loans-cards-2 {
+  background-image: url('../../../../../images/outstandingloans/Computer Loan.png');
+}
+
+.loans-cards-3 {
+  background-image: url('../../../../../images/outstandingloans/Housing Assistance Loan.png');
+}
+
+.loans-cards-4 {
+  background-image: url('../../../../../images/outstandingloans/Housing Assistance Loan.png');
+}
+
+.loans-cards-5 {
+  background-image: url('../../../../../images/outstandingloans/Motorcycle Loan.png');
+}
+
+.loans-cards-6 {
+  background-image: url('../../../../../images/outstandingloans/Salary Loan.png');
 }
 
 .loans-card {
