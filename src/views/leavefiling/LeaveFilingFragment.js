@@ -18,10 +18,26 @@ import './styles/leaveFilingStyle.css'
 class LeaveFilingFragment extends BaseMVPView {
   constructor (props) {
     super (props)
+    this.state = {
+      feedbackTextareaValue: '',
+      feedbackTextareaValueRemarks: '',
+    }
+  }
+
+  getTextareaValue (e) {
+    this.setState({ feedbackTextareaValue:  e })
+  }
+  getTextareaValueRemarks (e) {
+    this.setState({ feedbackTextareaValueRemarks: e })
   }
 
   render () {
     const { navigateBenefits } = this.props
+    const {
+      feedbackTextareaValue,
+      feedbackTextareaValueRemarks
+    } = this.props
+
     return (
       <div className={ 'brv-container' }>
         { super.render() }
@@ -60,6 +76,12 @@ class LeaveFilingFragment extends BaseMVPView {
                 className = { 'feedback-textarea' }
                 placeholder = { 'Enter Feedback' }
                 value = { feedbackTextareaValue ? feedbackTextareaValue : '' }
+              />
+              <textarea
+                onChange = { e => this.getTextareaValue(e.target.value) }
+                className = { 'feedback-textarea' }
+                placeholder = { 'Enter Feedback' }
+                value = { feedbackTextareaValueRemarks ? feedbackTextareaValueRemarks : '' }
               />
             </div>
             <div className = { 'text-align-right' }>
