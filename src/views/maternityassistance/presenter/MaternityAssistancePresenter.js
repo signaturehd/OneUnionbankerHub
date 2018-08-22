@@ -84,8 +84,7 @@ export default class MaternityAssistancePresenter {
         this.view.hideCircularLoader()
         this.view.noticeOfUndertaking(data)
       }, errors => {
-        this.view.hideCircularLoader()
-        this.view.showErrorMessage(true, errors)
+        this.view.navigate()
       }
     )
   }
@@ -127,8 +126,7 @@ export default class MaternityAssistancePresenter {
         this.view.confirmationMat1Response(true)
         this.view.showConfirmationModal(data.message)
       },  errors => {
-          this.view.hideCircularLoader()
-          this.view.showErrorMessage(true, errors)
+          this.view.navigate()
         }
       )
     }

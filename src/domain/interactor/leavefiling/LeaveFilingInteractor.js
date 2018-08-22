@@ -3,7 +3,7 @@ export default class LeaveFilingInteractor {
     this.client = client
   }
 
-  execute (addLeaveFilingParam) {
-    return this.client.addLeaveFilling(this.client.getToken(), addLeaveFilingParam)
+  execute (leaveFilingParam) {
+    return this.client.addLeaveFiling(this.client.getToken(), leaveFilingParam)
   }
 }

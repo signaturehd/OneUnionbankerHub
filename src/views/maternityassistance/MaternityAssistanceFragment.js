@@ -89,8 +89,6 @@ class MaternityAssistanceFragment extends BaseMVPView {
         noMiscarriageText : '',
         noMiscarriageErrorMessage: '',
         noMiscarriageFunc: '',
-        showErrorMesageModal: false,
-        showErrorMessageValidate: '',
     }
   }
 
@@ -127,8 +125,8 @@ class MaternityAssistanceFragment extends BaseMVPView {
     this.setState({ typeOfDeliveryData })
   }
 
-  showErrorMessage (showErrorMesageModal, showErrorMessageValidate) {
-    this.setState({ showErrorMesageModal, showErrorMessageValidate })
+  showErrorMessage (showErrorMessageModal, showErrorMessageValidate) {
+    this.setState({ showErrorMessageModal, showErrorMessageValidate })
   }
 
   navigate () {
@@ -438,7 +436,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
       noDeliveryFunc,
       noMiscarriageText,
       noMiscarriageErrorMessage,
-      noMiscarriageFunc
+      noMiscarriageFunc,
     } = this.state
 
     const {
@@ -460,23 +458,6 @@ class MaternityAssistanceFragment extends BaseMVPView {
                   this.setState({ showConfirmationModal : false })
                   this.navigate()
                 }}
-                />
-            </center>
-          </Modal>
-        }
-        {
-          showErrorMessageModal &&
-          <Modal>
-            <center>
-              <h2>{ showErrorMessageValue.message }</h2>
-              <br/>
-              <GenericButton
-                text = { 'Ok' }
-                onClick = { () =>  {
-                  this.setState({ showErrorMessageModal : false })
-                  this.navigate()
-                }
-              }
                 />
             </center>
           </Modal>

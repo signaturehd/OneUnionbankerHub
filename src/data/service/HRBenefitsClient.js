@@ -762,8 +762,8 @@ export default class HRBenefitsClient {
   }
 
   /* Leave Filing  */
-  addLeaveFilling (token, leaveFilingParam) {
-    return this.service.addLeaveFilling(token, leaveFilingParam)
+  addLeaveFiling (token, leaveFilingParam) {
+    return this.service.addLeaveFiling(token, leaveFilingParam)
       .pipe(ServiceErrorOperator())
   }
 }

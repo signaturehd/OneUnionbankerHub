@@ -62,8 +62,6 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         dateErrorMessage: '',
         orNumberErrorMessage: '',
         amountErrorMessage : '',
-        showErrorMessageModal: false,
-        showErrorMessageValidate: ''
     }
   }
 
@@ -260,8 +258,6 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       titleChange,
       limit,
       updateTotalAmount,
-      showErrorMessageModal,
-      showErrorMessageValidate
     } = this.state
 
     const {

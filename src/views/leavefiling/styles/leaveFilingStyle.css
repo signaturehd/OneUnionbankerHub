@@ -1,10 +1,23 @@
 
 /* Bereavement leave */
 .bereavement-leave-card {
-  padding: 20px;
+  background-color: transparent;
+  border-radius: 0px;
+  box-shadow: none;
 }
 
 .bereavement-leave-submit:hover {
   background-color: #ff8a00;
   color: #fff;
+}
+
+.leave-filing-reason {
+  text-align: right;
+  margin: 0px;
+  font-size: 10px;
+  color: red;
+}
+
+.leave-filing-submit {
+  width: 100%;
 }

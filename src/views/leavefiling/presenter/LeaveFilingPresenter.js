@@ -24,11 +24,11 @@ export default class LeaveFilingPresenter {
 
     this.view.showCircularLoader()
     this.leaveFilingInteractor.execute(
-      type,
+    addLeaveFilingParam(type,
       dateFrom,
       dateTo,
       reason,
-      remarks
+      remarks)
     )
     .subscribe(data => {
       this.view.showSuccessResponse(data)

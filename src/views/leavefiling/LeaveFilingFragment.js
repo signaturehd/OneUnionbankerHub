@@ -10,23 +10,33 @@ import {
   Card,
   GenericButton,
   DatePicker,
-  CircularLoader
+  CircularLoader,
+  Modal
 } from '../../ub-components/'
 
+import {
+  RequiredValidation
+} from '../../utils/validate/'
+
+import * as LeaveFilingFunctions from './functions/LeaveFilingFunctions'
+
+import moment from 'moment'
 import './styles/leaveFilingStyle.css'
 
 class LeaveFilingFragment extends BaseMVPView {
   constructor (props) {
     super (props)
     this.state = {
-      feedbackTextareaValue: '',
       feedbackTextareaValueRemarks: '',
-      enabledLoader : false
+      enabledLoader : false,
+      showSuccessModal : false,
+      showEditMode : false,
+      successMessage: '',
+      dateTo: '',
+      dateFrom: '',
+      errorMessageRemarks : '',
+      errorMessageRemarksDateFrom : '',
     }
-  }
-
-  getTextareaValue (e) {
-    this.setState({ feedbackTextareaValue:  e })
   }
   getTextareaValueRemarks (e) {
     this.setState({ feedbackTextareaValueRemarks: e })
@@ -40,18 +50,98 @@ class LeaveFilingFragment extends BaseMVPView {
     this.setState({ enabledLoader : false })
   }
 
-  render () {
-    const { navigateBenefits } = this.props
+  showSuccessResponse (successMessage) {
+    this.setState({ successMessage, showSuccessModal : true })
+  }
+
+  checkedFromDate (e) {
+    this.setState({ dateFrom : e })
+  }
+
+  checkedToDate (e) {
+    this.setState({ dateTo : e })
+  }
+
+  submitLeaveFiling () {
+    const {
+      feedbackTextareaValueRemarks,
+      dateFrom,
+      dateTo,
+    } = this.state
+
+    if(!new RequiredValidation().isValid(dateFrom)) {
+      this.setState({ errorMessageRemarksDateFrom : 'Date is Required' })
+    } else if(!new RequiredValidation().isValid(dateTo)) {
+      this.setState({ errorMessageRemarksDateTo : 'Date is required' })
+    } else if(!new RequiredValidation().isValid(feedbackTextareaValueRemarks)) {
+      this.setState({ errorMessageRemarks : 'Remarks is required' })
+    } else {
+      this.setState({ showEditMode : true })
+    }
+  }
+
+  submitForm () {
     const {
       feedbackTextareaValue,
       feedbackTextareaValueRemarks,
-      enabledLoader
+      dateFrom,
+      dateTo,
+    } = this.state
+
+    const {
+      benefitsCodeType
+    } = this.props
+    let dateTimeFrom = moment(dateFrom).format('MM/DD/YYYY') + ' 08:30:00 AM'
+    let dateTimeTo = moment(dateTo).format('MM/DD/YYYY') + ' 05:30:00 PM'
+    this.presenter.addLeaveFiling(
+      LeaveFilingFunctions.checkedReasonForLeave(benefitsCodeType),
+      dateTimeFrom,
+      dateTimeTo,
+      feedbackTextareaValue,
+      feedbackTextareaValueRemarks,
+    )
+  }
+
+  render () {
+    console.log(benefitsCodeType)
+    const {
+      benefitsCodeType,
+      navigateBenefits
+    } = this.props
+
+    const {
+      showEditMode,
+      feedbackTextareaValueRemarks,
+      enabledLoader,
+      successMessage,
+      dateFrom,
+      dateTo,
+      showSuccessModal,
+      errorMessageRemarks,
+      errorMessageRemarksDateFrom,
+      errorMessageRemarksDateTo
     } = this.state
 
     return (
       <div className={ 'brv-container' }>
         { super.render() }
         <div className={ 'brv-grid-column-2' }>
+          {
+            showSuccessModal &&
+            <Modal>
+              <center>
+                <h2>{ successMessage.message }</h2>
+                <br/>
+                <GenericButton
+                  onClick = { () => {
+                    this.setState({ showSuccessModal : false })
+                    navigateBenefits
+                    }
+                  }
+                  text = { 'Ok' }/>
+              </center>
+            </Modal>
+          }
           <div></div>
           <div>
             {
@@ -67,47 +157,78 @@ class LeaveFilingFragment extends BaseMVPView {
                   <div>
                     <DatePicker
                       readOnly
-                      text = { 'From Date' }/>
+                      minDate = { moment() }
+                      selected = { dateFrom ? moment(dateFrom) : '' }
+                      text = { 'From Date' }
+                      onChange = { (e) => this.checkedFromDate(e) }
+                      disabled = { showEditMode }
+                      errorMessage = { dateFrom ? '' : errorMessageRemarksDateFrom }
+                      />
                   </div>
                   <div>
                     <div></div>
                     <DatePicker
                       readOnly
+                      minDate = { moment(dateFrom) }
+                      disabled = { showEditMode }
+                      onChange = { (e) => this.checkedToDate(e) }
+                      errorMessage = { dateTo ? '' : errorMessageRemarksDateTo }
+                      selected = { dateTo ? moment(dateTo) : '' }
                       text = { 'To Date' }/>
                   </div>
                 </div>
                 <div className = { 'grid-global' }>
                   <div>
                     <GenericInput
+                      disabled = { showEditMode }
                       text = { 'From Time' }/>
                   </div>
                   <div>
                     <div></div>
                     <GenericInput
+                      disabled = { showEditMode }
                       text = { 'To Time' }/>
                   </div>
                 </div>
                 <div>
-                  <textarea
-                    onChange = { (e) => this.getTextareaValue(e.target.value) }
-                    className = { 'feedback-textarea' }
-                    placeholder = { 'Enter Feedback' }
-                    value = { feedbackTextareaValue ? feedbackTextareaValue : '' }
+                  <GenericInput
+                    text = { 'Reason for Leave' }
+                    value = { LeaveFilingFunctions.checkedReasonForLeave(benefitsCodeType) }
+                    readOnly
                   />
-                  <textarea
+                  <GenericInput
+                    disabled = { showEditMode }
+                    text = { 'Remarks' }
                     onChange = { (e) => this.getTextareaValueRemarks(e.target.value) }
-                    className = { 'feedback-textarea' }
-                    placeholder = { 'Enter Feedback' }
+                    hint = { 'Enter Remarks' }
                     value = { feedbackTextareaValueRemarks ? feedbackTextareaValueRemarks : '' }
+                    errorMessage = { feedbackTextareaValueRemarks ? '' : errorMessageRemarks }
                   />
                 </div>
-                <div className = { 'text-align-right' }>
-                  <GenericButton
-                    className = { 'bereavement-leave-submit' }
-                    text = { 'Submit' }
-                    onClick = { () => navigateBenefits() }
-                    />
-                </div>
+                <br/>
+              <div>
+                {
+                  showEditMode ?
+                  <div className = { 'grid-global' }>
+                    <GenericButton
+                      text = { 'Edit' }
+                      onClick = { () => this.setState({ showEditMode : false }) }
+                      />
+                    <GenericButton
+                      text = { 'Submit' }
+                      onClick = { () => this.submitForm() }
+                      />
+                  </div>
+                  :
+                  <div className = { 'text-align-right' }>
+                    <GenericButton
+                      className = { 'leave-filing-submit' }
+                      text = { 'Continue' }
+                      onClick = { () => this.submitLeaveFiling() }
+                      />
+                  </div>
+                }
+              </div>
               </Card>
               }
             </div>
@@ -119,6 +240,7 @@ class LeaveFilingFragment extends BaseMVPView {
 }
 
 LeaveFilingFragment.propTypes = {
+  benefitsCodeType : PropTypes.string,
 }
 
 export default ConnectView(LeaveFilingFragment, Presenter)

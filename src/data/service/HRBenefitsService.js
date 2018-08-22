@@ -943,7 +943,7 @@ export default class HRBenefitsService {
   }
 
   /* Leave Filing  */
-  addLeaveFilling (token, leaveFilingParam) {
+  addLeaveFiling (token, leaveFilingParam) {
     const objectLeaveFiling = {
       type : leaveFilingParam.type,
       dateFrom : leaveFilingParam.dateFrom,
@@ -951,7 +951,7 @@ export default class HRBenefitsService {
       reason: leaveFilingParam.reason,
       remarks : leaveFilingParam.remarks
     }
-    return this.apiClient.get('v1/leave', objectLeaveFiling, {
+    return this.apiClient.post('v1/leaves', objectLeaveFiling, {
       headers : { token }
     })
   }
