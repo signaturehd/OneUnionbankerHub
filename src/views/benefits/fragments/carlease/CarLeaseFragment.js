@@ -54,20 +54,20 @@ class CarLeaseFragment extends Component {
                   key={ idx }
                   onClick = { () => history.push(value.path) }
                   >
-                  <div className = { 'car-column-grid' }>
-                    <div
-                      className={ value.styleName}
-                      text={ value.title }
-                      onClick={ () => history.push(value.path) } >
-                      <p className={ 'benefits-option-cards' }>
-                        { value.title }
-                      </p>
-                      <h2 className = { 'font-size-14px' }> Lorem ipsum dolor </h2>
-                    </div>
+                    <div className = { 'car-column-grid' }>
+                      <div
+                        className={ value.styleName}
+                        text={ value.title }
+                        onClick={ () => history.push(value.path) }/>
+                        <p className={ 'car-option-cards font-weight-bold font-size-15px' }>
+                          { value.title }
+                        </p>
+                        <h2 className = { 'font-size-12px' }> Lorem ipsum dolor </h2>
+                      </div>
                   </Card>
-                  ))
-                }
-              </div>
+                  )
+                )
+              }
             </div>
           </div>
         </div>
