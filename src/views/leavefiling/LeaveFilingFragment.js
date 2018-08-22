@@ -54,6 +54,11 @@ class LeaveFilingFragment extends BaseMVPView {
                   text = { 'To Time' }/>
               </div>
             </div>
+            <div>
+              <textarea
+                
+                />
+            </div>
             <div className = { 'text-align-right' }>
               <GenericButton
                 className = { 'bereavement-leave-submit' }
