@@ -10,7 +10,7 @@ import {
   Card,
   GenericButton,
   DatePicker,
-  Line
+  CircularLoader
 } from '../../ub-components/'
 
 import './styles/leaveFilingStyle.css'
@@ -21,6 +21,7 @@ class LeaveFilingFragment extends BaseMVPView {
     this.state = {
       feedbackTextareaValue: '',
       feedbackTextareaValueRemarks: '',
+      enabledLoader : false
     }
   }
 
@@ -31,67 +32,85 @@ class LeaveFilingFragment extends BaseMVPView {
     this.setState({ feedbackTextareaValueRemarks: e })
   }
 
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
   render () {
     const { navigateBenefits } = this.props
     const {
       feedbackTextareaValue,
-      feedbackTextareaValueRemarks
-    } = this.props
+      feedbackTextareaValueRemarks,
+      enabledLoader
+    } = this.state
 
     return (
       <div className={ 'brv-container' }>
         { super.render() }
         <div className={ 'brv-grid-column-2' }>
           <div></div>
-          <Card className = { 'bereavement-leave-card' }>
-            <h2 className = { 'tex-align-center' }>Leave Filing</h2>
-            <br/>
-            <div className = { 'grid-global' }>
-              <div>
-                <DatePicker
-                  readOnly
-                  text = { 'From Date' }/>
-              </div>
-              <div>
-                <div></div>
-                <DatePicker
-                  readOnly
-                  text = { 'To Date' }/>
-              </div>
+          <div>
+            {
+              enabledLoader ?
+              <center className = { 'circular-loader-center' }>
+                <CircularLoader show = { true }/>
+              </center>
+              :
+              <Card className = { 'bereavement-leave-card' }>
+                <h2 className = { 'tex-align-center' }>Leave Filing</h2>
+                <br/>
+                <div className = { 'grid-global' }>
+                  <div>
+                    <DatePicker
+                      readOnly
+                      text = { 'From Date' }/>
+                  </div>
+                  <div>
+                    <div></div>
+                    <DatePicker
+                      readOnly
+                      text = { 'To Date' }/>
+                  </div>
+                </div>
+                <div className = { 'grid-global' }>
+                  <div>
+                    <GenericInput
+                      text = { 'From Time' }/>
+                  </div>
+                  <div>
+                    <div></div>
+                    <GenericInput
+                      text = { 'To Time' }/>
+                  </div>
+                </div>
+                <div>
+                  <textarea
+                    onChange = { (e) => this.getTextareaValue(e.target.value) }
+                    className = { 'feedback-textarea' }
+                    placeholder = { 'Enter Feedback' }
+                    value = { feedbackTextareaValue ? feedbackTextareaValue : '' }
+                  />
+                  <textarea
+                    onChange = { (e) => this.getTextareaValueRemarks(e.target.value) }
+                    className = { 'feedback-textarea' }
+                    placeholder = { 'Enter Feedback' }
+                    value = { feedbackTextareaValueRemarks ? feedbackTextareaValueRemarks : '' }
+                  />
+                </div>
+                <div className = { 'text-align-right' }>
+                  <GenericButton
+                    className = { 'bereavement-leave-submit' }
+                    text = { 'Submit' }
+                    onClick = { () => navigateBenefits() }
+                    />
+                </div>
+              </Card>
+              }
             </div>
-            <div className = { 'grid-global' }>
-              <div>
-                <GenericInput
-                  text = { 'From Time' }/>
-              </div>
-              <div>
-                <div></div>
-                <GenericInput
-                  text = { 'To Time' }/>
-              </div>
-            </div>
-            <div>
-              <textarea
-                onChange = { e => this.getTextareaValue(e.target.value) }
-                className = { 'feedback-textarea' }
-                placeholder = { 'Enter Feedback' }
-                value = { feedbackTextareaValue ? feedbackTextareaValue : '' }
-              />
-              <textarea
-                onChange = { e => this.getTextareaValue(e.target.value) }
-                className = { 'feedback-textarea' }
-                placeholder = { 'Enter Feedback' }
-                value = { feedbackTextareaValueRemarks ? feedbackTextareaValueRemarks : '' }
-              />
-            </div>
-            <div className = { 'text-align-right' }>
-              <GenericButton
-                className = { 'bereavement-leave-submit' }
-                text = { 'Submit' }
-                onClick = { () => navigateBenefits() }
-                />
-            </div>
-          </Card>
           <div></div>
         </div>
       </div>
