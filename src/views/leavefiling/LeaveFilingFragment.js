@@ -56,8 +56,11 @@ class LeaveFilingFragment extends BaseMVPView {
             </div>
             <div>
               <textarea
-                
-                />
+                onChange = { e => this.getTextareaValue(e.target.value) }
+                className = { 'feedback-textarea' }
+                placeholder = { 'Enter Feedback' }
+                value = { feedbackTextareaValue ? feedbackTextareaValue : '' }
+              />
             </div>
             <div className = { 'text-align-right' }>
               <GenericButton
