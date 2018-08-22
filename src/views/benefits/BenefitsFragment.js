@@ -263,8 +263,8 @@ class BenefitsFragment extends BaseMVPView {
                     className={ value.styleName }
                     text={ value.title } >
                   </div>
-                  <p className={ 'benefits-option-cards font-weight-bold' }> { value.title } </p>
-                  <h2 className = { 'font-size-14px' }> Lorem ipsum dolor </h2>
+                  <p className={ 'benefits-option-cards font-weight-bold' }>{ value.title }</p>
+                  <h2 className = { 'font-size-14px' }>Lorem ipsum dolor</h2>
                 </div>
               </Card>
             ))
@@ -287,7 +287,7 @@ class BenefitsFragment extends BaseMVPView {
     <div>
       <div>
         <div>
-          <h2 className={ 'header-margin-default text-align-left' }> My Benefits </h2>
+          <h2 className={ 'header-margin-default text-align-left' }>My Benefits</h2>
           <h2>Which benefit would you like to avail of today?</h2>
           <br/>
         </div>
