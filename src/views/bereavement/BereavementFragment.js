@@ -17,7 +17,7 @@ import store from '../../store'
 import { NotifyActions } from '../../actions'
 
 import FormComponent from  './components/BereavementFormCardComponent'
-import BereavementLeaveCardComponent from  './components/BereavementLeaveCardComponent'
+import LeaveFilingComponentFragment from  '../leavefiling/LeaveFilingFragment'
 import * as BereavementFunction from './controller/BereavementFunction'
 
 class BereavementFragment extends BaseMVPView {
@@ -406,6 +406,7 @@ class BereavementFragment extends BaseMVPView {
 
     return (
       <div>
+        { super.render() }
         {
           showBereavementLeaveModal &&
           <BereavementLeaveModal
@@ -419,7 +420,7 @@ class BereavementFragment extends BaseMVPView {
         }
         {
           showBereavementLeaveComponent ?
-          <BereavementLeaveCardComponent
+          <LeaveFilingComponentFragment
             navigateBenefits = { () => this.navigate() }
             />
           :

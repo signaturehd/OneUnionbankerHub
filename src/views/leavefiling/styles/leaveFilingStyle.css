@@ -1,0 +1,10 @@
+
+/* Bereavement leave */
+.bereavement-leave-card {
+  padding: 20px;
+}
+
+.bereavement-leave-submit:hover {
+  background-color: #ff8a00;
+  color: #fff;
+}
