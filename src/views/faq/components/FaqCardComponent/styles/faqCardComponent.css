@@ -1,11 +1,18 @@
-.faqs-container {
-  display:grid;
-  grid-column-gap: 1%;
-  grid-template-columns : repeat(250px);
-  margin-top: 20px;
+
+.faqs-body {
+}
+
+.faqs-container-content {
+  margin-bottom: 20px;
   cursor: pointer;
 }
 
-.faqs-body {
-  padding : 50px;
+
+.faqs-container-column-grid {
+  display: grid;
+  grid-template-rows: .5fr .5fr .5fr;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }

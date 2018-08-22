@@ -61,13 +61,14 @@ class FaqCategoryFragment extends Component {
          {
            !isLoading ?
               searchCategories && searchCategories.length > 0 ?
-                <div className = { 'card-container' }>
+                <div className = { 'faqs-container' }>
                   {
                     searchCategories.map((faq, i) =>
                       <FaqCardComponent
+                        subtitle = { faq.subtitle }
                         key = { i }
-                        icon = { faq.icon }
-                        title = { faq.category }
+                        icon = { faq && faq.icon }
+                        title = { faq && faq.category }
                         onClick = { () => setSelectedFaqCategory(faq) } />
                       )
                   }

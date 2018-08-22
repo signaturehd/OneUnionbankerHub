@@ -23,22 +23,22 @@ class LoansFragment extends Component {
       path: '/mybenefits/benefits/loans/emergency',
     }, {
       id: 3,
-      styleName: 'loans-cards-1 loans-option-default',
+      styleName: 'loans-cards-3 loans-option-default',
       title: 'Housing Assistance Loan',
       path: '/mybenefits/benefits/loans/housingassistance',
     }, {
       id: 1,
-      styleName: 'loans-cards-1 loans-option-default',
+      styleName: 'loans-cards-6 loans-option-default',
       title: 'Salary Loan',
       path: '/mybenefits/benefits/loans/salary',
     }, {
       id: 4,
-      styleName: 'loans-cards-1 loans-option-default',
+      styleName: 'loans-cards-2 loans-option-default',
       title: 'Computer Loan',
       path: '/mybenefits/benefits/loans/computer',
     }, {
       id: 5,
-      styleName: 'loans-cards-1 loans-option-default',
+      styleName: 'loans-cards-5 loans-option-default',
       title: 'Motorcycle Loan',
       path: '/mybenefits/benefits/loans/motorcycle',
     }]
