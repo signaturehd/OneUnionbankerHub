@@ -59,6 +59,7 @@ class EducationFragment extends Component {
                   <p className = { 'education-option-cards font-weight-bold font-size-15px' }>
                     { value.title }
                   </p>
+                  <h2 className = { 'font-size-14px' }> Lorem ipsum dolor </h2>
                 </div>
               </Card>
             ))

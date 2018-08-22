@@ -16,6 +16,7 @@ class PhenomCardComponent extends Component {
     super(props)
   }
 
+
   render () {
 
     const {
@@ -65,7 +66,7 @@ class PhenomCardComponent extends Component {
           <div></div>
           <div>
             <h2 className = { 'phenom-date-validity' }>
-             { moment(startDate).format('MMM DD') } - { moment(endDate).format('MMM DD YYYY') }
+             { moment(endDate).diff(startDate, 'weeks') } weeks remaining
             </h2>
           </div>
         </div>

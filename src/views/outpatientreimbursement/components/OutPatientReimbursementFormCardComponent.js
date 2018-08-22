@@ -93,6 +93,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
                 type = { 'text' }/>
               <DatePicker
                 selected = { preferredDate }
+                readOnly
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateFunc(e) }
                 maxDate = { moment() }
@@ -123,29 +124,41 @@ class OutPatientReimbursementFormCardComponent extends Component {
                 {
                   showProcedureInput &&
                   procedureArray.map((resp, key) =>
-                    <GenericInput
-                      hint = { 'Enter Amount' }
-                      text = { resp.name }
-                      value = { resp.amount ? resp.amount : '' }
-                      errorMessage = {
-                        resp.amount === 0  ?
-                        'Please enter an amount for the selected procedure' :
-                        ''
-                      }
-                      disabled = { showEditSubmitButton }
-                      onChange = { e =>
-                        {
-                         const updatedProcedures = [...procedureArray]
-                         updatedProcedures[key].amount = parseInt(e.target.value) || 0
-                         selectedProcedureAmountFunc(updatedProcedures)
+                    <div className = { 'outpatient-card-procedure-grid' }>
+                      <GenericInput
+                        hint = { 'Enter Amount' }
+                        text = { resp.name }
+                        value = { resp.amount ? resp.amount : '' }
+                        errorMessage = {
+                          resp.amount === 0  &&
+                          'Please enter an amount for the selected procedure'
                         }
+                        disabled = { showEditSubmitButton }
+                        onChange = { e =>
+                          {
+                           const updatedProcedures = [...procedureArray]
+                           updatedProcedures[key].amount = parseInt(e.target.value) || 0
+                           selectedProcedureAmountFunc(updatedProcedures)
+                          }
+                        }
+                        type = { 'text' } />
+                      {
+                        !showEditSubmitButton &&
+                        <img
+                          className = { 'close-button-global' }
+                          src = { require('../../../images/x-circle-global.png') }
+                          onClick = { () => {
+                            procedureArray.splice(key, 1)
+                            selectedProcedureAmountFunc(procedureArray)
+                          }}
+                        />
                       }
-                      type = { 'text' } />
-                    )
-                  }
+                    </div>
+                  )
+                }
               </div>
               {
-                attachmentsData.length !== 0  ?
+                attachmentsData.length !== 0  &&
                 <div>
                   <MultipleFileUploader
                     placeholder = { 'Form Attachments' }
@@ -158,8 +171,6 @@ class OutPatientReimbursementFormCardComponent extends Component {
                       `Please upload the required attachments`  }
                   />
                 </div>
-                :
-                <div></div>
               }
               <br/>
               <Line/>

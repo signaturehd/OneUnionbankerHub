@@ -3,15 +3,16 @@
   max-width: 100%;
 }
 
-
-.educ-form-card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+.educaid-form-card {
   max-width: 100%;
-  float: center;
   padding: 20px 5px 20px 5px;
   margin: auto;
-  text-align: center;
-  font-family: arial;
+}
+
+.educ-form-review {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
 }
 
 .educ-form-card-body {
@@ -28,7 +29,25 @@
   bottom: 0;
   height: 35px;
   margin-top: 20px;
-  width: 95%;
+  width: 100%;
+}
+
+.educ-submit:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
+}
+
+.educ-submit-form-button:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
+}
+
+.educ-edit-form:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
 }
 
 .educ-grid-column-2 {

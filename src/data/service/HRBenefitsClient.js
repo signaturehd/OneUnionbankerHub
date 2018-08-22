@@ -729,8 +729,8 @@ export default class HRBenefitsClient {
 
   /* Code of Conduct  */
 
-  getCompliancesPdf (token, page) {
-    return this.service.getCompliancesPdf(token, page)
+  getCompliancesPdf (token) {
+    return this.service.getCompliancesPdf(token)
       .pipe(ServiceErrorOperator())
   }
 
@@ -753,6 +753,11 @@ export default class HRBenefitsClient {
 
   getPhenomSelectedDiscounts (token, id) {
     return this.service.getPhenomSelectedDiscounts(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addPhenomIsHeart (token, like) {
+    return this.service.addPhenomIsHeart(token, like)
       .pipe(ServiceErrorOperator())
   }
 }

@@ -10,7 +10,6 @@ import './styles/educationComponentStyle.css'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
 
-import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
 class EducationGrantAidFormCardComponent extends Component {

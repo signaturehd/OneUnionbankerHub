@@ -12,29 +12,25 @@
 
 .education-column-grid {
   display: grid;
-  grid-template-columns: .5fr 1fr;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  padding-left: 30px;
+  grid-template-rows: .5fr .5fr .5fr;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .education-option-cards {
-  color: #fff;
-  margin-top: 5%;
-  background: rgba(0,0,0,0.5);
-  padding: 12px 0 12px 0;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  color: #1f1d1d;
+  margin: 0px;
 }
 
 .education-option-default {
-  padding: 21% 0 0 0;
-  cursor: pointer;
-  border-radius: 5px;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
+  text-align: center;
+  height: 50px;
+  margin: 0px auto;
+  width: 50px;
 }
 
 .education-card-container {

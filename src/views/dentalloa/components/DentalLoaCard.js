@@ -76,7 +76,6 @@ class DentalLoaCard extends Component {
                   readOnly
                   text = { text1 }
                   errorMessage = { recipient ? '' : recipientErrorMessage } />
-                  <br/>
                 <GenericInput
                   value = { branch ? branch : '' }
                   disabled = { showEditSubmitButton }
@@ -86,14 +85,15 @@ class DentalLoaCard extends Component {
                   onFocus = { () => onClick(false, true, false) }
                   text = { text2 }
                   errorMessage = { branch ? '' : healthwayBranchErrorMessage } />
-                  <br/>
                 <DatePicker
+                  readOnly
                   minDate = { moment() }
                   disabled = { showEditSubmitButton }
                   selected = {  preferredDate && moment() }
                   onChange = { (e) => dateFunc(e) }
+                  text = { 'Preferred Schedule' }
+                  hint = { '(eg. MM/DD/YYYY)' }
                   errorMessage = { preferredDate ? '' : dateErrorMessage }/>
-                <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
               </div>
             </div>
             <div className = { 'dentalloa-footer-left' }>

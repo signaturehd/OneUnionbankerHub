@@ -51,7 +51,6 @@ p {
   margin-bottom: 20px;
   font-size: 35px;
   text-align: center;
-  margin-left: 15px;
 }
 
 @media (max-width: 768px) {
@@ -199,6 +198,13 @@ p {
   column-gap: 2%;
 }
 
+@media (max-width: 768px) {
+  .grid-global {
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 2%;
+  }
+}
 .grid-global-rows {
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -277,4 +283,9 @@ p {
 
 .global-icons-promissoryNote {
   background-image: url('../images/icons/ic_account_balance_wallet_grey_600_36dp.png')
+}
+
+/**/
+.close-button-global {
+  margin: auto;
 }

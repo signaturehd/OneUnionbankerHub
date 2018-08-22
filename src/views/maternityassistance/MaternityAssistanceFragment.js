@@ -10,8 +10,8 @@ import {
   SingleInputModal,
   MultipleInputModal,
   Line,
-  Modal,
-  GenericButton
+  GenericButton,
+  Modal
 } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
@@ -88,21 +88,15 @@ class MaternityAssistanceFragment extends BaseMVPView {
         noDeliveryFunc : '',
         noMiscarriageText : '',
         noMiscarriageErrorMessage: '',
-        noMiscarriageFunc: ''
+        noMiscarriageFunc: '',
+        showErrorMesageModal: false,
+        showErrorMessageValidate: '',
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateMaternityAssistance()
-  }
-
-  confirmationMat1Response (resp) {
-    this.setState({ showConfirmationModal : resp })
-  }
-
-  showConfirmationModal (respMat1Confirmation) {
-    this.setState({ respMat1Confirmation })
   }
 
   noticeOfUndertaking (noticeResponse) {
@@ -131,6 +125,10 @@ class MaternityAssistanceFragment extends BaseMVPView {
 
   showTypeOfDeliveryMap (typeOfDeliveryData) {
     this.setState({ typeOfDeliveryData })
+  }
+
+  showErrorMessage (showErrorMesageModal, showErrorMessageValidate) {
+    this.setState({ showErrorMesageModal, showErrorMessageValidate })
   }
 
   navigate () {
@@ -179,12 +177,12 @@ class MaternityAssistanceFragment extends BaseMVPView {
   }
 
   validateRequiredRoomNumber (e) {
-    const validate = MaternityAssistanceFunction.checkedValidateSymbol(e)
+    const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
     this.setState({ roomNumberText : validate, roomNumberErrorMessage : '' })
   }
 
   validateRequiredHouseNumber (e) {
-    const validate = MaternityAssistanceFunction.checkedValidateSymbol(e)
+    const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
     this.setState({ houseNumberText : validate, houseNumberErrorMessage : '' })
   }
 
@@ -275,6 +273,28 @@ class MaternityAssistanceFragment extends BaseMVPView {
       this.setState({ dateErrorMessage : 'Please provide the Official Receipt Date' })
     } else if (!this.validateRequired(orNumberText)) {
       this.setState({ orNumberErrorMessage : 'Please provide the Official Receipt Number' })
+    } else {
+      this.setState({
+        showEditSubmitButton: true,
+        titleChange: false,
+      })
+    }
+  }
+
+  showFormReviewFieldDisabledOR () {
+    const {
+      typeDeliveryName,
+      deliveryDate,
+      amount,
+      attachmentArray
+    } = this.state
+
+    if(!this.validateRequired(typeDeliveryName)){
+      this.setState({ typeOfDeliveryErrorMessage : 'Please provide the type of delivery' })
+    } else if (!this.validateRequired(deliveryDate)) {
+      this.setState({ dateOfDeliveryErrorMessage : 'Please provide the date of delivery' })
+    } else if (!this.validateRequired(amount)) {
+      this.setState({ amountErrorMessage : 'Please enter an amount' })
     } else {
       this.setState({
         showEditSubmitButton: true,
@@ -445,6 +465,23 @@ class MaternityAssistanceFragment extends BaseMVPView {
           </Modal>
         }
         {
+          showErrorMessageModal &&
+          <Modal>
+            <center>
+              <h2>{ showErrorMessageValue.message }</h2>
+              <br/>
+              <GenericButton
+                text = { 'Ok' }
+                onClick = { () =>  {
+                  this.setState({ showErrorMessageModal : false })
+                  this.navigate()
+                }
+              }
+                />
+            </center>
+          </Modal>
+        }
+        {
           showNoticeModal &&
           <NoticeModal
             onClose={ () => this.setState({ showNoticeModal : false })}
@@ -526,6 +563,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
                 oRNumberFunc = { (resp) => this.validateSymbol(resp) }
                 dateFunc = { (resp) => this.validateDate(resp) }
                 showFormReview = { () => this.showFormReviewFieldDisabled() }
+                showFormReviewDisabledORFunc = { () => this.showFormReviewFieldDisabledOR() }
                 setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
                 onSubmitFunc = { () => this.submitForm() }
                 editFormDataFunc = { () => this.editFormReview() }

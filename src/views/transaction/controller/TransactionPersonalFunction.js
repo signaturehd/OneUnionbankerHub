@@ -196,3 +196,29 @@ import { format } from '../../../utils/numberUtils'
       return 'not transaction'
     }
   }
+
+  /* Maternity Assistance */
+
+  export function checkedType (details) {
+    return details && details.MaternityAssistanceDetails.DeliveryType ?
+    details.MaternityAssistanceDetails.DeliveryType :
+    '(Not Yet Provided)'
+  }
+
+export function checkedAmount (details) {
+  return details && details.MaternityAssistanceDetails.Amount ?
+  format(details.MaternityAssistanceDetails.Amount) :
+  '(Not Yet Provided)'
+}
+
+export function checkedDeliveryDate (details) {
+  return details && details.MaternityAssistanceDetails.DeliveryDate ?
+  moment(details.MaternityAssistanceDetails.DeliveryDate).format('MMM DD, YYYY') :
+  '(Not Yet Provided)'
+}
+
+export function checkedRecipient (details) {
+  return details && details.MaternityAssistanceDetails.Recipient ?
+  details.MaternityAssistanceDetails.Recipient :
+  '(Not Yet Provided)'
+}

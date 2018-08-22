@@ -1,0 +1,117 @@
+.staff-account-container {
+  max-height: 90%;
+}
+
+.modal-description {
+  font-size: 13px;
+  font-weight: normal;
+  margin-top: 5px;
+}
+
+.staff-account-body {
+  overflow: auto;
+  width: 100%;
+}
+
+/* css for staff cards, temporary */
+
+.staff-account-card {
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  background-image: url('../../../../images/ub_card_bg.png');
+  background-size: cover;
+  margin-bottom: 20px;
+}
+
+.staff-account-card-details {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  column-gap: 2%;
+}
+
+.staff-account-grid-2 {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 2%;
+}
+
+.staff-account-card-title {
+  font-size: 20px;
+  color: white;
+}
+
+.staff-account-card-description {
+  font-size: 14px;
+  color: white;
+}
+
+.staff-account-card-number {
+  font-size: 16px;
+  color: white;
+}
+
+.staff-account-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.staff-account-card-icon-money {
+  background: url('../../../../images/icons/money-bag.png') #fff;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.staff-account-card-icon-savings {
+  background: url('../../../../images/icons/piggy-bank.png') #fff;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.staff-account-card-icon-card {
+  background: url('../../../../images/icons/credit-card.png') #fff;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+
+.confirmed-button {
+  font-size: 12px;
+  color: white;
+  height: 32px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  background-color: #27AE61;
+}
+
+.not-confirmed-button {
+  font-size: 12px;
+  color: white;
+  height: 32px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  background-color: #E14938;
+}
+
+.not-confirmed-button:hover {
+  background-color: #B8312F;
+}
+
+.back-color-orange {
+  background-color: #ff8a00;
+}
+
+.back-color-blue {
+  background-color: #2C82C9;
+}
+
+.back-color-black {
+  background-color: #28324E;
+}
+
+.back-color-violet {
+  background-color: #553982;
+}
