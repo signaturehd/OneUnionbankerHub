@@ -61,7 +61,7 @@ export default class MedicalSchedulingPresenter {
           this.view.setProcedures(procedures)
           this.view.hideCircularLoader()
         } , error => {
-          this.view.navigate()
+          this.view.showErrorMessage(true, error)
         }
       )
     }
@@ -86,7 +86,7 @@ export default class MedicalSchedulingPresenter {
           errors => {
             this.view.hideCircularLoader()
             this.view.noticeResponse(errors)
-            this.view.navigate()
+            this.view.showErrorMessage(true, error)
           }
         )
       }

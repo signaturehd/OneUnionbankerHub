@@ -9,6 +9,8 @@ import {
   CircularLoader,
   SingleInputModal,
   MultipleInputModal,
+  Modal,
+  GenericButton
 } from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
@@ -60,6 +62,8 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         dateErrorMessage: '',
         orNumberErrorMessage: '',
         amountErrorMessage : '',
+        showErrorMessageModal: false,
+        showErrorMessageValidate: ''
     }
   }
 
@@ -96,6 +100,10 @@ class OutPatientReimbursementFragment extends BaseMVPView {
     this.setState({ attachmentsData })
   }
 
+  showErrorMessage (showErrorMessageModal, showErrorMessageValidate) {
+    this.setState({ showErrorMessageModal, showErrorMessageValidate })
+  }
+
   navigate () {
     this.props.history.push('/mybenefits/benefits/medical')
   }
@@ -121,8 +129,8 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       return resp.amount
     })
     const totalAmount = newValueArray.reduce((a, b) => a + b, 0)
-    const validate = MaternityAssistanceFunction.checkedAmount(totalAmount)
-    if(parseInt(totalAmount) >= parseInt(limit)) {
+    const validate = OutPatientReimbursementFunction.checkedAmount(totalAmount)
+    if(parseInt(totalAmount) > parseInt(limit)) {
       this.setState({
         errorMessageRequiredProcedure : `The amount you entered must not exceed to ${ limit }`
       })
@@ -251,7 +259,9 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       showEditSubmitButton,
       titleChange,
       limit,
-      updateTotalAmount
+      updateTotalAmount,
+      showErrorMessageModal,
+      showErrorMessageValidate
     } = this.state
 
     const {
@@ -261,6 +271,23 @@ class OutPatientReimbursementFragment extends BaseMVPView {
 
     return (
       <div>
+        {
+          showErrorMessageModal &&
+          <Modal>
+            <center>
+              <h2>{ showErrorMessageValue.message }</h2>
+              <br/>
+              <GenericButton
+                text = { 'Ok' }
+                onClick = { () =>  {
+                  this.setState({ showErrorMessageModal : false })
+                  this.navigate()
+                }
+              }
+                />
+            </center>
+          </Modal>
+        }
         {
           showNoticeModal &&
           <NoticeModal

@@ -135,6 +135,13 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 disabled = { showEditSubmitButton }
                 errorMessage = { barangayErrorMessage }
                 type = { 'text' }/>
+              <GenericInput
+                value = { cityText }
+                onChange = { e => cityFunc(e.target.value) }
+                text = { 'City/Municipality' }
+                disabled = { showEditSubmitButton }
+                errorMessage = { cityErrorMessage }
+                type = { 'text' }/>
               <div className = { 'maternity-grid-location' }>
                 <div>
                   <GenericInput
@@ -147,21 +154,12 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 </div>
                 <div>
                   <GenericInput
-                    value = { cityText }
-                    onChange = { e => cityFunc(e.target.value) }
-                    text = { 'City/Municipality' }
-                    disabled = { showEditSubmitButton }
-                    errorMessage = { cityErrorMessage }
-                    type = { 'text' }/>
-                </div>
-                <div>
-                  <GenericInput
                     value = { zipCodeText }
                     onChange = { e => zipCodeFunc(e.target.value) }
                     text = { 'Zip Code' }
                     disabled = { showEditSubmitButton }
                     errorMessage = { zipCodeErrorMessage }
-                    maxLength = { 12 }
+                    maxLength = { 4 }
                     type = { 'text' }/>
                 </div>
               </div>
@@ -216,6 +214,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateOfDelivertFunc(e) }
                 minDate = { moment() }
+                readOnly
                 text = { 'Expected Date of Delivery' }
                 errorMessage = { dateOfDeliveryErrorMessage }
                 />
