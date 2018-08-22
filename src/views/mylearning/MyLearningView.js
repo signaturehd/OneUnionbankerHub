@@ -45,7 +45,10 @@ class MyLearningView extends BaseMVPView {
     }]
     const MyLearning = () => (
       <div className = { 'mylearning-container' }>
-        <h2 className = { 'header-margin-default ' }>MY LEARNING</h2>
+        <div>
+          <h2 className={ 'header-margin-default text-align-left' }> My Learning </h2>
+          <h2> How would you want to develop yourself today? </h2>
+        </div>
         {
           showAccountNumberModal &&
             <InputModal

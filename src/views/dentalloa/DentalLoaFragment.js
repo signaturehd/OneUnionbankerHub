@@ -10,7 +10,7 @@ import DentalLoaProcedureModal from './modal/DentalLoaProcedureModal'
 import Notice from '../notice/Notice'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 import ResponseModal from '../notice/NoticeResponseModal'
-import { CircularLoader, Modal } from '../../ub-components/'
+import { CircularLoader, Modal, GenericButton } from '../../ub-components/'
 import './styles/dentalloa.css'
 
 import { RequiredValidation, Validator, MoneyValidation } from '../../utils/validate'
@@ -48,7 +48,9 @@ class DentalLoaView extends BaseMVPView {
       branch : null, /* Get Branch List*/
       date : null,
       noticeResponse: [],
-      selectedProcedures : [] /* Selected Procedures */
+      selectedProcedures : [], /* Selected Procedures */
+      showErrorMessageValidate: '',
+      showErrorMessageModal : false
     }
     this.getDentalLoa = this.getDentalLoa.bind(this)
     this.dateFunc = this.dateFunc.bind(this)
@@ -146,6 +148,12 @@ class DentalLoaView extends BaseMVPView {
       this.props.history.push('/mybenefits/benefits/medical')
   }
 
+  showErrorMessage (showErrorMessageValidate, showErrorMessageModal) {
+    console.log(showErrorMessageValidate)
+    this.setState({ showErrorMessageValidate, showErrorMessageModal })
+  }
+
+
   render () {
     const { details, chosenBranch, chosenDependent, onClose } = this.props
 
@@ -175,11 +183,30 @@ class DentalLoaView extends BaseMVPView {
       preferredDate,
       noticeResponse,
       selectedProcedures,
-      titleChange
+      titleChange,
+      showErrorMessageModal,
+      showErrorMessageValidate
     } = this.state
 
     return (
       <div  className = { 'benefits-container' }>
+        {
+        showErrorMessageModal &&
+        <Modal>
+          <center>
+            <h2>{ showErrorMessageValidate.message }</h2>
+            <br/>
+            <GenericButton
+              text = { 'Ok' }
+              onClick = { () => {
+                this.setState({ showErrorMessageModal : false })
+                this.navigate()
+              }
+            }
+              />
+          </center>
+        </Modal>
+        }
         {
           showNoticeResponseModal &&
           <Notice

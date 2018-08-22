@@ -20,7 +20,7 @@ export default class PhenomPresenter {
       this.view.showCircularLoader(false)
       this.view.showPhenomDiscountList(data)
     }, error => {
-      this.showCircularLoader(false)
+      this.view.showCircularLoader(false)
     })
   }
 

@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/MedicalSchedulingPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
-import { CircularLoader, SingleInputModal } from '../../ub-components/'
+import {
+  CircularLoader,
+  SingleInputModal,
+  GenericButton,
+  Modal
+} from '../../ub-components/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
@@ -33,6 +38,8 @@ class MedicalSchedulingFragment extends BaseMVPView {
       preferredDate : '',
       index : 4,
       viewMoreText : 'View more',
+      showErrorMessageModal : false,
+      showErrorMessageValidate: ''
     }
   }
 
@@ -66,6 +73,10 @@ class MedicalSchedulingFragment extends BaseMVPView {
 
   noticeResponse (noticeResponse) {
     this.setState({showConfirmation: false, noticeResponse })
+  }
+
+  showErrorMessage (showErrorMessageModal, showErrorMessageValidate) {
+    this.setState({ showErrorMessageModal, showErrorMessageValidate })
   }
 
   navigate () {
@@ -113,7 +124,9 @@ class MedicalSchedulingFragment extends BaseMVPView {
       packageLabel,
       preferredDate,
       index,
-      viewMoreText
+      viewMoreText,
+      showErrorMessageModal,
+      showErrorMessageValidate,
     } = this.state
 
     let procedureList = []
@@ -125,6 +138,22 @@ class MedicalSchedulingFragment extends BaseMVPView {
 
     return (
       <div>
+        {
+          showErrorMessageModal &&
+          <Modal>
+            <center>
+              <h2>{ showErrorMessageValidate.message }</h2>
+              <br/>
+              <GenericButton
+                text = { 'Ok' }
+                onClick = { () => {
+                  this.setState({ showErrorMessageModal : false })
+                  this.navigate()
+                }
+              }/>
+            </center>
+          </Modal>
+        }
         {
           showClinics &&
           <SingleInputModal

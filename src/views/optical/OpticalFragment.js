@@ -13,7 +13,7 @@ import './styles/optical.css'
 import store from '../../store'
 import { NotifyActions } from '../../actions'
 
-import { CircularLoader } from '../../ub-components'
+import { CircularLoader, Modal, GenericButton } from '../../ub-components'
 
 import { format } from '../../utils/numberUtils'
 
@@ -45,7 +45,9 @@ class OpticalFragment extends BaseMVPView {
       amount: '',
       orNumberText: '',
       preferredDate: '',
-      limit: 0
+      limit: 0,
+      showErrorMessageValue: '',
+      showErrorMessageModal : false
     }
     this.confirmation = this.confirmation.bind(this)
     this.validator = this.validator.bind(this)
@@ -60,11 +62,11 @@ class OpticalFragment extends BaseMVPView {
     this.props.setSelectedNavigation(1)
   }
 
-  isEligible (resp) {
-    if(resp === true) {
-      this.setState({ isVisible : resp})
+  isEligible (isVisible, showErrorMessageValue) {
+    if(isVisible === true) {
+      this.setState({ isVisible })
     } else {
-      this.navigate()
+      this.setState({ showErrorMessageValue, showErrorMessageModal : true })
     }
   }
 
@@ -161,11 +163,30 @@ class OpticalFragment extends BaseMVPView {
       orNumberErrorMessage,
       orNumberText,
       preferredDate,
-      limit
+      limit,
+      showErrorMessageValue,
+      showErrorMessageModal
     } = this.state
 
     return (
       <div>
+        {
+          showErrorMessageModal &&
+          <Modal>
+            <center>
+              <h2>{ showErrorMessageValue.message }</h2>
+              <br/>
+              <GenericButton
+                text = { 'Ok' }
+                onClick = { () =>  {
+                  this.setState({ showErrorMessageModal : false })
+                  this.navigate()
+                }
+              }
+                />
+            </center>
+          </Modal>
+        }
         {
           showNoticeModal &&
           <NoticeModal
