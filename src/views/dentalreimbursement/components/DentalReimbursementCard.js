@@ -80,7 +80,7 @@ submission (e) {
   let validateAttachments = false
   attachmentArray && attachmentArray.map(
     (attachment, key) => {
-      if(!attachment.base64) {
+      if(!attachment.file) {
         validateAttachments = true
       }
     }
@@ -102,10 +102,18 @@ submission (e) {
        duration : 2000
      })
    )
+ } else if (!attachmentArray.length) {
+    store.dispatch(NotifyActions.addNotify({
+       title : 'Warning' ,
+       message : 'Attachments is required',
+       type : 'warning',
+       duration : 2000
+     })
+   )
  } else if (validateAttachments) {
    attachmentArray && attachmentArray.map(
      (attachment, key) => {
-       if(!attachment.base64) {
+       if(!attachment.file) {
          store.dispatch(NotifyActions.addNotify({
             title : 'Warning' ,
             message : attachment.name + ' is required',
@@ -249,6 +257,7 @@ render () {
     file2,
     officialReceiptDate,
     officialReceiptNumber,
+    attachmentArray
   } = this.state
 
 
@@ -283,14 +292,14 @@ render () {
         showReviewSubmissionModal &&
         <ReviewSubmission
           onClose = { (result) => this.setState({ showReviewSubmissionModal : result }) }
-          attachment1 = { file }
-          attachment2 = { file2 }
+          orDate = { officialReceiptDate }
+          orNumber = { officialReceiptNumber }
+          attachments = { attachmentArray }
           dependent = { selectedDependent }
           procedure = { selectedProcedures }
-          imageUrl = { imagePreviewUrl }
-          imageUrl2 = { imagePreviewUrl2 }
           presenter = { this.props.presenter }
-          onClick = { () => this.submission }
+          imageUrl = { attachmentArray[0].base64 }
+          imageUrl2 = { attachmentArray[1].base64 }
         />
       }
       <div className = { 'dentailreimbursement-grid-x3' }>
@@ -404,6 +413,7 @@ DentalReimbursementCard.propTypes = {
   onFocus : PropTypes.func,
   procedure : PropTypes.string,
   dependents: PropTypes.array,
+
 }
 DentalReimbursementCard.defaultProps = {
   procedure : 'PROCEDURE',
