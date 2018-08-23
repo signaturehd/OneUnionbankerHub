@@ -48,6 +48,7 @@ class BenefitsFragment extends BaseMVPView {
       accountNumber: '', // this is only used to handle onChange of input modal
       enableLoader: false,
       enabledAccountNumberLoader: false,
+      accountNumberPrefill : ''
     }
   }
 
@@ -55,11 +56,20 @@ class BenefitsFragment extends BaseMVPView {
     this.props.setSelectedNavigation(1)
     this.presenter.validateFabToShow()
     this.presenter.getReleasingCenters()
+    this.presenter.getAccountNumber()
+  }
+
+  showAccountNumberPrefill (accountNumberPrefill) {
+    this.setState({ accountNumberPrefill })
   }
 
   showReleasingCenters (releasingCenters) {
     this.setState({ releasingCenters })
   // TODO show to generic multilist dialog
+  }
+
+  getPrefillAccountNumber (accountNumber) {
+    this.setState({  })
   }
 
   showCarValidated (carValidated) {
@@ -115,8 +125,6 @@ class BenefitsFragment extends BaseMVPView {
     }
   }
 
-
-
   navigate () {
     this.props.history.push('/mybenefits/benefits')
   }
@@ -125,6 +133,7 @@ class BenefitsFragment extends BaseMVPView {
     const { history, onClick } = this.props
     const {
       accountNumber,
+      accountNumberPrefill,
       showBereavementConfirmationModal,
       showAccountNumberModal,
       showReleasingCenterModal,
@@ -208,12 +217,15 @@ class BenefitsFragment extends BaseMVPView {
             </center>
             :
               <div>
+                <h2 className = { 'font-weight-bold' }>UnionBank Account Enrollment</h2>
+                <br/>
                 <h4>All benefit requests and claims will be credited to this account. Payroll accounts will not be accepted.</h4>
                 <GenericTextBox
-                  onChange={ e => this.setState({ accountNumber:   e.target.value }) }
+                  onChange={ e => this.setState({ accountNumber: e.target.value }) }
                   placeholder={ 'Account Number' }
                   container={ 'benefits-container-text' }
                   group={ 'benefits-container-group' }
+                  value={ accountNumberPrefill ? accountNumberPrefill : accountNumber }
                   type={ 'text' }
                 />
               <br/>
