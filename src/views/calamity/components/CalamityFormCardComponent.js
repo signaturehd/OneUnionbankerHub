@@ -95,56 +95,50 @@ class CalamityFormCardComponent extends Component {
     }=this.props
     return (
       <div className={'calamity-form'}>
-            <h4>
-              Property Form
-            </h4>
-                <GenericInput
-                  value={ calamityName }
-                  onClick={ () => requestCalamityTypeFunc(true) }
-                  text={ 'Type of Calamity' }
-                  errorMessage = { calamityTypeErrorMessage }
-                />
-                <br/>
-                  <DatePicker
-                    maxDate={ moment() }
-                    readOnly
-                    selected={ preferredDate}
-                    onChange={ (e) => handleChange(e) }
-                    text = { 'Date of Occurrence' }
-                    />
-                <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
-                <br/>
-              <GenericInput
-                value={ property }
-                onChange={ (e) => propertyFunc(e.target.value) }
-                text={ 'Property' }
-                type={ 'text' }/>
-                <br/>
-              <GenericInput
-                value={ propertyDesc }
-                onChange={ (e) => propertyDescFunc(e.target.value) }
-                text={ 'Property Description' }
-                type={ 'text' }/>
-                <br/>
-              <GenericInput
-                value={ propertyType }
-                onClick={ () => requestPropertyTypeFunc(true) }
-                text={ 'Property Type' }/>
-            <br/>
-              <GenericInput
-                value={ acquisitionValue }
-                onChange={ (e) => acquisitionFunc(e.target.value) }
-                text={ 'Acquisition Value' }
-                type={ 'text' }/>
-            <br/>
-              <GenericInput
-                value={ estimatedCost }
-                onChange={ (e) => estimatedCostFunc(e.target.value) }
-                text={ 'Estimated Repair Cost' }
-                type={ 'text' }
-                maxLength = { 5 }
-                errorMessage = { estimatedCostErrorMessage }
-                />
+        <h4>
+          Property Form
+        </h4>
+        <GenericInput
+          value={ calamityName }
+          onClick={ () => requestCalamityTypeFunc(true) }
+          text={ 'Type of Calamity' }
+          errorMessage = { calamityTypeErrorMessage }
+        />
+        <DatePicker
+          maxDate={ moment() }
+          readOnly
+          selected={ preferredDate}
+          onChange={ (e) => handleChange(e) }
+          text = { 'Date of Occurrence' }
+          />
+        <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
+          <GenericInput
+            value={ property }
+            onChange={ (e) => propertyFunc(e.target.value) }
+            text={ 'Property' }
+            type={ 'text' }/>
+          <GenericInput
+            value={ propertyDesc }
+            onChange={ (e) => propertyDescFunc(e.target.value) }
+            text={ 'Property Description' }
+            type={ 'text' }/>
+          <GenericInput
+            value={ propertyType }
+            onClick={ () => requestPropertyTypeFunc(true) }
+            text={ 'Property Type' }/>
+          <GenericInput
+            value={ acquisitionValue }
+            onChange={ (e) => acquisitionFunc(e.target.value) }
+            text={ 'Acquisition Value' }
+            type={ 'text' }/>
+          <GenericInput
+            value={ estimatedCost }
+            onChange={ (e) => estimatedCostFunc(e.target.value) }
+            text={ 'Estimated Repair Cost' }
+            type={ 'text' }
+            maxLength = { 5 }
+            errorMessage = { estimatedCostErrorMessage }
+            />
           <br/>
             {
               attachmentsData.length !== 0  ?
@@ -169,7 +163,6 @@ class CalamityFormCardComponent extends Component {
             }
             <br/>
             <Line/>
-          <br/>
           <GenericButton
             type={ 'button' }
             text={ 'Submit' }
@@ -188,11 +181,10 @@ class CalamityFormCardComponent extends Component {
               )
             }
             className={ 'calamity-submit' } />
-
-      </div>
-    )
+        </div>
+      )
+    }
   }
-}
 
 CalamityFormCardComponent.propTypes={
   onFocus: PropTypes.func,

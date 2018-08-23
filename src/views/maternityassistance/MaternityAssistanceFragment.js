@@ -25,6 +25,9 @@ import { NotifyActions } from '../../actions'
 import FormComponent from './components/MaternityAssistanceFormCardComponent'
 import FormComponentSSS from './components/MaternityAssistanceSSSFormCardComponent'
 
+import LeaveFilingComponentFragment from  '../leavefiling/LeaveFilingFragment'
+
+import MaternityLeaveModal from  './modals/MaternityLeaveModal'
 import * as MaternityAssistanceFunction from
 './function/MaternityAssistanceFunction'
 
@@ -42,6 +45,8 @@ class MaternityAssistanceFragment extends BaseMVPView {
         showEditSubmitButton: false,
         titleChange: true,
         showBenefitFeedbackModal : false,
+        showMaternityLeaveComponent : false,
+        showMaternityLeaveModal: false,
         respMat1Confirmation: '',
         attachmentsData: [],
         maternityData : [],
@@ -89,14 +94,19 @@ class MaternityAssistanceFragment extends BaseMVPView {
         noMiscarriageText : '',
         noMiscarriageErrorMessage: '',
         noMiscarriageFunc: '',
-        showErrorMesageModal: false,
-        showErrorMessageValidate: '',
+        benefitsCodeType: '',
+        gender: '',
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateMaternityAssistance()
+    this.presenter.getProfile()
+  }
+
+  showProfileGender (gender) {
+    this.setState({ gender })
   }
 
   noticeOfUndertaking (noticeResponse) {
@@ -127,12 +137,16 @@ class MaternityAssistanceFragment extends BaseMVPView {
     this.setState({ typeOfDeliveryData })
   }
 
-  showErrorMessage (showErrorMesageModal, showErrorMessageValidate) {
-    this.setState({ showErrorMesageModal, showErrorMessageValidate })
+  showErrorMessage (showErrorMessageModal, showErrorMessageValidate) {
+    this.setState({ showErrorMessageModal, showErrorMessageValidate })
   }
 
   navigate () {
     this.props.history.push('/mybenefits/benefits/medical')
+  }
+
+  confirmationMat1Response (showConfirmationModal, respMat1Confirmation) {
+    this.setState({ showConfirmationModal, respMat1Confirmation })
   }
 
   showTypeOfDeliveryModal (showTypeOfDeliveryModalResp) {
@@ -218,7 +232,11 @@ class MaternityAssistanceFragment extends BaseMVPView {
 
   validateRequiredNoPregnancy (e) {
     const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
-    this.setState({ noPregnancyText : validate, noPregnancyErrorMessage : '' })
+    if(parseInt(validate) > 5) {
+      this.setState({ noPregnancyErrorMessage : 'max no. is 5' })
+    } else {
+      this.setState({ noPregnancyText : validate, noPregnancyErrorMessage : '' })
+    }
   }
 
   validateRequiredNoDelivery (e) {
@@ -238,19 +256,28 @@ class MaternityAssistanceFragment extends BaseMVPView {
   submitForm () {
     const {
       typeDeliveryId,
+      typeDeliveryName,
       deliveryDate,
       amount,
       preferredDate,
       orNumberText,
-      attachmentArray
+      attachmentArray,
+      gender
     } = this.state
+    if(typeDeliveryName.toUpperCase() === 'normal') {
+      this.setState({ benefitsCodeType : 'MN' })
+    } else if (typeDeliveryName.toUpperCase() === 'caesarean') {
+      this.setState({ benefitsCodeType : 'MC' })
+    } else if (gender === 'M') {
+      this.setState({ benefitsCodeType : 'PL' })
+    }
     this.presenter.addMaternityAssistance(
       typeDeliveryId,
       moment(deliveryDate).format('MM/DD/YYYY'),
       amount,
-      moment(preferredDate).format('MM/DD/YYYY'),
-      orNumberText,
-      attachmentArray)
+      moment(preferredDate).format('MM/DD/YYYY') ? moment(preferredDate).format('MM/DD/YYYY') : null ,
+      orNumberText ? orNumberText : null,
+      attachmentArray ? attachmentArray : null)
   }
 
   showFormReviewFieldDisabled () {
@@ -329,7 +356,9 @@ class MaternityAssistanceFragment extends BaseMVPView {
       this.setState({ subdivisionErrorMessage : 'Subdivision field is required' })
     } else if (!this.validateRequired(barangayText)) {
       this.setState({ barangayErrorMessage : 'Barangay field is required' })
-    } else if (!this.validateRequired(provinceText)) {
+    } else if (!this.validateRequired(cityText)) {
+      this.setState({ cityErrorMessage : 'Barangay field is required' })
+    }  else if (!this.validateRequired(provinceText)) {
       this.setState({ provinceErrorMessage : 'Province field is required' })
     } else if (!this.validateRequired(zipCodeText)) {
       this.setState({ zipCodeErrorMessage : 'Zip Code field is required' })
@@ -438,7 +467,11 @@ class MaternityAssistanceFragment extends BaseMVPView {
       noDeliveryFunc,
       noMiscarriageText,
       noMiscarriageErrorMessage,
-      noMiscarriageFunc
+      noMiscarriageFunc,
+      benefitsCodeType,
+      showMaternityLeaveComponent,
+      showMaternityLeaveModal,
+      gender
     } = this.state
 
     const {
@@ -465,21 +498,15 @@ class MaternityAssistanceFragment extends BaseMVPView {
           </Modal>
         }
         {
-          showErrorMessageModal &&
-          <Modal>
-            <center>
-              <h2>{ showErrorMessageValue.message }</h2>
-              <br/>
-              <GenericButton
-                text = { 'Ok' }
-                onClick = { () =>  {
-                  this.setState({ showErrorMessageModal : false })
-                  this.navigate()
-                }
+          showMaternityLeaveModal &&
+          <MaternityLeaveModal
+            onLoadMaternityLeave = { (resp) =>
+              this.setState({
+                showMaternityLeaveModal: false,
+                showMaternityLeaveComponent : resp })
               }
-                />
-            </center>
-          </Modal>
+            onLoadNavigateBenefits = { () => this.navigate() }
+            />
         }
         {
           showNoticeModal &&
@@ -527,6 +554,13 @@ class MaternityAssistanceFragment extends BaseMVPView {
             onClose = { () => this.setState({ showTypeOfDeliveryModalResp : false }) }
           />
         }
+        {
+          showMaternityLeaveModal ?
+          <LeaveFilingComponentFragment
+            benefitsCodeType = { benefitsCodeType }
+            navigateBenefits = { () => this.navigate() }
+            />
+          :
         <div>
           {
           enabledLoader ?
@@ -633,6 +667,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
           </div>
           }
         </div>
+        }
       </div>
     )
   }

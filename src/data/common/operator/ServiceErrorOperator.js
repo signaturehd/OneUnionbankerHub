@@ -2,6 +2,9 @@ import GenericError from '../../../domain/common/exception/GenericError'
 import ForbiddenError from '../../../domain/common/exception/ForbiddenError'
 import ServerError from '../../../domain/common/exception/ServerError'
 import { Observable } from 'rxjs'
+import {
+  Modal
+} from '../../../ub-components'
 
 import SessionProvider from '../../provider/SessionProvider'
 

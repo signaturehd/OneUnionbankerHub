@@ -192,6 +192,7 @@ class BereavementFormCardComponent extends Component {
                 onChange = { (e) => checkDeceasedDate(e) }
                 selected = { deceasedDate ? moment(deceasedDate) : '' }
                 text = { 'Date of Death' }
+                readOnly
                 disabled = { showEditSubmitButton }
                 errorMessage = { deceasedDate ? '' :  '* Required Field' }/>
             </div>
@@ -210,6 +211,7 @@ class BereavementFormCardComponent extends Component {
                 maxDate = { moment(deceasedDate).add(30, 'days') }
                 hint = { funeralDate ? funeralDate : '(eg. MM/DD/YYYY)' }
                 text = { 'Date of Wake' }
+                readOnly
                 selected = { funeralDate ? moment(funeralDate) : '' }
                 onChange = { (e) => checkFuneralDate(e) }
                 disabled = { showEditSubmitButton }
@@ -296,6 +298,7 @@ class BereavementFormCardComponent extends Component {
                   maxDate = { moment(deceasedDate).add(30, 'days') }
                   onChange =  { (e) => checkIntermentDate(e) }
                   disabled = { showEditSubmitButton }
+                  readOnly
                   selected = { intermentDate ? moment(intermentDate) : '' }
                   hint = { intermentDate ? intermentDate : '(eg. MM/DD/YYYY)'  }
                   text = { 'Date of Interment' }
@@ -376,6 +379,14 @@ class BereavementFormCardComponent extends Component {
                     />
                 }
               </div>
+              <Line/>
+              {
+                showEditSubmitButton &&
+                <center>
+                  <h2 className = { 'font-size-12px' }>Please review he information you have selected before submitting the transaction</h2>
+                </center>
+              }
+              <br/>
               {
                 showEditSubmitButton ?
 

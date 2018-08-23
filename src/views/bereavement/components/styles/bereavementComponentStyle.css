@@ -160,13 +160,3 @@
 .brv-file {
   background-image: url('../../../../images/icons/ic_insert_drive_file_grey_500_18dp.png');
 }
-
-/* Bereavement leave */
-.bereavement-leave-card {
-  padding: 20px;
-}
-
-.bereavement-leave-submit:hover {
-  background-color: #ff8a00;
-  color: #fff;
-}

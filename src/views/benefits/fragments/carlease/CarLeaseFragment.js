@@ -13,78 +13,64 @@ class CarLeaseFragment extends Component {
 
   constructor (props) {
     super(props)
-
-    this.state={
-      disabledCarlease : false,
-    }
   }
 
   componentDidMount () {
     // this.props.presenter.getCarValidate()
   }
 
+  navigate () {
+    this.props.history.push('/mybenefits/benefits/')
+  }
+
   render () {
-    const { disabledCarlease } = this.state
     const { history, callCarBack, onClose } = this.props
 
     const benefitsOptions = [{
       id: 0,
-      styleName: 'cars-cards-1',
+      styleName: 'car-cards-1 car-option-default',
       title: 'BRAND NEW CAR',
       path: '/mybenefits/benefits/carlease/new',
     }, {
       id: 1,
-      styleName: 'cars-cards-2',
+      styleName: 'car-cards-1 car-option-default',
       title: 'SECOND HAND CAR',
       path: '/mybenefits/benefits/carlease/old',
     }]
 
     return (
       <div>
-        <Modal
-          isDismisable={ true }
-        >
-          <h2>Under Development</h2>
-            <br/>
-          <center>
-            <h4>Hi there! Unfortunately Car Lease applications will not be available until August 2018. Please come back then to avail of your Brand New Car!</h4>
-            <br/>
-            <GenericButton
-              text={ 'OK' }
-              onClick={ () => callCarBack() }
-            />
-        </center>
-        </Modal>
-        {
-          disabledCarlease &&
-          <div>
-            <i
-              className={ 'back-arrow' }
-              onClick={ () => this.navigate() }></i>
-            <h1>CAR LEASE OPTION</h1>
-            <div className={ 'adjustment' }>
-              <div className={ 'card-container' }>
-                {
-                benefitsOptions.map((value, idx) => (
-                  <Card
-                    className={ 'benefits-card' }
-                    key={ idx }>
-                    <div
-                      className={ value.styleName}
-                      text={ value.title }
-                      onClick={ () => history.push(value.path) } >
-                      <p className={ 'benefits-option-cards' }>
-                        { value.title }
-                      </p>
-                      <h2 className = { 'font-size-14px' }> Lorem ipsum dolor </h2>
-                    </div>
+        <div>
+          <i
+            className={ 'back-arrow' }
+            onClick={ () => this.navigate() }></i>
+          <h1>Car Lease Options</h1>
+          <div className={ 'adjustment' }>
+            <div className = { 'car-card-container' }>
+              {
+              benefitsOptions.map((value, idx) => (
+                <Card
+                  className={ 'car-card' }
+                  key={ idx }
+                  onClick = { () => history.push(value.path) }
+                  >
+                    <div className = { 'car-column-grid' }>
+                      <div
+                        className={ value.styleName}
+                        text={ value.title }
+                        onClick={ () => history.push(value.path) }/>
+                        <p className={ 'car-option-cards font-weight-bold font-size-15px' }>
+                          { value.title }
+                        </p>
+                        <h2 className = { 'font-size-12px' }> Lorem ipsum dolor </h2>
+                      </div>
                   </Card>
-                  ))
-                }
-              </div>
+                  )
+                )
+              }
             </div>
           </div>
-        }
+        </div>
       </div>
     )
   }
