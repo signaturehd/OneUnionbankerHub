@@ -132,6 +132,11 @@
 
 }
 
+.lock-icon {
+  background-image: url('../../../../images/icons/ic_lock.png');
+}
+
+
 
 /* Desktop View */
 .profile-settings-grid-column-desktop {

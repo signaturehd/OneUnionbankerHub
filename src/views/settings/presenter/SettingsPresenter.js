@@ -1,8 +1,13 @@
 import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInteractor'
+import GenericPutNewCodeInteractor from '../../../domain/interactor/pinCode/GenericPutNewCodeInteractor'
+
+import { NotifyActions } from '../../../actions'
+import store from '../../../store'
 
 export default class SettingsPresenter {
   constructor (container) {
     this.getProfileInteractor = new GetProfileInteractor(container.get('HRBenefitsClient'))
+    this.genericPutNewCodeInteractor = new GenericPutNewCodeInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -24,5 +29,23 @@ export default class SettingsPresenter {
       this.view.hideLoading()
       // TODO prompt generic error
     })
+   }
+
+   putEnrollPin (objectPINParam) {
+     this.view.showCircularLoader()
+     this.genericPutNewCodeInteractor.execute(objectPINParam)
+     .subscribe(data => {
+       store.dispatch(NotifyActions.addNotify({
+         title: 'Benefits',
+         message : data.message,
+         type : 'success',
+         duration : 2000
+         })
+       )
+       this.view.hideModal(false)
+       this.view.hideCircularLoader()
+     }, error => {
+       this.view.hideCircularLoader()
+     })
    }
  }
