@@ -35,7 +35,6 @@ class EducationAidFragment extends BaseMVPView {
     this.state={
       showNoticeModal : false,
       noticeResponse : null,
-      showConfirmation : false,
       showNoticeResponseModal : false,
       enabledLoader : false,
       showEditSubmitButton : false,
@@ -55,6 +54,10 @@ class EducationAidFragment extends BaseMVPView {
       semesterText: '',
       gwaText: '',
       totalReimbursableAmount: '',
+      orNumber : '',
+      orNumberErrorMessage : '',
+      orDate : '',
+      orDateErrorMessage : '',
       tuitionFeeErrorMessage: '',
       registrationFeeErrorMessage: '',
       schoolErrorMessage: '',
@@ -99,6 +102,15 @@ class EducationAidFragment extends BaseMVPView {
     this.setState({ gwaText : validate , gwaErrorMessage : '' })
   }
 
+  orNumberFunc (e) {
+    const validate = EducationAidFunction.checkedValidateSymbol(e)
+    this.setState({ orNumber : validate , orNumberErrorMessage : '' })
+  }
+
+  orDateFunc (data) {
+    this.setState({ orDate: data.format('MM-DD-YYYY') })
+  }
+
   validateRequired (e) {
     return EducationAidFunction.checkedValidateInput(e)
   }
@@ -140,6 +152,8 @@ class EducationAidFragment extends BaseMVPView {
       tuitionFeeText,
       registrationFeeText,
       schoolId,
+      orDate,
+      orNumber,
       attachmentArray
     } = this.state
 
@@ -151,6 +165,8 @@ class EducationAidFragment extends BaseMVPView {
       tuitionFeeText,
       registrationFeeText,
       schoolId,
+      orDate,
+      orNumber,
       attachmentArray)
   }
 
@@ -168,6 +184,7 @@ class EducationAidFragment extends BaseMVPView {
       academicYearText,
       semesterText,
       gwaText,
+      orNumber,
       attachmentArray
     } = this.state
 
@@ -184,7 +201,9 @@ class EducationAidFragment extends BaseMVPView {
     } else if (!this.validateRequired(semesterText)) {
       this.setState({ semesterErrorMessage : 'Please select a Semester' })
     } else if (!this.validateRequired(gwaText)) {
-      this.setState({ gwaErrorMessage : 'Please enter an amount' })
+      this.setState({ gwaErrorMessage : 'Please enter your GWA' })
+    } else if (!this.validateRequired(orNumber)) {
+      this.setState({ orNumberErrorMessage : 'Please enter an amount' })
     } else {
       this.setState({
         showEditSubmitButton: true,
@@ -242,6 +261,10 @@ class EducationAidFragment extends BaseMVPView {
       gwaText,
       gwaErrorMessage,
       totalReimbursableAmount,
+      orNumber,
+      orNumberErrorMessage,
+      orDate,
+      orDateErrorMessage,
       educationAid,
       enabledLoader,
       showSchools,
@@ -249,7 +272,6 @@ class EducationAidFragment extends BaseMVPView {
       noticeResponse,
       showNoticeResponseModal,
       showBenefitFeedbackModal,
-      showConfirmation,
       showEditSubmitButton,
       showEducationAcademicYearModal,
       showEducationSemesterModal,
@@ -299,32 +321,6 @@ class EducationAidFragment extends BaseMVPView {
 
     return (
       <div>
-        {
-          showConfirmation &&
-          <ConfirmationModal
-            data = { data }
-            submitForm = { (
-              courseText,
-              academicYearText,
-              semesterText,
-              gwaText,
-              tuitionFeeText,
-              registrationFeeText,
-              schoolId,
-              fileAttachments) =>
-              this.submitForm(
-                courseText,
-                academicYearText,
-                semesterText,
-                gwaText,
-                tuitionFeeText,
-                registrationFeeText,
-                schoolId,
-                fileAttachments) }
-            onClose = { () => this.setState({ showConfirmation : false }) }
-          />
-        }
-
         {
           showNoticeModal &&
           <NoticeModal
@@ -446,6 +442,10 @@ class EducationAidFragment extends BaseMVPView {
             courseTextErrorMessage = { courseTextErrorMessage }
             semesterErrorMessage = { semesterErrorMessage }
             gwaErrorMessage = { gwaErrorMessage }
+            orNumber = { orNumber }
+            orNumberErrorMessage = { orNumberErrorMessage }
+            orDate = { orDate }
+            orDateErrorMessage = { orDateErrorMessage }
             attachmentsData = { attachmentsData }
             showEditSubmitButton = { showEditSubmitButton }
             tuitionFeeFunc = { (resp) => this.tuitionFeeFunc(resp) }
@@ -455,16 +455,12 @@ class EducationAidFragment extends BaseMVPView {
             showAcademicYearFunc = { (resp) => this.showAcademicYearFunc(resp) }
             showSemesterFunc = { (resp) => this.showSemesterFunc(resp) }
             gwaFunc = { (resp) => this.gwaFunc(resp) }
+            orNumberFunc = { (resp) => this.orNumberFunc(resp) }
+            orDateFunc = { (resp) => this.orDateFunc(resp) }
             showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
             onSubmitFunc = { () => this.submitForm() }
             editFormDataFunc = { () => this.editFormReview() }
             setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
-            onClick = {
-              (showConfirmation, data) => {
-                this.confirmation(showConfirmation, data)
-              }
-            }
-            presenter = { this.presenter }
           />
         }
       </div>

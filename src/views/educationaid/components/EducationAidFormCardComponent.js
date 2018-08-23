@@ -19,19 +19,12 @@ import { NotifyActions } from '../../../actions/'
 
 import moment from 'moment'
 
-import { MoneyValidation, RequiredDecimalValidation, RequiredAlphabetValidation } from '../../../utils/validate'
 import { format } from '../../../utils/numberUtils'
 
 class EducationAidFormCardComponent extends Component {
 
   constructor (props) {
     super (props)
-    this.onGetClicked=this.onGetClicked.bind(this)
-  }
-
-  getExtension (filename) {
-    const parts=filename.split('/')
-    return parts[parts.length - 1]
   }
 
   totalReimbursableAmount (computations, gwa, totalFee) {
@@ -47,46 +40,9 @@ class EducationAidFormCardComponent extends Component {
     }
   }
 
-  onGetClicked (
-    courseText,
-    academicYearText,
-    semesterText,
-    gwaText,
-    tuitionFeeText,
-    registrationFeeText,
-    schoolID,
-    fileOR,
-    fileCOG,
-    fileRegForm,
-    imagePrevOR,
-    imagePrevCOG,
-    imagePrevRegForm,
-    totalFeeText,
-    totalReimbursableAmountText) {
-      this.props.getFormData(
-        courseText,
-        academicYearText,
-        semesterText,
-        gwaText,
-        tuitionFeeText,
-        registrationFeeText,
-        schoolID,
-        fileOR,
-        fileCOG,
-        fileRegForm,
-        imagePrevOR,
-        imagePrevCOG,
-        imagePrevRegForm,
-        totalFeeText,
-        totalReimbursableAmountText
-      )
-  }
-
   render () {
     const {
       educationAid,
-      onClick,
-      presenter,
       tuitionFeeText,
       tuitionFeeFunc,
       tuitionFeeErrorMessage,
@@ -111,6 +67,12 @@ class EducationAidFormCardComponent extends Component {
       gwaErrorMessage,
       gwaFunc,
       totalReimbursment,
+      orNumber,
+      orNumberErrorMessage,
+      orNumberFunc,
+      orDate,
+      orDateErrorMessage,
+      orDateFunc,
       attachmentsData,
       showEditSubmitButton,
       showFormReview,
@@ -185,6 +147,22 @@ class EducationAidFormCardComponent extends Component {
               disabled={ 'disabled' }
               type={ 'text' }
               text={ 'Total Reimbursable Amount' }/>
+            <DatePicker
+              readOnly
+              minDate = { moment() }
+              disabled = { showEditSubmitButton }
+              selected = { orDate && moment(orDate) }
+              onChange = { (e) => orDateFunc(e) }
+              text = { 'Date of Official Receipt' }
+              hint = { '(eg. MM/DD/YYYY)' }
+              errorMessage = { orDateErrorMessage }/>
+            <GenericInput
+              value = { orNumber }
+              onChange = { (e) => orNumberFunc(e.target.value) }
+              text = { 'Official Receipt Number' }
+              type = { 'text' }
+              errorMessage = { orNumberErrorMessage }
+              disabled = { showEditSubmitButton }/>
 
               {
                 attachmentsData.length !== 0  ?
@@ -205,6 +183,7 @@ class EducationAidFormCardComponent extends Component {
               }
               <br/>
               <Line/>
+              <br/>
 
               {
                 showEditSubmitButton ?
@@ -265,6 +244,12 @@ EducationAidFormCardComponent.propTypes = {
   gwaErrorMessage : PropTypes.string,
   gwaFunc : PropTypes.func,
   totalReimbursment : PropTypes.string,
+  orNumber : PropTypes.string,
+  orNumberErrorMessage : PropTypes.string,
+  orNumberFunc : PropTypes.func,
+  orDate : PropTypes.date,
+  orDateErrorMessage : PropTypes.string,
+  orDateFunc : PropTypes.func,
   showEditSubmitButton : PropTypes.bool,
   showFormReview : PropTypes.func,
   setAttachmentArrayFunc : PropTypes.func,

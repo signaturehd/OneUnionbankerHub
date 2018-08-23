@@ -24,6 +24,8 @@ export default class EducationAidPresenter {
    tuitionFeeText,
    registrationFeeText,
    schoolId,
+   orDate,
+   orNumber,
    fileAttachments) {
    this.view.showCircularLoader()
   this.addEducationAidInteractor.execute(educationAidParam(
@@ -34,6 +36,8 @@ export default class EducationAidPresenter {
     tuitionFeeText,
     registrationFeeText,
     schoolId,
+    orDate,
+    orNumber,
     fileAttachments
     )
   )

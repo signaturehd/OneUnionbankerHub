@@ -504,6 +504,8 @@ export default class HRBenefitsService {
         tuitionFee : educationAidParam.tuitionFee,
         registrationFee : educationAidParam.registrationFee,
         schoolId : educationAidParam.schoolId,
+        orDate : educationAidParam.orDate,
+        orNumber : educationAidParam.orNumber
       }
       formData.append('uuid', 12345)
       formData.append('cert1', educationAidParam.attachments[0].file)
