@@ -123,7 +123,7 @@ class MaternityAssistanceCardComponent extends Component {
                 <div>
                   {
                     moment(deliveryDate).format('MM DD YYYY') <=
-                    moment().format('MM DD YYYY') ?
+                    moment().format('MM DD YYYY') &&
                     <MultipleFileUploader
                       placeholder = { 'Form Attachments' }
                       fileArray = { attachmentsData }
@@ -134,20 +134,9 @@ class MaternityAssistanceCardComponent extends Component {
                         '' :
                         `Please upload the required attachments`  }
                     />
-                  :
-                    <MultipleFileUploader
-                      placeholder = { 'Form Attachments' }
-                      fileArray = { attachmentsData.slice(1) }
-                      setFile = { (resp) => setAttachmentArrayFunc(resp) }
-                      disabled = { showEditSubmitButton }
-                      errorMessage = {
-                        showEditSubmitButton ?
-                        '' :
-                        `Please upload the required attachments`  }
-                    />
                   }
                 </div>
-              }
+               }
               <Line/>
               <br/>
               {

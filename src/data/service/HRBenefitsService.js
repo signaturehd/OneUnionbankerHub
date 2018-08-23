@@ -455,20 +455,22 @@ export default class HRBenefitsService {
     releasingCenter,
     carRequestParam) {
     const formData = new FormData()
+    formData.append('uuid', 12345)
     const addCarleaseObject = {
       accountNumber,
       releasingCenter,
       brand : carRequestParam.carBrand,
       model : carRequestParam.carModel,
-      year : carRequestParam.year,
+      year : carRequestParam.makeYear,
       insurancePayment: '1',
-      leaseMode : parseInt(carRequestParam.leaseMode),
+      leaseMode : carRequestParam.leaseMode,
+      solRC: carRequestParam.solRC,
+      cmUnit: carRequestParam.cmUnit,
       primaryColor : carRequestParam.primaryColor,
       secondaryColor : carRequestParam.secondaryColor,
     }
     formData.append('body', JSON.stringify(addCarleaseObject))
-    formData.append('uuid', 12345)
-    formData.append('attachment1', carRequestParam.attachments ? carRequestParam.attachments : null)
+    formData.append('attachment1', carRequestParam.file)
     return this.apiClient.post('v1/leases/car', formData, {
       headers: { token }
     })

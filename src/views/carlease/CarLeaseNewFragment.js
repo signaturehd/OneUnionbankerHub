@@ -17,6 +17,7 @@ import {
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
+import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 import CarDealerQuotation from './modals/CarDealerQuotationModal'
 
 import FormComponent from './components/CarLeaseNewFormComponent'
@@ -31,6 +32,7 @@ class CarLeaseNewFragment extends BaseMVPView {
     this.state = {
       enabledLoader : false,
       showNoticeModal : false,
+      showNoticeResponseModal : false,
       showFileUpload: false,
       showQuotation: true,
       noticeResponse : null,
@@ -92,10 +94,12 @@ class CarLeaseNewFragment extends BaseMVPView {
     carBrand,
     carModel,
     makeYear,
-    leaseMode,
+    solRCDefault,
+    cMUnit,
     primaryColor,
     secondaryColor,
     file) {
+      const { leaseMode } = this.state
       if (carBrand === null) {
           store.dispatch(NotifyActions.addNotify({
               title : 'Car Lease (New)',
@@ -142,6 +146,8 @@ class CarLeaseNewFragment extends BaseMVPView {
           carModel,
           makeYear,
           leaseMode,
+          solRCDefault,
+          cMUnit,
           primaryColor,
           secondaryColor,
           file ? file : null)
@@ -151,11 +157,11 @@ class CarLeaseNewFragment extends BaseMVPView {
   /* Notice Response*/
 
   noticeOfUndertaking (noticeResponse) {
-  this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
+   this.setState({ showNoticeModal : true, noticeResponse })
   }
 
-  noticeResponse (noticeResponse) {
-    this.setState({showConfirmation: false, noticeResponse })
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse })
   }
 
   /* Implementation*/
@@ -251,9 +257,28 @@ class CarLeaseNewFragment extends BaseMVPView {
           <NoticeModal
             onClose={ () => this.setState({ showNoticeModal : false })}
             noticeResponse={ noticeResponse }
-            benefitId={ loanType }
+            benefitId={ '15' }
             onDismiss={ (showNoticeModal, noticeResponse) =>
               this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
+          />
+        }
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
+            }}
+            noticeResponse={ noticeResponse }
+          />
+        }
+        {
+          showBenefitFeedbackModal &&
+          <BenefitFeedbackModal
+            benefitId={ '15' }
+            onClose={ () => {
+              this.props.history.push('/mybenefits/benefits/medical'),
+              this.setState({ showBenefitFeedbackModal : false })
+            }}
           />
         }
         {
@@ -315,7 +340,6 @@ class CarLeaseNewFragment extends BaseMVPView {
               showFileUpload = { showFileUpload }
               secondaryColor = { secondaryColor }
               primaryColor = { primaryColor }
-              solRC = { solRC }
               solRCDefault = { carValidate.solRC }
               cmUnit = { carValidate.unit }
               onGetCarBrandsFunc = { () => this.setState({ showCarBrands : true }) }
@@ -329,6 +353,8 @@ class CarLeaseNewFragment extends BaseMVPView {
                 carBrand,
                 carModel,
                 makeYear,
+                solRCDefault,
+                cMUnit,
                 primaryColor,
                 secondaryColor,
                 file) =>
@@ -336,11 +362,11 @@ class CarLeaseNewFragment extends BaseMVPView {
                   carBrand,
                   carModel,
                   makeYear,
-                  leaseMode,
+                  solRCDefault,
+                  cMUnit,
                   primaryColor,
                   secondaryColor,
-                  file
-                  )
+                  file)
                 }
             />
           }

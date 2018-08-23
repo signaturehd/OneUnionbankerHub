@@ -79,21 +79,20 @@ class CarLeaseNewFormComponent extends Component {
     carBrand,
     carModel,
     makeYear,
+    solRC,
+    cmUnit,
     primaryColor,
     secondaryColor,
-    file,
-    imagePreviewUrl) {
-      const attachments=[{
-        "base64Doc" : file,
-      }]
+    file,) {
     this.props.onSubmit(
       carBrand,
       carModel,
       makeYear,
+      solRC,
+      cmUnit,
       primaryColor,
       secondaryColor,
-      file
-    )
+      file)
   }
 
   render () {
@@ -110,7 +109,6 @@ class CarLeaseNewFormComponent extends Component {
       carBrand,
       makeYear,
       primaryColor,
-      solRC,
       solRCDefault,
       cmUnit,
       secondaryColor,
@@ -186,9 +184,10 @@ class CarLeaseNewFormComponent extends Component {
                 text = { 'Secondary Color' }
               />
               <GenericInput
-                value = { solRC ? solRC : solRCDefault }
-                onClick = { () => onShowEnterSolRCModalFunc() }
+                value = { solRCDefault }
+                onClick = { () => {} }
                 maxLength = { 20 }
+                readOnly
                 onClick = { () => onShowEnterSolRCModalFunc }
                 errorMessage = { '' }
                 text = { 'Sol RC' }
@@ -223,10 +222,11 @@ class CarLeaseNewFormComponent extends Component {
                       carBrand,
                       carModel,
                       makeYear,
+                      solRCDefault,
+                      cmUnit,
                       primaryColor,
                       secondaryColor,
-                      file,
-                      imagePreviewUrl)
+                      file)
                     }
                   className={ 'carview-submit' } />
             </div>
@@ -244,7 +244,6 @@ CarLeaseNewFormComponent.propTypes = {
   setSelectedNavigation: PropTypes.func,
   history: PropTypes.object,
   carBrand: PropTypes.string,
-  solRC: PropTypes.string,
   solRCDefault: PropTypes.string,
   cmUnit: PropTypes.string,
   carModel: PropTypes.string,

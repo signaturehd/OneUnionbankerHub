@@ -261,7 +261,8 @@ class MaternityAssistanceFragment extends BaseMVPView {
       amount,
       preferredDate,
       orNumberText,
-      attachmentArray
+      attachmentArray,
+      gender
     } = this.state
     if(typeDeliveryName.toUpperCase() === 'normal') {
       this.setState({ benefitsCodeType : 'MN' })
@@ -274,9 +275,9 @@ class MaternityAssistanceFragment extends BaseMVPView {
       typeDeliveryId,
       moment(deliveryDate).format('MM/DD/YYYY'),
       amount,
-      moment(preferredDate).format('MM/DD/YYYY'),
-      orNumberText,
-      attachmentArray)
+      moment(preferredDate).format('MM/DD/YYYY') ? moment(preferredDate).format('MM/DD/YYYY') : null ,
+      orNumberText ? orNumberText : null,
+      attachmentArray ? attachmentArray : null)
   }
 
   showFormReviewFieldDisabled () {

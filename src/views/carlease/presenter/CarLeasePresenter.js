@@ -40,6 +40,8 @@ export default class CarLeasePresenter {
     carModel,
     makeYear,
     leaseMode,
+    solRC,
+    cMUnit,
     primaryColor,
     secondaryColor,
     file
@@ -50,6 +52,8 @@ export default class CarLeasePresenter {
       carModel,
       makeYear,
       leaseMode,
+      solRC,
+      cMUnit,
       primaryColor,
       secondaryColor,
       file
@@ -58,11 +62,9 @@ export default class CarLeasePresenter {
        data => {
          this.view.hideCircularLoader()
          this.view.noticeOfUndertaking(data)
-         this.view.navigate()
        }, error => {
          this.view.noticeResponse(error)
          this.view.hideCircularLoader()
-         this.view.navigate()
        }
      )
   }

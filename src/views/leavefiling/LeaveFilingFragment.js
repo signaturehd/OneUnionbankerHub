@@ -10,6 +10,7 @@ import {
   Card,
   GenericButton,
   DatePicker,
+  TimePickerComponent,
   CircularLoader,
   Modal
 } from '../../ub-components/'
@@ -103,7 +104,6 @@ class LeaveFilingFragment extends BaseMVPView {
   }
 
   render () {
-    console.log(benefitsCodeType)
     const {
       benefitsCodeType,
       navigateBenefits
@@ -188,6 +188,15 @@ class LeaveFilingFragment extends BaseMVPView {
                     <GenericInput
                       disabled = { showEditMode }
                       text = { 'To Time' }/>
+                  </div>
+                </div>
+                <div className = { 'grid-global' }>
+                  <div>
+                    <TimePickerComponent />
+                  </div>
+                  <div>
+                    <div></div>
+                    <TimePickerComponent />
                   </div>
                 </div>
                 <div>

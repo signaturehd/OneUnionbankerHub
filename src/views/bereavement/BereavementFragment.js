@@ -419,7 +419,7 @@ class BereavementFragment extends BaseMVPView {
             />
         }
         {
-          showBereavementLeaveComponent ?
+          !showBereavementLeaveComponent ?
           <LeaveFilingComponentFragment
             benefitsCodeType = { 'FL' }
             navigateBenefits = { () => this.navigate() }

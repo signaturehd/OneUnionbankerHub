@@ -59,8 +59,8 @@ class BenefitsFragment extends BaseMVPView {
     this.presenter.getAccountNumber()
   }
 
-  showAccountNumberPrefill (accountNumberPrefill) {
-    this.setState({ accountNumberPrefill })
+  showAccountNumberPrefill (accountNumber) {
+    this.setState({ accountNumber })
   }
 
   showReleasingCenters (releasingCenters) {
@@ -133,7 +133,6 @@ class BenefitsFragment extends BaseMVPView {
     const { history, onClick } = this.props
     const {
       accountNumber,
-      accountNumberPrefill,
       showBereavementConfirmationModal,
       showAccountNumberModal,
       showReleasingCenterModal,
@@ -221,11 +220,11 @@ class BenefitsFragment extends BaseMVPView {
                 <br/>
                 <h4>All benefit requests and claims will be credited to this account. Payroll accounts will not be accepted.</h4>
                 <GenericTextBox
-                  onChange={ e => this.setState({ accountNumber: e.target.value }) }
+                  onChange={ (e) => this.setState({ accountNumber: e.target.value }) }
                   placeholder={ 'Account Number' }
                   container={ 'benefits-container-text' }
                   group={ 'benefits-container-group' }
-                  value={ accountNumberPrefill ? accountNumberPrefill : accountNumber }
+                  value={ accountNumber }
                   type={ 'text' }
                 />
               <br/>
