@@ -68,10 +68,6 @@ class BenefitsFragment extends BaseMVPView {
   // TODO show to generic multilist dialog
   }
 
-  getPrefillAccountNumber (accountNumber) {
-    this.setState({  })
-  }
-
   showCarValidated (carValidated) {
     this.setState({ carValidated })
   }
