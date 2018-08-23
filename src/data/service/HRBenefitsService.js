@@ -79,13 +79,17 @@ export default class HRBenefitsService {
       releasingCenter,
       type : dentalReimbursementParam.dependentId.id !== 1 ? 2 : 1,
       procedures : dentalReimbursementParam.procedure,
-      dependentId : dentalReimbursementParam.dependentId.id
+      dependentId : dentalReimbursementParam.dependentId,
+      orNumber :  dentalReimbursementParam.orNumber,
+      orDate : dentalReimbursementParam.orDate.format('MM/DD/YYYY')
     }
 
     formData.append('uuid', 12345)
-    formData.append('dentcert1', dentalReimbursementParam.file1)
-    formData.append('dentcert2', dentalReimbursementParam.file2)
     formData.append('body', JSON.stringify(dentalRObject))
+    dentalReimbursementParam.attachments.map((resp, key) => (
+      formData.append(resp.name, resp.file)
+      )
+    )
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {
       headers : { token }
     })

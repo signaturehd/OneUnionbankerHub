@@ -35,10 +35,10 @@ export default class DentalReimbursementPresenter {
   .subscribe()
   }
 
-  addDentalReimbursement (file1, file2, dependentId, procedure) {
+  addDentalReimbursement (orDate, orNumber, dependentId, procedure, attachments) {
     this.view.showCircularLoader()
     this.AddDentalReimbursementInteractor.execute(
-      dentalReimbursementParam(file1, file2, dependentId, procedure))
+      dentalReimbursementParam(orDate, orNumber, dependentId, procedure, attachments))
       .subscribe(
         data => {
          this.view.hideCircularLoader()

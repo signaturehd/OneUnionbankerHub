@@ -5,7 +5,7 @@ import { Modal, GenericButton } from '../../../ub-components/'
 
 import './styles/dentalReimbursementModal.css'
 
-class DentalReimbursementModal extends Component {
+class DentalReimbursementReviewModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -15,12 +15,9 @@ class DentalReimbursementModal extends Component {
 
     this.submitForm = this.submitForm.bind(this)
   }
-  submitForm (attachment1, attachment2, dependent, procedure) {
+  submitForm (orDate, orNumber, dependentId, procedure, attachments) {
     this.props.presenter.addDentalReimbursement(
-      attachment1,
-      attachment2,
-      dependent,
-      procedure
+      orDate, orNumber, dependentId, procedure, attachments
     )
   }
 
@@ -28,12 +25,12 @@ class DentalReimbursementModal extends Component {
     const { isDismisable } = this.state
     const {
       onClose,
-      confirm,
-      cancel,
-      attachment1,
-      attachment2,
+      orDate,
+      orNumber,
+      attachments,
       dependent,
       procedure,
+      presenter,
       imageUrl,
       imageUrl2 } = this.props
 
@@ -76,6 +73,14 @@ class DentalReimbursementModal extends Component {
             <div className={ 'font-weight-light' }> { dependent && dependent.name } </div>
           </div>
           <div className = { 'dentalreimbursement-grid-image' } >
+            <div className={ 'font-weight-bold' }>OFFICIAL RECEIPT DATE :</div>
+            <div className={ 'font-weight-light' }> { orDate.format('MM/DD/YYYY') } </div>
+          </div>
+          <div className = { 'dentalreimbursement-grid-image' } >
+            <div className={ 'font-weight-bold' }>OFFICIAL RECEIPT NUMBER :</div>
+            <div className={ 'font-weight-light' }> { orNumber } </div>
+          </div>
+          <div className = { 'dentalreimbursement-grid-image' } >
             <div className={ 'font-weight-bold' }>PROCEDURE :</div>
             <div className={ 'font-weight-light' }>
               {
@@ -91,14 +96,10 @@ class DentalReimbursementModal extends Component {
           <div className = { 'dental-reimbursement-modal-action-button' }>
             <GenericButton
               onClick = { () =>
-              this.submitForm(
-                attachment1 && attachment1,
-                attachment2 && attachment2,
-                dependent && dependent,
-                procedure && procedure) }
-              text = { confirm } />
+              this.submitForm(orDate, orNumber, dependent.id, procedure, attachments) }
+              text = { 'Submit' } />
             <GenericButton
-              text = { cancel }
+              text = { 'Cancel' }
               onClick = { () => onClose(false) }/>
           </div>
         </div>
@@ -107,19 +108,4 @@ class DentalReimbursementModal extends Component {
     }
   }
 
-DentalReimbursementModal.propTypes = {
-  onClose : PropTypes.func,
-  confirm : PropTypes.string,
-  cancel : PropTypes.string,
-  attachment1 : PropTypes.object,
-  attachment2 : PropTypes.object,
-  dependent : PropTypes.object,
-  procedure : PropTypes.array,
-  imageUrl : PropTypes.string,
-  imageUrl2 : PropTypes.string
-}
-DentalReimbursementModal.defaultProps = {
-  confirm : 'Submit',
-  cancel : 'Cancel',
-}
-export default DentalReimbursementModal
+export default DentalReimbursementReviewModal
