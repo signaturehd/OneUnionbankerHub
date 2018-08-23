@@ -31,7 +31,7 @@
   top: -68px;
   font-size: 14px;
   pointer-events: none;
-  color: #ff8a00 !important;
+  color: #ff8a00;
 }
 
 
@@ -69,8 +69,6 @@
   color:#ff8a00;
 }
 .dentalloa-footer-left {
-  background-color: white;
-  overflow: hidden;
   margin: 50px auto auto auto;
   width: 100%;
  }
@@ -114,7 +112,7 @@
   bottom: 0;
   height: 35px;
   margin-top: 20px;
-  width: 95%;
+  width: 100%;
 }
 
 .dentalloa-button:hover {
@@ -171,7 +169,7 @@
   border-right :0px;
   font-size: 16px;
   font-family: arial;
-  width: 90%;
+  width: 100%;
 }
 
 .react-datepicker-popper {
@@ -282,11 +280,6 @@
 }
 
 .procedure-header {
-  width: 90%;
-  margin: auto;
-  border-style: solid;
-  border-width: 0 0 2px 0;
-  border-color: #DBDBE0;
 }
 
 .grid {

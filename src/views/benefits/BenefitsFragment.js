@@ -263,8 +263,8 @@ class BenefitsFragment extends BaseMVPView {
                     className={ value.styleName }
                     text={ value.title } >
                   </div>
-                  <p className={ 'benefits-option-cards font-weight-bold' }> { value.title } </p>
-                  <h2 className = { 'font-size-14px' }> Lorem ipsum dolor </h2>
+                  <p className={ 'benefits-option-cards font-weight-bold' }>{ value.title }</p>
+                  <h2 className = { 'font-size-14px' }>Lorem ipsum dolor</h2>
                 </div>
               </Card>
             ))
@@ -285,82 +285,88 @@ class BenefitsFragment extends BaseMVPView {
 
   return (
     <div>
-        <h2 className = { 'header-margin-default' }>My Benefits</h2>
-        <div className = { 'tabs-container' }>
-          <input
-            className = { 'input-tab' }
-            id = { 'tab1' }
-            type = { 'radio' }
-            name = { 'tabs' }
-            defaultChecked = { true }
-            onClick = { () => this.props.history.push('/mybenefits/benefits') }/>
-          <label className = { 'benefit-icon-tab' } htmlFor='tab1'>Benefits</label>
-
-         <input
-           className = { 'input-tab' }
-           id = { 'tab2' }
-           type = { 'radio' }
-           name = { 'tabs' }
-           onClick={ () => this.props.history.push('/mybenefits/transactions/personal') } />
-         <label className={ 'transaction-icon-tab' } htmlFor='tab2'>My Transactions</label>
-
-         <input
-           className = { 'input-tab' }
-           id = { 'tab3' }
-           type = { 'radio' }
-           name = { 'tabs' }
-           onClick={ () => this.props.history.push('/mybenefits/loan/existing') } />
-         <label className={ 'transaction-icon-tab' } htmlFor='tab3'>My Existing Loans</label>
-          {
-            // TODO uncomment if required the for approval module
-
-            // <input
-            //    className = { 'input-tab' }
-            //    id='tab3'  type='radio'
-            //    name='tabs'
-            //    onClick = { () => this.props.history.push('/mybenefits/transactions/approval') } />
-            //    <label className = { 'approval-icon' } htmlFor = 'tab3' >For Approval</label>
-          }
-          <section id='content1'>
-            <Switch>
-              <Route path='/mybenefits/transactions/personal'
-                render={ props => <TransactionPersonalFragment { ...props } /> } />
-              <Route path='/mybenefits/transactions/approval'
-                render={ props => <TransactionApprovalFragment { ...props }/> } />
-              <Route path='/mybenefits/loan/existing'
-                render={ props => <MyExistingLoansFragment { ...props }/> } />
-              <Route path='/mybenefits/benefits/education'
-                render={ props => <EducationFragment { ...props } />}/>
-              <Route exact path='/mybenefits/benefits/medical'
-                render={ props => <MedicalFragment { ...props } />}/>
-              <Route exact path='/mybenefits/benefits/loans'
-                render={ props => <LoansFragment { ...props } />}/>
-              {
-                enableLoader ?
-                <Modal>
-                  <h4>Please wait while validating your Employee Number</h4>
-                  <br/>
-                  <center>
-                    <CircularLoader show={ enableLoader }/>
-                  </center>
-                </Modal>
-                :
-                <Route exact path='/mybenefits/benefits/carlease'
-                  render={ props => <CarLeaseFragment
-                  { ...props }
-                  callCarBack={ () => this.navigate() }
-                  />}
-                />
-              }
-
-              <Route path='/mybenefits'
-                render={ Benefits } />
-              <Route exact path='/mybenefits/calamity'
-                render={ props => <CalamityFragment { ...props } />}/>
-             </Switch>
-          </section>
+      <div>
+        <div>
+          <h2 className={ 'header-margin-default text-align-left' }>My Benefits</h2>
+          <h2>Which benefit would you like to avail of today?</h2>
+          <br/>
         </div>
       </div>
+      <div className = { 'tabs-container' }>
+        <input
+          className = { 'input-tab' }
+          id = { 'tab1' }
+          type = { 'radio' }
+          name = { 'tabs' }
+          defaultChecked = { true }
+          onClick = { () => this.props.history.push('/mybenefits/benefits') }/>
+        <label className = { 'benefit-icon-tab' } htmlFor='tab1'>Benefits</label>
+
+       <input
+         className = { 'input-tab' }
+         id = { 'tab2' }
+         type = { 'radio' }
+         name = { 'tabs' }
+         onClick={ () => this.props.history.push('/mybenefits/transactions/personal') } />
+       <label className={ 'transaction-icon-tab' } htmlFor='tab2'>My Transactions</label>
+
+       <input
+         className = { 'input-tab' }
+         id = { 'tab3' }
+         type = { 'radio' }
+         name = { 'tabs' }
+         onClick={ () => this.props.history.push('/mybenefits/loan/existing') } />
+       <label className={ 'transaction-icon-tab' } htmlFor='tab3'>My Existing Loans</label>
+        {
+          // TODO uncomment if required the for approval module
+
+          // <input
+          //    className = { 'input-tab' }
+          //    id='tab3'  type='radio'
+          //    name='tabs'
+          //    onClick = { () => this.props.history.push('/mybenefits/transactions/approval') } />
+          //    <label className = { 'approval-icon' } htmlFor = 'tab3' >For Approval</label>
+        }
+        <section id='content1'>
+          <Switch>
+            <Route path='/mybenefits/transactions/personal'
+              render={ props => <TransactionPersonalFragment { ...props } /> } />
+            <Route path='/mybenefits/transactions/approval'
+              render={ props => <TransactionApprovalFragment { ...props }/> } />
+            <Route path='/mybenefits/loan/existing'
+              render={ props => <MyExistingLoansFragment { ...props }/> } />
+            <Route path='/mybenefits/benefits/education'
+              render={ props => <EducationFragment { ...props } />}/>
+            <Route exact path='/mybenefits/benefits/medical'
+              render={ props => <MedicalFragment { ...props } />}/>
+            <Route exact path='/mybenefits/benefits/loans'
+              render={ props => <LoansFragment { ...props } />}/>
+            {
+              enableLoader ?
+              <Modal>
+                <h4>Please wait while validating your Employee Number</h4>
+                <br/>
+                <center>
+                  <CircularLoader show={ enableLoader }/>
+                </center>
+              </Modal>
+              :
+              <Route exact path='/mybenefits/benefits/carlease'
+                render={ props => <CarLeaseFragment
+                { ...props }
+                callCarBack={ () => this.navigate() }
+                />}
+              />
+            }
+
+            <Route path='/mybenefits'
+              render={ Benefits } />
+            <Route exact path='/mybenefits/calamity'
+              render={ props => <CalamityFragment { ...props } />}/>
+           </Switch>
+        </section>
+      </div>
+    </div>
     )
   }
 }

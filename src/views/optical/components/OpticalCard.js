@@ -55,7 +55,6 @@ class OpticalCard extends Component {
                 placeholder = { 'Enter Amount' }
                 onChange = { e => desiredAmount(e.target.value) }
               />
-            <br/>
             </div>
             <div>
               <DatePicker
@@ -67,7 +66,6 @@ class OpticalCard extends Component {
                 text = { 'Date of Official Receipt' }
                 errorMessage = { dateErrorMessage }
                 />
-                <br/>
             </div>
             <div>
               <GenericInput
@@ -77,7 +75,6 @@ class OpticalCard extends Component {
                 text = { 'Official Receipt Number' }
                 errorMessage = { orNumberErrorMessage }
                 type = { 'text' }/>
-                <br/>
             </div>
             <div className = { 'optical-body' }>
             <br/>

@@ -63,7 +63,7 @@ class FaqListFragment extends Component {
             value = { searchString }
             onChange = { this.updateSearch } />
         </div>
-        <div className = {'card-container'}>
+        <div className = {'faqs-container'}>
         {
           searchQuestions ?
             searchQuestions.map((qtn, i) =>
@@ -71,6 +71,7 @@ class FaqListFragment extends Component {
                 key = { i }
                 imageResponse = { imageResponse }
                 title = { qtn && qtn.title }
+                subtitle = { qtn && qtn.subtitle }
                 onClick = { () => setSelectedFaqQuestion(qtn) } />
             )          :
           <div className = { 'faqs-loader' }>
