@@ -610,7 +610,9 @@ export default class HRBenefitsService {
         amount: groupAidParam.desiredAmount,
         effectivityDate: groupAidParam.effectiveDate,
         companyName: groupAidParam.company,
-        paymentDurationId: groupAidParam.durationOfPaymentId
+        paymentDurationId: groupAidParam.durationOfPaymentId,
+        orDate: groupAidParam.orDate,
+        orNumber: groupAidParam.orNumber
      }
      formData.append('uuid', 12345)
      groupAidParam.attachments.map((resp, key) =>

@@ -33,6 +33,7 @@ class EducationAidFragment extends BaseMVPView {
     super(props)
 
     this.state={
+      titleChange : true,
       showNoticeModal : false,
       noticeResponse : null,
       showNoticeResponseModal : false,
@@ -108,7 +109,7 @@ class EducationAidFragment extends BaseMVPView {
   }
 
   orDateFunc (data) {
-    this.setState({ orDate: data.format('MM-DD-YYYY') })
+    this.setState({ orDate: data.format('MM-DD-YYYY'), orDateErrorMessage : '' })
   }
 
   validateRequired (e) {
@@ -185,6 +186,7 @@ class EducationAidFragment extends BaseMVPView {
       semesterText,
       gwaText,
       orNumber,
+      orDate,
       attachmentArray
     } = this.state
 
@@ -202,8 +204,10 @@ class EducationAidFragment extends BaseMVPView {
       this.setState({ semesterErrorMessage : 'Please select a Semester' })
     } else if (!this.validateRequired(gwaText)) {
       this.setState({ gwaErrorMessage : 'Please enter your GWA' })
+    } else if (!this.validateRequired(orDate)) {
+      this.setState({ orDateErrorMessage : 'Please select a date' })
     } else if (!this.validateRequired(orNumber)) {
-      this.setState({ orNumberErrorMessage : 'Please enter an amount' })
+      this.setState({ orNumberErrorMessage : 'Please enter an Official Receipt Number' })
     } else {
       this.setState({
         showEditSubmitButton: true,
@@ -276,6 +280,7 @@ class EducationAidFragment extends BaseMVPView {
       showEducationAcademicYearModal,
       showEducationSemesterModal,
       data,
+      titleChange,
       schoolsData,
       attachmentArray,
       attachmentsData
@@ -413,9 +418,18 @@ class EducationAidFragment extends BaseMVPView {
             className={ 'back-arrow' }
             onClick={ this.navigate.bind(this) }>
           </i>
-          <h2 className={ 'header-margin-default' }>
-            Education Aid
-          </h2>
+
+          {
+            titleChange ?
+            <h2 className={ 'header-margin-default' }>
+              Education Aid
+            </h2>
+            :
+            <h2 className = { 'header-margin-default' }>
+              Form Summary
+            </h2>
+          }
+
         </div>
         {
           enabledLoader ?
