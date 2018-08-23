@@ -1,6 +1,7 @@
-export default (file1, file2, dependentId, procedure) => ({
-    file1,
-    file2,
+export default (orDate, orNumber, dependentId, procedure, attachments) => ({
+    orDate,
+    orNumber,
     dependentId,
-    procedure
+    procedure,
+    attachments
   })
