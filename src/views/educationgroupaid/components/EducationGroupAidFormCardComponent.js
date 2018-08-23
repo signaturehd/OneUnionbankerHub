@@ -99,6 +99,7 @@ class EducationGroupAidFormCardComponent extends Component {
                 errorMessage = { DOPErrorMessage }
                 type = { 'text' }/>
               <DatePicker
+                readOnly
                 selected = { effectivityDate }
                 value = { effectivityDateText }
                 text = { 'Effectivity Date/Coverage of Insurance' }
@@ -111,6 +112,7 @@ class EducationGroupAidFormCardComponent extends Component {
                 disabled = { showEditSubmitButton }
                 type = { 'text' }/>
               <DatePicker
+                readOnly
                 minDate = { moment() }
                 selected = { orDate && moment(orDate) }
                 text = { 'Date of Official Receipt' }
