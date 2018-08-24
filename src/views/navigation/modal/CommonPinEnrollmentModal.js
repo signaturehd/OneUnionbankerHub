@@ -44,6 +44,7 @@ class CommonPinEnrollmentModal extends Component {
                 className = { 'generic-pin' }
                 hint = { '* * * * *' }
                 maxLength = { 5 }
+                type = { 'password' }
                 onChange = { (e) => {
                   new RequiredNumberValidation().isValid(e.target.value) ?
                   this.setState({ uniquePIN : e.target.value }) :

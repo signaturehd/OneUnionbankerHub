@@ -110,6 +110,12 @@ class SettingsFragment extends BaseMVPView {
            showCompanyInfoModal = { showCompanyInfoModal }
            showPersonalInfoModal = { showPersonalInfoModal }
            showStaffAccountsModal = { showStaffAccountsModal }
+           showChangePINModalFunc = { (showChangePINModal) => this.setState({ showChangePINModal }) }
+           showContactInfoModalFunc = { (showContactInfoModal) => this.setState({ showContactInfoModal }) }
+           showDependentModalFunc = { (showDependentModal) => this.setState({ showDependentModal }) }
+           showCompanyInfoModalFunc = { showCompanyInfoModal }
+           showPersonalInfoModalFunc = { (showPersonalInfoModal) => this.setState({ showPersonalInfoModal }) }
+           showStaffAccountsModalFunc = { (showStaffAccountsModal) =>  this.setState({ showStaffAccountsModal }) }
            changePinSendToFragment = { (uniqueOldPIN, uniqueNewPIN) => this.submitUpdatedPIN(uniqueOldPIN, uniqueNewPIN) }
         />
       </div>
