@@ -4,6 +4,7 @@ import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInte
 // import GetWizardInteractor from '../../../domain/interactor/user/GetWizardInteractor'
 // import SetWizardInteractor from '../../../domain/interactor/user/SetWizardInteractor'
 import RelogInInteractor from '../../../domain/interactor/user/RelogInInteractor'
+import GenericPinCodeInteractor from '../../../domain/interactor/pinCode/GenericPinCodeInteractor'
 
 import { NotifyActions, LoginActions } from '../../../actions'
 import store from '../../../store'
@@ -16,6 +17,7 @@ export default class NavigationPresenter {
     // this.getWizardInteractor = new GetWizardInteractor(container.get('HRBenefitsClient'))
     // this.setWizardInteractor = new SetWizardInteractor(container.get('HRBenefitsClient'))
     this.relogInInteractor = new  RelogInInteractor(container.get('HRBenefitsClient'))
+    this.genericPinCodeInteractor = new GenericPinCodeInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -46,15 +48,34 @@ export default class NavigationPresenter {
     )
   }
 
+  postEnrollPin (id) {
+   this.view.showCircularLoader()
+    this.genericPinCodeInteractor.execute(id)
+    .subscribe(data => {
+      store.dispatch(NotifyActions.addNotify({
+        title: 'Benefits',
+        message : data.message,
+        type : 'success',
+        duration : 2000
+        })
+      )
+      this.view.hideEnrollPin(1)
+      this.view.hideCircularLoader()
+    }, error => {
+      this.view.hideCircularLoader()
+    })
+  }
+
   getProfile () {
-   this.view.showLoading()
+   this.view.showCircularLoader()
 
    this.getProfileInteractor.execute()
     .do(profile => this.view.showProfile(profile.employee))
+    .do(profile => this.view.showPinIsValid(profile.hasPIN))
     .subscribe(profile => {
-     this.view.hideLoading()
+     this.view.hideCircularLoader()
     }, e => {
-     this.view.hideLoading()
+     this.view.hideCircularLoader()
    })
   }
   //

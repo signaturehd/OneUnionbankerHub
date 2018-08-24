@@ -965,4 +965,20 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Pin Enrollment */
+  postEnrollPin (token, id) {
+    const objectPostPin = {
+      code: id
+    }
+    return this.apiClient.post('v1/pin' , objectPostPin, {
+      headers : { token }
+    })
+  }
+
+  putEnrollPin (token, putPINParam) {
+    return this.apiClient.put('v1/pin', putPINParam, {
+      headers : { token }
+    })
+  }
 }
