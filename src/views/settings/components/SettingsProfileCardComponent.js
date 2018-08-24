@@ -41,6 +41,12 @@ class SettingsProfileCardComponent extends Component {
       accountNumber,
       changePinSendToFragment,
       enabledLoader,
+      showChangePINModalFunc,
+      showContactInfoModalFunc,
+      showDependentModalFunc,
+      showCompanyInfoModalFunc,
+      showPersonalInfoModalFunc,
+      showStaffAccountsModalFunc,
       showChangePINModal,
       showContactInfoModal,
       showDependentModal,
@@ -64,7 +70,7 @@ class SettingsProfileCardComponent extends Component {
           <ChangePINModal
             enabledLoader = { enabledLoader }
             onSubmitPinCode = { (uniqueOldPIN, uniqueNewPIN) => changePinSendToFragment(uniqueOldPIN, uniqueNewPIN) }
-            onClose={ () => this.setState({ showChangePINModal : false }) }
+            onClose={ () => showChangePINModalFunc(false) }
           />
         }
         {
@@ -73,7 +79,7 @@ class SettingsProfileCardComponent extends Component {
               profileName={ profile && profile.fullname }
               profileEmail={ profile && profile.email }
               profileNumber={ profile && profile.contactNumber }
-              onClose={ () => this.setState({ showContactInfoModal : false }) }
+              onClose={ () => showContactInfoModalFunc(false) }
             />
         }
         {
@@ -81,7 +87,7 @@ class SettingsProfileCardComponent extends Component {
             <DependentsModal
               profileName={ profile && profile.fullname }
               dependents={ profileDependent && profileDependent }
-              onClose={ () => this.setState({ showDependentModal : false }) }
+              onClose={ () => showDependentModalFunc(false) }
             />
         }
         {
@@ -89,7 +95,7 @@ class SettingsProfileCardComponent extends Component {
             <PersonalInfoModal
               accountNumber={ accountNumber }
               profile={ profile && profile}
-              onClose={ () => this.setState({ showPersonalInfoModal : false }) }
+              onClose={ () => showPersonalInfoModalFunc(false) }
             />
         }
         {
@@ -98,13 +104,13 @@ class SettingsProfileCardComponent extends Component {
               profile={ profile && profile}
               lineManager={ lineManager && lineManager.fullName }
               rank={ rank && rank.rank }
-              onClose={ () => this.setState({ showCompanyInfoModal : false }) }
+              onClose={ () => showCompanyInfoModalFunc(false) }
             />
         }
         {
           showStaffAccountsModal &&
           <StaffAccountsModal
-            onClose={ () => this.setState({  showStaffAccountsModal : false }) }
+            onClose={ () => showStaffAccountsModalFunc(false) }
           />
         }
         <div>
@@ -140,7 +146,7 @@ class SettingsProfileCardComponent extends Component {
               </div>
               <div>
                 <div
-                  onClick={ () => this.setState({ showChangePINModal : true }) }
+                  onClick={ () => showChangePINModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings lock-icon' }/>
@@ -152,7 +158,7 @@ class SettingsProfileCardComponent extends Component {
                   </div>
                 </div>
                 <div
-                  onClick={ () => this.setState({ showPersonalInfoModal : true }) }
+                  onClick={ () => showContactInfoModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings employeeContactAddress' }/>
@@ -164,7 +170,7 @@ class SettingsProfileCardComponent extends Component {
                   </div>
                 </div>
                 <div
-                  onClick={ () => this.setState({ showContactInfoModal : true }) }
+                  onClick={ () => showContactInfoModal(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings employeeContact' }/>
@@ -176,7 +182,7 @@ class SettingsProfileCardComponent extends Component {
                   </div>
                 </div>
                 <div
-                  onClick={ () => this.setState({ showDependentModal : true }) }
+                  onClick={ () => showDependentModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings employeeDependent' }/>
@@ -188,7 +194,7 @@ class SettingsProfileCardComponent extends Component {
                   </div>
                 </div>
                 <div
-                  onClick={ () => this.setState({ showCompanyInfoModal : true }) }
+                  onClick={ () => showCompanyInfoModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings employeeId' }/>
@@ -200,7 +206,7 @@ class SettingsProfileCardComponent extends Component {
                   </div>
                 </div>
                 <div
-                  onClick={ () => this.setState({ showStaffAccountsModal : true }) }
+                  onClick={ () => showStaffAccountsModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings staffAccount' }/>
@@ -253,6 +259,7 @@ class SettingsProfileCardComponent extends Component {
 
 SettingsProfileCardComponent.propTypes = {
   onClick : PropTypes.func,
+  onClose : PropTypes.func,
   changePinSendToFragment : PropTypes.func,
   profileImageUrl : PropTypes.string,
   rank: PropTypes.object,
