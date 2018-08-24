@@ -23,10 +23,12 @@ export default class CarLeasePresenter {
 
 
   getCarValidate () {
+    this.view.showCircularLoader()
     this.getCarValidateInteractor.execute()
     .subscribe(
       validate => {
         this.view.showCarValidated(validate)
+        this.view.hideCircularLoader()
       }, error => {
         this.view.navigate()
       }
@@ -38,6 +40,8 @@ export default class CarLeasePresenter {
     carModel,
     makeYear,
     leaseMode,
+    solRC,
+    cMUnit,
     primaryColor,
     secondaryColor,
     file
@@ -48,6 +52,8 @@ export default class CarLeasePresenter {
       carModel,
       makeYear,
       leaseMode,
+      solRC,
+      cMUnit,
       primaryColor,
       secondaryColor,
       file
@@ -56,11 +62,9 @@ export default class CarLeasePresenter {
        data => {
          this.view.hideCircularLoader()
          this.view.noticeOfUndertaking(data)
-         this.view.navigate()
        }, error => {
          this.view.noticeResponse(error)
          this.view.hideCircularLoader()
-         this.view.navigate()
        }
      )
   }

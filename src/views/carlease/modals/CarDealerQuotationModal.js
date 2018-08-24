@@ -29,8 +29,8 @@ class CarDealerQuotation extends Component {
         <br/>
         <center className={ 'car-grid-modal' }>
           <GenericButton
-            onClick={ () => this.navigateBenefits() }
-            text={ 'No' }/>
+            onClick = { () => this.navigateBenefits() }
+            text = { 'No' }/>
           <GenericButton
             onClick={ () => onUserConfirmation(false, true) }
             text={ 'Yes' } />

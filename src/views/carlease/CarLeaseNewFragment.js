@@ -5,10 +5,20 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/CarLeasePresenter'
 import ConnectView from '../../utils/ConnectView'
 
-import { CircularLoader } from '../../ub-components/'
+import * as CarLeaseFunctions from './functions/CarLeaseFunctions'
+
+import {
+  CircularLoader,
+  SingleInputModal,
+  Modal,
+  GenericInput,
+  GenericButton
+} from '../../ub-components/'
 
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
+import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
+import CarDealerQuotation from './modals/CarDealerQuotationModal'
 
 import FormComponent from './components/CarLeaseNewFormComponent'
 
@@ -22,18 +32,26 @@ class CarLeaseNewFragment extends BaseMVPView {
     this.state = {
       enabledLoader : false,
       showNoticeModal : false,
+      showNoticeResponseModal : false,
+      showFileUpload: false,
+      showQuotation: true,
       noticeResponse : null,
       showNoticeResponseModal : false,
       showBenefitFeedbackModal : false,
+      showCarBrands: false,
+      showEnterSolRCModal: false,
+      carValidate: [],
       loanType: 15,
       leaseMode: 1,
       carBrand: '',
+      carId: '',
       carModel: '',
-      makeYear: 0,
+      makeYear: '',
       primaryColor: '',
       secondaryColor: '',
       file: '',
-      carValidate: [],
+      solRC: '',
+      solRCInput: ''
     }
     this.sendFormData = this.sendFormData.bind(this)
   }
@@ -47,14 +65,41 @@ class CarLeaseNewFragment extends BaseMVPView {
     this.setState({ carValidate })
   }
 
+  validateInputCarModelValue (e) {
+    const validate = CarLeaseFunctions.checkedValidatedInput(e)
+    this.setState({ carModel : validate })
+  }
+
+  validateInputPrimaryColor (e) {
+    const validate = CarLeaseFunctions.checkedValidateAlphabet(e)
+    this.setState({ primaryColor : validate })
+  }
+
+  validateInputSecondaryColor (e) {
+    const validate = CarLeaseFunctions.checkedValidateAlphabet(e)
+    this.setState({ secondaryColor : validate })
+  }
+
+  validateInputNumber (e) {
+    const validate = CarLeaseFunctions.checkedValidateInputNumber(e)
+    this.setState({ solRC : validate })
+  }
+
+  validateYear (e) {
+    const validate = CarLeaseFunctions.checkedValidateInputNumber(e)
+    this.setState({ makeYear : validate })
+  }
+
   sendFormData (
     carBrand,
     carModel,
     makeYear,
-    leaseMode,
+    solRCDefault,
+    cMUnit,
     primaryColor,
     secondaryColor,
     file) {
+      const { leaseMode } = this.state
       if (carBrand === null) {
           store.dispatch(NotifyActions.addNotify({
               title : 'Car Lease (New)',
@@ -101,6 +146,8 @@ class CarLeaseNewFragment extends BaseMVPView {
           carModel,
           makeYear,
           leaseMode,
+          solRCDefault,
+          cMUnit,
           primaryColor,
           secondaryColor,
           file ? file : null)
@@ -110,11 +157,11 @@ class CarLeaseNewFragment extends BaseMVPView {
   /* Notice Response*/
 
   noticeOfUndertaking (noticeResponse) {
-  this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
+   this.setState({ showNoticeModal : true, noticeResponse })
   }
 
-  noticeResponse (noticeResponse) {
-    this.setState({showConfirmation: false, noticeResponse })
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse })
   }
 
   /* Implementation*/
@@ -139,12 +186,16 @@ class CarLeaseNewFragment extends BaseMVPView {
 
   render () {
     const {
+      showCarBrands,
+      showQuotation,
+      showFileUpload,
       enabledLoader,
       formAttachments,
       showNoticeModal,
       noticeResponse,
       showNoticeResponseModal,
       showBenefitFeedbackModal,
+      showEnterSolRCModal,
       response,
       carBrand,
       carModel,
@@ -154,22 +205,98 @@ class CarLeaseNewFragment extends BaseMVPView {
       file,
       leaseMode,
       loanType,
-      carValidate
+      carValidate,
+      solRC,
+      solRCInput
     } = this.state
+
     const { onSubmit, history }=this.props
     return (
       <div>
+        {
+          showEnterSolRCModal &&
+          <Modal>
+            <center>
+              <GenericInput
+                value = { solRC }
+                text = { 'Enter Sol RC' }
+                hint = { 'Please Enter Required Sol RC' }
+                onChange = { (e) => this.validateInputNumber(e.target.value) }
+                />
+              <br/>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'Cancel' }
+                  onClick = { () => this.setState({ showEnterSolRCModal : false }) }
+                  />
+                <GenericButton
+                  text = { 'Continue' }
+                  onClick = { () => {
+                    this.setState({ showEnterSolRCModal : false })
+                    }
+                  }
+                />
+              </div>
+            </center>
+          </Modal>
+        }
+        {
+          showQuotation &&
+          <CarDealerQuotation
+            history = { history }
+            backToBenefits = { this.navigate.bind(this) }
+            onUserConfirmation = { (showQuotation, showFileUpload) =>
+              this.setState({ showQuotation, showFileUpload })
+           }
+            onClose = { () =>
+              this.setState({ showQuotation: false })  }
+            />
+        }
         {
           showNoticeModal &&
           <NoticeModal
             onClose={ () => this.setState({ showNoticeModal : false })}
             noticeResponse={ noticeResponse }
-            benefitId={ loanType }
+            benefitId={ '15' }
             onDismiss={ (showNoticeModal, noticeResponse) =>
               this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
           />
         }
-
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
+            }}
+            noticeResponse={ noticeResponse }
+          />
+        }
+        {
+          showBenefitFeedbackModal &&
+          <BenefitFeedbackModal
+            benefitId={ '15' }
+            onClose={ () => {
+              this.props.history.push('/mybenefits/benefits/medical'),
+              this.setState({ showBenefitFeedbackModal : false })
+            }}
+          />
+        }
+        {
+          showCarBrands &&
+          <SingleInputModal
+            label = { 'Brands' }
+            inputArray = { carValidate && carValidate.brands }
+            selectedArray = { (carId, carBrand) =>
+              this.setState({
+                carId,
+                carBrand,
+                showCarBrands : false,
+                carBrandErrorMessage : ''
+              })
+            }
+            onClose = { () => this.setState({ showCarBrands : false }) }
+          />
+        }
         {
           showNoticeResponseModal &&
           <ResponseModal
@@ -205,12 +332,29 @@ class CarLeaseNewFragment extends BaseMVPView {
                <CircularLoader show={ this.state.enabledLoader }/>
              </center> :
             <FormComponent
-              history={ history }
-              brands={ carValidate  && carValidate.brands ? carValidate.brands : [] }
+              history = { history }
+              carBrand = { carBrand }
+              carModel = { carModel }
+              makeYear = { makeYear }
+              showQuotation = { showQuotation }
+              showFileUpload = { showFileUpload }
+              secondaryColor = { secondaryColor }
+              primaryColor = { primaryColor }
+              solRCDefault = { carValidate.solRC }
+              cmUnit = { carValidate.unit }
+              onGetCarBrandsFunc = { () => this.setState({ showCarBrands : true }) }
+              onCarModelValidateFunc = { (resp) => this.validateInputCarModelValue(resp) }
+              onValidateyearFunc = { (resp) => this.validateYear(resp) }
+              onValidatePrimaryColor = { (resp) => this.validateInputPrimaryColor(resp) }
+              onValidateSecondaryColor = { (resp) => this.validateInputSecondaryColor(resp) }
+              onValidateSolRC = { (resp) => this.validateInputNumber(resp) }
+              onShowEnterSolRCModalFunc = { () => this.setState({ showEnterSolRCModal : true }) }
               onSubmit={ (
                 carBrand,
                 carModel,
                 makeYear,
+                solRCDefault,
+                cMUnit,
                 primaryColor,
                 secondaryColor,
                 file) =>
@@ -218,11 +362,11 @@ class CarLeaseNewFragment extends BaseMVPView {
                   carBrand,
                   carModel,
                   makeYear,
-                  leaseMode,
+                  solRCDefault,
+                  cMUnit,
                   primaryColor,
                   secondaryColor,
-                  file
-                  )
+                  file)
                 }
             />
           }

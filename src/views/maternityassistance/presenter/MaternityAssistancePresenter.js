@@ -3,12 +3,12 @@ import { NotifyActions } from '../../../actions'
 
 import AddMaternityAssistanceSSSInteractor from
 '../../../domain/interactor/maternityassistancesss/AddMaternityAssistanceSSSInteractor'
-
 import ValidateMaternityAssistanceInteractor from
 '../../../domain/interactor/maternityassistance/ValidateMaternityAssistanceInteractor'
-
 import AddMaternityAssistanceInteractor from
 '../../../domain/interactor/maternityassistance/AddMaternityAssistanceInteractor'
+import GetProfileInteractor from
+'../../../domain/interactor/user/GetProfileInteractor'
 
 import addMaternityAssistanceParam from '../../../domain/param/AddMaternityAssistanceParam'
 import addMaternityAssistanceSSSParam from '../../../domain/param/AddMaternityAssistanceSSSParam'
@@ -23,10 +23,20 @@ export default class MaternityAssistancePresenter {
 
     this.addMaternityAssistanceInteractor =
       new AddMaternityAssistanceInteractor(container.get('HRBenefitsClient'))
+
+
+    this.getProfileInteractor =
+      new GetProfileInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
+  }
+
+  getProfile () {
+    this.getProfileInteractor.execute()
+     .do(profile => this.view.showProfileGender(profile.employee.gender))
+     .subscribe()
   }
 
   validateMaternityAssistance () {
@@ -84,8 +94,7 @@ export default class MaternityAssistancePresenter {
         this.view.hideCircularLoader()
         this.view.noticeOfUndertaking(data)
       }, errors => {
-        this.view.hideCircularLoader()
-        this.view.showErrorMessage(true, errors)
+        this.view.navigate()
       }
     )
   }
@@ -124,11 +133,9 @@ export default class MaternityAssistancePresenter {
     .subscribe(
       data => {
         this.view.hideCircularLoader()
-        this.view.confirmationMat1Response(true)
-        this.view.showConfirmationModal(data.message)
+        this.view.confirmationMat1Response(true, data.message)
       },  errors => {
-          this.view.hideCircularLoader()
-          this.view.showErrorMessage(true, errors)
+          this.view.navigate()
         }
       )
     }

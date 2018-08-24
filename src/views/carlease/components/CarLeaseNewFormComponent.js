@@ -2,11 +2,16 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import './styles/carleaseStyle.css'
-import { GenericTextBox,  Card, GenericButton, FileUploader } from '../../../ub-components/'
+import {
+  GenericTextBox,
+  GenericInput,
+  Card,
+  GenericButton,
+  FileUploader,
+  Line
+} from '../../../ub-components/'
 
 import { RequiredAlphabetValidation, RequiredNumberValidation } from '../../../utils/validate'
-
-import CarDealerQuotation from '../modals/CarDealerQuotationModal'
 import CarBrandsModal from '../modals/CarBrandsModal'
 
 import store from '../../../store'
@@ -17,50 +22,13 @@ class CarLeaseNewFormComponent extends Component {
   constructor (props) {
     super(props)
     this.state={
-      carBrand : '',
-      carModel : '',
-      makeYear : '',
-      primaryColor : '',
-      secondaryColor: '',
       file: '',
       imagePreviewUrl: '',
-      showFileUpload: false,
-      showQuotation: true,
       navigate: false,
-      showCarBrands: false,
-      carBrandId: ''
     }
-     this.onChange=this.onChange.bind(this)
-     this.getCarModel=this.getCarModel.bind(this)
-     this.getPrimaryColor=this.getPrimaryColor.bind(this)
-     this.getSecondaryColor=this.getSecondaryColor.bind(this)
      this.handleImageChange=this.handleImageChange.bind(this)
      this.onGetClicked=this.onGetClicked.bind(this)
   }
-
-  getCarModel (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-      this.setState({ carModel : e.target.value }) :
-      this.setState({ carModel : '' })
-  }
-
-  getPrimaryColor (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-      this.setState({ primaryColor : e.target.value }) :
-      this.setSTate({ primaryColor : '' })
-  }
-
-  getSecondaryColor (e) {
-    new RequiredAlphabetValidation().isValid(e.target.value) ?
-      this.setState({ secondaryColor : e.target.value }):
-      this.setState({ secondaryColor : '' })
-  }
-
-  onChange (e) {
-    new RequiredNumberValidation().isValid(e.target.value) ?
-      this.setState({ makeYear: e.target.value })  :
-      this.setState({ makeYear: '' })
-   }
 
    getExtension (filename) {
      const parts=filename.split('/')
@@ -111,48 +79,50 @@ class CarLeaseNewFormComponent extends Component {
     carBrand,
     carModel,
     makeYear,
+    solRC,
+    cmUnit,
     primaryColor,
     secondaryColor,
-    file,
-    imagePreviewUrl) {
-      const attachments=[{
-        "base64Doc" : file,
-      }]
+    file,) {
     this.props.onSubmit(
       carBrand,
       carModel,
       makeYear,
+      solRC,
+      cmUnit,
       primaryColor,
       secondaryColor,
-      file
-    )
-  }
-
-  navigateBenefits () {
-    this.props.history.push('/mybenefits/benefits')
+      file)
   }
 
   render () {
     const {
-      carBrand,
-      carBrandId,
-      carModel,
-      makeYear,
-      primaryColor,
-      secondaryColor,
       file,
       imagePreviewUrl,
-      showFileUpload,
-      showQuotation,
       navigate,
-      showCarBrands
     }=this.state
 
     const {
       loanType,
       history,
-      brands,
+      carModel,
+      carBrand,
+      makeYear,
+      primaryColor,
+      solRCDefault,
+      cmUnit,
+      secondaryColor,
+      showQuotation,
+      showFileUpload,
+      onGetCarBrandsFunc,
+      onCarModelValidateFunc,
+      onValidateyearFunc,
+      onValidatePrimaryColor,
+      onValidateSecondaryColor,
+      onValidateSolRC,
+      onShowEnterSolRCModalFunc
     }=this.props
+
       const styles={
         image : {
           backgroundImage: `url('${imagePreviewUrl}')`,
@@ -169,115 +139,125 @@ class CarLeaseNewFormComponent extends Component {
     return (
       <div className={'carview-container'}>
         <div className={ 'car-grid-column-2' }>
-          {
-            showQuotation &&
-            <CarDealerQuotation
-              history={ history }
-              backToBenefits={ this.navigateBenefits.bind(this) }
-              onUserConfirmation={ (showQuotation, showFileUpload) =>
-                this.setState({ showQuotation, showFileUpload })
-             }
-              onClose={ () =>
-                this.setState({ showQuotation: false })  }
-              />
-          }
-          {
-            showCarBrands &&
-            <CarBrandsModal
-              brands={ brands }
-              onGetCarBrands={ (car, hideModal) =>
-              this.setState({ carBrand : car.name, carId : car.id, showCarBrands: hideModal}) }
-              onClose={ ()=>
-                this.setState({ showCarBrands : false } )
-            }
-            />
-          }
-          <Card className={ 'car-form-card' }>
-            <h4>
-              Car Lease Form (New)
-            </h4>
+          <div></div>
+          <div className={ 'car-form-card' }>
+            <Line/>
+            <br/>
             <div className={ 'car-form-card-body' }>
-              <GenericTextBox
-                value={ carBrand }
-                onClick={ ()=> this.setState({ showCarBrands : true }) }
-                placeholder={ 'Brand' }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={ carModel }
-                onChange={ this.getCarModel }
-                placeholder={ 'Model' }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={ makeYear }
-                onChange={ this.onChange }
-                placeholder={ 'Year' }
-                maxLength={ 4 }
-                type={ 'text' } />
-              <GenericTextBox
-                value={ primaryColor }
-                onChange={ this.getPrimaryColor }
-                placeholder={ 'Primary Color' }
-                type={ 'text' }/>
-              <GenericTextBox
-                value={ secondaryColor }
-                onChange={ this.getSecondaryColor }
-                placeholder={ 'Secondary Color' }
-                type={ 'text' }/>
-              <GenericButton
-                type={ 'button' }
-                text={ 'continue' }
-                onClick={ () =>
-                  this.onGetClicked(
-                    carBrand,
-                    carModel,
-                    makeYear,
-                    primaryColor,
-                    secondaryColor,
-                    file,
-                    imagePreviewUrl)
-                  }
-                className={ 'carview-submit' } />
-            </div>
-          </Card>
-          {
-            showFileUpload &&
-          <Card className={ 'car-form-preview' }>
-            <h4>
-              Dealer Quotation Attachment
-            </h4>
-            <div className={ 'optical-body' }>
-             <FileUploader
-                onChange={ this.handleImageChange }
-                placeholder={ 'File Attachments' }
-                value={ file.name }
+              <GenericInput
+                placeholder = { 'Brand' }
+                errorMessage = { '' }
+                onClick ={ () => onGetCarBrandsFunc() }
+                text = { 'Brands' }
+                value = { carBrand }
+                readOnly
+                />
+              <GenericInput
+                placeholder = { 'Model' }
+                errorMessage = { '' }
+                text = { 'Model' }
+                onChange = { (e) => onCarModelValidateFunc(e.target.value) }
+                value = { carModel }
+                />
+              <GenericInput
+                value = { makeYear }
+                hint = { '(e.g) 2001... 2017, 2018' }
+                maxLength = { 4 }
+                onChange = { (e) => onValidateyearFunc(e.target.value) }
+                text = { 'Year' }
+                errorMessage = { '' }
+                />
+              <GenericInput
+                value = { primaryColor }
+                hint = { '(e.g) Red, Black, White & etc.' }
+                onChange = { (e) => onValidatePrimaryColor(e.target.value)  }
+                maxLength = { 20 }
+                errorMessage = { '' }
+                text = { 'Primary Color' }
               />
-            </div>
-            <div className={ 'car-form-card-body' }>
-              <div className={ 'car-footer-left' }>
-                <div className={ 'car-grid' }>
-                  <div className={ 'car-image-view' }>
-                    { $imagePreview }
-                    <div className={ 'car-image-layer' }></div>
+              <GenericInput
+                value = { secondaryColor }
+                hint = { '(e.g) Red, Black, White & etc.' }
+                onChange = { (e) => onValidateSecondaryColor(e.target.value)  }
+                maxLength = { 20 }
+                errorMessage = { '' }
+                text = { 'Secondary Color' }
+              />
+              <GenericInput
+                value = { solRCDefault }
+                onClick = { () => {} }
+                maxLength = { 20 }
+                readOnly
+                onClick = { () => onShowEnterSolRCModalFunc }
+                errorMessage = { '' }
+                text = { 'Sol RC' }
+              />
+              <GenericInput
+                value = { cmUnit }
+                readOnly
+                text = { 'CM Unit' }
+              />
+              {
+                showFileUpload &&
+                <div>
+                  <h4>
+                    Dealer Quotation Attachment
+                  </h4>
+                  <div>
+                   <FileUploader
+                      onChange = { this.handleImageChange }
+                      placeholder = { 'File Attachments' }
+                      value = { file.name }
+                      base64 = { $imagePreview }
+                      disabled = { false }
+                    />
                   </div>
                 </div>
-              </div>
+                }
+                <GenericButton
+                  type={ 'button' }
+                  text={ 'continue' }
+                  onClick={ () =>
+                    this.onGetClicked(
+                      carBrand,
+                      carModel,
+                      makeYear,
+                      solRCDefault,
+                      cmUnit,
+                      primaryColor,
+                      secondaryColor,
+                      file)
+                    }
+                  className={ 'carview-submit' } />
             </div>
-          </Card>
-          }
+          </div>
+          <div></div>
         </div>
       </div>
     )
   }
 }
 
-CarLeaseNewFormComponent.propTypes={
+CarLeaseNewFormComponent.propTypes = {
   loanType : PropTypes.number,
+  makeYear : PropTypes.number,
   setSelectedNavigation: PropTypes.func,
   history: PropTypes.object,
-  brands: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.array
-  ]),
+  carBrand: PropTypes.string,
+  solRCDefault: PropTypes.string,
+  cmUnit: PropTypes.string,
+  carModel: PropTypes.string,
+  primaryColor: PropTypes.string,
+  secondaryColor: PropTypes.string,
+  primaryColor: PropTypes.bool,
+  showQuotation: PropTypes.bool,
+  showFileUpload: PropTypes.bool,
+  onCarModelValidateFun: PropTypes.func,
+  onValidateyearFunc: PropTypes.func,
+  onValidatePrimaryColor: PropTypes.func,
+  onValidateSecondaryColor: PropTypes.func,
+  onValidateSolRC: PropTypes.func,
+  onShowEnterSolRCModalFunc: PropTypes.func,
 }
 
 export default CarLeaseNewFormComponent

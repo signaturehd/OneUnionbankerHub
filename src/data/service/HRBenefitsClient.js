@@ -760,4 +760,10 @@ export default class HRBenefitsClient {
     return this.service.addPhenomIsHeart(token, like)
       .pipe(ServiceErrorOperator())
   }
+
+  /* Leave Filing  */
+  addLeaveFiling (token, leaveFilingParam) {
+    return this.service.addLeaveFiling(token, leaveFilingParam)
+      .pipe(ServiceErrorOperator())
+  }
 }
