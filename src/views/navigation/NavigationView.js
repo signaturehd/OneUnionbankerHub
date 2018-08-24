@@ -65,6 +65,7 @@ import Carousel from '../carousel/Carousel'
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
+import CommonPinEnrollmentModal from './modal/CommonPinEnrollmentModal'
 
 class NavigationView extends BaseMVPView {
   constructor (props) {
@@ -74,6 +75,9 @@ class NavigationView extends BaseMVPView {
       selected: 0,
       profile: [],
       showLogoutModal: false,
+      showPinEnrollmentModal : true,
+      hasPIN: '',
+      enabledLoader : false,
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -88,6 +92,18 @@ class NavigationView extends BaseMVPView {
 
   showProfile (profile) {
     this.setState({ profile })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false  })
+  }
+
+  hideEnrollPin (hasPIN) {
+    this.setState({ hasPIN })
   }
 
   componentDidMount () {
@@ -113,6 +129,10 @@ class NavigationView extends BaseMVPView {
     this.setState({ selected: id })
   }
 
+  showPinIsValid (hasPIN) {
+    this.setState({ hasPIN })
+  }
+
   callLogout () {
     this.presenter.logout()
   }
@@ -129,9 +149,14 @@ class NavigationView extends BaseMVPView {
       selected,
       onClick,
       profile,
-      showLogoutModal
+      showLogoutModal,
+      showPinEnrollmentModal,
+      hasPIN,
+      enabledLoader
     } = this.state
+
     const { history, login } = this.props
+
     const style = {
       show: {
           display : displayShow
@@ -155,22 +180,30 @@ class NavigationView extends BaseMVPView {
             className = { 'navigation-panel navigation-content' }
             role = { 'main' }
             id = { 'navPanId' }>
-          {
-            showLogoutModal &&
-            <NavigationViewModal
-              logout = { () => this.presenter.logout() }
-              onClose = { () => this.setState({ showLogoutModal : false }) }
-            />
-          }
-
-          {
-            login &&
-            <ReloginModal
-              relogin = { () => {
-               this.presenter.relogin()
-              } }
-            />
-          }
+              {
+                hasPIN === 0 &&
+                <CommonPinEnrollmentModal
+                  hasPIN = { hasPIN }
+                  enabledLoader = { enabledLoader }
+                  onSubmitPinCode = { (resp) => this.presenter.postEnrollPin(resp) }
+                  onCloseModal = { (resp) => this.setState({  }) }
+                  />
+              }
+              {
+                showLogoutModal &&
+                <NavigationViewModal
+                  logout = { () => this.presenter.logout() }
+                  onClose = { () => this.setState({ showLogoutModal : false }) }
+                />
+              }
+              {
+                login &&
+                <ReloginModal
+                  relogin = { () => {
+                   this.presenter.relogin()
+                  } }
+                />
+              }
               <Drawer >
                 <Switch>
                   <Route exact path = '/' render = {props =>
