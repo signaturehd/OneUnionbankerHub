@@ -24,6 +24,7 @@ import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import ConfirmationModal from './modal/CalamityReviewModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
+import CalamityFormGenericModal from './modal/CalamityFormGenericModal'
 
 import FormComponent from './components/CalamityFormCardComponent'
 import { RequiredValidation } from '../../utils/validate'
@@ -47,6 +48,7 @@ class CalamityFragment extends BaseMVPView {
       showPropertyTypeModal: false,
       showModal: false,
       enabledLoader:false,
+      showPropertyModal:false,
       calamityAssistance: [],
       attachmentArray: [],
       attachmentsData: [],
@@ -265,7 +267,8 @@ class CalamityFragment extends BaseMVPView {
       acquisitionValue,
       estimatedCost,
       calamityTypeErrorMessage,
-      estimatedCostErrorMessage
+      estimatedCostErrorMessage,
+      showPropertyModal
     }=this.state
 
     return (
@@ -312,148 +315,155 @@ class CalamityFragment extends BaseMVPView {
         />
       }
 
-        {
-          showCalamityTypeModal &&
-          <SingleInputModal
-            label = { 'Type of Calamity' }
-            inputArray = { calamityType && calamityType }
-            selectedArray = { (calamityId, calamityName) =>
-              this.setState({
-                calamityId,
-                calamityName,
-                showCalamityTypeModal : false,
-                calamityTypeErrorMessage : ''
-              })
-            }
-            onClose = { () => this.setState({ showCalamityTypeModal : false }) }
-          />
-        }
-
-        {
-          showPropertyTypeModal &&
-          <SingleInputModal
-            label = { 'Property Type' }
-            inputArray = { propertyTypeValue && propertyTypeValue }
-            selectedArray = { (propertyId, propertyType) =>
-              this.setState({
-                propertyId,
-                propertyType,
-                showPropertyTypeModal : false,
-                propertyTypeErrorMessage : ''
-              })
-            }
-            onClose = { () => this.setState({ showPropertyTypeModal : false }) }
-          />
-        }
-
-          {
-            showReviewCalamityModal &&
-            <CalamityReviewModal
-              calamityId={ calamityId }
-              calamityName={ calamityName }
-              preferredDate={ preferredDate }
-              property={ property }
-              propertyDesc={ propertyDesc }
-              propertyType={ propertyType }
-              acquisitionValue={ acquisitionValue }
-              estimatedCost={ estimatedCost }
-
-              onCancel={  () => this.setState({ showReviewCalamityModal : false })  }
-              onClose={ () => this.setState({ showReviewCalamityModal : false }) }
-
-              onClick={ () => this.onGetClicked(
-                calamityId,
-                calamityType,
-                preferredDate,
-                property,
-                propertyDesc,
-                propertyType,
-                acquisitionValue,
-                estimatedCost,
-
-                )
-              }
-              onClose={
-                () => {
-                  this.setState({ showReviewCalamityModal : false })
-                }
-              }
-            />
+      {
+        showCalamityTypeModal &&
+        <SingleInputModal
+          label = { 'Type of Calamity' }
+          inputArray = { calamityType && calamityType }
+          selectedArray = { (calamityId, calamityName) =>
+            this.setState({
+              calamityId,
+              calamityName,
+              showCalamityTypeModal : false,
+              calamityTypeErrorMessage : ''
+            })
           }
-        <div>
-          <i
-            className={ 'back-arrow' }
-            onClick={ this.navigate.bind(this) }>
-          </i>
-          <h2 className={ 'header-margin-default' }>
-            Calamity Assistance Form
-          </h2>
-        </div>
-        {
-          enabledLoader ?
-           <center className={ 'circular-loader-center' }>
-             <CircularLoader show={ this.state.enabledLoader }/>
-           </center> :
-          <FormComponent
-            onClick = {
-              (showConfirmation, data) => {
-                this.confirmation(showConfirmation, data)
-              }
-            }
-            calamityAssistance={ calamityAssistance }
-            attachmentsData = { attachmentsData }
-            calamityId = { calamityId }
-            calamityName={ calamityName }
-            calamityType = { calamityType }
-            preferredDate = { preferredDate }
-            property = { property }
-            propertyDesc = { propertyDesc }
-            propertyType = { propertyType }
-            acquisitionValue = { acquisitionValue }
-            estimatedCost = { estimatedCost }
-            calamityTypeErrorMessage = { calamityTypeErrorMessage }
-            estimatedCostErrorMessage = { estimatedCostErrorMessage }
-            propertyFunc = { (resp) => this.validatePropertyFunc(resp) }
-            propertyDescFunc = { (resp) => this.validatePropertyDescFunc(resp) }
-            acquisitionFunc = { (resp) => this.validateAcquisitionFunc(resp) }
-            estimatedCostFunc = { (resp) => this.validateEstimatedCostFunc(resp) }
-            handleChange = { (resp) => this.handleChange(resp) }
-            requestCalamityTypeFunc = { (resp) => this.showCalamityTypeModal(resp) }
-            requestPropertyTypeFunc = { (resp) => this.showPropertyTypeModal(resp) }
-            setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
-            getPreferredDate = { data =>
-              this.setState({ date :  data })}
+          onClose = { () => this.setState({ showCalamityTypeModal : false }) }
+        />
+      }
 
-              getFormData={ (
-                calamityId,
-                calamityType,
-                preferredDate,
-                property,
-                propertyDesc,
-                propertyType,
-                acquisitionValue,
-                estimatedCost,
-                fileBC,
-                fileDP,
-                imgPrevBC,
-                imgPrevDP
-              ) => this.confirmation(
-                calamityId,
-                calamityType,
-                preferredDate,
-                property,
-                propertyDesc,
-                propertyType,
-                acquisitionValue,
-                estimatedCost,
-                fileBC,
-                fileDP,
-                imgPrevBC,
-                imgPrevDP
-                )
-              }
+      {
+        showPropertyTypeModal &&
+        <SingleInputModal
+          label = { 'Property Type' }
+          inputArray = { propertyTypeValue && propertyTypeValue }
+          selectedArray = { (propertyId, propertyType) =>
+            this.setState({
+              propertyId,
+              propertyType,
+              showPropertyTypeModal : false,
+              propertyTypeErrorMessage : ''
+            })
+          }
+          onClose = { () => this.setState({ showPropertyTypeModal : false }) }
+        />
+      }
+
+      {
+        showPropertyModal &&
+        <CalamityFormGenericModal
           />
-        }
+      }
+
+      {
+        showReviewCalamityModal &&
+        <CalamityReviewModal
+          calamityId={ calamityId }
+          calamityName={ calamityName }
+          preferredDate={ preferredDate }
+          property={ property }
+          propertyDesc={ propertyDesc }
+          propertyType={ propertyType }
+          acquisitionValue={ acquisitionValue }
+          estimatedCost={ estimatedCost }
+
+          onCancel={  () => this.setState({ showReviewCalamityModal : false })  }
+          onClose={ () => this.setState({ showReviewCalamityModal : false }) }
+
+          onClick={ () => this.onGetClicked(
+            calamityId,
+            calamityType,
+            preferredDate,
+            property,
+            propertyDesc,
+            propertyType,
+            acquisitionValue,
+            estimatedCost,
+
+            )
+          }
+          onClose={
+            () => {
+              this.setState({ showReviewCalamityModal : false })
+            }
+          }
+        />
+      }
+      <div>
+        <i
+          className={ 'back-arrow' }
+          onClick={ this.navigate.bind(this) }>
+        </i>
+        <h2 className={ 'header-margin-default' }>
+          Calamity Assistance Form
+        </h2>
+      </div>
+      {
+        enabledLoader ?
+         <center className={ 'circular-loader-center' }>
+           <CircularLoader show={ this.state.enabledLoader }/>
+         </center> :
+        <FormComponent
+          onClick = {
+            (showConfirmation, data) => {
+              this.confirmation(showConfirmation, data)
+            }
+          }
+          calamityAssistance={ calamityAssistance }
+          attachmentsData = { attachmentsData }
+          calamityId = { calamityId }
+          calamityName={ calamityName }
+          calamityType = { calamityType }
+          preferredDate = { preferredDate }
+          property = { property }
+          propertyDesc = { propertyDesc }
+          propertyType = { propertyType }
+          acquisitionValue = { acquisitionValue }
+          estimatedCost = { estimatedCost }
+          calamityTypeErrorMessage = { calamityTypeErrorMessage }
+          estimatedCostErrorMessage = { estimatedCostErrorMessage }
+          propertyFunc = { (resp) => this.validatePropertyFunc(resp) }
+          propertyDescFunc = { (resp) => this.validatePropertyDescFunc(resp) }
+          acquisitionFunc = { (resp) => this.validateAcquisitionFunc(resp) }
+          estimatedCostFunc = { (resp) => this.validateEstimatedCostFunc(resp) }
+          handleChange = { (resp) => this.handleChange(resp) }
+          requestCalamityTypeFunc = { (resp) => this.showCalamityTypeModal(resp) }
+          requestPropertyTypeFunc = { (resp) => this.showPropertyTypeModal(resp) }
+          onShowPropertyFormModalFunc = { () => this.setState({ showPropertyModal : true }) }
+          setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
+          getPreferredDate = { data =>
+            this.setState({ date :  data })}
+
+            getFormData={ (
+              calamityId,
+              calamityType,
+              preferredDate,
+              property,
+              propertyDesc,
+              propertyType,
+              acquisitionValue,
+              estimatedCost,
+              fileBC,
+              fileDP,
+              imgPrevBC,
+              imgPrevDP
+            ) => this.confirmation(
+              calamityId,
+              calamityType,
+              preferredDate,
+              property,
+              propertyDesc,
+              propertyType,
+              acquisitionValue,
+              estimatedCost,
+              fileBC,
+              fileDP,
+              imgPrevBC,
+              imgPrevDP
+              )
+            }
+        />
+      }
       </div>
     )
   }

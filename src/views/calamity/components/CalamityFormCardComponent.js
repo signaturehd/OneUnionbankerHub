@@ -63,6 +63,7 @@ class CalamityFormCardComponent extends Component {
 
   render () {
     const {
+      onShowPropertyFormModalFunc,
       calamityAssistance,
       attachmentsData,
       setAttachmentArrayFunc,
@@ -95,9 +96,6 @@ class CalamityFormCardComponent extends Component {
     }=this.props
     return (
       <div className={'calamity-form'}>
-        <h4>
-          Property Form
-        </h4>
         <GenericInput
           value={ calamityName }
           onClick={ () => requestCalamityTypeFunc(true) }
@@ -111,58 +109,40 @@ class CalamityFormCardComponent extends Component {
           onChange={ (e) => handleChange(e) }
           text = { 'Date of Occurrence' }
           />
-        <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
-          <GenericInput
-            value={ property }
-            onChange={ (e) => propertyFunc(e.target.value) }
-            text={ 'Property' }
-            type={ 'text' }/>
-          <GenericInput
-            value={ propertyDesc }
-            onChange={ (e) => propertyDescFunc(e.target.value) }
-            text={ 'Property Description' }
-            type={ 'text' }/>
-          <GenericInput
-            value={ propertyType }
-            onClick={ () => requestPropertyTypeFunc(true) }
-            text={ 'Property Type' }/>
-          <GenericInput
-            value={ acquisitionValue }
-            onChange={ (e) => acquisitionFunc(e.target.value) }
-            text={ 'Acquisition Value' }
-            type={ 'text' }/>
-          <GenericInput
-            value={ estimatedCost }
-            onChange={ (e) => estimatedCostFunc(e.target.value) }
-            text={ 'Estimated Repair Cost' }
-            type={ 'text' }
-            maxLength = { 5 }
-            errorMessage = { estimatedCostErrorMessage }
-            />
-          <br/>
+        <Line/>
+        <br/>
+        <div className = { 'grid-global' }>
+          <div>
+            <h2 className = { 'font-weight-bold' }>Damage Properties</h2>
+          </div>
+          <div className = { 'text-align-right' }>
+            <GenericButton
+              text = { 'Add Property' }
+              onClick = { () => onShowPropertyFormModalFunc() }
+              />
+          </div>
+        </div>
             {
               attachmentsData.length !== 0  ?
-
               <div>
-              <h4>
-                Form Attachments
-              </h4>
-              <MultipleFileUploader
-                  placeholder = { 'Form Attachments' }
-                  fileArray = { attachmentsData }
-                  setFile = { (resp) => setAttachmentArrayFunc(resp) }
-                  disabled = { showEditSubmitButton }
-                  errorMessage = {
-                    showEditSubmitButton ?
-                    '' :
-                    `Please upload the required attachments`  }
-                />
+                <h4>
+                  Form Attachments
+                </h4>
+                <MultipleFileUploader
+                    placeholder = { 'Form Attachments' }
+                    fileArray = { attachmentsData }
+                    setFile = { (resp) => setAttachmentArrayFunc(resp) }
+                    disabled = { showEditSubmitButton }
+                    errorMessage = {
+                      showEditSubmitButton ?
+                      '' :
+                      `Please upload the required attachments`  }
+                  />
               </div>
               :
               <div></div>
             }
             <br/>
-            <Line/>
           <GenericButton
             type={ 'button' }
             text={ 'Submit' }
