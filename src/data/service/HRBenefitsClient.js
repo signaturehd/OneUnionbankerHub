@@ -766,4 +766,15 @@ export default class HRBenefitsClient {
     return this.service.addLeaveFiling(token, leaveFilingParam)
       .pipe(ServiceErrorOperator())
   }
+
+  /* Pin Enrollment */
+  postEnrollPin (token, id) {
+    return this.service.postEnrollPin(token , id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  putEnrollPin (token, putPINParam) {
+    return this.service.putEnrollPin(token, putPINParam)
+      .pipe(ServiceErrorOperator())
+  }
 }

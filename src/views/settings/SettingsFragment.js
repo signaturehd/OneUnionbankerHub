@@ -26,11 +26,24 @@ class SettingsFragment extends BaseMVPView {
      showEmployeeProfile : false,
      showLineManager : false,
      showProfileDependent : false,
+     enabledLoader: false,
+     showChangePINModal : false,
+     showContactInfoModal : false,
+     showDependentModal : false,
+     showCompanyInfoModal : false,
+     showPersonalInfoModal : false,
+     showStaffAccountsModal : false,
     }
   }
   componentDidMount () {
     this.presenter.getProfile()
     this.props.setSelectedNavigation(3)
+  }
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
   }
   showProfile (profile) {
     this.setState({ profile })
@@ -51,6 +64,19 @@ class SettingsFragment extends BaseMVPView {
   showAccountNumber (accountNumber) {
     this.setState({accountNumber})
   }
+
+  hideModal (showChangePINModal) {
+    this.setState({ showChangePINModal })
+  }
+
+  submitUpdatedPIN (uniqueOldPIN, uniqueNewPIN) {
+    const objectPINParam = {
+      oldCode : uniqueOldPIN,
+      newCode : uniqueNewPIN,
+    }
+    this.presenter.putEnrollPin(objectPINParam)
+  }
+
   render () {
     const {
       lineManager,
@@ -59,7 +85,14 @@ class SettingsFragment extends BaseMVPView {
       className,
       rank,
       profileDependent,
-      accountNumber
+      accountNumber,
+      enabledLoader,
+      showChangePINModal,
+      showContactInfoModal,
+      showDependentModal,
+      showCompanyInfoModal,
+      showPersonalInfoModal,
+      showStaffAccountsModal,
     }=this.state
     return (
       <div className={ 'profile-container' }>
@@ -70,7 +103,14 @@ class SettingsFragment extends BaseMVPView {
            lineManager={ lineManager }
            profileDependent={ profileDependent }
            rank={ rank }
-           presenter={ this.presenter }
+           enabledLoader = { enabledLoader }
+           showChangePINModal = { showChangePINModal }
+           showContactInfoModal = { showContactInfoModal }
+           showDependentModal = { showDependentModal }
+           showCompanyInfoModal = { showCompanyInfoModal }
+           showPersonalInfoModal = { showPersonalInfoModal }
+           showStaffAccountsModal = { showStaffAccountsModal }
+           changePinSendToFragment = { (uniqueOldPIN, uniqueNewPIN) => this.submitUpdatedPIN(uniqueOldPIN, uniqueNewPIN) }
         />
       </div>
     )

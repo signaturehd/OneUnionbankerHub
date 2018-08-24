@@ -9,6 +9,7 @@ import DependentsModal from '../modals/DependentsModal'
 import CompanyInfoModal from '../modals/CompanyInformationModal'
 import PersonalInfoModal from '../modals/PersonalInfoModal'
 import StaffAccountsModal from '../modals/StaffAccountsModal'
+import ChangePINModal from '../modals/ChangePINModal'
 
 import SkillsFragment from '../../common/fragments/ProfileFragments/SkillsFragment'
 import ExperienceFragment from '../../common/fragments/ProfileFragments/ExperienceFragment'
@@ -21,13 +22,6 @@ class SettingsProfileCardComponent extends Component {
 
   constructor (props) {
     super(props)
-      this.state={
-        showContactInfoModal : false,
-        showDependentModal : false,
-        showCompanyInfoModal : false,
-        showPersonalInfoModal : false,
-        showStaffAccountsModal : false,
-      }
   }
 
   renderEditable () {
@@ -44,16 +38,16 @@ class SettingsProfileCardComponent extends Component {
       lineManager,
       profileImageUrl,
       profileDependent,
-      accountNumber
-    } = this.props
-
-    const {
+      accountNumber,
+      changePinSendToFragment,
+      enabledLoader,
+      showChangePINModal,
       showContactInfoModal,
       showDependentModal,
       showCompanyInfoModal,
       showPersonalInfoModal,
       showStaffAccountsModal,
-     }=this.state
+    } = this.props
 
     let genderPartial
     if (profile.gender === 'M') {
@@ -65,6 +59,14 @@ class SettingsProfileCardComponent extends Component {
     return (
     <div>
       <div className={ 'profile-settings-grid-column-desktop' }>
+        {
+          showChangePINModal &&
+          <ChangePINModal
+            enabledLoader = { enabledLoader }
+            onSubmitPinCode = { (uniqueOldPIN, uniqueNewPIN) => changePinSendToFragment(uniqueOldPIN, uniqueNewPIN) }
+            onClose={ () => this.setState({ showChangePINModal : false }) }
+          />
+        }
         {
           showContactInfoModal &&
             <ContactInfoModal
@@ -137,6 +139,18 @@ class SettingsProfileCardComponent extends Component {
                 </h2>
               </div>
               <div>
+                <div
+                  onClick={ () => this.setState({ showChangePINModal : true }) }
+                  className={ 'profile-information-view-right' }>
+                  <div>
+                    <span className={ 'profile-icon-settings lock-icon' }/>
+                  </div>
+                  <div>
+                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
+                      { 'Change PIN'  }
+                    </h5>
+                  </div>
+                </div>
                 <div
                   onClick={ () => this.setState({ showPersonalInfoModal : true }) }
                   className={ 'profile-information-view-right' }>
@@ -239,10 +253,12 @@ class SettingsProfileCardComponent extends Component {
 
 SettingsProfileCardComponent.propTypes = {
   onClick : PropTypes.func,
+  changePinSendToFragment : PropTypes.func,
   profileImageUrl : PropTypes.string,
   rank: PropTypes.object,
   profile: PropTypes.object,
   lineManager: PropTypes.object,
+  enabledLoader: PropTypes.bool,
 }
 
 export default SettingsProfileCardComponent
