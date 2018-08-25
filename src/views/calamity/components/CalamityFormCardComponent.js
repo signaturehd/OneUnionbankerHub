@@ -66,7 +66,7 @@ class CalamityFormCardComponent extends Component {
       onShowPropertyFormModalFunc,
       calamityAssistance,
       attachmentsData,
-      setAttachmentArrayFunc,
+      setAttachmentDefaultyFunc,
       requestCalamityTypeFunc,
       requestPropertyTypeFunc,
       propertyFunc,
@@ -122,27 +122,28 @@ class CalamityFormCardComponent extends Component {
               />
           </div>
         </div>
-            {
-              attachmentsData.length !== 0  ?
-              <div>
-                <h4>
-                  Form Attachments
-                </h4>
-                <MultipleFileUploader
-                    placeholder = { 'Form Attachments' }
-                    fileArray = { attachmentsData }
-                    setFile = { (resp) => setAttachmentArrayFunc(resp) }
-                    disabled = { showEditSubmitButton }
-                    errorMessage = {
-                      showEditSubmitButton ?
-                      '' :
-                      `Please upload the required attachments`  }
-                  />
-              </div>
-              :
-              <div></div>
-            }
-            <br/>
+          {
+            attachmentsData.length !== 0  ?
+            <div>
+              <h4>
+                <br/>
+                Form Attachments
+              </h4>
+              <MultipleFileUploader
+                placeholder = { '.' }
+                fileArray = { attachmentsData }
+                setFile = { (resp) => setAttachmentDefaultyFunc(resp) }
+                disabled = { showEditSubmitButton }
+                errorMessage = {
+                  showEditSubmitButton ?
+                  '' :
+                  `Please upload the required attachments`  }
+                />
+            </div>
+            :
+            <div></div>
+          }
+          <br/>
           <GenericButton
             type={ 'button' }
             text={ 'Submit' }
@@ -169,6 +170,7 @@ class CalamityFormCardComponent extends Component {
 CalamityFormCardComponent.propTypes={
   onFocus: PropTypes.func,
   handleChange: PropTypes.func,
+  setAttachmentDefaultyFunc: PropTypes.func,
   MinMaxNumberValidation: PropTypes.func,
   requestCalamityTypeFunc: PropTypes.func,
   requestPropertyTypeFunc: PropTypes.func,

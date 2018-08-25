@@ -21,12 +21,16 @@ export default class CalamityPresenter {
    .map(data => {
      let attachmentArray = []
      let calamityType = []
-     // data &&
-     // data.attachments.map((attachment, key) => {
-     //   attachmentArray.push({
-     //     name : attachment
-     //   })
-     // })
+     const defaultAttachments = [
+       {
+         name: 'Barangay Certificate'
+       }
+     ]
+     const defaultDamangeProperty = [
+       {
+         name: 'Damage Property ' + 1
+       }
+     ]
      data &&
      data.map((resp, key) => {
        calamityType.push({
@@ -35,7 +39,8 @@ export default class CalamityPresenter {
        })
      })
      this.view.showCalamityTypeMap(calamityType)
-     this.view.showAttachmentsMap(attachmentArray)
+     this.view.showAttachmentsMap(defaultAttachments)
+     this.view.showDamagePropertyAttachments(defaultDamangeProperty)
      this.view.showValidatedCalamity(data)
    })
      .subscribe(

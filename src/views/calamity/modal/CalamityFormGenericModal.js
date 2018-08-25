@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal, GenericButton, CircularLoader, MultipleFileUploader } from '../../../ub-components/'
+import {
+  Modal,
+  GenericButton,
+  CircularLoader,
+  MultipleFileUploader,
+  GenericInput,
+  Line
+} from '../../../ub-components/'
 
 import './styles/calamityModalStyle.css'
 import { format } from '../../../utils/numberUtils'
@@ -19,12 +26,12 @@ class CalamityFormGenericModal extends Component {
     }
   }
 
-
   render () {
     const {
       calamityAssistance,
       attachmentsData,
-      setAttachmentArrayFunc,
+      setAttachmentFunc,
+      addAttachmentsFunc,
       requestCalamityTypeFunc,
       requestPropertyTypeFunc,
       propertyFunc,
@@ -50,7 +57,8 @@ class CalamityFormGenericModal extends Component {
       propertyTypeValue,
       presenter,
       onClick,
-      onFocus
+      onFocus,
+      hideModalPropertyFormFunc
     }=this.props
 
     const {
@@ -59,8 +67,10 @@ class CalamityFormGenericModal extends Component {
     }=this.state
 
     return (
-      <Modal>
-        <div className={'calamity-form'}>
+      <Modal
+        isDismisable = { true }
+        width = { 50 }>
+        <div>
           <h4>
             Property Form
           </h4>
@@ -91,18 +101,26 @@ class CalamityFormGenericModal extends Component {
             maxLength = { 5 }
             errorMessage = { estimatedCostErrorMessage }
             />
-          <br/>
+          <div className = { 'grid-global' }>
+            <h2></h2>
+            <div className = { 'text-align-right' }>
+              <GenericButton
+                text = { 'Add Attachments' }
+                onClick = { () => addAttachmentsFunc() }
+                />
+            </div>
+          </div>
             {
-              attachmentsData.length !== 0  ?
-
+              attachmentsData.length !== 0  &&
               <div>
               <h4>
+                <br/>
                 Form Attachments
               </h4>
               <MultipleFileUploader
-                placeholder = { 'Form Attachments' }
+                placeholder = { '.' }
                 fileArray = { attachmentsData }
-                setFile = { (resp) => setAttachmentArrayFunc(resp) }
+                setFile = { (resp) => setAttachmentFunc(resp) }
                 disabled = { showEditSubmitButton }
                 errorMessage = {
                   showEditSubmitButton ?
@@ -110,29 +128,31 @@ class CalamityFormGenericModal extends Component {
                   `Please upload the required attachments`  }
                 />
               </div>
-              :
-              <div></div>
-            }
-          <br/>
-          <Line/>
+             }
+        <Line/>
+        <br/>
+        <div className = { 'grid-global' }>
           <GenericButton
-            type={ 'button' }
-            text={ 'Submit' }
+            text = { 'Cancel' }
+            onClick = { () => hideModalPropertyFormFunc(false)  }
+            />
+          <GenericButton
+            text={ 'Add' }
             onClick={
-              () => onClick(true,
-                {
-                  calamityId,
-                  calamityType,
-                  preferredDate,
-                  property,
-                  propertyDesc,
-                  propertyType,
-                  acquisitionValue,
-                  estimatedCost
-                }
-              )
-            }
-            className={ 'calamity-submit' } />
+            () => onClick(true,
+              {
+                calamityId,
+                calamityType,
+                preferredDate,
+                property,
+                propertyDesc,
+                propertyType,
+                acquisitionValue,
+                estimatedCost
+              }
+            )
+          }/>
+          </div>
         </div>
       </Modal>
     )
@@ -142,7 +162,10 @@ class CalamityFormGenericModal extends Component {
 CalamityFormGenericModal.propTypes={
   onClose : PropTypes.func,
   onClick : PropTypes.func,
+  hideModalPropertyFormFunc : PropTypes.func,
   onCancel : PropTypes.func,
+  attachmentsData : PropTypes.array,
+  setAttachmentFunc  : PropTypes.func,
 }
 CalamityFormGenericModal.defaultProps={
   confirm : 'Add',

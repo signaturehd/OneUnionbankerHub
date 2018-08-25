@@ -51,8 +51,10 @@ class CalamityFragment extends BaseMVPView {
       showPropertyModal:false,
       calamityAssistance: [],
       attachmentArray: [],
+      attachmentDefaultArray: [],
       attachmentsData: [],
       calamityType: [],
+      defaultDamangeProperty: [],
       calamityId: '',
       calamityName: '',
       preferredDate: '',
@@ -67,6 +69,7 @@ class CalamityFragment extends BaseMVPView {
       estimatedCostErrorMessage: '',
       date: null,
       noticeResponse : null,
+      count : 2,
       propertyTypeValue : [ {id: 1, name: 'Replaceable'},
                             {id: 2, name: 'Irreplaceable'} ]
     }
@@ -97,8 +100,16 @@ class CalamityFragment extends BaseMVPView {
     this.setState({ attachmentsData })
   }
 
+  showDamagePropertyAttachments (defaultDamangeProperty) {
+    this.setState({ defaultDamangeProperty })
+  }
+
   setFileAttachments (attachmentArray) {
     this.setState({ attachmentArray })
+  }
+
+  setFileAttachmentsArray (attachmentDefaultArray) {
+    this.setState({ attachmentDefaultArray })
   }
 
   showValidatedMaternity (calamityAssistance) {
@@ -254,6 +265,7 @@ class CalamityFragment extends BaseMVPView {
       showConfirmation,
       data,
       attachmentArray,
+      attachmentDefaultArray,
       attachmentsData,
       calamityId,
       calamityName,
@@ -268,9 +280,11 @@ class CalamityFragment extends BaseMVPView {
       estimatedCost,
       calamityTypeErrorMessage,
       estimatedCostErrorMessage,
-      showPropertyModal
+      showPropertyModal,
+      defaultDamangeProperty,
+      count
     }=this.state
-
+    console.log(defaultDamangeProperty)
     return (
       <div>
       {
@@ -352,6 +366,19 @@ class CalamityFragment extends BaseMVPView {
       {
         showPropertyModal &&
         <CalamityFormGenericModal
+          attachmentsData = { defaultDamangeProperty }
+          setAttachmentFunc = { (updatedAttachments) => this.setFileAttachmentsArray(updatedAttachments) }
+          addAttachmentsFunc = { () => {
+            const updatedAttachments = [...defaultDamangeProperty]
+            let newCount = count + 1
+            this.setState({ count : newCount })
+            updatedAttachments.push({
+              name : 'Damage Property ' + count
+            })
+            this.setState({ defaultDamangeProperty : updatedAttachments })
+            }
+          }
+          hideModalPropertyFormFunc = { (showPropertyModal) => this.setState({ showPropertyModal }) }
           />
       }
 
@@ -366,7 +393,6 @@ class CalamityFragment extends BaseMVPView {
           propertyType={ propertyType }
           acquisitionValue={ acquisitionValue }
           estimatedCost={ estimatedCost }
-
           onCancel={  () => this.setState({ showReviewCalamityModal : false })  }
           onClose={ () => this.setState({ showReviewCalamityModal : false }) }
 
@@ -411,6 +437,7 @@ class CalamityFragment extends BaseMVPView {
           }
           calamityAssistance={ calamityAssistance }
           attachmentsData = { attachmentsData }
+          defaultDamangeProperty = { defaultDamangeProperty }
           calamityId = { calamityId }
           calamityName={ calamityName }
           calamityType = { calamityType }
@@ -430,7 +457,7 @@ class CalamityFragment extends BaseMVPView {
           requestCalamityTypeFunc = { (resp) => this.showCalamityTypeModal(resp) }
           requestPropertyTypeFunc = { (resp) => this.showPropertyTypeModal(resp) }
           onShowPropertyFormModalFunc = { () => this.setState({ showPropertyModal : true }) }
-          setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
+          setAttachmentDefaultyFunc = { (attachmentDefaultArray) => this.setFileAttachments(attachmentDefaultArray) }
           getPreferredDate = { data =>
             this.setState({ date :  data })}
 
