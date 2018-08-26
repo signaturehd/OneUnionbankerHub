@@ -50,6 +50,10 @@ class EducationGroupAidFragment extends BaseMVPView {
       DOPErrorMessage : '',
       effectiveDate : '',
       effectivityDateText : '',
+      orDate : '',
+      orDateErrorMessage : '',
+      orNumber : '',
+      orNumberErrorMessage : '',
       dependentArray : [],
       durationOfPremium : [],
       attachmentsData : [],
@@ -92,6 +96,15 @@ class EducationGroupAidFragment extends BaseMVPView {
     this.setState({ desiredAmount: validate ,  desiredAmountErrorMessage: '' })
   }
 
+  orNumberFunc (e) {
+    const validate = EducationGroupAidFunction.checkedValidationSymbol(e)
+    this.setState({ orNumber : validate, orNumberErrorMessage : '' })
+  }
+
+  orDateFunc (data) {
+    this.setState({ orDate : data.format('MM/DD/YYYY'), orDateErrorMessage : '' })
+  }
+
   dateFunc (date) {
     const { premiumMonths } = this.state
     const eDate = (premiumMonths ? moment(date).add(premiumMonths, 'months') : '')
@@ -118,6 +131,8 @@ class EducationGroupAidFragment extends BaseMVPView {
       desiredAmount,
       company,
       premiumId,
+      orDate,
+      orNumber,
       attachmentArray
     } = this.state
 
@@ -129,6 +144,10 @@ class EducationGroupAidFragment extends BaseMVPView {
       this.setState({ desiredAmountErrorMessage : 'Please enter desired amount' })
     } else if (!this.validateRequired(premiumId)) {
       this.setState({ DOPErrorMessage : 'Please select a duration of premium payment' })
+    }else if (!this.validateRequired(orDate)) {
+      this.setState({ orDateErrorMessage : 'Please select a date' })
+    }else if (!this.validateRequired(orNumber)) {
+      this.setState({ orNumberErrorMessage : 'Please enter an Official Receipt Number' })
     } else {
       this.setState({
         showEditSubmitButton: true,
@@ -160,6 +179,8 @@ class EducationGroupAidFragment extends BaseMVPView {
       company,
       premiumId,
       effectiveDate,
+      orDate,
+      orNumber,
       attachmentArray
     } = this.state
 
@@ -169,6 +190,8 @@ class EducationGroupAidFragment extends BaseMVPView {
       effectiveDate,
       company,
       premiumId,
+      orDate,
+      orNumber,
       attachmentArray)
   }
 
@@ -204,6 +227,10 @@ class EducationGroupAidFragment extends BaseMVPView {
       effectiveDate,
       effectivityDateText,
       effectivityDate,
+      orNumber,
+      orNumberErrorMessage,
+      orDate,
+      orDateErrorMessage,
       attachmentsData,
       attachmentArray
     } = this.state
@@ -316,6 +343,10 @@ class EducationGroupAidFragment extends BaseMVPView {
             DOPErrorMessage = { DOPErrorMessage }
             effectivityDate = { effectivityDate }
             effectivityDateText = { effectivityDateText }
+            orDate = { orDate }
+            orDateErrorMessage = { orDateErrorMessage }
+            orNumber = { orNumber }
+            orNumberErrorMessage = { orNumberErrorMessage }
             showEditSubmitButton = { showEditSubmitButton }
             showDependentFunc = { (resp) => this.showDependentModal(resp) }
             showPremiumFunc = { (resp) => this.showPremiumModal(resp) }
@@ -324,6 +355,8 @@ class EducationGroupAidFragment extends BaseMVPView {
             dateFunc = { (resp) => this.dateFunc(resp) }
             setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
             showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
+            orDateFunc = { (resp) => this.orDateFunc(resp) }
+            orNumberFunc = { (resp) => this.orNumberFunc(resp) }
             onSubmitFunc = { () => this.submitForm() }
             editFormDataFunc = { () => this.editFormReview() }
             attachmentsData = { attachmentsData }

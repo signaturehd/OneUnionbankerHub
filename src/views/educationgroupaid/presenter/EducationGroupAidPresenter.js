@@ -23,6 +23,8 @@ export default class EducationGroupAidPresenter {
      effectiveDate,
      company,
      durationOfPaymentId,
+     orDate,
+     orNumber,
      attachments) {
        this.view.showCircularLoader()
        this.AddGroupAidInteractor.execute(groupAidParam(
@@ -31,6 +33,8 @@ export default class EducationGroupAidPresenter {
          effectiveDate,
          company,
          durationOfPaymentId,
+         orDate,
+         orNumber,
          attachments))
     .subscribe(groupPlan => {
       this.view.hideCircularLoader()
@@ -49,22 +53,7 @@ export default class EducationGroupAidPresenter {
       let dependentArray = []
       let attachmentArray = []
       let premiumArray = []
-      data &&
-      data.recipients.map((dependent, key) => {
-        dependentArray.push({
-          id : dependent.id,
-          name : dependent.name,
-          months : dependent.months
-        })
-      })
-      data &&
-      data.durationOfPremium.map((premium, key) => {
-        premiumArray.push({
-          id : premium.id,
-          months : premium.months,
-          paymentDuration : premium.paymentDuration
-        })
-      })
+
       data &&
       data.attachments.map((attachment, key) => {
         attachmentArray.push({
@@ -72,9 +61,8 @@ export default class EducationGroupAidPresenter {
         })
       })
       this.view.showAttachmentsMap(attachmentArray)
-      this.view.showValidatedGroupAid(data)
-      this.view.showDependentMap(dependentArray)
-      this.view.showPremiumMap(premiumArray)
+      this.view.showDependentMap(data.recipients)
+      this.view.showPremiumMap(data.durationOfPremium)
     })
     .subscribe(
         grantPlan => {

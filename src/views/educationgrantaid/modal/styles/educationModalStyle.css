@@ -23,3 +23,17 @@
   grid-column-gap: 5px;
   grid-template-columns: 50% 50%;
 }
+
+.select-grid {
+  display: grid;
+  grid-row-gap: 10px;
+}
+
+.select-button {
+  width:100%;
+}
+
+.educ-modal-button {
+  width: 100%;
+  margin-bottom: 10px;
+}

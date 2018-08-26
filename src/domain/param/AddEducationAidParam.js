@@ -1,5 +1,5 @@
 export default (course, academicYear, semester, gwa, tuitionFee, registrationFee,
-schoolId, attachments) => ({
+schoolId, orDate, orNumber, attachments) => ({
   course,
   academicYear,
   semester,
@@ -7,5 +7,7 @@ schoolId, attachments) => ({
   tuitionFee,
   registrationFee,
   schoolId,
+  orDate,
+  orNumber,
   attachments
 })

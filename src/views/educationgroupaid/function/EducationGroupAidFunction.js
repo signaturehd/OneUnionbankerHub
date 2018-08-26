@@ -2,7 +2,8 @@ import {
   RequiredValidation,
   MinMaxNumberValidation,
   RequiredAlphabetValidation,
-  RequiredDecimalValidation
+  RequiredDecimalValidation,
+  RequiredSymbolValidation
 } from '../../../utils/validate'
 
 export function checkedValidateText (text) {
@@ -14,9 +15,15 @@ export function checkedValidateDecimal (num) {
   return new RequiredDecimalValidation().isValid(num) ?
    num : ''
 }
+
 export function checkedMinMaxNumber (num) {
   return new MinMaxNumberValidation().isValid(num) ?
    num : ''
+}
+
+export function checkedValidationSymbol (value) {
+  return !new RequiredSymbolValidation().isValid(value) ?
+   value : ''
 }
 
 export function checkedDesiredAmountFunc (num) {
