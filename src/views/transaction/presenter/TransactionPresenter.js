@@ -5,7 +5,7 @@ export default class TransactionPresenter {
   constructor (container) {
     this.getTransactionApprovalInteractor =
       new GetTransactionApprovalInteractor(container.get('HRBenefitsClient'))
-      
+
     this.getTransactionPersonalInteractor =
       new GetTransactionPersonalInteractor(container.get('HRBenefitsClient'))
   }
