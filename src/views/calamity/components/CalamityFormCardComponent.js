@@ -6,20 +6,14 @@ import {
   DatePicker,
   GenericButton,
   Line,
-  MultipleFileUploader
+  MultipleFileUploader,
+  GenericMultipleCard
 } from '../../../ub-components/'
 
 import './styles/calamityComponentStyle.css'
 
 import { RequiredValidation, MoneyValidation } from '../../../utils/validate'
 import { format } from '../../../utils/numberUtils'
-
-import CalamityModal from '../modal/CalamityModal'
-import CalamityReviewModal from '../modal/CalamityReviewModal'
-import PropertyTypeModal from '../modal/PropertyTypeModal'
-
-import store from '../../../store'
-import { NotifyActions } from '../../../actions/'
 
 import {
   RequiredDecimalValidation,
@@ -35,65 +29,25 @@ class CalamityFormCardComponent extends Component {
     super (props)
   }
 
-  onGetClicked (
-    calamityId,
-    calamityType,
-    preferredDate,
-    property,
-    propertyDesc,
-    propertyType,
-    acquisitionValue,
-    estimatedCost) {
-      this.props.getFormData(
-        calamityId,
-        calamityType,
-        preferredDate,
-        property,
-        propertyDesc,
-        propertyType,
-        acquisitionValue,
-        estimatedCost
-      )
-  }
-
-  getExtension (filename) {
-    const parts=filename.split('/')
-    return parts[parts.length - 1]
-  }
-
   render () {
     const {
       onShowPropertyFormModalFunc,
       calamityAssistance,
       attachmentsData,
       setAttachmentDefaultyFunc,
+      setCardHolderDefaultyFunc,
       requestCalamityTypeFunc,
       requestPropertyTypeFunc,
-      propertyFunc,
-      propertyDescFunc,
-      acquisitionFunc,
-      estimatedCostFunc,
       handleChange,
       showEditSubmitButton,
-      showModal,
-      showReviewCalamityModal,
-      showPropModal,
-      showErrorModal,
       calamityName,
       calamityType,
       preferredDate,
-      property,
-      propertyDesc,
-      propertyType,
-      acquisitionValue,
-      estimatedCost,
       calamityTypeErrorMessage,
-      estimatedCostErrorMessage,
-      propertyTypeValue,
-      presenter,
       onClick,
-      onFocus
+      damagePropertyCardHolder
     }=this.props
+
     return (
       <div className={'calamity-form'}>
         <GenericInput
@@ -109,8 +63,6 @@ class CalamityFormCardComponent extends Component {
           onChange={ (e) => handleChange(e) }
           text = { 'Date of Occurrence' }
           />
-        <Line/>
-        <br/>
         <div className = { 'grid-global' }>
           <div>
             <h2 className = { 'font-weight-bold' }>Damage Properties</h2>
@@ -122,8 +74,24 @@ class CalamityFormCardComponent extends Component {
               />
           </div>
         </div>
+        <br/>
+        {
+        damagePropertyCardHolder.length !==0 &&
+          <GenericMultipleCard
+            fileArray = { damagePropertyCardHolder }
+            setCard = { (resp) => setCardHolderDefaultyFunc(resp) }
+            disabled = { showEditSubmitButton }
+            errorMessage = {
+              showEditSubmitButton ?
+              '' :
+              `Please upload the required attachments`  }
+            />
+        }
+        <br/>
+        <Line/>
+        <br/>
           {
-            attachmentsData.length !== 0  ?
+            attachmentsData.length !== 0  &&
             <div>
               <h4>
                 <br/>
@@ -140,56 +108,29 @@ class CalamityFormCardComponent extends Component {
                   `Please upload the required attachments`  }
                 />
             </div>
-            :
-            <div></div>
           }
           <br/>
           <GenericButton
-            type={ 'button' }
-            text={ 'Submit' }
-            onClick={
-              () => onClick(true,
-                {
-                  calamityId,
-                  calamityType,
-                  preferredDate,
-                  property,
-                  propertyDesc,
-                  propertyType,
-                  acquisitionValue,
-                  estimatedCost
-                }
-              )
-            }
-            className={ 'calamity-submit' } />
+            text = { 'Submit' }
+            onClick = { () => {}}
+            className = { 'calamity-submit' } />
         </div>
       )
     }
   }
 
 CalamityFormCardComponent.propTypes={
-  onFocus: PropTypes.func,
   handleChange: PropTypes.func,
   setAttachmentDefaultyFunc: PropTypes.func,
-  MinMaxNumberValidation: PropTypes.func,
+  setCardHolderDefaultyFunc: PropTypes.func,
   requestCalamityTypeFunc: PropTypes.func,
-  requestPropertyTypeFunc: PropTypes.func,
-  propertyFunc: PropTypes.func,
-  propertyDescFunc: PropTypes.func,
-  acquisitionFunc: PropTypes.func,
-  estimatedCostFunc: PropTypes.func,
-  showErrorModal: PropTypes.bool,
   showEditSubmitButton: PropTypes.bool,
   calamityName: PropTypes.string,
   calamityType: PropTypes.array,
+  damagePropertyCardHolder: PropTypes.array,
+  attachmentsData: PropTypes.array,
   preferredDate: PropTypes.string,
-  property: PropTypes.string,
-  propertyDesc: PropTypes.string,
-  propertyType: PropTypes.string,
-  acquisitionValue: PropTypes.string,
-  estimatedCost: PropTypes.string,
   calamityTypeErrorMessage: PropTypes.string,
-  estimatedCostErrorMessage: PropTypes.string
 }
 
 export default CalamityFormCardComponent

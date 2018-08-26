@@ -4,9 +4,10 @@ import PropTypes from 'prop-types'
 import {
   Modal,
   GenericButton,
-  CircularLoader,
   MultipleFileUploader,
+  MultipleAttachments,
   GenericInput,
+  SingleInputModal,
   Line
 } from '../../../ub-components/'
 
@@ -20,20 +21,58 @@ class CalamityFormGenericModal extends Component {
   constructor (props) {
     super (props)
 
-    this.state={
-      disableSubmit : false,
-      isDismisable : true
+    this.state = {
+      genericFileAttachmentArray : [],
     }
+  }
+
+  getDamagePropertyObject () {
+    const {
+      property,
+      propertyDesc,
+      propertyType,
+      acquisitionValue,
+      estimatedCost,
+      getPropertyHolderFunc,
+      requestPropertyTypeFunc,
+      propertyDescFunc,
+      propertyFunc,
+      acquisitionFunc,
+      estimatedCostFunc,
+      hideModalPropertyFormFunc
+    } = this.props
+
+    const {
+      genericFileAttachmentArray
+    } = this.state
+
+    const damagePropertyObject = {
+      properTyName : property,
+      description : propertyDesc,
+      acquisitionValue : acquisitionValue,
+      repairCost : estimatedCost,
+      imageKey: genericFileAttachmentArray
+    }
+    getPropertyHolderFunc(damagePropertyObject)
+    propertyFunc('')
+    requestPropertyTypeFunc('')
+    propertyDescFunc('')
+    acquisitionFunc('')
+    estimatedCostFunc('')
+    this.setState({ genericFileAttachmentArray : [] })
+    hideModalPropertyFormFunc(false)
   }
 
   render () {
     const {
       calamityAssistance,
-      attachmentsData,
+      defaultDamageProperty,
       setAttachmentFunc,
       addAttachmentsFunc,
       requestCalamityTypeFunc,
       requestPropertyTypeFunc,
+      hideModalPropertyFormFunc,
+      getPropertyHolderFunc,
       propertyFunc,
       propertyDescFunc,
       acquisitionFunc,
@@ -44,32 +83,45 @@ class CalamityFormGenericModal extends Component {
       showReviewCalamityModal,
       showPropModal,
       showErrorModal,
-      calamityName,
-      calamityType,
-      preferredDate,
       property,
       propertyDesc,
       propertyType,
       acquisitionValue,
       estimatedCost,
-      calamityTypeErrorMessage,
       estimatedCostErrorMessage,
       propertyTypeValue,
-      presenter,
       onClick,
       onFocus,
-      hideModalPropertyFormFunc
+      count,
+      countFunc,
+      showPropertyTypeModal,
+      setPropertyData
     }=this.props
 
     const {
-       disableSubmit,
-       isDismisable,
+       genericFileAttachmentArray,
     }=this.state
 
     return (
       <Modal
+        onClose = { () => hideModalPropertyFormFunc(false) }
         isDismisable = { true }
         width = { 50 }>
+        {
+          showPropertyTypeModal &&
+          <SingleInputModal
+            label = { 'Property Type' }
+            inputArray = { propertyTypeValue && propertyTypeValue }
+            selectedArray = { (propertyId, propertyType) =>
+              setPropertyData(
+                propertyId,
+                propertyType,
+                false,
+                '')
+            }
+            onClose = { () => hidePropertyModalFunc(false) }
+          />
+        }
         <div>
           <h4>
             Property Form
@@ -110,48 +162,42 @@ class CalamityFormGenericModal extends Component {
                 />
             </div>
           </div>
-            {
-              attachmentsData.length !== 0  &&
-              <div>
-              <h4>
-                <br/>
-                Form Attachments
-              </h4>
-              <MultipleFileUploader
-                placeholder = { '.' }
-                fileArray = { attachmentsData }
-                setFile = { (resp) => setAttachmentFunc(resp) }
-                disabled = { showEditSubmitButton }
-                errorMessage = {
-                  showEditSubmitButton ?
-                  '' :
-                  `Please upload the required attachments`  }
-                />
-              </div>
-             }
-        <Line/>
-        <br/>
-        <div className = { 'grid-global' }>
-          <GenericButton
-            text = { 'Cancel' }
-            onClick = { () => hideModalPropertyFormFunc(false)  }
-            />
+          {
+            defaultDamageProperty.length !== 0  &&
+            <div>
+            <h4>
+              <br/>
+              Form Attachments
+            </h4>
+            <MultipleAttachments
+              count = { count }
+              countFunc = { (count) => countFunc(count) }
+              placeholder = { '.' }
+              fileArray = { defaultDamageProperty }
+              setFile = { (genericFileAttachmentArray) =>
+                  this.setState({ genericFileAttachmentArray })
+              }
+              disabled = { showEditSubmitButton }
+              errorMessage = {
+                showEditSubmitButton ?
+                '' :
+                `Please upload the required attachments`  }
+              />
+            </div>
+           }
+          <br/>
+          <Line/>
+          <br/>
+          <div className = { 'grid-global' }>
+            <GenericButton
+              text = { 'Cancel' }
+              onClick = { () => hideModalPropertyFormFunc(false)  }
+              />
           <GenericButton
             text={ 'Add' }
             onClick={
-            () => onClick(true,
-              {
-                calamityId,
-                calamityType,
-                preferredDate,
-                property,
-                propertyDesc,
-                propertyType,
-                acquisitionValue,
-                estimatedCost
-              }
-            )
-          }/>
+            () => this.getDamagePropertyObject()
+            }/>
           </div>
         </div>
       </Modal>
@@ -160,12 +206,17 @@ class CalamityFormGenericModal extends Component {
 }
 
 CalamityFormGenericModal.propTypes={
+  getPropertyHolderFunc : PropTypes.func,
   onClose : PropTypes.func,
   onClick : PropTypes.func,
-  hideModalPropertyFormFunc : PropTypes.func,
-  onCancel : PropTypes.func,
-  attachmentsData : PropTypes.array,
   setAttachmentFunc  : PropTypes.func,
+  onCancel : PropTypes.func,
+  propertyType : PropTypes.func,
+  hideModalPropertyFormFunc : PropTypes.func,
+  hidePropertyModalFunc : PropTypes.func,
+  showPropertyTypeModal : PropTypes.bool,
+  defaultDamageProperty : PropTypes.array,
+  propertyTypeValue : PropTypes.object,
 }
 CalamityFormGenericModal.defaultProps={
   confirm : 'Add',

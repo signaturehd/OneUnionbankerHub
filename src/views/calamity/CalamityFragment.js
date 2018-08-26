@@ -54,7 +54,7 @@ class CalamityFragment extends BaseMVPView {
       attachmentDefaultArray: [],
       attachmentsData: [],
       calamityType: [],
-      defaultDamangeProperty: [],
+      defaultDamageProperty: [],
       calamityId: '',
       calamityName: '',
       preferredDate: '',
@@ -62,6 +62,7 @@ class CalamityFragment extends BaseMVPView {
       property: '',
       propertyDesc: '',
       propertyType: '',
+      propertyTypeErrorMessage: '',
       acquisitionValue: '',
       estimatedCost: '',
       data : '',
@@ -71,7 +72,8 @@ class CalamityFragment extends BaseMVPView {
       noticeResponse : null,
       count : 2,
       propertyTypeValue : [ {id: 1, name: 'Replaceable'},
-                            {id: 2, name: 'Irreplaceable'} ]
+                            {id: 2, name: 'Irreplaceable'} ],
+      damagePropertyCardHolder : [],
     }
     this.validator = this.validator.bind(this)
     this.handleChange=this.handleChange.bind(this)
@@ -100,8 +102,8 @@ class CalamityFragment extends BaseMVPView {
     this.setState({ attachmentsData })
   }
 
-  showDamagePropertyAttachments (defaultDamangeProperty) {
-    this.setState({ defaultDamangeProperty })
+  showDamagePropertyAttachments (defaultDamageProperty) {
+    this.setState({ defaultDamageProperty })
   }
 
   setFileAttachments (attachmentArray) {
@@ -274,6 +276,7 @@ class CalamityFragment extends BaseMVPView {
       propertyId,
       property,
       propertyDesc,
+      propertyTypeErrorMessage,
       propertyType,
       propertyTypeValue,
       acquisitionValue,
@@ -281,10 +284,11 @@ class CalamityFragment extends BaseMVPView {
       calamityTypeErrorMessage,
       estimatedCostErrorMessage,
       showPropertyModal,
-      defaultDamangeProperty,
-      count
+      defaultDamageProperty,
+      count,
+      damagePropertyCardHolder
     }=this.state
-    console.log(defaultDamangeProperty)
+    console.log(damagePropertyCardHolder)
     return (
       <div>
       {
@@ -347,38 +351,56 @@ class CalamityFragment extends BaseMVPView {
       }
 
       {
-        showPropertyTypeModal &&
-        <SingleInputModal
-          label = { 'Property Type' }
-          inputArray = { propertyTypeValue && propertyTypeValue }
-          selectedArray = { (propertyId, propertyType) =>
+        showPropertyModal &&
+        <CalamityFormGenericModal
+          propertyTypeValue = { propertyTypeValue }
+          defaultDamageProperty = { defaultDamageProperty }
+          showPropertyTypeModal = { showPropertyTypeModal }
+          propertyTypeErrorMessage = { propertyTypeErrorMessage }
+          property = { property }
+          propertyDesc = { propertyDesc }
+          propertyType = { propertyType }
+          acquisitionValue = { acquisitionValue }
+          estimatedCost = { estimatedCost }
+          calamityTypeErrorMessage = { calamityTypeErrorMessage }
+          estimatedCostErrorMessage = { estimatedCostErrorMessage }
+          propertyFunc = { (resp) => this.validatePropertyFunc(resp) }
+          propertyDescFunc = { (resp) => this.validatePropertyDescFunc(resp) }
+          acquisitionFunc = { (resp) => this.validateAcquisitionFunc(resp) }
+          estimatedCostFunc = { (resp) => this.validateEstimatedCostFunc(resp) }
+          handleChange = { (resp) => this.handleChange(resp) }
+          requestPropertyTypeFunc = { (resp) => this.showPropertyTypeModal(resp) }
+          setPropertyData = { (
+              propertyId,
+              propertyType,
+              showPropertyTypeModal,
+              propertyTypeErrorMessage) =>
             this.setState({
               propertyId,
               propertyType,
-              showPropertyTypeModal : false,
-              propertyTypeErrorMessage : ''
+              showPropertyTypeModal,
+              propertyTypeErrorMessage
             })
           }
-          onClose = { () => this.setState({ showPropertyTypeModal : false }) }
-        />
-      }
-
-      {
-        showPropertyModal &&
-        <CalamityFormGenericModal
-          attachmentsData = { defaultDamangeProperty }
           setAttachmentFunc = { (updatedAttachments) => this.setFileAttachmentsArray(updatedAttachments) }
           addAttachmentsFunc = { () => {
-            const updatedAttachments = [...defaultDamangeProperty]
+            const updatedAttachments = [...defaultDamageProperty]
             let newCount = count + 1
             this.setState({ count : newCount })
             updatedAttachments.push({
               name : 'Damage Property ' + count
             })
-            this.setState({ defaultDamangeProperty : updatedAttachments })
+            this.setState({ defaultDamageProperty : updatedAttachments })
             }
           }
+          count = { count }
+          countFunc = { (count) => this.setState({ count }) }
           hideModalPropertyFormFunc = { (showPropertyModal) => this.setState({ showPropertyModal }) }
+          getPropertyHolderFunc = { (resp) => {
+            const updatePropertyHolder = [...damagePropertyCardHolder]
+            updatePropertyHolder.push(resp)
+            this.setState({ damagePropertyCardHolder : updatePropertyHolder})
+          }}
           />
       }
 
@@ -405,7 +427,6 @@ class CalamityFragment extends BaseMVPView {
             propertyType,
             acquisitionValue,
             estimatedCost,
-
             )
           }
           onClose={
@@ -435,29 +456,18 @@ class CalamityFragment extends BaseMVPView {
               this.confirmation(showConfirmation, data)
             }
           }
+          damagePropertyCardHolder = { damagePropertyCardHolder }
           calamityAssistance={ calamityAssistance }
           attachmentsData = { attachmentsData }
-          defaultDamangeProperty = { defaultDamangeProperty }
+          defaultDamageProperty = { defaultDamageProperty }
           calamityId = { calamityId }
           calamityName={ calamityName }
           calamityType = { calamityType }
           preferredDate = { preferredDate }
-          property = { property }
-          propertyDesc = { propertyDesc }
-          propertyType = { propertyType }
-          acquisitionValue = { acquisitionValue }
-          estimatedCost = { estimatedCost }
-          calamityTypeErrorMessage = { calamityTypeErrorMessage }
-          estimatedCostErrorMessage = { estimatedCostErrorMessage }
-          propertyFunc = { (resp) => this.validatePropertyFunc(resp) }
-          propertyDescFunc = { (resp) => this.validatePropertyDescFunc(resp) }
-          acquisitionFunc = { (resp) => this.validateAcquisitionFunc(resp) }
-          estimatedCostFunc = { (resp) => this.validateEstimatedCostFunc(resp) }
-          handleChange = { (resp) => this.handleChange(resp) }
           requestCalamityTypeFunc = { (resp) => this.showCalamityTypeModal(resp) }
-          requestPropertyTypeFunc = { (resp) => this.showPropertyTypeModal(resp) }
           onShowPropertyFormModalFunc = { () => this.setState({ showPropertyModal : true }) }
           setAttachmentDefaultyFunc = { (attachmentDefaultArray) => this.setFileAttachments(attachmentDefaultArray) }
+          setCardHolderDefaultyFunc = { (damagePropertyCardHolder) => this.setState({ damagePropertyCardHolder }) }
           getPreferredDate = { data =>
             this.setState({ date :  data })}
 
