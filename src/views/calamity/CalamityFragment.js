@@ -42,7 +42,6 @@ class CalamityFragment extends BaseMVPView {
       showNoticeResponseModal : false,
       showBenefitFeedbackModal : false,
       showEditSubmitButton : false,
-      showReviewCalamityModal: false,
       showCalamityTypeModal: false,
       showErrorModal : false,
       showPropertyTypeModal: false,
@@ -250,12 +249,16 @@ class CalamityFragment extends BaseMVPView {
   }
 
   render () {
+    const defaultDamagePropertyStatic = [
+      {
+        name: 'Damage Property ' + 1
+      }
+    ]
     const {
       showNoticeModal,
       noticeResponse,
       showNoticeResponseModal,
       showBenefitFeedbackModal,
-      showReviewCalamityModal,
       showCalamityTypeModal,
       showPropertyTypeModal,
       showPropModal,
@@ -353,6 +356,7 @@ class CalamityFragment extends BaseMVPView {
       {
         showPropertyModal &&
         <CalamityFormGenericModal
+          resetInstance = { () => this.setState({ defaultDamageProperty : defaultDamagePropertyStatic}) }
           propertyTypeValue = { propertyTypeValue }
           defaultDamageProperty = { defaultDamageProperty }
           showPropertyTypeModal = { showPropertyTypeModal }
@@ -402,39 +406,6 @@ class CalamityFragment extends BaseMVPView {
             this.setState({ damagePropertyCardHolder : updatePropertyHolder})
           }}
           />
-      }
-
-      {
-        showReviewCalamityModal &&
-        <CalamityReviewModal
-          calamityId={ calamityId }
-          calamityName={ calamityName }
-          preferredDate={ preferredDate }
-          property={ property }
-          propertyDesc={ propertyDesc }
-          propertyType={ propertyType }
-          acquisitionValue={ acquisitionValue }
-          estimatedCost={ estimatedCost }
-          onCancel={  () => this.setState({ showReviewCalamityModal : false })  }
-          onClose={ () => this.setState({ showReviewCalamityModal : false }) }
-
-          onClick={ () => this.onGetClicked(
-            calamityId,
-            calamityType,
-            preferredDate,
-            property,
-            propertyDesc,
-            propertyType,
-            acquisitionValue,
-            estimatedCost,
-            )
-          }
-          onClose={
-            () => {
-              this.setState({ showReviewCalamityModal : false })
-            }
-          }
-        />
       }
       <div>
         <i

@@ -78,7 +78,7 @@ class CalamityFormCardComponent extends Component {
         {
         damagePropertyCardHolder.length !==0 &&
           <GenericMultipleCard
-            fileArray = { damagePropertyCardHolder }
+            cardDataHolder = { damagePropertyCardHolder }
             setCard = { (resp) => setCardHolderDefaultyFunc(resp) }
             disabled = { showEditSubmitButton }
             errorMessage = {

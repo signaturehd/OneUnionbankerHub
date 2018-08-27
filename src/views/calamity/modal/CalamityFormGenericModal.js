@@ -39,7 +39,8 @@ class CalamityFormGenericModal extends Component {
       propertyFunc,
       acquisitionFunc,
       estimatedCostFunc,
-      hideModalPropertyFormFunc
+      hideModalPropertyFormFunc,
+      resetInstance
     } = this.props
 
     const {
@@ -47,7 +48,7 @@ class CalamityFormGenericModal extends Component {
     } = this.state
 
     const damagePropertyObject = {
-      properTyName : property,
+      propertyName : property,
       description : propertyDesc,
       acquisitionValue : acquisitionValue,
       repairCost : estimatedCost,
@@ -59,6 +60,7 @@ class CalamityFormGenericModal extends Component {
     propertyDescFunc('')
     acquisitionFunc('')
     estimatedCostFunc('')
+    resetInstance('')
     this.setState({ genericFileAttachmentArray : [] })
     hideModalPropertyFormFunc(false)
   }

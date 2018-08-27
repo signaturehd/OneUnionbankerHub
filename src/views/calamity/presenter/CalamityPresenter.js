@@ -26,7 +26,7 @@ export default class CalamityPresenter {
          name: 'Barangay Certificate'
        }
      ]
-     const defaultDamangeProperty = [
+     const defaultDamageProperty = [
        {
          name: 'Damage Property ' + 1
        }
@@ -40,7 +40,7 @@ export default class CalamityPresenter {
      })
      this.view.showCalamityTypeMap(calamityType)
      this.view.showAttachmentsMap(defaultAttachments)
-     this.view.showDamagePropertyAttachments(defaultDamangeProperty)
+     this.view.showDamagePropertyAttachments(defaultDamageProperty)
      this.view.showValidatedCalamity(data)
    })
      .subscribe(
