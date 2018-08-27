@@ -50,7 +50,7 @@ export default class OutPatientReimbursementPresenter {
       .subscribe(data => {
         this.view.hideCircularLoader()
       }, error => {
-        this.view.showErrorMessage(true, error)
+        this.view.navigate()
       })
     }
 
@@ -85,7 +85,7 @@ export default class OutPatientReimbursementPresenter {
           errors => {
             this.view.hideCircularLoader()
             this.view.noticeResponse(errors)
-            this.view.showErrorMessage(true, error)
+            this.view.navigate()
           }
         )
       }

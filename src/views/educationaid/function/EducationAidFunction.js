@@ -2,7 +2,8 @@ import {
   MoneyValidation,
   RequiredValidation,
   RequiredAlphabetValidation,
-  RequiredDecimalValidation
+  RequiredDecimalValidation,
+  RequiredSymbolValidation
 } from '../../../utils/validate'
 
 export function checkedAmount (amount) {
@@ -18,6 +19,11 @@ export function checkedValidateText (text) {
 export function checkedValidateDecimal (num) {
   return new RequiredDecimalValidation().isValid(num) ?
    num : ''
+}
+
+export function checkedValidateSymbol (value) {
+  return !new RequiredSymbolValidation().isValid(value) ?
+  value : ''
 }
 
 export function checkedValidateInput (input) {

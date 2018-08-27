@@ -30,8 +30,8 @@ export default class EducationGrantAidPresenter {
     this.view.showCircularLoader()
     this.validateGrantAidInteractor.execute()
       .subscribe(
-        grantAid => {
-          this.view.setGrantAid(grantAid)
+        data => {
+          this.view.showValidateGrantAidMap(data)
           this.view.hideCircularLoader()
         },
         error => {

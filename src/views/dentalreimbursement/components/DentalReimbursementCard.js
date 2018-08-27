@@ -7,6 +7,8 @@ import DentalReimbursementProcedureModal from
 import ReviewSubmission from '../modal/DentalReimbursementReviewModal'
 
 import {
+  GenericInput,
+  DatePicker,
   Card,
   GenericButton,
   FileUploader,
@@ -20,7 +22,7 @@ import {
  import { NotifyActions } from '../../../actions'
 
  import { RequiredValidation, Validator, MoneyValidation } from '../../../utils/validate'
-
+import moment from 'moment'
 
 class DentalReimbursementCard extends Component {
   constructor (props) {
@@ -40,6 +42,9 @@ class DentalReimbursementCard extends Component {
     procedure: '',
     showReviewSubmissionModal : false,
     fileAttachments : [],
+    officialReceiptDate : null,
+    officialReceiptNumber : '',
+    attachmentArray : [],
   }
   this.handleImageChange = this.handleImageChange.bind(this)
   this.handleImageChange2 = this.handleImageChange2.bind(this)
@@ -65,28 +70,62 @@ getExtension (filename) {
 */
 submission (e) {
   const {
-    file,
-    file2,
     selectedDependent,
-    selectedProcedures
+    selectedProcedures,
+    officialReceiptDate,
+    officialReceiptNumber,
+    attachmentArray,
   } = this.state
-  if (!this.validator(file)) {
+
+  let validateAttachments = false
+  attachmentArray && attachmentArray.map(
+    (attachment, key) => {
+      if(!attachment.file) {
+        validateAttachments = true
+      }
+    }
+  )
+
+  if (!this.validator(officialReceiptDate)) {
     store.dispatch(NotifyActions.addNotify({
        title : 'Warning' ,
-       message : 'Official Receipt attachment is required',
+       message : 'Official Receipt Date is required',
        type : 'warning',
        duration : 2000
      })
    )
-  } else if (!this.validator(file2)) {
+ } else if (!this.validator(officialReceiptNumber)) {
     store.dispatch(NotifyActions.addNotify({
        title : 'Warning' ,
-       message : 'Medical Certificate attachment is required',
+       message : 'Official Receipt Number is required',
        type : 'warning',
        duration : 2000
      })
    )
- } else if (!this.validator(selectedDependent)) {
+ } else if (!attachmentArray.length) {
+    store.dispatch(NotifyActions.addNotify({
+       title : 'Warning' ,
+       message : 'Attachments is required',
+       type : 'warning',
+       duration : 2000
+     })
+   )
+ } else if (validateAttachments) {
+   attachmentArray && attachmentArray.map(
+     (attachment, key) => {
+       if(!attachment.file) {
+         store.dispatch(NotifyActions.addNotify({
+            title : 'Warning' ,
+            message : attachment.name + ' is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+       }
+     }
+   )
+
+  } else if (!this.validator(selectedDependent)) {
    store.dispatch(NotifyActions.addNotify({
       title : 'Warning' ,
       message : 'Please select dependents',
@@ -215,8 +254,12 @@ render () {
     showResults,
     showReviewSubmissionModal,
     file,
-    file2
+    file2,
+    officialReceiptDate,
+    officialReceiptNumber,
+    attachmentArray
   } = this.state
+
 
   const { imagePreviewUrl, imagePreviewUrl2 } = this.state
 
@@ -249,34 +292,38 @@ render () {
         showReviewSubmissionModal &&
         <ReviewSubmission
           onClose = { (result) => this.setState({ showReviewSubmissionModal : result }) }
-          attachment1 = { file }
-          attachment2 = { file2 }
+          orDate = { officialReceiptDate }
+          orNumber = { officialReceiptNumber }
+          attachments = { attachmentArray }
           dependent = { selectedDependent }
           procedure = { selectedProcedures }
-          imageUrl = { imagePreviewUrl }
-          imageUrl2 = { imagePreviewUrl2 }
           presenter = { this.props.presenter }
-          onClick = { () => this.submission }
+          imageUrl = { attachmentArray[0].base64 }
+          imageUrl2 = { attachmentArray[1].base64 }
         />
       }
       <div className = { 'dentailreimbursement-grid-x3' }>
         <div></div>
           <Card className = { 'dentalreimbursement-card' }>
             <div className = 'dentalreimbursement-main'>
+              <DatePicker
+                maxDate = { moment() }
+                disabled = { false }
+                selected = { officialReceiptDate }
+                onChange = { (e) => this.setState({ officialReceiptDate : e }) }
+                text = { 'Date of Official Receipt' }
+                hint = { '(eg. MM/DD/YYYY)' }/>
+              <br/>
+              <GenericInput
+                value = { officialReceiptNumber }
+                onChange = { (e) => this.setState({ officialReceiptNumber : e.target.value }) }
+                disabled = { false }
+                text = { 'Official Receipt Number' } />
+              <br/>
               <MultipleFileUploader
-                placeholder = 'attachments'
+                placeholder = 'Form Attachments'
                 fileArray = { attachments }
-                setFile = { (attachment, base64, index) => {
-                    // spread attachments
-                    // set attachments file via attachment
-                    // set base64 base64 via base64
-                    // indicator via index
-                    // send to main view
-                    // setFileAttachment(attachment,base64,index)
-                    // fileAttachment[index].file = attachment
-                    // fileAttachment[index].base64 = base64
-                  }
-                }
+                setFile = { (resp) => this.setState({ attachmentArray : resp }) }
              />
             </div>
             <div className = {'dentalreimbursement-footer-left'}>
@@ -350,7 +397,6 @@ render () {
             )
           }
            <GenericButton
-              className = { 'dentalreimbursement-submit' }
               onClick = { this.submission }
               type = { 'button' }
               text = { 'Submit' }/>
@@ -367,6 +413,7 @@ DentalReimbursementCard.propTypes = {
   onFocus : PropTypes.func,
   procedure : PropTypes.string,
   dependents: PropTypes.array,
+
 }
 DentalReimbursementCard.defaultProps = {
   procedure : 'PROCEDURE',

@@ -62,8 +62,6 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         dateErrorMessage: '',
         orNumberErrorMessage: '',
         amountErrorMessage : '',
-        showErrorMessageModal: false,
-        showErrorMessageValidate: ''
     }
   }
 
@@ -260,8 +258,6 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       titleChange,
       limit,
       updateTotalAmount,
-      showErrorMessageModal,
-      showErrorMessageValidate
     } = this.state
 
     const {
@@ -271,23 +267,6 @@ class OutPatientReimbursementFragment extends BaseMVPView {
 
     return (
       <div>
-        {
-          showErrorMessageModal &&
-          <Modal>
-            <center>
-              <h2>{ showErrorMessageValue.message }</h2>
-              <br/>
-              <GenericButton
-                text = { 'Ok' }
-                onClick = { () =>  {
-                  this.setState({ showErrorMessageModal : false })
-                  this.navigate()
-                }
-              }
-                />
-            </center>
-          </Modal>
-        }
         {
           showNoticeModal &&
           <NoticeModal

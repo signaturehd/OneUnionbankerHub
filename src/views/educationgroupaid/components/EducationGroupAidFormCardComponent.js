@@ -44,6 +44,12 @@ class EducationGroupAidFormCardComponent extends Component {
       showDependentFunc,
       companyFunc,
       desiredAmountFunc,
+      orDate,
+      orDateErrorMessage,
+      orNumber,
+      orNumberErrorMessage,
+      orDateFunc,
+      orNumberFunc,
       showPremiumFunc,
       dateFunc,
       showFormReview,
@@ -93,6 +99,7 @@ class EducationGroupAidFormCardComponent extends Component {
                 errorMessage = { DOPErrorMessage }
                 type = { 'text' }/>
               <DatePicker
+                readOnly
                 selected = { effectivityDate }
                 value = { effectivityDateText }
                 text = { 'Effectivity Date/Coverage of Insurance' }
@@ -104,56 +111,70 @@ class EducationGroupAidFormCardComponent extends Component {
                 text = { 'Maturity Date' }
                 disabled = { showEditSubmitButton }
                 type = { 'text' }/>
-                {
-                  attachmentsData.length !== 0  ?
-                  <div>
-                    <MultipleFileUploader
-                      placeholder = { 'Form Attachments' }
-                      fileArray = { attachmentsData }
-                      setFile = { (resp) => setAttachmentArrayFunc(resp) }
-                      disabled = { showEditSubmitButton }
-                      errorMessage = {
-                        showEditSubmitButton ?
-                        '' :
-                        `Please upload the required attachments`  }
-                    />
-                  </div>
-                  :
-                  <div></div>
-                }
-                <br/>
-                <Line/>
-                <br/>
+              <DatePicker
+                readOnly
+                minDate = { moment() }
+                selected = { orDate && moment(orDate) }
+                text = { 'Date of Official Receipt' }
+                disabled = { showEditSubmitButton }
+                errorMessage = { orDateErrorMessage }
+                onChange = { (e) => orDateFunc(e) }/>
+              <GenericInput
+                value = { orNumber }
+                text = { 'Official Receipt Number' }
+                onChange = { (e) => orNumberFunc(e.target.value) }
+                disabled = { showEditSubmitButton }
+                errorMessage = { orNumberErrorMessage }
+                type = { 'text' }/>
+              {
+                attachmentsData.length !== 0  ?
+                <div>
+                  <MultipleFileUploader
+                    placeholder = { 'Form Attachments' }
+                    fileArray = { attachmentsData }
+                    setFile = { (resp) => setAttachmentArrayFunc(resp) }
+                    disabled = { showEditSubmitButton }
+                    errorMessage = {
+                      showEditSubmitButton ?
+                      '' :
+                      `Please upload the required attachments`  }/>
+                </div>
+                :
+                <div></div>
+              }
+              <br/>
+              <Line/>
+              <br/>
 
-                {
-                  showEditSubmitButton ?
-                  <div className = { 'educG-form-review' }>
-                    <GenericButton
-                      type = { 'button' }
-                      text = { 'Edit' }
-                      className = { 'educG-edit-form' }
-                      onClick = { () =>
-                        editFormDataFunc()
-                        }
-                      />
-                    <GenericButton
-                      type = { 'button' }
-                      text = { 'Submit' }
-                      onClick = { () => onSubmitFunc() }
-                      className = { 'educG-submit-form-button' }
-                      />
-                  </div>
-                  :
-                  <div>
-                    <GenericButton
-                      type = { 'button' }
-                      text = { 'Continue' }
-                      onClick = {
-                        () => showFormReview(true)
+              {
+                showEditSubmitButton ?
+                <div className = { 'educG-form-review' }>
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Edit' }
+                    className = { 'educG-edit-form' }
+                    onClick = { () =>
+                      editFormDataFunc()
                       }
-                      className = { 'educG-submit' } />
-                  </div>
-                }
+                    />
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Submit' }
+                    onClick = { () => onSubmitFunc() }
+                    className = { 'educG-submit-form-button' }
+                    />
+                </div>
+                :
+                <div>
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Continue' }
+                    onClick = {
+                      () => showFormReview(true)
+                    }
+                    className = { 'educG-submit' } />
+                </div>
+              }
             </div>
           </div>
         </div>
@@ -174,12 +195,18 @@ EducationGroupAidFormCardComponent.propTypes = {
   premiumDuration : PropTypes.string,
   effectivityDate : PropTypes.date,
   effectivityDateText : PropTypes.string,
+  orDate : PropTypes.date,
+  orNumber : PropTypes.string,
+  orDateErrorMessage : PropTypes.string,
+  orNumberErrorMessage : PropTypes.string,
   showEditSubmitButton : PropTypes.bool,
   showDepedendentFunc : PropTypes.func,
   companyFunc : PropTypes.func,
   desiredAmountFunc : PropTypes.func,
   showPremiumFunc : PropTypes.func,
   dateFunc : PropTypes.func,
+  orDateFunc : PropTypes.func,
+  orNumberFunc : PropTypes.func,
   showFormReview : PropTypes.func,
   editFormDataFunc : PropTypes.func,
   onSubmitFunc : PropTypes.func,

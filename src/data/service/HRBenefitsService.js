@@ -79,13 +79,17 @@ export default class HRBenefitsService {
       releasingCenter,
       type : dentalReimbursementParam.dependentId.id !== 1 ? 2 : 1,
       procedures : dentalReimbursementParam.procedure,
-      dependentId : dentalReimbursementParam.dependentId.id
+      dependentId : dentalReimbursementParam.dependentId,
+      orNumber :  dentalReimbursementParam.orNumber,
+      orDate : dentalReimbursementParam.orDate.format('MM/DD/YYYY')
     }
 
     formData.append('uuid', 12345)
-    formData.append('dentcert1', dentalReimbursementParam.file1)
-    formData.append('dentcert2', dentalReimbursementParam.file2)
     formData.append('body', JSON.stringify(dentalRObject))
+    dentalReimbursementParam.attachments.map((resp, key) => (
+      formData.append(resp.name, resp.file)
+      )
+    )
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {
       headers : { token }
     })
@@ -455,20 +459,22 @@ export default class HRBenefitsService {
     releasingCenter,
     carRequestParam) {
     const formData = new FormData()
+    formData.append('uuid', 12345)
     const addCarleaseObject = {
       accountNumber,
       releasingCenter,
       brand : carRequestParam.carBrand,
       model : carRequestParam.carModel,
-      year : carRequestParam.year,
+      year : carRequestParam.makeYear,
       insurancePayment: '1',
-      leaseMode : parseInt(carRequestParam.leaseMode),
+      leaseMode : carRequestParam.leaseMode,
+      solRC: carRequestParam.solRC,
+      cmUnit: carRequestParam.cmUnit,
       primaryColor : carRequestParam.primaryColor,
       secondaryColor : carRequestParam.secondaryColor,
     }
     formData.append('body', JSON.stringify(addCarleaseObject))
-    formData.append('uuid', 12345)
-    formData.append('attachment1', carRequestParam.attachments ? carRequestParam.attachments : null)
+    formData.append('attachment1', carRequestParam.file)
     return this.apiClient.post('v1/leases/car', formData, {
       headers: { token }
     })
@@ -504,6 +510,8 @@ export default class HRBenefitsService {
         tuitionFee : educationAidParam.tuitionFee,
         registrationFee : educationAidParam.registrationFee,
         schoolId : educationAidParam.schoolId,
+        orDate : educationAidParam.orDate,
+        orNumber : educationAidParam.orNumber
       }
       formData.append('uuid', 12345)
       formData.append('cert1', educationAidParam.attachments[0].file)
@@ -608,7 +616,9 @@ export default class HRBenefitsService {
         amount: groupAidParam.desiredAmount,
         effectivityDate: groupAidParam.effectiveDate,
         companyName: groupAidParam.company,
-        paymentDurationId: groupAidParam.durationOfPaymentId
+        paymentDurationId: groupAidParam.durationOfPaymentId,
+        orDate: groupAidParam.orDate,
+        orNumber: groupAidParam.orNumber
      }
      formData.append('uuid', 12345)
      groupAidParam.attachments.map((resp, key) =>
@@ -938,6 +948,36 @@ export default class HRBenefitsService {
       isLiked : isHeart
     }
     return this.apiClient.get(`v1/phenom/reactions?type=corporate`, objectPhenomIsHeart, {
+      headers : { token }
+    })
+  }
+
+  /* Leave Filing  */
+  addLeaveFiling (token, leaveFilingParam) {
+    const objectLeaveFiling = {
+      type : leaveFilingParam.type,
+      dateFrom : leaveFilingParam.dateFrom,
+      dateTo : leaveFilingParam.dateTo,
+      reason: leaveFilingParam.reason,
+      remarks : leaveFilingParam.remarks
+    }
+    return this.apiClient.post('v1/leaves', objectLeaveFiling, {
+      headers : { token }
+    })
+  }
+
+  /* Pin Enrollment */
+  postEnrollPin (token, id) {
+    const objectPostPin = {
+      code: id
+    }
+    return this.apiClient.post('v1/pin' , objectPostPin, {
+      headers : { token }
+    })
+  }
+
+  putEnrollPin (token, putPINParam) {
+    return this.apiClient.put('v1/pin', putPINParam, {
       headers : { token }
     })
   }
