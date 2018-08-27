@@ -69,14 +69,12 @@ class BereavementFragment extends BaseMVPView {
 
   formatDeceasedDate (value) {
     const validator = BereavementFunction.dateFormat(value)
-    this.setState({ deceasedDate : validator,
-                    funeralDate : validator })
+    this.setState({ deceasedDate : validator })
   }
 
   formatFuneralDate (value) {
     const validator = BereavementFunction.dateFormat(value)
-    this.setState({ funeralDate : validator,
-                    intermentDate : validator })
+    this.setState({ funeralDate : validator })
   }
 
   formatIntermentDate (value) {

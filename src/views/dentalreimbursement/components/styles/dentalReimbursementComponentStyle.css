@@ -15,6 +15,10 @@
   grid-template-columns: 1fr 2fr 1fr;
 }
 
+.dentalr-continue-button {
+  min-width: 100%;
+}
+
 .dentalreimbursement-image-view {
   position: relative;
   background: url('../../../../images/uploadicon-grey.jpg') no-repeat center center;
@@ -38,7 +42,6 @@
   padding: 20px 5px 20px 5px;
   margin: 50px 0 auto 0;
   background-color: rgba(0, 0, 0, 0);
-  text-align: center;
 }
 .dentalreimbursement-secondary {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
