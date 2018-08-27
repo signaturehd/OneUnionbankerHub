@@ -296,4 +296,5 @@ p {
 /**/
 .close-button-global {
   margin: auto;
+  cursor: pointer;
 }

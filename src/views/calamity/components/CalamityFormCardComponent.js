@@ -7,10 +7,11 @@ import {
   GenericButton,
   Line,
   MultipleFileUploader,
-  GenericMultipleCard
 } from '../../../ub-components/'
 
 import './styles/calamityComponentStyle.css'
+
+import CalamityMultiplePropertyCardComponent from './CalamityMultiplePropertyCardComponent'
 
 import { RequiredValidation, MoneyValidation } from '../../../utils/validate'
 import { format } from '../../../utils/numberUtils'
@@ -38,14 +39,15 @@ class CalamityFormCardComponent extends Component {
       setCardHolderDefaultyFunc,
       requestCalamityTypeFunc,
       requestPropertyTypeFunc,
-      handleChange,
+      handleChangeDate,
       showEditSubmitButton,
       calamityName,
       calamityType,
       preferredDate,
       calamityTypeErrorMessage,
       onClick,
-      damagePropertyCardHolder
+      damagePropertyCardHolder,
+      onEditModeProperty
     }=this.props
 
     return (
@@ -60,7 +62,7 @@ class CalamityFormCardComponent extends Component {
           maxDate={ moment() }
           readOnly
           selected={ preferredDate}
-          onChange={ (e) => handleChange(e) }
+          onChange={ (e) => handleChangeDate(e) }
           text = { 'Date of Occurrence' }
           />
         <div className = { 'grid-global' }>
@@ -70,17 +72,18 @@ class CalamityFormCardComponent extends Component {
           <div className = { 'text-align-right' }>
             <GenericButton
               text = { 'Add Property' }
-              onClick = { () => onShowPropertyFormModalFunc() }
+              onClick = { (resp, key) => onShowPropertyFormModalFunc(resp, key) }
               />
           </div>
         </div>
         <br/>
         {
         damagePropertyCardHolder.length !==0 &&
-          <GenericMultipleCard
+          <CalamityMultiplePropertyCardComponent
             cardDataHolder = { damagePropertyCardHolder }
             setCard = { (resp) => setCardHolderDefaultyFunc(resp) }
             disabled = { showEditSubmitButton }
+            onEditModeProperty = { (resp, showPreview, editMode) => onEditModeProperty(resp, showPreview, editMode) }
             errorMessage = {
               showEditSubmitButton ?
               '' :
@@ -120,7 +123,8 @@ class CalamityFormCardComponent extends Component {
   }
 
 CalamityFormCardComponent.propTypes={
-  handleChange: PropTypes.func,
+  handleChangeDate: PropTypes.func,
+  onEditModeProperty: PropTypes.func,
   setAttachmentDefaultyFunc: PropTypes.func,
   setCardHolderDefaultyFunc: PropTypes.func,
   requestCalamityTypeFunc: PropTypes.func,
