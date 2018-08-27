@@ -510,6 +510,8 @@ export default class HRBenefitsService {
         tuitionFee : educationAidParam.tuitionFee,
         registrationFee : educationAidParam.registrationFee,
         schoolId : educationAidParam.schoolId,
+        orDate : educationAidParam.orDate,
+        orNumber : educationAidParam.orNumber
       }
       formData.append('uuid', 12345)
       formData.append('cert1', educationAidParam.attachments[0].file)
@@ -614,7 +616,9 @@ export default class HRBenefitsService {
         amount: groupAidParam.desiredAmount,
         effectivityDate: groupAidParam.effectiveDate,
         companyName: groupAidParam.company,
-        paymentDurationId: groupAidParam.durationOfPaymentId
+        paymentDurationId: groupAidParam.durationOfPaymentId,
+        orDate: groupAidParam.orDate,
+        orNumber: groupAidParam.orNumber
      }
      formData.append('uuid', 12345)
      groupAidParam.attachments.map((resp, key) =>
