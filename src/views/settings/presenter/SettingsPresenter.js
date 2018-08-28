@@ -1,5 +1,6 @@
 import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInteractor'
 import GenericPutNewCodeInteractor from '../../../domain/interactor/pinCode/GenericPutNewCodeInteractor'
+import GetForConfirmationInteractor from '../../../domain/interactor/staffaccounts/GetForConfirmationInteractor'
 
 import { NotifyActions } from '../../../actions'
 import store from '../../../store'
@@ -8,6 +9,7 @@ export default class SettingsPresenter {
   constructor (container) {
     this.getProfileInteractor = new GetProfileInteractor(container.get('HRBenefitsClient'))
     this.genericPutNewCodeInteractor = new GenericPutNewCodeInteractor(container.get('HRBenefitsClient'))
+    this.getForConfirmationInteractor = new GetForConfirmationInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -46,6 +48,56 @@ export default class SettingsPresenter {
        this.view.hideCircularLoader()
      }, error => {
        this.view.hideCircularLoader()
+     })
+   }
+
+   getForConfirmation (id) {
+     this.view.staffCircularLoader(true)
+     this.getForConfirmationInteractor.execute(id)
+     .subscribe( data => {
+       this.view.staffCircularLoader(false)
+     }, error => {
+       const sampleData = [
+        {
+          "employeeId": "1604023",
+          "employeeName": "Jayzer0",
+          "account": {
+            "name": "4",
+            "number": "********1234",
+            "remarks": ""
+          },
+          "status": "Confirmed",
+          "sequence": 1,
+          "dateRegistered": "2018-08-16 14:40:11.393",
+          "addedBy": "1604023",
+          "line1": "5YGBRQJ9OA6CJ1CU",
+          "line2": "CA",
+          "line3": "NA",
+          "line4": "",
+          "line5": ""
+        },
+        {
+          "employeeId": "1604023",
+          "employeeName": "Jayzer0",
+          "account": {
+            "name": "4",
+            "number": "********4321",
+            "remarks": ""
+          },
+          "status": "Confirmed",
+          "sequence": 2,
+          "dateRegistered": "2018-08-16 14:40:11.393",
+          "addedBy": "1604023",
+          "line1": "5YGBRQJ9OA6CJ1CU",
+          "line2": "EO",
+          "line3": "NA",
+          "line4": "",
+          "line5": ""
+        }
+      ]
+      this.view.setStaffAccounts(sampleData)
+      this.view.staffCircularLoader(false)
+      //this.view.showStaffAccount(false)
      })
    }
  }
