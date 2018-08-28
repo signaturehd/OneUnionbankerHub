@@ -32,7 +32,7 @@ export default class OpticalPresenter {
         // this.view.showOptical(optical)
       }, e => {
         this.view.noticeResponse(e)
-        this.view.isEligible(false, errors)
+        this.view.isEligible(false, e)
       })
     }
 

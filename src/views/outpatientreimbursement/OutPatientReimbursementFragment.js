@@ -71,11 +71,11 @@ class OutPatientReimbursementFragment extends BaseMVPView {
   }
 
   noticeOfUndertaking (noticeResponse) {
-   this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
+   this.setState({ showNoticeModal : true, noticeResponse })
   }
 
   noticeResponse (noticeResponse) {
-    this.setState({showConfirmation: false, noticeResponse })
+    this.setState({ noticeResponse })
   }
 
   hideCircularLoader () {

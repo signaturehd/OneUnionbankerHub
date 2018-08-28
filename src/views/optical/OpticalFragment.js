@@ -30,7 +30,6 @@ class OpticalFragment extends BaseMVPView {
     super(props)
     this.state = {
       showNoticeModal : false,
-      showConfirmation : false,
       noticeResponse : null,
       showNoticeResponseModal : false,
       showBenefitFeedbackModal : false,
@@ -84,6 +83,10 @@ class OpticalFragment extends BaseMVPView {
 
   noticeOfUndertaking (noticeResponse) {
     this.setState({ showNoticeModal : true, noticeResponse })
+  }
+
+  noticeResponse (noticeResponse) {
+    this.setState({ noticeResponse })
   }
 
   navigate () {
@@ -148,7 +151,6 @@ class OpticalFragment extends BaseMVPView {
 
   render () {
     const {
-      showConfirmation,
       showNoticeModal,
       showBenefitFeedbackModal,
       showNoticeResponseModal,

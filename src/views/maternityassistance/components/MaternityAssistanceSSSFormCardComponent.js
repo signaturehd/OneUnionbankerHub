@@ -97,7 +97,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 <div>
                   <GenericInput
                     value = { roomNumberText }
-                    maxLength = { 10 }
+                    maxLength = { 20 }
                     onChange = { e => roomNumberFunc(e.target.value) }
                     text = { 'Room Number' }
                     disabled = { showEditSubmitButton }
@@ -107,7 +107,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 <div>
                   <GenericInput
                     value = { houseNumberText }
-                    maxLength = { 10 }
+                    maxLength = { 20 }
                     onChange = { e => houseNumberFunc(e.target.value) }
                     text = { 'House Number' }
                     disabled = { showEditSubmitButton }
@@ -117,6 +117,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 <div>
                   <GenericInput
                     value = { streetNameText }
+                    maxLength = { 40 }
                     onChange = { e => streetNameFunc(e.target.value) }
                     text = { 'Street Name' }
                     disabled = { showEditSubmitButton }
@@ -140,6 +141,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 type = { 'text' }/>
               <GenericInput
                 value = { cityText }
+                maxLength = { 20 }
                 onChange = { e => cityFunc(e.target.value) }
                 text = { 'City/Municipality' }
                 disabled = { showEditSubmitButton }
@@ -149,6 +151,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 <div>
                   <GenericInput
                     value = { provinceText }
+                    maxLength = { 20 }
                     onChange = { e => provinceFunc(e.target.value) }
                     text = { 'Province' }
                     disabled = { showEditSubmitButton }
@@ -228,7 +231,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
               {
                 showEditSubmitButton &&
                 <center>
-                  <h2 className = { 'font-size-12px' }>Please review he information you have selected before submitting the transaction</h2>
+                  <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
                 </center>
               }
               <br/>
