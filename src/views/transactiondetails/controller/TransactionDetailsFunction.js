@@ -25,6 +25,8 @@ import moment from 'moment'
       return 'clear'
     } else if (status === 'for processing') {
       return 'process'
+    } else if (status === 'confirmation') {
+      return 'confirmation'
     }
   }
 
