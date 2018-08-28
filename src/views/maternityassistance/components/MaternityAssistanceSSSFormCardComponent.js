@@ -220,6 +220,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateOfDelivertFunc(e) }
                 minDate = { moment() }
+                maxDate = { moment().add(9, 'months') }
                 readOnly
                 text = { 'Expected Date of Delivery' }
                 errorMessage = { dateOfDeliveryErrorMessage }
