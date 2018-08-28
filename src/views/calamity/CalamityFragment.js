@@ -343,10 +343,9 @@ class CalamityFragment extends BaseMVPView {
           countFunc = { (count) => this.setState({ count }) }
           hideModalPropertyFormFunc = { (showPropertyModal) => this.setState({ showPropertyModal }) }
           hideModalPropertyTypeFunc = { (showPropertyTypeModal) => this.setState({ showPropertyTypeModal }) }
-          getPropertyHolderFunc = { (resp, key) => {
+          getPropertyHolderFunc = { (resp) => {
             const updatePropertyHolder = [...damagePropertyCardHolder]
             updatePropertyHolder.push(resp)
-            updatePropertyHolder.push(key)
             this.setState({ damagePropertyCardHolder : updatePropertyHolder})
           }}
           />
