@@ -1,0 +1,26 @@
+.enrolled-list {
+  margin: 20px;
+}
+
+.enrolled-title {
+  text-align: left;
+  margin: 0!important;
+  color: #ff8a00;
+  font-size: 16px;
+}
+
+.enrolled-date {
+  text-align: left;
+  margin: 0!important;
+  color: #555;
+  font-size: 16px;
+}
+
+.clickable-card:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 4px #888;
+}
+
+.clickable-card:active {
+  box-shadow: 0px 0px 4px #ffa800;
+}

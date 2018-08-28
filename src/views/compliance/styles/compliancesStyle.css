@@ -1,0 +1,40 @@
+
+.compliance-body {
+  display: grid;
+  grid-template-columns: 1fr 8fr 1fr;
+  column-gap: 2%;
+}
+
+.compliance-disabled {
+  width: 100%;
+  background-color: #efefef;
+  border: 1px solid #d1d5d8;
+  color: black;
+}
+
+.compliance-submit {
+  width: 100%;
+  border: 1px solid #ff8a00;
+}
+
+.compliance-submit:hover {
+  background-color: #ff8a00;
+  color: white;
+}
+
+.compliance-submit:active {
+  background-color: #ee7900;
+  color: white;
+}
+
+.pin-label {
+  text-align: center;
+}
+
+.font-12 {
+  font-size: 12px;
+}
+
+.compliance-card-content {
+  padding: 50px;
+}

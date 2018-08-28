@@ -1,0 +1,19 @@
+.faqs-button {
+  border-radius: 5px;
+  font-size: 14px;
+  border: 1px solid #ff8A00;
+  background-color: white;
+  color: #ff8A00;
+  outline: none;
+  display:block;
+  margin: 5px;
+  width: auto;
+  cursor: pointer;
+  height: 35px;
+}
+
+.faqs-button:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
+}
