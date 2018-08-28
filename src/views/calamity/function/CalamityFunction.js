@@ -1,5 +1,5 @@
 export function symbolValidation (value) {
-  return value && value.replace(/[&\/\\#+()$~%'":;*?<>\[\]|{}]/g, '')
+  return value.replace(/[&\/\\#+()$~@%'":;*?<>\[\]|{}]/g, '')
 }
 
 export function MinMaxNumberValidation (value) {

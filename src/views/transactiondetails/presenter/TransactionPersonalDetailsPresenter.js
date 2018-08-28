@@ -59,7 +59,6 @@ export default class TransactionPersonalDetailsPresenter {
         this.view.showCircularLoader()
         }, e => {
           this.view.showCircularLoader()
-          this.view.navigate()
       })
   }
 
