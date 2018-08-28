@@ -25,6 +25,8 @@ import {
 
 import * as func from './functions/OpticalFunctions'
 
+import moment from 'moment'
+
 class OpticalFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -45,8 +47,6 @@ class OpticalFragment extends BaseMVPView {
       orNumberText: '',
       preferredDate: '',
       limit: 0,
-      showErrorMessageValue: '',
-      showErrorMessageModal : false
     }
     this.confirmation = this.confirmation.bind(this)
     this.validator = this.validator.bind(this)
@@ -146,7 +146,7 @@ class OpticalFragment extends BaseMVPView {
       attachmentsData,
     } = this.state
 
-      this.presenter.addOptical(amount, preferredDate, orNumberText, attachmentsData)
+      this.presenter.addOptical(amount, moment(preferredDate).format('MM/DD/YYYY'), orNumberText, attachmentsData)
   }
 
   render () {
@@ -166,29 +166,10 @@ class OpticalFragment extends BaseMVPView {
       orNumberText,
       preferredDate,
       limit,
-      showErrorMessageValue,
-      showErrorMessageModal
     } = this.state
 
     return (
       <div>
-        {
-          showErrorMessageModal &&
-          <Modal>
-            <center>
-              <h2>{ showErrorMessageValue.message }</h2>
-              <br/>
-              <GenericButton
-                text = { 'Ok' }
-                onClick = { () =>  {
-                  this.setState({ showErrorMessageModal : false })
-                  this.navigate()
-                }
-              }
-                />
-            </center>
-          </Modal>
-        }
         {
           showNoticeModal &&
           <NoticeModal
