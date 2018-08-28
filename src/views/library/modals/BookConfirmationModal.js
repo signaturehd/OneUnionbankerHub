@@ -41,12 +41,14 @@ class BookConfirmationModal extends Component {
           </center>          :
           <div>
             <h3>Are you sure you want to {title} this book?</h3>
-            <GenericButton
-              onClick = { () => this.onYes()  }
-              text = { 'Yes' } />
-            <GenericButton
-              onClick = { onClose }
-              text = { 'Cancel' } />
+            <div className = { 'grid-global' }>
+              <GenericButton
+                onClick = { () => this.onYes()  }
+                text = { 'Yes' } />
+              <GenericButton
+                onClick = { onClose }
+                text = { 'Cancel' } />
+            </div>
           </div>
         }
 

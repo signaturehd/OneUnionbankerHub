@@ -68,8 +68,8 @@ class MedicalSchedulingOtherDetailCardComponent extends Component {
           <br/>
         </div>
         {
-          procedures && procedures.slice(0, index).map( (resp ,key) => (
-            <div className = { 'transaction-icons-details-grid' } key = {key}>
+          procedures && procedures.map((resp ,key) => (
+            <div key = {key}>
               <div>
                 <h2 className = { 'font-size-13px font-weight-lighter' } >
                   { resp.Procedure }
@@ -79,27 +79,6 @@ class MedicalSchedulingOtherDetailCardComponent extends Component {
           )
         )
         }
-        <div className = { 'grid-global' }>
-          <GenericButton
-            className = { 'transaction-component-button' }
-            text = { 'View Less' }
-            onClick = { () =>
-              this.setState({
-                index : TransactionPersonalFunction.indexDecreased(index)
-                })
-              }
-            />
-          <GenericButton
-            className = { 'transaction-component-button' }
-            text = { 'View More' }
-            onClick = { () => {
-              if (index < procedures.length)
-              this.setState({ index : TransactionPersonalFunction.indexIncreased(index) })
-              }
-
-            }
-            />
-        </div>
         <br/>
         <br/>
       </div>

@@ -60,7 +60,7 @@ export default class MaternityAssistancePresenter {
           })
         })
         this.view.showTypeOfDeliveryMap(typeOfDelivery)
-        this.view.showAttachmentsMap(attachmentArray)
+        this.view.showAttachmentsMap(attachmentArray, attachmentArray.length)
         this.view.showValidatedMaternity(data)
       })
       .subscribe(data => {
@@ -94,7 +94,7 @@ export default class MaternityAssistancePresenter {
         this.view.hideCircularLoader()
         this.view.noticeOfUndertaking(data)
       }, errors => {
-        this.view.navigate()
+        this.view.hideCircularLoader()
       }
     )
   }
@@ -135,7 +135,7 @@ export default class MaternityAssistancePresenter {
         this.view.hideCircularLoader()
         this.view.confirmationMat1Response(true, data.message)
       },  errors => {
-          this.view.navigate()
+          this.view.hideCircularLoader()
         }
       )
     }

@@ -4,7 +4,6 @@ import './styles/dentalReimbursementComponentStyle.css'
 
 import DentalReimbursementProcedureModal from
   '../modal/DentalReimbursementProcedureModal'
-import ReviewSubmission from '../modal/DentalReimbursementReviewModal'
 
 import {
   GenericInput,
@@ -45,6 +44,7 @@ class DentalReimbursementCard extends Component {
     officialReceiptDate : null,
     officialReceiptNumber : '',
     attachmentArray : [],
+    showEditMode: false
   }
   this.handleImageChange = this.handleImageChange.bind(this)
   this.handleImageChange2 = this.handleImageChange2.bind(this)
@@ -157,13 +157,14 @@ submission (e) {
           })
         )
       } else {
-        this.setState({ showReviewSubmissionModal : true })
+        this.setState({ showEditMode : true })
       }
     })
   } else {
-    this.setState({ showReviewSubmissionModal : true })
+    this.setState({ showEditMode : true })
   }
 }
+
 handleImageChange (e) {
   e.preventDefault()
   const reader = new FileReader()
@@ -257,7 +258,8 @@ render () {
     file2,
     officialReceiptDate,
     officialReceiptNumber,
-    attachmentArray
+    attachmentArray,
+    showEditMode
   } = this.state
 
 
@@ -288,38 +290,24 @@ render () {
 
   return (
     <div className = { 'dentalreimbursement-container' }>
-      {
-        showReviewSubmissionModal &&
-        <ReviewSubmission
-          onClose = { (result) => this.setState({ showReviewSubmissionModal : result }) }
-          orDate = { officialReceiptDate }
-          orNumber = { officialReceiptNumber }
-          attachments = { attachmentArray }
-          dependent = { selectedDependent }
-          procedure = { selectedProcedures }
-          presenter = { this.props.presenter }
-          imageUrl = { attachmentArray[0].base64 }
-          imageUrl2 = { attachmentArray[1].base64 }
-        />
-      }
       <div className = { 'dentailreimbursement-grid-x3' }>
         <div></div>
           <Card className = { 'dentalreimbursement-card' }>
-            <div className = 'dentalreimbursement-main'>
+            <div>
               <DatePicker
                 maxDate = { moment() }
                 disabled = { false }
                 selected = { officialReceiptDate }
                 onChange = { (e) => this.setState({ officialReceiptDate : e }) }
                 text = { 'Date of Official Receipt' }
+                readOnly
                 hint = { '(eg. MM/DD/YYYY)' }/>
-              <br/>
               <GenericInput
                 value = { officialReceiptNumber }
                 onChange = { (e) => this.setState({ officialReceiptNumber : e.target.value }) }
                 disabled = { false }
+                maxLength = { 20 }
                 text = { 'Official Receipt Number' } />
-              <br/>
               <MultipleFileUploader
                 placeholder = 'Form Attachments'
                 fileArray = { attachments }
@@ -342,7 +330,7 @@ render () {
                 }
 
                <h2 className = { 'dentalreimbursement-header-chooseDependents' }>
-                 CHOOSE DEPENDENT
+                 CHOOSE RECIPIENT
                </h2>
                {
                  dependents && dependents.map((dependent, key) => {
@@ -396,10 +384,27 @@ render () {
               )
             )
           }
-           <GenericButton
-              onClick = { this.submission }
-              type = { 'button' }
-              text = { 'Submit' }/>
+          {
+            showEditMode ?
+            <div className = { 'grid-global' }>
+              <GenericButton
+                onClick = { () => this.setState({ showEditMode : false }) }
+                text = { 'Edit' }
+                />
+              <GenericButton
+                onClick = { () => this.props.presenter.addDentalReimbursement(
+                      officialReceiptDate, officialReceiptNumber, selectedDependent.id, selectedProcedures, attachmentArray
+                    ) }
+                text = { 'Submit' }
+                />
+            </div>
+            :
+            <GenericButton
+             onClick = { this.submission }
+             className = { 'dentalr-continue-button' }
+             text = { 'Continue' }/>
+          }
+
           </Card>
         <div></div>
       </div>
