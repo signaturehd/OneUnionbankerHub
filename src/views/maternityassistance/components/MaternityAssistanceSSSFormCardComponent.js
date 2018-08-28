@@ -117,7 +117,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 <div>
                   <GenericInput
                     value = { streetNameText }
-                    maxLength = {  }
+                    maxLength = { 40 }
                     onChange = { e => streetNameFunc(e.target.value) }
                     text = { 'Street Name' }
                     disabled = { showEditSubmitButton }
@@ -220,6 +220,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateOfDelivertFunc(e) }
                 minDate = { moment() }
+                maxDate = { moment().add(9, 'months') }
                 readOnly
                 text = { 'Expected Date of Delivery' }
                 errorMessage = { dateOfDeliveryErrorMessage }

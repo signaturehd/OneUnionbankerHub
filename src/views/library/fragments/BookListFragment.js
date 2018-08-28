@@ -104,7 +104,7 @@ class BookListFragment extends Component {
           showConfirmationReserveModal &&
           <BookConfirmationModal
             onYes = { () => {
-              this.addReserve(bookId, bookQuantity), this.setState({ showConfirmationReserveModal : false })
+              this.addReserve(bookId, bookQuantity), this.setState({ showConfirmationReserveModal : false, view : false })
             } }
             title = { title }
             onClose = { () => this.setState({ showConfirmationReserveModal : false }) }

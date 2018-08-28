@@ -209,7 +209,7 @@ class BereavementFormCardComponent extends Component {
               <DatePicker
                 minDate = { moment(deceasedDate) }
                 maxDate = { moment(deceasedDate).add(30, 'days') }
-                hint = { funeralDate ? funeralDate : '(eg. MM/DD/YYYY)' }
+                hint = { '(eg. MM/DD/YYYY)' }
                 text = { 'Date of Wake' }
                 readOnly
                 selected = { funeralDate ? moment(funeralDate) : '' }

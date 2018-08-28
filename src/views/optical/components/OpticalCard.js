@@ -69,6 +69,7 @@ class OpticalCard extends Component {
             </div>
             <div>
               <GenericInput
+                maxLength = { 20 }
                 value = { orNumberText }
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => oRNumberFunc(e.target.value) }
