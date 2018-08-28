@@ -60,7 +60,7 @@ export default class MaternityAssistancePresenter {
           })
         })
         this.view.showTypeOfDeliveryMap(typeOfDelivery)
-        this.view.showAttachmentsMap(attachmentArray)
+        this.view.showAttachmentsMap(attachmentArray, attachmentArray.length)
         this.view.showValidatedMaternity(data)
       })
       .subscribe(data => {
