@@ -29,6 +29,7 @@ class MaternityAssistanceCardComponent extends Component {
   const {
     oRNumberFunc,
     setAttachmentArrayFunc,
+    showFormReviewDisabledORFunc,
     onSubmitFunc,
     dateFunc,
     requestTypeOfDeliveryFunc,
@@ -49,7 +50,8 @@ class MaternityAssistanceCardComponent extends Component {
     orNumberErrorMessage,
     amountErrorMessage,
     typeOfDeliveryErrorMessage,
-    dateOfDeliveryErrorMessage
+    dateOfDeliveryErrorMessage,
+    recipient
   } = this.props
 
   return (
@@ -57,8 +59,15 @@ class MaternityAssistanceCardComponent extends Component {
       <div className={ 'maternity-grid-column-2' }>
         <div></div>
         <div>
-          <div className={ 'maternity-form-card' }>
-            <div className={ 'maternity-form-card-body' }>
+          <Line/>
+          <div className={ 'outpatient-form-card' }>
+            <div className={ 'outpatient-form-card-body' }>
+              <GenericInput
+                value = { recipient }
+                text = { 'Recipient' }
+                readOnly
+                disabled = { true }
+                type = { 'text' }/>
               <GenericInput
                 value = { typeDeliveryName }
                 onClick = { () => requestTypeOfDeliveryFunc(true) }
@@ -66,65 +75,69 @@ class MaternityAssistanceCardComponent extends Component {
                 disabled = { showEditSubmitButton }
                 errorMessage = { typeOfDeliveryErrorMessage }
                 type = { 'text' }/>
-                <br/>
               <DatePicker
                 selected = { deliveryDate }
+                readOnly
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateOfDelivertFunc(e) }
-                minDate = { moment() }
                 text = { 'Date of Delivery' }
+                maxDate = { moment().add(9, 'months') }
                 errorMessage = { dateOfDeliveryErrorMessage }
                 />
-                <br/>
               <GenericInput
                 hint = { 'Enter Amount' }
                 text = { 'Amount' }
                 value = { amount }
                 onFocus = { true }
                 errorMessage = { amountErrorMessage }
-                disabled = { showEditSubmitButton }
+                disabled = { typeDeliveryName ? showEditSubmitButton : true }
                 onChange = { e => {
                     desiredAmountFunc(e.target.value)
                   }
                 }
                 type = { 'text' } />
-              <br/>
-              <DatePicker
-                selected = { preferredDate }
-                disabled = { showEditSubmitButton }
-                onChange = { (e) => dateFunc(e) }
-                maxDate = { moment() }
-                text = { 'Official Receipt Date' }
-                errorMessage = { dateErrorMessage }
-                />
-                <br/>
-              <GenericInput
-                value = { orNumberText }
-                disabled = { showEditSubmitButton }
-                onChange = { (e) => oRNumberFunc(e.target.value) }
-                text = { 'Official Receipt Number' }
-                errorMessage = { orNumberErrorMessage }
-                type = { 'text' }/>
-            </div>
-            <br/>
               {
-                attachmentsData.length !== 0  ?
-                <div>
-                  <MultipleFileUploader
-                    placeholder = { 'Form Attachments' }
-                    fileArray = { attachmentsData }
-                    setFile = { (resp) => setAttachmentArrayFunc(resp) }
-                    disabled = { showEditSubmitButton }
-                    errorMessage = {
-                      showEditSubmitButton ?
-                      '' :
-                      `Please upload the required attachments`  }
+                moment(deliveryDate).format('MM DD YYYY') <=
+                moment().format('MM DD YYYY') &&
+              <div>
+                <DatePicker
+                  selected = { preferredDate }
+                  disabled = { showEditSubmitButton }
+                  onChange = { (e) => dateFunc(e) }
+                  text = { 'Official Receipt Date' }
+                  readOnly
+                  errorMessage = { dateErrorMessage }
                   />
-                </div>
-                :
-                <div></div>
+                <GenericInput
+                  value = { orNumberText }
+                  disabled = { showEditSubmitButton }
+                  maxLength = { 20 }
+                  onChange = { (e) => oRNumberFunc(e.target.value) }
+                  text = { 'Official Receipt Number' }
+                  errorMessage = { orNumberErrorMessage }
+                  type = { 'text' }/>
+              </div>
               }
-              <br/>
+            </div>
+              {
+                attachmentsData.length !== 0  &&
+                <div>
+                  {
+                    moment(deliveryDate).format('MM DD YYYY') <=
+                    moment().format('MM DD YYYY') &&
+                    <MultipleFileUploader
+                      placeholder = { 'Form Attachments' }
+                      fileArray = { attachmentsData }
+                      setFile = { (resp) => setAttachmentArrayFunc(resp) }
+                      disabled = { showEditSubmitButton }
+                      errorMessage = {
+                        showEditSubmitButton ?
+                        '' :
+                        `Please upload the required attachments`  }
+                    />
+                  }
+                </div>
+               }
               <Line/>
               <br/>
               {
@@ -147,13 +160,24 @@ class MaternityAssistanceCardComponent extends Component {
                 </div>
                 :
                 <div>
-                  <GenericButton
-                    type = { 'button' }
-                    text = { 'continue' }
-                    onClick = {
-                      () => showFormReview(true)
-                    }
-                    className = { 'maternity-submit' } />
+                  {
+                      moment(deliveryDate).format('MM DD YYYY') <=
+                      moment().format('MM DD YYYY') ?
+                      <GenericButton
+                        type = { 'button' }
+                        text = { 'Continue' }
+                        onClick = {
+                          () => showFormReview()
+                        }
+                        className = { 'outpatient-submit' } /> :
+                      <GenericButton
+                        type = { 'button' }
+                        text = { 'Continue' }
+                        onClick = {
+                          () => showFormReviewDisabledORFunc()
+                        }
+                        className = { 'outpatient-submit' } />
+                  }
                 </div>
               }
           </div>
@@ -167,6 +191,7 @@ class MaternityAssistanceCardComponent extends Component {
 MaternityAssistanceCardComponent.propTypes = {
   desiredAmountFunc : PropTypes.func,
   editFormDataFunc : PropTypes.func,
+  showFormReviewDisabledORFunc : PropTypes.func,
   showFormReview: PropTypes.func,
   requestTypeOfDeliveryFunc: PropTypes.func,
   dateOfDelivertFunc: PropTypes.func,
@@ -183,6 +208,7 @@ MaternityAssistanceCardComponent.propTypes = {
   orNumberErrorMessage: PropTypes.string,
   typeOfDeliveryErrorMessage: PropTypes.string,
   dateOfDeliveryErrorMessage: PropTypes.string,
+  recipient: PropTypes.string,
   attachments: PropTypes.array,
   showEditSubmitButton: PropTypes.bool,
   onSubmitFunc : PropTypes.func,

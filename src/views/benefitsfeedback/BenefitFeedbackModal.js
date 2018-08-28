@@ -61,7 +61,7 @@ class BenefitFeedbackModal extends BaseMVPView {
                   src={ require('../../images/icons/img_message_circle.png') }
                   className= {'sidebar-img-ub-logo'}/>
                 <br/>
-                <h3>Thank you for using 1Uhub! We'd love to know what your experience was like using the application.</h3>
+                <h3>Thank you for using 1Uhub! We&#39;d love to know what your experience was like using the application.</h3>
                 <br/>
                 <Rating
                   emptySymbol={<MdStarOutline style={{ fontSize: 30, color : '#c65e11' }} />}
@@ -78,10 +78,15 @@ class BenefitFeedbackModal extends BaseMVPView {
               <br/>
               {
                 rating <= 3 ?
-                <textarea
-                  className={ 'default-feedback-textarea' }
-                  placeholder={ 'Your Feedback' }
-                  onChange={ e => this.setState({ comment : e.target.value }) }/>
+                <div>
+                  <h4 className = { 'font-size-12px' }>
+                    Tell us why
+                  </h4>
+                  <textarea
+                    className={ 'default-feedback-textarea' }
+                    placeholder={ `We're sorry that the experience wasn't as stellar for you. Would you be able to tell us how we can improve further?` }
+                    onChange={ e => this.setState({ comment : e.target.value }) }/>
+                </div>
                 :
                 <div></div>
               }

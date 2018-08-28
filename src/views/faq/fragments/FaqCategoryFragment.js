@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import FaqCardComponent from '../components/FaqCardComponent'
 
-import { CircularLoader } from '../../../ub-components'
+import { CircularLoader, GenericInput  } from '../../../ub-components'
 
 import './styles/faqsFragment.css'
 
@@ -14,6 +14,12 @@ class FaqCategoryFragment extends Component {
     this.state = {
       searchString: '',
     }
+    this.updateSearch = this.updateSearch.bind(this)
+  }
+
+
+  updateSearch (e) {
+    this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
 
   search (searchString) {
@@ -39,22 +45,30 @@ class FaqCategoryFragment extends Component {
 
     return (
       <div className = { 'container' }>
-        <h1 className = { 'title-view' }>FAQ&#39;s</h1>
-          <input type = 'text'
-                 className = 'faqsSearchBar'
-                 placeholder = 'Search FAQs'
-                 value = { this.state.searchString }
-                 onChange = { e => this.search(e.target.value) } />
+        <div className = { 'faqlist-grid-header' }>
+          <div className = { 'text-align-left' } >
+            <h1 className = { 'title-view' }>FAQ&#39;s</h1>
+          </div>
+          <div></div>
+          <GenericInput
+            className = { 'faqsSearchBar' }
+            refCallback = { 'search' }
+            type = { 'text' }
+            hint = { 'Search FAQs' }
+            value = { searchString }
+            onChange = { this.updateSearch } />
+        </div>
          {
            !isLoading ?
               searchCategories && searchCategories.length > 0 ?
-                <div className = { 'card-container' }>
+                <div className = { 'faqs-container' }>
                   {
                     searchCategories.map((faq, i) =>
                       <FaqCardComponent
+                        subtitle = { faq.subtitle }
                         key = { i }
-                        icon = { faq.icon }
-                        title = { faq.category }
+                        icon = { faq && faq.icon }
+                        title = { faq && faq.category }
                         onClick = { () => setSelectedFaqCategory(faq) } />
                       )
                   }

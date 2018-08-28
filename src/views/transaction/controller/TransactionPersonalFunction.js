@@ -4,7 +4,7 @@ import { format } from '../../../utils/numberUtils'
   /* Default Amount View (e.g) P 2,000.00 */
 
   export function checkedAmountFormat (amount) {
-    return amount && amount ? format(amount) :  'Not Yet Provided'
+    return amount && amount ? format(amount) :  '(Not Yet Provided)'
   }
 
   /* (e.g) Friday, July 5, 2018, 1:07:18 PM*/
@@ -141,6 +141,40 @@ import { format } from '../../../utils/numberUtils'
     return index + 4
   }
 
+  /* Education  */
+  export function checkedCourse (course) {
+    return course && course.Course ? course.Course: '(Not Yet Provided)'
+  }
+
+  export function checkedCollege (school) {
+    return school &&
+           school.College ?
+           school.College :
+           '(Not Yet Provided)'
+  }
+
+  export function checkedAcademicyear (year) {
+    return year &&
+           year.AcademicYear ?
+           year.AcademicYear :
+           '(Not Yet Provided)'
+  }
+
+  export function checkedSemester (semester) {
+    return semester &&
+           semester.Semester ?
+           semester.Semester :
+           '(Not Yet Provided)'
+  }
+
+  export function checkedGrant (grant) {
+    return grant &&
+           grant.Grant &&
+           grant.Grant.Name ?
+           grant.Grant.Name :
+           '(Not Yet Provided)'
+  }
+
   export function checkedBenefitStatus (detailStatus) {
     if(detailStatus === 'cancelled') {
       return 'cancel'
@@ -154,5 +188,37 @@ import { format } from '../../../utils/numberUtils'
       return 'clear'
     } else if (detailStatus === 'for processing') {
       return 'process'
+    } else if (detailStatus === 'confirmed') {
+      return 'confirmed'
+    } else if (detailStatus === 'for confirmation') {
+      return 'confirmation'
+    } else {
+      return 'not transaction'
     }
   }
+
+  /* Maternity Assistance */
+
+  export function checkedType (details) {
+    return details && details.MaternityAssistanceDetails.DeliveryType ?
+    details.MaternityAssistanceDetails.DeliveryType :
+    '(Not Yet Provided)'
+  }
+
+export function checkedAmount (details) {
+  return details && details.MaternityAssistanceDetails.Amount ?
+  format(details.MaternityAssistanceDetails.Amount) :
+  '(Not Yet Provided)'
+}
+
+export function checkedDeliveryDate (details) {
+  return details && details.MaternityAssistanceDetails.DeliveryDate ?
+  moment(details.MaternityAssistanceDetails.DeliveryDate).format('MMM DD, YYYY') :
+  '(Not Yet Provided)'
+}
+
+export function checkedRecipient (details) {
+  return details && details.MaternityAssistanceDetails.Recipient ?
+  details.MaternityAssistanceDetails.Recipient :
+  '(Not Yet Provided)'
+}

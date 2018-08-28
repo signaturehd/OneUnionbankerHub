@@ -32,7 +32,7 @@ export default class OpticalPresenter {
         // this.view.showOptical(optical)
       }, e => {
         this.view.noticeResponse(e)
-        // TODO prompt generic error
+        this.view.isEligible(false, e)
       })
     }
 
@@ -49,6 +49,10 @@ export default class OpticalPresenter {
         this.view.showAttachmentsMap(attachmentsArray, data.limit)
         this.view.isEligible(data ? true : false)
       })
-      .subscribe()
+      .subscribe(data => {
+        // this.view.isEligible(data ? true : false)
+      }, errors => {
+        this.view.isEligible(false, errors)
+      })
     }
   }

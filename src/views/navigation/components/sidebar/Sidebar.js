@@ -51,6 +51,18 @@ class SideBar extends Component {
         className: 'payslip-icon'
       },
       {
+        id: 9 ,
+        title: 'My Compliance',
+        action: () => history.push('/mycompliance'),
+        className: 'compliance-icon'
+      },
+      {
+        id: 10 ,
+        title: 'Phenom Prime',
+        action: () => history.push('/phenom'),
+        className: 'phenom-sidebar-icon'
+      },
+      {
         id: 3 ,
         title: 'My Personal Information',
         action: () => history.push('/settings'),
@@ -75,6 +87,7 @@ class SideBar extends Component {
         className: 'logout-icon'
       },
     ]
+
   return (
     <div className = { '_sidebar-overlay' }>
       <ul className = { '_link-list ul' }>
@@ -84,12 +97,18 @@ class SideBar extends Component {
             src={ require('../../../../images/profile-picture.png') }
             className= {'sidebar-img-ub-logo'}/>
         </div>
-        <h5 className = { 'sidebar-profile-name' }>
-          { profile && profile.fullname }
-        </h5>
+          {
+            profile && profile.fullname ?
+            <h5 className = { 'sidebar-profile-name' }>
+              { profile && profile.fullname }
+            </h5> :
+            <h5 className = { 'sidebar-profile-name' }>
+              ( Employee Name Retrieving.... )
+            </h5>
+          }
           {
             modules.map((d, idx) =>
-            d.id === 8 ?
+            d.id === 10 ?
             <div
               key = { idx }
             >

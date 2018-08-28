@@ -1,26 +1,42 @@
 import { store } from '../../../store'
 import { NotifyActions } from '../../../actions'
 
+import AddMaternityAssistanceSSSInteractor from
+'../../../domain/interactor/maternityassistancesss/AddMaternityAssistanceSSSInteractor'
 import ValidateMaternityAssistanceInteractor from
 '../../../domain/interactor/maternityassistance/ValidateMaternityAssistanceInteractor'
-
 import AddMaternityAssistanceInteractor from
 '../../../domain/interactor/maternityassistance/AddMaternityAssistanceInteractor'
+import GetProfileInteractor from
+'../../../domain/interactor/user/GetProfileInteractor'
 
-import addParam from '../../../domain/param/AddMaternityAssistanceParam'
+import addMaternityAssistanceParam from '../../../domain/param/AddMaternityAssistanceParam'
+import addMaternityAssistanceSSSParam from '../../../domain/param/AddMaternityAssistanceSSSParam'
 
 export default class MaternityAssistancePresenter {
   constructor (container) {
     this.validateMaternityAssistanceInteractor =
       new ValidateMaternityAssistanceInteractor(container.get('HRBenefitsClient'))
 
+    this.addMaternityAssistanceSSSInteractor =
+      new AddMaternityAssistanceSSSInteractor(container.get('HRBenefitsClient'))
+
     this.addMaternityAssistanceInteractor =
       new AddMaternityAssistanceInteractor(container.get('HRBenefitsClient'))
 
+
+    this.getProfileInteractor =
+      new GetProfileInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
+  }
+
+  getProfile () {
+    this.getProfileInteractor.execute()
+     .do(profile => this.view.showProfileGender(profile.employee.gender))
+     .subscribe()
   }
 
   validateMaternityAssistance () {
@@ -28,20 +44,19 @@ export default class MaternityAssistancePresenter {
     this.validateMaternityAssistanceInteractor.execute()
       .map(data => {
         let attachmentArray = []
-        const typeOfDelivery = [
-          {
-            id: 1,
-            name: 'Normal'
-          },
-          {
-            id: 2,
-            name: 'Cesarean'
-          }
-        ]
+        let typeOfDelivery = []
         data &&
         data.attachments.map((attachment, key) => {
           attachmentArray.push({
             name : attachment
+          })
+        })
+        data &&
+        data.typeOfDelivery.map((resp, key) => {
+          typeOfDelivery.push({
+            id : resp.Id,
+            name : resp.DeliveryType,
+            limit : resp.AmountLimit
           })
         })
         this.view.showTypeOfDeliveryMap(typeOfDelivery)
@@ -55,34 +70,73 @@ export default class MaternityAssistancePresenter {
       })
     }
 
-    addMaternityAssistance (
-      typeOfDelivery,
-      dateOfDelivery,
-      amount,
-      orNumber,
-      orDate,
-      attachments
-      ) {
-        this.view.showCircularLoader()
-        this.addMaternityAssistanceInteractor.execute(
-          addParam(
-            typeOfDelivery,
-            dateOfDelivery,
-            amount,
-            orNumber,
-            orDate,
-            attachments
-          )
+  addMaternityAssistance (
+    typeDeliveryId,
+    deliveryDate,
+    amount,
+    preferredDate,
+    orNumberText,
+    attachmentArray
+    ) {
+      this.view.showCircularLoader()
+      this.addMaternityAssistanceInteractor.execute(
+        addMaternityAssistanceParam(
+          typeDeliveryId,
+          deliveryDate,
+          amount,
+          preferredDate,
+          orNumberText,
+          attachmentArray
         )
-        .subscribe(
-        data => {
-          this.view.noticeOfUndertaking(data)
-          this.view.hideCircularLoader()
-        },  errors => {
-            this.view.noticeResponseResp(errors)
-            this.view.hideCircularLoader()
-            // this.view.navigate()
-          }
-        )
+      )
+    .subscribe(
+      data => {
+        this.view.hideCircularLoader()
+        this.view.noticeOfUndertaking(data)
+      }, errors => {
+        this.view.navigate()
       }
+    )
+  }
+
+  addMaternityAssistanceSSS (
+    roomNumber,
+    houseNumber,
+    street,
+    subdivision,
+    barangay,
+    city,
+    province,
+    zipCode,
+    noOfPregnancy,
+    expectedDateOfDelivery,
+    noOfDelivery,
+    noOfMiscarriage,
+    ) {
+      this.view.showCircularLoader()
+      this.addMaternityAssistanceSSSInteractor.execute(
+        addMaternityAssistanceSSSParam(
+          roomNumber,
+          houseNumber,
+          street,
+          subdivision,
+          barangay,
+          city,
+          province,
+          zipCode,
+          noOfPregnancy,
+          expectedDateOfDelivery,
+          noOfDelivery,
+          noOfMiscarriage,
+        )
+      )
+    .subscribe(
+      data => {
+        this.view.hideCircularLoader()
+        this.view.confirmationMat1Response(true, data.message)
+      },  errors => {
+          this.view.navigate()
+        }
+      )
+    }
   }

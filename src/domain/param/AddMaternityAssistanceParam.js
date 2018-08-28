@@ -1,15 +1,15 @@
 export default (
-  typeOfDelivery,
-  dateOfDelivery,
+  typeDeliveryId,
+  deliveryDate,
   amount,
-  orNumber,
-  orDate,
-  attachments
+  preferredDate,
+  orNumberText,
+  attachmentArray
   ) => ({
-    typeOfDelivery,
-    dateOfDelivery,
+    typeDeliveryId,
+    deliveryDate,
     amount,
-    orNumber,
-    orDate,
-    attachments
+    preferredDate,
+    orNumberText,
+    attachmentArray
   })

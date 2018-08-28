@@ -22,6 +22,7 @@ import CalamityAssistanceDetailsFragment from './fragments/CalamityAssistanceDet
 import BereavementDetailsFragment from './fragments/BereavementDetailsFragment'
 import MedicalSchedulingDetailsFragment from './fragments/MedicalSchedulingDetailsFragment'
 import OutpatientDetailsFragment from './fragments/OutpatientDetailsFragment'
+import MaternityAssistanceDetailsFragment from './fragments/MaternityAssistanceDetailsFragment'
 
 import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreementsModal'
 import TransactionDetailsFormAttachmentsModal from './modals/TransactionDetailsFormAttachmentsModal'
@@ -60,17 +61,25 @@ function  TransactionDetails (props)  {
   } else if (transactionId === 13) {
     return <EducGrantAidDetailsFragment
       details = { transactionDetails }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 12) {
     return <EducGroupPlanDetailsFragment
       details = { transactionDetails }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       transactionsPerson = { transactionsPerson } />
   } else if (transactionId === 11) {
     return <EducAidDetailsFragment
       details = { transactionDetails }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 32) {
     return <EducGrantPlanDetailsFragment
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       details = { transactionDetails }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 1) {
@@ -98,22 +107,30 @@ function  TransactionDetails (props)  {
       showFileReceipt = { showFileReceipt }
       details = { transactionDetails }
      />
- } else if (transactionId === 10) {
-   // Medical Scheduling Transaction Details
-   return <MedicalSchedulingDetailsFragment
-    transactionsPerson = { transactionsPerson }
-    agreementsMethod = { (resp) => agreementsMethod(resp) }
-    details = { transactionDetails }
-    />
- } else if (transactionId === 41) {
-   // Outpatient Reimbursement Transaction Details
-   return <OutpatientDetailsFragment
-     transactionsPerson = { transactionsPerson }
-     attachmentsMethod = { (resp) => attachmentsMethod(resp) }
-     agreementsMethod = { (resp) => agreementsMethod(resp) }
-     details = { transactionDetails }
-    />
- }
+   } else if (transactionId === 10) {
+     // Medical Scheduling Transaction Details
+     return <MedicalSchedulingDetailsFragment
+      transactionsPerson = { transactionsPerson }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
+      details = { transactionDetails }
+      />
+   } else if (transactionId === 41) {
+     // Outpatient Reimbursement Transaction Details
+     return <OutpatientDetailsFragment
+       transactionsPerson = { transactionsPerson }
+       attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+       agreementsMethod = { (resp) => agreementsMethod(resp) }
+       details = { transactionDetails }
+      />
+  } else if (transactionId === 9) {
+    // Maternity Assistance
+    return <MaternityAssistanceDetailsFragment
+      transactionsPerson = { transactionsPerson }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
+      details = { transactionDetails }
+     />
+  }
   else {
    return <h1>No Transaction Occured please reload</h1> // No  Transaction
    }

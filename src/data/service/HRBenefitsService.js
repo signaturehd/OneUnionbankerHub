@@ -79,13 +79,17 @@ export default class HRBenefitsService {
       releasingCenter,
       type : dentalReimbursementParam.dependentId.id !== 1 ? 2 : 1,
       procedures : dentalReimbursementParam.procedure,
-      dependentId : dentalReimbursementParam.dependentId.id
+      dependentId : dentalReimbursementParam.dependentId,
+      orNumber :  dentalReimbursementParam.orNumber,
+      orDate : dentalReimbursementParam.orDate.format('MM/DD/YYYY')
     }
 
     formData.append('uuid', 12345)
-    formData.append('dentcert1', dentalReimbursementParam.file1)
-    formData.append('dentcert2', dentalReimbursementParam.file2)
     formData.append('body', JSON.stringify(dentalRObject))
+    dentalReimbursementParam.attachments.map((resp, key) => (
+      formData.append(resp.name, resp.file)
+      )
+    )
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {
       headers : { token }
     })
@@ -455,20 +459,22 @@ export default class HRBenefitsService {
     releasingCenter,
     carRequestParam) {
     const formData = new FormData()
+    formData.append('uuid', 12345)
     const addCarleaseObject = {
       accountNumber,
       releasingCenter,
       brand : carRequestParam.carBrand,
       model : carRequestParam.carModel,
-      year : carRequestParam.year,
+      year : carRequestParam.makeYear,
       insurancePayment: '1',
-      leaseMode : parseInt(carRequestParam.leaseMode),
+      leaseMode : carRequestParam.leaseMode,
+      solRC: carRequestParam.solRC,
+      cmUnit: carRequestParam.cmUnit,
       primaryColor : carRequestParam.primaryColor,
       secondaryColor : carRequestParam.secondaryColor,
     }
     formData.append('body', JSON.stringify(addCarleaseObject))
-    formData.append('uuid', 12345)
-    formData.append('attachment1', carRequestParam.attachments ? carRequestParam.attachments : null)
+    formData.append('attachment1', carRequestParam.file)
     return this.apiClient.post('v1/leases/car', formData, {
       headers: { token }
     })
@@ -504,6 +510,8 @@ export default class HRBenefitsService {
         tuitionFee : educationAidParam.tuitionFee,
         registrationFee : educationAidParam.registrationFee,
         schoolId : educationAidParam.schoolId,
+        orDate : educationAidParam.orDate,
+        orNumber : educationAidParam.orNumber
       }
       formData.append('uuid', 12345)
       formData.append('cert1', educationAidParam.attachments[0].file)
@@ -608,11 +616,15 @@ export default class HRBenefitsService {
         amount: groupAidParam.desiredAmount,
         effectivityDate: groupAidParam.effectiveDate,
         companyName: groupAidParam.company,
-        paymentDurationId: groupAidParam.durationOfPaymentId
+        paymentDurationId: groupAidParam.durationOfPaymentId,
+        orDate: groupAidParam.orDate,
+        orNumber: groupAidParam.orNumber
      }
      formData.append('uuid', 12345)
-     formData.append('cert1', groupAidParam.file1)
-     formData.append('cert2', groupAidParam.file2)
+     groupAidParam.attachments.map((resp, key) =>
+      (
+        formData.append(resp.name, resp.file)
+      ))
      formData.append('body', JSON.stringify(groupPlanObject))
      return this.apiClient.post('v2/reimbursements/education/dependent/submit', formData, {
        headers : { token }
@@ -713,7 +725,7 @@ export default class HRBenefitsService {
   /* Medical Scheduling */
 
   validateMedicalScheduling (token) {
-    return this.apiClient.get('v1/medical/validate', {
+    return this.apiClient.get('v1/medical/exam/validate', {
       headers: { token }
     })
   }
@@ -730,7 +742,7 @@ export default class HRBenefitsService {
       clinicId : addMedicalSchedulingParam.clinicId,
       packageId : addMedicalSchedulingParam.packageId,
     }
-    return this.apiClient.post('v1/medical/schedule', medicalSchedulingObject, {
+    return this.apiClient.post('v1/medical/exam/submit', medicalSchedulingObject, {
       headers : { token }
     })
   }
@@ -756,12 +768,12 @@ export default class HRBenefitsService {
         accountNumber,
         releasingCenter,
         type : outPatientParam.type,
-        amount : outPatientParam.amount,
         dependentId : outPatientParam.dependentId,
         diagnosis : outPatientParam.diagnosisText,
-        procedureId : outPatientParam.procedureId,
+        procedure : outPatientParam.procedure,
         officialReceiptNumber : outPatientParam.orNumber,
         officialReceiptDate : outPatientParam.orDate,
+        amount : outPatientParam.amount,
       }
       outPatientParam.attachments.map((resp, key) => (
         formData.append(resp.name, resp.file)
@@ -776,7 +788,51 @@ export default class HRBenefitsService {
   /* Employee Trainings */
 
   getEmployeeTraining (token) {
-    return this.apiClient.get('v1/training/programs', {
+    return this.apiClient.get('v1/trainings', {
+      headers : { token }
+    })
+  }
+
+  getEmployeeTrainingDetails (token, id) {
+    return this.apiClient.get(`v1/trainings/${id}`, {
+      headers : { token }
+    })
+  }
+
+  enrollEmployee (token, id) {
+    return this.apiClient.post('v1/trainings/enroll', {
+      id
+    }, {
+      headers : { token }
+    })
+  }
+
+  getEnrolledTrainings (token) {
+    return this.apiClient.get('v1/trainings/learners/enrolled', {
+      headers : { token }
+    })
+  }
+
+  getNeedApprovalTrainings (token) {
+    return this.apiClient.get('v1/trainings/learners/requests', {
+      headers : { token }
+    })
+  }
+
+  getApprovedTrainings (token) {
+    return this.apiClient.get('v1/trainings/learners/approved', {
+      headers : { token }
+    })
+  }
+
+  getApprovalTrainingDetails (id, token) {
+    return this.apiClient.get(`v1/trainings/learners/enrollments/${id}`, {
+      headers : { token }
+    })
+  }
+
+  trainingRequest (trainingId, ApprovalTrainingParam, token) {
+    return this.apiClient.post(`v1/trainings/${trainingId}/requests`, ApprovalTrainingParam, {
       headers : { token }
     })
   }
@@ -800,60 +856,128 @@ export default class HRBenefitsService {
     const objectMaternity = {
       accountNumber,
       releasingCenter,
-      deliveryType : addMaternityAssistanceParam.typeOfDelivery,
-      deliveryDate : addMaternityAssistanceParam.dateOfDelivery,
+      deliveryType : addMaternityAssistanceParam.typeDeliveryId,
+      deliveryDate : addMaternityAssistanceParam.deliveryDate,
       amount : addMaternityAssistanceParam.amount,
-      orNumber : addMaternityAssistanceParam.orNumber,
-      orDate : addMaternityAssistanceParam.orDate
+      orNumber : addMaternityAssistanceParam.orNumberText,
+      orDate : addMaternityAssistanceParam.preferredDate,
     }
-    addMaternityAssistanceParam.attachments.map((resp, key) => (
+    addMaternityAssistanceParam.attachmentArray.map((resp) =>
+      (
         formData.append(resp.name, resp.file)
       )
     )
-    formData.append("body", JSON.stringify(objectMaternity))
+
+    formData.append('body', JSON.stringify(objectMaternity))
     return this.apiClient.post('v1/maternity/submit', formData, {
       headers : { token }
     })
   }
 
   /* Maternity Assistance SSS */
-  validateMaternityAssistanceSSS (token) {
-    return this.apiClient.get('v1/maternity/validate/sss', {
-      headers : { token }
-    })
-  }
 
   addMaternityAssistanceSSS (
     token,
     accountToken,
     accountNumber,
     releasingCenter,
-    addMaternityAssistanceSSSParam
+    maternityAssistanceSSSParam
   ) {
-    const formData = new FormData()
-    formData.append('uuid', 12345)
-    const objectMaternity = {
+    const objectMaternitySSS = {
+      accountNumber,
+      releasingCenter,
       address : {
-        room : addMaternityAssistanceSSSParam.roomNumber,
-        house : addMaternityAssistanceSSSParam.houseNumber,
-        street: addMaternityAssistanceSSSParam.street,
-        subdivision: addMaternityAssistanceSSSParam.subdivision,
-        barangay: addMaternityAssistanceSSSParam.barangay,
-        city : addMaternityAssistanceSSSParam.city,
-        province : addMaternityAssistanceSSSParam.province,
-        zipCode : addMaternityAssistanceSSSParam.zipCode,
+        room : maternityAssistanceSSSParam.roomNumber,
+        house : maternityAssistanceSSSParam.houseNumber,
+        street: maternityAssistanceSSSParam.street,
+        subdivision: maternityAssistanceSSSParam.subdivision,
+        barangay: maternityAssistanceSSSParam.barangay,
+        city : maternityAssistanceSSSParam.city,
+        province : maternityAssistanceSSSParam.province,
+        zipCode : maternityAssistanceSSSParam.zipCode,
       },
-      numberOfPregnancy : addMaternityAssistanceSSSParam.noOfPregnancy,
-      expectedDateOfDelivery : addMaternityAssistanceSSSParam.expectedDateOfDelivery,
-      numberOfDelivery: addMaternityAssistanceSSSParam.noOfDelivery,
-      numberOfMiscarriage : addMaternityAssistanceSSSParam.noOfMiscarriage ,
+      numberOfPregnancy : maternityAssistanceSSSParam.noOfPregnancy,
+      numberOfMiscarriage : maternityAssistanceSSSParam.noOfMiscarriage,
+      numberOfDelivery: maternityAssistanceSSSParam.noOfDelivery,
+      expectedDateOfDelivery : maternityAssistanceSSSParam.expectedDateOfDelivery,
     }
-    addMaternityAssistanceSSSParam.attachments.map((resp, key) => (
-        formData.append(resp.name, resp.file)
-      )
-    )
-    formData.append("body", JSON.stringify(objectMaternity))
-    return this.apiClient.post('v1/maternity/submit/sss', formData, {
+    return this.apiClient.post('v1/maternity/submit/sss/mat1', objectMaternitySSS, {
+      headers : { token }
+    })
+  }
+
+  /*  My Existing Loans */
+
+  getExistingLoans (token) {
+    return this.apiClient.get('v1/loans/mpl/outstanding', {
+      headers : { token }
+    })
+  }
+
+  /* Code of Conduct  */
+
+  getCompliancesPdf (token) {
+    return this.apiClient.get(`v1/compliances/coc`, {
+      headers : { token }
+    })
+  }
+
+  submitPin (token, code) {
+    return this.apiClient.post('v1/compliances/coc', { code }, {
+      headers : { token }
+    })
+  }
+
+  /* Phenom */
+
+  getPhenomDiscounts (token) {
+    return this.apiClient.get('v1/phenom/discounts?type=corporate', {
+      headers : { token }
+    })
+  }
+
+  getPhenomSelectedDiscounts (token, id) {
+    return this.apiClient.get(`v1/phenom/discounts/${ id }`, {
+      headers : { token }
+    })
+  }
+
+  addPhenomIsHeart (token, id, isHeart) {
+    const objectPhenomIsHeart = {
+      phenomId : id,
+      isLiked : isHeart
+    }
+    return this.apiClient.get(`v1/phenom/reactions?type=corporate`, objectPhenomIsHeart, {
+      headers : { token }
+    })
+  }
+
+  /* Leave Filing  */
+  addLeaveFiling (token, leaveFilingParam) {
+    const objectLeaveFiling = {
+      type : leaveFilingParam.type,
+      dateFrom : leaveFilingParam.dateFrom,
+      dateTo : leaveFilingParam.dateTo,
+      reason: leaveFilingParam.reason,
+      remarks : leaveFilingParam.remarks
+    }
+    return this.apiClient.post('v1/leaves', objectLeaveFiling, {
+      headers : { token }
+    })
+  }
+
+  /* Pin Enrollment */
+  postEnrollPin (token, id) {
+    const objectPostPin = {
+      code: id
+    }
+    return this.apiClient.post('v1/pin' , objectPostPin, {
+      headers : { token }
+    })
+  }
+
+  putEnrollPin (token, putPINParam) {
+    return this.apiClient.put('v1/pin', putPINParam, {
       headers : { token }
     })
   }

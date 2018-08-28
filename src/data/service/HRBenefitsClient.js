@@ -650,6 +650,40 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getEmployeeTrainingDetails (token, id) {
+    return this.service.getEmployeeTrainingDetails (token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  enrollEmployee (token, id) {
+    return this.service.enrollEmployee(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getEnrolledTrainings (token) {
+    return this.service.getEnrolledTrainings (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getNeedApprovalTrainings (token) {
+    return this.service.getNeedApprovalTrainings (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getApprovedTrainings (token) {
+    return this.service.getApprovedTrainings (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getApprovalTrainingDetails (id, token) {
+    return this.service.getApprovalTrainingDetails (id, token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  trainingRequest (trainingId, ApprovalTrainingParam, token) {
+    return this.service.trainingRequest (trainingId, ApprovalTrainingParam, token)
+      .pipe(ServiceErrorOperator())
+  }
 
   /* Maternity Assistance */
   validateMaternityAssistance (token) {
@@ -664,36 +698,83 @@ export default class HRBenefitsClient {
     releasingCenter,
     addMaternityAssistanceParam
   ) {
-    return this.service.addMaternityAssistance(
+    return this.service.addMaternityAssistance (
       token,
       accountToken,
       accountNumber,
       releasingCenter,
-      addMaternityAssistanceParam
-    )
-      .pipe(ServiceErrorOperator())
+      addMaternityAssistanceParam)
+    .pipe(ServiceErrorOperator())
   }
 
   /* Maternity Assistance SSS */
-  validateMaternityAssistanceSSS (token) {
-    return this.service.validateMaternityAssistanceSSS(token)
-      .pipe(ServiceErrorOperator())
-  }
 
   addMaternityAssistanceSSS (
     token,
     accountToken,
     accountNumber,
     releasingCenter,
-    addMaternityAssistanceSSSParam
+    maternityAssistanceSSSParam
   ) {
     return this.service.addMaternityAssistanceSSS(
       token,
       accountToken,
       accountNumber,
       releasingCenter,
-      addMaternityAssistanceSSSParam
+      maternityAssistanceSSSParam
     )
+      .pipe(ServiceErrorOperator())
+  }
+
+
+  /* Code of Conduct  */
+
+  getCompliancesPdf (token) {
+    return this.service.getCompliancesPdf(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  submitPin (token, code) {
+    return this.service.submitPin(token, code)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* My Existing Loans */
+  getExistingLoans (token) {
+    return this.service.getExistingLoans(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Phenom Loans */
+  getPhenomDiscounts (token) {
+    return this.service.getPhenomDiscounts(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPhenomSelectedDiscounts (token, id) {
+    return this.service.getPhenomSelectedDiscounts(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addPhenomIsHeart (token, like) {
+    return this.service.addPhenomIsHeart(token, like)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Leave Filing  */
+  addLeaveFiling (token, leaveFilingParam) {
+    return this.service.addLeaveFiling(token, leaveFilingParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Pin Enrollment */
+  postEnrollPin (token, id) {
+    return this.service.postEnrollPin(token , id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  putEnrollPin (token, putPINParam) {
+    return this.service.putEnrollPin(token, putPINParam)
       .pipe(ServiceErrorOperator())
   }
 }

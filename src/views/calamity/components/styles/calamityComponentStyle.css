@@ -1,20 +1,8 @@
-
-.calamity-container {
-  max-width: 100%;
-  padding-left: 0%;
-  padding-right: 10%;
-  padding-top: 0%;
-}
-
-
-.calamity-form-card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+.calamity-form {
   max-width: 100%;
   float: center;
-  padding: 20px 5px 20px 5px;
+  padding: 10px 20% 10px 20%;
   margin: auto;
-  text-align: center;
-  font-family: arial;
 }
 
 .calamity-form-card-body {
@@ -31,7 +19,7 @@
   bottom: 0;
   height: 35px;
   margin-top: 20px;
-  width: 95%;
+  width: 100%;
 }
 
 .calamity-grid-column-2 {
@@ -164,4 +152,7 @@
 
 .font-color-gray {
   color: #8c8c8c;
+}
+
+.calamity-multiple-card-details {
 }

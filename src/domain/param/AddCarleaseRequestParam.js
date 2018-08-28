@@ -1,16 +1,20 @@
 export default (
   carBrand,
   carModel,
-  year,
+  makeYear,
   leaseMode,
+  solRC,
+  cMUnit,
   primaryColor,
   secondaryColor,
-  attachments) => ({
+  file ) => ({
     carBrand,
     carModel,
-    year,
+    makeYear,
     leaseMode,
+    solRC,
+    cMUnit,
     primaryColor,
     secondaryColor,
-    attachments
+    file
   })

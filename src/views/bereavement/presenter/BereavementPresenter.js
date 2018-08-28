@@ -26,6 +26,12 @@ export default class BereavementPresenter {
   this.view.showCircularLoader()
     this.getBereavementValidateInteractor.execute()
       .subscribe(resp => {
+        let attachmentArray = []
+        resp &&
+          resp.attachments.map((attachment, key) => {
+            attachmentArray.push({ name : attachment })
+          })
+          this.view.showAttachmentsMap(attachmentArray)
           this.view.showValidatedValue(resp)
           this.view.showDependentsValue(resp.dependents)
           this.view.hideCircularLoader()

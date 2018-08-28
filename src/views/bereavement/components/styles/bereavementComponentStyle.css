@@ -1,22 +1,10 @@
 
-.brv-container {
-  max-width: 100%;
-}
-
-
-.brv-form-card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+.brv-form-div {
   max-width: 100%;
   float: center;
   padding: 20px 5px 20px 5px;
   margin: auto;
-  text-align: center;
   font-family: arial;
-}
-
-.brv-form-card-body {
-  border-color: #0a0a0a;
-  color: #090909;
 }
 
 .brv-submit {
@@ -28,7 +16,7 @@
   bottom: 0;
   height: 35px;
   margin-top: 20px;
-  width: 95%;
+  width: 100%;
 }
 
 .brv-grid-column-2 {
@@ -129,7 +117,7 @@
 
 .brv-container {
   padding-left: 0%;
-  padding-right: 10%;
+  padding-right: 0%;
   padding-top: 0%;
 }
 
@@ -171,8 +159,4 @@
 
 .brv-file {
   background-image: url('../../../../images/icons/ic_insert_drive_file_grey_500_18dp.png');
-}
-
-.brv-error-color {
-  color: #ff4336;
 }

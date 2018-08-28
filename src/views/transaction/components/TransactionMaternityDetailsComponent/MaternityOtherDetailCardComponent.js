@@ -14,44 +14,77 @@ class MaternityOtherDetailCardComponent extends Component {
   }
 
   render () {
-  const { detailsOutpatient } = this.props
+  const { detailsMaternity } = this.props
 
-  const recipient = detailsOutpatient.OutpatientDetails.Recipient
-  const procedure = detailsOutpatient.OutpatientDetails.Procedure
+  const amount = TransactionPersonalFunction.checkedAmount(detailsMaternity)
+  const deliveryDate = TransactionPersonalFunction.checkedDeliveryDate(detailsMaternity)
+  const deliveryType = TransactionPersonalFunction.checkedType(detailsMaternity)
+  const recipient = TransactionPersonalFunction.checkedRecipient(detailsMaternity)
 
   return (
     <div  className = { 'transaction-component-otherdetails-form' }>
       <div>
         <div>
-          <h2 className = { 'font-weight-bolder' }> Recipient Details </h2>
+          <h2 className = { 'font-weight-bolder' }> Personal Data </h2>
           <br/>
         </div>
-        <div>
+
+
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
+            <div>
+              <h2 className = { 'font-weight-ligter' }>
+                { recipient }
+              </h2>
+              <h2 className = { 'unionbank-color font-size-12px' }>
+                Recipient
+              </h2>
+              <br/>
+              <br/>
+            </div>
+        </div>
+
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
           <div>
             <h2 className = { 'font-weight-ligter' }>
-              { recipient.Name }
+               { deliveryType }
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
-              { recipient.Relationship }
+              Delivery type
             </h2>
             <br/>
             <br/>
           </div>
         </div>
+
         <br/>
       </div>
       <div>
-        <div>
-          <h2 className = { 'font-weight-bolder' }> Procedure Details </h2>
-          <br/>
-        </div>
-        <div>
+        <br/>
+        <br/>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
           <div>
             <h2 className = { 'font-weight-ligter' }>
-              { procedure }
+               { deliveryDate }
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
-              Procedure
+              Delivery date
+            </h2>
+            <br/>
+            <br/>
+          </div>
+        </div>
+
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
+          <div>
+            <h2 className = { 'font-weight-ligter' }>
+               { amount }
+            </h2>
+            <h2 className = { 'unionbank-color font-size-12px' }>
+              Amount
             </h2>
             <br/>
             <br/>

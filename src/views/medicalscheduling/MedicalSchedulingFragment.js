@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'
 import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/MedicalSchedulingPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
-import { CircularLoader, SingleInputModal } from '../../ub-components/'
+import {
+  CircularLoader,
+  SingleInputModal,
+  GenericButton,
+  Modal
+} from '../../ub-components/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
@@ -30,7 +35,11 @@ class MedicalSchedulingFragment extends BaseMVPView {
       clinicLabel : '',
       packageId : null,
       packageLabel : '',
-      preferredDate : ''
+      preferredDate : '',
+      index : 4,
+      viewMoreText : 'View more',
+      showErrorMessageModal : false,
+      showErrorMessageValidate: ''
     }
   }
 
@@ -64,6 +73,10 @@ class MedicalSchedulingFragment extends BaseMVPView {
 
   noticeResponse (noticeResponse) {
     this.setState({showConfirmation: false, noticeResponse })
+  }
+
+  showErrorMessage (showErrorMessageModal, showErrorMessageValidate) {
+    this.setState({ showErrorMessageModal, showErrorMessageValidate })
   }
 
   navigate () {
@@ -109,7 +122,11 @@ class MedicalSchedulingFragment extends BaseMVPView {
       clinicLabel,
       packageId,
       packageLabel,
-      preferredDate
+      preferredDate,
+      index,
+      viewMoreText,
+      showErrorMessageModal,
+      showErrorMessageValidate,
     } = this.state
 
     let procedureList = []
@@ -121,6 +138,22 @@ class MedicalSchedulingFragment extends BaseMVPView {
 
     return (
       <div>
+        {
+          showErrorMessageModal &&
+          <Modal>
+            <center>
+              <h2>{ showErrorMessageValidate.message }</h2>
+              <br/>
+              <GenericButton
+                text = { 'Ok' }
+                onClick = { () => {
+                  this.setState({ showErrorMessageModal : false })
+                  this.navigate()
+                }
+              }/>
+            </center>
+          </Modal>
+        }
         {
           showClinics &&
           <SingleInputModal
@@ -135,7 +168,7 @@ class MedicalSchedulingFragment extends BaseMVPView {
           <SingleInputModal
             inputArray = { packages.filter(pack => pack.clinicId === clinicId) }
             selectedArray = { (packageId, packageLabel) =>{
-              this.setState({ packageId, packageLabel, showPackages : false }) }
+              this.setState({ packageId, packageLabel, showPackages : false, index : 4, viewMoreText : 'View more' }) }
             }
             onClose = { () => this.setState({showPackages : false}) }
           />
@@ -198,6 +231,10 @@ class MedicalSchedulingFragment extends BaseMVPView {
                 this.presenter.addMedicalScheduling(preferredDate.format('MM/DD/YYYY'), clinicId, packageId)
                 }
               }
+              index = { index }
+              viewMoreText = { viewMoreText }
+              viewMore = { () => this.setState({ index : procedureList.length, viewMoreText : 'View less' }) }
+              viewLess = { () => this.setState({ index : 4, viewMoreText : 'View more' }) }
             />
         }
       </div>

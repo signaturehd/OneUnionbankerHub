@@ -2,19 +2,21 @@
   max-width: 100%;
 }
 
-.dentalloa-card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+.dentalloa-form-card {
   max-width: 100%;
-  float: center;
   padding: 20px 5px 20px 5px;
   margin: auto;
-  text-align: center;
-  font-family: arial;
 }
 
 .dentalloa-body {
   border-color: #0a0a0a;
   color: #090909;
+}
+
+.dentalloa-form-review {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
 }
 
 .dentalloa-grid-column-2 {
@@ -29,7 +31,7 @@
   top: -68px;
   font-size: 14px;
   pointer-events: none;
-  color: #ff8a00 !important;
+  color: #ff8a00;
 }
 
 
@@ -67,8 +69,6 @@
   color:#ff8a00;
 }
 .dentalloa-footer-left {
-  background-color: white;
-  overflow: hidden;
   margin: 50px auto auto auto;
   width: 100%;
  }
@@ -112,7 +112,25 @@
   bottom: 0;
   height: 35px;
   margin-top: 20px;
-  width: 95%;
+  width: 100%;
+}
+
+.dentalloa-button:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
+}
+
+.dentalloa-submit-form-button:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
+}
+
+.dentalloa-edit-form:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
 }
 
 .dentalloa-body-group {
@@ -151,7 +169,7 @@
   border-right :0px;
   font-size: 16px;
   font-family: arial;
-  width: 90%;
+  width: 100%;
 }
 
 .react-datepicker-popper {
@@ -262,14 +280,14 @@
 }
 
 .procedure-header {
-  width: 90%;
-  margin: auto;
-  border-style: solid;
-  border-width: 0 0 2px 0;
-  border-color: #DBDBE0;
 }
 
 .grid {
   display: grid;
   grid-template-columns: 4fr 1fr;
+}
+
+.text-error {
+  font-size: 12px;
+  color: #ff4336;
 }

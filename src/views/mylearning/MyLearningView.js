@@ -9,7 +9,7 @@ import Presenter from './presenter/MyLearningPresenter'
 import PodcastFragment from '../podcast/PodcastFragment'
 import PodcastPlayerFragment from '../podcastplayer/PodcastPlayerFragment'
 import LibraryView from '../library/LibraryFragment'
-import MyTrainingFragment from '../trainings/MyTrainingFragment'
+import TrainingFragment from '../trainings/TrainingFragment'
 
 import { InputModal, Card, GenericButton } from '../../ub-components'
 
@@ -29,23 +29,26 @@ class MyLearningView extends BaseMVPView {
     const { accountNumber, showAccountNumberModal } = this.state
     const mylearning = [{
       id: 0 ,
-      styleName: 'mylearning-cards-1',
-      title: 'BOOKS',
+      styleName: 'mylearning-cards-1 font-weight-bold',
+      title: 'Borrow Books',
       path: '/mylearning/books',
     }, {
       id: 1 ,
-      styleName: 'mylearning-cards-1',
-      title: 'PODCASTS',
+      styleName: 'mylearning-cards-2 font-weight-bold',
+      title: 'Listen Podcasts',
       path: '/mylearning/podcasts',
     }, {
       id: 2 ,
-      styleName: 'mylearning-cards-1',
-      title: 'TRAININGS',
+      styleName: 'mylearning-cards-3 font-weight-bold',
+      title: 'Enroll to Trainings',
       path: '/mylearning/trainings',
     }]
     const MyLearning = () => (
       <div className = { 'mylearning-container' }>
-        <h2 className = { 'header-margin-default ' }>MY LEARNING</h2>
+        <div>
+          <h2 className={ 'header-margin-default text-align-left' }> My Learning </h2>
+          <h2> How would you want to develop yourself today? </h2>
+        </div>
         {
           showAccountNumberModal &&
             <InputModal
@@ -84,7 +87,7 @@ class MyLearningView extends BaseMVPView {
       <div>
         <Switch>
           <Route path = '/mylearning/trainings' render = { props =>
-            <MyTrainingFragment { ...props } /> } />
+            <TrainingFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts' render = { props =>
             <PodcastFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts/:id' render = { props =>

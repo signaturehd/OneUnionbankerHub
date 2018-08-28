@@ -6,7 +6,7 @@ import { Card, GenericButton } from '../../../../ub-components/'
 import moment from 'moment'
 
 import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
-import OutpatientOtherDetailCardComponent from './OutpatientOtherDetailCardComponent'
+import MaternityOtherDetailCardComponent from './MaternityOtherDetailCardComponent'
 
 class MaternityDetailCardComponent extends Component {
   constructor (props) {
@@ -17,15 +17,14 @@ class MaternityDetailCardComponent extends Component {
     const {
       details,
       transactionsPerson,
-      onClickAttachments,
       onClickAgreements,
+      onClickAttachments
      } = this.props
 
    const transactionID = details.transactionId
    const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
    const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
    const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details)
-   const amountValue = TransactionPersonalFunction.checkedAmountFormat(details.details.OutpatientDetails.Amount)
 
     return (
       <div className = { 'transaction-component-details-form' }>
@@ -56,18 +55,9 @@ class MaternityDetailCardComponent extends Component {
               </h2>
             </div>
           </div>
-          <div className = { 'transaction-icons-details-grid' }>
-            <span className = { ' transaction-card-icon-settings' }></span>
-            <div>
-              <h2>
-                &#8369; { amountValue }
-              </h2>
-              <br/>
-              <br/>
-            </div>
-          </div>
-            <OutpatientOtherDetailCardComponent
-              detailsOutpatient = { details && details.details }
+          <br/>
+            <MaternityOtherDetailCardComponent
+              detailsMaternity = { details && details.details }
             />
         </div>
         <div className = { 'transaction-attachments-agreements-grid' }>

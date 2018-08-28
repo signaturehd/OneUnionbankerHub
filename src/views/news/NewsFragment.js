@@ -10,7 +10,7 @@ import ConnectPartial from '../../utils/ConnectPartial'
 import NewsCardComponent from './components/NewsCardComponent/NewsCardComponent'
 import NewsModalComponent from './modals/NewsModalComponent'
 
-import { CircularLoader } from '../../ub-components'
+import { CircularLoader, GenericInput } from '../../ub-components'
 
 
 import './styles/newsStyles.css'
@@ -33,8 +33,8 @@ class NewsFragment extends BaseMVPView {
       setTimeout(() => this.setState({ showLoader : false }), 3000)
   }
 
-  updateSearch () {
-    this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
+  updateSearch (e) {
+    this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
   news (news) {
     this.setState({ news })
@@ -46,9 +46,10 @@ class NewsFragment extends BaseMVPView {
       show,
       details,
       showLoader,
+      searchString
     } = this.state
     let newsList = news
-    const search = this.state.searchString.trim().toLowerCase()
+    const search = searchString.trim().toLowerCase()
     if (search.length > 0) {
       newsList = news.filter(news => news.title.toLowerCase().match(search))
     }
@@ -62,13 +63,22 @@ class NewsFragment extends BaseMVPView {
             details = { details }
            />
         }
-        <h1 className = { 'title-view' }>News Feed</h1>
-        <input type = 'text'
-          className = 'newsSearchBar'
-          ref='search'
-          placeholder = {'Search News'}
-          value = { this.state.searchString }
-          onChange = { this.updateSearch } />
+        <div className = { 'news-grid-header' }>
+          <div>
+            <h2 className={ 'header-margin-default text-align-left' }> News Feed </h2>
+            <h2>View recent 1UHub News</h2>
+            <br/>
+          </div>
+          <div></div>
+          <GenericInput
+            type = { 'text' }
+            className = { 'newsSearchBar' }
+            refCallback = { 'search' }
+            type = { 'text' }
+            hint = { 'Search News' }
+            value = { searchString }
+            onChange = { this.updateSearch } />
+        </div>
         {
           showLoader ?
             <div className = {'news-loader'} >

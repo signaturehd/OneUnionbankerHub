@@ -7,6 +7,8 @@ import DentalReimbursementProcedureModal from
 import ReviewSubmission from '../modal/DentalReimbursementReviewModal'
 
 import {
+  GenericInput,
+  DatePicker,
   Card,
   GenericButton,
   FileUploader,
@@ -20,7 +22,7 @@ import {
  import { NotifyActions } from '../../../actions'
 
  import { RequiredValidation, Validator, MoneyValidation } from '../../../utils/validate'
-
+import moment from 'moment'
 
 class DentalReimbursementCard extends Component {
   constructor (props) {
@@ -40,6 +42,9 @@ class DentalReimbursementCard extends Component {
     procedure: '',
     showReviewSubmissionModal : false,
     fileAttachments : [],
+    officialReceiptDate : null,
+    officialReceiptNumber : '',
+    attachmentArray : [],
   }
   this.handleImageChange = this.handleImageChange.bind(this)
   this.handleImageChange2 = this.handleImageChange2.bind(this)
@@ -65,28 +70,62 @@ getExtension (filename) {
 */
 submission (e) {
   const {
-    file,
-    file2,
     selectedDependent,
-    selectedProcedures
+    selectedProcedures,
+    officialReceiptDate,
+    officialReceiptNumber,
+    attachmentArray,
   } = this.state
-  if (!this.validator(file)) {
+
+  let validateAttachments = false
+  attachmentArray && attachmentArray.map(
+    (attachment, key) => {
+      if(!attachment.file) {
+        validateAttachments = true
+      }
+    }
+  )
+
+  if (!this.validator(officialReceiptDate)) {
     store.dispatch(NotifyActions.addNotify({
        title : 'Warning' ,
-       message : 'Official Receipt attachment is required',
+       message : 'Official Receipt Date is required',
        type : 'warning',
        duration : 2000
      })
    )
-  } else if (!this.validator(file2)) {
+ } else if (!this.validator(officialReceiptNumber)) {
     store.dispatch(NotifyActions.addNotify({
        title : 'Warning' ,
-       message : 'Medical Certificate attachment is required',
+       message : 'Official Receipt Number is required',
        type : 'warning',
        duration : 2000
      })
    )
- } else if (!this.validator(selectedDependent)) {
+ } else if (!attachmentArray.length) {
+    store.dispatch(NotifyActions.addNotify({
+       title : 'Warning' ,
+       message : 'Attachments is required',
+       type : 'warning',
+       duration : 2000
+     })
+   )
+ } else if (validateAttachments) {
+   attachmentArray && attachmentArray.map(
+     (attachment, key) => {
+       if(!attachment.file) {
+         store.dispatch(NotifyActions.addNotify({
+            title : 'Warning' ,
+            message : attachment.name + ' is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+       }
+     }
+   )
+
+  } else if (!this.validator(selectedDependent)) {
    store.dispatch(NotifyActions.addNotify({
       title : 'Warning' ,
       message : 'Please select dependents',
@@ -215,9 +254,12 @@ render () {
     showResults,
     showReviewSubmissionModal,
     file,
-    file2
+    file2,
+    officialReceiptDate,
+    officialReceiptNumber,
+    attachmentArray
   } = this.state
-  console.log(this.state.fileAttachments)
+
 
   const { imagePreviewUrl, imagePreviewUrl2 } = this.state
 
@@ -250,126 +292,116 @@ render () {
         showReviewSubmissionModal &&
         <ReviewSubmission
           onClose = { (result) => this.setState({ showReviewSubmissionModal : result }) }
-          attachment1 = { file }
-          attachment2 = { file2 }
+          orDate = { officialReceiptDate }
+          orNumber = { officialReceiptNumber }
+          attachments = { attachmentArray }
           dependent = { selectedDependent }
           procedure = { selectedProcedures }
-          imageUrl = { imagePreviewUrl }
-          imageUrl2 = { imagePreviewUrl2 }
           presenter = { this.props.presenter }
-          onClick = { () => this.submission }
+          imageUrl = { attachmentArray[0].base64 }
+          imageUrl2 = { attachmentArray[1].base64 }
         />
       }
-      <div>
-        <Card className = { 'dentalreimbursement-card' }>
-         <div className = 'dentalreimbursement-main'>
-           <MultipleFileUploader
-              placeholder = 'attachments'
-              fileArray = { attachments }
-              setFile = { (attachment, base64, index) => {
-                  // spread attachments
-                  // set attachments file via attachment
-                  // set base64 base64 via base64
-                  // indicator via index
-                  // send to main view
-                  // setFileAttachment(attachment,base64,index)
-                  // fileAttachment[index].file = attachment
-                  // fileAttachment[index].base64 = base64
-                }
-              }
-           />
-         </div>
-        <div className = {'dentalreimbursement-footer-left'}>
-          {
-            procedureModal &&
-            <DentalReimbursementProcedureModal
-              onSubmit = { procedure => {
-              const updatedProcedures = [...selectedProcedures]
-              updatedProcedures.push(procedure)
-
-              this.setState({ selectedProcedures: updatedProcedures })
-            }}
-              selectedProcedure = { selectedProcedures }
-              procedures = { selectedDependent ? selectedDependent.procedures : [] }
-              onClose = { () => this.setState({ procedureModal : false }) } />
-          }
-
-           <h2 className = { 'dentalreimbursement-header-chooseDependents' }>
-             CHOOSE DEPENDENT
-           </h2>
-           {
-             dependents && dependents.map((dependent, key) => {
-               const selectedDependentId = selectedDependent && selectedDependent.id
-               return (
-                 <Checkbox
-                  label={ dependent.name }
-                  key={ key }
-                  value={ dependent.id }
-                  checked={ dependent.id === selectedDependentId }
-                  onChange={ e => this.setState({ selectedDependent: dependent }) } />
-               )
-             })
-           }
-         <GenericButton
-           onClick={ () => this.setState({ procedureModal: true }) }
-           onFocus={ () => this.setState({ procedureModal: true }) }
-           className = {'dentalreimbursement-procedure' }
-           text = { 'Open Procedures' } />
-        </div>
-        <br/>
-        <br/>
-       {
-         selectedProcedures && selectedProcedures.map((procedure, key) => (
-            <div key={ key } className = { 'dentalreimbursement-selected-procedure' }>
-              <div className = {'input-grid'}>
-                <GenericTextBox
-                  value = { procedure.amount }
-                  onChange = { e => {
-                    const updatedProcedures = [...selectedProcedures]
-                    updatedProcedures[key].amount = parseInt(e.target.value) || 0
-                    this.setState({ selectedProcedures: updatedProcedures })
-                    }
-                  }
-                  maxLength = { procedure.limit.toString().length }
-                  placeholder = { `${procedure.name} (${procedure.limit})` }
-                 />
-                <div className = { 'dentalreimbursement-button-close' }>
-                  <img
-                    src = { require('../../../images/x-circle-global.png') }
-                    onClick = { () => {
-                      const { selectedProcedures } = this.state
-                      selectedProcedures.splice(key, 1)
-                      this.setState({ selectedProcedures })
-                    }}
-                  />
-                </div>
-              </div>
+      <div className = { 'dentailreimbursement-grid-x3' }>
+        <div></div>
+          <Card className = { 'dentalreimbursement-card' }>
+            <div className = 'dentalreimbursement-main'>
+              <DatePicker
+                maxDate = { moment() }
+                disabled = { false }
+                selected = { officialReceiptDate }
+                onChange = { (e) => this.setState({ officialReceiptDate : e }) }
+                text = { 'Date of Official Receipt' }
+                hint = { '(eg. MM/DD/YYYY)' }/>
               <br/>
+              <GenericInput
+                value = { officialReceiptNumber }
+                onChange = { (e) => this.setState({ officialReceiptNumber : e.target.value }) }
+                disabled = { false }
+                text = { 'Official Receipt Number' } />
+              <br/>
+              <MultipleFileUploader
+                placeholder = 'Form Attachments'
+                fileArray = { attachments }
+                setFile = { (resp) => this.setState({ attachmentArray : resp }) }
+             />
             </div>
+            <div className = {'dentalreimbursement-footer-left'}>
+              {
+                procedureModal &&
+                <DentalReimbursementProcedureModal
+                  onSubmit = { procedure => {
+                  const updatedProcedures = [...selectedProcedures]
+                  updatedProcedures.push(procedure)
+
+                  this.setState({ selectedProcedures: updatedProcedures })
+                }}
+                  selectedProcedure = { selectedProcedures }
+                  procedures = { selectedDependent ? selectedDependent.procedures : [] }
+                  onClose = { () => this.setState({ procedureModal : false }) } />
+                }
+
+               <h2 className = { 'dentalreimbursement-header-chooseDependents' }>
+                 CHOOSE DEPENDENT
+               </h2>
+               {
+                 dependents && dependents.map((dependent, key) => {
+                   const selectedDependentId = selectedDependent && selectedDependent.id
+                   return (
+                     <Checkbox
+                      label={ dependent.name }
+                      key={ key }
+                      value={ dependent.id }
+                      checked={ dependent.id === selectedDependentId }
+                      onChange={ e => this.setState({ selectedDependent: dependent }) } />
+                   )
+                 })
+               }
+             <GenericButton
+               onClick={ () => this.setState({ procedureModal: true }) }
+               onFocus={ () => this.setState({ procedureModal: true }) }
+               className = {'dentalreimbursement-procedure' }
+               text = { 'Open Procedures' } />
+            </div>
+          <br/>
+          <br/>
+         {
+           selectedProcedures && selectedProcedures.map((procedure, key) => (
+              <div key={ key } className = { 'dentalreimbursement-selected-procedure' }>
+                <div className = {'input-grid'}>
+                  <GenericTextBox
+                    value = { procedure.amount }
+                    onChange = { e => {
+                      const updatedProcedures = [...selectedProcedures]
+                      updatedProcedures[key].amount = parseInt(e.target.value) || 0
+                      this.setState({ selectedProcedures: updatedProcedures })
+                      }
+                    }
+                    maxLength = { procedure.limit.toString().length }
+                    placeholder = { `${procedure.name} (${procedure.limit})` }
+                   />
+                  <div className = { 'dentalreimbursement-button-close' }>
+                    <img
+                      src = { require('../../../images/x-circle-global.png') }
+                      onClick = { () => {
+                        const { selectedProcedures } = this.state
+                        selectedProcedures.splice(key, 1)
+                        this.setState({ selectedProcedures })
+                      }}
+                    />
+                  </div>
+                </div>
+                <br/>
+              </div>
+              )
             )
-          )
-         }
-        </Card>
-        <Card className = { 'dentalreimbursement-secondary' }>
-          <h2 className = { 'dentalreimbursement-upload-header' }>
-            Uploaded Files
-          </h2>
-          <div className = 'dentalreimbursement-main'>
-            <div className = { 'dentalreimbursement-review' }>
-             <div className = { 'dentalreimbursement-image-view' }>
-                 {$imagePreview}
-             </div>
-             <div className = { 'dentalreimbursement-image-view' }>
-                 {$imagePreview2}
-             </div>
-           </div>
-          </div>
-          <GenericButton
-             className = { 'dentalreimbursement-submit' }
-             onClick = { this.submission }
-             type = { 'button' }
-             text = { 'Submit' }/>
-        </Card>
+          }
+           <GenericButton
+              onClick = { this.submission }
+              type = { 'button' }
+              text = { 'Submit' }/>
+          </Card>
+        <div></div>
       </div>
     </div>
     )
@@ -381,6 +413,7 @@ DentalReimbursementCard.propTypes = {
   onFocus : PropTypes.func,
   procedure : PropTypes.string,
   dependents: PropTypes.array,
+
 }
 DentalReimbursementCard.defaultProps = {
   procedure : 'PROCEDURE',

@@ -1,17 +1,4 @@
 
-<<<<<<< HEAD:src/views/maternityassistanceSSS/components/styles/maternitySSSComponentStyle.css
-.maternity-container {
-  max-width: 100%;
-}
-
-.maternity-form-card {
-  max-width: 100%;
-  padding: 20px 5px 20px 5px;
-  margin: auto;
-}
-
-.maternity-form-review {
-=======
 .maternitySSS-container {
   max-width: 100%;
 }
@@ -23,26 +10,17 @@
 }
 
 .maternitySSS-grid-address {
->>>>>>> 0f1fdaa083e5b89c9aaaf136b63f6b754d7b9625:src/views/maternityassistance/components/styles/maternitySSSComponentStyle.css
   display: grid;
   grid-template-columns: .3fr .3fr 1fr;
   column-gap: 2%;
 }
 
-<<<<<<< HEAD:src/views/maternityassistanceSSS/components/styles/maternitySSSComponentStyle.css
-.maternity-form-card-body {
-=======
 .maternitySSS-form-card-body {
->>>>>>> 0f1fdaa083e5b89c9aaaf136b63f6b754d7b9625:src/views/maternityassistance/components/styles/maternitySSSComponentStyle.css
   border-color: #0a0a0a;
   color: #090909;
 }
 
-<<<<<<< HEAD:src/views/maternityassistanceSSS/components/styles/maternitySSSComponentStyle.css
-.maternity-submit {
-=======
 .maternitySSS-submit {
->>>>>>> 0f1fdaa083e5b89c9aaaf136b63f6b754d7b9625:src/views/maternityassistance/components/styles/maternitySSSComponentStyle.css
   border-radius: 5px;
   text-align: center;
   outline: none;
@@ -54,35 +32,18 @@
   width: 100%;
 }
 
-<<<<<<< HEAD:src/views/maternityassistanceSSS/components/styles/maternitySSSComponentStyle.css
-.maternity-submit:hover {
-=======
 .maternitySSS-submit:hover {
->>>>>>> 0f1fdaa083e5b89c9aaaf136b63f6b754d7b9625:src/views/maternityassistance/components/styles/maternitySSSComponentStyle.css
   border: 1px solid #FF7200;
   background-color: #ff8A00;
   color: #fff;
 }
 
-<<<<<<< HEAD:src/views/maternityassistanceSSS/components/styles/maternitySSSComponentStyle.css
-.maternity-submit-form-button:hover {
-=======
 .maternitySSS-submit-form-button:hover {
->>>>>>> 0f1fdaa083e5b89c9aaaf136b63f6b754d7b9625:src/views/maternityassistance/components/styles/maternitySSSComponentStyle.css
   border: 1px solid #FF7200;
   background-color: #ff8A00;
   color: #fff;
 }
 
-<<<<<<< HEAD:src/views/maternityassistanceSSS/components/styles/maternitySSSComponentStyle.css
-.maternity-procedure:hover {
-  border: 1px solid #FF7200;
-  background-color: #ff8A00;
-  color: #fff;
-}
-
-.maternity-edit-form:hover {
-=======
 .maternity-grid-location {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -90,39 +51,24 @@
 }
 
 .maternitySSS-edit-form:hover {
->>>>>>> 0f1fdaa083e5b89c9aaaf136b63f6b754d7b9625:src/views/maternityassistance/components/styles/maternitySSSComponentStyle.css
   border: 1px solid #FF7200;
   background-color: #ff8A00;
   color: #fff;
 }
 
-<<<<<<< HEAD:src/views/maternityassistanceSSS/components/styles/maternitySSSComponentStyle.css
-.maternity-grid-column-2 {
-=======
 .maternitySSS-grid-column-2 {
->>>>>>> 0f1fdaa083e5b89c9aaaf136b63f6b754d7b9625:src/views/maternityassistance/components/styles/maternitySSSComponentStyle.css
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   column-gap: 2%;
 }
 
 @media (max-width : 768px) {
-<<<<<<< HEAD:src/views/maternityassistanceSSS/components/styles/maternitySSSComponentStyle.css
-  .maternity-grid-column-2 {
-=======
   .maternitySSS-grid-column-2 {
->>>>>>> 0f1fdaa083e5b89c9aaaf136b63f6b754d7b9625:src/views/maternityassistance/components/styles/maternitySSSComponentStyle.css
     display: grid;
     grid-template-columns: 1fr ;
     column-gap: 2%;
     grid-row-gap: 2%;
   }
-<<<<<<< HEAD:src/views/maternityassistanceSSS/components/styles/maternitySSSComponentStyle.css
-  .maternity-form-card {
-    margin-top: 10px;
-  }
-=======
->>>>>>> 0f1fdaa083e5b89c9aaaf136b63f6b754d7b9625:src/views/maternityassistance/components/styles/maternitySSSComponentStyle.css
 }
 
 /*CARD TRANSITION*/
@@ -136,11 +82,7 @@
     transform: translate3d(0, 0, 0);
   }
 }
-<<<<<<< HEAD:src/views/maternityassistanceSSS/components/styles/maternitySSSComponentStyle.css
-.maternity-form-preview{
-=======
 .maternitySSS-form-preview {
->>>>>>> 0f1fdaa083e5b89c9aaaf136b63f6b754d7b9625:src/views/maternityassistance/components/styles/maternitySSSComponentStyle.css
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 100%;
   float: center;
@@ -153,45 +95,10 @@
   animation: fadeInUp 0.5s ease-in-out 0s forwards;
 }
 
-<<<<<<< HEAD:src/views/maternityassistanceSSS/components/styles/maternitySSSComponentStyle.css
-.maternity-attachment-form {
-  padding: 10px;
-  margin: 0 30px 0 30px;
-  background-color: #f6f6f6;
-  border-style: solid;
-  border-width: 0 0 1px 0;
-  border-color: #DBDBE0;
-}
-
-.maternity-form-title {
-  display: block;
-  text-align: left;
-  font-size:14px;
-  pointer-events:none;
-  color: #ff8a00 !important;
-}
-
-=======
->>>>>>> 0f1fdaa083e5b89c9aaaf136b63f6b754d7b9625:src/views/maternityassistance/components/styles/maternitySSSComponentStyle.css
 .close-button {
   float: right;
 }
 
-<<<<<<< HEAD:src/views/maternityassistanceSSS/components/styles/maternitySSSComponentStyle.css
-.maternity-file-name {
-  margin-left: 120px;
-  line-height: 60px;
-  text-align: left;
-  font-size: 14px;
-  font-weight: normal;
-}
-.maternity-grid-procedure {
-  display: grid;
-  grid-template-columns: 1fr .2fr;
-}
-
-=======
->>>>>>> 0f1fdaa083e5b89c9aaaf136b63f6b754d7b9625:src/views/maternityassistance/components/styles/maternitySSSComponentStyle.css
 .react-datepicker__input-container {
   margin-top: 0px!important;
 }

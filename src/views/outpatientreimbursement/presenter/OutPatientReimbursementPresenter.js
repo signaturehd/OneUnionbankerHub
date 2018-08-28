@@ -29,11 +29,12 @@ export default class OutPatientReimbursementPresenter {
       .map(data => {
         let procedureArray = []
         let attachmentArray = []
+
         data &&
         data.procedures.map((procedure, key) => {
           procedureArray.push({
             id : procedure.id,
-            name : procedure.procedures
+            name : procedure.name
           })
         })
         data &&
@@ -43,7 +44,7 @@ export default class OutPatientReimbursementPresenter {
           })
         })
         this.view.showAttachmentsMap(attachmentArray)
-        this.view.showValidatedOutPatient(data)
+        this.view.showValidatedOutPatient(data, data.limit)
         this.view.showProcedureMap(procedureArray)
       })
       .subscribe(data => {
@@ -56,11 +57,11 @@ export default class OutPatientReimbursementPresenter {
     addOutPatientReimbursement (
       type,
       dependentId,
-      procedureId,
-      amount,
       diagnosisText,
+      procedure,
       orNumber,
       orDate,
+      amount,
       attachments
       ) {
         this.view.showCircularLoader()
@@ -68,11 +69,11 @@ export default class OutPatientReimbursementPresenter {
           addOutPatientReimbursementParam(
             type,
             dependentId,
-            procedureId,
-            amount,
             diagnosisText,
+            procedure,
             orNumber,
             orDate,
+            amount,
             attachments
           )
         )
@@ -84,7 +85,7 @@ export default class OutPatientReimbursementPresenter {
           errors => {
             this.view.hideCircularLoader()
             this.view.noticeResponse(errors)
-            // this.view.navigate()
+            this.view.navigate()
           }
         )
       }
