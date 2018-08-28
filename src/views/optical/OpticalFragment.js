@@ -100,7 +100,7 @@ class OpticalFragment extends BaseMVPView {
 
   validateSymbol (e) {
     const validate = func.checkedValidateSymbol(e)
-    this.setState({ orNumberText : validate.toUpperCase(), orNumberErrorMessage : '' })
+    this.setState({ orNumberText : validate, orNumberErrorMessage : '' })
   }
 
   validateDate (e) {
