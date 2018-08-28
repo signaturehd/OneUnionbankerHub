@@ -97,10 +97,9 @@ class CalamityFormGenericModal extends Component {
   updateSelectedPropertyObject () {
     const {
       editModeData,
-      updateModeFunc 
+      updateModeFunc
     } = this.props
     updateModeFunc(false)
-    console.log(editModeData)
   }
 
   render () {
