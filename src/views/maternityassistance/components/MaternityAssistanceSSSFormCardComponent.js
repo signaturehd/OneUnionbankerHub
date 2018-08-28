@@ -117,7 +117,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 <div>
                   <GenericInput
                     value = { streetNameText }
-                    maxLength = {  }
+                    maxLength = { 20 }
                     onChange = { e => streetNameFunc(e.target.value) }
                     text = { 'Street Name' }
                     disabled = { showEditSubmitButton }
