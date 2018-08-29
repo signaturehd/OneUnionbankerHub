@@ -466,15 +466,18 @@ export default class HRBenefitsService {
       brand : carRequestParam.carBrand,
       model : carRequestParam.carModel,
       year : carRequestParam.makeYear,
-      insurancePayment: '1',
+      insurancePayment: carRequestParam.insurancePayment,
       leaseMode : carRequestParam.leaseMode,
-      solRC: carRequestParam.solRC,
-      cmUnit: carRequestParam.cmUnit,
+      solRC: carRequestParam.solRCDefault,
       primaryColor : carRequestParam.primaryColor,
       secondaryColor : carRequestParam.secondaryColor,
     }
+    carRequestParam.file.map((attachment, key) =>
+      (
+        formData.append(attachment.name, attachment.file)
+      )
+    )
     formData.append('body', JSON.stringify(addCarleaseObject))
-    formData.append('attachment1', carRequestParam.file)
     return this.apiClient.post('v1/leases/car', formData, {
       headers: { token }
     })

@@ -156,7 +156,7 @@ class LoginView extends BaseMVPView {
         }
 
         <Card className = {'login-form'}>
-          <div className={ 'login-version' }>v 4.5.3</div>
+          <div className={ 'login-version' }>v 4.5.4</div>
           <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
             <br/>
             <GenericInput
