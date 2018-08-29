@@ -240,7 +240,7 @@ class ComputerLoanFragment extends BaseMVPView {
         purposeOfAvailmentLabel,
         showPurposeOfAvailment : false
       })
-      this.presenter.getMplFormAttachments(purposeOfAvailmentLabel)
+      this.presenter.getMplFormAttachments(purposeOfAvailmentLabel, nfis)
     }
   }
 
@@ -344,7 +344,7 @@ class ComputerLoanFragment extends BaseMVPView {
             label = { 'Purpose of Availment' }
             inputArray = { purposeOfAvailment && purposeOfAvailment.category }
             selectedArray = { (purposeOfAvailmentId, purposeOfAvailmentLabel) =>
-              this.setPurposeOfAvailment(purposeOfAvailmentId, purposeOfAvailment.subCategoryLvl,purposeOfAvailmentLabel) } //response
+              this.setPurposeOfAvailment(purposeOfAvailmentId, purposeOfAvailment.subCategoryLvl,purposeOfAvailmentLabel, nfis) } //response
             onClose = { () => this.setState({showPurposeOfAvailment : false}) }
 
           />
