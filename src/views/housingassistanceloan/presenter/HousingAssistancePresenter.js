@@ -103,10 +103,12 @@ export default class HousingAssitancePresenter {
         })
 
         let requiredAttachments = [...new Set(data.RequiredDocuments && data.RequiredDocuments)]
+        console.log(requiredAttachments)
+        console.log(nfisArray)
         nfisArray &&
         nfisArray.map((nfis, key) => {
           requiredAttachments &&
-          requiredDocuments.map((attachment, key) => {
+          requiredAttachments.map((attachment, key) => {
             attachments.push({
               name : attachment + ' for ' + nfis
             })
@@ -167,6 +169,7 @@ export default class HousingAssitancePresenter {
         this.view.setOffset(data && data.offsetArray)
         this.view.setModeOfLoan(data && data.modeOfLoan)
         this.view.showMaximumLoanableAmount(data && data.maximumLoanableAmount)
+        this.view.setNfis(data && data.nfis)
         this.view.showValidate(data)
         // this.view.showComputationForOffset(data && data.offset)
         this.view.setTermOfLoan(data && data.termsArray)

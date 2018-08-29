@@ -295,7 +295,8 @@ class ComputerLoanFragment extends BaseMVPView {
       noticeResponse,
       isValid,
       showLoading,
-      supplier
+      supplier,
+      nfis,
     } = this.state
 
 

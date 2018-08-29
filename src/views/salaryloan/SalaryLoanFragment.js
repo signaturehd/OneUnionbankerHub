@@ -292,6 +292,7 @@ class SalaryLoanFragment extends BaseMVPView {
       noticeResponse,
       isValid,
       showLoading,
+      nfis,
     } = this.state
 
     // const empName=employeeName && employeeName.fullname

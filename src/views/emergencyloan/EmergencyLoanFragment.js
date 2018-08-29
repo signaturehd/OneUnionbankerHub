@@ -292,6 +292,7 @@ class EmergencyLoanFragment extends BaseMVPView {
       noticeResponse,
       isValid,
       showLoading,
+      nfis,
     } = this.state
 
     // const empName=employeeName && employeeName.fullname

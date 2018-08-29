@@ -293,7 +293,8 @@ class MotorcycleLoanFragment extends BaseMVPView {
       noticeResponse,
       isValid,
       showLoading,
-      dealer
+      nfis,
+      dealer,
     } = this.state
 
     // const empName=employeeName && employeeName.fullname

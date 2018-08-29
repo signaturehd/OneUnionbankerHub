@@ -237,7 +237,7 @@ class HousingAssistanceFragment extends BaseMVPView {
         purposeOfAvailmentLabel,
         showPurposeOfAvailment : false
       })
-      this.presenter.getMplFormAttachments(purposeOfAvailmentLabel)
+      this.presenter.getMplFormAttachments(purposeOfAvailmentLabel, nfis)
     }
   }
 
@@ -292,6 +292,7 @@ class HousingAssistanceFragment extends BaseMVPView {
       noticeResponse,
       isValid,
       showLoading,
+      nfis,
     } = this.state
 
 
@@ -339,7 +340,7 @@ class HousingAssistanceFragment extends BaseMVPView {
             label = { 'Purpose of Availment' }
             inputArray = { purposeOfAvailment && purposeOfAvailment.category }
             selectedArray = { (purposeOfAvailmentId, purposeOfAvailmentLabel) =>
-              this.setPurposeOfAvailment(purposeOfAvailmentId, purposeOfAvailment.subCategoryLvl,purposeOfAvailmentLabel) } //response
+              this.setPurposeOfAvailment(purposeOfAvailmentId, purposeOfAvailment.subCategoryLvl, purposeOfAvailmentLabel, nfis) } //response
             onClose = { () => this.setState({showPurposeOfAvailment : false}) }
 
           />
