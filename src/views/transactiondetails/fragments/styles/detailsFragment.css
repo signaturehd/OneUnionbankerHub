@@ -83,6 +83,10 @@
   background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/maternity_bg.jpeg');
 }
 
+.transaction-carlease {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/car_bg.jpg');
+}
+
 .transaction-details-grid-row {
   display: grid;
   grid-template-columns: .3fr auto .3fr;

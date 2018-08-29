@@ -103,14 +103,12 @@ export default class HousingAssitancePresenter {
         })
 
         let requiredAttachments = [...new Set(data.RequiredDocuments && data.RequiredDocuments)]
-        console.log(requiredAttachments)
-        console.log(nfisArray)
         nfisArray &&
         nfisArray.map((nfis, key) => {
           requiredAttachments &&
           requiredAttachments.map((attachment, key) => {
             attachments.push({
-              name : attachment + ' for ' + nfis
+              name : attachment + ' for ' + nfis.CardNumber
             })
           })
         })
