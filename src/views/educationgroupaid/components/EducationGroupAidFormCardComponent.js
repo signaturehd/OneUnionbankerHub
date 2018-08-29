@@ -113,7 +113,7 @@ class EducationGroupAidFormCardComponent extends Component {
                 type = { 'text' }/>
               <DatePicker
                 readOnly
-                minDate = { moment() }
+                maxDate = { moment() }
                 selected = { orDate && moment(orDate) }
                 text = { 'Date of Official Receipt' }
                 disabled = { showEditSubmitButton }
@@ -135,10 +135,7 @@ class EducationGroupAidFormCardComponent extends Component {
                     fileArray = { attachmentsData }
                     setFile = { (resp) => setAttachmentArrayFunc(resp) }
                     disabled = { showEditSubmitButton }
-                    errorMessage = {
-                      showEditSubmitButton ?
-                      '' :
-                      `Please upload the required attachments`  }/>
+                    />
                 </div>
                 :
                 <div></div>

@@ -89,10 +89,6 @@ class EducationGrantAidFormCardComponent extends Component {
                     fileArray = { attachment }
                     setFile = { (resp) => setAttachmentArrayFunc(resp) }
                     disabled = { showEditSubmitButton }
-                    errorMessage = {
-                      showEditSubmitButton ?
-                      '' :
-                      `Please upload the required attachments`  }
                   />
                 </div>
                 :
