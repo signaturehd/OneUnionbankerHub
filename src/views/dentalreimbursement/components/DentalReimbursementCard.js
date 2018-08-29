@@ -124,7 +124,6 @@ submission (e) {
        }
      }
    )
-
   } else if (!this.validator(selectedDependent)) {
    store.dispatch(NotifyActions.addNotify({
       title : 'Warning' ,

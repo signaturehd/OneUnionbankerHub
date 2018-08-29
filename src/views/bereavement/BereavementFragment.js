@@ -194,6 +194,15 @@ class BereavementFragment extends BaseMVPView {
     attachmentData
   ) {
 
+    let validateAttachments = false
+    attachmentData && attachmentData.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
+
     if (dependentId === null || dependentId === '') {
       store.dispatch(NotifyActions.addNotify({
           title: 'Warning',
@@ -319,9 +328,29 @@ class BereavementFragment extends BaseMVPView {
           duration: 2000
         })
       )
-    }
-    else {
-      // console.log(dependentId, objectDate, objectFuneral, objectMemorial, attachmentData)
+    }else if (!attachmentData.length) {
+       store.dispatch(NotifyActions.addNotify({
+          title : 'Warning' ,
+          message : 'Attachments is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (validateAttachments) {
+      attachmentData && attachmentData.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'Warning',
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 2000
+             })
+           )
+          }
+        }
+      )
+     } else {
       this.setState({ showEditSubmitButton : true })
     }
   }
