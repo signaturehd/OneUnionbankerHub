@@ -63,7 +63,15 @@ class CalamityMultiplePropertyCardComponent extends Component {
                       className = { 'close-button-global' }
                       src = { require('../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
                       onClick = { () =>
-                        onEditModeProperty(resp, true, true)
+                        onEditModeProperty(
+                          resp.propertyName,
+                          resp.description,
+                          resp.propertyType,
+                          resp.acquisitionValue,
+                          resp.repairCost,
+                          resp.imageKey,
+                          true,
+                          true)
                       }
                     />
                   }

@@ -72,6 +72,8 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
       noMiscarriageFunc,
     } = this.props
 
+    const total = parseInt(noMiscarriageText) + parseInt(noDeliveryText)
+
   return (
     <div className={ 'maternitySSS-container' }>
       <div className={ 'outpatient-grid-column-2' }>
@@ -174,7 +176,7 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                   <GenericInput
                     value = { noPregnancyText }
                     onChange = { e => noPregnancyFunc(e.target.value) }
-                    text = { 'Number Of Pregnancy' }
+                    text = { 'Number of Pregnancy' }
                     disabled = { showEditSubmitButton }
                     maxLength = { 1 }
                     errorMessage = { noPregnancyErrorMessage }
@@ -199,19 +201,14 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 </div>
                 <div>
                   <GenericInput
-                    value = {
-                      parseInt(noMiscarriageText) > parseInt(noPregnancyText) ?
-                      '' : noMiscarriageText
+                    value = {  parseInt(noPregnancyText) === total ?
+                      noMiscarriageText : ''
                     }
                     disabled = { noDeliveryText ? showEditSubmitButton : true }
                     onChange = { e => noMiscarriageFunc(e.target.value) }
                     text = { 'Number of Miscarriage' }
                     maxLength = { 1 }
-                    errorMessage = {
-                      parseInt(noMiscarriageText) > parseInt(noPregnancyText) ?
-                      'Error count of delivery' :
-                      noDeliveryErrorMessage
-                    }
+                    errorMessage = { '' }
                     type = { 'text' }/>
                 </div>
               </div>

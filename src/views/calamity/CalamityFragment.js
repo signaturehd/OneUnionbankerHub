@@ -289,6 +289,7 @@ class CalamityFragment extends BaseMVPView {
       {
         showPropertyModal &&
         <CalamityFormGenericModal
+          damagePropertyCardHolder = { damagePropertyCardHolder }
           updateMode = { updateMode }
           editModeData = { editModeData }
           resetInstance = { () => this.setState({ defaultDamageProperty : defaultDamagePropertyStatic}) }
@@ -343,6 +344,10 @@ class CalamityFragment extends BaseMVPView {
           countFunc = { (count) => this.setState({ count }) }
           hideModalPropertyFormFunc = { (showPropertyModal) => this.setState({ showPropertyModal }) }
           hideModalPropertyTypeFunc = { (showPropertyTypeModal) => this.setState({ showPropertyTypeModal }) }
+          updateDataPropertyHolderFunc = { (resp) => {
+            const updatePropertyHolder = [...resp]
+            this.setState({ damagePropertyCardHolder : updatePropertyHolder  })
+          }}
           getPropertyHolderFunc = { (resp) => {
             const updatePropertyHolder = [...damagePropertyCardHolder]
             updatePropertyHolder.push(resp)
@@ -365,7 +370,25 @@ class CalamityFragment extends BaseMVPView {
            <CircularLoader show={ this.state.enabledLoader }/>
          </center> :
         <FormComponent
-          onEditModeProperty = { (resp, showPropertyModal, updateMode) => this.setState({ showPropertyModal, editModeData : resp, updateMode }) }
+          onEditModeProperty = { (
+            property,
+            description,
+            propertyType,
+            acquisitionValue,
+            estimatedCost,
+            defaultDamageProperty,
+            showPropertyModal,
+            updateMode) => this.setState({
+              property,
+              description,
+              propertyType,
+              acquisitionValue,
+              estimatedCost,
+              defaultDamageProperty,
+              showPropertyModal,
+              updateMode,
+             })
+           }
           onClick = {
             (showConfirmation, data) => {
               this.confirmation(showConfirmation, data)

@@ -16,6 +16,8 @@ import {
   Line
  } from '../../ub-components'
 
+import { RequiredNumberValidation } from '../../utils/validate/'
+
 import './styles/compliancesStyle.css'
 
 
@@ -86,6 +88,14 @@ class ComplianceFragment extends BaseMVPView {
     this.props.history.push('/')
   }
 
+  validateInputPin (e) {
+    this.setState({ pin : this.inputPin(e) })
+  }
+
+  inputPin (value) {
+    return value && value.replace(/[^0-9]/g, '')
+  }
+
   render () {
     const { history, onClick } = this.props
     const {
@@ -135,7 +145,7 @@ class ComplianceFragment extends BaseMVPView {
             <GenericInput
               autocomplete = { 'off' }
               value = { pin }
-              onChange = { e => this.setState({ pin : parseInt(e.target.value) || '' }) }
+              onChange = { (e) => this.validateInputPin(e.target.value) }
               text = { 'Password' }
               type = { 'password' }
               maxLength = { 5 }
