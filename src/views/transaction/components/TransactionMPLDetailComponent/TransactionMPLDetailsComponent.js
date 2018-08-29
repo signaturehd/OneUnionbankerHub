@@ -27,7 +27,7 @@ class TransactionMPLDetailComponent extends Component {
   const patient = TransactionPersonalFunction.checkedPatient(details.details)
 
   return (
-    <div>
+    <div className = { 'transaction-component-details-form' }>
       <div>
         <div className = { 'transaction-icons-details-grid' }>
           <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
