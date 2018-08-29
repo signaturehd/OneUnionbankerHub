@@ -1,4 +1,4 @@
-import store from '../../../store'
+import { store } from '../../../store'
 import { NotifyActions } from '../../../actions'
 
 import AddMaternityAssistanceSSSInteractor from
@@ -23,7 +23,6 @@ export default class MaternityAssistancePresenter {
 
     this.addMaternityAssistanceInteractor =
       new AddMaternityAssistanceInteractor(container.get('HRBenefitsClient'))
-
 
     this.getProfileInteractor =
       new GetProfileInteractor(container.get('HRBenefitsClient'))
@@ -60,7 +59,7 @@ export default class MaternityAssistancePresenter {
           })
         })
         this.view.showTypeOfDeliveryMap(typeOfDelivery)
-        this.view.showAttachmentsMap(attachmentArray)
+        this.view.showAttachmentsMap(attachmentArray, attachmentArray.length)
         this.view.showValidatedMaternity(data)
       })
       .subscribe(data => {
@@ -94,7 +93,7 @@ export default class MaternityAssistancePresenter {
         this.view.hideCircularLoader()
         this.view.noticeOfUndertaking(data)
       }, errors => {
-        this.view.navigate()
+        this.view.hideCircularLoader()
       }
     )
   }
@@ -135,7 +134,7 @@ export default class MaternityAssistancePresenter {
         this.view.hideCircularLoader()
         this.view.confirmationMat1Response(true, data.message)
       },  errors => {
-          this.view.navigate()
+          this.view.hideCircularLoader()
         }
       )
     }

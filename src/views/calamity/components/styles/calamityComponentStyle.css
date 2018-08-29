@@ -3,7 +3,6 @@
   float: center;
   padding: 10px 20% 10px 20%;
   margin: auto;
-  text-align: center;
 }
 
 .calamity-form-card-body {
@@ -20,7 +19,7 @@
   bottom: 0;
   height: 35px;
   margin-top: 20px;
-  width: 95%;
+  width: 100%;
 }
 
 .calamity-grid-column-2 {
@@ -153,4 +152,7 @@
 
 .font-color-gray {
   color: #8c8c8c;
+}
+
+.calamity-multiple-card-details {
 }

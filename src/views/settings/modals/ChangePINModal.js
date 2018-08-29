@@ -52,6 +52,7 @@ class ChangePINModal extends Component {
                 <GenericInput
                   className = { 'generic-pin' }
                   hint = { '* * * * *' }
+                  type = { 'password' }
                   maxLength = { 5 }
                   text = { 'Old PIN' }
                   onChange = { (e) => {
@@ -65,6 +66,7 @@ class ChangePINModal extends Component {
                   <GenericInput
                     text = { 'New PIN' }
                     className = { 'generic-pin' }
+                    type = { 'password' }
                     hint = { '* * * * *' }
                     maxLength = { 5 }
                     onChange = { (e) => {

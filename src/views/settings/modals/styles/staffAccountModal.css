@@ -100,18 +100,34 @@
   background-color: #B8312F;
 }
 
-.back-color-orange {
-  background-color: #ff8a00;
+.back-color- {
+  background-color: #f57c00;
 }
 
-.back-color-blue {
-  background-color: #2C82C9;
+.back-color-CA {
+  background-color: #f57c00;
 }
 
-.back-color-black {
-  background-color: #28324E;
+.back-color-EO {
+  background-color: #4a4a4a;
 }
 
-.back-color-violet {
-  background-color: #553982;
+.back-color-OT {
+  background-color: #e0e0e0;
+}
+
+.back-color-SA {
+  background-color: #f57002;
+}
+
+.back-color-TD {
+  background-color: #3f98c7;
+}
+
+.back-color-TE {
+  background-color: #ffd700;
+}
+
+.back-color-TU {
+  background-color: #203864;
 }

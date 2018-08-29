@@ -139,8 +139,15 @@ class CarLeaseNewFragment extends BaseMVPView {
             type: 'warning'
           })
         )
-      }
-      else {
+      }  else if (!file) {
+         store.dispatch(NotifyActions.addNotify({
+            title : 'Car Lease (New)' ,
+            message : 'Attachments is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else {
         this.presenter.addCarRequest(
           carBrand,
           carModel,
@@ -162,12 +169,6 @@ class CarLeaseNewFragment extends BaseMVPView {
 
   noticeResponseResp (noticeResponse) {
     this.setState({ noticeResponse })
-  }
-
-  /* Implementation*/
-
-  showMPLFormAttachments (formAttachments) {
-    this.setState({ formAttachments })
   }
 
   /* Loader*/

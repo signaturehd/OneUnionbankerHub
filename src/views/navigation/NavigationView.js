@@ -106,6 +106,13 @@ class NavigationView extends BaseMVPView {
     this.setState({ hasPIN })
   }
 
+  validateInputPIN (e) {
+    if(e.length > 5 || e.length < 5) {}
+    else {
+      this.presenter.postEnrollPin(e)
+    }
+  }
+
   componentDidMount () {
     const mediaQuery = window.matchMedia('(min-width: 1201px)')
       if (mediaQuery.matches) {
@@ -185,8 +192,7 @@ class NavigationView extends BaseMVPView {
                 <CommonPinEnrollmentModal
                   hasPIN = { hasPIN }
                   enabledLoader = { enabledLoader }
-                  onSubmitPinCode = { (resp) => this.presenter.postEnrollPin(resp) }
-                  onCloseModal = { (resp) => this.setState({  }) }
+                  onSubmitPinCode = { (resp) => this.validateInputPIN(resp) }
                   />
               }
               {

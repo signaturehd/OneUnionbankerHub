@@ -25,12 +25,13 @@ import {
 
 import * as func from './functions/OpticalFunctions'
 
+import moment from 'moment'
+
 class OpticalFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
       showNoticeModal : false,
-      showConfirmation : false,
       noticeResponse : null,
       showNoticeResponseModal : false,
       showBenefitFeedbackModal : false,
@@ -46,8 +47,6 @@ class OpticalFragment extends BaseMVPView {
       orNumberText: '',
       preferredDate: '',
       limit: 0,
-      showErrorMessageValue: '',
-      showErrorMessageModal : false
     }
     this.confirmation = this.confirmation.bind(this)
     this.validator = this.validator.bind(this)
@@ -86,6 +85,10 @@ class OpticalFragment extends BaseMVPView {
     this.setState({ showNoticeModal : true, noticeResponse })
   }
 
+  noticeResponse (noticeResponse) {
+    this.setState({ noticeResponse })
+  }
+
   navigate () {
     this.props.history.push('/mybenefits/benefits/medical')
   }
@@ -97,7 +100,7 @@ class OpticalFragment extends BaseMVPView {
 
   validateSymbol (e) {
     const validate = func.checkedValidateSymbol(e)
-    this.setState({ orNumberText : validate.toUpperCase(), orNumberErrorMessage : '' })
+    this.setState({ orNumberText : validate, orNumberErrorMessage : '' })
   }
 
   validateDate (e) {
@@ -114,6 +117,15 @@ class OpticalFragment extends BaseMVPView {
       preferredDate,
     } = this.state
 
+    let validateAttachments = false
+    attachmentsData && attachmentsData.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
+
     if (parseInt(amount) === 0 || amount === '') {
       this.setState({ amountErrorMessage : 'Please enter an amount not equal to 0' })
     } else if (parseInt(amount) > parseInt(limit)) {
@@ -122,7 +134,29 @@ class OpticalFragment extends BaseMVPView {
       this.setState({ dateErrorMessage :  'Please select the required date' })
     } else if (!this.validator(orNumberText)) {
       this.setState({ orNumberErrorMessage :  'Please enter the official receipt number' })
-    } else {
+    }  else if (!attachmentsData.length) {
+       store.dispatch(NotifyActions.addNotify({
+          title : 'Warning' ,
+          message : 'Attachments is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (validateAttachments) {
+      attachmentsData && attachmentsData.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'Warning' ,
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 2000
+             })
+           )
+          }
+        }
+      )
+     } else {
       this.setState({ showEditSubmitButton : true })
     }
   }
@@ -143,12 +177,11 @@ class OpticalFragment extends BaseMVPView {
       attachmentsData,
     } = this.state
 
-      this.presenter.addOptical(amount, preferredDate, orNumberText, attachmentsData)
+      this.presenter.addOptical(amount, moment(preferredDate).format('MM/DD/YYYY'), orNumberText, attachmentsData)
   }
 
   render () {
     const {
-      showConfirmation,
       showNoticeModal,
       showBenefitFeedbackModal,
       showNoticeResponseModal,
@@ -164,29 +197,10 @@ class OpticalFragment extends BaseMVPView {
       orNumberText,
       preferredDate,
       limit,
-      showErrorMessageValue,
-      showErrorMessageModal
     } = this.state
 
     return (
       <div>
-        {
-          showErrorMessageModal &&
-          <Modal>
-            <center>
-              <h2>{ showErrorMessageValue.message }</h2>
-              <br/>
-              <GenericButton
-                text = { 'Ok' }
-                onClick = { () =>  {
-                  this.setState({ showErrorMessageModal : false })
-                  this.navigate()
-                }
-              }
-                />
-            </center>
-          </Modal>
-        }
         {
           showNoticeModal &&
           <NoticeModal

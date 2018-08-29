@@ -104,15 +104,15 @@ export default class HRBenefitsService {
 
   addOptical (token, accountToken, accountNumber, releasingCenter, opticalParam) {
     const formData = new FormData()
+    formData.append('uuid', 123345)
     const opticalObject = {
       accountNumber,
-      amount: opticalParam.amount,
-      officialReceiptDate: opticalParam.oRDate,
-      officialReceiptNumber : opticalParam.orNumber,
       releasingCenter,
+      amount: opticalParam.amount,
+      orDate: opticalParam.orDate,
+      orNumber : opticalParam.orNumber,
       distributor: 'distributorTest'
     }
-    formData.append('uuid', 123345)
     opticalParam.attachmentData.map((resp) => (
       formData.append(resp.name, resp.file)
       )
@@ -978,6 +978,13 @@ export default class HRBenefitsService {
 
   putEnrollPin (token, putPINParam) {
     return this.apiClient.put('v1/pin', putPINParam, {
+      headers : { token }
+    })
+  }
+
+  /* Staff accounts */
+  getForConfirmation (token, id) {
+    return this.apiClient.get(`v1/employees/${id}/details?status=confirmation`, {
       headers : { token }
     })
   }

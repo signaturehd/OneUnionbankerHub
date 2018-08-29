@@ -122,6 +122,7 @@ class EducationGroupAidFormCardComponent extends Component {
               <GenericInput
                 value = { orNumber }
                 text = { 'Official Receipt Number' }
+                maxLength = { 20 }
                 onChange = { (e) => orNumberFunc(e.target.value) }
                 disabled = { showEditSubmitButton }
                 errorMessage = { orNumberErrorMessage }

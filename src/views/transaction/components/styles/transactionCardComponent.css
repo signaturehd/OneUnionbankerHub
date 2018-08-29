@@ -118,6 +118,11 @@
   background: #00c853;
 }
 
+.transaction-component-status-confirmation {
+  color: #fff;
+  background: #2d9ee0;
+}
+
 .transaction-component-status-cancel {
   color: #fff;
   background: #d50000;

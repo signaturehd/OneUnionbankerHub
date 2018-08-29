@@ -149,7 +149,6 @@ class DentalLoaView extends BaseMVPView {
   }
 
   showErrorMessage (showErrorMessageValidate, showErrorMessageModal) {
-    console.log(showErrorMessageValidate)
     this.setState({ showErrorMessageValidate, showErrorMessageModal })
   }
 

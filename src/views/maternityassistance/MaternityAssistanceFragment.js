@@ -96,6 +96,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
         noMiscarriageFunc: '',
         benefitsCodeType: '',
         gender: '',
+        attachmentLength: ''
     }
   }
 
@@ -129,8 +130,8 @@ class MaternityAssistanceFragment extends BaseMVPView {
     this.setState({ maternityData })
   }
 
-  showAttachmentsMap (attachmentsData) {
-    this.setState({ attachmentsData })
+  showAttachmentsMap (attachmentsData, attachmentLength) {
+    this.setState({ attachmentsData, attachmentLength })
   }
 
   showTypeOfDeliveryMap (typeOfDeliveryData) {
@@ -232,16 +233,21 @@ class MaternityAssistanceFragment extends BaseMVPView {
 
   validateRequiredNoPregnancy (e) {
     const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
-    if(parseInt(validate) > 5) {
-      this.setState({ noPregnancyErrorMessage : 'max no. is 5' })
+    if(parseInt(validate) > 4) {
+      this.setState({ noPregnancyErrorMessage : 'max no. is 4' })
     } else {
       this.setState({ noPregnancyText : validate, noPregnancyErrorMessage : '' })
     }
   }
 
   validateRequiredNoDelivery (e) {
+    const {  noPregnancyText  } = this.state
     const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
-    this.setState({ noDeliveryText : validate, noPregnancyErrorMessage : '' })
+    if(parseInt(validate) >= parseInt(noPregnancyText)) {
+      this.setState({ noDeliveryErrorMessage : 'Error no. of delivery' })
+    } else {
+      this.setState({ noDeliveryText : validate, noDeliveryErrorMessage : '' })
+    }
   }
 
   validateRequiredNoMiscarriage (e) {
@@ -287,8 +293,18 @@ class MaternityAssistanceFragment extends BaseMVPView {
       amount,
       preferredDate,
       orNumberText,
-      attachmentArray
+      attachmentArray,
+      attachmentLength
     } = this.state
+
+    let validateAttachments = false
+    attachmentArray && attachmentArray.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
 
     if(!this.validateRequired(typeDeliveryName)){
       this.setState({ typeOfDeliveryErrorMessage : 'Please provide the type of delivery' })
@@ -300,12 +316,48 @@ class MaternityAssistanceFragment extends BaseMVPView {
       this.setState({ dateErrorMessage : 'Please provide the Official Receipt Date' })
     } else if (!this.validateRequired(orNumberText)) {
       this.setState({ orNumberErrorMessage : 'Please provide the Official Receipt Number' })
-    } else {
+    } else if(attachmentArray.length !== parseInt(attachmentLength) ) {
+      store.dispatch(NotifyActions.addNotify({
+        title : 'Maternity Assistance',
+        type : 'warning',
+        message : 'Please provide all required attachments',
+        duration: 2000,
+      })
+    )
+    } else if (validateAttachments) {
+      attachmentArray && attachmentArray.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'Warning' ,
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 2000
+             })
+           )
+          }
+        }
+      )
+     } else {
       this.setState({
         showEditSubmitButton: true,
         titleChange: false,
       })
     }
+  }
+
+  objectChecker (obj) {
+    let count = 0
+
+    obj.map((resp) => {
+      for (let property in resp) {
+        if (Object.prototype.hasOwnProperty.call(resp, property)) {
+            count++;
+          }
+        }
+      }
+    )
+    return count;
   }
 
   showFormReviewFieldDisabledOR () {
@@ -471,14 +523,14 @@ class MaternityAssistanceFragment extends BaseMVPView {
       benefitsCodeType,
       showMaternityLeaveComponent,
       showMaternityLeaveModal,
-      gender
+      gender,
+      attachmentLength
     } = this.state
 
     const {
       selectedArray,
       classProp
     } = this.props
-
     return (
       <div>
         {
@@ -490,8 +542,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
               <GenericButton
                 text = { 'Ok' }
                 onClick = { () => {
-                  this.setState({ showConfirmationModal : false })
-                  this.navigate()
+                  this.setState({ showConfirmationModal : false, showMaternityLeaveModal: true })
                 }}
                 />
             </center>
@@ -555,7 +606,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
           />
         }
         {
-          showMaternityLeaveModal ?
+          showMaternityLeaveComponent ?
           <LeaveFilingComponentFragment
             benefitsCodeType = { benefitsCodeType }
             navigateBenefits = { () => this.navigate() }
@@ -563,7 +614,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
           :
         <div>
           {
-          enabledLoader ?
+          !enabledLoader ?
             <center className = { 'circular-loader-center' }>
               <CircularLoader show = { true }/>
             </center> :

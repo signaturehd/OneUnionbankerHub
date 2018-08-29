@@ -106,7 +106,7 @@ export default class MotorcycleLoanPresenter {
         nfisArray &&
         nfisArray.map((nfis, key) => {
           requiredAttachments &&
-          requiredDocuments.map((attachment, key) => {
+          requiredAttachments.map((attachment, key) => {
             attachments.push({
               name : attachment + ' for ' + nfis
             })
@@ -168,6 +168,7 @@ export default class MotorcycleLoanPresenter {
         this.view.setModeOfLoan(data && data.modeOfLoan)
         this.view.showMaximumLoanableAmount(data && data.maximumLoanableAmount)
         this.view.showValidate(data)
+        this.view.setNfis(data && data.nfis)
         // this.view.showComputationForOffset(data && data.offset)
         this.view.setTermOfLoan(data && data.termsArray)
         this.view.isValid(true)

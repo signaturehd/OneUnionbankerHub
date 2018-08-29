@@ -31,19 +31,21 @@ class CommonPinEnrollmentModal extends Component {
           {
             enabledLoader ?
             <center>
+              <h2>Please wait while validating the Employee PIN</h2>
               <CircularLoader show = { true }/>
             </center>
             :
             <center>
               <div className = { 'grid-global-row' }>
                 <span className = { 'lock-icon lock-icon-settings' }/>
-                <h2 className = { 'font-size-14px' }> Please enter your old pin for verification</h2>
+                <h2 className = { 'font-size-14px' }>Hi UnionBanker!</h2>
               </div>
               <br/>
               <GenericInput
                 className = { 'generic-pin' }
                 hint = { '* * * * *' }
                 maxLength = { 5 }
+                type = { 'password' }
                 onChange = { (e) => {
                   new RequiredNumberValidation().isValid(e.target.value) ?
                   this.setState({ uniquePIN : e.target.value }) :
@@ -51,6 +53,7 @@ class CommonPinEnrollmentModal extends Component {
                   }
                 }
                 value = { uniquePIN }
+                errorMessage = { 'Please enter your 5-digit PIN' }
                 />
               <br/>
               <GenericButton

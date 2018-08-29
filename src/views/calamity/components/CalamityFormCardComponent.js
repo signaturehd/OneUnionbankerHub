@@ -6,20 +6,15 @@ import {
   DatePicker,
   GenericButton,
   Line,
-  MultipleFileUploader
+  MultipleFileUploader,
 } from '../../../ub-components/'
 
 import './styles/calamityComponentStyle.css'
 
+import CalamityMultiplePropertyCardComponent from './CalamityMultiplePropertyCardComponent'
+
 import { RequiredValidation, MoneyValidation } from '../../../utils/validate'
 import { format } from '../../../utils/numberUtils'
-
-import CalamityModal from '../modal/CalamityModal'
-import CalamityReviewModal from '../modal/CalamityReviewModal'
-import PropertyTypeModal from '../modal/PropertyTypeModal'
-
-import store from '../../../store'
-import { NotifyActions } from '../../../actions/'
 
 import {
   RequiredDecimalValidation,
@@ -35,69 +30,28 @@ class CalamityFormCardComponent extends Component {
     super (props)
   }
 
-  onGetClicked (
-    calamityId,
-    calamityType,
-    preferredDate,
-    property,
-    propertyDesc,
-    propertyType,
-    acquisitionValue,
-    estimatedCost) {
-      this.props.getFormData(
-        calamityId,
-        calamityType,
-        preferredDate,
-        property,
-        propertyDesc,
-        propertyType,
-        acquisitionValue,
-        estimatedCost
-      )
-  }
-
-  getExtension (filename) {
-    const parts=filename.split('/')
-    return parts[parts.length - 1]
-  }
-
   render () {
     const {
+      onShowPropertyFormModalFunc,
       calamityAssistance,
       attachmentsData,
-      setAttachmentArrayFunc,
+      setAttachmentDefaultyFunc,
+      setCardHolderDefaultyFunc,
       requestCalamityTypeFunc,
       requestPropertyTypeFunc,
-      propertyFunc,
-      propertyDescFunc,
-      acquisitionFunc,
-      estimatedCostFunc,
-      handleChange,
+      handleChangeDate,
       showEditSubmitButton,
-      showModal,
-      showReviewCalamityModal,
-      showPropModal,
-      showErrorModal,
       calamityName,
       calamityType,
       preferredDate,
-      property,
-      propertyDesc,
-      propertyType,
-      acquisitionValue,
-      estimatedCost,
       calamityTypeErrorMessage,
-      estimatedCostErrorMessage,
-      propertyTypeValue,
-      presenter,
       onClick,
-      onFocus
+      damagePropertyCardHolder,
+      onEditModeProperty
     }=this.props
+
     return (
       <div className={'calamity-form'}>
-        <h4>
-          Property Form
-        </h4>
         <GenericInput
           value={ calamityName }
           onClick={ () => requestCalamityTypeFunc(true) }
@@ -108,106 +62,99 @@ class CalamityFormCardComponent extends Component {
           maxDate={ moment() }
           readOnly
           selected={ preferredDate}
-          onChange={ (e) => handleChange(e) }
+          onChange={ (e) => handleChangeDate(e) }
           text = { 'Date of Occurrence' }
           />
-        <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
-          <GenericInput
-            value={ property }
-            onChange={ (e) => propertyFunc(e.target.value) }
-            text={ 'Property' }
-            type={ 'text' }/>
-          <GenericInput
-            value={ propertyDesc }
-            onChange={ (e) => propertyDescFunc(e.target.value) }
-            text={ 'Property Description' }
-            type={ 'text' }/>
-          <GenericInput
-            value={ propertyType }
-            onClick={ () => requestPropertyTypeFunc(true) }
-            text={ 'Property Type' }/>
-          <GenericInput
-            value={ acquisitionValue }
-            onChange={ (e) => acquisitionFunc(e.target.value) }
-            text={ 'Acquisition Value' }
-            type={ 'text' }/>
-          <GenericInput
-            value={ estimatedCost }
-            onChange={ (e) => estimatedCostFunc(e.target.value) }
-            text={ 'Estimated Repair Cost' }
-            type={ 'text' }
-            maxLength = { 5 }
-            errorMessage = { estimatedCostErrorMessage }
+        <div className = { 'grid-global' }>
+          <div>
+            <h2 className = { 'font-weight-bold' }>Damage Properties</h2>
+          </div>
+          <div className = { 'text-align-right' }>
+            <GenericButton
+              text = { 'Add Property' }
+              onClick = { (resp, key) => onShowPropertyFormModalFunc(resp, key) }
+              />
+          </div>
+        </div>
+        <br/>
+        {
+        damagePropertyCardHolder.length !==0 &&
+          <CalamityMultiplePropertyCardComponent
+            cardDataHolder = { damagePropertyCardHolder }
+            setCard = { (resp) => setCardHolderDefaultyFunc(resp) }
+            disabled = { showEditSubmitButton }
+            onEditModeProperty = { (
+              propertyName,
+              description,
+              propertyType,
+              cquisitionValue,
+              repairCost,
+              imageKey,
+              updateMode,
+              showPropertyModal,
+              editMode) =>
+              onEditModeProperty(
+                propertyName,
+                description,
+                propertyType,
+                cquisitionValue,
+                repairCost,
+                imageKey,
+                updateMode,
+                showPropertyModal,
+                editMode
+              ) }
+            errorMessage = {
+              showEditSubmitButton ?
+              '' :
+              `Please upload the required attachments`  }
             />
-          <br/>
-            {
-              attachmentsData.length !== 0  ?
-
-              <div>
+        }
+        <br/>
+        <Line/>
+        <br/>
+          {
+            attachmentsData.length !== 0  &&
+            <div>
               <h4>
+                <br/>
                 Form Attachments
               </h4>
               <MultipleFileUploader
-                  placeholder = { 'Form Attachments' }
-                  fileArray = { attachmentsData }
-                  setFile = { (resp) => setAttachmentArrayFunc(resp) }
-                  disabled = { showEditSubmitButton }
-                  errorMessage = {
-                    showEditSubmitButton ?
-                    '' :
-                    `Please upload the required attachments`  }
+                placeholder = { '.' }
+                fileArray = { attachmentsData }
+                setFile = { (resp) => setAttachmentDefaultyFunc(resp) }
+                disabled = { showEditSubmitButton }
+                errorMessage = {
+                  showEditSubmitButton ?
+                  '' :
+                  `Please upload the required attachments`  }
                 />
-              </div>
-              :
-              <div></div>
-            }
-            <br/>
-            <Line/>
+            </div>
+          }
+          <br/>
           <GenericButton
-            type={ 'button' }
-            text={ 'Submit' }
-            onClick={
-              () => onClick(true,
-                {
-                  calamityId,
-                  calamityType,
-                  preferredDate,
-                  property,
-                  propertyDesc,
-                  propertyType,
-                  acquisitionValue,
-                  estimatedCost
-                }
-              )
-            }
-            className={ 'calamity-submit' } />
+            text = { 'Submit' }
+            onClick = { () => {}}
+            className = { 'calamity-submit' } />
         </div>
       )
     }
   }
 
 CalamityFormCardComponent.propTypes={
-  onFocus: PropTypes.func,
-  handleChange: PropTypes.func,
-  MinMaxNumberValidation: PropTypes.func,
+  handleChangeDate: PropTypes.func,
+  onEditModeProperty: PropTypes.func,
+  setAttachmentDefaultyFunc: PropTypes.func,
+  setCardHolderDefaultyFunc: PropTypes.func,
   requestCalamityTypeFunc: PropTypes.func,
-  requestPropertyTypeFunc: PropTypes.func,
-  propertyFunc: PropTypes.func,
-  propertyDescFunc: PropTypes.func,
-  acquisitionFunc: PropTypes.func,
-  estimatedCostFunc: PropTypes.func,
-  showErrorModal: PropTypes.bool,
   showEditSubmitButton: PropTypes.bool,
   calamityName: PropTypes.string,
   calamityType: PropTypes.array,
+  damagePropertyCardHolder: PropTypes.array,
+  attachmentsData: PropTypes.array,
   preferredDate: PropTypes.string,
-  property: PropTypes.string,
-  propertyDesc: PropTypes.string,
-  propertyType: PropTypes.string,
-  acquisitionValue: PropTypes.string,
-  estimatedCost: PropTypes.string,
   calamityTypeErrorMessage: PropTypes.string,
-  estimatedCostErrorMessage: PropTypes.string
 }
 
 export default CalamityFormCardComponent

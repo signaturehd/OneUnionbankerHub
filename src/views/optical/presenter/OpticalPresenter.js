@@ -1,6 +1,6 @@
 import AddOpticalInteractor from '../../../domain/interactor/optical/AddOpticalInteractor'
 import GetOpticalInteractor from '../../../domain/interactor/optical/GetOpticalInteractor'
-import OpticalParam from '../../../domain/param/OpticalParam'
+import opticalParam from '../../../domain/param/OpticalParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
@@ -21,7 +21,7 @@ export default class OpticalPresenter {
     attachmentData
   ) {
     this.view.showCircularLoader()
-    this.addOpticalInteractior.execute(OpticalParam(
+    this.addOpticalInteractior.execute(opticalParam(
       amount,
       orDate,
       orNumber,
@@ -31,8 +31,7 @@ export default class OpticalPresenter {
         this.view.hideCircularLoader()
         // this.view.showOptical(optical)
       }, e => {
-        this.view.noticeResponse(e)
-        this.view.isEligible(false, errors)
+        this.view.hideCircularLoader()
       })
     }
 
@@ -53,6 +52,7 @@ export default class OpticalPresenter {
         // this.view.isEligible(data ? true : false)
       }, errors => {
         this.view.isEligible(false, errors)
+        this.view.navigate()
       })
     }
   }
