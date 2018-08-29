@@ -448,8 +448,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addCarLeaseConfirmation (token) {
-    return this.service.addCarLeaseConfirmation(token)
+  addCarLeaseConfirmation (token, leasesCarConfirm) {
+    return this.service.addCarLeaseConfirmation(token, leasesCarConfirm)
       .pipe(ServiceErrorOperator())
   }
 

@@ -19,6 +19,7 @@ class CarLeaseDetailCardComponent extends Component {
       transactionsPerson,
       onClickAttachments,
       onClickAgreements,
+      onConfirmationFunc
      } = this.props
 
    const transactionID = details.transactionId
@@ -55,9 +56,11 @@ class CarLeaseDetailCardComponent extends Component {
               </h2>
             </div>
           </div>
-            <CarLeaseOtherDetailsComponent
-              detailsEducation = { details && details.details }
-            />
+          <CarLeaseOtherDetailsComponent
+            transactionID = { transactionID }
+            onConfirmation = { (id, status) => onConfirmationFunc(id, status) }
+            detailsCarLease = { details && details.details }
+          />
         </div>
         <div className = { 'transaction-attachments-agreements-grid' }>
           <div>
@@ -96,6 +99,7 @@ CarLeaseDetailCardComponent.propTypes = {
   transactionsPerson : PropTypes.array,
   onClickAttachments : PropTypes.func,
   onClickAgreements : PropTypes.func,
+  onConfirmationFunc : PropTypes.func,
 }
 
 export default CarLeaseDetailCardComponent

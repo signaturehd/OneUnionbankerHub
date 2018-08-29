@@ -5,7 +5,7 @@ import Presenter from './presenter/TransactionPersonalDetailsPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { CircularLoader, Modal } from '../../ub-components'
+import { CircularLoader, Modal, GenericButton } from '../../ub-components'
 
 import './styles/transactionDetails.css'
 
@@ -35,6 +35,7 @@ function  TransactionDetails (props)  {
   const showFileReceipt = props.showFileReceipt
   const attachmentsMethod = props.attachmentsMethod
   const agreementsMethod = props.agreementsMethod
+  const onConfirmationCarleaseFunc = props.onConfirmationCarleaseFunc
 
   if (transactionId === 6) {
     return <DentalRDetailsFragment
@@ -56,6 +57,7 @@ function  TransactionDetails (props)  {
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 15) {
     return <CarLeaseDetailsFragment
+      onConfirmationCarleaseFunc = { (id, status) => onConfirmationCarleaseFunc(id, status) }
       attachmentsMethod = { (resp) => attachmentsMethod(resp) }
       agreementsMethod = { (resp) => agreementsMethod(resp) }
       details = { transactionDetails }
@@ -150,6 +152,8 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
       enabledLoader: false,
       showAttachmentsModal: false,
       showAgreementsModal: false,
+      showConfirmation : false,
+      showConfirmationMessage : ''
     }
   }
 
@@ -198,6 +202,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     this.setState({ enabledLoader : false })
   }
 
+  showMessageSuccessConfirm (showConfirmationMessage) {
+    this.setState({ showConfirmationMessage, showConfirmation : true })
+  }
+
   render () {
 
   const {
@@ -207,7 +215,9 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     response,
     enabledLoader,
     showAttachmentsModal,
-    showAgreementsModal
+    showAgreementsModal,
+    showConfirmation,
+    showConfirmationMessage
   } = this.state
 
   return (
@@ -230,6 +240,24 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
             this.setState({ showAttachmentsModal : false }) }
           />
       }
+      {
+        showConfirmation &&
+        <Modal>
+          <center>
+            <h2>{ showConfirmationMessage ? showConfirmationMessage :  '(Not Yet Provided)' }
+            </h2>
+            <br/>
+            <GenericButton
+              text = { 'Ok' }
+              onClick = { () => {
+                window.location.reload()
+                this.setState({ showConfirmation : false })
+              }
+            }
+              />
+          </center>
+        </Modal>
+      }
       <div>
         <i className={ 'back-arrow' }
           onClick = {
@@ -250,6 +278,9 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              agreementsMethod = { (resp) =>
                this.showAgreementsMethod(resp)
              }
+             onConfirmationCarleaseFunc = { (transactionID, status) =>
+               this.presenter.addCarLeaseConfirmation(transactionID, status)
+            }
              showFileReceipt = { response }
              uploadImage = { (transactionType, transactionId, file) => {
                this.presenter.uploadTransactionBereavement(transactionType, transactionId, file)

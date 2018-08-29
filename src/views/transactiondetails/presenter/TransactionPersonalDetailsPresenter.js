@@ -3,6 +3,9 @@ import { Observable } from 'rxjs'
 import GetTransactionDetailsInteractor from '../../../domain/interactor/transactions/GetTransactionDetailsInteractor'
 import GetTransactionPersonalInteractor from '../../../domain/interactor/transactions/GetTransactionPersonalInteractor'
 import UploadTransactionImageInteractor from '../../../domain/interactor/transactions/UploadTransactionImageInteractor'
+import PostNewCarConfirmationInteractor from '../../../domain/interactor/transactions/PostNewCarConfirmationInteractor'
+
+import leasesCarConfirm from '../../../domain/param/AddCarLeaseConfirmationParam'
 import GetTransactionParam from '../../../domain/param/GetTransactionParam'
 
 import store from '../../../store'
@@ -21,6 +24,9 @@ export default class TransactionPersonalDetailsPresenter {
 
     this.uploadTransactionImageInteractor =
       new UploadTransactionImageInteractor(container.get('HRBenefitsClient'))
+
+    this.postNewCarConfirmationInteractor =
+      new PostNewCarConfirmationInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -89,6 +95,19 @@ export default class TransactionPersonalDetailsPresenter {
         }, e => {
           this.view.showCircularLoader()
       })
+  }
+
+  addCarLeaseConfirmation (transactionId, isConfirm) {
+    this.postNewCarConfirmationInteractor.execute(leasesCarConfirm(
+      transactionId,
+      isConfirm
+    ))
+    .subscribe(
+      data => {
+        this.view.showMessageSuccessConfirm(data && data.message)
+      }, error => {
+      }
+    )
   }
 
   uploadTransactionCalamity (transactionType, benefitId, image) {

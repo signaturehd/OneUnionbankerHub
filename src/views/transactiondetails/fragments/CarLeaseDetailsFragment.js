@@ -24,7 +24,8 @@ class CarLeaseDetailsFragment extends Component {
     details,
     transactionsPerson,
     attachmentsMethod,
-    agreementsMethod
+    agreementsMethod,
+    onConfirmationCarleaseFunc
   } = this.props
 
   const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
@@ -65,6 +66,7 @@ class CarLeaseDetailsFragment extends Component {
           <br/>
           <div>
             <CarLeaseDetailCardComponent
+              onConfirmationFunc = { (id, status) => onConfirmationCarleaseFunc(id, status) }
               transactionsPerson = { transactionsPerson }
               details = { details }
               onClickAttachments = { (resp) => attachmentsMethod(resp) }
@@ -82,6 +84,7 @@ CarLeaseDetailsFragment.propTypes = {
   transactionsPerson : PropTypes.array,
   onClickAttachments : PropTypes.func,
   onClickAgreements : PropTypes.func,
+  onConfirmationCarleaseFunc : PropTypes.func,
 }
 
 export default CarLeaseDetailsFragment
