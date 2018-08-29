@@ -383,7 +383,7 @@ class BereavementFormCardComponent extends Component {
               {
                 showEditSubmitButton &&
                 <center>
-                  <h2 className = { 'font-size-12px' }>Please review he information you have selected before submitting the transaction</h2>
+                  <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
                 </center>
               }
               <br/>
