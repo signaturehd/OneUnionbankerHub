@@ -52,6 +52,7 @@ export default class OpticalPresenter {
         // this.view.isEligible(data ? true : false)
       }, errors => {
         this.view.isEligible(false, errors)
+        this.view.navigate()
       })
     }
   }
