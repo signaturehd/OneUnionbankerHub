@@ -1,26 +1,26 @@
 
-.outpatient-container {
+.maternity-container {
   max-width: 100%;
 }
 
-.outpatient-form-card {
+.maternity-form-card {
   max-width: 100%;
   padding: 20px 5px 20px 5px;
   margin: auto;
 }
 
-.outpatient-form-review {
+.maternity-form-review {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 2%;
 }
 
-.outpatient-form-card-body {
+.maternity-form-card-body {
   border-color: #0a0a0a;
   color: #090909;
 }
 
-.outpatient-submit {
+.maternity-submit {
   border-radius: 5px;
   text-align: center;
   outline: none;
@@ -32,44 +32,44 @@
   width: 100%;
 }
 
-.outpatient-submit:hover {
+.maternity-submit:hover {
   border: 1px solid #FF7200;
   background-color: #ff8A00;
   color: #fff;
 }
 
-.outpatient-submit-form-button:hover {
+.maternity-submit-form-button:hover {
   border: 1px solid #FF7200;
   background-color: #ff8A00;
   color: #fff;
 }
 
-.outpatient-procedure:hover {
+.maternity-procedure:hover {
   border: 1px solid #FF7200;
   background-color: #ff8A00;
   color: #fff;
 }
 
-.outpatient-edit-form:hover {
+.maternity-edit-form:hover {
   border: 1px solid #FF7200;
   background-color: #ff8A00;
   color: #fff;
 }
 
-.outpatient-grid-column-2 {
+.maternity-grid-column-2 {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   column-gap: 2%;
 }
 
 @media (max-width : 768px) {
-  .outpatient-grid-column-2 {
+  .maternity-grid-column-2 {
     display: grid;
     grid-template-columns: 1fr ;
     column-gap: 2%;
     grid-row-gap: 2%;
   }
-  .outpatient-form-card {
+  .maternity-form-card {
     margin-top: 10px;
   }
 }
@@ -85,7 +85,7 @@
     transform: translate3d(0, 0, 0);
   }
 }
-.outpatient-form-preview{
+.maternity-form-preview{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 100%;
   float: center;
@@ -98,7 +98,7 @@
   animation: fadeInUp 0.5s ease-in-out 0s forwards;
 }
 
-.outpatient-attachment-form {
+.maternity-attachment-form {
   padding: 10px;
   margin: 0 30px 0 30px;
   background-color: #f6f6f6;
@@ -107,7 +107,7 @@
   border-color: #DBDBE0;
 }
 
-.outpatient-form-title {
+.maternity-form-title {
   display: block;
   text-align: left;
   font-size:14px;
@@ -119,14 +119,14 @@
   float: right;
 }
 
-.outpatient-file-name {
+.maternity-file-name {
   margin-left: 120px;
   line-height: 60px;
   text-align: left;
   font-size: 14px;
   font-weight: normal;
 }
-.outpatient-grid-procedure {
+.maternity-grid-procedure {
   display: grid;
   grid-template-columns: 1fr .2fr;
 }
