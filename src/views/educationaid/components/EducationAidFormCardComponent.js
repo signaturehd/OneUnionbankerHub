@@ -172,10 +172,6 @@ class EducationAidFormCardComponent extends Component {
                     fileArray = { attachmentsData }
                     setFile = { (resp) => setAttachmentArrayFunc(resp) }
                     disabled = { showEditSubmitButton }
-                    errorMessage = {
-                      showEditSubmitButton ?
-                      '' :
-                      `Please upload the required attachments`  }
                   />
                 </div>
                 :

@@ -98,7 +98,7 @@ class EducationGroupAidFragment extends BaseMVPView {
 
   orNumberFunc (e) {
     const validate = EducationGroupAidFunction.checkedValidationSymbol(e)
-    this.setState({ orNumber : validate, orNumberErrorMessage : '' })
+    this.setState({ orNumber : validate.toUpperCase(), orNumberErrorMessage : '' })
   }
 
   orDateFunc (data) {
@@ -136,6 +136,15 @@ class EducationGroupAidFragment extends BaseMVPView {
       attachmentArray
     } = this.state
 
+    let validateAttachments = false
+    attachmentArray && attachmentArray.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
+
     if(!this.validateRequired(dependentId)) {
      this.setState({ dependentErrorMessage : 'Please select your dependent' })
     } else if (!this.validateRequired(company)) {
@@ -148,7 +157,31 @@ class EducationGroupAidFragment extends BaseMVPView {
       this.setState({ orDateErrorMessage : 'Please select a date' })
     }else if (!this.validateRequired(orNumber)) {
       this.setState({ orNumberErrorMessage : 'Please enter an Official Receipt Number' })
-    } else {
+    } else if (!attachmentArray.length) {
+       store.dispatch(NotifyActions.addNotify({
+          title : 'Warning' ,
+          message : 'Attachments is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (validateAttachments) {
+      attachmentArray && attachmentArray.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'Warning' ,
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 2000
+             })
+           )
+          }
+        }
+      )
+
+     }
+     else {
       this.setState({
         showEditSubmitButton: true,
         titleChange: false,
