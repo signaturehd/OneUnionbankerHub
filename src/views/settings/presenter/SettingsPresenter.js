@@ -56,6 +56,7 @@ export default class SettingsPresenter {
      this.getForConfirmationInteractor.execute(id)
      .subscribe( data => {
        this.view.staffCircularLoader(false)
+       this.view.setStaffAccounts(data)
      }, error => {
        const sampleData = [
         {
@@ -95,8 +96,8 @@ export default class SettingsPresenter {
           "line5": ""
         }
       ]
-      this.view.setStaffAccounts(sampleData)
       this.view.staffCircularLoader(false)
+      this.view.setStaffAccounts(sampleData)
       //this.view.showStaffAccount(false)
      })
    }
