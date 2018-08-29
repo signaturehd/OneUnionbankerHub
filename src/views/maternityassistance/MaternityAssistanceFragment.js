@@ -297,6 +297,15 @@ class MaternityAssistanceFragment extends BaseMVPView {
       attachmentLength
     } = this.state
 
+    let validateAttachments = false
+    attachmentArray && attachmentArray.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
+
     if(!this.validateRequired(typeDeliveryName)){
       this.setState({ typeOfDeliveryErrorMessage : 'Please provide the type of delivery' })
     } else if (!this.validateRequired(deliveryDate)) {
@@ -315,7 +324,21 @@ class MaternityAssistanceFragment extends BaseMVPView {
         duration: 2000,
       })
     )
-    } else {
+    } else if (validateAttachments) {
+      attachmentArray && attachmentArray.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'Warning' ,
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 2000
+             })
+           )
+          }
+        }
+      )
+     } else {
       this.setState({
         showEditSubmitButton: true,
         titleChange: false,
@@ -591,7 +614,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
           :
         <div>
           {
-          enabledLoader ?
+          !enabledLoader ?
             <center className = { 'circular-loader-center' }>
               <CircularLoader show = { true }/>
             </center> :

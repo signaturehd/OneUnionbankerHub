@@ -26,7 +26,6 @@ class DentalLoaCard extends Component {
       showProcedureModal : false, // Recipient Procedure Modal
       datePicker : '',
     }
-
   }
 
   render () {
