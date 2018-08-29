@@ -56,6 +56,8 @@ function  TransactionDetails (props)  {
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 15) {
     return <CarLeaseDetailsFragment
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       details = { transactionDetails }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 13) {

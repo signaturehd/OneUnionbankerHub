@@ -1,43 +1,101 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
-import { Card } from '../../../../ub-components/'
+import { Card, GenericButton } from '../../../../ub-components/'
 
 import moment from 'moment'
 
-class CarLeaseDetailCardComponent extends Component {
-    constructor (props) {
-      super(props)
-    }
+import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
+import CarLeaseOtherDetailsComponent from './CarLeaseOtherDetailsComponent'
 
-    render () {
-    const { details, transactionsPerson } = this.props
-    const transactionID = details.transactionId
+class CarLeaseDetailCardComponent extends Component {
+  constructor (props) {
+    super(props)
+  }
+
+  render() {
+    const {
+      details,
+      transactionsPerson,
+      onClickAttachments,
+      onClickAgreements,
+     } = this.props
+
+   const transactionID = details.transactionId
+   const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
+   const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
+   const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details)
+
     return (
-      <div className = { 'transaction-card-details-form' }>
+      <div className = { 'transaction-component-details-form' }>
         <div>
-          <h2 className = { 'transaction-detail details-bold' }> Date Filed: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Reference Number: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> : </h2>
-          { details && details.details.AccountNo &&  <h2 className = { 'transaction-detail details-bold' }> Account Number: </h2> }
-          <h2 className = { 'transaction-detail details-bold' }> Color: </h2>
-          <h2 className = { 'transaction-detail details-bold' }> Brand: </h2>
-          { details && details.details.CarDetails.Amount && <h2 className = { 'transaction-detail details-bold' }> Amount: </h2> }
-          <h2 className = { 'transaction-detail details-bold' }> Lease Type: </h2>
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+            <div>
+              <h2>
+                { dateFilled }
+              </h2>
+              <br/>
+            </div>
+          </div>
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { ' transaction-card-icon-settings global-icons-referenceNumber' }></span>
+            <div>
+              <h2>
+                { referenceNumber }
+              </h2>
+              <br/>
+            </div>
+          </div>
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
+            <div>
+              <h2>
+                { acccountNumber }
+              </h2>
+            </div>
+          </div>
+            <CarLeaseOtherDetailsComponent
+              detailsEducation = { details && details.details }
+            />
         </div>
-        <div>
-          <h2 className = { 'transaction-detail' }> { details && moment(details.dateFiled).format('MMMM DD, YYYY') } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.ReferenceNumber }</h2>
-          <h2 className = { 'transaction-detail' }> { details && details.status.name } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.AccountNo } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.CarDetails.Color  } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.CarDetails.Brand } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.CarDetails.Amount } </h2>
-          <h2 className = { 'transaction-detail' }> { details && details.details.CarDetails.LeaseMode } </h2>
+        <div className = { 'transaction-attachments-agreements-grid' }>
+          <div>
+            <br/>
+              {
+                details &&
+                details.details &&
+                details.details.Attachments ?
+
+                <GenericButton
+                  className = { 'transaction-details-button' }
+                  text = { 'View Attachments' }
+                  onClick = { () => onClickAttachments(true) }
+                /> :
+                <div></div>
+              }
+              <br/>
+          </div>
+          <div>
+            <br/>
+            <GenericButton
+              className = { 'transaction-details-button' }
+              text = { 'View Agreements' }
+              onClick = { () => onClickAgreements(true) }
+            />
+            <br/>
+          </div>
         </div>
       </div>
     )
   }
+}
+
+CarLeaseDetailCardComponent.propTypes = {
+  details : PropTypes.object,
+  transactionsPerson : PropTypes.array,
+  onClickAttachments : PropTypes.func,
+  onClickAgreements : PropTypes.func,
 }
 
 export default CarLeaseDetailCardComponent

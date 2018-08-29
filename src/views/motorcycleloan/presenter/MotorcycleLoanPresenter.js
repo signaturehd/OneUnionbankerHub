@@ -108,7 +108,7 @@ export default class MotorcycleLoanPresenter {
           requiredAttachments &&
           requiredAttachments.map((attachment, key) => {
             attachments.push({
-              name : attachment + ' for ' + nfis
+              name : attachment + ' for ' + nfis.CardNumber
             })
           })
         })

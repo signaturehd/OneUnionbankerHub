@@ -123,18 +123,18 @@ class CarLeaseNewFormComponent extends Component {
       onShowEnterSolRCModalFunc
     }=this.props
 
-      const styles={
-        image : {
-          backgroundImage: `url('${imagePreviewUrl}')`,
-          width : '-webkit-fill-available',
-          height : '-webkit-fill-available',
-          backgroundSize : 'cover',
-          backgroundRepeat : 'no-repeat',
-        }
+    const styles={
+      image : {
+        backgroundImage: `url('${imagePreviewUrl}')`,
+        width : '-webkit-fill-available',
+        height : '-webkit-fill-available',
+        backgroundSize : 'cover',
+        backgroundRepeat : 'no-repeat',
       }
+    }
 
-      let $imagePreview=null
-        $imagePreview=(<div style={ styles.image }></div>)
+    let $imagePreview=null
+      $imagePreview=(<div style={ styles.image }></div>)
 
     return (
       <div className={'carview-container'}>
