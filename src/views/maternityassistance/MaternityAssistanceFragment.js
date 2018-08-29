@@ -514,8 +514,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
               <GenericButton
                 text = { 'Ok' }
                 onClick = { () => {
-                  this.setState({ showConfirmationModal : false })
-                  this.navigate()
+                  this.setState({ showConfirmationModal : false, showMaternityLeaveModal: true })
                 }}
                 />
             </center>
@@ -579,7 +578,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
           />
         }
         {
-          showMaternityLeaveModal ?
+          showMaternityLeaveComponent ?
           <LeaveFilingComponentFragment
             benefitsCodeType = { benefitsCodeType }
             navigateBenefits = { () => this.navigate() }
