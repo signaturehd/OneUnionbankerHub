@@ -981,4 +981,11 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Staff accounts */
+  getForConfirmation (token, id) {
+    return this.apiClient.get(`v1/employees/${id}/details?status=confirmation`, {
+      headers : { token }
+    })
+  }
 }
