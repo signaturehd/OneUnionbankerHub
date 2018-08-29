@@ -237,7 +237,7 @@ class EmergencyLoanFragment extends BaseMVPView {
         purposeOfAvailmentLabel,
         showPurposeOfAvailment : false
       })
-      this.presenter.getMplFormAttachments(purposeOfAvailmentLabel)
+      this.presenter.getMplFormAttachments(purposeOfAvailmentLabel, nfis)
     }
   }
 
@@ -292,6 +292,7 @@ class EmergencyLoanFragment extends BaseMVPView {
       noticeResponse,
       isValid,
       showLoading,
+      nfis,
     } = this.state
 
     // const empName=employeeName && employeeName.fullname
@@ -338,7 +339,7 @@ class EmergencyLoanFragment extends BaseMVPView {
             label = { 'Purpose of Availment' }
             inputArray = { purposeOfAvailment && purposeOfAvailment.category }
             selectedArray = { (purposeOfAvailmentId, purposeOfAvailmentLabel) =>
-              this.setPurposeOfAvailment(purposeOfAvailmentId, purposeOfAvailment.subCategoryLvl,purposeOfAvailmentLabel) } //response
+              this.setPurposeOfAvailment(purposeOfAvailmentId, purposeOfAvailment.subCategoryLvl,purposeOfAvailmentLabel, nfis) } //response
             onClose = { () => this.setState({showPurposeOfAvailment : false}) }
 
           />
