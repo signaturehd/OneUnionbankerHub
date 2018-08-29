@@ -83,7 +83,27 @@ class CalamityFormCardComponent extends Component {
             cardDataHolder = { damagePropertyCardHolder }
             setCard = { (resp) => setCardHolderDefaultyFunc(resp) }
             disabled = { showEditSubmitButton }
-            onEditModeProperty = { (resp, showPreview, editMode) => onEditModeProperty(resp, showPreview, editMode) }
+            onEditModeProperty = { (
+              propertyName,
+              description,
+              propertyType,
+              cquisitionValue,
+              repairCost,
+              imageKey,
+              updateMode,
+              showPropertyModal,
+              editMode) =>
+              onEditModeProperty(
+                propertyName,
+                description,
+                propertyType,
+                cquisitionValue,
+                repairCost,
+                imageKey,
+                updateMode,
+                showPropertyModal,
+                editMode
+              ) }
             errorMessage = {
               showEditSubmitButton ?
               '' :

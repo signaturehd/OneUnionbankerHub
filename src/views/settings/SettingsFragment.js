@@ -20,6 +20,7 @@ class SettingsFragment extends BaseMVPView {
      rank: [],
      lineManager: [],
      profileDependent: [],
+     staffAccounts : [],
      accountNumber : 'No Account Number',
      showProfile : false,
      showRank : false,
@@ -33,6 +34,7 @@ class SettingsFragment extends BaseMVPView {
      showCompanyInfoModal : false,
      showPersonalInfoModal : false,
      showStaffAccountsModal : false,
+     staffLoader : false,
     }
   }
   componentDidMount () {
@@ -44,6 +46,15 @@ class SettingsFragment extends BaseMVPView {
   }
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
+  }
+  staffCircularLoader (staffLoader) {
+    this.setState({ staffLoader })
+  }
+  showStaffAccount (showStaffAccountsModal) {
+    this.setState({ showStaffAccountsModal })
+  }
+  setStaffAccounts (staffAccounts) {
+    this.setState({ staffAccounts })
   }
   showProfile (profile) {
     this.setState({ profile })
@@ -93,7 +104,10 @@ class SettingsFragment extends BaseMVPView {
       showCompanyInfoModal,
       showPersonalInfoModal,
       showStaffAccountsModal,
+      staffLoader,
+      staffAccounts,
     }=this.state
+
     return (
       <div className={ 'profile-container' }>
         { super.render() }
@@ -104,6 +118,8 @@ class SettingsFragment extends BaseMVPView {
            profileDependent={ profileDependent }
            rank={ rank }
            enabledLoader = { enabledLoader }
+           staffLoader = { staffLoader }
+           staffAccounts = { staffAccounts }
            showChangePINModal = { showChangePINModal }
            showContactInfoModal = { showContactInfoModal }
            showDependentModal = { showDependentModal }
@@ -113,10 +129,11 @@ class SettingsFragment extends BaseMVPView {
            showChangePINModalFunc = { (showChangePINModal) => this.setState({ showChangePINModal }) }
            showContactInfoModalFunc = { (showContactInfoModal) => this.setState({ showContactInfoModal }) }
            showDependentModalFunc = { (showDependentModal) => this.setState({ showDependentModal }) }
-           showCompanyInfoModalFunc = { showCompanyInfoModal }
+           showCompanyInfoModalFunc = { (showCompanyInfoModal) => this.setState({ showCompanyInfoModal }) }
            showPersonalInfoModalFunc = { (showPersonalInfoModal) => this.setState({ showPersonalInfoModal }) }
            showStaffAccountsModalFunc = { (showStaffAccountsModal) =>  this.setState({ showStaffAccountsModal }) }
            changePinSendToFragment = { (uniqueOldPIN, uniqueNewPIN) => this.submitUpdatedPIN(uniqueOldPIN, uniqueNewPIN) }
+           getStaffAccounts = { (id) => this.presenter.getForConfirmation(id) }
         />
       </div>
     )

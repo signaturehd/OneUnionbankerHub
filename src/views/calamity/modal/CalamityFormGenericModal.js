@@ -82,12 +82,6 @@ class CalamityFormGenericModal extends Component {
       estimatedCostErrorMessageFunc('Estimated cost is required')
     } else {
       getPropertyHolderFunc(damagePropertyObject)
-      propertyFunc('')
-      requestPropertyTypeFunc('')
-      propertyDescFunc('')
-      acquisitionFunc('')
-      estimatedCostFunc('')
-      estimatedCostFunc('')
       resetInstance()
       this.setState({ genericFileAttachmentArray : [] })
       hideModalPropertyFormFunc(false)
@@ -96,10 +90,54 @@ class CalamityFormGenericModal extends Component {
 
   updateSelectedPropertyObject () {
     const {
-      editModeData,
-      updateModeFunc
+      updateModeFunc,
+      damagePropertyCardHolder,
+      property,
+      propertyType,
+      propertyDesc,
+      propertyFunc,
+      requestPropertyTypeFunc,
+      propertyDescFunc,
+      acquisitionFunc,
+      estimatedCostFunc,
+      resetInstance,
+      estimatedCost,
+      acquisitionValue,
+      getPropertyHolderFunc,
+      updateDataPropertyHolderFunc
     } = this.props
-    updateModeFunc(false)
+    const { genericFileAttachmentArray } =this.state
+
+    const updateInstance = [...damagePropertyCardHolder]
+    let updateProperty, updatePropertyDesc, updatePropertyType, updateAcquisitionValue, updateEstimatedCost, updateImages
+    damagePropertyCardHolder.map((data, key) => {
+      updateProperty = property
+      updatePropertyDesc = propertyDesc
+      updatePropertyType = propertyType
+      updateAcquisitionValue = estimatedCost
+      updateImages = [...data.imageKey]
+      data.imageKey.map((images, key) => {
+        images.base64 = images.base64
+        images.file = images.file
+        images.name = images.name
+      })
+      data.propertyName = updateProperty
+      data.description = updatePropertyDesc
+      data.propertyType = updatePropertyType
+      data.acquisitionValue = updateAcquisitionValue
+      data.repairCost = updateEstimatedCost
+      data.imageKey = updateImages
+      })
+
+      updateDataPropertyHolderFunc(updateInstance)
+      propertyFunc('')
+      propertyDescFunc('')
+      requestPropertyTypeFunc('')
+      acquisitionFunc('')
+      estimatedCostFunc('')
+      resetInstance()
+      this.setState({ genericFileAttachmentArray : [] })
+      updateModeFunc(false)
   }
 
   render () {
@@ -140,7 +178,6 @@ class CalamityFormGenericModal extends Component {
       propertyDescErrorMessage,
       estimatedCostErrorMessage,
       acquisitionErrorMessage,
-      editModeData,
       updateMode
     }=this.props
 
@@ -169,7 +206,7 @@ class CalamityFormGenericModal extends Component {
             Property Form
           </h4>
           <GenericInput
-            value={ property  }
+            value={ property }
             onChange={ (e) => propertyFunc(e.target.value) }
             text={ 'Property' }
             type={ 'text' }
@@ -186,8 +223,9 @@ class CalamityFormGenericModal extends Component {
             text={ 'Property Type' }
             errorMessage = { !propertyType && propertyTypeErrorMessage }/>
           <GenericInput
-            value={ acquisitionValue }
+            value={ acquisitionValue  }
             onChange={ (e) => acquisitionFunc(e.target.value) }
+            maxLength = { 10 }
             text={ 'Acquisition Value' }
             type={ 'text' }
             errorMessage = { !acquisitionValue && acquisitionErrorMessage }/>
@@ -245,7 +283,7 @@ class CalamityFormGenericModal extends Component {
               <GenericButton
                 text={ 'Update' }
                 onClick={
-                () => this.updateSelectedPropertyObject(editModeData)
+                () => this.updateSelectedPropertyObject()
               }/> :
               <GenericButton
                 text={ 'Add' }

@@ -171,6 +171,15 @@
   height: 35px;
 }
 
+.transaction-details-status-confirmation {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #2d9ee0;
+  cursor: initial;
+  height: 35px;
+}
+
 .transaction-details-status-crediting {
   border-radius: 1px;
   color: #fff;

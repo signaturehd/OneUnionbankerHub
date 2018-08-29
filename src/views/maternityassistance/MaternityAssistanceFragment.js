@@ -233,16 +233,21 @@ class MaternityAssistanceFragment extends BaseMVPView {
 
   validateRequiredNoPregnancy (e) {
     const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
-    if(parseInt(validate) > 5) {
-      this.setState({ noPregnancyErrorMessage : 'max no. is 5' })
+    if(parseInt(validate) > 4) {
+      this.setState({ noPregnancyErrorMessage : 'max no. is 4' })
     } else {
       this.setState({ noPregnancyText : validate, noPregnancyErrorMessage : '' })
     }
   }
 
   validateRequiredNoDelivery (e) {
+    const {  noPregnancyText  } = this.state
     const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
-    this.setState({ noDeliveryText : validate, noPregnancyErrorMessage : '' })
+    if(parseInt(validate) >= parseInt(noPregnancyText)) {
+      this.setState({ noDeliveryErrorMessage : 'Error no. of delivery' })
+    } else {
+      this.setState({ noDeliveryText : validate, noDeliveryErrorMessage : '' })
+    }
   }
 
   validateRequiredNoMiscarriage (e) {

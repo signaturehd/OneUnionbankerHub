@@ -53,6 +53,9 @@ class SettingsProfileCardComponent extends Component {
       showCompanyInfoModal,
       showPersonalInfoModal,
       showStaffAccountsModal,
+      getStaffAccounts,
+      staffLoader,
+      staffAccounts,
     } = this.props
 
     let genderPartial
@@ -110,6 +113,10 @@ class SettingsProfileCardComponent extends Component {
         {
           showStaffAccountsModal &&
           <StaffAccountsModal
+            staffLoader = { staffLoader }
+            staffAccounts = { staffAccounts }
+            employeeNumber = { profile.employeeNumber }
+            getStaffAccounts = { getStaffAccounts }
             onClose={ () => showStaffAccountsModalFunc(false) }
           />
         }
@@ -170,7 +177,7 @@ class SettingsProfileCardComponent extends Component {
                   </div>
                 </div>
                 <div
-                  onClick={ () => showContactInfoModal(true) }
+                  onClick={ () => showContactInfoModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings employeeContact' }/>

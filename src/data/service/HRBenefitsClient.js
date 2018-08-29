@@ -777,4 +777,10 @@ export default class HRBenefitsClient {
     return this.service.putEnrollPin(token, putPINParam)
       .pipe(ServiceErrorOperator())
   }
+
+  /* Staff Accounts */
+  getForConfirmation (token, id) {
+    return this.service.getForConfirmation(token, id)
+      .pipe(ServiceErrorOperator())
+  }
 }
