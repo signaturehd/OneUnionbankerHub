@@ -1,4 +1,4 @@
-import store from '../../../store'
+import { store } from '../../../store'
 import { NotifyActions } from '../../../actions'
 
 import AddMaternityAssistanceSSSInteractor from

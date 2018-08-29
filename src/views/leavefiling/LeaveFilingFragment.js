@@ -37,8 +37,35 @@ class LeaveFilingFragment extends BaseMVPView {
       dateFrom: '',
       errorMessageRemarks : '',
       errorMessageRemarksDateFrom : '',
+      fromTime : '',
+      fromMeridiem : '',
+      toTime : '',
+      toMeridiem : ''
     }
+    this.fromTimeChange = this.fromTimeChange.bind(this);
+    this.toTimeChange = this.toTimeChange.bind(this);
   }
+
+  fromTimeChange(options) {
+    const {
+      hour,
+      minute,
+      meridiem
+    } = options
+
+    this.setState({ fromTime: `${hour}:${minute}`, fromMeridiem: meridiem })
+  }
+
+  toTimeChange(options) {
+    const {
+      hour,
+      minute,
+      meridiem
+    } = options
+
+    this.setState({ toTime: `${hour}:${minute}`, toMeridiem: meridiem })
+  }
+
   getTextareaValueRemarks (e) {
     this.setState({ feedbackTextareaValueRemarks: e })
   }
@@ -68,12 +95,18 @@ class LeaveFilingFragment extends BaseMVPView {
       feedbackTextareaValueRemarks,
       dateFrom,
       dateTo,
+      toTime,
+      fromTime
     } = this.state
 
     if(!new RequiredValidation().isValid(dateFrom)) {
       this.setState({ errorMessageRemarksDateFrom : 'Date is Required' })
     } else if(!new RequiredValidation().isValid(dateTo)) {
       this.setState({ errorMessageRemarksDateTo : 'Date is required' })
+    } else if(!new RequiredValidation().isValid(fromTime)) {
+      this.setState({ errorMessageRemarksDateTo : 'Time is required' })
+    } else if(!new RequiredValidation().isValid(toTime)) {
+      this.setState({ errorMessageRemarksDateTo : 'Time is required' })
     } else if(!new RequiredValidation().isValid(feedbackTextareaValueRemarks)) {
       this.setState({ errorMessageRemarks : 'Remarks is required' })
     } else {
@@ -87,13 +120,17 @@ class LeaveFilingFragment extends BaseMVPView {
       feedbackTextareaValueRemarks,
       dateFrom,
       dateTo,
+      fromTime,
+      fromMeridiem,
+      toTime,
+      toMeridiem
     } = this.state
 
     const {
       benefitsCodeType
     } = this.props
-    let dateTimeFrom = moment(dateFrom).format('MM/DD/YYYY') + ' 08:30:00 AM'
-    let dateTimeTo = moment(dateTo).format('MM/DD/YYYY') + ' 05:30:00 PM'
+    let dateTimeFrom = moment(dateFrom).format('MM/DD/YYYY') + ' ' + fromTime + ':00 ' + fromMeridiem
+    let dateTimeTo = moment(dateTo).format('MM/DD/YYYY') + ' ' + toTime + ':00 ' + toMeridiem
     this.presenter.addLeaveFiling(
       LeaveFilingFunctions.checkedReasonForLeave(benefitsCodeType),
       dateTimeFrom,
@@ -119,7 +156,11 @@ class LeaveFilingFragment extends BaseMVPView {
       showSuccessModal,
       errorMessageRemarks,
       errorMessageRemarksDateFrom,
-      errorMessageRemarksDateTo
+      errorMessageRemarksDateTo,
+      fromTime,
+      fromMeridiem,
+      toTime,
+      toMeridiem
     } = this.state
 
     return (
@@ -179,24 +220,29 @@ class LeaveFilingFragment extends BaseMVPView {
                 </div>
                 <div className = { 'grid-global' }>
                   <div>
-                    <GenericInput
+                    <TimePickerComponent
+                      text = { 'From Time' }
+                      format = { 'hh:mm' }
+                      timeMode = { '12' }
+                      meridiem = { fromMeridiem ? fromMeridiem : 'AM' }
+                      time = { fromTime }
+                      defaultTime = { '8:30' }
+                      onTimeChange = { this.fromTimeChange }
                       disabled = { showEditMode }
-                      text = { 'From Time' }/>
+                    />
                   </div>
                   <div>
                     <div></div>
-                    <GenericInput
+                    <TimePickerComponent
+                      text = { 'To Time' }
+                      format = { 'hh:mm' }
+                      timeMode = { '12' }
+                      meridiem = { toMeridiem ? toMeridiem : 'PM'}
+                      time = { toTime }
+                      defaultTime = { '5:30' }
+                      onTimeChange = { this.toTimeChange }
                       disabled = { showEditMode }
-                      text = { 'To Time' }/>
-                  </div>
-                </div>
-                <div className = { 'grid-global' }>
-                  <div>
-                    <TimePickerComponent />
-                  </div>
-                  <div>
-                    <div></div>
-                    <TimePickerComponent />
+                    />
                   </div>
                 </div>
                 <div>
