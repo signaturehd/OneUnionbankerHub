@@ -101,7 +101,6 @@ class CarLeaseOtherDetailsComponent extends Component {
              { registrationFee }
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
-              Registration Fee
              <br/>
              <br/>
             </h2>
