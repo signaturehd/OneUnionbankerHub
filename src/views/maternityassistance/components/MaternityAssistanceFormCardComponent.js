@@ -101,6 +101,7 @@ class MaternityAssistanceCardComponent extends Component {
                 moment().format('MM DD YYYY') &&
               <div>
                 <DatePicker
+                  maxDate = { moment(deliveryDate) }
                   selected = { preferredDate }
                   disabled = { showEditSubmitButton }
                   onChange = { (e) => dateFunc(e) }
@@ -133,7 +134,7 @@ class MaternityAssistanceCardComponent extends Component {
                       errorMessage = {
                         showEditSubmitButton ?
                         '' :
-                        `Please upload the required attachments`  }
+                        ''  }
                     />
                   }
                 </div>

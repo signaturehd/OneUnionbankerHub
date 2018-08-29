@@ -17,7 +17,7 @@ class OutpatientOtherDetailCardComponent extends Component {
   const { detailsOutpatient } = this.props
 
   const recipient = detailsOutpatient.OutpatientDetails.Recipient
-  const procedure = detailsOutpatient.OutpatientDetails.Procedure
+  const procedure = detailsOutpatient.OutpatientDetails
 
   return (
     <div  className = { 'transaction-component-otherdetails-form' }>
@@ -48,10 +48,18 @@ class OutpatientOtherDetailCardComponent extends Component {
         <div>
           <div>
             <h2 className = { 'font-weight-ligter' }>
-              { procedure }
+              {
+                procedure.Procedures.map((resp, key) =>
+                  <div className = { 'grid-global-rows' }>
+                    <h4 className = { 'font-size-14px' }>Name : { resp.Name }</h4>
+                    <h4 className = { 'font-size-14px' }>Amount : &#8369; { format(resp.Amount) }</h4>
+                    <br/>
+                  </div>
+                )
+              }
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
-              Procedure
+              Procedures
             </h2>
             <br/>
             <br/>
