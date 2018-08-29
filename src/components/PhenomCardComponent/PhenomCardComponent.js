@@ -14,13 +14,11 @@ import defaultImageBackground from '../../images/phenomtest.jpg'
 class PhenomCardComponent extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      isHeartActive :props.isHeart,
-    }
   }
 
+
   render () {
-    const { isHeartActive } = this.state
+
     const {
       onClick,
       onChangeHeart,
@@ -37,6 +35,7 @@ class PhenomCardComponent extends Component {
 
     return (
       <Card
+        onClick = { () => onClick(selectedDetails) }
         style = {{
           backgroundImage : `url(${ rewardImage ? rewardImage : defaultImageBackground })`,
           height: '200px',
@@ -44,8 +43,7 @@ class PhenomCardComponent extends Component {
           backgroundSize: 'cover',
           cursor: 'pointer',
         }} >
-        <div
-          className = { 'phenom-card-grid-content' }>
+        <div className = { 'phenom-card-grid-content' }>
           <div className = { 'phenom-content-card' }>
             <div
               className = { 'phenom-content-grid-column-right' }>
@@ -58,23 +56,15 @@ class PhenomCardComponent extends Component {
                 </h2>
               </div>
             </div>
-            <div className = { 'phenom-content-grid-column-left' }
-              onClick = { () => null }>
+            <div className = { 'phenom-content-grid-column-left' }>
               <span
-                onClick = { () => {
-                  this.setState({ isHeartActive : (isHeartActive == 1) ? "0" : "1" })
-                  onChangeHeart(id, isHeart)
-                }
-              }
-                className = { (parseInt(isHeartActive) ? 'phenom-status-icon' : 'phenom-heart-icon') + ' phenom-icon' }/>
+                onClick = { () => onChangeHeart(id) }
+                className = { 'phenom-status-icon phenom-icon' }/>
             </div>
           </div>
-          <div
-            onClick = { () => onClick(selectedDetails) }></div>
-          <div
-            onClick = { () => onClick(selectedDetails) }></div>
-          <div
-            onClick = { () => onClick(selectedDetails) }>
+          <div></div>
+          <div></div>
+          <div>
             <h2 className = { 'phenom-date-validity' }>
              { moment(endDate).diff(startDate, 'weeks') } weeks remaining
             </h2>

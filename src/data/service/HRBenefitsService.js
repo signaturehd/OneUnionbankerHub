@@ -947,7 +947,7 @@ export default class HRBenefitsService {
       phenomId : id,
       isLiked : isHeart
     }
-    return this.apiClient.post(`v1/phenom/reactions?type=corporate`, objectPhenomIsHeart, {
+    return this.apiClient.get(`v1/phenom/reactions?type=corporate`, objectPhenomIsHeart, {
       headers : { token }
     })
   }

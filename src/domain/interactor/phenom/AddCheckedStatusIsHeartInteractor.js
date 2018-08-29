@@ -4,6 +4,6 @@ export default class AddCheckedStatusIsHeartInteractor {
   }
 
   execute(id, isHeart) {
-      return this.client.addPhenomIsHeart(this.client.getToken(), id, isHeart)
+      return this.client.addPhenomIsHeart(this.client.getTokent(), id, isHeart)
   }
 }
