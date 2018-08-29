@@ -756,8 +756,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addPhenomIsHeart (token, like) {
-    return this.service.addPhenomIsHeart(token, like)
+  addPhenomIsHeart (token, id, isHeart) {
+    return this.service.addPhenomIsHeart(token, id, isHeart)
       .pipe(ServiceErrorOperator())
   }
 

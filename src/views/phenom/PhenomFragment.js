@@ -48,6 +48,10 @@ class PhenomFragment extends BaseMVPView {
     this.setState({ phenomDetails, showPhenomCardDetails })
   }
 
+  showDataUponClickingLike () {
+
+  }
+
   navigate () {
     this.props.history.push('/phenom')
   }
@@ -120,7 +124,7 @@ class PhenomFragment extends BaseMVPView {
                           this.setState({ showPhenomCardDetails : true })
                         }
                       }
-                      onChangeHeart = { (id) => this.presenter.addPhenomIsHeart(id) }
+                      onChangeHeart = { (id, isHeart) => this.presenter.addPhenomIsHeart(id, isHeart) }
                       />
                     )
                   }
