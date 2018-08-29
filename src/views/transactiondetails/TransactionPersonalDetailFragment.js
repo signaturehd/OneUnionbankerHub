@@ -36,6 +36,9 @@ function  TransactionDetails (props)  {
   const attachmentsMethod = props.attachmentsMethod
   const agreementsMethod = props.agreementsMethod
   const onConfirmationCarleaseFunc = props.onConfirmationCarleaseFunc
+  const onUploadAttachmentsFunc = props.onUploadAttachmentsFunc
+  const setFileCarlease = props.setFileCarlease
+  const fileCarLease = props.fileCarlease
 
   if (transactionId === 6) {
     return <DentalRDetailsFragment
@@ -57,9 +60,12 @@ function  TransactionDetails (props)  {
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 15) {
     return <CarLeaseDetailsFragment
+      fileCarLease = { fileCarLease }
       onConfirmationCarleaseFunc = { (id, status) => onConfirmationCarleaseFunc(id, status) }
+      onUploadAttachmentsFunc = { (id, file) => onUploadAttachmentsFunc(id, file) }
       attachmentsMethod = { (resp) => attachmentsMethod(resp) }
       agreementsMethod = { (resp) => agreementsMethod(resp) }
+      setFileCarlease = { (resp) => setFileCarlease(resp) }
       details = { transactionDetails }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 13) {
@@ -153,7 +159,8 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
       showAttachmentsModal: false,
       showAgreementsModal: false,
       showConfirmation : false,
-      showConfirmationMessage : ''
+      showConfirmationMessage : '',
+      fileCarLease : []
     }
   }
 
@@ -166,6 +173,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
 
   navigate () {
     this.props.history.push('/mybenefits/transactions/personal')
+  }
+
+  setCarleaseFile (fileCarLease) {
+    this.setState({ fileCarLease })
   }
 
   showAttachmentsMethod (e) {
@@ -217,7 +228,8 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     showAttachmentsModal,
     showAgreementsModal,
     showConfirmation,
-    showConfirmationMessage
+    showConfirmationMessage,
+    fileCarLease
   } = this.state
 
   return (
@@ -280,8 +292,11 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              }
              onConfirmationCarleaseFunc = { (transactionID, status) =>
                this.presenter.addCarLeaseConfirmation(transactionID, status)
-            }
+             }
+             fileCarLease = { fileCarLease }
+             setFileCarlease = { (file) => this.setFileCarlease(file) }
              showFileReceipt = { response }
+             onUploadAttachmentsFunc = { (id, file) => this.presenter.addCarLeasePayment(id, file) }
              uploadImage = { (transactionType, transactionId, file) => {
                this.presenter.uploadTransactionBereavement(transactionType, transactionId, file)
                 }

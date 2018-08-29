@@ -19,7 +19,9 @@ class CarLeaseDetailCardComponent extends Component {
       transactionsPerson,
       onClickAttachments,
       onClickAgreements,
-      onConfirmationFunc
+      onConfirmationFunc,
+      setFileCarlease,
+      fileCarLease
      } = this.props
 
    const transactionID = details.transactionId
@@ -57,7 +59,9 @@ class CarLeaseDetailCardComponent extends Component {
             </div>
           </div>
           <CarLeaseOtherDetailsComponent
+            fileCarlease = { fileCarLease }
             transactionID = { transactionID }
+            setFileCarlease = { (resp) => setFileCarlease(resp) }
             onConfirmation = { (id, status) => onConfirmationFunc(id, status) }
             detailsCarLease = { details && details.details }
           />
@@ -97,6 +101,7 @@ class CarLeaseDetailCardComponent extends Component {
 CarLeaseDetailCardComponent.propTypes = {
   details : PropTypes.object,
   transactionsPerson : PropTypes.array,
+  fileCarLease : PropTypes.array,
   onClickAttachments : PropTypes.func,
   onClickAgreements : PropTypes.func,
   onConfirmationFunc : PropTypes.func,

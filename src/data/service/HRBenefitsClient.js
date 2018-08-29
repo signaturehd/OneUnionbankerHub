@@ -443,8 +443,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addCarLeasePayment (token) {
-    return this.service.addCarLeasePayment(token)
+  addCarLeasePayment (token, leasesConfirmpaymentParam) {
+    return this.service.addCarLeasePayment(token, leasesConfirmpaymentParam)
       .pipe(ServiceErrorOperator())
   }
 

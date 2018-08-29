@@ -25,7 +25,10 @@ class CarLeaseDetailsFragment extends Component {
     transactionsPerson,
     attachmentsMethod,
     agreementsMethod,
-    onConfirmationCarleaseFunc
+    onConfirmationCarleaseFunc,
+    onUploadAttachmentsFunc,
+    setFileCarlease,
+    fileCarLease
   } = this.props
 
   const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
@@ -66,8 +69,11 @@ class CarLeaseDetailsFragment extends Component {
           <br/>
           <div>
             <CarLeaseDetailCardComponent
+              fileCarLease = { fileCarLease }
               onConfirmationFunc = { (id, status) => onConfirmationCarleaseFunc(id, status) }
+              onUploadAttachments = { (id, file) => onUploadAttachmentsFunc(id, file) }
               transactionsPerson = { transactionsPerson }
+              setFileCarlease = { (resp) => setFileCarlease(resp) }
               details = { details }
               onClickAttachments = { (resp) => attachmentsMethod(resp) }
               onClickAgreements = { (resp) => agreementsMethod(resp) }
@@ -85,6 +91,7 @@ CarLeaseDetailsFragment.propTypes = {
   onClickAttachments : PropTypes.func,
   onClickAgreements : PropTypes.func,
   onConfirmationCarleaseFunc : PropTypes.func,
+  onUploadAttachmentsFunc : PropTypes.func,
 }
 
 export default CarLeaseDetailsFragment

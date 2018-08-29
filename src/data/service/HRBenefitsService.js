@@ -483,8 +483,17 @@ export default class HRBenefitsService {
     })
   }
 
-  addCarLeasePayment (token) {
-    return this.apiClient.post('v1/leases/car/payment', {
+  addCarLeasePayment (token, leasesConfirmpaymentParam) {
+    const formData = new FormData()
+    const leasesConfirmpaymentObject = {
+      transactionId : leasesConfirmpaymentParam.transactionId,
+      uuid : '12345'
+    }
+    leasesConfirmpaymentParam.file.map((resp, key) =>
+      formData.append(file.name, file.file)
+    )
+    formData.append(body, JSON.stringify(leasesConfirmpaymentObject))
+    return this.apiClient.post('v1/leases/car/payment', formData, {
       headers: { token }
     })
   }

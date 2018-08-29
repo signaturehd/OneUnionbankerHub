@@ -4,8 +4,10 @@ import GetTransactionDetailsInteractor from '../../../domain/interactor/transact
 import GetTransactionPersonalInteractor from '../../../domain/interactor/transactions/GetTransactionPersonalInteractor'
 import UploadTransactionImageInteractor from '../../../domain/interactor/transactions/UploadTransactionImageInteractor'
 import PostNewCarConfirmationInteractor from '../../../domain/interactor/transactions/PostNewCarConfirmationInteractor'
+import PostNewPaymentInteractor from '../../../domain/interactor/transactions/PostNewPaymentInteractor'
 
 import leasesCarConfirm from '../../../domain/param/AddCarLeaseConfirmationParam'
+import leasesConfirmpaymentParam from '../../../domain/param/AddCarleasePaymentParam'
 import GetTransactionParam from '../../../domain/param/GetTransactionParam'
 
 import store from '../../../store'
@@ -27,10 +29,30 @@ export default class TransactionPersonalDetailsPresenter {
 
     this.postNewCarConfirmationInteractor =
       new PostNewCarConfirmationInteractor(container.get('HRBenefitsClient'))
+
+    this.postNewPaymentInteractor =
+      new PostNewPaymentInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
+  }
+
+  addCarLeasePayment (
+    transactionId,
+    file
+  ) {
+      this.postNewPaymentInteractor.execute(leasesConfirmpaymentParam(
+        transactionId,
+        file
+      )
+    )
+    .subscribe(
+      data => {
+        this.view.showMessageSuccessConfirm(data && data.message)
+      }, error => {
+      }
+    )
   }
 
   getTransactionDetails (id) {

@@ -14,18 +14,21 @@ class CarLeaseOtherDetailsComponent extends Component {
   }
 
   render () {
-  const {
-    detailsCarLease,
-    transactionID,
-    onConfirmation
-  } = this.props
+    const {
+      detailsCarLease,
+      transactionID,
+      onConfirmation,
+      setFileCarlease,
+      fiileCarlease,
+      onUploadAttachmentsFunc
+    } = this.props
 
-  const carBrand = TransactionPersonalFunction.checkedCarBrand(detailsCarLease)
-  const carModel = TransactionPersonalFunction.checkedModel(detailsCarLease)
-  const LeaseMode = TransactionPersonalFunction.checkedLeaseMode(detailsCarLease)
-  const insurancePayment = TransactionPersonalFunction.checkedInsurancePayment(detailsCarLease)
-  const Amount = TransactionPersonalFunction.checkedCarAmount(detailsCarLease)
-  const EquityAmount = TransactionPersonalFunction.checkedEquityAmount(detailsCarLease)
+    const carBrand = TransactionPersonalFunction.checkedCarBrand(detailsCarLease)
+    const carModel = TransactionPersonalFunction.checkedModel(detailsCarLease)
+    const LeaseMode = TransactionPersonalFunction.checkedLeaseMode(detailsCarLease)
+    const insurancePayment = TransactionPersonalFunction.checkedInsurancePayment(detailsCarLease)
+    const Amount = TransactionPersonalFunction.checkedCarAmount(detailsCarLease)
+    const EquityAmount = TransactionPersonalFunction.checkedEquityAmount(detailsCarLease)
 
   return (
   <div className = { 'transaction-with-attachments' }>
@@ -166,10 +169,18 @@ class CarLeaseOtherDetailsComponent extends Component {
         <div>
           {
             detailsCarLease.CarDetails.RequiredAttachment.length !== 0 &&
-            <MultipleFileUploader
-              fileArray = { detailsCarLease.CarDetails.RequiredAttachment }
-              placeholder = { 'Required Attachments' }
-              />
+            <div>
+              <MultipleFileUploader
+                fileArray = { detailsCarLease.CarDetails.RequiredAttachment }
+                placeholder = { 'Required Attachments' }
+                setFile = { (file) => setFileCarlease(file) }
+                />
+              <br/>
+              <GenerictButton
+                text = { 'Upload' }
+                onClick = { () => onUploadAttachmentsFunc(transactionID, fileCarLease) }
+                />
+            </div>
           }
         </div>
         <div>
@@ -202,7 +213,9 @@ CarLeaseOtherDetailsComponent.propTypes = {
     PropTypes.object,
     PropTypes.array
   ]),
-  onConfirmation : PropTypes.func
+  onConfirmation : PropTypes.func,
+  onUploadAttachmentsFunc : PropTypes.func,
+  setFileCarlease : PropTypes.func
 }
 
 export default CarLeaseOtherDetailsComponent
