@@ -1019,7 +1019,8 @@ export default class HRBenefitsService {
       employeeName : staffAccountsParam.employeeName,
       accounts: {
         accountNumber: accountNumber,
-      }
+      },
+      sequence : staffAccountsParam.sequence
     }
     return this.accountClient.post('v1/employees/accounts/confirm', staffAccontObject , {
       headers : { token }

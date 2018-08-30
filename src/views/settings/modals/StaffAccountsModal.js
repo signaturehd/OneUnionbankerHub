@@ -12,7 +12,8 @@ class StaffAccountsModal extends Component {
     this.state={
       isDismisable : true,
       showConfirmationModal : false,
-      employeeName : ''
+      employeeName : '',
+      sequence : '',
     }
   }
 
@@ -25,8 +26,8 @@ class StaffAccountsModal extends Component {
     getStaffAccounts(employeeNumber)
   }
 
-  confirmationModal (showConfirmationModal, employeeName) {
-    this.setState({ showConfirmationModal, employeeName })
+  confirmationModal (showConfirmationModal, employeeName, sequence) {
+    this.setState({ showConfirmationModal, employeeName, sequence })
   }
 
   getAccountType (type) {
@@ -61,7 +62,8 @@ class StaffAccountsModal extends Component {
       isDismisable,
       showConfirmationModal,
       enabledLoader,
-      employeeName
+      employeeName,
+      sequence
     }=this.state
 
     return (
@@ -89,8 +91,12 @@ class StaffAccountsModal extends Component {
                     />
                   <GenericButton
                     text = { 'Yes' }
-                    onClick = { () => onClickEmployeeConfirmation(employeeName) }
-                    />
+                    onClick = { () => {
+                      onClickEmployeeConfirmation(employeeName, sequence)
+                      this.setState({ showConfirmationModal : false, staffLoader : false })
+                    }
+                  }
+                  />
                 </div>
               </center>
             }
@@ -128,7 +134,7 @@ class StaffAccountsModal extends Component {
                       <h3 className = { 'staff-account-card-number' }>{ resp.account.number }</h3>
                       <GenericButton
                         text = { resp.status }
-                        onClick = { () => this.confirmationModal(true, resp.employeeName) }
+                        onClick = { () => this.confirmationModal(true, resp.employeeName, resp.sequence) }
                         disabled = { resp.status.toLowerCase() === 'confirmed' ? true : false  }
                         className = { 'confirmed-button' }
                       />

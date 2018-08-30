@@ -118,7 +118,7 @@ class SettingsProfileCardComponent extends Component {
             staffAccounts = { staffAccounts }
             employeeNumber = { profile.employeeNumber }
             getStaffAccounts = { getStaffAccounts }
-            onClickEmployeeConfirmation = { (resp) => onClickEmployeeConfirmationFunc(resp) }
+            onClickEmployeeConfirmation = { (resp, resp1) => onClickEmployeeConfirmationFunc(resp, resp1) }
             onClose={ () => showStaffAccountsModalFunc(false) }
           />
         }

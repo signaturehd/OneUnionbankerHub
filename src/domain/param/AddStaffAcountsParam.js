@@ -1,5 +1,7 @@
 export default (
-    employeeName
+    employeeName,
+    sequence
   ) => ({
-    employeeName
+    employeeName,
+    sequence
   })

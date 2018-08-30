@@ -55,15 +55,17 @@ export default class SettingsPresenter {
      })
    }
 
-   addStaffAccounts (employeeName) {
+   addStaffAccounts (employeeName, sequence) {
      this.view.staffCircularLoader(true)
      this.postStaffAccountsInteractor.execute(addStaffAcountsParam(
-       employeeName
+       employeeName,
+       sequence
      ))
      .subscribe(data => {
+       this.view.showStaffAccountConfirmation(data)
        this.view.staffCircularLoader(false)
      }, error => {
-       this.view.staffCircularLoader(false)  
+       this.view.staffCircularLoader(false)
      })
    }
 
