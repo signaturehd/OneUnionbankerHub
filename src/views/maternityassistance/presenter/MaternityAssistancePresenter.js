@@ -24,7 +24,6 @@ export default class MaternityAssistancePresenter {
     this.addMaternityAssistanceInteractor =
       new AddMaternityAssistanceInteractor(container.get('HRBenefitsClient'))
 
-
     this.getProfileInteractor =
       new GetProfileInteractor(container.get('HRBenefitsClient'))
   }

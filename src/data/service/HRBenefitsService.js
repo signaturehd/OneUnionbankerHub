@@ -379,7 +379,7 @@ export default class HRBenefitsService {
       formData.append('body', JSON.stringify(multiLoanBodyObject))
       mplPurposeLoanAddParam.attachments &&
       mplPurposeLoanAddParam.attachments.map((attachment, key) => (
-        formData.append(attachment.name, attachment.file)
+        formData.append(attachment.label, attachment.file)
       ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
@@ -409,7 +409,7 @@ export default class HRBenefitsService {
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
     addMotorLoanParam.attachments.map((attachment, key) => (
-      formData.append(attachment.name, attachment.file)
+      formData.append(attachment.label, attachment.file)
     ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
@@ -439,7 +439,7 @@ export default class HRBenefitsService {
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
     addComputerLoanParam.attachments.map((attachment, key) => (
-      formData.append(attachment.name, attachment.file)
+      formData.append(attachment.label, attachment.file)
     ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
@@ -466,28 +466,44 @@ export default class HRBenefitsService {
       brand : carRequestParam.carBrand,
       model : carRequestParam.carModel,
       year : carRequestParam.makeYear,
-      insurancePayment: '1',
+      insurancePayment: carRequestParam.insurancePayment,
       leaseMode : carRequestParam.leaseMode,
-      solRC: carRequestParam.solRC,
-      cmUnit: carRequestParam.cmUnit,
+      solRC: carRequestParam.solRCDefault,
       primaryColor : carRequestParam.primaryColor,
       secondaryColor : carRequestParam.secondaryColor,
     }
+    carRequestParam.file.map((attachment, key) =>
+      (
+        formData.append(attachment.name, attachment.file)
+      )
+    )
     formData.append('body', JSON.stringify(addCarleaseObject))
-    formData.append('attachment1', carRequestParam.file)
     return this.apiClient.post('v1/leases/car', formData, {
       headers: { token }
     })
   }
 
-  addCarLeasePayment (token) {
-    return this.apiClient.post('v1/leases/car/payment', {
+  addCarLeasePayment (token, leasesConfirmpaymentParam) {
+    const formData = new FormData()
+    const leasesConfirmpaymentObject = {
+      transactionId : leasesConfirmpaymentParam.transactionId,
+      uuid : '12345'
+    }
+    leasesConfirmpaymentParam.file.map((resp, key) =>
+      formData.append(file.name, file.file)
+    )
+    formData.append(body, JSON.stringify(leasesConfirmpaymentObject))
+    return this.apiClient.post('v1/leases/car/payment', formData, {
       headers: { token }
     })
   }
 
-  addCarLeaseConfirmation (token) {
-    return this.apiClient.post('v1/leases/car/confirm', {
+  addCarLeaseConfirmation (token, leasesCarConfirm) {
+    const leasesConfirmObject = {
+      transactionId : leasesCarConfirm.transactionId,
+      isConfirm: leasesCarConfirm.isConfirm
+    }
+    return this.apiClient.post('v1/leases/car/confirm', leasesConfirmObject, {
       headers: { token }
     })
   }
@@ -947,7 +963,7 @@ export default class HRBenefitsService {
       phenomId : id,
       isLiked : isHeart
     }
-    return this.apiClient.get(`v1/phenom/reactions?type=corporate`, objectPhenomIsHeart, {
+    return this.apiClient.post(`v1/phenom/reactions?type=corporate`, objectPhenomIsHeart, {
       headers : { token }
     })
   }
@@ -978,6 +994,15 @@ export default class HRBenefitsService {
 
   putEnrollPin (token, putPINParam) {
     return this.apiClient.put('v1/pin', putPINParam, {
+      headers : { token }
+    })
+  }
+
+  validateEmployeePin (token, employeePinParam) {
+    const validateObject = {
+      code: employeePinParam,
+    }
+    return this.apiClient.post('v1/pin/validate', validateObject, {
       headers : { token }
     })
   }

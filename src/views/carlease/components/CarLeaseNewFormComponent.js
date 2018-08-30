@@ -8,100 +8,19 @@ import {
   Card,
   GenericButton,
   FileUploader,
+  MultipleFileUploader,
   Line
 } from '../../../ub-components/'
 
-import { RequiredAlphabetValidation, RequiredNumberValidation } from '../../../utils/validate'
 import CarBrandsModal from '../modals/CarBrandsModal'
-
-import store from '../../../store'
-import { NotifyActions } from '../../../actions/'
 
 class CarLeaseNewFormComponent extends Component {
 
   constructor (props) {
     super(props)
-    this.state={
-      file: '',
-      imagePreviewUrl: '',
-      navigate: false,
-    }
-     this.handleImageChange=this.handleImageChange.bind(this)
-     this.onGetClicked=this.onGetClicked.bind(this)
-  }
-
-   getExtension (filename) {
-     const parts=filename.split('/')
-     return parts[parts.length - 1]
-   }
-
-   handleImageChange (e) {
-     e.preventDefault()
-
-     const reader=new FileReader()
-     const [file]=e.target.files
-     let isValid
-       switch (this.getExtension(file.type).toLowerCase()) {
-         case 'jpeg' :
-           isValid=true
-           break
-         case 'jpg' :
-           isValid=true
-           break
-         case 'png' :
-           isValid=true
-           break
-         case 'pdf' :
-           isValid=true
-           break
-     }
-
-     if (isValid) {
-        reader.onloadend=() => {
-          this.setState({
-            file,
-            imagePreviewUrl: reader.result
-          })
-        }
-        reader.readAsDataURL(file)
-      } else {
-        store.dispatch(NotifyActions.addNotify({
-            title : 'File Uploading',
-            message : 'The accepted attachments are JPG/PNG/PDF',
-            type : 'warning',
-            duration : 2000
-          })
-        )
-      }
-    }
-
-  onGetClicked (
-    carBrand,
-    carModel,
-    makeYear,
-    solRC,
-    cmUnit,
-    primaryColor,
-    secondaryColor,
-    file,) {
-    this.props.onSubmit(
-      carBrand,
-      carModel,
-      makeYear,
-      solRC,
-      cmUnit,
-      primaryColor,
-      secondaryColor,
-      file)
   }
 
   render () {
-    const {
-      file,
-      imagePreviewUrl,
-      navigate,
-    }=this.state
-
     const {
       loanType,
       history,
@@ -110,6 +29,7 @@ class CarLeaseNewFormComponent extends Component {
       makeYear,
       primaryColor,
       solRCDefault,
+      solRC,
       cmUnit,
       secondaryColor,
       showQuotation,
@@ -120,21 +40,19 @@ class CarLeaseNewFormComponent extends Component {
       onValidatePrimaryColor,
       onValidateSecondaryColor,
       onValidateSolRC,
-      onShowEnterSolRCModalFunc
+      onShowEnterSolRCModalFunc,
+      onShowInsurancePaymentFunc,
+      insurancePayment,
+      onChangeSolRCFunc,
+      solRCErrorMessage,
+      onSubmit,
+      onEdit,
+      onContinue,
+      yearErrorMessage,
+      showEditMode,
+      getFileArray,
+      attachments
     }=this.props
-
-      const styles={
-        image : {
-          backgroundImage: `url('${imagePreviewUrl}')`,
-          width : '-webkit-fill-available',
-          height : '-webkit-fill-available',
-          backgroundSize : 'cover',
-          backgroundRepeat : 'no-repeat',
-        }
-      }
-
-      let $imagePreview=null
-        $imagePreview=(<div style={ styles.image }></div>)
 
     return (
       <div className={'carview-container'}>
@@ -149,23 +67,27 @@ class CarLeaseNewFormComponent extends Component {
                 errorMessage = { '' }
                 onClick ={ () => onGetCarBrandsFunc() }
                 text = { 'Brands' }
+                disabled = { showEditMode }
                 value = { carBrand }
                 readOnly
                 />
               <GenericInput
                 placeholder = { 'Model' }
                 errorMessage = { '' }
+                disabled = { showEditMode }
                 text = { 'Model' }
                 onChange = { (e) => onCarModelValidateFunc(e.target.value) }
                 value = { carModel }
                 />
               <GenericInput
                 value = { makeYear }
+                disabled = { showEditMode }
                 hint = { '(e.g) 2001... 2017, 2018' }
                 maxLength = { 4 }
                 onChange = { (e) => onValidateyearFunc(e.target.value) }
                 text = { 'Year' }
-                errorMessage = { '' }
+                disabled = { showEditMode }
+                errorMessage = { yearErrorMessage }
                 />
               <GenericInput
                 value = { primaryColor }
@@ -173,10 +95,12 @@ class CarLeaseNewFormComponent extends Component {
                 onChange = { (e) => onValidatePrimaryColor(e.target.value)  }
                 maxLength = { 20 }
                 errorMessage = { '' }
+                disabled = { showEditMode }
                 text = { 'Primary Color' }
               />
               <GenericInput
                 value = { secondaryColor }
+                disabled = { showEditMode }
                 hint = { '(e.g) Red, Black, White & etc.' }
                 onChange = { (e) => onValidateSecondaryColor(e.target.value)  }
                 maxLength = { 20 }
@@ -184,51 +108,62 @@ class CarLeaseNewFormComponent extends Component {
                 text = { 'Secondary Color' }
               />
               <GenericInput
-                value = { solRCDefault }
-                onClick = { () => {} }
-                maxLength = { 20 }
+                disabled = { showEditMode }
+                value = { insurancePayment }
+                onClick = { () => onShowInsurancePaymentFunc() }
                 readOnly
-                onClick = { () => onShowEnterSolRCModalFunc }
                 errorMessage = { '' }
+                text = { 'Insurance Payment' }
+              />
+              <GenericInput
+                disabled = { showEditMode }
+                value = { solRCDefault ? solRCDefault : solRC }
+                onChange = { (e) => onChangeSolRCFunc(e.target.value) }
+                maxLength = { 20 }
+                onClick = { () => onShowEnterSolRCModalFunc }
+                errorMessage = { solRCErrorMessage }
                 text = { 'Sol RC' }
               />
               <GenericInput
                 value = { cmUnit }
+                disabled = { showEditMode }
                 readOnly
                 text = { 'CM Unit' }
               />
               {
                 showFileUpload &&
-                <div>
-                  <h4>
-                    Dealer Quotation Attachment
-                  </h4>
-                  <div>
-                   <FileUploader
-                      onChange = { this.handleImageChange }
-                      placeholder = { 'File Attachments' }
-                      value = { file.name }
-                      base64 = { $imagePreview }
-                      disabled = { false }
-                    />
-                  </div>
+                <MultipleFileUploader
+                  placeholder = { 'Dealer Quotations' }
+                  disabled = { showEditMode }
+                  fileArray = { attachments }
+                  setFile = { (file) => getFileArray(file) }
+                  />
+              }
+              {
+                showEditMode ?
+                <div className = { 'grid-global' }>
+                  <GenericButton
+                    text={ 'Edit' }
+                    onClick={ () =>
+                      onEdit()
+                      }
+                    className={ 'carview-submit' } />
+                  <GenericButton
+                    text={ 'Submit' }
+                    onClick={ () =>
+                      onSubmit()
+                      }
+                    className={ 'carview-submit' } />
+
                 </div>
-                }
+                :
                 <GenericButton
-                  type={ 'button' }
-                  text={ 'continue' }
+                  text={ 'Continue' }
                   onClick={ () =>
-                    this.onGetClicked(
-                      carBrand,
-                      carModel,
-                      makeYear,
-                      solRCDefault,
-                      cmUnit,
-                      primaryColor,
-                      secondaryColor,
-                      file)
+                    onContinue()
                     }
                   className={ 'carview-submit' } />
+              }
             </div>
           </div>
           <div></div>
@@ -242,22 +177,32 @@ CarLeaseNewFormComponent.propTypes = {
   loanType : PropTypes.number,
   makeYear : PropTypes.number,
   setSelectedNavigation: PropTypes.func,
+  getFileArray: PropTypes.func,
+  onShowInsurancePaymentFunc: PropTypes.func,
+  insurancePayment: PropTypes.string,
   history: PropTypes.object,
   carBrand: PropTypes.string,
   solRCDefault: PropTypes.string,
+  solRC: PropTypes.string,
   cmUnit: PropTypes.string,
   carModel: PropTypes.string,
   primaryColor: PropTypes.string,
   secondaryColor: PropTypes.string,
+  yearErrorMessage: PropTypes.string,
   primaryColor: PropTypes.bool,
   showQuotation: PropTypes.bool,
   showFileUpload: PropTypes.bool,
   onCarModelValidateFun: PropTypes.func,
+  onChangeSolRCFunc: PropTypes.func,
   onValidateyearFunc: PropTypes.func,
   onValidatePrimaryColor: PropTypes.func,
   onValidateSecondaryColor: PropTypes.func,
   onValidateSolRC: PropTypes.func,
   onShowEnterSolRCModalFunc: PropTypes.func,
+  onSubmit: PropTypes.func,
+  onSubmit: PropTypes.func,
+  onContinue: PropTypes.func,
+  attachments : PropTypes.array
 }
 
 export default CarLeaseNewFormComponent

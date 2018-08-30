@@ -61,6 +61,15 @@ class CalamityFormGenericModal extends Component {
       genericFileAttachmentArray
     } = this.state
 
+    let validateAttachments = false
+    genericFileAttachmentArray && genericFileAttachmentArray.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
+
     const damagePropertyObject = {
       propertyName : property,
       description : propertyDesc,
@@ -80,7 +89,29 @@ class CalamityFormGenericModal extends Component {
       acquisitionErrorMessageFunc('Acquisition value is required')
     } else if (!this.validator(estimatedCost)) {
       estimatedCostErrorMessageFunc('Estimated cost is required')
-    } else {
+    } else if (!genericFileAttachmentArray.length) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Warning' ,
+         message : 'Attachments is required',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+    } else if (validateAttachments) {
+      genericFileAttachmentArray && genericFileAttachmentArray.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'Warning' ,
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 2000
+             })
+           )
+          }
+        }
+      )
+     } else {
       getPropertyHolderFunc(damagePropertyObject)
       resetInstance()
       this.setState({ genericFileAttachmentArray : [] })

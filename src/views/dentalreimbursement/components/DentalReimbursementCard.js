@@ -27,10 +27,6 @@ class DentalReimbursementCard extends Component {
   constructor (props) {
   super(props)
   this.state = {
-    file: '', // file1 array
-    file2: '',// file2 array
-    imagePreviewUrl: '',
-    imagePreviewUrl2: '',
     procedureModal : false, // display procedure modal
     dependents: [],
     selectedDependent: null, // selected dependent
@@ -43,27 +39,15 @@ class DentalReimbursementCard extends Component {
     fileAttachments : [],
     officialReceiptDate : null,
     officialReceiptNumber : '',
-    attachmentArray : [],
     showEditMode: false
   }
-  this.handleImageChange = this.handleImageChange.bind(this)
-  this.handleImageChange2 = this.handleImageChange2.bind(this)
   this.submission = this.submission.bind(this)
   this.validator = this.validator.bind(this)
 }
 
-/*
-Official Certificate Atachments
-*/
-
-getExtension (filename) {
-  const parts = filename.split('/')
-  return parts[parts.length - 1]
+validator (input) {
+  return new RequiredValidation().isValid(input)
 }
-
-  validator (input) {
-    return new RequiredValidation().isValid(input)
-  }
 
 /*
   Form Submission
@@ -74,11 +58,11 @@ submission (e) {
     selectedProcedures,
     officialReceiptDate,
     officialReceiptNumber,
-    attachmentArray,
   } = this.state
+  const { attachments } = this.props
 
   let validateAttachments = false
-  attachmentArray && attachmentArray.map(
+  attachments && attachments.map(
     (attachment, key) => {
       if(!attachment.file) {
         validateAttachments = true
@@ -102,7 +86,7 @@ submission (e) {
        duration : 2000
      })
    )
- } else if (!attachmentArray.length) {
+ } else if (!attachments.length) {
     store.dispatch(NotifyActions.addNotify({
        title : 'Warning' ,
        message : 'Attachments is required',
@@ -111,7 +95,7 @@ submission (e) {
      })
    )
  } else if (validateAttachments) {
-   attachmentArray && attachmentArray.map(
+   attachments && attachments.map(
      (attachment, key) => {
        if(!attachment.file) {
          store.dispatch(NotifyActions.addNotify({
@@ -124,7 +108,6 @@ submission (e) {
        }
      }
    )
-
   } else if (!this.validator(selectedDependent)) {
    store.dispatch(NotifyActions.addNotify({
       title : 'Warning' ,
@@ -165,76 +148,6 @@ submission (e) {
   }
 }
 
-handleImageChange (e) {
-  e.preventDefault()
-  const reader = new FileReader()
-  const file = e.target.files[0]
-  let isValid
-  switch (this.getExtension(file.type).toLowerCase()) {
-    case 'jpeg' :
-      isValid = true
-    case 'jpg' :
-      isValid = true
-    case 'png' :
-      isValid = true
-    case 'pdf' :
-      isValid = true
-  }
-
-  if (isValid) {
-     reader.onloadend = () => {
-       this.setState({
-         file,
-         imagePreviewUrl: reader.result
-       })
-     }
-     reader.readAsDataURL(file)
-   } else {
-     store.dispatch(NotifyActions.addNotify({
-         title : 'File Uploading',
-         message : 'The accepted attachments are JPG/PNG/PDF',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-   }
-}
-/*
-Medical Certificate Atachments
-*/
-handleImageChange2 (e1) {
-  e1.preventDefault()
-  const reader2 = new FileReader()
-  const file2 = e1.target.files[0]
-  let isValid = false
-  switch (this.getExtension(file2.type).toLowerCase()) {
-    case 'jpeg' :
-      isValid = true
-    case 'jpg' :
-      isValid = true
-    case 'png' :
-      isValid = true
-    case 'pdf' :
-      isValid = true
-  }
-  if (isValid) {
-     reader2.onloadend = () => {
-       this.setState({
-         file2,
-         imagePreviewUrl2: reader2.result
-       })
-     }
-     reader2.readAsDataURL(file2)
-  } else {
-    store.dispatch(NotifyActions.addNotify({
-        title : 'File Uploading',
-        message : 'The accepted attachments are JPG/PNG/PDF',
-        type : 'warning',
-        duration : 2000
-      })
-    )
-  }
-}
 render () {
   const {
     details,
@@ -243,7 +156,8 @@ render () {
     onClick,
     dependents,
     onFocus,
-    attachments
+    attachments,
+    setFileNewFunc
   } = this.props
 
   const {
@@ -254,39 +168,10 @@ render () {
     procedure,
     showResults,
     showReviewSubmissionModal,
-    file,
-    file2,
     officialReceiptDate,
     officialReceiptNumber,
-    attachmentArray,
     showEditMode
   } = this.state
-
-
-  const { imagePreviewUrl, imagePreviewUrl2 } = this.state
-
-  let $imagePreview = null
-  let $imagePreview2 = null
-
-  const styleImage = {
-    image1 : {
-      backgroundImage: `url('${imagePreviewUrl}')`,
-      width : '225px',
-      height : '250px',
-      backgroundSize : 'cover',
-      backgroundRepeat : 'no-repeat',
-    },
-    image2 : {
-      backgroundImage: `url('${imagePreviewUrl2}')`,
-      width : '225px',
-      height : '250px',
-      backgroundSize : 'cover',
-      backgroundRepeat : 'no-repeat',
-    }
-  }
-
-  $imagePreview = (<div style = {styleImage.image1}></div>)
-  $imagePreview2 = (<div style = {styleImage.image2}></div>)
 
   return (
     <div className = { 'dentalreimbursement-container' }>
@@ -311,7 +196,7 @@ render () {
               <MultipleFileUploader
                 placeholder = 'Form Attachments'
                 fileArray = { attachments }
-                setFile = { (resp) => this.setState({ attachmentArray : resp }) }
+                setFile = { (attachmentArray) => setFileNewFunc(attachmentArray) }
              />
             </div>
             <div className = {'dentalreimbursement-footer-left'}>
@@ -393,7 +278,7 @@ render () {
                 />
               <GenericButton
                 onClick = { () => this.props.presenter.addDentalReimbursement(
-                      officialReceiptDate, officialReceiptNumber, selectedDependent.id, selectedProcedures, attachmentArray
+                      officialReceiptDate, officialReceiptNumber, selectedDependent.id, selectedProcedures, attachments
                     ) }
                 text = { 'Submit' }
                 />
@@ -416,6 +301,7 @@ DentalReimbursementCard.propTypes = {
   onClose : PropTypes.func,
   onClick : PropTypes.func,
   onFocus : PropTypes.func,
+  setFileNewFunc : PropTypes.func,
   procedure : PropTypes.string,
   dependents: PropTypes.array,
 
