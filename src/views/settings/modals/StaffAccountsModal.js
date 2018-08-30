@@ -11,7 +11,8 @@ class StaffAccountsModal extends Component {
     super(props)
     this.state={
       isDismisable : true,
-      showConfirmationModal : false
+      showConfirmationModal : false,
+      employeeName : ''
     }
   }
 
@@ -22,6 +23,10 @@ class StaffAccountsModal extends Component {
     } = this.props
 
     getStaffAccounts(employeeNumber)
+  }
+
+  confirmationModal (showConfirmationModal, employeeName) {
+    this.setState({ showConfirmationModal, employeeName })
   }
 
   getAccountType (type) {
@@ -48,23 +53,48 @@ class StaffAccountsModal extends Component {
     const {
       onClose,
       staffLoader,
-      staffAccounts
+      staffAccounts,
+      onClickEmployeeConfirmation
     }=this.props
 
-    const { isDismisable, showConfirmationModal, enabledLoader }=this.state
+    const {
+      isDismisable,
+      showConfirmationModal,
+      enabledLoader,
+      employeeName
+    }=this.state
 
     return (
       <Modal
-        isDismisable={ isDismisable }
-        onClose={ onClose }
-        backgroundColor={ '#fff' }>
+        isDismisable = { isDismisable }
+        onClose = { onClose }
+        >
         {
           showConfirmationModal &&
-          <ConfirmationModal
-            text = { 'Are you sure you want to confirm the chosen account?' }
-            onYes = { () => this.setState({ showConfirmationModal : false }) }
-            onClose = { () => this.setState({ showConfirmationModal : false }) }
-          />
+          <Modal>
+            {
+              staffLoader ?
+
+              <center>
+                <CircularLoader show = { true }/>
+              </center> :
+
+              <center>
+                <h2>Are you sure you want to confirm the chosen account?</h2>
+                <br/>
+                <div className = { 'grid-global' }>
+                  <GenericButton
+                    text = { 'No' }
+                    onClick = { () => this.setState({ showConfirmationModal : false }) }
+                    />
+                  <GenericButton
+                    text = { 'Yes' }
+                    onClick = { () => onClickEmployeeConfirmation(employeeName) }
+                    />
+                </div>
+              </center>
+            }
+          </Modal>
         }
         <div>
           <div>
@@ -98,9 +128,8 @@ class StaffAccountsModal extends Component {
                       <h3 className = { 'staff-account-card-number' }>{ resp.account.number }</h3>
                       <GenericButton
                         text = { resp.status }
-                        onClick = { () => null }
-                        disabled = { true }
-                        readOnly
+                        onClick = { () => this.confirmationModal(true, resp.employeeName) }
+                        disabled = { resp.status.toLowerCase() === 'confirmed' ? true : false  }
                         className = { 'confirmed-button' }
                       />
                     </div>
@@ -118,6 +147,7 @@ class StaffAccountsModal extends Component {
   }
 StaffAccountsModal.propTypes={
   onClose : PropTypes.func,
+  onClickEmployeeConfirmation : PropTypes.func,
 }
 StaffAccountsModal.defaultProps={
 }

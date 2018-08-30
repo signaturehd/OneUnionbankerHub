@@ -134,6 +134,7 @@ class SettingsFragment extends BaseMVPView {
            showStaffAccountsModalFunc = { (showStaffAccountsModal) =>  this.setState({ showStaffAccountsModal }) }
            changePinSendToFragment = { (uniqueOldPIN, uniqueNewPIN) => this.submitUpdatedPIN(uniqueOldPIN, uniqueNewPIN) }
            getStaffAccounts = { (id) => this.presenter.getForConfirmation(id) }
+           onClickEmployeeConfirmationFunc = { (resp) => this.presenter.addStaffAccounts(resp)  }
         />
       </div>
     )

@@ -56,6 +56,7 @@ class SettingsProfileCardComponent extends Component {
       getStaffAccounts,
       staffLoader,
       staffAccounts,
+      onClickEmployeeConfirmationFunc
     } = this.props
 
     let genderPartial
@@ -117,6 +118,7 @@ class SettingsProfileCardComponent extends Component {
             staffAccounts = { staffAccounts }
             employeeNumber = { profile.employeeNumber }
             getStaffAccounts = { getStaffAccounts }
+            onClickEmployeeConfirmation = { (resp) => onClickEmployeeConfirmationFunc(resp) }
             onClose={ () => showStaffAccountsModalFunc(false) }
           />
         }
@@ -268,10 +270,20 @@ SettingsProfileCardComponent.propTypes = {
   onClick : PropTypes.func,
   onClose : PropTypes.func,
   changePinSendToFragment : PropTypes.func,
+  onClickEmployeeConfirmationFunc : PropTypes.func,
   profileImageUrl : PropTypes.string,
-  rank: PropTypes.object,
-  profile: PropTypes.object,
-  lineManager: PropTypes.object,
+  rank: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
+  profile:  PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
+  lineManager: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
   enabledLoader: PropTypes.bool,
 }
 

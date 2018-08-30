@@ -1013,4 +1013,16 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  addStaffAccounts (token, accountNumber, staffAccountsParam) {
+    const staffAccontObject = {
+      employeeName : staffAccountsParam.employeeName,
+      accounts: {
+        accountNumber: accountNumber,
+      }
+    }
+    return this.accountClient.post('v1/employees/accounts/confirm', staffAccontObject , {
+      headers : { token }
+    })
+  }
 }
