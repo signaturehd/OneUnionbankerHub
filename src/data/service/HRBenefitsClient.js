@@ -788,4 +788,9 @@ export default class HRBenefitsClient {
     return this.service.getForConfirmation(token, id)
       .pipe(ServiceErrorOperator())
   }
+
+  addStaffAccounts (token, accountNumber, staffAccountsParam) {
+    return this.service.addStaffAccounts(token, accountNumber, staffAccountsParam)
+      .pipe(ServiceErrorOperator())
+  }
 }

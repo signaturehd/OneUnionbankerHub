@@ -99,7 +99,7 @@ class EducationGroupAidFragment extends BaseMVPView {
 
   orNumberFunc (e) {
     const validate = EducationGroupAidFunction.checkedValidationSymbol(e)
-    this.setState({ orNumber : validate.toUpperCase(), orNumberErrorMessage : '' })
+    this.setState({ orNumber : validate, orNumberErrorMessage : '' })
   }
 
   orDateFunc (data) {
