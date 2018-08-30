@@ -6,7 +6,7 @@ import moment from 'moment'
 
   export function checkedDateFilled (details) {
     return details ?
-           moment(details && details.dateFiled).format('dddd, MMMM d, YYYY, h:MM:ss A') : '(Not Yet Provided)'
+           moment(details && details.dateFiled).format('dddd, MMMM DD, YYYY, h:MM:ss A') : '(Not Yet Provided)'
   }
 
   export function checkedBenefitStatus (detailStatus) {

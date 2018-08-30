@@ -12,9 +12,7 @@ import {
   CircularLoader,
   Card,
 } from '../../ub-components/'
-
-
-
+import NoticePinModal from './NoticePinModal'
 import './styles/notice-styles.css'
 
 class Notice extends BaseMVPView {
@@ -23,12 +21,20 @@ class Notice extends BaseMVPView {
     this.state = {
       disableSubmit : false,
       showValidatedCofirmation: false,
-      showCancelCofirmation: false
+      showCancelCofirmation: false,
+      showPinCodeModal : false,
+      tranId : '',
+      isAgree: '',
+      benId : '',
     }
     this.onFailed = this.onFailed.bind(this)
   }
 
   isAgree (tranId, isAgree, benId) {
+    this.setState({ tranId, isAgree, benId })
+  }
+
+  isAgreementConfirm (tranId, isAgree, benId) {
     this.presenter.updateNotice(tranId, isAgree, benId)
   }
 
@@ -46,7 +52,11 @@ class Notice extends BaseMVPView {
       isDismissable,
       disableSubmit,
       showValidatedCofirmation,
-      showCancelCofirmation
+      showCancelCofirmation,
+      showPinCodeModal,
+      tranId,
+      isAgree,
+      benId
     } = this.state
 
     return (
@@ -71,6 +81,12 @@ class Notice extends BaseMVPView {
               }
             </div>
           )
+        }
+        {
+          showPinCodeModal &&
+          <NoticePinModal
+            onSubmitAgreement = { () => this.isAgreementConfirm(tranId, isAgree, benId) }
+          />
         }
         {
           disableSubmit || isDismissable ?
@@ -105,11 +121,11 @@ class Notice extends BaseMVPView {
                   <GenericButton
                     text={ 'Yes' }
                     onClick={
-                      () =>  {
-                        this.isAgree(noticeResponse.transactionId.toString(), 0, benefitId),
-                        this.setState({ isDimissable : true, disableSubmit: true })
-                        }
+                      () => {
+                        this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true })
+                        this.isAgree(noticeResponse.transactionId.toString(), 0, benefitId)
                       }
+                    }
                     />
                 </div>
               </center>
@@ -130,8 +146,8 @@ class Notice extends BaseMVPView {
                   <GenericButton
                     text = { 'Yes' }
                     onClick = { () => {
-                        this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId),
-                        this.setState({ isDimissable : true, disableSubmit: true })
+                      this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true  })
+                      this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId)
                       }
                     }
                     />
