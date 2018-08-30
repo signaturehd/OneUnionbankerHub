@@ -72,7 +72,7 @@ class CalamityFormCardComponent extends Component {
           <div className = { 'text-align-right' }>
             <GenericButton
               text = { 'Add Property' }
-              onClick = { (resp, key) => onShowPropertyFormModalFunc(resp, key) }
+              onClick = { (resp, key) => onShowPropertyFormModalFunc(resp, key, false) }
               />
           </div>
         </div>

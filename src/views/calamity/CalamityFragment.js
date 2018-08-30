@@ -31,6 +31,8 @@ import { RequiredValidation } from '../../utils/validate'
 
 import * as CalamityFunction from './function/CalamityFunction'
 
+let id = 0
+
 class CalamityFragment extends BaseMVPView {
 
   constructor(props) {
@@ -77,6 +79,7 @@ class CalamityFragment extends BaseMVPView {
       propertyTypeValue : [ {id: 1, name: 'Replaceable'},
                             {id: 2, name: 'Irreplaceable'} ],
       editModeData: '',
+      editedId : null,
     }
     this.validator = this.validator.bind(this)
   }
@@ -217,6 +220,7 @@ class CalamityFragment extends BaseMVPView {
       damagePropertyCardHolder,
       editModeData,
       updateMode,
+      editedId,
     }=this.state
 
     const defaultDamagePropertyStatic = [
@@ -289,6 +293,9 @@ class CalamityFragment extends BaseMVPView {
       {
         showPropertyModal &&
         <CalamityFormGenericModal
+          editedId = { editedId }
+          id = { id }
+          incrementId = { () => ++id }
           damagePropertyCardHolder = { damagePropertyCardHolder }
           updateMode = { updateMode }
           editModeData = { editModeData }
@@ -345,8 +352,7 @@ class CalamityFragment extends BaseMVPView {
           hideModalPropertyFormFunc = { (showPropertyModal) => this.setState({ showPropertyModal }) }
           hideModalPropertyTypeFunc = { (showPropertyTypeModal) => this.setState({ showPropertyTypeModal }) }
           updateDataPropertyHolderFunc = { (resp) => {
-            const updatePropertyHolder = [...resp]
-            this.setState({ damagePropertyCardHolder : updatePropertyHolder  })
+            this.setState({ damagePropertyCardHolder : resp })
           }}
           getPropertyHolderFunc = { (resp) => {
             const updatePropertyHolder = [...damagePropertyCardHolder]
@@ -371,16 +377,18 @@ class CalamityFragment extends BaseMVPView {
          </center> :
         <FormComponent
           onEditModeProperty = { (
+            editedId,
             property,
-            description,
+            propertyDesc,
             propertyType,
             acquisitionValue,
             estimatedCost,
             defaultDamageProperty,
             showPropertyModal,
             updateMode) => this.setState({
+              editedId,
               property,
-              description,
+              propertyDesc,
               propertyType,
               acquisitionValue,
               estimatedCost,
@@ -404,7 +412,16 @@ class CalamityFragment extends BaseMVPView {
           preferredDate = { preferredDate }
           handleChangeDate = { (resp) => this.changeDate(resp) }
           requestCalamityTypeFunc = { (resp) => this.showCalamityTypeModal(resp) }
-          onShowPropertyFormModalFunc = { () => this.setState({ showPropertyModal : true }) }
+          onShowPropertyFormModalFunc = { () => this.setState({
+            property : '',
+            propertyDesc : '',
+            propertyType : '',
+            acquisitionValue : '',
+            estimatedCost : '',
+            defaultDamageProperty : defaultDamageProperty,
+            showPropertyModal : true,
+            updateMode : false,})
+          }
           setAttachmentDefaultyFunc = { (attachmentDefaultArray) => this.setFileAttachments(attachmentDefaultArray) }
           setCardHolderDefaultyFunc = { (damagePropertyCardHolder) => this.setState({ damagePropertyCardHolder }) }
           getPreferredDate = { data =>
