@@ -112,7 +112,7 @@ class HousingAssistanceCardComponent extends Component {
           {
             review &&
             <GenericButton
-              text = { 'Back' }
+              text = { 'Edit' }
               onClick = { () => updateForm() }
             />
           }
