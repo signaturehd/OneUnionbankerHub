@@ -74,32 +74,24 @@ class StaffAccountsModal extends Component {
         {
           showConfirmationModal &&
           <Modal>
-            {
-              staffLoader ?
-
-              <center>
-                <CircularLoader show = { true }/>
-              </center> :
-
-              <center>
-                <h2>Are you sure you want to confirm the chosen account?</h2>
-                <br/>
-                <div className = { 'grid-global' }>
-                  <GenericButton
-                    text = { 'No' }
-                    onClick = { () => this.setState({ showConfirmationModal : false }) }
-                    />
-                  <GenericButton
-                    text = { 'Yes' }
-                    onClick = { () => {
-                      onClickEmployeeConfirmation(employeeName, sequence)
-                      this.setState({ showConfirmationModal : false, staffLoader : false })
-                    }
-                  }
+            <center>
+              <h2>Are you sure you want to confirm the chosen account?</h2>
+              <br/>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'No' }
+                  onClick = { () => this.setState({ showConfirmationModal : false }) }
                   />
-                </div>
-              </center>
-            }
+                <GenericButton
+                  text = { 'Yes' }
+                  onClick = { () => {
+                    onClickEmployeeConfirmation(employeeName, sequence)
+                    this.setState({ showConfirmationModal : false })
+                  }
+                }
+                />
+              </div>
+            </center>
           </Modal>
         }
         <div>

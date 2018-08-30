@@ -7,7 +7,7 @@ import Presenter from './presenter/SettingsPresenter'
 
 import SettingsProfileCardComponent from './components/SettingsProfileCardComponent'
 
-import { Card } from '../../ub-components/'
+import { Card, Modal, GenericButton   } from '../../ub-components/'
 
 class SettingsFragment extends BaseMVPView {
 
@@ -69,7 +69,7 @@ class SettingsFragment extends BaseMVPView {
   }
 
   showStaffAccountConfirmation (noticeResponse) {
-    this.setState({ noticeResponse, noticeResponseModal })
+    this.setState({ noticeResponse, noticeResponseModal : true })
   }
 
   showProfileDependent (profileDependent) {
@@ -116,7 +116,7 @@ class SettingsFragment extends BaseMVPView {
       noticeResponse,
       noticeResponseModal
     }=this.state
-
+    console.log(noticeResponse)
     return (
       <div className={ 'profile-container' }>
         { super.render() }
@@ -124,7 +124,7 @@ class SettingsFragment extends BaseMVPView {
           noticeResponseModal &&
           <Modal>
             <center>
-              <h2>{ noticeResponse.message }</h2>
+              <h2>{ noticeResponse }</h2>
               <br/>
               <GenericButton
                 text = { 'Ok' }
