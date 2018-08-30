@@ -100,7 +100,7 @@ class EducationGroupAidFormCardComponent extends Component {
                 type = { 'text' }/>
               <DatePicker
                 readOnly
-                selected = { effectivityDate }
+                selected = { effectivityDate && moment(effectivityDate)}
                 value = { effectivityDateText }
                 text = { 'Effectivity Date/Coverage of Insurance' }
                 disabled = { showEditSubmitButton }
