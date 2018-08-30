@@ -998,6 +998,15 @@ export default class HRBenefitsService {
     })
   }
 
+  validateEmployeePin (token, employeePinParam) {
+    const validateObject = {
+      code: employeePinParam,
+    }
+    return this.apiClient.post('v1/pin/validate', validateObject, {
+      headers : { token }
+    })
+  }
+
   /* Staff accounts */
   getForConfirmation (token, id) {
     return this.apiClient.get(`v1/employees/${id}/details?status=confirmation`, {

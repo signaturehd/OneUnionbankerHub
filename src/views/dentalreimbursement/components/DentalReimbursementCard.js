@@ -39,7 +39,6 @@ class DentalReimbursementCard extends Component {
     fileAttachments : [],
     officialReceiptDate : null,
     officialReceiptNumber : '',
-    attachmentArray : [],
     showEditMode: false
   }
   this.submission = this.submission.bind(this)
@@ -59,11 +58,11 @@ submission (e) {
     selectedProcedures,
     officialReceiptDate,
     officialReceiptNumber,
-    attachmentArray,
   } = this.state
+  const { attachments } = this.props
 
   let validateAttachments = false
-  attachmentArray && attachmentArray.map(
+  attachments && attachments.map(
     (attachment, key) => {
       if(!attachment.file) {
         validateAttachments = true
@@ -87,7 +86,7 @@ submission (e) {
        duration : 2000
      })
    )
- } else if (!attachmentArray.length) {
+ } else if (!attachments.length) {
     store.dispatch(NotifyActions.addNotify({
        title : 'Warning' ,
        message : 'Attachments is required',
@@ -96,7 +95,7 @@ submission (e) {
      })
    )
  } else if (validateAttachments) {
-   attachmentArray && attachmentArray.map(
+   attachments && attachments.map(
      (attachment, key) => {
        if(!attachment.file) {
          store.dispatch(NotifyActions.addNotify({
@@ -157,7 +156,8 @@ render () {
     onClick,
     dependents,
     onFocus,
-    attachments
+    attachments,
+    setFileNewFunc
   } = this.props
 
   const {
@@ -170,7 +170,6 @@ render () {
     showReviewSubmissionModal,
     officialReceiptDate,
     officialReceiptNumber,
-    attachmentArray,
     showEditMode
   } = this.state
 
@@ -197,7 +196,7 @@ render () {
               <MultipleFileUploader
                 placeholder = 'Form Attachments'
                 fileArray = { attachments }
-                setFile = { (resp) => this.setState({ attachmentArray : resp }) }
+                setFile = { (attachmentArray) => setFileNewFunc(attachmentArray) }
              />
             </div>
             <div className = {'dentalreimbursement-footer-left'}>
@@ -279,7 +278,7 @@ render () {
                 />
               <GenericButton
                 onClick = { () => this.props.presenter.addDentalReimbursement(
-                      officialReceiptDate, officialReceiptNumber, selectedDependent.id, selectedProcedures, attachmentArray
+                      officialReceiptDate, officialReceiptNumber, selectedDependent.id, selectedProcedures, attachments
                     ) }
                 text = { 'Submit' }
                 />
@@ -302,6 +301,7 @@ DentalReimbursementCard.propTypes = {
   onClose : PropTypes.func,
   onClick : PropTypes.func,
   onFocus : PropTypes.func,
+  setFileNewFunc : PropTypes.func,
   procedure : PropTypes.string,
   dependents: PropTypes.array,
 
