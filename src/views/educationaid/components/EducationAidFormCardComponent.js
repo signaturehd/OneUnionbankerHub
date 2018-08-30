@@ -149,7 +149,7 @@ class EducationAidFormCardComponent extends Component {
               text={ 'Total Reimbursable Amount' }/>
             <DatePicker
               readOnly
-              minDate = { moment() }
+              maxDate = { moment() }
               disabled = { showEditSubmitButton }
               selected = { orDate && moment(orDate) }
               onChange = { (e) => orDateFunc(e) }
@@ -157,6 +157,7 @@ class EducationAidFormCardComponent extends Component {
               hint = { '(eg. MM/DD/YYYY)' }
               errorMessage = { orDateErrorMessage }/>
             <GenericInput
+              maxLength = { 20 }
               value = { orNumber }
               onChange = { (e) => orNumberFunc(e.target.value) }
               text = { 'Official Receipt Number' }
