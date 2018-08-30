@@ -108,7 +108,8 @@ export default class EmergencyLoanPresenter {
           requiredAttachments &&
           requiredAttachments.map((attachment, key) => {
             attachments.push({
-              name : attachment + ' for ' + nfis
+              name : attachment + ' for ' + nfis.CardNumber,
+              label : attachment + ' for ' + nfis.CardNumber + ' of ' + nfis.Id
             })
           })
         })
