@@ -174,7 +174,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
 
   validateSymbol (e) {
     const validate = MaternityAssistanceFunction.checkedValidateSymbol(e)
-    this.setState({ orNumberText : validate.toUpperCase(), orNumberErrorMessage : '' })
+    this.setState({ orNumberText : validate, orNumberErrorMessage : '' })
   }
 
   validateDate (e) {
