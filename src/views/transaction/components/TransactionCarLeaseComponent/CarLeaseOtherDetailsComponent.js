@@ -15,6 +15,7 @@ class CarLeaseOtherDetailsComponent extends Component {
 
   render () {
     const {
+      details,
       detailsCarLease,
       transactionID,
       onConfirmation,
@@ -29,7 +30,6 @@ class CarLeaseOtherDetailsComponent extends Component {
     const insurancePayment = TransactionPersonalFunction.checkedInsurancePayment(detailsCarLease)
     const Amount = TransactionPersonalFunction.checkedCarAmount(detailsCarLease)
     const EquityAmount = TransactionPersonalFunction.checkedEquityAmount(detailsCarLease)
-
   return (
   <div className = { 'transaction-with-attachments' }>
     <div className = { 'transaction-component-otherdetails-form' }>
@@ -79,7 +79,9 @@ class CarLeaseOtherDetailsComponent extends Component {
           </div>
         </div>
        {
-         detailsCarLease.CarDetails.Color.map((resp, key) =>
+        detailsCarLease &&
+        detailsCarLease.CarDetails &&
+        detailsCarLease.CarDetails.Color.map((resp, key) =>
          <div>
            <div
               className = { 'transaction-icons-details-grid' }>
@@ -186,20 +188,47 @@ class CarLeaseOtherDetailsComponent extends Component {
         <div>
           <br/>
           <br/>
-          <div className = { 'grid-global' }>
-            <div>
-              <GenericButton
-                onClick = { () => onConfirmation(transactionID, 1) }
-                text = { 'Approve' }
-                />
+          {
+            details === 13 &&
+            <div className = { 'grid-global' }>
+              <div>
+                <GenericButton
+                  onClick = { () => onConfirmation(transactionID, 1) }
+                  text = { 'Confirm' }
+                  />
+              </div>
+              <div>
+                <GenericButton
+                  onClick = { () => onConfirmation(transactionID, 0) }
+                  text = { 'Decline' }
+                  />
+              </div>
             </div>
-            <div>
-              <GenericButton
-                onClick = { () => onConfirmation(transactionID, 0) }
-                text = { 'Decline' }
-                />
+          }
+          {
+            details === 14 &&
+
+            <div className = { 'grid-global' }>
+              <div>
+                <GenericButton
+                  onClick = { () => onConfirmation(transactionID, 1) }
+                  text = { 'Confirm' }
+                  />
+              </div>
+              <div>
+                <GenericButton
+                  onClick = { () => onConfirmation(transactionID, 0) }
+                  text = { 'Decline' }
+                  />
+              </div>
             </div>
-          </div>
+          }
+          {
+            details === 18 &&
+            <div>
+
+            </div>
+          }
         </div>
       </div>
     </div>
@@ -209,6 +238,7 @@ class CarLeaseOtherDetailsComponent extends Component {
 }
 
 CarLeaseOtherDetailsComponent.propTypes = {
+  details: PropTypes.func,
   detailsCarLease : PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array

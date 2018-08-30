@@ -498,6 +498,12 @@ export default class HRBenefitsService {
     })
   }
 
+  addCarLeaseReleasing (token, leasesCarLeaseReleasingParam) {
+    return this.apiClient.post('v1/leases/car/release', leasesCarLeaseReleasingParam, {
+      headers : { token }
+    })
+  }
+
   addCarLeaseConfirmation (token, leasesCarConfirm) {
     const leasesConfirmObject = {
       transactionId : leasesCarConfirm.transactionId,

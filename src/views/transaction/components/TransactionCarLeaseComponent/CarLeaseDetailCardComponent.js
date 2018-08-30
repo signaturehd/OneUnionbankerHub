@@ -59,6 +59,7 @@ class CarLeaseDetailCardComponent extends Component {
             </div>
           </div>
           <CarLeaseOtherDetailsComponent
+            details = { details }
             fileCarlease = { fileCarLease }
             transactionID = { transactionID }
             setFileCarlease = { (resp) => setFileCarlease(resp) }

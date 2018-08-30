@@ -39,7 +39,6 @@ function  TransactionDetails (props)  {
   const onUploadAttachmentsFunc = props.onUploadAttachmentsFunc
   const setFileCarlease = props.setFileCarlease
   const fileCarLease = props.fileCarlease
-
   if (transactionId === 6) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
