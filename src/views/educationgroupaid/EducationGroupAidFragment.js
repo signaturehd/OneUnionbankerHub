@@ -103,7 +103,7 @@ class EducationGroupAidFragment extends BaseMVPView {
   }
 
   orDateFunc (data) {
-    this.setState({ orDate : data.format('MM-DD-YYYY'), orDateErrorMessage : '' })
+    this.setState({ orDate : data.format('MM/DD/YYYY'), orDateErrorMessage : '' })
   }
 
   dateFunc (date) {
