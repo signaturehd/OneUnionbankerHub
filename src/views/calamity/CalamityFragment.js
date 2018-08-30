@@ -293,6 +293,7 @@ class CalamityFragment extends BaseMVPView {
       {
         showPropertyModal &&
         <CalamityFormGenericModal
+          calamityId = { calamityId }
           editedId = { editedId }
           id = { id }
           incrementId = { () => ++id }
@@ -402,6 +403,7 @@ class CalamityFragment extends BaseMVPView {
               this.confirmation(showConfirmation, data)
             }
           }
+          onSubmit = {(id, date, damageProperty, attachmentArray) => this.presenter.addCalamityAssistance(id, date, damageProperty, attachmentArray) }
           damagePropertyCardHolder = { damagePropertyCardHolder }
           calamityAssistance={ calamityAssistance }
           attachmentsData = { attachmentsData }

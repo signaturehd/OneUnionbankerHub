@@ -43,11 +43,13 @@ class CalamityFormCardComponent extends Component {
       showEditSubmitButton,
       calamityName,
       calamityType,
+      calamityId,
       preferredDate,
       calamityTypeErrorMessage,
       onClick,
       damagePropertyCardHolder,
-      onEditModeProperty
+      onEditModeProperty,
+      onSubmit,
     }=this.props
 
     return (
@@ -135,7 +137,7 @@ class CalamityFormCardComponent extends Component {
           <br/>
           <GenericButton
             text = { 'Submit' }
-            onClick = { () => {}}
+            onClick = { () => onSubmit(calamityId, preferredDate.format('MM/DD/YYYY'), damagePropertyCardHolder, attachmentsData) }
             className = { 'calamity-submit' } />
         </div>
       )
@@ -153,6 +155,7 @@ CalamityFormCardComponent.propTypes={
   calamityType: PropTypes.array,
   damagePropertyCardHolder: PropTypes.array,
   attachmentsData: PropTypes.array,
+  attachmentArray: PropTypes.array,
   preferredDate: PropTypes.string,
   calamityTypeErrorMessage: PropTypes.string,
 }
