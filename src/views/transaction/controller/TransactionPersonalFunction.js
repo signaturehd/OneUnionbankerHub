@@ -11,7 +11,7 @@ import { format } from '../../../utils/numberUtils'
   export function checkedDateFilled (details) {
     return details ?
            details &&
-           moment(details && details.dateFiled).format('dddd, MMMM DD, YYYY, h:MM:ss A') : '(Not Yet Provided)'
+           moment(details && details.dateFiled).format('dddd, MMMM DD, YYYY, HH:mm:ss A') : '(Not Yet Provided)'
   }
 
   /* (e.g) July 5, 2018 */
