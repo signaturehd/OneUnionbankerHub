@@ -3,12 +3,12 @@ export default class AddEducationAidInteractor {
     this.client = client
   }
 
-  execute (groupAidParam) {
+  execute (educationAidParam) {
     return this.client.addEducationAid(
       this.client.getToken(),
       this.client.getAccountToken(),
       this.client.getAccountNumber(),
       this.client.getReleasingCenter(),
-      groupAidParam)
+      educationAidParam)
   }
 }
