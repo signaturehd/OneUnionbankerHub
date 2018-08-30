@@ -135,10 +135,10 @@ class LeaveFilingFragment extends BaseMVPView {
     let dateTimeFrom = moment(dateFrom).format('MM/DD/YYYY') + ' ' + fromTime + ':00 ' + fromMeridiem
     let dateTimeTo = moment(dateTo).format('MM/DD/YYYY') + ' ' + toTime + ':00 ' + toMeridiem
     this.presenter.addLeaveFiling(
-      LeaveFilingFunctions.checkedReasonForLeave(benefitsCodeType),
+      benefitsCodeType.toUpperCase(),
       dateTimeFrom,
       dateTimeTo,
-      feedbackTextareaValue,
+      LeaveFilingFunctions.checkedReasonForLeave(benefitsCodeType),
       feedbackTextareaValueRemarks,
     )
   }
