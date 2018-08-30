@@ -614,7 +614,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
           :
         <div>
           {
-          !enabledLoader ?
+          enabledLoader ?
             <center className = { 'circular-loader-center' }>
               <CircularLoader show = { true }/>
             </center> :
