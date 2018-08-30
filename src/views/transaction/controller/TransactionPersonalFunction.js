@@ -199,11 +199,11 @@ import { format } from '../../../utils/numberUtils'
 
   /* Maternity Assistance */
 
-  export function checkedType (details) {
-    return details && details.MaternityAssistanceDetails.DeliveryType ?
-    details.MaternityAssistanceDetails.DeliveryType :
-    '(Not Yet Provided)'
-  }
+export function checkedType (details) {
+  return details && details.MaternityAssistanceDetails.DeliveryType ?
+  details.MaternityAssistanceDetails.DeliveryType :
+  '(Not Yet Provided)'
+}
 
 export function checkedAmount (details) {
   return details && details.MaternityAssistanceDetails.Amount ?
@@ -221,4 +221,47 @@ export function checkedRecipient (details) {
   return details && details.MaternityAssistanceDetails.Recipient ?
   details.MaternityAssistanceDetails.Recipient :
   '(Not Yet Provided)'
+}
+
+/* Car Leases */
+export function checkedCarBrand (details) {
+  return details &&
+         details.CarDetails &&
+         details.CarDetails.Brand ?
+         details.CarDetails.Brand : '(Not Yet Provided)'
+}
+
+export function checkedModel (details) {
+  return details &&
+         details.CarDetails &&
+         details.CarDetails.Model ?
+         details.CarDetails.Model : '(Not Yet Provided)'
+}
+
+export function checkedLeaseMode (details) {
+  return details &&
+         details.CarDetails &&
+         details.CarDetails.LeaseMode ?
+         details.CarDetails.LeaseMode : '(Not Yet Provided)'
+}
+
+export function checkedInsurancePayment (details) {
+  return details &&
+         details.CarDetails &&
+         details.CarDetails.InsurancePayment ?
+         details.CarDetails.InsurancePayment : '(Not Yet Provided)'
+}
+
+export function checkedEquityAmount (details) {
+  return details &&
+         details.CarDetails &&
+         details.CarDetails.EquityAmount ?
+         format(details.CarDetails.EquityAmount) : '(Not Yet Provided)'
+}
+
+export function checkedCarAmount (details) {
+  return details &&
+         details.CarDetails &&
+         details.CarDetails.Amount ?
+         format(details.CarDetails.Amount) : '(Not Yet Provided)'
 }

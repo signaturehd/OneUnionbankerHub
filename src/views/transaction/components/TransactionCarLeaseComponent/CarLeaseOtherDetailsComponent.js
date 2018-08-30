@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { format } from '../../../../utils/numberUtils'
 
-import { Card } from '../../../../ub-components/'
+import { Card, MultipleFileUploader, GenericButton } from '../../../../ub-components/'
 
 import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
 
@@ -14,36 +14,123 @@ class CarLeaseOtherDetailsComponent extends Component {
   }
 
   render () {
-  const {
-    detailsEducation
-  } = this.props
+    const {
+      detailsCarLease,
+      transactionID,
+      onConfirmation,
+      setFileCarlease,
+      fiileCarlease,
+      onUploadAttachmentsFunc
+    } = this.props
 
-  const school = TransactionPersonalFunction.checkedCollege(detailsEducation)
-  const course = TransactionPersonalFunction.checkedCourse(detailsEducation)
-  const academicYear = TransactionPersonalFunction.checkedAcademicyear(detailsEducation)
-  const semester = TransactionPersonalFunction.checkedSemester(detailsEducation)
-  const reimbursableAmount = TransactionPersonalFunction.checkedAmountFormat(detailsEducation.TotalReimbursableAmount)
-  const registrationFee = TransactionPersonalFunction.checkedAmountFormat(detailsEducation.RegistrationFee)
-  const tuitionFee = TransactionPersonalFunction.checkedAmountFormat(detailsEducation.TuitionFee)
+    const carBrand = TransactionPersonalFunction.checkedCarBrand(detailsCarLease)
+    const carModel = TransactionPersonalFunction.checkedModel(detailsCarLease)
+    const LeaseMode = TransactionPersonalFunction.checkedLeaseMode(detailsCarLease)
+    const insurancePayment = TransactionPersonalFunction.checkedInsurancePayment(detailsCarLease)
+    const Amount = TransactionPersonalFunction.checkedCarAmount(detailsCarLease)
+    const EquityAmount = TransactionPersonalFunction.checkedEquityAmount(detailsCarLease)
 
   return (
-  <div>
+  <div className = { 'transaction-with-attachments' }>
     <div className = { 'transaction-component-otherdetails-form' }>
       <div>
         <div>
+          <br/>
           <br/>
           <h2 className = { 'font-weight-bolder' }> Car Leases Details </h2>
           <br/>
         </div>
         <div className = { 'transaction-icons-details-grid' }>
-          <span className = { ' transaction-card-icon-settings global-icons-school' }></span>
+          <span></span>
           <div>
             <h2 className = { 'font-weight-ligter' }>
-               { school }
+              { carBrand }
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
+              Car Brand
+            </h2>
             <br/>
+          </div>
+        </div>
+        <div
+           className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
+          <div>
+            <h2 className = { 'font-weight-ligter' }>
+             { carModel }
+            </h2>
+            <h2 className = { 'unionbank-color font-size-12px' }>
+              Car Model
+            </h2>
             <br/>
+          </div>
+        </div>
+        <div
+           className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
+          <div>
+            <h2 className = { 'font-weight-ligter' }>
+             { LeaseMode }
+            </h2>
+            <h2 className = { 'unionbank-color font-size-12px' }>
+             LeaseMode
+            </h2>
+            <br/>
+          </div>
+        </div>
+       {
+         detailsCarLease.CarDetails.Color.map((resp, key) =>
+         <div>
+           <div
+              className = { 'transaction-icons-details-grid' }>
+             <span className = { ' transaction-card-icon-settings' }></span>
+             <div>
+               <h2 className = { 'font-weight-ligter' }>
+                 { resp.PrimaryColor }
+               </h2>
+               <h2 className = { 'unionbank-color font-size-12px' }>
+                 Primary Color
+               </h2>
+               <br/>
+             </div>
+           </div>
+           <div
+              className = { 'transaction-icons-details-grid' }>
+             <span className = { ' transaction-card-icon-settings' }></span>
+             <div>
+               <h2 className = { 'font-weight-ligter' }>
+                 { resp.SecondaryColor }
+               </h2>
+               <h2 className = { 'unionbank-color font-size-12px' }>
+                 Secondary Color
+               </h2>
+               <br/>
+             </div>
+           </div>
+         </div>
+        )
+       }
+      </div>
+      <div>
+        <div>
+          <br/>
+          <br/>
+          <h2 className = { 'font-weight-bolder' }></h2>
+            Cost
+          <br/>
+          <br/>
+        </div>
+        <div
+           className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
+          <div>
+            <h2 className = { 'font-weight-ligter' }>
+              { Amount }
+            </h2>
+            <h2 className = { 'unionbank-color font-size-12px' }>
+              Amount
+             <br/>
+             <br/>
             </h2>
           </div>
         </div>
@@ -52,9 +139,10 @@ class CarLeaseOtherDetailsComponent extends Component {
           <span className = { ' transaction-card-icon-settings' }></span>
           <div>
             <h2 className = { 'font-weight-ligter' }>
-             { course }
+              { EquityAmount }
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
+              Equity Amount
              <br/>
              <br/>
             </h2>
@@ -65,45 +153,52 @@ class CarLeaseOtherDetailsComponent extends Component {
           <span className = { ' transaction-card-icon-settings' }></span>
           <div>
             <h2 className = { 'font-weight-ligter' }>
-             { academicYear }
+              { insurancePayment }
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
-             <br/>
-             <br/>
-            </h2>
-          </div>
-        </div>
-        <div
-           className = { 'transaction-icons-details-grid' }>
-          <span className = { ' transaction-card-icon-settings' }></span>
-          <div>
-            <h2 className = { 'font-weight-ligter' }>
-             { semester }
-            </h2>
-            <h2 className = { 'unionbank-color font-size-12px' }>
+              Insurance Payment
              <br/>
              <br/>
             </h2>
           </div>
         </div>
       </div>
-      <div>
+    </div>
+    <div>
+      <div className = { 'grid-global' }>
+        <div>
+          {
+            detailsCarLease.CarDetails.RequiredAttachment.length !== 0 &&
+            <div>
+              <MultipleFileUploader
+                fileArray = { detailsCarLease.CarDetails.RequiredAttachment }
+                placeholder = { 'Required Attachments' }
+                setFile = { (file) => setFileCarlease(file) }
+                />
+              <br/>
+              <GenerictButton
+                text = { 'Upload' }
+                onClick = { () => onUploadAttachmentsFunc(transactionID, fileCarLease) }
+                />
+            </div>
+          }
+        </div>
         <div>
           <br/>
-          <h2 className = { 'font-weight-bolder' }></h2>
           <br/>
-        </div>
-        <div
-           className = { 'transaction-icons-details-grid' }>
-          <span className = { ' transaction-card-icon-settings' }></span>
-          <div>
-            <h2 className = { 'font-weight-ligter' }>
-             { registrationFee }
-            </h2>
-            <h2 className = { 'unionbank-color font-size-12px' }>
-             <br/>
-             <br/>
-            </h2>
+          <div className = { 'grid-global' }>
+            <div>
+              <GenericButton
+                onClick = { () => onConfirmation(transactionID, 1) }
+                text = { 'Approve' }
+                />
+            </div>
+            <div>
+              <GenericButton
+                onClick = { () => onConfirmation(transactionID, 0) }
+                text = { 'Decline' }
+                />
+            </div>
           </div>
         </div>
       </div>
@@ -114,10 +209,13 @@ class CarLeaseOtherDetailsComponent extends Component {
 }
 
 CarLeaseOtherDetailsComponent.propTypes = {
-  detailsEducation : PropTypes.oneOfType([
+  detailsCarLease : PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array
-  ])
+  ]),
+  onConfirmation : PropTypes.func,
+  onUploadAttachmentsFunc : PropTypes.func,
+  setFileCarlease : PropTypes.func
 }
 
 export default CarLeaseOtherDetailsComponent

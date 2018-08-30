@@ -5,7 +5,7 @@ import Presenter from './presenter/TransactionPersonalDetailsPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { CircularLoader, Modal } from '../../ub-components'
+import { CircularLoader, Modal, GenericButton } from '../../ub-components'
 
 import './styles/transactionDetails.css'
 
@@ -35,6 +35,10 @@ function  TransactionDetails (props)  {
   const showFileReceipt = props.showFileReceipt
   const attachmentsMethod = props.attachmentsMethod
   const agreementsMethod = props.agreementsMethod
+  const onConfirmationCarleaseFunc = props.onConfirmationCarleaseFunc
+  const onUploadAttachmentsFunc = props.onUploadAttachmentsFunc
+  const setFileCarlease = props.setFileCarlease
+  const fileCarLease = props.fileCarlease
 
   if (transactionId === 6) {
     return <DentalRDetailsFragment
@@ -56,8 +60,12 @@ function  TransactionDetails (props)  {
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 15) {
     return <CarLeaseDetailsFragment
+      fileCarLease = { fileCarLease }
+      onConfirmationCarleaseFunc = { (id, status) => onConfirmationCarleaseFunc(id, status) }
+      onUploadAttachmentsFunc = { (id, file) => onUploadAttachmentsFunc(id, file) }
       attachmentsMethod = { (resp) => attachmentsMethod(resp) }
       agreementsMethod = { (resp) => agreementsMethod(resp) }
+      setFileCarlease = { (resp) => setFileCarlease(resp) }
       details = { transactionDetails }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 13) {
@@ -150,6 +158,9 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
       enabledLoader: false,
       showAttachmentsModal: false,
       showAgreementsModal: false,
+      showConfirmation : false,
+      showConfirmationMessage : '',
+      fileCarLease : []
     }
   }
 
@@ -162,6 +173,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
 
   navigate () {
     this.props.history.push('/mybenefits/transactions/personal')
+  }
+
+  setCarleaseFile (fileCarLease) {
+    this.setState({ fileCarLease })
   }
 
   showAttachmentsMethod (e) {
@@ -198,6 +213,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     this.setState({ enabledLoader : false })
   }
 
+  showMessageSuccessConfirm (showConfirmationMessage) {
+    this.setState({ showConfirmationMessage, showConfirmation : true })
+  }
+
   render () {
 
   const {
@@ -207,7 +226,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     response,
     enabledLoader,
     showAttachmentsModal,
-    showAgreementsModal
+    showAgreementsModal,
+    showConfirmation,
+    showConfirmationMessage,
+    fileCarLease
   } = this.state
 
   return (
@@ -230,6 +252,24 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
             this.setState({ showAttachmentsModal : false }) }
           />
       }
+      {
+        showConfirmation &&
+        <Modal>
+          <center>
+            <h2>{ showConfirmationMessage ? showConfirmationMessage :  '(Not Yet Provided)' }
+            </h2>
+            <br/>
+            <GenericButton
+              text = { 'Ok' }
+              onClick = { () => {
+                window.location.reload()
+                this.setState({ showConfirmation : false })
+              }
+            }
+              />
+          </center>
+        </Modal>
+      }
       <div>
         <i className={ 'back-arrow' }
           onClick = {
@@ -250,7 +290,13 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              agreementsMethod = { (resp) =>
                this.showAgreementsMethod(resp)
              }
+             onConfirmationCarleaseFunc = { (transactionID, status) =>
+               this.presenter.addCarLeaseConfirmation(transactionID, status)
+             }
+             fileCarLease = { fileCarLease }
+             setFileCarlease = { (file) => this.setFileCarlease(file) }
              showFileReceipt = { response }
+             onUploadAttachmentsFunc = { (id, file) => this.presenter.addCarLeasePayment(id, file) }
              uploadImage = { (transactionType, transactionId, file) => {
                this.presenter.uploadTransactionBereavement(transactionType, transactionId, file)
                 }

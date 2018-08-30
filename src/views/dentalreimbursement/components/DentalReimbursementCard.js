@@ -27,10 +27,6 @@ class DentalReimbursementCard extends Component {
   constructor (props) {
   super(props)
   this.state = {
-    file: '', // file1 array
-    file2: '',// file2 array
-    imagePreviewUrl: '',
-    imagePreviewUrl2: '',
     procedureModal : false, // display procedure modal
     dependents: [],
     selectedDependent: null, // selected dependent
@@ -46,24 +42,13 @@ class DentalReimbursementCard extends Component {
     attachmentArray : [],
     showEditMode: false
   }
-  this.handleImageChange = this.handleImageChange.bind(this)
-  this.handleImageChange2 = this.handleImageChange2.bind(this)
   this.submission = this.submission.bind(this)
   this.validator = this.validator.bind(this)
 }
 
-/*
-Official Certificate Atachments
-*/
-
-getExtension (filename) {
-  const parts = filename.split('/')
-  return parts[parts.length - 1]
+validator (input) {
+  return new RequiredValidation().isValid(input)
 }
-
-  validator (input) {
-    return new RequiredValidation().isValid(input)
-  }
 
 /*
   Form Submission
@@ -164,76 +149,6 @@ submission (e) {
   }
 }
 
-handleImageChange (e) {
-  e.preventDefault()
-  const reader = new FileReader()
-  const file = e.target.files[0]
-  let isValid
-  switch (this.getExtension(file.type).toLowerCase()) {
-    case 'jpeg' :
-      isValid = true
-    case 'jpg' :
-      isValid = true
-    case 'png' :
-      isValid = true
-    case 'pdf' :
-      isValid = true
-  }
-
-  if (isValid) {
-     reader.onloadend = () => {
-       this.setState({
-         file,
-         imagePreviewUrl: reader.result
-       })
-     }
-     reader.readAsDataURL(file)
-   } else {
-     store.dispatch(NotifyActions.addNotify({
-         title : 'File Uploading',
-         message : 'The accepted attachments are JPG/PNG/PDF',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-   }
-}
-/*
-Medical Certificate Atachments
-*/
-handleImageChange2 (e1) {
-  e1.preventDefault()
-  const reader2 = new FileReader()
-  const file2 = e1.target.files[0]
-  let isValid = false
-  switch (this.getExtension(file2.type).toLowerCase()) {
-    case 'jpeg' :
-      isValid = true
-    case 'jpg' :
-      isValid = true
-    case 'png' :
-      isValid = true
-    case 'pdf' :
-      isValid = true
-  }
-  if (isValid) {
-     reader2.onloadend = () => {
-       this.setState({
-         file2,
-         imagePreviewUrl2: reader2.result
-       })
-     }
-     reader2.readAsDataURL(file2)
-  } else {
-    store.dispatch(NotifyActions.addNotify({
-        title : 'File Uploading',
-        message : 'The accepted attachments are JPG/PNG/PDF',
-        type : 'warning',
-        duration : 2000
-      })
-    )
-  }
-}
 render () {
   const {
     details,
@@ -253,39 +168,11 @@ render () {
     procedure,
     showResults,
     showReviewSubmissionModal,
-    file,
-    file2,
     officialReceiptDate,
     officialReceiptNumber,
     attachmentArray,
     showEditMode
   } = this.state
-
-
-  const { imagePreviewUrl, imagePreviewUrl2 } = this.state
-
-  let $imagePreview = null
-  let $imagePreview2 = null
-
-  const styleImage = {
-    image1 : {
-      backgroundImage: `url('${imagePreviewUrl}')`,
-      width : '225px',
-      height : '250px',
-      backgroundSize : 'cover',
-      backgroundRepeat : 'no-repeat',
-    },
-    image2 : {
-      backgroundImage: `url('${imagePreviewUrl2}')`,
-      width : '225px',
-      height : '250px',
-      backgroundSize : 'cover',
-      backgroundRepeat : 'no-repeat',
-    }
-  }
-
-  $imagePreview = (<div style = {styleImage.image1}></div>)
-  $imagePreview2 = (<div style = {styleImage.image2}></div>)
 
   return (
     <div className = { 'dentalreimbursement-container' }>
