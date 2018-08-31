@@ -62,7 +62,7 @@ export default class CalamityPresenter {
   this.view.showCircularLoader()
   this.addCalamityInteractor.execute(calamityAssistanceParam(
     id,
-    date,
+    date.format('MM/DD/YYYY'),
     damageProperty,
     attachmentArray
     )

@@ -31,6 +31,8 @@ import { RequiredValidation } from '../../utils/validate'
 
 import * as CalamityFunction from './function/CalamityFunction'
 
+import moment from 'moment'
+
 let id = 0
 
 class CalamityFragment extends BaseMVPView {
@@ -147,12 +149,66 @@ class CalamityFragment extends BaseMVPView {
    this.setState({ showPropertyTypeModal })
   }
 
-  confirmation (showConfirmation, data) {
+  submitForm (id, date, damageProperty, attachmentArray) {
 
-  }
+    let validateAttachments = false
+    attachmentArray && attachmentArray.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
 
-  submitForm (data) {
-
+    if (id === null || id === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Type of Calamity is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    } else if (date === null || date === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Date of Occurence is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    } else if (damageProperty === null || !damageProperty.length) {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Damage Property is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }else if (!attachmentArray.length) {
+       store.dispatch(NotifyActions.addNotify({
+          title : 'Warning' ,
+          message : 'Attachments is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (validateAttachments) {
+      attachmentArray && attachmentArray.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'Warning',
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 2000
+             })
+           )
+          }
+        }
+      )
+     } else {
+     this.setState({ showEditSubmitButton : true })
+   }
   }
 
   setValidateCalamityAssistance(calamityAssistance) {
@@ -221,6 +277,7 @@ class CalamityFragment extends BaseMVPView {
       editModeData,
       updateMode,
       editedId,
+      showEditSubmitButton,
     }=this.state
 
     const defaultDamagePropertyStatic = [
@@ -377,6 +434,16 @@ class CalamityFragment extends BaseMVPView {
            <CircularLoader show={ this.state.enabledLoader }/>
          </center> :
         <FormComponent
+          showEditSubmitButton = { showEditSubmitButton }
+          changeStateEditToFalse = { () => this.setState({ showEditSubmitButton : false }) }
+          getOnClicked = { (id, date, damageProperty, attachmentArray) =>
+            this.submitForm (
+              id,
+              date,
+              damageProperty,
+              attachmentArray
+            )
+          }
           onEditModeProperty = { (
             editedId,
             property,
@@ -403,7 +470,15 @@ class CalamityFragment extends BaseMVPView {
               this.confirmation(showConfirmation, data)
             }
           }
-          onSubmit = {(id, date, damageProperty, attachmentArray) => this.presenter.addCalamityAssistance(id, date, damageProperty, attachmentArray) }
+          onSubmit = {
+            (id, date, damageProperty, attachmentArray) =>
+            this.presenter.addCalamityAssistance (
+              id,
+              date,
+              damageProperty,
+              attachmentArray
+            )
+          }
           damagePropertyCardHolder = { damagePropertyCardHolder }
           calamityAssistance={ calamityAssistance }
           attachmentsData = { attachmentsData }

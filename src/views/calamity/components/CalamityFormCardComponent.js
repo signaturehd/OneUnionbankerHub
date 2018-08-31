@@ -50,6 +50,8 @@ class CalamityFormCardComponent extends Component {
       damagePropertyCardHolder,
       onEditModeProperty,
       onSubmit,
+      getOnClicked,
+      changeStateEditToFalse,
     }=this.props
 
     return (
@@ -59,6 +61,7 @@ class CalamityFormCardComponent extends Component {
           onClick={ () => requestCalamityTypeFunc(true) }
           text={ 'Type of Calamity' }
           errorMessage = { calamityTypeErrorMessage }
+          disabled = { showEditSubmitButton }
         />
         <DatePicker
           maxDate={ moment() }
@@ -66,6 +69,7 @@ class CalamityFormCardComponent extends Component {
           selected={ preferredDate}
           onChange={ (e) => handleChangeDate(e) }
           text = { 'Date of Occurrence' }
+          disabled = { showEditSubmitButton }
           />
         <div className = { 'grid-global' }>
           <div>
@@ -135,10 +139,42 @@ class CalamityFormCardComponent extends Component {
             </div>
           }
           <br/>
-          <GenericButton
-            text = { 'Submit' }
-            onClick = { () => onSubmit(calamityId, preferredDate.format('MM/DD/YYYY'), damagePropertyCardHolder, attachmentsData) }
-            className = { 'calamity-submit' } />
+
+          {
+            showEditSubmitButton ?
+
+            <div className = { 'grid-global' }>
+              <GenericButton
+                type = { 'button' }
+                text = { 'Edit' }
+                onClick = { () => changeStateEditToFalse() }
+                />
+              <GenericButton
+                type = { 'button' }
+                text = { 'Submit' }
+                onClick={
+                  () => onSubmit (
+                    calamityId,
+                    preferredDate,
+                    damagePropertyCardHolder,
+                    attachmentsData
+                  )
+                }/>
+            </div>
+            :
+            <GenericButton
+              type={ 'button' }
+              text={ 'Continue' }
+              onClick={
+                () => getOnClicked (
+                  calamityId,
+                  preferredDate,
+                  damagePropertyCardHolder,
+                  attachmentsData
+                )
+              }
+              className={ 'brv-submit' } />
+          }
         </div>
       )
     }
