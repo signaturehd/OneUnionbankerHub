@@ -32,7 +32,7 @@ class StaffAccountsModal extends Component {
 
   getAccountType (type) {
     var upperCaseType = type.toUpperCase()
-    var ret = 'Other Account'
+    var ret = upperCaseType
     if(upperCaseType == 'CA') {
       ret = 'Current Account'
     } else if (upperCaseType == 'EO') {
@@ -131,7 +131,7 @@ class StaffAccountsModal extends Component {
                         text = { resp.status }
                         onClick = { () => this.confirmationModal(true, resp.employeeName, resp.sequence) }
                         disabled = { resp.status.toLowerCase() === 'confirmed' ? true : false  }
-                        className = { 'confirmed-button' }
+                        className = { resp.status.toLowerCase() === 'confirmed' ? 'confirmed-button' : 'not-confirmed-button' }
                       />
                     </div>
                   </div>
