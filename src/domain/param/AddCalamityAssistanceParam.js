@@ -1,20 +1,11 @@
 export default (
-  calamityId,
+  id,
   date,
-  property,
-  propertyDesc,
-  propertyType,
-  acquisitionValue,
-  estimatedCost,
-  file1,
-file2) => ({
-    calamityId,
-    date,
-    property,
-    propertyDesc,
-    propertyType,
-    acquisitionValue,
-    estimatedCost,
-    file1,
-    file2
+  damageProperty,
+  attachmentArray
+) => ({
+  id,
+  date,
+  damageProperty,
+  attachmentArray
   })

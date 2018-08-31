@@ -697,23 +697,28 @@ export default class HRBenefitsService {
 
   addCalamityAssistance (token, accountToken, accountNumber, releasingCenter, calamityAssistanceParam) {
     const formData = new FormData()
+    const damageProperty = calamityAssistanceParam.damageProperty
+    calamityAssistanceParam.damageProperty.map((property, key) => {
+      const length = property.imageKey.length
+      if (length > 0) {
+        for(var i =0 ; i < length; i++) {
+          delete damageProperty[key].imageKey[i].base64
+          delete damageProperty[key].imageKey[i].name
+        }
+      }
+    })
     const calamityObject = {
-      id: calamityAssistanceParam.calamityId,
+      id: calamityAssistanceParam.id,
       accountNumber,
       releasingCenter,
       date: calamityAssistanceParam.date,
-      damageProperty: [{
-        propertyName: calamityAssistanceParam.property,
-        description: calamityAssistanceParam.propertyDesc,
-        propertyType: calamityAssistanceParam.propertyType,
-        acquisitionValue: calamityAssistanceParam.acquisitionValue,
-        repairCost: calamityAssistanceParam.estimatedCost
-      }]
+      damageProperty: calamityAssistanceParam.damageProperty
     }
-
     formData.append('uuid', 12345)
-    formData.append('Barangay Certificate', calamityAssistanceParam.file1)
-    formData.append('Damaged Property', calamityAssistanceParam.file2)
+    calamityAssistanceParam.attachmentArray.map((resp, key) =>
+     (
+       formData.append(resp.name, resp.file)
+     ))
     formData.append('body', JSON.stringify(calamityObject))
     return this.apiClient.post('v1/calamity/availment', formData,{
       headers: { token }
