@@ -1,0 +1,62 @@
+/* benefits */
+
+.mycompliance-card-adjustment {
+  margin: 3px 3px;
+}
+
+.mycompliance-card {
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.mycompliance-card-container {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  text-align: center;
+  column-gap: 2%;
+}
+
+.page-header-buttons {
+  text-align : right;
+}
+
+.mycompliance-option-cards {
+  color: #1f1d1d;
+  margin: 0px;
+}
+
+.mycompliance-option-default {
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+  height: 50px;
+  margin: 0px auto;
+  width: 50px;
+}
+
+.mycompliance-column-grid {
+  display: grid;
+  grid-template-rows: .5fr .5fr ;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.mycompliance-adjustment {
+  margin-top: 4%;
+}
+
+.mycompliance-cards-1 {
+  background-image: url('../../../images/icons/Book.png');
+}
+.mycompliance-title-view {
+  font-size: 30px;
+}
+
+@media screen and (max-width : 768px) {
+  .mycompliance-title-view {
+    text-align: center;
+    margin: auto;
+  }
+}
