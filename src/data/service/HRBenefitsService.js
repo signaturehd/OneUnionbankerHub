@@ -569,9 +569,9 @@ export default class HRBenefitsService {
         course : educationAidParam.course,
         academicYear : educationAidParam.academicYear,
         semester : educationAidParam.semester,
-        generalWeightedAverage : parseFloat(educationAidParam.gwa),
-        tuitionFee : parseFloat(educationAidParam.tuitionFee),
-        registrationFee : parseFloat(educationAidParam.registrationFee),
+        generalWeightedAverage : educationAidParam.gwa,
+        tuitionFee : educationAidParam.tuitionFee,
+        registrationFee : educationAidParam.registrationFee,
         schoolId : educationAidParam.schoolId,
         orDate : educationAidParam.orDate,
         orNumber : educationAidParam.orNumber
