@@ -62,7 +62,6 @@ class CarLeaseFragment extends Component {
                         <p className={ 'car-option-cards font-weight-bold font-size-15px' }>
                           { value.title }
                         </p>
-                        <h2 className = { 'font-size-12px' }> Lorem ipsum dolor </h2>
                       </div>
                   </Card>
                   )
