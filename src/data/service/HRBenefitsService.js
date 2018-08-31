@@ -573,16 +573,18 @@ export default class HRBenefitsService {
         tuitionFee : educationAidParam.tuitionFee,
         registrationFee : educationAidParam.registrationFee,
         schoolId : educationAidParam.schoolId,
+        orNumber : educationAidParam.orNumber,
         orDate : educationAidParam.orDate,
-        orNumber : educationAidParam.orNumber
       }
       formData.append('uuid', 12345)
+      formData.append('body', JSON.stringify(educationAidObject))
       {
         educationAidParam.attachments.map((resp, key ) =>
-          formData.append(resp.name, resp.file)
+          (
+            formData.append(resp.name, resp.file)
+          )
         )
       }
-      formData.append('body', JSON.stringify(educationAidObject))
       return this.apiClient.post('v2/reimbursements/education/personal/submit', formData, {
         headers : { token }
       })
@@ -606,14 +608,14 @@ export default class HRBenefitsService {
 
   addGrantPlan (token, accountToken, accountNumber, releasingCenter, grantPlanParam) {
     const formData = new FormData()
+    formData.append('uuid', 12345)
     const grantPlanObject = {
       grantType : grantPlanParam.grantId,
       accountNumber,
       releasingCenter
     }
-    formData.append('uuid', 12345)
-    formData.append('cert', grantPlanParam.file)
     formData.append('body', JSON.stringify(grantPlanObject))
+    formData.append('cert', grantPlanParam.file)
     return this.apiClient.post('v2/grants/education/dependent/submit', formData, {
       headers : { token }
     })
@@ -635,6 +637,7 @@ export default class HRBenefitsService {
 
    addGroupAid (token, accountToken, accountNumber, releasingCenter, groupAidParam) {
      const formData = new FormData()
+     formData.append('uuid', 12345)
      const groupPlanObject = {
         accountNumber,
         releasingCenter,
@@ -646,12 +649,11 @@ export default class HRBenefitsService {
         orDate: groupAidParam.orDate,
         orNumber: groupAidParam.orNumber
      }
-     formData.append('uuid', 12345)
+     formData.append('body', JSON.stringify(groupPlanObject))
      groupAidParam.attachments.map((resp, key) =>
       (
         formData.append(resp.name, resp.file)
       ))
-     formData.append('body', JSON.stringify(groupPlanObject))
      return this.apiClient.post('v2/reimbursements/education/dependent/submit', formData, {
        headers : { token }
      })
