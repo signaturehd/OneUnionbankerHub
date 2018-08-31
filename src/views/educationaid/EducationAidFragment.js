@@ -105,11 +105,11 @@ class EducationAidFragment extends BaseMVPView {
 
   orNumberFunc (e) {
     const validate = EducationAidFunction.checkedValidateSymbol(e)
-    this.setState({ orNumber : validate, orNumberErrorMessage : '' })
+    this.setState({ orNumber : validate.toUpperCase(), orNumberErrorMessage : '' })
   }
 
   orDateFunc (data) {
-    this.setState({ orDate: data.format('MM-DD-YYYY'), orDateErrorMessage : '' })
+    this.setState({ orDate: data.format('MM/DD/YYYY'), orDateErrorMessage : '' })
   }
 
   validateRequired (e) {
@@ -328,30 +328,30 @@ class EducationAidFragment extends BaseMVPView {
     const AcademicYearOptions = [
       {
         id: 0,
-        name: moment().subtract(1, 'years').format('YYYY') + ' - ' + moment().format('YYYY')
+        name: moment().subtract(1, 'years').format('YYYY') + '-' + moment().format('YYYY')
       },
       {
         id: 1,
-        name: moment().format('YYYY') + ' - ' + moment().add(1, 'years').format('YYYY')
+        name: moment().format('YYYY') + '-' + moment().add(1, 'years').format('YYYY')
       }
     ]
 
     const semesterOptions = [
       {
           id: 0,
-          name: 'First Semester',
+          name: '1st Semester',
       },
       {
           id: 1,
-          name: 'Second Semester',
+          name: '2nd Semester',
       },
       {
           id: 2,
-          name: 'Third Semester',
+          name: '3rd Semester',
       },
       {
           id: 4,
-          name: 'Fourth Semester',
+          name: '4th Semester',
       }
     ]
 
