@@ -88,7 +88,7 @@ class DentalLoaCard extends Component {
                   readOnly
                   minDate = { moment() }
                   disabled = { showEditSubmitButton }
-                  selected = {  preferredDate && moment() }
+                  selected = {  preferredDate && moment(preferredDate) }
                   onChange = { (e) => dateFunc(e) }
                   text = { 'Preferred Schedule' }
                   hint = { '(eg. MM/DD/YYYY)' }
@@ -113,28 +113,32 @@ class DentalLoaCard extends Component {
               </div>
             </div>
             {
-            selectedProcedures && selectedProcedures.map((procedure, key) => (
-                 <div className = { 'dentalloa-procedure-list' }>
-                   <div key = { key } className = { 'procedure-grid' }>
-                      <div className={ 'procedure-div' }>
-                        <h5 className={'dentalloa-procedure-list-name'}>{ procedure.name }</h5>
-                        <h6 className={'dentalloa-procedure-list-limit'}>{ `${  procedure.limit}` }</h6>
-                      </div>
-                      <img
-                        src={ require('../../../ub-components/Notify/images/x-circle.png') }
-                        className='close-button'
-                        onClick={
-                          () => {
-                            selectedProcedures.splice(key, 1)
-                            this.setState({ selectedProcedures })
-                          }
+
+              selectedProcedures && selectedProcedures.map((procedure, key) => (
+                   <div className = { 'dentalloa-procedure-list' }>
+                     <div key = { key } className = { 'procedure-grid' }>
+                        <div className={ 'procedure-div' }>
+                          <h5 className={'dentalloa-procedure-list-name'}>{ procedure.name }</h5>
+                          <h6 className={'dentalloa-procedure-list-limit'}>{ `${  procedure.limit}` }</h6>
+                        </div>
+                        {
+                          !showEditSubmitButton &&
+                          <img
+                            src={ require('../../../ub-components/Notify/images/x-circle.png') }
+                            className='close-button'
+                            onClick={
+                              () => {
+                                selectedProcedures.splice(key, 1)
+                                this.setState({ selectedProcedures })
+                              }
+                            }
+                          />
                         }
-                      />
+                     </div>
+                     <br/>
                    </div>
-                   <br/>
-                 </div>
-                 ))
-             }
+                   ))
+               }
              <br/>
              <Line/>
              <br/>

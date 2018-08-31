@@ -5,8 +5,10 @@ import GetTransactionPersonalInteractor from '../../../domain/interactor/transac
 import UploadTransactionImageInteractor from '../../../domain/interactor/transactions/UploadTransactionImageInteractor'
 import PostNewCarConfirmationInteractor from '../../../domain/interactor/transactions/PostNewCarConfirmationInteractor'
 import PostNewPaymentInteractor from '../../../domain/interactor/transactions/PostNewPaymentInteractor'
+import PostNewReleasingInteractor from '../../../domain/interactor/transactions/PostNewReleasingInteractor'
 
 import leasesCarConfirm from '../../../domain/param/AddCarLeaseConfirmationParam'
+import leasesCarLeaseReleasingParam from '../../../domain/param/AddCarLeaseReleasingParam'
 import leasesConfirmpaymentParam from '../../../domain/param/AddCarleasePaymentParam'
 import GetTransactionParam from '../../../domain/param/GetTransactionParam'
 
@@ -130,6 +132,17 @@ export default class TransactionPersonalDetailsPresenter {
       }, error => {
       }
     )
+  }
+
+  addCarLeaseReleasing (transactionId) {
+    this.view.showCircularLoader()
+    this.postNewReleasingInteractor.execute(leasesCarLeaseReleasingParam(transactionId))
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.showMessageSuccessConfirm(data.message)
+    }, error => {
+      this.view.hideCircularLoader()
+    })
   }
 
   uploadTransactionCalamity (transactionType, benefitId, image) {
