@@ -1,11 +1,13 @@
 import UpdateNoticeInteractor from '../../../domain/interactor/notice/UpdateNoticeInteractor'
 import NoticeParam from '../../../domain/param/NoticeParam'
 import SubmitPinInteractor from '../../../domain/interactor/compliances/SubmitPinInteractor'
+import ValidateEmployeePinInteractor from '../../../domain/interactor/pinCode/ValidateEmployeePinInteractor'
 
 export default class NoticePresenter {
   constructor (container) {
     this.updateNoticeInteractor = new UpdateNoticeInteractor(container.get('HRBenefitsClient'))
     this.submitPinInteractor = new SubmitPinInteractor(container.get('HRBenefitsClient'))
+    this.validateEmployeePinInteractor = new ValidateEmployeePinInteractor(container.get('HRBenefitsClient'))
     // this.updateNoticeMplInteractor = new UpdateNoticeMplInteractor(container.get('HRBenefitsClient'))
   }
 
@@ -25,13 +27,13 @@ export default class NoticePresenter {
      })
   }
 
-  submitPin (code) {
+  validateEmployeePin (code) {
     this.view.showCircularLoader()
-    this.submitPinInteractor.execute(code)
+    this.validateEmployeePinInteractor.execute(code)
       .subscribe(
         data => {
           this.view.hideCircularLoader()
-          this.view.noticeResponse(data, true)
+          this.view.noticeResponseFunc(data, true, false)
         }, error => {
         this.view.hideCircularLoader()
     })

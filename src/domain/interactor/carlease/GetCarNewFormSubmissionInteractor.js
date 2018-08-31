@@ -3,13 +3,13 @@ export default class GetCarNewFormSubmissionInteractor {
     this.client = client
   }
 
-  execute (addCarParam) {
+  execute (carRequestParam) {
     return this.client.addCarRequest(
       this.client.getToken(),
       this.client.getAccountToken(),
       this.client.getAccountNumber(),
       this.client.getReleasingCenter(),
-      addCarParam
+      carRequestParam
     )
   }
 }

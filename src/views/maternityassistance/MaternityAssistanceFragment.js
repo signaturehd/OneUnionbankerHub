@@ -174,7 +174,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
 
   validateSymbol (e) {
     const validate = MaternityAssistanceFunction.checkedValidateSymbol(e)
-    this.setState({ orNumberText : validate.toUpperCase(), orNumberErrorMessage : '' })
+    this.setState({ orNumberText : validate, orNumberErrorMessage : '' })
   }
 
   validateDate (e) {
@@ -270,9 +270,9 @@ class MaternityAssistanceFragment extends BaseMVPView {
       attachmentArray,
       gender
     } = this.state
-    if(typeDeliveryName.toUpperCase() === 'normal') {
+    if(typeDeliveryName.toLowerCase() === 'normal') {
       this.setState({ benefitsCodeType : 'MN' })
-    } else if (typeDeliveryName.toUpperCase() === 'caesarean') {
+    } else if (typeDeliveryName.toLowerCase() === 'caesarean') {
       this.setState({ benefitsCodeType : 'MC' })
     } else if (gender === 'M') {
       this.setState({ benefitsCodeType : 'PL' })
@@ -297,6 +297,15 @@ class MaternityAssistanceFragment extends BaseMVPView {
       attachmentLength
     } = this.state
 
+    let validateAttachments = false
+    attachmentArray && attachmentArray.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
+
     if(!this.validateRequired(typeDeliveryName)){
       this.setState({ typeOfDeliveryErrorMessage : 'Please provide the type of delivery' })
     } else if (!this.validateRequired(deliveryDate)) {
@@ -315,7 +324,21 @@ class MaternityAssistanceFragment extends BaseMVPView {
         duration: 2000,
       })
     )
-    } else {
+    } else if (validateAttachments) {
+      attachmentArray && attachmentArray.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'Warning' ,
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 2000
+             })
+           )
+          }
+        }
+      )
+     } else {
       this.setState({
         showEditSubmitButton: true,
         titleChange: false,
@@ -519,7 +542,8 @@ class MaternityAssistanceFragment extends BaseMVPView {
               <GenericButton
                 text = { 'Ok' }
                 onClick = { () => {
-                  this.setState({ showConfirmationModal : false, showMaternityLeaveModal: true })
+                  this.setState({ showConfirmationModal : false })
+                  this.navigate()
                 }}
                 />
             </center>
@@ -560,8 +584,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
           <BenefitFeedbackModal
             benefitId={ '9' }
             onClose={ () => {
-              this.props.history.push('/mybenefits/benefits/medical'),
-              this.setState({ showBenefitFeedbackModal : false })
+              this.setState({ showBenefitFeedbackModal : false, showMaternityLeaveModal: true  })
             }}
           />
         }

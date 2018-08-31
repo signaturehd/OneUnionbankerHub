@@ -443,13 +443,13 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addCarLeasePayment (token) {
-    return this.service.addCarLeasePayment(token)
+  addCarLeasePayment (token, leasesConfirmpaymentParam) {
+    return this.service.addCarLeasePayment(token, leasesConfirmpaymentParam)
       .pipe(ServiceErrorOperator())
   }
 
-  addCarLeaseConfirmation (token) {
-    return this.service.addCarLeaseConfirmation(token)
+  addCarLeaseConfirmation (token, leasesCarConfirm) {
+    return this.service.addCarLeaseConfirmation(token, leasesCarConfirm)
       .pipe(ServiceErrorOperator())
   }
 
@@ -756,8 +756,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addPhenomIsHeart (token, like) {
-    return this.service.addPhenomIsHeart(token, like)
+  addPhenomIsHeart (token, id, isHeart) {
+    return this.service.addPhenomIsHeart(token, id, isHeart)
       .pipe(ServiceErrorOperator())
   }
 
@@ -778,9 +778,19 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  validateEmployeePin (token, employeePinParam) {
+    return this.service.validateEmployeePin(token, employeePinParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Staff Accounts */
   getForConfirmation (token, id) {
     return this.service.getForConfirmation(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addStaffAccounts (token, accountNumber, staffAccountsParam) {
+    return this.service.addStaffAccounts(token, accountNumber, staffAccountsParam)
       .pipe(ServiceErrorOperator())
   }
 }

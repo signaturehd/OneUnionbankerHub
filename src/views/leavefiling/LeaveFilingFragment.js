@@ -37,6 +37,9 @@ class LeaveFilingFragment extends BaseMVPView {
       dateFrom: '',
       errorMessageRemarks : '',
       errorMessageRemarksDateFrom : '',
+      errorMessageRemarksDateTo : '',
+      errorMessageRemarksTimeFrom : '',
+      errorMessageRemarksTimeTo : '',
       fromTime : '',
       fromMeridiem : '',
       toTime : '',
@@ -104,9 +107,9 @@ class LeaveFilingFragment extends BaseMVPView {
     } else if(!new RequiredValidation().isValid(dateTo)) {
       this.setState({ errorMessageRemarksDateTo : 'Date is required' })
     } else if(!new RequiredValidation().isValid(fromTime)) {
-      this.setState({ errorMessageRemarksDateTo : 'Time is required' })
+      this.setState({ errorMessageRemarksTimeFrom : 'Time is required' })
     } else if(!new RequiredValidation().isValid(toTime)) {
-      this.setState({ errorMessageRemarksDateTo : 'Time is required' })
+      this.setState({ errorMessageRemarksTimeTo : 'Time is required' })
     } else if(!new RequiredValidation().isValid(feedbackTextareaValueRemarks)) {
       this.setState({ errorMessageRemarks : 'Remarks is required' })
     } else {
@@ -132,10 +135,10 @@ class LeaveFilingFragment extends BaseMVPView {
     let dateTimeFrom = moment(dateFrom).format('MM/DD/YYYY') + ' ' + fromTime + ':00 ' + fromMeridiem
     let dateTimeTo = moment(dateTo).format('MM/DD/YYYY') + ' ' + toTime + ':00 ' + toMeridiem
     this.presenter.addLeaveFiling(
-      LeaveFilingFunctions.checkedReasonForLeave(benefitsCodeType),
+      benefitsCodeType.toUpperCase(),
       dateTimeFrom,
       dateTimeTo,
-      feedbackTextareaValue,
+      LeaveFilingFunctions.checkedReasonForLeave(benefitsCodeType),
       feedbackTextareaValueRemarks,
     )
   }
@@ -157,6 +160,8 @@ class LeaveFilingFragment extends BaseMVPView {
       errorMessageRemarks,
       errorMessageRemarksDateFrom,
       errorMessageRemarksDateTo,
+      errorMessageRemarksTimeFrom,
+      errorMessageRemarksTimeTo,
       fromTime,
       fromMeridiem,
       toTime,
@@ -176,7 +181,7 @@ class LeaveFilingFragment extends BaseMVPView {
                 <GenericButton
                   onClick = { () => {
                     this.setState({ showSuccessModal : false })
-                    navigateBenefits
+                    this.navigate()
                     }
                   }
                   text = { 'Ok' }/>
@@ -225,10 +230,10 @@ class LeaveFilingFragment extends BaseMVPView {
                       format = { 'hh:mm' }
                       timeMode = { '12' }
                       meridiem = { fromMeridiem ? fromMeridiem : 'AM' }
-                      time = { fromTime }
-                      defaultTime = { '8:30' }
+                      time = { fromTime ? fromTime : '8:30'}
                       onTimeChange = { this.fromTimeChange }
                       disabled = { showEditMode }
+                      errorMessage = { fromTime ? '' : errorMessageRemarksTimeFrom }
                     />
                   </div>
                   <div>
@@ -238,10 +243,10 @@ class LeaveFilingFragment extends BaseMVPView {
                       format = { 'hh:mm' }
                       timeMode = { '12' }
                       meridiem = { toMeridiem ? toMeridiem : 'PM'}
-                      time = { toTime }
-                      defaultTime = { '5:30' }
+                      time = { toTime ? toTime : '5:30' }
                       onTimeChange = { this.toTimeChange }
                       disabled = { showEditMode }
+                      errorMessage = { toTime ? '' : errorMessageRemarksTimeTo }
                     />
                   </div>
                 </div>

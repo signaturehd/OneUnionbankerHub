@@ -70,6 +70,10 @@ class DentalReimbursementFragment extends BaseMVPView {
     this.setState({ attachmentArray : updatedAttachment })
   }
 
+  setFileNew (attachmentArray) {
+    this.setState({ attachmentArray })
+  }
+
   render () {
     const {
       procedureModal,
@@ -134,6 +138,7 @@ class DentalReimbursementFragment extends BaseMVPView {
                </center>               :
               <DentalReimbursementCard
                 attachments = { attachmentArray }
+                setFileNewFunc  = { (attachmentArray) =>  this.setFileNew(attachmentArray) }
                 presenter = { this.presenter }
                 dependents = { dependents }/>
             }

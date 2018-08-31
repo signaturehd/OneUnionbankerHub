@@ -7,7 +7,7 @@ import Presenter from './presenter/SettingsPresenter'
 
 import SettingsProfileCardComponent from './components/SettingsProfileCardComponent'
 
-import { Card } from '../../ub-components/'
+import { Card, Modal, GenericButton   } from '../../ub-components/'
 
 class SettingsFragment extends BaseMVPView {
 
@@ -35,6 +35,8 @@ class SettingsFragment extends BaseMVPView {
      showPersonalInfoModal : false,
      showStaffAccountsModal : false,
      staffLoader : false,
+     noticeResponseModal : false,
+     noticeResponse : ''
     }
   }
   componentDidMount () {
@@ -65,6 +67,11 @@ class SettingsFragment extends BaseMVPView {
   showRank (rank) {
     this.setState({ rank })
   }
+
+  showStaffAccountConfirmation (noticeResponse) {
+    this.setState({ noticeResponse, noticeResponseModal : true })
+  }
+
   showProfileDependent (profileDependent) {
     this.setState({ profileDependent })
   }
@@ -106,11 +113,26 @@ class SettingsFragment extends BaseMVPView {
       showStaffAccountsModal,
       staffLoader,
       staffAccounts,
+      noticeResponse,
+      noticeResponseModal
     }=this.state
-
+    console.log(noticeResponse)
     return (
       <div className={ 'profile-container' }>
         { super.render() }
+        {
+          noticeResponseModal &&
+          <Modal>
+            <center>
+              <h2>{ noticeResponse }</h2>
+              <br/>
+              <GenericButton
+                text = { 'Ok' }
+                onClick = { () => this.setState({ noticeResponseModal: false }) }
+                />
+            </center>
+          </Modal>
+        }
         <SettingsProfileCardComponent
           accountNumber = { accountNumber }
            profile={ profile }
@@ -134,6 +156,7 @@ class SettingsFragment extends BaseMVPView {
            showStaffAccountsModalFunc = { (showStaffAccountsModal) =>  this.setState({ showStaffAccountsModal }) }
            changePinSendToFragment = { (uniqueOldPIN, uniqueNewPIN) => this.submitUpdatedPIN(uniqueOldPIN, uniqueNewPIN) }
            getStaffAccounts = { (id) => this.presenter.getForConfirmation(id) }
+           onClickEmployeeConfirmationFunc = { (resp, resp1) => this.presenter.addStaffAccounts(resp, resp1)  }
         />
       </div>
     )

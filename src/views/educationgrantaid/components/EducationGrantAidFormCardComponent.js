@@ -38,7 +38,7 @@ class EducationGrantAidFormCardComponent extends Component {
       onClick,
       showEditSubmitButton
     } = this.props
-
+console.log(attachment)
     return (
       <div className = {'educGrant-container'}>
 
@@ -89,10 +89,6 @@ class EducationGrantAidFormCardComponent extends Component {
                     fileArray = { attachment }
                     setFile = { (resp) => setAttachmentArrayFunc(resp) }
                     disabled = { showEditSubmitButton }
-                    errorMessage = {
-                      showEditSubmitButton ?
-                      '' :
-                      `Please upload the required attachments`  }
                   />
                 </div>
                 :
