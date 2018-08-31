@@ -538,10 +538,11 @@ export default class HRBenefitsService {
         orDate : educationAidParam.orDate,
         orNumber : educationAidParam.orNumber
       }
-      formData.append('uuid', 12345)
-      formData.append('cert1', educationAidParam.attachments[0].file)
-      formData.append('cert2', educationAidParam.attachments[1].file)
-      formData.append('cert3', educationAidParam.attachments[2].file)
+      {
+        educationAidParam.attachments.map((resp, key ) =>
+          formData.append(resp.name, resp.file)
+        )
+      }
       formData.append('body', JSON.stringify(educationAidObject))
       return this.apiClient.post('v2/reimbursements/education/personal/submit', formData, {
         headers : { token }
