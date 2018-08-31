@@ -119,7 +119,7 @@ class ComputerLoanCardComponent extends Component {
           {
             review &&
             <GenericButton
-              text = { 'Back' }
+              text = { 'Edit' }
               onClick = { () => updateForm() }
             />
           }

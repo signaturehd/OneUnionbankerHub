@@ -12,11 +12,16 @@ import {
   LoaderModal,
 } from '../../ub-components/'
 
+import store from '../../store'
 import NoticeModal from '../notice/Notice'
+import { NotifyActions } from '../../actions'
+
 import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import EmergencyLoanCardComponent from './components/EmergencyLoanCardComponent'
+
+import * as EmergencyLoanFunction from './functions/EmergencyLoanFunction'
 
 class EmergencyLoanFragment extends BaseMVPView {
   constructor (props) {
@@ -157,6 +162,10 @@ class EmergencyLoanFragment extends BaseMVPView {
     this.setState({ maximumAmount })
   }
 
+  validateRequired (e) {
+    return EmergencyLoanFunction.checkedValidateInput(e)
+  }
+
   updateModeOfLoan (modeOfLoanId, modeOfLoanLabel) {
     if (modeOfLoanId === 1) {
       this.setState({
@@ -216,13 +225,79 @@ class EmergencyLoanFragment extends BaseMVPView {
   submitForm () {
     const {
       review,
+      purposeOfAvailmentLabel,
+      modeOfLoanId,
+      termOfLoanId,
+      desiredAmount,
+      fileAttachments,
       showConfirmationModal
     } = this.state
-
+    let validateAttachments = false
+    fileAttachments && fileAttachments.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
     if (review) {
       this.setState({showConfirmationModal : true})
     } else {
-      this.setState({review : true, status: 'Submit'})
+      if (!this.validateRequired(purposeOfAvailmentLabel)) {
+         store.dispatch(NotifyActions.addNotify({
+            title : 'Warning' ,
+            message : 'Purpose of Availment is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (!this.validateRequired(modeOfLoanId)) {
+         store.dispatch(NotifyActions.addNotify({
+            title : 'Warning' ,
+            message : 'Mode of Loan is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (!this.validateRequired(termOfLoanId)) {
+         store.dispatch(NotifyActions.addNotify({
+            title : 'Warning' ,
+            message : 'Term of Loan is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (!this.validateRequired(desiredAmount)) {
+         store.dispatch(NotifyActions.addNotify({
+            title : 'Warning' ,
+            message : 'Desired Amount is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (!fileAttachments.length) {
+        if (validateAttachments) {
+          fileAttachments && fileAttachments.map(
+            (attachment, key) => {
+              if(!attachment.file) {
+                store.dispatch(NotifyActions.addNotify({
+                   title : 'Warning' ,
+                   message : attachment.name + ' is required',
+                   type : 'warning',
+                   duration : 2000
+                 })
+               )
+              }
+            }
+          )
+
+        }else {
+          this.setState({review : true, status: 'Submit'})
+        }
+      }
+      else {
+        this.setState({review : true, status: 'Submit'})
+      }
     }
   }
 

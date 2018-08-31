@@ -12,9 +12,12 @@ import {
   LoaderModal,
 } from '../../ub-components/'
 
+import store from '../../store'
+import { NotifyActions } from '../../actions'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
+import * as ComputerLoanFunction from './function/ComputerLoanFunction'
 
 import ComputerLoanCardComponent from './components/ComputerLoanCardComponent'
 
@@ -47,7 +50,8 @@ class ComputerLoanFragment extends BaseMVPView {
       termOfLoan : [],
       nfis : [],
       fileAttachments : [],
-      supplier : null,
+      supplier : '',
+      desiredAmount: '',
       status : 'Next',
     }
 
@@ -138,6 +142,14 @@ class ComputerLoanFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  supplierFunc (supplier) {
+    this.setState({ supplier })
+  }
+
+  validateRequired (e) {
+    return ComputerLoanFunction.checkedValidateInput(e)
+  }
+
   /* Navigage back to loans Option*/
   navigate () {
     this.props.history.push('/mybenefits/benefits/loans')
@@ -219,17 +231,92 @@ class ComputerLoanFragment extends BaseMVPView {
   submitForm () {
     const {
       review,
+      purposeOfAvailmentLabel,
+      modeOfLoanId,
+      termOfLoanId,
+      desiredAmount,
+      fileAttachments,
+      supplier,
       showConfirmationModal
     } = this.state
+
+    let validateAttachments = false
+    fileAttachments && fileAttachments.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
 
     if (review) {
       this.setState({showConfirmationModal : true})
     } else {
-      this.setState({review : true, status: 'Submit'})
+      if (!this.validateRequired(purposeOfAvailmentLabel)) {
+         store.dispatch(NotifyActions.addNotify({
+            title : 'Warning' ,
+            message : 'Purpose of Availment is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (!this.validateRequired(modeOfLoanId)) {
+         store.dispatch(NotifyActions.addNotify({
+            title : 'Warning' ,
+            message : 'Mode of Loan is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (!this.validateRequired(termOfLoanId)) {
+         store.dispatch(NotifyActions.addNotify({
+            title : 'Warning' ,
+            message : 'Term of Loan is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (!this.validateRequired(supplier)) {
+         store.dispatch(NotifyActions.addNotify({
+            title : 'Warning' ,
+            message : 'Supplier is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (!this.validateRequired(desiredAmount)) {
+         store.dispatch(NotifyActions.addNotify({
+            title : 'Warning' ,
+            message : 'Desired Amount is required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (fileAttachments.length) {
+        if (validateAttachments) {
+          fileAttachments && fileAttachments.map(
+            (attachment, key) => {
+              if(!attachment.file) {
+                store.dispatch(NotifyActions.addNotify({
+                   title : 'Warning' ,
+                   message : attachment.name + ' is required',
+                   type : 'warning',
+                   duration : 2000
+                 })
+               )
+              }
+            }
+          )
+        }else {
+          this.setState({review : true, status: 'Submit'})
+        }
+      }
+      else {
+        console.log("No attachment")
+        this.setState({review : true, status: 'Submit'})
+      }
     }
   }
-
-
 
   setPurposeOfAvailment (purposeOfAvailmentId, subCategoryId, purposeOfAvailmentLabel, nfis) {
     if (purposeOfAvailmentId) {
@@ -415,7 +502,7 @@ class ComputerLoanFragment extends BaseMVPView {
               offsetLoan = { offsetLoanArray }
               desiredAmount = { (desiredAmount) => this.setState({ desiredAmount : parseInt(desiredAmount) }) }
               onClick = { () => this.submitForm() }
-              supplierName = { (supplier) => this.setState({ supplier }) }
+              supplierName = { (supplier) => this.supplierFunc(supplier) }
               status = { status }
               review = { review }
               setAttachments = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
