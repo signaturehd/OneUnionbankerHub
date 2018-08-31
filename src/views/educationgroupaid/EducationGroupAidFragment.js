@@ -99,11 +99,11 @@ class EducationGroupAidFragment extends BaseMVPView {
 
   orNumberFunc (e) {
     const validate = EducationGroupAidFunction.checkedValidationSymbol(e)
-    this.setState({ orNumber : validate, orNumberErrorMessage : '' })
+    this.setState({ orNumber : validate.toUpperCase(), orNumberErrorMessage : '' })
   }
 
   orDateFunc (data) {
-    this.setState({ orDate : data.format('MM-DD-YYYY'), orDateErrorMessage : '' })
+    this.setState({ orDate : data.format('MM/DD/YYYY'), orDateErrorMessage : '' })
   }
 
   dateFunc (date) {
