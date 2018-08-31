@@ -174,7 +174,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
 
   validateSymbol (e) {
     const validate = MaternityAssistanceFunction.checkedValidateSymbol(e)
-    this.setState({ orNumberText : validate.toUpperCase(), orNumberErrorMessage : '' })
+    this.setState({ orNumberText : validate, orNumberErrorMessage : '' })
   }
 
   validateDate (e) {
@@ -270,9 +270,9 @@ class MaternityAssistanceFragment extends BaseMVPView {
       attachmentArray,
       gender
     } = this.state
-    if(typeDeliveryName.toUpperCase() === 'normal') {
+    if(typeDeliveryName.toLowerCase() === 'normal') {
       this.setState({ benefitsCodeType : 'MN' })
-    } else if (typeDeliveryName.toUpperCase() === 'caesarean') {
+    } else if (typeDeliveryName.toLowerCase() === 'caesarean') {
       this.setState({ benefitsCodeType : 'MC' })
     } else if (gender === 'M') {
       this.setState({ benefitsCodeType : 'PL' })
@@ -542,7 +542,8 @@ class MaternityAssistanceFragment extends BaseMVPView {
               <GenericButton
                 text = { 'Ok' }
                 onClick = { () => {
-                  this.setState({ showConfirmationModal : false, showMaternityLeaveModal: true })
+                  this.setState({ showConfirmationModal : false })
+                  this.navigate()
                 }}
                 />
             </center>
@@ -583,8 +584,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
           <BenefitFeedbackModal
             benefitId={ '9' }
             onClose={ () => {
-              this.props.history.push('/mybenefits/benefits/medical'),
-              this.setState({ showBenefitFeedbackModal : false })
+              this.setState({ showBenefitFeedbackModal : false, showMaternityLeaveModal: true  })
             }}
           />
         }
@@ -614,7 +614,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
           :
         <div>
           {
-          !enabledLoader ?
+          enabledLoader ?
             <center className = { 'circular-loader-center' }>
               <CircularLoader show = { true }/>
             </center> :

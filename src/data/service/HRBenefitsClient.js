@@ -778,9 +778,19 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  validateEmployeePin (token, employeePinParam) {
+    return this.service.validateEmployeePin(token, employeePinParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Staff Accounts */
   getForConfirmation (token, id) {
     return this.service.getForConfirmation(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addStaffAccounts (token, accountNumber, staffAccountsParam) {
+    return this.service.addStaffAccounts(token, accountNumber, staffAccountsParam)
       .pipe(ServiceErrorOperator())
   }
 }

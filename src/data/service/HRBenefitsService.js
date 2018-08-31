@@ -1003,9 +1003,31 @@ export default class HRBenefitsService {
     })
   }
 
+  validateEmployeePin (token, employeePinParam) {
+    const validateObject = {
+      code: employeePinParam,
+    }
+    return this.apiClient.post('v1/pin/validate', validateObject, {
+      headers : { token }
+    })
+  }
+
   /* Staff accounts */
   getForConfirmation (token, id) {
     return this.apiClient.get(`v1/employees/${id}/details?status=confirmation`, {
+      headers : { token }
+    })
+  }
+
+  addStaffAccounts (token, accountNumber, staffAccountsParam) {
+    const staffAccontObject = {
+      employeeName : staffAccountsParam.employeeName,
+      accounts: {
+        accountNumber: accountNumber,
+      },
+      sequence : staffAccountsParam.sequence
+    }
+    return this.accountClient.post('v1/employees/accounts/confirm', staffAccontObject , {
       headers : { token }
     })
   }

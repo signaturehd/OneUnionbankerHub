@@ -79,6 +79,7 @@ class EducationGroupAidFragment extends BaseMVPView {
   }
 
   showPremiumModal (showDOPModal) {
+    const { effectivityDate } = this.state
     this.setState({ showDOPModal })
   }
 
@@ -327,7 +328,7 @@ class EducationGroupAidFragment extends BaseMVPView {
           <DurationOfPremium
             label = { 'Dependents' }
             inputArray = { durationOfPremium }
-            selectedArray = { (premiumId, premiumMonths, premiumDuration) =>
+            selectedArray = { (premiumId, premiumMonths, premiumDuration) => {
               this.setState({
                 premiumId,
                 premiumMonths,
@@ -335,6 +336,8 @@ class EducationGroupAidFragment extends BaseMVPView {
                 showDOPModal : false,
                 DOPErrorMessage : ''
               })
+              this.dateFunc(effectivityDate)
+              }
             }
             onClose = { () => this.setState({ showDOPModal : false }) }
           />
@@ -374,6 +377,7 @@ class EducationGroupAidFragment extends BaseMVPView {
             premiumMonths = { premiumMonths }
             premiumDuration = { premiumDuration }
             DOPErrorMessage = { DOPErrorMessage }
+            effectiveDate = { effectiveDate }
             effectivityDate = { effectivityDate }
             effectivityDateText = { effectivityDateText }
             orDate = { orDate }

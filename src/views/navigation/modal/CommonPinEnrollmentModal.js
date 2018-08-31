@@ -18,7 +18,6 @@ class CommonPinEnrollmentModal extends Component {
       uniquePIN
     } = this.state
     const {
-      hasPIN,
       onCloseModal,
       onSubmitPinCode,
       enabledLoader,
@@ -69,7 +68,6 @@ class CommonPinEnrollmentModal extends Component {
 }
 
 CommonPinEnrollmentModal.propTypes = {
-  hasPIN : PropTypes.string,
   enabledLoader  : PropTypes.bool,
   onCloseModal  : PropTypes.func,
 }
