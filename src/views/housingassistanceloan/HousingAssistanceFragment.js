@@ -307,8 +307,6 @@ class HousingAssistanceFragment extends BaseMVPView {
     }
   }
 
-
-
   setPurposeOfAvailment (purposeOfAvailmentId, subCategoryId, purposeOfAvailmentLabel, nfis) {
     if (purposeOfAvailmentId) {
       this.presenter.getMplPurposeOfAvailment(purposeOfAvailmentId, subCategoryId)
