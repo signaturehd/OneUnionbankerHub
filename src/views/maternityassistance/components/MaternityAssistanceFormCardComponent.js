@@ -101,7 +101,8 @@ class MaternityAssistanceCardComponent extends Component {
                 moment().format('MM DD YYYY') &&
               <div>
                 <DatePicker
-                  maxDate = { moment(deliveryDate) }
+                  minDate = { moment(deliveryDate) }
+                  maxDate = { moment() }
                   selected = { preferredDate }
                   disabled = { showEditSubmitButton }
                   onChange = { (e) => dateFunc(e) }
