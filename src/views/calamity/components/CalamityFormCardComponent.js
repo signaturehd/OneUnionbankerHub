@@ -79,6 +79,7 @@ class CalamityFormCardComponent extends Component {
             <GenericButton
               text = { 'Add Property' }
               onClick = { (resp, key) => onShowPropertyFormModalFunc(resp, key, false) }
+              disabled = { showEditSubmitButton }
               />
           </div>
         </div>
