@@ -39,6 +39,8 @@ function  TransactionDetails (props)  {
   const onUploadAttachmentsFunc = props.onUploadAttachmentsFunc
   const setFileCarlease = props.setFileCarlease
   const fileCarLease = props.fileCarlease
+  const onConfirmationReleaseFunc = props.onConfirmationReleaseFunc
+
   if (transactionId === 6) {
     return <DentalRDetailsFragment
       details = { transactionDetails }
@@ -60,6 +62,7 @@ function  TransactionDetails (props)  {
   } else if (transactionId === 15) {
     return <CarLeaseDetailsFragment
       fileCarLease = { fileCarLease }
+      onConfirmationReleaseFunc = { (resp) => onConfirmationReleaseFunc(resp) }
       onConfirmationCarleaseFunc = { (id, status) => onConfirmationCarleaseFunc(id, status) }
       onUploadAttachmentsFunc = { (id, file) => onUploadAttachmentsFunc(id, file) }
       attachmentsMethod = { (resp) => attachmentsMethod(resp) }
@@ -292,6 +295,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              onConfirmationCarleaseFunc = { (transactionID, status) =>
                this.presenter.addCarLeaseConfirmation(transactionID, status)
              }
+             onConfirmationReleaseFunc = { (resp) => this.presenter.addCarLeaseConfirmation(resp) }
              fileCarLease = { fileCarLease }
              setFileCarlease = { (file) => this.setFileCarlease(file) }
              showFileReceipt = { response }

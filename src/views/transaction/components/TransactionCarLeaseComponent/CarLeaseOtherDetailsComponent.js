@@ -21,7 +21,8 @@ class CarLeaseOtherDetailsComponent extends Component {
       onConfirmation,
       setFileCarlease,
       fiileCarlease,
-      onUploadAttachmentsFunc
+      onUploadAttachmentsFunc,
+      onConfirmationReleaseFunc
     } = this.props
 
     const carBrand = TransactionPersonalFunction.checkedCarBrand(detailsCarLease)
@@ -169,19 +170,23 @@ class CarLeaseOtherDetailsComponent extends Component {
     <div>
       <div className = { 'grid-global' }>
         <div>
+
           {
-            detailsCarLease.CarDetails.RequiredAttachment.length !== 0 &&
+            details === 18 &&
             <div>
-              <MultipleFileUploader
-                fileArray = { detailsCarLease.CarDetails.RequiredAttachment }
-                placeholder = { 'Required Attachments' }
-                setFile = { (file) => setFileCarlease(file) }
-                />
-              <br/>
-              <GenerictButton
-                text = { 'Upload' }
-                onClick = { () => onUploadAttachmentsFunc(transactionID, fileCarLease) }
-                />
+              detailsCarLease.CarDetails.RequiredAttachment.length !== 0 &&
+              <div>
+                <MultipleFileUploader
+                  fileArray = { detailsCarLease.CarDetails.RequiredAttachment }
+                  placeholder = { 'Required Attachments' }
+                  setFile = { (file) => setFileCarlease(file) }
+                  />
+                <br/>
+                <GenerictButton
+                  text = { 'Upload' }
+                  onClick = { () => onUploadAttachmentsFunc(transactionID, fileCarLease) }
+                  />
+              </div>
             </div>
           }
         </div>
@@ -211,22 +216,10 @@ class CarLeaseOtherDetailsComponent extends Component {
             <div className = { 'grid-global' }>
               <div>
                 <GenericButton
-                  onClick = { () => onConfirmation(transactionID, 1) }
+                  onClick = { () => onConfirmationReleaseFunc(transactionID) }
                   text = { 'Confirm' }
                   />
               </div>
-              <div>
-                <GenericButton
-                  onClick = { () => onConfirmation(transactionID, 0) }
-                  text = { 'Decline' }
-                  />
-              </div>
-            </div>
-          }
-          {
-            details === 18 &&
-            <div>
-
             </div>
           }
         </div>
@@ -245,6 +238,7 @@ CarLeaseOtherDetailsComponent.propTypes = {
   ]),
   onConfirmation : PropTypes.func,
   onUploadAttachmentsFunc : PropTypes.func,
+  onConfirmationReleaseFunc : PropTypes.func,
   setFileCarlease : PropTypes.func
 }
 
