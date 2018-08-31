@@ -59,15 +59,15 @@ class DentalReimbursementFragment extends BaseMVPView {
   showDentalReimbursementValidate (validateDentalReimbursementResp) {
     this.setState({
       dependents: validateDentalReimbursementResp.dependents,
-    })
+  })
 
-    const { attachments } = validateDentalReimbursementResp
-    const updatedAttachment = [...this.state.attachmentArray]
-    attachments && attachments.map((attachment, key) => {
-      updatedAttachment.push({name: attachment})
-    })
+  const { attachments } = validateDentalReimbursementResp
+  const updatedAttachment = [...this.state.attachmentArray]
+  attachments && attachments.map((attachment, key) => {
+    updatedAttachment.push({name: attachment})
+  })
 
-    this.setState({ attachmentArray : updatedAttachment })
+  this.setState({ attachmentArray : updatedAttachment })
   }
 
   setFileNew (attachmentArray) {

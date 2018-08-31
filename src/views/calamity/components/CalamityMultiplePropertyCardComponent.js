@@ -64,6 +64,7 @@ class CalamityMultiplePropertyCardComponent extends Component {
                       src = { require('../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
                       onClick = { () =>
                         onEditModeProperty(
+                          resp.id,
                           resp.propertyName,
                           resp.description,
                           resp.propertyType,

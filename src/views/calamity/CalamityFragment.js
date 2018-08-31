@@ -31,6 +31,10 @@ import { RequiredValidation } from '../../utils/validate'
 
 import * as CalamityFunction from './function/CalamityFunction'
 
+import moment from 'moment'
+
+let id = 0
+
 class CalamityFragment extends BaseMVPView {
 
   constructor(props) {
@@ -77,6 +81,7 @@ class CalamityFragment extends BaseMVPView {
       propertyTypeValue : [ {id: 1, name: 'Replaceable'},
                             {id: 2, name: 'Irreplaceable'} ],
       editModeData: '',
+      editedId : null,
     }
     this.validator = this.validator.bind(this)
   }
@@ -144,12 +149,66 @@ class CalamityFragment extends BaseMVPView {
    this.setState({ showPropertyTypeModal })
   }
 
-  confirmation (showConfirmation, data) {
+  submitForm (id, date, damageProperty, attachmentArray) {
 
-  }
+    let validateAttachments = false
+    attachmentArray && attachmentArray.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
 
-  submitForm (data) {
-
+    if (id === null || id === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Type of Calamity is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    } else if (date === null || date === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Date of Occurence is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    } else if (damageProperty === null || !damageProperty.length) {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Damage Property is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }else if (!attachmentArray.length) {
+       store.dispatch(NotifyActions.addNotify({
+          title : 'Warning' ,
+          message : 'Attachments is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (validateAttachments) {
+      attachmentArray && attachmentArray.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'Warning',
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 2000
+             })
+           )
+          }
+        }
+      )
+     } else {
+     this.setState({ showEditSubmitButton : true })
+   }
   }
 
   setValidateCalamityAssistance(calamityAssistance) {
@@ -217,6 +276,8 @@ class CalamityFragment extends BaseMVPView {
       damagePropertyCardHolder,
       editModeData,
       updateMode,
+      editedId,
+      showEditSubmitButton,
     }=this.state
 
     const defaultDamagePropertyStatic = [
@@ -289,6 +350,10 @@ class CalamityFragment extends BaseMVPView {
       {
         showPropertyModal &&
         <CalamityFormGenericModal
+          calamityId = { calamityId }
+          editedId = { editedId }
+          id = { id }
+          incrementId = { () => ++id }
           damagePropertyCardHolder = { damagePropertyCardHolder }
           updateMode = { updateMode }
           editModeData = { editModeData }
@@ -345,8 +410,7 @@ class CalamityFragment extends BaseMVPView {
           hideModalPropertyFormFunc = { (showPropertyModal) => this.setState({ showPropertyModal }) }
           hideModalPropertyTypeFunc = { (showPropertyTypeModal) => this.setState({ showPropertyTypeModal }) }
           updateDataPropertyHolderFunc = { (resp) => {
-            const updatePropertyHolder = [...resp]
-            this.setState({ damagePropertyCardHolder : updatePropertyHolder  })
+            this.setState({ damagePropertyCardHolder : resp })
           }}
           getPropertyHolderFunc = { (resp) => {
             const updatePropertyHolder = [...damagePropertyCardHolder]
@@ -370,17 +434,29 @@ class CalamityFragment extends BaseMVPView {
            <CircularLoader show={ this.state.enabledLoader }/>
          </center> :
         <FormComponent
+          showEditSubmitButton = { showEditSubmitButton }
+          changeStateEditToFalse = { () => this.setState({ showEditSubmitButton : false }) }
+          getOnClicked = { (id, date, damageProperty, attachmentArray) =>
+            this.submitForm (
+              id,
+              date,
+              damageProperty,
+              attachmentArray
+            )
+          }
           onEditModeProperty = { (
+            editedId,
             property,
-            description,
+            propertyDesc,
             propertyType,
             acquisitionValue,
             estimatedCost,
             defaultDamageProperty,
             showPropertyModal,
             updateMode) => this.setState({
+              editedId,
               property,
-              description,
+              propertyDesc,
               propertyType,
               acquisitionValue,
               estimatedCost,
@@ -394,6 +470,15 @@ class CalamityFragment extends BaseMVPView {
               this.confirmation(showConfirmation, data)
             }
           }
+          onSubmit = {
+            (id, date, damageProperty, attachmentArray) =>
+            this.presenter.addCalamityAssistance (
+              id,
+              date,
+              damageProperty,
+              attachmentArray
+            )
+          }
           damagePropertyCardHolder = { damagePropertyCardHolder }
           calamityAssistance={ calamityAssistance }
           attachmentsData = { attachmentsData }
@@ -404,7 +489,16 @@ class CalamityFragment extends BaseMVPView {
           preferredDate = { preferredDate }
           handleChangeDate = { (resp) => this.changeDate(resp) }
           requestCalamityTypeFunc = { (resp) => this.showCalamityTypeModal(resp) }
-          onShowPropertyFormModalFunc = { () => this.setState({ showPropertyModal : true }) }
+          onShowPropertyFormModalFunc = { () => this.setState({
+            property : '',
+            propertyDesc : '',
+            propertyType : '',
+            acquisitionValue : '',
+            estimatedCost : '',
+            defaultDamageProperty : defaultDamageProperty,
+            showPropertyModal : true,
+            updateMode : false,})
+          }
           setAttachmentDefaultyFunc = { (attachmentDefaultArray) => this.setFileAttachments(attachmentDefaultArray) }
           setCardHolderDefaultyFunc = { (damagePropertyCardHolder) => this.setState({ damagePropertyCardHolder }) }
           getPreferredDate = { data =>

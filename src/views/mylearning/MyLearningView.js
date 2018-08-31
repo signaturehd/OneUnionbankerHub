@@ -29,17 +29,17 @@ class MyLearningView extends BaseMVPView {
     const { accountNumber, showAccountNumberModal } = this.state
     const mylearning = [{
       id: 0 ,
-      styleName: 'mylearning-cards-1 font-weight-bold',
+      styleName: 'mylearning-cards-1 mylearning-option-default font-weight-bold',
       title: 'Borrow Books',
       path: '/mylearning/books',
     }, {
       id: 1 ,
-      styleName: 'mylearning-cards-2 font-weight-bold',
+      styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
       title: 'Listen Podcasts',
       path: '/mylearning/podcasts',
     }, {
       id: 2 ,
-      styleName: 'mylearning-cards-3 font-weight-bold',
+      styleName: 'mylearning-cards-3 mylearning-option-default font-weight-bold',
       title: 'Enroll to Trainings',
       path: '/mylearning/trainings',
     }]
@@ -69,12 +69,17 @@ class MyLearningView extends BaseMVPView {
           {
           mylearning.map((value, idx) => (
             <Card
-              className = { 'mylearning-card-adjustment' } key={ idx }>
-              <div
-                className = { value.styleName }
-                text = { value.title }
-                onClick = { () => history.push(value.path) }>
-                <p className = { 'mylearning-option-cards' }> { value.title } </p>
+              className = { 'mylearning-card' }
+              onClick={ () =>
+                history.push(value.path)
+              }
+              key={ idx }>
+              <div className = { 'mylearning-column-grid' }>
+                <div
+                  className={ value.styleName }
+                  text={ value.title } >
+                </div>
+                <p className={ 'mylearning-option-cards font-weight-bold' }>{ value.title }</p>
               </div>
             </Card>
           ))

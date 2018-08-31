@@ -453,6 +453,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  addCarLeaseReleasing (token, leasesCarLeaseReleasingParam) {
+    return this.service.addCarLeaseReleasing(token, leasesCarLeaseReleasingParam)
+    .pipe(ServiceErrorOperator())
+  }
+
   getPayslip (token) {
     return this.service.getPayslip(token)
       .pipe(ServiceErrorOperator())

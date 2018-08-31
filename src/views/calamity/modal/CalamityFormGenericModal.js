@@ -37,6 +37,9 @@ class CalamityFormGenericModal extends Component {
 
   getDamagePropertyObject () {
     const {
+      editedId,
+      id,
+      incrementId,
       property,
       propertyDesc,
       propertyType,
@@ -71,6 +74,7 @@ class CalamityFormGenericModal extends Component {
     )
 
     const damagePropertyObject = {
+      id : id,
       propertyName : property,
       description : propertyDesc,
       propertyType : propertyType,
@@ -112,6 +116,7 @@ class CalamityFormGenericModal extends Component {
         }
       )
      } else {
+      incrementId()
       getPropertyHolderFunc(damagePropertyObject)
       resetInstance()
       this.setState({ genericFileAttachmentArray : [] })
@@ -120,55 +125,39 @@ class CalamityFormGenericModal extends Component {
   }
 
   updateSelectedPropertyObject () {
-    const {
-      updateModeFunc,
-      damagePropertyCardHolder,
+    const { damagePropertyCardHolder,
+      editedId,
       property,
-      propertyType,
       propertyDesc,
-      propertyFunc,
-      requestPropertyTypeFunc,
-      propertyDescFunc,
-      acquisitionFunc,
-      estimatedCostFunc,
-      resetInstance,
-      estimatedCost,
+      propertyType,
       acquisitionValue,
-      getPropertyHolderFunc,
-      updateDataPropertyHolderFunc
+      estimatedCost,
+      updateDataPropertyHolderFunc,
+      resetInstance,
+      hideModalPropertyFormFunc,
     } = this.props
-    const { genericFileAttachmentArray } =this.state
 
-    const updateInstance = [...damagePropertyCardHolder]
-    let updateProperty, updatePropertyDesc, updatePropertyType, updateAcquisitionValue, updateEstimatedCost, updateImages
-    damagePropertyCardHolder.map((data, key) => {
-      updateProperty = property
-      updatePropertyDesc = propertyDesc
-      updatePropertyType = propertyType
-      updateAcquisitionValue = estimatedCost
-      updateImages = [...data.imageKey]
-      data.imageKey.map((images, key) => {
-        images.base64 = images.base64
-        images.file = images.file
-        images.name = images.name
-      })
-      data.propertyName = updateProperty
-      data.description = updatePropertyDesc
-      data.propertyType = updatePropertyType
-      data.acquisitionValue = updateAcquisitionValue
-      data.repairCost = updateEstimatedCost
-      data.imageKey = updateImages
-      })
+    const { genericFileAttachmentArray } = this.state
 
-      updateDataPropertyHolderFunc(updateInstance)
-      propertyFunc('')
-      propertyDescFunc('')
-      requestPropertyTypeFunc('')
-      acquisitionFunc('')
-      estimatedCostFunc('')
-      resetInstance()
-      this.setState({ genericFileAttachmentArray : [] })
-      updateModeFunc(false)
+    const updatePropertyHolder = [...damagePropertyCardHolder]
+    const index = updatePropertyHolder.findIndex(property => property.id === editedId)
+    const damagePropertyObject = {
+      id : editedId,
+      propertyName : property,
+      description : propertyDesc,
+      propertyType : propertyType,
+      acquisitionValue : acquisitionValue,
+      repairCost : estimatedCost,
+      imageKey: genericFileAttachmentArray
+    }
+
+    if (index > -1) {
+       updatePropertyHolder.splice(index, 1, damagePropertyObject)
+       updateDataPropertyHolderFunc(updatePropertyHolder)
+       resetInstance()
+       this.setState({ genericFileAttachmentArray : [] })
+       hideModalPropertyFormFunc(false)
+    }
   }
 
   render () {

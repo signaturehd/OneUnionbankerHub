@@ -181,7 +181,7 @@ render () {
             <div>
               <DatePicker
                 maxDate = { moment() }
-                disabled = { false }
+                disabled = { showEditMode }
                 selected = { officialReceiptDate }
                 onChange = { (e) => this.setState({ officialReceiptDate : e }) }
                 text = { 'Date of Official Receipt' }
@@ -190,12 +190,13 @@ render () {
               <GenericInput
                 value = { officialReceiptNumber }
                 onChange = { (e) => this.setState({ officialReceiptNumber : e.target.value }) }
-                disabled = { false }
+                disabled = { showEditMode }
                 maxLength = { 20 }
                 text = { 'Official Receipt Number' } />
               <MultipleFileUploader
                 placeholder = 'Form Attachments'
                 fileArray = { attachments }
+                disabled = { showEditMode }
                 setFile = { (attachmentArray) => setFileNewFunc(attachmentArray) }
              />
             </div>
@@ -223,6 +224,7 @@ render () {
                    return (
                      <Checkbox
                       label={ dependent.name }
+                      disabled = { showEditMode }
                       key={ key }
                       value={ dependent.id }
                       checked={ dependent.id === selectedDependentId }
@@ -231,6 +233,7 @@ render () {
                  })
                }
              <GenericButton
+               disabled = { showEditMode }
                onClick={ () => this.setState({ procedureModal: true }) }
                onFocus={ () => this.setState({ procedureModal: true }) }
                className = {'dentalreimbursement-procedure' }
@@ -243,6 +246,7 @@ render () {
               <div key={ key } className = { 'dentalreimbursement-selected-procedure' }>
                 <div className = {'input-grid'}>
                   <GenericTextBox
+                    disabled = { showEditMode }
                     value = { procedure.amount }
                     onChange = { e => {
                       const updatedProcedures = [...selectedProcedures]
@@ -253,15 +257,18 @@ render () {
                     maxLength = { procedure.limit.toString().length }
                     placeholder = { `${procedure.name} (${procedure.limit})` }
                    />
-                  <div className = { 'dentalreimbursement-button-close' }>
-                    <img
-                      src = { require('../../../images/x-circle-global.png') }
-                      onClick = { () => {
-                        const { selectedProcedures } = this.state
-                        selectedProcedures.splice(key, 1)
-                        this.setState({ selectedProcedures })
-                      }}
-                    />
+                 <div className = { 'dentalreimbursement-button-close' }>
+                   {
+                     !showEditMode &&
+                     <img
+                       src = { require('../../../images/x-circle-global.png') }
+                       onClick = { () => {
+                         const { selectedProcedures } = this.state
+                         selectedProcedures.splice(key, 1)
+                         this.setState({ selectedProcedures })
+                       }}
+                     />
+                   }
                   </div>
                 </div>
                 <br/>
