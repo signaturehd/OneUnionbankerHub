@@ -206,8 +206,11 @@ export function checkedType (details) {
 }
 
 export function checkedAmount (details) {
-  return details && details.MaternityAssistanceDetails.Amount ?
-  format(details.MaternityAssistanceDetails.Amount) :
+  return
+    details &&
+    details.MaternityAssistanceDetails &&
+    details.MaternityAssistanceDetails.Amount ?
+    format(details.MaternityAssistanceDetails.Amount) :
   '(Not Yet Provided)'
 }
 

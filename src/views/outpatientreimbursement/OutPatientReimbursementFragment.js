@@ -127,9 +127,11 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       return resp.amount
     })
     const totalAmount = newValueArray.reduce((a, b) => a + b, 0)
+    console.log(totalAmount)
     const validate = OutPatientReimbursementFunction.checkedAmount(totalAmount)
     if(parseInt(totalAmount) > parseInt(limit)) {
       this.setState({
+        amount: totalAmount,
         errorMessageRequiredProcedure : `The amount you entered must not exceed to ${ limit }`
       })
     } else {
@@ -199,7 +201,6 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       limit,
       attachmentArray
     } = this.state
-
     let validateAttachments = false
     attachmentArray && attachmentArray.map(
       (attachment, key) => {
@@ -233,6 +234,14 @@ class OutPatientReimbursementFragment extends BaseMVPView {
           duration : 2000
         })
       )
+    } else if (!procedureArray.length) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Warning' ,
+         message : 'Procedure is required',
+         type : 'warning',
+         duration : 2000
+       })
+     )
     } else if (!attachmentArray.length) {
        store.dispatch(NotifyActions.addNotify({
           title : 'Warning' ,

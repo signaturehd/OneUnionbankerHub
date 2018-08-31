@@ -15,12 +15,14 @@ class CarLeaseOtherDetailsComponent extends Component {
 
   render () {
     const {
+      details,
       detailsCarLease,
       transactionID,
       onConfirmation,
       setFileCarlease,
       fiileCarlease,
-      onUploadAttachmentsFunc
+      onUploadAttachmentsFunc,
+      onConfirmationReleaseFunc
     } = this.props
 
     const carBrand = TransactionPersonalFunction.checkedCarBrand(detailsCarLease)
@@ -29,7 +31,6 @@ class CarLeaseOtherDetailsComponent extends Component {
     const insurancePayment = TransactionPersonalFunction.checkedInsurancePayment(detailsCarLease)
     const Amount = TransactionPersonalFunction.checkedCarAmount(detailsCarLease)
     const EquityAmount = TransactionPersonalFunction.checkedEquityAmount(detailsCarLease)
-
   return (
   <div className = { 'transaction-with-attachments' }>
     <div className = { 'transaction-component-otherdetails-form' }>
@@ -79,7 +80,9 @@ class CarLeaseOtherDetailsComponent extends Component {
           </div>
         </div>
        {
-         detailsCarLease.CarDetails.Color.map((resp, key) =>
+        detailsCarLease &&
+        detailsCarLease.CarDetails &&
+        detailsCarLease.CarDetails.Color.map((resp, key) =>
          <div>
            <div
               className = { 'transaction-icons-details-grid' }>
@@ -167,39 +170,58 @@ class CarLeaseOtherDetailsComponent extends Component {
     <div>
       <div className = { 'grid-global' }>
         <div>
+
           {
-            detailsCarLease.CarDetails.RequiredAttachment.length !== 0 &&
+            details === 18 &&
             <div>
-              <MultipleFileUploader
-                fileArray = { detailsCarLease.CarDetails.RequiredAttachment }
-                placeholder = { 'Required Attachments' }
-                setFile = { (file) => setFileCarlease(file) }
-                />
-              <br/>
-              <GenerictButton
-                text = { 'Upload' }
-                onClick = { () => onUploadAttachmentsFunc(transactionID, fileCarLease) }
-                />
+              detailsCarLease.CarDetails.RequiredAttachment.length !== 0 &&
+              <div>
+                <MultipleFileUploader
+                  fileArray = { detailsCarLease.CarDetails.RequiredAttachment }
+                  placeholder = { 'Required Attachments' }
+                  setFile = { (file) => setFileCarlease(file) }
+                  />
+                <br/>
+                <GenerictButton
+                  text = { 'Upload' }
+                  onClick = { () => onUploadAttachmentsFunc(transactionID, fileCarLease) }
+                  />
+              </div>
             </div>
           }
         </div>
         <div>
           <br/>
           <br/>
-          <div className = { 'grid-global' }>
-            <div>
-              <GenericButton
-                onClick = { () => onConfirmation(transactionID, 1) }
-                text = { 'Approve' }
-                />
+          {
+            details === 13 &&
+            <div className = { 'grid-global' }>
+              <div>
+                <GenericButton
+                  onClick = { () => onConfirmation(transactionID, 1) }
+                  text = { 'Confirm' }
+                  />
+              </div>
+              <div>
+                <GenericButton
+                  onClick = { () => onConfirmation(transactionID, 0) }
+                  text = { 'Decline' }
+                  />
+              </div>
             </div>
-            <div>
-              <GenericButton
-                onClick = { () => onConfirmation(transactionID, 0) }
-                text = { 'Decline' }
-                />
+          }
+          {
+            details === 14 &&
+
+            <div className = { 'grid-global' }>
+              <div>
+                <GenericButton
+                  onClick = { () => onConfirmationReleaseFunc(transactionID) }
+                  text = { 'Confirm' }
+                  />
+              </div>
             </div>
-          </div>
+          }
         </div>
       </div>
     </div>
@@ -209,12 +231,14 @@ class CarLeaseOtherDetailsComponent extends Component {
 }
 
 CarLeaseOtherDetailsComponent.propTypes = {
+  details: PropTypes.func,
   detailsCarLease : PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array
   ]),
   onConfirmation : PropTypes.func,
   onUploadAttachmentsFunc : PropTypes.func,
+  onConfirmationReleaseFunc : PropTypes.func,
   setFileCarlease : PropTypes.func
 }
 

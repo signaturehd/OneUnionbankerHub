@@ -93,7 +93,7 @@ class NoticePinModal extends BaseMVPView {
                 <center className = { 'circular-loader-center' }>
                   <CircularLoader show = { enabledLoader }/>
                 </center> :
-                <div>
+                <center>
                   <div className = { 'grid-global-row' }>
                     <span className = { 'lock-icon lock-icon-settings' }/>
                     <h2 className = { 'font-size-12px' }>Please enter your registered digital signature (PIN).</h2>
@@ -123,7 +123,7 @@ class NoticePinModal extends BaseMVPView {
                     }
                     className={ 'compliance-buttons compliance-submit' }
                     />
-                </div>
+                </center>
               }
             </div>
           </Modal>

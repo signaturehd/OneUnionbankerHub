@@ -498,6 +498,15 @@ export default class HRBenefitsService {
     })
   }
 
+  addCarLeaseReleasing (token, leasesCarLeaseReleasingParam) {
+    const paramObject = {
+      transactionId : leasesCarLeaseReleasingParam.transactionId
+    }
+    return this.apiClient.post('v1/leases/car/release', paramObject, {
+      headers : { token }
+    })
+  }
+
   addCarLeaseConfirmation (token, leasesCarConfirm) {
     const leasesConfirmObject = {
       transactionId : leasesCarConfirm.transactionId,
@@ -505,53 +514,6 @@ export default class HRBenefitsService {
     }
     return this.apiClient.post('v1/leases/car/confirm', leasesConfirmObject, {
       headers: { token }
-    })
-  }
-
-
-  addEducationAid (
-    token,
-    accountToken,
-    accountNumber,
-    releasingCenter,
-    educationAidParam) {
-      const formData = new FormData()
-      const educationAidObject = {
-        accountNumber,
-        releasingCenter,
-        course : educationAidParam.course,
-        academicYear : educationAidParam.academicYear,
-        semester : educationAidParam.semester,
-        generalWeightedAverage : educationAidParam.gwa,
-        tuitionFee : educationAidParam.tuitionFee,
-        registrationFee : educationAidParam.registrationFee,
-        schoolId : educationAidParam.schoolId,
-        orDate : educationAidParam.orDate,
-        orNumber : educationAidParam.orNumber
-      }
-      formData.append('uuid', 12345)
-      formData.append('cert1', educationAidParam.attachments[0].file)
-      formData.append('cert2', educationAidParam.attachments[1].file)
-      formData.append('cert3', educationAidParam.attachments[2].file)
-      formData.append('body', JSON.stringify(educationAidObject))
-      return this.apiClient.post('v2/reimbursements/education/personal/submit', formData, {
-        headers : { token }
-      })
-  }
-
-  /* validate grant aid */
-  addGrantAid (token, accountToken, accountNumber, releasingCenter, grantAidParam) {
-    const formData = new FormData()
-    const grantAidObject = {
-      grantType : grantAidParam.grantId,
-      accountNumber,
-      releasingCenter
-    }
-    formData.append('uuid', 12345)
-    formData.append('cert', grantAidParam.file)
-    formData.append('body', JSON.stringify(grantAidObject))
-    return this.apiClient.post('v2/grants/education/personal/submit', formData, {
-      headers : { token }
     })
   }
 
@@ -593,6 +555,54 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  addEducationAid (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    educationAidParam) {
+      const formData = new FormData()
+      const educationAidObject = {
+        accountNumber,
+        releasingCenter,
+        course : educationAidParam.course,
+        academicYear : educationAidParam.academicYear,
+        semester : educationAidParam.semester,
+        generalWeightedAverage : educationAidParam.gwa,
+        tuitionFee : educationAidParam.tuitionFee,
+        registrationFee : educationAidParam.registrationFee,
+        schoolId : educationAidParam.schoolId,
+        orDate : educationAidParam.orDate,
+        orNumber : educationAidParam.orNumber
+      }
+      formData.append('uuid', 12345)
+      {
+        educationAidParam.attachments.map((resp, key ) =>
+          formData.append(resp.name, resp.file)
+        )
+      }
+      formData.append('body', JSON.stringify(educationAidObject))
+      return this.apiClient.post('v2/reimbursements/education/personal/submit', formData, {
+        headers : { token }
+      })
+    }
+
+    /* validate grant aid */
+    addGrantAid (token, accountToken, accountNumber, releasingCenter, grantAidParam) {
+      const formData = new FormData()
+      const grantAidObject = {
+        grantType : grantAidParam.grantId,
+        accountNumber,
+        releasingCenter
+      }
+      formData.append('uuid', 12345)
+      formData.append('cert', grantAidParam.file)
+      formData.append('body', JSON.stringify(grantAidObject))
+      return this.apiClient.post('v2/grants/education/personal/submit', formData, {
+        headers : { token }
+      })
+    }
 
   addGrantPlan (token, accountToken, accountNumber, releasingCenter, grantPlanParam) {
     const formData = new FormData()
