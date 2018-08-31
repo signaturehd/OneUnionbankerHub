@@ -31,21 +31,24 @@ class StaffAccountsModal extends Component {
   }
 
   getAccountType (type) {
-    var ret = ''
-    if(type == 'CA') {
-      ret = 'Current'
-    } else if (type == 'EO') {
+    var upperCaseType = type.toUpperCase()
+    var ret = 'Other Account'
+    if(upperCaseType == 'CA') {
+      ret = 'Current Account'
+    } else if (upperCaseType == 'EO') {
       ret = 'EON'
-    } else if (type == 'OT') {
+    } else if (upperCaseType == 'OT') {
       ret = 'Others'
-    } else if (type == 'SA') {
-      ret = 'Savings'
-    } else if (type == 'TD') {
+    } else if (upperCaseType == 'SA') {
+      ret = 'Savings Account'
+    } else if (upperCaseType == 'TD') {
       ret = 'Time Dep'
-    } else if (type == 'TE') {
+    } else if (upperCaseType == 'TE') {
       ret = 'Treasury'
-    } else if (type == 'TU') {
+    } else if (upperCaseType == 'TU') {
       ret = 'Trust'
+    } else if (upperCaseType == 'CC') {
+      ret = 'Credit Card'
     }
     return ret
   }
@@ -112,7 +115,7 @@ class StaffAccountsModal extends Component {
             {
               staffAccounts && staffAccounts.map(
                 (resp, key) => (
-                  <div className={ `staff-account-card back-color-${resp.line2}` }>
+                  <div className={ `back-color-default staff-account-card back-color-${resp.line2}` }>
                     <div className = { 'staff-account-card-details' }>
                       <div className = { 'staff-account-card-icon staff-account-card-icon-card' }>
                       </div>
