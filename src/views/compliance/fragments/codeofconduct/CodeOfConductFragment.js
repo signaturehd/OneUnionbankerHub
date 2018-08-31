@@ -84,7 +84,7 @@ class CodeOfConductFragment extends BaseMVPView {
   }
 
   navigate () {
-    this.props.history.push('/')
+    this.props.history.push('/mycompliance')
   }
 
   validateInputPin (e) {
@@ -109,7 +109,10 @@ class CodeOfConductFragment extends BaseMVPView {
 
     return (
       <div>
-      <h2 className = { 'header-margin-default' }>My Compliance</h2>
+      <div className={ 'header-margin-container' }>
+        <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) }></i>
+      </div>
+      <h2 className = { 'header-margin-default' }>Code of Conduct</h2>
       <br/>
       <br/>
       {
