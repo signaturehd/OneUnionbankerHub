@@ -143,6 +143,24 @@ class BenefitsFragment extends BaseMVPView {
 
 
     const benefitsOptions = [{
+      id: 4,
+      styleName: 'benefits-option-cards-5 benefits-option-default font-weight-bold',
+      title: 'Bereavement',
+      path: '/mybenefits/benefits/bereavement',
+      subTitle: 'Avail of monetary assistance during periods of loss.'
+    }, {
+      id: 3,
+      styleName: 'benefits-option-cards-4 benefits-option-default font-weight-bold',
+      title: 'Car Lease',
+      path: '/mybenefits/benefits/carlease',
+      subTitle: 'Start your engines, your brand new car is here waiting for you.'
+    }, {
+      id: 5,
+      styleName : 'benefits-option-cards-6 benefits-option-default font-weight-bold',
+      title: 'Calamity',
+      path: '/mybenefits/benefits/calamity',
+      subTitle: 'Avail of monetary assistance during difficult times.'
+    }, {
       id: 0 ,
       styleName: 'benefits-option-cards-1 benefits-option-default font-weight-bold',
       title: 'Education',
@@ -160,24 +178,6 @@ class BenefitsFragment extends BaseMVPView {
       title: 'Multi Purpose Loan',
       path: '/mybenefits/benefits/loans',
       subTitle: `Financial flexibility at your fingertips, access MPL's here.`
-    }, {
-      id: 3,
-      styleName: 'benefits-option-cards-4 benefits-option-default font-weight-bold',
-      title: 'Car Lease',
-      path: '/mybenefits/benefits/carlease',
-      subTitle: 'Start your engines, your brand new car is here waiting for you.'
-    }, {
-      id: 4,
-      styleName: 'benefits-option-cards-5 benefits-option-default font-weight-bold',
-      title: 'Bereavement',
-      path: '/mybenefits/benefits/bereavement',
-      subTitle: 'Avail of monetary assistance during periods of loss.'
-    }, {
-      id: 5,
-      styleName : 'benefits-option-cards-6 benefits-option-default font-weight-bold',
-      title: 'Calamity',
-      path: '/mybenefits/benefits/calamity',
-      subTitle: 'Avail of monetary assistance during difficult times.'
     }]
 
   const Benefits = () => (
