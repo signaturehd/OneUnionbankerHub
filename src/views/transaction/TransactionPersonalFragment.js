@@ -99,15 +99,18 @@ class TransactionPersonalFragment extends BaseMVPView {
           </div>
 
           <div className = { 'grid-global' }>
-            <GenericButton
-              className = { 'transaction-component-button' }
-              text = { 'View Less' }
-              onClick = { () =>
-                this.setState({
-                  index : TransactionPersonalFunction.indexDecreased(index)
-                  })
-                }
-              />
+            {
+              !index === 4 &&
+              <GenericButton
+                className = { 'transaction-component-button' }
+                text = { 'View Less' }
+                onClick = { () =>
+                  this.setState({
+                    index : TransactionPersonalFunction.indexDecreased(index)
+                    })
+                  }
+                />
+            }
             <GenericButton
               className = { 'transaction-component-button' }
               text = { 'View More' }

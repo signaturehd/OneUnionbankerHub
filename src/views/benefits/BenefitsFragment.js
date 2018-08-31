@@ -147,31 +147,37 @@ class BenefitsFragment extends BaseMVPView {
       styleName: 'benefits-option-cards-1 benefits-option-default font-weight-bold',
       title: 'Education',
       path: '/mybenefits/benefits/education',
+      subTitle: 'Avail of a wide range of educational benefits.'
     }, {
       id: 1 ,
       styleName: 'benefits-option-cards-2 benefits-option-default font-weight-bold',
       title: 'Medical',
       path: '/mybenefits/benefits/medical',
+      subTitle: 'Your health is our priority, access medical benefits here.'
     }, {
       id: 2,
       styleName: 'benefits-option-cards-3 benefits-option-default font-weight-bold',
       title: 'Multi Purpose Loan',
       path: '/mybenefits/benefits/loans',
+      subTitle: `Financial flexibility at your fingertips, access MPL's here.`
     }, {
       id: 3,
       styleName: 'benefits-option-cards-4 benefits-option-default font-weight-bold',
       title: 'Car Lease',
       path: '/mybenefits/benefits/carlease',
+      subTitle: 'Start your engines, your brand new car is here waiting for you.'
     }, {
       id: 4,
       styleName: 'benefits-option-cards-5 benefits-option-default font-weight-bold',
       title: 'Bereavement',
       path: '/mybenefits/benefits/bereavement',
+      subTitle: 'Avail of monetary assistance during periods of loss.'
     }, {
       id: 5,
       styleName : 'benefits-option-cards-6 benefits-option-default font-weight-bold',
       title: 'Calamity',
       path: '/mybenefits/benefits/calamity',
+      subTitle: 'Avail of monetary assistance during difficult times.'
     }]
 
   const Benefits = () => (
@@ -271,7 +277,7 @@ class BenefitsFragment extends BaseMVPView {
                     text={ value.title } >
                   </div>
                   <p className={ 'benefits-option-cards font-weight-bold' }>{ value.title }</p>
-                  <h2 className = { 'font-size-14px' }>Lorem ipsum dolor</h2>
+                  <h2 className = { 'font-size-12px' }>{value.subTitle}</h2>
                 </div>
               </Card>
             ))
