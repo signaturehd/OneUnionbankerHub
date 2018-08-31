@@ -18,6 +18,11 @@ class OutpatientOtherDetailCardComponent extends Component {
 
   const recipient = detailsOutpatient.OutpatientDetails.Recipient
   const procedure = detailsOutpatient.OutpatientDetails
+  const number = detailsOutpatient.OutpatientDetails.OfficialReceiptNumber
+  const date = TransactionPersonalFunction.checkedMDYDate(
+    detailsOutpatient &&
+    detailsOutpatient.OutpatientDetails &&
+    detailsOutpatient.OutpatientDetails.OfficialReceiptDate)
 
   return (
     <div  className = { 'transaction-component-otherdetails-form' }>
@@ -35,6 +40,27 @@ class OutpatientOtherDetailCardComponent extends Component {
               { recipient.Relationship }
             </h2>
             <br/>
+          </div>
+        </div>
+        <div>
+          <div>
+            <h2 className = { 'font-weight-ligter' }>
+              { date }
+            </h2>
+            <h2 className = { 'unionbank-color font-size-12px' }>
+              Official Receipt Date
+            </h2>
+            <br/>
+          </div>
+        </div>
+        <div>
+          <div>
+            <h2 className = { 'font-weight-ligter' }>
+              { number }
+            </h2>
+            <h2 className = { 'unionbank-color font-size-12px' }>
+              Official Receipt Number
+            </h2>
             <br/>
           </div>
         </div>

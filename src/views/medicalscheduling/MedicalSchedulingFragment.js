@@ -38,8 +38,6 @@ class MedicalSchedulingFragment extends BaseMVPView {
       preferredDate : '',
       index : 4,
       viewMoreText : 'View more',
-      showErrorMessageModal : false,
-      showErrorMessageValidate: ''
     }
   }
 
@@ -73,10 +71,6 @@ class MedicalSchedulingFragment extends BaseMVPView {
 
   noticeResponse (noticeResponse) {
     this.setState({showConfirmation: false, noticeResponse })
-  }
-
-  showErrorMessage (showErrorMessageModal, showErrorMessageValidate) {
-    this.setState({ showErrorMessageModal, showErrorMessageValidate })
   }
 
   navigate () {
@@ -125,8 +119,6 @@ class MedicalSchedulingFragment extends BaseMVPView {
       preferredDate,
       index,
       viewMoreText,
-      showErrorMessageModal,
-      showErrorMessageValidate,
     } = this.state
 
     let procedureList = []
@@ -135,25 +127,8 @@ class MedicalSchedulingFragment extends BaseMVPView {
     }
     catch (e) {
     }
-
     return (
       <div>
-        {
-          showErrorMessageModal &&
-          <Modal>
-            <center>
-              <h2>{ showErrorMessageValidate.message }</h2>
-              <br/>
-              <GenericButton
-                text = { 'Ok' }
-                onClick = { () => {
-                  this.setState({ showErrorMessageModal : false })
-                  this.navigate()
-                }
-              }/>
-            </center>
-          </Modal>
-        }
         {
           showClinics &&
           <SingleInputModal

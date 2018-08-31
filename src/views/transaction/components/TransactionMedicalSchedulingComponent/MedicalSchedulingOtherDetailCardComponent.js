@@ -22,6 +22,11 @@ class MedicalSchedulingOtherDetailCardComponent extends Component {
   const hospital = detailsMedicalScheduling.MedicalScheduleDetails.HospitalPackage.Clinic.Hospital
   const packages = detailsMedicalScheduling.MedicalScheduleDetails.HospitalPackage.Package
   const procedures = detailsMedicalScheduling.MedicalScheduleDetails.HospitalPackage.Procedures
+  const preferredDate = TransactionPersonalFunction.checkedMDYDate(
+    detailsMedicalScheduling &&
+    detailsMedicalScheduling.MedicalScheduleDetails &&
+    detailsMedicalScheduling.MedicalScheduleDetails.HospitalPackage &&
+    detailsMedicalScheduling.MedicalScheduleDetails.HospitalPackage.PreferredDate)
 
   return (
     <div  className = { 'transaction-component-otherdetails-form' }>
@@ -56,6 +61,19 @@ class MedicalSchedulingOtherDetailCardComponent extends Component {
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
               Package
+            </h2>
+            <br/>
+            <br/>
+          </div>
+        </div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span></span>
+          <div>
+            <h2 className = { 'font-weight-ligter' }>
+              { preferredDate }
+            </h2>
+            <h2 className = { 'unionbank-color font-size-12px' }>
+              Preferred Date
             </h2>
             <br/>
             <br/>
