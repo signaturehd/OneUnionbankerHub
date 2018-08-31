@@ -167,7 +167,7 @@ class SettingsProfileCardComponent extends Component {
                   </div>
                 </div>
                 <div
-                  onClick={ () => showContactInfoModalFunc(true) }
+                  onClick={ () => showPersonalInfoModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings employeeContactAddress' }/>
