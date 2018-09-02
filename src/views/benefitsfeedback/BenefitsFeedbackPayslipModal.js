@@ -106,7 +106,7 @@ class BenefitsFeedbackPayslipModal extends BaseMVPView {
                 src={ require('../../images/icons/img_message_circle.png') }
                 className= {'sidebar-img-ub-logo'}/>
               <br/>
-              <h3>Thank you for using 1Uhub! We&#39;d love to know what your experience was like using the application.</h3>
+              <h3>Your feedback will help us improve our service</h3>
               <br/>
                 <GenericTextBox
                   type={ 'text' }
@@ -116,8 +116,8 @@ class BenefitsFeedbackPayslipModal extends BaseMVPView {
                 />
               <br/>
               <textarea
-                className={ 'default-feedback-textarea' }
-                placeholder={ 'Tell us why' }
+                className={ 'default-feedback-textarea font-size-14px font-weight-normal' }
+                placeholder={ 'Let us know more ...' }
                 onChange={ e => this.setState({ comment : e.target.value }) }/>
             </center>
             <br/>

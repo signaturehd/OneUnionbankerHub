@@ -33,7 +33,7 @@ class NavigationViewModal extends Component {
         {
           showCircularLoader ?
             <center>
-              <h3>Please wait while were logging you out</h3>
+              <h3>Please wait while we're logging you out</h3>
               <br/>
               <br/>
               <CircularLoader show={true}/>

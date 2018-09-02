@@ -16,7 +16,7 @@ class TransactionMPLDetailComponent extends Component {
   render () {
   const {
     details,
-    onClickAttachments,
+    onClickAttachmentsMPL,
     onClickAgreements
   } = this.props
 
@@ -90,7 +90,7 @@ class TransactionMPLDetailComponent extends Component {
               <GenericButton
                 className = { 'transaction-details-button' }
                 text = { 'View Attachments' }
-                onClick = { () => onClickAttachments(true) }
+                onClick = { () => onClickAttachmentsMPL(true) }
               /> :
               <div></div>
             }
@@ -113,7 +113,7 @@ class TransactionMPLDetailComponent extends Component {
 
 TransactionMPLDetailComponent.propTypes = {
   details : PropTypes.object,
-  onClickAttachments : PropTypes.func,
+  onClickAttachmentsMPL : PropTypes.func,
   onClickAgreements : PropTypes.func
 }
 

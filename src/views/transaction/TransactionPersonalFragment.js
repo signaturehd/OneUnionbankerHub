@@ -100,7 +100,7 @@ class TransactionPersonalFragment extends BaseMVPView {
 
           <div className = { 'grid-global' }>
             {
-              !index === 4 &&
+              !index === 4 || !transactionSearch.length === 4 &&
               <GenericButton
                 className = { 'transaction-component-button' }
                 text = { 'View Less' }

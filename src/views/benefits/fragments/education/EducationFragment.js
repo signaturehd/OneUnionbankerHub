@@ -54,8 +54,7 @@ class EducationFragment extends Component {
                 onClick = { () => history.push(value.path) } >
                 <div className = { 'education-column-grid' }>
                   <div
-                    className = { value.styleName}
-                    text = { value.title }/>
+                    className = { value.styleName}/>
                   <p className = { 'education-option-cards font-weight-bold font-size-15px' }>
                     { value.title }
                   </p>

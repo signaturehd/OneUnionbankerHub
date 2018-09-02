@@ -56,11 +56,12 @@ class BereavementDetailCardComponent extends Component {
               </h2>
             </div>
           </div>
+          <br/>
           <div className = { 'transaction-icons-details-grid' }>
             <span className = { ' transaction-card-icon-settings' }></span>
             <div>
               <h2>
-                &#8369; { amountValue }
+              Amount : &#8369; { amountValue }
               </h2>
               <br/>
               <br/>

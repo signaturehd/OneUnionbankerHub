@@ -105,7 +105,6 @@ class MedicalFragment extends Component {
               <div className = { 'medical-column-grid' }>
                 <div
                   className={ value.styleName }
-                  text={ value.title }
                   />
                 <p className={ 'medical-option-cards font-weight-bold font-size-14px' }>
                   { value.title }

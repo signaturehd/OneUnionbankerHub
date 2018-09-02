@@ -60,6 +60,10 @@ class LoginView extends BaseMVPView {
     }
   }
 
+  getSupportURL () {
+    return location.origin + '/support'
+  }
+
   componentDidMount () {
     store.dispatch(NotifyActions.resetNotify())
   }
@@ -131,7 +135,10 @@ class LoginView extends BaseMVPView {
       disabled,
       type,
     } = this.state
-    const { notify } = this.props
+    const {
+      notify,
+      history
+    } = this.props
 
     return (
       <div>
@@ -156,7 +163,6 @@ class LoginView extends BaseMVPView {
         }
 
         <Card className = {'login-form'}>
-          <div className={ 'login-version' }>v 4.5.6</div>
           <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
             <br/>
             <GenericInput
@@ -221,9 +227,18 @@ class LoginView extends BaseMVPView {
                     className = { 'icon-1' } />
             </div>
             <br/>
+            <center>
+            </center>
             <div className = {'download-container'}>
               <button className = {'link-googleplay'} onClick = { () => this.downloadAndroid() } />
               <button className = {'link-appstore'} onClick = { () => this.downloadIOS() } />
+            </div>
+            <br/>
+            <div className = { 'grid-global' }>
+              <h2
+                onClick = { () => window.open(this.getSupportURL()) }
+                className = { 'unionbank-color font-size-12px text-align-left cursor-pointer' }>Learn More.</h2>
+              <div className={ 'login-version' }>v 4.6.1 UAT</div>
             </div>
         </Card>
 
