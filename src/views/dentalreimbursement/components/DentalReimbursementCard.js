@@ -10,10 +10,9 @@ import {
   DatePicker,
   Card,
   GenericButton,
-  FileUploader,
   Checkbox,
-  GenericTextBox,
   List,
+  Line,
   MultipleFileUploader,
  } from '../../../ub-components/'
 
@@ -243,39 +242,45 @@ render () {
           <br/>
          {
            selectedProcedures && selectedProcedures.map((procedure, key) => (
-              <div key={ key } className = { 'dentalreimbursement-selected-procedure' }>
-                <div className = {'input-grid'}>
-                  <GenericTextBox
-                    disabled = { showEditMode }
-                    value = { procedure.amount }
-                    onChange = { e => {
-                      const updatedProcedures = [...selectedProcedures]
-                      updatedProcedures[key].amount = parseInt(e.target.value) || 0
-                      this.setState({ selectedProcedures: updatedProcedures })
-                      }
+              <div key={ key } className = { 'dentalreimbursement-grid-procedure' }>
+                <GenericInput
+                  disabled = { showEditMode }
+                  value = { procedure.amount }
+                  onChange = { e => {
+                    const updatedProcedures = [...selectedProcedures]
+                    updatedProcedures[key].amount = parseInt(e.target.value) || 0
+                    this.setState({ selectedProcedures: updatedProcedures })
                     }
-                    maxLength = { procedure.limit.toString().length }
-                    placeholder = { `${procedure.name} (${procedure.limit})` }
+                  }
+                  maxLength = { procedure.limit.toString().length }
+                  placeholder = { `${procedure.name} (${procedure.limit})` }
+                 />
+               <div>
+                 {
+                   !showEditMode &&
+                   <img
+                     src = { require('../../../images/x-circle-global.png') }
+                     onClick = { () => {
+                       const { selectedProcedures } = this.state
+                       selectedProcedures.splice(key, 1)
+                       this.setState({ selectedProcedures })
+                     }}
                    />
-                 <div className = { 'dentalreimbursement-button-close' }>
-                   {
-                     !showEditMode &&
-                     <img
-                       src = { require('../../../images/x-circle-global.png') }
-                       onClick = { () => {
-                         const { selectedProcedures } = this.state
-                         selectedProcedures.splice(key, 1)
-                         this.setState({ selectedProcedures })
-                       }}
-                     />
-                   }
-                  </div>
-                </div>
-                <br/>
+                 }
+               </div>
               </div>
               )
             )
           }
+          <br/>
+          <Line/>
+          {
+            showEditMode &&
+            <center>
+              <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
+            </center>
+          }
+          <br/>
           {
             showEditMode ?
             <div className = { 'grid-global' }>

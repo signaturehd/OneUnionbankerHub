@@ -97,13 +97,13 @@ class Notice extends BaseMVPView {
           <center>
             <br/>
             <br/>
-            <GenericButton text = {'Disagree'} className = { 'notice-button-modal' }
+            <GenericButton text = {'Disagree'} className = { 'notice-button-modal notice-disagree' }
               onClick = { () => {
                 this.setState({ showCancelCofirmation : true  })
                 }
               }
             />
-            <GenericButton text = {'Agree'} className = { 'notice-button-modal' }
+            <GenericButton text = {'Agree'} className = { 'notice-button-modal notice-agree' }
               onClick = { () =>
                   this.setState({ showValidatedCofirmation : true  })
               }

@@ -91,6 +91,8 @@ class NoticePinModal extends BaseMVPView {
               {
                 enabledLoader ?
                 <center className = { 'circular-loader-center' }>
+                  <h2>Please wait while validating your registered pin</h2>
+                  <br/>
                   <CircularLoader show = { enabledLoader }/>
                 </center> :
                 <center>

@@ -10,6 +10,14 @@
   width: 100% !important;
 }
 
+.dentalreimbursement-grid-procedure {
+  display: grid;
+  align-items: center;
+  text-align: center;
+  margin: 0px auto;
+  grid-template-columns: 1fr .1fr;
+}
+
 .dentailreimbursement-grid-x3 {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;

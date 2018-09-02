@@ -11,6 +11,15 @@
   font-size: 12px;
 }
 
+.notice-agree {
+  background-color: #388E3C;
+  color: white;
+}
+
+.notice-disagree {
+  background-color: #d32f2f;
+  color: white;
+}
 
 .lock-icon {
   background-image: url('../../../images/icons/ic_lock.png');

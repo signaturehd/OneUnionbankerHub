@@ -201,7 +201,6 @@ class LoginView extends BaseMVPView {
                 <br/>
                 <br/>
               </div>
-
             }
             <div className = { 'login-layer-icons' }>
                   <img
@@ -234,7 +233,7 @@ class LoginView extends BaseMVPView {
               <button className = {'link-appstore'} onClick = { () => this.downloadIOS() } />
             </div>
             <br/>
-            <div className = { 'grid-global' }>
+            <div className = { 'grid-global login-adjustment-for-version' }>
               <h2
                 onClick = { () => window.open(this.getSupportURL()) }
                 className = { 'unionbank-color font-size-12px text-align-left cursor-pointer' }>Learn More.</h2>
