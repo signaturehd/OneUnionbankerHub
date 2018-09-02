@@ -61,7 +61,7 @@ class LoginView extends BaseMVPView {
   }
 
   getSupportURL () {
-    return location.origin + '/support'
+    return location.origin + '/support/'
   }
 
   componentDidMount () {
