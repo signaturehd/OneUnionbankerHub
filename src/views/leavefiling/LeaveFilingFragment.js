@@ -43,7 +43,7 @@ class LeaveFilingFragment extends BaseMVPView {
       fromTime : '',
       fromMeridiem : '',
       toTime : '',
-      toMeridiem : ''
+      toMeridiem : '',
     }
     this.fromTimeChange = this.fromTimeChange.bind(this);
     this.toTimeChange = this.toTimeChange.bind(this);
@@ -146,7 +146,9 @@ class LeaveFilingFragment extends BaseMVPView {
   render () {
     const {
       benefitsCodeType,
-      navigateBenefits
+      navigateBenefits,
+      maxDateDataNumber,
+      maxDateDataType
     } = this.props
 
     const {
@@ -165,9 +167,11 @@ class LeaveFilingFragment extends BaseMVPView {
       fromTime,
       fromMeridiem,
       toTime,
-      toMeridiem
+      toMeridiem,
     } = this.state
+
     const benefitTitleName = LeaveFilingFunctions.checkedReasonForLeave(benefitsCodeType)
+
     return (
       <div className={ 'brv-container' }>
         { super.render() }
@@ -217,6 +221,7 @@ class LeaveFilingFragment extends BaseMVPView {
                       readOnly
                       minDate = { moment(dateFrom) }
                       disabled = { showEditMode }
+                      maxDate = { moment(dateFrom).add(maxDateDataNumber, maxDateDataType) }
                       onChange = { (e) => this.checkedToDate(e) }
                       errorMessage = { dateTo ? '' : errorMessageRemarksDateTo }
                       selected = { dateTo ? moment(dateTo) : '' }
@@ -303,6 +308,8 @@ class LeaveFilingFragment extends BaseMVPView {
 
 LeaveFilingFragment.propTypes = {
   benefitsCodeType : PropTypes.string,
+  maxDateData : PropTypes.numeric,
+  maxDateDataType : PropTypes.string,
 }
 
 export default ConnectView(LeaveFilingFragment, Presenter)

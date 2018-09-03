@@ -19,6 +19,7 @@ import { NotifyActions } from '../../actions'
 import FormComponent from  './components/BereavementFormCardComponent'
 import LeaveFilingComponentFragment from  '../leavefiling/LeaveFilingFragment'
 import * as BereavementFunction from './controller/BereavementFunction'
+import moment from 'moment'
 
 class BereavementFragment extends BaseMVPView {
 
@@ -448,6 +449,8 @@ class BereavementFragment extends BaseMVPView {
         {
           showBereavementLeaveComponent ?
           <LeaveFilingComponentFragment
+            maxDateDataNumber = { 2 }
+            maxDateDataType = { 'days' }
             benefitsCodeType = { 'FL' }
             navigateBenefits = { () => this.navigate() }
             />

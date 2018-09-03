@@ -531,7 +531,8 @@ class MaternityAssistanceFragment extends BaseMVPView {
     } = this.state
     const {
       selectedArray,
-      classProp
+      classProp,
+      maxDateData
     } = this.props
     return (
       <div>
@@ -610,6 +611,8 @@ class MaternityAssistanceFragment extends BaseMVPView {
         {
           showMaternityLeaveComponent ?
           <LeaveFilingComponentFragment
+            maxDateDataNumber = { 2 }
+            maxDateDataType = { 'months' }
             benefitsCodeType = { benefitsCodeType }
             navigateBenefits = { () => this.navigate() }
             />
