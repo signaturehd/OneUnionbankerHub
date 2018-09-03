@@ -270,11 +270,13 @@ class MaternityAssistanceFragment extends BaseMVPView {
       attachmentArray,
       gender
     } = this.state
+    const genderValue = gender === 'M' ? 'PL' : typeDeliveryName
+    this.setState({ typeDeliveryName : genderValue })
     if(typeDeliveryName.toLowerCase() === 'normal') {
       this.setState({ benefitsCodeType : 'MN' })
     } else if (typeDeliveryName.toLowerCase() === 'caesarean') {
       this.setState({ benefitsCodeType : 'MC' })
-    } else if (gender === 'M') {
+    } else if (typeDeliveryName === 'PL') {
       this.setState({ benefitsCodeType : 'PL' })
     }
     this.presenter.addMaternityAssistance(
@@ -526,7 +528,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
       gender,
       attachmentLength
     } = this.state
-
+    console.log(gender)
     const {
       selectedArray,
       classProp
