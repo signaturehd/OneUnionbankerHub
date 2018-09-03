@@ -167,7 +167,7 @@ class LeaveFilingFragment extends BaseMVPView {
       toTime,
       toMeridiem
     } = this.state
-
+    const benefitTitleName = LeaveFilingFunctions.checkedReasonForLeave(benefitsCodeType)
     return (
       <div className={ 'brv-container' }>
         { super.render() }
@@ -197,7 +197,7 @@ class LeaveFilingFragment extends BaseMVPView {
               </center>
               :
               <Card className = { 'bereavement-leave-card' }>
-                <h2 className = { 'tex-align-center' }>Leave Filing</h2>
+                <h2 className = { 'tex-align-center' }>{ benefitTitleName } Filing</h2>
                 <br/>
                 <div className = { 'grid-global' }>
                   <div>
@@ -226,6 +226,7 @@ class LeaveFilingFragment extends BaseMVPView {
                 <div className = { 'grid-global' }>
                   <div>
                     <TimePickerComponent
+                      type = { 'time' }
                       text = { 'From Time' }
                       format = { 'hh:mm' }
                       timeMode = { '12' }
@@ -239,6 +240,7 @@ class LeaveFilingFragment extends BaseMVPView {
                   <div>
                     <div></div>
                     <TimePickerComponent
+                      type = { 'time' }
                       text = { 'To Time' }
                       format = { 'hh:mm' }
                       timeMode = { '12' }
