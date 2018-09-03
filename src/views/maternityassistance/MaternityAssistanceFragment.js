@@ -271,6 +271,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
       gender
     } = this.state
     const genderValue = gender === 'M' ? 'PL' : typeDeliveryName
+    console.log(genderValue)
     this.setState({ typeDeliveryName : genderValue })
     if(typeDeliveryName.toLowerCase() === 'normal') {
       this.setState({ benefitsCodeType : 'MN' })
@@ -528,7 +529,6 @@ class MaternityAssistanceFragment extends BaseMVPView {
       gender,
       attachmentLength
     } = this.state
-    console.log(gender)
     const {
       selectedArray,
       classProp
