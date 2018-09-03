@@ -12,7 +12,8 @@
 
 .car-column-grid {
   display: grid;
-  grid-template-rows: .7fr .5fr .5fr;
+  grid-template-rows: 1fr 1fr ;
+  align-items: center;
   padding-top: 20px;
   padding-bottom: 20px;
   padding-left: 20px;

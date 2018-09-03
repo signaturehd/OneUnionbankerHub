@@ -56,9 +56,7 @@ class CarLeaseFragment extends Component {
                   >
                     <div className = { 'car-column-grid' }>
                       <div
-                        className={ value.styleName}
-                        text={ value.title }
-                        onClick={ () => history.push(value.path) }/>
+                        className={ value.styleName } />
                         <p className={ 'car-option-cards font-weight-bold font-size-15px' }>
                           { value.title }
                         </p>

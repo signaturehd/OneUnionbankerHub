@@ -59,8 +59,7 @@ class LoansFragment extends Component {
               key = { idx }>
               <div className = { 'loans-column-grid' }>
                 <div
-                  className = { value.styleName }
-                  text = { value.title } />
+                  className = { value.styleName } />
                 <p className = { 'loans-option-cards font-weight-bold font-size-15px' }>
                   { value.title }
                 </p>

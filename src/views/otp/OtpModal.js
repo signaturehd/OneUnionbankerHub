@@ -82,14 +82,14 @@ class OtpModal extends BaseMVPView {
               className = { 'center-text' }
               maxLength = {6}
               onChange={ e => this.setState({ otp: e.target.value }) }
-              errorMessage = { 'Please enter your 6-digits code' }
+              errorMessage = { 'Please enter your 6-digit code' }
             />
             <br/>
             <div className = {'otp-function'}>
               <GenericButton text= "Submit"
                 onClick={ () => {
                     this.presenter.verifyOtp(username, otp, transactionType),
-                    this.setState({ disableSubmit : true, text : 'Please wait while were verifying your OTP' })
+                    this.setState({ disableSubmit : true, text : `Please wait while we're verifying your OTP` })
                   }
                 }
                 disabled = {this.state.disableSubmit}
@@ -97,7 +97,7 @@ class OtpModal extends BaseMVPView {
               <GenericButton text= "Resend OTP"
                 onClick={ () => {
                     this.presenter.resendOtp(username, transactionType),
-                    this.setState({ disableResend: true, text : 'Please wait while were resending your OTP' })
+                    this.setState({ disableResend: true, text : `Please wait while we're resending your OTP` })
                   }
                 }
                 disabled = {this.state.disableResend}

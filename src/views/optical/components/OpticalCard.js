@@ -91,6 +91,15 @@ class OpticalCard extends Component {
               <div></div>
             }
             </div>
+            <br/>
+            <Line/>
+            {
+              showEditSubmitButton &&
+              <center>
+                <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
+              </center>
+            }
+            <br/>
             <div>
               {
                 !showEditSubmitButton ?

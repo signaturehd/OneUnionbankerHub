@@ -34,6 +34,7 @@ function  TransactionDetails (props)  {
   const uploadImage = props.uploadImage
   const showFileReceipt = props.showFileReceipt
   const attachmentsMethod = props.attachmentsMethod
+  const attachmentsMethodMPL = props.attachmentsMethodMPL
   const agreementsMethod = props.agreementsMethod
   const onConfirmationCarleaseFunc = props.onConfirmationCarleaseFunc
   const onUploadAttachmentsFunc = props.onUploadAttachmentsFunc
@@ -97,7 +98,7 @@ function  TransactionDetails (props)  {
   } else if (transactionId === 1) {
     return <LoansDetailsFragment
       transactionsPerson = { transactionsPerson }
-      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      attachmentsMethodMPL = { (resp) => attachmentsMethodMPL(resp) }
       agreementsMethod = { (resp) => agreementsMethod(resp) }
       details = { transactionDetails } />
   } else if (transactionId === 21) {
@@ -161,6 +162,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
       showAttachmentsModal: false,
       showAgreementsModal: false,
       showConfirmation : false,
+      showAttachmentsMPLModal : false,
       showConfirmationMessage : '',
       fileCarLease : []
     }
@@ -191,6 +193,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
 
   showAttachments (attachments) {
     this.setState({ attachments })
+  }
+
+  showAttachmentsMethodMPL (showAttachmentsMPLModal) {
+    this.setState({ showAttachmentsMPLModal })
   }
 
   transactions (transactions) {
@@ -228,6 +234,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     response,
     enabledLoader,
     showAttachmentsModal,
+    showAttachmentsMPLModal,
     showAgreementsModal,
     showConfirmation,
     showConfirmationMessage,
@@ -238,6 +245,15 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     <div  className={ 'container' }>
       {
         showAgreementsModal &&
+        <TransactionDetailsAgreementsModal
+          agreements = { details && details.details }
+          isDismisable = { true }
+          onClose = { () =>
+            this.setState({ showAgreementsModal : false }) }
+          />
+      }
+      {
+        showAttachmentsMPLModal &&
         <TransactionDetailsAgreementsModal
           agreements = { details && details.details }
           isDismisable = { true }
@@ -288,6 +304,9 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              showUploading = { response }
              attachmentsMethod = { (resp) =>
                this.showAttachmentsMethod(resp)
+             }
+             attachmentsMethodMPL = { (resp) =>
+               this.showAttachmentsMethodMPL(resp)
              }
              agreementsMethod = { (resp) =>
                this.showAgreementsMethod(resp)

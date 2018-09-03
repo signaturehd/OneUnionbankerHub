@@ -90,7 +90,15 @@ export default class MedicalSchedulingFormCardComponent extends Component {
               <span className={ 'tooltiptext' }>{ viewMoreText }</span>
             </button>
             <br/>
-          {
+            <Line/>
+            {
+              isFormReview &&
+              <center>
+                <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
+              </center>
+            }
+            <br/>
+            {
             isFormReview ?
             <div className={ 'form-review' }>
               <GenericButton

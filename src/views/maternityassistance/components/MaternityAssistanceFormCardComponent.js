@@ -139,8 +139,15 @@ class MaternityAssistanceCardComponent extends Component {
                   }
                 </div>
                }
-              <Line/>
-              <br/>
+               <br/>
+               <Line/>
+               {
+                 showEditSubmitButton &&
+                 <center>
+                   <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
+                 </center>
+               }
+               <br/>
               {
                 showEditSubmitButton ?
                 <div className = { 'maternity-form-review' }>

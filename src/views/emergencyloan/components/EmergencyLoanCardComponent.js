@@ -102,8 +102,15 @@ class EmergencyLoanCardComponent extends Component {
                 disabled = { review }
                 setFile = { (updatedFile) => setAttachments(updatedFile) }
               />
-            <Line/>
           </div>
+        }
+        <br/>
+        <Line/>
+        {
+          review &&
+          <center>
+            <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
+          </center>
         }
         <br/>
         <div className = { 'salary-function' } >

@@ -18,6 +18,8 @@ class MaternityOtherDetailCardComponent extends Component {
 
   const amount = TransactionPersonalFunction.checkedAmount(detailsMaternity)
   const deliveryDate = TransactionPersonalFunction.checkedDeliveryDate(detailsMaternity)
+  const orDate = TransactionPersonalFunction.checkedORDate(detailsMaternity)
+  const orNumber = TransactionPersonalFunction.checkedorNumber(detailsMaternity)
   const deliveryType = TransactionPersonalFunction.checkedType(detailsMaternity)
   const recipient = TransactionPersonalFunction.checkedRecipient(detailsMaternity)
 
@@ -40,7 +42,6 @@ class MaternityOtherDetailCardComponent extends Component {
                 Recipient
               </h2>
               <br/>
-              <br/>
             </div>
         </div>
 
@@ -54,6 +55,29 @@ class MaternityOtherDetailCardComponent extends Component {
               Delivery type
             </h2>
             <br/>
+          </div>
+        </div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
+          <div>
+            <h2 className = { 'font-weight-ligter' }>
+               { orDate }
+            </h2>
+            <h2 className = { 'unionbank-color font-size-12px' }>
+              Official Receipt Date
+            </h2>
+            <br/>
+          </div>
+        </div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
+          <div>
+            <h2 className = { 'font-weight-ligter' }>
+               { orNumber }
+            </h2>
+            <h2 className = { 'unionbank-color font-size-12px' }>
+              Official Receipt Number
+            </h2>
             <br/>
           </div>
         </div>
@@ -73,15 +97,13 @@ class MaternityOtherDetailCardComponent extends Component {
               Delivery date
             </h2>
             <br/>
-            <br/>
           </div>
         </div>
-
         <div className = { 'transaction-icons-details-grid' }>
           <span className = { ' transaction-card-icon-settings' }></span>
           <div>
             <h2 className = { 'font-weight-ligter' }>
-               { amount }
+               &#8369; { amount  }
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
               Amount
