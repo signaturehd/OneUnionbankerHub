@@ -25,13 +25,16 @@ class TransactionProcedureCardComponent extends Component {
       </h2>
       <br/>
       <div>
-        <div className = { 'transaction-icons-details-grid' }>
-          <span className = { 'transaction-card-icon-settings global-icons-procedure' }>
-          </span>
-          {
-            procedure &&
-            procedure.Procedures.map((procedure, key) =>
-              <div key = { key }>
+
+        {
+          procedure &&
+          procedure.Procedures.map((procedure, key) =>
+          <div
+            key = { key }>
+            <div
+              className = { 'transaction-icons-details-grid' }>
+              <span className = { 'transaction-card-icon-settings global-icons-procedure' }/>
+              <div>
                 <div>
                   <h2>{ procedure.Name ? procedure.Name : '(Not Yet Provided)' }</h2>
                 </div>
@@ -39,9 +42,12 @@ class TransactionProcedureCardComponent extends Component {
                   <h2>&#8369; { procedure.Amount ? procedure.Amount : '(Not Yet Provided)' }</h2>
                 </div>
               </div>
-            )
-          }
-        </div>
+            </div>
+            <br/>
+          </div>
+          )
+        }
+
         <br/>
         <div>
           <div>

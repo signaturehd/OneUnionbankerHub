@@ -100,7 +100,7 @@ class TransactionPersonalFragment extends BaseMVPView {
 
           <div className = { 'grid-global' }>
             {
-              !index === 4 &&
+              !index === 4 || !transactionSearch.length === 4 &&
               <GenericButton
                 className = { 'transaction-component-button' }
                 text = { 'View Less' }
@@ -111,15 +111,18 @@ class TransactionPersonalFragment extends BaseMVPView {
                   }
                 />
             }
-            <GenericButton
-              className = { 'transaction-component-button' }
-              text = { 'View More' }
-              onClick = { () =>
-                this.setState({
-                  index : TransactionPersonalFunction.indexIncreased(index)
-                  })
-                }
-              />
+            {
+              transactionSearch.length === 5 &&
+              <GenericButton
+                className = { 'transaction-component-button' }
+                text = { 'View More' }
+                onClick = { () =>
+                  this.setState({
+                    index : TransactionPersonalFunction.indexIncreased(index)
+                    })
+                  }
+                />
+            }
           </div>
         </div>
             :

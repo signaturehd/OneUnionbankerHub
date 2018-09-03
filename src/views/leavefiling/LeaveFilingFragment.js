@@ -181,7 +181,7 @@ class LeaveFilingFragment extends BaseMVPView {
                 <GenericButton
                   onClick = { () => {
                     this.setState({ showSuccessModal : false })
-                    this.navigate()
+                    navigateBenefits()
                     }
                   }
                   text = { 'Ok' }/>

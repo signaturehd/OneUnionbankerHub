@@ -27,7 +27,7 @@ class LoansDetailsFragment extends Component {
   const {
     details,
     transactionsPerson,
-    attachmentsMethod,
+    attachmentsMethodMPL,
     agreementsMethod
   } = this.props
 
@@ -70,7 +70,7 @@ class LoansDetailsFragment extends Component {
             <MPLDetailsComponent
               transactionsPerson={ transactionsPerson }
               details={ details }
-              onClickAttachments = { (resp) => attachmentsMethod(resp) }
+              onClickAttachmentsMPL = { (resp) => attachmentsMethodMPL(resp) }
               onClickAgreements = { (resp) => agreementsMethod(resp) }
             />
           </div>
@@ -89,7 +89,7 @@ class LoansDetailsFragment extends Component {
 LoansDetailsFragment.propTypes = {
   details : PropTypes.object,
   transactionsPerson : PropTypes.array,
-  attachmentsMethod: PropTypes.func,
+  attachmentsMethodMPL: PropTypes.func,
   agreementsMethod: PropTypes.func ,
 }
 

@@ -194,6 +194,10 @@ p {
   text-align: justify;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 /* Default color */
 
 .unionbank-color {

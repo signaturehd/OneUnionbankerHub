@@ -139,6 +139,15 @@ class CarLeaseNewFormComponent extends Component {
                   setFile = { (file) => getFileArray(file) }
                   />
               }
+              <br/>
+              <Line/>
+              {
+                showEditMode &&
+                <center>
+                  <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
+                </center>
+              }
+              <br/>
               {
                 showEditMode ?
                 <div className = { 'grid-global' }>

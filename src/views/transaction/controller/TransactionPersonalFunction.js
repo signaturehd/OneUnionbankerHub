@@ -206,17 +206,28 @@ export function checkedType (details) {
 }
 
 export function checkedAmount (details) {
-  return
-    details &&
-    details.MaternityAssistanceDetails &&
-    details.MaternityAssistanceDetails.Amount ?
-    format(details.MaternityAssistanceDetails.Amount) :
-  '(Not Yet Provided)'
+  return  details && details.MaternityAssistanceDetails &&
+          details.MaternityAssistanceDetails.Amount ?
+          format(details.MaternityAssistanceDetails.Amount) :
+          '(Not Yet Provided)'
+}
+
+export function checkedorNumber (details) {
+  return  details && details.MaternityAssistanceDetails &&
+          details.MaternityAssistanceDetails.ReceiptNumber ?
+          details.MaternityAssistanceDetails.ReceiptNumber :
+          '(Not Yet Provided)'
 }
 
 export function checkedDeliveryDate (details) {
   return details && details.MaternityAssistanceDetails.DeliveryDate ?
   moment(details.MaternityAssistanceDetails.DeliveryDate).format('MMM DD, YYYY') :
+  '(Not Yet Provided)'
+}
+
+export function checkedORDate (details) {
+  return details && details.MaternityAssistanceDetails.ORDate ?
+  moment(details.MaternityAssistanceDetails.ORDate).format('MMM DD, YYYY') :
   '(Not Yet Provided)'
 }
 
