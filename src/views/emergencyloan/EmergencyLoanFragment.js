@@ -21,7 +21,7 @@ import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import EmergencyLoanCardComponent from './components/EmergencyLoanCardComponent'
 
-import * as EmergencyLoanFunction from './functions/EmergencyLoanFunction'
+import * as Functions from './functions/EmergencyLoanFunction'
 
 class EmergencyLoanFragment extends BaseMVPView {
   constructor (props) {
@@ -53,6 +53,7 @@ class EmergencyLoanFragment extends BaseMVPView {
       nfis : [],
       fileAttachments : [],
       status : 'Next',
+      desiredAmount : ''
     }
 
     this.setPurposeOfAvailment = this.setPurposeOfAvailment.bind(this)
@@ -163,7 +164,7 @@ class EmergencyLoanFragment extends BaseMVPView {
   }
 
   validateRequired (e) {
-    return EmergencyLoanFunction.checkedValidateInput(e)
+    return Functions.checkedValidateInput(e)
   }
 
   updateModeOfLoan (modeOfLoanId, modeOfLoanLabel) {
@@ -301,8 +302,6 @@ class EmergencyLoanFragment extends BaseMVPView {
     }
   }
 
-
-
   setPurposeOfAvailment (purposeOfAvailmentId, subCategoryId, purposeOfAvailmentLabel, nfis) {
     if (purposeOfAvailmentId) {
       this.presenter.getMplPurposeOfAvailment(purposeOfAvailmentId, subCategoryId)
@@ -339,6 +338,10 @@ class EmergencyLoanFragment extends BaseMVPView {
     })
   }
 
+  validateInputAmount (resp) {
+    this.setState({ desiredAmount : Functions.checkedValidateAmount(resp) })
+  }
+
   render () {
     const {
       showNoticeModal,
@@ -368,6 +371,7 @@ class EmergencyLoanFragment extends BaseMVPView {
       isValid,
       showLoading,
       nfis,
+      desiredAmount
     } = this.state
 
     // const empName=employeeName && employeeName.fullname
@@ -483,8 +487,9 @@ class EmergencyLoanFragment extends BaseMVPView {
               modeOfLoan = { modeOfLoanLabel }
               modeOfLoanId = { modeOfLoanId }
               offsetLoan = { offsetLoanArray }
+              desiredAmount = {  desiredAmount }
               setAttachments = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
-              desiredAmount = { (desiredAmount) => this.setState({ desiredAmount : parseInt(desiredAmount) }) }
+              desiredAmountFunc = { (desiredAmount) => this.validateInputAmount(desiredAmount) }
               onClick = { () => this.submitForm() }
               status = { status }
               review = { review }

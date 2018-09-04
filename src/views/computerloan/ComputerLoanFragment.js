@@ -17,7 +17,7 @@ import { NotifyActions } from '../../actions'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
-import * as ComputerLoanFunction from './function/ComputerLoanFunction'
+import * as Functions from './function/ComputerLoanFunction'
 
 import ComputerLoanCardComponent from './components/ComputerLoanCardComponent'
 
@@ -53,6 +53,7 @@ class ComputerLoanFragment extends BaseMVPView {
       supplier : '',
       desiredAmount: '',
       status : 'Next',
+      desiredAmount : ''
     }
 
     this.setPurposeOfAvailment = this.setPurposeOfAvailment.bind(this)
@@ -147,7 +148,7 @@ class ComputerLoanFragment extends BaseMVPView {
   }
 
   validateRequired (e) {
-    return ComputerLoanFunction.checkedValidateInput(e)
+    return Functions.checkedValidateInput(e)
   }
 
   /* Navigage back to loans Option*/
@@ -312,7 +313,6 @@ class ComputerLoanFragment extends BaseMVPView {
         }
       }
       else {
-        console.log("No attachment")
         this.setState({review : true, status: 'Submit'})
       }
     }
@@ -354,6 +354,10 @@ class ComputerLoanFragment extends BaseMVPView {
     })
   }
 
+  validateInputAmount (resp) {
+    this.setState({ desiredAmount : Functions.checkedValidateAmount(resp) })
+  }
+
   render () {
     const {
       showNoticeModal,
@@ -384,6 +388,8 @@ class ComputerLoanFragment extends BaseMVPView {
       showLoading,
       supplier,
       nfis,
+      desiredAmount ,
+      desiredAmountFunc
     } = this.state
 
 
@@ -500,7 +506,8 @@ class ComputerLoanFragment extends BaseMVPView {
               modeOfLoan = { modeOfLoanLabel }
               modeOfLoanId = { modeOfLoanId }
               offsetLoan = { offsetLoanArray }
-              desiredAmount = { (desiredAmount) => this.setState({ desiredAmount : parseInt(desiredAmount) }) }
+              desiredAmount = { desiredAmount }
+              desiredAmountFunc  = { (desiredAmount) => this.validateInputAmount(desiredAmount) }
               onClick = { () => this.submitForm() }
               supplierName = { (supplier) => this.supplierFunc(supplier) }
               status = { status }
