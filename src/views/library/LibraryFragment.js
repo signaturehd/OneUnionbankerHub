@@ -181,14 +181,26 @@ class LibraryFragment extends BaseMVPView {
           <section id='content1'>
               <Switch>
                 <Route path = '/mylearning/books/recommended'
-                  render = { props => <BookRecommendationFragment
-                    page = { pageNumber => this.getBooks(pageNumber) } presenter = { this.presenter } recommended = { recommended }  filteredBooks = { filteredBooks }/> } />
+                  render = { props =>
+                    <BookRecommendationFragment
+                      page = { pageNumber => this.getBooks(pageNumber) }
+                      presenter = { this.presenter }
+                      recommended = { recommended }
+                      filteredBooks = { filteredBooks }/>
+                    }/>
                 <Route path = '/mylearning/books/history'
-                  render = { props => <BookBorrowedFragment
-                    presenter = { this.presenter } borrowed = { borrowed }  /> } />
+                  render = { props =>
+                    <BookBorrowedFragment
+                      presenter = { this.presenter }
+                      borrowed = { borrowed }/>
+                    }/>
                 <Route path = '/mylearning/books'
-                  render = { props => <BookListFragment
-                    page = { pageNumber => this.getBooks(pageNumber) } presenter = { this.presenter } filteredBooks = { filteredBooks } /> } />
+                  render = { props =>
+                    <BookListFragment
+                      page = { pageNumber => this.getBooks(pageNumber) }
+                      presenter = { this.presenter }
+                      filteredBooks = { filteredBooks }/>
+                    }/>
              </Switch>
           </section>
         </div>
