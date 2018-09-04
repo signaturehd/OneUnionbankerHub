@@ -85,7 +85,6 @@ export default class OutPatientReimbursementPresenter {
           errors => {
             this.view.hideCircularLoader()
             this.view.noticeResponse(errors)
-            this.view.navigate()
           }
         )
       }

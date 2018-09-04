@@ -58,17 +58,22 @@ class TransactionDetailCardComponent extends Component {
             <br/>
           </div>
         </div>
-        <div className = { 'transaction-icons-details-grid' }>
-          <span className = { ' transaction-card-icon-settings global-icons-patient-name' }></span>
-          <div>
-            <h2>
-              { patient }
-            </h2>
-            <h4  className = { 'font-size-14px unionbank-color' }>
-            </h4>
-            <br/>
+        {
+          details &&
+          details.benefitType &&
+          details.benefitType.id !== 8 &&
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { ' transaction-card-icon-settings global-icons-patient-name' }></span>
+            <div>
+              <h2>
+                { patient }
+              </h2>
+              <h4  className = { 'font-size-14px unionbank-color' }>
+              </h4>
+              <br/>
+            </div>
           </div>
-        </div>
+        }
         {
           details &&
           details.details &&

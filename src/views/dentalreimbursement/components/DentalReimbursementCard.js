@@ -245,8 +245,8 @@ render () {
               <div key={ key } className = { 'dentalreimbursement-grid-procedure' }>
                 <GenericInput
                   disabled = { showEditMode }
-                  value = { procedure.amount }
-                  onChange = { e => {
+                  text = { procedure.name }
+                  onChange = { (e) => {
                     const updatedProcedures = [...selectedProcedures]
                     updatedProcedures[key].amount = parseInt(e.target.value) || 0
                     this.setState({ selectedProcedures: updatedProcedures })
