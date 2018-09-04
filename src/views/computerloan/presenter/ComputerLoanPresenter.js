@@ -177,7 +177,7 @@ export default class EmergencyLoanPresenter {
         this.view.isValid(true)
       },
       error => {
-        // this.view.navigate()
+        this.view.navigate()
       }
     )
   }

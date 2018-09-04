@@ -175,7 +175,7 @@ export default class HousingAssitancePresenter {
         this.view.isValid(true)
       },
       error => {
-        // this.view.navigate()
+        this.view.navigate()
       }
     )
   }
