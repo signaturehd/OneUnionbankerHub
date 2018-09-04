@@ -109,7 +109,7 @@ class EducationAidFragment extends BaseMVPView {
   }
 
   orDateFunc (data) {
-    this.setState({ orDate: data.format('MM/DD/YYYY'), orDateErrorMessage : '' })
+    this.setState({ orDate: data.format('MM-DD-YYYY'), orDateErrorMessage : '' })
   }
 
   validateRequired (e) {
@@ -162,9 +162,9 @@ class EducationAidFragment extends BaseMVPView {
       courseText,
       academicYearText,
       semesterText,
-      parseFloat(gwaText),
-      parseFloat(tuitionFeeText),
-      parseFloat(registrationFeeText),
+      gwaText,
+      tuitionFeeText,
+      registrationFeeText,
       schoolId,
       orDate,
       orNumber,

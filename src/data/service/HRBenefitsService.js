@@ -87,7 +87,7 @@ export default class HRBenefitsService {
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(dentalRObject))
     dentalReimbursementParam.attachments.map((resp, key) => (
-      formData.append(resp.name, resp.file)
+      formData.append(resp.name.replace('/', '-'), resp.file)
       )
     )
     return this.apiClient.post('v2/reimbursements/dental/submit', formData, {
@@ -114,7 +114,7 @@ export default class HRBenefitsService {
       distributor: 'distributorTest'
     }
     opticalParam.attachmentData.map((resp) => (
-      formData.append(resp.name, resp.file)
+      formData.append(resp.name.replace('/', '-'), resp.file)
       )
     )
     formData.append('body', JSON.stringify(opticalObject))
@@ -379,7 +379,7 @@ export default class HRBenefitsService {
       formData.append('body', JSON.stringify(multiLoanBodyObject))
       mplPurposeLoanAddParam.attachments &&
       mplPurposeLoanAddParam.attachments.map((attachment, key) => (
-        formData.append(attachment.label, attachment.file)
+        formData.append(attachment.label.replace('/', '-'), attachment.file)
       ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
@@ -409,7 +409,7 @@ export default class HRBenefitsService {
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
     addMotorLoanParam.attachments.map((attachment, key) => (
-      formData.append(attachment.label, attachment.file)
+      formData.append(attachment.label.replace('/', '-'), attachment.file)
     ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
@@ -439,7 +439,7 @@ export default class HRBenefitsService {
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
     addComputerLoanParam.attachments.map((attachment, key) => (
-      formData.append(attachment.label, attachment.file)
+      formData.append(attachment.label.replace('/', '-'), attachment.file)
     ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
@@ -474,7 +474,7 @@ export default class HRBenefitsService {
     }
     carRequestParam.file.map((attachment, key) =>
       (
-        formData.append(attachment.name, attachment.file)
+        formData.append(attachment.name.replace('/', '-'), attachment.file)
       )
     )
     formData.append('body', JSON.stringify(addCarleaseObject))
@@ -490,7 +490,7 @@ export default class HRBenefitsService {
       uuid : '12345'
     }
     leasesConfirmpaymentParam.file.map((resp, key) =>
-      formData.append(file.name, file.file)
+      formData.append(file.name.replace('/', '-'), file.file)
     )
     formData.append(body, JSON.stringify(leasesConfirmpaymentObject))
     return this.apiClient.post('v1/leases/car/payment', formData, {
@@ -574,17 +574,13 @@ export default class HRBenefitsService {
         registrationFee : educationAidParam.registrationFee,
         schoolId : educationAidParam.schoolId,
         orNumber : educationAidParam.orNumber,
-        orDate : educationAidParam.orDate,
+        orDate : educationAidParam.orDate
       }
       formData.append('uuid', 12345)
       formData.append('body', JSON.stringify(educationAidObject))
-      {
-        educationAidParam.attachments.map((resp, key ) =>
-          (
-            formData.append(resp.name, resp.file)
-          )
-        )
-      }
+
+      educationAidParam.attachments.map((resp, key ) => formData.append(resp.name.replace('/', '-'), resp.file))
+
       return this.apiClient.post('v2/reimbursements/education/personal/submit', formData, {
         headers : { token }
       })
@@ -652,7 +648,7 @@ export default class HRBenefitsService {
      formData.append('body', JSON.stringify(groupPlanObject))
      groupAidParam.attachments.map((resp, key) =>
       (
-        formData.append(resp.name, resp.file)
+        formData.append(resp.name.replace('/', '-'), resp.file)
       ))
      return this.apiClient.post('v2/reimbursements/education/dependent/submit', formData, {
        headers : { token }
@@ -719,7 +715,7 @@ export default class HRBenefitsService {
     formData.append('uuid', 12345)
     calamityAssistanceParam.attachmentArray.map((resp, key) =>
      (
-       formData.append(resp.name, resp.file)
+       formData.append(resp.name.replace('/', '-'), resp.file)
      ))
     formData.append('body', JSON.stringify(calamityObject))
     return this.apiClient.post('v1/calamity/availment', formData,{
@@ -731,7 +727,7 @@ export default class HRBenefitsService {
     const formData = new FormData()
     formData.append('uuid', 12345)
     files.map((file, key) => (
-      formData.append(file.name, file.file)
+      formData.append(file.name.replace('/', '-'), file.file)
     ))
     formData.append('body', JSON.stringify({
       transactionId : id
@@ -745,7 +741,7 @@ export default class HRBenefitsService {
     const formData = new FormData()
     formData.append('uuid', 12345)
     files.map((file, key) => (
-      formData.append(file.name, file.file)
+      formData.append(file.name.replace('/', '-'), file.file)
     ))
     formData.append('body', JSON.stringify({
       transactionId : id
@@ -809,7 +805,7 @@ export default class HRBenefitsService {
         amount : outPatientParam.amount,
       }
       outPatientParam.attachments.map((resp, key) => (
-        formData.append(resp.name, resp.file)
+        formData.append(resp.name.replace('/', '-'), resp.file)
         )
       )
     formData.append('body', JSON.stringify(objectOutPatient))
@@ -897,7 +893,7 @@ export default class HRBenefitsService {
     }
     addMaternityAssistanceParam.attachmentArray.map((resp) =>
       (
-        formData.append(resp.name, resp.file)
+        formData.append(resp.name.replace('/', '-'), resp.file)
       )
     )
 
