@@ -57,6 +57,11 @@ class MedicalFragment extends Component {
       styleName: 'medical-cards-1 medical-option-default',
       title: 'Maternity Assistance',
       path: '/mybenefits/benefits/medical/assistance/maternity',
+    }, {
+      id: 7,
+      styleName: 'medical-cards-1 medical-option-default',
+      title: 'Vaccine Requisition',
+      path: '/mybenefits/benefits/medical/vaccine',
     }]
 
     const MedicalHome = () => (

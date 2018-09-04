@@ -798,4 +798,10 @@ export default class HRBenefitsClient {
     return this.service.addStaffAccounts(token, accountNumber, staffAccountsParam)
       .pipe(ServiceErrorOperator())
   }
+
+  /* Vaccine Requisition */
+  validateVaccine (token) {
+    return this.service.validateVaccine(token)
+      .pipe(ServiceErrorOperator())
+  }
 }

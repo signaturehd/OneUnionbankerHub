@@ -1039,4 +1039,11 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Vaccine Requisition */
+   validateVaccine (token) {
+     return this.apiClient.get('v1/vaccinations/validate', {
+       headers: { token }
+     })
+   }
 }
