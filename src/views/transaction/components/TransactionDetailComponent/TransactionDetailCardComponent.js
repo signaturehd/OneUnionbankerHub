@@ -5,6 +5,7 @@ import { Card, GenericButton } from '../../../../ub-components/'
 
 import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
 import TransactionProcedureCardComponent from './TransactionProcedureCardComponent'
+import TransactionOtherDetailsComponent from './TransactionOtherDetailsComponent'
 
 import moment from 'moment'
 
@@ -80,9 +81,10 @@ class TransactionDetailCardComponent extends Component {
           details.details.Procedures ?
             <TransactionProcedureCardComponent
               procedure = { details && details.details }
+            /> :
+            <TransactionOtherDetailsComponent
+              procedure = { details && details.details }
             />
-            :
-            <div></div>
         }
         <br/>
         <br/>
