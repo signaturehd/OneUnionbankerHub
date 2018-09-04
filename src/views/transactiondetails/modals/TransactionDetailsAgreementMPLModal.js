@@ -3,33 +3,35 @@ import PropTypes from 'prop-types'
 
 import { Modal } from '../../../ub-components'
 
-class TransactionDetailsFormAttachmentsModal extends Component {
+class TransactionDetailsAgreementMPLModal extends Component {
   constructor (props) {
     super(props)
   }
 
   render () {
   const { onClose, agreements } = this.props
-  console.log(agreements)
+
   return (
     <Modal
       isDismisable = { true }
-      width = { 50 }
+      width = { 60 }
       onClose = { onClose }
     >
       {
-        agreements && agreements.FormAgreements.map ((formAgreement, key) =>
-        <center key = { key }>
-            <div dangerouslySetInnerHTML = {{ __html : formAgreement }}></div>
-        </center>
+      agreements && agreements.FormAgreements.map((formAgreement, key) =>
+        (
+        <div key = { key }>
+            <div dangerouslySetInnerHTML = {{ __html : formAgreement.Form }}></div>
+        </div>
         )
-      }
+      )
+    }
     </Modal>
     )
   }
 }
 
-TransactionDetailsFormAttachmentsModal.propTypes = {
+TransactionDetailsAgreementMPLModal.propTypes = {
   onClose: PropTypes.func,
   agreements: PropTypes.oneOfType([
     PropTypes.object,
@@ -37,4 +39,4 @@ TransactionDetailsFormAttachmentsModal.propTypes = {
   ]),
 }
 
-export default TransactionDetailsFormAttachmentsModal
+export default TransactionDetailsAgreementMPLModal

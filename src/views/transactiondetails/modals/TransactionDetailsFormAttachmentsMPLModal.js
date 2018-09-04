@@ -9,7 +9,7 @@ class TransactionDetailsFormAttachmentsMPLModal extends Component {
   }
 
   render () {
-  const { onClose, fileAttachments } = this.props
+  const { onClose, attachments } = this.props
   return (
     <Modal
       isDismisable = { true }
@@ -17,16 +17,15 @@ class TransactionDetailsFormAttachmentsMPLModal extends Component {
       onClose = { onClose }
     >
       <div className={ 'transaction-attachments-container' }>
-        {
-          fileAttachments &&
-          fileAttachments.map((image, key) => (
-            <img
-              key = { key }
-              className = { 'transaction-attachments _img-ub-logo' }
-              src = { image }
-            />
-          ))
-        }
+      {
+        attachments.map((resp, key) =>
+        <img
+          key = { key }
+          className = { 'transaction-attachments _img-ub-logo' }
+          src = { resp }
+        />
+        )
+      }
       </div>
     </Modal>
     )
@@ -35,7 +34,7 @@ class TransactionDetailsFormAttachmentsMPLModal extends Component {
 
 TransactionDetailsFormAttachmentsMPLModal.propTypes = {
   onClose: PropTypes.func,
-  fileAttachments: PropTypes.object,
+  fileAttachments: PropTypes.array,
 }
 
 export default TransactionDetailsFormAttachmentsMPLModal
