@@ -19,7 +19,7 @@ import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import MotorcycleLoanCardComponent from './components/MotorcycleLoanCardComponent'
-import * as MotorcycleLoanFunction from './function/MotorcycleLoanFunction'
+import * as Functions from './function/MotorcycleLoanFunction'
 
 class MotorcycleLoanFragment extends BaseMVPView {
   constructor (props) {
@@ -50,8 +50,9 @@ class MotorcycleLoanFragment extends BaseMVPView {
       termOfLoan : [],
       nfis : [],
       fileAttachments : [],
-      dealer : null,
+      dealer : '',
       status : 'Next',
+      desiredAmount : '',
     }
 
     this.setPurposeOfAvailment = this.setPurposeOfAvailment.bind(this)
@@ -162,7 +163,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
   }
 
   validateRequired (e) {
-    return MotorcycleLoanFunction.checkedValidateInput(e)
+    return Functions.checkedValidateInput(e)
   }
 
   updateModeOfLoan (modeOfLoanId, modeOfLoanLabel) {
@@ -350,6 +351,14 @@ class MotorcycleLoanFragment extends BaseMVPView {
     })
   }
 
+  validateInputAmount (resp) {
+    this.setState({ desiredAmount : Functions.checkedValidateAmount(resp) })
+  }
+
+  setDealerName (dealer) {
+    this.setState({ dealedealerr })
+  }
+
   render () {
     const {
       showNoticeModal,
@@ -380,6 +389,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
       showLoading,
       nfis,
       dealer,
+      desiredAmount,
     } = this.state
 
     // const empName=employeeName && employeeName.fullname
@@ -495,11 +505,13 @@ class MotorcycleLoanFragment extends BaseMVPView {
               modeOfLoan = { modeOfLoanLabel }
               modeOfLoanId = { modeOfLoanId }
               offsetLoan = { offsetLoanArray }
-              desiredAmount = { (desiredAmount) => this.setState({ desiredAmount : parseInt(desiredAmount) }) }
+              desiredAmount = { desiredAmount }
+              desiredAmountFunc = { (desiredAmount) => this.validateInputAmount(desiredAmount) }
               onClick = { () => this.submitForm() }
-              dealerName = { (dealer) => this.setState({ dealer }) }
+              dealerNameFunc = { (dealer) => this.setDealerName(dealer) }
               status = { status }
               review = { review }
+              dealer = { dealer }
               setAttachments = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
               updateForm = { () => this.setState({ review : false, status : 'Next' }) }
             />

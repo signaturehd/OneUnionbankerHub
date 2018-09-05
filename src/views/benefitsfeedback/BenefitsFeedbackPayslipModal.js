@@ -6,7 +6,12 @@ import Presenter from './presenter/BenefitFeedbackPresenter'
 import ConnectView from '../../utils/ConnectView'
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { Modal, GenericButton, CircularLoader, GenericTextBox } from '../../ub-components'
+import {
+  Modal,
+  GenericButton,
+  CircularLoader,
+  GenericInput
+} from '../../ub-components'
 
 import './styles/benefitFeedback.css'
 
@@ -70,8 +75,11 @@ class BenefitsFeedbackPayslipModal extends BaseMVPView {
             isDismisable={ true }>
             <div>
               <center>
-                <div>
-                  Payroll Issue
+                <div className = { 'grid-global-rows' }>
+                  <h2>
+                    Payroll Concern
+                  </h2>
+                  <h2 className = { 'font-size-14px' }>Please select the type of payroll concern you want to raise</h2>
                 </div>
                 {
                   respCategories.map((resp, key) =>
@@ -106,12 +114,13 @@ class BenefitsFeedbackPayslipModal extends BaseMVPView {
                 src={ require('../../images/icons/img_message_circle.png') }
                 className= {'sidebar-img-ub-logo'}/>
               <br/>
-              <h3>Your feedback will help us improve our service</h3>
+              <h2>Do you have a payroll concern? </h2>
+              <h3>Please tell us more about this so we can help.</h3>
               <br/>
-                <GenericTextBox
+                <GenericInput
                   type={ 'text' }
                   value={ selectedFeedback ? selectedFeedback : '' }
-                  placeholder={ 'Please select payroll issue' }
+                  placeholder={ 'Payroll Concern' }
                   onClick={ () => this.setState({ payrollModalIssue : true }) }
                 />
               <br/>

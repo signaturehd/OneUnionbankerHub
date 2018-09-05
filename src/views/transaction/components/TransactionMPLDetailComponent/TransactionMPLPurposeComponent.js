@@ -20,22 +20,14 @@ class TransactionMPLPurposeComponent extends Component {
     const name = TransactionPersonalFunction.checkPurposeName(details.details)
     const creditRatio = TransactionPersonalFunction.checkedCreditRatio(details.details)
     const termTerm = TransactionPersonalFunction.checkedTerm(details.details)
+    const rate = TransactionPersonalFunction.checkedRate(details.details)
 
     return (
       <div className = { 'transaction-component-details-form' }>
         <div>
           <div>
-            <h2 className = { 'font-weight-bolder' }> Term of Payment </h2>
+            <h2 className = { 'font-weight-bolder' }> Loan Details </h2>
             <br/>
-          </div>
-          <div className = { 'transaction-icons-details-grid' }>
-            <span className = { ' transaction-card-icon-settings' }></span>
-            <div>
-              <h2 className = { 'font-weight-ligter' }>
-                { name }
-              </h2>
-              <br/>
-            </div>
           </div>
           <div className = { 'transaction-icons-details-grid' }>
             <span className = { 'transaction-card-icon-settings' }></span>
@@ -43,21 +35,37 @@ class TransactionMPLPurposeComponent extends Component {
               <h2>
                 { purposeOfAvailement }
               </h2>
-              <h2 className = { 'unionbank-color font-size-12px' }>
-                Purpose of Availement
-                <br/>
-                <br/>
-              </h2>
-            </div>
-          </div>
-          <div className = { 'transaction-icons-details-grid' }>
-            <span className = { ' transaction-card-icon-settings' }></span>
-            <div>
-              <h2>
+              <h2 className = { 'unionbank-color font-size-14px' }>
                 { modeOfLoan }
+                <br/>
+                <br/>
+              </h2>
+            </div>
+          </div>
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { 'transaction-card-icon-settings' }></span>
+            <div>
+              <h2>
+                { name }
+              </h2>
+              <h2 className = { 'unionbank-color font-size-14px' }>
+                <br/>
+                <br/>
+              </h2>
+            </div>
+          </div>
+          <div>
+            <h2 className = { 'font-weight-bolder' }> Term of Payment </h2>
+            <br/>
+          </div>
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { ' transaction-card-icon-settings' }></span>
+            <div>
+              <h2>
+                { termTerm } months
               </h2>
               <h2 className = { 'unionbank-color font-size-12px' }>
-                Mode of Loan
+                Duration
                 <br/>
                 <br/>
               </h2>
@@ -67,10 +75,10 @@ class TransactionMPLPurposeComponent extends Component {
             <span className = { ' transaction-card-icon-settings' }></span>
             <div>
               <h2>
-                { desiredAmount }
+                { rate }
               </h2>
               <h2 className = { 'unionbank-color font-size-12px' }>
-                Desired Amount
+                Term Rate
                 <br/>
                 <br/>
               </h2>
@@ -80,7 +88,7 @@ class TransactionMPLPurposeComponent extends Component {
             <span className = { ' transaction-card-icon-settings' }></span>
             <div>
               <h2>
-                { creditRatio }
+                { creditRatio } %
               </h2>
               <h2 className = { 'unionbank-color font-size-12px' }>
                 Credit Ratio
@@ -93,10 +101,10 @@ class TransactionMPLPurposeComponent extends Component {
             <span className = { ' transaction-card-icon-settings' }></span>
             <div>
               <h2>
-                { termTerm }
+                 &#8369; { amortization }
               </h2>
               <h2 className = { 'unionbank-color font-size-12px' }>
-                Term Rate
+                amortization
                 <br/>
                 <br/>
               </h2>

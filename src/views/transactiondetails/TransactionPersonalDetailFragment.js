@@ -25,7 +25,9 @@ import OutpatientDetailsFragment from './fragments/OutpatientDetailsFragment'
 import MaternityAssistanceDetailsFragment from './fragments/MaternityAssistanceDetailsFragment'
 
 import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreementsModal'
+import TransactionDetailsAgreementMPLModal from './modals/TransactionDetailsAgreementMPLModal'
 import TransactionDetailsFormAttachmentsModal from './modals/TransactionDetailsFormAttachmentsModal'
+import TransactionDetailsFormAttachmentsMplModal from './modals/TransactionDetailsFormAttachmentsMplModal'
 
 function  TransactionDetails (props)  {
   const transactionId = props.details ? props.details.benefitType.id : 0
@@ -36,6 +38,7 @@ function  TransactionDetails (props)  {
   const attachmentsMethod = props.attachmentsMethod
   const attachmentsMethodMPL = props.attachmentsMethodMPL
   const agreementsMethod = props.agreementsMethod
+  const agreementsMethodMPL = props.agreementsMethodMPL
   const onConfirmationCarleaseFunc = props.onConfirmationCarleaseFunc
   const onUploadAttachmentsFunc = props.onUploadAttachmentsFunc
   const setFileCarlease = props.setFileCarlease
@@ -99,7 +102,7 @@ function  TransactionDetails (props)  {
     return <LoansDetailsFragment
       transactionsPerson = { transactionsPerson }
       attachmentsMethodMPL = { (resp) => attachmentsMethodMPL(resp) }
-      agreementsMethod = { (resp) => agreementsMethod(resp) }
+      agreementsMethodMPL = { (resp) => agreementsMethodMPL(resp) }
       details = { transactionDetails } />
   } else if (transactionId === 21) {
     // Bereavement Transaction Details
@@ -163,6 +166,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
       showAgreementsModal: false,
       showConfirmation : false,
       showAttachmentsMPLModal : false,
+      showAgreementsMethodMPL : false,
       showConfirmationMessage : '',
       fileCarLease : []
     }
@@ -189,6 +193,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
 
   showAgreementsMethod (e) {
     this.setState({ showAgreementsModal : e })
+  }
+
+  showAgreementsMethodMPL (e) {
+    this.setState({ showAgreementsMethodMPL : e })
   }
 
   showAttachments (attachments) {
@@ -236,6 +244,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     showAttachmentsModal,
     showAttachmentsMPLModal,
     showAgreementsModal,
+    showAgreementsMethodMPL,
     showConfirmation,
     showConfirmationMessage,
     fileCarLease
@@ -253,18 +262,27 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
           />
       }
       {
-        showAttachmentsMPLModal &&
-        <TransactionDetailsAgreementsModal
+        showAgreementsMethodMPL &&
+        <TransactionDetailsAgreementMPLModal
           agreements = { details && details.details }
           isDismisable = { true }
           onClose = { () =>
-            this.setState({ showAgreementsModal : false }) }
+            this.setState({ showAgreementsMethodMPL : false }) }
+          />
+      }
+      {
+        showAttachmentsMPLModal &&
+        <TransactionDetailsFormAttachmentsMplModal
+          attachments = { attachments }
+          isDismisable = { true }
+          onClose = { () =>
+            this.setState({ showAttachmentsMPLModal : false }) }
           />
       }
       {
         showAttachmentsModal &&
         <TransactionDetailsFormAttachmentsModal
-          fileAttachments = { attachments }
+          attachments = { attachments }
           isDismisable = { true }
           onClose = { () =>
             this.setState({ showAttachmentsModal : false }) }
@@ -310,6 +328,9 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              }
              agreementsMethod = { (resp) =>
                this.showAgreementsMethod(resp)
+             }
+             agreementsMethodMPL = { (resp) =>
+               this.showAgreementsMethodMPL(resp)
              }
              onConfirmationCarleaseFunc = { (transactionID, status) =>
                this.presenter.addCarLeaseConfirmation(transactionID, status)

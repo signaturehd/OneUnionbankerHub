@@ -31,76 +31,17 @@ class BereavementFormCardComponent extends Component {
     this.submitFormOnClicked = this.submitFormOnClicked.bind(this)
   }
 
-  submitFormOnClicked (
-    funeralDate,
-    intermentDate,
-    deceasedDate,
-    dependentId,
-    funeralHome,
-    funeralAddress,
-    funeralRegion,
-    funeralProvince,
-    funeralCity,
-    memorialPark,
-    memorialAddress,
-    memorialRegion,
-    memorialProvince,
-    memorialCity,
-    attachmentData
-  ) {
-    this.props.submitFormData(
-      funeralDate,
-      intermentDate,
-      deceasedDate,
-      dependentId,
-      funeralHome,
-      funeralAddress,
-      funeralRegion,
-      funeralProvince,
-      funeralCity,
-      memorialPark,
-      memorialAddress,
-      memorialRegion,
-      memorialProvince,
-      memorialCity,
-      attachmentData
-    )
+  submitFormOnClicked () {
+    this.props.submitFormData()
   }
 
-  getOnClicked(
-    funeralDate,
-    intermentDate,
-    deceasedDate,
-    dependentId,
-    funeralHome,
-    funeralAddress,
-    funeralRegion,
-    funeralProvince,
-    funeralCity,
-    memorialPark,
-    memorialAddress,
-    memorialRegion,
-    memorialProvince,
-    memorialCity,
-    attachmentData
-  ) {
-    this.props.editFormData(
-      funeralDate && moment(funeralDate).format('MM/DD/YYYY'),
-      intermentDate && moment(intermentDate).format('MM/DD/YYYY'),
-      deceasedDate  && moment(deceasedDate).format('MM/DD/YYYY'),
-      dependentId,
-      funeralHome,
-      funeralAddress,
-      funeralRegion,
-      funeralProvince,
-      funeralCity,
-      memorialPark,
-      memorialAddress,
-      memorialRegion,
-      memorialProvince,
-      memorialCity,
-      attachmentData
-    )
+  getOnClicked() {
+    const {withDeathCert} = this.props
+    if(withDeathCert) {
+      this.props.editFormData()
+    } else {
+      this.props.submitFormDataWithNoAttachments()
+    }
   }
 
   render () {
@@ -400,23 +341,7 @@ class BereavementFormCardComponent extends Component {
                     type = { 'button' }
                     text = { 'Submit' }
                     onClick={
-                      () => this.submitFormOnClicked(
-                        funeralDate,
-                        intermentDate,
-                        deceasedDate,
-                        dependentId,
-                        funeralHome,
-                        funeralAddress,
-                        funeralRegion,
-                        funeralProvince,
-                        funeralCity,
-                        memorialPark,
-                        memorialAddress,
-                        memorialRegion,
-                        memorialProvince,
-                        memorialCity,
-                        attachmentData
-                      )
+                      () => this.submitFormOnClicked()
                     }/>
                 </div>
                 :
@@ -424,23 +349,7 @@ class BereavementFormCardComponent extends Component {
                   type={ 'button' }
                   text={ 'Continue' }
                   onClick={
-                    () => this.getOnClicked(
-                      funeralDate,
-                      intermentDate,
-                      deceasedDate,
-                      dependentId,
-                      funeralHome,
-                      funeralAddress,
-                      funeralRegion,
-                      funeralProvince,
-                      funeralCity,
-                      memorialPark,
-                      memorialAddress,
-                      memorialRegion,
-                      memorialProvince,
-                      memorialCity,
-                      attachmentData
-                    )
+                    () => this.getOnClicked()
                   }
                   className={ 'brv-submit' } />
               }

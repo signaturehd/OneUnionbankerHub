@@ -16,8 +16,8 @@ export function checkedReasonForLeave (benefitsCodeType) {
     return 'Maternity-Normal'
   } else if (status === 'mc') {
     return 'Maternity-Caesarean'
-  } else if (status === 'pl') {a
-    return 'Paternity'
+  } else if (status === 'pl') {
+    return 'Paternity Leave'
   } else if (status === 'br') {
     return 'Bar/Board Review'
   } else if (status === 'vl') {

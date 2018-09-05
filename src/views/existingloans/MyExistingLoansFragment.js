@@ -44,6 +44,13 @@ class MyExistingLoansFragment extends BaseMVPView {
 
   render () {
     const { existingLoans, enabledLoader } = this.state
+
+    const existingLoansTotal = existingLoans.map(function(resp) {
+      return resp.balance
+    })
+
+    const totalAmount = existingLoansTotal.reduce((a, b) => a + b, 0)
+
     return (
       <div>
         <br/>
@@ -57,29 +64,7 @@ class MyExistingLoansFragment extends BaseMVPView {
           </div>
           :
           <div className = { 'existing-loans-grid-container' }>
-            <div className = { 'existing-loans-grid-header' }>
-              <div>
-                {
-                  existingLoans.map((resp, key) =>
-                  <div className = { 'text-align-right' }>
-                    <h2 className = { 'existing-loan-title-header' }>
-                      &#8369; { format(resp.balance) }
-                    </h2>
-                    <br/>
-                    <h2>
-                      Outstanding Balance
-                    </h2>
-                    <h2>
-                      { moment(resp.date).format('DD MMM YYYY') }
-                    </h2>
-                  </div>
-                  )
-                }
-              </div>
-              <div></div>
-            </div>
             <div>
-              <br/>
               <div className = { 'existing-loan-summary-grid-x2' }>
                 <div>
                   Existing Loans Summary
@@ -87,16 +72,31 @@ class MyExistingLoansFragment extends BaseMVPView {
                 <div>
                   <Line/>
                 </div>
+                <br/>
+                <br/>
               </div>
-              <br/>
-              <ExistingLoansSummaryCardComponent
-                existingLoans = { existingLoans }
-                />
-              <br/>
+            </div>
+            <div className = { 'existing-loans-grid-header' }>
+              <div>
+                <div className = { 'text-align-right' }>
+                  <h2 className = { 'existing-loan-title-header' }>
+                    &#8369; { format(totalAmount  ) }
+                  </h2>
+                  <br/>
+                  <h2>
+                    Outstanding Balance
+                  </h2>
+                  <h2>
+                    { moment().format('DD MMM YYYY') }
+                  </h2>
+                </div>
+              </div>
+              <div></div>
             </div>
             <div>
               <div className = { 'existing-loan-summary-grid-x2' }>
                 <div>
+                  <br/>
                   Loans History
                 </div>
                 <div>
@@ -104,9 +104,11 @@ class MyExistingLoansFragment extends BaseMVPView {
                 </div>
               </div>
               <br/>
-              <ExistingLoansHistoryCardComponent
+              <ExistingLoansSummaryCardComponent
+                totalAmount = { totalAmount }
                 existingLoans = { existingLoans }
                 />
+              <br/>
             </div>
           </div>
         }
