@@ -11,6 +11,11 @@
   display: grid;
 }
 
+.bereavement-padding-attachments{
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
 .transaction-detail {
   margin-bottom: 10px;
 }

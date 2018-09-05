@@ -282,7 +282,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
       {
         showAttachmentsModal &&
         <TransactionDetailsFormAttachmentsModal
-          fileAttachments = { attachments }
+          attachments = { attachments }
           isDismisable = { true }
           onClose = { () =>
             this.setState({ showAttachmentsModal : false }) }

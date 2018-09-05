@@ -9,8 +9,8 @@ class TransactionDetailsFormAttachmentsModal extends Component {
   }
 
   render () {
-  const { onClose, agreements } = this.props
-  console.log(agreements)
+  const { onClose, attachments } = this.props
+
   return (
     <Modal
       isDismisable = { true }
@@ -18,10 +18,12 @@ class TransactionDetailsFormAttachmentsModal extends Component {
       onClose = { onClose }
     >
       {
-        agreements && agreements.FormAgreements.map ((formAgreement, key) =>
-        <center key = { key }>
-            <div dangerouslySetInnerHTML = {{ __html : formAgreement }}></div>
-        </center>
+        attachments && attachments.map ((attachment, key) =>
+        <img
+          key = { key }
+          className = { 'transaction-attachments _img-ub-logo' }
+          src = { attachment }
+        />
         )
       }
     </Modal>
@@ -31,7 +33,7 @@ class TransactionDetailsFormAttachmentsModal extends Component {
 
 TransactionDetailsFormAttachmentsModal.propTypes = {
   onClose: PropTypes.func,
-  agreements: PropTypes.oneOfType([
+  attachments: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array
   ]),

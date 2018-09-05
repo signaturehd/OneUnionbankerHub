@@ -300,12 +300,6 @@ class CarLeaseNewFragment extends BaseMVPView {
       {
         id : '1',
         name : 'Salary Deduction',
-      }, {
-        id: '2',
-        name : 'Branch Payment',
-      }, {
-        id : '3',
-        name : 'Bills Payment'
       }
     ]
 

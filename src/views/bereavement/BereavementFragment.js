@@ -177,23 +177,24 @@ class BereavementFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits')
   }
 
-  editForm (
-    funeralDate,
-    intermentDate,
-    deceasedDate,
-    dependentId,
-    funeralHome,
-    funeralAddress,
-    funeralRegion,
-    funeralProvince,
-    funeralCity,
-    memorialPark,
-    memorialAddress,
-    memorialRegion,
-    memorialProvince,
-    memorialCity,
-    attachmentData
-  ) {
+  editForm () {
+    const {
+      funeralDate,
+      intermentDate,
+      deceasedDate,
+      dependentId,
+      funeralHome,
+      funeralAddress,
+      funeralRegion,
+      funeralProvince,
+      funeralCity,
+      memorialPark,
+      memorialAddress,
+      memorialRegion,
+      memorialProvince,
+      memorialCity,
+      attachmentData
+    } = this.state
 
     let validateAttachments = false
     attachmentData && attachmentData.map(
@@ -355,28 +356,186 @@ class BereavementFragment extends BaseMVPView {
       this.setState({ showEditSubmitButton : true })
     }
   }
+  editFormNoAttachments () {
+    const {
+      funeralDate,
+      intermentDate,
+      deceasedDate,
+      dependentId,
+      funeralHome,
+      funeralAddress,
+      funeralRegion,
+      funeralProvince,
+      funeralCity,
+      memorialPark,
+      memorialAddress,
+      memorialRegion,
+      memorialProvince,
+      memorialCity,
+      attachmentData
+    } = this.state
 
-  submitForm (
-    funeralDate,
-    intermentDate,
-    deceasedDate,
-    dependentId,
-    funeralHome,
-    funeralAddress,
-    funeralRegion,
-    funeralProvince,
-    funeralCity,
-    memorialPark,
-    memorialAddress,
-    memorialRegion,
-    memorialProvince,
-    memorialCity,
-    attachmentData
-  ) {
+    let validateAttachments = false
+    attachmentData && attachmentData.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
+
+    if (dependentId === null || dependentId === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Dependent field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (deceasedDate === null || deceasedDate === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Deceased Date field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (funeralDate === null || funeralDate === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Funeral Date field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (funeralHome === null || funeralHome === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Funeral Home field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (funeralAddress === null || funeralAddress === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Funeral Address field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (funeralRegion === null || funeralRegion === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Funeral Region field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (funeralProvince === null || funeralProvince === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Funeral Province field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (funeralCity === null || funeralCity === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Funeral City field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (intermentDate === null || intermentDate === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Interment Date field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (memorialPark === null || memorialPark === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Memorial Park field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (memorialAddress === null || memorialAddress === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Memorial Address field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (memorialRegion === null || memorialRegion === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Memorial Region field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (memorialProvince === null || memorialProvince === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Memorial Province field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    }
+    else if (memorialCity === null || memorialCity === '') {
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Warning',
+          message: 'Memorial City field is required',
+          type: 'warning',
+          duration: 2000
+        })
+      )
+    } else {
+      this.setState({ showEditSubmitButton : true })
+    }
+  }
+
+  submitForm () {
+    const {
+      funeralDate,
+      intermentDate,
+      deceasedDate,
+      dependentId,
+      funeralHome,
+      funeralAddress,
+      funeralRegion,
+      funeralProvince,
+      funeralCity,
+      memorialPark,
+      memorialAddress,
+      memorialRegion,
+      memorialProvince,
+      memorialCity,
+      attachmentData
+    } =this.state
     const objectDate={
-      "death" : deceasedDate,
-      "wake" : funeralDate,
-      "interment" : intermentDate
+      "death" :  deceasedDate && moment(deceasedDate).format('MM/DD/YYYY'),
+      "wake" :  funeralDate && moment(funeralDate).format('MM/DD/YYYY'),
+      "interment" : intermentDate && moment(intermentDate).format('MM/DD/YYYY')
     }
     const objectFuneral ={
       "home" : funeralHome,
@@ -553,75 +712,14 @@ class BereavementFragment extends BaseMVPView {
                 showDeceasedDependents = { () => this.setState({ showDeceasedDependents : true }) }
                 setAttachmentArrayFunc = { (attachmentData) => this.setState({ attachmentData }) }
                 changeStateEditToFalse = { () => this.setState({ showEditSubmitButton : false }) }
-                editFormData={ (
-                  funeralDate,
-                  intermentDate,
-                  deceasedDate,
-                  dependentId,
-                  funeralHome,
-                  funeralAddress,
-                  funeralRegion,
-                  funeralProvince,
-                  funeralCity,
-                  memorialPark,
-                  memorialAddress,
-                  memorialRegion,
-                  memorialProvince,
-                  memorialCity,
-                  attachmentData
-                ) =>
-                  this.editForm(
-                    funeralDate,
-                    intermentDate,
-                    deceasedDate,
-                    dependentId,
-                    funeralHome,
-                    funeralAddress,
-                    funeralRegion,
-                    funeralProvince,
-                    funeralCity,
-                    memorialPark,
-                    memorialAddress,
-                    memorialRegion,
-                    memorialProvince,
-                    memorialCity,
-                    attachmentData
-                  )
+                editFormData={ () =>
+                  this.editForm()
                 }
-                submitFormData={ (
-                  funeralDate,
-                  intermentDate,
-                  deceasedDate,
-                  dependentId,
-                  funeralHome,
-                  funeralAddress,
-                  funeralRegion,
-                  funeralProvince,
-                  funeralCity,
-                  memorialPark,
-                  memorialAddress,
-                  memorialRegion,
-                  memorialProvince,
-                  memorialCity,
-                  attachmentData
-                ) =>
-                  this.submitForm(
-                    funeralDate,
-                    intermentDate,
-                    deceasedDate,
-                    dependentId,
-                    funeralHome,
-                    funeralAddress,
-                    funeralRegion,
-                    funeralProvince,
-                    funeralCity,
-                    memorialPark,
-                    memorialAddress,
-                    memorialRegion,
-                    memorialProvince,
-                    memorialCity,
-                    attachmentData
-                  )
+                submitFormData={ () =>
+                  this.submitForm()
+                }
+                submitFormDataWithNoAttachments={ () =>
+                  this.editFormNoAttachments()
                 }
               />
             }
