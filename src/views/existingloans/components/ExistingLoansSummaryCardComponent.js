@@ -21,6 +21,7 @@ class ExistingLoansSummaryCardComponent extends Component {
       description,
       amortization,
       balance,
+      totalAmount ,
       promissoryNote,
       date
     } = this.props
@@ -50,14 +51,14 @@ class ExistingLoansSummaryCardComponent extends Component {
               <div>{ moment(resp.date).format('DD MMM YYYY') }</div>
             </div>
             <div className = { 'existing-loans-grid-label' }>
-              <div  className = { 'font-weight-bold font-size-14px' }>Outstanding Amount</div>
-              <div>{ resp.balance }</div>
+              <div  className = { 'font-weight-bold font-size-14px' }>Principal Amount</div>
+              <div>&#8369; { format(resp.balance) }</div>
             </div>
             <div  className = { 'font-weight-bold font-size-14px' }>(progressbar insert here)</div>
             <div className = { 'existing-loans-grid-label' }>
               <div  className = { 'font-weight-bold font-size-14px' }>Outstanding Amount</div>
               <div>
-                &#8369; { format(resp.balance) }
+                &#8369; { format(totalAmount) }
               </div>
             </div>
           </Card>
@@ -71,6 +72,7 @@ class ExistingLoansSummaryCardComponent extends Component {
 ExistingLoansSummaryCardComponent.propTypes = {
   description : PropTypes.string,
   amortization : PropTypes.string,
+  totalAmount  : PropTypes.string,
   balance : PropTypes.string,
   promissoryNote : PropTypes.string,
   date: PropTypes.object

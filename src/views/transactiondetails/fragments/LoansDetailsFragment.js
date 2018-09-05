@@ -28,7 +28,7 @@ class LoansDetailsFragment extends Component {
     details,
     transactionsPerson,
     attachmentsMethodMPL,
-    agreementsMethod
+    agreementsMethodMPL
   } = this.props
 
   const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
@@ -71,7 +71,7 @@ class LoansDetailsFragment extends Component {
               transactionsPerson={ transactionsPerson }
               details={ details }
               onClickAttachmentsMPL = { (resp) => attachmentsMethodMPL(resp) }
-              onClickAgreements = { (resp) => agreementsMethod(resp) }
+              onClickAgreementsMPL = { (resp) => agreementsMethodMPL(resp) }
             />
           </div>
           <div>
@@ -90,7 +90,7 @@ LoansDetailsFragment.propTypes = {
   details : PropTypes.object,
   transactionsPerson : PropTypes.array,
   attachmentsMethodMPL: PropTypes.func,
-  agreementsMethod: PropTypes.func ,
+  agreementsMethodMPL: PropTypes.func ,
 }
 
 export default LoansDetailsFragment

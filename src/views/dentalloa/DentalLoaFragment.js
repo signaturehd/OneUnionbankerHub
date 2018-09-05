@@ -190,23 +190,6 @@ class DentalLoaView extends BaseMVPView {
     return (
       <div  className = { 'benefits-container' }>
         {
-        showErrorMessageModal &&
-        <Modal>
-          <center>
-            <h2>{ showErrorMessageValidate.message }</h2>
-            <br/>
-            <GenericButton
-              text = { 'Ok' }
-              onClick = { () => {
-                this.setState({ showErrorMessageModal : false })
-                this.navigate()
-              }
-            }
-              />
-          </center>
-        </Modal>
-        }
-        {
           showNoticeResponseModal &&
           <Notice
             onClose = { () => this.setState({ noticeResp : false })}

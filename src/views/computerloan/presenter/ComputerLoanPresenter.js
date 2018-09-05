@@ -17,7 +17,7 @@ import MplGetFormParam from '../../../domain/param/MplGetFormParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
-export default class EmergencyLoanPresenter {
+export default class ComputerLoanPresenter {
   constructor (container) {
     this.getTypesInteractor =
       new GetTypesInteractor(container.get('HRBenefitsClient'))
@@ -104,7 +104,6 @@ export default class EmergencyLoanPresenter {
         })
 
         let requiredAttachments = [...new Set(data.RequiredDocuments && data.RequiredDocuments)]
-        console.log(requiredAttachments)
         nfisArray &&
         nfisArray.map((nfis, key) => {
           requiredAttachments &&
@@ -159,6 +158,7 @@ export default class EmergencyLoanPresenter {
         resp.offsetArray.push({
           id : offset.promissoryNoteNumber,
           name : offset.promissoryNoteNumber + ' ' + offset.outstandingBalance
+
         })
       })
 
@@ -177,7 +177,7 @@ export default class EmergencyLoanPresenter {
         this.view.isValid(true)
       },
       error => {
-        // this.view.navigate()
+        this.view.navigate()
       }
     )
   }

@@ -25,6 +25,7 @@ class SalaryLoanCardComponent extends Component {
       showOffsetLoan,
       showPurposeOfAvailment,
       desiredAmount,
+      desiredAmountFunc,
       showTerm,
       termOfLoan,
       purposeOfAvailment,
@@ -47,7 +48,6 @@ class SalaryLoanCardComponent extends Component {
           value = { purposeOfAvailment }
           readOnly
         />
-        <br/>
         <GenericInput
           text = { 'Mode of Loan' }
           onClick = { () => showModeOfLoan() }
@@ -55,7 +55,6 @@ class SalaryLoanCardComponent extends Component {
           disabled = { review }
           readOnly
         />
-        <br/>
         <GenericInput
           text = { 'Term of Loan' }
           onClick = { () => showTermOfLoan() }
@@ -63,15 +62,13 @@ class SalaryLoanCardComponent extends Component {
           disabled = { review }
           readOnly
         />
-        <br/>
         <GenericInput
           text = { 'Desired Amount' }
           maxLength = { 7 }
           disabled = { review }
-          onChange = { (e) => desiredAmount(e.target.value) }
+          value = { desiredAmount }
+          onChange = { (e) => desiredAmountFunc(e.target.value) }
         />
-        <br/>
-
         {
           modeOfLoanId === 2 &&
           <div>
@@ -112,18 +109,26 @@ class SalaryLoanCardComponent extends Component {
           </center>
         }
         <br/>
-        <div className = { 'salary-function' } >
+        <div>
           {
-            review &&
+            review ?
+            <div className = { 'grid-global' }>
+              <GenericButton
+                text = { 'Edit' }
+                onClick = { () => updateForm() }
+              />
+
+              <GenericButton
+                text = { status }
+                onClick = { () => onClick() }
+              />
+            </div> :
             <GenericButton
-              text = { 'Edit' }
-              onClick = { () => updateForm() }
+              className = { 'loan-submit-button' }
+              text = { status }
+              onClick = { () => onClick() }
             />
           }
-          <GenericButton
-            text = { status }
-            onClick = { () => onClick() }
-          />
         </div>
       </div>
     )
@@ -135,7 +140,8 @@ SalaryLoanCardComponent.propTypes = {
   showModeOfLoan : PropTypes.func,
   showPurposeOfAvailment : PropTypes.func,
   showOffsetLoan : PropTypes.func,
-  desiredAmount : PropTypes.func,
+  desiredAmountFunc : PropTypes.func,
+  desiredAmount : PropTypes.string,
   onClick : PropTypes.func,
   updateForm : PropTypes.func,
   modeOfLoanId : PropTypes.number,

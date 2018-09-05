@@ -43,7 +43,7 @@ class LeaveFilingFragment extends BaseMVPView {
       fromTime : '',
       fromMeridiem : '',
       toTime : '',
-      toMeridiem : ''
+      toMeridiem : '',
     }
     this.fromTimeChange = this.fromTimeChange.bind(this);
     this.toTimeChange = this.toTimeChange.bind(this);
@@ -146,7 +146,9 @@ class LeaveFilingFragment extends BaseMVPView {
   render () {
     const {
       benefitsCodeType,
-      navigateBenefits
+      navigateBenefits,
+      maxDateDataNumber,
+      maxDateDataType
     } = this.props
 
     const {
@@ -165,8 +167,10 @@ class LeaveFilingFragment extends BaseMVPView {
       fromTime,
       fromMeridiem,
       toTime,
-      toMeridiem
+      toMeridiem,
     } = this.state
+
+    const benefitTitleName = LeaveFilingFunctions.checkedReasonForLeave(benefitsCodeType)
 
     return (
       <div className={ 'brv-container' }>
@@ -197,7 +201,7 @@ class LeaveFilingFragment extends BaseMVPView {
               </center>
               :
               <Card className = { 'bereavement-leave-card' }>
-                <h2 className = { 'tex-align-center' }>Leave Filing</h2>
+                <h2 className = { 'tex-align-center' }>{ benefitTitleName } Filing</h2>
                 <br/>
                 <div className = { 'grid-global' }>
                   <div>
@@ -217,6 +221,7 @@ class LeaveFilingFragment extends BaseMVPView {
                       readOnly
                       minDate = { moment(dateFrom) }
                       disabled = { showEditMode }
+                      maxDate = { moment(dateFrom).add(maxDateDataNumber, maxDateDataType) }
                       onChange = { (e) => this.checkedToDate(e) }
                       errorMessage = { dateTo ? '' : errorMessageRemarksDateTo }
                       selected = { dateTo ? moment(dateTo) : '' }
@@ -226,6 +231,7 @@ class LeaveFilingFragment extends BaseMVPView {
                 <div className = { 'grid-global' }>
                   <div>
                     <TimePickerComponent
+                      type = { 'time' }
                       text = { 'From Time' }
                       format = { 'hh:mm' }
                       timeMode = { '12' }
@@ -239,6 +245,7 @@ class LeaveFilingFragment extends BaseMVPView {
                   <div>
                     <div></div>
                     <TimePickerComponent
+                      type = { 'time' }
                       text = { 'To Time' }
                       format = { 'hh:mm' }
                       timeMode = { '12' }
@@ -301,6 +308,8 @@ class LeaveFilingFragment extends BaseMVPView {
 
 LeaveFilingFragment.propTypes = {
   benefitsCodeType : PropTypes.string,
+  maxDateData : PropTypes.numeric,
+  maxDateDataType : PropTypes.string,
 }
 
 export default ConnectView(LeaveFilingFragment, Presenter)

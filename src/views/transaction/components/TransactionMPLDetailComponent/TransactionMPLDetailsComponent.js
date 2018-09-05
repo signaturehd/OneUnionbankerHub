@@ -17,7 +17,7 @@ class TransactionMPLDetailComponent extends Component {
   const {
     details,
     onClickAttachmentsMPL,
-    onClickAgreements
+    onClickAgreementsMPL
   } = this.props
 
   const transactionID = details.transactionId
@@ -56,17 +56,6 @@ class TransactionMPLDetailComponent extends Component {
             <br/>
           </div>
         </div>
-        <div className = { 'transaction-icons-details-grid' }>
-          <span className = { ' transaction-card-icon-settings global-icons-patient-name' }></span>
-          <div>
-            <h2>
-              { patient }
-            </h2>
-            <h4  className = { 'font-size-14px unionbank-color' }>
-            </h4>
-            <br/>
-          </div>
-        </div>
         {
           details &&
           details.details &&
@@ -101,7 +90,7 @@ class TransactionMPLDetailComponent extends Component {
           <GenericButton
             className = { 'transaction-details-button' }
             text = { 'View Agreements' }
-            onClick = { () => onClickAgreements(true) }
+            onClick = { () => onClickAgreementsMPL(true) }
           />
           <br/>
         </div>
@@ -114,7 +103,7 @@ class TransactionMPLDetailComponent extends Component {
 TransactionMPLDetailComponent.propTypes = {
   details : PropTypes.object,
   onClickAttachmentsMPL : PropTypes.func,
-  onClickAgreements : PropTypes.func
+  onClickAgreementsMPL : PropTypes.func
 }
 
 export default TransactionMPLDetailComponent

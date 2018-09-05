@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { GenericInput, GenericButton, FileUploader, DatePicker, ViewMoreButton } from '../../../ub-components/'
+import {
+  GenericInput,
+  GenericButton,
+  FileUploader,
+  DatePicker,
+  ViewMoreButton,
+  Line  
+} from '../../../ub-components/'
 import * as func from '../controller/MedicalSchedulingFunction'
 import './styles/medicalSchedulingComponentStyle.css'
 import '../../../ub-components/TextBox/styles/input.css'

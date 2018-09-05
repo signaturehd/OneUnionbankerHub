@@ -25,7 +25,7 @@ class MotorcycleLoanCardComponent extends Component {
       showOffsetLoan,
       showPurposeOfAvailment,
       desiredAmount,
-      dealerName,
+      desiredAmountFunc,
       showTerm,
       termOfLoan,
       purposeOfAvailment,
@@ -37,7 +37,9 @@ class MotorcycleLoanCardComponent extends Component {
       onClick,
       status,
       updateForm,
-      review
+      review,
+      dealer,
+      dealerNameFunc
     } = this.props
 
     return (
@@ -49,7 +51,6 @@ class MotorcycleLoanCardComponent extends Component {
           value = { purposeOfAvailment }
           readOnly
         />
-        <br/>
         <GenericInput
           text = { 'Mode of Loan' }
           onClick = { () => showModeOfLoan() }
@@ -57,7 +58,6 @@ class MotorcycleLoanCardComponent extends Component {
           disabled = { review }
           readOnly
         />
-        <br/>
         <GenericInput
           text = { 'Term of Loan' }
           onClick = { () => showTermOfLoan() }
@@ -65,22 +65,20 @@ class MotorcycleLoanCardComponent extends Component {
           disabled = { review }
           readOnly
         />
-        <br/>
         <GenericInput
           text = { 'Dealer Name' }
-          onChange = { (e) => dealerName(e.target.value) }
+          value = { dealer }
+          onChange = { (e) => dealerNameFunc(e.target.value) }
           maxLength = { 20 }
           disabled = { review }
         />
-        <br/>
         <GenericInput
           text = { 'Desired Amount' }
           maxLength = { 7 }
+          value = { desiredAmount }
           disabled = { review }
-          onChange = { (e) => desiredAmount(e.target.value) }
+          onChange = { (e) => desiredAmountFunc(e.target.value) }
         />
-        <br/>
-
         {
           modeOfLoanId === 2 &&
           <div>
@@ -122,18 +120,26 @@ class MotorcycleLoanCardComponent extends Component {
           </center>
         }
         <br/>
-        <div className = { 'computer-function' } >
+        <div>
           {
-            review &&
+            review ?
+            <div className = { 'grid-global' }>
+              <GenericButton
+                text = { 'Edit' }
+                onClick = { () => updateForm() }
+              />
+
+              <GenericButton
+                text = { status }
+                onClick = { () => onClick() }
+              />
+            </div> :
             <GenericButton
-              text = { 'Back' }
-              onClick = { () => updateForm() }
+              className = { 'loan-submit-button' }
+              text = { status }
+              onClick = { () => onClick() }
             />
           }
-          <GenericButton
-            text = { status }
-            onClick = { () => onClick() }
-          />
         </div>
       </div>
     )
@@ -145,11 +151,14 @@ MotorcycleLoanCardComponent.propTypes = {
   showModeOfLoan : PropTypes.func,
   showPurposeOfAvailment : PropTypes.func,
   showOffsetLoan : PropTypes.func,
-  desiredAmount : PropTypes.func,
+  desiredAmountFunc : PropTypes.func,
+  desiredAmount : PropTypes.string,
+  dealer : PropTypes.string,
   onClick : PropTypes.func,
   updateForm : PropTypes.func,
   dealerName : PropTypes.func,
   setAttachments : PropTypes.func,
+  dealerNameFunc : PropTypes.func,
   modeOfLoanId : PropTypes.number,
   status : PropTypes.string,
   termOfLoan : PropTypes.string,

@@ -79,17 +79,13 @@ class CarLeaseOtherDetailsComponent extends Component {
             <br/>
           </div>
         </div>
-       {
-        detailsCarLease &&
-        detailsCarLease.CarDetails &&
-        detailsCarLease.CarDetails.Color.map((resp, key) =>
          <div>
            <div
               className = { 'transaction-icons-details-grid' }>
              <span className = { ' transaction-card-icon-settings' }></span>
              <div>
                <h2 className = { 'font-weight-ligter' }>
-                 { resp.PrimaryColor }
+                 { detailsCarLease.CarDetails.Color.PrimaryColor }
                </h2>
                <h2 className = { 'unionbank-color font-size-12px' }>
                  Primary Color
@@ -102,7 +98,7 @@ class CarLeaseOtherDetailsComponent extends Component {
              <span className = { ' transaction-card-icon-settings' }></span>
              <div>
                <h2 className = { 'font-weight-ligter' }>
-                 { resp.SecondaryColor }
+                 { detailsCarLease.CarDetails.Color.ChosenColor }
                </h2>
                <h2 className = { 'unionbank-color font-size-12px' }>
                  Secondary Color
@@ -110,11 +106,22 @@ class CarLeaseOtherDetailsComponent extends Component {
                <br/>
              </div>
            </div>
+           <div
+              className = { 'transaction-icons-details-grid' }>
+             <span className = { ' transaction-card-icon-settings' }></span>
+             <div>
+               <h2 className = { 'font-weight-ligter' }>
+                 { detailsCarLease.CarDetails.Color.SecondaryColor }
+               </h2>
+               <h2 className = { 'unionbank-color font-size-12px' }>
+                 Chosen Color
+               </h2>
+               <br/>
+             </div>
+           </div>
          </div>
-        )
-       }
-      </div>
-      <div>
+       </div>
+       <div>
         <div>
           <br/>
           <br/>
@@ -172,18 +179,21 @@ class CarLeaseOtherDetailsComponent extends Component {
         <div>
 
           {
-            details === 18 &&
+            details.status.id === 18 &&
             <div>
-              detailsCarLease.CarDetails.RequiredAttachment.length !== 0 &&
               <div>
-                <MultipleFileUploader
-                  fileArray = { detailsCarLease.CarDetails.RequiredAttachment }
-                  placeholder = { 'Required Attachments' }
-                  setFile = { (file) => setFileCarlease(file) }
-                  />
+                {
+                  detailsCarLease.CarDetails.RequiredAttachment.length !== 0 &&
+
+                  <MultipleFileUploader
+                    fileArray = { detailsCarLease.CarDetails.RequiredAttachment }
+                    placeholder = { 'Required Attachments' }
+                    setFile = { (file) => setFileCarlease(file) }
+                    />
+                }
                 <br/>
-                <GenerictButton
-                  text = { 'Upload' }
+                <GenericButton
+                  text = { 'I Confirm' }
                   onClick = { () => onUploadAttachmentsFunc(transactionID, fileCarLease) }
                   />
               </div>
@@ -194,30 +204,30 @@ class CarLeaseOtherDetailsComponent extends Component {
           <br/>
           <br/>
           {
-            details === 13 &&
+            details.status.id === 13 &&
             <div className = { 'grid-global' }>
               <div>
                 <GenericButton
                   onClick = { () => onConfirmation(transactionID, 1) }
-                  text = { 'Confirm' }
+                  text = { 'I Confirm' }
                   />
               </div>
               <div>
                 <GenericButton
                   onClick = { () => onConfirmation(transactionID, 0) }
-                  text = { 'Decline' }
+                  text = { 'Cancel' }
                   />
               </div>
             </div>
           }
           {
-            details === 14 &&
+            details.status.id === 14 &&
 
             <div className = { 'grid-global' }>
               <div>
                 <GenericButton
                   onClick = { () => onConfirmationReleaseFunc(transactionID) }
-                  text = { 'Confirm' }
+                  text = { 'I Confirm' }
                   />
               </div>
             </div>

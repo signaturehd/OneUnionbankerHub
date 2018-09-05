@@ -60,7 +60,15 @@ import { format } from '../../../utils/numberUtils'
   }
 
   export function checkedTerm (term) {
-    return term && term.Term ? term && term.Term && term.Term.Term : '(Not Yet Provided)'
+    return  term &&
+            term.Term &&
+            term.Term.Term ? term.Term.Term
+            :
+            '(Not Yet Provided)'
+  }
+
+  export function checkedRate (rate)  {
+    return rate && rate.Term && rate.Term.Rate ? rate.Term.Rate : '(Not Yet Provided)'
   }
 
   /* Calamity Assistance  */

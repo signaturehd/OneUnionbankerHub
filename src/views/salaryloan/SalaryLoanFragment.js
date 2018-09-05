@@ -19,7 +19,7 @@ import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import SalaryLoanCardComponent from './components/SalaryLoanCardComponent'
-import * as SalaryLoanFunction from './functions/SalaryLoanFunction'
+import * as Functions from './functions/SalaryLoanFunction'
 
 class SalaryLoanFragment extends BaseMVPView {
   constructor (props) {
@@ -51,6 +51,7 @@ class SalaryLoanFragment extends BaseMVPView {
       nfis : [],
       fileAttachments : [],
       status : 'Next',
+      desiredAmount : ''
     }
 
     this.setPurposeOfAvailment = this.setPurposeOfAvailment.bind(this)
@@ -161,7 +162,7 @@ class SalaryLoanFragment extends BaseMVPView {
   }
 
   validateRequired (e) {
-    return SalaryLoanFunction.checkedValidateInput(e)
+    return Functions.checkedValidateInput(e)
   }
 
   updateModeOfLoan (modeOfLoanId, modeOfLoanLabel) {
@@ -339,6 +340,10 @@ class SalaryLoanFragment extends BaseMVPView {
     })
   }
 
+  validateInputAmount (resp) {
+    this.setState({ desiredAmount : Functions.checkedValidateAmount(resp) })
+  }
+
   render () {
     const {
       showNoticeModal,
@@ -368,6 +373,7 @@ class SalaryLoanFragment extends BaseMVPView {
       isValid,
       showLoading,
       nfis,
+      desiredAmount
     } = this.state
 
     // const empName=employeeName && employeeName.fullname
@@ -483,8 +489,9 @@ class SalaryLoanFragment extends BaseMVPView {
               modeOfLoan = { modeOfLoanLabel }
               modeOfLoanId = { modeOfLoanId }
               offsetLoan = { offsetLoanArray }
+              desiredAmount = { desiredAmount }
               setAttachments = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
-              desiredAmount = { (desiredAmount) => this.setState({ desiredAmount : parseInt(desiredAmount) }) }
+              desiredAmountFunc = { (desiredAmount) => this.validateInputAmount(desiredAmount) }
               onClick = { () => this.submitForm() }
               status = { status }
               review = { review }

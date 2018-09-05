@@ -21,7 +21,7 @@ import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import HousingAssistanceCardComponent from './components/HousingAssistanceCardComponent'
 
-import * as HousingAssistanceFunction from './function/HousingAssistanceFunction'
+import * as Functions from './function/HousingAssistanceFunction'
 
 class HousingAssistanceFragment extends BaseMVPView {
   constructor (props) {
@@ -53,6 +53,7 @@ class HousingAssistanceFragment extends BaseMVPView {
       nfis : [],
       fileAttachments : [],
       status : 'Next',
+      desiredAmount : ''
     }
 
     this.setPurposeOfAvailment = this.setPurposeOfAvailment.bind(this)
@@ -134,7 +135,7 @@ class HousingAssistanceFragment extends BaseMVPView {
   }
 
   validateRequired (e) {
-    return HousingAssistanceFunction.checkedValidateInput(e)
+    return Functions.checkedValidateInput(e)
   }
 
   /* Loader*/
@@ -343,6 +344,10 @@ class HousingAssistanceFragment extends BaseMVPView {
     })
   }
 
+  validateInputAmount (resp) {
+    this.setState({ desiredAmount : Functions.checkedValidateAmount(resp) })
+  }
+
   render () {
     const {
       showNoticeModal,
@@ -372,14 +377,14 @@ class HousingAssistanceFragment extends BaseMVPView {
       isValid,
       showLoading,
       nfis,
+      desiredAmount
     } = this.state
-
 
     // const empName=employeeName && employeeName.fullname
     // const updateIsDealerOrPayeeName=[...storedIsDealerOrPayee]
     // updateIsDealerOrPayeeName.push(isPayeeOrDealerResp)
     // updateIsDealerOrPayeeName.push(empName)
-
+    console.log(fileAttachments)
     return (
       <div>
         {
@@ -487,8 +492,9 @@ class HousingAssistanceFragment extends BaseMVPView {
               purposeOfAvailment = { purposeOfAvailmentLabel }
               modeOfLoan = { modeOfLoanLabel }
               modeOfLoanId = { modeOfLoanId }
+              desiredAmount = { desiredAmount }
               offsetLoan = { offsetLoanArray }
-              desiredAmount = { (desiredAmount) => this.setState({ desiredAmount : parseInt(desiredAmount) }) }
+              desiredAmountFunc  = { (desiredAmount) => this.validateInputAmount(desiredAmount) }
               onClick = { () => this.submitForm() }
               status = { status }
               review = { review }

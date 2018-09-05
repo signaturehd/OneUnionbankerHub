@@ -57,7 +57,7 @@ class BereavementDetailsFragment extends Component {
       transactionsPerson,
       attachments,
       uploadImage,
-      response,
+      showFileReceipt,
       attachmentsMethod,
       agreementsMethod,
     } = this.props
@@ -111,9 +111,9 @@ class BereavementDetailsFragment extends Component {
                 onClickAgreements = { (resp) => agreementsMethod(resp) }
               />
             </div>
-            <div>
+            <div className = { 'bereavement-padding-attachments' }>
             {
-              response &&
+              showFileReceipt &&
                 showLoader ?
                   <center>
                     <CircularLoader show = { true }/>

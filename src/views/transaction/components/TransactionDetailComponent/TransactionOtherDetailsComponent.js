@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import '../styles/transactionCardComponent.css'
 import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
-class TransactionProcedureCardComponent extends Component {
+class TransactionOtherDetailsComponent extends Component {
   constructor (props) {
     super(props)
   }
@@ -17,36 +17,13 @@ class TransactionProcedureCardComponent extends Component {
     procedure &&
     procedure.OfficialReceiptDate)
   const number =  procedure && procedure.OfficialReceiptNumber
+  const approvedAmount = TransactionPersonalFunction.checkedAmountFormat(
+    procedure &&
+    procedure.Amount)
 
   return (
     <div>
-      <h2 className = { 'font-weight-bolder' }>
-        Procedure
-      </h2>
-      <br/>
       <div>
-      {
-        procedure &&
-        procedure.Procedures.map((procedure, key) =>
-        <div
-          key = { key }>
-          <div
-            className = { 'transaction-icons-details-grid' }>
-            <span className = { 'transaction-card-icon-settings global-icons-procedure' }/>
-            <div>
-              <div>
-                <h2>{ procedure.Name ? procedure.Name : '(Not Yet Provided)' }</h2>
-              </div>
-              <div>
-                <h2>&#8369; { procedure.Amount ? procedure.Amount : '(Not Yet Provided)' }</h2>
-              </div>
-            </div>
-          </div>
-          <br/>
-        </div>
-          )
-        }
-        <br/>
         <div>
           <div>
             <h2 className = { 'font-weight-ligter' }>
@@ -69,10 +46,21 @@ class TransactionProcedureCardComponent extends Component {
             <br/>
           </div>
         </div>
+        <div>
+          <div>
+            <h2 className = { 'font-weight-ligter' }>
+              &#8369; { approvedAmount }
+            </h2>
+            <h2 className = { 'unionbank-color font-size-12px' }>
+              Approved Amount
+            </h2>
+            <br/>
+          </div>
+        </div>
       </div>
     </div>
     )
   }
 }
 
-export default TransactionProcedureCardComponent
+export default TransactionOtherDetailsComponent

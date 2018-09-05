@@ -8,7 +8,7 @@
 
 .existing-loans-grid-container {
   display: grid;
-  grid-template-rows: .5fr 1fr 1fr;
+  grid-template-rows: .3fr 1fr;
   column-gap: 2%;
 }
 
