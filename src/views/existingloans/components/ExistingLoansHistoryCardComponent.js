@@ -22,7 +22,8 @@ class ExistingLoansHistoryCardComponent extends Component {
       amortization,
       balance,
       promissoryNote,
-      date
+      date,
+      totalAmount
     } = this.props
 
     const convertBalance = MyExistitngLoansFunctions.checkedDesiredAmount(balance)
@@ -50,14 +51,14 @@ class ExistingLoansHistoryCardComponent extends Component {
               <div>{ moment(resp.date).format('DD MMM YYYY') }</div>
             </div>
             <div className = { 'existing-loans-grid-label' }>
-              <div  className = { 'font-weight-bold font-size-14px' }>Outstanding Amount</div>
-              <div>{ resp.balance }</div>
+              <div  className = { 'font-weight-bold font-size-14px' }>Principal Amount</div>
+              <div>&#8369; { format(resp.balance) }</div>
             </div>
             <div  className = { 'font-weight-bold font-size-14px' }>(progressbar insert here)</div>
             <div className = { 'existing-loans-grid-label' }>
               <div  className = { 'font-weight-bold font-size-14px' }>Outstanding Amount</div>
               <div>
-                &#8369; { format(resp.balance) }
+                &#8369; { format(totalAmount) }
               </div>
             </div>
           </Card>
@@ -73,6 +74,7 @@ ExistingLoansHistoryCardComponent.propTypes = {
   amortization : PropTypes.string,
   balance : PropTypes.string,
   promissoryNote : PropTypes.string,
+  totalAmount : PropTypes.string,
   date: PropTypes.object
 }
 
