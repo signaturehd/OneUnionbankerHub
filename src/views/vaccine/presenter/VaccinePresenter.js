@@ -13,16 +13,40 @@ export default class VaccinePresenter {
     this.view.showCircularLoader()
     this.validateVaccineInteractor.execute()
     .map(data => {
-      let denpendentArray = []
+      let vaccineArray = []
+      let dependentArray = []
+      let appModeArray = []
+
+      data &&
+      data.vaccines.map((vaccine, key) => {
+        vaccineArray.push({
+          id : vaccine.id,
+          name : vaccine.name,
+          orderingStart : vaccine.orderingStart,
+          orderingEnd : vaccine.orderingEnd,
+          cost : vaccine.cost
+        })
+      })
 
       data &&
       data.dependents.map((dependent, key) => {
-        schoolsArray.push({
+        dependentArray.push({
           id : dependent.id,
           name : dependent.name
         })
       })
+
+      data &&
+      data.applicationModes.map((appMode, key) => {
+        appModeArray.push({
+          id : appMode.id,
+          name : appMode.name
+        })
+      })
+
+      this.view.showVaccineMap(vaccineArray)
       this.view.showDependentMap(denpendentArray)
+      this.view.showAppModeMap(appModeArray)
     })
     .subscribe(
         data => {
