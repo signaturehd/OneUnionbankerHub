@@ -53,7 +53,7 @@ export default class HRBenefitsService {
     const dentalLoaObject = {
       accountNo,
       releasingCenter,
-      type : 1,
+      type : dentalLoaParam.dependent === 1 ? 1 : 2,
       dependentId : dentalLoaParam.dependent,
       dentalClinicId : dentalLoaParam.branch,
       preferredDate : dentalLoaParam.date,
@@ -77,7 +77,7 @@ export default class HRBenefitsService {
     const dentalRObject = {
       accountNumber,
       releasingCenter,
-      type : dentalReimbursementParam.dependentId.id !== 1 ? 2 : 1,
+      type : dentalReimbursementParam.dependentId !== 1 ? 2 : 1,
       procedures : dentalReimbursementParam.procedure,
       dependentId : dentalReimbursementParam.dependentId,
       orNumber :  dentalReimbursementParam.orNumber,
@@ -379,7 +379,7 @@ export default class HRBenefitsService {
       formData.append('body', JSON.stringify(multiLoanBodyObject))
       mplPurposeLoanAddParam.attachments &&
       mplPurposeLoanAddParam.attachments.map((attachment, key) => (
-        formData.append(attachment.label, attachment.file)
+        formData.append(attachment.name, attachment.file)
       ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
@@ -409,7 +409,7 @@ export default class HRBenefitsService {
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
     addMotorLoanParam.attachments.map((attachment, key) => (
-      formData.append(attachment.label, attachment.file)
+      formData.append(attachment.name, attachment.file)
     ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }
@@ -439,7 +439,7 @@ export default class HRBenefitsService {
     formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
     addComputerLoanParam.attachments.map((attachment, key) => (
-      formData.append(attachment.label, attachment.file)
+      formData.append(attachment.name, attachment.file)
     ))
     return this.apiClient.post('v2/loans/mpl/submit', formData, {
       headers : { token }

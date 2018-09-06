@@ -58,17 +58,6 @@ class TransactionProcedureCardComponent extends Component {
             <br/>
           </div>
         </div>
-        <div>
-          <div>
-            <h2 className = { 'font-weight-ligter' }>
-              {number}
-            </h2>
-            <h2 className = { 'unionbank-color font-size-12px' }>
-              Official Receipt Number
-            </h2>
-            <br/>
-          </div>
-        </div>
       </div>
     </div>
     )
