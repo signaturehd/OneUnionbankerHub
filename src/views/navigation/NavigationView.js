@@ -62,6 +62,9 @@ import Payslip from '../payslip/PayslipFragment'
 import OnboardingView from '../onboarding/OnboardingView'
 import Carousel from '../carousel/Carousel'
 
+/* Pre Employment */
+import PreEmploymentFragment from '../preemployment/PreEmploymentFragment'
+
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
@@ -78,6 +81,7 @@ class NavigationView extends BaseMVPView {
       showPinEnrollmentModal : true,
       hasPIN: '',
       enabledLoader : false,
+      tempPreEmployment : 0,
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -159,7 +163,8 @@ class NavigationView extends BaseMVPView {
       showLogoutModal,
       showPinEnrollmentModal,
       hasPIN,
-      enabledLoader
+      enabledLoader,
+      tempPreEmployment
     } = this.state
 
     const { history, login } = this.props
@@ -210,7 +215,25 @@ class NavigationView extends BaseMVPView {
                   } }
                 />
               }
-              <Drawer >
+            <Drawer >
+              {
+                tempPreEmployment === 1 ?
+                <Switch>
+                  <Route exact path = '/' render = {props =>
+                    <NewsFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> }/>
+                  <Route path = '/settings' render = { props =>
+                    <SettingsFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/preemployment' render = { props =>
+                    <PreEmploymentFragment { ...props }
+                      tempPreEmployment = { tempPreEmployment }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/faqs' render = { props =>
+                    <FaqFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                </Switch>
+                :
                 <Switch>
                   <Route exact path = '/' render = {props =>
                     <NewsFragment { ...props }
@@ -307,12 +330,14 @@ class NavigationView extends BaseMVPView {
                     <PhenomFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
+              }
             </Drawer>
           </main>
           <aside
             className ="left-side"
             style = { style.show }>
             <SideBar
+              tempPreEmployment = { tempPreEmployment }
               logout = { () => this.setState({ showLogoutModal : true }) }
               selected={ selected }
               profile = { profile }

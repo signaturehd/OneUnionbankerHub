@@ -21,7 +21,8 @@ class SideBar extends Component {
       selected,
       history,
       logout,
-      profile
+      profile,
+      tempPreEmployment
     } = this.props
 
     const modules =
@@ -31,6 +32,12 @@ class SideBar extends Component {
         title: 'News Feed',
         action: () => history.push('/'),
         className: 'newsfeed-icon'
+      },
+      {
+        id: 11 ,
+        title: 'Onboarding Requirements',
+        action: () => history.push('/preemployment'),
+        className: 'onboardrequirements-icon'
       },
       {
         id: 4 ,
@@ -97,45 +104,73 @@ class SideBar extends Component {
             src={ require('../../../../images/profile-picture.png') }
             className= {'sidebar-img-ub-logo'}/>
         </div>
-          {
-            profile && profile.fullname ?
-            <h5 className = { 'sidebar-profile-name' }>
-              { profile && profile.fullname }
-            </h5> :
-            <h5 className = { 'sidebar-profile-name' }>
-              ( Employee Name Retrieving.... )
-            </h5>
-          }
-          {
+        {
+          profile && profile.fullname ?
+          <h5 className = { 'sidebar-profile-name' }>
+            { profile && profile.fullname }
+          </h5> :
+          <h5 className = { 'sidebar-profile-name' }>
+            ( Employee Name Retrieving.... )
+          </h5>
+        }
+        {
+          tempPreEmployment === 1 ?
+        <div>
+        {
             modules.map((d, idx) =>
-            d.id === 10 ?
-            <div
-              key = { idx }
-            >
+            d.id !== 1 &&
+            d.id !== 3 &&
+            d.id !== 4 &&
+            d.id !== 5 &&
+            d.id !== 8 &&
+            d.id !== 9 &&
+            d.id !== 10 &&
+            <div key = { idx }>
               <li
                 className = { `_text-link ${selected === d.id && 'active'}` }
                 onClick = { d.action }>
                 <a key = { idx }
                   className =
                   { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                    { d.title }
+                  { d.title }
               </li>
-              <Line />
-            </div>              :
-              <div
-                key = { idx }
-              >
-                <li
-                  className = { `_text-link ${selected === d.id && 'active'}` }
-                  onClick = { d.action }>
-                  <a key = { idx }
-                    className =
-                    { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                    { d.title }
-                </li>
-              </div>
+            </div>
             )
           }
+        </div>
+        :
+        <div>
+        {
+          modules.map((d, idx) =>
+          d.id === 10 ?
+          <div key = { idx }>
+            <li
+              className = { `_text-link ${selected === d.id && 'active'}` }
+              onClick = { d.action }>
+              <a key = { idx }
+                className =
+                { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                  { d.title }
+            </li>
+            <Line />
+          </div>              :
+          d.id !== 11 &&
+          <div
+            key = { idx }
+          >
+            <li
+              className = { `_text-link ${selected === d.id && 'active'}` }
+              onClick = { d.action }>
+              <a key = { idx }
+                className =
+                { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                { d.title }
+            </li>
+          </div>
+          )
+        }
+        </div>
+      }
       </ul>
     </div>
     )
