@@ -26,11 +26,16 @@ class BereavementDetailsFragment extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      attachmentArray : []
+      attachmentArray : [],
+      showAttachment : true
     }
     this.setAttachments = this.setAttachments.bind(this)
+    this.showFileReceipt = this.showFileReceipt.bind(this)
   }
 
+  showFileReceipt (show) {
+    this.setState({ showAttachment : false })
+  }
 
   getExtension (filename) {
     const parts=filename.split('/')
@@ -39,6 +44,13 @@ class BereavementDetailsFragment extends Component {
 
   componentDidMount () {
     this.setAttachments()
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!nextProps.showFileReceipt) {
+      this.setState({ showAttachment : false })
+      window.location.reload()
+    }
   }
 
   setAttachments () {
@@ -65,12 +77,17 @@ class BereavementDetailsFragment extends Component {
     const {
       showLoader,
       attachmentArray,
+      showAttachment
     } = this.state
 
     const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
     const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
     const dateFiled = TransactionDetailsFunction.checkedDateFilled(details)
     const benefitLabel = TransactionDetailsFunction.getBenefitLabelStatus(details.status)
+
+    if (!showFileReceipt) {
+      window.location.reload()
+    }
 
     return (
       <div className={ 'transaction-details-global-x3' }>
@@ -119,6 +136,7 @@ class BereavementDetailsFragment extends Component {
                     <CircularLoader show = { true }/>
                   </center>
                 :
+                  showAttachment &&
                   details &&
                   details.status &&
                   (details.status.id === 6 ||
