@@ -28,7 +28,7 @@ class OutpatientOtherDetailCardComponent extends Component {
     <div  className = { 'transaction-component-otherdetails-form' }>
       <div>
         <div>
-          <h2 className = { 'font-weight-bolder' }> Recipient Details </h2>
+          <h2 className = { 'font-weight-bold' }> Recipient Details </h2>
           <br/>
         </div>
         <div>
@@ -68,7 +68,7 @@ class OutpatientOtherDetailCardComponent extends Component {
       </div>
       <div>
         <div>
-          <h2 className = { 'font-weight-bolder' }> Procedure Details </h2>
+          <h2 className = { 'font-weight-bold' }> Procedure Details </h2>
           <br/>
         </div>
         <div>

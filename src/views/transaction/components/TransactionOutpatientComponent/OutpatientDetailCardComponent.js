@@ -48,14 +48,17 @@ class OutpatientDetailCardComponent extends Component {
               <br/>
             </div>
           </div>
-          <div className = { 'transaction-icons-details-grid' }>
-            <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
-            <div>
-              <h2>
-                { acccountNumber }
-              </h2>
+          {
+            acccountNumber !== '(Not Yet Provided)' &&
+            <div className = { 'transaction-icons-details-grid' }>
+              <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
+              <div>
+                <h2>
+                  { acccountNumber }
+                </h2>
+              </div>
             </div>
-          </div>
+          }
           <br/>
             <OutpatientOtherDetailCardComponent
               detailsOutpatient = { details && details.details }

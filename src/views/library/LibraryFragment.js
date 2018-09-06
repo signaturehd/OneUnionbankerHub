@@ -167,6 +167,7 @@ class LibraryFragment extends BaseMVPView {
             className = { 'input-tab' }
             id='tab2'
             type='radio'
+            defaultChecked
             onClick = { () => this.props.history.push('/mylearning/books/recommended') }
             name='tabs' />
           <label  htmlFor='tab2'>Recommended</label>

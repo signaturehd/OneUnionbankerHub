@@ -560,7 +560,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
                 showMaternityLeaveModal: false,
                 showMaternityLeaveComponent : resp })
               }
-            onLoadNavigateBenefits = { () => this.navigate() }
+            navigateBenefits = { () => this.navigate() }
             />
         }
         {
