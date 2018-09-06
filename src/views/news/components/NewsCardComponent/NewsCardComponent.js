@@ -24,8 +24,6 @@ class NewsCardComponent extends Component {
         backgroundSize: 'cover',
         color : 'white',
         fontWeight : 'bold',
-        borderRadius: '10px'
-
       }
     }
 

@@ -1,7 +1,7 @@
 .book-card {
   display:grid;
   grid-template-rows: 40% 30% 30%;
-  height: 350px;
+  height: 450px;
   margin-bottom:10px;
 }
 

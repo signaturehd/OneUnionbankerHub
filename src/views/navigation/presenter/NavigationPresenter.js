@@ -53,7 +53,7 @@ export default class NavigationPresenter {
     this.genericPinCodeInteractor.execute(id)
     .subscribe(data => {
       store.dispatch(NotifyActions.addNotify({
-        title: 'Benefits',
+        title: 'Authentication',
         message : data.message,
         type : 'success',
         duration : 2000

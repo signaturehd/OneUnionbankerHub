@@ -62,7 +62,8 @@ class TransactionDetailCardComponent extends Component {
         {
           details &&
           details.benefitType &&
-          details.benefitType.id !== 8 &&
+          details.benefitType.id !== 8 ||
+          details.benefitType.id !== 7 &&
           <div className = { 'transaction-icons-details-grid' }>
             <span className = { ' transaction-card-icon-settings global-icons-patient-name' }></span>
             <div>

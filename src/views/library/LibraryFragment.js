@@ -153,19 +153,21 @@ class LibraryFragment extends BaseMVPView {
            value = { this.state.searchString }
            onChange = { this.updateSearch } />
         <div className = { 'tabs-container' }>
-          <input
-            className = { 'input-tab' }
-            id='tab1'
-            type='radio'
-            name='tabs'
-            onClick = { () => this.props.history.push('/mylearning/books') }
-            defaultChecked />
-          <label  htmlFor = 'tab1'>All Books</label>
-
+          {
+          // <input
+          //   className = { 'input-tab' }
+          //   id='tab1'
+          //   type='radio'
+          //   name='tabs'
+          //   onClick = { () => this.props.history.push('/mylearning/books') }
+          //   defaultChecked />
+          // <label  htmlFor = 'tab1'>All Books</label>
+        }
           <input
             className = { 'input-tab' }
             id='tab2'
             type='radio'
+            defaultChecked
             onClick = { () => this.props.history.push('/mylearning/books/recommended') }
             name='tabs' />
           <label  htmlFor='tab2'>Recommended</label>
