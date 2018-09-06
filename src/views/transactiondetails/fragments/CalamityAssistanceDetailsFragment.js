@@ -34,7 +34,6 @@ class CalamityAssistanceDetailsFragment extends Component {
   }
 
   showFileReceipt (show) {
-
     this.setState({ showAttachment : false })
   }
 
