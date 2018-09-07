@@ -79,22 +79,25 @@ class MyExistingLoansFragment extends BaseMVPView {
               </div>
             </div>
             <div className = { 'existing-loans-grid-header' }>
-              <Card className = { 'existing-loan-card-balance' }>
-                <div className = { 'text-align-right' }>
-                  <h2 className = { 'existing-loan-title-header' }>
-                    &#8369; { format(totalAmount  ) }
-                  </h2>
-                  <br/>
-                  <h2>
-                    Outstanding Balance
-                  </h2>
-                  <h2>
-                    { moment().format('DD MMM YYYY') }
-                  </h2>
-                </div>
-              </Card>
               <div>
               </div>
+              <Card className = { 'existing-loan-card-balance existingloan-card-background' }>
+                <div className = { 'existing-loans-grid-card' }>
+                  <span className = { 'existing-card-image-icon' } />
+                  <div className = { 'text-align-right' }>
+                    <h2 className = { 'existing-loan-title-header' }>
+                      &#8369; { format(totalAmount  ) }
+                    </h2>
+                    <br/>
+                    <h2>
+                      Outstanding Balance
+                    </h2>
+                    <h2>
+                      { moment().format('DD MMM YYYY') }
+                    </h2>
+                  </div>
+                </div>
+              </Card>
             </div>
             <div>
               <div className = { 'existing-loan-summary-grid-x2' }>

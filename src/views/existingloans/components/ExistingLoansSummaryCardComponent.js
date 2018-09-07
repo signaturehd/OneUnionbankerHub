@@ -38,16 +38,16 @@ class ExistingLoansSummaryCardComponent extends Component {
           existingLoans.map((resp, key) =>
           <Card className = { 'existing-loans-grid-x6' }>
             <div className = { 'existing-loans-grid-label' }>
+              <div  className = { 'font-weight-bold font-size-14px' }>Type</div>
+              <div>{ resp.description }</div>
+            </div>
+            <div className = { 'existing-loans-grid-label' }>
               <div className = { 'font-weight-bold font-size-14px' }>
                 PN Number
               </div>
               <div>
                 { resp.promissoryNote }
               </div>
-            </div>
-            <div className = { 'existing-loans-grid-label' }>
-              <div  className = { 'font-weight-bold font-size-14px' }>Type</div>
-              <div>{ resp.description }</div>
             </div>
             <div className = { 'existing-loans-grid-label' }>
               <div  className = { 'font-weight-bold font-size-14px' }>Date</div>
