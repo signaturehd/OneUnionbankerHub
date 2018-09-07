@@ -76,13 +76,13 @@ export default class TrainingCardModal extends Component {
              </div>
              <div className={ 'training-components' }>
                <h4>Instructor Details</h4>
-               <p>Facilitator Name : { details.facilitator.lastName }, { details.facilitator.firstName } { details.facilitator.middleInitial }.</p>
+               <p>Name : { details.facilitator.lastName }, { details.facilitator.firstName } { details.facilitator.middleInitial }.</p>
                <p>Email : { details.facilitator.email }</p>
                <br/>
                <h4>Date and Time</h4>
                <p>Date : { moment(details.startDate).format('LL') } - { moment(details.endDate).format('LL') }</p>
                <p>Time : { details.startTime } - { details.endTime }</p>
-               <p>Duration : { details.duration }</p>
+               <p>Duration : { details.duration } hr</p>
              </div>
            </div>
            <div className={ 'button-grid' }>
