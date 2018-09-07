@@ -648,7 +648,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
             }
             {
               maternityData &&
-              maternityData.hasMat1 !== 1 ?
+              maternityData.hasMat1 === 1 ?
               <FormComponent
                 recipient = { maternityData.recepient }
                 oRNumberFunc = { (resp) => this.validateSymbol(resp) }
