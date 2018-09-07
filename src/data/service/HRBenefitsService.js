@@ -172,7 +172,12 @@ export default class HRBenefitsService {
   }
 
   addRating (token, bookParam) {
-    return this.apiClient.post('v1/books/rate', bookParam, {
+    const objectBook = {
+      id : bookParam.id,
+      rate : bookParam.rate,
+      comments : bookParam.comments,
+    }
+    return this.apiClient.post('v1/books/rate', objectBook, {
       headers : { token }
     })
   }
