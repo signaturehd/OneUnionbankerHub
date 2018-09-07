@@ -6,9 +6,13 @@
   vertical-align: middle;
 }
 
+.existing-loan-card-balance {
+  padding: 50px;
+}
+
 .existing-loans-grid-container {
   display: grid;
-  grid-template-rows: .3fr 1fr;
+  grid-template-rows: .1fr 1fr;
   column-gap: 2%;
 }
 
@@ -37,5 +41,5 @@
 
 .existing-loans-grid-header {
   display: grid;
-  grid-template-columns: .5fr 1fr;
+  grid-template-columns: 1fr 1fr;
 }

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { Modal, GenericButton } from '../../../ub-components/'
 
+import * as Functions from '../function/MaternityAssistanceFunction'
+
 class MaternityLeaveModal extends Component {
 
   constructor (props) {
@@ -15,7 +17,9 @@ class MaternityLeaveModal extends Component {
     isDismisable,
     onLoadMaternityLeave,
     onLoadNavigateBenefits,
+    benefitsCodeType
   } = this.props
+  const titleOFLeave = Functions.checkedReasonForLeave(benefitsCodeType)
 
   return (
     <Modal
@@ -23,7 +27,7 @@ class MaternityLeaveModal extends Component {
      isDismisable={ true }
     >
       <div className={ 'text-align-center' }>
-        <h2>  Have you file your maternity leave already ? </h2>
+        <h2> Have you file your `${ titleOFLeave }` already?</h2>
         <br/>
         <div className = { 'grid-global' }>
           <GenericButton

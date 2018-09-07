@@ -6,7 +6,6 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/MyExistingLoansPresenter'
 
 import ExistingLoansSummaryCardComponent from './components/ExistingLoansSummaryCardComponent'
-import ExistingLoansHistoryCardComponent from './components/ExistingLoansHistoryCardComponent'
 
 import {
   CircularLoader,
@@ -18,6 +17,9 @@ import {
 import { format } from '../../utils/numberUtils'
 
 import './styles/myExistingLoanStyle.css'
+
+import { Progress } from 'react-sweet-progress'
+import "react-sweet-progress/lib/style.css"
 
 import moment from 'moment'
 
@@ -77,7 +79,7 @@ class MyExistingLoansFragment extends BaseMVPView {
               </div>
             </div>
             <div className = { 'existing-loans-grid-header' }>
-              <div>
+              <Card className = { 'existing-loan-card-balance' }>
                 <div className = { 'text-align-right' }>
                   <h2 className = { 'existing-loan-title-header' }>
                     &#8369; { format(totalAmount  ) }
@@ -90,8 +92,9 @@ class MyExistingLoansFragment extends BaseMVPView {
                     { moment().format('DD MMM YYYY') }
                   </h2>
                 </div>
+              </Card>
+              <div>
               </div>
-              <div></div>
             </div>
             <div>
               <div className = { 'existing-loan-summary-grid-x2' }>

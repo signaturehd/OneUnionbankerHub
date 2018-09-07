@@ -555,6 +555,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
         {
           showMaternityLeaveModal &&
           <MaternityLeaveModal
+            benefitsCodeType = { benefitsCodeType }
             onLoadMaternityLeave = { (resp) =>
               this.setState({
                 showMaternityLeaveModal: false,
