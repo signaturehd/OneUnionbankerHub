@@ -25,7 +25,6 @@ export default class TrainingCardModal extends Component {
     const { onClose, details, onEnroll, showConfirmation, setConfirmation } = this.props
     const { enabledLoader } = this.state
     const dateRequired = moment(details.endDate).diff(details.startDate, 'days')
-    console.log(dateRequired)
     let dayDuration = parseInt(dateRequired) * parseInt(details.duration)
 
     const style = {
@@ -80,7 +79,7 @@ export default class TrainingCardModal extends Component {
              </div>
              <div className={ 'training-components' }>
                <h4>Instructor Details</h4>
-               <p>Name : { details.facilitator.lastName }, { details.facilitator.firstName } { details.facilitator.middleInitial }.</p>
+               <p>Name : { details.facilitator.lastName } { details.facilitator.firstName } { details.facilitator.middleInitial }</p>
                <p>Email : { details.facilitator.email }</p>
                <br/>
                <h4>Date and Time</h4>
