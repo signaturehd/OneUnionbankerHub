@@ -53,7 +53,9 @@ class BookBorrowedFragment extends Component {
             <BookBorrowedCard
 
               rateBook = { (id, rating) => this.addRating(id, rating) }
-              detail = { bookRequest.book } key = { key }
+              detail = { bookRequest.book }
+              quantity = { bookRequest.quantity }
+              key = { key }
               onClick = { (details, view) => this.setState({ bookRequest, view }) }
             />
           )

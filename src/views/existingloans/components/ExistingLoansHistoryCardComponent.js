@@ -9,6 +9,9 @@ import './styles/myExistingLoansCardStyle.css'
 import { format } from '../../../utils/numberUtils'
 import moment from 'moment'
 
+import Progress from 'react-sweet-progress'
+import 'react-sweet-progress/lib/style.css'
+
 class ExistingLoansHistoryCardComponent extends Component {
 
   constructor (props) {
@@ -54,7 +57,32 @@ class ExistingLoansHistoryCardComponent extends Component {
               <div  className = { 'font-weight-bold font-size-14px' }>Principal Amount</div>
               <div>&#8369; { format(resp.balance) }</div>
             </div>
-            <div  className = { 'font-weight-bold font-size-14px' }>(progressbar insert here)</div>
+            <Progress
+              theme={
+                {
+                  error: {
+                    symbol: 10 + '%',
+                    trailColor: 'pink',
+                    color: 'red'
+                  },
+                  default: {
+                    symbol: 20 + '%',
+                    trailColor: 'lightblue',
+                    color: 'blue'
+                  },
+                  active: {
+                    symbol: 30 + '%',
+                    trailColor: 'yellow',
+                    color: 'orange'
+                  },
+                  success: {
+                    symbol: 40 + '%',
+                    trailColor: 'lime',
+                    color: 'green'
+                  }
+                }
+              }
+            />
             <div className = { 'existing-loans-grid-label' }>
               <div  className = { 'font-weight-bold font-size-14px' }>Outstanding Amount</div>
               <div>

@@ -314,25 +314,25 @@ class VaccineFragment extends BaseMVPView {
            </center> :
            <VaccineComponent
            showEditSubmitButton = { showEditSubmitButton }
-           showEditSubmitFunc = { (resp) => this.showEditSubmitFunc(resp) }
            dependentName = { dependentName }
-           dependentErrorMessage = { dependentErrorMessage }
-           showDependentFunc = { () => this.showDependentFunc() }
            vaccineName = { vaccineName }
            orderingStart = { orderingStart }
            orderingEnd = { orderingEnd }
            cost = { cost }
-           showVaccineFunc = { () => this.showVaccineFunc() }
-           vaccineErrorMessage = { vaccineErrorMessage }
            appModeName = { appModeName }
-           showAppModesFunc = { () => this.showAppModesFunc() }
+           dependentErrorMessage = { dependentErrorMessage }
+           vaccineErrorMessage = { vaccineErrorMessage }
            appModeErrorMessage = { appModeErrorMessage }
-           showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
+           showDependentFunc = { () => this.showDependentFunc() }
+           showVaccineFunc = { () => this.showVaccineFunc() }
+           showAppModesFunc = { () => this.showAppModesFunc() }
            editFormDataFunc = { () => this.editFormReview() }
+           showEditSubmitFunc = { (resp) => this.showEditSubmitFunc(resp) }
+           showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
            />
         }
       </div>
-  )
-}
+    )
+  }
 }
 export default ConnectView(VaccineFragment, Presenter)

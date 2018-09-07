@@ -22,9 +22,8 @@ class CarDealerQuotation extends Component {
       <Modal
         onClose={ onClose }
       >
-        <center><h2>Is the dealer quoations available ?</h2></center>
         <br/>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          {`We're excited for you. You're a few steps from owning your dream car. Is the dealer quotation available?`}
         <br/>
         <br/>
         <center className={ 'car-grid-modal' }>

@@ -53,7 +53,7 @@ export default class HRBenefitsService {
     const dentalLoaObject = {
       accountNo,
       releasingCenter,
-      type : 1,
+      type : dentalLoaParam.dependent === 1 ? 1 : 2,
       dependentId : dentalLoaParam.dependent,
       dentalClinicId : dentalLoaParam.branch,
       preferredDate : dentalLoaParam.date,
@@ -77,7 +77,7 @@ export default class HRBenefitsService {
     const dentalRObject = {
       accountNumber,
       releasingCenter,
-      type : dentalReimbursementParam.dependentId.id !== 1 ? 2 : 1,
+      type : dentalReimbursementParam.dependentId !== 1 ? 2 : 1,
       procedures : dentalReimbursementParam.procedure,
       dependentId : dentalReimbursementParam.dependentId,
       orNumber :  dentalReimbursementParam.orNumber,

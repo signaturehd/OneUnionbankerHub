@@ -27,11 +27,11 @@ import { format } from '../../../utils/numberUtils'
   }
 
   export function  checkedReferenceNumber (details) {
-    return details && details.ReferenceNumber ? details && details.ReferenceNumber : '(Not Yet Provided)'
+    return details && details.ReferenceNumber ? details && details.ReferenceNumber : '(No Reference Number)'
   }
 
   export function checkedPatient (patient) {
-    return patient && patient.Recipient ? patient && patient.Recipient : '(Not Yet Provided)'
+    return patient && patient.Recipient ? patient && patient.Recipient : '(No Recipient)'
   }
 
   /* Multi Purpose Loan */
@@ -224,7 +224,7 @@ export function checkedorNumber (details) {
   return  details && details.MaternityAssistanceDetails &&
           details.MaternityAssistanceDetails.ReceiptNumber ?
           details.MaternityAssistanceDetails.ReceiptNumber :
-          '(Not Yet Provided)'
+          '(No Receipt Number)'
 }
 
 export function checkedDeliveryDate (details) {
@@ -236,7 +236,7 @@ export function checkedDeliveryDate (details) {
 export function checkedORDate (details) {
   return details && details.MaternityAssistanceDetails.ORDate ?
   moment(details.MaternityAssistanceDetails.ORDate).format('MMM DD, YYYY') :
-  '(Not Yet Provided)'
+  '(No Official Receipt Date)'
 }
 
 export function checkedRecipient (details) {

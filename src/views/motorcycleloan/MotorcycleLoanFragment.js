@@ -356,7 +356,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
   }
 
   setDealerName (dealer) {
-    this.setState({ dealedealerr })
+    this.setState({ dealer })
   }
 
   render () {

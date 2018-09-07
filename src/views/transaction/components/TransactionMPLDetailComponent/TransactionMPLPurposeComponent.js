@@ -54,6 +54,18 @@ class TransactionMPLPurposeComponent extends Component {
               </h2>
             </div>
           </div>
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { 'transaction-card-icon-settings' }></span>
+            <div>
+              <h2>
+                   &#8369;  { desiredAmount }
+              </h2>
+              <h2 className = { 'unionbank-color font-size-14px' }>
+                Amount
+              </h2>
+              <br/>
+            </div>
+          </div>
           <div>
             <h2 className = { 'font-weight-bolder' }> Term of Payment </h2>
             <br/>
@@ -104,7 +116,7 @@ class TransactionMPLPurposeComponent extends Component {
                  &#8369; { amortization }
               </h2>
               <h2 className = { 'unionbank-color font-size-12px' }>
-                amortization
+                Amortization
                 <br/>
                 <br/>
               </h2>

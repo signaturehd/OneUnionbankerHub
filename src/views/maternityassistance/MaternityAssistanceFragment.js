@@ -560,7 +560,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
                 showMaternityLeaveModal: false,
                 showMaternityLeaveComponent : resp })
               }
-            onLoadNavigateBenefits = { () => this.navigate() }
+            navigateBenefits = { () => this.navigate() }
             />
         }
         {
@@ -611,8 +611,8 @@ class MaternityAssistanceFragment extends BaseMVPView {
         {
           showMaternityLeaveComponent ?
           <LeaveFilingComponentFragment
-            maxDateDataNumber = { 2 }
-            maxDateDataType = { 'months' }
+            maxDateDataNumber = { 60 }
+            maxDateDataType = { 'days' }
             benefitsCodeType = { benefitsCodeType }
             navigateBenefits = { () => this.navigate() }
             />

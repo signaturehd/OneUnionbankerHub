@@ -5299,6 +5299,12 @@ react-scrollbar-size@^2.0.2:
     react-event-listener "^0.5.1"
     stifle "^1.0.2"
 
+react-sweet-progress@^1.1.2:
+  version "1.1.2"
+  resolved "http://registry.npm.taobao.org/react-sweet-progress/download/react-sweet-progress-1.1.2.tgz#b27c6baa7c08a12cf0896565431ba477af249892"
+  dependencies:
+    classnames "^2.2.5"
+
 react-table@^6.8.2:
   version "6.8.2"
   resolved "https://registry.yarnpkg.com/react-table/-/react-table-6.8.2.tgz#3a5aefabc85953300d16786fa307c30610db9adc"
