@@ -24,6 +24,10 @@ export default class TrainingCardModal extends Component {
   render () {
     const { onClose, details, onEnroll, showConfirmation, setConfirmation } = this.props
     const { enabledLoader } = this.state
+    const dateRequired = moment(details.endDate).diff(details.startDate, 'days')
+    console.log(dateRequired)
+    let dayDuration = parseInt(dateRequired) * parseInt(details.duration)
+
     const style = {
       background : `rgba(0,0,0,0.5) url(${staticImage}) no-repeat center center`,
       backgroundSize : 'cover',
@@ -82,7 +86,7 @@ export default class TrainingCardModal extends Component {
                <h4>Date and Time</h4>
                <p>Date : { moment(details.startDate).format('LL') } - { moment(details.endDate).format('LL') }</p>
                <p>Time : { details.startTime } - { details.endTime }</p>
-               <p>Duration : { moment(details.endTime).diff(details.startTime, 'days') }{ details.duration } hr</p>
+               <p>Duration :  { dayDuration } hrs</p>
              </div>
            </div>
            <div className={ 'button-grid' }>
