@@ -243,7 +243,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
   validateRequiredNoDelivery (e) {
     const {  noPregnancyText  } = this.state
     const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
-    if(parseInt(validate) >= parseInt(noPregnancyText)) {
+    if(parseInt(validate) > parseInt(noPregnancyText)) {
       this.setState({ noDeliveryErrorMessage : 'Error no. of delivery' })
     } else {
       this.setState({ noDeliveryText : validate, noDeliveryErrorMessage : '' })
@@ -253,7 +253,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
   validateRequiredNoMiscarriage (e) {
     const {  noPregnancyText  } = this.state
     const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
-    if(parseInt(validate) >= parseInt(noPregnancyText)) {
+    if(parseInt(validate) > parseInt(noPregnancyText)) {
       this.setState({ noMiscarriageErrorMessage : 'Error no. of Miscarriage' })
     } else {
       this.setState({ noMiscarriageText : validate, noMiscarriageErrorMessage : '' })
@@ -436,7 +436,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
       store.dispatch(NotifyActions.addNotify({
         title : 'Maternity Assistance',
         type : 'warning',
-        message : `No. of Delivery & No. of Miscarriage must not exceed to the count of ${ noPregnancyText }`,
+        message : `The total No. of Delivery & No. of Miscarriage must not exceed to the count of ${ noPregnancyText }`,
         duration: 2000,
       })
     )

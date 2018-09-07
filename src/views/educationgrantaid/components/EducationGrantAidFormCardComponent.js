@@ -38,7 +38,6 @@ class EducationGrantAidFormCardComponent extends Component {
       onClick,
       showEditSubmitButton
     } = this.props
-console.log(attachment)
     return (
       <div className = {'educGrant-container'}>
 
