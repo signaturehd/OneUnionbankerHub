@@ -31,7 +31,7 @@ class MyLearningView extends BaseMVPView {
       id: 0 ,
       styleName: 'mylearning-cards-1 mylearning-option-default font-weight-bold',
       title: 'Borrow a Book',
-      path: '/mylearning/books',
+      path: '/mylearning/books/recommended',
     }, {
       id: 1 ,
       styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
@@ -97,7 +97,9 @@ class MyLearningView extends BaseMVPView {
             <PodcastFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts/:id' render = { props =>
             <PodcastPlayerFragment { ...props } /> } />
-          <Route path = '/mylearning/books' render = { props =>
+          <Route path = '/mylearning/books/recommended' render = { props =>
+            <LibraryView { ...props } /> } />
+          <Route path = '/mylearning/books/history' render = { props =>
             <LibraryView { ...props } /> } />
           <Route path = '/mylearning' render = { MyLearning } />
         </Switch>
