@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Switch, Route } from 'react-router-dom'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
@@ -24,12 +25,19 @@ class PreEmploymentFragment extends BaseMVPView {
   }
 
   render() {
-    const { setSelectedNavigation, selected, tempPreEmployment } = this.props
+    const {
+      setSelectedNavigation,
+      selected,
+      tempPreEmploymentModal,
+      history,
+      onChangeStatusPreEmploymentModal
+    } = this.props
+
     const { isDismisable  } = this.state
     return(
       <div>
       {
-        tempPreEmployment &&
+        tempPreEmploymentModal &&
         <Modal
           isDismisable = { isDismisable  }
           >
@@ -46,10 +54,12 @@ class PreEmploymentFragment extends BaseMVPView {
             <GenericButton
               className = { 'pre-emp-setup-button' }
               text = { 'SETUP MY ACCOUNT' }
+              onClick = { () => onChangeStatusPreEmploymentModal() }
                />
           </div>
         </Modal>
       }
+      awdawd
       </div>
     )
   }

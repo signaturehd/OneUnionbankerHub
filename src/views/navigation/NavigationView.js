@@ -81,7 +81,8 @@ class NavigationView extends BaseMVPView {
       showPinEnrollmentModal : true,
       hasPIN: '',
       enabledLoader : false,
-      tempPreEmployment : 0,
+      tempPreEmployment : 1,
+      tempPreEmploymentModal : true,
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -152,6 +153,10 @@ class NavigationView extends BaseMVPView {
     this.props.history.push('/')
   }
 
+  onChangeStatusPreEmploymentModal () {
+    this.setState({ tempPreEmploymentModal : false  })
+  }
+
   render () {
     const {
       displayShow,
@@ -164,7 +169,8 @@ class NavigationView extends BaseMVPView {
       showPinEnrollmentModal,
       hasPIN,
       enabledLoader,
-      tempPreEmployment
+      tempPreEmployment,
+      tempPreEmploymentModal
     } = this.state
 
     const { history, login } = this.props
@@ -227,7 +233,8 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/preemployment' render = { props =>
                     <PreEmploymentFragment { ...props }
-                      tempPreEmployment = { tempPreEmployment }
+                      onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
+                      tempPreEmploymentModal = { tempPreEmploymentModal }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/faqs' render = { props =>
                     <FaqFragment { ...props }
