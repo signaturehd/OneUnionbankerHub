@@ -5,10 +5,16 @@ import { Switch, Route } from 'react-router-dom'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 
+/* Fragment */
 import AffirmationDocumentFragment
   from '../preemploymentfragment/affirmdocument/AffirmationDocumentFragment'
 import FinancialObligationFragment
   from '../preemploymentfragment/financialobligation/FinancialObligationFragment'
+import BiographicalDataFragment
+  from '../preemploymentfragment/biographicaldata/BiographicalDataFragment'
+/* Modal */
+import IsFinancialObilgationConfirmModal
+  from './modals/IsFinancialObilgationConfirmModal'
 
 import {
   Modal,
@@ -25,7 +31,7 @@ function  PreEmploymentFragments (props)  {
   const pageNumber = props.preEmpPage
   const onSendPageNumberToView = props.onSendPageNumberToView
 
-  if (pageNumber === 0) {
+  if (props.preEmpPage === 0) {
     return <AffirmationDocumentFragment
       onSendPageNumberToView = { onSendPageNumberToView }
       />
@@ -33,6 +39,12 @@ function  PreEmploymentFragments (props)  {
     return <FinancialObligationFragment
       onSendPageNumberToView = { onSendPageNumberToView }
       />
+  } else if (pageNumber === 2 ) {
+    return <BiographicalDataFragment
+      onSendPageNumberToView = { onSendPageNumberToView }
+      />
+  } else {
+    onSendPageNumberToView(pageNumber)
   }
 }
 
@@ -44,6 +56,7 @@ class PreEmploymentFragment extends BaseMVPView {
       isDismisable : true,
       enabledLoader: false,
       preEmpPage  : 0,
+      showFinancialObligationModal: false,
     }
   }
 
@@ -62,12 +75,20 @@ class PreEmploymentFragment extends BaseMVPView {
 
   incrementPage () {
     const index = this.state.preEmpPage + 1
-    this.setState({ preEmpPage : index })
+    if(index === 1) {
+      this.setState({ showFinancialObligationModal : true })
+    } else {
+      this.setState({ preEmpPage : index })
+    }
   }
 
   decerementPage () {
     const index = this.state.preEmpPage - 1
-    this.setState({ preEmpPage : index })
+    if(index === 1) {
+      this.setState({ showFinancialObligationModal : true })
+    } else {
+      this.setState({ preEmpPage : index })
+    }
   }
 
   render() {
@@ -83,12 +104,22 @@ class PreEmploymentFragment extends BaseMVPView {
     const {
       isDismisable,
       enabledLoader,
-      preEmpPage
+      preEmpPage,
+      showFinancialObligationModal
     } = this.state
 
     return(
       <div>
       { super.render() }
+      {
+        showFinancialObligationModal &&
+        <IsFinancialObilgationConfirmModal
+          onSendPageNumberToView = { (res) => {
+          this.onSendPageNumberToView(res)
+          this.setState({ showFinancialObligationModal : false })
+        } }
+        />
+      }
       {
         tempPreEmploymentModal &&
         <Modal>

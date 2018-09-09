@@ -9,6 +9,7 @@ import {
   Modal,
   GenericButton,
   CircularLoader,
+  GenericInput,
   Card
 } from '../../../ub-components/'
 
@@ -39,7 +40,29 @@ class FinancialObligationFragment extends BaseMVPView {
         <h2 className={ 'header-margin-default text-align-left' }>Financial Obligation</h2>
         <h2>Fill up the form</h2>
         <br/>
-
+        <GenericInput
+          text = { 'Name of the Bank/ Financial Institution' }
+          onChange = { () => {} }
+          />
+        <GenericInput
+          text = { 'Nature of Obligation' }
+          onChange = { () => {} }
+          />
+        <GenericInput
+          text = { 'Amount' }
+          onChange = { () => {} }
+          />
+        <GenericInput
+          text = { 'Status' }
+          onChange = { () => {} }
+          />
+        <center>
+          <GenericButton
+            className = { 'global-button' }
+            text = { 'Save' }
+            onClick = { () => {} }
+            />
+        </center>
       </div>
     </div>
     )
