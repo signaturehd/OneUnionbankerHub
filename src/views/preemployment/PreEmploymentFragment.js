@@ -5,11 +5,36 @@ import { Switch, Route } from 'react-router-dom'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 
-import { Modal, GenericButton } from '../../ub-components/'
+import AffirmationDocumentFragment
+  from '../preemploymentfragment/affirmdocument/AffirmationDocumentFragment'
+import FinancialObligationFragment
+  from '../preemploymentfragment/financialobligation/FinancialObligationFragment'
+
+import {
+  Modal,
+  GenericButton,
+  CircularLoader,
+  Card
+} from '../../ub-components/'
 
 import Presenter from './presenter/PreEmploymentPresenter'
 
 import './styles/preEmploymentStyle.css'
+
+function  PreEmploymentFragments (props)  {
+  const pageNumber = props.preEmpPage
+  const onSendPageNumberToView = props.onSendPageNumberToView
+
+  if (pageNumber === 0) {
+    return <AffirmationDocumentFragment
+      onSendPageNumberToView = { onSendPageNumberToView }
+      />
+  } else if (pageNumber === 1) {
+    return <FinancialObligationFragment
+      onSendPageNumberToView = { onSendPageNumberToView }
+      />
+  }
+}
 
 class PreEmploymentFragment extends BaseMVPView {
   constructor(props) {
@@ -17,11 +42,32 @@ class PreEmploymentFragment extends BaseMVPView {
     this.state = {
       welcomeModal : true,
       isDismisable : true,
+      enabledLoader: false,
+      preEmpPage  : 0,
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(11)
+  }
+
+  onSendPageNumberToView (preEmpPage) {
+    const storedPage = this.state.preEmpPage
+    if(preEmpPage === null) {
+      this.setState({ preEmpPage : storedPage })
+    } else {
+      this.setState({ preEmpPage })
+    }
+  }
+
+  incrementPage () {
+    const index = this.state.preEmpPage + 1
+    this.setState({ preEmpPage : index })
+  }
+
+  decerementPage () {
+    const index = this.state.preEmpPage - 1
+    this.setState({ preEmpPage : index })
   }
 
   render() {
@@ -30,17 +76,22 @@ class PreEmploymentFragment extends BaseMVPView {
       selected,
       tempPreEmploymentModal,
       history,
-      onChangeStatusPreEmploymentModal
+      onChangeStatusPreEmploymentModal,
+      checkPEUndertaking
     } = this.props
 
-    const { isDismisable  } = this.state
+    const {
+      isDismisable,
+      enabledLoader,
+      preEmpPage
+    } = this.state
+
     return(
       <div>
+      { super.render() }
       {
         tempPreEmploymentModal &&
-        <Modal
-          isDismisable = { isDismisable  }
-          >
+        <Modal>
           <center>
             <h2 className = { 'font-weight-bold font-size-24px' }>Hello</h2>
             <br/>
@@ -54,13 +105,46 @@ class PreEmploymentFragment extends BaseMVPView {
             <GenericButton
               className = { 'pre-emp-setup-button' }
               text = { 'SETUP MY ACCOUNT' }
-              onClick = { () => onChangeStatusPreEmploymentModal() }
-               />
+              onClick = { () =>
+                onChangeStatusPreEmploymentModal()
+                }
+             />
           </div>
         </Modal>
       }
-      awdawd
+      <div className={ 'preemployment-container' }>
+        <div></div>
+        <div>
+          {
+            enabledLoader ?
+            <center className = { 'circular-loader-center' }>
+              <CircularLoader show = { true }/>
+            </center>
+            :
+            <PreEmploymentFragments
+              preEmpPage = { preEmpPage }
+              onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
+              />
+            }
+            <br/>
+            <div className = { 'grid-global' }>
+              {
+                preEmpPage !== 0 ?
+                <GenericButton
+                  className = { 'global-button' }
+                  text = { 'Previous' }
+                  onClick = { () => this.decerementPage() } /> :
+                  <div></div>
+              }
+              <GenericButton
+                className = { 'global-button' }
+                text = { 'Next' }
+                onClick = { () => this.incrementPage() } />
+            </div>
+        </div>
+        <div></div>
       </div>
+    </div>
     )
   }
 }
