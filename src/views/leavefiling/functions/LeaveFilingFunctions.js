@@ -7,9 +7,9 @@ export function checkedReasonForLeave (benefitsCodeType) {
   if(status === 'fl') {
     return 'Bereavement Leave'
   } else if (status === 'sl') {
-    return 'Sick'
+    return 'Sick Leave'
   } else if (status === 'bl') {
-    return 'Birthday'
+    return 'Birthday Leave'
   } else if (status === 'el') {
     return 'Emergency'
   } else if (status === 'mn') {
@@ -19,8 +19,8 @@ export function checkedReasonForLeave (benefitsCodeType) {
   } else if (status === 'pl') {
     return 'Paternity Leave'
   } else if (status === 'br') {
-    return 'Bar/Board Review'
+    return 'Bar/Board Review Leave'
   } else if (status === 'vl') {
-    return 'Vacation'
+    return 'Vacation Leave'
   }
 }

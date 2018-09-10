@@ -172,7 +172,12 @@ export default class HRBenefitsService {
   }
 
   addRating (token, bookParam) {
-    return this.apiClient.post('v1/books/rate', bookParam, {
+    const objectBook = {
+      id : bookParam.id,
+      rate : bookParam.rate,
+      comments : bookParam.comments,
+    }
+    return this.apiClient.post('v1/books/rate', objectBook, {
       headers : { token }
     })
   }
@@ -679,7 +684,9 @@ export default class HRBenefitsService {
       memorial: addBereavementParam.objectMemorial,
     }
     formData.append('uuid', 12345)
-    formData.append('file', addBereavementParam.file)
+    addBereavementParam.file.map((resp, key) =>
+      formData.append(resp.name, resp.file)
+    )
     formData.append('body', JSON.stringify(bereavementObject))
     return this.apiClient.post('v1/bereavement/availment', formData, {
       headers: { token }

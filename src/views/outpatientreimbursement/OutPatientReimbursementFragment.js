@@ -127,7 +127,6 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       return resp.amount
     })
     const totalAmount = newValueArray.reduce((a, b) => a + b, 0)
-    console.log(totalAmount)
     const validate = OutPatientReimbursementFunction.checkedAmount(totalAmount)
     if(parseInt(totalAmount) > parseInt(limit)) {
       this.setState({

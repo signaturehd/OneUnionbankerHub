@@ -184,11 +184,8 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 </div>
                 <div>
                   <GenericInput
-                    value = {
-                      parseInt(noDeliveryText) > parseInt(noPregnancyText) ?
-                      '' : noDeliveryText
-                    }
-                    disabled = { noPregnancyText ? showEditSubmitButton : true }
+                    value = { noDeliveryText }
+                    disabled = { showEditSubmitButton }
                     onChange = { e => noDeliveryFunc(e.target.value)  }
                     text = { 'Number of Delivery' }
                     maxLength = { 1 }
@@ -201,10 +198,8 @@ class MaternityAssistanceSSSFormCardComponent extends Component {
                 </div>
                 <div>
                   <GenericInput
-                    value = {  parseInt(noPregnancyText) === total ?
-                      noMiscarriageText : ''
-                    }
-                    disabled = { noDeliveryText ? showEditSubmitButton : true }
+                    value = { noMiscarriageText }
+                    disabled = { showEditSubmitButton }
                     onChange = { e => noMiscarriageFunc(e.target.value) }
                     text = { 'Number of Miscarriage' }
                     maxLength = { 1 }

@@ -6,7 +6,6 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/MyExistingLoansPresenter'
 
 import ExistingLoansSummaryCardComponent from './components/ExistingLoansSummaryCardComponent'
-import ExistingLoansHistoryCardComponent from './components/ExistingLoansHistoryCardComponent'
 
 import {
   CircularLoader,
@@ -18,6 +17,9 @@ import {
 import { format } from '../../utils/numberUtils'
 
 import './styles/myExistingLoanStyle.css'
+
+import { Progress } from 'react-sweet-progress'
+import "react-sweet-progress/lib/style.css"
 
 import moment from 'moment'
 
@@ -78,20 +80,24 @@ class MyExistingLoansFragment extends BaseMVPView {
             </div>
             <div className = { 'existing-loans-grid-header' }>
               <div>
-                <div className = { 'text-align-right' }>
-                  <h2 className = { 'existing-loan-title-header' }>
-                    &#8369; { format(totalAmount  ) }
-                  </h2>
-                  <br/>
-                  <h2>
-                    Outstanding Balance
-                  </h2>
-                  <h2>
-                    { moment().format('DD MMM YYYY') }
-                  </h2>
-                </div>
               </div>
-              <div></div>
+              <Card className = { 'existing-loan-card-balance existingloan-card-background' }>
+                <div className = { 'existing-loans-grid-card' }>
+                  <span className = { 'existing-card-image-icon' } />
+                  <div className = { 'text-align-right' }>
+                    <h2 className = { 'existing-loan-title-header' }>
+                      &#8369; { format(totalAmount  ) }
+                    </h2>
+                    <br/>
+                    <h2>
+                      Outstanding Balance
+                    </h2>
+                    <h2>
+                      { moment().format('DD MMM YYYY') }
+                    </h2>
+                  </div>
+                </div>
+              </Card>
             </div>
             <div>
               <div className = { 'existing-loan-summary-grid-x2' }>
