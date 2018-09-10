@@ -10,7 +10,8 @@ import {
   GenericButton,
   CircularLoader,
   Card,
-  Line
+  Line,
+  MultipleAttachments
 } from '../../../ub-components/'
 
 import Presenter from './presenter/BiographicalDataPresenter'
@@ -21,12 +22,25 @@ class BiographicalDataFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      biographicalDataForm: []
+      biographicalDataFormData: [],
+      count : 1
     }
+    this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(2)
+  }
+
+  addAttachmentsFunc (attachment, tempCount) {
+    console.log(attachment)
+    const attachmentTemp = [...attachment]
+    let newCount = tempCount + 1
+    this.setState({ count : newCount })
+    attachmentTemp.push({
+      name : 'Biographical Data Form ' + tempCount
+    })
+    this.setState({ biographicalDataFormData : attachmentTemp })
   }
 
   render() {
@@ -34,9 +48,17 @@ class BiographicalDataFragment extends BaseMVPView {
       history,
       checkPEUndertaking,
     } = this.props
+
     const {
-      biographicalDataForm
+      biographicalDataFormData,
+      count
     } = this.state
+
+    const bioAttachmentArray = [
+      {
+        name : 'Biographical Data Form ' + count
+      }
+    ]
 
     return(
     <div>
@@ -64,20 +86,20 @@ class BiographicalDataFragment extends BaseMVPView {
             </div>
           </Card>
         </div>
+        <br/>
+        <Line />
+        <br/>
         <div className = { 'grid-global' }>
           <h2></h2>
           <div className = { 'text-align-right' }>
             <GenericButton
               text = { 'Add Attachments' }
-              onClick = { () => {} }
+              onClick = { () => this.addAttachmentsFunc(biographicalDataFormData, count) }
               />
           </div>
         </div>
-        <br/>
-        <Line />
-        <br/>
           {
-            defaultDamageProperty.length !== 0  &&
+            biographicalDataFormData.length !== 0  &&
             <div>
             <h4>
               <br/>
@@ -85,17 +107,12 @@ class BiographicalDataFragment extends BaseMVPView {
             </h4>
             <MultipleAttachments
               count = { count }
-              countFunc = { (count) => countFunc(count) }
+              countFunc = { (count) => this.setState({ count }) }
               placeholder = { '.' }
-              fileArray = { defaultDamageProperty }
-              setFile = { (genericFileAttachmentArray) =>
-                  this.setState({ genericFileAttachmentArray })
+              fileArray = { biographicalDataFormData }
+              setFile = { (biographicalDataFormData) =>
+                  this.setState({ biographicalDataFormData })
               }
-              disabled = { showEditSubmitButton }
-              errorMessage = {
-                showEditSubmitButton ?
-                '' :
-                `Please upload the required attachments`  }
               />
             </div>
            }
