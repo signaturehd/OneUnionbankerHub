@@ -4,5 +4,19 @@
 
 .affirmation-grid-card-x2 {
   display: grid;
-  grid-template-columns: 1fr .2fr;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  column-gap: 2%;
+}
+
+.affirmation-next-icon {
+  -webkit-mask-image: url('../../../../images/icons/ic_next.png')
+}
+
+.affirmation-icon {
+  width: 50px;
+}
+
+.affirmation-grid-x2 {
+  display: grid;
+  grid-template-rows: 1fr 1fr
 }

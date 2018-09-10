@@ -31,7 +31,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
       checkPEUndertaking,
     } = this.props
 
-    const documentCardOptions = [
+    let documentCardOptions = [
       {
         id: 0,
         title: 'Pre-Employment Undertaking',
@@ -53,24 +53,33 @@ class AffirmationDocumentFragment extends BaseMVPView {
 
     return(
     <div>
-    { super.render() }
+      { super.render() }
       <div>
         <br/>
         <h2 className={ 'header-margin-default text-align-left' }> Pre Employment Documents Affirmation </h2>
         <h2>Please click and read all documents below and affirm each one. Documents that are marked with checked are already affirmed</h2>
         <br/>
-        {
-          documentCardOptions.map((resp, key) =>
-          <Card
-            key = { key }
-            className = { 'affirmation-card' }>
-            <div className = { 'affirmation-grid-card-x2' }>
-              <h2> { resp.title } </h2>
-              <span className = { `affirmation-icon` }/>
-            </div>
-          </Card>
-          )
-        }
+        <div className = { 'affirmation-grid-card-x2' }>
+          {
+            documentCardOptions.map((resp, key) =>
+            <Card
+              key = { key }
+              className = { 'affirmation-card' }>
+              <div className = { 'affirmation-grid-x2' }>
+                <h2> { resp.title } </h2>
+                <div className = { 'grid-global' }>
+                  <GenericButton
+                    className = { 'affirmation-button' }
+                    text = { 'Download' }/>
+                  <GenericButton
+                    className = { 'affirmation-button' }
+                    text = { 'Preview' }/>
+                </div>
+              </div>
+            </Card>
+            )
+          }
+        </div>
       </div>
     </div>
     )

@@ -798,4 +798,11 @@ export default class HRBenefitsClient {
     return this.service.addStaffAccounts(token, accountNumber, staffAccountsParam)
       .pipe(ServiceErrorOperator())
   }
+
+  /* Pre Employment */
+
+  postAffirmPreEmploymentUndertaking (token) {
+    return this.service.postAffirmPreEmploymentUndertaking(token)
+      .pipe(ServiceErrorOperator())
+  }
 }

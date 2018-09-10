@@ -1041,9 +1041,122 @@ export default class HRBenefitsService {
   }
 
   /* Pre-Employment */
-  postAffirmPreEmploymentUndertaking () {
+  postAffirmPreEmploymentUndertaking (token) {
     return this.OnboardingClient.post('v1/affirm/pre-emp-undertaking', {
-      
+      headers : { token }
     })
   }
+
+  // /* Pre Employment */
+  //
+  //   @Multipart
+  //   @POST("employees/v1/employees")
+  //   Single<Response<MessageResp>> submitOnBoardingForm(
+  //           @Part("uuid") RequestBody uuid,
+  //           @Part("body") RequestBody body,
+  //           @Part MultipartBody.Part attachments);
+  //
+  //   @GET("employees/v1/schools")
+  //   Single<Response<CollegesResp>> getColleges(
+  //           @Query("pageNumber") int pageNumber,
+  //           @Query("find") String searchString
+  //   );
+  //
+  //   @Streaming
+  //   @GET("files/v1/uploads?folder=documents")
+  //   Single<Response<ResponseBody>> getOnBoardingDocument(@Header("file") String fileUrl);
+  //
+  //   //TODO
+  //   @POST("employees/v1/affirm/pre-emp-undertaking")
+  //   Single<Response<MessageResp>> affirmPreEmploymentUndertaking(
+  //           @Body AffirmDocumentParam affirmDocumentParam);
+  //
+  //   //TODO
+  //   @POST("employees/v1/affirm/it-resource-policy")
+  //   Single<Response<MessageResp>> affirmItResourcePolicy(
+  //           @Body AffirmDocumentParam affirmDocumentParam);
+  //
+  //   //TODO
+  //   @POST("employees/v1/affirm/undertaking-confidentiality")
+  //   Single<Response<MessageResp>> affirmUndertakingConfidentiality(
+  //           @Body AffirmDocumentParam affirmDocumentParam);
+  //
+  //   //TODO
+  //   @POST("employees/v1/affirm/secrecy-bank-deposits")
+  //   Single<Response<MessageResp>> affirmSecrecyBankDeposits(
+  //           @Body AffirmDocumentParam affirmDocumentParam);
+  //
+  //   @POST("onboarding/v1/employees/finances/details")
+  //   Single<Response<MessageResp>> saveFinancialObligation(
+  //           @Body FinancialObligationParam financialObligationParam);
+  //
+  //   //TODO
+  //   @Multipart
+  //   @POST("onboarding/v1/employees/attachments")
+  //   Single<Response<MessageResp>> saveDocuments(
+  //           @Part("uuid") RequestBody uuid,
+  //           @Part("body") RequestBody body,
+  //           @Part List<MultipartBody.Part> attachments
+  //   );
+  //
+  //   Single<Response<MessageResp>> saveEducationBackground(@Part("uuid") RequestBody uuid,
+  //                                                         @Part("body") RequestBody body,
+  //                                                         @Part MultipartBody.Part file);
+  //
+  //   //TODO
+  //   @POST("employees/v1/preemp/savePagIbig/submit")
+  //   Single<Response<MessageResp>> savePagIbigLoan(@Part("uuid") RequestBody uuid,
+  //                                                 @Part("body") RequestBody body,
+  //                                                 @Part List<MultipartBody.Part> attachments);
+  //
+  //   //TODO
+  //   @POST("employees/v1/preemp/saveParentForm/submit")
+  //   Single<Response<MessageResp>> saveParentForm(@Part("uuid") RequestBody uuid,
+  //                                                @Part("body") RequestBody body);
+  //
+  //   //TODO
+  //   @POST("employees/v1/preemp/work/submit")
+  //   Single<Response<MessageResp>> saveWorkExperience(
+  //           @Body PreEmpWorkExperienceParam preEmpWorkExperienceParam);
+  //
+  //   //TODO
+  //   @POST("employees/v1/preemp/bio/submit")
+  //   Single<Response<MessageResp>> saveBioData(@Part List<MultipartBody.Part> attachment);
+  //
+  //   //TODO
+  //   @POST("employees/v1/preemp/birthcert/submit")
+  //   Single<Response<MessageResp>> saveBirthCertificate(@Part List<MultipartBody.Part> attachment);
+  //
+  //   //TODO
+  //   @POST("employees/v1/preemp/brgy/submit")
+  //   Single<Response<MessageResp>> saveBrgyCert(@Part List<MultipartBody.Part> attachment);
+  //
+  //   //TODO
+  //   @POST("employees/v1/preemp/philhealth/submit")
+  //   Single<Response<MessageResp>> savePhilHealth(@Part List<MultipartBody.Part> attachment);
+  //
+  //   //TODO
+  //   @POST("employees/v1/preemp/pagibig/submit")
+  //   Single<Response<MessageResp>> savePagIbig(@Part List<MultipartBody.Part> attachment);
+  //
+  //   //TODO
+  //   @POST("employees/v1/preemp/personalsignature/submit")
+  //   Single<Response<MessageResp>> savePersonalSignature(@Part List<MultipartBody.Part> attachment);
+  //
+  //   //TODO
+  //   @POST("employees/v1/preemp/nbi/submit")
+  //   Single<Response<MessageResp>> saveNBIClearance(@Part MultipartBody.Part attachment);
+  //
+  //   @GET("onboarding/v1/employees/school")
+  //   Single<Response<List<PreEmpEducation>>> getEducationList();
+  //
+  //   //TODO
+  //   @GET("employess/v1/preemp/work")
+  //   Single<Response<List<PreEmpWork>>> getWorkList();
+  //
+  //   /* Announcements */
+  //
+  //   @GET("benefits/v1/news")
+  //   Single<Response<List<Announcement>>> getAnnouncements();
+
 }

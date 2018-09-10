@@ -119,7 +119,6 @@ class SideBar extends Component {
         {
             modules.map((d, idx) =>
             d.id !== 1 &&
-            d.id !== 3 &&
             d.id !== 4 &&
             d.id !== 5 &&
             d.id !== 8 &&
