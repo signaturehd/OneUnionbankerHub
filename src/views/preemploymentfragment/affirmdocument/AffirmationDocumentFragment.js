@@ -66,7 +66,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
             className = { 'affirmation-card' }>
             <div className = { 'affirmation-grid-card-x2' }>
               <h2> { resp.title } </h2>
-              <span className = { `` }/>
+              <span className = { `affirmation-icon` }/>
             </div>
           </Card>
           )

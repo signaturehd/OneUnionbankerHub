@@ -1,10 +1,10 @@
 
 export default class HRBenefitsService {
-  constructor (apiClient, accountClient, fileClient) {
+  constructor (apiClient, accountClient, fileClient, OnboardingClient) {
     this.apiClient = apiClient
     this.accountClient = accountClient
     this.fileClient = fileClient
-
+    this.OnboardingClient = OnboardingClient
   }
 
   /* user */
@@ -1037,6 +1037,13 @@ export default class HRBenefitsService {
     }
     return this.accountClient.post('v1/employees/accounts/confirm', staffAccontObject , {
       headers : { token }
+    })
+  }
+
+  /* Pre-Employment */
+  postAffirmPreEmploymentUndertaking () {
+    return this.OnboardingClient.post('v1/affirm/pre-emp-undertaking', {
+      
     })
   }
 }
