@@ -24,6 +24,7 @@ export default class SettingsPresenter {
     this.view.showLoading()
 
     this.getProfileInteractor.execute()
+    .do(profile => this.view.showProfileBackground(profile))
      .do(profile => this.view.showProfile(profile.employee))
      .do(profile => this.view.showRank(profile.employee.rank))
      .do(profile => this.view.showLineManager(profile.employee.lineManager))

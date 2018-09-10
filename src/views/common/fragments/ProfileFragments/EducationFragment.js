@@ -5,7 +5,7 @@ import { Line, Card } from '../../../../ub-components/'
 
 import './styles/profileFragment.css'
 
-import defaultImage from '../../../../images/updilimanDefault.png'
+import defaultImage from '../../../../images/icons/ic_school_grey_500_18dp.png'
 
 class EducationFragment extends Component {
 
@@ -18,26 +18,6 @@ class EducationFragment extends Component {
       profileEducation,
     }=this.props
 
-      const educationDefault = [{
-        id: 0 ,
-        title: 'UP Diliman',
-        imagePath: require('../../../../images/icons/ic_school_grey_500_18dp.png'),
-        course: 'Bachelor of Science in Computer Studies',
-        year: '2015-2018'
-      }, {
-        id: 1 ,
-        title: 'De Lasalle University',
-        imagePath: require('../../../../images/icons/ic_school_grey_500_18dp.png'),
-        course: 'Bachelor of Science in Computer Studies',
-        year: '2015-2018'
-      }, {
-        id: 2,
-        title: 'STI University',
-        imagePath: require('../../../../images/icons/ic_school_grey_500_18dp.png'),
-        course: 'Bachelor of Science in Computer Studies',
-        year: '2015-2018'
-      }]
-
     return (
       <div>
         <Card className={ 'profile-common-card' }>
@@ -45,7 +25,6 @@ class EducationFragment extends Component {
           <br/>
           {
             profileEducation ?
-
               profileEducation.map((education, key)=>
               <div
                 key={ key }
@@ -66,7 +45,7 @@ class EducationFragment extends Component {
                     { `${ 'Degree :' + education.degree }` }
                   </h3>
                   <h4 className={ 'font-size-16px font-weight-lighter' }>
-                    { `${ education.startYear }+ ' - ' ${ education.endYear } `  }
+                    SY { `${ education.startYear } - ${ education.endYear } `  }
                   </h4>
                 </div>
               </div>
