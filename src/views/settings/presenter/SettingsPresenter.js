@@ -42,7 +42,7 @@ export default class SettingsPresenter {
      this.genericPutNewCodeInteractor.execute(objectPINParam)
      .subscribe(data => {
        store.dispatch(NotifyActions.addNotify({
-         title: 'Benefits',
+         title: 'My Security',
          message : data.message,
          type : 'success',
          duration : 2000
