@@ -436,10 +436,10 @@ class MaternityAssistanceFragment extends BaseMVPView {
       store.dispatch(NotifyActions.addNotify({
         title : 'Maternity Assistance',
         type : 'warning',
-        message : `The total No. of Delivery & No. of Miscarriage must not exceed to the count of ${ noPregnancyText }`,
+        message : `The total of Delivery & Miscarriage must not exceed to the count of Pregnancy(${ noPregnancyText })`,
         duration: 2000,
-      })
-    )
+        })
+      )
     } else {
       this.setState({
         showEditSubmitButton: true,
