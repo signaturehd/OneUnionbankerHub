@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Switch, Route } from 'react-router-dom'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
@@ -12,6 +11,8 @@ import FinancialObligationFragment
   from '../preemploymentfragment/financialobligation/FinancialObligationFragment'
 import BiographicalDataFragment
   from '../preemploymentfragment/biographicaldata/BiographicalDataFragment'
+import EducationBackgroundFragment
+  from '../preemploymentfragment/education/EducationBackgroundFragment'
 /* Modal */
 import IsFinancialObilgationConfirmModal
   from './modals/IsFinancialObilgationConfirmModal'
@@ -41,6 +42,10 @@ function  PreEmploymentFragments (props)  {
       />
   } else if (pageNumber === 2 ) {
     return <BiographicalDataFragment
+      onSendPageNumberToView = { onSendPageNumberToView }
+      />
+  } else if (pageNumber === 3) {
+    return <EducationBackgroundFragment
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else {
