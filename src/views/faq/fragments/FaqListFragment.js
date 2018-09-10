@@ -72,6 +72,7 @@ class FaqListFragment extends Component {
                 imageResponse = { imageResponse }
                 title = { qtn && qtn.title }
                 subtitle = { qtn && qtn.subtitle }
+                icon = { qtn && qtn.icon }
                 onClick = { () => setSelectedFaqQuestion(qtn) } />
             )          :
           <div className = { 'faqs-loader' }>

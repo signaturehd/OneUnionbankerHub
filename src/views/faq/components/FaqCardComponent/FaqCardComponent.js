@@ -15,7 +15,7 @@ class FaqCardComponent extends Component {
   const { onClick, title, icon, subtitle } = this.props
   const style = {
     iconFaqs : {
-      background : `url('http://${icon}')`,
+      background : `url('${icon}')`,
       backgroundSize : 'cover',
       backgroundRepeat : 'no-repeat',
       fontWeight : 'bold',
