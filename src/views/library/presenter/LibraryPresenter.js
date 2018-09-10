@@ -52,9 +52,9 @@ export default class LibraryPresenter {
       })
   }
 
-  rateBook (id, rating) {
+  addRating (id, rating, comments) {
     this.view.showLoading()
-    this.addBookInteractor.execute(BookRateParam(id, rating))
+    this.addBookInteractor.execute(BookRateParam(id, rating, comments))
     .subscribe(
       data => {
         this.view.hideLoading()

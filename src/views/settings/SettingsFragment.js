@@ -116,7 +116,7 @@ class SettingsFragment extends BaseMVPView {
       noticeResponse,
       noticeResponseModal
     }=this.state
-    console.log(noticeResponse)
+
     return (
       <div className={ 'profile-container' }>
         { super.render() }

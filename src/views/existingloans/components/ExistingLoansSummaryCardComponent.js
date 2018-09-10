@@ -3,11 +3,14 @@ import PropTypes from 'prop-types'
 
 import * as MyExistitngLoansFunctions from '../functions/MyExistitngLoansFunctions'
 
-import { Card, GenericButton } from '../../../ub-components'
+import { Card, GenericButton, Loader } from '../../../ub-components'
 import './styles/myExistingLoansCardStyle.css'
 
 import { format } from '../../../utils/numberUtils'
 import moment from 'moment'
+
+import { Progress } from 'react-sweet-progress'
+import "react-sweet-progress/lib/style.css"
 
 class ExistingLoansSummaryCardComponent extends Component {
 
@@ -35,16 +38,16 @@ class ExistingLoansSummaryCardComponent extends Component {
           existingLoans.map((resp, key) =>
           <Card className = { 'existing-loans-grid-x6' }>
             <div className = { 'existing-loans-grid-label' }>
+              <div  className = { 'font-weight-bold font-size-14px' }>Type</div>
+              <div>{ resp.description }</div>
+            </div>
+            <div className = { 'existing-loans-grid-label' }>
               <div className = { 'font-weight-bold font-size-14px' }>
                 PN Number
               </div>
               <div>
                 { resp.promissoryNote }
               </div>
-            </div>
-            <div className = { 'existing-loans-grid-label' }>
-              <div  className = { 'font-weight-bold font-size-14px' }>Type</div>
-              <div>{ resp.description }</div>
             </div>
             <div className = { 'existing-loans-grid-label' }>
               <div  className = { 'font-weight-bold font-size-14px' }>Date</div>
@@ -54,7 +57,11 @@ class ExistingLoansSummaryCardComponent extends Component {
               <div  className = { 'font-weight-bold font-size-14px' }>Principal Amount</div>
               <div>&#8369; { format(resp.balance) }</div>
             </div>
-            <div  className = { 'font-weight-bold font-size-14px' }>(progressbar insert here)</div>
+            <div  className = { 'font-weight-bold font-size-14px' }>
+              <br/>
+              <br/>
+              <Progress />
+            </div>
             <div className = { 'existing-loans-grid-label' }>
               <div  className = { 'font-weight-bold font-size-14px' }>Outstanding Amount</div>
               <div>

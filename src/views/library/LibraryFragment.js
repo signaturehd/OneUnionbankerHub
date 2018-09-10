@@ -138,8 +138,10 @@ class LibraryFragment extends BaseMVPView {
       pageNumber,
       borrowedPageNumber
     } = this.state
+
     const filteredBooks = books
     const search = searchString.trim().toLowerCase()
+    
     return (
       <div>
       { super.render() }

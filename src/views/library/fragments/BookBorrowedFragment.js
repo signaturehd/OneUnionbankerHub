@@ -27,8 +27,8 @@ class BookBorrowedFragment extends Component {
   }
 
 
-  addRating (id, rating) {
-    this.props.presenter.rateBook(id, rating)
+  addRating (id, rating, comment) {
+    this.props.presenter.addRating(id, rating, comment)
   }
 
   handleScroll () {
@@ -51,8 +51,7 @@ class BookBorrowedFragment extends Component {
           borrowed.requests &&
           borrowed.requests.map((bookRequest, key) =>
             <BookBorrowedCard
-
-              rateBook = { (id, rating) => this.addRating(id, rating) }
+              rateBook = { (id, rating, comment) => this.addRating(id, rating, comment) }
               detail = { bookRequest.book }
               quantity = { bookRequest.quantity }
               key = { key }

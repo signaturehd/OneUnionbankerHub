@@ -17,6 +17,9 @@ export default class ApprovalTrainingModal extends Component {
       showRejectModal,
     } = this.props
 
+    const dateRequired = moment(details.training.endDate).diff(details.training.startDate, 'days')
+    let dayDuration = parseInt(dateRequired) * parseInt(details.training.duration)
+
     return (
       <Modal
         isDismisable = { true }
@@ -47,7 +50,7 @@ export default class ApprovalTrainingModal extends Component {
               <h4>Date and Time</h4>
               <p>Date : { details.training.startDate } - { details.training.endDate }</p>
               <p>Time : { details.training.startTime } - { details.training.endTime }</p>
-              <p>Duration : { details.training.duration }</p>
+              <p>Duration : { dayDuration} hrs</p>
             </div>
           </div>
           <br/>

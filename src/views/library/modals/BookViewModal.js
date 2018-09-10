@@ -10,13 +10,24 @@ class BookViewModal extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      rating : 0
+      rating : 0,
+      comment : null,
+      showCommentModal: false
     }
  }
 
   render () {
-    const { onClose, details, rateBook, reserveBook } = this.props
-    const { rating } = this.state
+    const {
+      onClose,
+      details,
+      rateBook,
+      reserveBook
+    } = this.props
+    const {
+      rating,
+      comment,
+      showCommentModal
+    } = this.state
     const style = {
       background : `rgba(0,0,0,0.5) url(${staticImage}) no-repeat center center`,
       backgroundSize : '450px 200px',
@@ -29,6 +40,27 @@ class BookViewModal extends Component {
         onClose = { onClose }
         width = { 50 }
       >
+      {
+        showCommentModal &&
+        <Modal
+          onClose = { onClose }
+          isDismisable = { true }>
+          <textarea
+            className={ 'default-feedback-textarea font-size-14px' }
+            placeholder={ `We'd like to know what's the experience was like` }
+            onChange={ e => this.setState({ comment : e.target.value }) }/>
+          <br/>
+        <center>
+          <GenericButton
+            text = { 'Submit' }
+            onClick = { (e) => {
+              rateBook(details.id, rating, comment)
+              }
+            }
+            />
+        </center>
+        </Modal>
+      }
         <div className = { 'library-modal-container' }>
           <div style = {style}>
           </div>
@@ -38,8 +70,11 @@ class BookViewModal extends Component {
                 emptySymbol = {<MdStarOutline style={{ fontSize: 30, color : '#c65e11' }} />}
                 fullSymbol = {<MdStar style={{ fontSize: 30,  color : '#c65e11' }} />}
                 onChange = { e => {
-                  rateBook(details.id, e)
-                  this.setState({ rating : e })
+                  // rateBook(details.id, e)
+                  e <= 3 ?
+                  this.setState({ rating : e , showCommentModal : true })
+                  :
+                  rateBook(details.id, rating, comment)
                 }}
                 fractions = { 2 }
                 initialRating = { rating ? rating : details.rating }
