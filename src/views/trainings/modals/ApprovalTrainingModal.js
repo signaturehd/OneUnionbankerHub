@@ -50,7 +50,7 @@ export default class ApprovalTrainingModal extends Component {
               <h4>Date and Time</h4>
               <p>Date : { details.training.startDate } - { details.training.endDate }</p>
               <p>Time : { details.training.startTime } - { details.training.endTime }</p>
-              <p>Duration : { dayDuration} hrs</p>
+              <p>Total Duration : { dayDuration} hrs</p>
             </div>
           </div>
           <br/>
