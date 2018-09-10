@@ -9,6 +9,8 @@ import {
   MultipleFileUploader
 } from '../../../ub-components/'
 
+import VaccineMultipleCardComponent from './VaccineMultipleCardComponent'
+
 import './styles/vaccineStyle.css'
 
 class VaccineComponent extends Component {
@@ -31,6 +33,8 @@ class VaccineComponent extends Component {
       orderingEnd,
       cost,
       appModeName,
+      vaccineCardHolder,
+      setCardHolderDefaultyFunc,
       dependentErrorMessage,
       vaccineErrorMessage,
       appModeErrorMessage
@@ -46,32 +50,35 @@ class VaccineComponent extends Component {
           disabled = { showEditSubmitButton }
           readOnly
         />
-        <GenericInput
-          text = { 'Vaccines' }
-          onClick = { () => showVaccineFunc() }
-          value = { vaccineName }
-          errorMessage = { vaccineErrorMessage }
-          disabled = { showEditSubmitButton }
-          readOnly
-        />
-        <GenericInput
-          text = { 'Ordering Start Date' }
-          value = { orderingStart }
-          disabled = { showEditSubmitButton }
-          readOnly
-        />
-        <GenericInput
-          text = { 'Ordering End Date' }
-          value = { orderingEnd }
-          disabled = { showEditSubmitButton }
-          readOnly
-        />
-        <GenericInput
-          text = { 'Cost' }
-          value = { cost }
-          disabled = { showEditSubmitButton }
-          readOnly
-        />
+        <div className = { 'grid-global' }>
+          <h2 className = { 'font-weight-bold text-align-left' }>Select vaccine(s)</h2>
+          <div className = { 'text-align-right' }>
+            <GenericButton
+              text = { 'Add Vaccine' }
+              onClick = { () => showVaccineFunc() }
+              disabled = { showEditSubmitButton }
+              />
+              <br/>
+            {
+              vaccineErrorMessage &&
+              <span className = { 'error-message' }>
+                { vaccineErrorMessage }
+              </span>
+            }
+          </div>
+        </div>
+        <br/>
+        {
+        vaccineCardHolder.length !==0 &&
+          <VaccineMultipleCardComponent
+            cardDataHolder = { vaccineCardHolder }
+            setCard = { (resp) => setCardHolderDefaultyFunc(resp) }
+            disabled = { showEditSubmitButton }
+            errorMessage = { vaccineErrorMessage }
+            />
+        }
+        <br/>
+        <Line/>
         <GenericInput
           text = { 'Application Mode' }
           onClick = { () => showAppModesFunc() }
@@ -125,6 +132,7 @@ VaccineComponent.propTypes = {
   showDependentFunc : PropTypes.func,
   showVaccineFunc : PropTypes.func,
   showFormReview : PropTypes.func,
-  editFormDataFunc : PropTypes.func
+  editFormDataFunc : PropTypes.func,
+  setCardHolderDefaultyFunc : PropTypes.func
 }
 export default VaccineComponent

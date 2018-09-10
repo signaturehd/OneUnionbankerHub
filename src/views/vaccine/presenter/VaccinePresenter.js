@@ -24,7 +24,8 @@ export default class VaccinePresenter {
           name : vaccine.name,
           orderingStart : vaccine.orderingStart,
           orderingEnd : vaccine.orderingEnd,
-          cost : vaccine.cost
+          cost : vaccine.cost,
+          availmentLimit : vaccine.availmentLimit
         })
       })
 
@@ -45,11 +46,11 @@ export default class VaccinePresenter {
       })
 
       this.view.showVaccineMap(vaccineArray)
-      this.view.showDependentMap(denpendentArray)
+      this.view.showDependentMap(dependentArray)
       this.view.showAppModeMap(appModeArray)
     })
     .subscribe(
-        data => {
+        vaccine => {
           this.view.hideCircularLoader()
         },
         error => {
@@ -57,5 +58,4 @@ export default class VaccinePresenter {
        }
     )
   }
-
 }

@@ -44,13 +44,14 @@ class VaccineFragment extends BaseMVPView {
       appModeErrorMessage : '',
       vaccinesData : [],
       dependentsData : [],
-      appModesData : []
+      appModesData : [],
+      vaccineCardHolder : []
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    // this.presenter.validateVaccine()
+    this.presenter.validateVaccine()
   }
 
   navigate () {
@@ -97,13 +98,13 @@ class VaccineFragment extends BaseMVPView {
   showFormReviewFieldDisabled (e) {
     const {
       dependentId,
-      vaccineId,
+      vaccineCardHolder,
       appModeId
     } = this.state
 
     if(!this.validateRequired(dependentId)) {
       this.setState({ dependentErrorMessage : 'Please select a Dependent' })
-    } else if(!this.validateRequired(vaccineId)) {
+    } else if(vaccineCardHolder.length == 0) {
       this.setState({ vaccineErrorMessage : 'Please select a Vaccine' })
     } else if(!this.validateRequired(appModeId)) {
       this.setState({ appModeErrorMessage : 'Please select an Application Mode' })
@@ -151,53 +152,11 @@ class VaccineFragment extends BaseMVPView {
       appModeId,
       appModeName,
       appModeErrorMessage,
+      vaccineCardHolder,
       vaccinesData,
       dependentsData,
       appModesData
     } = this.state
-
-    const vaccineDummyData = [
-      {
-        id: 1,
-        name: 'Influenza',
-        orderingStart: '2018-08-19',
-        orderingEnd: '2018-08-25',
-        cost: 500
-      },
-      {
-        id: 2,
-        name: 'Measles',
-        orderingStart: '2018-08-19',
-        orderingEnd: '2018-08-25',
-        cost: 1100
-      }
-    ]
-
-    const dependentDummyData = [
-      {
-        id: 1,
-        name: 'Dash Nathan'
-      },
-      {
-        id: 2,
-        name: 'Mxayah Caithlyn'
-      }
-    ]
-
-    const appModeDummyData = [
-      {
-        id: 1,
-        name: 'Personal'
-      },
-      {
-        id: 2,
-        name: 'Dependent'
-      },
-      {
-        id: 3,
-        name: 'Others'
-      }
-    ]
 
     return (
       <div>
@@ -236,7 +195,7 @@ class VaccineFragment extends BaseMVPView {
           showDependentsModal &&
           <SingleInputModal
             label = { 'Dependents' }
-            inputArray = { dependentDummyData }
+            inputArray = { dependentsData }
             selectedArray = { (dependentId, dependentName) => {
               this.setState({
                 dependentId,
@@ -253,18 +212,23 @@ class VaccineFragment extends BaseMVPView {
           showVaccinesModal &&
           <VaccinesModal
             label = { 'Vaccines' }
-            inputArray = { vaccineDummyData }
+            inputArray = { vaccinesData }
             selectedArray = {
-              (vaccineId, vaccineName,
-              orderingStart, orderingEnd, cost) => {
-              this.setState({
-                vaccineId,
-                vaccineName,
-                orderingStart,
-                orderingEnd,
-                cost,
-                showVaccinesModal : false,
-                vaccineErrorMessage : ''
+              (vaccineId, vaccineName, orderingStart, orderingEnd, cost) => {
+                const updatedVaccine = [...vaccineCardHolder]
+                updatedVaccine.push(
+                  {
+                    id : vaccineId,
+                    name : vaccineName,
+                    orderingStart : orderingStart,
+                    orderingEnd : orderingEnd,
+                    cost : cost
+                  }
+                )
+                this.setState({
+                  vaccineCardHolder : updatedVaccine,
+                  showVaccinesModal : false,
+                  vaccineErrorMessage : ''
                 })
               }
             }
@@ -275,7 +239,7 @@ class VaccineFragment extends BaseMVPView {
           showAppModesModal &&
           <SingleInputModal
             label = { 'Application Modes' }
-            inputArray = { appModeDummyData }
+            inputArray = { appModesData }
             selectedArray = { (appModeId, appModeName) => {
               this.setState({
                 appModeId,
@@ -320,6 +284,7 @@ class VaccineFragment extends BaseMVPView {
            orderingEnd = { orderingEnd }
            cost = { cost }
            appModeName = { appModeName }
+           vaccineCardHolder = { vaccineCardHolder }
            dependentErrorMessage = { dependentErrorMessage }
            vaccineErrorMessage = { vaccineErrorMessage }
            appModeErrorMessage = { appModeErrorMessage }
@@ -329,6 +294,7 @@ class VaccineFragment extends BaseMVPView {
            editFormDataFunc = { () => this.editFormReview() }
            showEditSubmitFunc = { (resp) => this.showEditSubmitFunc(resp) }
            showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
+           setCardHolderDefaultyFunc = { (vaccineCardHolder) => this.setState({ vaccineCardHolder }) }
            />
         }
       </div>
