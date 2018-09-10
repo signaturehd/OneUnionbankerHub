@@ -43,6 +43,9 @@ class EducationBackgroundFragment extends BaseMVPView {
               />
           </div>
         </div>
+        <div>
+          <Card></Card>
+        </div>
       </div>
     )
   }
