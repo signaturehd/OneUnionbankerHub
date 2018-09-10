@@ -59,7 +59,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
         <h2 className={ 'header-margin-default text-align-left' }> Pre Employment Documents Affirmation </h2>
         <h2>Please click and read all documents below and affirm each one. Documents that are marked with checked are already affirmed</h2>
         <br/>
-        <div className = { 'affirmation-grid-card-x2' }>
+        <div className = { 'affirmation-grid-card' }>
           {
             documentCardOptions.map((resp, key) =>
             <Card
@@ -70,9 +70,11 @@ class AffirmationDocumentFragment extends BaseMVPView {
                 <div className = { 'grid-global' }>
                   <GenericButton
                     className = { 'affirmation-button' }
+                    onClick = { () => {} }
                     text = { 'Download' }/>
                   <GenericButton
                     className = { 'affirmation-button' }
+                    onClick = { () => {} }
                     text = { 'Preview' }/>
                 </div>
               </div>
