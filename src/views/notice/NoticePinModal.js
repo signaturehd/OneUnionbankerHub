@@ -15,7 +15,7 @@ import {
   FloatingActionButton
  } from '../../ub-components'
 
-import { RequiredNumberValidation } from '../../utils/validate/'
+import { RequiredNumberValidation, RequiredValidation } from '../../utils/validate/'
 import ResponseModal from './NoticeResponseModal'
 import './styles/notice-styles.css'
 
@@ -51,8 +51,22 @@ class NoticePinModal extends BaseMVPView {
     this.presenter.updateNotice(tranId, isAgree, benId)
   }
 
+  validator (input) {
+   return new RequiredValidation().isValid(input)
+  }
+
   onSubmit (pin) {
-    this.presenter.validateEmployeePin(pin)
+    if(!this.validator(pin)) {
+      store.dispatch(NotifyActions.addNotify({
+         title : 'Authentication' ,
+         message : 'Pin is required',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+   } else {
+     this.presenter.validateEmployeePin(pin)
+   }
   }
 
   render () {

@@ -6,9 +6,36 @@
   vertical-align: middle;
 }
 
+.existing-loan-card-balance {
+  padding: 50px;
+}
+
+.existingloan-card-background {
+  background-image: url('../../../images/ub_card_bg_mobile.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.existing-loans-grid-card {
+  display: grid;
+  grid-template-columns: .5fr 1fr;
+}
+
+.existing-card-image-icon {
+  background-image : url('../../../images/icons/ic_current_account.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.existing-salary-image-icon {
+  background-image : url('../../../images/outstandingloans/Salary Loan.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 .existing-loans-grid-container {
   display: grid;
-  grid-template-rows: .3fr 1fr;
+  grid-template-rows: .1fr 1fr;
   column-gap: 2%;
 }
 
@@ -37,5 +64,5 @@
 
 .existing-loans-grid-header {
   display: grid;
-  grid-template-columns: .5fr 1fr;
+  grid-template-columns: 1fr 1fr;
 }

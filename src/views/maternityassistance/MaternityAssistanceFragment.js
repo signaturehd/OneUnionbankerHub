@@ -243,7 +243,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
   validateRequiredNoDelivery (e) {
     const {  noPregnancyText  } = this.state
     const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
-    if(parseInt(validate) >= parseInt(noPregnancyText)) {
+    if(parseInt(validate) > parseInt(noPregnancyText)) {
       this.setState({ noDeliveryErrorMessage : 'Error no. of delivery' })
     } else {
       this.setState({ noDeliveryText : validate, noDeliveryErrorMessage : '' })
@@ -251,8 +251,13 @@ class MaternityAssistanceFragment extends BaseMVPView {
   }
 
   validateRequiredNoMiscarriage (e) {
+    const {  noPregnancyText  } = this.state
     const validate = MaternityAssistanceFunction.checkedValidateInputNumber(e)
-    this.setState({ noMiscarriageText : validate, noMiscarriageErrorMessage : '' })
+    if(parseInt(validate) > parseInt(noPregnancyText)) {
+      this.setState({ noMiscarriageErrorMessage : 'Error no. of Miscarriage' })
+    } else {
+      this.setState({ noMiscarriageText : validate, noMiscarriageErrorMessage : '' })
+    }
   }
 
   editFormReview (e) {
@@ -401,6 +406,8 @@ class MaternityAssistanceFragment extends BaseMVPView {
       noMiscarriageText,
     } = this.state
 
+    const total = parseInt(noMiscarriageText) + parseInt(noDeliveryText)
+
     if(!this.validateRequired(roomNumberText)){
       this.setState({ roomNumberErrorMessage : 'Field is required' })
     } else if (!this.validateRequired(houseNumberText)) {
@@ -425,6 +432,14 @@ class MaternityAssistanceFragment extends BaseMVPView {
       this.setState({ noDeliveryErrorMessage : 'Number of delivery is required' })
     } else if (!this.validateRequired(noMiscarriageText)) {
       this.setState({ noMiscarriageErrorMessage : 'Number of Miscarriage is required' })
+    } else if (total > noPregnancyText) {
+      store.dispatch(NotifyActions.addNotify({
+        title : 'Maternity Assistance',
+        type : 'warning',
+        message : `The total of Delivery & Miscarriage must not exceed to the count of Pregnancy(${ noPregnancyText })`,
+        duration: 2000,
+        })
+      )
     } else {
       this.setState({
         showEditSubmitButton: true,
@@ -555,6 +570,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
         {
           showMaternityLeaveModal &&
           <MaternityLeaveModal
+            benefitsCodeType = { benefitsCodeType }
             onLoadMaternityLeave = { (resp) =>
               this.setState({
                 showMaternityLeaveModal: false,

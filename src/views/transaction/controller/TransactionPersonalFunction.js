@@ -138,15 +138,15 @@ import { format } from '../../../utils/numberUtils'
   }
 
   export function indexDecreased (index) {
-    if(Number(index) === 4) {
+    if(Number(index) === 3) {
       return index
     } else {
-      return index - 4
+      return index - 3
     }
   }
 
   export function indexIncreased (index) {
-    return index + 4
+    return index + 3
   }
 
   /* Education  */
