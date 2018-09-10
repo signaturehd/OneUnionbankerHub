@@ -37,6 +37,7 @@ class ExistingLoansSummaryCardComponent extends Component {
         {
           existingLoans.map((resp, key) =>
           <Card className = { 'existing-loans-grid-x6' }>
+            <span  className = { `existing-icon-fixed-${ MyExistitngLoansFunctions.checkIcon(resp.description) }` }/>
             <div className = { 'existing-loans-grid-label' }>
               <div  className = { 'font-weight-bold font-size-14px' }>Type</div>
               <div>{ resp.description }</div>
