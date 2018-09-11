@@ -51,7 +51,7 @@ class CertificateFragment extends Component {
               </Card>
             )
             :
-            <center><h3>Not yet Provided</h3><br/></center>
+            <center><h3>No Information Available</h3><br/></center>
 
         }
       </div>
