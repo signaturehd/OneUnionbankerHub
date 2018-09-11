@@ -30,6 +30,8 @@ class CarLeaseNewFormComponent extends Component {
       primaryColor,
       solRCDefault,
       solRC,
+      solId,
+      solIdErrorMessage,
       cmUnit,
       secondaryColor,
       showQuotation,
@@ -44,6 +46,7 @@ class CarLeaseNewFormComponent extends Component {
       onShowInsurancePaymentFunc,
       insurancePayment,
       onChangeSolRCFunc,
+      onChangeSolIdFunc,
       solRCErrorMessage,
       onSubmit,
       onEdit,
@@ -115,15 +118,25 @@ class CarLeaseNewFormComponent extends Component {
                 errorMessage = { '' }
                 text = { 'Insurance Payment' }
               />
-              <GenericInput
-                disabled = { showEditMode }
-                value = { solRCDefault ? solRCDefault : solRC }
-                onChange = { (e) => onChangeSolRCFunc(e.target.value) }
-                maxLength = { 20 }
-                onClick = { () => onShowEnterSolRCModalFunc }
-                errorMessage = { solRCErrorMessage }
-                text = { 'Sol RC' }
-              />
+              <div className = { 'grid-global' }>
+                <GenericInput
+                  disabled = { showEditMode }
+                  value = { solId }
+                  onChange = { (e) => onChangeSolIdFunc(e.target.value) }
+                  errorMessage = { solIdErrorMessage }
+                  text = { 'Sol Id' }
+                  maxLength = { 20 }
+                />
+                <GenericInput
+                  disabled = { showEditMode }
+                  value = { solRCDefault ? solRCDefault : solRC }
+                  onChange = { (e) => onChangeSolRCFunc(e.target.value) }
+                  onClick = { () => onShowEnterSolRCModalFunc }
+                  errorMessage = { solRCErrorMessage }
+                  text = { 'Sol RC' }
+                  maxLength = { 20 }
+                />
+              </div>
               <GenericInput
                 value = { cmUnit }
                 disabled = { showEditMode }
@@ -193,6 +206,9 @@ CarLeaseNewFormComponent.propTypes = {
   carBrand: PropTypes.string,
   solRCDefault: PropTypes.string,
   solRC: PropTypes.string,
+  solId: PropTypes.string,
+  onChangeSolIdFunc: PropTypes.func,
+  solIdErrorMessage: PropTypes.string,
   cmUnit: PropTypes.string,
   carModel: PropTypes.string,
   primaryColor: PropTypes.string,
