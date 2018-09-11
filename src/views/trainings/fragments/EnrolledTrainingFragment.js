@@ -92,6 +92,7 @@ class EnrolledTrainingFragment extends BaseMVPView {
                name = { resp.name }
                title = { resp.title }
                date = { resp.date }
+               status = { resp.status }
              />
            )
           }
