@@ -39,26 +39,6 @@ class AffirmationDocumentFragment extends BaseMVPView {
       checkPEUndertaking,
     } = this.props
     const { affirmationPreEmploymentStatus } = this.state
-    console.log(affirmationPreEmploymentStatus)
-    let documentCardOptions = [
-      {
-        id: 0,
-        title: 'Pre-Employment Undertaking',
-        action: checkPEUndertaking,
-      },{
-        id: 1,
-        title: 'Acceptable use of IT Resource Policy',
-        action: checkPEUndertaking,
-      },{
-        id: 2,
-        title: 'Undertaking of Confidentiality',
-        action: checkPEUndertaking,
-      },{
-        id: 2,
-        title: 'Security of Bank Deposit',
-        action: checkPEUndertaking,
-      },
-    ]
 
     return(
     <div>
@@ -70,7 +50,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
         <br/>
         <div className = { 'affirmation-grid-card' }>
           {
-            documentCardOptions.map((resp, key) =>
+            affirmationPreEmploymentStatus.map((resp, key) =>
             <Card
               key = { key }
               className = { 'affirmation-card' }>
