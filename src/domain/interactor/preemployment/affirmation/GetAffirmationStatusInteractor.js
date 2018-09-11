@@ -6,7 +6,7 @@ export default class GetAffirmationStatusInteractor {
   execute () {
     return this.client.getAffirmationsStatus(this.client.getToken())
     .map((resp) => {
-      const documentCardOptions = [
+      let documentCardOptions = [
         {
           id: 0,
           title: 'Pre-Employment Undertaking',

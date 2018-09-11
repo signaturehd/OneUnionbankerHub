@@ -33,7 +33,6 @@ class BiographicalDataFragment extends BaseMVPView {
   }
 
   addAttachmentsFunc (attachment, tempCount) {
-    console.log(attachment)
     const attachmentTemp = [...attachment]
     let newCount = tempCount + 1
     this.setState({ count : newCount })
@@ -98,24 +97,24 @@ class BiographicalDataFragment extends BaseMVPView {
               />
           </div>
         </div>
-          {
-            biographicalDataFormData.length !== 0  &&
-            <div>
-            <h4>
-              <br/>
-              Form Attachments
-            </h4>
-            <MultipleAttachments
-              count = { count }
-              countFunc = { (count) => this.setState({ count }) }
-              placeholder = { '.' }
-              fileArray = { biographicalDataFormData }
-              setFile = { (biographicalDataFormData) =>
-                  this.setState({ biographicalDataFormData })
-              }
-              />
-            </div>
-           }
+        {
+          biographicalDataFormData.length !== 0  &&
+          <div>
+          <h4>
+            <br/>
+            Form Attachments
+          </h4>
+          <MultipleAttachments
+            count = { count }
+            countFunc = { (count) => this.setState({ count }) }
+            placeholder = { '.' }
+            fileArray = { biographicalDataFormData }
+            setFile = { (biographicalDataFormData) =>
+                this.setState({ biographicalDataFormData })
+            }
+            />
+          </div>
+         }
       </div>
     </div>
     )

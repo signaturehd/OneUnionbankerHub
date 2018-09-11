@@ -17,8 +17,6 @@ export default class AffirmDocumentPresenter {
   getAffirmationsStatus () {
     this.getAffirmationStatusInteractor.execute()
     .subscribe(data => {
-      console.log(data)
-      
       this.view.checkedAffirmationPreEmploymentStatus(data)
     }, error => {
     })

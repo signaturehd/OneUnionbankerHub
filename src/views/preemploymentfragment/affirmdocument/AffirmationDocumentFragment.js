@@ -39,7 +39,6 @@ class AffirmationDocumentFragment extends BaseMVPView {
       checkPEUndertaking,
     } = this.props
     const { affirmationPreEmploymentStatus } = this.state
-
     return(
     <div>
       { super.render() }
