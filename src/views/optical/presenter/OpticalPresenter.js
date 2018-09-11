@@ -1,6 +1,6 @@
 import AddOpticalInteractor from '../../../domain/interactor/optical/AddOpticalInteractor'
 import GetOpticalInteractor from '../../../domain/interactor/optical/GetOpticalInteractor'
-import OpticalParam from '../../../domain/param/OpticalParam'
+import opticalParam from '../../../domain/param/OpticalParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
@@ -14,23 +14,45 @@ export default class OpticalPresenter {
     this.view = view
   }
 
-  addOptical (amount, form1, form2) {
-    this.addOpticalInteractior.execute(OpticalParam(amount, form1, form2))
+  addOptical (
+    amount,
+    orDate,
+    orNumber,
+    attachmentData
+  ) {
+    this.view.showCircularLoader()
+    this.addOpticalInteractior.execute(opticalParam(
+      amount,
+      orDate,
+      orNumber,
+      attachmentData))
       .subscribe(optical => {
         this.view.noticeOfUndertaking(optical)
+        this.view.hideCircularLoader()
         // this.view.showOptical(optical)
       }, e => {
-        this.view.noticeResponse(e)
-        // TODO prompt generic error
+        this.view.hideCircularLoader()
       })
-  }
+    }
 
   getOptical () {
     this.getOpticalInteractor.execute()
-      .subscribe(response => {
-        this.view.isEligible(response)
-      }, e => {
-        // TODO notify
+      .map(data => {
+        let attachmentsArray = []
+          data &&
+          data.attachments.map((resp, key) => {
+          attachmentsArray.push({
+            name : resp
+          })
+        })
+        this.view.showAttachmentsMap(attachmentsArray, data.limit)
+        this.view.isEligible(data ? true : false)
       })
+      .subscribe(data => {
+        // this.view.isEligible(data ? true : false)
+      }, errors => {
+        this.view.isEligible(false, errors)
+        this.view.navigate()
+      })
+    }
   }
-}

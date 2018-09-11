@@ -59,15 +59,19 @@ class DentalReimbursementFragment extends BaseMVPView {
   showDentalReimbursementValidate (validateDentalReimbursementResp) {
     this.setState({
       dependents: validateDentalReimbursementResp.dependents,
-    })
+  })
 
-    const { attachments } = validateDentalReimbursementResp
-    const updatedAttachment = [...this.state.attachmentArray]
-    attachments && attachments.map((attachment, key) => {
-      updatedAttachment.push({name: attachment})
-    })
+  const { attachments } = validateDentalReimbursementResp
+  const updatedAttachment = [...this.state.attachmentArray]
+  attachments && attachments.map((attachment, key) => {
+    updatedAttachment.push({name: attachment})
+  })
 
-    this.setState({ attachmentArray : updatedAttachment })
+  this.setState({ attachmentArray : updatedAttachment })
+  }
+
+  setFileNew (attachmentArray) {
+    this.setState({ attachmentArray })
   }
 
   render () {
@@ -91,7 +95,7 @@ class DentalReimbursementFragment extends BaseMVPView {
         { super.render() }
         <div>
           <i className = { 'back-arrow' } onClick = { () => this.navigate() }></i>
-          <h4 className = { 'header-margin-default' } >DENTAL REIMBURSEMENT</h4>
+          <h4 className = { 'header-margin-default' } >Dental Reimbursement</h4>
         </div>
           <div className = { 'dentalreimbursement-container' }>
             {
@@ -134,6 +138,7 @@ class DentalReimbursementFragment extends BaseMVPView {
                </center>               :
               <DentalReimbursementCard
                 attachments = { attachmentArray }
+                setFileNewFunc  = { (attachmentArray) =>  this.setFileNew(attachmentArray) }
                 presenter = { this.presenter }
                 dependents = { dependents }/>
             }

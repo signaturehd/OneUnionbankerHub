@@ -3,6 +3,13 @@ import { Observable } from 'rxjs'
 import GetTransactionDetailsInteractor from '../../../domain/interactor/transactions/GetTransactionDetailsInteractor'
 import GetTransactionPersonalInteractor from '../../../domain/interactor/transactions/GetTransactionPersonalInteractor'
 import UploadTransactionImageInteractor from '../../../domain/interactor/transactions/UploadTransactionImageInteractor'
+import PostNewCarConfirmationInteractor from '../../../domain/interactor/transactions/PostNewCarConfirmationInteractor'
+import PostNewPaymentInteractor from '../../../domain/interactor/transactions/PostNewPaymentInteractor'
+import PostNewReleasingInteractor from '../../../domain/interactor/transactions/PostNewReleasingInteractor'
+
+import leasesCarConfirm from '../../../domain/param/AddCarLeaseConfirmationParam'
+import leasesCarLeaseReleasingParam from '../../../domain/param/AddCarLeaseReleasingParam'
+import leasesConfirmpaymentParam from '../../../domain/param/AddCarleasePaymentParam'
 import GetTransactionParam from '../../../domain/param/GetTransactionParam'
 
 import store from '../../../store'
@@ -21,10 +28,33 @@ export default class TransactionPersonalDetailsPresenter {
 
     this.uploadTransactionImageInteractor =
       new UploadTransactionImageInteractor(container.get('HRBenefitsClient'))
+
+    this.postNewCarConfirmationInteractor =
+      new PostNewCarConfirmationInteractor(container.get('HRBenefitsClient'))
+
+    this.postNewPaymentInteractor =
+      new PostNewPaymentInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
+  }
+
+  addCarLeasePayment (
+    transactionId,
+    file
+  ) {
+      this.postNewPaymentInteractor.execute(leasesConfirmpaymentParam(
+        transactionId,
+        file
+      )
+    )
+    .subscribe(
+      data => {
+        this.view.showMessageSuccessConfirm(data && data.message)
+      }, error => {
+      }
+    )
   }
 
   getTransactionDetails (id) {
@@ -59,7 +89,6 @@ export default class TransactionPersonalDetailsPresenter {
         this.view.showCircularLoader()
         }, e => {
           this.view.showCircularLoader()
-          this.view.navigate()
       })
   }
 
@@ -90,6 +119,30 @@ export default class TransactionPersonalDetailsPresenter {
         }, e => {
           this.view.showCircularLoader()
       })
+  }
+
+  addCarLeaseConfirmation (transactionId, isConfirm) {
+    this.postNewCarConfirmationInteractor.execute(leasesCarConfirm(
+      transactionId,
+      isConfirm
+    ))
+    .subscribe(
+      data => {
+        this.view.showMessageSuccessConfirm(data && data.message)
+      }, error => {
+      }
+    )
+  }
+
+  addCarLeaseReleasing (transactionId) {
+    this.view.showCircularLoader()
+    this.postNewReleasingInteractor.execute(leasesCarLeaseReleasingParam(transactionId))
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.showMessageSuccessConfirm(data.message)
+    }, error => {
+      this.view.hideCircularLoader()
+    })
   }
 
   uploadTransactionCalamity (transactionType, benefitId, image) {

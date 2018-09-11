@@ -144,6 +144,11 @@ export default class HRBenefitsClient {
         .pipe(ServiceErrorOperator())
   }
 
+  getBooksComments (token , itemId, page, items) {
+    return this.service.getBooksComments(token , itemId, page, items)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* optical */
   getOptical (token) {
     return this.service.getOptical(token)
@@ -443,14 +448,19 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addCarLeasePayment (token) {
-    return this.service.addCarLeasePayment(token)
+  addCarLeasePayment (token, leasesConfirmpaymentParam) {
+    return this.service.addCarLeasePayment(token, leasesConfirmpaymentParam)
       .pipe(ServiceErrorOperator())
   }
 
-  addCarLeaseConfirmation (token) {
-    return this.service.addCarLeaseConfirmation(token)
+  addCarLeaseConfirmation (token, leasesCarConfirm) {
+    return this.service.addCarLeaseConfirmation(token, leasesCarConfirm)
       .pipe(ServiceErrorOperator())
+  }
+
+  addCarLeaseReleasing (token, leasesCarLeaseReleasingParam) {
+    return this.service.addCarLeaseReleasing(token, leasesCarLeaseReleasingParam)
+    .pipe(ServiceErrorOperator())
   }
 
   getPayslip (token) {
@@ -647,6 +657,150 @@ export default class HRBenefitsClient {
 
   getEmployeeTraining (token) {
     return this.service.getEmployeeTraining (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getEmployeeTrainingDetails (token, id) {
+    return this.service.getEmployeeTrainingDetails (token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  enrollEmployee (token, id) {
+    return this.service.enrollEmployee(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getEnrolledTrainings (token) {
+    return this.service.getEnrolledTrainings (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getNeedApprovalTrainings (token) {
+    return this.service.getNeedApprovalTrainings (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getApprovedTrainings (token) {
+    return this.service.getApprovedTrainings (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getApprovalTrainingDetails (id, token) {
+    return this.service.getApprovalTrainingDetails (id, token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  trainingRequest (trainingId, ApprovalTrainingParam, token) {
+    return this.service.trainingRequest (trainingId, ApprovalTrainingParam, token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Maternity Assistance */
+  validateMaternityAssistance (token) {
+    return this.service.validateMaternityAssistance(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addMaternityAssistance (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addMaternityAssistanceParam
+  ) {
+    return this.service.addMaternityAssistance (
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      addMaternityAssistanceParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  /* Maternity Assistance SSS */
+
+  addMaternityAssistanceSSS (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    maternityAssistanceSSSParam
+  ) {
+    return this.service.addMaternityAssistanceSSS(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      maternityAssistanceSSSParam
+    )
+      .pipe(ServiceErrorOperator())
+  }
+
+
+  /* Code of Conduct  */
+
+  getCompliancesPdf (token) {
+    return this.service.getCompliancesPdf(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  submitPin (token, code) {
+    return this.service.submitPin(token, code)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* My Existing Loans */
+  getExistingLoans (token) {
+    return this.service.getExistingLoans(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Phenom Loans */
+  getPhenomDiscounts (token) {
+    return this.service.getPhenomDiscounts(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPhenomSelectedDiscounts (token, id) {
+    return this.service.getPhenomSelectedDiscounts(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addPhenomIsHeart (token, id, isHeart) {
+    return this.service.addPhenomIsHeart(token, id, isHeart)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Leave Filing  */
+  addLeaveFiling (token, leaveFilingParam) {
+    return this.service.addLeaveFiling(token, leaveFilingParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Pin Enrollment */
+  postEnrollPin (token, id) {
+    return this.service.postEnrollPin(token , id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  putEnrollPin (token, putPINParam) {
+    return this.service.putEnrollPin(token, putPINParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateEmployeePin (token, employeePinParam) {
+    return this.service.validateEmployeePin(token, employeePinParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Staff Accounts */
+  getForConfirmation (token, id) {
+    return this.service.getForConfirmation(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addStaffAccounts (token, accountNumber, staffAccountsParam) {
+    return this.service.addStaffAccounts(token, accountNumber, staffAccountsParam)
       .pipe(ServiceErrorOperator())
   }
 }

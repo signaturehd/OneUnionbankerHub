@@ -18,23 +18,23 @@ class EducationFragment extends Component {
 
     const benefitsOptions = [{
       id: 1,
-      styleName: 'education-cards-1',
-      title: 'EDUCATION AID',
+      styleName: 'education-cards-1 education-option-default',
+      title: 'Education Aid',
       path: '/mybenefits/benefits/education/aid',
     }, {
       id: 2,
-      styleName: 'education-cards-4',
-      title: 'EDUCATION GROUP - PLAN',
+      styleName: 'education-cards-1 education-option-default',
+      title: 'Education Group - Plan',
       path: '/mybenefits/benefits/education/groupaid',
     }, {
       id: 3,
-      styleName: 'education-cards-2',
-      title: 'EDUCATION GRANT - AID',
+      styleName: 'education-cards-1 education-option-default',
+      title: 'Education Grant - Aid',
       path: '/mybenefits/benefits/education/grantaid',
     }, {
       id: 4,
-      styleName: 'education-cards-3',
-      title: 'EDUCATION GRANT - PLAN',
+      styleName: 'education-cards-1 education-option-default',
+      title: 'Education Grant - Plan',
       path: '/mybenefits/benefits/education/grantplan',
     }]
 
@@ -43,19 +43,19 @@ class EducationFragment extends Component {
             <i
               className = { 'back-arrow' }
               onClick = { () => this.navigate() }></i>
-            <h1>EDUCATION</h1>
+            <h1>Education</h1>
           <div className = { 'adjustment' }>
-          <div className = { 'card-container' }>
+          <div className = { 'education-card-container' }>
             {
             benefitsOptions.map((value, idx) => (
               <Card
-                className = { 'benefits-card' }
-                key = { idx }>
-                <div
-                  className = { value.styleName}
-                  text = { value.title }
-                  onClick = { () => history.push(value.path) } >
-                  <p className = { 'benefits-option-cards' }>
+                className = { 'education-card' }
+                key = { idx }
+                onClick = { () => history.push(value.path) } >
+                <div className = { 'education-column-grid' }>
+                  <div
+                    className = { value.styleName}/>
+                  <p className = { 'education-option-cards font-weight-bold font-size-15px' }>
                     { value.title }
                   </p>
                 </div>

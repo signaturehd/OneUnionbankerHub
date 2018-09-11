@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Accordion from '../components/AccordionComponent'
 import {
   Card,
   GenericButton,
@@ -35,7 +34,6 @@ class CalamityAssistanceDetailsFragment extends Component {
   }
 
   showFileReceipt (show) {
-
     this.setState({ showAttachment : false })
   }
 
@@ -99,7 +97,7 @@ class CalamityAssistanceDetailsFragment extends Component {
           <div className={ 'transaction-details-container' }>
             <div className = { 'transaction-banner transaction-calamity' }>
               <div className={ 'transaction-banner-card' }>
-                <div>
+                <div className = { 'text-align-left' }>
                   <h1 className = { 'transaction-details-name font-weight-normal'}>
                     { benefitType }
                   </h1>
@@ -109,13 +107,13 @@ class CalamityAssistanceDetailsFragment extends Component {
                   <div></div>
                   <div className = { 'transaction-details-status-grid' }>
                     <div className =
-                      { `font-weight-bolder grid-global-row-x3 transaction-details-status-${ detailStatus }` }
+                      { `font-weight-bolder grid-global-row-x3 transaction-default-status transaction-details-status-${ detailStatus }` }
                     >
                       <div></div>
                         { benefitLabel }
                       <div></div>
                     </div>
-                    <div className = { 'font-size-14px' }>Transaction Status</div>
+                    <div className = { 'font-size-14px' }></div>
                   </div>
                   <div></div>
                 </div>

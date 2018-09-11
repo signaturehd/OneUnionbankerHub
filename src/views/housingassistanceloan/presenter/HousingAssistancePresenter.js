@@ -106,9 +106,10 @@ export default class HousingAssitancePresenter {
         nfisArray &&
         nfisArray.map((nfis, key) => {
           requiredAttachments &&
-          requiredDocuments.map((attachment, key) => {
+          requiredAttachments.map((attachment, key) => {
             attachments.push({
-              name : attachment + ' for ' + nfis
+              name : attachment + ' for ' + nfis.CardNumber,
+              label : attachment + ' for ' + nfis.CardNumber + ' of ' + nfis.Id
             })
           })
         })
@@ -167,13 +168,14 @@ export default class HousingAssitancePresenter {
         this.view.setOffset(data && data.offsetArray)
         this.view.setModeOfLoan(data && data.modeOfLoan)
         this.view.showMaximumLoanableAmount(data && data.maximumLoanableAmount)
+        this.view.setNfis(data && data.nfis)
         this.view.showValidate(data)
         // this.view.showComputationForOffset(data && data.offset)
         this.view.setTermOfLoan(data && data.termsArray)
         this.view.isValid(true)
       },
       error => {
-        // this.view.navigate()
+        this.view.navigate()
       }
     )
   }

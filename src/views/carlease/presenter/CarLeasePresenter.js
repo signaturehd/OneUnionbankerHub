@@ -5,7 +5,7 @@ import GetCarValidateInteractor from '../../../domain/interactor/carlease/GetCar
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
-import addCarParam from '../../../domain/param/AddCarleaseRequestParam'
+import carRequestParam from '../../../domain/param/AddCarleaseRequestParam'
 
 export default class CarLeasePresenter {
   constructor (container) {
@@ -23,10 +23,12 @@ export default class CarLeasePresenter {
 
 
   getCarValidate () {
+    this.view.showCircularLoader()
     this.getCarValidateInteractor.execute()
     .subscribe(
       validate => {
         this.view.showCarValidated(validate)
+        this.view.hideCircularLoader()
       }, error => {
         this.view.navigate()
       }
@@ -38,16 +40,22 @@ export default class CarLeasePresenter {
     carModel,
     makeYear,
     leaseMode,
+    solRC,
+    insurancePayment,
+    cMUnit,
     primaryColor,
     secondaryColor,
     file
   ) {
     this.view.showCircularLoader()
-    this.carNewSubmissionInteractor.execute(addCarParam(
+    this.carNewSubmissionInteractor.execute(carRequestParam(
       carBrand,
       carModel,
       makeYear,
       leaseMode,
+      solRC,
+      insurancePayment,
+      cMUnit,
       primaryColor,
       secondaryColor,
       file
@@ -56,11 +64,9 @@ export default class CarLeasePresenter {
        data => {
          this.view.hideCircularLoader()
          this.view.noticeOfUndertaking(data)
-         this.view.navigate()
        }, error => {
-         this.view.noticeResponse(error)
+         this.view.noticeResponseResp(error)
          this.view.hideCircularLoader()
-         this.view.navigate()
        }
      )
   }

@@ -28,15 +28,15 @@ class BereavementDependentsModal extends Component {
      onClose={ onClose }
      isDismisable={ true }
     >
-      <div className={ 'dentalloa-description' }>
+      <div className={ 'text-align-center' }>
         <h2 className={ 'header-default-margin' }>Deceased Name</h2>
       </div>
-      <div className={ 'optical-modal-footer' }>
+      <div className={ 'bereavement-modal-footer' }>
       {
         showDepedents.map((dependent, key) =>
           <GenericButton
             key={ key }
-            className={ 'dentalloa-modal-option-button' }
+            className={ 'bereavement-modal-option-button' }
             text={ dependent.name }
             onClick={ () =>
               this.sendDependents(dependent)

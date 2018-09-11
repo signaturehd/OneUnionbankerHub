@@ -1,21 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Accordion from '../components/AccordionComponent'
+import moment from 'moment'
 import { Card } from '../../../ub-components'
 
 import './styles/detailsFragment.css'
 /*
-Transaction DentalLOA Form Agreement, Form Agreement, & File Attacment
+Transaction DentalLOA
 */
-import CarLeaseDetailsComponent from
- '../../transaction/components/TransactionCarLeaseComponent/CarLeaseDetailCardComponent'
+import CarLeaseDetailCardComponent
+from '../../transaction/components/TransactionCarLeaseComponent/CarLeaseDetailCardComponent'
 
-import CarLeaseFileComponent from
- '../../transaction/components/TransactionCarLeaseComponent/CarLeaseFileCardComponent'
-
-import CarLeaseFormAgreementComponent from
- '../../transaction/components/TransactionCarLeaseComponent/CarLeaseFormAgreementCardComponent'
+import * as TransactionDetailsFunction
+from '../../transactiondetails/controller/TransactionDetailsFunction'
 
 class CarLeaseDetailsFragment extends Component {
   constructor (props) {
@@ -23,52 +20,78 @@ class CarLeaseDetailsFragment extends Component {
   }
 
   render () {
-    const { details, transactionsPerson } = this.props
-    return (
-      <div className={'details-container'}>
-        <center>
-          <h2 className={ 'transaction-detail details-bold' }>
-            Transaction Information
-          </h2>
-        </center>
-        <br/>
-        <div>
-          <Accordion>
-            <div className={ 'accor' }>
-              <div className={ 'head' }>
-                Details
+  const {
+    details,
+    transactionsPerson,
+    attachmentsMethod,
+    agreementsMethod,
+    onConfirmationCarleaseFunc,
+    onUploadAttachmentsFunc,
+    setFileCarlease,
+    fileCarLease
+  } = this.props
+
+  const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
+  const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
+  const dateFiled = TransactionDetailsFunction.checkedDateFilled(details)
+  const benefitLabel = TransactionDetailsFunction.getBenefitLabelStatus(details.status)
+
+  return (
+    <div className={ 'transaction-details-global-x3' }>
+      <div></div>
+        <Card>
+          <div className={ 'transaction-details-container' }>
+            <div className = { 'transaction-banner transaction-carlease' }>
+              <div className={ 'transaction-banner-card' }>
+                <div className = { 'text-align-left' }>
+                  <h1 className = { 'transaction-details-name font-weight-normal'}>
+                     { benefitType }
+                  </h1>
+                  <div></div>
+                </div>
+                <div className={ 'transaction-details-grid-row' }>
+                  <div></div>
+                  <div className = { 'transaction-details-status-grid' }>
+                    <div className =
+                      { `font-weight-bolder grid-global-row-x3 transaction-default-status transaction-details-status-${ detailStatus }` }
+                      >
+                      <div></div>
+                        { benefitLabel }
+                      <div></div>
+                    </div>
+                    <div className = { 'font-size-14px' }></div>
+                  </div>
+                  <div></div>
+                </div>
               </div>
-              <div className={ 'body' }>
-                <CarLeaseDetailsComponent
-                  details = { details }
-                  transactionsPerson = { transactionsPerson }/>
-                <br/>
-              </div>
-            </div>
-            <div className={ 'accor' }>
-              <div className={ 'head' }>Attachments</div>
-                <div className={ 'body' }>
-                  <CarLeaseFileComponent details = { details } />
-                <br/>
-              </div>
-            </div>
-            <div className={ 'accor' }>
-              <div className={ 'head' }>
-                Notice
-              </div>
-            <div className={ 'body' }>
-              <CarLeaseFormAgreementComponent details={ details } />
             </div>
           </div>
-        </Accordion>
-      </div>
+          <br/>
+          <div>
+            <CarLeaseDetailCardComponent
+              fileCarLease = { fileCarLease }
+              onConfirmationFunc = { (id, status) => onConfirmationCarleaseFunc(id, status) }
+              onUploadAttachments = { (id, file) => onUploadAttachmentsFunc(id, file) }
+              transactionsPerson = { transactionsPerson }
+              setFileCarlease = { (resp) => setFileCarlease(resp) }
+              details = { details }
+              onClickAttachments = { (resp) => attachmentsMethod(resp) }
+              onClickAgreements = { (resp) => agreementsMethod(resp) }
+            />
+          </div>
+        </Card>
+      <div></div>
     </div>
     )
   }
 }
 CarLeaseDetailsFragment.propTypes = {
   details : PropTypes.object,
-  transactionsPerson : PropTypes.array
+  transactionsPerson : PropTypes.array,
+  onClickAttachments : PropTypes.func,
+  onClickAgreements : PropTypes.func,
+  onConfirmationCarleaseFunc : PropTypes.func,
+  onUploadAttachmentsFunc : PropTypes.func,
 }
 
 export default CarLeaseDetailsFragment

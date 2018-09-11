@@ -11,6 +11,11 @@
   display: grid;
 }
 
+.bereavement-padding-attachments{
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
 .transaction-detail {
   margin-bottom: 10px;
 }
@@ -79,6 +84,14 @@
   background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/medical_bg.jpg');
 }
 
+.transaction-maternity-assistance {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/maternity_bg.jpeg');
+}
+
+.transaction-carlease {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/car_bg.jpg');
+}
+
 .transaction-details-grid-row {
   display: grid;
   grid-template-columns: .3fr auto .3fr;
@@ -91,10 +104,11 @@
 
 .transaction-banner-card {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr .5fr;
   position: absolute;
   margin-left: 25px;
   margin-top: 157px;
+  padding-left: 35px;
 }
 
 @media screen and (max-width: 768px) {
@@ -162,6 +176,15 @@
   color: #fff;
   border: 0px;
   background: #ff8a00;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-status-confirmation {
+  border-radius: 1px;
+  color: #fff;
+  border: 0px;
+  background: #2d9ee0;
   cursor: initial;
   height: 35px;
 }

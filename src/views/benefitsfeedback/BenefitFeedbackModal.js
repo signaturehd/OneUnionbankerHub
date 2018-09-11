@@ -19,7 +19,8 @@ class BenefitFeedbackModal extends BaseMVPView {
     this.state = {
       rating : 0,
       comment : null,
-      submitLoader : false
+      submitLoader : false,
+      showCommendSection : false
     }
 
     this.addRating = this.addRating.bind(this)
@@ -40,8 +41,17 @@ class BenefitFeedbackModal extends BaseMVPView {
     this.setState({ submitLoader : false })
   }
 
+  commentShowIfLowRate (e) {
+    this.setState({ rating : e })
+    if(parseFloat(e) <= 3) {
+      this.setState({ showCommendSection : true })
+    } else {
+      this.setState({ showCommendSection : false })
+    }
+  }
+
   render () {
-    const { submitLoader, rating } = this.state
+    const { submitLoader, rating, showCommendSection } = this.state
     const { onClose } = this.props
 
     return (
@@ -61,14 +71,12 @@ class BenefitFeedbackModal extends BaseMVPView {
                   src={ require('../../images/icons/img_message_circle.png') }
                   className= {'sidebar-img-ub-logo'}/>
                 <br/>
-                <h3>Thank you for using 1Uhub! We'd love to know what your experience was like using the application.</h3>
+                <h3>Thank you for using 1Uhub! We&#39;d love to know what your experience was like using the application.</h3>
                 <br/>
                 <Rating
                   emptySymbol={<MdStarOutline style={{ fontSize: 30, color : '#c65e11' }} />}
                   fullSymbol={<MdStar style={{ fontSize: 30,  color : '#c65e11' }} />}
-                  onChange={ e => {
-                    this.setState({ rating : e })
-                  }}
+                  onChange={ e => this.commentShowIfLowRate(e) }
                   initialRating={ rating && rating }
                   fractions={ 2 }
                 />
@@ -77,13 +85,16 @@ class BenefitFeedbackModal extends BaseMVPView {
               <br/>
               <br/>
               {
-                rating <= 3 ?
-                <textarea
-                  className={ 'default-feedback-textarea' }
-                  placeholder={ 'Your Feedback' }
-                  onChange={ e => this.setState({ comment : e.target.value }) }/>
-                :
-                <div></div>
+                showCommendSection &&
+                <div>
+                  <h4 className = { 'font-size-16px' }>
+                    Tell us why
+                  </h4>
+                  <textarea
+                    className={ 'default-feedback-textarea font-size-14px' }
+                    placeholder={ `We're sorry that the experience wasn't as stellar for you. Would you be able to tell us how we can improve further?` }
+                    onChange={ e => this.setState({ comment : e.target.value }) }/>
+                </div>
               }
               <br/>
               <br/>

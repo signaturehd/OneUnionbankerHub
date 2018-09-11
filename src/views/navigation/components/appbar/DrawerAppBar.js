@@ -19,7 +19,14 @@ class DrawerAppBar extends Component {
   }
 
   render () {
-    const { onClick, displayNavIcon, onToggleShow, displayShow } = this.props
+    const {
+      onClick,
+      displayNavIcon,
+      onToggleShow,
+      displayShow,
+      onCallWizard
+    } = this.props
+
     const style = {
       show: {
         display : displayNavIcon,
@@ -31,6 +38,12 @@ class DrawerAppBar extends Component {
         margin: '10px',
         display: 'block',
         height: '35px',
+      },
+      infoLogo: {
+        width: '25px',
+        margin: '20px',
+        display: 'block',
+        height: '25px',
       }
     }
 
@@ -52,5 +65,13 @@ class DrawerAppBar extends Component {
       </AppBar>
     )
   }
+}
+
+DrawerAppBar.propTypes = {
+  onClick : PropTypes.func,
+  displayNavIcon: PropTypes.string,
+  onToggleShow : PropTypes.string,
+  displayShow : PropTypes.string,
+  onCallWizard : PropTypes.func,
 }
 export default DrawerAppBar

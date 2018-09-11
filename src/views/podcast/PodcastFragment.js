@@ -105,7 +105,7 @@ class PodcastFragment extends BaseMVPView {
             <h4>We’re sorry to inform you that Podcasts on One UnionBanker Hub will be available in the future releases. Apologies for the inconvenience.</h4>
             <br/>
             <GenericButton
-              onClick={ () => this.props.history.push('/mybenefits/benefits') }
+              onClick={ () => this.props.history.push('/mylearning') }
               text={ 'OK' }
               />
           </center>

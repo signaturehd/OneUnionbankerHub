@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import '../styles/transactionCardComponent.css'
-
+import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
 class TransactionProcedureCardComponent extends Component {
   constructor (props) {
     super(props)
@@ -10,6 +10,13 @@ class TransactionProcedureCardComponent extends Component {
 
   render () {
   const { procedure } = this.props
+  const date = TransactionPersonalFunction.checkedMDYDate(
+    procedure &&
+    procedure.PreferredSchedule)
+  const orDate = TransactionPersonalFunction.checkedMDYDate(
+    procedure &&
+    procedure.OfficialReceiptDate)
+  const number =  procedure && procedure.OfficialReceiptNumber
 
   return (
     <div>
@@ -17,13 +24,16 @@ class TransactionProcedureCardComponent extends Component {
         Procedure
       </h2>
       <br/>
-      <div className = { 'transaction-icons-details-grid' }>
-        <span className = { 'transaction-card-icon-settings global-icons-procedure' }>
-        </span>
-        {
-          procedure &&
-          procedure.Procedures.map((procedure, key) =>
-            <div key = { key }>
+      <div>
+      {
+        procedure &&
+        procedure.Procedures.map((procedure, key) =>
+        <div
+          key = { key }>
+          <div
+            className = { 'transaction-icons-details-grid' }>
+            <span className = { 'transaction-card-icon-settings global-icons-procedure' }/>
+            <div>
               <div>
                 <h2>{ procedure.Name ? procedure.Name : '(Not Yet Provided)' }</h2>
               </div>
@@ -31,8 +41,23 @@ class TransactionProcedureCardComponent extends Component {
                 <h2>&#8369; { procedure.Amount ? procedure.Amount : '(Not Yet Provided)' }</h2>
               </div>
             </div>
+          </div>
+          <br/>
+        </div>
           )
         }
+        <br/>
+        <div>
+          <div>
+            <h2 className = { 'font-weight-ligter' }>
+              { date !== '(Not Yet Provided)' ? date : orDate }
+            </h2>
+            <h2 className = { 'unionbank-color font-size-12px' }>
+              { date !== '(Not Yet Provided)' ? 'Preferred Schedule' : 'Official Receipt Date'}
+            </h2>
+            <br/>
+          </div>
+        </div>
       </div>
     </div>
     )

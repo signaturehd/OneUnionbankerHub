@@ -94,8 +94,8 @@ class BookListFragment extends Component {
         {
           view &&
           <BookViewModal
-           rateBook = { (bookId, bookRating) => this.setState({ bookId, bookRating, showConfirmationRateModal : true, title : 'Rate' }) }
-           reserveBook = { (bookId, bookQuantity) => this.setState({ bookId, bookQuantity, showConfirmationReserveModal : true, title : 'Reserve' }) }
+           rateBook = { (bookId, bookRating) => this.setState({ bookId, bookRating, showConfirmationRateModal : true, title : 'rate' }) }
+           reserveBook = { (bookId, bookQuantity) => this.setState({ bookId, bookQuantity, showConfirmationReserveModal : true, title : 'borrow' }) }
            details = { details }
            onClose = { () => this.setState({ view : false }) }/>
         }
@@ -104,7 +104,7 @@ class BookListFragment extends Component {
           showConfirmationReserveModal &&
           <BookConfirmationModal
             onYes = { () => {
-              this.addReserve(bookId, bookQuantity), this.setState({ showConfirmationReserveModal : false })
+              this.addReserve(bookId, bookQuantity), this.setState({ showConfirmationReserveModal : false, view : false })
             } }
             title = { title }
             onClose = { () => this.setState({ showConfirmationReserveModal : false }) }

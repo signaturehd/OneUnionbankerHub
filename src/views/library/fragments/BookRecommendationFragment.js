@@ -18,6 +18,8 @@ class BookRecommendationFragment extends Component {
       bookRating : null,
       bookQuantity : null,
       title : null,
+      comments: null,
+      bookPage : ''
     }
     this.pageNumber = 2
     this.handleScroll = this.handleScroll.bind(this)
@@ -31,8 +33,8 @@ class BookRecommendationFragment extends Component {
     window.removeEventListener('scroll', this.handleScroll, true)
   }
 
-  addRating (id, rating) {
-    this.props.presenter.rateBook(id, rating)
+  addRating (id, rating, comments) {
+    this.props.presenter.addRating(id, rating, comments)
   }
 
   addReserve (id, quantity) {
@@ -59,14 +61,21 @@ class BookRecommendationFragment extends Component {
       */
       if (bookNumber === 0) {
         this.props.page(this.pageNumber++)
+        this.setState({ bookPage : this.pageNumber++ })
       }
     }
+  }
+
+  getCommentsMethod (bookId) {
+    this.props.getComments(bookId)
   }
 
   render () {
     const {
       detail,
-      recommended
+      booksCommentList,
+      recommended,
+      getComments
     } = this.props
 
     const {
@@ -78,14 +87,18 @@ class BookRecommendationFragment extends Component {
       bookRating,
       bookQuantity,
       title,
+      comments,
+      bookPage
     } = this.state
+
     const BookRecommendation = () => (
       <div className = {'library-container'}>
         {
           recommended.map((book, key) =>
             <BookCardComponent
-              rateBook = { (id, rating) => this.addRating(id, rating) }
+              rateBook = { (id, rating, comments) => this.addRating(id, rating, comments) }
               detail = { book } key = { key }
+              getComments = { (id) => this.getCommentsMethod(id) }
               onClick = { (details, view) => this.setState({ details, view }) }
             />
           )
@@ -93,9 +106,10 @@ class BookRecommendationFragment extends Component {
         {
           view &&
           <BookViewModal
-           rateBook = { (bookId, bookRating) => this.setState({ bookId, bookRating, showConfirmationRateModal : true, title : 'Rate' }) }
+           rateBook = { (bookId, bookRating, comments) => this.setState({ bookId, bookRating, comments, showConfirmationRateModal : true, title : 'Rate' }) }
            reserveBook = { (bookId, bookQuantity) => this.setState({ bookId, bookQuantity, showConfirmationReserveModal : true, title : 'Reserve' }) }
            details = { details }
+           booksCommentList  = { booksCommentList }
            onClose = { () => this.setState({ view : false }) }
           />
         }
@@ -104,7 +118,11 @@ class BookRecommendationFragment extends Component {
           showConfirmationReserveModal &&
           <BookConfirmationModal
             onYes = { () => {
-              this.addReserve(bookId, bookQuantity), this.setState({ showConfirmationReserveModal : false })
+              this.addReserve(bookId, bookQuantity),
+              this.setState({
+                showConfirmationReserveModal : false,
+                view : false
+              })
             } }
             title = { title }
             onClose = { () => this.setState({ showConfirmationReserveModal : false }) }
@@ -115,7 +133,11 @@ class BookRecommendationFragment extends Component {
           showConfirmationRateModal &&
           <BookConfirmationModal
             onYes = { () => {
-              this.addRating(bookId, bookRating), this.setState({ showConfirmationRateModal : false })
+              this.addRating(bookId, bookRating, comments),
+              this.setState({
+                showConfirmationRateModal : false,
+                view : false
+              })
             } }
             title = { title }
             onClose = { () => this.setState({ showConfirmationRateModal : false }) }

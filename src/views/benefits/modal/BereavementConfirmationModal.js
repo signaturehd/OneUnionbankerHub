@@ -41,19 +41,17 @@ class BereavementConfirmationModal extends Component {
             onClose = { onClose }>
             <div>
               <center>
-                <h2>Is the death certificate available?</h2>
                 <br/>
                 <p>We&#39;re sorry to hear about your loss. Please accept our sympathies. We&#39;d like to help you on this time of need. Has the Death certificate been prepared?
                 </p>
               </center>
               <div className = { 'confirmation-grid-action' } >
                 <GenericButton
-                  onClick = { () => onClose() 
-                }
-                  text = { 'no' } />
+                  onClick = { () => onClose() }
+                  text = { 'No' } />
                 <GenericButton
                   onClick = { () => onYes() }
-                  text = { 'yes' }
+                  text = { 'Yes' }
                   disabled = { this.state.disabled }
                 />
               </div>

@@ -5,8 +5,10 @@ import calamityAssistanceParam from '../../../domain/param/AddCalamityAssistance
 export default class CalamityPresenter {
 
  constructor (container) {
-   this.calamityInteractor = new CalamityInteractor(container.get('HRBenefitsClient'))
-   this.addCalamityInteractor = new AddCalamityInteractor(container.get('HRBenefitsClient'))
+   this.calamityInteractor =
+   new CalamityInteractor(container.get('HRBenefitsClient'))
+   this.addCalamityInteractor =
+   new AddCalamityInteractor(container.get('HRBenefitsClient'))
  }
 
  setView (view) {
@@ -16,39 +18,53 @@ export default class CalamityPresenter {
  validateCalamityAssistance () {
    this.view.showCircularLoader()
    this.calamityInteractor.execute()
+   .map(data => {
+     let attachmentArray = []
+     let calamityType = []
+     const defaultAttachments = [
+       {
+         name: 'Barangay Certificate'
+       }
+     ]
+     const defaultDamageProperty = [
+       {
+         name: 'Damage Property ' + 1
+       }
+     ]
+     data &&
+     data.map((resp, key) => {
+       calamityType.push({
+         id : resp.id,
+         name : resp.description
+       })
+     })
+     this.view.showCalamityTypeMap(calamityType)
+     this.view.showAttachmentsMap(defaultAttachments)
+     this.view.showDamagePropertyAttachments(defaultDamageProperty)
+     this.view.showValidatedCalamity(data)
+   })
      .subscribe(
-       calamityAssistance => {
-         this.view.setValidateCalamityAssistance(calamityAssistance)
+       data => {
          this.view.hideCircularLoader()
        },
        error => {
          this.view.hideCircularLoader()
-         this.view.navigate()
       }
    )
  }
 
  addCalamityAssistance (
-   calamityId,
+   id,
    date,
-   property,
-   propertyDesc,
-   propertyType,
-   acquisitionValue,
-   estimatedCost,
-   file1,
- file2) {
+   damageProperty,
+   attachmentArray
+ ) {
   this.view.showCircularLoader()
   this.addCalamityInteractor.execute(calamityAssistanceParam(
-    calamityId,
-    date,
-    property,
-    propertyDesc,
-    propertyType,
-    acquisitionValue,
-    estimatedCost,
-    file1,
-    file2
+    id,
+    date.format('MM/DD/YYYY'),
+    damageProperty,
+    attachmentArray
     )
   )
   .subscribe(calamityAssistance => {

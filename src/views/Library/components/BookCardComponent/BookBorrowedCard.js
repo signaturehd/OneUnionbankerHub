@@ -20,7 +20,7 @@ class BookBorrowedCard extends Component {
   }
 
   render () {
-    const { detail, onClick, rateBook } = this.props
+    const { detail, onClick, rateBook, quantity } = this.props
     const { rating } = this.state
     const  styles = {
       cardHeader : {
@@ -37,7 +37,17 @@ class BookBorrowedCard extends Component {
         <div className = {'card-body'}>
           <span>{ detail.title }</span>
           <br/>
-          <small>Available Copies : { detail.availableCopies }</small>
+          <small>Approved Copies: {
+              quantity &&
+              quantity.approved !== null ?
+              quantity.approved : '0' }
+          </small>
+          <br/>
+          <small>Returned Copies: {
+              quantity &&
+              quantity.returned !== null ?
+              quantity.returned : '0' }
+          </small>
         </div>
         <div className = {'card-footer'}>
           <center>
@@ -53,7 +63,9 @@ class BookBorrowedCard extends Component {
               readonly
             />
           <GenericButton
-            onClick = { () => onClick(detail, true) }
+            onClick = { () =>
+              onClick(detail, true)
+            }
             text = { 'Read More' } />
           </center>
         </div>

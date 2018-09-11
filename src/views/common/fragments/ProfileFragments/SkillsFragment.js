@@ -9,7 +9,7 @@ import { Card, Line } from '../../../../ub-components/'
 
 import './styles/profileFragment.css'
 
-import defaultImage from '../../../../images/updilimanDefault.png'
+import defaultImage from '../../../../images/icons/ic_skill_level.png'
 
 class SkillsFragment extends Component {
 
@@ -23,21 +23,6 @@ class SkillsFragment extends Component {
       onClick,
     }=this.props
 
-    const skillsDefault=[
-    {
-      id: 0 ,
-      name: 'React Native',
-      imagePath: require('../../../../images/icons/ic_skill.png'),
-      ratings: 5,
-    },
-    {
-      id: 0 ,
-      name: 'Java',
-      imagePath: require('../../../../images/icons/ic_skill.png'),
-      ratings: 3,
-    }
-  ]
-
     return (
       <Card className={ 'profile-common-card' }>
         <h2 className={ 'font-weight-normal unionbank-color' }> Skills </h2>
@@ -45,7 +30,7 @@ class SkillsFragment extends Component {
         <Line />
         <br/>
         {
-          profileSkills?
+          profileSkills ?
             profileSkills.map((skills, key)=>
               <div
                 key={ key }
@@ -59,18 +44,11 @@ class SkillsFragment extends Component {
                 <div>
                   <h2>{ `Name: ${ skills.name}` }</h2>
                   <h2>{ `Level: ${skills.level}` }</h2>
-                    <Rating
-                      emptySymbol = { <MdStarOutline style={{ fontSize: 35, color : '#c65e11' }} /> }
-                      fullSymbol = { <MdStar style={{ fontSize: 35,  color : '#c65e11' }} /> }
-                      fractions = { 2 }
-                      initialRating = { (skills.ratings ? skills.ratings : 0) || 0 }
-                      readonly
-                    />
                 </div>
               </div>
             )
             :
-            <center><h3>Not yet Provided</h3></center>
+            <center><h3>No Information Available</h3></center>
         }
       </Card>
     )

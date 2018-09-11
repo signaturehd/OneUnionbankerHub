@@ -3,39 +3,40 @@ import PropTypes from 'prop-types'
 
 import { Modal } from '../../../ub-components'
 
-class TransactionDetailsAgreementsModal extends Component {
+class TransactionDetailsFormAttachmentsModal extends Component {
   constructor (props) {
     super(props)
   }
 
   render () {
-  const { onClose, fileAttachments } = this.props
+  const { onClose, attachments } = this.props
+
   return (
     <Modal
       isDismisable = { true }
       width = { 50 }
       onClose = { onClose }
     >
-      <div className={ 'transaction-attachments-container' }>
-        {
-          fileAttachments &&
-          fileAttachments.map((image, key) => (
-            <img
-              key = { key }
-              className = { 'transaction-attachments _img-ub-logo' }
-              src = { image }
-            />
-          ))
-        }
-      </div>
+      {
+        attachments && attachments.map ((attachment, key) =>
+        <img
+          key = { key }
+          className = { 'transaction-attachments _img-ub-logo' }
+          src = { attachment }
+        />
+        )
+      }
     </Modal>
     )
   }
 }
 
-TransactionDetailsAgreementsModal.propTypes = {
+TransactionDetailsFormAttachmentsModal.propTypes = {
   onClose: PropTypes.func,
-  fileAttachments: PropTypes.object,
+  attachments: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
 }
 
-export default TransactionDetailsAgreementsModal
+export default TransactionDetailsFormAttachmentsModal

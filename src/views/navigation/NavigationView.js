@@ -13,6 +13,8 @@ import PodcastFragment from '../podcast/PodcastFragment'
 import LibraryFragment from '../library/LibraryFragment'
 import MyLearningView from '../mylearning/MyLearningView'
 import FeedbackFragment from '../Feedback/FeedbackFragment'
+import ComplianceFragment from '../compliance/ComplianceFragment'
+import PhenomFragment from '../phenom/PhenomFragment'
 /* Navigation Drawer Component*/
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
@@ -35,6 +37,7 @@ import DentalLoaView from '../dentalloa/DentalLoaFragment'
 import OpticalFragment from '../optical/OpticalFragment'
 import MedicalSchedulingFragment from '../medicalscheduling/MedicalSchedulingFragment'
 import OutPatientReimbursementFragment from '../outpatientreimbursement/OutPatientReimbursementFragment'
+import MaternityAssistanceFragment from '../maternityassistance/MaternityAssistanceFragment'
 /* MPL */
 import HousingAssistanceFragment from '../housingassistanceloan/HousingAssistanceFragment'
 import EmergencyLoanFragment from '../emergencyloan/EmergencyLoanFragment'
@@ -62,6 +65,7 @@ import Carousel from '../carousel/Carousel'
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
+import CommonPinEnrollmentModal from './modal/CommonPinEnrollmentModal'
 
 class NavigationView extends BaseMVPView {
   constructor (props) {
@@ -70,7 +74,10 @@ class NavigationView extends BaseMVPView {
     this.state = {
       selected: 0,
       profile: [],
-      showLogoutModal: false
+      showLogoutModal: false,
+      showPinEnrollmentModal : true,
+      hasPIN: '',
+      enabledLoader : false,
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -85,6 +92,25 @@ class NavigationView extends BaseMVPView {
 
   showProfile (profile) {
     this.setState({ profile })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false  })
+  }
+
+  hideEnrollPin (hasPIN) {
+    this.setState({ hasPIN })
+  }
+
+  validateInputPIN (e) {
+    if(e.length > 5 || e.length < 5) {}
+    else {
+      this.presenter.postEnrollPin(e)
+    }
   }
 
   componentDidMount () {
@@ -104,19 +130,18 @@ class NavigationView extends BaseMVPView {
     store.dispatch(NotifyActions.resetNotify())
     this.presenter.getLibraries()
     this.presenter.getProfile()
-    this.presenter.getWizard()
   }
 
   setSelectedNavigation (id) {
     this.setState({ selected: id })
   }
 
-  callLogout () {
-    this.presenter.logout()
+  showPinIsValid (hasPIN) {
+    this.setState({ hasPIN })
   }
 
-  showWizard (wizard) {
-    this.setState({ wizard })
+  callLogout () {
+    this.presenter.logout()
   }
 
   relogin () {
@@ -131,51 +156,60 @@ class NavigationView extends BaseMVPView {
       selected,
       onClick,
       profile,
-      wizard,
-      showLogoutModal
+      showLogoutModal,
+      showPinEnrollmentModal,
+      hasPIN,
+      enabledLoader
     } = this.state
-      const { history, login } = this.props
+
+    const { history, login } = this.props
+
     const style = {
       show: {
           display : displayShow
       }
     }
-
     const locationPath = history.location.pathname
+
     return (
       <div className = { 'navigation-body-div' }>
         { super.render() }
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
+            onCallWizard = { () => this.callWizard() }
             onClick = { onClick }
             displayNavIcon = { displayNavIcon } displayShow = { displayShow }
             hide = { () => this.setState({ displayShow : 'block' })}
             show = { () => this.setState({ displayShow : 'none' })} />
         </header>
         <div className="navigation-panels">
-          <main className ="navigation-panel navigation-content" role="main" id="navPanId">
-          {
-            !wizard &&
-            <Carousel
-              onClose = { () => this.presenter.setWizard('false') }
-            />
-          }
-          {
-            showLogoutModal &&
-            <NavigationViewModal
-              logout = { () => this.presenter.logout() }
-              onClose = { () => this.setState({ showLogoutModal : false }) }
-            />
-          }
-
-          {
-            login &&
-            <ReloginModal
-              relogin = { () => {
-               this.presenter.relogin()
-              } }
-            />
-          }
+          <main
+            className = { 'navigation-panel navigation-content' }
+            role = { 'main' }
+            id = { 'navPanId' }>
+              {
+                hasPIN === 0 &&
+                <CommonPinEnrollmentModal
+                  hasPIN = { hasPIN }
+                  enabledLoader = { enabledLoader }
+                  onSubmitPinCode = { (resp) => this.validateInputPIN(resp) }
+                  />
+              }
+              {
+                showLogoutModal &&
+                <NavigationViewModal
+                  logout = { () => this.presenter.logout() }
+                  onClose = { () => this.setState({ showLogoutModal : false }) }
+                />
+              }
+              {
+                login &&
+                <ReloginModal
+                  relogin = { () => {
+                   this.presenter.relogin()
+                  } }
+                />
+              }
               <Drawer >
                 <Switch>
                   <Route exact path = '/' render = {props =>
@@ -213,6 +247,9 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation }/>}/>
                   <Route path = '/mybenefits/benefits/medical/reimbursement/outpatient' render = { props =>
                     <OutPatientReimbursementFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                  <Route path = '/mybenefits/benefits/medical/assistance/maternity' render = { props =>
+                    <MaternityAssistanceFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation }/>}/>
                   <Route path = '/mybenefits/benefits/loans/housingassistance' render = { props =>
                     <HousingAssistanceFragment { ...props }
@@ -261,6 +298,13 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/onboard' render = { props =>
                     <OnboardingView { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mycompliance' render = { props =>
+                    <ComplianceFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/phenom' render = { props =>
+                    <PhenomFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>

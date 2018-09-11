@@ -25,6 +25,7 @@ class HousingAssistanceCardComponent extends Component {
       showOffsetLoan,
       showPurposeOfAvailment,
       desiredAmount,
+      desiredAmountFunc,
       showTerm,
       termOfLoan,
       purposeOfAvailment,
@@ -49,7 +50,6 @@ class HousingAssistanceCardComponent extends Component {
           value = { purposeOfAvailment }
           readOnly
         />
-        <br/>
         <GenericInput
           text = { 'Mode of Loan' }
           onClick = { () => showModeOfLoan() }
@@ -57,7 +57,6 @@ class HousingAssistanceCardComponent extends Component {
           disabled = { review }
           readOnly
         />
-        <br/>
         <GenericInput
           text = { 'Term of Loan' }
           onClick = { () => showTermOfLoan() }
@@ -65,15 +64,13 @@ class HousingAssistanceCardComponent extends Component {
           disabled = { review }
           readOnly
         />
-        <br/>
         <GenericInput
           text = { 'Desired Amount' }
           maxLength = { 7 }
           disabled = { review }
-          onChange = { (e) => desiredAmount(e.target.value) }
+          value = { desiredAmount }
+          onChange = { (e) => desiredAmountFunc(e.target.value) }
         />
-        <br/>
-
         {
           modeOfLoanId === 2 &&
           <div>
@@ -104,22 +101,37 @@ class HousingAssistanceCardComponent extends Component {
                 disabled = { review }
                 setFile = { (updatedFile) => setAttachments(updatedFile) }
               />
-            <Line/>
           </div>
         }
         <br/>
-        <div className = { 'housing-loan-function' } >
+        <Line/>
+        {
+          review &&
+          <center>
+            <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
+          </center>
+        }
+        <br/>
+        <div>
           {
-            review &&
+            review ?
+            <div className = { 'grid-global' }>
+              <GenericButton
+                text = { 'Edit' }
+                onClick = { () => updateForm() }
+              />
+
+              <GenericButton
+                text = { status }
+                onClick = { () => onClick() }
+              />
+            </div> :
             <GenericButton
-              text = { 'Back' }
-              onClick = { () => updateForm() }
+              className = { 'loan-submit-button' }
+              text = { status }
+              onClick = { () => onClick() }
             />
           }
-          <GenericButton
-            text = { status }
-            onClick = { () => onClick() }
-          />
         </div>
       </div>
     )
@@ -131,7 +143,8 @@ HousingAssistanceCardComponent.propTypes = {
   showModeOfLoan : PropTypes.func,
   showPurposeOfAvailment : PropTypes.func,
   showOffsetLoan : PropTypes.func,
-  desiredAmount : PropTypes.func,
+  desiredAmountFunc : PropTypes.func,
+  desiredAmount : PropTypes.string,
   onClick : PropTypes.func,
   setAttachments : PropTypes.func,
   updateForm : PropTypes.func,

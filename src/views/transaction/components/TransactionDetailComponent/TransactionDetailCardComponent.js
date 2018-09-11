@@ -5,6 +5,7 @@ import { Card, GenericButton } from '../../../../ub-components/'
 
 import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
 import TransactionProcedureCardComponent from './TransactionProcedureCardComponent'
+import TransactionOtherDetailsComponent from './TransactionOtherDetailsComponent'
 
 import moment from 'moment'
 
@@ -58,26 +59,33 @@ class TransactionDetailCardComponent extends Component {
             <br/>
           </div>
         </div>
-        <div className = { 'transaction-icons-details-grid' }>
-          <span className = { ' transaction-card-icon-settings global-icons-patient-name' }></span>
-          <div>
-            <h2>
-              { patient }
-            </h2>
-            <h4  className = { 'font-size-14px unionbank-color' }>
-            </h4>
-            <br/>
+        {
+          details &&
+          details.benefitType &&
+          details.benefitType.id !== 8 ||
+          details.benefitType.id !== 7 &&
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { ' transaction-card-icon-settings global-icons-patient-name' }></span>
+            <div>
+              <h2>
+                { patient }
+              </h2>
+              <h4  className = { 'font-size-14px unionbank-color' }>
+              </h4>
+              <br/>
+            </div>
           </div>
-        </div>
+        }
         {
           details &&
           details.details &&
           details.details.Procedures ?
             <TransactionProcedureCardComponent
               procedure = { details && details.details }
+            /> :
+            <TransactionOtherDetailsComponent
+              procedure = { details && details.details }
             />
-            :
-            <div></div>
         }
         <br/>
         <br/>

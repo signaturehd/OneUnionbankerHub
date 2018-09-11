@@ -31,7 +31,7 @@ class SettingsProfileDescriptions extends Component {
           <div className={ 'font-size-14px' }>
             {
               profileDescriptions ? profileDescriptions :
-              'Sorry, you can update this information by our August 2018 release. Thank you for bearing with us as we create a better experience, Just For U!'
+              'Sorry, you can update this information by our next release. Thank you for bearing with us as we create a better experience, Just For U!'
             }
           </div>
           <br/>

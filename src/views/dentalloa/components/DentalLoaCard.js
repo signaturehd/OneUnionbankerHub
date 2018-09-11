@@ -4,13 +4,14 @@ import './styles/dentalloaComponentStyle.css'
 import DentalLoaBranchModal from '../modal/DentalLoaBranchModal'
 import DentalLoaDependentModal from '../modal/DentalLoaDependentModal'
 import DentalLoaProcedureModal from '../modal/DentalLoaProcedureModal'
-import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import {
-  GenericTextBox,
+  GenericInput,
   GenericButton,
+  DatePicker,
   Card,
-  List
+  List,
+  Line
 } from '../../../ub-components'
 import '../../../../node_modules/react-datepicker/dist/react-datepicker.css'
 
@@ -24,17 +25,7 @@ class DentalLoaCard extends Component {
       showHealthwayBranchModal : false, // Recipient Branch Modal
       showProcedureModal : false, // Recipient Procedure Modal
       datePicker : '',
-      preferredDate: '',
     }
-
-    this.onChange = this.onChange.bind(this)
-  }
-
-  /* store the date */
-  onChange (data) {
-    this.setState({ preferredDate: data })
-    this.props.getPreferredDate(
-      data && data.format('DD-MM-YYYY')) /* date format*/
   }
 
   render () {
@@ -45,15 +36,26 @@ class DentalLoaCard extends Component {
       text4,
       onClose,
       submit,
+      cntinue,
+      edit,
       recipient,
       branch,
       onClick,
       submitForm,
-      selectedProcedures
+      preferredDate,
+      selectedProcedures,
+      showEditSubmitButton,
+      editFormDataFunc,
+      recipientErrorMessage,
+      healthwayBranchErrorMessage,
+      dateErrorMessage,
+      errorMessageRequiredProcedure,
+      showFormReview,
+      dateFunc,
+      onSubmitFunc
     } = this.props
 
     const {
-      preferredDate,
       showRecipientModal,
       showHealthwayBranchModal,
       showProcedureModal } = this.state
@@ -62,33 +64,35 @@ class DentalLoaCard extends Component {
       <div className = { 'dentalloa-container' }>
         <div className = { 'dentalloa-grid-column-2' }>
           <div></div>
-          <Card className = { 'dentalloa-card' }>
-            <div className = { 'dentalloa-header' }>
+          <div>
+            <div className = { 'dentalloa-form-card' }>
               <div className = {'dentalloa-body'}>
-                <GenericTextBox
+                <GenericInput
                   onClick = { () => onClick(true, false, false) }
                   onFocus = { () => onClick(true, false, false) }
-                  value = { recipient ? recipient : '' }
+                  value = { recipient }
+                  disabled = { showEditSubmitButton }
                   readOnly
-                  placeholder = { text1 } />
-                <GenericTextBox
+                  text = { text1 }
+                  errorMessage = { recipient ? '' : recipientErrorMessage } />
+                <GenericInput
                   value = { branch ? branch : '' }
+                  disabled = { showEditSubmitButton }
                   readOnly
                   type={ 'text' }
                   onClick = { () => onClick(false, true, false) }
                   onFocus = { () => onClick(false, true, false) }
-                  placeholder = { text2 } />
-                <div>
-                  <DatePicker
-                    dateFormat = { 'DD-MM-YYYY' }
-                    readOnly
-                    value={  preferredDate ? preferredDate : 'Preferred Schedule' }
-                    selected = {  preferredDate ? moment(preferredDate, 'MM/DD/YYYY') : moment() }
-                    onChange = { this.onChange }
-                    className = { 'calendar font-size-14px' }
-                    calendarClassName = { 'calendarClass' }/>
-                </div>
-                <h4 className={ 'font-size-10px' }>(eg. MM/DD/YYYY)</h4>
+                  text = { text2 }
+                  errorMessage = { branch ? '' : healthwayBranchErrorMessage } />
+                <DatePicker
+                  readOnly
+                  minDate = { moment() }
+                  disabled = { showEditSubmitButton }
+                  selected = {  preferredDate && moment(preferredDate) }
+                  onChange = { (e) => dateFunc(e) }
+                  text = { 'Preferred Schedule' }
+                  hint = { '(eg. MM/DD/YYYY)' }
+                  errorMessage = { preferredDate ? '' : dateErrorMessage }/>
               </div>
             </div>
             <div className = { 'dentalloa-footer-left' }>
@@ -98,45 +102,83 @@ class DentalLoaCard extends Component {
               <GenericButton
                 onClick = { () => onClick(false, false, true) }
                 onFocus = { () => onClick(false, false, true) }
+                disabled = { showEditSubmitButton }
                 type = { 'button' }
                 text = { 'Add procedure' }
                 className = { 'dentalloa-procedure' }
                 value = { 'Procedures' } />
+                  <div className = { 'text-error' }>
+                      { selectedProcedures.lenght ===0 ? '' : errorMessageRequiredProcedure }
+                  </div>
               </div>
             </div>
             {
-            selectedProcedures && selectedProcedures.map((procedure, key) => (
-                 <div className = { 'dentalloa-procedure-list' }>
-                   <div key = { key } className = { 'procedure-grid' }>
-                      <div className={ 'procedure-div' }>
-                        <h5 className={'dentalloa-procedure-list-name'}>{ procedure.name }</h5>
-                        <h6 className={'dentalloa-procedure-list-limit'}>{ `${  procedure.limit}` }</h6>
-                      </div>
-                      <img
-                        src={ require('../../../ub-components/Notify/images/x-circle.png') }
-                        className='close-button'
-                        onClick={
-                          () => {
-                            selectedProcedures.splice(key, 1)
-                            this.setState({ selectedProcedures })
-                          }
+
+              selectedProcedures && selectedProcedures.map((procedure, key) => (
+                   <div className = { 'dentalloa-procedure-list' }>
+                     <div key = { key } className = { 'procedure-grid' }>
+                        <div className={ 'procedure-div' }>
+                          <h5 className={'dentalloa-procedure-list-name'}>{ procedure.name }</h5>
+                          <h6 className={'dentalloa-procedure-list-limit'}>{ `${  procedure.limit}` }</h6>
+                        </div>
+                        {
+                          !showEditSubmitButton &&
+                          <img
+                            src={ require('../../../ub-components/Notify/images/x-circle.png') }
+                            className='close-button'
+                            onClick={
+                              () => {
+                                selectedProcedures.splice(key, 1)
+                                this.setState({ selectedProcedures })
+                              }
+                            }
+                          />
                         }
-                      />
+                     </div>
+                     <br/>
                    </div>
-                   <br/>
-                 </div>
-                 ))
+                   ))
+               }
+             <br/>
+             <Line/>
+             {
+               showEditSubmitButton &&
+               <center>
+                 <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
+               </center>
              }
              <br/>
-
-            <div className = { 'dentalloa-button-submit' }>
-              <GenericButton
-                 className = { 'dentalloa-button' }
-                 onClick = { submitForm }
-                 text = { submit }/>
-            </div>
+             {
+               showEditSubmitButton ?
+               <div className = { 'dentalloa-form-review' }>
+                 <GenericButton
+                   type = { 'button' }
+                   text = { edit }
+                   className = { 'dentalloa-edit-form' }
+                   onClick = { () =>
+                     editFormDataFunc()
+                     }
+                   />
+                 <GenericButton
+                   type = { 'button' }
+                   text = { submit }
+                   onClick = { () => onSubmitFunc() }
+                   className = { 'dentalloa-submit-form-button' }
+                   />
+               </div>
+               :
+               <div>
+                 <GenericButton
+                   type = { 'button' }
+                   text = { cntinue }
+                   onClick = {
+                     () => showFormReview(true)
+                   }
+                   className = { 'dentalloa-button' } />
+               </div>
+             }
           </div>
-        </Card>
+        </div>
       </div>
     </div>
     )
@@ -150,15 +192,27 @@ DentalLoaCard.propTypes = {
   text2   : PropTypes.string,
   text3   : PropTypes.string,
   submit  : PropTypes.string,
-  text4  : PropTypes.string,
+  text4   : PropTypes.string,
+  preferredDate : PropTypes.string,
+  recipientErrorMessage : PropTypes.string,
+  healthwayBranchErrorMessage : PropTypes.string,
+  dateErrorMessage : PropTypes.string,
+  errorMessageRequiredProcedure : PropTypes.string,
   selectedProcedures : PropTypes.array,
+  showEditSubmitButton : PropTypes.bool,
   branch : PropTypes.string,
+  dateFunc : PropTypes.func,
+  editFormDataFunc : PropTypes.func,
+  onSubmitFunc : PropTypes.func,
+  showFormReview : PropTypes.func,
   submitForm : PropTypes.func,
   onFocus : PropTypes.func,
 }
 
 DentalLoaCard.defaultProps = {
   submit  : 'Submit',
+  cntinue : 'Continue',
+  edit    : 'Edit',
   text1   : 'Recipient',
   text2   : 'Healthway Branch',
   text3   : 'Preferred Schedule',

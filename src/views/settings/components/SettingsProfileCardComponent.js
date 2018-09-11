@@ -8,6 +8,8 @@ import ContactInfoModal from '../modals/ContactsModal'
 import DependentsModal from '../modals/DependentsModal'
 import CompanyInfoModal from '../modals/CompanyInformationModal'
 import PersonalInfoModal from '../modals/PersonalInfoModal'
+import StaffAccountsModal from '../modals/StaffAccountsModal'
+import ChangePINModal from '../modals/ChangePINModal'
 
 import SkillsFragment from '../../common/fragments/ProfileFragments/SkillsFragment'
 import ExperienceFragment from '../../common/fragments/ProfileFragments/ExperienceFragment'
@@ -20,12 +22,6 @@ class SettingsProfileCardComponent extends Component {
 
   constructor (props) {
     super(props)
-      this.state={
-        showContactInfoModal : false,
-        showDependentModal : false,
-        showCompanyInfoModal : false,
-        showPersonalInfoModal : false
-      }
   }
 
   renderEditable () {
@@ -37,19 +33,32 @@ class SettingsProfileCardComponent extends Component {
   render () {
     const {
       profile,
+      profileBackground,
       onClick,
       rank,
       lineManager,
       profileImageUrl,
       profileDependent,
-      accountNumber
-    } = this.props
-
-    const {
+      accountNumber,
+      changePinSendToFragment,
+      enabledLoader,
+      showChangePINModalFunc,
+      showContactInfoModalFunc,
+      showDependentModalFunc,
+      showCompanyInfoModalFunc,
+      showPersonalInfoModalFunc,
+      showStaffAccountsModalFunc,
+      showChangePINModal,
       showContactInfoModal,
       showDependentModal,
       showCompanyInfoModal,
-      showPersonalInfoModal }=this.state
+      showPersonalInfoModal,
+      showStaffAccountsModal,
+      getStaffAccounts,
+      staffLoader,
+      staffAccounts,
+      onClickEmployeeConfirmationFunc
+    } = this.props
 
     let genderPartial
     if (profile.gender === 'M') {
@@ -62,12 +71,20 @@ class SettingsProfileCardComponent extends Component {
     <div>
       <div className={ 'profile-settings-grid-column-desktop' }>
         {
+          showChangePINModal &&
+          <ChangePINModal
+            enabledLoader = { enabledLoader }
+            onSubmitPinCode = { (uniqueOldPIN, uniqueNewPIN) => changePinSendToFragment(uniqueOldPIN, uniqueNewPIN) }
+            onClose={ () => showChangePINModalFunc(false) }
+          />
+        }
+        {
           showContactInfoModal &&
             <ContactInfoModal
               profileName={ profile && profile.fullname }
               profileEmail={ profile && profile.email }
               profileNumber={ profile && profile.contactNumber }
-              onClose={ () => this.setState({ showContactInfoModal : false }) }
+              onClose={ () => showContactInfoModalFunc(false) }
             />
         }
         {
@@ -75,7 +92,7 @@ class SettingsProfileCardComponent extends Component {
             <DependentsModal
               profileName={ profile && profile.fullname }
               dependents={ profileDependent && profileDependent }
-              onClose={ () => this.setState({ showDependentModal : false }) }
+              onClose={ () => showDependentModalFunc(false) }
             />
         }
         {
@@ -83,7 +100,7 @@ class SettingsProfileCardComponent extends Component {
             <PersonalInfoModal
               accountNumber={ accountNumber }
               profile={ profile && profile}
-              onClose={ () => this.setState({ showPersonalInfoModal : false }) }
+              onClose={ () => showPersonalInfoModalFunc(false) }
             />
         }
         {
@@ -92,8 +109,19 @@ class SettingsProfileCardComponent extends Component {
               profile={ profile && profile}
               lineManager={ lineManager && lineManager.fullName }
               rank={ rank && rank.rank }
-              onClose={ () => this.setState({ showCompanyInfoModal : false }) }
+              onClose={ () => showCompanyInfoModalFunc(false) }
             />
+        }
+        {
+          showStaffAccountsModal &&
+          <StaffAccountsModal
+            staffLoader = { staffLoader }
+            staffAccounts = { staffAccounts }
+            employeeNumber = { profile.employeeNumber }
+            getStaffAccounts = { getStaffAccounts }
+            onClickEmployeeConfirmation = { (resp, resp1) => onClickEmployeeConfirmationFunc(resp, resp1) }
+            onClose={ () => showStaffAccountsModalFunc(false) }
+          />
         }
         <div>
           <Card className={ 'profile-settings-card-view' }>
@@ -128,7 +156,19 @@ class SettingsProfileCardComponent extends Component {
               </div>
               <div>
                 <div
-                  onClick={ () => this.setState({ showPersonalInfoModal : true }) }
+                  onClick={ () => showChangePINModalFunc(true) }
+                  className={ 'profile-information-view-right' }>
+                  <div>
+                    <span className={ 'profile-icon-settings lock-icon' }/>
+                  </div>
+                  <div>
+                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
+                      { 'Change PIN'  }
+                    </h5>
+                  </div>
+                </div>
+                <div
+                  onClick={ () => showPersonalInfoModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings employeeContactAddress' }/>
@@ -140,7 +180,7 @@ class SettingsProfileCardComponent extends Component {
                   </div>
                 </div>
                 <div
-                  onClick={ () => this.setState({ showContactInfoModal : true }) }
+                  onClick={ () => showContactInfoModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings employeeContact' }/>
@@ -152,7 +192,7 @@ class SettingsProfileCardComponent extends Component {
                   </div>
                 </div>
                 <div
-                  onClick={ () => this.setState({ showDependentModal : true }) }
+                  onClick={ () => showDependentModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings employeeDependent' }/>
@@ -164,7 +204,7 @@ class SettingsProfileCardComponent extends Component {
                   </div>
                 </div>
                 <div
-                  onClick={ () => this.setState({ showCompanyInfoModal : true }) }
+                  onClick={ () => showCompanyInfoModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings employeeId' }/>
@@ -172,6 +212,18 @@ class SettingsProfileCardComponent extends Component {
                   <div>
                     <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
                       { 'See company info'  }
+                    </h5>
+                  </div>
+                </div>
+                <div
+                  onClick={ () => showStaffAccountsModalFunc(true) }
+                  className={ 'profile-information-view-right' }>
+                  <div>
+                    <span className={ 'profile-icon-settings staffAccount' }/>
+                  </div>
+                  <div>
+                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
+                      { 'View Staff Accounts'  }
                     </h5>
                   </div>
                 </div>
@@ -188,28 +240,28 @@ class SettingsProfileCardComponent extends Component {
             </div>
           </Card>
           <ExperienceFragment
-            profileWork={ profile && profile.work }
-            profileExperience={ profile && profile.experience }
+            profileExperience={ profileBackground && profileBackground.employments }
             />
           <EducationFragment
-            profileEducation={ profile && profile.education }
+            profileEducation={ profileBackground && profileBackground.education }
             />
         </div>
         <div>
           <CertificateFragment
-            profileCertificate={ profile && profile.certificate } />
+            profileCertificate={ profileBackground && profileBackground.certificates } />
 
           <SkillsFragment
-            profileSkills={ profile && profile.skills }/>
+            profileSkills={ profileBackground && profileBackground.skills }/>
         </div>
 
       </div>
       <div className={ 'profile-settings-grid-column-mobile' }>
       </div>
-
-      <FloatingActionButton
-        text="+"
-      />
+      {
+      // <FloatingActionButton
+      //   text="+"
+      // />
+      }
     </div>
     )
   }
@@ -217,10 +269,23 @@ class SettingsProfileCardComponent extends Component {
 
 SettingsProfileCardComponent.propTypes = {
   onClick : PropTypes.func,
+  onClose : PropTypes.func,
+  changePinSendToFragment : PropTypes.func,
+  onClickEmployeeConfirmationFunc : PropTypes.func,
   profileImageUrl : PropTypes.string,
-  rank: PropTypes.object,
-  profile: PropTypes.object,
-  lineManager: PropTypes.object,
+  rank: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
+  profile:  PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
+  lineManager: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
+  enabledLoader: PropTypes.bool,
 }
 
 export default SettingsProfileCardComponent

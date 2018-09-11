@@ -5,7 +5,7 @@ import Presenter from './presenter/TransactionPersonalDetailsPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
 
-import { CircularLoader, Modal } from '../../ub-components'
+import { CircularLoader, Modal, GenericButton } from '../../ub-components'
 
 import './styles/transactionDetails.css'
 
@@ -21,9 +21,13 @@ import CarLeaseDetailsFragment from './fragments/CarLeaseDetailsFragment'
 import CalamityAssistanceDetailsFragment from './fragments/CalamityAssistanceDetailsFragment'
 import BereavementDetailsFragment from './fragments/BereavementDetailsFragment'
 import MedicalSchedulingDetailsFragment from './fragments/MedicalSchedulingDetailsFragment'
+import OutpatientDetailsFragment from './fragments/OutpatientDetailsFragment'
+import MaternityAssistanceDetailsFragment from './fragments/MaternityAssistanceDetailsFragment'
 
 import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreementsModal'
+import TransactionDetailsAgreementMPLModal from './modals/TransactionDetailsAgreementMPLModal'
 import TransactionDetailsFormAttachmentsModal from './modals/TransactionDetailsFormAttachmentsModal'
+import TransactionDetailsFormAttachmentsMplModal from './modals/TransactionDetailsFormAttachmentsMplModal'
 
 function  TransactionDetails (props)  {
   const transactionId = props.details ? props.details.benefitType.id : 0
@@ -32,7 +36,14 @@ function  TransactionDetails (props)  {
   const uploadImage = props.uploadImage
   const showFileReceipt = props.showFileReceipt
   const attachmentsMethod = props.attachmentsMethod
+  const attachmentsMethodMPL = props.attachmentsMethodMPL
   const agreementsMethod = props.agreementsMethod
+  const agreementsMethodMPL = props.agreementsMethodMPL
+  const onConfirmationCarleaseFunc = props.onConfirmationCarleaseFunc
+  const onUploadAttachmentsFunc = props.onUploadAttachmentsFunc
+  const setFileCarlease = props.setFileCarlease
+  const fileCarLease = props.fileCarlease
+  const onConfirmationReleaseFunc = props.onConfirmationReleaseFunc
 
   if (transactionId === 6) {
     return <DentalRDetailsFragment
@@ -43,8 +54,9 @@ function  TransactionDetails (props)  {
   } else if (transactionId === 7) {
     return <DentalLoaDetailsFragment
       details = { transactionDetails }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
       agreementsMethod = { (resp) => agreementsMethod(resp) }
-      transactionsPerson = { transactionsPerson } />
+      transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 8) {
     return <OpticalDetailsFragment
       details = { transactionDetails }
@@ -53,29 +65,44 @@ function  TransactionDetails (props)  {
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 15) {
     return <CarLeaseDetailsFragment
+      fileCarLease = { fileCarLease }
+      onConfirmationReleaseFunc = { (resp) => onConfirmationReleaseFunc(resp) }
+      onConfirmationCarleaseFunc = { (id, status) => onConfirmationCarleaseFunc(id, status) }
+      onUploadAttachmentsFunc = { (id, file) => onUploadAttachmentsFunc(id, file) }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
+      setFileCarlease = { (resp) => setFileCarlease(resp) }
       details = { transactionDetails }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 13) {
     return <EducGrantAidDetailsFragment
       details = { transactionDetails }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 12) {
     return <EducGroupPlanDetailsFragment
       details = { transactionDetails }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       transactionsPerson = { transactionsPerson } />
   } else if (transactionId === 11) {
     return <EducAidDetailsFragment
       details = { transactionDetails }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 32) {
     return <EducGrantPlanDetailsFragment
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
       details = { transactionDetails }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 1) {
     return <LoansDetailsFragment
       transactionsPerson = { transactionsPerson }
-      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
-      agreementsMethod = { (resp) => agreementsMethod(resp) }
+      attachmentsMethodMPL = { (resp) => attachmentsMethodMPL(resp) }
+      agreementsMethodMPL = { (resp) => agreementsMethodMPL(resp) }
       details = { transactionDetails } />
   } else if (transactionId === 21) {
     // Bereavement Transaction Details
@@ -84,6 +111,7 @@ function  TransactionDetails (props)  {
       attachmentsMethod = { (resp) => attachmentsMethod(resp) }
       agreementsMethod = { (resp) => agreementsMethod(resp) }
       uploadImage = { (transactionId, file) => uploadImage(21, transactionId, file) }
+      showFileReceipt = { showFileReceipt }
       details = { transactionDetails } />
   } else if (transactionId === 22) {
     // Calamity Assistance
@@ -95,14 +123,31 @@ function  TransactionDetails (props)  {
       showFileReceipt = { showFileReceipt }
       details = { transactionDetails }
      />
- } else if (transactionId === 10) {
-   // Medical Scheduling Transaction Details
-   return <MedicalSchedulingDetailsFragment
-    transactionsPerson = { transactionsPerson }
-    agreementsMethod = { (resp) => agreementsMethod(resp) }
-    details = { transactionDetails }
-    />
- } else {
+   } else if (transactionId === 10) {
+     // Medical Scheduling Transaction Details
+     return <MedicalSchedulingDetailsFragment
+      transactionsPerson = { transactionsPerson }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
+      details = { transactionDetails }
+      />
+   } else if (transactionId === 41) {
+     // Outpatient Reimbursement Transaction Details
+     return <OutpatientDetailsFragment
+       transactionsPerson = { transactionsPerson }
+       attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+       agreementsMethod = { (resp) => agreementsMethod(resp) }
+       details = { transactionDetails }
+      />
+  } else if (transactionId === 9) {
+    // Maternity Assistance
+    return <MaternityAssistanceDetailsFragment
+      transactionsPerson = { transactionsPerson }
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
+      details = { transactionDetails }
+     />
+  }
+  else {
    return <h1>No Transaction Occured please reload</h1> // No  Transaction
    }
 }
@@ -119,6 +164,11 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
       enabledLoader: false,
       showAttachmentsModal: false,
       showAgreementsModal: false,
+      showConfirmation : false,
+      showAttachmentsMPLModal : false,
+      showAgreementsMethodMPL : false,
+      showConfirmationMessage : '',
+      fileCarLease : []
     }
   }
 
@@ -133,6 +183,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/transactions/personal')
   }
 
+  setCarleaseFile (fileCarLease) {
+    this.setState({ fileCarLease })
+  }
+
   showAttachmentsMethod (e) {
     this.setState({ showAttachmentsModal : e })
   }
@@ -141,8 +195,16 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     this.setState({ showAgreementsModal : e })
   }
 
+  showAgreementsMethodMPL (e) {
+    this.setState({ showAgreementsMethodMPL : e })
+  }
+
   showAttachments (attachments) {
     this.setState({ attachments })
+  }
+
+  showAttachmentsMethodMPL (showAttachmentsMPLModal) {
+    this.setState({ showAttachmentsMPLModal })
   }
 
   transactions (transactions) {
@@ -167,6 +229,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     this.setState({ enabledLoader : false })
   }
 
+  showMessageSuccessConfirm (showConfirmationMessage) {
+    this.setState({ showConfirmationMessage, showConfirmation : true })
+  }
+
   render () {
 
   const {
@@ -176,7 +242,12 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     response,
     enabledLoader,
     showAttachmentsModal,
-    showAgreementsModal
+    showAttachmentsMPLModal,
+    showAgreementsModal,
+    showAgreementsMethodMPL,
+    showConfirmation,
+    showConfirmationMessage,
+    fileCarLease
   } = this.state
 
   return (
@@ -191,13 +262,49 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
           />
       }
       {
+        showAgreementsMethodMPL &&
+        <TransactionDetailsAgreementMPLModal
+          agreements = { details && details.details }
+          isDismisable = { true }
+          onClose = { () =>
+            this.setState({ showAgreementsMethodMPL : false }) }
+          />
+      }
+      {
+        showAttachmentsMPLModal &&
+        <TransactionDetailsFormAttachmentsMplModal
+          attachments = { attachments }
+          isDismisable = { true }
+          onClose = { () =>
+            this.setState({ showAttachmentsMPLModal : false }) }
+          />
+      }
+      {
         showAttachmentsModal &&
         <TransactionDetailsFormAttachmentsModal
-          fileAttachments = { attachments }
+          attachments = { attachments }
           isDismisable = { true }
           onClose = { () =>
             this.setState({ showAttachmentsModal : false }) }
           />
+      }
+      {
+        showConfirmation &&
+        <Modal>
+          <center>
+            <h2>{ showConfirmationMessage ? showConfirmationMessage :  '(Not Yet Provided)' }
+            </h2>
+            <br/>
+            <GenericButton
+              text = { 'Ok' }
+              onClick = { () => {
+                window.location.reload()
+                this.setState({ showConfirmation : false })
+              }
+            }
+              />
+          </center>
+        </Modal>
       }
       <div>
         <i className={ 'back-arrow' }
@@ -216,10 +323,23 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              attachmentsMethod = { (resp) =>
                this.showAttachmentsMethod(resp)
              }
+             attachmentsMethodMPL = { (resp) =>
+               this.showAttachmentsMethodMPL(resp)
+             }
              agreementsMethod = { (resp) =>
                this.showAgreementsMethod(resp)
              }
+             agreementsMethodMPL = { (resp) =>
+               this.showAgreementsMethodMPL(resp)
+             }
+             onConfirmationCarleaseFunc = { (transactionID, status) =>
+               this.presenter.addCarLeaseConfirmation(transactionID, status)
+             }
+             onConfirmationReleaseFunc = { (resp) => this.presenter.addCarLeaseConfirmation(resp) }
+             fileCarLease = { fileCarLease }
+             setFileCarlease = { (file) => this.setFileCarlease(file) }
              showFileReceipt = { response }
+             onUploadAttachmentsFunc = { (id, file) => this.presenter.addCarLeasePayment(id, file) }
              uploadImage = { (transactionType, transactionId, file) => {
                this.presenter.uploadTransactionBereavement(transactionType, transactionId, file)
                 }

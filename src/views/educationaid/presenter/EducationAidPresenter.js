@@ -24,6 +24,8 @@ export default class EducationAidPresenter {
    tuitionFeeText,
    registrationFeeText,
    schoolId,
+   orDate,
+   orNumber,
    fileAttachments) {
    this.view.showCircularLoader()
   this.addEducationAidInteractor.execute(educationAidParam(
@@ -34,6 +36,8 @@ export default class EducationAidPresenter {
     tuitionFeeText,
     registrationFeeText,
     schoolId,
+    orDate,
+    orNumber,
     fileAttachments
     )
   )
@@ -49,9 +53,31 @@ export default class EducationAidPresenter {
  validateAid () {
    this.view.showCircularLoader()
    this.validateAidInteractor.execute()
-     .subscribe(
+   .map(data => {
+     let schoolsArray = []
+     let attachmentArray = []
+
+     data &&
+     data.schools.map((schools, key) => {
+       schoolsArray.push({
+         id : schools.id,
+         name : schools.name,
+         computations : schools.computations
+       })
+     })
+
+     data &&
+     data.attachments.map((attachment, key) => {
+       attachmentArray.push({
+         name : attachment
+       })
+     })
+     this.view.showAttachmentsMap(attachmentArray)
+     this.view.showValidatedAid(data)
+     this.view.showSchoolsMap(schoolsArray)
+   })
+   .subscribe(
        educationAid => {
-         this.view.setEducationAid(educationAid)
          this.view.hideCircularLoader()
        },
        error => {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Accordion from '../components/AccordionComponent'
 import {
   Card,
   GenericButton,
@@ -27,11 +26,16 @@ class BereavementDetailsFragment extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      attachmentArray : []
+      attachmentArray : [],
+      showAttachment : true
     }
     this.setAttachments = this.setAttachments.bind(this)
+    this.showFileReceipt = this.showFileReceipt.bind(this)
   }
 
+  showFileReceipt (show) {
+    this.setState({ showAttachment : false })
+  }
 
   getExtension (filename) {
     const parts=filename.split('/')
@@ -40,6 +44,13 @@ class BereavementDetailsFragment extends Component {
 
   componentDidMount () {
     this.setAttachments()
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!nextProps.showFileReceipt) {
+      this.setState({ showAttachment : false })
+      window.location.reload()
+    }
   }
 
   setAttachments () {
@@ -58,7 +69,7 @@ class BereavementDetailsFragment extends Component {
       transactionsPerson,
       attachments,
       uploadImage,
-      response,
+      showFileReceipt,
       attachmentsMethod,
       agreementsMethod,
     } = this.props
@@ -66,12 +77,17 @@ class BereavementDetailsFragment extends Component {
     const {
       showLoader,
       attachmentArray,
+      showAttachment
     } = this.state
 
     const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
     const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
     const dateFiled = TransactionDetailsFunction.checkedDateFilled(details)
     const benefitLabel = TransactionDetailsFunction.getBenefitLabelStatus(details.status)
+
+    if (!showFileReceipt) {
+      window.location.reload()
+    }
 
     return (
       <div className={ 'transaction-details-global-x3' }>
@@ -80,7 +96,7 @@ class BereavementDetailsFragment extends Component {
             <div className={ 'transaction-details-container' }>
               <div className = { 'transaction-banner transaction-bereavement' }>
                 <div className={ 'transaction-banner-card' }>
-                  <div>
+                  <div className = { 'text-align-left' }>
                     <h1 className = { 'transaction-details-name font-weight-normal'}>
                       { benefitType }
                     </h1>
@@ -90,13 +106,13 @@ class BereavementDetailsFragment extends Component {
                     <div></div>
                     <div className = { 'transaction-details-status-grid' }>
                       <div className =
-                        { `font-weight-bolder grid-global-row-x3 transaction-details-status-${ detailStatus }` }
+                        { `font-weight-bolder grid-global-row-x3 transaction-default-status transaction-details-status-${ detailStatus }` }
                       >
                         <div></div>
                           { benefitLabel }
                         <div></div>
                       </div>
-                      <div className = { 'font-size-14px' }>Transaction Status</div>
+                      <div className = { 'font-size-14px' }></div>
                     </div>
                     <div></div>
                   </div>
@@ -112,14 +128,15 @@ class BereavementDetailsFragment extends Component {
                 onClickAgreements = { (resp) => agreementsMethod(resp) }
               />
             </div>
-            <div>
+            <div className = { 'bereavement-padding-attachments' }>
             {
-              response &&
+              showFileReceipt &&
                 showLoader ?
                   <center>
                     <CircularLoader show = { true }/>
                   </center>
                 :
+                  showAttachment &&
                   details &&
                   details.status &&
                   (details.status.id === 6 ||

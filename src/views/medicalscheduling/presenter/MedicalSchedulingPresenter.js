@@ -86,7 +86,6 @@ export default class MedicalSchedulingPresenter {
           errors => {
             this.view.hideCircularLoader()
             this.view.noticeResponse(errors)
-            this.view.navigate()
           }
         )
       }

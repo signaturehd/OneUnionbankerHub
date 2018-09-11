@@ -9,7 +9,7 @@ import Presenter from './presenter/MyLearningPresenter'
 import PodcastFragment from '../podcast/PodcastFragment'
 import PodcastPlayerFragment from '../podcastplayer/PodcastPlayerFragment'
 import LibraryView from '../library/LibraryFragment'
-import MyTrainingFragment from '../trainings/MyTrainingFragment'
+import TrainingFragment from '../trainings/TrainingFragment'
 
 import { InputModal, Card, GenericButton } from '../../ub-components'
 
@@ -29,23 +29,26 @@ class MyLearningView extends BaseMVPView {
     const { accountNumber, showAccountNumberModal } = this.state
     const mylearning = [{
       id: 0 ,
-      styleName: 'mylearning-cards-1',
-      title: 'BOOKS',
-      path: '/mylearning/books',
+      styleName: 'mylearning-cards-1 mylearning-option-default font-weight-bold',
+      title: 'Borrow a Book',
+      path: '/mylearning/books/recommended',
     }, {
       id: 1 ,
-      styleName: 'mylearning-cards-1',
-      title: 'PODCASTS',
+      styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
+      title: 'Listen to a Podcast',
       path: '/mylearning/podcasts',
     }, {
       id: 2 ,
-      styleName: 'mylearning-cards-1',
-      title: 'TRAININGS',
+      styleName: 'mylearning-cards-3 mylearning-option-default font-weight-bold',
+      title: 'Enroll to Training',
       path: '/mylearning/trainings',
     }]
     const MyLearning = () => (
       <div className = { 'mylearning-container' }>
-        <h2 className = { 'header-margin-default ' }>MY LEARNING</h2>
+        <div>
+          <h2 className={ 'header-margin-default text-align-left' }> My Learning </h2>
+          <h2> How would you want to develop yourself today? </h2>
+        </div>
         {
           showAccountNumberModal &&
             <InputModal
@@ -66,12 +69,17 @@ class MyLearningView extends BaseMVPView {
           {
           mylearning.map((value, idx) => (
             <Card
-              className = { 'mylearning-card-adjustment' } key={ idx }>
-              <div
-                className = { value.styleName }
-                text = { value.title }
-                onClick = { () => history.push(value.path) }>
-                <p className = { 'mylearning-option-cards' }> { value.title } </p>
+              className = { 'mylearning-card' }
+              onClick={ () =>
+                history.push(value.path)
+              }
+              key={ idx }>
+              <div className = { 'mylearning-column-grid' }>
+                <div
+                  className={ value.styleName }
+                  text={ value.title } >
+                </div>
+                <p className={ 'mylearning-option-cards font-weight-bold' }>{ value.title }</p>
               </div>
             </Card>
           ))
@@ -84,12 +92,14 @@ class MyLearningView extends BaseMVPView {
       <div>
         <Switch>
           <Route path = '/mylearning/trainings' render = { props =>
-            <MyTrainingFragment { ...props } /> } />
+            <TrainingFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts' render = { props =>
             <PodcastFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts/:id' render = { props =>
             <PodcastPlayerFragment { ...props } /> } />
-          <Route path = '/mylearning/books' render = { props =>
+          <Route path = '/mylearning/books/recommended' render = { props =>
+            <LibraryView { ...props } /> } />
+          <Route path = '/mylearning/books/history' render = { props =>
             <LibraryView { ...props } /> } />
           <Route path = '/mylearning' render = { MyLearning } />
         </Switch>

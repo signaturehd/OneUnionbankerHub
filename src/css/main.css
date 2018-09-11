@@ -25,6 +25,11 @@ h1, h2, h3, h4, h5, h6, p{
     background: transparent; /* make scrollbar transparent */
 }
 
+::-moz-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
 h1 {
   font-weight: 350;
   text-align: -webkit-auto;
@@ -42,11 +47,10 @@ p {
   -webkit-transform: rotate(135deg);
 }
 .header-margin-default {
-  display: flex;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   font-size: 35px;
-  margin-left: 30px;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
@@ -54,7 +58,6 @@ p {
     display: flex;
     align-items: center;
     font-size: 20px;
-    margin-left: 30px;
   }
 }
 .circular-loader-center {
@@ -84,6 +87,14 @@ p {
 }
 
 /* font size */
+
+.font-size-8px {
+  font-size: 8px;
+}
+
+.font-size-9px {
+  font-size: 9px;
+}
 
 .font-size-10px {
   font-size: 10px;
@@ -141,6 +152,30 @@ p {
   font-size: 24px;
 }
 
+.font-size-25px{
+  font-size: 25px;
+}
+
+.font-size-26px{
+  font-size: 26px;
+}
+
+.font-size-27px{
+  font-size: 27px;
+}
+
+.font-size-28px{
+  font-size: 28px;
+}
+
+.font-size-29px{
+  font-size: 29px;
+}
+
+.font-size-30px{
+  font-size: 30px;
+}
+
 /* text-align*/
 
 .text-align-center {
@@ -159,6 +194,10 @@ p {
   text-align: justify;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 /* Default color */
 
 .unionbank-color {
@@ -168,11 +207,32 @@ p {
 .grid-global {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
+}
+
+@media (max-width: 768px) {
+  .grid-global {
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 2%;
+  }
+}
+.grid-global-rows {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  column-gap: 2%;
+}
+
+.grid-global-columns-x3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 2%;
 }
 
 .grid-global-row-x3 {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
+  column-gap: 2%;
 }
 
 /* global icons default */
@@ -187,6 +247,10 @@ p {
 
 .global-icons-next {
   background-image: url('../images/icons/ic_next.png');
+}
+
+.global-icons-dropdown {
+  background-image: url('../images/icons/ic_dropdown.png');
 }
 
 .global-icons-accountNumber {
@@ -223,4 +287,18 @@ p {
 
 .global-icons-memorial {
   background-image: url('../images/icons/ic_memorial_park.png');
+}
+
+.global-icons-school {
+  background-image: url('../images/icons/ic_school_grey_500_18dp.png');
+}
+
+.global-icons-promissoryNote {
+  background-image: url('../images/icons/ic_account_balance_wallet_grey_600_36dp.png')
+}
+
+/**/
+.close-button-global {
+  margin: auto;
+  cursor: pointer;
 }

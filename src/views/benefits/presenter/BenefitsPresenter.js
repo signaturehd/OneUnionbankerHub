@@ -5,7 +5,6 @@ import GetReleasingCentersInteractor from '../../../domain/interactor/rds/GetRel
 import AddReleasingCenterInteractor from '../../../domain/interactor/rds/AddReleasingCenterInteractor'
 import GetManagersCheckInteractor from '../../../domain/interactor/user/GetManagersCheckInteractor'
 import GetCarValidateInteractor from '../../../domain/interactor/carlease/GetCarNewValidateInteractor'
-
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
@@ -65,6 +64,11 @@ export default class BenefitsPresenter {
 
   setReleasingCenter (releasingCenter) {
     this.addReleasingCenterInteractor.execute(releasingCenter)
+  }
+
+  getAccountNumber () {
+    const accountNumberPrefill = this.getAccountNumberInteractor.execute()
+      this.view.showAccountNumberPrefill(accountNumberPrefill)
   }
 
   validateFabToShow () {

@@ -49,7 +49,7 @@ class TermsModal extends BaseMVPView {
           <br/>
           <GenericButton text= "Agree"
             onClick={ () => {
-                this.setState({ disableSubmit : true, text : 'Please wait while were submitting your Response' })
+                this.setState({ disableSubmit : true, text : `Please wait while we're submitting your Response` })
                 this.presenter.agreeTerms()
               }
             }

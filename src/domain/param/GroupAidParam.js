@@ -1,9 +1,11 @@
-export default (dependentId, desiredAmount, effectiveDate, company, durationOfPaymentId, file1, file2) => ({
+export default (dependentId, desiredAmount, effectiveDate, company,
+  durationOfPaymentId, orDate, orNumber, attachments) => ({
     dependentId,
     desiredAmount,
     effectiveDate,
     company,
     durationOfPaymentId,
-    file1,
-    file2
+    orDate,
+    orNumber,
+    attachments
   })

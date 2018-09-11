@@ -5,7 +5,7 @@ import { Card, Line } from '../../../../ub-components/'
 
 import './styles/profileFragment.css'
 
-import defaultImage from '../../../../images/updilimanDefault.png'
+import defaultImage from '../../../../images/icons/ic_work.png'
 
 class ExperienceComponent extends Component {
 
@@ -17,15 +17,6 @@ class ExperienceComponent extends Component {
     const {
       profileExperience,
     }=this.props
-
-    const experienceDefault = [{
-      id: 0 ,
-      company: 'UnionBank of the Philippines',
-      imagePath: require('../../../../images/icons/ic_work.png'),
-      position: 'Associate Programmer - Android Developer',
-      year: '2015-2018',
-      location  : 'NCR - National Capital Region, Philippines'
-    }]
 
     return (
       <div>
@@ -47,22 +38,22 @@ class ExperienceComponent extends Component {
                   </div>
                   <div>
                     <h2 className={ 'font-size-18px font-weight-normal' }>
-                      { experience.name }
+                      Name : { experience.name }
                     </h2>
                     <h3 className={ 'font-size-17px font-weight-lighter' }>
-                      { experience.level }
+                      Level : { experience.level }
                     </h3>
                     <h4 className={ 'font-size-15px font-weight-lighter' }>
-                      { `${ experience.startYear }+ ' - ' ${ experience.endYear } `  }
+                      { `${ experience.startYear } - ${ experience.endYear } `  }
                     </h4>
                     <h5 className={ 'font-size-15px font-weight-lighter' }>
-                      { experience.address }
+                      Address : { experience.addreess }
                     </h5>
                   </div>
                 </div>
               )
               :
-              <center><h3>Not yet Provided</h3></center>
+              <center><h3>No Information Available</h3></center>
 
             }
         </Card>

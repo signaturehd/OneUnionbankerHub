@@ -12,7 +12,7 @@ import {
   CircularLoader,
   Card,
 } from '../../ub-components/'
-
+import NoticePinModal from './NoticePinModal'
 import './styles/notice-styles.css'
 
 class Notice extends BaseMVPView {
@@ -21,12 +21,20 @@ class Notice extends BaseMVPView {
     this.state = {
       disableSubmit : false,
       showValidatedCofirmation: false,
-      showCancelCofirmation: false
+      showCancelCofirmation: false,
+      showPinCodeModal : false,
+      tranId : '',
+      isAgree: '',
+      benId : '',
     }
     this.onFailed = this.onFailed.bind(this)
   }
 
   isAgree (tranId, isAgree, benId) {
+    this.setState({ tranId, isAgree, benId })
+  }
+
+  isAgreementConfirm (tranId, isAgree, benId) {
     this.presenter.updateNotice(tranId, isAgree, benId)
   }
 
@@ -44,11 +52,15 @@ class Notice extends BaseMVPView {
       isDismissable,
       disableSubmit,
       showValidatedCofirmation,
-      showCancelCofirmation
+      showCancelCofirmation,
+      showPinCodeModal,
+      tranId,
+      isAgree,
+      benId
     } = this.state
 
     return (
-      <Modal
+    <Modal
         width={ 45 }
         isDismissable = { isDismissable }
         onClose = { onClose }
@@ -60,7 +72,7 @@ class Notice extends BaseMVPView {
             <div key = { key }>
               <div dangerouslySetInnerHTML = {{ __html : form.form }}></div>
               <br/>
-              {  
+              {
               form.aggregateMessage ?
                 <Card>
                   <div dangerouslySetInnerHTML = {{ __html : form.aggregateMessage }}></div>
@@ -71,6 +83,12 @@ class Notice extends BaseMVPView {
           )
         }
         {
+          showPinCodeModal &&
+          <NoticePinModal
+            onSubmitAgreement = { () => this.isAgreementConfirm(tranId, isAgree, benId) }
+          />
+        }
+        {
           disableSubmit || isDismissable ?
           <center>
             <CircularLoader show={true}/>
@@ -79,15 +97,15 @@ class Notice extends BaseMVPView {
           <center>
             <br/>
             <br/>
-            <GenericButton text = {'Agree'} className = { 'notice-button-modal' }
-              onClick = { () =>
-                  this.setState({ showValidatedCofirmation : true  })
-              }
-            />
-            <GenericButton text = {'Disagree'} className = { 'notice-button-modal' }
+            <GenericButton text = {'Disagree'} className = { 'notice-button-modal notice-disagree' }
               onClick = { () => {
                 this.setState({ showCancelCofirmation : true  })
                 }
+              }
+            />
+            <GenericButton text = {'Agree'} className = { 'notice-button-modal notice-agree' }
+              onClick = { () =>
+                  this.setState({ showValidatedCofirmation : true  })
               }
             />
           {
@@ -103,11 +121,11 @@ class Notice extends BaseMVPView {
                   <GenericButton
                     text={ 'Yes' }
                     onClick={
-                      () =>  {
-                        this.isAgree(noticeResponse.transactionId.toString(), 0, benefitId),
-                        this.setState({ isDimissable : true, disableSubmit: true })
-                        }
+                      () => {
+                        this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true })
+                        this.isAgree(noticeResponse.transactionId.toString(), 0, benefitId)
                       }
+                    }
                     />
                 </div>
               </center>
@@ -116,20 +134,20 @@ class Notice extends BaseMVPView {
           {
             showValidatedCofirmation &&
             <Modal
-              onClose={ () => this.setState({ showValidatedCofirmation: false }) }
-              isDismisable={ true }
+              onClose = { () => this.setState({ showValidatedCofirmation: false }) }
+              isDismisable = { true }
               >
               <center>
                 <h4> Are you sure you want to Submit your form ? </h4>
-                <div className={ 'grid-global' }>
+                <div className = { 'grid-global' }>
                   <GenericButton
-                    text={ 'No' }
-                    onClick={ () => this.setState({ showValidatedCofirmation : false }) }/>
+                    text = { 'No' }
+                    onClick = { () => this.setState({ showValidatedCofirmation : false }) }/>
                   <GenericButton
-                    text={ 'Yes' }
+                    text = { 'Yes' }
                     onClick = { () => {
-                        this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId),
-                        this.setState({ isDimissable : true, disableSubmit: true })
+                      this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true  })
+                      this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId)
                       }
                     }
                     />
@@ -138,11 +156,9 @@ class Notice extends BaseMVPView {
             </Modal>
           }
           </center>
-          </div>
-        }
-
-
-      </Modal>
+        </div>
+      }
+    </Modal>
     )
   }
 }

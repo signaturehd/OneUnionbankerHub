@@ -22,8 +22,8 @@ export default class DentalLoaPresenter {
     .subscribe(response => {
       this.view.hideCircularLoader()
       this.view.getDentalLoa(response)
-    }, e => {
-      this.view.hideCircularLoader()
+    }, error => {
+      this.view.showErrorMessage(error, true)
     })
  }
 
@@ -43,7 +43,6 @@ export default class DentalLoaPresenter {
         },
         error => {
           this.view.hideCircularLoader()
-          this.view.navigate()
         }
       )
     }
