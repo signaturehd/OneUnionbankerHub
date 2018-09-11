@@ -1060,6 +1060,31 @@ export default class HRBenefitsService {
     })
   }
 
+  getAffirmationsStatus (token) {
+    return this.OnboardingClient.get('v1/employees/affirmations/status', {
+      headers : { token }
+    })
+  }
+
+  getFinancial (token) {
+    return this.OnboardingClient.get('v1/employee/finances/status', {
+      headers : { token }
+    })
+  }
+
+  getEmployeeTin (token) {
+    return this.OnboardingClient.get('v1/employee/tin', {
+      headers : { token }
+    })
+  }
+
+  createEmployeeTin (token) {
+    return this.OnboardingClient.post('v1/employee/tin', {
+      headers : { token }
+    })
+  }
+
+
   // /* Pre Employment */
   //
   //   @Multipart

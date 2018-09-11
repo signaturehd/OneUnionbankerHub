@@ -19,10 +19,18 @@ import './styles/affirmDocumentStyle.css'
 class AffirmationDocumentFragment extends BaseMVPView {
   constructor(props) {
     super(props)
+    this.state = {
+      affirmationPreEmploymentStatus : []
+    }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(0)
+    this.presenter.getAffirmationsStatus()
+  }
+
+  checkedAffirmationPreEmploymentStatus (affirmationPreEmploymentStatus) {
+    this.setState({ affirmationPreEmploymentStatus })
   }
 
   render() {
@@ -30,7 +38,8 @@ class AffirmationDocumentFragment extends BaseMVPView {
       history,
       checkPEUndertaking,
     } = this.props
-
+    const { affirmationPreEmploymentStatus } = this.state
+    console.log(affirmationPreEmploymentStatus)
     let documentCardOptions = [
       {
         id: 0,
