@@ -121,18 +121,20 @@ class CarLeaseNewFormComponent extends Component {
               <div className = { 'grid-global' }>
                 <GenericInput
                   disabled = { showEditMode }
+                  value = { solId }
+                  onChange = { (e) => onChangeSolIdFunc(e.target.value) }
+                  errorMessage = { solIdErrorMessage }
+                  text = { 'Sol Id' }
+                  maxLength = { 20 }
+                />
+                <GenericInput
+                  disabled = { showEditMode }
                   value = { solRCDefault ? solRCDefault : solRC }
                   onChange = { (e) => onChangeSolRCFunc(e.target.value) }
                   onClick = { () => onShowEnterSolRCModalFunc }
                   errorMessage = { solRCErrorMessage }
                   text = { 'Sol RC' }
-                />
-                <GenericInput
-                  disabled = { showEditMode }
-                  value = { solId }
-                  onChange = { (e) => onChangeSolIdFunc(e.target.value) }
-                  errorMessage = { solIdErrorMessage }
-                  text = { 'Sol Id' }
+                  maxLength = { 20 }
                 />
               </div>
               <GenericInput
