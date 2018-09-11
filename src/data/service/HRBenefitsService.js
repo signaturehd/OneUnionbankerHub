@@ -182,6 +182,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getBooksComments (token , itemId, page, items) {
+    return this.apiClient.get(`v1/books/comments?bookId=${itemId}&page=${page}&items=${items}`, {
+      headers : { token }
+    })
+  }
+
   /* News */
   getNews (token) {
     return this.apiClient.get('v1/news', {

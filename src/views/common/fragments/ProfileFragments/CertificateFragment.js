@@ -19,20 +19,6 @@ class CertificateFragment extends Component {
       profileCertificate,
     }=this.props
 
-      const certificateDefault = [{
-        id: 0 ,
-        title: 'UP Diliman',
-        imagePath: require('../../../../images/icons/ic_course.png'),
-        course: 'Bachelor of Science in Computer Studies',
-        year: '2015-2018'
-      }, {
-        id: 1 ,
-        title: 'De Lasalle University',
-        imagePath: require('../../../../images/icons/ic_course.png'),
-        course: 'Bachelor of Science in Computer Studies',
-        year: '2015-2018'
-      }]
-
     return (
       <div>
         <h2 className={ 'font-weight-normal unionbank-color' }> Certificate </h2>
@@ -53,13 +39,13 @@ class CertificateFragment extends Component {
                 </div>
                 <div>
                   <h2 className={ 'font-size-18px font-weight-normal' }>
-                    { certificate.name }
+                    Title : { certificate.name }
                   </h2>
                   <h3 className={ 'font-size-17px font-weight-lighter' }>
-                    { certificate.issuingBody }
+                    Issued body: { certificate.issuingBody }
                   </h3>
                   <h4 className={ 'font-size-16px font-weight-lighter' }>
-                    { certificate.dateIssued }
+                    Date Issued: { certificate.dateIssued }
                   </h4>
                 </div>
               </Card>

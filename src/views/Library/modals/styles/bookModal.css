@@ -1,7 +1,7 @@
 .library-modal-container {
-  display:grid;
-  grid-template-rows: 1fr 1fr;
-  min-height:500px;
+  display: grid;
+  grid-template-rows: .4fr 1fr;
+  min-height: 300px;
 }
 .title .books-details,
    .title .books-details-content {
@@ -53,4 +53,9 @@
 
 .library-modal-footer-container {
   float:right
+}
+
+.books-grid-comment {
+  display: grid;
+  grid-template-columns: .2fr 1fr;
 }

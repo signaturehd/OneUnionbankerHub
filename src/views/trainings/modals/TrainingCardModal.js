@@ -85,7 +85,7 @@ export default class TrainingCardModal extends Component {
                <h4>Date and Time</h4>
                <p>Date : { moment(details.startDate).format('LL') } - { moment(details.endDate).format('LL') }</p>
                <p>Time : { details.startTime } - { details.endTime }</p>
-               <p>Duration :  { dayDuration } hrs</p>
+               <p>Total Duration :  { dayDuration } hrs</p>
              </div>
            </div>
            <div className={ 'button-grid' }>
