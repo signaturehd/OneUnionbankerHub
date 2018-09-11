@@ -55,6 +55,8 @@ class CarLeaseNewFragment extends BaseMVPView {
       secondaryColor: '',
       file: [],
       solRC: '',
+      solId: '',
+      solIdErrorMessage: '',
       solRCInput: '',
       insurancePayment: '',
       insuranceId: '',
@@ -88,6 +90,11 @@ class CarLeaseNewFragment extends BaseMVPView {
     this.setState({ solRC : validate, solRCErrorMessage : '' })
   }
 
+  validateSolId (e) {
+    const validate = CarLeaseFunctions.checkedValidateInputNumber(e)
+    this.setState({ solId : validate, solIdErrorMessage : '' })
+  }
+
   validateInputCarModelValue (e) {
     const validate = CarLeaseFunctions.checkedValidatedInput(e)
     this.setState({ carModel : validate })
@@ -118,7 +125,6 @@ class CarLeaseNewFragment extends BaseMVPView {
       carBrand,
       carModel,
       makeYear,
-      solRCDefault,
       solRC,
       insurancePayment,
       cMUnit,
@@ -126,9 +132,10 @@ class CarLeaseNewFragment extends BaseMVPView {
       secondaryColor,
       file,
       leaseMode,
-      insuranceId
+      insuranceId,
+      solId,
+      carValidate
     } = this.state
-
 
     let validateAttachments = false
     file && file.map(
@@ -139,8 +146,7 @@ class CarLeaseNewFragment extends BaseMVPView {
       }
     )
 
-    const solRCChecked = solRCDefault ? solRCDefault : solRC
-
+    const solRCChecked = carValidate.solRC ? carValidate.solRC : solRC
       if (!this.validator(carBrand)) {
           store.dispatch(NotifyActions.addNotify({
               title : 'Car Lease (New)',
@@ -186,8 +192,8 @@ class CarLeaseNewFragment extends BaseMVPView {
             type: 'warning'
           })
         )
-      } else if (!this.validator(solRCChecked)) {
-        this.setState({ solRCErrorMessage : 'sol rc is required' })
+      } else if (!this.validator(solId)) {
+        this.setState({ solIdErrorMessage : 'sol id is required' })
       } else if (validateAttachments) {
         file && file.map(
           (attachment, key) => {
@@ -236,7 +242,6 @@ class CarLeaseNewFragment extends BaseMVPView {
       carBrand,
       carModel,
       makeYear,
-      solRCDefault,
       solRC,
       insurancePayment,
       cMUnit,
@@ -244,16 +249,20 @@ class CarLeaseNewFragment extends BaseMVPView {
       secondaryColor,
       file,
       leaseMode,
-      insuranceId
+      insuranceId,
+      solId,
+      carValidate
     } = this.state
 
-    const solRCChecked = solRCDefault ? solRCDefault : solRC
+    const solRCChecked = carValidate.solRC ? carValidate.solRC : solRC
+
     this.presenter.addCarRequest(
       carBrand,
       carModel,
       makeYear,
       leaseMode,
       solRCChecked,
+      solId,
       insuranceId,
       cMUnit,
       primaryColor,
@@ -291,7 +300,9 @@ class CarLeaseNewFragment extends BaseMVPView {
       showInsurancePaymentModal,
       yearErrorMessage,
       showEditMode,
-      attachmentsRequired
+      attachmentsRequired,
+      solId,
+      solIdErrorMessage,
     } = this.state
 
     const { history }=this.props
@@ -302,7 +313,6 @@ class CarLeaseNewFragment extends BaseMVPView {
         name : 'Salary Deduction',
       }
     ]
-
     return (
       <div>
         {
@@ -445,6 +455,8 @@ class CarLeaseNewFragment extends BaseMVPView {
               makeYear = { makeYear }
               yearErrorMessage = { yearErrorMessage }
               solRC = { solRC }
+              solId = { solId }
+              solIdErrorMessage = { solIdErrorMessage }
               showQuotation = { showQuotation }
               showFileUpload = { showFileUpload }
               secondaryColor = { secondaryColor }
@@ -454,6 +466,7 @@ class CarLeaseNewFragment extends BaseMVPView {
               attachments = { attachmentsRequired }
               insurancePayment = { insurancePayment }
               onChangeSolRCFunc = { (e) => this.validateSolRC(e) }
+              onChangeSolIdFunc = { (e) => this.validateSolId(e) }
               solRCErrorMessage = { solRCErrorMessage }
               getFileArray = { (resp) => this.setFileAttachments(resp) }
               onShowInsurancePaymentFunc = { () => this.setState({ showInsurancePaymentModal : true }) }
