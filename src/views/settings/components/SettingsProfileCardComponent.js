@@ -33,6 +33,7 @@ class SettingsProfileCardComponent extends Component {
   render () {
     const {
       profile,
+      profileBackground,
       onClick,
       rank,
       lineManager,
@@ -239,19 +240,18 @@ class SettingsProfileCardComponent extends Component {
             </div>
           </Card>
           <ExperienceFragment
-            profileWork={ profile && profile.work }
-            profileExperience={ profile && profile.experience }
+            profileExperience={ profileBackground && profileBackground.employments }
             />
           <EducationFragment
-            profileEducation={ profile && profile.education }
+            profileEducation={ profileBackground && profileBackground.education }
             />
         </div>
         <div>
           <CertificateFragment
-            profileCertificate={ profile && profile.certificate } />
+            profileCertificate={ profileBackground && profileBackground.certificates } />
 
           <SkillsFragment
-            profileSkills={ profile && profile.skills }/>
+            profileSkills={ profileBackground && profileBackground.skills }/>
         </div>
 
       </div>
