@@ -160,11 +160,11 @@ class LibraryFragment extends BaseMVPView {
         <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) }></i>
       </div>
       <input type = 'text'
-           className = {'booksSearchBar'}
-           ref='search'
-           placeholder = {'Search Books'}
-           value = { this.state.searchString }
-           onChange = { this.updateSearch } />
+         className = {'booksSearchBar'}
+         ref='search'
+         placeholder = {'Search Books'}
+         value = { this.state.searchString }
+         onChange = { this.updateSearch } />
         <div className = { 'tabs-container' }>
           {
           // <input

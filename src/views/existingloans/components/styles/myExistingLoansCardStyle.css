@@ -14,6 +14,11 @@
   background-repeat: no-repeat;
 }
 
+.existingloans-progressbar {
+  margin-top: -45px;
+  padding: 10px;
+}
+
 .existing-icon-fixed-salary {
   background-image : url('../../../../images/outstandingloans/Salary Loan.png');
   background-repeat: no-repeat;
