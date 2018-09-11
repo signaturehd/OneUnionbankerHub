@@ -103,7 +103,7 @@ class MyExistingLoansFragment extends BaseMVPView {
               <div className = { 'existing-loan-summary-grid-x2' }>
                 <div>
                   <br/>
-                  Loans History
+                  Multi Purpose Loan History
                 </div>
                 <div>
                   <Line/>
