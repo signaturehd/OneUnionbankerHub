@@ -20,6 +20,7 @@ class EnrolledTrainingCardComponent extends Component {
       name,
       title,
       date,
+      status
     } = this.props
 
     return (
@@ -28,6 +29,8 @@ class EnrolledTrainingCardComponent extends Component {
           <h3>{ name ? name : '(no name)' }</h3>
           <p className={ 'enrolled-title' }>{ title ? title : '(no title)' }</p>
           <p className={ 'enrolled-date' }>{ date ? moment(date).format('LL') : '(no date)' }</p>
+          <br/>
+          <p className={ 'enrolled-date' }>{ status ? status : '(no status)' }</p>
         </div>
       </Card>
     )
@@ -39,6 +42,7 @@ EnrolledTrainingCardComponent.propTypes = {
   name : PropTypes.string,
   title : PropTypes.string,
   date : PropTypes.string,
+  status : PropTypes.string,
 }
 
 export default EnrolledTrainingCardComponent

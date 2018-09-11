@@ -480,6 +480,7 @@ export default class HRBenefitsService {
       insurancePayment: carRequestParam.insurancePayment,
       leaseMode : carRequestParam.leaseMode,
       solRC: carRequestParam.solRCDefault,
+      solId: carRequestParam.solId,
       primaryColor : carRequestParam.primaryColor,
       secondaryColor : carRequestParam.secondaryColor,
     }
