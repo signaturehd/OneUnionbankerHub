@@ -144,6 +144,11 @@ export default class HRBenefitsClient {
         .pipe(ServiceErrorOperator())
   }
 
+  getBooksComments (token , itemId, page, items) {
+    return this.service.getBooksComments(token , itemId, page, items)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* optical */
   getOptical (token) {
     return this.service.getOptical(token)

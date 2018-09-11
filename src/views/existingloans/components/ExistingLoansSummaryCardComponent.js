@@ -37,6 +37,7 @@ class ExistingLoansSummaryCardComponent extends Component {
         {
           existingLoans.map((resp, key) =>
           <Card className = { 'existing-loans-grid-x6' }>
+            <span  className = { `existing-icon-fixed-${ MyExistitngLoansFunctions.checkIcon(resp.description) }` }/>
             <div className = { 'existing-loans-grid-label' }>
               <div  className = { 'font-weight-bold font-size-14px' }>Type</div>
               <div>{ resp.description }</div>
@@ -54,7 +55,7 @@ class ExistingLoansSummaryCardComponent extends Component {
               <div>{ moment(resp.date).format('DD MMM YYYY') }</div>
             </div>
             <div className = { 'existing-loans-grid-label' }>
-              <div  className = { 'font-weight-bold font-size-14px' }>Principal Amount</div>
+              <div  className = { 'font-weight-bold font-size-14px' }>Outstanding Balance</div>
               <div>&#8369; { format(resp.balance) }</div>
             </div>
             <div  className = { 'font-weight-bold font-size-14px' }>
@@ -63,7 +64,7 @@ class ExistingLoansSummaryCardComponent extends Component {
               <Progress />
             </div>
             <div className = { 'existing-loans-grid-label' }>
-              <div  className = { 'font-weight-bold font-size-14px' }>Outstanding Amount</div>
+              <div  className = { 'font-weight-bold font-size-14px' }>Principal Amount</div>
               <div>
                 &#8369; { format(totalAmount) }
               </div>

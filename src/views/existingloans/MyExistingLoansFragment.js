@@ -83,7 +83,7 @@ class MyExistingLoansFragment extends BaseMVPView {
               </div>
               <Card className = { 'existing-loan-card-balance existingloan-card-background' }>
                 <div className = { 'existing-loans-grid-card' }>
-                  <span className = { 'existing-card-image-icon' } />
+                  <span />
                   <div className = { 'text-align-right' }>
                     <h2 className = { 'existing-loan-title-header' }>
                       &#8369; { format(totalAmount  ) }

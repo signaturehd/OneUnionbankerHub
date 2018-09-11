@@ -36,7 +36,8 @@ class SettingsFragment extends BaseMVPView {
      showStaffAccountsModal : false,
      staffLoader : false,
      noticeResponseModal : false,
-     noticeResponse : ''
+     noticeResponse : '',
+     profileBackground : []
     }
   }
   componentDidMount () {
@@ -83,6 +84,10 @@ class SettingsFragment extends BaseMVPView {
     this.setState({accountNumber})
   }
 
+  showProfileBackground (profileBackground) {
+    this.setState({ profileBackground })
+  }
+
   hideModal (showChangePINModal) {
     this.setState({ showChangePINModal })
   }
@@ -114,7 +119,8 @@ class SettingsFragment extends BaseMVPView {
       staffLoader,
       staffAccounts,
       noticeResponse,
-      noticeResponseModal
+      noticeResponseModal,
+      profileBackground
     }=this.state
 
     return (
@@ -134,7 +140,8 @@ class SettingsFragment extends BaseMVPView {
           </Modal>
         }
         <SettingsProfileCardComponent
-          accountNumber = { accountNumber }
+          profileBackground = { profileBackground }
+           accountNumber = { accountNumber }
            profile={ profile }
            lineManager={ lineManager }
            profileDependent={ profileDependent }

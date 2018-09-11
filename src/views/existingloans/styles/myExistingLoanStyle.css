@@ -11,7 +11,8 @@
 }
 
 .existingloan-card-background {
-  background-image: url('../../../images/ub_card_bg_mobile.png');
+  background-image: url('../../../images/ubp-bg-HD.png');
+  color: white;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -22,7 +23,7 @@
 }
 
 .existing-card-image-icon {
-  background-image : url('../../../images/icons/ic_current_account.png');
+  background-image : url('../../../images/ubp-bg-HD.png');
   background-repeat: no-repeat;
   background-size: contain;
 }
@@ -47,10 +48,9 @@
 }
 
 .existing-loans-grid-x6 {
-  padding: 20px;
+  padding: 20px 10px 10px 10px;
   display: grid;
-  grid-template-columns: .5fr .5fr .5fr .5fr 2fr .5fr;
-  column-gap: 2%;
+  grid-template-columns: .25fr .4fr .4fr .4fr .5fr 1fr .5fr;
 }
 
 .existing-loans-grid-label {

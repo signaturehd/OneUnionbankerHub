@@ -1,6 +1,7 @@
 import GetBooksInteractor from '../../../domain/interactor/library/GetBooksInteractor'
 import AddBookRatingInteractor from '../../../domain/interactor/library/AddBookRatingInteractor'
 import GetBooksBorrowedInteractor from '../../../domain/interactor/library/GetBooksBorrowedInteractor'
+import GetBooksCommentsInteractor from '../../../domain/interactor/library/GetBooksCommentsInteractor'
 import ReserveBookInteractor from '../../../domain/interactor/library/ReserveBookInteractor'
 import BookRateParam from '../../../domain/param/BookRateParam'
 import ReserveParam from '../../../domain/param/ReserveParam'
@@ -16,6 +17,7 @@ export default class LibraryPresenter {
     this.getBooksInteractor = new GetBooksInteractor(container.get('HRBenefitsClient'))
     this.addBookInteractor = new AddBookRatingInteractor(container.get('HRBenefitsClient'))
     this.getBooksBorrowedInteractor = new GetBooksBorrowedInteractor(container.get('HRBenefitsClient'))
+    this.getBooksCommentsInteractor = new GetBooksCommentsInteractor(container.get('HRBenefitsClient'))
     this.reserveBookInteractor = new ReserveBookInteractor(container.get('HRBenefitsClient'))
   }
 
@@ -37,6 +39,14 @@ export default class LibraryPresenter {
       }, e => {
         this.view.hideLoading()
       })
+  }
+
+  getBooksComments (itemId, page, items) {
+    this.getBooksCommentsInteractor.execute(itemId, page, items)
+    .subscribe(data => {
+      this.view.showBooksComments(data.bookList)
+    }, error =>{
+    })
   }
 
 
