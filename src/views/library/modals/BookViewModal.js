@@ -5,6 +5,7 @@ import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import Rating from 'react-rating'
 import './styles/bookModal.css'
 import staticImage from '../../../images/education_bg.jpg'
+import moment from 'moment'
 
 class BookViewModal extends Component {
   constructor (props) {
@@ -14,20 +15,23 @@ class BookViewModal extends Component {
       comment : null,
       showCommentModal: false
     }
- }
+  }
+
 
   render () {
     const {
       onClose,
       details,
       rateBook,
-      reserveBook
+      reserveBook,
+      booksCommentList
     } = this.props
     const {
       rating,
       comment,
       showCommentModal
     } = this.state
+
     const style = {
       background : `rgba(0,0,0,0.5) url(${staticImage}) no-repeat center center`,
       backgroundSize : '450px 200px',
@@ -86,9 +90,26 @@ class BookViewModal extends Component {
               <p className = { 'library-modal-body-title-author' } >Publisher : {details.publisher}</p>
             </div>
             <div className = { 'library-modal-body-description' } >
-              <p>{details.description}</p>
+              <p>Description: {details.description}</p>
             </div>
-
+            <br/>
+            <div>
+              <h2 className = { 'font-weight-bold' }></h2>
+                {
+                  booksCommentList.map((resp, key) =>
+                    <div>
+                      <h2>Name: { resp.name }</h2>
+                      <div className = { 'grid-global-rows' }>
+                        <h2>Date: { moment(resp.date).format('dddd, MMMM DD, YYYY, h:MM:ss A') }</h2>
+                        <div>
+                          <h2>Comment: { resp.comment }</h2>
+                          <br/>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }
+            </div>
           </div>
           <div className = { 'library-momdal-footer' } >
             <div className = {'library-modal-footer-container'} >

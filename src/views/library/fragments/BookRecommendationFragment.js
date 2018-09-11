@@ -19,6 +19,7 @@ class BookRecommendationFragment extends Component {
       bookQuantity : null,
       title : null,
       comments: null,
+      bookPage : ''
     }
     this.pageNumber = 2
     this.handleScroll = this.handleScroll.bind(this)
@@ -60,14 +61,21 @@ class BookRecommendationFragment extends Component {
       */
       if (bookNumber === 0) {
         this.props.page(this.pageNumber++)
+        this.setState({ bookPage : this.pageNumber++ })
       }
     }
+  }
+
+  getCommentsMethod (bookId) {
+    this.props.getComments(bookId)
   }
 
   render () {
     const {
       detail,
-      recommended
+      booksCommentList,
+      recommended,
+      getComments
     } = this.props
 
     const {
@@ -79,8 +87,10 @@ class BookRecommendationFragment extends Component {
       bookRating,
       bookQuantity,
       title,
-      comments
+      comments,
+      bookPage
     } = this.state
+
     const BookRecommendation = () => (
       <div className = {'library-container'}>
         {
@@ -88,6 +98,7 @@ class BookRecommendationFragment extends Component {
             <BookCardComponent
               rateBook = { (id, rating, comments) => this.addRating(id, rating, comments) }
               detail = { book } key = { key }
+              getComments = { (id) => this.getCommentsMethod(id) }
               onClick = { (details, view) => this.setState({ details, view }) }
             />
           )
@@ -98,6 +109,7 @@ class BookRecommendationFragment extends Component {
            rateBook = { (bookId, bookRating, comments) => this.setState({ bookId, bookRating, comments, showConfirmationRateModal : true, title : 'Rate' }) }
            reserveBook = { (bookId, bookQuantity) => this.setState({ bookId, bookQuantity, showConfirmationReserveModal : true, title : 'Reserve' }) }
            details = { details }
+           booksCommentList  = { booksCommentList }
            onClose = { () => this.setState({ view : false }) }
           />
         }
@@ -109,7 +121,7 @@ class BookRecommendationFragment extends Component {
               this.addReserve(bookId, bookQuantity),
               this.setState({
                 showConfirmationReserveModal : false,
-                view : false 
+                view : false
               })
             } }
             title = { title }

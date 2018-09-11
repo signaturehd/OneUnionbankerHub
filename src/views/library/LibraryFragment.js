@@ -30,7 +30,8 @@ class LibraryFragment extends BaseMVPView {
       searchString : '',
       pageNumber : null,
       borrowedPageNumber: null,
-      refresh : 0
+      refresh : 0,
+      booksCommentList : []
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
@@ -43,6 +44,10 @@ class LibraryFragment extends BaseMVPView {
 
   componentWillUnmount () {
     clearInterval(this.timer)
+  }
+
+  showBooksComments (booksCommentList) {
+    this.setState({ booksCommentList })
   }
 
   getBooks (pageNumber) {
@@ -126,6 +131,11 @@ class LibraryFragment extends BaseMVPView {
     this.setState({ filteredBook })
   }
 
+  getCommentsMethod (bookId) {
+    const { pageNumber } = this.state
+    this.presenter.getBooksComments(bookId, pageNumber, '')
+  }
+
   render () {
     const {
       filteredBook,
@@ -136,12 +146,13 @@ class LibraryFragment extends BaseMVPView {
       reserve,
       searchString,
       pageNumber,
-      borrowedPageNumber
+      borrowedPageNumber,
+      booksCommentList
     } = this.state
 
     const filteredBooks = books
     const search = searchString.trim().toLowerCase()
-    
+
     return (
       <div>
       { super.render() }
@@ -187,6 +198,8 @@ class LibraryFragment extends BaseMVPView {
                 <Route path = '/mylearning/books/recommended'
                   render = { props =>
                     <BookRecommendationFragment
+                      getComments = { (bookId) => this.getCommentsMethod(bookId) }
+                      booksCommentList = { booksCommentList }
                       page = { pageNumber => this.getBooks(pageNumber) }
                       presenter = { this.presenter }
                       recommended = { recommended }

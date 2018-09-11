@@ -63,7 +63,9 @@ class BookBorrowedCard extends Component {
               readonly
             />
           <GenericButton
-            onClick = { () => onClick(detail, true) }
+            onClick = { () =>
+              onClick(detail, true)
+            }
             text = { 'Read More' } />
           </center>
         </div>

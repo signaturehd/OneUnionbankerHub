@@ -19,7 +19,7 @@ class BookCardComponent extends Component {
   }
 
   render () {
-    const { detail, onClick, rateBook  } = this.props
+    const { detail, onClick, rateBook, getComments } = this.props
     const { rating } = this.state
 
     const  styles = {
@@ -54,7 +54,14 @@ class BookCardComponent extends Component {
               initialRating = { rating ? rating : detail.rating }
               readonly
             />
-            <GenericButton onClick = { () => onClick(detail, true) } text = { 'Read More' } />
+            <GenericButton onClick =
+              { () =>
+                {
+                  getComments(detail.id)
+                  onClick(detail, true)
+                }
+              }
+              text = { 'Read More' } />
           </center>
         </div>
       </Card>
@@ -65,6 +72,7 @@ class BookCardComponent extends Component {
 BookCardComponent.propTypes = {
   detail : PropTypes.object,
   onClick : PropTypes.func,
+  getComments : PropTypes.func,
   rateBook : PropTypes.func,
 }
 
