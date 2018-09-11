@@ -140,6 +140,11 @@ class LoginView extends BaseMVPView {
       history
     } = this.props
 
+    let version = 4
+    let majorVersion = 8
+    let minorVersion = 0
+    let versionNumber = version + '.' + majorVersion + '.' + minorVersion
+
     return (
       <div>
         { super.render() }
@@ -237,7 +242,7 @@ class LoginView extends BaseMVPView {
               <h2
                 onClick = { () => window.open(this.getSupportURL()) }
                 className = { 'unionbank-color font-size-12px text-align-left cursor-pointer' }>Learn More.</h2>
-              <div className={ 'login-version' }>v 4.7 UAT</div>
+              <div className={ 'login-version' }>v { versionNumber } UAT</div>
             </div>
         </Card>
 
