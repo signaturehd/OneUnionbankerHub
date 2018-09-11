@@ -74,7 +74,7 @@ class FaqCategoryFragment extends Component {
                   }
                 </div>              :
               <div>
-                <center><h1>No Category Found</h1></center>
+                <center><h1>No image found</h1></center>
               </div>            :
             <div className = { 'faqs-loader' }>
               <center><CircularLoader show = {true} /></center>

@@ -119,6 +119,7 @@ class BenefitsFeedbackPayslipModal extends BaseMVPView {
               <br/>
                 <GenericInput
                   type={ 'text' }
+                  hint = { 'What was your experience?' }
                   value={ selectedFeedback ? selectedFeedback : '' }
                   placeholder={ 'Payroll Concern' }
                   onClick={ () => this.setState({ payrollModalIssue : true }) }

@@ -51,7 +51,7 @@ class EducationFragment extends Component {
               </div>
               )
               :
-              <center><h3>Not yet Provided</h3></center>
+              <center><h3>No Information Available</h3></center>
 
           }
         </Card>

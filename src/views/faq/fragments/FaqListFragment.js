@@ -76,7 +76,7 @@ class FaqListFragment extends Component {
                 onClick = { () => setSelectedFaqQuestion(qtn) } />
             )          :
           <div className = { 'faqs-loader' }>
-            <center><h1>No Category Found</h1></center>
+            <center><h1>No image found</h1></center>
           </div>
         }
         </div>
