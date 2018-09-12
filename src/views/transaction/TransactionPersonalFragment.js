@@ -68,49 +68,51 @@ class TransactionPersonalFragment extends BaseMVPView {
 
     return (
     <div>
-        {
-          transactions ?
-        <div className = { 'transaction-details-personal-grid-row' }>
+      {
+        transactions ?
+      <div className = { 'transaction-details-personal-grid-row' }>
 
-          <div className = { 'grid-global' }>
-            <div></div>
-            <div>
-              <GenericInput
-                type = { 'text' }
-                className = { 'transaction-search-bar' }
-                refCallback = { 'search' }
-                hint = { 'Search Transactions' }
-                value = { searchString }
-                onChange = { this.updateSearch } />
-            </div>
+        <div className = { 'grid-global' }>
+          <div></div>
+          <div>
+            <GenericInput
+              type = { 'text' }
+              className = { 'transaction-search-bar' }
+              refCallback = { 'search' }
+              hint = { 'Search Transactions' }
+              value = { searchString }
+              onChange = { this.updateSearch } />
           </div>
-          <div className = { 'transaction-details-container-grid' }>
-            {
-               transactionSearch.slice(0, index).map((transaction, key) => (
-               <TransactionCardComponent
-                  detail = { transaction }
-                  key = { key  }
-                  transactions = { transactions }
-                  onClick = { transaction =>
-                    this.props.history.push(`/mybenefits/transactions/personal/${transaction.id}`) }
-                  />
-              ))
-            }
-          </div>
-
-          <div className = { 'grid-global' }>
-            {
-              index > 3 &&
-              <GenericButton
-                className = { 'transaction-component-button' }
-                text = { 'View Less' }
-                onClick = { () =>
-                  this.setState({
-                    index : TransactionPersonalFunction.indexDecreased(index)
-                    })
-                  }
+        </div>
+        <div className = { 'transaction-details-container-grid' }>
+          {
+             transactionSearch.slice(0, index).map((transaction, key) => (
+             <TransactionCardComponent
+                detail = { transaction }
+                key = { key  }
+                transactions = { transactions }
+                onClick = { transaction =>
+                  this.props.history.push(`/mybenefits/transactions/personal/${transaction.id}`) }
                 />
-            }
+            ))
+          }
+        </div>
+
+        <div className = { 'grid-global' }>
+          {
+            index > 3 &&
+            <GenericButton
+              className = { 'transaction-component-button' }
+              text = { 'View Less' }
+              onClick = { () =>
+                this.setState({
+                  index : TransactionPersonalFunction.indexDecreased(index)
+                  })
+                }
+              />
+          }
+        {
+            index < transactionSearch.length &&
             <GenericButton
               className = { 'transaction-component-button' }
               text = { 'View More' }
@@ -120,6 +122,7 @@ class TransactionPersonalFragment extends BaseMVPView {
                   })
                 }
               />
+            }
           </div>
         </div>
             :

@@ -25,6 +25,10 @@ class App extends BaseMVPView {
     }
   }
 
+  componentDidMount () {
+    console.log('%cStop!', 'color: red; font-size: 40px; font-weight: bold;')
+  }
+
   componentWillReceiveProps (nextProps) {
     this.presenter.checkLogin()
   }
@@ -38,6 +42,7 @@ class App extends BaseMVPView {
   }
 
   render () {
+
     return (
       <div>
         <Switch>
