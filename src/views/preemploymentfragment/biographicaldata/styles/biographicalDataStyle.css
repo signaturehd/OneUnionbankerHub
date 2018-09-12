@@ -1,0 +1,19 @@
+.biographical-grid-card {
+  display: grid;
+  grid-template-rows: 1fr;
+  column-gap: 2%;
+}
+
+.biographical-grid-x2 {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.biographical-button {
+  border: none;
+  box-shadow: none;
+}
+
+.biographical-card {
+  padding: 20px;
+}

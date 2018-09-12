@@ -1,0 +1,19 @@
+.affirmation-card {
+  padding: 20px;
+}
+
+.affirmation-grid-card {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  column-gap: 2%;
+}
+
+.affirmation-grid-x2 {
+  display: grid;
+  grid-template-columns: 1fr .4fr;
+}
+
+.affirmation-button {
+  border: none;
+  box-shadow: none;
+}

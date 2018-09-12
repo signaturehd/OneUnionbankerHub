@@ -1,0 +1,8 @@
+.pre-emp-setup-button {
+  min-width: 35%;
+}
+
+.preemployment-container {
+  display: grid;
+  grid-template-columns: .2fr 1fr .2fr
+}
