@@ -26,7 +26,7 @@ class App extends BaseMVPView {
   }
 
   componentDidMount () {
-    console.log('%cStop!', 'color: red; font-size: 40px; font-weight: bold;')
+    console.log('%cWarning!', 'color: red; font-size: 40px; font-weight: bold;')
   }
 
   componentWillReceiveProps (nextProps) {

@@ -57,9 +57,9 @@ class TransactionPersonalFragment extends BaseMVPView {
     let transactionSearch = transactions
     const search = searchString.trim().toLowerCase()
     if (search.length > 0) {
-          transactionSearch = transactions.filter(transactions =>
-         transactions.benefit.toLowerCase().match(search) ||
-         transactions.referenceNumber.toLowerCase().match(search))
+      transactionSearch = transactions.filter(transactions =>
+      transactions.benefit.toLowerCase().match(search) ||
+      transactions.referenceNumber.toLowerCase().match(search))
     }
 
     const {
@@ -86,14 +86,14 @@ class TransactionPersonalFragment extends BaseMVPView {
         </div>
         <div className = { 'transaction-details-container-grid' }>
           {
-             transactionSearch.slice(0, index).map((transaction, key) => (
-             <TransactionCardComponent
-                detail = { transaction }
-                key = { key  }
-                transactions = { transactions }
-                onClick = { transaction =>
-                  this.props.history.push(`/mybenefits/transactions/personal/${transaction.id}`) }
-                />
+           transactionSearch.slice(0, index).map((transaction, key) => (
+           <TransactionCardComponent
+              detail = { transaction }
+              key = { key }
+              transactions = { transactions }
+              onClick = { transaction =>
+                this.props.history.push(`/mybenefits/transactions/personal/${transaction.id}`) }
+              />
             ))
           }
         </div>

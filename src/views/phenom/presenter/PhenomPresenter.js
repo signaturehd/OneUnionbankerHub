@@ -9,6 +9,8 @@ export default class PhenomPresenter {
       new GetPhenomDetailsInteractor(container.get('HRBenefitsClient'))
     this.addCheckedStatusIsHeartInteractor =
       new AddCheckedStatusIsHeartInteractor(container.get('HRBenefitsClient'))
+
+    this.getTransactionImage = container.get('FileClient')
   }
 
   setView(view) {

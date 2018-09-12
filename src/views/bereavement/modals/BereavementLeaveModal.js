@@ -19,10 +19,7 @@ class BereavementLeaveModal extends Component {
   } = this.props
 
   return (
-    <Modal
-     onClose = { onClose }
-     isDismisable={ true }
-    >
+    <Modal>
       <div className={ 'text-align-center' }>
         <h2>  Have you filed your bereavement leave already ? </h2>
         <br/>

@@ -30,7 +30,7 @@ class CommonPinEnrollmentModal extends Component {
           {
             enabledLoader ?
             <center>
-              <h2>Please wait while validating the Employee PIN</h2>
+              <h2>Please wait while we validate your PIN.</h2>
               <CircularLoader show = { true }/>
             </center>
             :
@@ -39,6 +39,7 @@ class CommonPinEnrollmentModal extends Component {
                 <span className = { 'lock-icon lock-icon-settings' }/>
                 <div>
                   <h2 className = { 'font-size-14px' }>Hi UnionBanker!</h2>
+                  <br/>
                   <h2>We&#96;re enhancing your security by installing a 5-digit code. This will also serve as your electronic signature for 1UHub. Please be reminded that this PIN code is unique to you and is only registered once.</h2>
                 </div>
               </div>

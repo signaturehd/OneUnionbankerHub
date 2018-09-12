@@ -110,7 +110,7 @@ export default class MedicalSchedulingFormCardComponent extends Component {
             <div className={ 'form-review' }>
               <GenericButton
                 type = { 'button' }
-                text = { 'Back' }
+                text = { 'Edit' }
                 onClick = { () => showFormReview(false) }
                 className = { 'medsched-submit' }/>
               <GenericButton
@@ -122,7 +122,7 @@ export default class MedicalSchedulingFormCardComponent extends Component {
             </div> :
             <GenericButton
               type = { 'button' }
-              text = { 'continue' }
+              text = { 'Continue' }
               onClick = { () => showFormReview(true) }
               className = { 'medsched-submit' }/>
           }
