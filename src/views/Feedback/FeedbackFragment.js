@@ -74,7 +74,14 @@ class FeedbackFragment extends BaseMVPView {
 
    return (
       <div>
-        <h2 className = { 'header-margin-default ' }>FEEDBACK</h2>
+      <img
+        onClick={ () => history.push('/settings') }
+        src={ require('../../images/icons/img_message_circle.png') }
+        className= {'sidebar-img-ub-logo'}/>
+        <br/>
+        <h2 className = { 'header-margin-default' }>Give Us Feedback</h2>
+        <center><h2>Your feedback will help us improve our service.</h2></center>
+
         {
           showCategoryModal &&
           <FeedbackCategoryModal
@@ -83,19 +90,17 @@ class FeedbackFragment extends BaseMVPView {
             onChange = { (feedbackId, feedbackValue) => this.setState({ feedbackId, feedbackValue }) }
             onClose = { () => this.setState({ showCategoryModal : false }) } />
         }
-        <div className={ 'breadcrumbs-container' }>
-        </div>
-            {
-              <FeedbackCard
-                feedbackCategory = { feedbackValue }
-                submitForm = { feedbackValue => this.submitForm(feedbackId, feedbackValue) }
-                showFeedback = { showFeedback }
-                onClick = {
-                  showCategoryModal =>
-                  this.setState({ showCategoryModal })
-                }
-              />
+        {
+          <FeedbackCard
+            feedbackCategory = { feedbackValue }
+            submitForm = { feedbackValue => this.submitForm(feedbackId, feedbackValue) }
+            showFeedback = { showFeedback }
+            onClick = {
+              showCategoryModal =>
+              this.setState({ showCategoryModal })
             }
+          />
+        }
       </div>
     )
   }

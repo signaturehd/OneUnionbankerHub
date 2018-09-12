@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './styles/feedbackStyles.css'
-import { GenericTextBox, GenericButton, Card, CircularLoader } from '../../../../ub-components'
+import {
+  GenericInput,
+  GenericButton,
+  CircularLoader } from '../../../../ub-components'
 import FeedbackCategoryModal from '../../modals/FeedbackCategoryModal'
 import staticImage from '../../../../images/feedback.jpg'
 
@@ -19,8 +22,6 @@ class FeedbackCard extends Component {
   getTextareaValue (feedbackTextareaValue) {
     this.setState({ feedbackTextareaValue })
   }
-
-
 
   handleSubmit (e) {
     e.preventDefault()
@@ -51,7 +52,7 @@ class FeedbackCard extends Component {
       }
     }
     return (
-      <Card className = { 'feedback-card' }
+      <div className = { 'feedback-card' }
         feedbackTextareaValue = { feedbackTextareaValue }
          >
           {
@@ -59,25 +60,24 @@ class FeedbackCard extends Component {
             <div>
               <div className = { 'feedback-header' } >
                 <div className = { 'feedback-body' }>
+                <br/>
                   <div className = { 'feedback-col span_1_of_3' }>
-                  <center>
-                    <GenericTextBox
+                    <GenericInput
                      value = { feedbackCategory ? feedbackCategory : '' }
                      onClick = { () => onClick(true) }
-                     placeholder = { 'Feedback Title' }
+                     text = { 'Feedback Category' }
                      readOnly
                    />
-                  </center>
                   </div>
                   <textarea
                     onChange = { e => this.getTextareaValue(e.target.value) }
                     className = { 'feedback-textarea' }
-                    placeholder = { 'Enter Feedback' }
+                    placeholder = { 'Let us know more...' }
                     value = { feedbackTextareaValue ? feedbackTextareaValue : '' }
                   />
                 </div>
               </div>
-              <div className = {'feedback-footer-left'}>
+              <center>
                 <GenericButton
                   onClick = { () => {
                      submitForm(feedbackTextareaValue, false),
@@ -89,14 +89,14 @@ class FeedbackCard extends Component {
                   className = {'feedback-procedure' }
                   value = { 'Procedures' }
                 />
-              </div>
+              </center>
             </div>            :
             <center>
               <CircularLoader show = {true}/>
             </center>
           }
 
-      </Card>
+      </div>
     )
   }
 }
