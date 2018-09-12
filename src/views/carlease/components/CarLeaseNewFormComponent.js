@@ -124,7 +124,7 @@ class CarLeaseNewFormComponent extends Component {
                   value = { solId }
                   onChange = { (e) => onChangeSolIdFunc(e.target.value) }
                   errorMessage = { solIdErrorMessage }
-                  text = { 'Sol Id' }
+                  text = { 'Sol ID' }
                   maxLength = { 20 }
                 />
                 <GenericInput
@@ -133,7 +133,7 @@ class CarLeaseNewFormComponent extends Component {
                   onChange = { (e) => onChangeSolRCFunc(e.target.value) }
                   onClick = { () => onShowEnterSolRCModalFunc }
                   errorMessage = { solRCErrorMessage }
-                  text = { 'Sol RC' }
+                  text = { 'RC' }
                   maxLength = { 20 }
                 />
               </div>
