@@ -27,7 +27,7 @@ class MaternityLeaveModal extends Component {
      isDismisable={ true }
     >
       <div className={ 'text-align-center' }>
-        <h2> Have you file your `${ titleOFLeave }` already?</h2>
+        <h2> Have you filed your `${ titleOFLeave }` already?</h2>
         <br/>
         <div className = { 'grid-global' }>
           <GenericButton

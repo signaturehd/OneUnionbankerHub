@@ -24,7 +24,7 @@ class BereavementLeaveModal extends Component {
      isDismisable={ true }
     >
       <div className={ 'text-align-center' }>
-        <h2>  Have you file your bereavement leave already ? </h2>
+        <h2>  Have you filed your bereavement leave already ? </h2>
         <br/>
         <div className = { 'grid-global' }>
           <GenericButton

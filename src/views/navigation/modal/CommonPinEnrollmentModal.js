@@ -37,7 +37,10 @@ class CommonPinEnrollmentModal extends Component {
             <center>
               <div className = { 'grid-global-row' }>
                 <span className = { 'lock-icon lock-icon-settings' }/>
-                <h2 className = { 'font-size-14px' }>Hi UnionBanker!</h2>
+                <div>
+                  <h2 className = { 'font-size-14px' }>Hi UnionBanker!</h2>
+                  <h2>We&#96;re enhancing your security by installing a 5-digit code. This will also serve as your electronic signature for 1UHub. Please be reminded that this PIN code is unique to you and is only registered once.</h2>
+                </div>
               </div>
               <br/>
               <GenericInput

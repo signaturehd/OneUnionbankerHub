@@ -71,7 +71,7 @@ submission (e) {
 
   if (!this.validator(officialReceiptDate)) {
     store.dispatch(NotifyActions.addNotify({
-       title : 'Warning' ,
+       title : 'My Benefits' ,
        message : 'Official Receipt Date is required',
        type : 'warning',
        duration : 2000
@@ -79,7 +79,7 @@ submission (e) {
    )
  } else if (!this.validator(officialReceiptNumber)) {
     store.dispatch(NotifyActions.addNotify({
-       title : 'Warning' ,
+       title : 'My Benefits' ,
        message : 'Official Receipt Number is required',
        type : 'warning',
        duration : 2000
@@ -87,7 +87,7 @@ submission (e) {
    )
  } else if (!attachments.length) {
     store.dispatch(NotifyActions.addNotify({
-       title : 'Warning' ,
+       title : 'My Benefits' ,
        message : 'Attachments is required',
        type : 'warning',
        duration : 2000
@@ -98,7 +98,7 @@ submission (e) {
      (attachment, key) => {
        if(!attachment.file) {
          store.dispatch(NotifyActions.addNotify({
-            title : 'Warning' ,
+            title : 'My Benefits' ,
             message : attachment.name + ' is required',
             type : 'warning',
             duration : 2000
@@ -109,7 +109,7 @@ submission (e) {
    )
   } else if (!this.validator(selectedDependent)) {
    store.dispatch(NotifyActions.addNotify({
-      title : 'Warning' ,
+      title : 'My Benefits' ,
       message : 'Please select dependents',
       type : 'warning',
       duration : 2000
@@ -117,7 +117,7 @@ submission (e) {
   )
 } else if (selectedProcedures.length === 0) {
   store.dispatch(NotifyActions.addNotify({
-     title : 'Warning' ,
+     title : 'My Benefits' ,
      message : 'Please select procedures',
      type : 'warning',
      duration : 2000

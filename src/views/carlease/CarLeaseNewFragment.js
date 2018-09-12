@@ -149,7 +149,7 @@ class CarLeaseNewFragment extends BaseMVPView {
     const solRCChecked = carValidate.solRC ? carValidate.solRC : solRC
       if (!this.validator(carBrand)) {
           store.dispatch(NotifyActions.addNotify({
-              title : 'Car Lease (New)',
+              title : 'My Benefits',
               message : 'Car Brand fields are required',
               type: 'warning'
           })
@@ -157,7 +157,7 @@ class CarLeaseNewFragment extends BaseMVPView {
       }
       else if (!this.validator(carModel)) {
           store.dispatch(NotifyActions.addNotify({
-            title : 'Car Lease (New)',
+            title : 'My Benefits',
             message : 'Car Model fields are required',
             type: 'warning'
           })
@@ -165,7 +165,7 @@ class CarLeaseNewFragment extends BaseMVPView {
       }
       else if (!this.validator(makeYear)) {
           store.dispatch(NotifyActions.addNotify({
-            title : 'Car Lease (New)',
+            title : 'My Benefits',
             message : 'Year fields are required',
             type: 'warning'
           })
@@ -173,21 +173,21 @@ class CarLeaseNewFragment extends BaseMVPView {
       }
       else if (!this.validator(primaryColor)) {
         store.dispatch(NotifyActions.addNotify({
-            title : 'Car Lease (New)',
+            title : 'My Benefits',
             message : 'Primary Color fields are required',
             type: 'warning'
           })
         )
       } else if (!this.validator(secondaryColor)) {
         store.dispatch(NotifyActions.addNotify({
-            title : 'Car Lease (New)',
+            title : 'My Benefits',
             message : 'Secondary Color fields are required',
             type: 'warning'
           })
         )
       } else if (!this.validator(insurancePayment)) {
         store.dispatch(NotifyActions.addNotify({
-            title : 'Car Lease (New)',
+            title : 'My Benefits',
             message : 'Insurance Payment is required',
             type: 'warning'
           })
@@ -199,7 +199,7 @@ class CarLeaseNewFragment extends BaseMVPView {
           (attachment, key) => {
             if(!attachment.file) {
               store.dispatch(NotifyActions.addNotify({
-                 title : 'Warning' ,
+                 title : 'My Benefits' ,
                  message : attachment.name + ' is required',
                  type : 'warning',
                  duration : 2000
