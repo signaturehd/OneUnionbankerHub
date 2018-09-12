@@ -22,10 +22,7 @@ class MaternityLeaveModal extends Component {
   const titleOFLeave = Functions.checkedReasonForLeave(benefitsCodeType)
 
   return (
-    <Modal
-     onClose = { onClose }
-     isDismisable={ true }
-    >
+    <Modal>
       <div className={ 'text-align-center' }>
         <h2> Have you filed your `${ titleOFLeave }` already?</h2>
         <br/>
