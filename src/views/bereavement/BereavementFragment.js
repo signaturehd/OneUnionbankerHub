@@ -241,10 +241,10 @@ class BereavementFragment extends BaseMVPView {
         })
       )
     }
-    else if (funeralAddress === null || funeralAddress === '') {
+    else if (funeralAddress === null || funeralAddress === '' || funeralAddress.length < 15) {
       store.dispatch(NotifyActions.addNotify({
           title: 'My Benefits',
-          message: 'Funeral Address field is required',
+          message: 'Funeral Address field is required and atleast 15 characters',
           type: 'warning',
           duration: 2000
         })
@@ -295,10 +295,10 @@ class BereavementFragment extends BaseMVPView {
         })
       )
     }
-    else if (memorialAddress === null || memorialAddress === '') {
+    else if (memorialAddress === null || memorialAddress === '' || memorialAddress.length < 15) {
       store.dispatch(NotifyActions.addNotify({
           title: 'My Benefits',
-          message: 'Memorial Address field is required',
+          message: 'Memorial Address field is required and atleast 15 characters',
           type: 'warning',
           duration: 2000
         })
@@ -420,10 +420,10 @@ class BereavementFragment extends BaseMVPView {
         })
       )
     }
-    else if (funeralAddress === null || funeralAddress === '') {
+    else if (funeralAddress === null || funeralAddress === '' || funeralAddress.length < 15) {
       store.dispatch(NotifyActions.addNotify({
           title: 'My Benefits',
-          message: 'Funeral Address field is required',
+          message: 'Funeral Address field is required  and atleast 15 characters',
           type: 'warning',
           duration: 2000
         })
