@@ -1085,6 +1085,11 @@ export default class HRBenefitsService {
     })
   }
 
+  validateVaccine (token) {
+    return this.apiClient.get('v1/vaccinations/validate', {
+      headers: { token }
+    })
+  }
 
   // /* Pre Employment */
   //

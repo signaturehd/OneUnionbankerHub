@@ -831,4 +831,9 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  validateVaccine (token) {
+    return this.service.validateVaccine(token)
+      .pipe(ServiceErrorOperator())
+  }
+
 }
