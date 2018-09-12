@@ -133,7 +133,7 @@ submission (e) {
       if (validate || checknull) {
         store.dispatch(NotifyActions.addNotify({
             title : 'Dental Reimbursement',
-            message : `Please check the amount for procedure  ${procedure.name}. It should not be zero, empty or more than the set limit`,
+            message : `Please check the amount for procedure  ${procedure.name}. It should not be zero, empty or more than the set limit of Php ${ procedure.limit }`,
             type : 'warning',
             duration : 2000
           })

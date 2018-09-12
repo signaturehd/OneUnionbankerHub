@@ -6,7 +6,7 @@ import {
   FileUploader,
   DatePicker,
   ViewMoreButton,
-  Line  
+  Line
 } from '../../../ub-components/'
 import * as func from '../controller/MedicalSchedulingFunction'
 import './styles/medicalSchedulingComponentStyle.css'
