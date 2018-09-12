@@ -159,7 +159,7 @@ class SettingsProfileCardComponent extends Component {
                   onClick={ () => showChangePINModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
-                    <span className={ 'profile-icon-settings lock-icon' }/>
+                    <span className={ 'profile-icon-settings pinlock-icon' }/>
                   </div>
                   <div>
                     <h5 className={ 'profile-margin-label profile-cursor-pointer' }>

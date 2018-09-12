@@ -43,45 +43,51 @@ class ChangePINModal extends Component {
                 <CircularLoader show = { true }/>
               </center>
               :
-              <center>
-                <div className = { 'grid-global-row' }>
-                  <span className = { 'lock-icon lock-icon-settings' }/>
-                  <h2 className = { 'font-size-14px' }> Change PIN </h2>
-                </div>
-                <br/>
-                <GenericInput
-                  className = { 'generic-pin' }
-                  hint = { '* * * * *' }
-                  type = { 'password' }
-                  maxLength = { 5 }
-                  text = { 'Old PIN' }
-                  onChange = { (e) => {
-                    new RequiredNumberValidation().isValid(e.target.value) ?
-                    this.setState({ uniqueOldPIN : e.target.value }) :
-                    this.setState({ uniqueOldPIN : '' })
-                    }
-                  }
-                  value = { uniqueOldPIN }
-                  />
+              <div>
+                <center>
+                  <div className = { 'grid-global-row' }>
+                    <span className = { 'pinlock-icon-black lock-icon-settings' }/>
+                    <h2 className = { 'font-size-14px' }> Change PIN </h2>
+                  </div>
+                  <br/>
+                </center>
+                <div>
                   <GenericInput
-                    text = { 'New PIN' }
                     className = { 'generic-pin' }
-                    type = { 'password' }
                     hint = { '* * * * *' }
+                    type = { 'password' }
                     maxLength = { 5 }
+                    text = { 'Old PIN' }
                     onChange = { (e) => {
                       new RequiredNumberValidation().isValid(e.target.value) ?
-                      this.setState({ uniqueNewPIN : e.target.value }) :
-                      this.setState({ uniqueNewPIN : '' })
+                      this.setState({ uniqueOldPIN : e.target.value }) :
+                      this.setState({ uniqueOldPIN : '' })
                       }
                     }
-                    value = { uniqueNewPIN }
+                    value = { uniqueOldPIN }
                     />
-                <GenericButton
-                  onClick = { () => onSubmitPinCode(uniqueOldPIN, uniqueNewPIN) }
-                  text = { 'Continue' }
-                  />
-              </center>
+                    <GenericInput
+                      text = { 'New PIN' }
+                      className = { 'generic-pin' }
+                      type = { 'password' }
+                      hint = { '* * * * *' }
+                      maxLength = { 5 }
+                      onChange = { (e) => {
+                        new RequiredNumberValidation().isValid(e.target.value) ?
+                        this.setState({ uniqueNewPIN : e.target.value }) :
+                        this.setState({ uniqueNewPIN : '' })
+                        }
+                      }
+                      value = { uniqueNewPIN }
+                      />
+                    <center>
+                      <GenericButton
+                        onClick = { () => onSubmitPinCode(uniqueOldPIN, uniqueNewPIN) }
+                        text = { 'Continue' }
+                        />
+                    </center>
+                </div>
+              </div>
             }
           </div>
         </Modal>
