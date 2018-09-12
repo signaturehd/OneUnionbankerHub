@@ -1091,6 +1091,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getEmployeeSchool (token) {
+    return this.OnboardingClient.get('v1/employees/school', {
+      headers: { token }
+    })
+  }
+
   // /* Pre Employment */
   //
   //   @Multipart

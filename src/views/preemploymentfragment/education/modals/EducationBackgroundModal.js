@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
+import YearPicker from "react-year-picker"
 import store from '../../../../store'
 import { NotifyActions } from '../../../../actions'
 
@@ -11,15 +11,16 @@ import {
   MultipleAttachments,
   GenericInput,
   SingleInputModal,
-  Line
+  Line,
+  DatePicker
 } from '../../../../ub-components/'
 
-import './styles/calamityModalStyle.css'
 import { format } from '../../../../utils/numberUtils'
 
 import imageDefault from '../../../../images/profile-picture.png'
 
 import { RequiredValidation } from '../../../../utils/validate/'
+import moment from 'moment'
 
 class EducationBackgroundModal extends Component {
 
@@ -27,9 +28,19 @@ class EducationBackgroundModal extends Component {
     super (props)
   }
 
+  getDamagePropertyObject () {
+    getPropertyHolderFunc(educationObject)
+  }
+
   render () {
+    const {
+    hideModalEducationFormFunc,
+    updateMode
+    } = this.props
+
     return (
       <Modal
+        onClose = { () => hideModalEducationFormFunc(false) }
         isDismisable = { true }
         width = { 50 }>
         <h2>Education Background Form</h2>
@@ -47,9 +58,34 @@ class EducationBackgroundModal extends Component {
         <div className = { 'text-align-left' }>
           <h2>Inclusive Details</h2>
           <br/>
+        </div>
+        <GenericInput
+          text = { 'Start Year' }
+          type = { 'number' }/>
+        <YearPicker
+          text = { 'End Year' }/>
+          <br/>
           <Line/>
 
-        </div>
+        <div className = { 'grid-global' }>
+          <GenericButton
+            text = { 'Cancel' }
+            onClick = { () => hideModalEducationFormFunc(false)  }
+            />
+            {
+              updateMode ?
+              <GenericButton
+                text={ 'Update' }
+                onClick={
+                () => this.updateSelectedPropertyObject()
+              }/> :
+              <GenericButton
+                text={ 'Add' }
+                onClick={
+                () => this.getDamagePropertyObject()
+                }/>
+            }
+          </div>
       </Modal>
     )
   }
@@ -60,4 +96,4 @@ EducationBackgroundModal.propTypes = {
 EducationBackgroundModal.defaultProps={
 }
 
-export default CalamityFormGenericModal
+export default EducationBackgroundModal
