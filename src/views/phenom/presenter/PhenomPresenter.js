@@ -46,7 +46,7 @@ export default class PhenomPresenter {
   }
 
   addPhenomIsHeart (id, isHeart) {
-    this.addCheckedStatusIsHeartInteractor.execute(id, (isHeart == 0 ? "1" : "0"))
+    this.addCheckedStatusIsHeartInteractor.execute(id, isHeart === 0 ? 1 : 0)
     .subscribe(data => {
       this.getPhenomDiscountNoLoading()
     }, error => {
