@@ -23,7 +23,9 @@ class PayslipFragment extends BaseMVPView {
       employeeId : [],
       payslipResult : [],
       pdfFile: null,
-      showPayslipDetails: false
+      showPayslipDetails: false,
+      index : 3,
+      viewMoreText : 'View more',
     }
   }
 
@@ -66,7 +68,9 @@ class PayslipFragment extends BaseMVPView {
       employeeId,
       payslipResult,
       showPayslipDetails,
-      pdfFile
+      pdfFile,
+      index,
+      viewMoreText
     } = this.state
 
     const { history }=this.props
@@ -90,6 +94,10 @@ class PayslipFragment extends BaseMVPView {
         </div>
         <br/>
           <PayslipCardComponent
+            index = { index }
+            viewMoreText = { viewMoreText }
+            viewMore = { () => this.setState({ index : payslipList.length, viewMoreText : 'View less' }) }
+            viewLess = { () => this.setState({ index : 3, viewMoreText : 'View more' }) }
             payslipList={ payslipList }
             showPayslipDetails={showPayslipDetails}
             onSubmit={ (date) =>
