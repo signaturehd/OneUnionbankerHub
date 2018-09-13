@@ -401,7 +401,7 @@ class CarLeaseNewFragment extends BaseMVPView {
         {
           showCarBrands &&
           <SingleInputModal
-            label = { 'Brands' }
+            label = { 'Car Brands' }
             inputArray = { carValidate && carValidate.brands }
             selectedArray = { (carId, carBrand) =>
               this.setState({

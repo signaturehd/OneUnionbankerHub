@@ -30,6 +30,7 @@ class TransactionPersonalFragment extends BaseMVPView {
       transaction: null,
       searchString : '',
       index: 3,
+      viewMoreText : 'View more',
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
@@ -51,7 +52,8 @@ class TransactionPersonalFragment extends BaseMVPView {
       transactions,
       transaction,
       searchString,
-      index
+      index,
+      viewMoreText,
     } = this.state
 
     let transactionSearch = transactions
@@ -65,6 +67,8 @@ class TransactionPersonalFragment extends BaseMVPView {
     const {
       onClick,
     } = this.props
+
+    const isVisible = (transactionSearch && transactionSearch.length > 3) ? '' : 'hide'
 
     return (
     <div>
@@ -97,33 +101,23 @@ class TransactionPersonalFragment extends BaseMVPView {
             ))
           }
         </div>
-
-        <div className = { 'grid-global' }>
-          {
-            index > 3 &&
-            <GenericButton
-              className = { 'transaction-component-button' }
-              text = { 'View Less' }
-              onClick = { () =>
-                this.setState({
-                  index : TransactionPersonalFunction.indexDecreased(index)
-                  })
-                }
-              />
-          }
-        {
-            index < transactionSearch.length &&
-            <GenericButton
-              className = { 'transaction-component-button' }
-              text = { 'View More' }
-              onClick = { () =>
-                this.setState({
-                  index : TransactionPersonalFunction.indexIncreased(index)
-                  })
-                }
-              />
-            }
-          </div>
+        <br/>
+        <div>
+          <button
+            type = { 'button' }
+            className = { `viewmore tooltip ${isVisible}` }
+            onClick = {
+              () => {
+                if(index === transactionSearch.length)
+                 this.setState({ index : 3, viewMoreText : 'View more' })
+                else
+                 this.setState({ index : transactionSearch.length, viewMoreText : 'View less' })
+              }
+            }>
+            <img src={ require('../../images/icons/horizontal.png') } />
+            <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+          </button>
+        </div>
         </div>
             :
         <div className = { 'transactions-loader' }>

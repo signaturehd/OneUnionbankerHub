@@ -141,7 +141,7 @@ class CarLeaseNewFormComponent extends Component {
                 value = { cmUnit }
                 disabled = { showEditMode }
                 readOnly
-                text = { 'CM Unit' }
+                text = { 'Unit' }
               />
               {
                 showFileUpload &&
