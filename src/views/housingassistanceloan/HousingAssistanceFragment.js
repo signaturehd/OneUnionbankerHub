@@ -384,7 +384,6 @@ class HousingAssistanceFragment extends BaseMVPView {
     // const updateIsDealerOrPayeeName=[...storedIsDealerOrPayee]
     // updateIsDealerOrPayeeName.push(isPayeeOrDealerResp)
     // updateIsDealerOrPayeeName.push(empName)
-    console.log(fileAttachments)
     return (
       <div>
         {
