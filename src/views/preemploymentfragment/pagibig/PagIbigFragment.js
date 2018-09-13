@@ -4,31 +4,32 @@ import PropTypes from 'prop-types'
 import BaseMVPView from '../../common/base/BaseMVPView'
 import ConnectView from '../../../utils/ConnectView'
 
-import Presenter from './presenter/NbiClearancePresenter'
+import Presenter from './presenter/PagIbigPresenter'
 
 import {
   GenericButton,
   CircularLoader,
   MultipleFileUploader,
+  GenericInput,
   Card,
   Line,
 } from '../../../ub-components/'
 
 import { Progress } from 'react-sweet-progress'
 
-class NbiClearanceFragment extends BaseMVPView {
+class PagIbigFragment extends BaseMVPView {
 
   constructor(props) {
     super(props)
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(5)
+    this.props.onSendPageNumberToView(11)
   }
 
   render () {
-    const nbiClearance = [{
-      name : 'NBI Clearance'
+    const phAttachment = [{
+      name : 'Pag-IBIG 1',
     }]
 
     const { percentage } = this.props
@@ -39,8 +40,8 @@ class NbiClearanceFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>NBI Clearance Attachment</h2>
-            <h2>Please secure the transaction by attaching your latest NBI Clearance</h2>
+            <h2 className={ 'header-margin-default text-align-left' }>Pag-IBIG</h2>
+            <h2></h2>
           <br/>
           </div>
           <Progress
@@ -48,18 +49,23 @@ class NbiClearanceFragment extends BaseMVPView {
             percent={ percentage } />
         </div>
         <br/>
+          <GenericButton
+            text = { 'Taxpayer Identification Number(TIN)' }
+          />
+        <br/>
         <Line />
         <br/>
           <MultipleFileUploader
-            fileArray = { nbiClearance }
+            placeholder = { 'Pag-IBIG Attachments' }
+            fileArray = { phAttachment }
             />
       </div>
     )
   }
 }
 
-NbiClearanceFragment.propTypes = {
+PagIbigFragment.propTypes = {
   onSendPageNumberToView : PropTypes.func
 }
 
-export default ConnectView(NbiClearanceFragment, Presenter )
+export default ConnectView(PagIbigFragment, Presenter )

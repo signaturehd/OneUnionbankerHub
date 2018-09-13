@@ -33,7 +33,7 @@ class WorkExperienceAddModal extends Component {
         isDismisable = { true }
         onClose = { onClose }
         width = { 50 }>
-        <h2>Work Experience Form</h2>
+        <h2>Work Experience</h2>
         <br/>
         <GenericInput
           text = { 'Company Name' }
@@ -46,10 +46,21 @@ class WorkExperienceAddModal extends Component {
           text = { 'Date Employment' }/>
         <GenericInput
           text = { 'Contact Number' }/>
+        <h2 className = { 'text-align-left' }>Inclusive Dates</h2>
+        <div className = { 'grid-global' }>
+          <GenericInput
+            text = { 'From Year' }
+            />
+          <GenericInput
+            text = { 'To Year' }
+            />
+        </div>
+        <GenericInput
+          text = { 'Brief Description of Duties' }
+          />
         <br/>
-
         <GenericButton
-          text = { 'Save' }
+          text = { 'Add' }
           className = { 'global-button' }
           onClick = { () => {} }
           />

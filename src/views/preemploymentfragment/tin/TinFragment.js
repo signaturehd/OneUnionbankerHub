@@ -4,31 +4,32 @@ import PropTypes from 'prop-types'
 import BaseMVPView from '../../common/base/BaseMVPView'
 import ConnectView from '../../../utils/ConnectView'
 
-import Presenter from './presenter/NbiClearancePresenter'
+import Presenter from './presenter/TinPresenter'
 
 import {
   GenericButton,
   CircularLoader,
   MultipleFileUploader,
+  GenericInput,
   Card,
   Line,
 } from '../../../ub-components/'
 
 import { Progress } from 'react-sweet-progress'
 
-class NbiClearanceFragment extends BaseMVPView {
+class TinFragment extends BaseMVPView {
 
   constructor(props) {
     super(props)
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(5)
+    this.props.onSendPageNumberToView(9)
   }
 
   render () {
-    const nbiClearance = [{
-      name : 'NBI Clearance'
+    const sssAttachment = [{
+      name : 'TIN ID/ BIR FORM',
     }]
 
     const { percentage } = this.props
@@ -39,8 +40,8 @@ class NbiClearanceFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>NBI Clearance Attachment</h2>
-            <h2>Please secure the transaction by attaching your latest NBI Clearance</h2>
+            <h2 className={ 'header-margin-default text-align-left' }>TIN Form</h2>
+            <h2></h2>
           <br/>
           </div>
           <Progress
@@ -48,18 +49,23 @@ class NbiClearanceFragment extends BaseMVPView {
             percent={ percentage } />
         </div>
         <br/>
+          <GenericInput
+            text = { 'Taxpayer Identification Number(TIN)' }
+          />
+        <br/>
         <Line />
         <br/>
           <MultipleFileUploader
-            fileArray = { nbiClearance }
+            placeholder = { 'SSS Attachments' }
+            fileArray = { sssAttachment }
             />
       </div>
     )
   }
 }
 
-NbiClearanceFragment.propTypes = {
+TinFragment.propTypes = {
   onSendPageNumberToView : PropTypes.func
 }
 
-export default ConnectView(NbiClearanceFragment, Presenter )
+export default ConnectView(TinFragment, Presenter )
