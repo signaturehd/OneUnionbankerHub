@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import BaseMVPView from '../../common/base/BaseMVPView'
 import ConnectView from '../../../utils/ConnectView'
 
+import { Progress } from 'react-sweet-progress'
+
 import Presenter from './presenter/EducationBackgroundPresenter'
 
 import {
@@ -12,6 +14,8 @@ import {
   Card,
   Line,
 } from '../../../ub-components/'
+
+import "react-sweet-progress/lib/style.css"
 
 class EducationBackgroundFragment extends BaseMVPView {
 
@@ -24,12 +28,24 @@ class EducationBackgroundFragment extends BaseMVPView {
   }
 
   render () {
+
+    const {
+    percentage
+  } = this.props
+
     return (
       <div>
         { super.render() }
         <br/>
-        <h2 className={ 'header-margin-default text-align-left' }>Education Background</h2>
-        <h2>Setup your education background</h2>
+        <div className = { 'percentage-grid' }>
+          <div>
+            <h2 className={ 'header-margin-default text-align-left' }>Education Background</h2>
+            <h2>Setup your education background</h2>
+          </div>
+          <Progress
+            type = { 'circle' }
+            percent={ percentage } />
+        </div>
         <br/>
         <br/>
         <Line />

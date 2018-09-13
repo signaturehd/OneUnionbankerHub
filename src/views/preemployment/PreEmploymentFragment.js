@@ -13,6 +13,10 @@ import BiographicalDataFragment
   from '../preemploymentfragment/biographicaldata/BiographicalDataFragment'
 import EducationBackgroundFragment
   from '../preemploymentfragment/education/EducationBackgroundFragment'
+import WorkExperienceFragment
+  from '../preemploymentfragment/workexperience/WorkExperienceFragment'
+import NbiClearanceFragment
+  from '../preemploymentfragment/nbiclearance/NbiClearanceFragment'
 /* Modal */
 import IsFinancialObilgationConfirmModal
   from './modals/IsFinancialObilgationConfirmModal'
@@ -31,25 +35,42 @@ import './styles/preEmploymentStyle.css'
 function  PreEmploymentFragments (props)  {
   const pageNumber = props.preEmpPage
   const onSendPageNumberToView = props.onSendPageNumberToView
+  const percentage = (pageNumber / 5) * 100
 
   if (props.preEmpPage === 0) {
     return <AffirmationDocumentFragment
+      percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 1) {
     return <FinancialObligationFragment
+      percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 2 ) {
     return <BiographicalDataFragment
+      percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 3) {
     return <EducationBackgroundFragment
+      percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
-  } else {
-    onSendPageNumberToView(pageNumber)
+  } else if (pageNumber === 4) {
+    return <WorkExperienceFragment
+      percentage = { percentage }
+      onSendPageNumberToView = { onSendPageNumberToView }
+      />
+  } else if (pageNumber === 5) {
+    return <NbiClearanceFragment
+      percentage = { percentage }
+      onSendPageNumberToView = { onSendPageNumberToView }
+      />
+  }else {
+    return <NbiClearanceFragment
+      onSendPageNumberToView = { onSendPageNumberToView }
+      />
   }
 }
 

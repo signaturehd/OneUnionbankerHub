@@ -15,6 +15,9 @@ import {
 
 import Presenter from './presenter/FinancialObligationPresenter'
 
+import { Progress } from 'react-sweet-progress'
+
+import "react-sweet-progress/lib/style.css"
 import './styles/financialObligationStyle.css'
 
 class FinancialObligationFragment extends BaseMVPView {
@@ -30,6 +33,7 @@ class FinancialObligationFragment extends BaseMVPView {
     const {
       history,
       checkPEUndertaking,
+      percentage
     } = this.props
 
     return(
@@ -37,8 +41,15 @@ class FinancialObligationFragment extends BaseMVPView {
     { super.render() }
       <div>
         <br/>
-        <h2 className={ 'header-margin-default text-align-left' }>Financial Obligation</h2>
-        <h2>Fill up the form</h2>
+        <div className = { 'percentage-grid' }>
+          <div>
+            <h2 className={ 'header-margin-default text-align-left' }>Financial Obligation</h2>
+            <h2>Fill up the form</h2>
+          </div>
+          <Progress
+            type = { 'circle' }
+            percent={ percentage } />
+        </div>
         <br/>
         <GenericInput
           text = { 'Name of the Bank/ Financial Institution' }

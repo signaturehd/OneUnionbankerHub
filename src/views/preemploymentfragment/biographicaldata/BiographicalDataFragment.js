@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router-dom'
 
+import { Progress } from 'react-sweet-progress'
+
 import BaseMVPView from '../../common/base/BaseMVPView'
 import ConnectView from '../../../utils/ConnectView'
 
@@ -16,6 +18,7 @@ import {
 
 import Presenter from './presenter/BiographicalDataPresenter'
 
+import "react-sweet-progress/lib/style.css"
 import './styles/biographicalDataStyle.css'
 
 class BiographicalDataFragment extends BaseMVPView {
@@ -46,6 +49,7 @@ class BiographicalDataFragment extends BaseMVPView {
     const {
       history,
       checkPEUndertaking,
+      percentage
     } = this.props
 
     const {
@@ -64,8 +68,15 @@ class BiographicalDataFragment extends BaseMVPView {
     { super.render() }
       <div>
         <br/>
-        <h2 className={ 'header-margin-default text-align-left' }>Biographical Data</h2>
-        <h2>Setup your work experience</h2>
+          <div className = { 'percentage-grid' }>
+            <div>
+              <h2 className={ 'header-margin-default text-align-left' }>Biographical Data</h2>
+              <h2>Setup your work experience</h2>
+            </div>
+            <Progress
+              type = { 'circle' }
+              percent={ percentage } />
+          </div>
         <br/>
         <div className = { 'biographical-grid-card' }>
           <Card
