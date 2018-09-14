@@ -36,6 +36,9 @@ class EducationBackgroundFragment extends BaseMVPView {
           degree : 'Accountancy'
         }
       ],
+      attachmentsData : [{
+        name : 'TOR Attachment'
+      }],
       showEducationFormModal : false,
       showEditSubmitButton : false
     }
@@ -73,7 +76,8 @@ class EducationBackgroundFragment extends BaseMVPView {
       educationCardHolder,
       showEducationFormModal,
       showEditSubmitButton,
-      defaultSchool
+      defaultSchool,
+      attachmentsData
     } = this.state
 
     return (
@@ -81,6 +85,7 @@ class EducationBackgroundFragment extends BaseMVPView {
         {
           showEducationFormModal &&
           <EducationBackgroundModal
+          attachmentsData = { attachmentsData }
           hideModalEducationFormFunc = { (showEducationFormModal) => this.setState({ showEducationFormModal }) }
           getEducationHolderFunc = { (resp) => {
             const updatePropertyHolder = [...damagePropertyCardHolder]

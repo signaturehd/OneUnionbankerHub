@@ -34,7 +34,8 @@ class EducationBackgroundModal extends Component {
   render () {
     const {
     hideModalEducationFormFunc,
-    updateMode
+    updateMode,
+    attachmentsData
     } = this.props
 
     return (
@@ -68,6 +69,20 @@ class EducationBackgroundModal extends Component {
           maxLength = { 4 }/>
           <br/>
           <Line/>
+          {
+            attachmentsData.length !== 0  &&
+            <div>
+              <h4>
+                <br/>
+                Form Attachments
+              </h4>
+              <MultipleFileUploader
+                placeholder = { '' }
+                fileArray = { attachmentsData }
+                setFile = { (resp) => setAttachmentDefaultyFunc(resp) }
+                />
+            </div>
+          }
 
         <div className = { 'grid-global' }>
           <GenericButton
