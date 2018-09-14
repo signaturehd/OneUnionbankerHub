@@ -33,7 +33,7 @@ export default class NoticePresenter {
       .subscribe(
         data => {
           this.view.hideCircularLoader()
-          this.view.noticeResponseFunc(data, true, false)
+          this.view.noticeResponseFunc(data, false)
         }, error => {
         this.view.hideCircularLoader()
     })

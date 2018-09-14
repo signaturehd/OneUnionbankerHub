@@ -34,12 +34,12 @@ class MyLearningView extends BaseMVPView {
       path: '/mylearning/books/recommended',
     }, {
       id: 1 ,
-      styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
+      styleName: 'mylearning-cards-3 mylearning-option-default font-weight-bold',
       title: 'Listen to a Podcast',
       path: '/mylearning/podcasts',
     }, {
       id: 2 ,
-      styleName: 'mylearning-cards-3 mylearning-option-default font-weight-bold',
+      styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
       title: 'Enroll to Training',
       path: '/mylearning/trainings',
     }]

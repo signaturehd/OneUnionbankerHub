@@ -162,7 +162,7 @@ class CalamityFragment extends BaseMVPView {
 
     if (id === null || id === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Type of Calamity is required',
           type: 'warning',
           duration: 2000
@@ -170,7 +170,7 @@ class CalamityFragment extends BaseMVPView {
       )
     } else if (date === null || date === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Date of Occurence is required',
           type: 'warning',
           duration: 2000
@@ -178,7 +178,7 @@ class CalamityFragment extends BaseMVPView {
       )
     } else if (damageProperty === null || !damageProperty.length) {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Damage Property is required',
           type: 'warning',
           duration: 2000
@@ -186,7 +186,7 @@ class CalamityFragment extends BaseMVPView {
       )
     }else if (!attachmentArray.length) {
        store.dispatch(NotifyActions.addNotify({
-          title : 'Warning' ,
+          title : 'My Benefits' ,
           message : 'Attachments is required',
           type : 'warning',
           duration : 2000
@@ -197,7 +197,7 @@ class CalamityFragment extends BaseMVPView {
         (attachment, key) => {
           if(!attachment.file) {
             store.dispatch(NotifyActions.addNotify({
-               title : 'Warning',
+               title : 'My Benefits',
                message : attachment.name + ' is required',
                type : 'warning',
                duration : 2000

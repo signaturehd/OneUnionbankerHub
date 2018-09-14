@@ -337,7 +337,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
         (attachment, key) => {
           if(!attachment.file) {
             store.dispatch(NotifyActions.addNotify({
-               title : 'Warning' ,
+               title : 'My Benefits' ,
                message : attachment.name + ' is required',
                type : 'warning',
                duration : 2000

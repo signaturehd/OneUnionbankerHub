@@ -40,6 +40,9 @@ class PhenomFragment extends BaseMVPView {
     this.setState({ loader })
   }
 
+  getPhenomDetails (test) {
+  }
+
   showPhenomDiscountList (phenomDataList) {
     this.setState({ phenomDataList })
   }

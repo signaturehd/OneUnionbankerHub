@@ -219,7 +219,7 @@ class EducationAidFragment extends BaseMVPView {
       this.setState({ orNumberErrorMessage : 'Please enter an Official Receipt Number' })
     } else if (!attachmentArray.length) {
        store.dispatch(NotifyActions.addNotify({
-          title : 'Warning' ,
+          title : 'My Benefits' ,
           message : 'Attachments is required',
           type : 'warning',
           duration : 2000
@@ -230,7 +230,7 @@ class EducationAidFragment extends BaseMVPView {
         (attachment, key) => {
           if(!attachment.file) {
             store.dispatch(NotifyActions.addNotify({
-               title : 'Warning' ,
+               title : 'My Benefits' ,
                message : attachment.name + ' is required',
                type : 'warning',
                duration : 2000

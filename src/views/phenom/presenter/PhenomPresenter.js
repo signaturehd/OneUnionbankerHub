@@ -9,6 +9,8 @@ export default class PhenomPresenter {
       new GetPhenomDetailsInteractor(container.get('HRBenefitsClient'))
     this.addCheckedStatusIsHeartInteractor =
       new AddCheckedStatusIsHeartInteractor(container.get('HRBenefitsClient'))
+
+    this.getTransactionImage = container.get('FileClient')
   }
 
   setView(view) {
@@ -46,7 +48,7 @@ export default class PhenomPresenter {
   }
 
   addPhenomIsHeart (id, isHeart) {
-    this.addCheckedStatusIsHeartInteractor.execute(id, (isHeart == 0 ? "1" : "0"))
+    this.addCheckedStatusIsHeartInteractor.execute(id, isHeart === 0 ? 1 : 0)
     .subscribe(data => {
       this.getPhenomDiscountNoLoading()
     }, error => {
