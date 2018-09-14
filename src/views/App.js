@@ -27,6 +27,7 @@ class App extends BaseMVPView {
 
   componentDidMount () {
     console.log('%cWarning!', 'color: red; font-size: 40px; font-weight: bold;')
+    console.log('%cThis is a browser feature intended for developers. If someone told you to copy-paste something here to enable a 1Uhub feature or "hack" someone account it is a scam and will give them access to your 1Uhub account!', 'color: #ff8a00; font-size: 18px; font-weight: bold;')
   }
 
   componentWillReceiveProps (nextProps) {
