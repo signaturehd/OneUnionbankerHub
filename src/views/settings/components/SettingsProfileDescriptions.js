@@ -25,7 +25,7 @@ class SettingsProfileDescriptions extends Component {
       <div className={ 'profile-others-card' }>
         <div className={ 'profile-padding' }>
           <h2 className={ 'unionbank-color font-weight-normal' }>
-            Descriptions
+            Description
           </h2>
           <br/>
           <div className={ 'font-size-14px' }>

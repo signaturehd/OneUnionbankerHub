@@ -110,10 +110,15 @@ class MyExistingLoansFragment extends BaseMVPView {
                 </div>
               </div>
               <br/>
-              <ExistingLoansSummaryCardComponent
-                totalAmount = { totalAmount }
-                existingLoans = { existingLoans }
-                />
+                {
+                 totalAmount == 0 ?
+                 <h2>No record(s)</h2>
+                 :
+                 <ExistingLoansSummaryCardComponent
+                   totalAmount = { totalAmount }
+                   existingLoans = { existingLoans }
+                   />
+                 }
               <br/>
             </div>
           </div>

@@ -1,5 +1,5 @@
 .feedback-card {
-  padding : 10% 15% 10% 15%;
+  padding : 2% 15% 10% 15%;
   width: auto;
 }
 
@@ -12,6 +12,7 @@
   outline-color: #FF8A00;
   border-radius: 5px;
   font-size: 14px;
+  padding: 10px;
 }
 
 .feedback-loader {
@@ -22,13 +23,9 @@
 }
 
 .feedback-body {
-  padding: 2px;
-}
-
-.feedback-body {
   clear: both;
   padding: 0px;
-  margin: 0px;
+  margin: 0px 100px 0px 100px;
 }
 .feedback-body-group:before,
 .feedback-body-group:after {

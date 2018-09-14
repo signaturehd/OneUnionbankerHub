@@ -38,25 +38,25 @@ class MedicalFragment extends Component {
       title: 'Dental Reimbursement',
       path: '/mybenefits/benefits/medical/reimbursement/dental',
     }, {
-      id: 3,
+      id: 6,
       styleName: 'medical-cards-1 medical-option-default',
-      title: 'Optical Reimbursement',
-      path: '/mybenefits/benefits/medical/optical',
+      title: 'Maternity Assistance',
+      path: '/mybenefits/benefits/medical/assistance/maternity',
     }, {
       id: 4,
       styleName: 'medical-cards-1 medical-option-default',
       title: 'Medical Scheduling',
       path: '/mybenefits/benefits/medical/scheduling',
     }, {
+      id: 3,
+      styleName: 'medical-cards-1 medical-option-default',
+      title: 'Optical Reimbursement',
+      path: '/mybenefits/benefits/medical/optical',
+    }, {
       id: 5,
       styleName: 'medical-cards-1 medical-option-default',
       title: 'Outpatient Reimbursement',
       path: '/mybenefits/benefits/medical/reimbursement/outpatient',
-    }, {
-      id: 6,
-      styleName: 'medical-cards-1 medical-option-default',
-      title: 'Maternity Assistance',
-      path: '/mybenefits/benefits/medical/assistance/maternity',
     }, {
       id: 7,
       styleName: 'medical-cards-1 medical-option-default',

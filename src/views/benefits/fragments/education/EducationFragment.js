@@ -22,11 +22,6 @@ class EducationFragment extends Component {
       title: 'Education Aid',
       path: '/mybenefits/benefits/education/aid',
     }, {
-      id: 2,
-      styleName: 'education-cards-1 education-option-default',
-      title: 'Education Group - Plan',
-      path: '/mybenefits/benefits/education/groupaid',
-    }, {
       id: 3,
       styleName: 'education-cards-1 education-option-default',
       title: 'Education Grant - Aid',
@@ -36,6 +31,11 @@ class EducationFragment extends Component {
       styleName: 'education-cards-1 education-option-default',
       title: 'Education Grant - Plan',
       path: '/mybenefits/benefits/education/grantplan',
+    }, {
+      id: 2,
+      styleName: 'education-cards-1 education-option-default',
+      title: 'Education Group - Plan',
+      path: '/mybenefits/benefits/education/groupaid',
     }]
 
     const EducationHome = () => (

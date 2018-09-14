@@ -30,7 +30,8 @@ class MyTrainingFragment extends BaseMVPView {
       trainingList : [],
       enabledLoader: false,
       searchString : '',
-      index: 8,
+      index : 3,
+      viewMoreText : 'View more',
       trainingDetails: null,
       showConfirmation : false,
       loadingModal : false,
@@ -93,6 +94,7 @@ class MyTrainingFragment extends BaseMVPView {
     trainingList,
     enabledLoader,
     index,
+    viewMoreText,
     trainingDetails,
     showConfirmation,
     loadingModal,
@@ -108,6 +110,7 @@ class MyTrainingFragment extends BaseMVPView {
        trainingList.venue.toLowerCase().match(search) ||
        trainingList.title.toLowerCase().match(search))
   }
+  const isVisible = (training && training.length > 3) ? '' : 'hide'
 
   return (
     <div>
@@ -177,37 +180,55 @@ class MyTrainingFragment extends BaseMVPView {
            )
           }
           </div>
+          <br/>
+          <button
+            type = { 'button' }
+            className = { `viewmore tooltip ${isVisible}` }
+            onClick = {
+              () => {
+                if(index === training.length)
+                 this.setState({ index : 3, viewMoreText : 'View more' })
+                else
+                 this.setState({ index : training.length, viewMoreText : 'View less' })
+              }
+            }>
+            <img src={ require('../../../images/icons/horizontal.png') } />
+            <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+          </button>
           {
-            trainingList ?
-            <div>
-              <div className = { 'grid-global' }>
-                {
-                  index === 8 ?
-                  <div></div> :
-                  <GenericButton
-                    className = { 'transaction-component-button' }
-                    text = { 'View Less' }
-                    onClick = { () =>
-                      this.setState({
-                        index : MyTrainingFunctions.indexDecreased(index)
-                        })
-                      }
-                    />
-                }
-                <GenericButton
-                  className = { 'transaction-component-button' }
-                  text = { 'View More' }
-                  onClick = { () =>
-                    this.setState({
-                      index : MyTrainingFunctions.indexIncreased(index)
-                      })
-                    }
-                  />
-              </div>
-              <Line/>
-            </div>
-            :
-            <div></div>
+            // trainingList ?
+            // <div>
+            //   <div className = { 'grid-global' }>
+            //     {
+            //       index < trainingList.length &&
+            //       <GenericButton
+            //         className = { 'transaction-component-button' }
+            //         text = { 'View Less' }
+            //         onClick = { () =>
+            //           this.setState({
+            //             index : MyTrainingFunctions.indexDecreased(index)
+            //             })
+            //           }
+            //         />
+            //     }
+            //     {
+            //       index > trainingList.length &&
+            //
+            //       <GenericButton
+            //         className = { 'transaction-component-button' }
+            //         text = { 'View More' }
+            //         onClick = { () =>
+            //           this.setState({
+            //             index : MyTrainingFunctions.indexIncreased(index)
+            //             })
+            //           }
+            //         />
+            //     }
+            //   </div>
+            //   <Line/>
+            // </div>
+            // :
+            // <div></div>
           }
         </div>
       </div>
@@ -220,6 +241,7 @@ class MyTrainingFragment extends BaseMVPView {
 MyTrainingFragment.propTypes = {
   presenterEnrollFunc : PropTypes.func,
   presenterEmployeeDetails : PropTypes.func,
+  viewMoreText : PropTypes.string,
 }
 
 export default MyTrainingFragment

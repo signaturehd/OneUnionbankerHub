@@ -248,7 +248,7 @@ class HousingAssistanceFragment extends BaseMVPView {
     } else {
       if (!this.validateRequired(purposeOfAvailmentLabel)) {
          store.dispatch(NotifyActions.addNotify({
-            title : 'Warning' ,
+            title : 'My Benefits' ,
             message : 'Purpose of Availment is required',
             type : 'warning',
             duration : 2000
@@ -256,7 +256,7 @@ class HousingAssistanceFragment extends BaseMVPView {
         )
       } else if (!this.validateRequired(modeOfLoanId)) {
          store.dispatch(NotifyActions.addNotify({
-            title : 'Warning' ,
+            title : 'My Benefits' ,
             message : 'Mode of Loan is required',
             type : 'warning',
             duration : 2000
@@ -264,7 +264,7 @@ class HousingAssistanceFragment extends BaseMVPView {
         )
       } else if (!this.validateRequired(termOfLoanId)) {
          store.dispatch(NotifyActions.addNotify({
-            title : 'Warning' ,
+            title : 'My Benefits' ,
             message : 'Term of Loan is required',
             type : 'warning',
             duration : 2000
@@ -272,7 +272,7 @@ class HousingAssistanceFragment extends BaseMVPView {
         )
       } else if (!this.validateRequired(desiredAmount)) {
          store.dispatch(NotifyActions.addNotify({
-            title : 'Warning' ,
+            title : 'My Benefits' ,
             message : 'Desired Amount is required',
             type : 'warning',
             duration : 2000
@@ -280,7 +280,7 @@ class HousingAssistanceFragment extends BaseMVPView {
         )
       } else if (!fileAttachments.length) {
          store.dispatch(NotifyActions.addNotify({
-            title : 'Warning' ,
+            title : 'My Benefits' ,
             message : 'Attachments is required',
             type : 'warning',
             duration : 2000
@@ -292,7 +292,7 @@ class HousingAssistanceFragment extends BaseMVPView {
           (attachment, key) => {
             if(!attachment.file) {
               store.dispatch(NotifyActions.addNotify({
-                 title : 'Warning' ,
+                 title : 'My Benefits' ,
                  message : attachment.name + ' is required',
                  type : 'warning',
                  duration : 2000
@@ -384,7 +384,6 @@ class HousingAssistanceFragment extends BaseMVPView {
     // const updateIsDealerOrPayeeName=[...storedIsDealerOrPayee]
     // updateIsDealerOrPayeeName.push(isPayeeOrDealerResp)
     // updateIsDealerOrPayeeName.push(empName)
-    console.log(fileAttachments)
     return (
       <div>
         {

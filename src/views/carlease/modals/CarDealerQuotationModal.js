@@ -19,11 +19,10 @@ class CarDealerQuotation extends Component {
     const { onClose, onUserConfirmation, backToBenefits } = this.props
 
     return (
-      <Modal
-        onClose={ onClose }
-      >
+      <Modal>
         <br/>
-          {`We're excited for you. You're a few steps from owning your dream car. Is the dealer quotation available?`}
+          {`We're excited for you. You're a few steps away from owning your dream car. Is the dealer quotation available?`}
+
         <br/>
         <br/>
         <center className={ 'car-grid-modal' }>

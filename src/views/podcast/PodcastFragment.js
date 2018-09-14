@@ -98,7 +98,7 @@ class PodcastFragment extends BaseMVPView {
     return (
       <div>
         { super.render() }
-        <Modal isDismisable={ true }>
+        <Modal>
           <h2>Under Development</h2>
           <br/>
           <center>

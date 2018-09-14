@@ -62,11 +62,11 @@ class PhenomCardComponent extends Component {
               onClick = { () => null }>
               <span
                 onClick = { () => {
-                  this.setState({ isHeartActive : (isHeartActive == 1) ? "0" : "1" })
+                  this.setState({ isHeartActive : isHeartActive === 0 ? 1 : 0  })
                   onChangeHeart(id, isHeart)
                 }
               }
-                className = { (parseInt(isHeartActive) ? 'phenom-status-icon' : 'phenom-heart-icon') + ' phenom-icon' }/>
+                className = { (parseInt(isHeartActive) !== 1 ? 'phenom-status-icon' : 'phenom-heart-icon') + ' phenom-icon' }/>
             </div>
           </div>
           <div

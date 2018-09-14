@@ -56,3 +56,38 @@
 .payslip-label {
   margin: 15px 0px 0px 20px;
 }
+
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.hide {
+  display: none!important;
+}
+
+.viewmore {
+  padding: 2px 0 2px 0;
+  width: 100%;
+  cursor: pointer;
+  border: 0;
+}

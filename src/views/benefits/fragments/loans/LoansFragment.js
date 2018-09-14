@@ -16,7 +16,13 @@ class LoansFragment extends Component {
   render () {
     const { history } = this.props
 
-    const benefitsOptions = [{
+    const benefitsOptions = [
+    {
+      id: 4,
+      styleName: 'loans-cards-2 loans-option-default',
+      title: 'Computer Loan',
+      path: '/mybenefits/benefits/loans/computer',
+    }, {
       id: 2,
       styleName: 'loans-cards-1 loans-option-default',
       title: 'Emergency Loan',
@@ -27,20 +33,15 @@ class LoansFragment extends Component {
       title: 'Housing Assistance Loan',
       path: '/mybenefits/benefits/loans/housingassistance',
     }, {
-      id: 1,
-      styleName: 'loans-cards-6 loans-option-default',
-      title: 'Salary Loan',
-      path: '/mybenefits/benefits/loans/salary',
-    }, {
-      id: 4,
-      styleName: 'loans-cards-2 loans-option-default',
-      title: 'Computer Loan',
-      path: '/mybenefits/benefits/loans/computer',
-    }, {
       id: 5,
       styleName: 'loans-cards-5 loans-option-default',
       title: 'Motorcycle Loan',
       path: '/mybenefits/benefits/loans/motorcycle',
+    }, {
+      id: 1,
+      styleName: 'loans-cards-6 loans-option-default',
+      title: 'Salary Loan',
+      path: '/mybenefits/benefits/loans/salary',
     }]
 
     const LoansHome = () => (
