@@ -15,7 +15,7 @@ export default class FinancialObligationPresenter {
   }
 
   getFinancialStatus () {
-    this.view.showCircularLoader()
+    this.view.hideCircularLoader()
     this.getFinanceStatusInteractor.execute()
     .map(data => {
       let singleInputArray = []

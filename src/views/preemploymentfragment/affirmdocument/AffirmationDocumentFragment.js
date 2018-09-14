@@ -93,14 +93,8 @@ class AffirmationDocumentFragment extends BaseMVPView {
               <div className = { 'affirmation-grid-x2' }>
                 <h2> { resp.title } </h2>
                 <div className = { 'grid-global' }>
-                  <GenericButton
-                    className = { 'affirmation-button' }
-                    onClick = { () => {} }
-                    text = { 'Download' }/>
-                  <GenericButton
-                    className = { 'affirmation-button' }
-                    onClick = { () => {} }
-                    text = { 'Preview' }/>
+                  <span className = { 'affirmation-icon affirmation-download-button' }/>
+                  <span className = { 'affirmation-icon affirmation-seemore-button' }/>
                 </div>
               </div>
             </Card>
