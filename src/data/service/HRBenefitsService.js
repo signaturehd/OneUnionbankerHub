@@ -1073,6 +1073,18 @@ export default class HRBenefitsService {
     })
   }
 
+  addFinancialStatus (token, financialStatusParam) {
+    const objectParam = {
+      bank : financialStatusParam.bank,
+      obligation: financialStatusParam.obligation,
+      amount: financialStatusParam.amount,
+      status: financialStatusParam.statusId,
+    }
+    return this.OnboardingClient.post('v1/employees/finances/details', objectParam, {
+      headers : { token }
+    })
+  }
+
   getEmployeeTin (token) {
     return this.OnboardingClient.get('v1/employee/tin', {
       headers : { token }

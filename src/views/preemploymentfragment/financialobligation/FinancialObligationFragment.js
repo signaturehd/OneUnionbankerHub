@@ -14,6 +14,8 @@ import {
   Card
 } from '../../../ub-components/'
 
+import { RequiredValidation } from '../../../utils/validate/'
+
 import Presenter from './presenter/FinancialObligationPresenter'
 
 import { Progress } from 'react-sweet-progress'
@@ -33,7 +35,11 @@ class FinancialObligationFragment extends BaseMVPView {
       statusName: '',
       bankNameInstitution : '',
       natureObligation: '',
-      amount: ''
+      amount: '',
+      bankNameInstitutionErrorMessage : '',
+      natureObligationErrorMessage: '',
+      amountErrorMessage: '',
+      statusNameErrorMessage: '',
     }
   }
 
@@ -46,8 +52,49 @@ class FinancialObligationFragment extends BaseMVPView {
     this.setState({ enabledLoader })
   }
 
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })  
+  }
+
+  validator (input) {
+   return new RequiredValidation().isValid(input)
+  }
+
   showFinanceStatus (financeStatus) {
     this.setState({ financeStatus })
+  }
+
+  submitForm () {
+    const {
+      bankNameInstitution,
+      natureObligation,
+      amount,
+      statusName,
+      statusId,
+      bankNameInstitutionErrorMessage,
+      natureObligationErrorMessage,
+      amountErrorMessage,
+      statusNameErrorMessage
+    } = this.state
+
+    if (!this.validator(bankNameInstitution)) {
+      this.setState({ bankNameInstitutionErrorMessage: 'Name of the Bank/ Financial Institution field is required' })
+    } else if (!this.validator(natureObligation)) {
+      this.setState({ natureObligationErrorMessage : 'Nature of Obligation field is required'  })
+    } else if (!this.validator(amount)) {
+      this.setState({ amountErrorMessage : 'Amount field is required'  })
+    } else if (!this.validator(statusName)) {
+      this.setState({ statusNameErrorMessage : 'Status field is required' })
+    }
+    this.presenter.addFinancialStatus(
+      bankNameInstitution,
+      natureObligation,
+      amount,
+      statusId)
   }
 
   render() {
@@ -65,7 +112,11 @@ class FinancialObligationFragment extends BaseMVPView {
       showFinanceStatusErrorMessage,
       bankNameInstitution,
       natureObligation,
-      amount
+      amount,
+      bankNameInstitutionErrorMessage,
+      natureObligationErrorMessage,
+      amountErrorMessage,
+      statusNameErrorMessage
     } = this.state
 
     return(
@@ -102,35 +153,40 @@ class FinancialObligationFragment extends BaseMVPView {
         {
           enabledLoader ?
           <center>
-            <CircularLoader show = { true }/>
+            <CircularLoader show = { enabledLoader }/>
           </center>
           :
           <div>
             <GenericInput
               text = { 'Name of the Bank/ Financial Institution' }
               value = { bankNameInstitution }
-              onChange = { () => {} }
+              onChange = { (e) => this.setState({ bankNameInstitution: e.target.value }) }
+              errorMessage = { bankNameInstitution ? '' : bankNameInstitutionErrorMessage }
               />
             <GenericInput
               text = { 'Nature of Obligation' }
               value = { natureObligation }
-              onChange = { () => {} }
+              onChange = { (e) => this.setState({ natureObligation : e.target.value }) }
+              errorMessage = { natureObligation ? '' : natureObligationErrorMessage }
               />
             <GenericInput
               text = { 'Amount' }
               value = { amount }
-              onChange = { () => {} }
+              type = { 'number' }
+              onChange = { (e) => this.setState({ amount : e.target.value }) }
+              errorMessage = { amount ? '' : amountErrorMessage }
               />
             <GenericInput
               text = { 'Status' }
               value = { statusName }
               onClick = { () => this.setState({ showFinanceStatusModal : true }) }
+              errorMessage = { statusName ? '' : statusNameErrorMessage }
               />
             <center>
               <GenericButton
                 className = { 'global-button' }
                 text = { 'Save' }
-                onClick = { () => {} }
+                onClick = { () => this.submitForm() }
                 />
             </center>
           </div>
