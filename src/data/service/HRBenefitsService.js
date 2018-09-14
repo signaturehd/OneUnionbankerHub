@@ -1096,4 +1096,9 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  getEmployeeSchool (token) {
+    return this.OnboardingClient.get('employees/school')
+    headers: { token }
+  }
 }
