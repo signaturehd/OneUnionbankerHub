@@ -75,8 +75,9 @@ class AffirmationDocumentFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }> Pre Employment Documents Affirmation </h2>
-            <h2>Please click and read all documents below and affirm each one. Documents that are marked with checked are already affirmed</h2>
+            <h2 className={ 'font-size-30px text-align-left' }> Pre Employment Documents Affirmation </h2>
+            <br/>
+            <h4>Please click and read all documents below and affirm each one. Documents that are marked with checked are already affirmed</h4>
           </div>
           <Progress
             type = { 'circle' }

@@ -21,10 +21,19 @@ class SSSFragment extends BaseMVPView {
 
   constructor(props) {
     super(props)
+    this.state = {
+      sssData : [],
+      sssInput : ''
+    }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(8)
+    this.presenter.getEmployeeSSS()
+  }
+
+  showEmployeeSSSData (sssData) {
+    this.setState({ sssData })
   }
 
   render () {
@@ -33,7 +42,7 @@ class SSSFragment extends BaseMVPView {
     },{
       name : 'SSS ID'
     }]
-
+    const { sssData, sssInput } = this.state
     const { percentage } = this.props
 
     return (
@@ -52,7 +61,9 @@ class SSSFragment extends BaseMVPView {
         </div>
         <br/>
           <GenericInput
-          text = { 'SSS Number' }
+            value = { sssData && sssData.sss ? sssData.sss : sssInput }
+            text = { 'SSS Number' }
+            onChange = { e => this.setState({ sssInput : e.target.value }) }
           />
         <br/>
         <Line />

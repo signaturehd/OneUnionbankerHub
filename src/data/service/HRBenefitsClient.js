@@ -822,12 +822,17 @@ export default class HRBenefitsClient {
   }
 
   getEmployeeTin (token) {
-    return this.service.getEmployeeTIN(token)
+    return this.service.getEmployeeTin(token)
       .pipe(ServiceErrorOperator())
   }
 
   createEmployeeTin () {
     return this.service.createEmployeeTin(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getEmployeeSSS (token) {
+    return this.service.getEmployeeSSS(token)
       .pipe(ServiceErrorOperator())
   }
 
