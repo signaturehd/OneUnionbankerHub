@@ -43,10 +43,7 @@ class PagIbigFragment extends BaseMVPView {
             <h2 className={ 'header-margin-default text-align-left' }>Pag-IBIG</h2>
             <h2></h2>
           <br/>
-          </div>
-          <Progress
-            type = { 'circle' }
-            percent={ percentage } />
+          </div>w
         </div>
         <br/>
           <GenericButton

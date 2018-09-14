@@ -16,6 +16,8 @@ import {
 import EducationMultipleCardComponent from './EducationMultipleCardComponent'
 import EducationBackgroundModal from './modals/EducationBackgroundModal'
 
+import { Progress } from 'react-sweet-progress'
+
 class EducationBackgroundFragment extends BaseMVPView {
 
   constructor(props) {
@@ -76,6 +78,8 @@ class EducationBackgroundFragment extends BaseMVPView {
       defaultSchool
     } = this.state
 
+    const { percentage } = this.props
+
     return (
       <div>
         {
@@ -90,8 +94,18 @@ class EducationBackgroundFragment extends BaseMVPView {
             />
         }
         <br/>
-        <h2 className={ 'header-margin-default text-align-left' }>Education Background</h2>
-        <h2>Setup your education background</h2>
+        <div className = { 'percentage-grid' }>
+          <div>
+            <h2 className={ 'font-size-30px text-align-left' }>Education Background</h2>
+            <br/>
+            <h4>Setup your education background</h4>
+          </div>
+          <Progress
+            type = { 'circle' }
+            height = { 100 }
+            width = { 100 }
+            percent={ percentage } />
+        </div>
         <br/>
         <br/>
         <Line />

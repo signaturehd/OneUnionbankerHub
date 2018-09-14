@@ -75,6 +75,8 @@ class BiographicalDataFragment extends BaseMVPView {
             </div>
             <Progress
               type = { 'circle' }
+              height = { 100 }
+              width = { 100 }
               percent={ percentage } />
           </div>
         <br/>
@@ -84,14 +86,8 @@ class BiographicalDataFragment extends BaseMVPView {
             <div className = { 'biographical-grid-x2' }>
               <h2>Biographical Data From</h2>
               <div className = { 'grid-global' }>
-                <GenericButton
-                  className = { 'biographical-button' }
-                  onClick = { () => {} }
-                  text = { 'Download' }/>
-                <GenericButton
-                  className = { 'biographical-button' }
-                  onClick = { () => {} }
-                  text = { 'Preview' }/>
+                <span className = { 'biographical-icon biographical-download-button' }/>
+                <span className = { 'biographical-icon biographical-seemore-button' }/>
               </div>
             </div>
           </Card>

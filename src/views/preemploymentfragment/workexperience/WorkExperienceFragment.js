@@ -55,6 +55,8 @@ class WorkExperienceFragment extends BaseMVPView {
           </div>
           <Progress
             type = { 'circle' }
+            height = { 100 }
+            width = { 100 }
             percent={ percentage } />
         </div>
         <br/>

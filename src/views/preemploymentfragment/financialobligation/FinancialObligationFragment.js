@@ -57,7 +57,7 @@ class FinancialObligationFragment extends BaseMVPView {
   }
 
   hideCircularLoader () {
-    this.setState({ enabledLoader : false })  
+    this.setState({ enabledLoader : false })
   }
 
   validator (input) {
@@ -142,11 +142,13 @@ class FinancialObligationFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>Financial Obligation</h2>
-            <h2>Fill up the form</h2>
+          <h2 className={ 'header-margin-default text-align-left' }>Financial Obligation</h2>
+          <h2>Fill up the form</h2>
           </div>
           <Progress
             type = { 'circle' }
+            height = { 100 }
+            width = { 100 }
             percent={ percentage } />
         </div>
         <br/>

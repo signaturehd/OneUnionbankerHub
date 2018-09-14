@@ -79,13 +79,11 @@ class AffirmationDocumentFragment extends BaseMVPView {
             <br/>
             <h4>Please click and read all documents below and affirm each one. Documents that are marked with checked are already affirmed</h4>
           </div>
-          <div className = { 'font-size-20px' }>
-            <Progress
-              type = { 'circle' }
-              height = { 100 }
-              width = { 100 }
-              percent={ percentage } />
-          </div>
+          <Progress
+            type = { 'circle' }
+            height = { 100 }
+            width = { 100 }
+            percent={ percentage } />
         </div>
         <br/>
         <div className = { 'affirmation-grid-card' }>
