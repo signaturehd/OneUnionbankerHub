@@ -31,6 +31,9 @@ class FinancialObligationFragment extends BaseMVPView {
       showFinanceStatusErrorMessage : '',
       statusId: '',
       statusName: '',
+      bankNameInstitution : '',
+      natureObligation: '',
+      amount: ''
     }
   }
 
@@ -44,7 +47,6 @@ class FinancialObligationFragment extends BaseMVPView {
   }
 
   showFinanceStatus (financeStatus) {
-    console.log(financeStatus)
     this.setState({ financeStatus })
   }
 
@@ -61,6 +63,9 @@ class FinancialObligationFragment extends BaseMVPView {
       statusName,
       showFinanceStatusModal,
       showFinanceStatusErrorMessage,
+      bankNameInstitution,
+      natureObligation,
+      amount
     } = this.state
 
     return(
@@ -103,14 +108,17 @@ class FinancialObligationFragment extends BaseMVPView {
           <div>
             <GenericInput
               text = { 'Name of the Bank/ Financial Institution' }
+              value = { bankNameInstitution }
               onChange = { () => {} }
               />
             <GenericInput
               text = { 'Nature of Obligation' }
+              value = { natureObligation }
               onChange = { () => {} }
               />
             <GenericInput
               text = { 'Amount' }
+              value = { amount }
               onChange = { () => {} }
               />
             <GenericInput
