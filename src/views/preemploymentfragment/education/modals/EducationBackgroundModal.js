@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
 import store from '../../../../store'
 import { NotifyActions } from '../../../../actions'
 
@@ -10,16 +11,15 @@ import {
   MultipleAttachments,
   GenericInput,
   SingleInputModal,
-  Line,
-  DatePicker
+  Line
 } from '../../../../ub-components/'
 
+import './styles/calamityModalStyle.css'
 import { format } from '../../../../utils/numberUtils'
 
 import imageDefault from '../../../../images/profile-picture.png'
 
 import { RequiredValidation } from '../../../../utils/validate/'
-import moment from 'moment'
 
 class EducationBackgroundModal extends Component {
 
@@ -27,19 +27,9 @@ class EducationBackgroundModal extends Component {
     super (props)
   }
 
-  getDamagePropertyObject () {
-    getPropertyHolderFunc(educationObject)
-  }
-
   render () {
-    const {
-    hideModalEducationFormFunc,
-    updateMode
-    } = this.props
-
     return (
       <Modal
-        onClose = { () => hideModalEducationFormFunc(false) }
         isDismisable = { true }
         width = { 50 }>
         <h2>Education Background Form</h2>
@@ -57,39 +47,9 @@ class EducationBackgroundModal extends Component {
         <div className = { 'text-align-left' }>
           <h2>Inclusive Details</h2>
           <br/>
-        </div>
-        <GenericInput
-          text = { 'Start Year' }
-          type = { 'number' }
-          maxLength = { 4 }
-          />
-        <GenericInput
-          text = { 'End Year' }
-          type = { 'number' }
-          maxLength = { 4 }
-          />
-          <br/>
           <Line/>
 
-        <div className = { 'grid-global' }>
-          <GenericButton
-            text = { 'Cancel' }
-            onClick = { () => hideModalEducationFormFunc(false)  }
-            />
-            {
-              updateMode ?
-              <GenericButton
-                text={ 'Update' }
-                onClick={
-                () => this.updateSelectedPropertyObject()
-              }/> :
-              <GenericButton
-                text={ 'Add' }
-                onClick={
-                () => this.getDamagePropertyObject()
-                }/>
-            }
-          </div>
+        </div>
       </Modal>
     )
   }
@@ -100,4 +60,4 @@ EducationBackgroundModal.propTypes = {
 EducationBackgroundModal.defaultProps={
 }
 
-export default EducationBackgroundModal
+export default CalamityFormGenericModal

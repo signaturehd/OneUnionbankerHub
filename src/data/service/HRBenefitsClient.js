@@ -815,14 +815,14 @@ export default class HRBenefitsClient {
     return this.service.getAffirmationsStatus(token)
       .pipe(ServiceErrorOperator())
   }
-
-  getFinancial (token) {
-    return this.service.getFinancial(token)
+  
+  getFinancialStatus (token) {
+    return this.service.getFinancialStatus(token)
       .pipe(ServiceErrorOperator())
   }
 
   getEmployeeTin (token) {
-    return this.service.getEmployeeTIN(token)
+    return this.service.getEmployeeTin(token)
       .pipe(ServiceErrorOperator())
   }
 
@@ -831,13 +831,13 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  validateVaccine (token) {
-    return this.service.validateVaccine(token)
+  getEmployeeSSS (token) {
+    return this.service.getEmployeeSSS(token)
       .pipe(ServiceErrorOperator())
   }
 
-  getEmployeeSchool (token) {
-    return this.service.getEmployeeSchool(token)
+  validateVaccine (token) {
+    return this.service.validateVaccine(token)
       .pipe(ServiceErrorOperator())
   }
 

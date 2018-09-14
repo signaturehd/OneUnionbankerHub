@@ -6,3 +6,13 @@
   display: grid;
   grid-template-columns: .2fr 1fr .2fr
 }
+
+.percentage-grid {
+  display: grid;
+  column-gap: 2%;
+  grid-template-columns:  1fr .1fr;
+}
+
+.react-sweet-progress-symbol{
+  width: auto !important;
+}

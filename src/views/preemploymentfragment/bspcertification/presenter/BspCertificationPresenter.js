@@ -1,7 +1,7 @@
 import { NotifyActions } from '../../../../actions'
 import store from '../../../../store'
 
-export default class EducationBackgroundPresenter {
+export default class BspCertificationPresenter {
   constructor (container) {
   }
 

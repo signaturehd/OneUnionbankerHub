@@ -1,0 +1,19 @@
+.tax-card {
+  padding: 20px;
+}
+
+.tax-grid-card {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  column-gap: 2%;
+}
+
+.tax-grid-x2 {
+  display: grid;
+  grid-template-columns: 1fr .4fr;
+}
+
+.tax-button {
+  border: none;
+  box-shadow: none;
+}
