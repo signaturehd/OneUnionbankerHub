@@ -33,15 +33,15 @@ class LoansFragment extends Component {
       title: 'Housing Assistance Loan',
       path: '/mybenefits/benefits/loans/housingassistance',
     }, {
-      id: 1,
-      styleName: 'loans-cards-6 loans-option-default',
-      title: 'Salary Loan',
-      path: '/mybenefits/benefits/loans/salary',
-    }, {
       id: 5,
       styleName: 'loans-cards-5 loans-option-default',
       title: 'Motorcycle Loan',
       path: '/mybenefits/benefits/loans/motorcycle',
+    }, {
+      id: 1,
+      styleName: 'loans-cards-6 loans-option-default',
+      title: 'Salary Loan',
+      path: '/mybenefits/benefits/loans/salary',
     }]
 
     const LoansHome = () => (
