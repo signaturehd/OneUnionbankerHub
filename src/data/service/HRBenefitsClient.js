@@ -815,9 +815,9 @@ export default class HRBenefitsClient {
     return this.service.getAffirmationsStatus(token)
       .pipe(ServiceErrorOperator())
   }
-
-  getFinancial (token) {
-    return this.service.getFinancial(token)
+  
+  getFinancialStatus (token) {
+    return this.service.getFinancialStatus(token)
       .pipe(ServiceErrorOperator())
   }
 

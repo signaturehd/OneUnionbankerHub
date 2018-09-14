@@ -1067,8 +1067,8 @@ export default class HRBenefitsService {
     })
   }
 
-  getFinancial (token) {
-    return this.OnboardingClient.get('v1/employee/finances/status', {
+  getFinancialStatus (token) {
+    return this.OnboardingClient.get('v1/employees/finances/status', {
       headers : { token }
     })
   }

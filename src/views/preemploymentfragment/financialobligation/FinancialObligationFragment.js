@@ -10,6 +10,7 @@ import {
   GenericButton,
   CircularLoader,
   GenericInput,
+  SingleInputModal,
   Card
 } from '../../../ub-components/'
 
@@ -23,10 +24,28 @@ import './styles/financialObligationStyle.css'
 class FinancialObligationFragment extends BaseMVPView {
   constructor(props) {
     super(props)
+    this.state = {
+      financeStatus : [],
+      showFinanceStatusModal : false,
+      enabledLoader : false,
+      showFinanceStatusErrorMessage : '',
+      statusId: '',
+      statusName: '',
+    }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(1)
+    this.presenter.getFinancialStatus()
+  }
+
+  circularLoader (enabledLoader) {
+    this.setState({ enabledLoader })
+  }
+
+  showFinanceStatus (financeStatus) {
+    console.log(financeStatus)
+    this.setState({ financeStatus })
   }
 
   render() {
@@ -35,10 +54,34 @@ class FinancialObligationFragment extends BaseMVPView {
       checkPEUndertaking,
       percentage
     } = this.props
+    const {
+      enabledLoader,
+      financeStatus,
+      statusId,
+      statusName,
+      showFinanceStatusModal,
+      showFinanceStatusErrorMessage,
+    } = this.state
 
     return(
     <div>
     { super.render() }
+      {
+        showFinanceStatusModal &&
+        <SingleInputModal
+          label = { 'Finance Status' }
+          inputArray = { financeStatus && financeStatus }
+          selectedArray = { (statusId, statusName) =>
+            this.setState({
+              statusId,
+              statusName,
+              showFinanceStatusModal : false,
+              showFinanceStatusErrorMessage : ''
+            })
+          }
+        onClose = { () => this.setState({ showFinanceStatusModal : false }) }
+        />
+      }
       <div>
         <br/>
         <div className = { 'percentage-grid' }>
@@ -51,29 +94,39 @@ class FinancialObligationFragment extends BaseMVPView {
             percent={ percentage } />
         </div>
         <br/>
-        <GenericInput
-          text = { 'Name of the Bank/ Financial Institution' }
-          onChange = { () => {} }
-          />
-        <GenericInput
-          text = { 'Nature of Obligation' }
-          onChange = { () => {} }
-          />
-        <GenericInput
-          text = { 'Amount' }
-          onChange = { () => {} }
-          />
-        <GenericInput
-          text = { 'Status' }
-          onChange = { () => {} }
-          />
-        <center>
-          <GenericButton
-            className = { 'global-button' }
-            text = { 'Save' }
-            onClick = { () => {} }
-            />
-        </center>
+        {
+          enabledLoader ?
+          <center>
+            <CircularLoader show = { true }/>
+          </center>
+          :
+          <div>
+            <GenericInput
+              text = { 'Name of the Bank/ Financial Institution' }
+              onChange = { () => {} }
+              />
+            <GenericInput
+              text = { 'Nature of Obligation' }
+              onChange = { () => {} }
+              />
+            <GenericInput
+              text = { 'Amount' }
+              onChange = { () => {} }
+              />
+            <GenericInput
+              text = { 'Status' }
+              value = { statusName }
+              onClick = { () => this.setState({ showFinanceStatusModal : true }) }
+              />
+            <center>
+              <GenericButton
+                className = { 'global-button' }
+                text = { 'Save' }
+                onClick = { () => {} }
+                />
+            </center>
+          </div>
+        }
       </div>
     </div>
     )

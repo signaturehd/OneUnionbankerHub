@@ -51,7 +51,7 @@ class WorkExperienceFragment extends BaseMVPView {
         <div className = { 'percentage-grid' }>
           <div>
             <h2 className={ 'header-margin-default text-align-left' }>Work Experience</h2>
-            <h2>Setup your work experience</h2>  <h2>Please click and read all documents below and affirm each one. Documents that are marked with checked are already affirmed</h2>
+            <h2>Setup your work experience</h2>
           </div>
           <Progress
             type = { 'circle' }
