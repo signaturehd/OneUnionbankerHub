@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import YearPicker from "react-year-picker"
 import store from '../../../../store'
 import { NotifyActions } from '../../../../actions'
 
@@ -61,9 +60,14 @@ class EducationBackgroundModal extends Component {
         </div>
         <GenericInput
           text = { 'Start Year' }
-          type = { 'number' }/>
-        <YearPicker
-          text = { 'End Year' }/>
+          type = { 'number' }
+          maxLength = { 4 }
+          />
+        <GenericInput
+          text = { 'End Year' }
+          type = { 'number' }
+          maxLength = { 4 }
+          />
           <br/>
           <Line/>
 
