@@ -193,12 +193,17 @@ class PreEmploymentFragment extends BaseMVPView {
         tempPreEmploymentModal &&
         <Modal>
           <center>
-            <h2 className = { 'font-weight-bold font-size-24px' }>Hello</h2>
-            <br/>
             <h2 className = { 'unionbank-color font-weight-lighter font-size-18px' }>
               Welcome to Unionbank!
             </h2>
             <br/>
+            <h2>
+              Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it's your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future.
+            </h2>
+            <br/>
+            <h2>
+              We're stoked to have you onboard, UnionBanker!
+            </h2>
             <br/>
           </center>
           <div className = { 'text-align-right' }>

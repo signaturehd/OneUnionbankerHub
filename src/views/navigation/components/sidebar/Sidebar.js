@@ -22,7 +22,8 @@ class SideBar extends Component {
       history,
       logout,
       profile,
-      tempPreEmployment
+      tempPreEmployment,
+      splitUserInitial
     } = this.props
 
     const modules =
@@ -99,10 +100,13 @@ class SideBar extends Component {
     <div className = { '_sidebar-overlay' }>
       <ul className = { '_link-list ul' }>
         <div className = { 'sidebar-profile-body' }>
-          <img
-            onClick={ () => history.push('/settings') }
-            src={ require('../../../../images/profile-picture.png') }
-            className= {'sidebar-img-ub-logo'}/>
+          <div className={ 'sidebar-picture-card' }>
+            <div>
+              <div className = { 'sidebar-picture' }>
+                <h2 className = { 'sidebar-initial-text' }>{ splitUserInitial }</h2>
+              </div>
+            </div>
+          </div>
         </div>
         {
           profile && profile.fullname ?
@@ -114,7 +118,7 @@ class SideBar extends Component {
           </h5>
         }
         {
-          tempPreEmployment === 1 ?
+          tempPreEmployment !== 0 ?
         <div>
         {
             modules.map((d, idx) =>
@@ -178,6 +182,7 @@ class SideBar extends Component {
 
 SideBar.propTypes = {
   onClick : PropTypes.func,
+  splitUserInitial : PropTypes.func,
   selected: PropTypes.number,
   onNavigationClick: PropTypes.func,
   history : PropTypes.object,

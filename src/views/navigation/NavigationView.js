@@ -178,10 +178,13 @@ class NavigationView extends BaseMVPView {
 
     const style = {
       show: {
-          display : displayShow
+        display : displayShow
       }
     }
     const locationPath = history.location.pathname
+
+    const profileInitial = profile && profile.fullname ? profile.fullname : 'Empty Empty'
+    let splitUserInitial = profileInitial.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),'')
 
     return (
       <div className = { 'navigation-body-div' }>
@@ -224,7 +227,7 @@ class NavigationView extends BaseMVPView {
               }
             <Drawer >
               {
-                tempPreEmployment === 1 ?
+                profile && profile.hasFilledOut !== 1 ?
                 <Switch>
                   <Route exact path = '/' render = {props =>
                     <NewsFragment { ...props }
@@ -348,7 +351,8 @@ class NavigationView extends BaseMVPView {
             className ="left-side"
             style = { style.show }>
             <SideBar
-              tempPreEmployment = { tempPreEmployment }
+              splitUserInitial = { splitUserInitial }
+              tempPreEmployment = { profile && profile.hasFilledOut }
               logout = { () => this.setState({ showLogoutModal : true }) }
               selected={ selected }
               profile = { profile }
