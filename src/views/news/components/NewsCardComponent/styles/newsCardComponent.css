@@ -45,7 +45,7 @@
 
 .news-details-card {
   border-radius: 25px;
-  padding: 0px 25px
+  padding: 0px 25px;
 }
 
 .news-body {
@@ -65,4 +65,28 @@
   box-shadow: none;
   border-radius: 25px;
   border: none;
+}
+
+
+.news-heart-icon {
+  background-color: #ff4436;
+  -webkit-mask-image: url('../../../../../images/heart@2x.png');
+  mask-image: url('../../../../../images/heart@2x.png');
+}
+
+.news-status-icon {
+  -webkit-mask-image: url('../../../../../images/icons/ic_cstatus.png');
+  mask-image: url('../../../../../images/icons/ic_cstatus.png');
+}
+
+.news-logo-icon {
+  background-image: url('../../../../../images/mcdologo.jpg');
+}
+
+.news-icon {
+  height: 30px;
+  width: 30px;
+  -webkit-mask-size: auto 100%;
+  -webkit-mask-repeat: no-repeat;
+  background-color: #ff4436;
 }

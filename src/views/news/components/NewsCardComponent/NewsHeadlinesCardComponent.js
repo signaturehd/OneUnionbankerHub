@@ -9,6 +9,14 @@ import './styles/newsCardComponent.css'
 class NewsHeadlinesCardComponent extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      isHeartActive : 0,
+    }
+  }
+
+  openLink () {
+    const { news } = this.props
+    window.open(news.linkUrl)
   }
 
   render () {
@@ -17,7 +25,7 @@ class NewsHeadlinesCardComponent extends Component {
       onClick ,
       imageUrl
     } = this.props
-
+    const { isHeartActive } = this.state
     const styleHead = {
       newsBackground: {
         backgroundImage : `url(${news.imageUrl})`,
@@ -38,15 +46,14 @@ class NewsHeadlinesCardComponent extends Component {
           style = { styleHead.newsBackground }
           className = {'news-body'}
           onClick = { () =>
-            onClick(news) } >
+            this.openLink() } >
           <div className = { 'news-grid-headlines' }>
             <div className = { 'text-align-right' }>
-              <span className = { '' }/>
             </div>
             <div></div>
             <div></div>
             <div>
-              <h2 className = { 'font-size-35px' }>{ news.title }</h2>
+              <h2 className = { 'font-size-30px' }>{ news.title }</h2>
               <br/>
               <div className = { 'news-grid-date' }>
                 <span className = { 'news-icon-size news-icon-headlines' }/>
