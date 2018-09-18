@@ -58,6 +58,11 @@ p {
   text-align: center;
 }
 
+.global-button:hover {
+  color: white;
+  background-color: #ff8a00;
+}
+
 @media (max-width: 768px) {
   .header-margin-default {
     display: flex;
@@ -215,7 +220,7 @@ p {
   column-gap: 2%;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .grid-global {
     display: grid;
     grid-template-columns: 1fr;
