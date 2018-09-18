@@ -11,6 +11,10 @@
   font-size: 50px;
 }
 
+.news-feature-stories {
+  padding: 20px;
+}
+
 .newsSearchBar {
   width: 40%;
   border-left: 0;

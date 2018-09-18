@@ -39,11 +39,17 @@ class NewsHeadlinesCardComponent extends Component {
           className = {'news-body'}
           onClick = { () =>
             onClick(news) } >
-          <div>
-            <h2>{ news.title }</h2>
-            <div className = { 'news-grid-date' }>
-              <span className = { 'news-icon-size global-icons-calendar' }/>
-              <h2>{ moment(news.date).format('MM DD YYYY') }</h2>
+          <div className = { 'news-grid-headlines' }>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div>
+              <h2 className = { 'font-size-35px' }>{ news.title }</h2>
+              <br/>
+              <div className = { 'news-grid-date' }>
+                <span className = { 'news-icon-size news-icon-headlines' }/>
+                <h2 className = { 'font-weight-normal' }>{ moment(news.date).format('MMM DD, YYYY') }</h2>
+              </div>
             </div>
           </div>
         </div>

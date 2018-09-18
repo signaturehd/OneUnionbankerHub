@@ -11,7 +11,7 @@ import NewsCardComponent from './components/NewsCardComponent/NewsCardComponent'
 import NewsHeadlinesCardComponent from './components/NewsCardComponent/NewsHeadlinesCardComponent'
 import NewsModalComponent from './modals/NewsModalComponent'
 
-import { CircularLoader, GenericInput, Line } from '../../ub-components'
+import { CircularLoader, GenericInput, Line, Card } from '../../ub-components'
 
 import './styles/newsStyles.css'
 
@@ -107,25 +107,29 @@ class NewsFragment extends BaseMVPView {
                 )
               }
               <br/>
-              <h2 className = { 'unionbank-color font-size-30px font-weight-bold' }>Featured Stories</h2>
-              <br/>
-              <Line/>
-              <br/>
-              <div className = { 'grid-global' }>
-              {
-                newsList &&
-                newsList.map((news, i) =>
-                news.status !== 1 &&
-                  <NewsCardComponent
-                    key={ i }
-                    news = { news }
-                    onClick = { details =>
-                      this.setState({ details, show: true })
-                      }
-                    />
-                  )
-                }
-              </div>
+              <Card className = { 'news-feature-stories' }>
+                <h2 className = { 'unionbank-color font-size-30px font-weight-bold' }>Featured Stories</h2>
+                <br/>
+                <br/>
+                {
+                  newsList &&
+                  newsList.map((news, i) =>
+                  news.status !== 1 &&
+                  <div>
+                    <NewsCardComponent
+                      key={ i }
+                      news = { news }
+                      onClick = { details =>
+                        this.setState({ details, show: true })
+                        }
+                      />
+                    <br/>
+                    <Line/>
+                    <br/>
+                  </div>
+                    )
+                  }
+              </Card>
             </div>
           }
         </div>
