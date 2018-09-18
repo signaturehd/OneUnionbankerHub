@@ -5,6 +5,12 @@
   vertical-align: middle;
 }
 
+.news-header {
+  color: #ff8a00;
+  font-weight: 600;
+  font-size: 50px;
+}
+
 .newsSearchBar {
   width: 40%;
   border-left: 0;
@@ -21,16 +27,6 @@
   border-bottom-color: #ff8a00;
 }
 
-.news-card-container {
-  column-gap: 10px;
-  column-count: 3;
-}
-
-@media (max-width : 786px) {
-  .news-card-container {
-    column-count : 1;
-  }
-}
 .news-title-view {
   margin: 25px auto;
 }

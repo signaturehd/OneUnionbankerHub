@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Card } from '../../../../ub-components/'
-
+import moment from 'moment'
 import { FaEye } from 'react-icons/lib/fa/'
 import './styles/newsCardComponent.css'
 
@@ -12,28 +12,35 @@ class NewsCardComponent extends Component {
   }
 
   render () {
-    const { news, onClick , imageUrl } = this.props
+    const {
+      news,
+      onClick ,
+      imageUrl
+    } = this.props
 
     const style = {
       newsBackground: {
         backgroundImage : `url(${news.imageUrl})`,
-        backgroundColor : 'rgba(0,0,0,0.7)',
         backgroundRepeat : 'no-repeat',
-        width: 'auto',
-        backgroundBlendMode: 'color',
         backgroundSize: 'cover',
         color : 'white',
+        height: '100%',
         fontWeight : 'bold',
+        borderRadius: '30px',
+        borderRadius: '25px',
       }
     }
 
-
-      return (
-        <Card className = { 'news-card' }>
-          <div onClick = { () => onClick(news) } style = { style.newsBackground } className = {'news-body'}>
-            <h3>{news.title}</h3>
-          </div>
-        </Card>
+    return (
+      <Card className = { 'news-card' }>
+        <div
+          style = { style.newsBackground }
+          className = {'news-body'}
+          onClick = { () =>
+            onClick(news) } >
+          <h3>{ news.title }</h3>
+        </div>
+      </Card>
     )
   }
 }

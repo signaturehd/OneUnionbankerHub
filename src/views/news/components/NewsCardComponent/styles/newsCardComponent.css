@@ -1,13 +1,31 @@
-.card-container {
+.news-card-container {
   display:grid;
   grid-column-gap: 1%;
   grid-template-columns : repeat(250px);
   margin-top: 20px;
 }
 
+.news-icon-size {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 20px;
+  width: 20px;
+  background-repeat: no-repeat;
+}
+
+.news-grid-date {
+  display: grid;
+  grid-template-columns: .2fr 1fr;
+}
+
+.news-card-headlines {
+  border-radius: 25px;
+}
+
 .news-body {
   padding : 50px;
-  text-align:center;
   cursor:pointer;
 }
 
@@ -18,6 +36,5 @@
 }
 
 .news-card {
-  margin-bottom: 10px;
-  break-inside: avoid-column;
+  border-radius: 25px
 }
