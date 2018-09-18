@@ -66,6 +66,9 @@ import Carousel from '../carousel/Carousel'
 /* Pre Employment */
 import PreEmploymentFragment from '../preemployment/PreEmploymentFragment'
 
+/* Laptop Lease */
+import LaptopLeaseFragment from '../laptoplease/LaptopLeaseFragment'
+
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
@@ -296,6 +299,9 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits/benefits/carlease/old' render = { props =>
                     <CarLeaseOldFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/laptoplease' render = { props =>
+                    <LaptopLeaseFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits/benefits/loans/emergency' render = { props =>
                     <EmergencyLoanFragment { ...props }
