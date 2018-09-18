@@ -1,13 +1,55 @@
-.card-container {
+.news-card-container {
   display:grid;
   grid-column-gap: 1%;
   grid-template-columns : repeat(250px);
   margin-top: 20px;
 }
 
+.news-grid-headlines {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+.news-icon-headlines {
+  -webkit-mask-image: url('../../../../../images/icons/ic_date_range_grey_500_18dp.png');
+  mask-image: url('../../../../../images/icons/ic_date_range_grey_500_18dp.png');
+}
+
+.news-limit-text {
+}
+
+.news-icon-size {
+  background-size: contain;
+  cursor: pointer;
+  background-color: #ffffff;
+  display: block;
+  height: 30px;
+  width: 30px;
+  -webkit-mask-repeat: no-repeat;
+}
+
+.news-grid-date {
+  display: grid;
+  align-items: center;
+  grid-template-columns: .04fr 1fr;
+}
+
+.news-card-headlines {
+  background-color: linear-gradient(to top, '#55000000', '#00000000');
+  mix-blend-mode: multiply;
+  border-radius: 25px;
+}
+
+.news-view-details-button {
+}
+
+.news-details-card {
+  border-radius: 25px;
+  padding: 0px 25px;
+}
+
 .news-body {
   padding : 50px;
-  text-align:center;
   cursor:pointer;
 }
 
@@ -18,6 +60,33 @@
 }
 
 .news-card {
-  margin-bottom: 10px;
-  break-inside: avoid-column;
+  display: grid;
+  grid-template-columns: .6fr 1fr;
+  box-shadow: none;
+  border-radius: 25px;
+  border: none;
+}
+
+
+.news-heart-icon {
+  background-color: #ff4436;
+  -webkit-mask-image: url('../../../../../images/heart@2x.png');
+  mask-image: url('../../../../../images/heart@2x.png');
+}
+
+.news-status-icon {
+  -webkit-mask-image: url('../../../../../images/icons/ic_cstatus.png');
+  mask-image: url('../../../../../images/icons/ic_cstatus.png');
+}
+
+.news-logo-icon {
+  background-image: url('../../../../../images/mcdologo.jpg');
+}
+
+.news-icon {
+  height: 30px;
+  width: 30px;
+  -webkit-mask-size: auto 100%;
+  -webkit-mask-repeat: no-repeat;
+  background-color: #ff4436;
 }

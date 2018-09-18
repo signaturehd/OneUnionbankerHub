@@ -63,6 +63,9 @@ import Payslip from '../payslip/PayslipFragment'
 import OnboardingView from '../onboarding/OnboardingView'
 import Carousel from '../carousel/Carousel'
 
+/* Pre Employment */
+import PreEmploymentFragment from '../preemployment/PreEmploymentFragment'
+
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
@@ -79,6 +82,8 @@ class NavigationView extends BaseMVPView {
       showPinEnrollmentModal : true,
       hasPIN: '',
       enabledLoader : false,
+      profileHasCOC: '',
+      tempPreEmploymentModal: false
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -130,7 +135,6 @@ class NavigationView extends BaseMVPView {
     })
     store.dispatch(NotifyActions.resetNotify())
     this.presenter.getLibraries()
-    this.presenter.getProfile()
   }
 
   setSelectedNavigation (id) {
@@ -145,8 +149,16 @@ class NavigationView extends BaseMVPView {
     this.presenter.logout()
   }
 
+  isHasCOC (profileHasCOC) {
+    this.setState({ profileHasCOC })
+  }
+
   relogin () {
     this.props.history.push('/')
+  }
+
+  onChangeStatusPreEmploymentModal () {
+    this.setState({ tempPreEmploymentModal : false  })
   }
 
   render () {
@@ -160,17 +172,22 @@ class NavigationView extends BaseMVPView {
       showLogoutModal,
       showPinEnrollmentModal,
       hasPIN,
-      enabledLoader
+      enabledLoader,
+      profileHasCOC,
+      tempPreEmploymentModal
     } = this.state
 
     const { history, login } = this.props
 
     const style = {
       show: {
-          display : displayShow
+        display : displayShow
       }
     }
     const locationPath = history.location.pathname
+
+    const profileInitial = profile && profile.fullname ? profile.fullname : 'Empty Empty'
+    let splitUserInitial = profileInitial.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),'')
 
     return (
       <div className = { 'navigation-body-div' }>
@@ -211,7 +228,29 @@ class NavigationView extends BaseMVPView {
                   } }
                 />
               }
-              <Drawer >
+            <Drawer >
+              {
+                profile && profile.hasFilledOut !== 1 ?
+                <Switch>
+                  <Route exact path = '/' render = {props =>
+                    <NewsFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> }/>
+                  <Route path = '/settings' render = { props =>
+                    <SettingsFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/preemployment' render = { props =>
+                    <PreEmploymentFragment { ...props }
+                      onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
+                      tempPreEmploymentModal = { tempPreEmploymentModal }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/faqs' render = { props =>
+                    <FaqFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/feedback' render = { props =>
+                    <FeedbackFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                </Switch>
+                :
                 <Switch>
                   <Route exact path = '/' render = {props =>
                     <NewsFragment { ...props }
@@ -305,18 +344,22 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mycompliance' render = { props =>
                     <ComplianceFragment { ...props }
+                      profileHasCOC = { profileHasCOC }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/phenom' render = { props =>
                     <PhenomFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
+              }
             </Drawer>
           </main>
           <aside
             className ="left-side"
             style = { style.show }>
             <SideBar
+              splitUserInitial = { splitUserInitial }
+              tempPreEmployment = { profile && profile.hasFilledOut }
               logout = { () => this.setState({ showLogoutModal : true }) }
               selected={ selected }
               profile = { profile }
