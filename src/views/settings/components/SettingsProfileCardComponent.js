@@ -60,12 +60,16 @@ class SettingsProfileCardComponent extends Component {
       onClickEmployeeConfirmationFunc
     } = this.props
 
+
     let genderPartial
     if (profile.gender === 'M') {
       genderPartial='Male'
     } else {
       genderPartial='Female'
     }
+
+    const profileInitial = profile && profile.fullname ? profile.fullname : 'Empty Empty'
+    let splitUserInitial = profileInitial.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),'')
 
     return (
     <div>
@@ -128,17 +132,9 @@ class SettingsProfileCardComponent extends Component {
             <div className={ 'profile-banner' }>
               <div className={ 'profile-picture-card' }>
                 <div>
-                  {
-                    profileImageUrl ?
-
-                    <img src={
-                      require(`${ profileImageUrl }`) }
-                      className={ 'profile-picture' }/>
-                    :
-                    <img src={
-                      require('../../../images/profile-picture.png') }
-                      className={ 'profile-picture' }/>
-                  }
+                  <div className = { 'profile-picture' }>
+                    <h2 className = { 'profile-initial-text' }>{ splitUserInitial }</h2>
+                  </div>
                 </div>
               </div>
             </div>
@@ -154,7 +150,7 @@ class SettingsProfileCardComponent extends Component {
                   { profile.address ? profile.address  : '(Not Yet Provided)' }
                 </h2>
               </div>
-              <div>
+              <div className = { 'profile-information-modal-view' }>
                 <div
                   onClick={ () => showChangePINModalFunc(true) }
                   className={ 'profile-information-view-right' }>
