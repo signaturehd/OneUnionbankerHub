@@ -40,7 +40,9 @@ class NewsHeadlinesCardComponent extends Component {
           onClick = { () =>
             onClick(news) } >
           <div className = { 'news-grid-headlines' }>
-            <div></div>
+            <div className = { 'text-align-right' }>
+              <span className = { '' }/>
+            </div>
             <div></div>
             <div></div>
             <div>
