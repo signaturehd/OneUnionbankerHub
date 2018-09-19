@@ -96,7 +96,7 @@ class CodeOfConductFragment extends BaseMVPView {
   }
 
   render () {
-    const { history, onClick } = this.props
+    const { history, onClick, profileHasCOC } = this.props
     const {
       compliancesData,
       enabledLoader,
@@ -189,17 +189,20 @@ class CodeOfConductFragment extends BaseMVPView {
                 )
               }
             <br/>
-            <div className={ 'compliance-body' }>
-              <div></div>
-              <GenericButton
-                type = { 'button' }
-                text = { 'I Acknowledge' }
-                onClick = {
-                  () => this.setState({ showEnterPin : true })
-                }
-                className={ 'compliance-submit' }
-                />
-            </div>
+            {
+              !profileHasCOC &&
+              <div className={ 'compliance-body' }>
+                <div></div>
+                <GenericButton
+                  type = { 'button' }
+                  text = { 'I Acknowledge' }
+                  onClick = {
+                    () => this.setState({ showEnterPin : true })
+                  }
+                  className={ 'compliance-submit' }
+                  />
+              </div>
+            }
           </div>
         </div>
       }
@@ -211,6 +214,7 @@ class CodeOfConductFragment extends BaseMVPView {
 CodeOfConductFragment.propTypes = {
   setSelectedNavigation: PropTypes.func,
   onClick: PropTypes.func,
+  profileHasCOC: PropTypes.boolean,
   history: PropTypes.object,
 }
 

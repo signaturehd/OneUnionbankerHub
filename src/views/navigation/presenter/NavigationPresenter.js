@@ -39,6 +39,9 @@ export default class NavigationPresenter {
   getLibraries () {
     this.view.showLoading()
     this.getLibrariesInteractor.execute()
+     .do(profile => this.view.showProfile(profile.employee))
+     .do(profile => this.view.showPinIsValid(profile.hasPIN))
+     .do(profile => this.view.isHasCOC(profile.hasCOC))
       .subscribe(resp => {
         this.view.hideLoading()
       }, error => {
@@ -64,19 +67,6 @@ export default class NavigationPresenter {
     }, error => {
       this.view.hideCircularLoader()
     })
-  }
-
-  getProfile () {
-   this.view.showCircularLoader()
-
-   this.getProfileInteractor.execute()
-    .do(profile => this.view.showProfile(profile.employee))
-    .do(profile => this.view.showPinIsValid(profile.hasPIN))
-    .subscribe(profile => {
-     this.view.hideCircularLoader()
-    }, e => {
-     this.view.hideCircularLoader()
-   })
   }
   //
   // getWizard () {

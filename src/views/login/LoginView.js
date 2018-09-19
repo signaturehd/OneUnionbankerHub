@@ -123,7 +123,6 @@ class LoginView extends BaseMVPView {
     }
   }
 
-
   render () {
     const {
       showOtpModal,
@@ -142,7 +141,7 @@ class LoginView extends BaseMVPView {
 
     let version = 4
     let majorVersion = 8
-    let minorVersion = 0
+    let minorVersion = 5
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     return (

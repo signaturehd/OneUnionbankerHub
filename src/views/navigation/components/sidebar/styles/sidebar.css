@@ -97,8 +97,8 @@ ul {
   mask-image: url('../../../../../images/icons/ic_payslip.png');
 }
 .compliance-icon {
-  -webkit-mask-image: url('../../../../../images/icons/drawer_compliance.png');
-  mask-image: url('../../../../../images/icons/drawer_compliance.png');
+  -webkit-mask-image: url('../../../../../images/icons/ic_my_compliance.png');
+  mask-image: url('../../../../../images/icons/ic_my_compliance.png');
 }
 .phenom-sidebar-icon {
   -webkit-mask-image: url('../../../../../images/icons/Phenom Prime - Grey.png');
