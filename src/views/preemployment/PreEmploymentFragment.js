@@ -126,11 +126,16 @@ class PreEmploymentFragment extends BaseMVPView {
       enabledLoader: false,
       preEmpPage  : 0,
       showFinancialObligationModal: false,
+      preEmploymentData : []
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(11)
+  }
+
+  checkedPreEmploymentForm (preEmploymentData) {
+    this.setState({ preEmploymentData })
   }
 
   onSendPageNumberToView (preEmpPage) {
@@ -174,7 +179,8 @@ class PreEmploymentFragment extends BaseMVPView {
       isDismisable,
       enabledLoader,
       preEmpPage,
-      showFinancialObligationModal
+      showFinancialObligationModal,
+      preEmploymentData
     } = this.state
 
     return(

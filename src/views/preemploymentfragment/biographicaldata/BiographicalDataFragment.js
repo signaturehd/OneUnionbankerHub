@@ -27,7 +27,6 @@ class BiographicalDataFragment extends BaseMVPView {
     this.state = {
       enabledLoader : false,
       biographicalDataFormData: [],
-      biographicalData : [],
       count : 1
     }
     this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
@@ -35,19 +34,6 @@ class BiographicalDataFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.onSendPageNumberToView(2)
-    this.presenter.getBiographicalForm()
-  }
-
-  checkedBiographicalDataForm(biographicalData) {
-    this.setState({ biographicalData })
-  }
-
-  hideCircularLoader () {
-    this.setState({ enabledLoader : false })
-  }
-
-  showCircularLoader () {
-    this.setState({ enabledLoader : true })
   }
 
   addAttachmentsFunc (attachment, tempCount) {
@@ -103,7 +89,6 @@ class BiographicalDataFragment extends BaseMVPView {
             <div className = { 'biographical-grid-x2' }>
               <h2>Biographical Data Form</h2>
               <div className = { 'grid-global' }>
-                <span className = { 'biographical-icon biographical-download-button' }/>
                 <span className = { 'biographical-icon biographical-seemore-button' }/>
               </div>
             </div>
