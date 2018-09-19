@@ -1,0 +1,37 @@
+.affirmation-card {
+  padding: 20px;
+}
+
+.affirmation-grid-card {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  column-gap: 2%;
+}
+
+.affirmation-grid-x2 {
+  display: grid;
+  grid-template-columns: 1fr .15fr;
+}
+
+.affirmation-button {
+  border: none;
+  box-shadow: none;
+}
+
+.affirmation-download-button {
+  background-image: url('../../../../images/icons/ic_file_icon_name.png');
+}
+
+.affirmation-seemore-button {
+  background-image: url('../../../../images/icons/ic_see_icon_name.png');
+}
+
+.affirmation-icon {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 25px;
+  width: 25px;
+  background-repeat: no-repeat;
+}
