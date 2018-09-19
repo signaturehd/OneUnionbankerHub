@@ -230,7 +230,7 @@ class NavigationView extends BaseMVPView {
               }
             <Drawer >
               {
-                profile && profile.hasFilledOut !== 1 ?
+                profile && profile.hasFilledOut == 1 ?
                 <Switch>
                   <Route exact path = '/' render = {props =>
                     <NewsFragment { ...props }

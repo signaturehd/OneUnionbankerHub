@@ -20,7 +20,7 @@ import { RequiredValidation } from '../../utils/validate/'
 import NoticeModal from '../notice/Notice'
 import ResponseModal from '../notice/NoticeResponseModal'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
-import CarDealerQuotation from './modals/CarDealerQuotationModal'
+// import CarDealerQuotation from './modals/CarDealerQuotationModal'
 
 import FormComponent from './components/LaptopLeaseCardComponent'
 import moment from 'moment'
@@ -40,7 +40,7 @@ class LaptopLeaseFragment extends BaseMVPView {
       noticeResponse : null,
       showNoticeResponseModal : false,
       showBenefitFeedbackModal : false,
-      showCarBrands: false,
+      showLaptopBrands: false,
       showEnterSolRCModal: false,
       showInsurancePaymentModal: false,
       showEditMode: false,
@@ -49,8 +49,8 @@ class LaptopLeaseFragment extends BaseMVPView {
       leaseMode: 1,
       carBrand: '',
       carId: '',
-      carModel: '',
-      makeYear: '',
+      laptopModel: '',
+      screenSize: '',
       primaryColor: '',
       secondaryColor: '',
       file: [],
@@ -70,7 +70,7 @@ class LaptopLeaseFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.props.presenter.getCarValidate()
+    // this.props.presenter.getCarValidate()
   }
 
   validator (input) {
@@ -86,45 +86,45 @@ class LaptopLeaseFragment extends BaseMVPView {
   }
 
   validateSolRC (e) {
-    const validate = CarLeaseFunctions.checkedValidateInputNumber(e)
+    const validate = LaptopLeaseFunctions.checkedValidateInputNumber(e)
     this.setState({ solRC : validate, solRCErrorMessage : '' })
   }
 
   validateSolId (e) {
-    const validate = CarLeaseFunctions.checkedValidateInputNumber(e)
+    const validate = LaptopLeaseFunctions.checkedValidateInputNumber(e)
     this.setState({ solId : validate, solIdErrorMessage : '' })
   }
 
-  validateInputCarModelValue (e) {
-    const validate = CarLeaseFunctions.checkedValidatedInput(e)
-    this.setState({ carModel : validate })
+  validateInputLaptopModelValue (e) {
+    const validate = LaptopLeaseFunctions.checkedValidatedInput(e)
+    this.setState({ laptopModel : validate })
   }
 
   validateInputPrimaryColor (e) {
-    const validate = CarLeaseFunctions.checkedValidateAlphabet(e)
+    const validate = LaptopLeaseFunctions.checkedValidateAlphabet(e)
     this.setState({ primaryColor : validate })
   }
 
   validateInputSecondaryColor (e) {
-    const validate = CarLeaseFunctions.checkedValidateAlphabet(e)
+    const validate = LaptopLeaseFunctions.checkedValidateAlphabet(e)
     this.setState({ secondaryColor : validate })
   }
 
   validateYear (e) {
     const currentDate = moment().format('YYYY')
-    const validate = CarLeaseFunctions.checkedValidateInputNumber(e)
+    const validate = LaptopLeaseFunctions.checkedValidateInputNumber(e)
     if(validate > currentDate) {
       this.setState({ yearErrorMessage : 'Future year are not allowed' })
     } else {
-      this.setState({ makeYear : validate, yearErrorMessage : '' })
+      this.setState({ screenSize : validate, yearErrorMessage : '' })
     }
   }
 
   sendFormData () {
     const {
       carBrand,
-      carModel,
-      makeYear,
+      laptopModel,
+      screenSize,
       solRC,
       insurancePayment,
       cMUnit,
@@ -155,7 +155,7 @@ class LaptopLeaseFragment extends BaseMVPView {
           })
         )
       }
-      else if (!this.validator(carModel)) {
+      else if (!this.validator(laptopModel)) {
           store.dispatch(NotifyActions.addNotify({
             title : 'My Benefits',
             message : 'Car Model fields are required',
@@ -163,7 +163,7 @@ class LaptopLeaseFragment extends BaseMVPView {
           })
         )
       }
-      else if (!this.validator(makeYear)) {
+      else if (!this.validator(screenSize)) {
           store.dispatch(NotifyActions.addNotify({
             title : 'My Benefits',
             message : 'Year fields are required',
@@ -234,14 +234,14 @@ class LaptopLeaseFragment extends BaseMVPView {
   }
   /* Navigage back to loans Option*/
   navigate () {
-    this.props.history.push('/mybenefits/benefits/carlease')
+    this.props.history.push('/mybenefits/benefits/')
   }
 
   formSubmission () {
     const {
       carBrand,
-      carModel,
-      makeYear,
+      laptopModel,
+      screenSize,
       solRC,
       insurancePayment,
       cMUnit,
@@ -258,8 +258,8 @@ class LaptopLeaseFragment extends BaseMVPView {
 
     this.presenter.addCarRequest(
       carBrand,
-      carModel,
-      makeYear,
+      laptopModel,
+      screenSize,
       leaseMode,
       solRCChecked,
       solId,
@@ -272,7 +272,7 @@ class LaptopLeaseFragment extends BaseMVPView {
 
   render () {
     const {
-      showCarBrands,
+      showLaptopBrands,
       showQuotation,
       showFileUpload,
       enabledLoader,
@@ -284,8 +284,8 @@ class LaptopLeaseFragment extends BaseMVPView {
       showEnterSolRCModal,
       response,
       carBrand,
-      carModel,
-      makeYear,
+      laptopModel,
+      screenSize,
       primaryColor,
       secondaryColor,
       file,
@@ -357,18 +357,7 @@ class LaptopLeaseFragment extends BaseMVPView {
             </center>
           </Modal>
         }
-        {
-          showQuotation &&
-          <CarDealerQuotation
-            history = { history }
-            backToBenefits = { this.navigate.bind(this) }
-            onUserConfirmation = { (showQuotation, showFileUpload) =>
-              this.setState({ showQuotation, showFileUpload })
-           }
-            onClose = { () =>
-              this.setState({ showQuotation: false })  }
-            />
-        }
+
         {
           showNoticeModal &&
           <NoticeModal
@@ -399,19 +388,19 @@ class LaptopLeaseFragment extends BaseMVPView {
           />
         }
         {
-          showCarBrands &&
+          showLaptopBrands &&
           <SingleInputModal
-            label = { 'Car Brands' }
+            label = { 'Laptop Brands' }
             inputArray = { carValidate && carValidate.brands }
             selectedArray = { (carId, carBrand) =>
               this.setState({
                 carId,
                 carBrand,
-                showCarBrands : false,
+                showLaptopBrands : false,
                 carBrandErrorMessage : ''
               })
             }
-            onClose = { () => this.setState({ showCarBrands : false }) }
+            onClose = { () => this.setState({ showLaptopBrands : false }) }
           />
         }
         {
@@ -440,7 +429,7 @@ class LaptopLeaseFragment extends BaseMVPView {
             onClick={ this.navigate.bind(this) }>
           </i>
           <h2 className={ 'header-margin-default' }>
-            Car Lease Brand New
+            Laptop Lease
           </h2>
         </div>
           {
@@ -451,8 +440,8 @@ class LaptopLeaseFragment extends BaseMVPView {
             <FormComponent
               showEditMode = { showEditMode }
               carBrand = { carBrand }
-              carModel = { carModel }
-              makeYear = { makeYear }
+              laptopModel = { laptopModel }
+              screenSize = { screenSize }
               yearErrorMessage = { yearErrorMessage }
               solRC = { solRC }
               solId = { solId }
@@ -470,8 +459,8 @@ class LaptopLeaseFragment extends BaseMVPView {
               solRCErrorMessage = { solRCErrorMessage }
               getFileArray = { (resp) => this.setFileAttachments(resp) }
               onShowInsurancePaymentFunc = { () => this.setState({ showInsurancePaymentModal : true }) }
-              onGetCarBrandsFunc = { () => this.setState({ showCarBrands : true }) }
-              onCarModelValidateFunc = { (resp) => this.validateInputCarModelValue(resp) }
+              onGetLaptopBrandsFunc = { () => this.setState({ showLaptopBrands : true }) }
+              onlaptopModelValidateFunc = { (resp) => this.validateInputLaptopModelValue(resp) }
               onValidateyearFunc = { (resp) => this.validateYear(resp) }
               onValidatePrimaryColor = { (resp) => this.validateInputPrimaryColor(resp) }
               onValidateSecondaryColor = { (resp) => this.validateInputSecondaryColor(resp) }
