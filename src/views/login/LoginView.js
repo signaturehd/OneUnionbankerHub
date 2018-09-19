@@ -241,7 +241,7 @@ class LoginView extends BaseMVPView {
               <h2
                 onClick = { () => window.open(this.getSupportURL()) }
                 className = { 'unionbank-color font-size-12px text-align-left cursor-pointer' }>Learn More.</h2>
-              <div className={ 'login-version' }>v { versionNumber } UAT</div>
+              <div className={ 'login-version' }>v { versionNumber }</div>
             </div>
         </Card>
 
