@@ -112,17 +112,12 @@ class AffirmationDocumentFragment extends BaseMVPView {
                 <h2> { resp.title } </h2>
                 <div>
                   {
-                    resp.nodeStatus === 1 ?
+                    resp.nodeStatus !== 1 ?
                     <span className = { 'affirmation-icon affirmation-success float-right' }/>
                     :
-
-                    <div className = { 'grid-global' }>
-                      <span
-                        className = { 'affirmation-icon affirmation-download-button' }/>
-                      <span
-                        onClick = { () => this.setState({ previewDataPDF: resp, showPdfViewModal : true }) }
-                        className = { 'affirmation-icon affirmation-seemore-button' }/>
-                    </div>
+                    <span
+                      onClick = { () => this.setState({ previewDataPDF: resp.link, showPdfViewModal : true }) }
+                      className = { 'affirmation-icon affirmation-seemore-buttons float-right' }/>
                   }
                 </div>
               </div>
