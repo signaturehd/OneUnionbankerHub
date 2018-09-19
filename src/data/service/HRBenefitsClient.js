@@ -845,17 +845,16 @@ export default class HRBenefitsClient {
     return this.service.getEmployeeSchool(token)
       .pipe(ServiceErrorOperator())
   }
-  
-  /* Vaccines Requisitions */
-  
-
-  validateVaccine (token) {
-    return this.service.validateVaccine(token)
-      .pipe(ServiceErrorOperator())
-  }
 
   getBiographicalForm (token) {
     return this.service.getBiographicalForm(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Vaccines Requisitions */
+
+  validateVaccine (token) {
+    return this.service.validateVaccine(token)
       .pipe(ServiceErrorOperator())
   }
 

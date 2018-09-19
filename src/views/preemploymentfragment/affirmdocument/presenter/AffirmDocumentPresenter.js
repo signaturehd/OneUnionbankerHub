@@ -1,6 +1,8 @@
 import { NotifyActions } from '../../../../actions'
 import store from '../../../../store'
 
+import { Observable } from 'rxjs'
+
 import GetAffirmationStatusInteractor from
   '../../../../domain/interactor/preemployment/affirmation/GetAffirmationStatusInteractor'
 
@@ -8,7 +10,7 @@ export default class AffirmDocumentPresenter {
   constructor (container) {
     this.getAffirmationStatusInteractor =
       new GetAffirmationStatusInteractor(container.get('HRBenefitsClient'))
-    this.getAffirmation
+    this.getAffirmationPdf = container.get('FileClient')
   }
 
   setView (view) {
@@ -23,4 +25,13 @@ export default class AffirmDocumentPresenter {
     })
   }
 
+  getAffirmationPdfView (link, token) {
+    this.getTransactionImage.get('v1/uploads?folder=attachments', {
+      headers: {
+        token: token,
+        file: link,
+      },
+      responseType : 'blob'
+    })
+  }
 }

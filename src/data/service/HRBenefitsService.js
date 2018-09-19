@@ -1105,8 +1105,22 @@ export default class HRBenefitsService {
   }
 
   getEmployeeSchool (token) {
-    return this.onboardingClient.get('employees/school')
-    headers: { token }
+    return this.onboardingClient.get('employees/school', {
+      headers: { token }
+    })
+  }
+
+
+  getEmployeeSchool (token) {
+    return this.OnboardingClient.get('v1/employees/school', {
+      headers: { token }
+    })
+  }
+
+  getBiographicalForm (token) {
+    return this.OnboardingClient.get('v1/employees/forms', {
+      headers: { token }
+    })
   }
 
   /* Vaccine Requisition */
@@ -1116,15 +1130,5 @@ export default class HRBenefitsService {
     return this.apiClient.get('v1/vaccinations/validate', {
       headers: { token }
     })
-  }
-
-  getEmployeeSchool (token) {
-    return this.OnboardingClient.get('v1/employees/school')
-    headers: { token }
-  }
-
-  getBiographicalForm (token) {
-    return this.OnboardingClient.get('v1/employees/forms')
-    headers: { token }
   }
 }
