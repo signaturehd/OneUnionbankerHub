@@ -8,6 +8,7 @@ export default class AffirmDocumentPresenter {
   constructor (container) {
     this.getAffirmationStatusInteractor =
       new GetAffirmationStatusInteractor(container.get('HRBenefitsClient'))
+    this.getAffirmation
   }
 
   setView (view) {
