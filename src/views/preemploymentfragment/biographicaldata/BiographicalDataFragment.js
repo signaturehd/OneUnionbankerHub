@@ -25,7 +25,9 @@ class BiographicalDataFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
+      enabledLoader : false,
       biographicalDataFormData: [],
+      biographicalData : [],
       count : 1
     }
     this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
@@ -33,6 +35,19 @@ class BiographicalDataFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.onSendPageNumberToView(2)
+    this.presenter.getBiographicalForm()
+  }
+
+  checkedBiographicalDataForm(biographicalData) {
+    this.setState({ biographicalData })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
   }
 
   addAttachmentsFunc (attachment, tempCount) {
@@ -53,7 +68,9 @@ class BiographicalDataFragment extends BaseMVPView {
     } = this.props
 
     const {
+      enabledLoader,
       biographicalDataFormData,
+      biographicalData,
       count
     } = this.state
 
@@ -84,7 +101,7 @@ class BiographicalDataFragment extends BaseMVPView {
           <Card
             className = { 'biographical-card' }>
             <div className = { 'biographical-grid-x2' }>
-              <h2>Biographical Data From</h2>
+              <h2>Biographical Data Form</h2>
               <div className = { 'grid-global' }>
                 <span className = { 'biographical-icon biographical-download-button' }/>
                 <span className = { 'biographical-icon biographical-seemore-button' }/>
@@ -114,7 +131,7 @@ class BiographicalDataFragment extends BaseMVPView {
           <MultipleAttachments
             count = { count }
             countFunc = { (count) => this.setState({ count }) }
-            placeholder = { '.' }
+            placeholder = { '' }
             fileArray = { biographicalDataFormData }
             setFile = { (biographicalDataFormData) =>
                 this.setState({ biographicalDataFormData })

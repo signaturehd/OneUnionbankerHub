@@ -1117,4 +1117,14 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  getEmployeeSchool (token) {
+    return this.OnboardingClient.get('v1/employees/school')
+    headers: { token }
+  }
+
+  getBiographicalForm (token) {
+    return this.OnboardingClient.get('v1/employees/forms')
+    headers: { token }
+  }
 }
