@@ -208,6 +208,16 @@ p {
   cursor: pointer;
 }
 
+/* flaot position */
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
 /* Default color */
 
 .unionbank-color {

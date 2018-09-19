@@ -26,6 +26,10 @@
   background-image: url('../../../../images/icons/ic_see_icon_name.png');
 }
 
+.affirmation-success {
+  background-image: url('../../../../images/icons/ic_check_green_500_24dp.png');
+}
+
 .affirmation-icon {
   background-size: contain;
   cursor: pointer;

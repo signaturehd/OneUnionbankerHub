@@ -1055,6 +1055,7 @@ export default class HRBenefitsService {
   }
 
   /* Pre-Employment */
+
   postAffirmPreEmploymentUndertaking (token) {
     return this.onboardingClient.post('v1/affirm/pre-emp-undertaking', {
       headers : { token }
@@ -1107,10 +1108,10 @@ export default class HRBenefitsService {
     return this.onboardingClient.get('employees/school')
     headers: { token }
   }
-  
+
   /* Vaccine Requisition */
-  
-  
+
+
   validateVaccine (token) {
     return this.apiClient.get('v1/vaccinations/validate', {
       headers: { token }

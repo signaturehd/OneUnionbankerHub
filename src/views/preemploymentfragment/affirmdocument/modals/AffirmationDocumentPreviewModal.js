@@ -13,12 +13,20 @@ class AffirmationDocumentPreviewModal extends Component {
   }
 
   render() {
-
+    const { onClose } = this.props
     return(
-      <Modal>
+    <Modal
+      onClose = { onClose }
+      isDismisable = { true }
+      >
+      <h2>test</h2>
     </Modal>
     )
   }
+}
+
+AffirmationDocumentPreviewModal.propTypes = {
+  onClose : PropTypes.func
 }
 
 export default AffirmationDocumentPreviewModal
