@@ -82,8 +82,8 @@ class NavigationView extends BaseMVPView {
       showPinEnrollmentModal : true,
       hasPIN: '',
       enabledLoader : false,
-      tempPreEmployment : 1,
-      tempPreEmploymentModal : true,
+      profileHasCOC: '',
+      tempPreEmploymentModal: false
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -135,7 +135,6 @@ class NavigationView extends BaseMVPView {
     })
     store.dispatch(NotifyActions.resetNotify())
     this.presenter.getLibraries()
-    this.presenter.getProfile()
   }
 
   setSelectedNavigation (id) {
@@ -148,6 +147,10 @@ class NavigationView extends BaseMVPView {
 
   callLogout () {
     this.presenter.logout()
+  }
+
+  isHasCOC (profileHasCOC) {
+    this.setState({ profileHasCOC })
   }
 
   relogin () {
@@ -170,7 +173,7 @@ class NavigationView extends BaseMVPView {
       showPinEnrollmentModal,
       hasPIN,
       enabledLoader,
-      tempPreEmployment,
+      profileHasCOC,
       tempPreEmploymentModal
     } = this.state
 
@@ -242,6 +245,9 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/faqs' render = { props =>
                     <FaqFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/feedback' render = { props =>
+                    <FeedbackFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 </Switch>
                 :
@@ -338,6 +344,7 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mycompliance' render = { props =>
                     <ComplianceFragment { ...props }
+                      profileHasCOC = { profileHasCOC }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/phenom' render = { props =>

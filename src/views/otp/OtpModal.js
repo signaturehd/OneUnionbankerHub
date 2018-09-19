@@ -85,7 +85,7 @@ class OtpModal extends BaseMVPView {
               errorMessage = { 'Please enter your 6-digit code' }
             />
             <br/>
-            <div className = {'otp-function'}>
+            <div className = {'grid-global'}>
               <GenericButton text= "Submit"
                 onClick={ () => {
                     this.presenter.verifyOtp(username, otp, transactionType),
@@ -94,13 +94,13 @@ class OtpModal extends BaseMVPView {
                 }
                 disabled = {this.state.disableSubmit}
                />
-              <GenericButton text= "Resend OTP"
-                onClick={ () => {
-                    this.presenter.resendOtp(username, transactionType),
-                    this.setState({ disableResend: true, text : `Please wait while we're resending your OTP` })
-                  }
-                }
-                disabled = {this.state.disableResend}
+               <GenericButton text= "Resend OTP"
+                 onClick={ () => {
+                     this.presenter.resendOtp(username, transactionType),
+                     this.setState({ disableResend: true, text : `Please wait while we're resending your OTP` })
+                   }
+                 }
+                 disabled = {this.state.disableResend}
               />
             </div>
           <br/>
