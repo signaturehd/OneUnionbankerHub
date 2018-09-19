@@ -13,13 +13,19 @@ class AffirmationDocumentPreviewModal extends Component {
   }
 
   render() {
-    const { onClose } = this.props
+    const { onClose, pdfFile } = this.props
     return(
     <Modal
       onClose = { onClose }
       isDismisable = { true }
       >
-      <h2>test</h2>
+      <iframe src = {pdfFile}
+        style = {{
+          height: 400,
+          width: '100%'
+        }}
+      >
+      </iframe>
     </Modal>
     )
   }

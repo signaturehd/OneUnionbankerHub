@@ -1,16 +1,16 @@
 import { NotifyActions } from '../../../../actions'
 import store from '../../../../store'
 
-import { Observable } from 'rxjs'
-
 import GetAffirmationStatusInteractor from
   '../../../../domain/interactor/preemployment/affirmation/GetAffirmationStatusInteractor'
+import GetAffirmationPdfViewInteractor from
+  '../../../../domain/interactor/preemployment/affirmation/GetAffirmationPdfViewInteractor'
 
 export default class AffirmDocumentPresenter {
   constructor (container) {
     this.getAffirmationStatusInteractor =
       new GetAffirmationStatusInteractor(container.get('HRBenefitsClient'))
-    this.getAffirmationPdf = container.get('FileClient')
+    this.getAffirmationPdf = new GetAffirmationPdfViewInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -25,13 +25,13 @@ export default class AffirmDocumentPresenter {
     })
   }
 
-  getAffirmationPdfView (link, token) {
-    this.getTransactionImage.get('v1/uploads?folder=attachments', {
-      headers: {
-        token: token,
-        file: link,
-      },
-      responseType : 'blob'
+  getOnBoardingDocument (link) {
+
+    this.getAffirmationPdf.execute(link)
+    .subscribe(data => {
+      this.view.showPdfFileView(data)
+    }, error => {
+      console.log(error)
     })
   }
 }

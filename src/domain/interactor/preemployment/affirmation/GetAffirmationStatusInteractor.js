@@ -12,25 +12,21 @@ export default class GetAffirmationStatusInteractor {
           title: 'Pre-Employment Undertaking',
           link: '/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf',
           nodeStatus : resp.preEmploymentUndertaking,
-          token: this.client.getToken()
         },{
           id: 1,
           title: 'Acceptable use of IT Resource Policy',
           link: '/2018-09-11/12345-Acceptable Use of IT Resource Policy-1536640939395.pdf',
           nodeStatus: resp.itResource,
-          token: this.client.getToken()
         },{
           id: 2,
           title: 'Undertaking of Confidentiality',
           link: '/2018-09-11/12345-Undertaking on Confidentiality-1536641093668.pdf',
           nodeStatus: resp.confidentiality,
-          token: this.client.getToken()
         },{
           id: 3,
           title: 'Security of Bank Deposit',
           link: '/2018-09-11/12345-Law on Secrecy of Bank Deposits-1536640999233.pdf',
           nodeStatus: resp.bankSecrecy,
-          token: this.client.getToken()
         },
       ]
       return documentCardOptions

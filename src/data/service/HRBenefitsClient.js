@@ -811,6 +811,22 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getOnBoardingDocument (token, link) {
+    return this.service.getOnBoardingDocument(token, link)
+    .pipe(ServiceErrorOperator())
+    .flatMap(resp =>
+      Observable.create(observer => {
+        const reader = new FileReader()
+        reader.onerror = err => observer.error(err)
+        reader.onabort = err => observer.error(err)
+        reader.onload = () => observer.next(reader.result)
+        reader.onloadend = () => observer.complete()
+
+        reader.readAsDataURL(resp)
+      }
+    ))
+  }
+
   getAffirmationsStatus (token) {
     return this.service.getAffirmationsStatus(token)
       .pipe(ServiceErrorOperator())

@@ -31,6 +31,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
       showPdfViewModal : false,
       pdfFile: ''
     }
+    this.onCheckedPdf = this.onCheckedPdf.bind(this)
   }
 
   componentDidMount () {
@@ -42,13 +43,13 @@ class AffirmationDocumentFragment extends BaseMVPView {
     this.setState({ affirmationPreEmploymentStatus })
   }
 
-  showPDFView (pdfFile) {
-    console.log(pdfFile)
-    this.setState({ pdfFile })
+  onCheckedPdf (link) {
+    this.presenter.getOnBoardingDocument(link)
   }
 
-  onCheckedPdf (link, token) {
-    this.presenter.getAffirmationPdfView (link, token)
+  showPdfFileView (pdfFile) {
+    console.log(pdfFile)
+    this.setState({ pdfFile, showPdfViewModal : true })
   }
 
   render() {
@@ -94,7 +95,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
       {
         showPdfViewModal &&
         <AffirmationDocumentPreviewModal
-          previewDataPDF = { previewDataPDF }
+          pdfFile = { pdfFile }
           onClose = { () => this.setState({ showPdfViewModal: false }) }
           />
       }
@@ -127,7 +128,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
                     <span className = { 'affirmation-icon affirmation-success float-right' }/>
                     :
                     <span
-                      onClick = { () => this.onCheckedPdf(resp.link, resp.token) }
+                      onClick = { () => this.onCheckedPdf(resp.link) }
                       className = { 'affirmation-icon affirmation-seemore-button float-right' }/>
                   }
                 </div>

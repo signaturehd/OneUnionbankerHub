@@ -1068,6 +1068,16 @@ export default class HRBenefitsService {
     })
   }
 
+  getOnBoardingDocument (token, link) {
+    return this.fileClient.get('v1/uploads?folder=documents', {
+      headers: {
+        token : token,
+        file : link,
+      },
+      responseType : 'blob'
+    })
+  }
+
   getFinancialStatus (token) {
     return this.onboardingClient.get('v1/employees/finances/status', {
       headers : { token }
