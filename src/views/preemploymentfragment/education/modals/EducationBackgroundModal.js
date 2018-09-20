@@ -25,10 +25,26 @@ class EducationBackgroundModal extends Component {
 
   constructor (props) {
     super (props)
+    this.state = {
+      count : 2,
+      torFormData: [{
+        name : 'Transcript of Records'
+      }]
+    }
   }
 
   getDamagePropertyObject () {
     getPropertyHolderFunc(educationObject)
+  }
+
+  addAttachmentsFunc (attachment, tempCount) {
+    const attachmentTemp = [...attachment]
+    let newCount = tempCount + 1
+    this.setState({ count : newCount })
+    attachmentTemp.push({
+      name : 'Transcript of Records ' + tempCount
+    })
+    this.setState({ torFormData : attachmentTemp })
   }
 
   render () {
@@ -37,6 +53,12 @@ class EducationBackgroundModal extends Component {
     updateMode
     } = this.props
 
+    const {
+    count,
+    defaultSchool,
+    torFormData
+    } = this.state
+
     return (
       <Modal
         onClose = { () => hideModalEducationFormFunc(false) }
@@ -44,14 +66,15 @@ class EducationBackgroundModal extends Component {
         width = { 50 }>
         <h2>Education Background Form</h2>
         <GenericInput
-          text = { 'School' }
-          />
+          text = { 'School' }/>
         <GenericInput
           text = { 'Student Number' }/>
         <GenericInput
           text = { 'Degree' }/>
         <GenericInput
           text = { 'Course' }/>
+        <GenericInput
+          text = { 'Term' }/>
         <GenericInput
           text = { 'Special Honor' }/>
         <div className = { 'text-align-left' }>
@@ -68,7 +91,36 @@ class EducationBackgroundModal extends Component {
           maxLength = { 4 }/>
           <br/>
           <Line/>
+          <br/>
+          <div className = { 'grid-global' }>
+            <h2></h2>
+            <div className = { 'text-align-right' }>
+              <GenericButton
+                text = { 'Add Attachments' }
+                onClick = { () => this.addAttachmentsFunc(torFormData, count) }
+                />
+            </div>
+          </div>
+          {
+            torFormData.length !== 0  &&
+            <div>
+            <h4>
+              <br/>
+              Form Attachments
+            </h4>
+            <MultipleAttachments
+              count = { count }
+              countFunc = { (count) => this.setState({ count }) }
+              placeholder = { '' }
+              fileArray = { torFormData }
+              setFile = { (torFormData) =>
+                  this.setState({ torFormData })
+              }
+              />
 
+            </div>
+
+           }
         <div className = { 'grid-global' }>
           <GenericButton
             text = { 'Cancel' }

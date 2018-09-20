@@ -25,19 +25,7 @@ class EducationBackgroundFragment extends BaseMVPView {
     this.state = {
       enabledLoader : false,
       educationCardHolder : [],
-      defaultSchool : [
-        {
-          school : {
-            id : 1,
-            name : 'University of the Philippines'
-          },
-          studentId : '201101033',
-          date : '8/21/2018',
-          startYear : 2011,
-          endYear : 2015,
-          degree : 'Accountancy'
-        }
-      ],
+      defaultSchool : [],
       showEducationFormModal : false,
       showEditSubmitButton : false
     }
@@ -120,10 +108,11 @@ class EducationBackgroundFragment extends BaseMVPView {
           </div>
         </div>
         <br/>
+
         {
-        defaultSchool.length !==0 &&
+          educationCardHolder.length !==0 &&
           <EducationMultipleCardComponent
-            cardDataHolder = { defaultSchool }
+            cardDataHolder = { educationCardHolder }
             setCard = { (resp) => this.setCardHolderDefaultyFunc(resp) }
             disabled = { showEditSubmitButton }
             onEditModeProperty = { (
