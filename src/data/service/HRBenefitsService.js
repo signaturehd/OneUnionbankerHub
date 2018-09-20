@@ -1137,7 +1137,6 @@ export default class HRBenefitsService {
 
   /* Vaccine Requisition */
 
-
   validateVaccine (token) {
     return this.apiClient.get('v1/vaccinations/validate', {
       headers: { token }

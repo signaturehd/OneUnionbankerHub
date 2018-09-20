@@ -17,6 +17,7 @@ import {
 } from '../../../ub-components/'
 
 import Presenter from './presenter/BiographicalDataPresenter'
+import BiographicalDocumentPreviewModal from './modal/BiographicalDocumentPreviewModal'
 
 import "react-sweet-progress/lib/style.css"
 import './styles/biographicalDataStyle.css'
@@ -25,15 +26,26 @@ class BiographicalDataFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
+      showPdfViewModal : false,
       enabledLoader : false,
       biographicalDataFormData: [],
-      count : 1
+      pdfFile: '',
+      count : 1,
+      biographicalName : ''
     }
     this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(2)
+  }
+
+  onCheckedPdf (link) {
+    this.presenter.getOnBoardingDocument(link)
+  }
+
+  showPdfFileView (pdfFile) {
+    this.setState({ pdfFile })
   }
 
   addAttachmentsFunc (attachment, tempCount) {
@@ -50,13 +62,17 @@ class BiographicalDataFragment extends BaseMVPView {
     const {
       history,
       checkPEUndertaking,
-      percentage
+      percentage,
+      biographicalArray
     } = this.props
 
     const {
       enabledLoader,
       biographicalDataFormData,
       biographicalData,
+      biographicalName,
+      showPdfViewModal,
+      pdfFile,
       count
     } = this.state
 
@@ -69,6 +85,13 @@ class BiographicalDataFragment extends BaseMVPView {
     return(
     <div>
     { super.render() }
+    {
+      showPdfViewModal &&
+      <BiographicalDocumentPreviewModal
+        pdfFile = { pdfFile }
+        onClose = { () => this.setState({ showPdfViewModal: false }) }
+        />
+    }
       <div>
         <br/>
           <div className = { 'percentage-grid' }>
@@ -84,15 +107,29 @@ class BiographicalDataFragment extends BaseMVPView {
           </div>
         <br/>
         <div className = { 'biographical-grid-card' }>
-          <Card
-            className = { 'biographical-card' }>
-            <div className = { 'biographical-grid-x2' }>
-              <h2>Biographical Data Form</h2>
-              <div className = { 'grid-global' }>
-                <span className = { 'biographical-icon biographical-seemore-button' }/>
-              </div>
-            </div>
-          </Card>
+          {
+            biographicalArray.map((bio, key) =>
+              <Card
+                key = { key }
+                className = { 'biographical-card' }>
+                <div className = { 'biographical-grid-x2' }>
+                  <h2>{ bio.name }</h2>
+                  <div>
+                  
+                    <span
+                      onClick = { () => {
+                        this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
+                        this.setState({ showPdfViewModal : true  })
+                      }
+                    }
+                      className = { 'biographical-icon biographical-seemore-button' }/>
+
+                  </div>
+                </div>
+              </Card>
+            )
+          }
+
         </div>
         <br/>
         <Line />
@@ -133,6 +170,7 @@ class BiographicalDataFragment extends BaseMVPView {
 BiographicalDataFragment.propTypes = {
   history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
+  biographicalArray : PropTypes.array
 }
 
 BiographicalDataFragment.defaultProps = {
