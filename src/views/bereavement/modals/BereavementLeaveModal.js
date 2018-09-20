@@ -25,12 +25,12 @@ class BereavementLeaveModal extends Component {
         <br/>
         <div className = { 'grid-global' }>
           <GenericButton
-            text = { 'Yes' }
-            onClick = { () => onLoadNavigateBenefits() }
-            />
-          <GenericButton
             text = { 'No' }
             onClick = { () => onLoadBereavementLeave(true) }
+            />
+          <GenericButton
+            text = { 'Yes' }
+            onClick = { () => onLoadNavigateBenefits() }
             />
         </div>
       </div>
