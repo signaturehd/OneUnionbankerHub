@@ -28,9 +28,11 @@ class BiographicalDataFragment extends BaseMVPView {
     this.state = {
       showPdfViewModal : false,
       enabledLoader : false,
-      biographicalDataFormData: [],
+      biographicalDataFormData: [{
+        name : 'Biographical Data Form'
+      }],
       pdfFile: '',
-      count : 1,
+      count : 2,
       biographicalName : ''
     }
     this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
@@ -57,6 +59,18 @@ class BiographicalDataFragment extends BaseMVPView {
     })
     this.setState({ biographicalDataFormData : attachmentTemp })
   }
+
+  submitForm () {
+    const {
+      biographicalDataFormData
+    } = this.state
+
+    if (biographicalDataFormData.length == 0) {
+    }
+    this.presenter.addFinancialStatus(
+      biographicalDataFormData)
+  }
+
 
   render() {
     const {
@@ -115,7 +129,7 @@ class BiographicalDataFragment extends BaseMVPView {
                 <div className = { 'biographical-grid-x2' }>
                   <h2>{ bio.name }</h2>
                   <div>
-                  
+
                     <span
                       onClick = { () => {
                         this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
@@ -159,7 +173,9 @@ class BiographicalDataFragment extends BaseMVPView {
                 this.setState({ biographicalDataFormData })
             }
             />
+
           </div>
+
          }
       </div>
     </div>

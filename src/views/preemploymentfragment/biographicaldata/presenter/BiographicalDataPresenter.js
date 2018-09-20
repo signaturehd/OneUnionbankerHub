@@ -13,12 +13,13 @@ export default class BiographicalDataPresenter {
   }
 
   getOnBoardingDocument (link) {
-
     this.getBiographicalPdf.execute(link)
     .subscribe(data => {
       this.view.showPdfFileView(data)
     }, error => {
     })
   }
+
+  
 
 }
