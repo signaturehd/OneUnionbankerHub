@@ -872,6 +872,21 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  postEnrollPinAffirmationsPolicy (token, pin) {
+    return this.service.postEnrollPinAffirmationsPolicy(token, pin)
+      .pipe(ServiceErrorOperator())
+  }
+
+  postEnrollPinAffirmationsConfidential (token, pin) {
+    return this.service.postEnrollPinAffirmationsConfidential(token, pin)
+      .pipe(ServiceErrorOperator())
+  }
+
+  postEnrollPinAffirmationsSecrecy (token, pin) {
+    return this.service.postEnrollPinAffirmationsSecrecy(token, pin)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Vaccines Requisitions */
 
   validateVaccine (token) {

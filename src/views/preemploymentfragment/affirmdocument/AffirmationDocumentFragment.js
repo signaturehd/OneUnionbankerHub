@@ -9,6 +9,7 @@ import {
   Modal,
   GenericButton,
   CircularLoader,
+  GenericInput,
   Card
 } from '../../../ub-components/'
 
@@ -19,8 +20,12 @@ import { Progress } from 'react-sweet-progress'
 import 'react-sweet-progress/lib/style.css'
 import './styles/affirmDocumentStyle.css'
 
-import AffirmationEnrollPinModal from './modals/AffirmationEnrollPinModal'
 import AffirmationDocumentPreviewModal from './modals/AffirmationDocumentPreviewModal'
+
+import { NotifyActions } from '../../../actions'
+import store from '../../../store'
+
+import { RequiredNumberValidation, RequiredValidation } from '../../../utils/validate/'
 
 class AffirmationDocumentFragment extends BaseMVPView {
   constructor(props) {
@@ -31,17 +36,82 @@ class AffirmationDocumentFragment extends BaseMVPView {
       showPdfViewModal : false,
       showPinCodeModal: false,
       enabledLoader: false,
+      noticeResponseModal: false,
       pdfFile: '',
       noticeResponse : [],
       uniquePIN: '',
+      preAffirmationEmpId: '',
     }
     this.onCheckedPdf = this.onCheckedPdf.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(0)
     this.presenter.getAffirmationsStatus()
   }
+
+  validator (input) {
+   return new RequiredValidation().isValid(input)
+  }
+
+  onSubmit (pin) {
+    const { preAffirmationEmpId } = this.state
+    if(preAffirmationEmpId === 0) {
+      if(!this.validator(pin)) {
+        store.dispatch(NotifyActions.addNotify({
+           title : 'Authentication' ,
+           message : 'Pin is required',
+           type : 'warning',
+           duration : 2000
+         })
+       )
+     } else {
+       console.log(preAffirmationEmpId)
+       this.presenter.postEnrollPinAffirmationsEmployment(pin)
+      }
+    } else if (preAffirmationEmpId === 1) {
+      if(!this.validator(pin)) {
+        store.dispatch(NotifyActions.addNotify({
+           title : 'Authentication' ,
+           message : 'Pin is required',
+           type : 'warning',
+           duration : 2000
+         })
+       )
+     } else {
+       console.log(preAffirmationEmpId)
+       this.presenter.postEnrollPinAffirmationsPolicy(pin)
+      }
+    } else if (preAffirmationEmpId === 2) {
+      if(!this.validator(pin)) {
+        store.dispatch(NotifyActions.addNotify({
+           title : 'Authentication' ,
+           message : 'Pin is required',
+           type : 'warning',
+           duration : 2000
+         })
+       )
+     } else {
+       console.log(preAffirmationEmpId)
+       this.presenter.postEnrollPinAffirmationsConfidential(pin)
+      }
+    } else if (preAffirmationEmpId === 3) {
+      if(!this.validator(pin)) {
+        store.dispatch(NotifyActions.addNotify({
+           title : 'Authentication' ,
+           message : 'Pin is required',
+           type : 'warning',
+           duration : 2000
+         })
+       )
+     } else {
+       console.log(preAffirmationEmpId)
+       this.presenter.postEnrollPinAffirmationsSecrecy(pin)
+      }
+    }
+  }
+
 
   checkedAffirmationPreEmploymentStatus (affirmationPreEmploymentStatus) {
     this.setState({ affirmationPreEmploymentStatus })
@@ -55,12 +125,16 @@ class AffirmationDocumentFragment extends BaseMVPView {
     this.setState({ pdfFile })
   }
 
-  showPinLoader (enabledLoader) {
-    this.setState({ enabledLoader })
+  showPinLoader () {
+    this.setState({ enabledLoader : true })
   }
 
-  noticeResponse (noticeResponse) {
-    this.setState({ noticeResponse })
+  hidePinLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  noticeResponse (noticeResponse, noticeResponseModal, showPinCodeModal) {
+    this.setState({ noticeResponse, noticeResponseModal, showPinCodeModal })
   }
 
   render() {
@@ -75,53 +149,92 @@ class AffirmationDocumentFragment extends BaseMVPView {
       previewDataPDF,
       showPdfViewModal,
       showPinCodeModal,
+      noticeResponseModal,
       pdfFile,
       noticeResponse,
-      enabledLoader
+      enabledLoader,
+      uniquePIN,
+      preAffirmationEmpId
     } = this.state
 
-    // const documentCardOptions = [
-    //   {
-    //     id: 0,
-    //     title: 'Pre-Employment Undertaking',
-    //     link: '/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf',
-    //     // nodeStatus : resp.preEmploymentUndertaking
-    //   },{
-    //     id: 1,
-    //     title: 'Acceptable use of IT Resource Policy',
-    //     link: '/2018-09-11/12345-Acceptable Use of IT Resource Policy-1536640939395.pdf',
-    //     // nodeStatus: resp.itResource
-    //   },{
-    //     id: 2,
-    //     title: 'Undertaking of Confidentiality',
-    //     link: '/2018-09-11/12345-Undertaking on Confidentiality-1536641093668.pdf',
-    //     // nodeStatus: resp.confidentiality,
-    //   },{
-    //     id: 3,
-    //     title: 'Security of Bank Deposit',
-    //     link: '/2018-09-11/12345-Law on Secrecy of Bank Deposits-1536640999233.pdf',
-    //     // nodeStatus: resp.bankSecrecy,
-    //   },
-    // ]
     return(
     <div>
       { super.render() }
       {
-        showPinCodeModal &&
-        <AffirmationEnrollPinModal
-          onClose = { () => this.setState({ showPinCodeModal : false }) }
-          enabledLoader = { enabledLoader }
-          uniquePIN = { uniquePIN }
-          sendPinProps = { (uniquePIN) => this.setState({ uniquePIN }) }
-          />
-      }
-      {
         showPdfViewModal &&
         <AffirmationDocumentPreviewModal
           pdfFile = { pdfFile }
-          showPinCodeModal = { () => this.setState({ showPinCodeModal : true, showPdfFileView: false }) }
+          showPinCodeModalFunc = { () => this.setState({ showPinCodeModal: true, showPdfViewModal: false }) }
           onClose = { () => this.setState({ showPdfViewModal: false }) }
           />
+      }
+      {
+        noticeResponseModal &&
+        <Modal>
+          <center>
+            <h2>{ noticeResponse }</h2>
+            <br/>
+            <GenericButton
+              onClick = { () => this.setState({ noticeResponseModal : false }) }
+              text = { 'Ok' }
+              />
+            <br/>
+          </center>
+        </Modal>
+      }
+      {
+        showPinCodeModal &&
+        <Modal
+          isDismisable = { true }
+          >
+          {
+            enabledLoader ?
+            <center className = { 'circular-loader-center' }>
+              <h2>Please wait while we validate your PIN</h2>
+              <br/>
+              <CircularLoader show = { enabledLoader }/>
+            </center> :
+            <center>
+              <div>
+                <div className = { 'grid-global-row' }>
+                  <span className = { 'pinlock-icon lock-icon-settings' }/>
+                  <h2 className = { 'font-size-12px' }>Please enter your registered digital signature (PIN).</h2>
+                </div>
+                <GenericInput
+                  className = { 'generic-pin' }
+                  hint = { '* * * * *' }
+                  maxLength = { 5 }
+                  type = { 'password' }
+                  onChange = { (e) =>
+                    {
+                     new RequiredNumberValidation().isValid(e.target.value) ?
+                     this.setState({ uniquePIN: e.target.value }) :
+                     this.setState({ uniquePIN : '' })
+                    }
+                  }
+                  value = { uniquePIN }
+                  errorMessage = { 'Please enter your 5-digit PIN' }
+                  />
+                <br/>
+                {
+                  pdfFile &&
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Submit' }
+                    onClick = {
+                      () => {
+                        this.onSubmit(uniquePIN)
+                      }
+                    }
+                    className={ 'compliance-buttons compliance-submit' }
+                    />
+                }
+                <br/>
+                <br/>
+              </div>
+            </center>
+          }
+        </Modal>
       }
       <div>
         <br/>
@@ -148,13 +261,13 @@ class AffirmationDocumentFragment extends BaseMVPView {
                 <h2> { resp.title } </h2>
                 <div>
                   {
-                    resp.nodeStatus === 1 ?
+                    resp.nodeStatus !== 1 ?
                     <span className = { 'affirmation-icon affirmation-success float-right' }/>
                     :
                     <span
                       onClick = { () => {
                         this.onCheckedPdf(resp.link)
-                        this.setState({ showPdfViewModal : true  })
+                        this.setState({ showPdfViewModal : true , preAffirmationEmpId : resp.id })
                       }
                     }
                       className = { 'affirmation-icon affirmation-seemore-button float-right' }/>
