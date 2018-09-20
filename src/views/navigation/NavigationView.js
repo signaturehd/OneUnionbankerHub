@@ -83,7 +83,7 @@ class NavigationView extends BaseMVPView {
       hasPIN: '',
       enabledLoader : false,
       profileHasCOC: '',
-      tempPreEmploymentModal: false
+      tempPreEmploymentModal: true
     }
 
     this.setDisplay = this.setDisplay.bind(this)

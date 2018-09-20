@@ -48,8 +48,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
   }
 
   showPdfFileView (pdfFile) {
-    console.log(pdfFile)
-    this.setState({ pdfFile, showPdfViewModal : true })
+    this.setState({ pdfFile })
   }
 
   render() {
@@ -124,11 +123,15 @@ class AffirmationDocumentFragment extends BaseMVPView {
                 <h2> { resp.title } </h2>
                 <div>
                   {
-                    resp.nodeStatus !== 1 ?
+                    resp.nodeStatus === 1 ?
                     <span className = { 'affirmation-icon affirmation-success float-right' }/>
                     :
                     <span
-                      onClick = { () => this.onCheckedPdf(resp.link) }
+                      onClick = { () => {
+                        this.onCheckedPdf(resp.link)
+                        this.setState({ showPdfViewModal : true  })
+                      }
+                    }
                       className = { 'affirmation-icon affirmation-seemore-button float-right' }/>
                   }
                 </div>

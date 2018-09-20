@@ -191,28 +191,36 @@ class PreEmploymentFragment extends BaseMVPView {
       }
       {
         tempPreEmploymentModal &&
-        <Modal>
-          <center>
-            <h2 className = { 'unionbank-color font-weight-lighter font-size-18px' }>
-              Welcome to Unionbank!
-            </h2>
-            <br/>
-            <h2>
-              Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it's your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future.
-            </h2>
-            <h2>
-              We're stoked to have you onboard, UnionBanker!
-            </h2>
-            <br/>
-          </center>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-              className = { 'pre-emp-setup-button' }
-              text = { 'SETUP MY ACCOUNT' }
-              onClick = { () =>
-                onChangeStatusPreEmploymentModal()
-                }
-             />
+        <Modal
+          width = { 50 }>
+          <div className = { 'pre-container' }>
+            <div className = { 'pre-env' }>
+              <label for = { 'open-env' }>
+                <input
+                  type='checkbox'
+                  id='open-env' />
+                <label
+                  className = { 'pre-top' }
+                  for = { 'open-env' }>
+                </label>
+                <div className = { 'pre-content' }>
+                  <h2 className = { 'unionbank-color font-weight-bold' }>Welcome to Unionbank!</h2>
+                  <br/>
+                  <h2>Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it's your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
+                  <br/>
+                  <h2>We're stoked to have you onboard, UnionBanker!</h2>
+                  <br/>
+                  <GenericButton
+                    className = { 'pre-emp-setup-button' }
+                    text = { 'SETUP MY ACCOUNT' }
+                    onClick = { () =>
+                      onChangeStatusPreEmploymentModal()
+                      }
+                   />
+                </div>
+                <div className = { 'pre-rest' }></div>
+              </label>
+            </div>
           </div>
         </Modal>
       }

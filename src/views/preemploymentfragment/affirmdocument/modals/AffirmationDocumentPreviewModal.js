@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {
   Modal,
   GenericButton,
+  CircularLoader
 } from '../../../../ub-components/'
 
 
@@ -16,16 +17,24 @@ class AffirmationDocumentPreviewModal extends Component {
     const { onClose, pdfFile } = this.props
     return(
     <Modal
+      width = { 70 }
       onClose = { onClose }
       isDismisable = { true }
       >
-      <iframe src = {pdfFile}
+      <iframe src = { pdfFile }
         style = {{
-          height: 400,
+          height: 500,
           width: '100%'
         }}
       >
       </iframe>
+      <br/>
+      <br/>
+      <center>
+      <GenericButton
+        onClick = { () => {} }
+        text = { 'I Affirm' }/>
+      </center>
     </Modal>
     )
   }
