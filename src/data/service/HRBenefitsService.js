@@ -1130,8 +1130,35 @@ export default class HRBenefitsService {
     const objectParam = {
       code : pin,
     }
-    return this.onboardingClient.get('v1/employees/affirmations/employment', objectParam,{
-        headers : { token }
+    return this.onboardingClient.post('v1/employees/affirmations/employment', objectParam,{
+      headers : { token }
+    })
+  }
+
+  postEnrollPinAffirmationsPolicy (token, pin) {
+    const objectParam = {
+      code : pin,
+    }
+    return this.onboardingClient.post('v1/employees/affirmations/policy', objectParam,{
+      headers : { token }
+    })
+  }
+
+  postEnrollPinAffirmationsConfidential (token, pin) {
+    const objectParam = {
+      code : pin,
+    }
+    return this.onboardingClient.post('v1/employees/affirmations/confidentiality', objectParam,{
+      headers : { token }
+    })
+  }
+
+  postEnrollPinAffirmationsSecrecy (token, pin) {
+    const objectParam = {
+      code : pin,
+    }
+    return this.onboardingClient.post('v1/employees/affirmations/secrecy', objectParam,{
+      headers : { token }
     })
   }
 

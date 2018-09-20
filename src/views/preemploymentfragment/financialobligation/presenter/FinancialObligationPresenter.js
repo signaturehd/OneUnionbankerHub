@@ -48,7 +48,8 @@ export default class FinancialObligationPresenter {
       amount,
       statusId
     ))
-    .subsribe(data => {
+    .subscribe(data => {
+      this.view.noticeResponseFunc(data.message)
       this.view.hideCircularLoader()
     }, error => {
       this.view.hideCircularLoader()

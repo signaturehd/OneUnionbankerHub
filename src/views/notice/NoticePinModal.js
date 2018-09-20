@@ -81,6 +81,7 @@ class NoticePinModal extends BaseMVPView {
       onClose,
       onSubmitAgreement
     } = this.props
+    
     const {
       enabledLoader,
       noticeResponse,
