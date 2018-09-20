@@ -40,6 +40,8 @@ class FinancialObligationFragment extends BaseMVPView {
       natureObligationErrorMessage: '',
       amountErrorMessage: '',
       statusNameErrorMessage: '',
+      noticeResponse: '',
+      showFinanceModal : false
     }
   }
 
@@ -66,6 +68,11 @@ class FinancialObligationFragment extends BaseMVPView {
 
   showFinanceStatus (financeStatus) {
     this.setState({ financeStatus })
+  }
+
+  noticeResponseFunc (noticeResponse) {
+    this.setState({ showFinanceModal : true })
+    this.setState({ noticeResponse })
   }
 
   submitForm () {
@@ -116,12 +123,27 @@ class FinancialObligationFragment extends BaseMVPView {
       bankNameInstitutionErrorMessage,
       natureObligationErrorMessage,
       amountErrorMessage,
-      statusNameErrorMessage
+      statusNameErrorMessage,
+      noticeResponse,
+      showFinanceModal
     } = this.state
 
     return(
     <div>
     { super.render() }
+      {
+        showFinanceModal &&
+        <Modal>
+          <center>
+            <h2>{ noticeResponse }</h2>
+            <br/>
+            <GenericButton
+              onClick = { () => this.setState({ showFinanceModal : false }) }
+              text = { 'Ok' }
+              />
+          </center>
+        </Modal>
+      }
       {
         showFinanceStatusModal &&
         <SingleInputModal
