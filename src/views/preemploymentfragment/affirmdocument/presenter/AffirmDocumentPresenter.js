@@ -11,6 +11,8 @@ export default class AffirmDocumentPresenter {
     this.getAffirmationStatusInteractor =
       new GetAffirmationStatusInteractor(container.get('HRBenefitsClient'))
     this.getAffirmationPdf = new GetAffirmationPdfViewInteractor(container.get('HRBenefitsClient'))
+
+    this.postEnrollPinAffirmationsEmployment = container.get('HRBenefitsClient')
   }
 
   setView (view) {
@@ -31,7 +33,17 @@ export default class AffirmDocumentPresenter {
     .subscribe(data => {
       this.view.showPdfFileView(data)
     }, error => {
-      console.log(error)
     })
+  }
+
+  postEnrollPinAffirmationsEmployment (pin) {
+    this.view.showPinLoader(true)
+    this.postEnrollPinAffirmationsEmployment.execute(pin)
+      .subscribe(data => {
+        this.voew.showPinLoader(false)
+        this.view.noticeResponse(data)
+      }, error => {
+
+      })
   }
 }

@@ -32,7 +32,7 @@ label {
 }
 
 div.pre-container {
-  margin: auto;
+  margin: 0px auto;
 }
 
 #open-env {
@@ -70,9 +70,9 @@ div.pre-container {
 }
 .pre-env .pre-content {
   width: 400px;
-  margin: -150px;
+  margin: 0 auto;
   padding: 40px 25px 0px 25px;
-  height: -webkit-fill-available;
+  height: 260px;
   background: #fff;
   transition: all 0.5s ease;
   -webkit-transition: all 0.5s ease;

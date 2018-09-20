@@ -14,7 +14,7 @@ class AffirmationDocumentPreviewModal extends Component {
   }
 
   render() {
-    const { onClose, pdfFile } = this.props
+    const { onClose, pdfFile, showPinCodeModal } = this.props
     return(
     <Modal
       width = { 70 }
@@ -32,7 +32,7 @@ class AffirmationDocumentPreviewModal extends Component {
       <br/>
       <center>
       <GenericButton
-        onClick = { () => {} }
+        onClick = { () => showPinCodeModal() }
         text = { 'I Affirm' }/>
       </center>
     </Modal>

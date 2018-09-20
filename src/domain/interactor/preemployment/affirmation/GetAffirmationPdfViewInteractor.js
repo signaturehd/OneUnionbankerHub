@@ -4,7 +4,6 @@ export default class GetAffirmationPdfViewInteractor {
   }
 
   execute (link) {
-    console.log(link)
     return this.client.getOnBoardingDocument(this.client.getToken(), link)
   }
 }

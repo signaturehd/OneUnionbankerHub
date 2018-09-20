@@ -1126,6 +1126,15 @@ export default class HRBenefitsService {
     })
   }
 
+  postEnrollPinAffirmationsEmployment (token, pin) {
+    const objectParam = {
+      code : pin,
+    }
+    return this.onboardingClient.get('v1/employees/affirmations/employment', objectParam,{
+        headers : { token }
+    })
+  }
+
   /* Vaccine Requisition */
 
 

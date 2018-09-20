@@ -19,7 +19,7 @@ import { Progress } from 'react-sweet-progress'
 import 'react-sweet-progress/lib/style.css'
 import './styles/affirmDocumentStyle.css'
 
-
+import AffirmationEnrollPinModal from './modals/AffirmationEnrollPinModal'
 import AffirmationDocumentPreviewModal from './modals/AffirmationDocumentPreviewModal'
 
 class AffirmationDocumentFragment extends BaseMVPView {
@@ -29,7 +29,11 @@ class AffirmationDocumentFragment extends BaseMVPView {
       affirmationPreEmploymentStatus : [],
       previewDataPDF : [],
       showPdfViewModal : false,
-      pdfFile: ''
+      showPinCodeModal: false,
+      enabledLoader: false,
+      pdfFile: '',
+      noticeResponse : [],
+      uniquePIN: '',
     }
     this.onCheckedPdf = this.onCheckedPdf.bind(this)
   }
@@ -51,6 +55,14 @@ class AffirmationDocumentFragment extends BaseMVPView {
     this.setState({ pdfFile })
   }
 
+  showPinLoader (enabledLoader) {
+    this.setState({ enabledLoader })
+  }
+
+  noticeResponse (noticeResponse) {
+    this.setState({ noticeResponse })
+  }
+
   render() {
     const {
       history,
@@ -62,7 +74,10 @@ class AffirmationDocumentFragment extends BaseMVPView {
       affirmationPreEmploymentStatus,
       previewDataPDF,
       showPdfViewModal,
-      pdfFile
+      showPinCodeModal,
+      pdfFile,
+      noticeResponse,
+      enabledLoader
     } = this.state
 
     // const documentCardOptions = [
@@ -92,9 +107,19 @@ class AffirmationDocumentFragment extends BaseMVPView {
     <div>
       { super.render() }
       {
+        showPinCodeModal &&
+        <AffirmationEnrollPinModal
+          onClose = { () => this.setState({ showPinCodeModal : false }) }
+          enabledLoader = { enabledLoader }
+          uniquePIN = { uniquePIN }
+          sendPinProps = { (uniquePIN) => this.setState({ uniquePIN }) }
+          />
+      }
+      {
         showPdfViewModal &&
         <AffirmationDocumentPreviewModal
           pdfFile = { pdfFile }
+          showPinCodeModal = { () => this.setState({ showPinCodeModal : true, showPdfFileView: false }) }
           onClose = { () => this.setState({ showPdfViewModal: false }) }
           />
       }

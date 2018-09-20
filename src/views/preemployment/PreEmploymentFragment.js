@@ -126,16 +126,39 @@ class PreEmploymentFragment extends BaseMVPView {
       enabledLoader: false,
       preEmpPage  : 0,
       showFinancialObligationModal: false,
-      preEmploymentData : []
+      preEmploymentData : [],
+      biographicalArray : []
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(11)
+    this.presenter.getPreEmploymentForm()
   }
 
   checkedPreEmploymentForm (preEmploymentData) {
     this.setState({ preEmploymentData })
+  }
+
+  getFormData (id) {
+    let formArray = []
+    this.state.preEmploymentData.map((form, key) => {
+      form.id === id
+      formArray.push({
+        id : form.id,
+        name : form.name,
+        url : form.url
+      })
+    })
+    return formArray
+  }
+
+  hideCircularLoader() {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader() {
+    this.setState({ enabledLoader : true })
   }
 
   onSendPageNumberToView (preEmpPage) {
@@ -180,7 +203,8 @@ class PreEmploymentFragment extends BaseMVPView {
       enabledLoader,
       preEmpPage,
       showFinancialObligationModal,
-      preEmploymentData
+      preEmploymentData,
+      biographicalArray
     } = this.state
 
     return(
@@ -196,8 +220,10 @@ class PreEmploymentFragment extends BaseMVPView {
         />
       }
       {
-        tempPreEmploymentModal &&
+        !tempPreEmploymentModal &&
         <Modal
+          boxShadow = { 'none' }
+          backgroundColor = { 'transparent' }
           width = { 50 }>
           <div className = { 'pre-container' }>
             <div className = { 'pre-env' }>
@@ -212,10 +238,6 @@ class PreEmploymentFragment extends BaseMVPView {
                 <div className = { 'pre-content' }>
                   <h2 className = { 'unionbank-color font-weight-bold' }>Welcome to Unionbank!</h2>
                   <br/>
-                  <h2>Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it's your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
-                  <br/>
-                  <h2>We're stoked to have you onboard, UnionBanker!</h2>
-                  <br/>
                   <GenericButton
                     className = { 'pre-emp-setup-button' }
                     text = { 'SETUP MY ACCOUNT' }
@@ -223,6 +245,10 @@ class PreEmploymentFragment extends BaseMVPView {
                       onChangeStatusPreEmploymentModal()
                       }
                    />
+                 <br/>
+                  <h2>Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it's your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
+                  <br/>
+                  <h2>We're stoked to have you onboard, UnionBanker!</h2>
                 </div>
                 <div className = { 'pre-rest' }></div>
               </label>
@@ -240,6 +266,7 @@ class PreEmploymentFragment extends BaseMVPView {
             </center>
             :
             <PreEmploymentFragments
+              getFormData = { (id) => this.getFormData(id) }
               preEmpPage = { preEmpPage }
               onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
               />
@@ -252,7 +279,7 @@ class PreEmploymentFragment extends BaseMVPView {
                   className = { 'global-button' }
                   text = { 'Previous' }
                   onClick = { () => this.decerementPage() } /> :
-                  <div></div>
+                <div></div>
               }
               <GenericButton
                 className = { 'global-button' }
