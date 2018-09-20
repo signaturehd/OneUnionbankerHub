@@ -1,27 +1,24 @@
 import { NotifyActions } from '../../../../actions'
 import store from '../../../../store'
-import biographicalFormInteractor from '../../../../domain/interactor/preemployment/biographical/GetBiographicalFormInteractor'
+import GetBiographicalPdfViewInteractor from
+'../../../../domain/interactor/preemployment/biographical/GetBiographicalPdfViewInteractor'
 
 export default class BiographicalDataPresenter {
   constructor (container) {
-    this.biographicalFormInteractor = new biographicalFormInteractor(container.get('HRBenefitsClient'))
+    this.getBiographicalPdf = new GetBiographicalPdfViewInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
   }
 
-  getBiographicalForm () {
-    this.view.showCircularLoader()
-    this.biographicalFormInteractor.execute()
-    .subscribe(
-        data => {
-          this.view.checkedBiographicalDataForm(data)
-          this.view.hideCircularLoader()
-        },
-        error => {
-          // this.view.navigate()
-       }
-    )
+  getOnBoardingDocument (link) {
+
+    this.getBiographicalPdf.execute(link)
+    .subscribe(data => {
+      this.view.showPdfFileView(data)
+    }, error => {
+    })
   }
+
 }

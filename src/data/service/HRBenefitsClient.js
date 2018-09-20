@@ -862,8 +862,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getBiographicalForm (token) {
-    return this.service.getBiographicalForm(token)
+  getPreEmploymentForm (token) {
+    return this.service.getPreEmploymentForm(token)
       .pipe(ServiceErrorOperator())
   }
 

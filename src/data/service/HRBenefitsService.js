@@ -1115,19 +1115,12 @@ export default class HRBenefitsService {
   }
 
   getEmployeeSchool (token) {
-    return this.onboardingClient.get('employees/school', {
-      headers: { token }
-    })
-  }
-
-
-  getEmployeeSchool (token) {
     return this.onboardingClient.get('v1/employees/school', {
       headers: { token }
     })
   }
 
-  getBiographicalForm (token) {
+  getPreEmploymentForm (token) {
     return this.onboardingClient.get('v1/employees/forms', {
       headers: { token }
     })
@@ -1170,7 +1163,6 @@ export default class HRBenefitsService {
   }
 
   /* Vaccine Requisition */
-
 
   validateVaccine (token) {
     return this.apiClient.get('v1/vaccinations/validate', {

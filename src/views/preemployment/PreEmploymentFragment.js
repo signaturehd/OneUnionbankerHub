@@ -49,6 +49,7 @@ function  PreEmploymentFragments (props)  {
   const onSendPageNumberToView = props.onSendPageNumberToView
   const percentageTemp = (pageNumber / 11) * 100
   const percentage = parseInt(percentageTemp)
+  const biographicalArray = props.biographicalArray
   if (props.preEmpPage === 0) {
     return <AffirmationDocumentFragment
       percentage = { percentage }
@@ -61,6 +62,7 @@ function  PreEmploymentFragments (props)  {
       />
   } else if (pageNumber === 2 ) {
     return <BiographicalDataFragment
+      biographicalArray = { biographicalArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
@@ -126,11 +128,43 @@ class PreEmploymentFragment extends BaseMVPView {
       enabledLoader: false,
       preEmpPage  : 0,
       showFinancialObligationModal: false,
+      preEmploymentData : [],
+      biographicalArray : []
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(11)
+    this.presenter.getPreEmploymentForm()
+  }
+
+  checkedPreEmploymentForm (preEmploymentData) {
+    this.setState({ preEmploymentData })
+  }
+
+  getFormData (id) {
+    let formArray = []
+    this.state.preEmploymentData.map((form, key) => {
+      form.id === id &&
+      formArray.push({
+        id : form.id,
+        name : form.name,
+        url : form.url
+      })
+    })
+    return formArray
+  }
+
+  getBiographicalData() {
+    this.setState({ biographicalArray : this.getFormData(1) })
+  }
+
+  hideCircularLoader() {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader() {
+    this.setState({ enabledLoader : true })
   }
 
   onSendPageNumberToView (preEmpPage) {
@@ -174,7 +208,9 @@ class PreEmploymentFragment extends BaseMVPView {
       isDismisable,
       enabledLoader,
       preEmpPage,
-      showFinancialObligationModal
+      showFinancialObligationModal,
+      preEmploymentData,
+      biographicalArray
     } = this.state
 
     return(
@@ -236,6 +272,7 @@ class PreEmploymentFragment extends BaseMVPView {
             </center>
             :
             <PreEmploymentFragments
+              biographicalArray = { this.getFormData(1) }
               preEmpPage = { preEmpPage }
               onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
               />
