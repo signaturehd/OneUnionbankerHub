@@ -10,13 +10,19 @@ class MedicalFragment extends Component {
     super(props)
     this.state = {
       showConfirmationModal : false,
-      checkedpath : ''
+      checkedpath : '',
+      showOutpatientModalUnAvailable: false
     }
     this.onCheckedProceed = this.onCheckedProceed.bind(this)
+    this.onCheckedOutpatient = this.onCheckedOutpatient.bind(this)
   }
 
   navigate () {
       this.props.history.push('/mybenefits/benefits')
+  }
+
+  onCheckedOutpatient () {
+    this.setState({ showOutpatientModalUnAvailable : true })
   }
 
   onCheckedProceed (path) {
@@ -25,7 +31,11 @@ class MedicalFragment extends Component {
 
   render () {
     const { history } = this.props
-    const { showConfirmationModal, checkedpath } =this.state
+    const {
+      showConfirmationModal,
+      checkedpath,
+      showOutpatientModalUnAvailable
+    } =this.state
 
     const benefitsOptions = [{
       id: 1,
@@ -57,12 +67,14 @@ class MedicalFragment extends Component {
       styleName: 'medical-cards-1 medical-option-default',
       title: 'Outpatient Reimbursement',
       path: '/mybenefits/benefits/medical/reimbursement/outpatient',
-    }, {
-      id: 7,
-      styleName: 'medical-cards-1 medical-option-default',
-      title: 'Vaccine Requisition',
-      path: '/mybenefits/benefits/medical/vaccine',
-    }]
+    },
+    // {
+    //   id: 7,
+    //   styleName: 'medical-cards-1 medical-option-default',
+    //   title: 'Vaccine Requisition',
+    //   path: '/mybenefits/benefits/medical/vaccine',
+    // }
+  ]
 
     const MedicalHome = () => (
       <div>
@@ -100,6 +112,8 @@ class MedicalFragment extends Component {
               onClick = { () => {
                 if(value.id == 6) {
                   this.onCheckedProceed(value.path)
+                } else if (value.id === 5) {
+                  this.onCheckedOutpatient()
                 } else {
                   history.push(value.path)
                   }
@@ -125,6 +139,19 @@ class MedicalFragment extends Component {
 
     return (
       <div>
+        {
+          showOutpatientModalUnAvailable &&
+          <Modal>
+            <center>
+              <h2>Outpatient Reimbursement is still under development. Please come back in the next few days to avail of this benefit. Thank you!</h2>
+              <br/>
+              <GenericButton
+                text = { 'Ok' }
+                onClick = { () => this.setState({ showOutpatientModalUnAvailable : false }) }
+                />
+          </center>
+          </Modal>
+        }
         <Switch>
           <Route exact path = '/mybenefits/benefits/medical'  render = { MedicalHome } />
         </Switch>
