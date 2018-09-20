@@ -3,6 +3,7 @@ import AddBookRatingInteractor from '../../../domain/interactor/library/AddBookR
 import GetBooksBorrowedInteractor from '../../../domain/interactor/library/GetBooksBorrowedInteractor'
 import GetBooksCommentsInteractor from '../../../domain/interactor/library/GetBooksCommentsInteractor'
 import ReserveBookInteractor from '../../../domain/interactor/library/ReserveBookInteractor'
+import GetRecommendationInteractor from '../../../domain/interactor/library/GetRecommendationInteractor'
 import BookRateParam from '../../../domain/param/BookRateParam'
 import ReserveParam from '../../../domain/param/ReserveParam'
 
@@ -19,6 +20,7 @@ export default class LibraryPresenter {
     this.getBooksBorrowedInteractor = new GetBooksBorrowedInteractor(container.get('HRBenefitsClient'))
     this.getBooksCommentsInteractor = new GetBooksCommentsInteractor(container.get('HRBenefitsClient'))
     this.reserveBookInteractor = new ReserveBookInteractor(container.get('HRBenefitsClient'))
+    this.getRecommendationInteractor = new GetRecommendationInteractor(container.get('HRBenefitsClient'))
   }
 
 
@@ -35,7 +37,6 @@ export default class LibraryPresenter {
       .toArray()
       .subscribe(books => {
         this.view.hideLoading()
-        this.view.showRecommendation(books)
       }, e => {
         this.view.hideLoading()
       })
@@ -49,11 +50,18 @@ export default class LibraryPresenter {
     })
   }
 
+  getBooksRecommended (pageNumber, find, isEditorsPick) {
+    this.getRecommendationInteractor.execute(pageNumber, find, isEditorsPick)
+    .subscribe(books => {
+      this.view.showRecommendation(books.bookList, books.totalCount)
+    }, error => {
+    })
+  }
+
 
   getBooksBorrowed (borrowedPageNumber, find) {
     this.view.showLoading()
     this.getBooksBorrowedInteractor.execute(borrowedPageNumber, find)
-
     .subscribe(borrowed => {
         this.view.hideLoading()
         this.view.showBorrowed(borrowed)
