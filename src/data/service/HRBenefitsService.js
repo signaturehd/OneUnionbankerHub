@@ -1122,14 +1122,23 @@ export default class HRBenefitsService {
 
 
   getEmployeeSchool (token) {
-    return this.OnboardingClient.get('v1/employees/school', {
+    return this.onboardingClient.get('v1/employees/school', {
       headers: { token }
     })
   }
 
   getBiographicalForm (token) {
-    return this.OnboardingClient.get('v1/employees/forms', {
+    return this.onboardingClient.get('v1/employees/forms', {
       headers: { token }
+    })
+  }
+
+  postEnrollPinAffirmationsEmployment (token, pin) {
+    const objectParam = {
+      code : pin,
+    }
+    return this.onboardingClient.get('v1/employees/affirmations/employment', objectParam,{
+        headers : { token }
     })
   }
 

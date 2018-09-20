@@ -71,7 +71,7 @@ class NoticePinModal extends BaseMVPView {
      )
    } else {
      this.presenter.validateEmployeePin(pin)
-   }
+    }
   }
 
   render () {
