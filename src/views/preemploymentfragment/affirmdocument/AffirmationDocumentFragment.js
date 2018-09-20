@@ -261,7 +261,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
                 <h2> { resp.title } </h2>
                 <div>
                   {
-                    resp.nodeStatus !== 1 ?
+                    resp.nodeStatus === 1 ?
                     <span className = { 'affirmation-icon affirmation-success float-right' }/>
                     :
                     <span
