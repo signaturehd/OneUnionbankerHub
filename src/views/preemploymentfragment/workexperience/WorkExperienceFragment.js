@@ -6,8 +6,6 @@ import ConnectView from '../../../utils/ConnectView'
 
 import Presenter from './presenter/WorkExperiencePresenter'
 
-import WorkExperienceAddModal from './modals/WorkExperienceAddModal'
-
 import {
   GenericButton,
   CircularLoader,
@@ -15,26 +13,52 @@ import {
   Line,
 } from '../../../ub-components/'
 
-import { Progress } from 'react-sweet-progress'
+import WorkExperienceMultipleCardComponent from './WorkExperienceMultipleCardComponent'
+import WorkExperienceAddModal from './modals/WorkExperienceAddModal'
 
-import "react-sweet-progress/lib/style.css"
+import { Progress } from 'react-sweet-progress'
 
 class WorkExperienceFragment extends BaseMVPView {
 
   constructor(props) {
     super(props)
     this.state = {
-      showAddWorkExperienceModal : false
+      enabledLoader : false,
+      showAddWorkExperienceModal : false,
+      workExperienceCardHolder : []
     }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(4)
+    this.presenter.getWorkExperience()
+  }
+
+  checkedWorkExperience (workExperienceCardHolder) {
+    this.setState({ workExperienceCardHolder })
+  }
+
+  setCardHolderDefaultyFunc (workExperienceCardHolder) {
+    this.setState({ workExperienceCardHolder })
+  }
+
+  onShowWorkExperienceFormModalFunc() {
+    this.setState({ showAddWorkExperienceModal : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
   }
 
   render () {
     const {
-      showAddWorkExperienceModal
+      enabledLoader,
+      showAddWorkExperienceModal,
+      workExperienceCardHolder
     } = this.state
 
     const { percentage } = this.props
@@ -68,10 +92,49 @@ class WorkExperienceFragment extends BaseMVPView {
           <div className = { 'text-align-right' }>
             <GenericButton
               text = { 'Add Work Experience' }
-              onClick = { () => this.setState({ showAddWorkExperienceModal : true }) }
+              onClick = { () => this.onShowWorkExperienceFormModalFunc() }
               />
           </div>
         </div>
+        <br/>
+        {
+          enabledLoader ?
+          <center>
+          <CircularLoader show = { enabledLoader }/>
+          </center>
+          :
+            workExperienceCardHolder.length !==0 &&
+            <WorkExperienceMultipleCardComponent
+              cardDataHolder = { workExperienceCardHolder }
+              setCard = { (resp) => this.setCardHolderDefaultyFunc(resp) }
+              disabled = { showEditSubmitButton }
+              onEditModeProperty = { (
+                propertyName,
+                description,
+                propertyType,
+                cquisitionValue,
+                repairCost,
+                imageKey,
+                updateMode,
+                showPropertyModal,
+                editMode) =>
+                onEditModeProperty(
+                  propertyName,
+                  description,
+                  propertyType,
+                  cquisitionValue,
+                  repairCost,
+                  imageKey,
+                  updateMode,
+                  showPropertyModal,
+                  editMode
+                ) }
+              errorMessage = {
+                showEditSubmitButton ?
+                '' :
+                `Please upload the required attachments`  }
+              />
+        }
         <div>
           <Card></Card>
         </div>
@@ -84,4 +147,4 @@ WorkExperienceFragment.propTypes = {
   onSendPageNumberToView : PropTypes.func
 }
 
-export default ConnectView(WorkExperienceFragment, Presenter )
+export default ConnectView(WorkExperienceFragment, Presenter)

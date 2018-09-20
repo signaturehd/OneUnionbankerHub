@@ -108,8 +108,12 @@ class EducationBackgroundFragment extends BaseMVPView {
           </div>
         </div>
         <br/>
-
         {
+          enabledLoader ?
+          <center>
+          <CircularLoader show = { enabledLoader }/>
+          </center>
+          :
           educationCardHolder.length !==0 &&
           <EducationMultipleCardComponent
             cardDataHolder = { educationCardHolder }
