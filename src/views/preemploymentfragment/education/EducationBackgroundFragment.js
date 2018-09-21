@@ -40,10 +40,6 @@ class EducationBackgroundFragment extends BaseMVPView {
     this.setState({ showEducationFormModal : true })
   }
 
-  setCardHolderDefaultyFunc (defaultSchool) {
-    this.setState({ defaultSchool })
-  }
-
   checkedEducationData(educationCardHolder) {
     this.setState({ educationCardHolder })
   }
@@ -117,7 +113,6 @@ class EducationBackgroundFragment extends BaseMVPView {
           educationCardHolder.length !==0 &&
           <EducationMultipleCardComponent
             cardDataHolder = { educationCardHolder }
-            setCard = { (resp) => this.setCardHolderDefaultyFunc(resp) }
             disabled = { showEditSubmitButton }
             onEditModeProperty = { (
               propertyName,

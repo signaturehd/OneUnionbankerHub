@@ -15,7 +15,6 @@ class WorkExperienceMultipleCardComponent extends Component {
   render () {
     const {
       cardDataHolder,
-      setCard,
       disabled,
       errorMessage,
       count,
@@ -38,8 +37,8 @@ class WorkExperienceMultipleCardComponent extends Component {
                       <h2 className = { 'font-size-12px font-weight-lighter' }>Contact number: { resp.company.contactNumber }</h2>
                   </div>
                   <div>
-                    <h2 className = { 'font-size-12px font-weight-lighter' }>Start Date: `${resp.company.startMonth} ${resp.company.startYear}` </h2>
-                    <h2 className = { 'font-size-12px font-weight-lighter' }>End Date: `${resp.company.endMonth} ${resp.company.endYear}` </h2>
+                    <h2 className = { 'font-size-12px font-weight-lighter' }>Start Date: { `${resp.company.startMonth} ${resp.company.startYear}` }</h2>
+                    <h2 className = { 'font-size-12px font-weight-lighter' }>End Date: { `${resp.company.endMonth} ${resp.company.endYear}` }</h2>
                   </div>
                 </div>
                 <div className = { 'grid-global-rows' }>
@@ -60,17 +59,6 @@ class WorkExperienceMultipleCardComponent extends Component {
                           true,
                           true)
                       }
-                    />
-                  }
-                  {
-                    !disabled &&
-                    <img
-                      className = { 'close-button-global' }
-                      src = { require('../../../images/x-circle-global.png') }
-                      onClick = { () => {
-                        cardDataHolder.splice(key, 1)
-                        setCard(cardDataHolder)
-                      }}
                     />
                   }
                 </div>

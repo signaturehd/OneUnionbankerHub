@@ -24,9 +24,11 @@ class WorkExperienceFragment extends BaseMVPView {
     super(props)
     this.state = {
       enabledLoader : false,
+      showEditSubmitButton : false,
       showAddWorkExperienceModal : false,
       workExperienceCardHolder : []
     }
+
   }
 
   componentDidMount () {
@@ -35,10 +37,6 @@ class WorkExperienceFragment extends BaseMVPView {
   }
 
   checkedWorkExperience (workExperienceCardHolder) {
-    this.setState({ workExperienceCardHolder })
-  }
-
-  setCardHolderDefaultyFunc (workExperienceCardHolder) {
     this.setState({ workExperienceCardHolder })
   }
 
@@ -57,6 +55,7 @@ class WorkExperienceFragment extends BaseMVPView {
   render () {
     const {
       enabledLoader,
+      showEditSubmitButton,
       showAddWorkExperienceModal,
       workExperienceCardHolder
     } = this.state
@@ -103,10 +102,11 @@ class WorkExperienceFragment extends BaseMVPView {
           <CircularLoader show = { enabledLoader }/>
           </center>
           :
+          <div>
+          {
             workExperienceCardHolder.length !==0 &&
             <WorkExperienceMultipleCardComponent
               cardDataHolder = { workExperienceCardHolder }
-              setCard = { (resp) => this.setCardHolderDefaultyFunc(resp) }
               disabled = { showEditSubmitButton }
               onEditModeProperty = { (
                 propertyName,
@@ -132,8 +132,9 @@ class WorkExperienceFragment extends BaseMVPView {
               errorMessage = {
                 showEditSubmitButton ?
                 '' :
-                `Please upload the required attachments`  }
-              />
+                `Please upload the required attachments`  }/>
+          }
+          </div>
         }
         <div>
           <Card></Card>

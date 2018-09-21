@@ -16,7 +16,6 @@ class EducationMultipleCardComponent extends Component {
   render () {
     const {
       cardDataHolder,
-      setCard,
       disabled,
       errorMessage,
       count,
@@ -71,17 +70,6 @@ class EducationMultipleCardComponent extends Component {
                           true,
                           true)
                       }
-                    />
-                  }
-                  {
-                    !disabled &&
-                    <img
-                      className = { 'close-button-global' }
-                      src = { require('../../../images/x-circle-global.png') }
-                      onClick = { () => {
-                        cardDataHolder.splice(key, 1)
-                        setCard(cardDataHolder)
-                      }}
                     />
                   }
                 </div>
