@@ -1,9 +1,9 @@
 export default class HRBenefitsService {
-  constructor (apiClient, accountClient, fileClient) {
+  constructor (apiClient, accountClient, fileClient, onboardingClient) {
     this.apiClient = apiClient
     this.accountClient = accountClient
     this.fileClient = fileClient
-
+    this.onboardingClient = onboardingClient
   }
 
   /* user */
@@ -1059,10 +1059,66 @@ export default class HRBenefitsService {
     })
   }
 
+  /* Pre-Employment */
+  postAffirmPreEmploymentUndertaking (token) {
+    return this.onboardingClient.post('v1/affirm/pre-emp-undertaking', {
+      headers : { token }
+    })
+  }
+
+  getAffirmationsStatus (token) {
+    return this.onboardingClient.get('v1/employees/affirmations/status', {
+      headers : { token }
+    })
+  }
+
+  getFinancialStatus (token) {
+    return this.onboardingClient.get('v1/employees/finances/status', {
+      headers : { token }
+    })
+  }
+
+  addFinancialStatus (token, financialStatusParam) {
+    const objectParam = {
+      bank : financialStatusParam.bank,
+      obligation: financialStatusParam.obligation,
+      amount: financialStatusParam.amount,
+      status: financialStatusParam.statusId,
+    }
+    return this.onboardingClient.post('v1/employees/finances/details', objectParam, {
+      headers : { token }
+    })
+  }
+
+  getEmployeeTin (token) {
+    return this.onboardingClient.get('v1/employee/tin', {
+      headers : { token }
+    })
+  }
+
+  createEmployeeTin (token) {
+    return this.onboardingClient.post('v1/employee/tin', {
+      headers : { token }
+    })
+  }
+
+  getEmployeeSSS (token) {
+    return this.onboardingClient.get('v1/employees/sss', {
+      headers : { token }
+    })
+  }
+
+  getEmployeeSchool (token) {
+    return this.onboardingClient.get('employees/school')
+    headers: { token }
+  }
+  
   /* Vaccine Requisition */
-   validateVaccine (token) {
-     return this.apiClient.get('v1/vaccinations/validate', {
-       headers: { token }
-     })
-   }
+  
+  
+  validateVaccine (token) {
+    return this.apiClient.get('v1/vaccinations/validate', {
+      headers: { token }
+    })
+  }
 }

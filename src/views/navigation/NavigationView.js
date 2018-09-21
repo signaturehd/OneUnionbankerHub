@@ -64,7 +64,7 @@ import OnboardingView from '../onboarding/OnboardingView'
 import Carousel from '../carousel/Carousel'
 
 /* Pre Employment */
-// import PreEmploymentFragment from '../preemployment/PreEmploymentFragment'
+import PreEmploymentFragment from '../preemployment/PreEmploymentFragment'
 
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
@@ -83,8 +83,7 @@ class NavigationView extends BaseMVPView {
       hasPIN: '',
       enabledLoader : false,
       profileHasCOC: '',
-      tempPreEmploymentModal: false,
-      tempProfile: 1
+      tempPreEmploymentModal: false
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -175,8 +174,7 @@ class NavigationView extends BaseMVPView {
       hasPIN,
       enabledLoader,
       profileHasCOC,
-      tempPreEmploymentModal,
-      tempProfile
+      tempPreEmploymentModal
     } = this.state
 
     const { history, login } = this.props
@@ -232,7 +230,7 @@ class NavigationView extends BaseMVPView {
               }
             <Drawer >
               {
-                tempProfile !== 1 ?
+                profile && profile.hasFilledOut !== 1 ?
                 <Switch>
                   <Route exact path = '/' render = {props =>
                     <NewsFragment { ...props }
@@ -240,13 +238,11 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/settings' render = { props =>
                     <SettingsFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  {
-                    // <Route path = '/preemployment' render = { props =>
-                    // <PreEmploymentFragment { ...props }
-                    //   onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
-                    //   tempPreEmploymentModal = { tempPreEmploymentModal }
-                    //   setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  }
+                  <Route path = '/preemployment' render = { props =>
+                    <PreEmploymentFragment { ...props }
+                      onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
+                      tempPreEmploymentModal = { tempPreEmploymentModal }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/faqs' render = { props =>
                     <FaqFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
@@ -363,7 +359,7 @@ class NavigationView extends BaseMVPView {
             style = { style.show }>
             <SideBar
               splitUserInitial = { splitUserInitial }
-              tempPreEmployment = { tempProfile }
+              tempPreEmployment = { profile && profile.hasFilledOut }
               logout = { () => this.setState({ showLogoutModal : true }) }
               selected={ selected }
               profile = { profile }

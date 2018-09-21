@@ -809,9 +809,54 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  /* Vaccine Requisition */
+  /* Pre Employment */
+
+  postAffirmPreEmploymentUndertaking (token) {
+    return this.service.postAffirmPreEmploymentUndertaking(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getAffirmationsStatus (token) {
+    return this.service.getAffirmationsStatus(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getFinancialStatus (token) {
+    return this.service.getFinancialStatus(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addFinancialStatus (token, financialStatusParam) {
+    return this.service.addFinancialStatus(token, financialStatusParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getEmployeeTin (token) {
+    return this.service.getEmployeeTin(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  createEmployeeTin () {
+    return this.service.createEmployeeTin(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getEmployeeSSS (token) {
+    return this.service.getEmployeeSSS(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getEmployeeSchool (token) {
+    return this.service.getEmployeeSchool(token)
+      .pipe(ServiceErrorOperator())
+  }
+  
+  /* Vaccines Requisitions */
+  
+
   validateVaccine (token) {
     return this.service.validateVaccine(token)
       .pipe(ServiceErrorOperator())
   }
+
 }
