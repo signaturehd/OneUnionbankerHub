@@ -66,7 +66,7 @@ class NewsFragment extends BaseMVPView {
         }
         <div className = { 'news-grid-header' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left news-header' }>1uHub News Feed </h2>
+            <h2 className={ 'header-margin-default text-align-left news-header' }>News Feed</h2>
             <h2>Be in the loop. Check out what's new below.</h2>
             <br/>
           </div>

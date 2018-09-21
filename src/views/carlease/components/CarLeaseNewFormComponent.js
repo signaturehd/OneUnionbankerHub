@@ -31,6 +31,7 @@ class CarLeaseNewFormComponent extends Component {
       solRCDefault,
       solRC,
       solId,
+      solIdDefault,
       solIdErrorMessage,
       cmUnit,
       secondaryColor,
@@ -41,7 +42,6 @@ class CarLeaseNewFormComponent extends Component {
       onValidateyearFunc,
       onValidatePrimaryColor,
       onValidateSecondaryColor,
-      onValidateSolRC,
       onShowEnterSolRCModalFunc,
       onShowInsurancePaymentFunc,
       insurancePayment,
@@ -129,9 +129,8 @@ class CarLeaseNewFormComponent extends Component {
                 />
                 <GenericInput
                   disabled = { showEditMode }
-                  value = { solRCDefault ? solRCDefault : solRC }
+                  value = { solRC }
                   onChange = { (e) => onChangeSolRCFunc(e.target.value) }
-                  onClick = { () => onShowEnterSolRCModalFunc }
                   errorMessage = { solRCErrorMessage }
                   text = { 'RC' }
                   maxLength = { 20 }
@@ -205,6 +204,7 @@ CarLeaseNewFormComponent.propTypes = {
   history: PropTypes.object,
   carBrand: PropTypes.string,
   solRCDefault: PropTypes.string,
+  solIdDefault: PropTypes.string,
   solRC: PropTypes.string,
   solId: PropTypes.string,
   onChangeSolIdFunc: PropTypes.func,
@@ -222,7 +222,6 @@ CarLeaseNewFormComponent.propTypes = {
   onValidateyearFunc: PropTypes.func,
   onValidatePrimaryColor: PropTypes.func,
   onValidateSecondaryColor: PropTypes.func,
-  onValidateSolRC: PropTypes.func,
   onShowEnterSolRCModalFunc: PropTypes.func,
   onSubmit: PropTypes.func,
   onSubmit: PropTypes.func,

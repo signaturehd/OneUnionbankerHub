@@ -62,7 +62,7 @@ class CarLeaseNewFragment extends BaseMVPView {
       insuranceId: '',
       solRCErrorMessage : '',
       yearErrorMessage : '',
-      attachmentsRequired : [ {name : 'Dealer Quotations'}]
+      attachmentsRequired : [ {name : 'Dealer Quotations'} ]
     }
     this.sendFormData = this.sendFormData.bind(this)
     this.validator = this.validator.bind(this)
@@ -78,11 +78,11 @@ class CarLeaseNewFragment extends BaseMVPView {
   }
 
   showCarValidated (carValidate) {
-    this.setState({ carValidate })
+    this.setState({ carValidate, solRC : carValidate.solRC, solId : carValidate.solId })
   }
 
-  setFileAttachments (file) {
-    this.setState({ file })
+  setFileAttachments (attachmentsRequired) {
+    this.setState({ attachmentsRequired })
   }
 
   validateSolRC (e) {
@@ -130,7 +130,7 @@ class CarLeaseNewFragment extends BaseMVPView {
       cMUnit,
       primaryColor,
       secondaryColor,
-      file,
+      attachmentsRequired,
       leaseMode,
       insuranceId,
       solId,
@@ -138,7 +138,7 @@ class CarLeaseNewFragment extends BaseMVPView {
     } = this.state
 
     let validateAttachments = false
-    file && file.map(
+    attachmentsRequired && attachmentsRequired.map(
       (attachment, key) => {
         if(!attachment.file) {
           validateAttachments = true
@@ -146,7 +146,9 @@ class CarLeaseNewFragment extends BaseMVPView {
       }
     )
 
-    const solRCChecked = carValidate.solRC ? carValidate.solRC : solRC
+    const solRCChecked = carValidate.solRC !== '' ? carValidate.solRC : solRC
+    const solIdChecked = carValidate.solId !== '' ? carValidate.solId : solId
+
       if (!this.validator(carBrand)) {
           store.dispatch(NotifyActions.addNotify({
               title : 'My Benefits',
@@ -192,19 +194,30 @@ class CarLeaseNewFragment extends BaseMVPView {
             type: 'warning'
           })
         )
-      } else if (!this.validator(solId)) {
-        this.setState({ solIdErrorMessage : 'sol id is required' })
+      } else if (!this.validator(solRC)) {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'My Benefits',
+            message : 'Sol RC  is required',
+            type: 'warning'
+          })
+        )
+      } else if (!this.validator(solIdChecked)) {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'My Benefits',
+            message : 'Sol ID  is required',
+            type: 'warning'
+          })
+        )
       } else if (validateAttachments) {
-        file && file.map(
+        attachmentsRequired && attachmentsRequired.map(
           (attachment, key) => {
-            if(!attachment.file) {
+            if(! attachment.file) {
               store.dispatch(NotifyActions.addNotify({
-                 title : 'My Benefits' ,
-                 message : attachment.name + ' is required',
-                 type : 'warning',
-                 duration : 2000
-               })
-             )
+                  title : 'My Benefits',
+                  message : `${ attachment.name } is required`,
+                  type: 'warning'
+                })
+              )
             }
           }
         )
@@ -247,27 +260,25 @@ class CarLeaseNewFragment extends BaseMVPView {
       cMUnit,
       primaryColor,
       secondaryColor,
-      file,
+      attachmentsRequired,
       leaseMode,
       insuranceId,
       solId,
       carValidate
     } = this.state
 
-    const solRCChecked = carValidate.solRC ? carValidate.solRC : solRC
-
     this.presenter.addCarRequest(
       carBrand,
       carModel,
       makeYear,
       leaseMode,
-      solRCChecked,
+      solRC,
       solId,
       insuranceId,
       cMUnit,
       primaryColor,
       secondaryColor,
-      file ? file : null)
+      attachmentsRequired ? attachmentsRequired : null)
   }
 
   render () {
@@ -462,6 +473,7 @@ class CarLeaseNewFragment extends BaseMVPView {
               secondaryColor = { secondaryColor }
               primaryColor = { primaryColor }
               solRCDefault = { carValidate.solRC }
+              solIdDefault = { carValidate.solId }
               cmUnit = { carValidate.unit }
               attachments = { attachmentsRequired }
               insurancePayment = { insurancePayment }
