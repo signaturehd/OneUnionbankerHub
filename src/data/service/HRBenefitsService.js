@@ -1,4 +1,3 @@
-
 export default class HRBenefitsService {
   constructor (apiClient, accountClient, fileClient, onboardingClient) {
     this.apiClient = apiClient
@@ -154,6 +153,12 @@ export default class HRBenefitsService {
   getBooks (token, pageNumber, find) {
     return this.apiClient.get(`v1/books?pageNumber=${pageNumber}&find=${find}`, {
       headers: { token }
+    })
+  }
+
+  getBooksRecommended (token, pageNumber, find, isEditorsPick) {
+    return this.apiClient.get(`v1/books?pageNumber=${ pageNumber }&find=${ find }&isEditorsPick=${ isEditorsPick }`, {
+      headers : { token }
     })
   }
 

@@ -26,10 +26,7 @@ class NavigationViewModal extends Component {
     } = this.state
 
     return (
-      <Modal
-        onClose = { onClose }
-        isDismisable = { isDismisable }
-      >
+      <Modal>
         {
           showCircularLoader ?
             <center>

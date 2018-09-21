@@ -127,6 +127,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getBooksRecommended (token, pageNumber, find, isEditorsPick) {
+    return this.service.getBooksRecommended(token, pageNumber, find, isEditorsPick)
+      .pipe(ServiceErrorOperator())
+  }
+
   getBooksBorrowed (token, borrowedPageNumber, find) {
     return this.service.getBooksBorrowed(token, borrowedPageNumber, find)
       .pipe(ServiceErrorOperator())

@@ -3,6 +3,7 @@ import AddBookRatingInteractor from '../../../domain/interactor/library/AddBookR
 import GetBooksBorrowedInteractor from '../../../domain/interactor/library/GetBooksBorrowedInteractor'
 import GetBooksCommentsInteractor from '../../../domain/interactor/library/GetBooksCommentsInteractor'
 import ReserveBookInteractor from '../../../domain/interactor/library/ReserveBookInteractor'
+import GetRecommendationInteractor from '../../../domain/interactor/library/GetRecommendationInteractor'
 import BookRateParam from '../../../domain/param/BookRateParam'
 import ReserveParam from '../../../domain/param/ReserveParam'
 
@@ -19,6 +20,8 @@ export default class LibraryPresenter {
     this.getBooksBorrowedInteractor = new GetBooksBorrowedInteractor(container.get('HRBenefitsClient'))
     this.getBooksCommentsInteractor = new GetBooksCommentsInteractor(container.get('HRBenefitsClient'))
     this.reserveBookInteractor = new ReserveBookInteractor(container.get('HRBenefitsClient'))
+    this.getRecommendationInteractor = new GetRecommendationInteractor(container.get('HRBenefitsClient'))
+    this.getTransactionImage = container.get('FileClient')
   }
 
 
@@ -35,7 +38,6 @@ export default class LibraryPresenter {
       .toArray()
       .subscribe(books => {
         this.view.hideLoading()
-        this.view.showRecommendation(books)
       }, e => {
         this.view.hideLoading()
       })
@@ -49,11 +51,44 @@ export default class LibraryPresenter {
     })
   }
 
+  getBooksRecommended (pageNumber, find, isEditorsPick) {
+    this.getRecommendationInteractor.execute(pageNumber, find, isEditorsPick)
+    .do(books => this.view.showRecommendation(books.bookList, books.totalCount))
+    // .flatMap(books =>
+    //   books.bookList.map((resp) =>
+    //     Observable.from(resp.imageUrl)
+    //     .flatMap(attachment =>
+    //       this.getTransactionImage.get('v1/uploads?folder=attachments', {
+    //         headers: {
+    //           token: resp.token,
+    //           file: attachment,
+    //         },
+    //         responseType : 'blob'
+    //       })
+    //     )
+    //     .flatMap(resp =>
+    //       Observable.create(observer => {
+    //         const reader = new FileReader()
+    //         reader.onerror = err => observer.error(err)
+    //         reader.onabort = err => observer.error(err)
+    //         reader.onload = () => observer.next(reader.result)
+    //         reader.onloadend = () => observer.complete()
+    //
+    //         reader.readAsDataURL(resp.data)
+    //         console.log(reader)
+    //       })
+    //     )
+    //     .toArray()
+    //   )
+    // )
+    .subscribe(books => {
+    }, error => {
+    })
+  }
 
   getBooksBorrowed (borrowedPageNumber, find) {
     this.view.showLoading()
     this.getBooksBorrowedInteractor.execute(borrowedPageNumber, find)
-
     .subscribe(borrowed => {
         this.view.hideLoading()
         this.view.showBorrowed(borrowed)

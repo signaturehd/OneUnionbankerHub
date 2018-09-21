@@ -26,7 +26,6 @@ class ReleasingCenterModal extends Component {
 
     return (
       <Modal
-        onClose = {onClose}
         isDismisable = {isDismisable}>
         <div>
         {
