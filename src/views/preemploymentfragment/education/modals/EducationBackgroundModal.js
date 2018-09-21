@@ -25,39 +25,25 @@ class EducationBackgroundModal extends Component {
 
   constructor (props) {
     super (props)
-    this.state = {
-      count : 2,
-      torFormData: [{
-        name : 'Transcript of Records'
-      }]
-    }
-  }
-
-  getDamagePropertyObject () {
-    getPropertyHolderFunc(educationObject)
-  }
-
-  addAttachmentsFunc (attachment, tempCount) {
-    const attachmentTemp = [...attachment]
-    let newCount = tempCount + 1
-    this.setState({ count : newCount })
-    attachmentTemp.push({
-      name : 'Transcript of Records ' + tempCount
-    })
-    this.setState({ torFormData : attachmentTemp })
   }
 
   render () {
     const {
     hideModalEducationFormFunc,
-    updateMode
-    } = this.props
-
-    const {
+    updateMode,
     count,
-    defaultSchool,
-    torFormData
-    } = this.state
+    torFormData,
+    addAttachmentsFunc,
+    schoolName,
+    studentNo,
+    startYear,
+    endYear,
+    term,
+    degree,
+    honor,
+    course,
+    address
+    } = this.props
 
     return (
       <Modal
@@ -66,17 +52,23 @@ class EducationBackgroundModal extends Component {
         width = { 50 }>
         <h2>Education Background Form</h2>
         <GenericInput
-          text = { 'School' }/>
+          text = { 'School' }
+          value = { schoolName }/>
         <GenericInput
-          text = { 'Student Number' }/>
+          text = { 'Student Number' }
+          value = { studentNo }/>
         <GenericInput
-          text = { 'Degree' }/>
+          text = { 'Degree' }
+          value = { degree }/>
         <GenericInput
-          text = { 'Course' }/>
+          text = { 'Course' }
+          value = { course }/>
         <GenericInput
-          text = { 'Term' }/>
+          text = { 'Term' }
+          value = { term }/>
         <GenericInput
-          text = { 'Special Honor' }/>
+          text = { 'Special Honor' }
+          value = { honor }/>
         <div className = { 'text-align-left' }>
           <h2>Inclusive Details</h2>
           <br/>
@@ -84,11 +76,13 @@ class EducationBackgroundModal extends Component {
         <GenericInput
           text = { 'Start Year' }
           type = { 'number' }
-          maxLength = { 4 }/>
+          maxLength = { 4 }
+          value = { startYear }/>
         <GenericInput
           text = { 'End Year' }
           type = { 'number' }
-          maxLength = { 4 }/>
+          maxLength = { 4 }
+          value = { endYear }/>
           <br/>
           <Line/>
           <br/>
@@ -97,7 +91,7 @@ class EducationBackgroundModal extends Component {
             <div className = { 'text-align-right' }>
               <GenericButton
                 text = { 'Add Attachments' }
-                onClick = { () => this.addAttachmentsFunc(torFormData, count) }
+                onClick = { () => addAttachmentsFunc(torFormData, count) }
                 />
             </div>
           </div>
@@ -130,14 +124,10 @@ class EducationBackgroundModal extends Component {
               updateMode ?
               <GenericButton
                 text={ 'Update' }
-                onClick={
-                () => this.updateSelectedPropertyObject()
-              }/> :
+                /> :
               <GenericButton
                 text={ 'Add' }
-                onClick={
-                () => this.getDamagePropertyObject()
-                }/>
+                />
             }
           </div>
       </Modal>
@@ -146,6 +136,18 @@ class EducationBackgroundModal extends Component {
 }
 
 EducationBackgroundModal.propTypes = {
+  count : PropTypes.number,
+  torFormData : PropTypes.array,
+  addAttachmentsFunc : PropTypes.func,
+  schoolName : PropTypes.string,
+  studentNo : PropTypes.string,
+  startYear : PropTypes.string,
+  endYear : PropTypes.string,
+  term : PropTypes.string,
+  degree : PropTypes.string,
+  honor : PropTypes.string,
+  course : PropTypes.string,
+  address : PropTypes.string,
 }
 EducationBackgroundModal.defaultProps={
 }

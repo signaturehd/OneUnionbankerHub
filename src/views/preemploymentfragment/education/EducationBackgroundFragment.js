@@ -24,10 +24,22 @@ class EducationBackgroundFragment extends BaseMVPView {
     super(props)
     this.state = {
       enabledLoader : false,
-      educationCardHolder : [],
-      defaultSchool : [],
       showEducationFormModal : false,
-      showEditSubmitButton : false
+      showEditSubmitButton : false,
+      educationCardHolder : [],
+      torFormData: [{
+        name : 'Transcript of Records'
+      }],
+      count : 2,
+      schoolName : '',
+      studentNo : '',
+      startYear : '',
+      endYear : '',
+      term : '',
+      degree : '',
+      honor : '',
+      course : '',
+      address : ''
     }
   }
 
@@ -59,7 +71,17 @@ class EducationBackgroundFragment extends BaseMVPView {
       educationCardHolder,
       showEducationFormModal,
       showEditSubmitButton,
-      defaultSchool
+      torFormData,
+      count,
+      schoolName,
+      studentNo,
+      startYear,
+      endYear,
+      term,
+      degree,
+      honor,
+      course,
+      address
     } = this.state
 
     const { percentage } = this.props
@@ -69,13 +91,35 @@ class EducationBackgroundFragment extends BaseMVPView {
         {
           showEducationFormModal &&
           <EducationBackgroundModal
-          hideModalEducationFormFunc = { (showEducationFormModal) => this.setState({ showEducationFormModal }) }
-          getEducationHolderFunc = { (resp) => {
-            const updatePropertyHolder = [...damagePropertyCardHolder]
-            updatePropertyHolder.push(resp)
-            this.setState({ damagePropertyCardHolder : updatePropertyHolder})
-          }}
-            />
+            torFormData = { torFormData }
+            count = { count }
+            schoolName = { schoolName }
+            studentNo = { studentNo }
+            startYear = { startYear }
+            endYear = { endYear }
+            term = { term }
+            degree = { degree }
+            honor = { honor }
+            course = { course }
+            address = { address }
+            addAttachmentsFunc = { (attachment, tempCount) =>
+              {
+                const attachmentTemp = [...attachment]
+                let newCount = tempCount + 1
+                this.setState({ count : newCount })
+                attachmentTemp.push({
+                  name : 'Transcript of Records ' + tempCount
+                })
+                this.setState({ torFormData : attachmentTemp })
+              }
+            }
+            hideModalEducationFormFunc = { (showEducationFormModal) => this.setState({ showEducationFormModal }) }
+            getEducationHolderFunc = { (resp) => {
+              const updatePropertyHolder = [...educationCardHolder]
+              updatePropertyHolder.push(resp)
+              this.setState({ educationCardHolder : updatePropertyHolder})
+            }}
+          />
         }
         <br/>
         <div className = { 'percentage-grid' }>
