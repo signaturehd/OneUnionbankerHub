@@ -37,8 +37,10 @@ class WorkExperienceMultipleCardComponent extends Component {
                       <h2 className = { 'font-size-12px font-weight-lighter' }>Contact number: { resp.company.contactNumber }</h2>
                   </div>
                   <div>
-                    <h2 className = { 'font-size-12px font-weight-lighter' }>Start Date: { `${resp.company.startMonth} ${resp.company.startYear}` }</h2>
-                    <h2 className = { 'font-size-12px font-weight-lighter' }>End Date: { `${resp.company.endMonth} ${resp.company.endYear}` }</h2>
+                    <h2 className = { 'font-size-14px font-weight-bold' }>{ resp.company.position }</h2>
+                    <h2 className = { 'font-size-12px font-weight-lighter' }>Description: { resp.company.description }</h2>
+                    <h2 className = { 'font-size-12px font-weight-lighter' }>Date Employment:
+                    { ` ${resp.company.startMonth} ${resp.company.startYear} - ${resp.company.endMonth} ${resp.company.endYear}` }</h2>
                   </div>
                 </div>
                 <div className = { 'grid-global-rows' }>
