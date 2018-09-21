@@ -720,10 +720,10 @@ export default class HRBenefitsService {
       if (length > 0) {
         for(var i =0 ; i < length; i++) {
           delete damageProperty[key].imageKey[i].base64
-          delete damageProperty[key].imageKey[i].name
         }
       }
     })
+    console.log(calamityAssistanceParam.damageProperty)
     const calamityObject = {
       id: calamityAssistanceParam.id,
       accountNumber,
@@ -731,13 +731,20 @@ export default class HRBenefitsService {
       date: calamityAssistanceParam.date,
       damageProperty: calamityAssistanceParam.damageProperty
     }
-    formData.append('uuid', 12345)
+
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     calamityAssistanceParam.attachmentArray.map((resp, key) =>
      (
        formData.append(resp.name.replace('/', '-'), resp.file)
      ))
+
+    calamityAssistanceParam.damageProperty.map((resp, key) => (
+      resp.imageKey.map((resp1, key) => {
+        formData.append(resp1.name.replace('/', '-'), resp1.file)
+      })
+    ))
     formData.append('body', JSON.stringify(calamityObject))
-    return this.apiClient.post('v1/calamity/availment', formData,{
+    return this.apiClient.post('v1/calamity/availment', formData, {
       headers: { token }
     })
   }
