@@ -719,17 +719,17 @@ export default class HRBenefitsService {
       const length = property.imageKey.length
       if (length > 0) {
         for(var i =0 ; i < length; i++) {
-          delete damageProperty[key].imageKey[i].base64
+          delete damageProperty[key].imageKey[i]
         }
       }
     })
-    console.log(calamityAssistanceParam.damageProperty)
+
     const calamityObject = {
       id: calamityAssistanceParam.id,
       accountNumber,
       releasingCenter,
       date: calamityAssistanceParam.date,
-      damageProperty: calamityAssistanceParam.damageProperty
+      damageProperty: damageProperty
     }
 
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
@@ -740,7 +740,7 @@ export default class HRBenefitsService {
 
     calamityAssistanceParam.damageProperty.map((resp, key) => (
       resp.imageKey.map((resp1, key) => {
-        formData.append(resp1.name.replace('/', '-'), resp1.file)
+        formData.append(`${Math.floor(Math.random()*90000) + 10000}`, resp1.file)
       })
     ))
     formData.append('body', JSON.stringify(calamityObject))
