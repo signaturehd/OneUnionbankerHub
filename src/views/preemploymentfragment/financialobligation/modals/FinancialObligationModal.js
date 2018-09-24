@@ -6,21 +6,16 @@ import { NotifyActions } from '../../../../actions'
 import {
   Modal,
   GenericButton,
-  MultipleFileUploader,
-  MultipleAttachments,
   GenericInput,
-  SingleInputModal,
-  Line,
-  DatePicker
+  DatePicker,
+  SingleInputModal
 } from '../../../../ub-components/'
 
 import { format } from '../../../../utils/numberUtils'
 
 import imageDefault from '../../../../images/profile-picture.png'
 
-
 import { RequiredValidation } from '../../../../utils/validate/'
-import moment from 'moment'
 
 class FinancialObligationModal extends Component {
 
@@ -30,67 +25,97 @@ class FinancialObligationModal extends Component {
 
   render () {
     const {
-
+      bankNameInstitutionFunc,
+      natureObligationFunc,
+      amountFunc,
+      statusNameFunc,
+      submitForm,
+      hideModalEducationFormFunc,
+      bankNameInstitutionErrorMessage,
+      natureObligationErrorMessage,
+      amountErrorMessage,
+      statusNameErrorMessage,
+      showFinanceStatusErrorMessage,
+      statusName,
+      bankNameInstitution,
+      natureObligation,
+      amount,
+      onClose,
+      showFinanceStatusModal,
+      financeStatusFunc,
+      financeStatus,
+      showFinanceStatusModalFunc
     } = this.props
 
     return (
       <Modal
-        onClose = { () => hideModalEducationFormFunc(false) }
         isDismisable = { true }
-        width = { 50 }>
+        onClose = { onClose }>
+        {
+          showFinanceStatusModal &&
+          <SingleInputModal
+            label = { 'Finance Status' }
+            inputArray = { financeStatus && financeStatus }
+            selectedArray = { (statusId, statusName) =>
+              financeStatusFunc(
+                statusId,
+                statusName,
+                false,
+                ''
+              )
+            }
+            onClose = { () => showFinanceStatusModalFunc() }
+          />
+        }
         <h2>Financial Obligation Form</h2>
-          <div>
-            <GenericInput
-              text = { 'Name of the Bank/ Financial Institution' }
-              value = { bankNameInstitution }
-              onChange = { (e) => this.setState({ bankNameInstitution: e.target.value }) }
-              errorMessage = { bankNameInstitution ? '' : bankNameInstitutionErrorMessage }
+        <div>
+          <GenericInput
+            text = { 'Name of the Bank/ Financial Institution' }
+            value = { bankNameInstitution }
+            onChange = { (e) => bankNameInstitutionFunc(e.target.value) }
+            errorMessage = { bankNameInstitution ? '' : bankNameInstitutionErrorMessage }
+            />
+          <GenericInput
+            text = { 'Nature of Obligation' }
+            value = { natureObligation }
+            onChange = { (e) => natureObligationFunc(e.target.value) }
+            errorMessage = { natureObligation ? '' : natureObligationErrorMessage }
+            />
+          <GenericInput
+            text = { 'Amount' }
+            value = { (amount) }
+            type = { 'number' }
+            onChange = { (e) => amountFunc(e.target.value) }
+            errorMessage = { amount ? '' : amountErrorMessage }
+            maxLength = { 12 }
+            />
+          <GenericInput
+            text = { 'Status' }
+            value = { statusName }
+            onClick = { () => statusNameFunc() }
+            errorMessage = { statusName ? '' : statusNameErrorMessage }
+            />
+          <center>
+            <GenericButton
+              className = { 'global-button' }
+              text = { 'Save' }
+              onClick = { () => submitForm() }
               />
-            <GenericInput
-              text = { 'Nature of Obligation' }
-              value = { natureObligation }
-              onChange = { (e) => this.setState({ natureObligation : e.target.value }) }
-              errorMessage = { natureObligation ? '' : natureObligationErrorMessage }
-              />
-            <GenericInput
-              text = { 'Amount' }
-              value = { amount }
-              type = { 'number' }
-              onChange = { (e) => this.setState({ amount : e.target.value }) }
-              errorMessage = { amount ? '' : amountErrorMessage }
-              />
-            <GenericInput
-              text = { 'Status' }
-              value = { statusName }
-              onClick = { () => this.setState({ showFinanceStatusModal : true }) }
-              errorMessage = { statusName ? '' : statusNameErrorMessage }
-              />
-            <center>
-              <GenericButton
-                className = { 'global-button' }
-                text = { 'Save' }
-                onClick = { () => this.submitForm() }
-                />
-            </center>
-          </div>
+          </center>
+        </div>
       </Modal>
     )
   }
 }
 
 FinancialObligationModal.propTypes = {
-  count : PropTypes.number,
-  torFormData : PropTypes.array,
-  addAttachmentsFunc : PropTypes.func,
-  schoolName : PropTypes.string,
-  studentNo : PropTypes.string,
-  startYear : PropTypes.string,
-  endYear : PropTypes.string,
-  term : PropTypes.string,
-  degree : PropTypes.string,
-  honor : PropTypes.string,
-  course : PropTypes.string,
-  address : PropTypes.string,
+  amountFunc : PropTypes.func,
+  bankNameInstitutionFunc : PropTypes.func,
+  natureObligationFunc : PropTypes.func,
+  statusNameFunc : PropTypes.func,
+  onClose : PropTypes.func,
+  submitForm : PropTypes.func,
+  financeStatusFunc : PropTypes.func,
 }
 FinancialObligationModal.defaultProps={
 }

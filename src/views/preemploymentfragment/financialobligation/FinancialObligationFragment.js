@@ -106,6 +106,7 @@ class FinancialObligationFragment extends BaseMVPView {
     } else if (!this.validator(statusName)) {
       this.setState({ statusNameErrorMessage : 'Status field is required' })
     }
+    this.setState({ showFinancialFormModal : false })
     this.presenter.addFinancialStatus(
       bankNameInstitution,
       natureObligation,
@@ -126,20 +127,20 @@ class FinancialObligationFragment extends BaseMVPView {
       financeDetailsHolder,
       statusId,
       statusName,
-      showFinanceStatusModal,
-      showFinanceStatusErrorMessage,
       bankNameInstitution,
       natureObligation,
       amount,
+      showFinanceStatusModal,
       bankNameInstitutionErrorMessage,
       natureObligationErrorMessage,
       amountErrorMessage,
       statusNameErrorMessage,
+      showFinanceStatusErrorMessage,
       noticeResponse,
       showFinanceModal,
       showFinancialFormModal,
       index,
-      viewMoreText
+      viewMoreText,
     } = this.state
 
     const isVisible = (financeDetailsHolder && financeDetailsHolder.length > 4) ? '' : 'hide'
@@ -161,24 +162,38 @@ class FinancialObligationFragment extends BaseMVPView {
         </Modal>
       }
       {
-        showFinanceStatusModal &&
-        <SingleInputModal
-          label = { 'Finance Status' }
-          inputArray = { financeStatus && financeStatus }
-          selectedArray = { (statusId, statusName) =>
+        showFinancialFormModal &&
+        <FinancialObligationModal
+          natureObligationFunc = { (natureObligation) =>  this.setState({ natureObligation }) }
+          statusName = { statusName }
+          bankNameInstitution = { bankNameInstitution }
+          natureObligation = { natureObligation }
+          amount = { amount }
+          bankNameInstitutionFunc = { (bankNameInstitution) => this.setState({ bankNameInstitution }) }
+          amountFunc = { (amount) => this.setState({ amount }) }
+          submitForm = { () => this.submitForm() }
+          onClose = { () => this.setState({ showFinancialFormModal : false }) }
+          bankNameInstitutionErrorMessage = { bankNameInstitutionErrorMessage }
+          natureObligationErrorMessage = { natureObligationErrorMessage }
+          amountErrorMessage = { amountErrorMessage }
+          statusNameErrorMessage = { statusNameErrorMessage }
+          showFinanceStatusModal = { showFinanceStatusModal }
+          showFinanceStatusErrorMessage = { showFinanceStatusErrorMessage }
+          financeStatus = { financeStatus }
+          showFinanceStatusModalFunc = { (showFinanceStatusModal) => this.setState({ showFinanceStatusModal : false })}
+          statusNameFunc = { () => this.setState({ showFinanceStatusModal : true })}
+          financeStatusFunc = { (
+            statusId,
+            statusName,
+            showFinanceStatusModal,
+            showFinanceStatusErrorMessage
+          ) =>
             this.setState({
               statusId,
               statusName,
-              showFinanceStatusModal : false,
-              showFinanceStatusErrorMessage : ''
-            })
-          }
-        onClose = { () => this.setState({ showFinanceStatusModal : false }) }
-        />
-      }
-      {
-        showFinancialFormModal &&
-        <FinancialObligationModal
+              showFinanceStatusModal,
+              showFinanceStatusErrorMessage,
+            }) }
           />
       }
       <div>
@@ -219,7 +234,7 @@ class FinancialObligationFragment extends BaseMVPView {
             <br/>
             <button
               type = { 'button' }
-              className = { `viewmore tooltip ${isVisible}` }
+              className = { `viewmore tooltip ${ isVisible }` }
               onClick = {
                 () => {
                   if(index === financeDetailsHolder.length)
