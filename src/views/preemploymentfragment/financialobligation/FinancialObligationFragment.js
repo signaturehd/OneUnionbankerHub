@@ -112,6 +112,12 @@ class FinancialObligationFragment extends BaseMVPView {
       natureObligation,
       amount,
       statusId)
+      this.setState({
+        bankNameInstitution : '',
+        natureObligation : '',
+        amount : '',
+        statusId : ''
+      })
   }
 
   render() {
