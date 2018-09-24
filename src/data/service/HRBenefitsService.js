@@ -1174,7 +1174,7 @@ export default class HRBenefitsService {
   }
 
   getWorkExperience (token) {
-    return this.onboardingClient.get('v1/employees/employment', {
+    return this.onboardingClient.get('v1/employees/employers', {
       headers: { token }
     })
   }

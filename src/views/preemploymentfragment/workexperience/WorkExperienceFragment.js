@@ -26,6 +26,7 @@ class WorkExperienceFragment extends BaseMVPView {
       enabledLoader : false,
       showEditSubmitButton : false,
       showAddWorkExperienceModal : false,
+      updateMode : false,
       workExperienceCardHolder : []
     }
 
@@ -57,7 +58,8 @@ class WorkExperienceFragment extends BaseMVPView {
       enabledLoader,
       showEditSubmitButton,
       showAddWorkExperienceModal,
-      workExperienceCardHolder
+      workExperienceCardHolder,
+      updateMode
     } = this.state
 
     const { percentage } = this.props
@@ -68,7 +70,8 @@ class WorkExperienceFragment extends BaseMVPView {
         {
           showAddWorkExperienceModal &&
           <WorkExperienceAddModal
-            onClose = { () => this.setState({ showAddWorkExperienceModal : false }) }/>
+            onClose = { () => this.setState({ showAddWorkExperienceModal : false }) }
+            updateMode = { updateMode }/>
         }
         <br/>
         <div className = { 'percentage-grid' }>

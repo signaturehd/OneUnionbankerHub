@@ -32,15 +32,15 @@ class WorkExperienceMultipleCardComponent extends Component {
                 key = {resp.id}>
                 <div className = { 'grid-global' }>
                   <div>
-                      <h2 className = { 'font-size-14px font-weight-bold' }>{ resp.company.name }</h2>
-                      <h2 className = { 'font-size-12px font-weight-lighter' }>Address: { resp.company.address }</h2>
-                      <h2 className = { 'font-size-12px font-weight-lighter' }>Contact number: { resp.company.contactNumber }</h2>
+                      <h2 className = { 'font-size-14px font-weight-bold' }>{ resp.companyName }</h2>
+                      <h2 className = { 'font-size-12px font-weight-lighter' }>Address: { resp.address }</h2>
+                      <h2 className = { 'font-size-12px font-weight-lighter' }>Contact number: { resp.contactNumber }</h2>
                   </div>
                   <div>
-                    <h2 className = { 'font-size-14px font-weight-bold' }>{ resp.company.position }</h2>
-                    <h2 className = { 'font-size-12px font-weight-lighter' }>Description: { resp.company.description }</h2>
+                    <h2 className = { 'font-size-14px font-weight-bold' }>{ resp.position }</h2>
+                    <h2 className = { 'font-size-12px font-weight-lighter' }>Description: { resp.description }</h2>
                     <h2 className = { 'font-size-12px font-weight-lighter' }>Date Employment:
-                    { ` ${resp.company.startMonth} ${resp.company.startYear} - ${resp.company.endMonth} ${resp.company.endYear}` }</h2>
+                    { ` ${resp.startMonth} ${resp.startYear} - ${resp.endMonth} ${resp.endYear}` }</h2>
                   </div>
                 </div>
                 <div className = { 'grid-global-rows' }>
