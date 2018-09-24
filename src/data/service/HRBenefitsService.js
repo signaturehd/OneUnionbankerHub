@@ -16,7 +16,7 @@ export default class HRBenefitsService {
   }
 
   otp (otpParam) {
-    return this.apiClient.post('v2/otp', otpParam)
+    return this.apiClient.post('v1/otp', otpParam)
   }
 
   resend (resendOtpParam) {
@@ -1085,6 +1085,12 @@ export default class HRBenefitsService {
 
   getFinancialStatus (token) {
     return this.onboardingClient.get('v1/employees/finances/status', {
+      headers : { token }
+    })
+  }
+
+  getFinancialDetails (token) {
+    return this.onboardingClient.get('v1/employees/finances/details', {
       headers : { token }
     })
   }

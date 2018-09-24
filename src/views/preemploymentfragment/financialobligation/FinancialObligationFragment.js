@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Switch, Route } from 'react-router-dom'
 
 import BaseMVPView from '../../common/base/BaseMVPView'
 import ConnectView from '../../../utils/ConnectView'
@@ -16,6 +15,8 @@ import {
 
 import { RequiredValidation } from '../../../utils/validate/'
 
+import FinancialObligationModal from './modals/FinancialObligationModal'
+import FinancialObligationMultipleCardComponent from './components/FinancialObligationMultipleCardComponent'
 import Presenter from './presenter/FinancialObligationPresenter'
 
 import { Progress } from 'react-sweet-progress'
@@ -41,13 +42,17 @@ class FinancialObligationFragment extends BaseMVPView {
       amountErrorMessage: '',
       statusNameErrorMessage: '',
       noticeResponse: '',
-      showFinanceModal : false
+      showFinanceModal : false,
+      showFinancialFormModal : false,
+      financeDetailsHolder : [],
+      index : 4,
+      viewMoreText : 'View more',
     }
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(1)
     this.presenter.getFinancialStatus()
+    this.presenter.getFinancialDetails()
   }
 
   circularLoader (enabledLoader) {
@@ -68,6 +73,10 @@ class FinancialObligationFragment extends BaseMVPView {
 
   showFinanceStatus (financeStatus) {
     this.setState({ financeStatus })
+  }
+
+  showFinanceDetails (financeDetailsHolder) {
+    this.setState({ financeDetailsHolder })
   }
 
   noticeResponseFunc (noticeResponse) {
@@ -110,9 +119,11 @@ class FinancialObligationFragment extends BaseMVPView {
       checkPEUndertaking,
       percentage
     } = this.props
+
     const {
       enabledLoader,
       financeStatus,
+      financeDetailsHolder,
       statusId,
       statusName,
       showFinanceStatusModal,
@@ -125,8 +136,13 @@ class FinancialObligationFragment extends BaseMVPView {
       amountErrorMessage,
       statusNameErrorMessage,
       noticeResponse,
-      showFinanceModal
+      showFinanceModal,
+      showFinancialFormModal,
+      index,
+      viewMoreText
     } = this.state
+
+    const isVisible = (financeDetailsHolder && financeDetailsHolder.length > 4) ? '' : 'hide'
 
     return(
     <div>
@@ -160,6 +176,11 @@ class FinancialObligationFragment extends BaseMVPView {
         onClose = { () => this.setState({ showFinanceStatusModal : false }) }
         />
       }
+      {
+        showFinancialFormModal &&
+        <FinancialObligationModal
+          />
+      }
       <div>
         <br/>
         <div className = { 'percentage-grid' }>
@@ -181,38 +202,25 @@ class FinancialObligationFragment extends BaseMVPView {
           </center>
           :
           <div>
-            <GenericInput
-              text = { 'Name of the Bank/ Financial Institution' }
-              value = { bankNameInstitution }
-              onChange = { (e) => this.setState({ bankNameInstitution: e.target.value }) }
-              errorMessage = { bankNameInstitution ? '' : bankNameInstitutionErrorMessage }
+            <FinancialObligationMultipleCardComponent
+              index = { index }
+              financeDetailsHolder = { financeDetailsHolder }
               />
-            <GenericInput
-              text = { 'Nature of Obligation' }
-              value = { natureObligation }
-              onChange = { (e) => this.setState({ natureObligation : e.target.value }) }
-              errorMessage = { natureObligation ? '' : natureObligationErrorMessage }
-              />
-            <GenericInput
-              text = { 'Amount' }
-              value = { amount }
-              type = { 'number' }
-              onChange = { (e) => this.setState({ amount : e.target.value }) }
-              errorMessage = { amount ? '' : amountErrorMessage }
-              />
-            <GenericInput
-              text = { 'Status' }
-              value = { statusName }
-              onClick = { () => this.setState({ showFinanceStatusModal : true }) }
-              errorMessage = { statusName ? '' : statusNameErrorMessage }
-              />
-            <center>
-              <GenericButton
-                className = { 'global-button' }
-                text = { 'Save' }
-                onClick = { () => this.submitForm() }
-                />
-            </center>
+            <br/>
+            <button
+              type = { 'button' }
+              className = { `viewmore tooltip ${isVisible}` }
+              onClick = {
+                () => {
+                  if(index === financeDetailsHolder.length)
+                    this.setState({ index : 4, viewMoreText : 'View more' })
+                  else
+                    this.setState({ index : financeDetailsHolder.length, viewMoreText : 'View less' })
+                }
+              }>
+              <img src={ require('../../../images/icons/horizontal.png') } />
+              <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+            </button>
           </div>
         }
       </div>
@@ -229,4 +237,4 @@ FinancialObligationFragment.propTypes = {
 FinancialObligationFragment.defaultProps = {
 }
 
-export default ConnectView(FinancialObligationFragment, Presenter)
+export default ConnectView(FinancialObligationFragment, Presenter )

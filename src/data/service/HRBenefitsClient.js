@@ -842,6 +842,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getFinancialDetails (token) {
+    return this.service.getFinancialDetails(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   addFinancialStatus (token, financialStatusParam) {
     return this.service.addFinancialStatus(token, financialStatusParam)
       .pipe(ServiceErrorOperator())
