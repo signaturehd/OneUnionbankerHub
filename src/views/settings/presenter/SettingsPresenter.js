@@ -2,6 +2,7 @@ import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInte
 import GenericPutNewCodeInteractor from '../../../domain/interactor/pinCode/GenericPutNewCodeInteractor'
 import GetForConfirmationInteractor from '../../../domain/interactor/staffaccounts/GetForConfirmationInteractor'
 import PostStaffAccountsInteractor from '../../../domain/interactor/staffaccounts/PostStaffAccountsInteractor'
+import GetEmployeeDevicesInteractor from '../../../domain/interactor/account/GetEmployeeDevicesInteractor'
 
 import { NotifyActions } from '../../../actions'
 import store from '../../../store'
@@ -14,11 +15,20 @@ export default class SettingsPresenter {
     this.genericPutNewCodeInteractor = new GenericPutNewCodeInteractor(container.get('HRBenefitsClient'))
     this.getForConfirmationInteractor = new GetForConfirmationInteractor(container.get('HRBenefitsClient'))
     this.postStaffAccountsInteractor = new PostStaffAccountsInteractor(container.get('HRBenefitsClient'))
+    this.getEmployeeDevicesInteractor = new GetEmployeeDevicesInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
   }
+
+   getEmployeeDevice () {
+     this.getEmployeeDevicesInteractor.execute()
+     .subscribe(data => {
+       this.view.showDevices(data)
+     }, error => {
+     })
+   }
 
    getProfile () {
     this.view.showLoading()

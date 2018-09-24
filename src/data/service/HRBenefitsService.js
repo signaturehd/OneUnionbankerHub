@@ -1203,4 +1203,12 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  /* Get Devices */
+
+  getEmployeeDevice (token) {
+    return this.apiClient.get('v1/devices', {
+      headers : { token }
+    })
+  }
 }

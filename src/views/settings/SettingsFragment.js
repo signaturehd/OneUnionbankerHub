@@ -37,11 +37,13 @@ class SettingsFragment extends BaseMVPView {
      staffLoader : false,
      noticeResponseModal : false,
      noticeResponse : '',
-     profileBackground : []
+     profileBackground : [],
+     devices: []
     }
   }
   componentDidMount () {
     this.presenter.getProfile()
+    // this.presenter.getEmployeeDevice()
     this.props.setSelectedNavigation(3)
   }
   showCircularLoader () {
@@ -68,7 +70,9 @@ class SettingsFragment extends BaseMVPView {
   showRank (rank) {
     this.setState({ rank })
   }
-
+  showDevices (devices) {
+    this.setState({ devices })
+  }
   showStaffAccountConfirmation (noticeResponse) {
     this.setState({ noticeResponse, noticeResponseModal : true })
   }
@@ -120,7 +124,8 @@ class SettingsFragment extends BaseMVPView {
       staffAccounts,
       noticeResponse,
       noticeResponseModal,
-      profileBackground
+      profileBackground,
+      devices
     }=this.state
 
     return (
@@ -140,6 +145,7 @@ class SettingsFragment extends BaseMVPView {
           </Modal>
         }
         <SettingsProfileCardComponent
+          devices = { devices }
           profileBackground = { profileBackground }
            accountNumber = { accountNumber }
            profile={ profile }

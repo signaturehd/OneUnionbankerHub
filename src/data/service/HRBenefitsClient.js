@@ -914,4 +914,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Devices */
+
+  getEmployeeDevice (token) {
+    return this.service.getEmployeeDevice(token)
+      .pipe(ServiceErrorOperator())
+  }
+
 }

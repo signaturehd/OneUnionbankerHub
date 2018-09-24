@@ -60,6 +60,7 @@ export default class FinancialObligationPresenter {
     ))
     .subscribe(data => {
       this.view.noticeResponseFunc(data.message)
+      this.getFinancialDetails()
       this.view.hideCircularLoader()
     }, error => {
       this.view.hideCircularLoader()

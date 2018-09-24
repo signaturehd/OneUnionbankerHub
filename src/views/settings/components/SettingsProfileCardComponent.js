@@ -57,7 +57,8 @@ class SettingsProfileCardComponent extends Component {
       getStaffAccounts,
       staffLoader,
       staffAccounts,
-      onClickEmployeeConfirmationFunc
+      onClickEmployeeConfirmationFunc,
+      devices
     } = this.props
 
 
@@ -282,6 +283,7 @@ SettingsProfileCardComponent.propTypes = {
     PropTypes.object
   ]),
   enabledLoader: PropTypes.bool,
+  devices: PropTypes.array,
 }
 
 export default SettingsProfileCardComponent
