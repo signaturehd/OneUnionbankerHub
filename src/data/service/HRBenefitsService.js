@@ -1179,6 +1179,23 @@ export default class HRBenefitsService {
     })
   }
 
+  addWorkExperience (token, workExperienceParam) {
+    const objectParam = {
+      companyName : workExperienceParam.companyName,
+      address : workExperienceParam.address,
+      position : workExperienceParam.position,
+      description : workExperienceParam.description,
+      contactNumber : workExperienceParam.contactNo,
+      startMonth : workExperienceParam.fromMonthName,
+      startYear : workExperienceParam.fromYear,
+      endMonth : workExperienceParam.toMonthName,
+      endYear : workExperienceParam.toYear
+    }
+    return this.onboardingClient.post('v1/employees/employers', objectParam, {
+      headers : { token }
+    })
+  }
+
   /* Vaccine Requisition */
 
   validateVaccine (token) {

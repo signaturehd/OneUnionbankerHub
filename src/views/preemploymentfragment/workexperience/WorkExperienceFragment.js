@@ -13,6 +13,8 @@ import {
   Line,
 } from '../../../ub-components/'
 
+import ResponseModal from '../../notice/NoticeResponseModal'
+
 import WorkExperienceMultipleCardComponent from './WorkExperienceMultipleCardComponent'
 import WorkExperienceAddModal from './modals/WorkExperienceAddModal'
 
@@ -27,6 +29,8 @@ class WorkExperienceFragment extends BaseMVPView {
       showEditSubmitButton : false,
       showAddWorkExperienceModal : false,
       updateMode : false,
+      showNoticeResponseModal : false,
+      noticeResponse : '',
       workExperienceCardHolder : []
     }
 
@@ -45,6 +49,10 @@ class WorkExperienceFragment extends BaseMVPView {
     this.setState({ showAddWorkExperienceModal : true })
   }
 
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse , showNoticeResponseModal : true})
+  }
+
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
   }
@@ -58,7 +66,9 @@ class WorkExperienceFragment extends BaseMVPView {
       enabledLoader,
       showEditSubmitButton,
       showAddWorkExperienceModal,
+      showNoticeResponseModal,
       workExperienceCardHolder,
+      noticeResponse,
       updateMode
     } = this.state
 
@@ -71,7 +81,33 @@ class WorkExperienceFragment extends BaseMVPView {
           showAddWorkExperienceModal &&
           <WorkExperienceAddModal
             onClose = { () => this.setState({ showAddWorkExperienceModal : false }) }
-            updateMode = { updateMode }/>
+            updateMode = { updateMode }
+            onSubmit = { (companyName,
+            address,
+            position,
+            briefDescDuties,
+            contactNo,
+            fromMonthName,
+            fromYear,
+            toMonthName,
+            toYear) => this.presenter.addWorkExperience(companyName,
+            address,
+            position,
+            briefDescDuties,
+            contactNo,
+            fromMonthName,
+            fromYear,
+            toMonthName,
+            toYear) }/>
+        }
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false})
+            }}
+            noticeResponse={ noticeResponse }
+          />
         }
         <br/>
         <div className = { 'percentage-grid' }>

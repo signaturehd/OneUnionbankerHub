@@ -902,6 +902,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  addWorkExperience (token, workExperienceParam) {
+    return this.service.addWorkExperience(token, workExperienceParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Vaccines Requisitions */
 
   validateVaccine (token) {
