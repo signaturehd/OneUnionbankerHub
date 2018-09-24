@@ -1,9 +1,8 @@
 
 .login-logo {
   display: block;
-  width: 80px;
-  margin: 30px auto;
-  box-shadow: 0 5px 10px -7px #333333;
+  width: -webkit-fill-available;
+  margin: auto;
   border-radius: 50%;
 }
 .text {
@@ -11,8 +10,8 @@
 }
 
 .login-loader {
-  padding-top: 43.5px;
-  padding-bottom: 43.5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .login-form {
@@ -45,14 +44,13 @@
 
 .download-container {
   display: grid;
-  column-gap: 5%;
   grid-template-columns: repeat(2, 1fr);
 }
 
 .link-googleplay {
   cursor: pointer;
   background: url('../../../images/Googleplay.png') no-repeat center;
-  background-size: cover;
+  background-size: 145px;
   vertical-align: middle;
   border-radius: 10px;
   height: 45px;
@@ -65,7 +63,7 @@
   user-select: none;
   cursor: pointer;
   background: url('../../../images/APPLE.png') no-repeat center;
-  background-size: cover;
+  background-size: 145px;
   vertical-align: middle;
   border-radius: 10px;
   height: 45px;
@@ -134,12 +132,11 @@
 
 }
 .icon-1 {
-  width: 30px;
+  width: 25px;
   margin-top: 50px;
-  margin:2%;
-  background: #fff;
-  margin-bottom: 10px;
-  border: 0px #e2d3d300;
+  margin: 2%;
+  background: transparent;
+  border: 0px transparent;
 }
 
 .password_show {
