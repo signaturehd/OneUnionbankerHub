@@ -41,6 +41,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
       noticeResponse : [],
       uniquePIN: '',
       preAffirmationEmpId: '',
+      nodeStatus : ''
     }
     this.onCheckedPdf = this.onCheckedPdf.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -67,7 +68,6 @@ class AffirmationDocumentFragment extends BaseMVPView {
          })
        )
      } else {
-       console.log(preAffirmationEmpId)
        this.presenter.postEnrollPinAffirmationsEmployment(pin)
       }
     } else if (preAffirmationEmpId === 1) {
@@ -80,7 +80,6 @@ class AffirmationDocumentFragment extends BaseMVPView {
          })
        )
      } else {
-       console.log(preAffirmationEmpId)
        this.presenter.postEnrollPinAffirmationsPolicy(pin)
       }
     } else if (preAffirmationEmpId === 2) {
@@ -93,7 +92,6 @@ class AffirmationDocumentFragment extends BaseMVPView {
          })
        )
      } else {
-       console.log(preAffirmationEmpId)
        this.presenter.postEnrollPinAffirmationsConfidential(pin)
       }
     } else if (preAffirmationEmpId === 3) {
@@ -106,7 +104,6 @@ class AffirmationDocumentFragment extends BaseMVPView {
          })
        )
      } else {
-       console.log(preAffirmationEmpId)
        this.presenter.postEnrollPinAffirmationsSecrecy(pin)
       }
     }
@@ -154,7 +151,8 @@ class AffirmationDocumentFragment extends BaseMVPView {
       noticeResponse,
       enabledLoader,
       uniquePIN,
-      preAffirmationEmpId
+      preAffirmationEmpId,
+      nodeStatus,
     } = this.state
 
     return(
@@ -163,6 +161,8 @@ class AffirmationDocumentFragment extends BaseMVPView {
       {
         showPdfViewModal &&
         <AffirmationDocumentPreviewModal
+          enabledLoader = { enabledLoader }
+          nodeStatus = { nodeStatus }
           pdfFile = { pdfFile }
           showPinCodeModalFunc = { () => this.setState({ showPinCodeModal: true, showPdfViewModal: false }) }
           onClose = { () => this.setState({ showPdfViewModal: false }) }
@@ -256,6 +256,15 @@ class AffirmationDocumentFragment extends BaseMVPView {
             affirmationPreEmploymentStatus.map((resp, key) =>
             <Card
               key = { key }
+              onClick = { () => {
+                this.onCheckedPdf(resp.link)
+                this.setState({
+                  showPdfViewModal : true ,
+                  preAffirmationEmpId : resp.id,
+                  nodeStatus : resp.nodeStatus
+                  })
+                }
+              }
               className = { 'affirmation-card' }>
               <div className = { 'affirmation-grid-x2' }>
                 <h2> { resp.title } </h2>
@@ -265,11 +274,6 @@ class AffirmationDocumentFragment extends BaseMVPView {
                     <span className = { 'affirmation-icon affirmation-success float-right' }/>
                     :
                     <span
-                      onClick = { () => {
-                        this.onCheckedPdf(resp.link)
-                        this.setState({ showPdfViewModal : true , preAffirmationEmpId : resp.id })
-                      }
-                    }
                       className = { 'affirmation-icon affirmation-seemore-button float-right' }/>
                   }
                 </div>

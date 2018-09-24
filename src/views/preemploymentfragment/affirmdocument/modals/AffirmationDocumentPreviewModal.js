@@ -11,12 +11,14 @@ class AffirmationDocumentPreviewModal extends Component {
   constructor(props) {
     super(props)
   }
-  
+
   render() {
     const {
       onClose,
       pdfFile,
-      showPinCodeModalFunc
+      showPinCodeModalFunc,
+      nodeStatus,
+      enabledLoader
     } = this.props
 
     return (
@@ -25,27 +27,48 @@ class AffirmationDocumentPreviewModal extends Component {
         onClose = { onClose }
         isDismisable = { true }
         >
-        <iframe src = { pdfFile }
-          style = {{
-            height: 500,
-            width: '100%'
-          }}
-        >
-        </iframe>
-        <br/>
-        <br/>
-        <center>
-        <GenericButton
-          onClick = { () => showPinCodeModalFunc() }
-          text = { 'I Affirm' }/>
-        </center>
+        <div>
+          {
+            enabledLoader ?
+            <div>
+              <center className = { 'circular-loader-center' }>
+                <h2>Please wait while we we're retrieving the documents</h2>
+                <CircularLoader show = { enabledLoader }/>
+              </center>
+            </div>
+            :
+            <div>
+              <iframe src = { pdfFile }
+                style = {{
+                  height: 500,
+                  width: '100%'
+                }}
+              >
+              </iframe>
+              <br/>
+              {
+                nodeStatus === 0 &&
+              <div>
+                <br/>
+                <center>
+                <GenericButton
+                  onClick = { () => showPinCodeModalFunc() }
+                  text = { 'I Affirm' }/>
+                </center>
+              </div>
+              }
+            </div>
+          }
+        </div>
       </Modal>
     )
   }
 }
 
 AffirmationDocumentPreviewModal.propTypes = {
-  onClose : PropTypes.func
+  onClose : PropTypes.func,
+  nodeStatus : PropTypes.number,
+  enabledLoader : PropTypes.number,
 }
 
 export default AffirmationDocumentPreviewModal
