@@ -195,6 +195,16 @@ class FinancialObligationFragment extends BaseMVPView {
             percent={ percentage } />
         </div>
         <br/>
+        <div className = { 'grid-global' }>
+          <div></div>
+          <div className = { 'text-align-right' }>
+            <GenericButton
+              text = { 'Add Financial Obligation' }
+              onClick = { () => this.setState({ showFinancialFormModal : true }) }
+              />
+          </div>
+        </div>
+        <br/>
         {
           enabledLoader ?
           <center>
