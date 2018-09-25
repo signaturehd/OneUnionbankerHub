@@ -25,7 +25,7 @@ class CommunityTaxFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(6)
+    this.props.onSendPageNumberToView(7)
   }
 
   render () {

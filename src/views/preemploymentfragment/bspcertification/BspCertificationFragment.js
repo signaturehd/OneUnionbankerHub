@@ -25,7 +25,7 @@ class BspCertificationFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(7)
+    this.props.onSendPageNumberToView(8)
   }
 
 

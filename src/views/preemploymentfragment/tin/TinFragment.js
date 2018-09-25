@@ -24,7 +24,7 @@ class TinFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(9)
+    this.props.onSendPageNumberToView(10)
   }
 
   render () {
