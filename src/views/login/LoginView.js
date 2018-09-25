@@ -207,27 +207,27 @@ class LoginView extends BaseMVPView {
               </div>
             }
             <div className = { 'login-layer-icons' }>
-                  <img
-                    src = { require('../../images/icons/PAGIBIG.png') }
-                    className = { 'icon-1' } />
-                  <img
-                    src = { require('../../images/icons/PHIC.png') }
-                    className = { 'icon-1' } />
-                  <img
-                    src = { require('../../images/icons/sssOrange.png') }
-                    className = { 'icon-1' } />
-                  <img
-                    src = { require('../../images/icons/PremiumBadgeOrange.png') }
-                    className = { 'icon-1' } />
-                  <img
-                    src = { require('../../images/icons/RankOrange.png') }
-                    className = { 'icon-1' } />
-                  <img
-                    src = { require('../../images/icons/taxOrange.png') }
-                    className = { 'icon-1' } />
-                  <img
-                    src = { require('../../images/icons/DesignationOrange.png') }
-                    className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/PAGIBIG.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/PHIC.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/sssOrange.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/PremiumBadgeOrange.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/RankOrange.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/taxOrange.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/DesignationOrange.png') }
+                  className = { 'icon-1' } />
             </div>
             <br/>
             <center>
@@ -257,7 +257,7 @@ class LoginView extends BaseMVPView {
                 title = { notify.title }
                 message = { notify.message }
                 type = { notify.type }
-              />
+                    />
             ))
           }
           </div>

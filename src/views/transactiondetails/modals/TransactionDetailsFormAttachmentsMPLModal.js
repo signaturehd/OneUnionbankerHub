@@ -16,7 +16,9 @@ class TransactionDetailsFormAttachmentsMPLModal extends Component {
       width = { 50 }
       onClose = { onClose }
     >
-      <div className={ 'transaction-attachments-container' }>
+      <h2 className = { 'text-align-center' } >Attachments</h2>
+      <br/>
+      <div className={ 'transacion-attachments-grid' }>
       {
         attachments.map((resp, key) =>
         <img

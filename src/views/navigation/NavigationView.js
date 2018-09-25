@@ -186,8 +186,26 @@ class NavigationView extends BaseMVPView {
     }
     const locationPath = history.location.pathname
 
-    const profileInitial = profile && profile.fullname ? profile.fullname : 'Empty Empty'
-    let splitUserInitial = profileInitial.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),'')
+    const name = profile && profile.fullname
+    let initials = []
+    let splitUserInitial
+    name &&
+    name.split(' ').map((newName, key) => {
+      const length = newName.length
+      if(length > 0) {
+        for(var i = 0; i < length; i++) {
+          if(newName === undefined) {
+            delete newName[key].newName[key]
+          } else {
+            newName.split().map((letters, key) =>
+              initials.push(letters[0])
+            )
+          }
+        }
+      }
+    })
+
+    splitUserInitial = initials[0] + initials[initials.length - 1]
 
     return (
       <div className = { 'navigation-body-div' }>
