@@ -169,7 +169,8 @@ class LoginView extends BaseMVPView {
         }
 
         <Card className = {'login-form'}>
-          <img className = { 'login-logo' } src = { require('../../images/StevieHub.png')} />
+          <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
+            <br/>
             <GenericInput
               autocomplete='off'
               onChange = { e =>
@@ -194,37 +195,41 @@ class LoginView extends BaseMVPView {
                 <CircularLoader show = { true }/>
               </center>              :
               <div>
+                <br/>
+                <br/>
                   <GenericButton
                     disabled = { disabled }
                     text = { 'LOGIN' }
                     onClick = { () =>
                       this.proceedToValidation( username, password )
                     }/>
+                <br/>
+                <br/>
+                <br/>
               </div>
             }
-            <br/>
             <div className = { 'login-layer-icons' }>
-              <img
-                src = { require('../../images/icons/PAGIBIG.png') }
-                className = { 'icon-1' } />
-              <img
-                src = { require('../../images/icons/PHIC.png') }
-                className = { 'icon-1' } />
-              <img
-                src = { require('../../images/icons/sssOrange.png') }
-                className = { 'icon-1' } />
-              <img
-                src = { require('../../images/icons/PremiumBadgeOrange.png') }
-                className = { 'icon-1' } />
-              <img
-                src = { require('../../images/icons/RankOrange.png') }
-                className = { 'icon-1' } />
-              <img
-                src = { require('../../images/icons/taxOrange.png') }
-                className = { 'icon-1' } />
-              <img
-                src = { require('../../images/icons/DesignationOrange.png') }
-                className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/PAGIBIG.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/PHIC.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/sssOrange.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/PremiumBadgeOrange.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/RankOrange.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/taxOrange.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/DesignationOrange.png') }
+                  className = { 'icon-1' } />
             </div>
             <br/>
             <center>
@@ -254,7 +259,7 @@ class LoginView extends BaseMVPView {
                 title = { notify.title }
                 message = { notify.message }
                 type = { notify.type }
-              />
+                    />
             ))
           }
           </div>
