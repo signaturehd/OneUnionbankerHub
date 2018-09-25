@@ -13,274 +13,91 @@ import {
   Card
 } from '../../../ub-components/'
 
-import Presenter from './presenter/AffirmDocumentPresenter'
+import Presenter from './presenter/CharacterReferencePresenter'
 
 import { Progress } from 'react-sweet-progress'
 
 import 'react-sweet-progress/lib/style.css'
-import './styles/affirmDocumentStyle.css'
-
-import AffirmationDocumentPreviewModal from './modals/AffirmationDocumentPreviewModal'
 
 import { NotifyActions } from '../../../actions'
 import store from '../../../store'
 
-import { RequiredNumberValidation, RequiredValidation } from '../../../utils/validate/'
+import './styles/characterReferenceStyle.css'
 
-class AffirmationDocumentFragment extends BaseMVPView {
+import CharacterReferenceAddFormModal from './modals/CharacterReferenceAddFormModal'
+
+class CharacterReferenceFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      affirmationPreEmploymentStatus : [],
-      previewDataPDF : [],
-      showPdfViewModal : false,
-      showPinCodeModal: false,
-      enabledLoader: false,
-      noticeResponseModal: false,
-      pdfFile: '',
-      noticeResponse : [],
-      uniquePIN: '',
-      preAffirmationEmpId: '',
-      nodeStatus : ''
+      showCharacterReferenceModal : false,
+      showOccupationModal : false,
+      showRequiredFields : false,
+      occupationId : '',
+      occupationName : '',
     }
-    this.onCheckedPdf = this.onCheckedPdf.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(0)
-    this.presenter.getAffirmationsStatus()
-  }
-
-  validator (input) {
-   return new RequiredValidation().isValid(input)
-  }
-
-  onSubmit (pin) {
-    const { preAffirmationEmpId } = this.state
-    if(preAffirmationEmpId === 0) {
-      if(!this.validator(pin)) {
-        store.dispatch(NotifyActions.addNotify({
-           title : 'Authentication' ,
-           message : 'Pin is required',
-           type : 'warning',
-           duration : 2000
-         })
-       )
-     } else {
-       this.presenter.postEnrollPinAffirmationsEmployment(pin)
-      }
-    } else if (preAffirmationEmpId === 1) {
-      if(!this.validator(pin)) {
-        store.dispatch(NotifyActions.addNotify({
-           title : 'Authentication' ,
-           message : 'Pin is required',
-           type : 'warning',
-           duration : 2000
-         })
-       )
-     } else {
-       this.presenter.postEnrollPinAffirmationsPolicy(pin)
-      }
-    } else if (preAffirmationEmpId === 2) {
-      if(!this.validator(pin)) {
-        store.dispatch(NotifyActions.addNotify({
-           title : 'Authentication' ,
-           message : 'Pin is required',
-           type : 'warning',
-           duration : 2000
-         })
-       )
-     } else {
-       this.presenter.postEnrollPinAffirmationsConfidential(pin)
-      }
-    } else if (preAffirmationEmpId === 3) {
-      if(!this.validator(pin)) {
-        store.dispatch(NotifyActions.addNotify({
-           title : 'Authentication' ,
-           message : 'Pin is required',
-           type : 'warning',
-           duration : 2000
-         })
-       )
-     } else {
-       this.presenter.postEnrollPinAffirmationsSecrecy(pin)
-      }
-    }
-  }
-
-
-  checkedAffirmationPreEmploymentStatus (affirmationPreEmploymentStatus) {
-    this.setState({ affirmationPreEmploymentStatus })
-  }
-
-  onCheckedPdf (link) {
-    this.presenter.getOnBoardingDocument(link)
-  }
-
-  showPdfFileView (pdfFile) {
-    this.setState({ pdfFile })
-  }
-
-  showPinLoader () {
-    this.setState({ enabledLoader : true })
-  }
-
-  hidePinLoader () {
-    this.setState({ enabledLoader : false })
-  }
-
-  noticeResponse (noticeResponse, noticeResponseModal, showPinCodeModal) {
-    this.setState({ noticeResponse, noticeResponseModal, showPinCodeModal })
+    this.props.onSendPageNumberToView(5)
   }
 
   render() {
     const {
       history,
-      checkPEUndertaking,
       percentage
     } = this.props
 
     const {
-      affirmationPreEmploymentStatus,
-      previewDataPDF,
-      showPdfViewModal,
-      showPinCodeModal,
-      noticeResponseModal,
-      pdfFile,
-      noticeResponse,
-      enabledLoader,
-      uniquePIN,
-      preAffirmationEmpId,
-      nodeStatus,
+      showCharacterReferenceModal,
+      showOccupationModal,
+      showRequiredFields,
+      occupationId,
+      occupationName
     } = this.state
 
-    return(
+    return (
     <div>
       { super.render() }
       {
-        showPdfViewModal &&
-        <AffirmationDocumentPreviewModal
-          enabledLoader = { enabledLoader }
-          nodeStatus = { nodeStatus }
-          pdfFile = { pdfFile }
-          showPinCodeModalFunc = { () => this.setState({ showPinCodeModal: true, showPdfViewModal: false }) }
-          onClose = { () => this.setState({ showPdfViewModal: false }) }
+        showCharacterReferenceModal &&
+        <CharacterReferenceAddFormModal 
+          occupationName = { occupationName }
+          showRequiredFields = { showRequiredFields }
+          occupationId = { occupationId }
+          showOccupationModal = { showOccupationModal }
+          showOccupationModalFunc = { () => 
+            this.setState({ showOccupationModal : true }) }
+          showRequiredFieldsFunc = { (occupationId, occupationName, showRequiredFields, showOccupationModal) => 
+            this.setState({ occupationId, occupationName, showRequiredFields, showOccupationModal }) }
+          onCloseInputModal = { () => 
+            this.setState({ showCharacterReferenceModal : false }) }
           />
       }
-      {
-        noticeResponseModal &&
-        <Modal>
-          <center>
-            <h2>{ noticeResponse }</h2>
-            <br/>
-            <GenericButton
-              onClick = { () => this.setState({ noticeResponseModal : false }) }
-              text = { 'Ok' }
-              />
-            <br/>
-          </center>
-        </Modal>
-      }
-      {
-        showPinCodeModal &&
-        <Modal
-          isDismisable = { true }
-          >
-          {
-            enabledLoader ?
-            <center className = { 'circular-loader-center' }>
-              <h2>Please wait while we validate your PIN</h2>
-              <br/>
-              <CircularLoader show = { enabledLoader }/>
-            </center> :
-            <center>
-              <div>
-                <div className = { 'grid-global-row' }>
-                  <span className = { 'pinlock-icon lock-icon-settings' }/>
-                  <h2 className = { 'font-size-12px' }>Please enter your registered digital signature (PIN).</h2>
-                </div>
-                <GenericInput
-                  className = { 'generic-pin' }
-                  hint = { '* * * * *' }
-                  maxLength = { 5 }
-                  type = { 'password' }
-                  onChange = { (e) =>
-                    {
-                     new RequiredNumberValidation().isValid(e.target.value) ?
-                     this.setState({ uniquePIN: e.target.value }) :
-                     this.setState({ uniquePIN : '' })
-                    }
-                  }
-                  value = { uniquePIN }
-                  errorMessage = { 'Please enter your 5-digit PIN' }
-                  />
-                <br/>
-                {
-                  pdfFile &&
-                  <GenericButton
-                    type = { 'button' }
-                    text = { 'Submit' }
-                    onClick = {
-                      () => {
-                        this.onSubmit(uniquePIN)
-                      }
-                    }
-                    className={ 'compliance-buttons compliance-submit' }
-                    />
-                }
-                <br/>
-                <br/>
-              </div>
-            </center>
-          }
-        </Modal>
-      }
       <div>
-        <br/>
-        <div className = { 'percentage-grid' }>
-          <div>
-            <h2 className={ 'font-size-30px text-align-left' }> Pre Employment Documents Affirmation </h2>
-            <br/>
-            <h4>Please click and read all documents below and affirm each one. Documents that are marked with checked are already affirmed</h4>
+         <br/>
+          <div className = { 'percentage-grid' }>
+            <div>
+              <h2 className={ 'header-margin-default text-align-left' }>Character Reference</h2>
+              <h2>By nominating these persons as your personal character references, you provide consent that UnionBank of the Philippines may conduct a character reference check on your possible employment with the company. You also certify that the information you've provided are true and corret</h2>
+            </div>
+            <Progress
+              type = { 'circle' }
+              height = { 100 }
+              width = { 100 }
+              percent={ percentage } />
           </div>
-          <Progress
-            type = { 'circle' }
-            height = { 100 }
-            width = { 100 }
-            percent={ percentage } />
-        </div>
         <br/>
-        <div className = { 'affirmation-grid-card' }>
-          {
-            affirmationPreEmploymentStatus.map((resp, key) =>
-            <Card
-              key = { key }
-              onClick = { () => {
-                this.onCheckedPdf(resp.link)
-                this.setState({
-                  showPdfViewModal : true ,
-                  preAffirmationEmpId : resp.id,
-                  nodeStatus : resp.nodeStatus
-                  })
-                }
-              }
-              className = { 'affirmation-card' }>
-              <div className = { 'affirmation-grid-x2' }>
-                <h2> { resp.title } </h2>
-                <div>
-                  {
-                    resp.nodeStatus === 1 ?
-                    <span className = { 'affirmation-icon affirmation-success float-right' }/>
-                    :
-                    <span
-                      className = { 'affirmation-icon affirmation-seemore-button float-right' }/>
-                  }
-                </div>
-              </div>
-            </Card>
-            )
-          }
+      </div>
+      <div>
+        <div className = { 'grid-global' } > 
+          <h2 className = { 'font-weight-bold' }>Character Reference</h2>
+          <div className = { 'text-align-end' }>
+            <GenericButton 
+              text = { 'ADD' }
+              onClick = { () => this.setState({ showCharacterReferenceModal : true }) }
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -288,12 +105,12 @@ class AffirmationDocumentFragment extends BaseMVPView {
   }
 }
 
-AffirmationDocumentFragment.propTypes = {
+CharacterReferenceFragment.propTypes = {
   history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
 }
 
-AffirmationDocumentFragment.defaultProps = {
+CharacterReferenceFragment.defaultProps = {
 }
 
-export default ConnectView(AffirmationDocumentFragment, Presenter)
+export default ConnectView(CharacterReferenceFragment, Presenter)

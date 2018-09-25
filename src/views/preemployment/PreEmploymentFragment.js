@@ -15,6 +15,8 @@ import EducationBackgroundFragment
   from '../preemploymentfragment/education/EducationBackgroundFragment'
 import WorkExperienceFragment
   from '../preemploymentfragment/workexperience/WorkExperienceFragment'
+import CharacterReferenceFragment
+  from '../preemploymentfragment/characterreference/CharacterReferenceFragment'
 import NbiClearanceFragment
   from '../preemploymentfragment/nbiclearance/NbiClearanceFragment'
 import CommunityTaxFragment
@@ -76,38 +78,42 @@ function  PreEmploymentFragments (props)  {
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
-  }
-  else if (pageNumber === 5) {
-    return <NbiClearanceFragment
+  } else if (pageNumber === 5) {
+    return <CharacterReferenceFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 6) {
-    return <CommunityTaxFragment
+    return <NbiClearanceFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 7) {
-    return <BspCertificationFragment
+    return <CommunityTaxFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 8) {
-    return <SSSFragment
+    return <BspCertificationFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 9) {
-    return <TinFragment
+    return <SSSFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 10) {
-    return <PhilHealthFragment
+    return <TinFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 11) {
+    return <PhilHealthFragment
+      percentage = { percentage }
+      onSendPageNumberToView = { onSendPageNumberToView }
+      />
+  } else if (pageNumber === 12) {
     return <PagibigFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
@@ -247,7 +253,7 @@ class PreEmploymentFragment extends BaseMVPView {
                   <GenericButton
                     className = { 'pre-emp-setup-button' }
                     text = { 'SETUP MY ACCOUNT' }
-                    onClick = { () =>
+                    onChange = { () =>
                       onChangeStatusPreEmploymentModal()
                       }
                    />
@@ -284,13 +290,13 @@ class PreEmploymentFragment extends BaseMVPView {
                 <GenericButton
                   className = { 'global-button' }
                   text = { 'Previous' }
-                  onClick = { () => this.decerementPage() } /> :
+                  onChange = { () => this.decerementPage() } /> :
                 <div></div>
               }
               <GenericButton
                 className = { 'global-button' }
                 text = { 'Next' }
-                onClick = { () => this.incrementPage() } />
+                onChange = { () => this.incrementPage() } />
             </div>
         </div>
         <div></div>
