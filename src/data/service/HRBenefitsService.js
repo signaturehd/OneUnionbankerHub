@@ -1076,11 +1076,11 @@ export default class HRBenefitsService {
 
   putStaffAccounts (token, putStaffAccountsParam) {
     const putStafftAccountsObject = {
-      
+
     }
     return this.accountClient.post('v1/', putStafftAccountsObject, {
       headers : { token }
-    }) 
+    })
   }
 
   /* Pre-Employment */
@@ -1132,19 +1132,36 @@ export default class HRBenefitsService {
   }
 
   getEmployeeTin (token) {
-    return this.onboardingClient.get('v1/employee/tin', {
+    return this.onboardingClient.get('v1/employees/tin', {
       headers : { token }
     })
   }
 
   createEmployeeTin (token) {
-    return this.onboardingClient.post('v1/employee/tin', {
+    return this.onboardingClient.post('v1/employees/tin', {
       headers : { token }
     })
   }
 
   getEmployeeSSS (token) {
     return this.onboardingClient.get('v1/employees/sss', {
+      headers : { token }
+    })
+  }
+
+  addEmployeeSSS (token, employeeParam) {
+    const formData = new FormData()
+    const objectParam = {
+      sss : employeeParam.sssInput
+    }
+    employeeParam.sssAttachment.map((resp) =>
+      (
+        formData.append(resp.name.replace('/', '-'), resp.file)
+      )
+    )
+
+    formData.append('body', JSON.stringify(objectParam))
+    return this.onboardingClient.post('v1/employees/sss', objectParam, {
       headers : { token }
     })
   }
