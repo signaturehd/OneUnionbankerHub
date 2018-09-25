@@ -1059,6 +1059,15 @@ export default class HRBenefitsService {
     })
   }
 
+  putStaffAccounts (token, putStaffAccountsParam) {
+    const putStafftAccountsObject = {
+      
+    }
+    return this.accountClient.post('v1/', putStafftAccountsObject, {
+      headers : { token }
+    }) 
+  }
+
   /* Pre-Employment */
 
   postAffirmPreEmploymentUndertaking (token) {
