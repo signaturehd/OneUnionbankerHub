@@ -123,7 +123,6 @@ class LoginView extends BaseMVPView {
     }
   }
 
-
   render () {
     const {
       showOtpModal,
@@ -141,8 +140,8 @@ class LoginView extends BaseMVPView {
     } = this.props
 
     let version = 4
-    let majorVersion = 8
-    let minorVersion = 0
+    let majorVersion = 11
+    let minorVersion = 5
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     return (
@@ -208,27 +207,27 @@ class LoginView extends BaseMVPView {
               </div>
             }
             <div className = { 'login-layer-icons' }>
-                  <img
-                    src = { require('../../images/icons/PAGIBIG.png') }
-                    className = { 'icon-1' } />
-                  <img
-                    src = { require('../../images/icons/PHIC.png') }
-                    className = { 'icon-1' } />
-                  <img
-                    src = { require('../../images/icons/sssOrange.png') }
-                    className = { 'icon-1' } />
-                  <img
-                    src = { require('../../images/icons/PremiumBadgeOrange.png') }
-                    className = { 'icon-1' } />
-                  <img
-                    src = { require('../../images/icons/RankOrange.png') }
-                    className = { 'icon-1' } />
-                  <img
-                    src = { require('../../images/icons/taxOrange.png') }
-                    className = { 'icon-1' } />
-                  <img
-                    src = { require('../../images/icons/DesignationOrange.png') }
-                    className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/PAGIBIG.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/PHIC.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/sssOrange.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/PremiumBadgeOrange.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/RankOrange.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/taxOrange.png') }
+                  className = { 'icon-1' } />
+                <img
+                  src = { require('../../images/icons/DesignationOrange.png') }
+                  className = { 'icon-1' } />
             </div>
             <br/>
             <center>
@@ -242,7 +241,7 @@ class LoginView extends BaseMVPView {
               <h2
                 onClick = { () => window.open(this.getSupportURL()) }
                 className = { 'unionbank-color font-size-12px text-align-left cursor-pointer' }>Learn More.</h2>
-              <div className={ 'login-version' }>v { versionNumber } UAT</div>
+              <div className={ 'login-version' }>v { versionNumber }</div>
             </div>
         </Card>
 
@@ -258,7 +257,7 @@ class LoginView extends BaseMVPView {
                 title = { notify.title }
                 message = { notify.message }
                 type = { notify.type }
-              />
+                    />
             ))
           }
           </div>

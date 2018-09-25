@@ -186,6 +186,10 @@ p {
   font-size: 30px;
 }
 
+.font-size-35px{
+  font-size: 35px;
+}
+
 /* text-align*/
 
 .text-align-center {
@@ -224,7 +228,6 @@ p {
   .grid-global {
     display: grid;
     grid-template-columns: 1fr;
-    column-gap: 2%;
   }
 }
 .grid-global-rows {
@@ -252,7 +255,7 @@ p {
 }
 
 .global-icons-calendar {
-  background-image: url('../images/icons/ic_date_range_grey_500_18dp.png');
+  background-image: url('../images/icons/ic_date_range_grey_500_24dp.png');
 }
 
 .global-icons-next {

@@ -41,6 +41,7 @@ class BookRecommendationFragment extends Component {
     this.props.presenter.reserveBook(id, quantity)
   }
 
+
   handleScroll () {
     const element = document.getElementById('navPanId')
     const scrollBar = element.scrollTop
@@ -61,7 +62,6 @@ class BookRecommendationFragment extends Component {
       */
       if (bookNumber === 0) {
         this.props.page(this.pageNumber++)
-        this.setState({ bookPage : this.pageNumber++ })
       }
     }
   }

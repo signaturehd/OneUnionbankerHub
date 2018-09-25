@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card } from '../../../../ub-components/'
-
+import { Card, GenericButton } from '../../../../ub-components/'
+import moment from 'moment'
 import { FaEye } from 'react-icons/lib/fa/'
 import './styles/newsCardComponent.css'
 
@@ -11,29 +11,50 @@ class NewsCardComponent extends Component {
     super(props)
   }
 
+  openLink () {
+    const { news } = this.props
+    window.open(news.linkUrl)
+  }
+
   render () {
-    const { news, onClick , imageUrl } = this.props
+    const {
+      news,
+      onClick ,
+      imageUrl
+    } = this.props
 
     const style = {
-      newsBackground: {
-        backgroundImage : `url(${news.imageUrl})`,
-        backgroundColor : 'rgba(0,0,0,0.7)',
-        backgroundRepeat : 'no-repeat',
-        width: 'auto',
-        backgroundBlendMode: 'color',
-        backgroundSize: 'cover',
-        color : 'white',
-        fontWeight : 'bold',
-      }
+      backgroundImage : `url(${news.imageUrl})`,
+      backgroundRepeat : 'no-repeat',
+      backgroundSize: 'cover',
+      height: 'unset',
+      backgroundPosition: 'center',
     }
 
+    const detailsFiltered = news && news.details.substr(0, 200)
 
-      return (
-        <Card className = { 'news-card' }>
-          <div onClick = { () => onClick(news) } style = { style.newsBackground } className = {'news-body'}>
-            <h3>{news.title}</h3>
+    return (
+      <Card className = { 'news-card' }>
+        <div
+          style = { style }
+          className = {'news-body'} >
+        </div>
+        <div className = { 'news-details-card' }>
+          <h2 className = { 'unionbank-color font-weight-bold font-size-22px' }>{ news.title }</h2>
+          <br/>
+          <h2 className= { 'news-limit-text font-size-16px font-weight-lighter text-align-justify' }>{ detailsFiltered } ...</h2>
+          <br/>
+          <div className = { 'text-align-right' }>
+            <GenericButton
+              onClick = { () =>
+                this.openLink() }
+              className = { 'news-view-details-button' }
+              text = { 'Read More' }
+              />
           </div>
-        </Card>
+          <br/>
+        </div>
+      </Card>
     )
   }
 }

@@ -210,10 +210,8 @@ class BenefitsFragment extends BaseMVPView {
       {
         showAccountNumberModal &&
         <Modal
-          isDismisable={ true }
-          onClose={ () =>
-            this.setState({ showAccountNumberModal: false }) }
-        >
+          onClose = { () => this.setState({ showAccountNumberModal : false }) }
+          isDismisable={ true } >
         <div>
           {
           enabledAccountNumberLoader ?
@@ -234,6 +232,7 @@ class BenefitsFragment extends BaseMVPView {
                   group={ 'benefits-container-group' }
                   value={ accountNumber }
                   type={ 'text' }
+                  maxLength = { 16 }
                 />
               <br/>
               <center>
