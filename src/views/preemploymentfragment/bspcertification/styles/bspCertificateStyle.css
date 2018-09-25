@@ -1,0 +1,19 @@
+.bsp-card {
+  padding: 20px;
+}
+
+.bsp-grid-card {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  column-gap: 2%;
+}
+
+.bsp-grid-x2 {
+  display: grid;
+  grid-template-columns: 1fr .4fr;
+}
+
+.bsp-button {
+  border: none;
+  box-shadow: none;
+}
