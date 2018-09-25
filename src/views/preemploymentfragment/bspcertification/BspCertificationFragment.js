@@ -16,24 +16,42 @@ import Presenter from './presenter/BspCertificationPresenter'
 
 import { Progress } from 'react-sweet-progress'
 
+import BspCertificateDocumentPreviewModal from './modal/BspCertificateDocumentPreviewModal'
+
 import "react-sweet-progress/lib/style.css"
 import './styles/bspCertificateStyle.css'
 
 class BspCertificationFragment extends BaseMVPView {
   constructor(props) {
     super(props)
+    this.state = {
+      showPdfViewModal : false,
+      pdfFile : ''
+    }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(8)
   }
 
+  onCheckedPdf (link) {
+    this.presenter.getOnBoardingDocument(link)
+  }
+
+  showPdfFileView (pdfFile) {
+    this.setState({ pdfFile })
+  }
 
   render() {
     const {
       history,
       percentage
     } = this.props
+
+    const {
+      showPdfViewModal,
+      pdfFile
+    } = this.state
 
     const documentCardOptions = [
       {
@@ -45,6 +63,13 @@ class BspCertificationFragment extends BaseMVPView {
     return(
     <div>
       { super.render() }
+      {
+        showPdfViewModal &&
+        <BspCertificateDocumentPreviewModal
+          pdfFile = { pdfFile }
+          onClose = { () => this.setState({ showPdfViewModal: false }) }
+          />
+      }
       <div>
         <br/>
         <div className = { 'percentage-grid' }>
@@ -67,15 +92,14 @@ class BspCertificationFragment extends BaseMVPView {
               className = { 'bsp-card' }>
               <div className = { 'bsp-grid-x2' }>
                 <h2> { resp.title } </h2>
-                <div className = { 'grid-global' }>
-                  <GenericButton
-                    className = { 'bsp-button' }
-                    onClick = { () => {} }
-                    text = { 'Download' }/>
-                  <GenericButton
-                    className = { 'bsp-button' }
-                    onClick = { () => {} }
-                    text = { 'Preview' }/>
+                <div>
+                  <span
+                    onClick = { () => {
+                      this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
+                      this.setState({ showPdfViewModal : true  })
+                    }
+                  }
+                    className = { 'bsp-icon bsp-seemore-button' }/>
                 </div>
               </div>
             </Card>
