@@ -226,6 +226,7 @@ class BenefitsFragment extends BaseMVPView {
                   group={ 'benefits-container-group' }
                   value={ accountNumber }
                   type={ 'text' }
+                  maxLength = { 16 }
                 />
               <br/>
               <center>
