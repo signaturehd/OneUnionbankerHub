@@ -32,7 +32,6 @@ class CharacterReferenceFragment extends BaseMVPView {
     this.state = {
       showCharacterReferenceModal : false,
       showOccupationModal : false,
-      showRequiredFields : false,
       occupationId : '',
       occupationName : '',
     }
@@ -61,16 +60,15 @@ class CharacterReferenceFragment extends BaseMVPView {
       { super.render() }
       {
         showCharacterReferenceModal &&
-        <CharacterReferenceAddFormModal 
+        <CharacterReferenceAddFormModal
           occupationName = { occupationName }
-          showRequiredFields = { showRequiredFields }
           occupationId = { occupationId }
           showOccupationModal = { showOccupationModal }
-          showOccupationModalFunc = { () => 
+          showOccupationModalFunc = { () =>
             this.setState({ showOccupationModal : true }) }
-          showRequiredFieldsFunc = { (occupationId, occupationName, showRequiredFields, showOccupationModal) => 
-            this.setState({ occupationId, occupationName, showRequiredFields, showOccupationModal }) }
-          onCloseInputModal = { () => 
+          showRequiredFieldsFunc = { (occupationId, occupationName, showOccupationModal) =>
+            this.setState({ occupationId, occupationName, showOccupationModal }) }
+          onClose = { () =>
             this.setState({ showCharacterReferenceModal : false }) }
           />
       }
@@ -79,7 +77,7 @@ class CharacterReferenceFragment extends BaseMVPView {
           <div className = { 'percentage-grid' }>
             <div>
               <h2 className={ 'header-margin-default text-align-left' }>Character Reference</h2>
-              <h2>By nominating these persons as your personal character references, you provide consent that UnionBank of the Philippines may conduct a character reference check on your possible employment with the company. You also certify that the information you've provided are true and corret</h2>
+              <h2>By nominating these persons as your personal character references, you provide consent that UnionBank of the Philippines may conduct a character reference check on your possible employment with the company. You also certify that the information you&#39;ve provided are true and corret</h2>
             </div>
             <Progress
               type = { 'circle' }
@@ -90,10 +88,10 @@ class CharacterReferenceFragment extends BaseMVPView {
         <br/>
       </div>
       <div>
-        <div className = { 'grid-global' } > 
+        <div className = { 'grid-global' } >
           <h2 className = { 'font-weight-bold' }>Character Reference</h2>
           <div className = { 'text-align-end' }>
-            <GenericButton 
+            <GenericButton
               text = { 'ADD' }
               onClick = { () => this.setState({ showCharacterReferenceModal : true }) }
             />

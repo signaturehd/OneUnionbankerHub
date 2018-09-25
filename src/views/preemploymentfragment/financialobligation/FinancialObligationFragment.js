@@ -51,6 +51,7 @@ class FinancialObligationFragment extends BaseMVPView {
   }
 
   componentDidMount () {
+    this.props.onSendPageNumberToView(1)
     this.presenter.getFinancialStatus()
     this.presenter.getFinancialDetails()
   }

@@ -52,7 +52,7 @@ function  PreEmploymentFragments (props)  {
   const percentageTemp = (pageNumber / 11) * 100
   const percentage = parseInt(percentageTemp)
   const biographicalArray = props.biographicalArray
-  if (props.preEmpPage === 0) {
+  if (pageNumber === 0) {
     return <AffirmationDocumentFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
@@ -119,7 +119,7 @@ function  PreEmploymentFragments (props)  {
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else {
-    return <AffirmationDocumentFragment
+    return <PagibigFragment
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   }
@@ -183,6 +183,7 @@ class PreEmploymentFragment extends BaseMVPView {
   }
 
   incrementPage () {
+    console.log('test')
     const index = this.state.preEmpPage + 1
     if(index === 1) {
       this.setState({ showFinancialObligationModal : true })
@@ -253,14 +254,14 @@ class PreEmploymentFragment extends BaseMVPView {
                   <GenericButton
                     className = { 'pre-emp-setup-button' }
                     text = { 'SETUP MY ACCOUNT' }
-                    onChange = { () =>
+                    onClick = { () =>
                       onChangeStatusPreEmploymentModal()
                       }
                    />
                  <br/>
-                  <h2>Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it's your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
+                  <h2>Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it&#39;s your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
                   <br/>
-                  <h2>We're stoked to have you onboard, UnionBanker!</h2>
+                  <h2>We&#39;re stoked to have you onboard, UnionBanker!</h2>
                 </div>
                 <div className = { 'pre-rest' }></div>
               </label>
@@ -290,13 +291,13 @@ class PreEmploymentFragment extends BaseMVPView {
                 <GenericButton
                   className = { 'global-button' }
                   text = { 'Previous' }
-                  onChange = { () => this.decerementPage() } /> :
+                  onClick = { () => this.decerementPage() } /> :
                 <div></div>
               }
               <GenericButton
                 className = { 'global-button' }
                 text = { 'Next' }
-                onChange = { () => this.incrementPage() } />
+                onClick = { () => this.incrementPage() } />
             </div>
         </div>
         <div></div>

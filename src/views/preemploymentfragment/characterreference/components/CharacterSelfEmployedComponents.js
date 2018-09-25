@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { format } from '../../../../utils/numberUtils'
-import { Card }  from '../../../../ub-components/'
-
-import moment from 'moment'
+import { Card, GenericInput }  from '../../../../ub-components/'
 
 class CharacterSelfEmployedComponents extends Component {
   constructor (props) {
@@ -12,11 +9,8 @@ class CharacterSelfEmployedComponents extends Component {
   }
 
   render () {
-    const {
-    } = this.props
-
     return (
-      <div> 
+      <div>
         <GenericInput
           onChange = { () => {} }
           text = { 'Position' } />
@@ -31,7 +25,7 @@ class CharacterSelfEmployedComponents extends Component {
             onChange = { () => {} }
             text = { 'Building Name' } />
         </div>
-        <GenericInput 
+        <GenericInput
           text = { 'Street' }
           onChange = { () => {} }
           />
