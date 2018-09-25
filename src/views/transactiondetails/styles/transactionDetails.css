@@ -8,3 +8,10 @@
 .transaction-detail-container {
   padding-top:10px;
 }
+
+.transacion-attachments-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 5%;
+  margin-bottom: 10px;
+}

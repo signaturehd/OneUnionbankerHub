@@ -713,7 +713,6 @@ export default class HRBenefitsService {
   }
 
   addCalamityAssistance (token, accountToken, accountNumber, releasingCenter, calamityAssistanceParam) {
-    console.log(calamityAssistanceParam)
 
     const formData = new FormData()
     const damageProperty = calamityAssistanceParam.damageProperty
