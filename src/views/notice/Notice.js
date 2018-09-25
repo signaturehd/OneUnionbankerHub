@@ -114,6 +114,7 @@ class Notice extends BaseMVPView {
               >
               <center>
                 <h4> By not confirming, your application will not proceed. Are you sure you want to cancel ? </h4>
+                <br/>
                 <div className={ 'grid-global' }>
                   <GenericButton
                     text={ 'No' }

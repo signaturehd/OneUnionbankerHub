@@ -27,7 +27,7 @@ class NewsCardComponent extends Component {
       backgroundImage : `url(${news.imageUrl})`,
       backgroundRepeat : 'no-repeat',
       backgroundSize: 'cover',
-      height: '100%',
+      height: 'unset',
       backgroundPosition: 'center',
     }
 
