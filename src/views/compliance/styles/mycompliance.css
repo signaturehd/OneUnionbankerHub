@@ -26,9 +26,9 @@
 }
 
 .mycompliance-option-default {
-  background-repeat: no-repeat;
-  background-size: cover;
-  text-align: center;
+  background-color: #ff8a00;
+  -webkit-mask-size: auto 100%;
+  -webkit-mask-repeat: no-repeat;
   height: 50px;
   margin: 0px auto;
   width: 50px;
@@ -48,7 +48,8 @@
 }
 
 .mycompliance-cards-1 {
-  background-image: url('../../../images/icons/Book.png');
+  -webkit-mask-image: url('../../../images/icons/ic_my_compliance.png');
+  mask-image: url('../../../images/icons/ic_my_compliance.png');
 }
 .mycompliance-title-view {
   font-size: 30px;
