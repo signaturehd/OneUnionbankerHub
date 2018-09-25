@@ -70,15 +70,16 @@ class LaptopLeaseFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    // this.props.presenter.getCarValidate()
+    this.props.presenter.getLaptopLease()
   }
 
   validator (input) {
    return new RequiredValidation().isValid(input)
   }
 
-  showCarValidated (carValidate) {
-    this.setState({ carValidate })
+  showLaptopLeaseValidate (laptopValidate) {
+    console.log(laptopValidate)
+    this.setState({ laptopValidate })
   }
 
   setFileAttachments (file) {

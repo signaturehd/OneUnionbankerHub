@@ -1127,13 +1127,21 @@ export default class HRBenefitsService {
     return this.onboardingClient.get('employees/school')
     headers: { token }
   }
-  
+
   /* Vaccine Requisition */
-  
-  
+
+
   validateVaccine (token) {
     return this.apiClient.get('v1/vaccinations/validate', {
       headers: { token }
+    })
+  }
+
+  /* Laptop Lease */
+
+  getLaptopLease (token) {
+    return this.apiClient.get('v1/leases/laptop/validate', {
+      headers : { token }
     })
   }
 }

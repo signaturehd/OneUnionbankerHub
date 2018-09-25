@@ -850,12 +850,19 @@ export default class HRBenefitsClient {
     return this.service.getEmployeeSchool(token)
       .pipe(ServiceErrorOperator())
   }
-  
+
   /* Vaccines Requisitions */
-  
+
 
   validateVaccine (token) {
     return this.service.validateVaccine(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Laptop Lease */
+
+  getLaptopLease (token) {
+    return this.service.getLaptopLease()
       .pipe(ServiceErrorOperator())
   }
 
