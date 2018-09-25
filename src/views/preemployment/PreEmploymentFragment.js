@@ -15,6 +15,8 @@ import EducationBackgroundFragment
   from '../preemploymentfragment/education/EducationBackgroundFragment'
 import WorkExperienceFragment
   from '../preemploymentfragment/workexperience/WorkExperienceFragment'
+import CharacterReferenceFragment
+  from '../preemploymentfragment/characterreference/CharacterReferenceFragment'
 import NbiClearanceFragment
   from '../preemploymentfragment/nbiclearance/NbiClearanceFragment'
 import CommunityTaxFragment
@@ -50,7 +52,7 @@ function  PreEmploymentFragments (props)  {
   const percentageTemp = (pageNumber / 11) * 100
   const percentage = parseInt(percentageTemp)
   const biographicalArray = props.biographicalArray
-  if (props.preEmpPage === 0) {
+  if (pageNumber === 0) {
     return <AffirmationDocumentFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
@@ -76,44 +78,48 @@ function  PreEmploymentFragments (props)  {
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
-  }
-  else if (pageNumber === 5) {
-    return <NbiClearanceFragment
+  } else if (pageNumber === 5) {
+    return <CharacterReferenceFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 6) {
-    return <CommunityTaxFragment
+    return <NbiClearanceFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 7) {
-    return <BspCertificationFragment
+    return <CommunityTaxFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 8) {
-    return <SSSFragment
+    return <BspCertificationFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 9) {
-    return <TinFragment
+    return <SSSFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 10) {
-    return <PhilHealthFragment
+    return <TinFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 11) {
+    return <PhilHealthFragment
+      percentage = { percentage }
+      onSendPageNumberToView = { onSendPageNumberToView }
+      />
+  } else if (pageNumber === 12) {
     return <PagibigFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else {
-    return <AffirmationDocumentFragment
+    return <PagibigFragment
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   }
@@ -177,6 +183,7 @@ class PreEmploymentFragment extends BaseMVPView {
   }
 
   incrementPage () {
+    console.log('test')
     const index = this.state.preEmpPage + 1
     if(index === 1) {
       this.setState({ showFinancialObligationModal : true })
@@ -252,9 +259,9 @@ class PreEmploymentFragment extends BaseMVPView {
                       }
                    />
                  <br/>
-                  <h2>Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it's your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
+                  <h2>Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it&#39;s your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
                   <br/>
-                  <h2>We're stoked to have you onboard, UnionBanker!</h2>
+                  <h2>We&#39;re stoked to have you onboard, UnionBanker!</h2>
                 </div>
                 <div className = { 'pre-rest' }></div>
               </label>
