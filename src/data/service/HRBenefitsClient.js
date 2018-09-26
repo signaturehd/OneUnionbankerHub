@@ -917,6 +917,21 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getCharacterReference (token) {
+    return this.service.getCharacterReference(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  postCharacterReference (token, postCharacterReferenceParam) {
+    return this.service.postCharacterReference(token, postCharacterReferenceParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  putCharacterReference (token, putCharacterReferenceParam) {
+    return this.service.putCharacterReference(token, putCharacterReferenceParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Vaccines Requisitions */
 
   validateVaccine (token) {

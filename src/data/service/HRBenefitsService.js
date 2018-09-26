@@ -1248,6 +1248,58 @@ export default class HRBenefitsService {
     })
   }
 
+  getCharacterReference (token) {
+    return this.onboardingClient.get('v1/employees/references' , {
+      headers : { token }
+    })
+  }
+
+  postCharacterReference (token, postCharacterReferenceParam) {
+    const objectParam = {
+      name : postCharacterReferenceParam.name,
+      relationship: postCharacterReferenceParam.relationship,
+      numberOfYearsKnown: postCharacterReferenceParam.numberOfYearsKnown,
+      contactNumber: postCharacterReferenceParam.numberOfYearsKnown,
+      company : {
+        position: postCharacterReferenceParam.company.position,
+        name: postCharacterReferenceParam.company.name,
+        departmentFloor: postCharacterReferenceParam.company.departmentFloor,
+        buildingName:  postCharacterReferenceParam.company.buildingName,
+        street: postCharacterReferenceParam.company.street,
+        district: postCharacterReferenceParam.company.district,
+        baranggay: postCharacterReferenceParam.company.baranggay,
+        city: postCharacterReferenceParam.company.city,
+        town: postCharacterReferenceParam.company.town
+      }
+    }
+    return this.onboardingClient.post('v1/employees/references', objectParam, {
+      headers : { token }
+    })
+  }
+
+  putCharacterReference (token, putCharacterReferenceParam, charReferenceId) {
+    const objectParam = {
+      name : putCharacterReferenceParam.name,
+      relationship: putCharacterReferenceParam.relationship,
+      numberOfYearsKnown: putCharacterReferenceParam.numberOfYearsKnown,
+      contactNumber: putCharacterReferenceParam.numberOfYearsKnown,
+      company : {
+        position: putCharacterReferenceParam.company.position,
+        name: putCharacterReferenceParam.company.name,
+        departmentFloor: putCharacterReferenceParam.company.departmentFloor,
+        buildingName:  putCharacterReferenceParam.company.buildingName,
+        street: putCharacterReferenceParam.company.street,
+        district: putCharacterReferenceParam.company.district,
+        baranggay: putCharacterReferenceParam.company.baranggay,
+        city: putCharacterReferenceParam.company.city,
+        town: putCharacterReferenceParam.company.town
+      }
+    }
+    return this.onboardingClient.post(`v1/employees/references/${ charReferenceId }`, objectParam, {
+      headers : { token }
+    })
+  }
+
   /* Vaccine Requisition */
 
   validateVaccine (token) {
