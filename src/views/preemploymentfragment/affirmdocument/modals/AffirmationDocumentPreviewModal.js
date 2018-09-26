@@ -25,14 +25,13 @@ class AffirmationDocumentPreviewModal extends Component {
       <Modal
         width = { 70 }
         onClose = { onClose }
-        isDismisable = { true }
         >
         <div>
           {
             enabledLoader ?
             <div>
               <center className = { 'circular-loader-center' }>
-                <h2>Please wait while we we're retrieving the documents</h2>
+                <h2>Please wait while we we&#39;re retrieving the documents</h2>
                 <CircularLoader show = { enabledLoader }/>
               </center>
             </div>

@@ -67,7 +67,7 @@ class CharacterReferenceMultipleCardComponent extends Component {
 }
 
 CharacterReferenceMultipleCardComponent.propTypes = {
-  cardDataHolder : PropTypes.arrayOf(
+  characterReferenceData : PropTypes.arrayOf(
       PropTypes.objectOf(
         PropTypes.shape({
           name : PropTypes.string,
@@ -77,14 +77,11 @@ CharacterReferenceMultipleCardComponent.propTypes = {
       )
   ),
   placeholder : PropTypes.string,
-  errorMessage : PropTypes.string,
   onEditModeProperty : PropTypes.func,
-  setCard : PropTypes.func,
-  disabled : PropTypes.bool,
 }
 
 CharacterReferenceMultipleCardComponent.defaultProps = {
-  cardDataHolder : [],
+  characterReferenceData : [],
 }
 
 export default CharacterReferenceMultipleCardComponent

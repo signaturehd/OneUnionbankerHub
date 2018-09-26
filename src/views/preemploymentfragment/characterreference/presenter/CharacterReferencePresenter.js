@@ -5,14 +5,14 @@ import GetCharacterReferenceInteractor from '../../../../domain/interactor/chara
 import PostCharacterReferenceInteractor from '../../../../domain/interactor/characterreference/PostCharacterReferenceInteractor'
 import PutCharacterReferenceInteractor from '../../../../domain/interactor/characterreference/PutCharacterReferenceInteractor'
 
-import param from '../../../../domain/param/PostCharacterReferenceParam'
+import genericParam from '../../../../domain/param/PostCharacterReferenceParam'
 
 
 export default class CharacterReferencePresenter {
   constructor (container) {
     this.getCharacterReferenceInteractor = new GetCharacterReferenceInteractor(container.get('HRBenefitsClient'))
     this.postCharacterReferenceInteractor = new PostCharacterReferenceInteractor(container.get('HRBenefitsClient'))
-    this.putCharacterReferenceInteractor = new PutCharacterReferenceInteractorPutCharacterReferenceInteractor(container.get('HRBenefitsClient'))
+    this.putCharacterReferenceInteractor = new PutCharacterReferenceInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -25,7 +25,6 @@ export default class CharacterReferencePresenter {
     .subscribe(data => {
       this.view.showCharacterReferenceMap(data)
     }, error => {
-
     })
   }
 
@@ -37,7 +36,7 @@ export default class CharacterReferencePresenter {
     contactNumber,
     company
   ) {
-    this.postCharacterReferenceInteractor.execute(param(
+    this.postCharacterReferenceInteractor.execute(genericParam(
       id,
       name,
       relationship,
@@ -45,10 +44,8 @@ export default class CharacterReferencePresenter {
       contactNumber,
       company
     ))
-
     .subscribe(data => {
     }, error => {
-
     })
   }
 
@@ -60,7 +57,7 @@ export default class CharacterReferencePresenter {
     contactNumber,
     company
   ) {
-    this.putCharacterReferenceInteractor.execute(param(
+    this.putCharacterReferenceInteractor.execute(genericParam(
       id,
       name,
       relationship,
@@ -68,10 +65,8 @@ export default class CharacterReferencePresenter {
       contactNumber,
       company
     ))
-
     .subscribe(data => {
     }, error => {
-
     })
   }
 }

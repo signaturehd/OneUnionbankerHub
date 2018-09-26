@@ -17,12 +17,11 @@ import Presenter from './presenter/CharacterReferencePresenter'
 
 import { Progress } from 'react-sweet-progress'
 
+import './styles/characterReferenceStyle.css'
 import 'react-sweet-progress/lib/style.css'
 
 import { NotifyActions } from '../../../actions'
 import store from '../../../store'
-
-import './styles/characterReferenceStyle.css'
 
 import CharacterReferenceAddFormModal from './modals/CharacterReferenceAddFormModal'
 import MullptipleCardComponent from './components/CharacterReferenceMultipleCardComponent'
@@ -57,7 +56,6 @@ class CharacterReferenceFragment extends BaseMVPView {
     const {
       showCharacterReferenceModal,
       showOccupationModal,
-      showRequiredFields,
       occupationId,
       occupationName,
       characterReferenceData
@@ -84,14 +82,14 @@ class CharacterReferenceFragment extends BaseMVPView {
          <br/>
           <div className = { 'percentage-grid' }>
             <div>
-              <h2 className={ 'header-margin-default text-align-left' }>Character Reference</h2>
+              <h2 className = { 'header-margin-default text-align-left' }>Character Reference</h2>
               <h2>By nominating these persons as your personal character references, you provide consent that UnionBank of the Philippines may conduct a character reference check on your possible employment with the company. You also certify that the information you&#39;ve provided are true and corret</h2>
             </div>
             <Progress
               type = { 'circle' }
               height = { 100 }
               width = { 100 }
-              percent={ percentage } />
+              percent = { percentage } />
           </div>
         <br/>
       </div>
@@ -107,12 +105,9 @@ class CharacterReferenceFragment extends BaseMVPView {
         </div>
 
         <br/>
-
-        <div>
           <MullptipleCardComponent
             characterReferenceData = { characterReferenceData }
           />
-        </div>
       </div>
     </div>
     )
@@ -122,9 +117,6 @@ class CharacterReferenceFragment extends BaseMVPView {
 CharacterReferenceFragment.propTypes = {
   history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
-}
-
-CharacterReferenceFragment.defaultProps = {
 }
 
 export default ConnectView(CharacterReferenceFragment, Presenter)
