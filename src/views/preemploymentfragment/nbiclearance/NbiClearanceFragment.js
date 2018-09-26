@@ -23,7 +23,7 @@ class NbiClearanceFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(5)
+    this.props.onSendPageNumberToView(6)
   }
 
   render () {

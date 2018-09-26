@@ -7,6 +7,7 @@ import ConnectView from '../../../utils/ConnectView'
 import Presenter from './presenter/SSSPresenter'
 
 import {
+  Modal,
   GenericButton,
   CircularLoader,
   MultipleFileUploader,
@@ -15,6 +16,8 @@ import {
   Line,
 } from '../../../ub-components/'
 
+import ResponseModal from '../../notice/NoticeResponseModal'
+
 import { Progress } from 'react-sweet-progress'
 
 class SSSFragment extends BaseMVPView {
@@ -22,32 +25,85 @@ class SSSFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      sssData : [],
-      sssInput : ''
+      enabledLoader : false,
+      showNoticeResponseModal : false,
+      noticeResponse : '',
+      sssInput : '',
+      sssAttachment : [{
+        name : 'E1 Form',
+      },{
+        name : 'SSS ID'
+      }]
     }
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(8)
+    this.props.onSendPageNumberToView(9)
     this.presenter.getEmployeeSSS()
   }
 
   showEmployeeSSSData (sssData) {
-    this.setState({ sssData })
+    this.setState({ sssInput : sssData.sss })
+  }
+
+  setFileAttachments (sssAttachment) {
+    this.setState({ sssAttachment })
+  }
+
+  submitForm () {
+    const {
+      sssInput,
+      sssAttachment
+    } = this.state
+
+    this.presenter.addEmployeeSSS(
+      sssInput,
+      sssAttachment)
+  }
+
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse , showNoticeResponseModal : true})
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
   }
 
   render () {
-    const sssAttachment = [{
-      name : 'E1 Form',
-    },{
-      name : 'SSS ID'
-    }]
-    const { sssData, sssInput } = this.state
+
+    const {
+      enabledLoader,
+      showNoticeResponseModal,
+      noticeResponse,
+      sssInput,
+      sssAttachment
+    } = this.state
     const { percentage } = this.props
 
     return (
       <div>
         { super.render() }
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false})
+            }}
+            noticeResponse={ noticeResponse }
+          />
+        }
+        {
+          enabledLoader &&
+          <Modal>
+          <center>
+          <CircularLoader show = { enabledLoader }/>
+          </center>
+          </Modal>
+        }
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
@@ -63,7 +119,7 @@ class SSSFragment extends BaseMVPView {
         </div>
         <br/>
           <GenericInput
-            value = { sssData && sssData.sss ? sssData.sss : sssInput }
+            value = { sssInput }
             text = { 'SSS Number' }
             onChange = { e => this.setState({ sssInput : e.target.value }) }
           />
@@ -73,7 +129,13 @@ class SSSFragment extends BaseMVPView {
           <MultipleFileUploader
             placeholder = { 'SSS Attachments' }
             fileArray = { sssAttachment }
+            setFile = { (resp) => this.setAttachments(resp) }
             />
+          <center>
+          <GenericButton
+          text = { 'Save' }
+          onClick = { () => this.submitForm() }/>
+          </center>
       </div>
     )
   }
