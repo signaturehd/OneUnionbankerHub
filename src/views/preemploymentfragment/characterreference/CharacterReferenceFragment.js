@@ -25,6 +25,7 @@ import store from '../../../store'
 import './styles/characterReferenceStyle.css'
 
 import CharacterReferenceAddFormModal from './modals/CharacterReferenceAddFormModal'
+import MullptipleCardComponent from './components/CharacterReferenceMultipleCardComponent'
 
 class CharacterReferenceFragment extends BaseMVPView {
   constructor(props) {
@@ -34,11 +35,17 @@ class CharacterReferenceFragment extends BaseMVPView {
       showOccupationModal : false,
       occupationId : '',
       occupationName : '',
+      characterReferenceData : [],
     }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(5)
+    this.presenter.getCharacterReference()
+  }
+
+  showCharacterReferenceMap (characterReferenceData) {
+    this.setState({ characterReferenceData })
   }
 
   render() {
@@ -52,7 +59,8 @@ class CharacterReferenceFragment extends BaseMVPView {
       showOccupationModal,
       showRequiredFields,
       occupationId,
-      occupationName
+      occupationName,
+      characterReferenceData
     } = this.state
 
     return (
@@ -96,6 +104,14 @@ class CharacterReferenceFragment extends BaseMVPView {
               onClick = { () => this.setState({ showCharacterReferenceModal : true }) }
             />
           </div>
+        </div>
+
+        <br/>
+
+        <div>
+          <MullptipleCardComponent
+            characterReferenceData = { characterReferenceData }
+          />
         </div>
       </div>
     </div>
