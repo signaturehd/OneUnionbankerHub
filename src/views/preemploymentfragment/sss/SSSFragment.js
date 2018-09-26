@@ -30,9 +30,7 @@ class SSSFragment extends BaseMVPView {
       noticeResponse : '',
       sssInput : '',
       sssAttachment : [{
-        name : 'E1 Form',
-      },{
-        name : 'SSS ID'
+        name : 'SSS ID / E1 Form',
       }]
     }
   }
@@ -56,9 +54,12 @@ class SSSFragment extends BaseMVPView {
       sssAttachment
     } = this.state
 
-    this.presenter.addEmployeeSSS(
-      sssInput,
-      sssAttachment)
+    const {
+      sssArray
+    } = this.props
+    sssArray.map((sss) =>
+      this.presenter.addEmployeeSSS(sssInput, sss.id, sssAttachment)
+    )
   }
 
   noticeResponseResp (noticeResponse) {
@@ -82,7 +83,7 @@ class SSSFragment extends BaseMVPView {
       sssInput,
       sssAttachment
     } = this.state
-    const { percentage } = this.props
+    const { percentage, sssArray } = this.props
 
     return (
       <div>
@@ -142,7 +143,8 @@ class SSSFragment extends BaseMVPView {
 }
 
 SSSFragment.propTypes = {
-  onSendPageNumberToView : PropTypes.func
+  onSendPageNumberToView : PropTypes.func,
+  sssArray : PropTypes.array
 }
 
 export default ConnectView(SSSFragment, Presenter )

@@ -912,6 +912,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  addEmployeeRequirement (token, requirementParam) {
+    return this.service.addEmployeeRequirement(token, requirementParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Vaccines Requisitions */
 
   validateVaccine (token) {

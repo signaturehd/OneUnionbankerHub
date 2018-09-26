@@ -1,4 +1,3 @@
-export default (sssInput, sssAttachment) => ({
-  sssInput,
-  sssAttachment
+export default (sssInput) => ({
+  sssInput
 })

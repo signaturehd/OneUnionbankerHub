@@ -1150,17 +1150,10 @@ export default class HRBenefitsService {
   }
 
   addEmployeeSSS (token, employeeParam) {
-    const formData = new FormData()
     const objectParam = {
       sss : employeeParam.sssInput
     }
-    employeeParam.sssAttachment.map((resp) =>
-      (
-        formData.append(resp.name.replace('/', '-'), resp.file)
-      )
-    )
 
-    formData.append('body', JSON.stringify(objectParam))
     return this.onboardingClient.post('v1/employees/sss', objectParam, {
       headers : { token }
     })
@@ -1173,7 +1166,7 @@ export default class HRBenefitsService {
   }
 
   getPreEmploymentForm (token) {
-    return this.onboardingClient.get('v1/employees/forms', {
+    return this.onboardingClient.get('v1/employees/requirements', {
       headers: { token }
     })
   }
@@ -1233,6 +1226,24 @@ export default class HRBenefitsService {
       endYear : workExperienceParam.toYear
     }
     return this.onboardingClient.post('v1/employees/employers', objectParam, {
+      headers : { token }
+    })
+  }
+
+  addEmployeeRequirement (token, requirementParam) {
+    const formData = new FormData()
+    formData.append('uuid', '12345')
+    const objectParam = {
+      documentType : requirementParam.documentId
+    }
+    requirementParam.attachments.map((resp) =>
+      (
+        formData.append(resp.name.replace('/', '-'), resp.file)
+      )
+    )
+
+    formData.append('body', JSON.stringify(objectParam))
+    return this.onboardingClient.post('v1/employees/requirements', formData, {
       headers : { token }
     })
   }

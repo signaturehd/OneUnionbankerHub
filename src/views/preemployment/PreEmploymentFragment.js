@@ -52,6 +52,7 @@ function  PreEmploymentFragments (props)  {
   const percentageTemp = (pageNumber / 11) * 100
   const percentage = parseInt(percentageTemp)
   const biographicalArray = props.biographicalArray
+  const sssArray = props.sssArray
   if (pageNumber === 0) {
     return <AffirmationDocumentFragment
       percentage = { percentage }
@@ -100,6 +101,7 @@ function  PreEmploymentFragments (props)  {
       />
   } else if (pageNumber === 9) {
     return <SSSFragment
+      sssArray = { sssArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
@@ -135,7 +137,6 @@ class PreEmploymentFragment extends BaseMVPView {
       preEmpPage  : 0,
       showFinancialObligationModal: false,
       preEmploymentData : [],
-      biographicalArray : []
     }
   }
 
@@ -151,18 +152,14 @@ class PreEmploymentFragment extends BaseMVPView {
   getFormData (id) {
     let formArray = []
     this.state.preEmploymentData.map((form, key) => {
-      form.id === id &&
+      form.documentId === id &&
       formArray.push({
-        id : form.id,
-        name : form.name,
+        id : form.documentId,
+        name : form.documentType,
         url : form.url
       })
     })
     return formArray
-  }
-
-  getBiographicalData() {
-    this.setState({ biographicalArray : this.getFormData(1) })
   }
 
   hideCircularLoader() {
@@ -183,7 +180,6 @@ class PreEmploymentFragment extends BaseMVPView {
   }
 
   incrementPage () {
-    console.log('test')
     const index = this.state.preEmpPage + 1
     if(index === 1) {
       this.setState({ showFinancialObligationModal : true })
@@ -216,8 +212,7 @@ class PreEmploymentFragment extends BaseMVPView {
       enabledLoader,
       preEmpPage,
       showFinancialObligationModal,
-      preEmploymentData,
-      biographicalArray
+      preEmploymentData
     } = this.state
 
     return(
@@ -280,6 +275,7 @@ class PreEmploymentFragment extends BaseMVPView {
             :
             <PreEmploymentFragments
               biographicalArray = { this.getFormData(1) }
+              sssArray = { this.getFormData(10) }
               preEmpPage = { preEmpPage }
               onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
               />
