@@ -17,6 +17,9 @@ class TransactionDetailsFormAttachmentsModal extends Component {
       width = { 50 }
       onClose = { onClose }
     >
+    <h2 className = { 'text-align-center' } >Attachments</h2>
+    <br/>
+    <div className = { 'transacion-attachments-grid' }>
       {
         attachments && attachments.map ((attachment, key) =>
         <img
@@ -26,6 +29,7 @@ class TransactionDetailsFormAttachmentsModal extends Component {
         />
         )
       }
+    </div>
     </Modal>
     )
   }

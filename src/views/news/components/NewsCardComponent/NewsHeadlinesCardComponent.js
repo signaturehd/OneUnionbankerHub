@@ -35,7 +35,7 @@ class NewsHeadlinesCardComponent extends Component {
         height: '100%',
         fontWeight : 'bold',
         width: '-webkit-fill-available',
-        height: '400px',
+        height: '350px',
         borderRadius: '25px',
       }
     }
