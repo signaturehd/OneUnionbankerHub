@@ -18,6 +18,7 @@ import {
 
 import Presenter from './presenter/BiographicalDataPresenter'
 import BiographicalDocumentPreviewModal from './modal/BiographicalDocumentPreviewModal'
+import ResponseModal from '../../notice/NoticeResponseModal'
 
 import "react-sweet-progress/lib/style.css"
 import './styles/biographicalDataStyle.css'
@@ -28,6 +29,8 @@ class BiographicalDataFragment extends BaseMVPView {
     this.state = {
       showPdfViewModal : false,
       enabledLoader : false,
+      showNoticeResponseModal : false,
+      noticeResponse : '',
       biographicalDataFormData: [{
         name : 'Biographical Data Form'
       }],
@@ -65,12 +68,25 @@ class BiographicalDataFragment extends BaseMVPView {
       biographicalDataFormData
     } = this.state
 
-    if (biographicalDataFormData.length == 0) {
-    }
-    this.presenter.addFinancialStatus(
-      biographicalDataFormData)
+    const {
+      biographicalArray
+    } = this.props
+    biographicalArray.map((bio) =>
+      this.presenter.addBiographicalData(bio.id, biographicalDataFormData)
+    )
   }
 
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse , showNoticeResponseModal : true})
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
 
   render() {
     const {
@@ -82,6 +98,8 @@ class BiographicalDataFragment extends BaseMVPView {
 
     const {
       enabledLoader,
+      showNoticeResponseModal,
+      noticeResponse,
       biographicalDataFormData,
       biographicalData,
       biographicalName,
@@ -105,6 +123,23 @@ class BiographicalDataFragment extends BaseMVPView {
         pdfFile = { pdfFile }
         onClose = { () => this.setState({ showPdfViewModal: false }) }
         />
+    }
+    {
+      showNoticeResponseModal &&
+      <ResponseModal
+        onClose={ () => {
+          this.setState({ showNoticeResponseModal : false})
+        }}
+        noticeResponse={ noticeResponse }
+      />
+    }
+    {
+      enabledLoader &&
+      <Modal>
+      <center>
+      <CircularLoader show = { enabledLoader }/>
+      </center>
+      </Modal>
     }
       <div>
         <br/>
@@ -173,7 +208,11 @@ class BiographicalDataFragment extends BaseMVPView {
                 this.setState({ biographicalDataFormData })
             }
             />
-
+            <center>
+            <GenericButton
+            text = { 'Save' }
+            onClick = { () => this.submitForm() }/>
+            </center>
           </div>
 
          }
