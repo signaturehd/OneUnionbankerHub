@@ -24,6 +24,7 @@ export default class WorkExperiencePresenter {
           this.view.hideCircularLoader()
         },
         error => {
+          this.view.hideCircularLoader()
           // this.view.navigate()
        }
     )

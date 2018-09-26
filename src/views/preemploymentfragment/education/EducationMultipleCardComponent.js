@@ -19,6 +19,7 @@ class EducationMultipleCardComponent extends Component {
       disabled,
       errorMessage,
       count,
+      index,
       onEditModeProperty
     } = this.props
 
@@ -26,7 +27,7 @@ class EducationMultipleCardComponent extends Component {
       <div>
         {
           cardDataHolder.length !== 0 &&
-          cardDataHolder.map((resp, key) => (
+          cardDataHolder.slice(0, index).map((resp, key) => (
             <div>
               <Card
                 className = { 'educ-card-grid-option' }

@@ -18,6 +18,7 @@ class WorkExperienceMultipleCardComponent extends Component {
       disabled,
       errorMessage,
       count,
+      index,
       onEditModeProperty
     } = this.props
 
@@ -25,7 +26,7 @@ class WorkExperienceMultipleCardComponent extends Component {
       <div>
         {
           cardDataHolder.length !== 0 &&
-          cardDataHolder.map((resp, key) => (
+          cardDataHolder.slice(0, index).map((resp, key) => (
             <div>
               <Card
                 className = { 'work-card-grid-option' }
