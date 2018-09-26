@@ -1137,8 +1137,12 @@ export default class HRBenefitsService {
     })
   }
 
-  createEmployeeTin (token) {
-    return this.onboardingClient.post('v1/employees/tin', {
+  addEmployeeTin (token, employeeTinParam) {
+    const objectParam = {
+      tin : employeeTinParam.tinId
+    }
+
+    return this.onboardingClient.post('v1/employees/tin', objectParam, {
       headers : { token }
     })
   }

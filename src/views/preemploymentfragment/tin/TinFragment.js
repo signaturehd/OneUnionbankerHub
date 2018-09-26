@@ -7,6 +7,7 @@ import ConnectView from '../../../utils/ConnectView'
 import Presenter from './presenter/TinPresenter'
 
 import {
+  Modal,
   GenericButton,
   CircularLoader,
   MultipleFileUploader,
@@ -15,6 +16,8 @@ import {
   Line,
 } from '../../../ub-components/'
 
+import ResponseModal from '../../notice/NoticeResponseModal'
+
 import { Progress } from 'react-sweet-progress'
 
 class TinFragment extends BaseMVPView {
@@ -22,8 +25,13 @@ class TinFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      tinData : [],
-      tinInput : ''
+      enabledLoader : false,
+      showNoticeResponseModal : false,
+      noticeResponse : '',
+      tinInput : '',
+      tinAttachment : [{
+        name : 'TIN ID/ BIR FORM',
+      }]
     }
   }
 
@@ -33,20 +41,66 @@ class TinFragment extends BaseMVPView {
   }
 
   showEmployeeTinData (tinData) {
-    this.setState({ tinData })
+    this.setState({ tinInput : tinData.tin })
+  }
+
+  submitForm () {
+    const {
+      tinInput,
+      tinAttachment
+    } = this.state
+
+    const {
+      tinArray
+    } = this.props
+    tinArray.map((tin) =>
+      this.presenter.addEmployeeTin(tinInput, tin.id, tinAttachment)
+    )
+  }
+
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse , showNoticeResponseModal : true})
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
   }
 
   render () {
-    const tinAttachment = [{
-      name : 'TIN ID/ BIR FORM',
-    }]
 
-    const { tinData, tinInput } = this.state
-    const { percentage } = this.props
+    const {
+      enabledLoader,
+      showNoticeResponseModal,
+      noticeResponse,
+      tinInput,
+      tinAttachment
+    } = this.state
+    const { percentage, tinArray } = this.props
 
     return (
       <div>
         { super.render() }
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false})
+            }}
+            noticeResponse={ noticeResponse }
+          />
+        }
+        {
+          enabledLoader &&
+          <Modal>
+          <center>
+          <CircularLoader show = { enabledLoader }/>
+          </center>
+          </Modal>
+        }
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
@@ -63,7 +117,9 @@ class TinFragment extends BaseMVPView {
         <br/>
           <GenericInput
             text = { 'Taxpayer Identification Number(TIN)' }
-            value = { tinData && tinData.tin ? tinData.tin : tinInput }
+            value = { tinInput }
+            maxLength = { 9 }
+            minLength = { 9 }
             onChange = { e => this.setState({ tinInput : e.target.value }) }
           />
         <br/>
@@ -73,13 +129,19 @@ class TinFragment extends BaseMVPView {
             placeholder = { 'TIN Attachments' }
             fileArray = { tinAttachment }
             />
+            <center>
+            <GenericButton
+            text = { 'Save' }
+            onClick = { () => this.submitForm() }/>
+            </center>
       </div>
     )
   }
 }
 
 TinFragment.propTypes = {
-  onSendPageNumberToView : PropTypes.func
+  onSendPageNumberToView : PropTypes.func,
+  tinArray : PropTypes.array
 }
 
 export default ConnectView(TinFragment, Presenter )

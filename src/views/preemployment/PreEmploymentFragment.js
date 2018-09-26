@@ -53,6 +53,7 @@ function  PreEmploymentFragments (props)  {
   const percentage = parseInt(percentageTemp)
   const biographicalArray = props.biographicalArray
   const sssArray = props.sssArray
+  const tinArray = props.tinArray
   if (pageNumber === 0) {
     return <AffirmationDocumentFragment
       percentage = { percentage }
@@ -107,6 +108,7 @@ function  PreEmploymentFragments (props)  {
       />
   } else if (pageNumber === 10) {
     return <TinFragment
+      tinArray = { tinArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
@@ -276,6 +278,7 @@ class PreEmploymentFragment extends BaseMVPView {
             <PreEmploymentFragments
               biographicalArray = { this.getFormData(1) }
               sssArray = { this.getFormData(10) }
+              tinArray = { this.getFormData(11) }
               preEmpPage = { preEmpPage }
               onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
               />

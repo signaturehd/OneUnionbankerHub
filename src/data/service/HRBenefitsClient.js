@@ -857,8 +857,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  createEmployeeTin () {
-    return this.service.createEmployeeTin(token)
+  addEmployeeTin (token, employeeTinParam) {
+    return this.service.addEmployeeTin(token, employeeTinParam)
       .pipe(ServiceErrorOperator())
   }
 

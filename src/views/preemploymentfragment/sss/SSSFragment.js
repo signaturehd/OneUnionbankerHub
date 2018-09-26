@@ -122,6 +122,7 @@ class SSSFragment extends BaseMVPView {
           <GenericInput
             value = { sssInput }
             text = { 'SSS Number' }
+            maxLength = { 10 }
             onChange = { e => this.setState({ sssInput : e.target.value }) }
           />
         <br/>
