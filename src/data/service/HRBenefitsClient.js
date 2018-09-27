@@ -857,13 +857,18 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  createEmployeeTin () {
-    return this.service.createEmployeeTin(token)
+  addEmployeeTin (token, employeeTinParam) {
+    return this.service.addEmployeeTin(token, employeeTinParam)
       .pipe(ServiceErrorOperator())
   }
 
   getEmployeeSSS (token) {
     return this.service.getEmployeeSSS(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addEmployeeSSS (token, employeeSSSParam) {
+    return this.service.addEmployeeSSS(token, employeeSSSParam)
       .pipe(ServiceErrorOperator())
   }
 
@@ -904,6 +909,26 @@ export default class HRBenefitsClient {
 
   addWorkExperience (token, workExperienceParam) {
     return this.service.addWorkExperience(token, workExperienceParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addEmployeeRequirement (token, requirementParam) {
+    return this.service.addEmployeeRequirement(token, requirementParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getCharacterReference (token) {
+    return this.service.getCharacterReference(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  postCharacterReference (token, postCharacterReferenceParam, charReferenceId) {
+    return this.service.postCharacterReference(token, postCharacterReferenceParam, charReferenceId)
+      .pipe(ServiceErrorOperator())
+  }
+
+  putCharacterReference (token, putCharacterReferenceParam, charReferenceId) {
+    return this.service.putCharacterReference(token, putCharacterReferenceParam, charReferenceId)
       .pipe(ServiceErrorOperator())
   }
 

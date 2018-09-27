@@ -20,6 +20,7 @@ export default class EducationBackgroundPresenter {
           this.view.hideCircularLoader()
         },
         error => {
+          this.view.hideCircularLoader()
           // this.view.navigate()
        }
     )

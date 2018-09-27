@@ -31,7 +31,9 @@ class WorkExperienceFragment extends BaseMVPView {
       updateMode : false,
       showNoticeResponseModal : false,
       noticeResponse : '',
-      workExperienceCardHolder : []
+      workExperienceCardHolder : [],
+      index : 4,
+      viewMoreText : 'View more',
     }
 
   }
@@ -69,10 +71,14 @@ class WorkExperienceFragment extends BaseMVPView {
       showNoticeResponseModal,
       workExperienceCardHolder,
       noticeResponse,
-      updateMode
+      updateMode,
+      index,
+      viewMoreText
     } = this.state
 
     const { percentage } = this.props
+
+    const isVisible = (workExperienceCardHolder && workExperienceCardHolder.length > 4) ? '' : 'hide'
 
     return (
       <div>
@@ -142,10 +148,9 @@ class WorkExperienceFragment extends BaseMVPView {
           </center>
           :
           <div>
-          {
-            workExperienceCardHolder.length !==0 &&
             <WorkExperienceMultipleCardComponent
               cardDataHolder = { workExperienceCardHolder }
+              index = { index }
               disabled = { showEditSubmitButton }
               onEditModeProperty = { (
                 propertyName,
@@ -167,12 +172,21 @@ class WorkExperienceFragment extends BaseMVPView {
                   updateMode,
                   showPropertyModal,
                   editMode
-                ) }
-              errorMessage = {
-                showEditSubmitButton ?
-                '' :
-                `Please upload the required attachments`  }/>
-          }
+                ) }/>
+                <button
+                  type = { 'button' }
+                  className = { `viewmore tooltip ${ isVisible }` }
+                  onClick = {
+                    () => {
+                      if(index === workExperienceCardHolder.length)
+                        this.setState({ index : 4, viewMoreText : 'View more' })
+                      else
+                        this.setState({ index : workExperienceCardHolder.length, viewMoreText : 'View less' })
+                    }
+                  }>
+                  <img src={ require('../../../images/icons/horizontal.png') } />
+                  <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+                </button>
           </div>
         }
         <div>

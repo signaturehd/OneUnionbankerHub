@@ -1076,11 +1076,11 @@ export default class HRBenefitsService {
 
   putStaffAccounts (token, putStaffAccountsParam) {
     const putStafftAccountsObject = {
-      
+
     }
     return this.accountClient.post('v1/', putStafftAccountsObject, {
       headers : { token }
-    }) 
+    })
   }
 
   /* Pre-Employment */
@@ -1132,19 +1132,33 @@ export default class HRBenefitsService {
   }
 
   getEmployeeTin (token) {
-    return this.onboardingClient.get('v1/employee/tin', {
+    return this.onboardingClient.get('v1/employees/tin', {
       headers : { token }
     })
   }
 
-  createEmployeeTin (token) {
-    return this.onboardingClient.post('v1/employee/tin', {
+  addEmployeeTin (token, employeeTinParam) {
+    const objectParam = {
+      tin : employeeTinParam.tinId
+    }
+
+    return this.onboardingClient.post('v1/employees/tin', objectParam, {
       headers : { token }
     })
   }
 
   getEmployeeSSS (token) {
     return this.onboardingClient.get('v1/employees/sss', {
+      headers : { token }
+    })
+  }
+
+  addEmployeeSSS (token, employeeParam) {
+    const objectParam = {
+      sss : employeeParam.sssInput
+    }
+
+    return this.onboardingClient.post('v1/employees/sss', objectParam, {
       headers : { token }
     })
   }
@@ -1156,7 +1170,7 @@ export default class HRBenefitsService {
   }
 
   getPreEmploymentForm (token) {
-    return this.onboardingClient.get('v1/employees/forms', {
+    return this.onboardingClient.get('v1/employees/requirements', {
       headers: { token }
     })
   }
@@ -1216,6 +1230,76 @@ export default class HRBenefitsService {
       endYear : workExperienceParam.toYear
     }
     return this.onboardingClient.post('v1/employees/employers', objectParam, {
+      headers : { token }
+    })
+  }
+
+  addEmployeeRequirement (token, requirementParam) {
+    const formData = new FormData()
+    formData.append('uuid', '12345')
+    const objectParam = {
+      documentType : requirementParam.documentId
+    }
+    requirementParam.attachments.map((resp) =>
+      (
+        formData.append(resp.name.replace('/', '-'), resp.file)
+      )
+    )
+
+    formData.append('body', JSON.stringify(objectParam))
+    return this.onboardingClient.post('v1/employees/requirements', formData, {
+      headers : { token }
+    })
+  }
+
+  getCharacterReference (token) {
+    return this.onboardingClient.get('v1/employees/references' , {
+      headers : { token }
+    })
+  }
+
+  postCharacterReference (token, postCharacterReferenceParam, charReferenceId) {
+    const objectParam = {
+      name : postCharacterReferenceParam.name,
+      relationship: postCharacterReferenceParam.relationship,
+      numberOfYearsKnown: postCharacterReferenceParam.numberOfYearsKnown,
+      contactNumber: postCharacterReferenceParam.numberOfYearsKnown,
+      company : {
+        position: postCharacterReferenceParam.company.position,
+        name: postCharacterReferenceParam.company.name,
+        departmentFloor: postCharacterReferenceParam.company.departmentFloor,
+        buildingName:  postCharacterReferenceParam.company.buildingName,
+        street: postCharacterReferenceParam.company.street,
+        district: postCharacterReferenceParam.company.district,
+        baranggay: postCharacterReferenceParam.company.baranggay,
+        city: postCharacterReferenceParam.company.city,
+        town: postCharacterReferenceParam.company.town
+      }
+    }
+    return this.onboardingClient.post('v1/employees/references', objectParam, {
+      headers : { token }
+    })
+  }
+
+  putCharacterReference (token, putCharacterReferenceParam, charReferenceId) {
+    const objectParam = {
+      name : putCharacterReferenceParam.name,
+      relationship: putCharacterReferenceParam.relationship,
+      numberOfYearsKnown: putCharacterReferenceParam.numberOfYearsKnown,
+      contactNumber: putCharacterReferenceParam.numberOfYearsKnown,
+      company : {
+        position: putCharacterReferenceParam.company.position,
+        name: putCharacterReferenceParam.company.name,
+        departmentFloor: putCharacterReferenceParam.company.departmentFloor,
+        buildingName:  putCharacterReferenceParam.company.buildingName,
+        street: putCharacterReferenceParam.company.street,
+        district: putCharacterReferenceParam.company.district,
+        baranggay: putCharacterReferenceParam.company.baranggay,
+        city: putCharacterReferenceParam.company.city,
+        town: putCharacterReferenceParam.company.town
+      }
+    }
+    return this.onboardingClient.post(`v1/employees/references/${ charReferenceId }`, objectParam, {
       headers : { token }
     })
   }

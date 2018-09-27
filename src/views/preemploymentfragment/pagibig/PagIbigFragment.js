@@ -24,7 +24,7 @@ class PagIbigFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(11)
+    this.props.onSendPageNumberToView(12)
   }
 
   render () {

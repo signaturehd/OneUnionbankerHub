@@ -17,14 +17,14 @@ import Presenter from './presenter/CharacterReferencePresenter'
 
 import { Progress } from 'react-sweet-progress'
 
+import './styles/characterReferenceStyle.css'
 import 'react-sweet-progress/lib/style.css'
 
 import { NotifyActions } from '../../../actions'
 import store from '../../../store'
 
-import './styles/characterReferenceStyle.css'
-
 import CharacterReferenceAddFormModal from './modals/CharacterReferenceAddFormModal'
+import MullptipleCardComponent from './components/CharacterReferenceMultipleCardComponent'
 
 class CharacterReferenceFragment extends BaseMVPView {
   constructor(props) {
@@ -32,14 +32,19 @@ class CharacterReferenceFragment extends BaseMVPView {
     this.state = {
       showCharacterReferenceModal : false,
       showOccupationModal : false,
-      showRequiredFields : false,
       occupationId : '',
       occupationName : '',
+      characterReferenceData : [],
     }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(5)
+    this.presenter.getCharacterReference()
+  }
+
+  showCharacterReferenceMap (characterReferenceData) {
+    this.setState({ characterReferenceData })
   }
 
   render() {
@@ -51,9 +56,9 @@ class CharacterReferenceFragment extends BaseMVPView {
     const {
       showCharacterReferenceModal,
       showOccupationModal,
-      showRequiredFields,
       occupationId,
-      occupationName
+      occupationName,
+      characterReferenceData
     } = this.state
 
     return (
@@ -61,16 +66,15 @@ class CharacterReferenceFragment extends BaseMVPView {
       { super.render() }
       {
         showCharacterReferenceModal &&
-        <CharacterReferenceAddFormModal 
+        <CharacterReferenceAddFormModal
           occupationName = { occupationName }
-          showRequiredFields = { showRequiredFields }
           occupationId = { occupationId }
           showOccupationModal = { showOccupationModal }
-          showOccupationModalFunc = { () => 
+          showOccupationModalFunc = { () =>
             this.setState({ showOccupationModal : true }) }
-          showRequiredFieldsFunc = { (occupationId, occupationName, showRequiredFields, showOccupationModal) => 
-            this.setState({ occupationId, occupationName, showRequiredFields, showOccupationModal }) }
-          onCloseInputModal = { () => 
+          showRequiredFieldsFunc = { (occupationId, occupationName, showOccupationModal) =>
+            this.setState({ occupationId, occupationName, showOccupationModal }) }
+          onClose = { () =>
             this.setState({ showCharacterReferenceModal : false }) }
           />
       }
@@ -78,27 +82,32 @@ class CharacterReferenceFragment extends BaseMVPView {
          <br/>
           <div className = { 'percentage-grid' }>
             <div>
-              <h2 className={ 'header-margin-default text-align-left' }>Character Reference</h2>
-              <h2>By nominating these persons as your personal character references, you provide consent that UnionBank of the Philippines may conduct a character reference check on your possible employment with the company. You also certify that the information you've provided are true and corret</h2>
+              <h2 className = { 'header-margin-default text-align-left' }>Character Reference</h2>
+              <h2>By nominating these persons as your personal character references, you provide consent that UnionBank of the Philippines may conduct a character reference check on your possible employment with the company. You also certify that the information you&#39;ve provided are true and corret</h2>
             </div>
             <Progress
               type = { 'circle' }
               height = { 100 }
               width = { 100 }
-              percent={ percentage } />
+              percent = { percentage } />
           </div>
         <br/>
       </div>
       <div>
-        <div className = { 'grid-global' } > 
+        <div className = { 'grid-global' } >
           <h2 className = { 'font-weight-bold' }>Character Reference</h2>
           <div className = { 'text-align-end' }>
-            <GenericButton 
+            <GenericButton
               text = { 'ADD' }
               onClick = { () => this.setState({ showCharacterReferenceModal : true }) }
             />
           </div>
         </div>
+
+        <br/>
+          <MullptipleCardComponent
+            characterReferenceData = { characterReferenceData }
+          />
       </div>
     </div>
     )
@@ -108,9 +117,6 @@ class CharacterReferenceFragment extends BaseMVPView {
 CharacterReferenceFragment.propTypes = {
   history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
-}
-
-CharacterReferenceFragment.defaultProps = {
 }
 
 export default ConnectView(CharacterReferenceFragment, Presenter)

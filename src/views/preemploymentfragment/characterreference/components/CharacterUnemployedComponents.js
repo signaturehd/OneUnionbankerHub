@@ -9,16 +9,13 @@ class CharacterUnemployedComponents extends Component {
   }
 
   render () {
-    const {
-    } = this.props
-
     return (
-      <div> 
+      <div>
         <GenericInput
           onChange = { () => {} }
           text = { 'Address' } />
       </div>
-    ) 
+    )
   }
 }
 

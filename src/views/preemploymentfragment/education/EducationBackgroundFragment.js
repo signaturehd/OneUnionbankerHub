@@ -39,7 +39,9 @@ class EducationBackgroundFragment extends BaseMVPView {
       degree : '',
       honor : '',
       course : '',
-      address : ''
+      address : '',
+      index : 4,
+      viewMoreText : 'View more'
     }
   }
 
@@ -81,10 +83,14 @@ class EducationBackgroundFragment extends BaseMVPView {
       degree,
       honor,
       course,
-      address
+      address,
+      index,
+      viewMoreText
     } = this.state
 
     const { percentage } = this.props
+
+    const isVisible = (educationCardHolder && educationCardHolder.length > 4) ? '' : 'hide'
 
     return (
       <div>
@@ -154,9 +160,10 @@ class EducationBackgroundFragment extends BaseMVPView {
           <CircularLoader show = { enabledLoader }/>
           </center>
           :
-          educationCardHolder.length !==0 &&
+          <div>
           <EducationMultipleCardComponent
             cardDataHolder = { educationCardHolder }
+            index = { index }
             disabled = { showEditSubmitButton }
             onEditModeProperty = { (
               propertyName,
@@ -179,11 +186,23 @@ class EducationBackgroundFragment extends BaseMVPView {
                 showPropertyModal,
                 editMode
               ) }
-            errorMessage = {
-              showEditSubmitButton ?
-              '' :
-              `Please upload the required attachments`  }
             />
+            <br/>
+            <button
+              type = { 'button' }
+              className = { `viewmore tooltip ${ isVisible }` }
+              onClick = {
+                () => {
+                  if(index === educationCardHolder.length)
+                    this.setState({ index : 4, viewMoreText : 'View more' })
+                  else
+                    this.setState({ index : educationCardHolder.length, viewMoreText : 'View less' })
+                }
+              }>
+              <img src={ require('../../../images/icons/horizontal.png') } />
+              <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+            </button>
+            </div>
         }
         <div>
           <Card></Card>

@@ -10,18 +10,20 @@ import {
 } from '../../../../ub-components/'
 
 import CharacterSelfEmployedComponents from '../components/CharacterSelfEmployedComponents'
-import CharacterEmployedComponens from '../components/CharacterEmployedComponents'
+import CharacterEmployedComponents from '../components/CharacterEmployedComponents'
 import CharacterUnemployedComponents from '../components/CharacterUnemployedComponents'
 
-function CharacterReferenceComponent (props) {
+function CharacterReferenceComponents (props) {
   const occupationId = props.occupationId
 
-  if(occupationId === '0') {
+  if(occupationId === 0) {
     return <CharacterSelfEmployedComponents />
-  } else if (occupationId === '1') {
+  } else if (occupationId === 1) {
     return <CharacterEmployedComponents />
-  } else if (occupationId === '2') {
+  } else if (occupationId === 2) {
     return <CharacterUnemployedComponents />
+  } else {
+    return <div></div>
   }
 }
 
@@ -32,25 +34,24 @@ class CharacterReferenceAddFormModal extends Component {
 
   render() {
     const occupationObject = [
-    {   
+    {
       id : 0,
-      name: 'Self-Employed' 
-    }, 
+      name: 'Self-Employed'
+    },
     {
       id : 1,
       name : 'Employed'
-    }, 
+    },
     {
       id: 2,
       name : 'Unemployed'
     }]
 
-    const { 
-      onClose, 
+    const {
+      onClose,
       showOccupationModal,
       showRequiredFieldsFunc,
       showOccupationModalFunc,
-      showRequiredFields,
       occupationId,
       occupationName,
       onCloseInputModal
@@ -59,6 +60,7 @@ class CharacterReferenceAddFormModal extends Component {
     return(
       <Modal
         isDismisable = { true }
+        onClose = { onClose }
         >
         {
           showOccupationModal &&
@@ -66,9 +68,8 @@ class CharacterReferenceAddFormModal extends Component {
             label = { 'Type of Occupation' }
             inputArray = { occupationObject }
             selectedArray = { (id, name) =>
-              showRequiredFieldsFunc(id, name, true, false)  
+              showRequiredFieldsFunc(id, name, false)
             }
-            onClose = { () => onCloseInputModal() }
           />
         }
         <h2 className = { 'font-weight-bold font-size-20px' }>Character Reference Form</h2>
@@ -76,42 +77,39 @@ class CharacterReferenceAddFormModal extends Component {
           Your personal references must have known you for at atleast 2 years. Do not include relatives, in-laws, or previous supervisors.
         </h4>
         <br/>
-        <div>
-          <GenericInput 
+        <div className = { 'text-align-left' }>
+          <GenericInput
             text = { 'Full Name' }
             onChange = { (e) => {} }
           />
-          <GenericInput 
+          <GenericInput
             text = { 'Occupation' }
             value = { occupationName }
             type = { 'button' }
             onClick = { () => showOccupationModalFunc() }
           />
-          {
-            showRequiredFields &&
-            <CharacterReferenceComponent 
-              occupationId = { occupationId }
+          <CharacterReferenceComponents
+            occupationId = { occupationId }
             />
-          }   
-          <GenericInput 
+          <GenericInput
             text = { 'Email' }
             onChange = { (e) => {} }
-          /> 
-          <GenericInput 
+          />
+          <GenericInput
             text = { 'Contact Number' }
             onChange = { (e) => {} }
           />
-          <GenericInput 
+          <GenericInput
             text = { 'Relationship' }
             onChange = { (e) => {} }
           />
-          <GenericInput 
+          <GenericInput
             text = { 'Period of Professional Experience' }
             onChange = { (e) => {} }
           />
         </div>
       </Modal>
-    ) 
+    )
   }
 }
 
@@ -120,7 +118,6 @@ CharacterReferenceAddFormModal.propTypes = {
   showRequiredFieldsFunc : PropTypes.func,
   showOccupationModalFunc : PropTypes.func,
   showOccupationModal : PropTypes.bool,
-  showRequiredFields : PropTypes.bool,
   occupationId : PropTypes.string,
 }
 

@@ -248,7 +248,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
             type = { 'circle' }
             height = { 100 }
             width = { 100 }
-            percent={ percentage } />
+            percent = { percentage } />
         </div>
         <br/>
         <div className = { 'affirmation-grid-card' }>
