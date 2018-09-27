@@ -25,6 +25,7 @@ class AffirmationDocumentPreviewModal extends Component {
       <Modal
         width = { 70 }
         onClose = { onClose }
+        isDismisable = { true }
         >
         <div>
           {
@@ -46,7 +47,8 @@ class AffirmationDocumentPreviewModal extends Component {
               </iframe>
               <br/>
               {
-                nodeStatus === 0 &&
+                nodeStatus === 0 ||
+                nodeStatus === null &&
               <div>
                 <br/>
                 <center>

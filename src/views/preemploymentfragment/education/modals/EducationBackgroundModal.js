@@ -53,9 +53,11 @@ class EducationBackgroundModal extends Component {
         <h2>Education Background Form</h2>
         <GenericInput
           text = { 'School' }
+          maxLength = { 30 }
           value = { schoolName }/>
         <GenericInput
           text = { 'Student Number' }
+          maxLength = { 24 }
           value = { studentNo }/>
         <GenericInput
           text = { 'Degree' }

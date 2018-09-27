@@ -238,6 +238,7 @@ class WorkExperienceAddModal extends Component {
         <GenericInput
           text = { 'Company Name' }
           value = { companyName }
+          maxLength = { 30 }
           onChange = { (e) => this.companyFunc(e.target.value) }
           errorMessage = { companyErrorMessage }
           />
@@ -245,6 +246,7 @@ class WorkExperienceAddModal extends Component {
           text = { 'Address' }
           onChange = { (e) => this.addressFunc(e.target.value) }
           value = { address }
+          maxLength = { 40 }
           errorMessage = { addressErrorMessage }
           />
         <GenericInput
@@ -256,6 +258,7 @@ class WorkExperienceAddModal extends Component {
         <GenericInput
           text = { 'Contact Number' }
           value = { contactNo }
+          maxLength = { 12 }
           onChange = { (e) => this.contactNoFunc(e.target.value) }
           type = { 'number' }
           errorMessage = { contactNoErrorMessage }

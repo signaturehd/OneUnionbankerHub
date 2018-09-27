@@ -72,12 +72,14 @@ class FinancialObligationModal extends Component {
           <GenericInput
             text = { 'Name of the Bank/ Financial Institution' }
             value = { bankNameInstitution }
+            maxLength = { 30 }
             onChange = { (e) => bankNameInstitutionFunc(e.target.value) }
             errorMessage = { bankNameInstitution ? '' : bankNameInstitutionErrorMessage }
             />
           <GenericInput
             text = { 'Nature of Obligation' }
             value = { natureObligation }
+            maxLength = { 20 }
             onChange = { (e) => natureObligationFunc(e.target.value) }
             errorMessage = { natureObligation ? '' : natureObligationErrorMessage }
             />
