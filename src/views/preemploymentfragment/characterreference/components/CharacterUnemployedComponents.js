@@ -9,10 +9,19 @@ class CharacterUnemployedComponents extends Component {
   }
 
   render () {
+    const {
+      addressText,
+      addressTextFunc,
+      addressTextErrorMessage
+    } = this.props
+
     return (
       <div>
         <GenericInput
-          onChange = { () => {} }
+          value = { addressText }
+          onChange = { (e) => addressTextFunc(e.target.value) }
+          maxLength = { 40 }
+          errorMessage = { addressText ? '' : addressTextErrorMessage }
           text = { 'Address' } />
       </div>
     )

@@ -26,6 +26,8 @@ import store from '../../../store'
 import CharacterReferenceAddFormModal from './modals/CharacterReferenceAddFormModal'
 import MullptipleCardComponent from './components/CharacterReferenceMultipleCardComponent'
 
+import * as func from './functions/CharacterReferenceFunctions'
+
 class CharacterReferenceFragment extends BaseMVPView {
   constructor(props) {
     super(props)
@@ -35,6 +37,33 @@ class CharacterReferenceFragment extends BaseMVPView {
       occupationId : '',
       occupationName : '',
       characterReferenceData : [],
+      addressText: '',
+      addressTextErrorMessage: '',
+      fullNameText : '',
+      fullNameTextErrorMessage: '',
+      emailText : '',
+      emailTextErrorMessage: '',
+      contactNumberText : '',
+      contactNumberTextErrorMessage: '',
+      relationshipText : '',
+      relationshipTextErrorMessage: '',
+      periodOfProfessionExperienceText : '',
+      periodOfProfessionExperienceTextErrorMessage: '',
+      companyNameText : '',
+      companyNameTextErrorMessage: '',
+      positionText: '',
+      positionTextErrorMessage: '',
+      floorText: '',
+      floorTextErrorMessage: '',
+      buildingNameText: '',
+      buildingNameTextErrorMessage: '',
+      districtText: '',
+      districtTextErrorMessage: '',
+      barangayText: '',
+      barangayTextTextErrorMessage: '',
+      streetText: '',
+      streetTextErrorMessage: '',
+      occupationNameErrorMessage: ''
     }
   }
 
@@ -45,6 +74,130 @@ class CharacterReferenceFragment extends BaseMVPView {
 
   showCharacterReferenceMap (characterReferenceData) {
     this.setState({ characterReferenceData })
+  }
+
+  fullNameTextValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ fullNameText : validate })
+  }
+
+  relationshipTextValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ relationshipText : validate })
+  }
+
+  positionTextValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ positionText : validate })
+  }
+
+  companyNameTextValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ companyNameText : validate })
+  }  
+
+  floorTextValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ floorText : validate })
+  }
+
+  districtTextValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ districtText : validate })
+  }
+  
+  barangayTextValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ barangayText : validate })
+  }
+
+  periodOfProfessionExperienceTextValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ periodOfProfessionExperienceText : validate })
+  }
+
+  emailTextValidate (e) {
+    this.setState({ emailText : e })
+  }
+
+  contactNumberTextValidate (e) {
+    const validate = func.checkValidateNumber(e)
+    this.setState({ contactNumberText : validate })
+  }
+
+  addressTextValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ addressText : validate })
+  }
+
+  streetTextValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ streetText : validate })
+  }
+
+  buildingNameTextValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ buildingNameText : validate })
+  }
+
+  validator (string) {
+    return func.checkedValidateInput(string)
+  }
+
+  validatorEmail (string) {
+    return func.checkValidateEmail(string)
+  }
+
+  postEditMode () {
+    const {
+      occupationId,
+      occupationName,
+      occupationNameErrorMessage,
+      characterReferenceData,
+      addressText,
+      addressTextErrorMessage,
+      fullNameText,
+      fullNameTextErrorMessage,
+      emailText,
+      emailTextErrorMessage,
+      contactNumberText,
+      contactNumberTextErrorMessage,
+      relationshipText,
+      relationshipTextErrorMessage,
+      periodOfProfessionExperienceText,
+      periodOfProfessionExperienceTextErrorMessage,
+      positionText,
+      positionTextErrorMessage,
+      companyNameText,
+      companyNameTextErrorMessage,
+      floorText,
+      floorTextErrorMessage,
+      buildingNameText,
+      buildingNameTextErrorMessage,
+      barangayText,
+      barangayTextTextErrorMessage,
+      streetText,
+      streetTextErrorMessage,
+      districtText,
+      districtTextErrorMessage,
+    } = this.state
+
+    const filterEmail = /^\w+[\+\.\w-]*@([\w-]+\.)*\w+[\w-]*\.([a-z]{2,4}|\d+)$/i
+
+    if(!this.validator(fullNameText)) {
+      this.setState({ fullNameTextErrorMessage : 'Fullname field is required' })
+    } else if (!this.validator(occupationName)) {
+      this.setState({ occupationNameErrorMessage : 'Occupation field is required' }) 
+    } else if (occupationId === 0) {
+    } else if (occupationId === 2) {
+      if(!this.validator(addressText)) {
+        this.setState({ addressTextErrorMessage : 'Address field is required' })
+      } else if (!filterEmail.test(emailText)) { 
+        this.setState({ emailTextErrorMessage : 'Email is invalid (e.g test@gmail.com)' })
+      } else if (!this.validator(contactNumberText)) {
+        this.setState({ contactNumberTextErrorMessage: 'Contact number field is required'})
+      }
+    }
   }
 
   render() {
@@ -58,7 +211,34 @@ class CharacterReferenceFragment extends BaseMVPView {
       showOccupationModal,
       occupationId,
       occupationName,
-      characterReferenceData
+      occupationNameErrorMessage,
+      characterReferenceData,
+      addressText,
+      addressTextErrorMessage,
+      fullNameText,
+      fullNameTextErrorMessage,
+      emailText,
+      emailTextErrorMessage,
+      contactNumberText,
+      contactNumberTextErrorMessage,
+      relationshipText,
+      relationshipTextErrorMessage,
+      periodOfProfessionExperienceText,
+      periodOfProfessionExperienceTextErrorMessage,
+      positionText,
+      positionTextErrorMessage,
+      companyNameText,
+      companyNameTextErrorMessage,
+      floorText,
+      floorTextErrorMessage,
+      buildingNameText,
+      buildingNameTextErrorMessage,
+      barangayText,
+      barangayTextTextErrorMessage,
+      streetText,
+      streetTextErrorMessage,
+      districtText,
+      districtTextErrorMessage,
     } = this.state
 
     return (
@@ -67,6 +247,7 @@ class CharacterReferenceFragment extends BaseMVPView {
       {
         showCharacterReferenceModal &&
         <CharacterReferenceAddFormModal
+          onSave = { () => this.postEditMode() }
           occupationName = { occupationName }
           occupationId = { occupationId }
           showOccupationModal = { showOccupationModal }
@@ -76,6 +257,52 @@ class CharacterReferenceFragment extends BaseMVPView {
             this.setState({ occupationId, occupationName, showOccupationModal }) }
           onClose = { () =>
             this.setState({ showCharacterReferenceModal : false }) }
+
+          fullNameTextErrorMessage = { fullNameTextErrorMessage }
+          occupationNameErrorMessage = { occupationNameErrorMessage }
+          addressTextErrorMessage = { addressTextErrorMessage }
+          emailTextErrorMessage = { emailTextErrorMessage }
+          contactNumberTextErrorMessage = { contactNumberTextErrorMessage }
+
+          addressText = { addressText }
+          addressTextFunc = { (e) => 
+            this.addressTextValidate(e) }
+          fullNameText = { fullNameText }
+          fullNameTextFunc = { (e) => 
+            this.fullNameTextValidate(e) }
+          emailText = { emailText }
+          emailTextFunc = { (e) => 
+            this.emailTextValidate(e) }
+          contactNumberText = { contactNumberText }
+          contactNumberTextFunc = { (e) => 
+            this.contactNumberTextValidate(e) }
+          relationshipText = { relationshipText }
+          relationshipTextFunc = { (e) => 
+            this.relationshipTextValidate(e) }          
+          periodOfProfessionExperienceText = { periodOfProfessionExperienceText }
+          periodOfProfessionExperienceTextFunc = { (e) => 
+            this.periodOfProfessionExperienceTextValidate(e) }
+          positionText = { positionText }
+          positionTextFunc = { (e) => 
+            this.positionTextValidate(e) }
+          companyNameText = { companyNameText }
+          companyNameTextFunc = { (e) => 
+            this.companyNameTextValidate(e) }          
+          floorText = { floorText }
+          floorTextFunc = { (e) => 
+            this.floorTextValidate(e) }          
+          buildingNameText = { buildingNameText }
+          buildingNameTextFunc = { (e) => 
+            this.buildingNameTextValidate(e) }          
+          streetText = { streetText }
+          streetTextFunc = { (e) => 
+            this.streetTextValidate(e) }         
+          districtText = { districtText }
+          districtTextFunc = { (e) => 
+            this.districtTextValidate(e) }       
+          barangayText = { barangayText }
+          barangayTextFunc = { (e) => 
+            this.barangayTextValidate(e) }
           />
       }
       <div>

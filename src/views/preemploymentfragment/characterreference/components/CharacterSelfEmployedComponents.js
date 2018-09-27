@@ -9,32 +9,60 @@ class CharacterSelfEmployedComponents extends Component {
   }
 
   render () {
+    const { 
+      positionText,
+      positionTextFunc,
+      companyNameText,
+      companyNameTextFunc,
+      floorText,
+      floorTextFunc,
+      buildingNameText,
+      buildingNameTextFunc,
+      streetText,
+      streetTextFunc,      
+      districtText,
+      districtTextFunc,      
+      barangayText,
+      barangayTextFunc,
+    } = this.props
+
     return (
       <div>
         <GenericInput
-          onChange = { () => {} }
+          value = { positionText }
+          maxLength = { 20 }
+          onChange = { (e) => positionTextFunc(e.target.value) }
           text = { 'Position' } />
         <GenericInput
-          onChange = { () => {} }
+          value = { companyNameText }
+          maxLength = { 30 }
+          onChange = { (e) => companyNameFunc(e.target.value) }
           text = { 'Company Name' } />
         <div className = { 'character-grid-input' }>
           <GenericInput
-            onChange = { () => {} }
+            value = { floorText }
+            maxLength = { 10 }
+            onChange = { (e) => floorTextFunc(e.target.value) }
             text = { 'Floor' } />
           <GenericInput
-            onChange = { () => {} }
+            maxLength = { 20 }
+            onChange = { (e) => buildingNameTextFunc(e.target.value) }
+            value = { buildingNameText }
             text = { 'Building Name' } />
         </div>
         <GenericInput
           text = { 'Street' }
-          onChange = { () => {} }
+          value = { streetText }
+          onChange = { (e) => streetTextFunc(e.target.value) }
           />
         <div className = { 'character-grid-input' }>
           <GenericInput
-            onChange = { () => {} }
+            value = { districtText }
+            onChange = { (e) => districtTextFunc(e.target.value) }
             text = { 'Disctrict' } />
           <GenericInput
-            onChange = { () => {} }
+            value = { barangayText }
+            onChange = { (e) => barangayTextFunc(e.target.value) }
             text = { 'Barangay' } />
         </div>
       </div>

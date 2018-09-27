@@ -15,15 +15,55 @@ import CharacterUnemployedComponents from '../components/CharacterUnemployedComp
 
 function CharacterReferenceComponents (props) {
   const occupationId = props.occupationId
+  const addressTextFunc = props.addressTextFunc
+  const addressText = props.addressText
+  const positionText = props.positionText
+  const positionTextFunc = props.positionTextFunc
+  const companyNameText = props.companyNameText
+  const companyNameTextFunc = props.companyNameTextFunc
+  const floorText = props.floorText
+  const floorTextFunc = props.floorTextFunc
+  const buildingNameText = props.buildingNameText
+  const buildingNameTextFunc = props.buildingNameTextFunc
+  const streetText = props.streetText
+  const streetTextFunc = props.streetTextFunc 
+  const districtText = props.districtText
+  const districtTextFunc = props.districtTextFunc
+  const barangayText = props.barangayText
+  const barangayTextFunc = props.barangayTextFunc  
+  const relationshipText = props.relationshipText
+  const relationshipTextFunc = props.relationshipTextFunc
+  const addressTextErrorMessage = props.addressTextErrorMessage
 
   if(occupationId === 0) {
-    return <CharacterSelfEmployedComponents />
+    return <CharacterSelfEmployedComponents 
+      positionText = { positionText }
+      positionTextFunc = { (e) => positionTextFunc(e) }
+      companyNameText = { companyNameText }
+      companyNameTextFunc = { (e) => companyNameTextFunc(e) }
+      floorText = { floorText }
+      floorTextFunc = { (e) => floorTextFunc(e) }
+      buildingNameText = { buildingNameText }
+      buildingNameTextFunc = { (e) => buildingNameTextFunc(e) }
+      streetText = { streetText }
+      streetTextFunc = { (e) => streetTextFunc(e) }
+      districtText = { districtText }
+      districtTextFunc = { (e) => districtTextFunc(e) }      
+      barangayText = { barangayText }
+      barangayTextFunc = { (e) => barangayTextFunc(e) }      
+      relationshipText = { relationshipText }
+      relationshipTextFunc = { (e) => relationshipTextFunc(e) }
+    />
   } else if (occupationId === 1) {
     return <CharacterEmployedComponents />
   } else if (occupationId === 2) {
-    return <CharacterUnemployedComponents />
+    return <CharacterUnemployedComponents 
+      addressTextFunc = { (e) => addressTextFunc(e) }
+      addressText = { addressText }
+      addressTextErrorMessage = { addressTextErrorMessage }
+    />
   } else {
-    return <div></div>
+    return null
   }
 }
 
@@ -54,7 +94,39 @@ class CharacterReferenceAddFormModal extends Component {
       showOccupationModalFunc,
       occupationId,
       occupationName,
-      onCloseInputModal
+      onCloseInputModal,
+      addressText,
+      addressTextFunc,
+      fullNameText,
+      fullNameTextFunc,
+      contactNumberText,
+      contactNumberTextFunc,
+      periodOfProfessionExperienceText,
+      periodOfProfessionExperienceTextFunc,
+      relationshipText,
+      relationshipTextFunc,
+      emailText,
+      emailTextFunc,
+      positionText,
+      positionTextFunc,
+      streetText,
+      streetTextFunc,
+      districtText,
+      districtTextFunc,
+      barangayText,
+      barangayTextFunc,
+      buildingNameText,
+      buildingNameTextFunc,
+      floorText,
+      floorTextFunc,
+      companyNameText,
+      companyNameTextFunc,
+      onSave,
+      fullNameTextErrorMessage,
+      occupationNameErrorMessage,
+      addressTextErrorMessage,
+      emailTextErrorMessage,
+      contactNumberTextErrorMessage
     } = this.props
 
     return(
@@ -80,33 +152,73 @@ class CharacterReferenceAddFormModal extends Component {
         <div className = { 'text-align-left' }>
           <GenericInput
             text = { 'Full Name' }
-            onChange = { (e) => {} }
+            value = { fullNameText }
+            errorMessage = { fullNameText ? '' : fullNameTextErrorMessage  }
+            maxLength = { 44 }
+            onChange = { (e) => fullNameTextFunc(e.target.value) }
           />
           <GenericInput
             text = { 'Occupation' }
             value = { occupationName }
+            errorMessage = { occupationName ? '' : occupationNameErrorMessage }
             type = { 'button' }
             onClick = { () => showOccupationModalFunc() }
           />
           <CharacterReferenceComponents
             occupationId = { occupationId }
+            addressText = { addressText }
+            addressTextFunc = { (e) => addressTextFunc(e) }
+            positionText = { positionText }
+            positionTextFunc = { (e) => positionTextFunc(e) }
+            companyNameText = { companyNameText }
+            companyNameTextFunc = { (e) => companyNameTextFunc(e) }
+            floorText = { floorText }
+            floorTextFunc = { (e) => floorTextFunc(e) }
+            buildingNameText = { buildingNameText }
+            buildingNameTextFunc = { (e) => buildingNameTextFunc(e) }
+            streetText = { streetText }
+            streetTextFunc = { (e) => streetTextFunc(e) }
+            districtText = { districtText }
+            districtTextFunc = { (e) => districtTextFunc(e) }      
+            barangayText = { barangayText }
+            barangayTextFunc = { (e) => barangayTextFunc(e) }            
+            relationshipText = { relationshipText }
+            relationshipTextFunc = { (e) => relationshipTextFunc(e) }
+            addressTextErrorMessage = { addressTextErrorMessage }
             />
           <GenericInput
             text = { 'Email' }
-            onChange = { (e) => {} }
+            value = { emailText }
+            maxLength = { 30 }
+            errorMessage = { emailText ? '' :  emailTextErrorMessage }
+            onChange = { (e) => emailTextFunc(e.target.value) }
           />
           <GenericInput
+            value = { contactNumberText }
             text = { 'Contact Number' }
-            onChange = { (e) => {} }
+            errorMessage = { contactNumberText ? '' : contactNumberTextErrorMessage }
+            maxLength = { 12 }
+            onChange = { (e) => contactNumberTextFunc(e.target.value) }
           />
           <GenericInput
             text = { 'Relationship' }
-            onChange = { (e) => {} }
+            value = { relationshipText }
+            maxLength = { 20 }
+            onChange = { (e) => relationshipTextFunc(e.target.value) }
           />
           <GenericInput
+            maxLength = { 20 }
+            value = { periodOfProfessionExperienceText }
             text = { 'Period of Professional Experience' }
-            onChange = { (e) => {} }
+            onChange = { (e) => periodOfProfessionExperienceTextFunc(e.target.value) }
           />
+          <br/>
+          <center>
+            <GenericButton 
+              text = { 'Save' }
+              onClick = { () => onSave() }
+            />
+          </center>
         </div>
       </Modal>
     )
@@ -119,6 +231,20 @@ CharacterReferenceAddFormModal.propTypes = {
   showOccupationModalFunc : PropTypes.func,
   showOccupationModal : PropTypes.bool,
   occupationId : PropTypes.string,
+  addressText : PropTypes.string,
+  addressTextFunc : PropTypes.func,  
+  fullNameText : PropTypes.string,
+  fullNameTextFunc : PropTypes.func,
+  contactNumberText : PropTypes.string,
+  contactNumberTextFunc : PropTypes.func,
+  periodOfProfessionExperienceText : PropTypes.string,
+  periodOfProfessionExperienceTextFunc : PropTypes.func,  
+  emailText : PropTypes.string,
+  emailTextFunc : PropTypes.func,
+  relationshipText : PropTypes.string,
+  relationshipTextFunc : PropTypes.func,  
+  barangayText : PropTypes.string,
+  barangayTextFunc : PropTypes.func,
 }
 
 export default CharacterReferenceAddFormModal

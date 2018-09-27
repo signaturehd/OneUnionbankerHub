@@ -62,7 +62,7 @@ class CharacterEmployedComponents extends Component {
 
 CharacterEmployedComponents.propTypes = {
   positionText : PropTypes.string,
-   positionFunc : PropTypes.func, 
+  positionFunc : PropTypes.func, 
   companyNameText : PropTypes.string,
   companyNameFunc : PropTypes.func,
   floarText : PropTypes.string,
