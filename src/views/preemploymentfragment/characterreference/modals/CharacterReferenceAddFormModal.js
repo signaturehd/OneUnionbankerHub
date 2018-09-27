@@ -26,17 +26,17 @@ function CharacterReferenceComponents (props) {
   const buildingNameText = props.buildingNameText
   const buildingNameTextFunc = props.buildingNameTextFunc
   const streetText = props.streetText
-  const streetTextFunc = props.streetTextFunc 
+  const streetTextFunc = props.streetTextFunc
   const districtText = props.districtText
   const districtTextFunc = props.districtTextFunc
   const barangayText = props.barangayText
-  const barangayTextFunc = props.barangayTextFunc  
+  const barangayTextFunc = props.barangayTextFunc
   const relationshipText = props.relationshipText
   const relationshipTextFunc = props.relationshipTextFunc
   const addressTextErrorMessage = props.addressTextErrorMessage
 
   if(occupationId === 0) {
-    return <CharacterSelfEmployedComponents 
+    return <CharacterSelfEmployedComponents
       positionText = { positionText }
       positionTextFunc = { (e) => positionTextFunc(e) }
       companyNameText = { companyNameText }
@@ -48,16 +48,33 @@ function CharacterReferenceComponents (props) {
       streetText = { streetText }
       streetTextFunc = { (e) => streetTextFunc(e) }
       districtText = { districtText }
-      districtTextFunc = { (e) => districtTextFunc(e) }      
+      districtTextFunc = { (e) => districtTextFunc(e) }
       barangayText = { barangayText }
-      barangayTextFunc = { (e) => barangayTextFunc(e) }      
+      barangayTextFunc = { (e) => barangayTextFunc(e) }
       relationshipText = { relationshipText }
       relationshipTextFunc = { (e) => relationshipTextFunc(e) }
     />
   } else if (occupationId === 1) {
-    return <CharacterEmployedComponents />
+    return <CharacterEmployedComponents
+      positionText = { positionText }
+      positionTextFunc = { (e) => positionTextFunc(e) }
+      companyNameText = { companyNameText }
+      companyNameTextFunc = { (e) => companyNameTextFunc(e) }
+      floorText = { floorText }
+      floorTextFunc = { (e) => floorTextFunc(e) }
+      buildingNameText = { buildingNameText }
+      buildingNameTextFunc = { (e) => buildingNameTextFunc(e) }
+      streetText = { streetText }
+      streetTextFunc = { (e) => streetTextFunc(e) }
+      districtText = { districtText }
+      districtTextFunc = { (e) => districtTextFunc(e) }
+      barangayText = { barangayText }
+      barangayTextFunc = { (e) => barangayTextFunc(e) }
+      relationshipText = { relationshipText }
+      relationshipTextFunc = { (e) => relationshipTextFunc(e) }
+      />
   } else if (occupationId === 2) {
-    return <CharacterUnemployedComponents 
+    return <CharacterUnemployedComponents
       addressTextFunc = { (e) => addressTextFunc(e) }
       addressText = { addressText }
       addressTextErrorMessage = { addressTextErrorMessage }
@@ -126,7 +143,9 @@ class CharacterReferenceAddFormModal extends Component {
       occupationNameErrorMessage,
       addressTextErrorMessage,
       emailTextErrorMessage,
-      contactNumberTextErrorMessage
+      contactNumberTextErrorMessage,
+      relationshipTextErrorMessage,
+      periodOfProfessionExperienceTextErrorMessage,
     } = this.props
 
     return(
@@ -179,9 +198,9 @@ class CharacterReferenceAddFormModal extends Component {
             streetText = { streetText }
             streetTextFunc = { (e) => streetTextFunc(e) }
             districtText = { districtText }
-            districtTextFunc = { (e) => districtTextFunc(e) }      
+            districtTextFunc = { (e) => districtTextFunc(e) }
             barangayText = { barangayText }
-            barangayTextFunc = { (e) => barangayTextFunc(e) }            
+            barangayTextFunc = { (e) => barangayTextFunc(e) }
             relationshipText = { relationshipText }
             relationshipTextFunc = { (e) => relationshipTextFunc(e) }
             addressTextErrorMessage = { addressTextErrorMessage }
@@ -204,17 +223,19 @@ class CharacterReferenceAddFormModal extends Component {
             text = { 'Relationship' }
             value = { relationshipText }
             maxLength = { 20 }
+            errorMessage = { relationshipText ? '' : relationshipTextErrorMessage }
             onChange = { (e) => relationshipTextFunc(e.target.value) }
           />
           <GenericInput
             maxLength = { 20 }
             value = { periodOfProfessionExperienceText }
             text = { 'Period of Professional Experience' }
+            errorMessage = { periodOfProfessionExperienceTextErrorMessage }
             onChange = { (e) => periodOfProfessionExperienceTextFunc(e.target.value) }
           />
           <br/>
           <center>
-            <GenericButton 
+            <GenericButton
               text = { 'Save' }
               onClick = { () => onSave() }
             />
@@ -232,17 +253,17 @@ CharacterReferenceAddFormModal.propTypes = {
   showOccupationModal : PropTypes.bool,
   occupationId : PropTypes.string,
   addressText : PropTypes.string,
-  addressTextFunc : PropTypes.func,  
+  addressTextFunc : PropTypes.func,
   fullNameText : PropTypes.string,
   fullNameTextFunc : PropTypes.func,
   contactNumberText : PropTypes.string,
   contactNumberTextFunc : PropTypes.func,
   periodOfProfessionExperienceText : PropTypes.string,
-  periodOfProfessionExperienceTextFunc : PropTypes.func,  
+  periodOfProfessionExperienceTextFunc : PropTypes.func,
   emailText : PropTypes.string,
   emailTextFunc : PropTypes.func,
   relationshipText : PropTypes.string,
-  relationshipTextFunc : PropTypes.func,  
+  relationshipTextFunc : PropTypes.func,
   barangayText : PropTypes.string,
   barangayTextFunc : PropTypes.func,
 }

@@ -31,8 +31,9 @@ class AffirmationDocumentPreviewModal extends Component {
           {
             enabledLoader ?
             <div>
-              <center className = { 'circular-loader-center' }>
+              <center>
                 <h2>Please wait while we we&#39;re retrieving the documents</h2>
+                <br/>
                 <CircularLoader show = { enabledLoader }/>
               </center>
             </div>
