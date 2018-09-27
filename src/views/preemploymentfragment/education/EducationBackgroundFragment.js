@@ -26,11 +26,14 @@ class EducationBackgroundFragment extends BaseMVPView {
       enabledLoader : false,
       showEducationFormModal : false,
       showEditSubmitButton : false,
+      showSchoolsModal : false,
       educationCardHolder : [],
+      schools : [],
       torFormData: [{
         name : 'Transcript of Records'
       }],
       count : 2,
+      schoolId : '',
       schoolName : '',
       studentNo : '',
       startYear : '',
@@ -58,6 +61,10 @@ class EducationBackgroundFragment extends BaseMVPView {
     this.setState({ educationCardHolder })
   }
 
+  checkedSchoolData(schools) {
+    this.setState({ schools })
+  }
+
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
   }
@@ -73,8 +80,11 @@ class EducationBackgroundFragment extends BaseMVPView {
       educationCardHolder,
       showEducationFormModal,
       showEditSubmitButton,
+      showSchoolsModal,
       torFormData,
       count,
+      schools,
+      schoolId,
       schoolName,
       studentNo,
       startYear,
@@ -98,7 +108,9 @@ class EducationBackgroundFragment extends BaseMVPView {
           showEducationFormModal &&
           <EducationBackgroundModal
             torFormData = { torFormData }
+            schools = { schools }
             count = { count }
+            schoolId = { schoolId }
             schoolName = { schoolName }
             studentNo = { studentNo }
             startYear = { startYear }
@@ -108,6 +120,10 @@ class EducationBackgroundFragment extends BaseMVPView {
             honor = { honor }
             course = { course }
             address = { address }
+            showSchoolsModal = { showSchoolsModal }
+            onCloseModal = { () => this.setState({ showSchoolsModal : false }) }
+            setSchoolFunc = { (schoolId, schoolName) => this.setState({ schoolId, schoolName, showSchoolsModal : false }) }
+            showSchoolsFunc = { () => this.setState({ showSchoolsModal : true }) }
             addAttachmentsFunc = { (attachment, tempCount) =>
               {
                 const attachmentTemp = [...attachment]

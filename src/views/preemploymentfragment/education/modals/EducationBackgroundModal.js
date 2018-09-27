@@ -27,13 +27,30 @@ class EducationBackgroundModal extends Component {
     super (props)
   }
 
+  schoolMap (schools) {
+    let newArray = []
+    schools.map((school) =>
+      newArray.push ({
+        id: school.id,
+        name: school.name
+      })
+    )
+    return newArray
+  }
+
   render () {
     const {
     hideModalEducationFormFunc,
     updateMode,
     count,
+    schools,
     torFormData,
     addAttachmentsFunc,
+    setSchoolFunc,
+    onCloseModal,
+    showSchoolsFunc,
+    showSchoolsModal,
+    schoolId,
     schoolName,
     studentNo,
     startYear,
@@ -50,11 +67,24 @@ class EducationBackgroundModal extends Component {
         onClose = { () => hideModalEducationFormFunc(false) }
         isDismisable = { true }
         width = { 50 }>
+        <div>
+        {
+          showSchoolsModal &&
+          <SingleInputModal
+            label = { 'School' }
+            inputArray = { schools.school }
+            selectedArray = {
+              (schoolId, schoolName) => setSchoolFunc(schoolId, schoolName)
+            }
+            onClose = { () => onCloseModal() }
+            />
+        }
         <h2>Education Background Form</h2>
         <GenericInput
           text = { 'School' }
           maxLength = { 30 }
-          value = { schoolName }/>
+          value = { schoolName }
+          onClick = { () => showSchoolsFunc() }/>
         <GenericInput
           text = { 'Student Number' }
           maxLength = { 24 }
@@ -113,9 +143,7 @@ class EducationBackgroundModal extends Component {
                   this.setState({ torFormData })
               }
               />
-
             </div>
-
            }
         <div className = { 'grid-global' }>
           <GenericButton
@@ -132,6 +160,7 @@ class EducationBackgroundModal extends Component {
                 />
             }
           </div>
+        </div>
       </Modal>
     )
   }
@@ -140,7 +169,13 @@ class EducationBackgroundModal extends Component {
 EducationBackgroundModal.propTypes = {
   count : PropTypes.number,
   torFormData : PropTypes.array,
+  schools : PropTypes.array,
+  onCloseModal : PropTypes.func,
+  setSchoolFunc : PropTypes.func,
   addAttachmentsFunc : PropTypes.func,
+  showSchoolsFunc : PropTypes.func,
+  showSchoolsModal : PropTypes.bool,
+  schoolId : PropTypes.string,
   schoolName : PropTypes.string,
   studentNo : PropTypes.string,
   startYear : PropTypes.string,

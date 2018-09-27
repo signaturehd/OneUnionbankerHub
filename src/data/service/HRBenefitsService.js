@@ -1304,6 +1304,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getSchoolData (token, pageNumber) {
+    return this.accountClient.get('v1/schools?pageNumber=${ pageNumber }', {
+      headers : { token }
+    })
+  }
+
   /* Vaccine Requisition */
 
   validateVaccine (token) {
