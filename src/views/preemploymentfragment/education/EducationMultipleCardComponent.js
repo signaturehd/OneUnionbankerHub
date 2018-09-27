@@ -34,22 +34,22 @@ class EducationMultipleCardComponent extends Component {
                 key = {key}>
                 <div className = { 'grid-global' }>
                   <div>
-                      <h2 className = { 'font-size-14px font-weight-bold' }>{ resp.school.name }</h2>
-                      <h2 className = { 'font-size-12px font-weight-lighter' }>Course: { resp.course }</h2>
-                      <h2 className = { 'font-size-12px font-weight-lighter' }>Degree: { resp.degree }</h2>
-                      <h2 className = { 'font-size-12px font-weight-lighter' }>Honor: { resp.honor }</h2>
+                      <h2 className = { 'font-size-14px font-weight-bold' }>{ resp.schoolName && resp.schoolName }</h2>
+                      <h2 className = { 'font-size-12px font-weight-lighter' }>Course: { resp.course && resp.course }</h2>
+                      <h2 className = { 'font-size-12px font-weight-lighter' }>Degree: { resp.degree && resp.degree }</h2>
+                      <h2 className = { 'font-size-12px font-weight-lighter' }>Honor: { resp.honor && resp.honor }</h2>
                   </div>
                   <div>
-                    <h2 className = { 'font-size-14px font-weight-bold' }>Student ID: { resp.studentId }</h2>
+                    <h2 className = { 'font-size-14px font-weight-bold' }>Student ID: { resp.studentNo && resp.studentNo }</h2>
 
                     <h2 className = { 'font-size-12px font-weight-lighter' }>
-                      Term: { resp.term }
+                      Term: { resp.term && resp.term }
                     </h2>
                     <h2 className = { 'font-size-12px font-weight-lighter' }>
-                      Start year: { moment(resp.startYear).format('MMMM DD, YYYY') }
+                      Start year: { resp.startYear && moment(resp.startYear).format('MMMM DD, YYYY') }
                     </h2>
                     <h2 className = { 'font-size-12px font-weight-lighter' }>
-                      Start end: { moment(resp.endYear).format('MMMM DD, YYYY') }
+                      Start end: { resp.endYear && moment(resp.endYear).format('MMMM DD, YYYY') }
                     </h2>
                   </div>
                 </div>
