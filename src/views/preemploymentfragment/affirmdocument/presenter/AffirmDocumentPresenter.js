@@ -69,6 +69,7 @@ export default class AffirmDocumentPresenter {
     this.postEnrollPinAffirmationsPolicyInteractor.execute(pin)
     .subscribe(data => {
       this.view.hidePinLoader()
+      this.getAffirmationsStatus()
       this.view.noticeResponse(data.message, true, false)
     }, error => {
       this.view.hidePinLoader()
@@ -80,6 +81,7 @@ export default class AffirmDocumentPresenter {
     this.postEnrollPinAffirmationsConfidentialInteractor.execute(pin)
     .subscribe(data => {
       this.view.hidePinLoader()
+      this.getAffirmationsStatus()
       this.view.noticeResponse(data.message, true, false)
     }, error => {
       this.view.hidePinLoader()
@@ -91,6 +93,7 @@ export default class AffirmDocumentPresenter {
     this.postEnrollPinAffirmationsSecrecyInteractor.execute(pin)
     .subscribe(data => {
       this.view.hidePinLoader()
+      this.getAffirmationsStatus()
       this.view.noticeResponse(data.message, true, false)
     }, error => {
       this.view.hidePinLoader()

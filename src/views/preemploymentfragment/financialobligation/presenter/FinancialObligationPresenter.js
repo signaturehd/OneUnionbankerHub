@@ -30,7 +30,9 @@ export default class FinancialObligationPresenter {
       this.view.showFinanceStatus(singleInputArray)
     })
     .subscribe(data => {
+      this.view.hideCircularLoader()
     }, error => {
+      this.view.hideCircularLoader()
     })
   }
 

@@ -1114,7 +1114,7 @@ export default class HRBenefitsService {
   }
 
   getFinancialDetails (token) {
-    return this.onboardingClient.get('v1/employees/finances/details', {
+    return this.onboardingClient.get('v1/employees/finances', {
       headers : { token }
     })
   }
@@ -1126,7 +1126,7 @@ export default class HRBenefitsService {
       amount: financialStatusParam.amount,
       status: financialStatusParam.statusId,
     }
-    return this.onboardingClient.post('v1/employees/finances/details', objectParam, {
+    return this.onboardingClient.post('v1/employees/finances', objectParam, {
       headers : { token }
     })
   }
