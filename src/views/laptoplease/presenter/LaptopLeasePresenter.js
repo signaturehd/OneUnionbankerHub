@@ -13,9 +13,21 @@ export default class LaptopLeasePresenter {
   getLaptopLease () {
     this.view.showCircularLoader()
     this.getLaptopLeaseInteractor.execute()
+    .map(data => {
+      let arrayOption = []
+
+      data &&
+      data.deliveryOptions.map((resp, key) => (
+        arrayOption.push({
+          id : resp.id,
+          name : resp.address
+        })
+      ))
+      this.view.showLaptopLeaseValidate(data)
+      this.view.showDeliveryOptions(arrayOption)
+    })
     .subscribe(data => {
       this.view.hideCircularLoader()
-      this.view.showLaptopLeaseValidate(data)
     }, error => {
       this.view.hideCircularLoader()
     })

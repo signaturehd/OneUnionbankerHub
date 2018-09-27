@@ -862,7 +862,23 @@ export default class HRBenefitsClient {
   /* Laptop Lease */
 
   getLaptopLease (token) {
-    return this.service.getLaptopLease()
+    return this.service.getLaptopLease(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  postlaptopLease (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    laptopLeaseParam) {
+    return this.service.postlaptopLease(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      laptopLeaseParam
+    )
       .pipe(ServiceErrorOperator())
   }
 

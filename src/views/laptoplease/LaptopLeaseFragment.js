@@ -45,6 +45,7 @@ class LaptopLeaseFragment extends BaseMVPView {
       showInsurancePaymentModal: false,
       showEditMode: false,
       carValidate: [],
+      deliveryData: [],
       loanType: 15,
       leaseMode: 1,
       carBrand: '',
@@ -222,6 +223,10 @@ class LaptopLeaseFragment extends BaseMVPView {
 
   noticeResponseResp (noticeResponse) {
     this.setState({ noticeResponse })
+  }
+
+  showDeliveryOptions (deliveryData) {
+    this.setState({ deliveryData })
   }
 
   /* Loader*/
