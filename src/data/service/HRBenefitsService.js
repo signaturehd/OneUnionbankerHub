@@ -1310,6 +1310,30 @@ export default class HRBenefitsService {
     })
   }
 
+  addEducationSchool (token, educationParam) {
+    const formData = new FormData()
+    const objectParam = {
+        schoolName : educationParam.schoolName,
+        studentNo : educationParam.studentNo,
+        startYear : educationParam.startYear,
+        endYear : educationParam.endYear,
+        term : educationParam.term,
+        degree : educationParam.degree,
+        honor : educationParam.honor,
+        course : educationParam.course,
+        address : educationParam.address
+      }
+      educationParam.attachments.map((resp) =>
+        (
+          formData.append(resp.name.replace('/', '-'), resp.file)
+        )
+      )
+    formData.append('body', JSON.stringify(objectParam))
+    return this.onboardingClient.post('v1/employees/school', objectParam, {
+      headers : { token }
+    })
+  }
+
   /* Vaccine Requisition */
 
   validateVaccine (token) {

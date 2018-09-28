@@ -14,6 +14,8 @@ import {
   DatePicker
 } from '../../../../ub-components/'
 
+import SchoolModal from './SchoolModal'
+
 import { format } from '../../../../utils/numberUtils'
 
 import imageDefault from '../../../../images/profile-picture.png'
@@ -27,23 +29,23 @@ class EducationBackgroundModal extends Component {
     super (props)
   }
 
-  schoolMap (schools) {
-    let newArray = []
-    schools.map((school) =>
-      newArray.push ({
-        id: school.id,
-        name: school.name
-      })
-    )
-    return newArray
-  }
-
   render () {
+
+    const degreeArray = [
+      { id:1, name:'Bachelors' },
+      { id:2, name:'Masteral' },
+      { id:3, name:'Doctorate' },
+      { id:4, name:'Vocational' }
+    ]
+
     const {
     hideModalEducationFormFunc,
     updateMode,
     count,
     schools,
+    schoolPageNumber,
+    schoolViewMore,
+    schoolPageNumberFunc,
     torFormData,
     addAttachmentsFunc,
     setSchoolFunc,
@@ -56,10 +58,25 @@ class EducationBackgroundModal extends Component {
     startYear,
     endYear,
     term,
+    showDegreeModal,
+    showDegreeFunc,
+    setDegreeFunc,
     degree,
     honor,
     course,
-    address
+    address,
+    studentNoFunc,
+    termFunc,
+    addressFunc,
+    degreeFunc,
+    courseFunc,
+    honorFunc,
+    startYearFunc,
+    startYearValidate,
+    startYearErrorMessage,
+    endYearFunc,
+    endYearValidate,
+    endYearErrorMessage
     } = this.props
 
     return (
@@ -70,37 +87,61 @@ class EducationBackgroundModal extends Component {
         <div>
         {
           showSchoolsModal &&
-          <SingleInputModal
+          <SchoolModal
             label = { 'School' }
-            inputArray = { schools.school }
-            selectedArray = {
-              (schoolId, schoolName) => setSchoolFunc(schoolId, schoolName)
-            }
+            schoolViewMore = { schoolViewMore }
+            schoolPageNumberFunc = { () => schoolPageNumberFunc() }
+            inputArray = { schools }
+            selectedArray = { (schoolId, schoolName) => setSchoolFunc(schoolId, schoolName) }
             onClose = { () => onCloseModal() }
             />
+        }
+        {
+          showDegreeModal &&
+          <SingleInputModal
+            label = { 'Degree' }
+            inputArray = { degreeArray }
+            selectedArray = { (degreeId,degreeName) => degreeFunc(degreeId,degreeName) }
+            onClose = { () => showDegreeFunc(false) }
+          />
         }
         <h2>Education Background Form</h2>
         <GenericInput
           text = { 'School' }
-          maxLength = { 30 }
           value = { schoolName }
           onClick = { () => showSchoolsFunc() }/>
         <GenericInput
+          text = { 'School Address' }
+          value = { address }
+          onChange = { (e) => addressFunc(e.target.value) }
+        />
+        <GenericInput
           text = { 'Student Number' }
           maxLength = { 24 }
-          value = { studentNo }/>
+          value = { studentNo }
+          onChange = { (e) => studentNoFunc(e.target.value) }
+          />
         <GenericInput
           text = { 'Degree' }
-          value = { degree }/>
+          value = { degree }
+          onChange = { (e) => degreeFunc(e.target.value) }
+          onClick = { () => showDegreeFunc(true) }
+          />
         <GenericInput
           text = { 'Course' }
-          value = { course }/>
+          value = { course }
+          onChange = { (e) => courseFunc(e.target.value) }
+          />
         <GenericInput
           text = { 'Term' }
-          value = { term }/>
+          value = { term }
+          onChange = { (e) => termFunc(e.target.value) }
+          />
         <GenericInput
           text = { 'Special Honor' }
-          value = { honor }/>
+          value = { honor }
+          onChange = { (e) => honorFunc(e.target.value) }
+          />
         <div className = { 'text-align-left' }>
           <h2>Inclusive Details</h2>
           <br/>
@@ -109,12 +150,26 @@ class EducationBackgroundModal extends Component {
           text = { 'Start Year' }
           type = { 'number' }
           maxLength = { 4 }
-          value = { startYear }/>
+          value = { startYear }
+          onChange = { (e) => {
+              startYearFunc(e.target.value)
+              startYearValidate(e.target.value)
+            }
+          }
+          errorMessage = { startYearErrorMessage }
+        />
         <GenericInput
           text = { 'End Year' }
           type = { 'number' }
           maxLength = { 4 }
-          value = { endYear }/>
+          value = { endYear }
+          onChange = { (e) => {
+              endYearFunc(e.target.value)
+              endYearValidate(e.target.value)
+            }
+          }
+          errorMessage = { endYearErrorMessage }
+          />
           <br/>
           <Line/>
           <br/>
@@ -185,6 +240,15 @@ EducationBackgroundModal.propTypes = {
   honor : PropTypes.string,
   course : PropTypes.string,
   address : PropTypes.string,
+  schoolPageNumber : PropTypes.number,
+  schoolViewMore : PropTypes.string,
+  schoolPageNumberFunc : PropTypes.func,
+  studentNoFunc : PropTypes.func,
+  termFunc : PropTypes.func,
+  addressFunc : PropTypes.func,
+  degreeFunc : PropTypes.func,
+  courseFunc : PropTypes.func,
+  honorFunc : PropTypes.func
 }
 EducationBackgroundModal.defaultProps={
 }

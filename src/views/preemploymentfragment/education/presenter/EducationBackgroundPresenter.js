@@ -2,11 +2,15 @@ import { NotifyActions } from '../../../../actions'
 import store from '../../../../store'
 import employeeSchoolInteractor from '../../../../domain/interactor/preemployment/education/GetEmployeeSchoolInteractor'
 import schoolDataInteractor from '../../../../domain/interactor/preemployment/education/GetSchoolDataInteractor'
+import addEducationSchoolInteractor from '../../../../domain/interactor/preemployment/education/AddEducationSchoolInteractor'
+
+import educationParam from '../../../../domain/param/AddEmployeeEducationParam'
 
 export default class EducationBackgroundPresenter {
   constructor (container) {
     this.employeeSchoolInteractor = new employeeSchoolInteractor(container.get('HRBenefitsClient'))
     this.schoolDataInteractor = new schoolDataInteractor(container.get('HRBenefitsClient'))
+    this.addEducationSchoolInteractor = new AddEducationSchoolInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -20,9 +24,7 @@ export default class EducationBackgroundPresenter {
       data => {
         this.view.checkedSchoolData(data)
       },
-      error => {
-
-      }
+      error => {}
     )
     this.employeeSchoolInteractor.execute()
     .subscribe(
@@ -36,4 +38,38 @@ export default class EducationBackgroundPresenter {
        }
     )
   }
-  }
+
+  addEducationSchool(
+    schoolName,
+    studentNo,
+    startYear,
+    endYear,
+    term,
+    degree,
+    honor,
+    course,
+    address,
+    torFormData) {
+      this.view.showCircularLoader()
+      this.addEducationSchoolInteractor.execute(educationParam(
+        schoolName,
+        studentNo,
+        startYear,
+        endYear,
+        term,
+        degree,
+        honor,
+        course,
+        address,
+        torFormData
+      ))
+      .subscribe(
+        data => {
+          this.view.hideCircularLoader()
+          this.view.noticeResponseResp(data)
+        }, error => {
+          this.view.hideCircularLoader()
+        }
+      )
+    }
+}

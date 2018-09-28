@@ -27,6 +27,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       showEducationFormModal : false,
       showEditSubmitButton : false,
       showSchoolsModal : false,
+      showDegreeModal : false,
       educationCardHolder : [],
       schools : [],
       torFormData: [{
@@ -37,20 +38,24 @@ class EducationBackgroundFragment extends BaseMVPView {
       schoolName : '',
       studentNo : '',
       startYear : '',
+      startYearErrorMessage : '',
       endYear : '',
+      endYearErrorMessage : '',
       term : '',
       degree : '',
       honor : '',
       course : '',
       address : '',
       index : 4,
+      schoolPageNumber: 1,
+      schoolViewMore : 'View more',
       viewMoreText : 'View more'
     }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(3)
-    this.presenter.getEmployeeSchool()
+    this.presenter.getEmployeeSchool(this.state.schoolPageNumber)
   }
 
   onShowEducationFormModalFunc () {
@@ -63,6 +68,62 @@ class EducationBackgroundFragment extends BaseMVPView {
 
   checkedSchoolData(schools) {
     this.setState({ schools })
+  }
+
+  studentNoFunc(studentNo) {
+    this.setState({ studentNo })
+  }
+
+  termFunc(term) {
+    this.setState({ term })
+  }
+
+  degreeFunc(id, degree) {
+    this.setState({ degree , showDegreeModal : false})
+  }
+
+  honorFunc(honor) {
+    this.setState({ honor })
+  }
+
+  courseFunc(course) {
+    this.setState({ course })
+  }
+
+  addressFunc(address) {
+    this.setState({ address })
+  }
+
+  startYearFunc(startYear) {
+    this.setState({ startYear })
+  }
+
+  startYearValidate(value) {
+    if(value.length === 4) {
+      if(value <= moment().format('YYYY')) {
+        this.setState({ startYearErrorMessage : '' })
+      } else {
+        this.setState({ startYearErrorMessage : 'Future year is not valid.' })
+      }
+    } else {
+      this.setState({ startYearErrorMessage : 'Please input a valid year.' })
+    }
+  }
+
+  endYearFunc(endYear) {
+    this.setState({ endYear })
+  }
+
+  endYearValidate(value) {
+    if(value.length === 4) {
+      if(value <= moment().format('YYYY')) {
+        this.setState({ endYearErrorMessage : '' })
+      } else {
+        this.setState({ endYearErrorMessage : 'Future year is not valid.' })
+      }
+    } else {
+      this.setState({ endYearErrorMessage : 'Please input a valid year.' })
+    }
   }
 
   hideCircularLoader () {
@@ -81,6 +142,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       showEducationFormModal,
       showEditSubmitButton,
       showSchoolsModal,
+      showDegreeModal,
       torFormData,
       count,
       schools,
@@ -88,13 +150,17 @@ class EducationBackgroundFragment extends BaseMVPView {
       schoolName,
       studentNo,
       startYear,
+      startYearErrorMessage,
       endYear,
+      endYearErrorMessage,
       term,
       degree,
       honor,
       course,
       address,
       index,
+      schoolPageNumber,
+      schoolViewMore,
       viewMoreText
     } = this.state
 
@@ -108,18 +174,35 @@ class EducationBackgroundFragment extends BaseMVPView {
           showEducationFormModal &&
           <EducationBackgroundModal
             torFormData = { torFormData }
-            schools = { schools }
+            schools = { schools.school }
             count = { count }
             schoolId = { schoolId }
             schoolName = { schoolName }
             studentNo = { studentNo }
             startYear = { startYear }
+            startYearErrorMessage = { startYearErrorMessage }
+            startYearFunc = { (resp) => this.startYearFunc(resp) }
+            startYearValidate = { (resp) => this.startYearValidate(resp) }
             endYear = { endYear }
+            endYearErrorMessage = { endYearErrorMessage }
+            endYearFunc = { (resp) => this.endYearFunc(resp) }
+            endYearValidate = { (resp) => this.endYearValidate(resp) }
             term = { term }
             degree = { degree }
             honor = { honor }
             course = { course }
             address = { address }
+            studentNoFunc = { (resp) => this.studentNoFunc(resp) }
+            termFunc = { (resp) => this.termFunc(resp) }
+            degreeFunc = { (respId, respName) => this.degreeFunc(respId, respName) }
+            honorFunc = { (resp) => this.honorFunc(resp) }
+            courseFunc = { (resp) => this.courseFunc(resp) }
+            addressFunc = { (resp) => this.addressFunc(resp) }
+            showDegreeFunc = { (resp) => this.setState({ showDegreeModal : resp }) }
+            showDegreeModal = { showDegreeModal }
+            schoolPageNumber = { schoolPageNumber }
+            schoolViewMore = { schoolViewMore }
+            schoolPageNumberFunc = { () => this.setState({ schoolPageNumber : schoolPageNumber + 1 }) }
             showSchoolsModal = { showSchoolsModal }
             onCloseModal = { () => this.setState({ showSchoolsModal : false }) }
             setSchoolFunc = { (schoolId, schoolName) => this.setState({ schoolId, schoolName, showSchoolsModal : false }) }

@@ -937,6 +937,11 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  addEducationSchool(token, educationParam) {
+    return this.service.addEducationSchool(token, educationParam)
+    .pipe(ServiceErrorOperator())
+  }
+  
   /* Vaccines Requisitions */
 
   validateVaccine (token) {
