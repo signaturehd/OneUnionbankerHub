@@ -54,6 +54,7 @@ function  PreEmploymentFragments (props)  {
   const biographicalArray = props.biographicalArray
   const sssArray = props.sssArray
   const tinArray = props.tinArray
+  const educationVerificationForm = props.educationVerificationForm
   if (pageNumber === 0) {
     return <AffirmationDocumentFragment
       percentage = { percentage }
@@ -73,6 +74,7 @@ function  PreEmploymentFragments (props)  {
   } else if (pageNumber === 3) {
     return <EducationBackgroundFragment
       percentage = { percentage }
+      educationVerificationForm = { educationVerificationForm }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 4) {
@@ -155,10 +157,13 @@ class PreEmploymentFragment extends BaseMVPView {
     let formArray = []
     this.state.preEmploymentData.map((form, key) => {
       form.documentId === id &&
-      formArray.push({
-        id : form.documentId,
-        name : form.documentType,
-        url : form.url
+      form.url.map((resp, key) => {
+        formArray.push({
+          id : form.documentId,
+          name : form.documentType,
+          status : form.status,
+          url : resp
+        })
       })
     })
     return formArray
@@ -284,6 +289,7 @@ class PreEmploymentFragment extends BaseMVPView {
                 biographicalArray = { this.getFormData(1) }
                 sssArray = { this.getFormData(10) }
                 tinArray = { this.getFormData(11) }
+                educationVerificationForm = { this.getFormData(3) }
                 preEmpPage = { preEmpPage }
                 onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
                 />
