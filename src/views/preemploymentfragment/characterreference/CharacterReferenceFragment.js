@@ -96,7 +96,7 @@ class CharacterReferenceFragment extends BaseMVPView {
   companyNameTextValidate (e) {
     const validate = func.checkedValidateText(e)
     this.setState({ companyNameText : validate })
-  }  
+  }
 
   floorTextValidate (e) {
     const validate = func.checkedValidateText(e)
@@ -107,7 +107,7 @@ class CharacterReferenceFragment extends BaseMVPView {
     const validate = func.checkedValidateText(e)
     this.setState({ districtText : validate })
   }
-  
+
   barangayTextValidate (e) {
     const validate = func.checkedValidateText(e)
     this.setState({ barangayText : validate })
@@ -324,45 +324,47 @@ class CharacterReferenceFragment extends BaseMVPView {
           addressTextErrorMessage = { addressTextErrorMessage }
           emailTextErrorMessage = { emailTextErrorMessage }
           contactNumberTextErrorMessage = { contactNumberTextErrorMessage }
+          relationshipTextErrorMessage = { relationshipTextErrorMessage }
+          periodOfProfessionExperienceTextErrorMessage = { periodOfProfessionExperienceTextErrorMessage }
 
           addressText = { addressText }
-          addressTextFunc = { (e) => 
+          addressTextFunc = { (e) =>
             this.addressTextValidate(e) }
           fullNameText = { fullNameText }
-          fullNameTextFunc = { (e) => 
+          fullNameTextFunc = { (e) =>
             this.fullNameTextValidate(e) }
           emailText = { emailText }
-          emailTextFunc = { (e) => 
+          emailTextFunc = { (e) =>
             this.emailTextValidate(e) }
           contactNumberText = { contactNumberText }
-          contactNumberTextFunc = { (e) => 
+          contactNumberTextFunc = { (e) =>
             this.contactNumberTextValidate(e) }
           relationshipText = { relationshipText }
-          relationshipTextFunc = { (e) => 
-            this.relationshipTextValidate(e) }          
+          relationshipTextFunc = { (e) =>
+            this.relationshipTextValidate(e) }
           periodOfProfessionExperienceText = { periodOfProfessionExperienceText }
-          periodOfProfessionExperienceTextFunc = { (e) => 
+          periodOfProfessionExperienceTextFunc = { (e) =>
             this.periodOfProfessionExperienceTextValidate(e) }
           positionText = { positionText }
-          positionTextFunc = { (e) => 
+          positionTextFunc = { (e) =>
             this.positionTextValidate(e) }
           companyNameText = { companyNameText }
-          companyNameTextFunc = { (e) => 
-            this.companyNameTextValidate(e) }          
+          companyNameTextFunc = { (e) =>
+            this.companyNameTextValidate(e) }
           floorText = { floorText }
-          floorTextFunc = { (e) => 
-            this.floorTextValidate(e) }          
+          floorTextFunc = { (e) =>
+            this.floorTextValidate(e) }
           buildingNameText = { buildingNameText }
-          buildingNameTextFunc = { (e) => 
-            this.buildingNameTextValidate(e) }          
+          buildingNameTextFunc = { (e) =>
+            this.buildingNameTextValidate(e) }
           streetText = { streetText }
-          streetTextFunc = { (e) => 
-            this.streetTextValidate(e) }         
+          streetTextFunc = { (e) =>
+            this.streetTextValidate(e) }
           districtText = { districtText }
-          districtTextFunc = { (e) => 
-            this.districtTextValidate(e) }       
+          districtTextFunc = { (e) =>
+            this.districtTextValidate(e) }
           barangayText = { barangayText }
-          barangayTextFunc = { (e) => 
+          barangayTextFunc = { (e) =>
             this.barangayTextValidate(e) }
           cityText = { cityText }
           cityTextFunc = { (e) => this.setState({ cityText : e })}
