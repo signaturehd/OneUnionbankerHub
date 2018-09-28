@@ -300,7 +300,10 @@ class PreEmploymentFragment extends BaseMVPView {
               <GenericButton 
                 className = { 'global-button' }
                 text = { 'Skip' }
-                onClick = { () => this.skipPage() }
+                onClick = { () => {
+                  this.skipPage()
+                  history.push('/')
+                } }
               />
               <GenericButton
                 className = { 'global-button' }

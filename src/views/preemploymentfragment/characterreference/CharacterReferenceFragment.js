@@ -186,7 +186,8 @@ class CharacterReferenceFragment extends BaseMVPView {
       cityText,
     } = this.state
 
-    const filterEmail = /^\w+[\+\.\w-]*@([\w-]+\.)*\w+[\w-]*\.([a-z]{2,4}|\d+)$/i
+    // const filterEmail = /^\w+[\+\.\w-]*@([\w-]+\.)*\w+[\w-]*\.([a-z]{2,4}|\d+)$/i
+    this.setState({ showCharacterReferenceModal : false })
     this.presenter.postCharacterReference(
       occupationId, 
       fullNameText, 
