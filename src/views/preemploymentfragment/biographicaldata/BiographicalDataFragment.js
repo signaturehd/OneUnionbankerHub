@@ -159,19 +159,18 @@ class BiographicalDataFragment extends BaseMVPView {
           {
             biographicalArray.map((bio, key) =>
               <Card
+                onClick = { () => {
+                  this.onCheckedPdf(bio.url)
+                  this.setState({ showPdfViewModal : true  })
+                  }
+                }
                 key = { key }
                 className = { 'biographical-card' }>
                 <div className = { 'biographical-grid-x2' }>
                   <h2>{ bio.name }</h2>
                   <div>
 
-                    <span
-                      onClick = { () => {
-                        this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
-                        this.setState({ showPdfViewModal : true  })
-                      }
-                    }
-                      className = { 'biographical-icon biographical-seemore-button' }/>
+                    <span className = { 'biographical-icon biographical-seemore-button' }/>
 
                   </div>
                 </div>

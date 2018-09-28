@@ -45,7 +45,6 @@ export default class CharacterReferencePresenter {
       company
     ))
     .subscribe(data => {
-      console.log(data)
     }, error => {
     })
   }

@@ -34,6 +34,10 @@ function CharacterReferenceComponents (props) {
   const relationshipText = props.relationshipText
   const relationshipTextFunc = props.relationshipTextFunc
   const addressTextErrorMessage = props.addressTextErrorMessage
+  const cityText = props.cityText
+  const townText = props.townText  
+  const cityTextFunc = props.cityTextFunc
+  const townTextFunc = props.townTextFunc
 
   if(occupationId === 0) {
     return <CharacterSelfEmployedComponents
@@ -53,6 +57,10 @@ function CharacterReferenceComponents (props) {
       barangayTextFunc = { (e) => barangayTextFunc(e) }
       relationshipText = { relationshipText }
       relationshipTextFunc = { (e) => relationshipTextFunc(e) }
+      townText = { townText }
+      cityText = { cityText }
+      townTextFunc = { (e) => townTextFunc(e) }
+      cityTextFunc = { (e) => cityTextFunc(e) }
     />
   } else if (occupationId === 1) {
     return <CharacterEmployedComponents
@@ -72,6 +80,10 @@ function CharacterReferenceComponents (props) {
       barangayTextFunc = { (e) => barangayTextFunc(e) }
       relationshipText = { relationshipText }
       relationshipTextFunc = { (e) => relationshipTextFunc(e) }
+      townText = { townText }
+      cityText = { cityText }
+      townTextFunc = { (e) => townTextFunc(e) }
+      cityTextFunc = { (e) => cityTextFunc(e) }
       />
   } else if (occupationId === 2) {
     return <CharacterUnemployedComponents
@@ -146,6 +158,12 @@ class CharacterReferenceAddFormModal extends Component {
       contactNumberTextErrorMessage,
       relationshipTextErrorMessage,
       periodOfProfessionExperienceTextErrorMessage,
+      cityText,
+      townText,
+      townTextFunc,
+      cityTextFunc,
+      editMode,
+      onEditSave
     } = this.props
 
     return(
@@ -204,6 +222,10 @@ class CharacterReferenceAddFormModal extends Component {
             relationshipText = { relationshipText }
             relationshipTextFunc = { (e) => relationshipTextFunc(e) }
             addressTextErrorMessage = { addressTextErrorMessage }
+            cityText = { cityText }
+            townText = { townText }
+            cityTextFunc = { (e) => cityTextFunc(e) }
+            townTextFunc = { (e) => townTextFunc(e) }
             />
           <GenericInput
             text = { 'Email' }
@@ -227,7 +249,7 @@ class CharacterReferenceAddFormModal extends Component {
             onChange = { (e) => relationshipTextFunc(e.target.value) }
           />
           <GenericInput
-            maxLength = { 20 }
+            maxLength = { 2 }
             value = { periodOfProfessionExperienceText }
             text = { 'Period of Professional Experience' }
             errorMessage = { periodOfProfessionExperienceTextErrorMessage }
@@ -235,10 +257,18 @@ class CharacterReferenceAddFormModal extends Component {
           />
           <br/>
           <center>
+          {
+            editMode ?
             <GenericButton
               text = { 'Save' }
               onClick = { () => onSave() }
+            />  :
+            <GenericButton
+              text = { 'Save' }
+              onClick = { () => onEditSave() }
             />
+          }
+
           </center>
         </div>
       </Modal>

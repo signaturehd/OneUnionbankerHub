@@ -15,7 +15,7 @@ class CharacterReferenceMultipleCardComponent extends Component {
       disabled,
       errorMessage,
       count,
-      onEditModeProperty
+      onEditModeProperty,
     } = this.props
 
     return (
@@ -51,7 +51,7 @@ class CharacterReferenceMultipleCardComponent extends Component {
                       className = { 'close-button-global' }
                       src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
                       onClick = { () =>
-                        onEditModeProperty()
+                        onEditModeProperty(resp)
                       }
                     />
                   }

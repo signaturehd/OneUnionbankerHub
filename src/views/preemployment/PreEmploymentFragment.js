@@ -54,6 +54,7 @@ function  PreEmploymentFragments (props)  {
   const biographicalArray = props.biographicalArray
   const sssArray = props.sssArray
   const tinArray = props.tinArray
+  const educationVerificationForm = props.educationVerificationForm
   if (pageNumber === 0) {
     return <AffirmationDocumentFragment
       percentage = { percentage }
@@ -73,6 +74,7 @@ function  PreEmploymentFragments (props)  {
   } else if (pageNumber === 3) {
     return <EducationBackgroundFragment
       percentage = { percentage }
+      educationVerificationForm = { educationVerificationForm }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 4) {
@@ -155,10 +157,13 @@ class PreEmploymentFragment extends BaseMVPView {
     let formArray = []
     this.state.preEmploymentData.map((form, key) => {
       form.documentId === id &&
-      formArray.push({
-        id : form.documentId,
-        name : form.documentType,
-        url : form.url
+      form.url.map((resp, key) => {
+        formArray.push({
+          id : form.documentId,
+          name : form.documentType,
+          status : form.status,
+          url : resp
+        })
       })
     })
     return formArray
@@ -210,7 +215,8 @@ class PreEmploymentFragment extends BaseMVPView {
       tempPreEmploymentModal,
       history,
       onChangeStatusPreEmploymentModal,
-      checkPEUndertaking
+      checkPEUndertaking,
+      onClose
     } = this.props
 
     const {
@@ -234,8 +240,10 @@ class PreEmploymentFragment extends BaseMVPView {
         />
       }
       {
-        !tempPreEmploymentModal &&
+        tempPreEmploymentModal &&
         <Modal
+          isDismisable = { true }
+          onClose = { onClose }
           boxShadow = { 'none' }
           backgroundColor = { 'transparent' }
           width = { 50 }>
@@ -250,24 +258,24 @@ class PreEmploymentFragment extends BaseMVPView {
                   for = { 'open-env' }>
                 </label>
                 <div className = { 'pre-content' }>
-                  <h2 className = { 'unionbank-color font-weight-bold' }>Welcome to Unionbank!</h2>
-                  <br/>
-                  <GenericButton
-                    className = { 'pre-emp-setup-button' }
-                    text = { 'SETUP MY ACCOUNT' }
-                    onClick = { () =>
-                      onChangeStatusPreEmploymentModal()
-                      }
-                   />
-                 <br/>
-                  <h2>Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it&#39;s your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
-                  <br/>
-                  <h2>We&#39;re stoked to have you onboard, UnionBanker!</h2>
+                  <h2 className = { 'unionbank-color font-weight-bold font-size-14px' }>Welcome to Unionbank!</h2>
+                  <h2 className = { 'font-size-12px' } >Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it&#39;s your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
+                  <h2 className = { 'font-size-12px' }>We&#39;re stoked to have you onboard, UnionBanker!</h2>
                 </div>
                 <div className = { 'pre-rest' }></div>
               </label>
             </div>
           </div>
+          <br/>
+          <center className = { 'open-env' } >
+            <GenericButton
+              className = { 'pre-emp-setup-button' }
+              text = { 'SETUP MY ACCOUNT' }
+              onClick = { () =>
+                onChangeStatusPreEmploymentModal()
+                }
+           />
+          </center>
         </Modal>
       }
       <div className={ 'preemployment-container' }>
@@ -279,34 +287,40 @@ class PreEmploymentFragment extends BaseMVPView {
               <CircularLoader show = { true }/>
             </center>
             :
-            <PreEmploymentFragments
-              biographicalArray = { this.getFormData(1) }
-              sssArray = { this.getFormData(10) }
-              tinArray = { this.getFormData(11) }
-              preEmpPage = { preEmpPage }
-              onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
-              />
-            }
-            <br/>
-            <div className = { 'grid-global-columns-x3' }>
-              {
-                preEmpPage !== 0 ?
+            <div>
+               <PreEmploymentFragments
+                biographicalArray = { this.getFormData(1) }
+                sssArray = { this.getFormData(10) }
+                tinArray = { this.getFormData(11) }
+                educationVerificationForm = { this.getFormData(3) }
+                preEmpPage = { preEmpPage }
+                onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
+                />
+                 <br/>
+              <div className = { 'grid-global-columns-x3' }>
+                {
+                  preEmpPage !== 0 ?
+                  <GenericButton
+                    className = { 'global-button' }
+                    text = { 'Previous' }
+                    onClick = { () => this.decerementPage() } /> :
+                  <div></div>
+                }
+                <GenericButton 
+                  className = { 'global-button' }
+                  text = { 'Skip' }
+                  onClick = { () => {
+                    this.skipPage()
+                    history.push('/')
+                  } }
+                />
                 <GenericButton
                   className = { 'global-button' }
-                  text = { 'Previous' }
-                  onClick = { () => this.decerementPage() } /> :
-                <div></div>
-              }
-              <GenericButton 
-                className = { 'global-button' }
-                text = { 'Skip' }
-                onClick = { () => this.skipPage() }
-              />
-              <GenericButton
-                className = { 'global-button' }
-                text = { 'Next' }
-                onClick = { () => this.incrementPage() } />
+                  text = { 'Next' }
+                  onClick = { () => this.incrementPage() } />
+              </div>
             </div>
+            }
         </div>
         <div></div>
       </div>

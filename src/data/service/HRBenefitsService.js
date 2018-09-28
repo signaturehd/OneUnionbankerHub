@@ -1263,17 +1263,17 @@ export default class HRBenefitsService {
       name : postCharacterReferenceParam.name,
       relationship: postCharacterReferenceParam.relationship,
       numberOfYearsKnown: postCharacterReferenceParam.numberOfYearsKnown,
-      contactNumber: postCharacterReferenceParam.numberOfYearsKnown,
+      contactNumber: postCharacterReferenceParam.contactNumber,
       company : {
-        position: postCharacterReferenceParam.company.position,
-        name: postCharacterReferenceParam.company.name,
-        departmentFloor: postCharacterReferenceParam.company.departmentFloor,
-        buildingName:  postCharacterReferenceParam.company.buildingName,
-        street: postCharacterReferenceParam.company.street,
-        district: postCharacterReferenceParam.company.district,
-        baranggay: postCharacterReferenceParam.company.baranggay,
-        city: postCharacterReferenceParam.company.city,
-        town: postCharacterReferenceParam.company.town
+        position: postCharacterReferenceParam.company.company.position,
+        name: postCharacterReferenceParam.company.company.name,
+        departmentFloor: postCharacterReferenceParam.company.company.departmentFloor,
+        buildingName:  postCharacterReferenceParam.company.company.buildingName,
+        street: postCharacterReferenceParam.company.company.street,
+        district: postCharacterReferenceParam.company.company.district,
+        baranggay: postCharacterReferenceParam.company.company.baranggay,
+        city: postCharacterReferenceParam.company.company.city,
+        town: postCharacterReferenceParam.company.company.town
       }
     }
     return this.onboardingClient.post('v1/employees/references', objectParam, {
@@ -1281,25 +1281,24 @@ export default class HRBenefitsService {
     })
   }
 
-  putCharacterReference (token, putCharacterReferenceParam, charReferenceId) {
+  putCharacterReference (token, putCharacterReferenceParam) {
     const objectParam = {
       name : putCharacterReferenceParam.name,
       relationship: putCharacterReferenceParam.relationship,
       numberOfYearsKnown: putCharacterReferenceParam.numberOfYearsKnown,
-      contactNumber: putCharacterReferenceParam.numberOfYearsKnown,
+      contactNumber: putCharacterReferenceParam.contactNumber,
       company : {
-        position: putCharacterReferenceParam.company.position,
-        name: putCharacterReferenceParam.company.name,
-        departmentFloor: putCharacterReferenceParam.company.departmentFloor,
-        buildingName:  putCharacterReferenceParam.company.buildingName,
-        street: putCharacterReferenceParam.company.street,
-        district: putCharacterReferenceParam.company.district,
-        baranggay: putCharacterReferenceParam.company.baranggay,
-        city: putCharacterReferenceParam.company.city,
-        town: putCharacterReferenceParam.company.town
+        position: putCharacterReferenceParam.company.company.position,
+        name: putCharacterReferenceParam.company.company.name,
+        departmentFloor: putCharacterReferenceParam.company.company.departmentFloor,
+        buildingName:  putCharacterReferenceParam.company.company.buildingName,
+        street: putCharacterReferenceParam.company.company.street,
+        district: putCharacterReferenceParam.company.company.district,
+        baranggay: putCharacterReferenceParam.company.company.baranggay,
+        city: putCharacterReferenceParam.company.company.city,
       }
     }
-    return this.onboardingClient.post(`v1/employees/references/${ charReferenceId }`, objectParam, {
+    return this.onboardingClient.put(`v1/employees/references/{${ putCharacterReferenceParam.id }}`, objectParam, {
       headers : { token }
     })
   }
@@ -1346,6 +1345,46 @@ export default class HRBenefitsService {
 
   getEmployeeDevice (token) {
     return this.apiClient.get('v1/devices', {
+
+    })
+  }
+  
+  /* Laptop Lease */
+
+  getLaptopLease (token) {
+    return this.apiClient.get('v1/leases/laptop/validate', {
+      headers : { token }
+    })
+  }
+
+  postlaptopLease (
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      laptopLeaseParam) {
+    const formData = new FormData()
+    const object = {
+      benefitId : laptopLeaseParam.benefitId,
+      brand : laptopLeaseParam.brand,
+      brand : laptopLeaseParam.brand,
+      color: laptopLeaseParam.colorFamily,
+      deliveryOptionId: laptopLeaseParam.deliveryOptionId,
+      estimatedCost: laptopLeaseParam.estimatedCost,
+      graphicsCard: laptopLeaseParam.graphicsCard,
+      hardDriveCapacity: laptopLeaseParam.hardDriveCapacity,
+      model: laptopLeaseParam.model,
+      operatingSystem: laptopLeaseParam.operatingSystem,
+      processorType: laptopLeaseParam.processorType,
+      screenSize: laptopLeaseParam.screenSize,
+      systemMemory: laptopLeaseParam.systemMemory
+    }
+    laptopLeaseParam.attachments &&
+    laptopLeaseParam.attachments.map((resp, key) =>(
+      formData.append(resp.name, resp.file)
+    ))
+    formData.append('body', JSON.stringify(object))
+    return this.apiClient.get('v1/leases/laptop',  formData, {
       headers : { token }
     })
   }
