@@ -1127,13 +1127,53 @@ export default class HRBenefitsService {
     return this.onboardingClient.get('employees/school')
     headers: { token }
   }
-  
+
   /* Vaccine Requisition */
-  
-  
+
+
   validateVaccine (token) {
     return this.apiClient.get('v1/vaccinations/validate', {
       headers: { token }
+    })
+  }
+
+  /* Laptop Lease */
+
+  getLaptopLease (token) {
+    return this.apiClient.get('v1/leases/laptop/validate', {
+      headers : { token }
+    })
+  }
+
+  postlaptopLease (
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      laptopLeaseParam) {
+    const formData = new FormData()
+    const object = {
+      benefitId : laptopLeaseParam.benefitId,
+      brand : laptopLeaseParam.brand,
+      brand : laptopLeaseParam.brand,
+      color: laptopLeaseParam.colorFamily,
+      deliveryOptionId: laptopLeaseParam.deliveryOptionId,
+      estimatedCost: laptopLeaseParam.estimatedCost,
+      graphicsCard: laptopLeaseParam.graphicsCard,
+      hardDriveCapacity: laptopLeaseParam.hardDriveCapacity,
+      model: laptopLeaseParam.model,
+      operatingSystem: laptopLeaseParam.operatingSystem,
+      processorType: laptopLeaseParam.processorType,
+      screenSize: laptopLeaseParam.screenSize,
+      systemMemory: laptopLeaseParam.systemMemory
+    }
+    laptopLeaseParam.attachments &&
+    laptopLeaseParam.attachments.map((resp, key) =>(
+      formData.append(resp.name, resp.file)
+    ))
+    formData.append('body', JSON.stringify(object))
+    return this.apiClient.get('v1/leases/laptop',  formData, {
+      headers : { token }
     })
   }
 }
