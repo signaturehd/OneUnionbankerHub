@@ -215,7 +215,8 @@ class PreEmploymentFragment extends BaseMVPView {
       tempPreEmploymentModal,
       history,
       onChangeStatusPreEmploymentModal,
-      checkPEUndertaking
+      checkPEUndertaking,
+      onClose
     } = this.props
 
     const {
@@ -239,8 +240,10 @@ class PreEmploymentFragment extends BaseMVPView {
         />
       }
       {
-        !tempPreEmploymentModal &&
+        tempPreEmploymentModal &&
         <Modal
+          isDismisable = { true }
+          onClose = { onClose }
           boxShadow = { 'none' }
           backgroundColor = { 'transparent' }
           width = { 50 }>
@@ -255,24 +258,24 @@ class PreEmploymentFragment extends BaseMVPView {
                   for = { 'open-env' }>
                 </label>
                 <div className = { 'pre-content' }>
-                  <h2 className = { 'unionbank-color font-weight-bold' }>Welcome to Unionbank!</h2>
-                  <br/>
-                  <GenericButton
-                    className = { 'pre-emp-setup-button' }
-                    text = { 'SETUP MY ACCOUNT' }
-                    onClick = { () =>
-                      onChangeStatusPreEmploymentModal()
-                      }
-                   />
-                 <br/>
-                  <h2>Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it&#39;s your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
-                  <br/>
-                  <h2>We&#39;re stoked to have you onboard, UnionBanker!</h2>
+                  <h2 className = { 'unionbank-color font-weight-bold font-size-14px' }>Welcome to Unionbank!</h2>
+                  <h2 className = { 'font-size-12px' } >Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it&#39;s your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
+                  <h2 className = { 'font-size-12px' }>We&#39;re stoked to have you onboard, UnionBanker!</h2>
                 </div>
                 <div className = { 'pre-rest' }></div>
               </label>
             </div>
           </div>
+          <br/>
+          <center className = { 'open-env' } >
+            <GenericButton
+              className = { 'pre-emp-setup-button' }
+              text = { 'SETUP MY ACCOUNT' }
+              onClick = { () =>
+                onChangeStatusPreEmploymentModal()
+                }
+           />
+          </center>
         </Modal>
       }
       <div className={ 'preemployment-container' }>
