@@ -199,6 +199,10 @@ class PreEmploymentFragment extends BaseMVPView {
     }
   }
 
+  skipPage () {
+    this.props.onChangeStateGoBenefits(1)
+  }
+
   render() {
     const {
       setSelectedNavigation,
@@ -284,7 +288,7 @@ class PreEmploymentFragment extends BaseMVPView {
               />
             }
             <br/>
-            <div className = { 'grid-global' }>
+            <div className = { 'grid-global-columns-x3' }>
               {
                 preEmpPage !== 0 ?
                 <GenericButton
@@ -293,6 +297,11 @@ class PreEmploymentFragment extends BaseMVPView {
                   onClick = { () => this.decerementPage() } /> :
                 <div></div>
               }
+              <GenericButton 
+                className = { 'global-button' }
+                text = { 'Skip' }
+                onClick = { () => this.skipPage() }
+              />
               <GenericButton
                 className = { 'global-button' }
                 text = { 'Next' }

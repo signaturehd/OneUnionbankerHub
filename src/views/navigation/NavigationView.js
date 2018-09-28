@@ -83,7 +83,8 @@ class NavigationView extends BaseMVPView {
       hasPIN: '',
       enabledLoader : false,
       profileHasCOC: '',
-      tempPreEmploymentModal: true
+      tempPreEmploymentModal: true,
+      hasFilledOut: ''
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -161,6 +162,10 @@ class NavigationView extends BaseMVPView {
     this.setState({ tempPreEmploymentModal : false  })
   }
 
+  hasFilledOutFunc (hasFilledOut) {
+    this.setState({ hasFilledOut })
+  } 
+
   render () {
     const {
       displayShow,
@@ -174,7 +179,8 @@ class NavigationView extends BaseMVPView {
       hasPIN,
       enabledLoader,
       profileHasCOC,
-      tempPreEmploymentModal
+      tempPreEmploymentModal,
+      hasFilledOut
     } = this.state
 
     const { history, login } = this.props
@@ -248,7 +254,7 @@ class NavigationView extends BaseMVPView {
               }
             <Drawer >
               {
-                profile && profile.hasFilledOut !== 1 ?
+                hasFilledOut !== 1 ?
                 <Switch>
                   <Route exact path = '/' render = {props =>
                     <NewsFragment { ...props }
@@ -258,6 +264,7 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/preemployment' render = { props =>
                     <PreEmploymentFragment { ...props }
+                      onChangeStateGoBenefits = { (e) => this.hasFilledOutFunc(e) }
                       onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
                       tempPreEmploymentModal = { tempPreEmploymentModal }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
@@ -377,7 +384,7 @@ class NavigationView extends BaseMVPView {
             style = { style.show }>
             <SideBar
               splitUserInitial = { splitUserInitial }
-              tempPreEmployment = { profile && profile.hasFilledOut }
+              tempPreEmployment = { hasFilledOut }
               logout = { () => this.setState({ showLogoutModal : true }) }
               selected={ selected }
               profile = { profile }

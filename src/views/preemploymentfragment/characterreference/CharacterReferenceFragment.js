@@ -63,7 +63,9 @@ class CharacterReferenceFragment extends BaseMVPView {
       barangayTextTextErrorMessage: '',
       streetText: '',
       streetTextErrorMessage: '',
-      occupationNameErrorMessage: ''
+      occupationNameErrorMessage: '',
+      cityText: '',
+      townText: '', 
     }
   }
 
@@ -180,24 +182,81 @@ class CharacterReferenceFragment extends BaseMVPView {
       streetTextErrorMessage,
       districtText,
       districtTextErrorMessage,
+      townText,
+      cityText,
     } = this.state
 
     const filterEmail = /^\w+[\+\.\w-]*@([\w-]+\.)*\w+[\w-]*\.([a-z]{2,4}|\d+)$/i
-
-    if(!this.validator(fullNameText)) {
-      this.setState({ fullNameTextErrorMessage : 'Fullname field is required' })
-    } else if (!this.validator(occupationName)) {
-      this.setState({ occupationNameErrorMessage : 'Occupation field is required' }) 
-    } else if (occupationId === 0) {
-    } else if (occupationId === 2) {
-      if(!this.validator(addressText)) {
-        this.setState({ addressTextErrorMessage : 'Address field is required' })
-      } else if (!filterEmail.test(emailText)) { 
-        this.setState({ emailTextErrorMessage : 'Email is invalid (e.g test@gmail.com)' })
-      } else if (!this.validator(contactNumberText)) {
-        this.setState({ contactNumberTextErrorMessage: 'Contact number field is required'})
-      }
-    }
+    this.presenter.postCharacterReference(
+      occupationId, 
+      fullNameText, 
+      relationshipText, 
+      periodOfProfessionExperienceText, 
+      contactNumberText,
+      company : {
+        position: positionText,
+        name: companyNameText,
+        departmentFloor: floorText,
+        buildingName:  buildingNameText,
+        street: streetText,
+        district: districtText,
+        baranggay: barangayText,
+        city: postCharacterReferenceParam.company.city,
+        town: postCharacterReferenceParam.company.town
+      })
+    // if(!this.validator(fullNameText)) {
+    //   this.setState({ fullNameTextErrorMessage : 'Fullname field is required' })
+    // } else if (!this.validator(occupationName)) {
+    //   this.setState({ occupationNameErrorMessage : 'Occupation field is required' }) 
+    // } else if (occupationId === 0) {
+    //     this.presenter.postCharacterReference(
+    //       occupationId, 
+    //       fullNameText, 
+    //       relationshipText, 
+    //       periodOfProfessionExperienceText, 
+    //       contactNumberText,
+    //       company : {
+    //         id : occupationId,
+    //         name: fullNameText,
+    //         relationship : relationshipText,
+    //         numberOfYearsKnown : periodOfProfessionExperienceText,
+    //         contactNumber : contactNumberText,
+    //         company : companyNameText,
+    //       })
+    //     console.log('test')
+    // } else if (occupationId === 1) {
+    //     this.presenter.postCharacterReference(
+    //       occupationId, 
+    //       fullNameText, 
+    //       relationshipText, 
+    //       periodOfProfessionExperienceText, 
+    //       contactNumberText,
+    //       company : {
+    //         id : occupationId,
+    //         name: fullNameText,
+    //         relationship : relationshipText,
+    //         numberOfYearsKnown : periodOfProfessionExperienceText,
+    //         contactNumber : contactNumberText,
+    //         company : companyNameText,
+    //       })
+    // } else if (occupationId === 2) {
+    //   if(!this.validator(addressText)) {
+    //     this.setState({ addressTextErrorMessage : 'Address field is required' })
+    //   } else if (!filterEmail.test(emailText)) { 
+    //     this.setState({ emailTextErrorMessage : 'Email is invalid (e.g test@gmail.com)' })
+    //   } else if (!this.validator(contactNumberText)) {
+    //     this.setState({ contactNumberTextErrorMessage: 'Contact number field is required'})
+    //   } else {
+    //     console.log('test')
+    //     this.presenter.postCharacterReference(
+    //       occupationId, 
+    //       fullNameText, 
+    //       relationshipText, 
+    //       periodOfProfessionExperienceText, 
+    //       contactNumberText,
+    //       company : {})
+    //   }
+    // }
   }
 
   render() {
@@ -239,6 +298,8 @@ class CharacterReferenceFragment extends BaseMVPView {
       streetTextErrorMessage,
       districtText,
       districtTextErrorMessage,
+      townText,
+      cityText
     } = this.state
 
     return (
@@ -303,6 +364,10 @@ class CharacterReferenceFragment extends BaseMVPView {
           barangayText = { barangayText }
           barangayTextFunc = { (e) => 
             this.barangayTextValidate(e) }
+          cityText = { cityText }
+          cityTextFunc = { (e) => this.setState({ cityText : e })}
+          townText = { townText }
+          townTextFunc = { (e) => this.setState({ townText : e }) }
           />
       }
       <div>

@@ -36,7 +36,7 @@ class CharacterSelfEmployedComponents extends Component {
         <GenericInput
           value = { companyNameText }
           maxLength = { 30 }
-          onChange = { (e) => companyNameFunc(e.target.value) }
+          onChange = { (e) => companyNameTextFunc(e.target.value) }
           text = { 'Company Name' } />
         <div className = { 'character-grid-input' }>
           <GenericInput

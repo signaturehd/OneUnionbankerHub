@@ -24,6 +24,10 @@ class CharacterEmployedComponents extends Component {
     districtTextFunc,
     barangayText,
     barangayTextFunc,
+    cityText,
+    cityTextFunc,
+    townText,
+    townTextFunc
   } = this.props
   
     return (
@@ -40,19 +44,35 @@ class CharacterEmployedComponents extends Component {
             onChange = { (e) => floorTextFunc(e.target.value) }
             text = { 'Floor' } />
           <GenericInput
-            onChange = { () => {} }
+            value = { buildingNameText }
+            onChange = { (e) => buildingNameFunc(e.target.value) }
             text = { 'Building Name' } />
         </div>
         <GenericInput
+          value = { streeText }
           text = { 'Street' }
-          onChange = { () => {} }
+          onChange = { (e) => streetTextFunc(e.target.value) }
           />
+         
+        <GenericInput
+          value = { cityText } 
+          onChange = { (e) => cityTextFunc(e.target.value) }
+          text = { 'City/Municipality' } 
+        />          
+        <GenericInput
+          value = { townText } 
+          onChange = { (e) => townTextFunc(e.target.value) }
+          text = { 'Town' } 
+        />
+
         <div className = { 'character-grid-input' }>
           <GenericInput
-            onChange = { () => {} }
+            value = { districtText }
+            onChange = { (e) => districtTextFunc(e.target.value) }
             text = { 'Disctrict' } />
           <GenericInput
-            onChange = { () => {} }
+          value = { barangayText }
+            onChange = { (e) => barangayTextFunc(e.target.value) }
             text = { 'Barangay' } />
         </div>
       </div>

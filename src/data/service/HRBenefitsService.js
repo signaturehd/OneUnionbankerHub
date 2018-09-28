@@ -1258,7 +1258,7 @@ export default class HRBenefitsService {
     })
   }
 
-  postCharacterReference (token, postCharacterReferenceParam, charReferenceId) {
+  postCharacterReference (token, postCharacterReferenceParam) {
     const objectParam = {
       name : postCharacterReferenceParam.name,
       relationship: postCharacterReferenceParam.relationship,

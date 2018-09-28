@@ -42,6 +42,7 @@ export default class NavigationPresenter {
      .do(profile => this.view.showProfile(profile.employee))
      .do(profile => this.view.showPinIsValid(profile.hasPIN))
      .do(profile => this.view.isHasCOC(profile.hasCOC))
+     .do(profile => this.view.hasFilledOutFunc(profile.hasFilledOut))
       .subscribe(resp => {
         this.view.hideLoading()
       }, error => {

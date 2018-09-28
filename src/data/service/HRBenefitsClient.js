@@ -922,8 +922,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  postCharacterReference (token, postCharacterReferenceParam, charReferenceId) {
-    return this.service.postCharacterReference(token, postCharacterReferenceParam, charReferenceId)
+  postCharacterReference (token, postCharacterReferenceParam) {
+    return this.service.postCharacterReference(token, postCharacterReferenceParam)
       .pipe(ServiceErrorOperator())
   }
 

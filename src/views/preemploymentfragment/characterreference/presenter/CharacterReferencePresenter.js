@@ -1,9 +1,9 @@
 import { NotifyActions } from '../../../../actions'
 import store from '../../../../store'
 
-import GetCharacterReferenceInteractor from '../../../../domain/interactor/characterreference/GetCharacterReferenceInteractor'
-import PostCharacterReferenceInteractor from '../../../../domain/interactor/characterreference/PostCharacterReferenceInteractor'
-import PutCharacterReferenceInteractor from '../../../../domain/interactor/characterreference/PutCharacterReferenceInteractor'
+import GetCharacterReferenceInteractor from '../../../../domain/interactor/preemployment/characterreference/GetCharacterReferenceInteractor'
+import PostCharacterReferenceInteractor from '../../../../domain/interactor/preemployment/characterreference/PostCharacterReferenceInteractor'
+import PutCharacterReferenceInteractor from '../../../../domain/interactor/preemployment/characterreference/PutCharacterReferenceInteractor'
 
 import genericParam from '../../../../domain/param/PostCharacterReferenceParam'
 
@@ -45,6 +45,7 @@ export default class CharacterReferencePresenter {
       company
     ))
     .subscribe(data => {
+      console.log(data)
     }, error => {
     })
   }
