@@ -279,37 +279,39 @@ class PreEmploymentFragment extends BaseMVPView {
               <CircularLoader show = { true }/>
             </center>
             :
-            <PreEmploymentFragments
-              biographicalArray = { this.getFormData(1) }
-              sssArray = { this.getFormData(10) }
-              tinArray = { this.getFormData(11) }
-              preEmpPage = { preEmpPage }
-              onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
-              />
-            }
-            <br/>
-            <div className = { 'grid-global-columns-x3' }>
-              {
-                preEmpPage !== 0 ?
+            <div>
+               <PreEmploymentFragments
+                biographicalArray = { this.getFormData(1) }
+                sssArray = { this.getFormData(10) }
+                tinArray = { this.getFormData(11) }
+                preEmpPage = { preEmpPage }
+                onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
+                />
+                 <br/>
+              <div className = { 'grid-global-columns-x3' }>
+                {
+                  preEmpPage !== 0 ?
+                  <GenericButton
+                    className = { 'global-button' }
+                    text = { 'Previous' }
+                    onClick = { () => this.decerementPage() } /> :
+                  <div></div>
+                }
+                <GenericButton 
+                  className = { 'global-button' }
+                  text = { 'Skip' }
+                  onClick = { () => {
+                    this.skipPage()
+                    history.push('/')
+                  } }
+                />
                 <GenericButton
                   className = { 'global-button' }
-                  text = { 'Previous' }
-                  onClick = { () => this.decerementPage() } /> :
-                <div></div>
-              }
-              <GenericButton 
-                className = { 'global-button' }
-                text = { 'Skip' }
-                onClick = { () => {
-                  this.skipPage()
-                  history.push('/')
-                } }
-              />
-              <GenericButton
-                className = { 'global-button' }
-                text = { 'Next' }
-                onClick = { () => this.incrementPage() } />
+                  text = { 'Next' }
+                  onClick = { () => this.incrementPage() } />
+              </div>
             </div>
+            }
         </div>
         <div></div>
       </div>

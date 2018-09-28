@@ -24,6 +24,10 @@ class CharacterSelfEmployedComponents extends Component {
       districtTextFunc,      
       barangayText,
       barangayTextFunc,
+      townTextFunc,
+      townText,
+      cityText,
+      cityTextFunc,
     } = this.props
 
     return (
@@ -55,6 +59,17 @@ class CharacterSelfEmployedComponents extends Component {
           value = { streetText }
           onChange = { (e) => streetTextFunc(e.target.value) }
           />
+          <GenericInput
+            value = { cityText } 
+            onChange = { (e) => cityTextFunc(e.target.value) }
+            text = { 'City/Municipality' } 
+          />          
+          <GenericInput
+            value = { townText } 
+            onChange = { (e) => townTextFunc(e.target.value) }
+            text = { 'Town' } 
+          />
+
         <div className = { 'character-grid-input' }>
           <GenericInput
             value = { districtText }

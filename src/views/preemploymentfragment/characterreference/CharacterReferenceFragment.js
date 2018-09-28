@@ -66,6 +66,9 @@ class CharacterReferenceFragment extends BaseMVPView {
       occupationNameErrorMessage: '',
       cityText: '',
       townText: '', 
+      editData : '',
+      editMode : false,
+      selectedId : ''
     }
   }
 
@@ -114,7 +117,7 @@ class CharacterReferenceFragment extends BaseMVPView {
   }
 
   periodOfProfessionExperienceTextValidate (e) {
-    const validate = func.checkedValidateText(e)
+    const validate = func.checkValidateNumber(e)
     this.setState({ periodOfProfessionExperienceText : validate })
   }
 
@@ -152,7 +155,7 @@ class CharacterReferenceFragment extends BaseMVPView {
 
   postEditMode () {
     const {
-      occupationId,
+      selectedId,
       occupationName,
       occupationNameErrorMessage,
       characterReferenceData,
@@ -184,27 +187,65 @@ class CharacterReferenceFragment extends BaseMVPView {
       districtTextErrorMessage,
       townText,
       cityText,
+      editData
     } = this.state
 
+    let companyObject = {
+     company : {
+      position: positionText,
+      name: companyNameText,
+      departmentFloor: floorText,
+      buildingName:  buildingNameText,
+      street: streetText,
+      district: districtText,
+      baranggay: barangayText,
+      city: cityText,
+      town: townText
+    }
+  }
     // const filterEmail = /^\w+[\+\.\w-]*@([\w-]+\.)*\w+[\w-]*\.([a-z]{2,4}|\d+)$/i
-    this.setState({ showCharacterReferenceModal : false })
     this.presenter.postCharacterReference(
-      occupationId, 
+      selectedId, 
       fullNameText, 
       relationshipText, 
       periodOfProfessionExperienceText, 
       contactNumberText,
-      company : {
-        position: positionText,
-        name: companyNameText,
-        departmentFloor: floorText,
-        buildingName:  buildingNameText,
-        street: streetText,
-        district: districtText,
-        baranggay: barangayText,
-        city: postCharacterReferenceParam.company.city,
-        town: postCharacterReferenceParam.company.town
-      })
+      companyObject
+     )
+    this.setState({ showCharacterReferenceModal : false })
+    this.setState({ 
+      occupationId : '',
+      selectedId: '',
+      occupationName : '',
+      occupationNameErrorMessage : '',
+      addressText : '',
+      addressTextErrorMessage : '',
+      fullNameText : '',
+      fullNameTextErrorMessage : '',
+      emailText : '',
+      emailTextErrorMessage : '',
+      contactNumberText : '',
+      contactNumberTextErrorMessage : '',
+      relationshipText : '',
+      relationshipTextErrorMessage : '',
+      periodOfProfessionExperienceText : '',
+      periodOfProfessionExperienceTextErrorMessage : '',
+      positionText : '',
+      positionTextErrorMessage : '',
+      companyNameText : '',
+      companyNameTextErrorMessage : '',
+      floorText : '',
+      floorTextErrorMessage : '',
+      buildingNameText : '',
+      buildingNameTextErrorMessage : '',
+      barangayText : '',
+      barangayTextTextErrorMessage : '',
+      streetText : '',
+      streetTextErrorMessage : '',
+      districtText : '',
+      districtTextErrorMessage : '',
+      townText : '',
+     })
     // if(!this.validator(fullNameText)) {
     //   this.setState({ fullNameTextErrorMessage : 'Fullname field is required' })
     // } else if (!this.validator(occupationName)) {
@@ -260,6 +301,74 @@ class CharacterReferenceFragment extends BaseMVPView {
     // }
   }
 
+  putEditMode (resp) {
+    this.setState({
+      showCharacterReferenceModal : true,
+      selectedId : resp.id,
+      occupationName : resp.occupation,
+      addressText : resp.address,
+      fullNameText : resp.name,
+      emailText : resp.numberOfYearsKnown,
+      contactNumberText : resp.contactNumber,
+      relationshipText : resp.relationship,
+      periodOfProfessionExperienceText : resp.numberOfYearsKnown,
+      positionText : resp.company.position,
+      companyNameText : resp.company.name,
+      floorText : resp.company.departmentFloor,
+      buildingNameText : resp.company.buildingName,
+      barangayText : resp.company.baranggay,
+      streetText : resp.company.street,
+      districtText : resp.company.district,
+      townText : resp.company.town,
+      cityText : resp.company.city
+    })
+  }
+
+  putEditModeSave () {
+    const {
+    selectedId,
+    occupationName,
+    addressText,
+    fullNameText,
+    emailText,
+    contactNumberText,
+    relationshipText,
+    periodOfProfessionExperienceText,
+    positionText,
+    companyNameText,
+    floorText,
+    buildingNameText,
+    barangayText,
+    streetText,
+    districtText,
+    townText,
+    cityText,
+    editData
+    } = this.state
+    let companyObject = {
+     company : {
+      position: positionText,
+      name: companyNameText,
+      departmentFloor: floorText,
+      buildingName:  buildingNameText,
+      street: streetText,
+      district: districtText,
+      baranggay: barangayText,
+      city: cityText,
+      town: townText
+      }
+    }
+    this.presenter.putCharacterReference(
+      selectedId, 
+      fullNameText, 
+      relationshipText, 
+      periodOfProfessionExperienceText, 
+      contactNumberText,
+      companyObject
+    )
+    this.setState({ showCharacterReferenceModal : false })
+  }
+
   render() {
     const {
       history,
@@ -300,7 +409,8 @@ class CharacterReferenceFragment extends BaseMVPView {
       districtText,
       districtTextErrorMessage,
       townText,
-      cityText
+      cityText,
+      editMode
     } = this.state
 
     return (
@@ -368,9 +478,10 @@ class CharacterReferenceFragment extends BaseMVPView {
           barangayTextFunc = { (e) =>
             this.barangayTextValidate(e) }
           cityText = { cityText }
-          cityTextFunc = { (e) => this.setState({ cityText : e })}
           townText = { townText }
+          cityTextFunc = { (e) => this.setState({ cityText : e })}
           townTextFunc = { (e) => this.setState({ townText : e }) }
+          onEditSave = { () => this.putEditModeSave() }
           />
       }
       <div>
@@ -402,6 +513,7 @@ class CharacterReferenceFragment extends BaseMVPView {
         <br/>
           <MullptipleCardComponent
             characterReferenceData = { characterReferenceData }
+            onEditModeProperty = { (resp) => this.putEditMode(resp)  }
           />
       </div>
     </div>
