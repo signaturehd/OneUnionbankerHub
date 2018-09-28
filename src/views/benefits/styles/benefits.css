@@ -139,6 +139,10 @@ label:hover {
   background-image: url('../../../images/icons/Calamity Assistance.png');
 }
 
+.benefits-option-cards-7 {
+  background-image: url('../../../images/icons/LAPTOP LEASE V2.png');
+}
+
 .benefits-option-default {
   background-repeat: no-repeat;
   background-size: cover;
