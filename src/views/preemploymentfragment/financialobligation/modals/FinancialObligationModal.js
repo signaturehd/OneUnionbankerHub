@@ -44,7 +44,9 @@ class FinancialObligationModal extends Component {
       showFinanceStatusModal,
       financeStatusFunc,
       financeStatus,
-      showFinanceStatusModalFunc
+      showFinanceStatusModalFunc,
+      editForm,
+      editMode
     } = this.props
 
     return (
@@ -98,11 +100,20 @@ class FinancialObligationModal extends Component {
             errorMessage = { statusName ? '' : statusNameErrorMessage }
             />
           <center>
-            <GenericButton
-              className = { 'global-button' }
-              text = { 'Save' }
-              onClick = { () => submitForm() }
-              />
+            {
+              editMode ?
+              <GenericButton
+                className = { 'global-button' }
+                text = { 'Edit' }
+                onClick = { () => submitForm() }
+                />
+                :
+              <GenericButton
+                className = { 'global-button' }
+                text = { 'Save' }
+                onClick = { () => submitForm() }
+                />
+            }
           </center>
         </div>
       </Modal>

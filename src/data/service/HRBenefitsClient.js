@@ -852,6 +852,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  putFinancialStatus (token, financialStatusParam) {
+    return this.service.putFinancialStatus(token, financialStatusParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   getEmployeeTin (token) {
     return this.service.getEmployeeTin(token)
       .pipe(ServiceErrorOperator())
@@ -941,7 +946,7 @@ export default class HRBenefitsClient {
     return this.service.addEducationSchool(token, educationParam)
     .pipe(ServiceErrorOperator())
   }
-  
+
   /* Vaccines Requisitions */
 
 

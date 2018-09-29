@@ -33,6 +33,7 @@ class FinancialObligationFragment extends BaseMVPView {
       enabledLoader : false,
       showFinanceStatusErrorMessage : '',
       statusId: '',
+      financeId: '',
       statusName: '',
       bankNameInstitution : '',
       natureObligation: '',
@@ -44,6 +45,7 @@ class FinancialObligationFragment extends BaseMVPView {
       noticeResponse: '',
       showFinanceModal : false,
       showFinancialFormModal : false,
+      editMode : false,
       financeDetailsHolder : [],
       index : 4,
       viewMoreText : 'View more',
@@ -95,7 +97,9 @@ class FinancialObligationFragment extends BaseMVPView {
       bankNameInstitutionErrorMessage,
       natureObligationErrorMessage,
       amountErrorMessage,
-      statusNameErrorMessage
+      statusNameErrorMessage,
+      financeId,
+      editMode
     } = this.state
 
     if (!this.validator(bankNameInstitution)) {
@@ -106,20 +110,45 @@ class FinancialObligationFragment extends BaseMVPView {
       this.setState({ amountErrorMessage : 'Amount field is required'  })
     } else if (!this.validator(statusName)) {
       this.setState({ statusNameErrorMessage : 'Status field is required' })
+    } else {
+      if(editMode) {
+        this.presenter.putFinancialStatus(
+          bankNameInstitution,
+          natureObligation,
+          amount,
+          statusId,
+          financeId
+        )
+        this.setState({ showFinancialFormModal : false })
+        this.setState({
+          bankNameInstitution : '',
+          natureObligation : '',
+          amount : '',
+          statusId : '',
+          fiananceId : '',
+          editMode: false,
+        })
+      } else {
+      this.presenter.addFinancialStatus(
+        bankNameInstitution,
+        natureObligation,
+        amount,
+        statusId,
+        financeId)
+
+        this.setState({ showFinancialFormModal : false })
+        this.setState({
+          bankNameInstitution : '',
+          natureObligation : '',
+          amount : '',
+          statusId : '',
+          fiananceId : '',
+          editMode: false,
+        })
+      }
     }
-    this.setState({ showFinancialFormModal : false })
-    this.presenter.addFinancialStatus(
-      bankNameInstitution,
-      natureObligation,
-      amount,
-      statusId)
-      this.setState({
-        bankNameInstitution : '',
-        natureObligation : '',
-        amount : '',
-        statusId : ''
-      })
   }
+
 
   render() {
     const {
@@ -148,6 +177,8 @@ class FinancialObligationFragment extends BaseMVPView {
       showFinancialFormModal,
       index,
       viewMoreText,
+      financeId,
+      editMode
     } = this.state
 
     const isVisible = (financeDetailsHolder && financeDetailsHolder.length > 4) ? '' : 'hide'
@@ -189,6 +220,7 @@ class FinancialObligationFragment extends BaseMVPView {
           financeStatus = { financeStatus }
           showFinanceStatusModalFunc = { (showFinanceStatusModal) => this.setState({ showFinanceStatusModal : false })}
           statusNameFunc = { () => this.setState({ showFinanceStatusModal : true })}
+          editMode = { editMode }
           financeStatusFunc = { (
             statusId,
             statusName,
@@ -237,6 +269,25 @@ class FinancialObligationFragment extends BaseMVPView {
             <FinancialObligationMultipleCardComponent
               index = { index }
               financeDetailsHolder = { financeDetailsHolder }
+              onEditModeProperty = { (
+                financeId,
+                bankNameInstitution,
+                natureObligation,
+                amount,
+                statusName,
+                showFinancialFormModal,
+                editMode
+              ) => this.setState({
+                financeId,
+                bankNameInstitution,
+                natureObligation,
+                amount,
+                statusName : statusName === 1 ? 'Current' : 'Past' ,
+                statusId : statusName,
+                showFinancialFormModal,
+                editMode
+                })
+              }
               />
             <br/>
             <button

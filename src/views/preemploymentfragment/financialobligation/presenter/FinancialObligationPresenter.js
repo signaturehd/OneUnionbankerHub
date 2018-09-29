@@ -2,6 +2,7 @@ import { NotifyActions } from '../../../../actions'
 import store from '../../../../store'
 import GetFinanceStatusInteractor from '../../../../domain/interactor/preemployment/financial/GetFinanceStatusInteractor'
 import AddFinanceStatusInteractor from '../../../../domain/interactor/preemployment/financial/AddFinanceStatusInteractor'
+import PutFinanceStatusInteractor from '../../../../domain/interactor/preemployment/financial/PutFinanceStatusInteractor'
 import GetFinanceDetailsInteractor from '../../../../domain/interactor/preemployment/financial/GetFinanceDetailsInteractor'
 import addFinancialStatusParam from '../../../../domain/param/AddFinancialStatusParam'
 
@@ -9,6 +10,7 @@ export default class FinancialObligationPresenter {
   constructor (container) {
     this.getFinanceStatusInteractor = new GetFinanceStatusInteractor(container.get('HRBenefitsClient'))
     this.addFinanceStatusInteractor = new AddFinanceStatusInteractor(container.get('HRBenefitsClient'))
+    this.putFinanceStatusInteractor = new PutFinanceStatusInteractor(container.get('HRBenefitsClient'))
     this.getFinanceDetailsInteractor = new GetFinanceDetailsInteractor(container.get('HRBenefitsClient'))
   }
 
@@ -51,14 +53,40 @@ export default class FinancialObligationPresenter {
     bankNameInstitution,
     natureObligation,
     amount,
-    statusId
+    statusId,
+    financeId
   ) {
     this.view.showCircularLoader()
     this.addFinanceStatusInteractor.execute(addFinancialStatusParam(
       bankNameInstitution,
       natureObligation,
       amount,
-      statusId
+      statusId,
+      financeId
+    ))
+    .subscribe(data => {
+      this.view.noticeResponseFunc(data.message)
+      this.getFinancialDetails()
+      this.view.hideCircularLoader()
+    }, error => {
+      this.view.hideCircularLoader()
+    })
+  }
+
+  putFinancialStatus (
+    bankNameInstitution,
+    natureObligation,
+    amount,
+    statusId,
+    financeId
+  ) {
+    this.view.showCircularLoader()
+    this.putFinanceStatusInteractor.execute(addFinancialStatusParam(
+      bankNameInstitution,
+      natureObligation,
+      amount,
+      statusId,
+      financeId
     ))
     .subscribe(data => {
       this.view.noticeResponseFunc(data.message)

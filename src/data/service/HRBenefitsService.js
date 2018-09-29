@@ -1131,6 +1131,18 @@ export default class HRBenefitsService {
     })
   }
 
+  putFinancialStatus (token, financialStatusParam) {
+    const objectParam = {
+      bank : financialStatusParam.bank,
+      obligation: financialStatusParam.obligation,
+      amount: financialStatusParam.amount,
+      status: financialStatusParam.statusId,
+    }
+    return this.onboardingClient.put(`v1/employees/finances/${financialStatusParam.financeId}`, objectParam, {
+      headers : { token }
+    })
+  }
+
   getEmployeeTin (token) {
     return this.onboardingClient.get('v1/employees/tin', {
       headers : { token }
@@ -1348,7 +1360,7 @@ export default class HRBenefitsService {
 
     })
   }
-  
+
   /* Laptop Lease */
 
   getLaptopLease (token) {

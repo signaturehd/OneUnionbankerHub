@@ -65,7 +65,8 @@ class FinancialObligationMultipleCardComponent extends Component {
                           resp.amount,
                           resp.status,
                           true,
-                          true)
+                          true
+                        )
                       }
                     />
                   }
