@@ -16,14 +16,13 @@ import {
   MultipleAttachments
 } from '../../../ub-components/'
 
-import Presenter from './presenter/BiographicalDataPresenter'
-import BiographicalDocumentPreviewModal from './modal/BiographicalDocumentPreviewModal'
+import Presenter from './presenter/BirthCertificatePresenter'
 import ResponseModal from '../../notice/NoticeResponseModal'
 
 import "react-sweet-progress/lib/style.css"
-import './styles/biographicalDataStyle.css'
+import './styles/birthCertificateStyle.css'
 
-class BiographicalDataFragment extends BaseMVPView {
+class BirthCertificateFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
@@ -31,7 +30,7 @@ class BiographicalDataFragment extends BaseMVPView {
       enabledLoader : false,
       showNoticeResponseModal : false,
       noticeResponse : '',
-      biographicalDataFormData: [{
+      birthDataFormData: [{
         name : 'Biographical Data Form'
       }],
       pdfFile: '',
@@ -42,7 +41,7 @@ class BiographicalDataFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(2)
+    this.props.onSendPageNumberToView(3)
   }
 
   onCheckedPdf (link) {
@@ -60,19 +59,19 @@ class BiographicalDataFragment extends BaseMVPView {
     attachmentTemp.push({
       name : 'Biographical Data Form ' + tempCount
     })
-    this.setState({ biographicalDataFormData : attachmentTemp })
+    this.setState({ birthDataFormData : attachmentTemp })
   }
 
   submitForm () {
     const {
-      biographicalDataFormData
+      birthDataFormData
     } = this.state
 
     const {
-      biographicalArray
+      birthArray
     } = this.props
-    biographicalArray.map((bio) =>
-      this.presenter.addBiographicalData(bio.id, biographicalDataFormData)
+    birthArray.map((bio) =>
+      this.presenter.addBiographicalData(bio.id, birthDataFormData)
     )
   }
 
@@ -93,14 +92,14 @@ class BiographicalDataFragment extends BaseMVPView {
       history,
       checkPEUndertaking,
       percentage,
-      biographicalArray
+      birthArray
     } = this.props
 
     const {
       enabledLoader,
       showNoticeResponseModal,
       noticeResponse,
-      biographicalDataFormData,
+      birthDataFormData,
       biographicalData,
       biographicalName,
       showPdfViewModal,
@@ -110,20 +109,13 @@ class BiographicalDataFragment extends BaseMVPView {
 
     const bioAttachmentArray = [
       {
-        name : 'Biographical Data Form ' + count
+        name : 'Birth Certificate ' + count
       }
     ]
 
     return(
     <div>
     { super.render() }
-    {
-      showPdfViewModal &&
-      <BiographicalDocumentPreviewModal
-        pdfFile = { pdfFile }
-        onClose = { () => this.setState({ showPdfViewModal: false }) }
-        />
-    }
     {
       showNoticeResponseModal &&
       <ResponseModal
@@ -155,18 +147,18 @@ class BiographicalDataFragment extends BaseMVPView {
               percent={ percentage } />
           </div>
         <br/>
-        <div className = { 'biographical-grid-card' }>
+        <div className = { 'birth-grid-card' }>
           <Card
             onClick = { () => {
               this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
               this.setState({ showPdfViewModal : true  })
               }
             }
-            className = { 'biographical-card' }>
-            <div className = { 'biographical-grid-x2' }>
+            className = { 'birth-card' }>
+            <div className = { 'birth-grid-x2' }>
               <h2>Biographical Data Form</h2>
               <div>
-                <span className = { 'biographical-icon biographical-seemore-button' }/>
+                <span className = { 'birth-icon biographical-seemore-button' }/>
               </div>
             </div>
           </Card>
@@ -179,12 +171,12 @@ class BiographicalDataFragment extends BaseMVPView {
           <div className = { 'text-align-right' }>
             <GenericButton
               text = { 'Add Attachments' }
-              onClick = { () => this.addAttachmentsFunc(biographicalDataFormData, count) }
+              onClick = { () => this.addAttachmentsFunc(birthDataFormData, count) }
               />
           </div>
         </div>
         {
-          biographicalDataFormData.length !== 0  &&
+          birthDataFormData.length !== 0  &&
           <div>
           <h4>
             Biographical Data Attachments
@@ -194,9 +186,9 @@ class BiographicalDataFragment extends BaseMVPView {
             count = { count }
             countFunc = { (count) => this.setState({ count }) }
             placeholder = { '' }
-            fileArray = { biographicalDataFormData }
-            setFile = { (biographicalDataFormData) =>
-                this.setState({ biographicalDataFormData })
+            fileArray = { birthDataFormData }
+            setFile = { (birthDataFormData) =>
+                this.setState({ birthDataFormData })
             }
             />
             <center>
@@ -213,13 +205,13 @@ class BiographicalDataFragment extends BaseMVPView {
   }
 }
 
-BiographicalDataFragment.propTypes = {
+BirthCertificateFragment.propTypes = {
   history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
-  biographicalArray : PropTypes.array
+  birthArray : PropTypes.array
 }
 
-BiographicalDataFragment.defaultProps = {
+BirthCertificateFragment.defaultProps = {
 }
 
-export default ConnectView(BiographicalDataFragment, Presenter)
+export default ConnectView(BirthCertificateFragment, Presenter)

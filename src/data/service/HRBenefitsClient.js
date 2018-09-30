@@ -832,6 +832,22 @@ export default class HRBenefitsClient {
     ))
   }
 
+  getOnBoardingAttachments (token, file) {
+    return this.service.getOnBoardingAttachments(token, file)
+    .pipe(ServiceErrorOperator())
+    .flatMap(resp =>
+      Observable.create(observer => {
+        const reader = new FileReader()
+        reader.onerror = err => observer.error(err)
+        reader.onabort = err => observer.error(err)
+        reader.onload = () => observer.next(reader.result)
+        reader.onloadend = () => observer.complete()
+
+        reader.readAsDataURL(resp)
+      }
+    ))
+  }
+
   getAffirmationsStatus (token) {
     return this.service.getAffirmationsStatus(token)
       .pipe(ServiceErrorOperator())

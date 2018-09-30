@@ -5,7 +5,7 @@ import GetOnboardingPdfInteractor from
 import AddEmploymentRequirementInteractor from '../../../../domain/interactor/preemployment/requirement/AddEmploymentRequirementInteractor'
 import employeeRequirementParam from '../../../../domain/param/AddEmployeeRequirementParam'
 
-export default class BiographicalDataPresenter {
+export default class BirthCertificatePresenter {
   constructor (container) {
     this.getOnboardingPdfInteractor = new GetOnboardingPdfInteractor(container.get('HRBenefitsClient'))
     this.addEmployeeRequirementInteractor = new AddEmploymentRequirementInteractor(container.get('HRBenefitsClient'))
@@ -23,9 +23,9 @@ export default class BiographicalDataPresenter {
     })
   }
 
-  addBiographicalData (bioId, bioAttachment) {
+  addBirthCertificateData (birthId, birthAttachment) {
     this.view.showCircularLoader()
-    this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(bioId, bioAttachment))
+    this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(birthId, birthAttachment))
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.noticeResponseResp(data)
