@@ -8,6 +8,7 @@ export default (
   honor,
   course,
   address,
+  isUpdated,
   attachments) => ({
     schoolName,
     studentNo,
@@ -18,5 +19,6 @@ export default (
     honor,
     course,
     address,
+    isUpdated,
     attachments
 })

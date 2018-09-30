@@ -1342,7 +1342,8 @@ export default class HRBenefitsService {
         degree : educationParam.degree,
         honor : educationParam.honor,
         course : educationParam.course,
-        address : educationParam.address
+        address : educationParam.address,
+        isUpdated : educationParam.isUpdated
       }
       educationParam.attachments.map((resp) =>
         (
@@ -1350,7 +1351,8 @@ export default class HRBenefitsService {
         )
       )
     formData.append('body', JSON.stringify(objectParam))
-    return this.onboardingClient.post('v1/employees/school', objectParam, {
+
+    return this.onboardingClient.post('v1/employees/school', formData, {
       headers : { token }
     })
   }

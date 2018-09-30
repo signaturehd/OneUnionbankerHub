@@ -49,6 +49,7 @@ export default class EducationBackgroundPresenter {
     honor,
     course,
     address,
+    isUpdated,
     torFormData) {
       this.view.showCircularLoader()
       this.addEducationSchoolInteractor.execute(educationParam(
@@ -61,6 +62,7 @@ export default class EducationBackgroundPresenter {
         honor,
         course,
         address,
+        isUpdated,
         torFormData
       ))
       .subscribe(
