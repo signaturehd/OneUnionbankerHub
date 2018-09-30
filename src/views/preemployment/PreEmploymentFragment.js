@@ -41,6 +41,8 @@ import PagIbigLoanFragment
   from '../preemploymentfragment/pagibigloan/PagIbigLoanFragment'
 import PersonnelSignatureFragment
   from '../preemploymentfragment/personnelsignature/PersonnelSignatureFragment'
+import SpouseFormFragment
+  from '../preemploymentfragment/spouseform/SpouseFormFragment'
 /* Modal */
 import IsFinancialObilgationConfirmModal
   from './modals/IsFinancialObilgationConfirmModal'
@@ -48,6 +50,10 @@ import IsTaxPayerConfirmModal
   from './modals/IsTaxPayerConfirmModal'
 import IsPagIbigLoanConfirmModal
   from './modals/IsPagIbigLoanConfirmModal'
+import IsMarriedConfirmModal
+  from './modals/IsMarriedConfirmModal'
+import IsChildrenConfirmModal
+  from './modals/IsChildrenConfirmModal'
 
 import {
   Modal,
@@ -63,7 +69,7 @@ import './styles/preEmploymentStyle.css'
 function  PreEmploymentFragments (props)  {
   const pageNumber = props.preEmpPage
   const onSendPageNumberToView = props.onSendPageNumberToView
-  const percentageTemp = (pageNumber / 15) * 100
+  const percentageTemp = (pageNumber / 17) * 100
   const percentage = parseInt(percentageTemp)
   const biographicalArray = props.biographicalArray
   const sssArray = props.sssArray
@@ -149,20 +155,20 @@ function  PreEmploymentFragments (props)  {
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 15) {
-    return <PersonnelSignatureFragment
-      percentage = { percentage }
-      onSendPageNumberToView = { onSendPageNumberToView }
-      />
-  } else if (pageNumber === 16) {
     return <PagIbigLoanFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
-  } else if (pageNumber === 18) {
-    return <CommunityTaxFragment
+  } else if (pageNumber === 16) {
+    return <PersonnelSignatureFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
+  } else if (pageNumber === 17) {
+    return <SpouseFormFragment
+      percentage = { percentage }
+      onSendPageNumberToView = { onSendPageNumberToView }
+    />
   } else {
     return <PagibigFragment
       onSendPageNumberToView = { onSendPageNumberToView }
@@ -181,6 +187,8 @@ class PreEmploymentFragment extends BaseMVPView {
       showFinancialObligationModal: false,
       showTaxPayerIdentificationModal: false,
       showPagibigLoanModal : false,
+      showMarriedConfirmModal : false,
+      showChildrenConfirmModal : false,
       preEmploymentData : [],
     }
   }
@@ -235,19 +243,23 @@ class PreEmploymentFragment extends BaseMVPView {
       this.setState({ showTaxPayerIdentificationModal : true })
     } else if (index === 15) {
       this.setState({ showPagibigLoanModal : true })
+    } else if (index === 17) {
+      this.setState({ showMarriedConfirmModal : true })
     } else {
       this.setState({ preEmpPage : index })
     }
   }
 
   decerementPage () {
-    const index = this.state.preEmpPage - 1
+    let index = this.state.preEmpPage - 1
     if(index === 1) {
-      this.setState({ showFinancialObligationModal : true })
+      this.setState({ preEmpPage : index - 1 })
     } else if (index === 11) {
-      this.setState({ showTaxPayerIdentificationModal : true })
+      this.setState({ preEmpPage : index - 1 })
     } else if (index === 15) {
-      this.setState({ showPagibigLoanModal : true })
+      this.setState({ preEmpPage : index - 1 })
+    } else if (index === 17) {
+      this.setState({ preEmpPage : index - 1 })
     } else {
       this.setState({ preEmpPage : index })
     }
@@ -275,7 +287,9 @@ class PreEmploymentFragment extends BaseMVPView {
       showFinancialObligationModal,
       showTaxPayerIdentificationModal,
       showPagibigLoanModal,
-      preEmploymentData
+      showMarriedConfirmModal,
+      preEmploymentData,
+      showChildrenConfirmModal
     } = this.state
 
     return(
@@ -305,6 +319,29 @@ class PreEmploymentFragment extends BaseMVPView {
           onSendPageNumberToView = { (res) => {
           this.onSendPageNumberToView(res)
           this.setState({ showPagibigLoanModal : false })
+        } }
+        />
+      }
+      {
+        showMarriedConfirmModal &&
+        <IsMarriedConfirmModal
+          onSendPageNumberToView = { (res) => {
+          this.onSendPageNumberToView(res)
+          this.setState({ showMarriedConfirmModal : false })
+          }}
+          showChildrenConfirmModalFunc = { () =>
+            this.setState({
+            showChildrenConfirmModal : true,
+            showMarriedConfirmModal : false
+          }) }
+        />
+      }
+      {
+        showChildrenConfirmModal &&
+        <IsChildrenConfirmModal
+          onSendPageNumberToView = { (res) => {
+          this.onSendPageNumberToView(res)
+          this.setState({ showChildrenConfirmModal : false })
         } }
         />
       }

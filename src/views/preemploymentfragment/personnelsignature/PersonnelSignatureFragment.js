@@ -41,7 +41,7 @@ class PersonnelSignatureFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(15)
+    this.props.onSendPageNumberToView(16)
   }
 
   onCheckedPdf (link) {

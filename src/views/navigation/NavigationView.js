@@ -167,7 +167,7 @@ class NavigationView extends BaseMVPView {
 
   hasFilledOutFunc (hasFilledOut) {
     this.setState({ hasFilledOut })
-  } 
+  }
 
   render () {
     const {
@@ -259,23 +259,11 @@ class NavigationView extends BaseMVPView {
               {
                 hasFilledOut !== 1 ?
                 <Switch>
-                  <Route exact path = '/' render = {props =>
-                    <NewsFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> }/>
-                  <Route path = '/settings' render = { props =>
-                    <SettingsFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/preemployment' render = { props =>
+                  <Route path = '/' render = { props =>
                     <PreEmploymentFragment { ...props }
                       onChangeStateGoBenefits = { (e) => this.hasFilledOutFunc(e) }
                       onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
                       tempPreEmploymentModal = { tempPreEmploymentModal }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/faqs' render = { props =>
-                    <FaqFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/feedback' render = { props =>
-                    <FeedbackFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 </Switch>
                 :

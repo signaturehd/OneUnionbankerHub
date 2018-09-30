@@ -37,7 +37,7 @@ class SideBar extends Component {
       {
         id: 11 ,
         title: 'Onboarding Requirements',
-        action: () => history.push('/preemployment'),
+        action: () => history.push('/'),
         className: 'compliance-icon'
       },
       {
@@ -122,9 +122,14 @@ class SideBar extends Component {
         <div>
         {
             modules.map((d, idx) =>
+            d.id !== 0 &&
             d.id !== 1 &&
+            d.id !== 2 &&
+            d.id !== 3 &&
             d.id !== 4 &&
             d.id !== 5 &&
+            d.id !== 6 &&
+            d.id !== 7 &&
             d.id !== 8 &&
             d.id !== 9 &&
             d.id !== 10 &&
