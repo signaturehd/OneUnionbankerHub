@@ -1,4 +1,4 @@
-export default class GetBiographicalPdfViewInteractor {
+export default class GetOnboardingPdfInteractor {
   constructor (client) {
     this.client = client
   }

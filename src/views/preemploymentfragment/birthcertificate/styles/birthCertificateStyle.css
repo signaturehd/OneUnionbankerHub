@@ -1,34 +1,34 @@
-.biographical-grid-card {
+.birth-grid-card {
   display: grid;
   grid-template-rows: 1fr;
   column-gap: 2%;
 }
 
-.biographical-grid-x2 {
+.birth-grid-x2 {
   display: grid;
   grid-template-columns: 1fr .005fr;
 }
 
-.biographical-button {
+.birth-button {
   border: none;
   box-shadow: none;
 }
 
-.biographical-card {
+.birth-card {
   padding: 20px;
   cursor: pointer;
 }
 
 
-.biographical-download-button {
+.birth-download-button {
   background-image: url('../../../../images/icons/ic_file_icon_name.png');
 }
 
-.biographical-seemore-button {
+.birth-seemore-button {
   background-image: url('../../../../images/icons/ic_next.png');
 }
 
-.biographical-icon {
+.birth-icon {
   background-size: contain;
   cursor: pointer;
   background-color: transparent;
