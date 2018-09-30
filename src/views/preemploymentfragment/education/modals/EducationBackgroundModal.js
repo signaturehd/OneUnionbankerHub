@@ -76,7 +76,8 @@ class EducationBackgroundModal extends Component {
     startYearErrorMessage,
     endYearFunc,
     endYearValidate,
-    endYearErrorMessage
+    endYearErrorMessage,
+    submission
     } = this.props
 
     return (
@@ -212,6 +213,7 @@ class EducationBackgroundModal extends Component {
                 /> :
               <GenericButton
                 text={ 'Add' }
+                onClick = { () => submission() }
                 />
             }
           </div>
@@ -248,7 +250,8 @@ EducationBackgroundModal.propTypes = {
   addressFunc : PropTypes.func,
   degreeFunc : PropTypes.func,
   courseFunc : PropTypes.func,
-  honorFunc : PropTypes.func
+  honorFunc : PropTypes.func,
+  submission : PropTypes.func
 }
 EducationBackgroundModal.defaultProps={
 }

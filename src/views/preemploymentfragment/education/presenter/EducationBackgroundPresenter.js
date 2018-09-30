@@ -10,7 +10,7 @@ export default class EducationBackgroundPresenter {
   constructor (container) {
     this.employeeSchoolInteractor = new employeeSchoolInteractor(container.get('HRBenefitsClient'))
     this.schoolDataInteractor = new schoolDataInteractor(container.get('HRBenefitsClient'))
-    this.addEducationSchoolInteractor = new AddEducationSchoolInteractor(container.get('HRBenefitsClient'))
+    this.addEducationSchoolInteractor = new addEducationSchoolInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
