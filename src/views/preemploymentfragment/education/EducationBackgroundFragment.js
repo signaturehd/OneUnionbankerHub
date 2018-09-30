@@ -15,6 +15,9 @@ import {
 
 import EducationMultipleCardComponent from './EducationMultipleCardComponent'
 import EducationBackgroundModal from './modals/EducationBackgroundModal'
+import moment from 'moment'
+import { format } from '../../../utils/numberUtils'
+
 
 import { Progress } from 'react-sweet-progress'
 
@@ -27,6 +30,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       showEducationFormModal : false,
       showSchoolsModal : false,
       showDegreeModal : false,
+      isUpdated : 0,
       educationCardHolder : [],
       schools : [],
       torFormData: [{
@@ -136,6 +140,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       honor,
       course,
       address,
+      isUpdated,
       torFormData
     } = this.state
 
@@ -149,6 +154,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       honor,
       course,
       address,
+      isUpdated,
       torFormData
     )
     this.setState({ showEducationFormModal : false })
