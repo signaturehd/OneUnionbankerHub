@@ -327,6 +327,7 @@ p {
 /**/
 .close-button-global {
   margin: auto;
+  padding-top: 10px;
   cursor: pointer;
 }
 
