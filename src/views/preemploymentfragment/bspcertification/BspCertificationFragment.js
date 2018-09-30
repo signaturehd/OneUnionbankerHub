@@ -31,7 +31,7 @@ class BspCertificationFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(8)
+    this.props.onSendPageNumberToView(9)
   }
 
   onCheckedPdf (link) {

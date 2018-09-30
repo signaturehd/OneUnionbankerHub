@@ -53,7 +53,7 @@ class EducationBackgroundFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(3)
+    this.props.onSendPageNumberToView(4)
     this.presenter.getEmployeeSchool()
   }
 

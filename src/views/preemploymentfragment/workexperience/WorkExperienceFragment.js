@@ -39,7 +39,7 @@ class WorkExperienceFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(4)
+    this.props.onSendPageNumberToView(5)
     this.presenter.getWorkExperience()
   }
 
@@ -118,7 +118,7 @@ class WorkExperienceFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>Work Experience</h2>
+            <h2 className={ 'header-margin-default text-align-left' }>Work History</h2>
             <h2>Setup your work experience</h2>
           </div>
           <Progress
