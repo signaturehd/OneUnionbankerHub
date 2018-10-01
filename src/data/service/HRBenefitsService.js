@@ -1370,6 +1370,49 @@ export default class HRBenefitsService {
       endYear : workExperienceParam.toYear
     }
     return this.onboardingClient.put(`v1/employees/employers/${workExperienceParam.workExpId}`, objectParam, {
+      headers :{ token }
+    }) 
+  }
+
+  getSpouse (token) {
+    return this.onboardingClient.get('v1/employees/spouse', {
+      headers : { token }
+    }) 
+  }
+
+  postSpouseForm (token, spouseFormParam) {
+    const objectParam = {
+      name : {
+        first : spouseFormParam.firstName, 
+        middle: spouseFormParam.middleName,
+        last : spouseFormParam.lastName
+      },
+        birthDate: spouseFormParam.birthDate,
+        occupation: spouseFormParam.occupation,
+        status: spouseFormParam.status,
+        healthHospitalizationPlan : spouseFormParam.healthHospitalizationPlan,
+        groupLifeInsurance: spouseFormParam.groupLifeInsurance
+
+    } 
+    return this.onboardingClient.post('v1/employees/spouse', objectParam, { 
+      headers : { token }
+    })
+  }
+
+  putSpouseForm (token, spouseFormParam) {
+    const objectParam = {
+      name : {
+        first : spouseFormParam.firstName, 
+        middle: spouseFormParam.middleName,
+        last : spouseFormParam.lastName
+      },
+        birthDate: spouseFormParam.birthDate,
+        occupation: spouseFormParam.occupation,
+        status: spouseFormParam.status,
+        healthHospitalizationPlan : spouseFormParam.healthHospitalizationPlan,
+        groupLifeInsurance: spouseFormParam.groupLifeInsurance
+    }
+    return this.onboardingClient.put(`v1/employees/spouse/${ spouseFormParam.putSpouseId }`, {
       headers : { token }
     })
   }
@@ -1386,7 +1429,7 @@ export default class HRBenefitsService {
 
   getEmployeeDevice (token) {
     return this.apiClient.get('v1/devices', {
-
+      headers : token
     })
   }
 

@@ -1,96 +1,88 @@
-import { NotifyActions } from '../../../../actions'
-import store from '../../../../store'
-import GetFinanceStatusInteractor from '../../../../domain/interactor/preemployment/financial/GetFinanceStatusInteractor'
-import AddFinanceStatusInteractor from '../../../../domain/interactor/preemployment/financial/AddFinanceStatusInteractor'
-import PutFinanceStatusInteractor from '../../../../domain/interactor/preemployment/financial/PutFinanceStatusInteractor'
-import GetFinanceDetailsInteractor from '../../../../domain/interactor/preemployment/financial/GetFinanceDetailsInteractor'
-import addFinancialStatusParam from '../../../../domain/param/AddFinancialStatusParam'
+import GetSpouseInteractor from '../../../../domain/interactor/preemployment/spouse/GetSpouseInteractor'
+import PostSpouseInteractor from '../../../../domain/interactor/preemployment/spouse/PostSpouseInteractor'
+import PutSpouseInteractor from '../../../../domain/interactor/preemployment/spouse/PutSpouseInteractor'
+import addSpouseForm from '../../../../domain/param/AddSpouseParam'
 
 export default class SpousePresenter {
   constructor (container) {
-    this.getFinanceStatusInteractor = new GetFinanceStatusInteractor(container.get('HRBenefitsClient'))
-    this.addFinanceStatusInteractor = new AddFinanceStatusInteractor(container.get('HRBenefitsClient'))
-    this.putFinanceStatusInteractor = new PutFinanceStatusInteractor(container.get('HRBenefitsClient'))
-    this.getFinanceDetailsInteractor = new GetFinanceDetailsInteractor(container.get('HRBenefitsClient'))
+    this.getSpouseInteractor = new GetSpouseInteractor(container.get('HRBenefitsClient'))
+    this.putSpouseInteractor = new PutSpouseInteractor(container.get('HRBenefitsClient'))
+    this.postSpouseInteractor = new PostSpouseInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
   }
 
-  getFinancialStatus () {
-    this.getFinanceStatusInteractor.execute()
-    .map(data => {
-      let singleInputArray = []
-
-      data.map((resp, key) => {
-        singleInputArray.push({
-          id: resp.id,
-          name : resp.status,
-        })
-      })
-      this.view.showFinanceStatus(singleInputArray)
-    })
-    .subscribe(data => {
-      this.view.hideCircularLoader()
-    }, error => {
-      this.view.hideCircularLoader()
-    })
-  }
-
-  getFinancialDetails () {
+  getSpouse () {
     this.view.showCircularLoader()
-    this.getFinanceDetailsInteractor.execute()
+    this.getSpouseInteractor.execute()
     .subscribe(data => {
       this.view.hideCircularLoader()
-      this.view.showFinanceDetails(data)
+      this.view.showSpouseDetails(data)
     }, error => {
       this.view.hideCircularLoader()
     })
   }
 
-  addFinancialStatus (
-    bankNameInstitution,
-    natureObligation,
-    amount,
-    statusId,
-    financeId
+  postSpouseForm (
+    firstName, 
+    middleName,
+    lastName,
+    birthDate,
+    occupation,
+    status,
+    healthHospitalizationPlan,
+    groupLifeInsurance,
+    spouseId
   ) {
     this.view.showCircularLoader()
-    this.addFinanceStatusInteractor.execute(addFinancialStatusParam(
-      bankNameInstitution,
-      natureObligation,
-      amount,
-      statusId,
-      financeId
+    this.postSpouseInteractor.execute(addSpouseForm(
+    firstName, 
+    middleName,
+    lastName,
+    birthDate,
+    occupation,
+    status,
+    healthHospitalizationPlan,
+    groupLifeInsurance,
+    spouseId
     ))
     .subscribe(data => {
       this.view.noticeResponseFunc(data.message)
-      this.getFinancialDetails()
+      // this.getFinancialDetails()
       this.view.hideCircularLoader()
     }, error => {
       this.view.hideCircularLoader()
     })
   }
 
-  putFinancialStatus (
-    bankNameInstitution,
-    natureObligation,
-    amount,
-    statusId,
-    financeId
+  putSpouseForm (
+    firstName, 
+    middleName,
+    lastName,
+    birthDate,
+    occupation,
+    status,
+    healthHospitalizationPlan,
+    groupLifeInsurance,
+    spouseId
   ) {
     this.view.showCircularLoader()
-    this.putFinanceStatusInteractor.execute(addFinancialStatusParam(
-      bankNameInstitution,
-      natureObligation,
-      amount,
-      statusId,
-      financeId
+    this.putSpouseInteractor.execute(addSpouseForm(
+      firstName, 
+      middleName,
+      lastName,
+      birthDate,
+      occupation,
+      status,
+      healthHospitalizationPlan,
+      groupLifeInsurance,
+      spouseId
     ))
     .subscribe(data => {
       this.view.noticeResponseFunc(data.message)
-      this.getFinancialDetails()
+      // this.getFinancialDetails()
       this.view.hideCircularLoader()
     }, error => {
       this.view.hideCircularLoader()
