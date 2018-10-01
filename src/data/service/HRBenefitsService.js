@@ -1357,6 +1357,7 @@ export default class HRBenefitsService {
     })
   }
 
+<<<<<<< Updated upstream
   putWorkExperience (token, workExperienceParam) {
     const objectParam = {
       companyName : workExperienceParam.companyName,
@@ -1374,6 +1375,8 @@ export default class HRBenefitsService {
     }) 
   }
 
+=======
+>>>>>>> Stashed changes
   getSpouse (token) {
     return this.onboardingClient.get('v1/employees/spouse', {
       headers : { token }

@@ -36,9 +36,10 @@ class SpouseFormFragment extends BaseMVPView {
       middleName: '',
       occupationName : '',
       contactNumber : '',
-      bloodType: '',
       birthDate: '',
       statusName: '',
+      gender: '',
+      genderErrorMessage: '',
       statusNameErrorMessage: '',
       birthDateErrorMessage : '',
       contactNumberErrorMessage : '',
@@ -50,11 +51,11 @@ class SpouseFormFragment extends BaseMVPView {
       noticeResponse: '',
       editMode : false,
       bloodTypeName: '',
+      showBloodTypeModal : false
     }
   }
 
   componentDidMount () {
-    console.log()
     this.props.onSendPageNumberToView(17)
     this.presenter.getSpouse()
   }
@@ -83,17 +84,17 @@ class SpouseFormFragment extends BaseMVPView {
     this.setState({ birthDate: moment(data).format('MM-DD-YYYY') })
   }
 
-  submitForm () {
+  postSaveFunc () {
     const {
-      enabledLoader,
       lastName,
       firstName,
       middleName,
       occupationName,
       contactNumber,
-      bloodType,
       birthDate,
       statusName,
+      gender,
+      genderErrorMessage,
       birthDateErrorMessage,
       statusNameErrorMessage,
       firstNameErrorMessage,
@@ -102,18 +103,20 @@ class SpouseFormFragment extends BaseMVPView {
       occupationNameErrorMessage,
       contactNumberErrorMessage,
       bloodTypeErrorMessage,
-      noticeResponse,
       spouseId,
+      bloodTypeName,
     } = this.state
 
     if (!this.validator(firstName)) {
-      this.setState({ firstNameErrorMessage: 'Name of the Bank/ Financial Institution field is required' })
+      this.setState({ firstNameErrorMessage: 'First name field is required' })
     } else if (!this.validator(middleName)) {
-      this.setState({ middleNameErrorMessage : 'Nature of Obligation field is required'  })
-    } else if (!this.validator(amount)) {
-      this.setState({ amountErrorMessage : 'Amount field is required'  })
+      this.setState({ middleNameErrorMessage : 'Middle name field is required'  })
     } else if (!this.validator(lastName)) {
-      this.setState({ lastNameErrorMessage : 'Status field is required' })
+      this.setState({ lastNameErrorMessage : 'Last name field is required'  })
+    } else if (!this.validator(occupationName)) {
+      this.setState({ occupationNameErrorMessage : 'Occupation field is required' })
+    } else if (!this.validator(gender)) {
+      this.setState({ genderErrorMessage : 'Gender field is required'  })
     } else {
       if(editMode) {
         this.presenter.putFinancialStatus(
@@ -168,9 +171,10 @@ class SpouseFormFragment extends BaseMVPView {
       middleName,
       occupationName,
       contactNumber,
-      bloodType,
       birthDate,
       statusName,
+      gender,
+      genderErrorMessage,
       birthDateErrorMessage,
       statusNameErrorMessage,
       firstNameErrorMessage,
@@ -183,6 +187,7 @@ class SpouseFormFragment extends BaseMVPView {
       spouseId,
       editMode,
       bloodTypeName,
+      showBloodTypeModal
     } = this.state
 
     const bloodObjectParam = [
@@ -227,7 +232,7 @@ class SpouseFormFragment extends BaseMVPView {
       showBloodTypeModal && 
 
       <SingleInputModal
-        label = { 'Type of Calamity' }
+        label = { 'Blood Type' }
         inputArray = { bloodObjectParam && bloodObjectParam }
         selectedArray = { (bloodTypeId, bloodTypeName) =>
           this.setState({
@@ -251,70 +256,93 @@ class SpouseFormFragment extends BaseMVPView {
           width = { 100 }
           percent={ percentage } 
         />
-      </div>
+        </div>
       <div>
-        <GenericInput
-          text = { 'First Name' }
-          value = { firstName }
-          maxLength = { 30 }
-          errorMessage = { firstName ? '' : firstNameErrorMessage }
-          />
-        <GenericInput
-          text = { 'Middle Name' }
-          value = { spouseData.middleName ? spouseData.middleName : middleName }
-          maxLength = { 20 }
-          errorMessage = { middleName ? '' : middleNameErrorMessage }
-          onChange = { (e) => this.setState({ middleName : e.target.value }) }
-          />
-        <GenericInput
-          text = { 'Last Name' }
-          value = { spouseData.lastName ? spouseData.lastName : lastName }
-          errorMessage = { lastName ? '' : lastNameErrorMessage }
-          onChange = { () => {} }
-          />
-        <GenericInput
-          text = { 'Occupation' }
-          value = { spouseData.occupationName ? spouseData.occupationName : occupationName }
-          errorMessage = { occupationName ? '' : occupationNameErrorMessage }
-          onChange = { () => {} }
-          />
-        <GenericInput
-          text = { 'Contact Number' }
-          value = { spouseData.contactNumber ? spouseData.contactNumber : contactNumber }
-          errorMessage = { contactNumber ? '' : contactNumberErrorMessage }
-          onChange = { () => {} }
-          />
-        <GenericInput
-          text = { 'Blood Type' }
-          value = { spouseData.bloodType ? spouseData.bloodType : bloodType }
-          errorMessage = { bloodType ? '' : bloodTypeErrorMessage }
-          onClick = { () => this.setState({ showBloodTypeModal : true }) }
-          />
-        <div className = { 'grid-global' }>
-          <DatePicker
-            text = { 'Birth Date' }
-            errorMessage = { birthDate ? '' : birthDateErrorMessage }
-            selected = { spouseData.birthDate ? spouseData.birthDate : birthDate }
-            onChange = { (e) => this.dateFunc(e) }
-            hint = { '(eg. MM/DD/YYYY)' }
-            />
-          <div className = { 'status-margin' } >
+       {
+        spouseData &&
+        spouseData.map((resp, key) => 
+          <div>
             <GenericInput
-              value = { spouseData.status ? spouseData.status : statusName  }
-              text = { 'Status' }
-              errorMessage = { statusName ? '' : statusNameErrorMessage }
-              onChange = { () => {} }
+              text = { 'First Name' }
+              value = { resp.name.first ? resp.name.first : firstName }
+              maxLength = { 30 }
+              errorMessage = { firstName ? '' : firstNameErrorMessage }
+              onChange = { (e) => this.setState({ middleName : e.target.value }) }
               />
+            <GenericInput
+              text = { 'Middle Name' }
+              value = { resp.name.middle ? resp.name.middle : middleName }
+              maxLength = { 20 }
+              errorMessage = { middleName ? '' : middleNameErrorMessage }
+              onChange = { (e) => this.setState({ middleName : e.target.value }) }
+              />
+            <GenericInput
+              text = { 'Last Name' }
+              value = { resp.name.last ? resp.name.last : lastName }
+              errorMessage = { lastName ? '' : lastNameErrorMessage }
+              onChange = { (e) => this.setState({ lastName : e.target.value }) }
+              />
+            <GenericInput
+              text = { 'Occupation' }
+              value = { resp.occupation ? resp.occupation : occupationName }
+              errorMessage = { occupationName ? '' : occupationNameErrorMessage }
+              onChange = { (e) => this.setState({ occupation : e.target.value }) }
+              />
+            <GenericInput
+              text = { 'Contact Number' }
+              value = { resp.contact ? resp.contact : contactNumber }
+              errorMessage = { contactNumber ? '' : contactNumberErrorMessage }
+              onChange = { (e) => this.setState({ contactNumber : e.target.value }) }
+              />
+            <div className = { 'grid-global' } >
+              <GenericInput
+                text = { 'Blood Type' }
+                value = { resp.bloodType ? resp.bloodType : bloodTypeName }
+                errorMessage = { bloodTypeName ? '' : bloodTypeErrorMessage }
+                onClick = { () => this.setState({ showBloodTypeModal : true }) }
+                />
+              <div className = { 'gender-margin' }>
+                <div className = { 'grid-global' }>
+                  <Checkbox
+                    label = { 'Male' }
+                    checked = { spouseData.gender === 'M' && 'M' }
+                    onChange = { () => this.setState({  }) }
+                    />
+                  <Checkbox
+                    label = { 'Female' }
+                    checked = { spouseData.gender === 'F' && 'F' }
+                    />
+                </div>
+              </div>
+            </div>
+            <div className = { 'grid-global' }>
+              <DatePicker
+                text = { 'Birth Date' }
+                errorMessage = { birthDate ? '' : birthDateErrorMessage }
+                selected = { spouseData && spouseData.birthDate ? spouseData.birthDate : birthDate }
+                onChange = { (e) => this.dateFunc(e) }
+                hint = { '(eg. MM/DD/YYYY)' }
+                />
+              <div className = { 'status-margin text-align-center' }>
+                <GenericInput
+                  value = { spouseData && spouseData.status ? spouseData.status : statusName  }
+                  text = { 'Status' }
+                  errorMessage = { statusName ? '' : statusNameErrorMessage }
+                  onChange = { (e) => this.setState({ statusName : e.target.value }) }
+                  />
+              </div>
+            </div>
+            <div className = { 'grid-global' }>
+              <Checkbox
+                label = { 'Group Life Insurance' }
+                />
+              <Checkbox
+                label = { 'Hospitalization Plan' }
+                />
+            </div>
           </div>
-        </div>
-        <div className = { 'grid-global' }>
-          <Checkbox
-            label = { 'Group Life Insurance' }
-            />
-          <Checkbox
-            label = { 'Hospitalization Plan' }
-            />
-        </div>
+          )
+       }
         <br/>
         <center>
           {
@@ -327,6 +355,7 @@ class SpouseFormFragment extends BaseMVPView {
             <GenericButton
               className = { 'global-button' }
               text = { 'Save' }
+              onClick = { () => postSaveFunc() }
               />
           }
         </center>
