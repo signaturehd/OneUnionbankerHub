@@ -23,7 +23,7 @@ class NbiClearanceFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(6)
+    this.props.onSendPageNumberToView(7)
   }
 
   render () {
@@ -39,7 +39,7 @@ class NbiClearanceFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>NBI Clearance Attachment</h2>
+            <h2 className={ 'header-margin-default text-align-left' }>NBI Clearance</h2>
             <h2>Please secure the transaction by attaching your latest NBI Clearance</h2>
           <br/>
           </div>

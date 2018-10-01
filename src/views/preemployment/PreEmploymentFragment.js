@@ -11,6 +11,8 @@ import FinancialObligationFragment
   from '../preemploymentfragment/financialobligation/FinancialObligationFragment'
 import BiographicalDataFragment
   from '../preemploymentfragment/biographicaldata/BiographicalDataFragment'
+import BirthCertificateFragment
+  from '../preemploymentfragment/birthcertificate/BirthCertificateFragment'
 import EducationBackgroundFragment
   from '../preemploymentfragment/education/EducationBackgroundFragment'
 import WorkExperienceFragment
@@ -19,6 +21,8 @@ import CharacterReferenceFragment
   from '../preemploymentfragment/characterreference/CharacterReferenceFragment'
 import NbiClearanceFragment
   from '../preemploymentfragment/nbiclearance/NbiClearanceFragment'
+import AuthorizationBackgroundCheckFragment
+  from '../preemploymentfragment/authorizationbackgroundcheck/AuthorizationBackgroundCheckFragment'
 import CommunityTaxFragment
   from '../preemploymentfragment/communitytax/CommunityTaxFragment'
 import BspCertificationFragment
@@ -27,13 +31,29 @@ import SSSFragment
   from '../preemploymentfragment/sss/SSSFragment'
 import TinFragment
   from '../preemploymentfragment/tin/TinFragment'
+import Bir1902FormFragment
+  from '../preemploymentfragment/bir1902form/Bir1902FormFragment'
 import PhilHealthFragment
   from '../preemploymentfragment/philhealth/PhilHealthFragment'
 import PagibigFragment
   from '../preemploymentfragment/pagibig/PagibigFragment'
+import PagIbigLoanFragment
+  from '../preemploymentfragment/pagibigloan/PagIbigLoanFragment'
+import PersonnelSignatureFragment
+  from '../preemploymentfragment/personnelsignature/PersonnelSignatureFragment'
+import SpouseFormFragment
+  from '../preemploymentfragment/spouseform/SpouseFormFragment'
 /* Modal */
 import IsFinancialObilgationConfirmModal
   from './modals/IsFinancialObilgationConfirmModal'
+import IsTaxPayerConfirmModal
+  from './modals/IsTaxPayerConfirmModal'
+import IsPagIbigLoanConfirmModal
+  from './modals/IsPagIbigLoanConfirmModal'
+import IsMarriedConfirmModal
+  from './modals/IsMarriedConfirmModal'
+import IsChildrenConfirmModal
+  from './modals/IsChildrenConfirmModal'
 
 import {
   Modal,
@@ -49,7 +69,7 @@ import './styles/preEmploymentStyle.css'
 function  PreEmploymentFragments (props)  {
   const pageNumber = props.preEmpPage
   const onSendPageNumberToView = props.onSendPageNumberToView
-  const percentageTemp = (pageNumber / 11) * 100
+  const percentageTemp = (pageNumber / 17) * 100
   const percentage = parseInt(percentageTemp)
   const biographicalArray = props.biographicalArray
   const sssArray = props.sssArray
@@ -72,58 +92,83 @@ function  PreEmploymentFragments (props)  {
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 3) {
+    return <BirthCertificateFragment
+      percentage = { percentage }
+      onSendPageNumberToView = { onSendPageNumberToView }
+      />
+  } else if (pageNumber === 4) {
     return <EducationBackgroundFragment
       percentage = { percentage }
       educationVerificationForm = { educationVerificationForm }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
-  } else if (pageNumber === 4) {
+  } else if (pageNumber === 5) {
     return <WorkExperienceFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
-  } else if (pageNumber === 5) {
+  } else if (pageNumber === 6) {
     return <CharacterReferenceFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
-  } else if (pageNumber === 6) {
+  } else if (pageNumber === 7) {
     return <NbiClearanceFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
-  } else if (pageNumber === 7) {
-    return <CommunityTaxFragment
+  } else if (pageNumber === 8) {
+    return <AuthorizationBackgroundCheckFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
-  } else if (pageNumber === 8) {
+  }else if (pageNumber === 9) {
     return <BspCertificationFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
-  } else if (pageNumber === 9) {
+  } else if (pageNumber === 10) {
     return <SSSFragment
       sssArray = { sssArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
-  } else if (pageNumber === 10) {
+  } else if (pageNumber === 11) {
     return <TinFragment
       tinArray = { tinArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
-  } else if (pageNumber === 11) {
+  } else if (pageNumber === 12) {
+    return <Bir1902FormFragment
+      percentage = { percentage }
+      onSendPageNumberToView = { onSendPageNumberToView }
+    />
+  } else if (pageNumber === 13) {
     return <PhilHealthFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
-  } else if (pageNumber === 12) {
+  } else if (pageNumber === 14) {
     return <PagibigFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
+  } else if (pageNumber === 15) {
+    return <PagIbigLoanFragment
+      percentage = { percentage }
+      onSendPageNumberToView = { onSendPageNumberToView }
+      />
+  } else if (pageNumber === 16) {
+    return <PersonnelSignatureFragment
+      percentage = { percentage }
+      onSendPageNumberToView = { onSendPageNumberToView }
+      />
+  } else if (pageNumber === 17) {
+    return <SpouseFormFragment
+      percentage = { percentage }
+      onSendPageNumberToView = { onSendPageNumberToView }
+    />
   } else {
     return <PagibigFragment
       onSendPageNumberToView = { onSendPageNumberToView }
@@ -140,6 +185,10 @@ class PreEmploymentFragment extends BaseMVPView {
       enabledLoader: false,
       preEmpPage  : 0,
       showFinancialObligationModal: false,
+      showTaxPayerIdentificationModal: false,
+      showPagibigLoanModal : false,
+      showMarriedConfirmModal : false,
+      showChildrenConfirmModal : false,
       preEmploymentData : [],
     }
   }
@@ -190,15 +239,27 @@ class PreEmploymentFragment extends BaseMVPView {
     const index = this.state.preEmpPage + 1
     if(index === 1) {
       this.setState({ showFinancialObligationModal : true })
+    } else if (index === 11) {
+      this.setState({ showTaxPayerIdentificationModal : true })
+    } else if (index === 15) {
+      this.setState({ showPagibigLoanModal : true })
+    } else if (index === 17) {
+      this.setState({ showMarriedConfirmModal : true })
     } else {
       this.setState({ preEmpPage : index })
     }
   }
 
   decerementPage () {
-    const index = this.state.preEmpPage - 1
+    let index = this.state.preEmpPage - 1
     if(index === 1) {
-      this.setState({ showFinancialObligationModal : true })
+      this.setState({ preEmpPage : index - 1 })
+    } else if (index === 11) {
+      this.setState({ preEmpPage : index - 1 })
+    } else if (index === 15) {
+      this.setState({ preEmpPage : index - 1 })
+    } else if (index === 17) {
+      this.setState({ preEmpPage : index - 1 })
     } else {
       this.setState({ preEmpPage : index })
     }
@@ -224,7 +285,11 @@ class PreEmploymentFragment extends BaseMVPView {
       enabledLoader,
       preEmpPage,
       showFinancialObligationModal,
-      preEmploymentData
+      showTaxPayerIdentificationModal,
+      showPagibigLoanModal,
+      showMarriedConfirmModal,
+      preEmploymentData,
+      showChildrenConfirmModal
     } = this.state
 
     return(
@@ -236,6 +301,47 @@ class PreEmploymentFragment extends BaseMVPView {
           onSendPageNumberToView = { (res) => {
           this.onSendPageNumberToView(res)
           this.setState({ showFinancialObligationModal : false })
+        } }
+        />
+      }
+      {
+        showTaxPayerIdentificationModal &&
+        <IsTaxPayerConfirmModal
+          onSendPageNumberToView = { (res) => {
+          this.onSendPageNumberToView(res)
+          this.setState({ showTaxPayerIdentificationModal : false })
+        } }
+        />
+      }
+      {
+        showPagibigLoanModal &&
+        <IsPagIbigLoanConfirmModal
+          onSendPageNumberToView = { (res) => {
+          this.onSendPageNumberToView(res)
+          this.setState({ showPagibigLoanModal : false })
+        } }
+        />
+      }
+      {
+        showMarriedConfirmModal &&
+        <IsMarriedConfirmModal
+          onSendPageNumberToView = { (res) => {
+          this.onSendPageNumberToView(res)
+          this.setState({ showMarriedConfirmModal : false })
+          }}
+          showChildrenConfirmModalFunc = { () =>
+            this.setState({
+            showChildrenConfirmModal : true,
+            showMarriedConfirmModal : false
+          }) }
+        />
+      }
+      {
+        showChildrenConfirmModal &&
+        <IsChildrenConfirmModal
+          onSendPageNumberToView = { (res) => {
+          this.onSendPageNumberToView(res)
+          this.setState({ showChildrenConfirmModal : false })
         } }
         />
       }

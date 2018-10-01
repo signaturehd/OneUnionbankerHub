@@ -65,7 +65,7 @@ class CharacterReferenceFragment extends BaseMVPView {
       streetTextErrorMessage: '',
       occupationNameErrorMessage: '',
       cityText: '',
-      townText: '', 
+      townText: '',
       editData : '',
       editMode : false,
       selectedId : ''
@@ -73,7 +73,7 @@ class CharacterReferenceFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(5)
+    this.props.onSendPageNumberToView(6)
     this.presenter.getCharacterReference()
   }
 
@@ -205,15 +205,15 @@ class CharacterReferenceFragment extends BaseMVPView {
   }
     // const filterEmail = /^\w+[\+\.\w-]*@([\w-]+\.)*\w+[\w-]*\.([a-z]{2,4}|\d+)$/i
     this.presenter.postCharacterReference(
-      selectedId, 
-      fullNameText, 
-      relationshipText, 
-      periodOfProfessionExperienceText, 
+      selectedId,
+      fullNameText,
+      relationshipText,
+      periodOfProfessionExperienceText,
       contactNumberText,
       companyObject
      )
     this.setState({ showCharacterReferenceModal : false })
-    this.setState({ 
+    this.setState({
       occupationId : '',
       selectedId: '',
       occupationName : '',
@@ -249,13 +249,13 @@ class CharacterReferenceFragment extends BaseMVPView {
     // if(!this.validator(fullNameText)) {
     //   this.setState({ fullNameTextErrorMessage : 'Fullname field is required' })
     // } else if (!this.validator(occupationName)) {
-    //   this.setState({ occupationNameErrorMessage : 'Occupation field is required' }) 
+    //   this.setState({ occupationNameErrorMessage : 'Occupation field is required' })
     // } else if (occupationId === 0) {
     //     this.presenter.postCharacterReference(
-    //       occupationId, 
-    //       fullNameText, 
-    //       relationshipText, 
-    //       periodOfProfessionExperienceText, 
+    //       occupationId,
+    //       fullNameText,
+    //       relationshipText,
+    //       periodOfProfessionExperienceText,
     //       contactNumberText,
     //       company : {
     //         id : occupationId,
@@ -268,10 +268,10 @@ class CharacterReferenceFragment extends BaseMVPView {
     //     console.log('test')
     // } else if (occupationId === 1) {
     //     this.presenter.postCharacterReference(
-    //       occupationId, 
-    //       fullNameText, 
-    //       relationshipText, 
-    //       periodOfProfessionExperienceText, 
+    //       occupationId,
+    //       fullNameText,
+    //       relationshipText,
+    //       periodOfProfessionExperienceText,
     //       contactNumberText,
     //       company : {
     //         id : occupationId,
@@ -284,17 +284,17 @@ class CharacterReferenceFragment extends BaseMVPView {
     // } else if (occupationId === 2) {
     //   if(!this.validator(addressText)) {
     //     this.setState({ addressTextErrorMessage : 'Address field is required' })
-    //   } else if (!filterEmail.test(emailText)) { 
+    //   } else if (!filterEmail.test(emailText)) {
     //     this.setState({ emailTextErrorMessage : 'Email is invalid (e.g test@gmail.com)' })
     //   } else if (!this.validator(contactNumberText)) {
     //     this.setState({ contactNumberTextErrorMessage: 'Contact number field is required'})
     //   } else {
     //     console.log('test')
     //     this.presenter.postCharacterReference(
-    //       occupationId, 
-    //       fullNameText, 
-    //       relationshipText, 
-    //       periodOfProfessionExperienceText, 
+    //       occupationId,
+    //       fullNameText,
+    //       relationshipText,
+    //       periodOfProfessionExperienceText,
     //       contactNumberText,
     //       company : {})
     //   }
@@ -359,10 +359,10 @@ class CharacterReferenceFragment extends BaseMVPView {
       }
     }
     this.presenter.putCharacterReference(
-      selectedId, 
-      fullNameText, 
-      relationshipText, 
-      periodOfProfessionExperienceText, 
+      selectedId,
+      fullNameText,
+      relationshipText,
+      periodOfProfessionExperienceText,
       contactNumberText,
       companyObject
     )

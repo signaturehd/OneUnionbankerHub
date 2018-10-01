@@ -16,13 +16,13 @@ import {
   MultipleAttachments
 } from '../../../ub-components/'
 
-import Presenter from './presenter/BirthCertificatePresenter'
+import Presenter from './presenter/PersonnelSignaturePresenter'
 import ResponseModal from '../../notice/NoticeResponseModal'
 
 import "react-sweet-progress/lib/style.css"
-import './styles/birthCertificateStyle.css'
+import './styles/signatureStyle.css'
 
-class BirthCertificateFragment extends BaseMVPView {
+class PersonnelSignatureFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
@@ -41,7 +41,7 @@ class BirthCertificateFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(3)
+    this.props.onSendPageNumberToView(16)
   }
 
   onCheckedPdf (link) {
@@ -117,15 +117,6 @@ class BirthCertificateFragment extends BaseMVPView {
     <div>
     { super.render() }
     {
-      showNoticeResponseModal &&
-      <ResponseModal
-        onClose={ () => {
-          this.setState({ showNoticeResponseModal : false})
-        }}
-        noticeResponse={ noticeResponse }
-      />
-    }
-    {
       enabledLoader &&
       <Modal>
       <center>
@@ -137,8 +128,8 @@ class BirthCertificateFragment extends BaseMVPView {
         <br/>
           <div className = { 'percentage-grid' }>
             <div>
-              <h2 className={ 'header-margin-default text-align-left' }>Birth Certificate</h2>
-              <h2>Please attach your Birth Certificate</h2>
+            <h2 className={ 'header-margin-default text-align-left' }>Personnel Signature</h2>
+            <h2>Setup your Personnel Signature.</h2>
             </div>
             <Progress
               type = { 'circle' }
@@ -147,18 +138,18 @@ class BirthCertificateFragment extends BaseMVPView {
               percent={ percentage } />
           </div>
         <br/>
-        <div className = { 'birth-grid-card' }>
+        <div className = { 'abc-grid-card' }>
           <Card
             onClick = { () => {
               this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
               this.setState({ showPdfViewModal : true  })
               }
             }
-            className = { 'birth-card' }>
-            <div className = { 'birth-grid-x2' }>
+            className = { 'abc-card' }>
+            <div className = { 'abc-grid-x2' }>
               <h2>Birth Certificate</h2>
               <div>
-                <span className = { 'birth-icon biographical-seemore-button' }/>
+                <span className = { 'abc-icon biographical-seemore-button' }/>
               </div>
             </div>
           </Card>
@@ -175,43 +166,19 @@ class BirthCertificateFragment extends BaseMVPView {
               />
           </div>
         </div>
-        {
-          birthDataFormData.length !== 0  &&
-          <div>
-          <h4>
-            Biographical Data Attachments
-          </h4>
-          <br/>
-          <MultipleAttachments
-            count = { count }
-            countFunc = { (count) => this.setState({ count }) }
-            placeholder = { '' }
-            fileArray = { birthDataFormData }
-            setFile = { (birthDataFormData) =>
-                this.setState({ birthDataFormData })
-            }
-            />
-            <center>
-            <GenericButton
-            text = { 'Save' }
-            onClick = { () => this.submitForm() }/>
-            </center>
-          </div>
-
-         }
       </div>
     </div>
     )
   }
 }
 
-BirthCertificateFragment.propTypes = {
+PersonnelSignatureFragment.propTypes = {
   history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
   birthArray : PropTypes.array
 }
 
-BirthCertificateFragment.defaultProps = {
+PersonnelSignatureFragment.defaultProps = {
 }
 
-export default ConnectView(BirthCertificateFragment, Presenter)
+export default ConnectView(PersonnelSignatureFragment, Presenter)

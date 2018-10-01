@@ -24,7 +24,7 @@ class PagIbigFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(12)
+    this.props.onSendPageNumberToView(14)
   }
 
   render () {
@@ -37,13 +37,17 @@ class PagIbigFragment extends BaseMVPView {
     return (
       <div>
         { super.render() }
-        <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>Pag-IBIG</h2>
-            <h2></h2>
+          <h2 className={ 'header-margin-default text-align-left' }>Pag-IBIG</h2>
           <br/>
-          </div>w
+          <h2>Set up your Pag-IBIG</h2>
+          </div>
+          <Progress
+            type = { 'circle' }
+            height = { 100 }
+            width = { 100 }
+            percent={ percentage } />
         </div>
         <br/>
           <GenericButton

@@ -12,16 +12,14 @@ import {
   Card
 } from '../../../ub-components/'
 
-import Presenter from './presenter/BspCertificationPresenter'
+import Presenter from './presenter/PagIbigLoanPresenter'
 
 import { Progress } from 'react-sweet-progress'
 
-import BspCertificateDocumentPreviewModal from './modal/BspCertificateDocumentPreviewModal'
-
 import "react-sweet-progress/lib/style.css"
-import './styles/bspCertificateStyle.css'
+import './styles/loanStyle.css'
 
-class BspCertificationFragment extends BaseMVPView {
+class PagIbigLoanFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
@@ -31,7 +29,7 @@ class BspCertificationFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(9)
+    this.props.onSendPageNumberToView(15)
   }
 
   onCheckedPdf (link) {
@@ -63,19 +61,12 @@ class BspCertificationFragment extends BaseMVPView {
     return(
     <div>
       { super.render() }
-      {
-        showPdfViewModal &&
-        <BspCertificateDocumentPreviewModal
-          pdfFile = { pdfFile }
-          onClose = { () => this.setState({ showPdfViewModal: false }) }
-          />
-      }
       <div>
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>BSP Certificate Download</h2>
-            <h2>Please download the Banko Sentral Pilipinas(BSP) Certificate by clicking the button below.</h2>
+            <h2 className={ 'header-margin-default text-align-left' }>Pag-IBIG Loan</h2>
+            <h2>Setup your Pa-IBIG.</h2>
           </div>
           <Progress
             type = { 'circle' }
@@ -84,6 +75,8 @@ class BspCertificationFragment extends BaseMVPView {
             percent={ percentage } />
         </div>
         <br/>
+        <br/>
+        <h2>Where do you want to deduct your loan?</h2>
         <div className = { 'bsp-grid-card' }>
           {
             documentCardOptions.map((resp, key) =>
@@ -112,12 +105,12 @@ class BspCertificationFragment extends BaseMVPView {
   }
 }
 
-BspCertificationFragment.propTypes = {
+PagIbigLoanFragment.propTypes = {
   history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
 }
 
-BspCertificationFragment.defaultProps = {
+PagIbigLoanFragment.defaultProps = {
 }
 
-export default ConnectView(BspCertificationFragment, Presenter)
+export default ConnectView(PagIbigLoanFragment, Presenter)

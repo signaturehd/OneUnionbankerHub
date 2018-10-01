@@ -36,7 +36,7 @@ class TinFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(10)
+    this.props.onSendPageNumberToView(11)
     this.presenter.getEmployeeTin()
   }
 

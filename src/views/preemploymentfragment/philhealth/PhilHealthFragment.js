@@ -24,7 +24,7 @@ class PhilHealthFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(11)
+    this.props.onSendPageNumberToView(13)
   }
 
   render () {
