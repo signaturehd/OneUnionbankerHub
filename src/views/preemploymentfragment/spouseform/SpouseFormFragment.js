@@ -95,11 +95,11 @@ class SpouseFormFragment extends BaseMVPView {
       middleName,
       occupationName,
       contactNumber,
-      birthDate,
-      statusName,
       gender,
       genderErrorMessage,
       bloodType,
+      birthDate,
+      statusName,
       birthDateErrorMessage,
       statusNameErrorMessage,
       firstNameErrorMessage,
@@ -177,11 +177,11 @@ class SpouseFormFragment extends BaseMVPView {
       middleName,
       occupationName,
       contactNumber,
+      bloodType,
+      birthDate,
       statusName,
       gender,
       genderErrorMessage,
-      bloodType,
-      birthDate,
       birthDateErrorMessage,
       statusNameErrorMessage,
       firstNameErrorMessage,
@@ -240,7 +240,6 @@ class SpouseFormFragment extends BaseMVPView {
 
       <SingleInputModal
         label = { 'Blood Type' }
-        label = { 'Type of Calamity' }
         inputArray = { bloodObjectParam && bloodObjectParam }
         selectedArray = { (bloodTypeId, bloodTypeName) =>
           this.setState({
@@ -266,7 +265,8 @@ class SpouseFormFragment extends BaseMVPView {
         />
         </div>
       <div>
-       {
+        <div> 
+           {
         spouseData &&
         spouseData.map((resp, key) => 
           <div>
@@ -351,6 +351,7 @@ class SpouseFormFragment extends BaseMVPView {
           </div>
           )
        }
+        </div>  
         <br/>
         <center>
           {
