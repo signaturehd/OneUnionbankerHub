@@ -978,6 +978,21 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getChildren (token) {
+    return this.service.getChildren(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  postChildren (token, childrenParam) {
+    return this.service.postChildren(token, childrenParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  putChildren (token, childrenParam) {
+    return this.service.postChildren(token, childrenParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Vaccines Requisitions */
 
 
