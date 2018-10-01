@@ -964,11 +964,14 @@ export default class HRBenefitsClient {
   }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   putWorkExperience (token, workExperienceParam) {
     return this.service.putWorkExperience(token, workExperienceParam)
     .pipe(ServiceErrorOperator())
   }
   
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
   getSpouse (token) {

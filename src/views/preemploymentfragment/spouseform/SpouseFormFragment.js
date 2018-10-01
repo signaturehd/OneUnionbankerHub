@@ -36,10 +36,16 @@ class SpouseFormFragment extends BaseMVPView {
       middleName: '',
       occupationName : '',
       contactNumber : '',
+<<<<<<< Updated upstream
       birthDate: '',
       statusName: '',
       gender: '',
       genderErrorMessage: '',
+=======
+      bloodType: '',
+      birthDate: '',
+      statusName: '',
+>>>>>>> Stashed changes
       statusNameErrorMessage: '',
       birthDateErrorMessage : '',
       contactNumberErrorMessage : '',
@@ -51,11 +57,15 @@ class SpouseFormFragment extends BaseMVPView {
       noticeResponse: '',
       editMode : false,
       bloodTypeName: '',
+<<<<<<< Updated upstream
       showBloodTypeModal : false
+=======
+>>>>>>> Stashed changes
     }
   }
 
   componentDidMount () {
+    console.log()
     this.props.onSendPageNumberToView(17)
     this.presenter.getSpouse()
   }
@@ -84,17 +94,29 @@ class SpouseFormFragment extends BaseMVPView {
     this.setState({ birthDate: moment(data).format('MM-DD-YYYY') })
   }
 
+<<<<<<< Updated upstream
   postSaveFunc () {
     const {
+=======
+  submitForm () {
+    const {
+      enabledLoader,
+>>>>>>> Stashed changes
       lastName,
       firstName,
       middleName,
       occupationName,
       contactNumber,
+<<<<<<< Updated upstream
       birthDate,
       statusName,
       gender,
       genderErrorMessage,
+=======
+      bloodType,
+      birthDate,
+      statusName,
+>>>>>>> Stashed changes
       birthDateErrorMessage,
       statusNameErrorMessage,
       firstNameErrorMessage,
@@ -103,8 +125,13 @@ class SpouseFormFragment extends BaseMVPView {
       occupationNameErrorMessage,
       contactNumberErrorMessage,
       bloodTypeErrorMessage,
+<<<<<<< Updated upstream
       spouseId,
       bloodTypeName,
+=======
+      noticeResponse,
+      spouseId,
+>>>>>>> Stashed changes
     } = this.state
 
     if (!this.validator(firstName)) {
@@ -171,10 +198,16 @@ class SpouseFormFragment extends BaseMVPView {
       middleName,
       occupationName,
       contactNumber,
+<<<<<<< Updated upstream
       birthDate,
       statusName,
       gender,
       genderErrorMessage,
+=======
+      bloodType,
+      birthDate,
+      statusName,
+>>>>>>> Stashed changes
       birthDateErrorMessage,
       statusNameErrorMessage,
       firstNameErrorMessage,
@@ -187,7 +220,10 @@ class SpouseFormFragment extends BaseMVPView {
       spouseId,
       editMode,
       bloodTypeName,
+<<<<<<< Updated upstream
       showBloodTypeModal
+=======
+>>>>>>> Stashed changes
     } = this.state
 
     const bloodObjectParam = [
@@ -232,7 +268,11 @@ class SpouseFormFragment extends BaseMVPView {
       showBloodTypeModal && 
 
       <SingleInputModal
+<<<<<<< Updated upstream
         label = { 'Blood Type' }
+=======
+        label = { 'Type of Calamity' }
+>>>>>>> Stashed changes
         inputArray = { bloodObjectParam && bloodObjectParam }
         selectedArray = { (bloodTypeId, bloodTypeName) =>
           this.setState({
@@ -256,6 +296,7 @@ class SpouseFormFragment extends BaseMVPView {
           width = { 100 }
           percent={ percentage } 
         />
+<<<<<<< Updated upstream
         </div>
       <div>
        {
@@ -343,6 +384,72 @@ class SpouseFormFragment extends BaseMVPView {
           </div>
           )
        }
+=======
+      </div>
+      <div>
+        <GenericInput
+          text = { 'First Name' }
+          value = { firstName }
+          maxLength = { 30 }
+          errorMessage = { firstName ? '' : firstNameErrorMessage }
+          />
+        <GenericInput
+          text = { 'Middle Name' }
+          value = { spouseData.middleName ? spouseData.middleName : middleName }
+          maxLength = { 20 }
+          errorMessage = { middleName ? '' : middleNameErrorMessage }
+          onChange = { (e) => this.setState({ middleName : e.target.value }) }
+          />
+        <GenericInput
+          text = { 'Last Name' }
+          value = { spouseData.lastName ? spouseData.lastName : lastName }
+          errorMessage = { lastName ? '' : lastNameErrorMessage }
+          onChange = { () => {} }
+          />
+        <GenericInput
+          text = { 'Occupation' }
+          value = { spouseData.occupationName ? spouseData.occupationName : occupationName }
+          errorMessage = { occupationName ? '' : occupationNameErrorMessage }
+          onChange = { () => {} }
+          />
+        <GenericInput
+          text = { 'Contact Number' }
+          value = { spouseData.contactNumber ? spouseData.contactNumber : contactNumber }
+          errorMessage = { contactNumber ? '' : contactNumberErrorMessage }
+          onChange = { () => {} }
+          />
+        <GenericInput
+          text = { 'Blood Type' }
+          value = { spouseData.bloodType ? spouseData.bloodType : bloodType }
+          errorMessage = { bloodType ? '' : bloodTypeErrorMessage }
+          onClick = { () => this.setState({ showBloodTypeModal : true }) }
+          />
+        <div className = { 'grid-global' }>
+          <DatePicker
+            text = { 'Birth Date' }
+            errorMessage = { birthDate ? '' : birthDateErrorMessage }
+            selected = { spouseData.birthDate ? spouseData.birthDate : birthDate }
+            onChange = { (e) => this.dateFunc(e) }
+            hint = { '(eg. MM/DD/YYYY)' }
+            />
+          <div className = { 'status-margin' } >
+            <GenericInput
+              value = { spouseData.status ? spouseData.status : statusName  }
+              text = { 'Status' }
+              errorMessage = { statusName ? '' : statusNameErrorMessage }
+              onChange = { () => {} }
+              />
+          </div>
+        </div>
+        <div className = { 'grid-global' }>
+          <Checkbox
+            label = { 'Group Life Insurance' }
+            />
+          <Checkbox
+            label = { 'Hospitalization Plan' }
+            />
+        </div>
+>>>>>>> Stashed changes
         <br/>
         <center>
           {

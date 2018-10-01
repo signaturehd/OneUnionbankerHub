@@ -1358,6 +1358,7 @@ export default class HRBenefitsService {
   }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   putWorkExperience (token, workExperienceParam) {
     const objectParam = {
       companyName : workExperienceParam.companyName,
@@ -1375,6 +1376,8 @@ export default class HRBenefitsService {
     }) 
   }
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
   getSpouse (token) {
