@@ -93,7 +93,9 @@ class EducationBackgroundModal extends Component {
             schoolViewMore = { schoolViewMore }
             schoolPageNumberFunc = { () => schoolPageNumberFunc() }
             inputArray = { schools }
-            selectedArray = { (schoolId, schoolName) => setSchoolFunc(schoolId, schoolName) }
+            selectedArray = { (schoolId, schoolName) =>
+              setSchoolFunc(schoolId, schoolName)
+            }
             onClose = { () => onCloseModal() }
             />
         }
@@ -102,7 +104,9 @@ class EducationBackgroundModal extends Component {
           <SingleInputModal
             label = { 'Degree' }
             inputArray = { degreeArray }
-            selectedArray = { (degreeId,degreeName) => degreeFunc(degreeId,degreeName) }
+            selectedArray = { (degreeId,degreeName) =>
+              degreeFunc(degreeId,degreeName)
+            }
             onClose = { () => showDegreeFunc(false) }
           />
         }
@@ -161,9 +165,9 @@ class EducationBackgroundModal extends Component {
         />
         <GenericInput
           text = { 'End Year' }
+          value = { endYear }
           type = { 'number' }
           maxLength = { 4 }
-          value = { endYear }
           onChange = { (e) => {
               endYearFunc(e.target.value)
               endYearValidate(e.target.value)

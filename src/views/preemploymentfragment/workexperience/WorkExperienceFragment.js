@@ -8,6 +8,7 @@ import Presenter from './presenter/WorkExperiencePresenter'
 
 import {
   GenericButton,
+  SingleInputModal,
   CircularLoader,
   Card,
   Line,
@@ -19,6 +20,12 @@ import WorkExperienceMultipleCardComponent from './WorkExperienceMultipleCardCom
 import WorkExperienceAddModal from './modals/WorkExperienceAddModal'
 
 import { Progress } from 'react-sweet-progress'
+
+import { RequiredValidation } from '../../../utils/validate/'
+
+import moment from 'moment'
+import { format } from '../../../utils/numberUtils'
+
 
 class WorkExperienceFragment extends BaseMVPView {
 
@@ -32,8 +39,44 @@ class WorkExperienceFragment extends BaseMVPView {
       showNoticeResponseModal : false,
       noticeResponse : '',
       workExperienceCardHolder : [],
+      workExpId : '',
       index : 4,
       viewMoreText : 'View more',
+      monthData :
+      [{ id: 1, name: 'January' },
+       { id: 2, name: 'February' },
+       { id: 3, name: 'March' },
+       { id: 4, name: 'April' },
+       { id: 5, name: 'May' },
+       { id: 6, name: 'June' },
+       { id: 7, name: 'July' },
+       { id: 8, name: 'August' },
+       { id: 9, name: 'September' },
+       { id: 10, name: 'October' },
+       { id: 11, name: 'November' },
+       { id: 12, name: 'December' }],
+      fromMonthId : '',
+      fromMonthName : '',
+      fromMonthErrorMessage : '',
+      toMonthId : '',
+      toMonthName : '',
+      toMonthErrorMessage : '',
+      fromYear : '',
+      fromYearErrorMessage : '',
+      toYear : '',
+      toYearErrorMessage : '',
+      companyName : '',
+      companyErrorMessage : '',
+      address : '',
+      addressErrorMessage : '',
+      position : '',
+      positionErrorMessage : '',
+      contactNo : '',
+      contactNoErrorMessage : '',
+      briefDescDuties : '',
+      briefDescDutiesErrorMessage : '',
+      showFromMonthModal : false,
+      showToMonthModal : false
     }
 
   }
@@ -48,7 +91,19 @@ class WorkExperienceFragment extends BaseMVPView {
   }
 
   onShowWorkExperienceFormModalFunc() {
-    this.setState({ showAddWorkExperienceModal : true })
+    this.setState({
+      showAddWorkExperienceModal : true,
+      companyName  : '',
+      address  : '',
+      position  : '',
+      contactNo  : '',
+      fromYear : '',
+      toYear : '',
+      fromMonthId : '',
+      toMonthId : '',
+      briefDescDuties : '',
+      updateMode : false
+    })
   }
 
   noticeResponseResp (noticeResponse) {
@@ -63,8 +118,154 @@ class WorkExperienceFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  companyFunc(companyName) {
+    this.setState({ companyName, companyErrorMessage : '' })
+  }
+
+  addressFunc(address) {
+    this.setState({ address, addressErrorMessage : '' })
+  }
+
+  positionFunc(position) {
+    this.setState({ position, positionErrorMessage : '' })
+  }
+
+  contactNoFunc(contactNo) {
+    this.setState({ contactNo, contactNoErrorMessage : '' })
+  }
+
+  fromYearFunc(fromYear) {
+    this.setState({ fromYear, fromMonthErrorMessage : '' })
+  }
+
+  fromYearValidate(value) {
+    if(value.length === 4) {
+      if(value <= moment().format('YYYY')) {
+        this.setState({ fromYearErrorMessage : '' })
+      } else {
+        this.setState({ fromYearErrorMessage : 'Future year is not valid.' })
+      }
+    } else {
+      this.setState({ fromYearErrorMessage : 'Please input a valid year.' })
+    }
+  }
+
+  toYearFunc(toYear) {
+    this.setState({ toYear, toYearErrorMessage : '' })
+  }
+
+  toYearValidate(value) {
+    if(value.length === 4) {
+      if(value <= moment().format('YYYY')) {
+        this.setState({ toYearErrorMessage : '' })
+      } else {
+        this.setState({ toYearErrorMessage : 'Future year is not valid.' })
+      }
+    } else {
+      this.setState({ toYearErrorMessage : 'Please input a valid year.' })
+    }
+  }
+
+  briefDescDutiesFunc(briefDescDuties) {
+    this.setState({ briefDescDuties, briefDescDutiesErrorMessage : '' })
+  }
+
+  validateRequired(value) {
+    const validate = new RequiredValidation().isValid(value)
+    return validate ? true : false
+  }
+
+  submission() {
+    const {
+      workExpId,
+      companyName,
+      address,
+      position,
+      contactNo,
+      fromMonthId,
+      fromYear,
+      toMonthId,
+      toYear,
+      briefDescDuties,
+      updateMode
+    } = this.state
+
+    if(!this.validateRequired(companyName)) {
+      this.setState({ companyErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(address)) {
+      this.setState({ addressErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(position)) {
+      this.setState({ positionErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(contactNo)) {
+      this.setState({ contactNoErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(fromMonthId)) {
+      this.setState({ fromMonthErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(fromYear)) {
+      this.setState({ fromYearErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(toMonthId)) {
+      this.setState({ toMonthErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(toYear)) {
+      this.setState({ toYearErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(briefDescDuties)) {
+      this.setState({ briefDescDutiesErrorMessage : 'Required field' })
+    } else {
+      if(updateMode) {
+        this.presenter.putWorkExperience(
+          workExpId,
+          companyName,
+          address,
+          position,
+          briefDescDuties,
+          contactNo,
+          fromMonthId,
+          fromYear,
+          toMonthId,
+          toYear)
+        this.setState({ showAddWorkExperienceModal : false })
+        this.setState({
+          workExpId : '',
+          companyName  : '',
+          address  : '',
+          position  : '',
+          contactNo  : '',
+          fromYear : '',
+          toYear : '',
+          fromMonthId : '',
+          toMonthId : '',
+          briefDescDuties : '',
+          updateMode: false
+        })
+      } else {
+        this.presenter.addWorkExperience(
+          companyName,
+          address,
+          position,
+          briefDescDuties,
+          contactNo,
+          fromMonthId,
+          fromYear,
+          toMonthId,
+          toYear)
+        this.setState({ showAddWorkExperienceModal : false })
+        this.setState({
+          companyName  : '',
+          address  : '',
+          position  : '',
+          contactNo  : '',
+          fromYear : '',
+          toYear : '',
+          fromMonthId : '',
+          toMonthId : '',
+          briefDescDuties : '',
+          updateMode: false
+        })
+      }
+    }
+  }
+
   render () {
     const {
+      workExpId,
       enabledLoader,
       showEditSubmitButton,
       showAddWorkExperienceModal,
@@ -73,7 +274,30 @@ class WorkExperienceFragment extends BaseMVPView {
       noticeResponse,
       updateMode,
       index,
-      viewMoreText
+      viewMoreText,
+      monthData,
+      fromMonthId,
+      fromMonthName,
+      fromMonthErrorMessage,
+      toMonthId,
+      toMonthName,
+      toMonthErrorMessage,
+      fromYear,
+      fromYearErrorMessage,
+      toYear,
+      toYearErrorMessage,
+      companyName,
+      companyErrorMessage,
+      address,
+      addressErrorMessage,
+      position,
+      positionErrorMessage,
+      contactNo,
+      contactNoErrorMessage,
+      briefDescDuties,
+      briefDescDutiesErrorMessage,
+      showFromMonthModal,
+      showToMonthModal
     } = this.state
 
     const { percentage } = this.props
@@ -86,25 +310,59 @@ class WorkExperienceFragment extends BaseMVPView {
         {
           showAddWorkExperienceModal &&
           <WorkExperienceAddModal
-            onClose = { () => this.setState({ showAddWorkExperienceModal : false }) }
+            workExpId = { workExpId }
+            onClose = { () => this.setState({ showAddWorkExperienceModal : false, updateMode: false }) }
             updateMode = { updateMode }
-            onSubmit = { (companyName,
-            address,
-            position,
-            briefDescDuties,
-            contactNo,
-            fromMonthName,
-            fromYear,
-            toMonthName,
-            toYear) => this.presenter.addWorkExperience(companyName,
-            address,
-            position,
-            briefDescDuties,
-            contactNo,
-            fromMonthName,
-            fromYear,
-            toMonthName,
-            toYear) }/>
+            submission = { () => this.submission() }
+            monthData = { monthData }
+            companyName = { companyName }
+            companyErrorMessage = { companyErrorMessage }
+            companyFunc = { (resp) => this.companyFunc(resp) }
+            address = { address }
+            addressErrorMessage = { addressErrorMessage }
+            addressFunc = { (resp) => this.addressFunc(resp) }
+            position = { position }
+            positionErrorMessage = { positionErrorMessage }
+            positionFunc = { (resp) => this.positionFunc(resp) }
+            contactNo = { contactNo }
+            contactNoErrorMessage = { contactNoErrorMessage }
+            contactNoFunc = { (resp) => this.contactNoFunc(resp) }
+            briefDescDuties = { briefDescDuties }
+            briefDescDutiesErrorMessage = { briefDescDutiesErrorMessage }
+            briefDescDutiesFunc = { (resp) => this.briefDescDutiesFunc(resp) }
+            toYear = { toYear }
+            toMonthName = { toMonthName }
+            toMonthErrorMessage = { toMonthErrorMessage }
+            toYearFunc = { (resp) => this.toYearFunc(resp) }
+            toYearValidate = { (resp) => this.toYearValidate(resp) }
+            toMonthFunc = {  (toMonthId, toMonthName) =>
+              this.setState({
+                toMonthId,
+                toMonthName,
+                showToMonthModal : false,
+                toMonthErrorMessage : ''
+              })
+            }
+            fromYear = { fromYear }
+            fromMonthName = { fromMonthName }
+            fromMonthErrorMessage = { fromMonthErrorMessage }
+            fromYearFunc = { (resp) => this.fromYearFunc(resp) }
+            fromYearValidate = { (resp) => this.fromYearValidate(resp) }
+            fromMonthFunc = { (fromMonthId, fromMonthName) =>
+              this.setState({
+                fromMonthId,
+                fromMonthName,
+                showFromMonthModal : false,
+                fromMonthErrorMessage : ''
+              })
+            }
+            fromYearErrorMessage = { fromYearErrorMessage }
+            toYearErrorMessage = { toYearErrorMessage }
+            showToMonthModal = { showToMonthModal }
+            showToMonthFunc = { (resp) => this.setState({ showToMonthModal : resp }) }
+            showFromMonthModal = { showFromMonthModal }
+            showFromMonthFunc = { (resp) => this.setState({ showFromMonthModal : resp }) }
+            />
         }
         {
           showNoticeResponseModal &&
@@ -115,6 +373,7 @@ class WorkExperienceFragment extends BaseMVPView {
             noticeResponse={ noticeResponse }
           />
         }
+
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
@@ -153,26 +412,32 @@ class WorkExperienceFragment extends BaseMVPView {
               index = { index }
               disabled = { showEditSubmitButton }
               onEditModeProperty = { (
-                propertyName,
-                description,
-                propertyType,
-                cquisitionValue,
-                repairCost,
-                imageKey,
-                updateMode,
-                showPropertyModal,
-                editMode) =>
-                onEditModeProperty(
-                  propertyName,
-                  description,
-                  propertyType,
-                  cquisitionValue,
-                  repairCost,
-                  imageKey,
-                  updateMode,
-                  showPropertyModal,
-                  editMode
-                ) }/>
+                workExpId,
+                companyName,
+                address,
+                contactNo,
+                position,
+                briefDescDuties,
+                fromMonth,
+                fromYear,
+                toMonth,
+                toYear,
+                showAddWorkExperienceModal,
+                updateMode) =>
+                this.setState({
+                  workExpId,
+                  companyName,
+                  address,
+                  contactNo,
+                  position,
+                  briefDescDuties,
+                  fromMonth,
+                  fromYear,
+                  toMonth,
+                  toYear,
+                  showAddWorkExperienceModal,
+                  updateMode
+                }) }/>
                 <button
                   type = { 'button' }
                   className = { `viewmore tooltip ${ isVisible }` }

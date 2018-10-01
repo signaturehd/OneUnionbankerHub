@@ -41,7 +41,7 @@ class WorkExperienceMultipleCardComponent extends Component {
                     <h2 className = { 'font-size-14px font-weight-bold' }>{ resp.position }</h2>
                     <h2 className = { 'font-size-12px font-weight-lighter' }>Description: { resp.description }</h2>
                     <h2 className = { 'font-size-12px font-weight-lighter' }>Date Employment:
-                    { ` ${resp.startMonth} ${resp.startYear} - ${resp.endMonth} ${resp.endYear}` }</h2>
+                    { `${resp.startYear} - ${resp.endYear}` }</h2>
                   </div>
                 </div>
                 <div className = { 'grid-global-rows' }>
@@ -53,12 +53,15 @@ class WorkExperienceMultipleCardComponent extends Component {
                       onClick = { () =>
                         onEditModeProperty(
                           resp.id,
-                          resp.propertyName,
+                          resp.companyName,
+                          resp.address,
+                          resp.contactNumber,
+                          resp.position,
                           resp.description,
-                          resp.propertyType,
-                          resp.acquisitionValue,
-                          resp.repairCost,
-                          resp.imageKey,
+                          resp.startMonth,
+                          resp.startYear,
+                          resp.endMonth,
+                          resp.endYear,
                           true,
                           true)
                       }
