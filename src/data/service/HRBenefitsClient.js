@@ -967,6 +967,16 @@ export default class HRBenefitsClient {
     return this.service.putWorkExperience(token, workExperienceParam)
     .pipe(ServiceErrorOperator())
   }
+  
+  getSpouse (token) {
+    return this.service.getSpouse(token) 
+      .pipe(ServiceErrorOperator())
+  }
+
+  postSpouseForm (token, spouseFormParam) {
+    return this.service.postSpouseForm(token, spouseFormParam)
+      .pipe(ServiceErrorOperator())
+  }
 
   /* Vaccines Requisitions */
 

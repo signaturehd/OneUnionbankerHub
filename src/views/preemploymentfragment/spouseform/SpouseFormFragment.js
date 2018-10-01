@@ -21,37 +21,46 @@ import Presenter from './presenter/SpousePresenter'
 
 import { Progress } from 'react-sweet-progress'
 
-import "react-sweet-progress/lib/style.css"
+import 'react-sweet-progress/lib/style.css'
 import './styles/spouseStyle.css'
 
 class SpouseFormFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      financeStatus : [],
+      spouseData : [],
       enabledLoader : false,
-      showFinanceStatusErrorMessage : '',
-      statusId: '',
-      financeId: '',
+      spouseId: '',
       lastName: '',
       firstName : '',
       middleName: '',
-      amount: '',
+      occupationName : '',
+      contactNumber : '',
+      birthDate: '',
+      statusName: '',
+      gender: '',
+      genderErrorMessage: '',
+      bloodType: '',
+      statusName: '',
+      statusNameErrorMessage: '',
+      birthDateErrorMessage : '',
+      contactNumberErrorMessage : '',
+      occupationNameErrorrMessage : '',
       firstNameErrorMessage : '',
       middleNameErrorMessage: '',
-      amountErrorMessage: '',
       lastNameErrorMessage: '',
+      bloodTypeErrorMessage: '',
       noticeResponse: '',
       editMode : false,
+      bloodTypeName: '',
+      showBloodTypeModal : false
     }
   }
 
   componentDidMount () {
+    console.log()
     this.props.onSendPageNumberToView(17)
-  }
-
-  circularLoader (enabledLoader) {
-    this.setState({ enabledLoader })
+    this.presenter.getSpouse()
   }
 
   showCircularLoader () {
@@ -66,34 +75,54 @@ class SpouseFormFragment extends BaseMVPView {
    return new RequiredValidation().isValid(input)
   }
 
+  showSpouseDetails (spouseData) {
+    this.setState({ spouseData })
+  }
+
   noticeResponseFunc (noticeResponse) {
-    this.setState({ showFinanceModal : true })
     this.setState({ noticeResponse })
   }
 
-  submitForm () {
+  dateFunc (data) {
+    this.setState({ birthDate: moment(data).format('MM-DD-YYYY') })
+  }
+
+  postSaveFunc () {
     const {
+      enabledLoader,
+      lastName,
       firstName,
       middleName,
-      amount,
-      lastName,
-      statusId,
+      occupationName,
+      contactNumber,
+      birthDate,
+      statusName,
+      gender,
+      genderErrorMessage,
+      bloodType,
+      birthDateErrorMessage,
+      statusNameErrorMessage,
       firstNameErrorMessage,
       middleNameErrorMessage,
-      amountErrorMessage,
       lastNameErrorMessage,
-      financeId,
-      editMode
+      occupationNameErrorMessage,
+      contactNumberErrorMessage,
+      bloodTypeErrorMessage,
+      spouseId,
+      bloodTypeName,
+      noticeResponse,
     } = this.state
 
     if (!this.validator(firstName)) {
-      this.setState({ firstNameErrorMessage: 'Name of the Bank/ Financial Institution field is required' })
+      this.setState({ firstNameErrorMessage: 'First name field is required' })
     } else if (!this.validator(middleName)) {
-      this.setState({ middleNameErrorMessage : 'Nature of Obligation field is required'  })
-    } else if (!this.validator(amount)) {
-      this.setState({ amountErrorMessage : 'Amount field is required'  })
+      this.setState({ middleNameErrorMessage : 'Middle name field is required'  })
     } else if (!this.validator(lastName)) {
-      this.setState({ lastNameErrorMessage : 'Status field is required' })
+      this.setState({ lastNameErrorMessage : 'Last name field is required'  })
+    } else if (!this.validator(occupationName)) {
+      this.setState({ occupationNameErrorMessage : 'Occupation field is required' })
+    } else if (!this.validator(gender)) {
+      this.setState({ genderErrorMessage : 'Gender field is required'  })
     } else {
       if(editMode) {
         this.presenter.putFinancialStatus(
@@ -133,7 +162,6 @@ class SpouseFormFragment extends BaseMVPView {
     }
   }
 
-
   render() {
     const {
       history,
@@ -142,33 +170,88 @@ class SpouseFormFragment extends BaseMVPView {
     } = this.props
 
     const {
+      spouseData,
       enabledLoader,
-      financeStatus,
-      financeDetailsHolder,
-      statusId,
       lastName,
       firstName,
       middleName,
-      amount,
-      showFinanceStatusModal,
+      occupationName,
+      contactNumber,
+      statusName,
+      gender,
+      genderErrorMessage,
+      bloodType,
+      birthDate,
+      birthDateErrorMessage,
+      statusNameErrorMessage,
       firstNameErrorMessage,
       middleNameErrorMessage,
-      amountErrorMessage,
       lastNameErrorMessage,
-      showFinanceStatusErrorMessage,
+      occupationNameErrorMessage,
+      contactNumberErrorMessage,
+      bloodTypeErrorMessage,
       noticeResponse,
-      showFinanceModal,
-      showFinancialFormModal,
-      index,
-      viewMoreText,
-      financeId,
-      editMode
+      spouseId,
+      editMode,
+      bloodTypeName,
+      showBloodTypeModal
     } = this.state
 
+    const bloodObjectParam = [
+      {
+        id : 0,
+        name: 'Type A+'
+      },
+      {
+        id : 1,
+        name : 'Type A-'
+      },
+      {
+        id : 2,
+        name : 'Type B+'
+      },
+      {
+        id : 3,
+        name : 'Type B-'
+      },
+      {
+        id : 4,
+        name : 'Type 0+'
+      },
+      {
+        id : 5,
+        name : 'Type 0-'
+      },
+      {
+        id : 6,
+        name : 'Type AB+'
+      },
+      {
+        id : 7,
+        name : 'Type AB-'
+      }
+    ]
 
     return(
     <div>
     { super.render() }
+    {
+      showBloodTypeModal && 
+
+      <SingleInputModal
+        label = { 'Blood Type' }
+        label = { 'Type of Calamity' }
+        inputArray = { bloodObjectParam && bloodObjectParam }
+        selectedArray = { (bloodTypeId, bloodTypeName) =>
+          this.setState({
+            bloodTypeName,
+            showBloodTypeModal : false,
+            bloodTypeErrorMessage : ''
+          })
+        }
+        onClose = { () => this.setState({ showBloodTypeModal : false }) }
+      />
+    }
       <div className = { 'percentage-grid' }>
         <div>
           <h2 className={ 'header-margin-default text-align-left' }>Spouse Form</h2>
@@ -179,61 +262,96 @@ class SpouseFormFragment extends BaseMVPView {
           type = { 'circle' }
           height = { 100 }
           width = { 100 }
-          percent={ percentage } />
-      </div>
+          percent={ percentage } 
+        />
+        </div>
       <div>
-        <GenericInput
-          text = { 'First Name' }
-          value = { firstName }
-          maxLength = { 30 }
-          errorMessage = { firstName ? '' : firstNameErrorMessage }
-          />
-        <GenericInput
-          text = { 'Middle Name' }
-          value = { middleName }
-          maxLength = { 20 }
-          errorMessage = { middleName ? '' : middleNameErrorMessage }
-          />
-        <GenericInput
-          text = { 'Last Name' }
-          value = { lastName }
-          errorMessage = { lastName ? '' : lastNameErrorMessage }
-          />
-        <GenericInput
-          text = { 'Occupation' }
-          errorMessage = { '' }
-          onClick = { () => {} }
-          />
-        <GenericInput
-          text = { 'Contact Number' }
-          errorMessage = { '' }
-          onClick = { () => {} }
-          />
-        <GenericInput
-          text = { 'Blood Type' }
-          errorMessage = { '' }
-          onClick = { () => {} }
-          />
-        <div className = { 'grid-global' }>
-          <DatePicker
-            text = { 'Birth Date' }
-            errorMessage = { '' }
-            onClick = { () => {} }
-            />
-          <GenericInput
-            text = { 'Status' }
-            errorMessage = { '' }
-            onClick = { () => {} }
-            />
-        </div>
-        <div className = { 'grid-global' }>
-          <Checkbox
-            label = { 'Group Life Insurance' }
-            />
-          <Checkbox
-            label = { 'Hospitalization Plan' }
-            />
-        </div>
+       {
+        spouseData &&
+        spouseData.map((resp, key) => 
+          <div>
+            <GenericInput
+              text = { 'First Name' }
+              value = { resp.name.first ? resp.name.first : firstName }
+              maxLength = { 30 }
+              errorMessage = { firstName ? '' : firstNameErrorMessage }
+              onChange = { (e) => this.setState({ middleName : e.target.value }) }
+              />
+            <GenericInput
+              text = { 'Middle Name' }
+              value = { resp.name.middle ? resp.name.middle : middleName }
+              maxLength = { 20 }
+              errorMessage = { middleName ? '' : middleNameErrorMessage }
+              onChange = { (e) => this.setState({ middleName : e.target.value }) }
+              />
+            <GenericInput
+              text = { 'Last Name' }
+              value = { resp.name.last ? resp.name.last : lastName }
+              errorMessage = { lastName ? '' : lastNameErrorMessage }
+              onChange = { (e) => this.setState({ lastName : e.target.value }) }
+              />
+            <GenericInput
+              text = { 'Occupation' }
+              value = { resp.occupation ? resp.occupation : occupationName }
+              errorMessage = { occupationName ? '' : occupationNameErrorMessage }
+              onChange = { (e) => this.setState({ occupation : e.target.value }) }
+              />
+            <GenericInput
+              text = { 'Contact Number' }
+              value = { resp.contact ? resp.contact : contactNumber }
+              errorMessage = { contactNumber ? '' : contactNumberErrorMessage }
+              onChange = { (e) => this.setState({ contactNumber : e.target.value }) }
+              />
+            <div className = { 'grid-global' } >
+              <GenericInput
+                text = { 'Blood Type' }
+                value = { resp.bloodType ? resp.bloodType : bloodTypeName }
+                errorMessage = { bloodTypeName ? '' : bloodTypeErrorMessage }
+                onClick = { () => this.setState({ showBloodTypeModal : true }) }
+                />
+              <div className = { 'gender-margin' }>
+                <div className = { 'grid-global' }>
+                  <Checkbox
+                    label = { 'Male' }
+                    checked = { spouseData.gender === 'M' && 'M' }
+                    onChange = { () => this.setState({  }) }
+                    />
+                  <Checkbox
+                    label = { 'Female' }
+                    checked = { spouseData.gender === 'F' && 'F' }
+                    />
+                </div>
+              </div>
+            </div>
+            <div className = { 'grid-global' }>
+              <DatePicker
+                text = { 'Birth Date' }
+                errorMessage = { birthDate ? '' : birthDateErrorMessage }
+                selected = { spouseData && spouseData.birthDate ? spouseData.birthDate : birthDate }
+                onChange = { (e) => this.dateFunc(e) }
+                hint = { '(eg. MM/DD/YYYY)' }
+                />
+              <div className = { 'status-margin text-align-center' }>
+                <GenericInput
+                  value = { spouseData && spouseData.status ? spouseData.status : statusName  }
+                  text = { 'Status' }
+                  errorMessage = { statusName ? '' : statusNameErrorMessage }
+                  onChange = { (e) => this.setState({ statusName : e.target.value }) }
+                  />
+              </div>
+            </div>
+            <div className = { 'grid-global' }>
+              <Checkbox
+                label = { 'Group Life Insurance' }
+                />
+              <Checkbox
+                label = { 'Hospitalization Plan' }
+                />
+            </div>
+          </div>
+          )
+       }
+        <br/>
         <center>
           {
             editMode ?
@@ -245,6 +363,7 @@ class SpouseFormFragment extends BaseMVPView {
             <GenericButton
               className = { 'global-button' }
               text = { 'Save' }
+              onClick = { () => postSaveFunc() }
               />
           }
         </center>
@@ -262,4 +381,4 @@ SpouseFormFragment.propTypes = {
 SpouseFormFragment.defaultProps = {
 }
 
-export default ConnectView(SpouseFormFragment, Presenter )
+export default ConnectView(SpouseFormFragment, Presenter)
