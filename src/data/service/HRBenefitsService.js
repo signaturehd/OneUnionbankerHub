@@ -1445,6 +1445,67 @@ export default class HRBenefitsService {
     })
   }
 
+  getChildren (token) {
+    return this.onboardingClient.get('v1/employees/children', {
+      headers : { token }
+    })
+  }
+
+  postChildren (token, childrenParam) {
+    const formData = new FormData()
+    const objectParam = {
+      name : {
+        first : childrenParam.firstName,
+        middle : childrenParam.middleName,
+        last : childrenParam.lastName,
+      },
+      bloodType : childrenParam.bloodType,
+      contactNumber : childrenParam.contactNumber,
+      birthDate : childrenParam.birthDate,
+      gender : childrenParam.birthDate,
+      healthHospitalizationPlan: childrenParam.healthHospitalizationPlan,
+      groupLifeInsurance : childrenParam.groupLifeInsurance,
+      status: childrenParam.status,
+    }
+    formData.append('uuid', 12345)
+    formData.append('body', JSON.stringify(objectParam))
+
+    childrenParam.attachments.map((resp, key) => {
+      formData.append(resp.name, resp.file)
+    })
+    return this.onboardingClient.post('v1/employees/children', formData, {
+      headers : { token }
+    })
+  }
+
+  putChildren (token, childrenParam) {
+    const formData = new FormData()
+    const objectParam = {
+      name : {
+        first : childrenParam.firstName,
+        middle : childrenParam.middleName,
+        last : childrenParam.lastName,
+      },
+      bloodType : childrenParam.bloodType,
+      contactNumber : childrenParam.contactNumber,
+      birthDate : childrenParam.birthDate,
+      gender : childrenParam.birthDate,
+      occupation : childrenParam.occupation,
+      healthHospitalizationPlan: childrenParam.healthHospitalizationPlan,
+      groupLifeInsurance : childrenParam.groupLifeInsurance,
+      status: childrenParam.status,
+    }
+    formData.append('uuid', 12345)
+    formData.append('body', JSON.stringify(objectParam))
+
+    childrenParam.attachments.map((resp, key) => {
+      formData.append(resp.name, resp.file)
+    })
+    return this.onboardingClient.put(`v1/employees/children/${ childrenParam.childrenId }`, formData, {
+      headers : { token }
+    })
+  }
+
   /* Vaccine Requisition */
 
   validateVaccine (token) {
