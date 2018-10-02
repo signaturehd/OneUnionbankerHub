@@ -1176,4 +1176,12 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Events Budget */
+
+  validateEventsBudget (token) {
+    return this.apiClient.get('v1/events/validate', {
+      header: { token }
+    })
+  }
 }

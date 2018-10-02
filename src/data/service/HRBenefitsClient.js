@@ -882,4 +882,10 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Events Budget */
+
+  validateEventsBudget (token) {
+    return this.service.validateEventsBudget(token)
+      .pipe(ServiceErrorOperator())
+  }
 }
