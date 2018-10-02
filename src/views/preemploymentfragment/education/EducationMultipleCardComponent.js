@@ -31,7 +31,7 @@ class EducationMultipleCardComponent extends Component {
             <div>
               <Card
                 className = { 'educ-card-grid-option' }
-                key = {key}>
+                key = {resp.id}>
                 <div className = { 'grid-global' }>
                   <div>
                       <h2 className = { 'font-size-14px font-weight-bold' }>{ resp.schoolName && resp.schoolName }</h2>
@@ -62,14 +62,17 @@ class EducationMultipleCardComponent extends Component {
                       onClick = { () =>
                         onEditModeProperty(
                           resp.id,
-                          resp.propertyName,
-                          resp.description,
-                          resp.propertyType,
-                          resp.acquisitionValue,
-                          resp.repairCost,
-                          resp.imageKey,
+                          resp.schoolName,
+                          resp.course,
+                          resp.degree,
+                          resp.honor,
+                          resp.studentNo,
+                          resp.term,
+                          resp.startYear,
+                          resp.endYear,
                           true,
-                          true)
+                          true,
+                          1)
                       }
                     />
                   }

@@ -1333,6 +1333,7 @@ export default class HRBenefitsService {
 
   addEducationSchool (token, educationParam) {
     const formData = new FormData()
+    formData.append('uuid', '12345')
     const objectParam = {
         schoolName : educationParam.schoolName,
         studentNo : educationParam.studentNo,
@@ -1371,19 +1372,46 @@ export default class HRBenefitsService {
     }
     return this.onboardingClient.put(`v1/employees/employers/${workExperienceParam.workExpId}`, objectParam, {
       headers :{ token }
-    }) 
+    })
+  }
+
+  putEducationSchool (token, educationParam) {
+    const formData = new FormData()
+    formData.append('uuid', '12345')
+    const objectParam = {
+        schoolName : educationParam.schoolName,
+        studentNo : educationParam.studentNo,
+        startYear : educationParam.startYear,
+        endYear : educationParam.endYear,
+        term : educationParam.term,
+        degree : educationParam.degree,
+        honor : educationParam.honor,
+        course : educationParam.course,
+        address : educationParam.address,
+        isUpdated : educationParam.isUpdated
+      }
+      educationParam.attachments.map((resp) =>
+        (
+          formData.append(resp.name.replace('/', '-'), resp.file)
+        )
+      )
+    formData.append('body', JSON.stringify(objectParam))
+
+    return this.onboardingClient.put(`v1/employees/school/${educationParam.educId}`, formData, {
+      headers : { token }
+    })
   }
 
   getSpouse (token) {
     return this.onboardingClient.get('v1/employees/spouse', {
       headers : { token }
-    }) 
+    })
   }
 
   postSpouseForm (token, spouseFormParam) {
     const objectParam = {
       name : {
-        first : spouseFormParam.firstName, 
+        first : spouseFormParam.firstName,
         middle: spouseFormParam.middleName,
         last : spouseFormParam.lastName
       },
@@ -1393,8 +1421,8 @@ export default class HRBenefitsService {
         healthHospitalizationPlan : spouseFormParam.healthHospitalizationPlan,
         groupLifeInsurance: spouseFormParam.groupLifeInsurance
 
-    } 
-    return this.onboardingClient.post('v1/employees/spouse', objectParam, { 
+    }
+    return this.onboardingClient.post('v1/employees/spouse', objectParam, {
       headers : { token }
     })
   }
@@ -1402,7 +1430,7 @@ export default class HRBenefitsService {
   putSpouseForm (token, spouseFormParam) {
     const objectParam = {
       name : {
-        first : spouseFormParam.firstName, 
+        first : spouseFormParam.firstName,
         middle: spouseFormParam.middleName,
         last : spouseFormParam.lastName
       },

@@ -1,0 +1,26 @@
+export default (
+  educId,
+  schoolName,
+  studentNo,
+  startYear,
+  endYear,
+  term,
+  degree,
+  honor,
+  course,
+  address,
+  isUpdated,
+  attachments) => ({
+    educId,
+    schoolName,
+    studentNo,
+    startYear,
+    endYear,
+    term,
+    degree,
+    honor,
+    course,
+    address,
+    isUpdated,
+    attachments
+})

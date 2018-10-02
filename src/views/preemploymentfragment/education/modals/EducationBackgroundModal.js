@@ -73,11 +73,18 @@ class EducationBackgroundModal extends Component {
     honorFunc,
     startYearFunc,
     startYearValidate,
-    startYearErrorMessage,
     endYearFunc,
     endYearValidate,
-    endYearErrorMessage,
-    submission
+    submission,
+    schoolNameErrorMessage,
+    studentNoErrorMessage,
+    addressErrorMessage,
+    degreeErrorMessage,
+    courseErrorMessage,
+    termErrorMessage,
+    honorErrorMessage,
+    startYearErrorMessage,
+    endYearErrorMessage
     } = this.props
 
     return (
@@ -114,39 +121,40 @@ class EducationBackgroundModal extends Component {
         <GenericInput
           text = { 'School' }
           value = { schoolName }
-          onClick = { () => showSchoolsFunc() }/>
+          onClick = { () => showSchoolsFunc() }
+          errorMessage = { schoolNameErrorMessage }/>
         <GenericInput
           text = { 'School Address' }
           value = { address }
           onChange = { (e) => addressFunc(e.target.value) }
-        />
+          errorMessage = { addressErrorMessage }/>
         <GenericInput
           text = { 'Student Number' }
           maxLength = { 24 }
           value = { studentNo }
           onChange = { (e) => studentNoFunc(e.target.value) }
-          />
+          errorMessage = { studentNoErrorMessage }/>
         <GenericInput
           text = { 'Degree' }
           value = { degree }
           onChange = { (e) => degreeFunc(e.target.value) }
           onClick = { () => showDegreeFunc(true) }
-          />
+          errorMessage = { degreeErrorMessage }/>
         <GenericInput
           text = { 'Course' }
           value = { course }
           onChange = { (e) => courseFunc(e.target.value) }
-          />
+          errorMessage = { courseErrorMessage }/>
         <GenericInput
           text = { 'Term' }
           value = { term }
           onChange = { (e) => termFunc(e.target.value) }
-          />
+          errorMessage = { termErrorMessage }/>
         <GenericInput
           text = { 'Special Honor' }
           value = { honor }
           onChange = { (e) => honorFunc(e.target.value) }
-          />
+          errorMessage = { honorErrorMessage }/>
         <div className = { 'text-align-left' }>
           <h2>Inclusive Details</h2>
           <br/>
@@ -214,6 +222,7 @@ class EducationBackgroundModal extends Component {
               updateMode ?
               <GenericButton
                 text={ 'Update' }
+                onClick = { () => submission() }
                 /> :
               <GenericButton
                 text={ 'Add' }
@@ -246,6 +255,13 @@ EducationBackgroundModal.propTypes = {
   honor : PropTypes.string,
   course : PropTypes.string,
   address : PropTypes.string,
+  schoolNameErrorMessage : PropTypes.string,
+  studentNoErrorMessage : PropTypes.string,
+  addressErrorMessage : PropTypes.string,
+  degreeErrorMessage : PropTypes.string,
+  courseErrorMessage : PropTypes.string,
+  termErrorMessage : PropTypes.string,
+  honorErrorMessage : PropTypes.string,
   schoolPageNumber : PropTypes.number,
   schoolViewMore : PropTypes.string,
   schoolPageNumberFunc : PropTypes.func,

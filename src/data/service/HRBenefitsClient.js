@@ -967,9 +967,14 @@ export default class HRBenefitsClient {
     return this.service.putWorkExperience(token, workExperienceParam)
     .pipe(ServiceErrorOperator())
   }
-  
+
+  putEducationSchool(token, educationParam) {
+    return this.service.putEducationSchool(token, educationParam)
+    .pipe(ServiceErrorOperator())
+  }
+
   getSpouse (token) {
-    return this.service.getSpouse(token) 
+    return this.service.getSpouse(token)
       .pipe(ServiceErrorOperator())
   }
 
