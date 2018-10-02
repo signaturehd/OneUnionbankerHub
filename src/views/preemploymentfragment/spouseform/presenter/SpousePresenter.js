@@ -3,6 +3,12 @@ import PostSpouseInteractor from '../../../../domain/interactor/preemployment/sp
 import PutSpouseInteractor from '../../../../domain/interactor/preemployment/spouse/PutSpouseInteractor'
 import addSpouseForm from '../../../../domain/param/AddSpouseParam'
 
+import { RequiredValidation }  from '../../../../utils/validate'
+import * as func from '../functions/SpouseFunctions'
+
+import store from '../../../../store'
+import { NotifyActions } from '../../../../actions'
+
 export default class SpousePresenter {
   constructor (container) {
     this.getSpouseInteractor = new GetSpouseInteractor(container.get('HRBenefitsClient'))
@@ -14,13 +20,56 @@ export default class SpousePresenter {
     this.view = view
   }
 
+  validator (string) {
+    return func.checkValidateInput(string)
+  }
+
   getSpouse () {
     this.view.showCircularLoader()
     this.getSpouseInteractor.execute()
+    .do(() => {
+       const bloodObjectParam = [
+        {
+          id : 0,
+          name: 'Type A+'
+        },
+        {
+          id : 1,
+          name : 'Type A-'
+        },
+        {
+          id : 2,
+          name : 'Type B+'
+        },
+        {
+          id : 3,
+          name : 'Type B-'
+        },
+        {
+          id : 4,
+          name : 'Type 0+'
+        },
+        {
+          id : 5,
+          name : 'Type 0-'
+        },
+        {
+          id : 6,
+          name : 'Type AB+'
+        },
+        {
+          id : 7,
+          name : 'Type AB-'
+        }
+      ]
+
+      this.view.showBloodType(bloodObjectParam)
+    })
     .subscribe(data => {
       this.view.hideCircularLoader()
-      this.view.showSpouseDetails(data)
+      this.view.showSpouseDetails(data, true)
     }, error => {
+      this.view.showSpouseDetails(error, false)
       this.view.hideCircularLoader()
     })
   }
@@ -31,30 +80,26 @@ export default class SpousePresenter {
     lastName,
     birthDate,
     occupation,
+    contact,
     status,
+    gender,
     healthHospitalizationPlan,
     groupLifeInsurance,
     spouseId
   ) {
-    this.view.showCircularLoader()
-    this.postSpouseInteractor.execute(addSpouseForm(
-    firstName, 
-    middleName,
-    lastName,
-    birthDate,
-    occupation,
-    status,
-    healthHospitalizationPlan,
-    groupLifeInsurance,
-    spouseId
-    ))
-    .subscribe(data => {
-      this.view.noticeResponseFunc(data.message)
-      // this.getFinancialDetails()
-      this.view.hideCircularLoader()
-    }, error => {
-      this.view.hideCircularLoader()
-    })
+    if(!this.validator(firstName)) {
+      this.view.firstNameErrorMessageFunc('First Name field is required')
+    } else if(!this.validator(middleName)) {
+      this.view.middleNameErrorMessageFunc('Middle Name field is required')
+    } else if(!this.validator(lastName)) { 
+      this.view.lastNameErrorMessageFunc('Last Name field is required')
+    } else if(!this.validator(occupation)) {
+      this.view.occupationErrorMessageFunc('Occupation field is required')
+    } else if(!this.validator(contact)) {
+      console.log('test')
+      
+      this.view.contactNumberErrorMessageFunc('Contact Number field is required')
+    }
   }
 
   putSpouseForm (
@@ -63,7 +108,9 @@ export default class SpousePresenter {
     lastName,
     birthDate,
     occupation,
+    contactNumber,
     status,
+    gender,
     healthHospitalizationPlan,
     groupLifeInsurance,
     spouseId
@@ -75,7 +122,9 @@ export default class SpousePresenter {
       lastName,
       birthDate,
       occupation,
+      contactNumber,
       status,
+      gender,
       healthHospitalizationPlan,
       groupLifeInsurance,
       spouseId
