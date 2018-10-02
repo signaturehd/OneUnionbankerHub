@@ -28,7 +28,7 @@ class SpouseFormFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      spouseData : [],
+      spouseData : '',
       enabledLoader : false,
       spouseId: '',
       lastName: '',
@@ -76,6 +76,19 @@ class SpouseFormFragment extends BaseMVPView {
   }
 
   showSpouseDetails (spouseData) {
+    const nullChecker = spouseData && spouseData
+    const nullCheckerName = spouseData && spouseData.name
+    this.setState({ 
+      firstName : nullCheckerName.first,
+      middleName : nullCheckerName.middle,
+      lastName : nullCheckerName.last,
+      bloodTypeName : nullChecker.bloodType,
+      birthDate : nullChecker.birthDate,
+      occupationName : nullChecker.occupationName,
+      gender : nullChecker.gender,
+      spouseId : nullChecker.id,
+      contactNumber : nullChecker.contactNumber
+    })
     this.setState({ spouseData })
   }
 
@@ -261,51 +274,48 @@ class SpouseFormFragment extends BaseMVPView {
           type = { 'circle' }
           height = { 100 }
           width = { 100 }
-          percent={ percentage } 
+          percent={ percentage }
         />
         </div>
       <div>
         <div> 
-           {
-        spouseData &&
-        spouseData.map((resp, key) => 
           <div>
             <GenericInput
               text = { 'First Name' }
-              value = { resp.name.first ? resp.name.first : firstName }
+              value = { firstName }
               maxLength = { 30 }
               errorMessage = { firstName ? '' : firstNameErrorMessage }
-              onChange = { (e) => this.setState({ middleName : e.target.value }) }
+              onChange = { (e) => this.setState({ firstName : e.target.value }) }
               />
             <GenericInput
               text = { 'Middle Name' }
-              value = { resp.name.middle ? resp.name.middle : middleName }
+              value = { middleName }
               maxLength = { 20 }
               errorMessage = { middleName ? '' : middleNameErrorMessage }
               onChange = { (e) => this.setState({ middleName : e.target.value }) }
               />
             <GenericInput
               text = { 'Last Name' }
-              value = { resp.name.last ? resp.name.last : lastName }
+              value = { lastName }
               errorMessage = { lastName ? '' : lastNameErrorMessage }
               onChange = { (e) => this.setState({ lastName : e.target.value }) }
               />
             <GenericInput
               text = { 'Occupation' }
-              value = { resp.occupation ? resp.occupation : occupationName }
+              value = { occupationName }
               errorMessage = { occupationName ? '' : occupationNameErrorMessage }
               onChange = { (e) => this.setState({ occupation : e.target.value }) }
               />
             <GenericInput
               text = { 'Contact Number' }
-              value = { resp.contact ? resp.contact : contactNumber }
+              value = { contactNumber }
               errorMessage = { contactNumber ? '' : contactNumberErrorMessage }
               onChange = { (e) => this.setState({ contactNumber : e.target.value }) }
               />
             <div className = { 'grid-global' } >
               <GenericInput
                 text = { 'Blood Type' }
-                value = { resp.bloodType ? resp.bloodType : bloodTypeName }
+                value = { bloodTypeName }
                 errorMessage = { bloodTypeName ? '' : bloodTypeErrorMessage }
                 onClick = { () => this.setState({ showBloodTypeModal : true }) }
                 />
@@ -313,44 +323,32 @@ class SpouseFormFragment extends BaseMVPView {
                 <div className = { 'grid-global' }>
                   <Checkbox
                     label = { 'Male' }
-                    checked = { spouseData.gender === 'M' && 'M' }
-                    onChange = { () => this.setState({  }) }
                     />
                   <Checkbox
                     label = { 'Female' }
-                    checked = { spouseData.gender === 'F' && 'F' }
                     />
                 </div>
               </div>
             </div>
             <div className = { 'grid-global' }>
-              <DatePicker
-                text = { 'Birth Date' }
-                errorMessage = { birthDate ? '' : birthDateErrorMessage }
-                selected = { spouseData && spouseData.birthDate ? spouseData.birthDate : birthDate }
-                onChange = { (e) => this.dateFunc(e) }
-                hint = { '(eg. MM/DD/YYYY)' }
-                />
               <div className = { 'status-margin text-align-center' }>
                 <GenericInput
-                  value = { spouseData && spouseData.status ? spouseData.status : statusName  }
+                  value = { statusName  }
                   text = { 'Status' }
                   errorMessage = { statusName ? '' : statusNameErrorMessage }
                   onChange = { (e) => this.setState({ statusName : e.target.value }) }
                   />
               </div>
+              <div className = { 'grid-global' }>
+                <Checkbox
+                  label = { 'Group Life Insurance' }
+                  />
+                <Checkbox
+                  label = { 'Hospitalization Plan' }
+                  />
             </div>
-            <div className = { 'grid-global' }>
-              <Checkbox
-                label = { 'Group Life Insurance' }
-                />
-              <Checkbox
-                label = { 'Hospitalization Plan' }
-                />
             </div>
           </div>
-          )
-       }
         </div>  
         <br/>
         <center>

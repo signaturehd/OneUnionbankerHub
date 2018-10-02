@@ -129,7 +129,6 @@ class SideBar extends Component {
             d.id !== 4 &&
             d.id !== 5 &&
             d.id !== 6 &&
-            d.id !== 7 &&
             d.id !== 8 &&
             d.id !== 9 &&
             d.id !== 10 &&
