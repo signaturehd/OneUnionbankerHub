@@ -35,6 +35,7 @@ class EducationMultipleCardComponent extends Component {
                 <div className = { 'grid-global' }>
                   <div>
                       <h2 className = { 'font-size-14px font-weight-bold' }>{ resp.schoolName && resp.schoolName }</h2>
+                      <h2 className = { 'font-size-12px font-weight-lighter' }>Address: { resp.address && resp.address }</h2>
                       <h2 className = { 'font-size-12px font-weight-lighter' }>Course: { resp.course && resp.course }</h2>
                       <h2 className = { 'font-size-12px font-weight-lighter' }>Degree: { resp.degree && resp.degree }</h2>
                       <h2 className = { 'font-size-12px font-weight-lighter' }>Honor: { resp.honor && resp.honor }</h2>
@@ -63,6 +64,7 @@ class EducationMultipleCardComponent extends Component {
                         onEditModeProperty(
                           resp.id,
                           resp.schoolName,
+                          resp.address,
                           resp.course,
                           resp.degree,
                           resp.honor,

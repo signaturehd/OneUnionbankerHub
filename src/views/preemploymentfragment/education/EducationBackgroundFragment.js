@@ -106,27 +106,27 @@ class EducationBackgroundFragment extends BaseMVPView {
   }
 
   studentNoFunc(studentNo) {
-    this.setState({ studentNo })
+    this.setState({ studentNo, studentNoErrorMessage : '' })
   }
 
   termFunc(term) {
-    this.setState({ term })
+    this.setState({ term, termErrorMessage : ''})
   }
 
   degreeFunc(id, degree) {
-    this.setState({ degree, showDegreeModal : false})
+    this.setState({ degree, showDegreeModal : false, degreeErrorMessage : ''})
   }
 
   honorFunc(honor) {
-    this.setState({ honor })
+    this.setState({ honor, honorErrorMessage : '' })
   }
 
   courseFunc(course) {
-    this.setState({ course })
+    this.setState({ course, courseErrorMessage : '' })
   }
 
   addressFunc(address) {
-    this.setState({ address })
+    this.setState({ address, addressErrorMessage : '' })
   }
 
   startYearFunc(startYear) {
@@ -231,9 +231,6 @@ class EducationBackgroundFragment extends BaseMVPView {
           isUpdated : 0,
           updateMode : false
         })
-        torFormData.push({
-          name : 'Transcript of Records'
-        })
       } else {
         this.presenter.addEducationSchool(
           schoolName,
@@ -260,9 +257,6 @@ class EducationBackgroundFragment extends BaseMVPView {
           address : '',
           isUpdated : 0,
           updateMode : false
-        })
-        torFormData.push({
-          name : 'Transcript of Records'
         })
       }
     }
@@ -328,6 +322,7 @@ class EducationBackgroundFragment extends BaseMVPView {
         {
           showEducationFormModal &&
           <EducationBackgroundModal
+            updateMode = { updateMode }
             torFormData = { torFormData }
             schools = { schools.school }
             count = { count }
@@ -367,7 +362,14 @@ class EducationBackgroundFragment extends BaseMVPView {
             schoolPageNumberFunc = { () => this.setState({ schoolPageNumber : schoolPageNumber + 1 }) }
             showSchoolsModal = { showSchoolsModal }
             onCloseModal = { () => this.setState({ showSchoolsModal : false }) }
-            setSchoolFunc = { (schoolId, schoolName) => this.setState({ schoolId, schoolName, showSchoolsModal : false }) }
+            setSchoolFunc = { (schoolId, schoolName) =>
+              this.setState({
+                schoolId,
+                schoolName,
+                showSchoolsModal : false,
+                schoolNameErrorMessage : ''
+              })
+            }
             showSchoolsFunc = { () => this.setState({ showSchoolsModal : true }) }
             submission = { () => this.submission() }
             addAttachmentsFunc = { (attachment, tempCount) =>
@@ -435,10 +437,10 @@ class EducationBackgroundFragment extends BaseMVPView {
           <EducationMultipleCardComponent
             cardDataHolder = { educationCardHolder }
             index = { index }
-            disabled = { showEditSubmitButton }
             onEditModeProperty = { (
               educId,
               schoolName,
+              address,
               course,
               degree,
               honor,
@@ -452,6 +454,7 @@ class EducationBackgroundFragment extends BaseMVPView {
               this.setState({
                 educId,
                 schoolName,
+                address,
                 course,
                 degree,
                 honor,
