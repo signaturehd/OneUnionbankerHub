@@ -63,17 +63,12 @@ class BiographicalDataFragment extends BaseMVPView {
     this.setState({ biographicalDataFormData : attachmentTemp })
   }
 
-  submitForm () {
+  submitForm (id) {
     const {
       biographicalDataFormData
     } = this.state
 
-    const {
-      biographicalArray
-    } = this.props
-    biographicalArray.map((bio) =>
-      this.presenter.addBiographicalData(bio.id, biographicalDataFormData)
-    )
+    this.presenter.addBiographicalData(id, biographicalDataFormData)
   }
 
   noticeResponseResp (noticeResponse) {
@@ -93,7 +88,8 @@ class BiographicalDataFragment extends BaseMVPView {
       history,
       checkPEUndertaking,
       percentage,
-      biographicalArray
+      biographicalArray,
+      showStatusSubmitted
     } = this.props
 
     const {
@@ -174,38 +170,53 @@ class BiographicalDataFragment extends BaseMVPView {
         <br/>
         <Line />
         <br/>
-        <div className = { 'grid-global' }>
-          <h2></h2>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-              text = { 'Add Attachments' }
-              onClick = { () => this.addAttachmentsFunc(biographicalDataFormData, count) }
-              />
-          </div>
-        </div>
         {
           biographicalDataFormData.length !== 0  &&
-          <div>
-          <h4>
-            Biographical Data Attachments
-          </h4>
-          <br/>
-          <MultipleAttachments
-            count = { count }
-            countFunc = { (count) => this.setState({ count }) }
-            placeholder = { '' }
-            fileArray = { biographicalDataFormData }
-            setFile = { (biographicalDataFormData) =>
-                this.setState({ biographicalDataFormData })
-            }
-            />
-            <center>
-            <GenericButton
-            text = { 'Save' }
-            onClick = { () => this.submitForm() }/>
-            </center>
-          </div>
 
+            biographicalArray.map((status) =>
+              status.status === 2 ?
+              <div>
+                <h4 className = { 'font-size-14px font-weight-lighter' }>
+                  Your documents has been submitted for confirmation.
+                </h4>
+              </div>
+              :
+              status.status === 4 ?
+              <div>
+                <h4 className = { 'font-size-14px font-weight-lighter' }>
+                  Your documents are verified.
+                </h4>
+              </div>
+              :
+              <div>
+                <h2></h2>
+                <div className = { 'text-align-right' }>
+                  <GenericButton
+                    text = { 'Add Attachments' }
+                    onClick = { () => this.addAttachmentsFunc(biographicalDataFormData, count) }
+                    />
+                </div>
+
+                <h4>
+                  Biographical Data Attachments
+                </h4>
+                <br/>
+                <MultipleAttachments
+                  count = { count }
+                  countFunc = { (count) => this.setState({ count }) }
+                  placeholder = { '' }
+                  fileArray = { biographicalDataFormData }
+                  setFile = { (biographicalDataFormData) =>
+                      this.setState({ biographicalDataFormData })
+                  }
+                  />
+                  <center>
+                  <GenericButton
+                  text = { 'Save' }
+                  onClick = { () => this.submitForm(status.id) }/>
+                  </center>
+              </div>
+            )
          }
       </div>
     </div>

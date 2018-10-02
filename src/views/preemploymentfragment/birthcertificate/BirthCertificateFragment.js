@@ -68,11 +68,9 @@ class BirthCertificateFragment extends BaseMVPView {
     } = this.state
 
     const {
-      birthArray
+      birthCertifArray
     } = this.props
-    birthArray.map((bio) =>
-      this.presenter.addBiographicalData(bio.id, birthDataFormData)
-    )
+      this.presenter.addBiographicalData(birthCertifArray.id, birthDataFormData)
   }
 
   noticeResponseResp (noticeResponse) {
@@ -92,7 +90,8 @@ class BirthCertificateFragment extends BaseMVPView {
       history,
       checkPEUndertaking,
       percentage,
-      birthArray
+      birthArray,
+      birthCertifArray
     } = this.props
 
     const {
@@ -166,18 +165,32 @@ class BirthCertificateFragment extends BaseMVPView {
         <br/>
         <Line />
         <br/>
-        <div className = { 'grid-global' }>
-          <h2></h2>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-              text = { 'Add Attachments' }
-              onClick = { () => this.addAttachmentsFunc(birthDataFormData, count) }
-              />
-          </div>
-        </div>
+
         {
-          birthDataFormData.length !== 0  &&
-          <div>
+          birthDataFormData.length !== 0 &&
+          birthCertifArray.map((status) =>
+            status.status === 2 ?
+            <div>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents has been submitted for confirmation.
+              </h4>
+            </div>
+            :
+            status.status === 4 ?
+            <div>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents are verified.
+              </h4>
+            </div>
+            :
+            <div className = { 'grid-global' }>
+            <h2></h2>
+            <div className = { 'text-align-right' }>
+              <GenericButton
+                text = { 'Add Attachments' }
+                onClick = { () => this.addAttachmentsFunc(birthDataFormData, count) }
+                />
+            </div>
           <h4>
             Biographical Data Attachments
           </h4>
@@ -197,8 +210,8 @@ class BirthCertificateFragment extends BaseMVPView {
             onClick = { () => this.submitForm() }/>
             </center>
           </div>
-
-         }
+          )
+        }
       </div>
     </div>
     )
@@ -208,7 +221,8 @@ class BirthCertificateFragment extends BaseMVPView {
 BirthCertificateFragment.propTypes = {
   history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
-  birthArray : PropTypes.array
+  birthArray : PropTypes.array,
+  birthCertifArray : PropTypes.array
 }
 
 BirthCertificateFragment.defaultProps = {

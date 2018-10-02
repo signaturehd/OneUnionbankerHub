@@ -7,6 +7,7 @@ import ConnectView from '../../../utils/ConnectView'
 import Presenter from './presenter/NbiClearancePresenter'
 
 import {
+  Modal,
   GenericButton,
   CircularLoader,
   MultipleFileUploader,
@@ -15,27 +16,76 @@ import {
 } from '../../../ub-components/'
 
 import { Progress } from 'react-sweet-progress'
+import ResponseModal from '../../notice/NoticeResponseModal'
 
 class NbiClearanceFragment extends BaseMVPView {
 
   constructor(props) {
     super(props)
+    this.state = {
+      enabledLoader : false,
+      showNoticeResponseModal : false,
+      noticeResponse : '',
+      nbiClearance : [{
+        name : 'NBI Clearance'
+      }]
+    }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(7)
   }
 
-  render () {
-    const nbiClearance = [{
-      name : 'NBI Clearance'
-    }]
+  submitForm (id) {
+    const {
+      nbiClearance
+    } = this.state
 
-    const { percentage } = this.props
+    this.presenter.addNbiClearance(id, nbiClearance)
+  }
+
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse , showNoticeResponseModal : true})
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  render () {
+    const {
+      enabledLoader,
+      nbiClearance,
+      showNoticeResponseModal,
+      noticeResponse
+     } = this.state
+
+    const { percentage, nbiArray } = this.props
 
     return (
       <div>
         { super.render() }
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false})
+            }}
+            noticeResponse={ noticeResponse }
+          />
+        }
+        {
+          enabledLoader &&
+          <Modal>
+          <center>
+          <CircularLoader show = { enabledLoader }/>
+          </center>
+          </Modal>
+        }
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
@@ -50,16 +100,50 @@ class NbiClearanceFragment extends BaseMVPView {
         <br/>
         <Line />
         <br/>
-          <MultipleFileUploader
-            fileArray = { nbiClearance }
-            />
+        {
+          nbiArray.map((status) =>
+            status.status === 2 ?
+            <div>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents has been submitted for confirmation.
+              </h4>
+            </div>
+            :
+            status.status === 4 ?
+            <div>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents are verified.
+              </h4>
+            </div>
+            :
+            <div>
+              <h4>
+                NBI Clearance Attachments
+              </h4>
+              <br/>
+              <MultipleFileUploader
+                placeholder = { '' }
+                fileArray = { nbiClearance }
+                setFile = { (nbiClearance) =>
+                  this.setState({ nbiClearance })
+                  }
+                />
+              <center>
+                <GenericButton
+                text = { 'Save' }
+                onClick = { () => this.submitForm(status.id) }/>
+              </center>
+            </div>
+          )
+        }
       </div>
     )
   }
 }
 
 NbiClearanceFragment.propTypes = {
-  onSendPageNumberToView : PropTypes.func
+  onSendPageNumberToView : PropTypes.func,
+  nbiArray : PropTypes.array
 }
 
 export default ConnectView(NbiClearanceFragment, Presenter )

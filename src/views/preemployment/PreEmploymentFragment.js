@@ -75,6 +75,8 @@ function  PreEmploymentFragments (props)  {
   const sssArray = props.sssArray
   const tinArray = props.tinArray
   const educationVerificationForm = props.educationVerificationForm
+  const birthCertifArray = props.birthCertifArray
+  const nbiArray = props.nbiArray
   if (pageNumber === 0) {
     return <AffirmationDocumentFragment
       percentage = { percentage }
@@ -93,6 +95,7 @@ function  PreEmploymentFragments (props)  {
       />
   } else if (pageNumber === 3) {
     return <BirthCertificateFragment
+      birthCertifArray = { birthCertifArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
@@ -114,6 +117,7 @@ function  PreEmploymentFragments (props)  {
       />
   } else if (pageNumber === 7) {
     return <NbiClearanceFragment
+      nbiArray = { nbiArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
@@ -206,14 +210,12 @@ class PreEmploymentFragment extends BaseMVPView {
     let formArray = []
     this.state.preEmploymentData.map((form, key) => {
       form.documentId === id &&
-      form.url.map((resp, key) => {
         formArray.push({
           id : form.documentId,
           name : form.documentType,
           status : form.status,
-          url : resp
+          url : form.url
         })
-      })
     })
     return formArray
   }
@@ -396,9 +398,11 @@ class PreEmploymentFragment extends BaseMVPView {
             <div>
                <PreEmploymentFragments
                 biographicalArray = { this.getFormData(1) }
+                birthCertifArray = { this.getFormData(2) }
+                educationVerificationForm = { this.getFormData(3) }
+                nbiArray = { this.getFormData(6) }
                 sssArray = { this.getFormData(10) }
                 tinArray = { this.getFormData(11) }
-                educationVerificationForm = { this.getFormData(3) }
                 preEmpPage = { preEmpPage }
                 onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
                 />
