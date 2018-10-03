@@ -1506,6 +1506,16 @@ export default class HRBenefitsService {
     })
   }
 
+  addPagibigLoan (token, pagibigParam) {
+    const objectParam = {
+      deductionLoan : pagibigParam.pagibigInput
+    }
+
+    return this.onboardingClient.put('v1/employees/pagibig/deductions', objectParam, {
+      headers : { token }
+    })
+  }
+
   /* Vaccine Requisition */
 
   validateVaccine (token) {

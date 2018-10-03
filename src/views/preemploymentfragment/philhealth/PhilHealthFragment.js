@@ -7,36 +7,124 @@ import ConnectView from '../../../utils/ConnectView'
 import Presenter from './presenter/PhilHealthPresenter'
 
 import {
+  Modal,
   GenericButton,
   CircularLoader,
-  MultipleFileUploader,
+  MultipleAttachments,
   GenericInput,
   Card,
   Line,
 } from '../../../ub-components/'
 
 import { Progress } from 'react-sweet-progress'
+import ResponseModal from '../../notice/NoticeResponseModal'
+
+import PhilHealthFormPreviewModal from './modal/PhilHealthFormPreviewModal'
 
 class PhilHealthFragment extends BaseMVPView {
 
   constructor(props) {
     super(props)
+    this.state = {
+      enabledLoader : false,
+      showNoticeResponseModal : false,
+      noticeResponse : '',
+      showPdfViewModal : false,
+      pdfFile: '',
+      philHealthAttachment : [{
+        name : 'PhilHealth'
+      }],
+      count : 2
+    }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(13)
   }
 
-  render () {
-    const sssAttachment = [{
-      name : 'PhilHealth 1',
-    }]
+  onCheckedPdf (link) {
+    this.presenter.getOnBoardingDocument(link)
+  }
 
-    const { percentage } = this.props
+  showPdfFileView (pdfFile) {
+    this.setState({ pdfFile })
+  }
+
+  addAttachmentsFunc (attachment, tempCount) {
+    const attachmentTemp = [...attachment]
+    let newCount = tempCount + 1
+    this.setState({ count : newCount })
+    attachmentTemp.push({
+      name : 'PhilHealth Form ' + tempCount
+    })
+    this.setState({ philHealthAttachment : attachmentTemp })
+  }
+
+  uploadForm () {
+    const {
+      philHealthAttachment
+    } = this.state
+
+    const {
+      philHealthArray
+    } = this.props
+    philHealthArray.map((phil) =>
+      this.presenter.uploadPhilHealthForm(phil.id, philHealthAttachment)
+    )
+  }
+
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse , showNoticeResponseModal : true})
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  render () {
+    const {
+      enabledLoader,
+      showPdfViewModal,
+      pdfFile,
+      count,
+      noticeResponse,
+      showNoticeResponseModal,
+      philHealthAttachment
+    } = this.state
+
+    const { percentage, philHealthArray } = this.props
 
     return (
       <div>
         { super.render() }
+        {
+          enabledLoader &&
+          <Modal>
+          <center>
+          <CircularLoader show = { enabledLoader }/>
+          </center>
+          </Modal>
+        }
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false})
+            }}
+            noticeResponse={ noticeResponse }
+          />
+        }
+        {
+          showPdfViewModal &&
+          <PhilHealthFormPreviewModal
+            pdfFile = { pdfFile }
+            onClose = { () => this.setState({ showPdfViewModal: false }) }
+            />
+        }
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
@@ -51,16 +139,79 @@ class PhilHealthFragment extends BaseMVPView {
             percent={ percentage } />
         </div>
         <br/>
-          <GenericInput
-          text = { 'SSS Number' }
-          />
+        <div className = { 'abc-grid-card' }>
+        <Card
+          className = { 'abc-card' }
+          onClick = { () => {
+            this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
+            this.setState({ showPdfViewModal : true  })
+            }
+          }>
+          <div className = { 'abc-grid-x2' }>
+            <h2>PhilHealth Form</h2>
+            <div>
+              <span
+                className = { 'abc-icon biographical-seemore-button' }/>
+            </div>
+          </div>
+        </Card>
+        </div>
         <br/>
         <Line />
         <br/>
-          <MultipleFileUploader
-            placeholder = { 'PhilHealth Attachments' }
-            fileArray = { sssAttachment }
-            />
+        {
+          philHealthAttachment.length !== 0  &&
+          philHealthArray.map((status) =>
+            status.status === 2 ?
+            <div>
+            <center>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents has been <b>submitted for confirmation</b>.
+              </h4>
+            </center>
+            </div>
+            :
+            status.status === 4 ?
+            <div>
+            <center>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents are <b>verified</b>.
+              </h4>
+            </center>
+            </div>
+            :
+            <div>
+            <div className = { 'grid-global' }>
+              <h2></h2>
+              <div className = { 'text-align-right' }>
+                <GenericButton
+                  text = { 'Add Attachments' }
+                  onClick = { () => this.addAttachmentsFunc(philHealthAttachment, count) }
+                  />
+              </div>
+            </div>
+            <h4>
+              <br/>
+              Form Attachments
+            </h4>
+            <MultipleAttachments
+              count = { count }
+              countFunc = { (count) => this.setState({ count }) }
+              placeholder = { '' }
+              fileArray = { philHealthAttachment }
+              setFile = { (philHealthAttachment) =>
+                  this.setState({ philHealthAttachment })
+              }
+              />
+              <center>
+               <GenericButton
+                 text = { 'Upload' }
+                 onClick = { () => this.uploadForm()  }
+               />
+             </center>
+            </div>
+          )
+         }
       </div>
     )
   }

@@ -139,18 +139,22 @@ class TinFragment extends BaseMVPView {
         <br/>
         {
           tinArray.map((status) =>
-          status.status === 3 ?
+          status.status === 2 ?
           <div>
+          <center>
             <h4 className = { 'font-size-14px font-weight-lighter' }>
-              Your documents has been submitted for confirmation.
+              Your documents has been <b>submitted for confirmation</b>.
             </h4>
+          </center>
           </div>
           :
           status.status === 4 ?
           <div>
+          <center>
             <h4 className = { 'font-size-14px font-weight-lighter' }>
-              Your documents are verified.
+              Your documents are <b>verified</b>.
             </h4>
+          </center>
           </div>
           :
           <div>

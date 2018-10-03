@@ -998,6 +998,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  addPagibigLoan (token, pagibigParam) {
+    return this.service.addPagibigLoan(token, pagibigParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Vaccines Requisitions */
 
 

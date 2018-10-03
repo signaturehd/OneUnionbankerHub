@@ -8,13 +8,19 @@ import ConnectView from '../../../utils/ConnectView'
 import {
   Modal,
   GenericButton,
+  GenericInput,
   CircularLoader,
-  Card
+  SingleInputModal,
+  MultipleAttachments,
+  Card,
+  Line
 } from '../../../ub-components/'
 
 import Presenter from './presenter/PagIbigLoanPresenter'
 
 import { Progress } from 'react-sweet-progress'
+
+import ResponseModal from '../../notice/NoticeResponseModal'
 
 import "react-sweet-progress/lib/style.css"
 import './styles/loanStyle.css'
@@ -23,8 +29,17 @@ class PagIbigLoanFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      showPdfViewModal : false,
-      pdfFile : ''
+      showDeductModal : false,
+      enabledLoader : false,
+      showNoticeResponseModal : false,
+      noticeResponse : '',
+      deductId : '',
+      deductName : '',
+      deductErrorMessage : '',
+      pagibigLoanAttachment : [{
+        name : 'Pag-IBIG Loan'
+      }],
+      count : 2
     }
   }
 
@@ -32,41 +47,124 @@ class PagIbigLoanFragment extends BaseMVPView {
     this.props.onSendPageNumberToView(15)
   }
 
-  onCheckedPdf (link) {
-    this.presenter.getOnBoardingDocument(link)
+  setFileAttachments (pagibigLoanAttachment) {
+    this.setState({ pagibigLoanAttachment })
   }
 
-  showPdfFileView (pdfFile) {
-    this.setState({ pdfFile })
+  saveForm () {
+    const {
+      deductName
+    } = this.state
+    this.presenter.savePagibigLoan(deductName)
+  }
+
+  uploadForm () {
+    const {
+      pagibigLoanAttachment
+    } = this.state
+
+    const {
+      pagibigLoanArray
+    } = this.props
+    pagibigLoanArray.map((pagibig) =>
+      this.presenter.uploadPagibigLoan(pagibig.id, pagibigLoanAttachment)
+    )
+  }
+
+  addAttachmentsFunc (attachment, tempCount) {
+    const attachmentTemp = [...attachment]
+    let newCount = tempCount + 1
+    this.setState({ count : newCount })
+    attachmentTemp.push({
+      name : 'Pag-IBIG Loan ' + tempCount
+    })
+    this.setState({ pagibigLoanAttachment : attachmentTemp })
+  }
+
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse , showNoticeResponseModal : true})
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
   }
 
   render() {
     const {
       history,
-      percentage
+      percentage,
+      pagibigLoanArray
     } = this.props
 
     const {
-      showPdfViewModal,
-      pdfFile
+      showDeductModal,
+      enabledLoader,
+      showNoticeResponseModal,
+      noticeResponse,
+      deductId,
+      deductName,
+      deductErrorMessage,
+      pagibigLoanAttachment,
+      count
     } = this.state
 
-    const documentCardOptions = [
+    const deductArray = [
       {
-        id: 0,
-        title: 'Download Banko Sentral ng Pilipinas(BSP) Certificate',
-        link: '/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf',
+        id: 1,
+        name: 'Payroll'
+      },
+      {
+        id: 2,
+        name: 'One-Time Payment'
       }
     ]
+
     return(
     <div>
       { super.render() }
+      {
+        enabledLoader &&
+        <Modal>
+        <center>
+        <CircularLoader show = { enabledLoader }/>
+        </center>
+        </Modal>
+      }
+      {
+        showDeductModal &&
+        <SingleInputModal
+          label = { 'Deduction Loan values' }
+          inputArray = { deductArray }
+          selectedArray = { (deductId, deductName) =>
+            this.setState({
+              deductId,
+              deductName,
+              deductErrorMessage : '',
+              showDeductModal : false
+            })
+          }
+          onClose = { () => this.setState({ showDeductModal : false }) }
+        />
+      }
+      {
+        showNoticeResponseModal &&
+        <ResponseModal
+          onClose={ () => {
+            this.setState({ showNoticeResponseModal : false})
+          }}
+          noticeResponse={ noticeResponse }
+        />
+      }
       <div>
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
             <h2 className={ 'header-margin-default text-align-left' }>Pag-IBIG Loan</h2>
-            <h2>Setup your Pa-IBIG.</h2>
+            <h2>Setup your Pag-IBIG.</h2>
           </div>
           <Progress
             type = { 'circle' }
@@ -78,27 +176,73 @@ class PagIbigLoanFragment extends BaseMVPView {
         <br/>
         <h2>Where do you want to deduct your loan?</h2>
         <div className = { 'bsp-grid-card' }>
-          {
-            documentCardOptions.map((resp, key) =>
-            <Card
-              key = { key }
-              className = { 'bsp-card' }>
-              <div className = { 'bsp-grid-x2' }>
-                <h2> { resp.title } </h2>
-                <div>
-                  <span
-                    onClick = { () => {
-                      this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
-                      this.setState({ showPdfViewModal : true  })
-                    }
-                  }
-                    className = { 'bsp-icon bsp-seemore-button' }/>
-                </div>
-              </div>
-            </Card>
-            )
-          }
+          <GenericInput
+            value = { deductName }
+            onClick = { () => this.setState({ showDeductModal : true }) }
+            errorMessage = { deductErrorMessage }
+          />
+          <center>
+          <GenericButton
+          text = { 'Save' }
+          onClick = { () => this.saveForm() }/>
+          </center>
         </div>
+        <br/>
+        <Line />
+        <br/>
+        {
+          pagibigLoanAttachment.length !== 0  &&
+          pagibigLoanArray.map((status) =>
+            status.status === 2 ?
+            <div>
+            <center>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents has been <b>submitted for confirmation</b>.
+              </h4>
+            </center>
+            </div>
+            :
+            status.status === 4 ?
+            <div>
+            <center>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents are <b>verified</b>.
+              </h4>
+            </center>
+            </div>
+            :
+            <div>
+            <div className = { 'grid-global' }>
+              <h2></h2>
+              <div className = { 'text-align-right' }>
+                <GenericButton
+                  text = { 'Add Attachments' }
+                  onClick = { () => this.addAttachmentsFunc(pagibigLoanAttachment, count) }
+                  />
+              </div>
+            </div>
+            <h4>
+              <br/>
+              Form Attachments
+            </h4>
+            <MultipleAttachments
+              count = { count }
+              countFunc = { (count) => this.setState({ count }) }
+              placeholder = { '' }
+              fileArray = { pagibigLoanAttachment }
+              setFile = { (pagibigLoanAttachment) =>
+                  this.setState({ pagibigLoanAttachment })
+              }
+              />
+              <center>
+               <GenericButton
+                 text = { 'Upload' }
+                 onClick = { () => this.uploadForm()  }
+               />
+             </center>
+            </div>
+          )
+         }
       </div>
     </div>
     )
