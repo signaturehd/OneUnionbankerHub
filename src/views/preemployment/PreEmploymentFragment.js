@@ -77,6 +77,7 @@ function  PreEmploymentFragments (props)  {
   const educationVerificationForm = props.educationVerificationForm
   const birthCertifArray = props.birthCertifArray
   const nbiArray = props.nbiArray
+  const bir1902Array = props.bir1902Array
   if (pageNumber === 0) {
     return <AffirmationDocumentFragment
       percentage = { percentage }
@@ -145,6 +146,7 @@ function  PreEmploymentFragments (props)  {
       />
   } else if (pageNumber === 12) {
     return <Bir1902FormFragment
+      bir1902Array = { bir1902Array }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
     />
@@ -403,6 +405,7 @@ class PreEmploymentFragment extends BaseMVPView {
                 nbiArray = { this.getFormData(6) }
                 sssArray = { this.getFormData(10) }
                 tinArray = { this.getFormData(11) }
+                bir1902Array = { this.getFormData(12) }
                 preEmpPage = { preEmpPage }
                 onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
                 />

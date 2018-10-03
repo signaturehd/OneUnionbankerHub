@@ -27,14 +27,21 @@ export default class SSSPresenter {
     })
   }
 
-  addEmployeeSSS (sssInput, sssId, sssAttachment) {
+  saveEmployeeSSS (sssInput) {
     this.view.showCircularLoader()
-    this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(sssId, sssAttachment))
+    this.addEmployeeSSSInteractor.execute(employeeSSSParam(sssInput))
     .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.noticeResponseResp(data)
     }, error => {
+      this.view.hideCircularLoader()
       this.view.noticeResponseResp(error)
     })
-    this.addEmployeeSSSInteractor.execute(employeeSSSParam(sssInput))
+  }
+
+  uploadEmployeeSSS (sssId, sssAttachment) {
+    this.view.showCircularLoader()
+    this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(sssId, sssAttachment))
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.noticeResponseResp(data)

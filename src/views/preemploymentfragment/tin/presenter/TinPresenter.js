@@ -26,14 +26,21 @@ export default class TinPresenter {
     })
   }
 
-  addEmployeeTin (tinInput, tinId, tinAttachment) {
+  saveEmployeeTin (tinInput) {
     this.view.showCircularLoader()
-    this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(tinId, tinAttachment))
+    this.addEmployeeTinInteractor.execute(employeeTinParam(tinInput))
     .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.noticeResponseResp(data)
     }, error => {
+      this.view.hideCircularLoader()
       this.view.noticeResponseResp(error)
     })
-    this.addEmployeeTinInteractor.execute(employeeTinParam(tinInput))
+  }
+
+  uploadEmployeeTin (tinId, tinAttachment) {
+    this.view.showCircularLoader()
+    this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(tinId, tinAttachment))
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.noticeResponseResp(data)

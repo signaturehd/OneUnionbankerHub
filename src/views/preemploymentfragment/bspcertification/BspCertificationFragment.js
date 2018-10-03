@@ -89,17 +89,17 @@ class BspCertificationFragment extends BaseMVPView {
             documentCardOptions.map((resp, key) =>
             <Card
               key = { key }
-              className = { 'bsp-card' }>
+              className = { 'bsp-card' }
+              onClick = { () => {
+                this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
+                this.setState({ showPdfViewModal : true  })
+                }
+              }>
               <div className = { 'bsp-grid-x2' }>
                 <h2> { resp.title } </h2>
                 <div>
                   <span
-                    onClick = { () => {
-                      this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
-                      this.setState({ showPdfViewModal : true  })
-                    }
-                  }
-                    className = { 'bsp-icon bsp-seemore-button' }/>
+                    className = { 'abc-icon biographical-seemore-button' }/>
                 </div>
               </div>
             </Card>

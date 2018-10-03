@@ -22,22 +22,15 @@ import ResponseModal from '../../notice/NoticeResponseModal'
 import "react-sweet-progress/lib/style.css"
 import './styles/authorizationStyle.css'
 
+import AuthorizationBackgroundPreviewModal from './modal/AuthorizationBackgroundPreviewModal'
+
 class AuthorizationBackgroundCheckFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
       showPdfViewModal : false,
-      enabledLoader : false,
-      showNoticeResponseModal : false,
-      noticeResponse : '',
-      birthDataFormData: [{
-        name : 'Birth Certificate'
-      }],
-      pdfFile: '',
-      count : 2,
-      biographicalName : ''
+      pdfFile: ''
     }
-    this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
   }
 
   componentDidMount () {
@@ -48,35 +41,8 @@ class AuthorizationBackgroundCheckFragment extends BaseMVPView {
     this.presenter.getOnBoardingDocument(link)
   }
 
-  showAttachments (pdfFile) {
+  showPdfFileView (pdfFile) {
     this.setState({ pdfFile })
-  }
-
-  addAttachmentsFunc (attachment, tempCount) {
-    const attachmentTemp = [...attachment]
-    let newCount = tempCount + 1
-    this.setState({ count : newCount })
-    attachmentTemp.push({
-      name : 'Birth Certificate Attachments ' + tempCount
-    })
-    this.setState({ birthDataFormData : attachmentTemp })
-  }
-
-  submitForm () {
-    const {
-      birthDataFormData
-    } = this.state
-
-    const {
-      birthArray
-    } = this.props
-    birthArray.map((bio) =>
-      this.presenter.addBiographicalData(bio.id, birthDataFormData)
-    )
-  }
-
-  noticeResponseResp (noticeResponse) {
-    this.setState({ noticeResponse , showNoticeResponseModal : true})
   }
 
   hideCircularLoader () {
@@ -90,40 +56,24 @@ class AuthorizationBackgroundCheckFragment extends BaseMVPView {
   render() {
     const {
       history,
-      checkPEUndertaking,
-      percentage,
-      birthArray
+      percentage
     } = this.props
 
     const {
-      enabledLoader,
-      showNoticeResponseModal,
-      noticeResponse,
-      birthDataFormData,
-      biographicalData,
-      biographicalName,
       showPdfViewModal,
-      pdfFile,
-      count
+      pdfFile
     } = this.state
-
-    const bioAttachmentArray = [
-      {
-        name : 'Birth Certificate ' + count
-      }
-    ]
 
     return(
     <div>
-    { super.render() }
-    {
-      enabledLoader &&
-      <Modal>
-      <center>
-      <CircularLoader show = { enabledLoader }/>
-      </center>
-      </Modal>
-    }
+      { super.render() }
+      {
+        showPdfViewModal &&
+        <AuthorizationBackgroundPreviewModal
+          pdfFile = { pdfFile }
+          onClose = { () => this.setState({ showPdfViewModal: false }) }
+          />
+      }
       <div>
         <br/>
           <div className = { 'percentage-grid' }>
@@ -139,33 +89,24 @@ class AuthorizationBackgroundCheckFragment extends BaseMVPView {
           </div>
         <br/>
         <div className = { 'abc-grid-card' }>
-          <Card
-            onClick = { () => {
-              this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
-              this.setState({ showPdfViewModal : true  })
-              }
+        <Card
+          className = { 'abc-card' }
+          onClick = { () => {
+            this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
+            this.setState({ showPdfViewModal : true  })
             }
-            className = { 'abc-card' }>
-            <div className = { 'abc-grid-x2' }>
-              <h2>Birth Certificate</h2>
-              <div>
-                <span className = { 'abc-icon biographical-seemore-button' }/>
-              </div>
+          }>
+          <div className = { 'abc-grid-x2' }>
+            <h2> Authorization For Background Check </h2>
+            <div>
+              <span
+                className = { 'abc-icon biographical-seemore-button' }/>
             </div>
-          </Card>
+          </div>
+        </Card>
         </div>
         <br/>
         <Line />
-        <br/>
-        <div className = { 'grid-global' }>
-          <h2></h2>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-              text = { 'Add Attachments' }
-              onClick = { () => this.addAttachmentsFunc(birthDataFormData, count) }
-              />
-          </div>
-        </div>
       </div>
     </div>
     )

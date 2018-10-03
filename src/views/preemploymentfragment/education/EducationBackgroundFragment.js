@@ -92,9 +92,6 @@ class EducationBackgroundFragment extends BaseMVPView {
       isUpdated : 0,
       updateMode : false
     })
-    torFormData.push({
-      name : 'Transcript of Records'
-    })
   }
 
   checkedEducationData(educationCardHolder) {

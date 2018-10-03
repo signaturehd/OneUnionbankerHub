@@ -23,9 +23,9 @@ export default class Bir1902FormPresenter {
     })
   }
 
-  addBiographicalData (bioId, bioAttachment) {
+  uploadBir1902Form (birId, birAttachment) {
     this.view.showCircularLoader()
-    this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(bioId, bioAttachment))
+    this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(birId, birAttachment))
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.noticeResponseResp(data)

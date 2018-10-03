@@ -30,8 +30,8 @@ class Bir1902FormFragment extends BaseMVPView {
       enabledLoader : false,
       showNoticeResponseModal : false,
       noticeResponse : '',
-      birthDataFormData: [{
-        name : 'Birth Certificate'
+      bir1902FormData: [{
+        name : 'BIR 1902 Form'
       }],
       pdfFile: '',
       count : 2,
@@ -57,21 +57,21 @@ class Bir1902FormFragment extends BaseMVPView {
     let newCount = tempCount + 1
     this.setState({ count : newCount })
     attachmentTemp.push({
-      name : 'Birth Certificate Attachments ' + tempCount
+      name : 'BIR 1902 Form ' + tempCount
     })
-    this.setState({ birthDataFormData : attachmentTemp })
+    this.setState({ bir1902FormData : attachmentTemp })
   }
 
-  submitForm () {
+  uploadForm () {
     const {
-      birthDataFormData
+      bir1902FormData
     } = this.state
 
     const {
-      birthArray
+      bir1902Array
     } = this.props
-    birthArray.map((bio) =>
-      this.presenter.addBiographicalData(bio.id, birthDataFormData)
+    bir1902Array.map((bir) =>
+      this.presenter.uploadBir1902Form(bir.id, bir1902FormData)
     )
   }
 
@@ -92,14 +92,14 @@ class Bir1902FormFragment extends BaseMVPView {
       history,
       checkPEUndertaking,
       percentage,
-      birthArray
+      bir1902Array
     } = this.props
 
     const {
       enabledLoader,
       showNoticeResponseModal,
       noticeResponse,
-      birthDataFormData,
+      bir1902FormData,
       biographicalData,
       biographicalName,
       showPdfViewModal,
@@ -124,6 +124,15 @@ class Bir1902FormFragment extends BaseMVPView {
       </center>
       </Modal>
     }
+    {
+      showNoticeResponseModal &&
+      <ResponseModal
+        onClose={ () => {
+          this.setState({ showNoticeResponseModal : false})
+        }}
+        noticeResponse={ noticeResponse }
+      />
+    }
       <div>
         <br/>
           <div className = { 'percentage-grid' }>
@@ -147,7 +156,7 @@ class Bir1902FormFragment extends BaseMVPView {
             }
             className = { 'abc-card' }>
             <div className = { 'abc-grid-x2' }>
-              <h2>Birth Certificate</h2>
+              <h2>Download BIR 1902 Form</h2>
               <div>
                 <span className = { 'abc-icon biographical-seemore-button' }/>
               </div>
@@ -162,10 +171,50 @@ class Bir1902FormFragment extends BaseMVPView {
           <div className = { 'text-align-right' }>
             <GenericButton
               text = { 'Add Attachments' }
-              onClick = { () => this.addAttachmentsFunc(birthDataFormData, count) }
+              onClick = { () => this.addAttachmentsFunc(bir1902FormData, count) }
               />
           </div>
         </div>
+        {
+          bir1902FormData.length !== 0  &&
+          bir1902Array.map((status) =>
+            status.status === 2 ?
+            <div>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents has been submitted for confirmation.
+              </h4>
+            </div>
+            :
+            status.status === 4 ?
+            <div>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents are verified.
+              </h4>
+            </div>
+            :
+            <div>
+            <h4>
+              <br/>
+              Form Attachments
+            </h4>
+            <MultipleAttachments
+              count = { count }
+              countFunc = { (count) => this.setState({ count }) }
+              placeholder = { '' }
+              fileArray = { bir1902FormData }
+              setFile = { (bir1902FormData) =>
+                  this.setState({ bir1902FormData })
+              }
+              />
+              <center>
+               <GenericButton
+                 text = { 'Upload' }
+                 onClick = { () => this.uploadForm()  }
+               />
+             </center>
+            </div>
+          )
+         }
       </div>
     </div>
     )

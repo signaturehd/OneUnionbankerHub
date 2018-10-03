@@ -44,9 +44,15 @@ class TinFragment extends BaseMVPView {
     this.setState({ tinInput : tinData.tin })
   }
 
-  submitForm () {
+  saveForm () {
     const {
-      tinInput,
+      tinInput
+    } = this.state
+    this.presenter.saveEmployeeTin(tinInput)
+  }
+
+  uploadForm () {
+    const {
       tinAttachment
     } = this.state
 
@@ -54,7 +60,7 @@ class TinFragment extends BaseMVPView {
       tinArray
     } = this.props
     tinArray.map((tin) =>
-      this.presenter.addEmployeeTin(tinInput, tin.id, tinAttachment)
+      this.presenter.uploadEmployeeTin(tin.id, tinAttachment)
     )
   }
 
@@ -123,17 +129,47 @@ class TinFragment extends BaseMVPView {
             onChange = { e => this.setState({ tinInput : e.target.value }) }
           />
         <br/>
+          <center>
+          <GenericButton
+          text = { 'Save' }
+          onClick = { () => this.saveForm() }/>
+          </center>
+        <br/>
         <Line />
         <br/>
+        {
+          tinArray.map((status) =>
+          status.status === 3 ?
+          <div>
+            <h4 className = { 'font-size-14px font-weight-lighter' }>
+              Your documents has been submitted for confirmation.
+            </h4>
+          </div>
+          :
+          status.status === 4 ?
+          <div>
+            <h4 className = { 'font-size-14px font-weight-lighter' }>
+              Your documents are verified.
+            </h4>
+          </div>
+          :
+          <div>
+            <h4>
+              TIN Attachments
+            </h4>
+            <br/>
           <MultipleFileUploader
-            placeholder = { 'TIN Attachments' }
+            placeholder = { '' }
             fileArray = { tinAttachment }
             />
             <center>
             <GenericButton
-            text = { 'Save' }
-            onClick = { () => this.submitForm() }/>
+            text = { 'Upload' }
+            onClick = { () => this.uploadForm() }/>
             </center>
+          </div>
+        )
+      }
       </div>
     )
   }

@@ -48,9 +48,15 @@ class SSSFragment extends BaseMVPView {
     this.setState({ sssAttachment })
   }
 
-  submitForm () {
+  saveForm () {
     const {
-      sssInput,
+      sssInput
+    } = this.state
+    this.presenter.saveEmployeeSSS(sssInput)
+  }
+
+  uploadForm () {
+    const {
       sssAttachment
     } = this.state
 
@@ -58,7 +64,7 @@ class SSSFragment extends BaseMVPView {
       sssArray
     } = this.props
     sssArray.map((sss) =>
-      this.presenter.addEmployeeSSS(sssInput, sss.id, sssAttachment)
+      this.presenter.uploadEmployeeSSS(sss.id, sssAttachment)
     )
   }
 
@@ -126,18 +132,48 @@ class SSSFragment extends BaseMVPView {
             onChange = { e => this.setState({ sssInput : e.target.value }) }
           />
         <br/>
+        <center>
+        <GenericButton
+        text = { 'Save' }
+        onClick = { () => this.saveForm() }/>
+        </center>
+        <br/>
         <Line />
         <br/>
+        {
+          sssArray.map((status) =>
+          status.status === 2 ?
+          <div>
+            <h4 className = { 'font-size-14px font-weight-lighter' }>
+              Your documents has been submitted for confirmation.
+            </h4>
+          </div>
+          :
+          status.status === 4 ?
+          <div>
+            <h4 className = { 'font-size-14px font-weight-lighter' }>
+              Your documents are verified.
+            </h4>
+          </div>
+          :
+          <div>
+            <h4>
+              SSS Attachments
+            </h4>
+            <br/>
           <MultipleFileUploader
-            placeholder = { 'SSS Attachments' }
+            placeholder = { '' }
             fileArray = { sssAttachment }
             setFile = { (resp) => this.setAttachments(resp) }
             />
           <center>
           <GenericButton
-          text = { 'Save' }
-          onClick = { () => this.submitForm() }/>
+          text = { 'Upload' }
+          onClick = { () => this.uploadForm() }/>
           </center>
+        </div>
+        )
+        }
       </div>
     )
   }
