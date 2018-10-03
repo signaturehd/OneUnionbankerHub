@@ -22,40 +22,18 @@ class LaptopLeaseCardComponent extends Component {
 
   render () {
     const {
-      loanType,
-      history,
-      laptopModel,
-      carBrand,
-      screenSize,
-      primaryColor,
-      solRCDefault,
-      solRC,
-      solId,
-      solIdErrorMessage,
-      cmUnit,
-      secondaryColor,
-      showQuotation,
-      showFileUpload,
-      showLaptopDeliveryOption,
-      onlaptopModelValidateFunc,
-      onValidateyearFunc,
-      onValidatePrimaryColor,
-      onValidateSecondaryColor,
-      onValidateSolRC,
-      onShowEnterSolRCModalFunc,
-      onShowInsurancePaymentFunc,
-      insurancePayment,
-      onChangeSolRCFunc,
-      onChangeSolIdFunc,
-      solRCErrorMessage,
+      setAmount,
+      amount,
+      setColor,
+      color,
+      setTerms,
+      terms,
+      showEditMode,
       onSubmit,
       onEdit,
       onContinue,
-      yearErrorMessage,
-      showEditMode,
-      getFileArray,
-      attachments
-    }=this.props
+      showFileUpload
+    } = this.props
 
     return (
       <div className={'carview-container'}>
@@ -68,94 +46,29 @@ class LaptopLeaseCardComponent extends Component {
 
             <div className = { 'grid-global' }>
               <GenericInput
-                placeholder = { 'Brand' }
+                placeholder = { 'Amount' }
                 errorMessage = { '' }
-                onChange ={ () => setLaptopBrand(e.target.value) }
+                onChange ={ () => setAmount(e.target.value) }
                 text = { 'Brands' }
                 disabled = { showEditMode }
-                value = { carBrand }
+                value = { amount }
                 />
               <GenericInput
-                placeholder = { 'Model' }
+                placeholder = { 'Color' }
                 errorMessage = { '' }
                 disabled = { showEditMode }
                 text = { 'Model' }
-                onChange = { (e) => setLaptopModel(e.target.value) }
-                value = { laptopModel }
+                onChange = { (e) => setColor(e.target.value) }
+                value = { color }
                 />
-            </div>
-            <div className = { 'grid-global' }>
               <GenericInput
-                value = { screenSize }
+                placeholder = { 'Terms' }
+                errorMessage = { '' }
                 disabled = { showEditMode }
-                maxLength = { 4 }
-                onChange = { (e) => setScreenSize(e.target.value) }
-                text = { 'Screen size' }
-                errorMessage = { yearErrorMessage }
-                disabled = { showEditMode }
+                text = { 'Model' }
+                onChange = { (e) => setTerms(e.target.value) }
+                value = { terms }
                 />
-                <GenericInput
-                  value = { secondaryColor }
-                  disabled = { showEditMode }
-                  hint = { '(e.g) Red, Black, White & etc.' }
-                  onChange = { (e) => setColor(e.target.value)  }
-                  maxLength = { 20 }
-                  errorMessage = { '' }
-                  text = { 'Color Family' }
-                />
-            </div>
-            <div className = { 'grid-global' }>
-              <GenericInput
-                value = { primaryColor }
-                onChange = { (e) => setOperatingSyatem(e.target.value)  }
-                maxLength = { 20 }
-                errorMessage = { '' }
-                disabled = { showEditMode }
-                text = { 'Operating System' }
-              />
-              <GenericInput
-                value = { secondaryColor }
-                disabled = { showEditMode }
-                onChange = { (e) => setProcessorType(e.target.value)  }
-                maxLength = { 20 }
-                errorMessage = { '' }
-                text = { 'Processor Type' }
-              />
-            </div>
-            <div className = { 'grid-global' }>
-              <GenericInput
-                disabled = { showEditMode }
-                value = { insurancePayment }
-                onClick = { () => setHardDriveCapacity() }
-                readOnly
-                errorMessage = { '' }
-                text = { 'Hard Drive Capacity' }
-              />
-              <GenericInput
-                value = { secondaryColor }
-                disabled = { showEditMode }
-                onChange = { (e) => setSystemMemory(e.target.value)  }
-                maxLength = { 20 }
-                errorMessage = { '' }
-                text = { 'System Memory' }
-              />
-            </div>
-            <div className = { 'grid-global' }>
-              <GenericInput
-                disabled = { showEditMode }
-                value = { graphicsCard && graphicsCard }
-                onChange = { (e) => setGraphicsCard(e.target.value) }
-                errorMessage = { solIdErrorMessage }
-                text = { 'Graphics Card' }
-                maxLength = { 20 }
-              />
-              <GenericInput
-                disabled = { showEditMode }
-                value = { estimatedCost && estimatedCost }
-                onChange = { (e) => setEstimatedCost(e.target.value) }
-                text = { 'Estimated Cost' }
-                maxLength = { 20 }
-              />
             </div>
               <GenericInput
                 value = { deliveryOption }
@@ -217,38 +130,16 @@ class LaptopLeaseCardComponent extends Component {
 }
 
 LaptopLeaseCardComponent.propTypes = {
-  loanType : PropTypes.number,
-  screenSize : PropTypes.string,
-  setSelectedNavigation: PropTypes.func,
-  getFileArray: PropTypes.func,
-  onShowInsurancePaymentFunc: PropTypes.func,
-  insurancePayment: PropTypes.string,
-  history: PropTypes.object,
-  carBrand: PropTypes.string,
-  solRCDefault: PropTypes.string,
-  solRC: PropTypes.string,
-  solId: PropTypes.string,
-  onChangeSolIdFunc: PropTypes.func,
-  solIdErrorMessage: PropTypes.string,
-  cmUnit: PropTypes.string,
-  laptopModel: PropTypes.string,
-  primaryColor: PropTypes.string,
-  secondaryColor: PropTypes.string,
-  yearErrorMessage: PropTypes.string,
-  primaryColor: PropTypes.bool,
-  showQuotation: PropTypes.bool,
-  showFileUpload: PropTypes.bool,
-  onlaptopModelValidateFun: PropTypes.func,
-  onChangeSolRCFunc: PropTypes.func,
-  onValidateyearFunc: PropTypes.func,
-  onValidatePrimaryColor: PropTypes.func,
-  onValidateSecondaryColor: PropTypes.func,
-  onValidateSolRC: PropTypes.func,
-  onShowEnterSolRCModalFunc: PropTypes.func,
+  setAmount: PropTypes.func,
+  setColor: PropTypes.func,
+  setTerms: PropTypes.func,
+  amount: PropTypes.string,
+  color: PropTypes.string,
+  terms: PropTypes.string,
+  showEditMode: PropTypes.bool,
   onSubmit: PropTypes.func,
-  onSubmit: PropTypes.func,
+  onEdit: PropTypes.func,
   onContinue: PropTypes.func,
-  attachments : PropTypes.array
 }
 
 export default LaptopLeaseCardComponent

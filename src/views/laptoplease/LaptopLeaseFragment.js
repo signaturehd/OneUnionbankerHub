@@ -242,38 +242,6 @@ class LaptopLeaseFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/')
   }
 
-  formSubmission () {
-    const {
-      carBrand,
-      laptopModel,
-      screenSize,
-      solRC,
-      insurancePayment,
-      cMUnit,
-      primaryColor,
-      secondaryColor,
-      file,
-      leaseMode,
-      insuranceId,
-      solId,
-      carValidate
-    } = this.state
-
-    const solRCChecked = carValidate.solRC ? carValidate.solRC : solRC
-
-    this.presenter.addCarRequest(
-      carBrand,
-      laptopModel,
-      screenSize,
-      leaseMode,
-      solRCChecked,
-      solId,
-      insuranceId,
-      cMUnit,
-      primaryColor,
-      secondaryColor,
-      file ? file : null)
-  }
 
   render () {
     const {
@@ -445,36 +413,15 @@ class LaptopLeaseFragment extends BaseMVPView {
              </center> :
             <FormComponent
               showEditMode = { showEditMode }
-              carBrand = { carBrand }
-              laptopModel = { laptopModel }
-              screenSize = { screenSize }
-              yearErrorMessage = { yearErrorMessage }
-              solRC = { solRC }
-              solId = { solId }
-              solIdErrorMessage = { solIdErrorMessage }
-              showQuotation = { showQuotation }
-              showFileUpload = { showFileUpload }
-              secondaryColor = { secondaryColor }
-              primaryColor = { primaryColor }
-              solRCDefault = { carValidate.solRC }
-              cmUnit = { carValidate.unit }
-              attachments = { attachmentsRequired }
-              insurancePayment = { insurancePayment }
-              onChangeSolRCFunc = { (e) => this.validateSolRC(e) }
-              onChangeSolIdFunc = { (e) => this.validateSolId(e) }
-              solRCErrorMessage = { solRCErrorMessage }
-              getFileArray = { (resp) => this.setFileAttachments(resp) }
-              onShowInsurancePaymentFunc = { () => this.setState({ showInsurancePaymentModal : true }) }
-              showLaptopDeliveryOption = { () => this.setState({ showLaptopDeliveryOption : true }) }
-              onlaptopModelValidateFunc = { (resp) => this.validateInputLaptopModelValue(resp) }
-              onValidateyearFunc = { (resp) => this.validateYear(resp) }
-              onValidatePrimaryColor = { (resp) => this.validateInputPrimaryColor(resp) }
-              onValidateSecondaryColor = { (resp) => this.validateInputSecondaryColor(resp) }
-              onValidateSolRC = { (resp) => this.validateInputNumber(resp) }
-              onShowEnterSolRCModalFunc = { () => this.setState({ showEnterSolRCModal : true }) }
+              setAmount = { this.presenter::setAmount }
+              setColor = { this.presenter::setColor }
+              setTerms = { this.presenter::setTerms }
+              amount = { amount }
+              color = { color }
+              terms = { terms }
               onContinue={ () =>
                 this.sendFormData()
-                }
+              }
               onEdit = { () => this.setState({ showEditMode : false })  }
               onSubmit = { () => this.formSubmission()  }
             />
