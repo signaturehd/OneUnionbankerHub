@@ -7,36 +7,124 @@ import ConnectView from '../../../utils/ConnectView'
 import Presenter from './presenter/PagIbigPresenter'
 
 import {
+  Modal,
   GenericButton,
   CircularLoader,
-  MultipleFileUploader,
+  MultipleAttachments,
   GenericInput,
   Card,
   Line,
 } from '../../../ub-components/'
 
 import { Progress } from 'react-sweet-progress'
+import ResponseModal from '../../notice/NoticeResponseModal'
+
+import PagibigFormPreviewModal from './modal/PagibigFormPreviewModal'
 
 class PagIbigFragment extends BaseMVPView {
 
   constructor(props) {
     super(props)
+    this.state = {
+      enabledLoader : false,
+      showNoticeResponseModal : false,
+      noticeResponse : '',
+      showPdfViewModal : false,
+      pdfFile: '',
+      pagibigAttachment : [{
+        name : 'Pag-IBIG Form'
+      }],
+      count : 2
+    }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(14)
   }
 
-  render () {
-    const phAttachment = [{
-      name : 'Pag-IBIG 1',
-    }]
+  onCheckedPdf (link) {
+    this.presenter.getOnBoardingDocument(link)
+  }
 
-    const { percentage } = this.props
+  showPdfFileView (pdfFile) {
+    this.setState({ pdfFile })
+  }
+
+  addAttachmentsFunc (attachment, tempCount) {
+    const attachmentTemp = [...attachment]
+    let newCount = tempCount + 1
+    this.setState({ count : newCount })
+    attachmentTemp.push({
+      name : 'Pag-IBIG Form ' + tempCount
+    })
+    this.setState({ pagibigAttachment : attachmentTemp })
+  }
+
+  uploadForm () {
+    const {
+      pagibigAttachment
+    } = this.state
+
+    const {
+      pagibigArray
+    } = this.props
+    pagibigArray.map((pagibig) =>
+      this.presenter.uploadPagibigForm(pagibig.id, pagibigAttachment)
+    )
+  }
+
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse , showNoticeResponseModal : true})
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  render () {
+    const {
+      enabledLoader,
+      showPdfViewModal,
+      pdfFile,
+      count,
+      noticeResponse,
+      showNoticeResponseModal,
+      pagibigAttachment
+    } = this.state
+
+    const { percentage, pagibigArray } = this.props
 
     return (
       <div>
         { super.render() }
+        {
+          enabledLoader &&
+          <Modal>
+          <center>
+          <CircularLoader show = { enabledLoader }/>
+          </center>
+          </Modal>
+        }
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false})
+            }}
+            noticeResponse={ noticeResponse }
+          />
+        }
+        {
+          showPdfViewModal &&
+          <PagibigFormPreviewModal
+            pdfFile = { pdfFile }
+            onClose = { () => this.setState({ showPdfViewModal: false }) }
+            />
+        }
         <div className = { 'percentage-grid' }>
           <div>
           <h2 className={ 'header-margin-default text-align-left' }>Pag-IBIG</h2>
@@ -50,16 +138,79 @@ class PagIbigFragment extends BaseMVPView {
             percent={ percentage } />
         </div>
         <br/>
-          <GenericButton
-            text = { 'Taxpayer Identification Number(TIN)' }
-          />
+          <div className = { 'abc-grid-card' }>
+          <Card
+            className = { 'abc-card' }
+            onClick = { () => {
+              this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
+              this.setState({ showPdfViewModal : true  })
+              }
+            }>
+            <div className = { 'abc-grid-x2' }>
+              <h2>Taxpayer Identification Number(TIN)</h2>
+              <div>
+                <span
+                  className = { 'abc-icon biographical-seemore-button' }/>
+              </div>
+            </div>
+          </Card>
+          </div>
         <br/>
         <Line />
         <br/>
-          <MultipleFileUploader
-            placeholder = { 'Pag-IBIG Attachments' }
-            fileArray = { phAttachment }
-            />
+          {
+            pagibigAttachment.length !== 0  &&
+            pagibigArray.map((status) =>
+              status.status === 2 ?
+              <div>
+              <center>
+                <h4 className = { 'font-size-14px font-weight-lighter' }>
+                  Your documents has been <b>submitted for confirmation</b>.
+                </h4>
+              </center>
+              </div>
+              :
+              status.status === 4 ?
+              <div>
+              <center>
+                <h4 className = { 'font-size-14px font-weight-lighter' }>
+                  Your documents are <b>verified</b>.
+                </h4>
+              </center>
+              </div>
+              :
+              <div>
+              <div className = { 'grid-global' }>
+                <h2></h2>
+                <div className = { 'text-align-right' }>
+                  <GenericButton
+                    text = { 'Add Attachments' }
+                    onClick = { () => this.addAttachmentsFunc(pagibigAttachment, count) }
+                    />
+                </div>
+              </div>
+              <h4>
+                <br/>
+                Form Attachments
+              </h4>
+              <MultipleAttachments
+                count = { count }
+                countFunc = { (count) => this.setState({ count }) }
+                placeholder = { '' }
+                fileArray = { pagibigAttachment }
+                setFile = { (pagibigAttachment) =>
+                    this.setState({ pagibigAttachment })
+                }
+                />
+                <center>
+                 <GenericButton
+                   text = { 'Upload' }
+                   onClick = { () => this.uploadForm()  }
+                 />
+               </center>
+              </div>
+            )
+          }
       </div>
     )
   }

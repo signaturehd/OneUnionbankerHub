@@ -34,8 +34,7 @@ class Bir1902FormFragment extends BaseMVPView {
         name : 'BIR 1902 Form'
       }],
       pdfFile: '',
-      count : 2,
-      biographicalName : ''
+      count : 2
     }
     this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
   }
@@ -100,18 +99,10 @@ class Bir1902FormFragment extends BaseMVPView {
       showNoticeResponseModal,
       noticeResponse,
       bir1902FormData,
-      biographicalData,
-      biographicalName,
       showPdfViewModal,
       pdfFile,
       count
     } = this.state
-
-    const bioAttachmentArray = [
-      {
-        name : 'Birth Certificate ' + count
-      }
-    ]
 
     return(
     <div>
@@ -166,33 +157,39 @@ class Bir1902FormFragment extends BaseMVPView {
         <br/>
         <Line />
         <br/>
-        <div className = { 'grid-global' }>
-          <h2></h2>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-              text = { 'Add Attachments' }
-              onClick = { () => this.addAttachmentsFunc(bir1902FormData, count) }
-              />
-          </div>
-        </div>
+
+        <br/>
         {
           bir1902FormData.length !== 0  &&
           bir1902Array.map((status) =>
             status.status === 2 ?
             <div>
+            <center>
               <h4 className = { 'font-size-14px font-weight-lighter' }>
-                Your documents has been submitted for confirmation.
+                Your documents has been <b>submitted for confirmation</b>.
               </h4>
+            </center>
             </div>
             :
             status.status === 4 ?
             <div>
+            <center>
               <h4 className = { 'font-size-14px font-weight-lighter' }>
-                Your documents are verified.
+                Your documents are <b>verified</b>.
               </h4>
+            </center>
             </div>
             :
             <div>
+            <div className = { 'grid-global' }>
+              <h2></h2>
+              <div className = { 'text-align-right' }>
+                <GenericButton
+                  text = { 'Add Attachments' }
+                  onClick = { () => this.addAttachmentsFunc(bir1902FormData, count) }
+                  />
+              </div>
+            </div>
             <h4>
               <br/>
               Form Attachments
