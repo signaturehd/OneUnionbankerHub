@@ -1137,6 +1137,14 @@ export default class HRBenefitsService {
     })
   }
 
+  addVaccine (token, data) {
+    return this.apiClient.post('v1/vaccinations/submit', {
+      data
+    }, {
+      header : { token }
+    })
+  }
+
   /* Laptop Lease */
 
   getLaptopLease (token) {

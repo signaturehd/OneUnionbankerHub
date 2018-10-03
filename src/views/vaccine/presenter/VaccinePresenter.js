@@ -1,8 +1,11 @@
-import validateVaccineInteractor from '../../../domain/interactor/vaccine/ValidateVaccineInteractor'
+import ValidateVaccineInteractor from '../../../domain/interactor/vaccine/ValidateVaccineInteractor'
+import AddVaccineInteractor from '../../../domain/interactor/vaccine/AddVaccineInteractor'
 
+let storedVaccineList = [], storedDependentList = []
 export default class VaccinePresenter {
   constructor (container) {
-    this.validateVaccineInteractor = new validateVaccineInteractor(container.get('HRBenefitsClient'))
+    this.validateVaccineInteractor = new ValidateVaccineInteractor(container.get('HRBenefitsClient'))
+    this.addVaccineInteractor = new AddVaccineInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -31,6 +34,10 @@ export default class VaccinePresenter {
 
       data &&
       data.dependents.map((dependent, key) => {
+        this.setDependentt({
+          id : dependent.id,
+          name : dependent.name
+        })
         dependentArray.push({
           id : dependent.id,
           name : dependent.name
@@ -44,18 +51,50 @@ export default class VaccinePresenter {
           name : appMode.name
         })
       })
-
       this.view.showVaccineMap(vaccineArray)
       this.view.showDependentMap(dependentArray)
       this.view.showAppModeMap(appModeArray)
     })
-    .subscribe(
-        vaccine => {
-          this.view.hideCircularLoader()
-        },
-        error => {
+    .subscribe(vaccine => {
+        this.view.hideCircularLoader()
+      }, error => {
           this.view.navigate()
-       }
+      }
     )
+  }
+
+  addVaccine () {
+    this.addVaccineInteractor.execute(storedVaccineList)
+      .subscribe(data => {
+
+      })
+  }
+
+  setDependent(dependent) {
+    const storedDependentListArray = storedDependentList.map(item => item.id)
+    if ( !storedDependentListArray.includes(dependent) ) {
+      storedDependentList.push(dependent)
+    } else {
+      storedDependentList.map((item, key) => item.id == dependent.id && storedDependentList.splice(key, 1))
+
+    }
+
+    this.view.setDependentList(dependentArray)
+    // if dependent paramenter is having the data -- remove then push
+
+    // if not push lang
+  }
+
+  setVaccineList (vaccineList) {
+    const storedVaccineListArray = storedVaccineList.map(item => item.id)
+
+    if ( !storedVaccineList.includes(vaccineList) ) {
+      // if not includes add to the array and remove it to the selections
+      this.setDependents(dependentId)
+      storedVaccineList.push(vaccineList)
+    }
+
+
+    this.view.setVaccineList(storedVaccineList)
   }
 }

@@ -47,6 +47,8 @@ class VaccineFragment extends BaseMVPView {
       appModesData : [],
       vaccineCardHolder : []
     }
+
+    this.addVaccine = this.addVaccine.bind(this)
   }
 
   componentDidMount () {
@@ -128,6 +130,10 @@ class VaccineFragment extends BaseMVPView {
     this.setState({showConfirmation: false, noticeResponse })
   }
 
+  addVaccine () {      
+    this.presenter.addVaccine()
+  }
+
   render () {
     const {
       titleChange,
@@ -155,7 +161,8 @@ class VaccineFragment extends BaseMVPView {
       vaccineCardHolder,
       vaccinesData,
       dependentsData,
-      appModesData
+      appModesData,
+      vaccineList
     } = this.state
 
     return (
@@ -277,24 +284,26 @@ class VaccineFragment extends BaseMVPView {
              <CircularLoader show={ this.state.enabledLoader }/>
            </center> :
            <VaccineComponent
-           showEditSubmitButton = { showEditSubmitButton }
-           dependentName = { dependentName }
-           vaccineName = { vaccineName }
-           orderingStart = { orderingStart }
-           orderingEnd = { orderingEnd }
-           cost = { cost }
-           appModeName = { appModeName }
-           vaccineCardHolder = { vaccineCardHolder }
-           dependentErrorMessage = { dependentErrorMessage }
-           vaccineErrorMessage = { vaccineErrorMessage }
-           appModeErrorMessage = { appModeErrorMessage }
-           showDependentFunc = { () => this.showDependentFunc() }
-           showVaccineFunc = { () => this.showVaccineFunc() }
-           showAppModesFunc = { () => this.showAppModesFunc() }
-           editFormDataFunc = { () => this.editFormReview() }
-           showEditSubmitFunc = { (resp) => this.showEditSubmitFunc(resp) }
-           showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
-           setCardHolderDefaultyFunc = { (vaccineCardHolder) => this.setState({ vaccineCardHolder }) }
+             showEditSubmitButton = { showEditSubmitButton }
+             dependentName = { dependentName }
+             vaccineName = { vaccineName }
+             orderingStart = { orderingStart }
+             orderingEnd = { orderingEnd }
+             cost = { cost }
+             appModeName = { appModeName }
+             vaccineList = { vaccineList }
+             onSubmitFunc = { () => this.addVaccine() }
+             vaccineCardHolder = { vaccineCardHolder }
+             dependentErrorMessage = { dependentErrorMessage }
+             vaccineErrorMessage = { vaccineErrorMessage }
+             appModeErrorMessage = { appModeErrorMessage }
+             showDependentFunc = { () => this.showDependentFunc() }
+             showVaccineFunc = { () => this.showVaccineFunc() }
+             showAppModesFunc = { () => this.showAppModesFunc() }
+             editFormDataFunc = { () => this.editFormReview() }
+             showEditSubmitFunc = { (resp) => this.showEditSubmitFunc(resp) }
+             showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
+             setCardHolderDefaultyFunc = { (vaccineCardHolder) => this.setState({ vaccineCardHolder }) }
            />
         }
       </div>

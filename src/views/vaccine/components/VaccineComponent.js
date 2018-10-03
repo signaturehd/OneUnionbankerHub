@@ -37,11 +37,21 @@ class VaccineComponent extends Component {
       setCardHolderDefaultyFunc,
       dependentErrorMessage,
       vaccineErrorMessage,
-      appModeErrorMessage
+      appModeErrorMessage,
+      onSubmitFunc,
+      vaccineList
     } = this.props
 
     return (
       <div className = { 'vaccine-form' } >
+        {
+          vaccineList &&
+          vaccineList.length !== 0 &&
+            <div>
+              <h1>Vaccine List</h1>
+            </div>
+
+        }
         <GenericInput
           text = { 'Dependents' }
           onClick = { () => showDependentFunc() }
@@ -75,7 +85,7 @@ class VaccineComponent extends Component {
             setCard = { (resp) => setCardHolderDefaultyFunc(resp) }
             disabled = { showEditSubmitButton }
             errorMessage = { vaccineErrorMessage }
-            />
+          />
         }
         <br/>
         <Line/>
