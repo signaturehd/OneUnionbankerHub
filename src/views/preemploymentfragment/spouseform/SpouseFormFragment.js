@@ -252,7 +252,7 @@ class SpouseFormFragment extends BaseMVPView {
       id : 1,
       name : 'Living'
     }]
-
+    console.log(contact)
     return(
     <div>
     { super.render() }
@@ -331,6 +331,7 @@ class SpouseFormFragment extends BaseMVPView {
             <GenericInput
               text = { 'Last Name' }
               value = { lastName }
+              maxLength = { 20 }
               errorMessage = { lastName ? '' : lastNameErrorMessage }
               onChange = { (e) => this.setState({ lastName : e.target.value }) }
               />

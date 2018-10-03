@@ -99,6 +99,7 @@ export default class SpousePresenter {
     // } else {
     // }
     this.view.showCircularLoader()
+    console.log('test')
     this.postSpouseInteractor.execute(addSpouseForm(
       firstName, 
       middleName,
@@ -135,7 +136,19 @@ export default class SpousePresenter {
     groupLifeInsurance,
     spouseId
   ) {
-    console.log('test')
+    console.log(  
+    firstName, 
+    middleName,
+    lastName,
+    birthDate,
+    occupation,
+    contact,
+    status,
+    gender,
+    bloodType,
+    healthHospitalizationPlan,
+    groupLifeInsurance,
+    spouseId)
     this.view.showCircularLoader()
     this.putSpouseInteractor.execute(addSpouseForm(
       firstName, 
