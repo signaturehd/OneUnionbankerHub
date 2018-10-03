@@ -983,6 +983,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  putSpouseForm (token, spouseFormParam) {
+    return this.service.putSpouseForm(token, spouseFormParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   getChildren (token) {
     return this.service.getChildren(token)
       .pipe(ServiceErrorOperator())

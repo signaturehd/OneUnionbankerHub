@@ -22,7 +22,7 @@ import Presenter from './presenter/ChildrenPresenter'
 import { Progress } from 'react-sweet-progress'
 
 import "react-sweet-progress/lib/style.css"
-import './styles/financialObligationStyle.css'
+import './styles/childrenStyle.css'
 
 class ChildrenFragment extends BaseMVPView {
   constructor(props) {
@@ -53,7 +53,7 @@ class ChildrenFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(1)
+    this.props.onSendPageNumberToView(18)
     this.presenter.getFinancialStatus()
     this.presenter.getFinancialDetails()
   }

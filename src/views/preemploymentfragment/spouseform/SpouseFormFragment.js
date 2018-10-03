@@ -12,7 +12,7 @@ import {
   Card,
   DatePicker,
   Checkbox,
-  MultipleFileUploader,
+  MultipleAttachments,
 } from '../../../ub-components/'
 
 import { RequiredValidation } from '../../../utils/validate/'
@@ -20,6 +20,8 @@ import { RequiredValidation } from '../../../utils/validate/'
 import Presenter from './presenter/SpousePresenter'
 
 import { Progress } from 'react-sweet-progress'
+
+import NoticeResponseModal from '../../notice/NoticeResponseModal'
 
 import 'react-sweet-progress/lib/style.css'
 import './styles/spouseStyle.css'
@@ -29,7 +31,13 @@ class SpouseFormFragment extends BaseMVPView {
     super(props)
     this.state = {
       bloodObjectParam: [],
+      spouseAttachments: [{
+        id : 0,
+        name : 'Spouse Attachments 1'
+      }],
+      spouseAttachmentsArray: [],
       spouseData : '',
+      count: 1,
       enabledLoader : false,
       spouseId: '',
       lastName: '',
@@ -38,6 +46,7 @@ class SpouseFormFragment extends BaseMVPView {
       occupationName : '',
       contact : '',
       birthDate: '',
+      statusId: '',
       statusName: '',
       gender: '',
       genderErrorMessage: '',
@@ -50,12 +59,13 @@ class SpouseFormFragment extends BaseMVPView {
       firstNameErrorMessage : '',
       middleNameErrorMessage: '',
       lastNameErrorMessage: '',
-      occupationNameErrorMessage: '',
       bloodTypeErrorMessage: '',
       noticeResponse: '',
       editMode : false,
       bloodTypeName: '',
-      showBloodTypeModal : false
+      showBloodTypeModal : false,
+      showNoticeResponseModal: false,
+      showStatusModal: false,
     }
   }
 
@@ -81,7 +91,7 @@ class SpouseFormFragment extends BaseMVPView {
     this.setState({ bloodObjectParam })
   }
 
-  showSpouseDetails (spouseData) {
+  showSpouseDetails (spouseData, editMode) {
     const nullChecker = spouseData && spouseData
     const nullCheckerName = spouseData && spouseData.name
     this.setState({ 
@@ -94,12 +104,14 @@ class SpouseFormFragment extends BaseMVPView {
       contact : nullChecker.contactNumber,
       gender : nullChecker.gender,
       spouseId : nullChecker.id,
+      statusId : nullChecker.status,
+      statusName : nullChecker.status === 0 ? 'Deceased' : 'Living'
     })
-    this.setState({ spouseData })
+    this.setState({ spouseData, editMode })
   }
 
-  noticeResponseFunc (noticeResponse) {
-    this.setState({ noticeResponse })
+  noticeResponseFunc (noticeResponse, showNoticeResponseModal) {
+    this.setState({ noticeResponse, showNoticeResponseModal })
   }
 
   dateFunc (data) {
@@ -130,7 +142,7 @@ class SpouseFormFragment extends BaseMVPView {
     this.setState({ genderErrorMessage })
   }
 
-  postSaveFunction () {
+  saveFunction () {
     const {
       firstName, 
       middleName,
@@ -140,11 +152,11 @@ class SpouseFormFragment extends BaseMVPView {
       contact,
       status,
       gender,
+      bloodType,
       healthHospitalizationPlan,
       groupLifeInsurance,
       spouseId
     } = this.state
-
     this.presenter.postSpouseForm(
       firstName, 
       middleName,
@@ -154,10 +166,43 @@ class SpouseFormFragment extends BaseMVPView {
       contact,
       status,
       gender,
+      bloodType,
       healthHospitalizationPlan,
       groupLifeInsurance,
       spouseId)
   }
+
+  updateFunction () {
+    const {
+      firstName, 
+      middleName,
+      lastName,
+      birthDate,
+      occupation,
+      contact,
+      status,
+      gender,
+      bloodType,
+      healthHospitalizationPlan,
+      groupLifeInsurance,
+      spouseId
+    } = this.state
+
+    this.presenter.putSpouseForm(
+      firstName, 
+      middleName,
+      lastName,
+      birthDate,
+      occupation,
+      contact,
+      status,
+      gender,
+      bloodType,
+      healthHospitalizationPlan,
+      groupLifeInsurance,
+      spouseId)
+  }
+
 
   render() {
     const {
@@ -168,7 +213,10 @@ class SpouseFormFragment extends BaseMVPView {
 
     const {
       bloodObjectParam,
+      spouseAttachmentsArray,
+      spouseAttachments,
       spouseData,
+      count,
       enabledLoader,
       lastName,
       firstName,
@@ -177,6 +225,7 @@ class SpouseFormFragment extends BaseMVPView {
       contact,
       bloodType,
       birthDate,
+      statusId,
       statusName,
       gender,
       genderErrorMessage,
@@ -192,12 +241,31 @@ class SpouseFormFragment extends BaseMVPView {
       spouseId,
       editMode,
       bloodTypeName,
-      showBloodTypeModal
+      showBloodTypeModal,
+      showNoticeResponseModal,
+      showStatusModal
     } = this.state
+
+    const statusObject = [{
+      id: 0,
+      name : 'Deceased'
+    }, {
+      id : 1,
+      name : 'Living'
+    }]
 
     return(
     <div>
     { super.render() }
+    {
+      showNoticeResponseModal &&
+
+      <NoticeResponseModal 
+        noticeResponse = { noticeResponse }
+        onClose = { () => 
+          this.setState({ showNoticeResponseModal: false }) }
+      />
+    }
     {
       showBloodTypeModal && 
 
@@ -212,6 +280,23 @@ class SpouseFormFragment extends BaseMVPView {
           })
         }
         onClose = { () => this.setState({ showBloodTypeModal : false }) }
+      />
+    }
+    {
+      showStatusModal && 
+
+      <SingleInputModal
+        label = { 'Status' }
+        inputArray = { statusObject && statusObject }
+        selectedArray = { (statusId, statusName) =>
+          this.setState({
+            statusId,
+            statusName,
+            showStatusModal : false,
+            statusNameErrorMessage : ''
+          })
+        }
+        onClose = { () => this.setState({ showStatusModal : false }) }
       />
     }
       <div className = { 'percentage-grid' }>
@@ -291,7 +376,7 @@ class SpouseFormFragment extends BaseMVPView {
                   value = { statusName  }
                   text = { 'Status' }
                   errorMessage = { statusName ? '' : statusNameErrorMessage }
-                  onChange = { (e) => this.setState({ statusName : e.target.value }) }
+                  onClick = { () => this.setState({ showStatusModal : true }) }
                   />
               </div>
             </div>
@@ -310,6 +395,33 @@ class SpouseFormFragment extends BaseMVPView {
             </div>
           </div>
         </div>  
+        <div className = { 'grid-global' }>
+          <div></div>
+          <div className = { 'text-align-right' }>
+            <GenericButton 
+            text = { 'Add Atttachments' }
+            onClick = { () => {
+              const updatedAttachments = [...spouseAttachments]
+              let newCount = count + 1
+              this.setState({ count : newCount })
+              updatedAttachments.push({
+                name : 'Spouse Attachments ' + count
+              })
+              this.setState({ spouseAttachments : updatedAttachments })
+                }
+              }
+            />
+          </div>
+        </div>
+        <MultipleAttachments
+          count = { count }
+          countFunc = { (count) => this.setState({ count }) }
+          placeholder = { '.' }
+          fileArray = { spouseAttachments }
+          setFile = { (spouseAttachmentsArray) =>
+              this.setState({ spouseAttachmentsArray })
+          }
+        />
         <br/>
         <center>
           {
@@ -317,12 +429,13 @@ class SpouseFormFragment extends BaseMVPView {
             <GenericButton
               className = { 'global-button' }
               text = { 'Edit' }
+              onClick = { () => this.updateFunction() }
               />
               :
             <GenericButton
               className = { 'global-button' }
               text = { 'Save' }
-              onClick = { () => this.postSaveFunction() }
+              onClick = { () => this.saveFunction() }
               />
           }
         </center>
