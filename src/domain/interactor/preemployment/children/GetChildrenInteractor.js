@@ -4,7 +4,6 @@ export default class GetChildrenInteractor {
   }
 
   execute () {
-    return this.client.getChildren(
-      this.client.getToken())
+    return this.client.getChildren(this.client.getToken())
   }
 }

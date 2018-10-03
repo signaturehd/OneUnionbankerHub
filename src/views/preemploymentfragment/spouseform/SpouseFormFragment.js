@@ -70,7 +70,6 @@ class SpouseFormFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    console.log()
     this.props.onSendPageNumberToView(17)
     this.presenter.getSpouse()
   }

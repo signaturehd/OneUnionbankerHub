@@ -15,8 +15,8 @@ import {
 
 import { RequiredValidation } from '../../../utils/validate/'
 
-import FinancialObligationModal from './modals/ChildrenModal'
-import FinancialObligationMultipleCardComponent from './components/ChildrenMultipleCardComponent'
+import ChildrenFormModal from './modals/ChildrenModal'
+import ChildrenMultipleCardComponent from './components/ChildrenMultipleCardComponent'
 import Presenter from './presenter/ChildrenPresenter'
 
 import { Progress } from 'react-sweet-progress'
@@ -29,6 +29,7 @@ class ChildrenFragment extends BaseMVPView {
     super(props)
     this.state = {
       financeStatus : [],
+      childrenData : [],
       showFinanceStatusModal : false,
       enabledLoader : false,
       showFinanceStatusErrorMessage : '',
@@ -56,6 +57,7 @@ class ChildrenFragment extends BaseMVPView {
     this.props.onSendPageNumberToView(18)
     this.presenter.getFinancialStatus()
     this.presenter.getFinancialDetails()
+    this.presenter.getChildren()
   }
 
   circularLoader (enabledLoader) {
@@ -72,6 +74,10 @@ class ChildrenFragment extends BaseMVPView {
 
   validator (input) {
    return new RequiredValidation().isValid(input)
+  }
+
+  showChildrenDetails (childrenData) {
+    this.setState({ childrenData })
   }
 
   showFinanceStatus (financeStatus) {
@@ -159,6 +165,7 @@ class ChildrenFragment extends BaseMVPView {
 
     const {
       enabledLoader,
+      childrenData,
       financeStatus,
       financeDetailsHolder,
       statusId,
@@ -181,7 +188,9 @@ class ChildrenFragment extends BaseMVPView {
       editMode
     } = this.state
 
-    const isVisible = (financeDetailsHolder && financeDetailsHolder.length > 4) ? '' : 'hide'
+    console.log(childrenData)
+
+    const isVisible = (childrenData && childrenData.length > 4) ? '' : 'hide'
 
     return(
     <div>
@@ -201,7 +210,7 @@ class ChildrenFragment extends BaseMVPView {
       }
       {
         showFinancialFormModal &&
-        <FinancialObligationModal
+        <ChildrenFormModal
           natureObligationFunc = { (natureObligation) =>  this.setState({ natureObligation }) }
           statusName = { statusName }
           bankNameInstitution = { bankNameInstitution }
@@ -239,8 +248,8 @@ class ChildrenFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-          <h2 className={ 'header-margin-default text-align-left' }>Financial Obligation List</h2>
-          <h2>Below is the list of your financial obligations.</h2>
+          <h2 className = { 'header-margin-default text-align-left' }>Children Form</h2>
+          <h2>Fill up children form.</h2>
           </div>
           <Progress
             type = { 'circle' }
@@ -255,7 +264,7 @@ class ChildrenFragment extends BaseMVPView {
             <GenericButton
               text = { 'Add Financial Obligation' }
               onClick = { () => this.setState({ showFinancialFormModal : true }) }
-              />W
+              />
           </div>
         </div>
         <br/>
@@ -266,28 +275,11 @@ class ChildrenFragment extends BaseMVPView {
           </center>
           :
           <div>
-            <FinancialObligationMultipleCardComponent
+            <ChildrenMultipleCardComponent
               index = { index }
+              childrenData = { childrenData }
               financeDetailsHolder = { financeDetailsHolder }
-              onEditModeProperty = { (
-                financeId,
-                bankNameInstitution,
-                natureObligation,
-                amount,
-                statusName,
-                showFinancialFormModal,
-                editMode
-              ) => this.setState({
-                financeId,
-                bankNameInstitution,
-                natureObligation,
-                amount,
-                statusName : statusName === 1 ? 'Current' : 'Past' ,
-                statusId : statusName,
-                showFinancialFormModal,
-                editMode
-                })
-              }
+              onEditModeProperty = { () => {} }
               />
             <br/>
             <button
@@ -295,10 +287,10 @@ class ChildrenFragment extends BaseMVPView {
               className = { `viewmore tooltip ${ isVisible }` }
               onClick = {
                 () => {
-                  if(index === financeDetailsHolder.length)
+                  if(index === childrenData.length)
                     this.setState({ index : 4, viewMoreText : 'View more' })
                   else
-                    this.setState({ index : financeDetailsHolder.length, viewMoreText : 'View less' })
+                    this.setState({ index : childrenData.length, viewMoreText : 'View less' })
                 }
               }>
               <img src={ require('../../../images/icons/horizontal.png') } />

@@ -8,18 +8,11 @@ import { Card }  from '../../../../ub-components/'
 import moment from 'moment'
 import './styles/childrenStyle.css'
 
+import * as functions from '../functions/ChildrenFunctions'
+
 class ChildrenMultipleCardComponent extends Component {
   constructor (props) {
     super(props)
-    this.checkStatus = this.checkStatus.bind(this)
-  }
-
-  checkStatus (status) {
-    if(status === 1) {
-      return 'Current'
-    } else {
-      return 'Past'
-    }
   }
 
   render () {
@@ -29,26 +22,45 @@ class ChildrenMultipleCardComponent extends Component {
       errorMessage,
       count,
       index,
-      onEditModeProperty
+      onEditModeProperty,
+      childrenData
     } = this.props
 
     return (
       <div>
         {
-          financeDetailsHolder.length !== 0 &&
-          financeDetailsHolder.slice(0, index).map((resp, key) => (
+          childrenData.length !== 0 &&
+          childrenData.slice(0, index).map((resp, key) => (
             <div>
               <Card
                 className = { 'educ-card-grid-option' }
                 key = { key }>
                 <div className = { 'grid-global' }>
                   <div>
-                      <h2 className = { 'font-size-14px font-weight-bold' }>{ resp.bank }</h2>
-                      <h2 className = { 'font-size-12px font-weight-bold' }>Amount: { resp.amount }</h2>
-                      <h2 className = { 'font-size-12px font-weight-bold' }>Status: { this.checkStatus(resp.status) }</h2>
+                    <h2 className = { 'font-size-16apx font-weight-bold' }>
+                      { resp.name && resp.name.first }, 
+                      { resp.name && resp.name.last } { resp.name && resp.name.middle }.
+                    </h2>
+                    <h2 className = { 'font-size-14px font-weight-normal' }>
+                      { 
+                        functions.checkedDateFilled(resp.birthDate)
+                      }
+                    </h2>                    
+                    <h2 className = { 'font-size-14px font-weight-normal' }>
+                      { 
+                        resp.contactNumber
+                      }
+                    </h2>
                   </div>
                   <div>
-                    <h2 className = { 'font-size-12px font-weight-lighter' }>Obligation: { resp.obligation }</h2>
+                    <h2 className = { 'font-size-12px font-weight-lighter' }>
+                      { functions.checkStatus(resp.status) }
+                    </h2>
+                    <h2 className = { 'font-size-10px font-weight-lighter' }>
+                      { 
+                        functions.checkGender(resp.gender)
+                      }
+                    </h2>
                   </div>
                 </div>
                 <div className = { 'grid-global-rows' }>
@@ -58,15 +70,7 @@ class ChildrenMultipleCardComponent extends Component {
                       className = { 'close-button-global' }
                       src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
                       onClick = { () =>
-                        onEditModeProperty(
-                          resp.id,
-                          resp.bank,
-                          resp.obligation,
-                          resp.amount,
-                          resp.status,
-                          true,
-                          true
-                        )
+                        onEditModeProperty()
                       }
                     />
                   }
@@ -82,7 +86,7 @@ class ChildrenMultipleCardComponent extends Component {
 }
 
 ChildrenMultipleCardComponent.propTypes = {
-  financeDetailsHolder : PropTypes.arrayOf(
+  childrenData : PropTypes.arrayOf(
       PropTypes.objectOf(
         PropTypes.shape({
           name : PropTypes.string,
