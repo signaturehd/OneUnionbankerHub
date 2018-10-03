@@ -1409,6 +1409,7 @@ export default class HRBenefitsService {
   }
 
   postSpouseForm (token, spouseFormParam) {
+    const formData = new FormData()
     const objectParam = {
       name : {
         first : spouseFormParam.firstName,
@@ -1419,15 +1420,22 @@ export default class HRBenefitsService {
         occupation: spouseFormParam.occupation,
         status: spouseFormParam.status,
         healthHospitalizationPlan : spouseFormParam.healthHospitalizationPlan,
-        groupLifeInsurance: spouseFormParam.groupLifeInsurance
-
+        groupLifeInsurance: spouseFormParam.groupLifeInsurance,
+        bloodType : spouseFormParam.bloodType,
+        contactNumber: spouseFormParam.contactNumber,
     }
-    return this.onboardingClient.post('v1/employees/spouse', objectParam, {
+    formData.append('uuid', 12345)
+    spouseFormParam.attachments.map((resp, key) => 
+      formData.append(resp.name, resp.file)
+    )
+    formData.append('body', JSON.stringify(objectParam))
+    return this.onboardingClient.post('v1/employees/spouse', formData, {
       headers : { token }
     })
   }
 
   putSpouseForm (token, spouseFormParam) {
+    const formData = new FormData()
     const objectParam = {
       name : {
         first : spouseFormParam.firstName,
@@ -1438,9 +1446,16 @@ export default class HRBenefitsService {
         occupation: spouseFormParam.occupation,
         status: spouseFormParam.status,
         healthHospitalizationPlan : spouseFormParam.healthHospitalizationPlan,
-        groupLifeInsurance: spouseFormParam.groupLifeInsurance
+        groupLifeInsurance: spouseFormParam.groupLifeInsurance,
+        bloodType : spouseFormParam.bloodType,
+        contactNumber: spouseFormParam.contactNumber,
     }
-    return this.onboardingClient.put(`v1/employees/spouse/${ spouseFormParam.putSpouseId }`, {
+    formData.append('uuid', 12345)
+    spouseFormParam.attachments.map((resp, key) => 
+      formData.append(resp.name, resp.file)
+    )
+    formData.append('body', JSON.stringify(objectParam))
+    return this.onboardingClient.put(`v1/employees/spouse/${ spouseFormParam.spouseId }`, formData, {
       headers : { token }
     })
   }
@@ -1467,9 +1482,8 @@ export default class HRBenefitsService {
       groupLifeInsurance : childrenParam.groupLifeInsurance,
       status: childrenParam.status,
     }
-    formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(objectParam))
-
+    formData.append('uuid', 12345)
     childrenParam.attachments.map((resp, key) => {
       formData.append(resp.name, resp.file)
     })
@@ -1495,9 +1509,8 @@ export default class HRBenefitsService {
       groupLifeInsurance : childrenParam.groupLifeInsurance,
       status: childrenParam.status,
     }
-    formData.append('uuid', 12345)
     formData.append('body', JSON.stringify(objectParam))
-
+    formData.append('uuid', 12345)
     childrenParam.attachments.map((resp, key) => {
       formData.append(resp.name, resp.file)
     })

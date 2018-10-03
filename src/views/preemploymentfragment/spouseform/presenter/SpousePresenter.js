@@ -83,23 +83,42 @@ export default class SpousePresenter {
     contact,
     status,
     gender,
+    bloodType,
     healthHospitalizationPlan,
     groupLifeInsurance,
     spouseId
   ) {
-    if(!this.validator(firstName)) {
-      this.view.firstNameErrorMessageFunc('First Name field is required')
-    } else if(!this.validator(middleName)) {
-      this.view.middleNameErrorMessageFunc('Middle Name field is required')
-    } else if(!this.validator(lastName)) { 
-      this.view.lastNameErrorMessageFunc('Last Name field is required')
-    } else if(!this.validator(occupation)) {
-      this.view.occupationErrorMessageFunc('Occupation field is required')
-    } else if(!this.validator(contact)) {
-      console.log('test')
-      
-      this.view.contactNumberErrorMessageFunc('Contact Number field is required')
-    }
+    // if(!this.validator(firstName)) {
+    //   this.view.firstNameErrorMessageFunc('First Name field is required')
+    // } else if(!this.validator(middleName)) {
+    //   this.view.middleNameErrorMessageFunc('Middle Name field is required')
+    // } else if(!this.validator(lastName)) { 
+    //   this.view.lastNameErrorMessageFunc('Last Name field is required')
+    // } else if(!this.validator(occupation)) {
+    //   this.view.occupationErrorMessageFunc('Occupation field is required')
+    // } else {
+    // }
+    this.view.showCircularLoader()
+    this.postSpouseInteractor.execute(addSpouseForm(
+      firstName, 
+      middleName,
+      lastName,
+      birthDate,
+      occupation,
+      contact,
+      status,
+      gender,
+      bloodType,
+      healthHospitalizationPlan,
+      groupLifeInsurance,
+      spouseId
+    ))
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.noticeResponseFunc(data, true)
+    }, error => {
+      this.view.hideCircularLoader()
+    })
   }
 
   putSpouseForm (
@@ -108,13 +127,15 @@ export default class SpousePresenter {
     lastName,
     birthDate,
     occupation,
-    contactNumber,
+    contact,
     status,
     gender,
+    bloodType,
     healthHospitalizationPlan,
     groupLifeInsurance,
     spouseId
   ) {
+    console.log('test')
     this.view.showCircularLoader()
     this.putSpouseInteractor.execute(addSpouseForm(
       firstName, 
@@ -122,17 +143,17 @@ export default class SpousePresenter {
       lastName,
       birthDate,
       occupation,
-      contactNumber,
+      contact,
       status,
       gender,
+      bloodType,
       healthHospitalizationPlan,
       groupLifeInsurance,
       spouseId
     ))
     .subscribe(data => {
-      this.view.noticeResponseFunc(data.message)
-      // this.getFinancialDetails()
       this.view.hideCircularLoader()
+      this.view.noticeResponseFunc(data, true)
     }, error => {
       this.view.hideCircularLoader()
     })

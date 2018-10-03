@@ -24,10 +24,10 @@ class IsChildrenConfirmModal extends Component {
           <GenericButton
             className = { 'global-button' }
             text = { 'No' }
-            onClick = { () => onSendPageNumberToView(18) }
+            onClick = { () => onSendPageNumberToView(19) }
             />
           <GenericButton
-            onClick = { () => onSendPageNumberToView(19) }
+            onClick = { () => onSendPageNumberToView(18) }
             className = { 'global-button' }
             text = { 'Yes' }
             />

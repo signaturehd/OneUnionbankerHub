@@ -43,6 +43,8 @@ import PersonnelSignatureFragment
   from '../preemploymentfragment/personnelsignature/PersonnelSignatureFragment'
 import SpouseFormFragment
   from '../preemploymentfragment/spouseform/SpouseFormFragment'
+import ChildrenFragment
+  from '../preemploymentfragment/childrenform/ChildrenFragment'
 /* Modal */
 import IsFinancialObilgationConfirmModal
   from './modals/IsFinancialObilgationConfirmModal'
@@ -69,7 +71,7 @@ import './styles/preEmploymentStyle.css'
 function  PreEmploymentFragments (props)  {
   const pageNumber = props.preEmpPage
   const onSendPageNumberToView = props.onSendPageNumberToView
-  const percentageTemp = (pageNumber / 17) * 100
+  const percentageTemp = (pageNumber / 19) * 100
   const percentage = parseInt(percentageTemp)
   const biographicalArray = props.biographicalArray
   const sssArray = props.sssArray
@@ -178,6 +180,11 @@ function  PreEmploymentFragments (props)  {
       />
   } else if (pageNumber === 17) {
     return <SpouseFormFragment
+      percentage = { percentage }
+      onSendPageNumberToView = { onSendPageNumberToView }
+    />
+  } else if (pageNumber === 18) {
+    return <ChildrenFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
     />
@@ -339,11 +346,14 @@ class PreEmploymentFragment extends BaseMVPView {
           this.onSendPageNumberToView(res)
           this.setState({ showMarriedConfirmModal : false })
           }}
-          showChildrenConfirmModalFunc = { () =>
+          showChildrenConfirmModalFunc = { (
+            showChildrenConfirmModal,
+            showMarriedConfirmModal) =>
             this.setState({
-            showChildrenConfirmModal : true,
-            showMarriedConfirmModal : false
-          }) }
+              showChildrenConfirmModal,
+              showMarriedConfirmModal
+            })
+          }
         />
       }
       {

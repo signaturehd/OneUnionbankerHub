@@ -1,4 +1,4 @@
-export default class GetSpouse {
+export default class PostSpouseInteractor {
   constructor (client) {
     this.client = client
   }

@@ -6,8 +6,11 @@ import PutFinanceStatusInteractor from '../../../../domain/interactor/preemploym
 import GetFinanceDetailsInteractor from '../../../../domain/interactor/preemployment/financial/GetFinanceDetailsInteractor'
 import addFinancialStatusParam from '../../../../domain/param/AddFinancialStatusParam'
 
+import GetChildrenInteractor from '../../../../domain/interactor/preemployment/children/GetChildrenInteractor'
+
 export default class ChildrenPresenter {
   constructor (container) {
+    this.getChildrenInteractor = new GetChildrenInteractor(container.get('HRBenefitsClient'))
     this.getFinanceStatusInteractor = new GetFinanceStatusInteractor(container.get('HRBenefitsClient'))
     this.addFinanceStatusInteractor = new AddFinanceStatusInteractor(container.get('HRBenefitsClient'))
     this.putFinanceStatusInteractor = new PutFinanceStatusInteractor(container.get('HRBenefitsClient'))
@@ -16,6 +19,17 @@ export default class ChildrenPresenter {
 
   setView (view) {
     this.view = view
+  }
+
+  getChildren () {
+    this.view.showCircularLoader()
+    this.getChildrenInteractor.execute()
+    .subscribe(data => {
+      this.view.showChildrenDetails(data)
+      this.view.hideCircularLoader()
+    }, erro => {
+      this.view.hideCircularLoader()
+    })
   }
 
   getFinancialStatus () {
@@ -48,7 +62,7 @@ export default class ChildrenPresenter {
       this.view.hideCircularLoader()
     })
   }
-
+ 
   addFinancialStatus (
     bankNameInstitution,
     natureObligation,

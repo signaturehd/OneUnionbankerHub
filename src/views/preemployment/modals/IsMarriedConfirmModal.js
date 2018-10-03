@@ -23,7 +23,7 @@ class IsMarriedConfirmModal extends Component {
           <GenericButton
             className = { 'global-button' }
             text = { 'No' }
-            onClick = { () => showChildrenConfirmModalFunc() }
+            onClick = { () => showChildrenConfirmModalFunc(true, false) }
             />
           <GenericButton
             onClick = { () => onSendPageNumberToView(17) }
