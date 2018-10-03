@@ -36,7 +36,7 @@ class LaptopLeaseCardComponent extends Component {
       secondaryColor,
       showQuotation,
       showFileUpload,
-      onGetLaptopBrandsFunc,
+      showLaptopDeliveryOption,
       onlaptopModelValidateFunc,
       onValidateyearFunc,
       onValidatePrimaryColor,
@@ -70,18 +70,17 @@ class LaptopLeaseCardComponent extends Component {
               <GenericInput
                 placeholder = { 'Brand' }
                 errorMessage = { '' }
-                onClick ={ () => onGetLaptopBrandsFunc() }
+                onChange ={ () => setLaptopBrand(e.target.value) }
                 text = { 'Brands' }
                 disabled = { showEditMode }
                 value = { carBrand }
-                readOnly
                 />
               <GenericInput
                 placeholder = { 'Model' }
                 errorMessage = { '' }
                 disabled = { showEditMode }
                 text = { 'Model' }
-                onChange = { (e) => onlaptopModelValidateFunc(e.target.value) }
+                onChange = { (e) => setLaptopModel(e.target.value) }
                 value = { laptopModel }
                 />
             </div>
@@ -90,16 +89,16 @@ class LaptopLeaseCardComponent extends Component {
                 value = { screenSize }
                 disabled = { showEditMode }
                 maxLength = { 4 }
-                onChange = { (e) => onValidateyearFunc(e.target.value) }
+                onChange = { (e) => setScreenSize(e.target.value) }
                 text = { 'Screen size' }
-                disabled = { showEditMode }
                 errorMessage = { yearErrorMessage }
+                disabled = { showEditMode }
                 />
                 <GenericInput
                   value = { secondaryColor }
                   disabled = { showEditMode }
                   hint = { '(e.g) Red, Black, White & etc.' }
-                  onChange = { (e) => onValidateSecondaryColor(e.target.value)  }
+                  onChange = { (e) => setColor(e.target.value)  }
                   maxLength = { 20 }
                   errorMessage = { '' }
                   text = { 'Color Family' }
@@ -108,7 +107,7 @@ class LaptopLeaseCardComponent extends Component {
             <div className = { 'grid-global' }>
               <GenericInput
                 value = { primaryColor }
-                onChange = { (e) => onValidatePrimaryColor(e.target.value)  }
+                onChange = { (e) => setOperatingSyatem(e.target.value)  }
                 maxLength = { 20 }
                 errorMessage = { '' }
                 disabled = { showEditMode }
@@ -117,7 +116,7 @@ class LaptopLeaseCardComponent extends Component {
               <GenericInput
                 value = { secondaryColor }
                 disabled = { showEditMode }
-                onChange = { (e) => onValidateSecondaryColor(e.target.value)  }
+                onChange = { (e) => setProcessorType(e.target.value)  }
                 maxLength = { 20 }
                 errorMessage = { '' }
                 text = { 'Processor Type' }
@@ -127,7 +126,7 @@ class LaptopLeaseCardComponent extends Component {
               <GenericInput
                 disabled = { showEditMode }
                 value = { insurancePayment }
-                onClick = { () => onShowInsurancePaymentFunc() }
+                onClick = { () => setHardDriveCapacity() }
                 readOnly
                 errorMessage = { '' }
                 text = { 'Hard Drive Capacity' }
@@ -135,7 +134,7 @@ class LaptopLeaseCardComponent extends Component {
               <GenericInput
                 value = { secondaryColor }
                 disabled = { showEditMode }
-                onChange = { (e) => onValidateSecondaryColor(e.target.value)  }
+                onChange = { (e) => setSystemMemory(e.target.value)  }
                 maxLength = { 20 }
                 errorMessage = { '' }
                 text = { 'System Memory' }
@@ -144,26 +143,25 @@ class LaptopLeaseCardComponent extends Component {
             <div className = { 'grid-global' }>
               <GenericInput
                 disabled = { showEditMode }
-                value = { solId }
-                onChange = { (e) => onChangeSolIdFunc(e.target.value) }
+                value = { graphicsCard && graphicsCard }
+                onChange = { (e) => setGraphicsCard(e.target.value) }
                 errorMessage = { solIdErrorMessage }
                 text = { 'Graphics Card' }
                 maxLength = { 20 }
               />
               <GenericInput
                 disabled = { showEditMode }
-                value = { solRCDefault ? solRCDefault : solRC }
-                onChange = { (e) => onChangeSolRCFunc(e.target.value) }
-                onClick = { () => onShowEnterSolRCModalFunc }
-                errorMessage = { solRCErrorMessage }
+                value = { estimatedCost && estimatedCost }
+                onChange = { (e) => setEstimatedCost(e.target.value) }
                 text = { 'Estimated Cost' }
                 maxLength = { 20 }
               />
             </div>
               <GenericInput
-                value = { cmUnit }
+                value = { deliveryOption }
                 disabled = { showEditMode }
                 readOnly
+                onClick = { () => showLaptopDeliveryOption() }
                 text = { 'Delivery Option' }
               />
               {
@@ -173,7 +171,7 @@ class LaptopLeaseCardComponent extends Component {
                   disabled = { showEditMode }
                   fileArray = { attachments }
                   setFile = { (file) => getFileArray(file) }
-                  />
+                />
               }
               <br/>
               <Line/>

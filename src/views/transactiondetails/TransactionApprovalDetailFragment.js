@@ -80,6 +80,8 @@ function  TransactionDetails (props)  {
         transactionsPerson = { transactionsPerson }
         attachments = { attachments }
         details = { transactionDetails } />
+    } else if (transactionId === 16) {
+     return <h1>Transaction for LaptopLease</h1>  
     }
     return <h1>No Transaction Occured please reload</h1> // No  Transaction
 }

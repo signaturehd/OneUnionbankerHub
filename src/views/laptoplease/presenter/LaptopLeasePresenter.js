@@ -1,18 +1,18 @@
-import GetLaptopLeaseInteractor from
-'../../../domain/interactor/laptoplease/GetLaptopLeaseInteractor'
+import ValidateLaptopLeaseInteractor from
+'../../../domain/interactor/laptoplease/ValidateLaptopLeaseInteractor'
 
 export default class LaptopLeasePresenter {
   constructor (container) {
-    this.getLaptopLeaseInteractor = new GetLaptopLeaseInteractor(container.get('HRBenefitsClient'))
+    this.validateLaptopLeaseInteractor = new ValidateLaptopLeaseInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
   }
 
-  getLaptopLease () {
+  validateLaptopLease () {
     this.view.showCircularLoader()
-    this.getLaptopLeaseInteractor.execute()
+    this.validateLaptopLeaseInteractor.execute()
     .map(data => {
       let arrayOption = []
 
@@ -32,4 +32,6 @@ export default class LaptopLeasePresenter {
       this.view.hideCircularLoader()
     })
   }
+
+
 }

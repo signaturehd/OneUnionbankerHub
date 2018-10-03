@@ -1139,13 +1139,22 @@ export default class HRBenefitsService {
 
   /* Laptop Lease */
 
-  getLaptopLease (token) {
+  confirmLaptopLease (token, transactionId, isConfirm) {
+    return this.apiClient.post('v1/leases/laptop/confirm', {
+      transactionId,
+      isConirm,
+    }, {
+      headers: { token }
+    })
+  }
+
+  validateLaptopLease (token) {
     return this.apiClient.get('v1/leases/laptop/validate', {
       headers : { token }
     })
   }
 
-  postlaptopLease (
+  addLaptopLease (
       token,
       accountToken,
       accountNumber,
@@ -1153,8 +1162,6 @@ export default class HRBenefitsService {
       laptopLeaseParam) {
     const formData = new FormData()
     const object = {
-      benefitId : laptopLeaseParam.benefitId,
-      brand : laptopLeaseParam.brand,
       brand : laptopLeaseParam.brand,
       color: laptopLeaseParam.colorFamily,
       deliveryOptionId: laptopLeaseParam.deliveryOptionId,
@@ -1172,7 +1179,7 @@ export default class HRBenefitsService {
       formData.append(resp.name, resp.file)
     ))
     formData.append('body', JSON.stringify(object))
-    return this.apiClient.get('v1/leases/laptop',  formData, {
+    return this.apiClient.post('v1/leases/laptop',  formData, {
       headers : { token }
     })
   }

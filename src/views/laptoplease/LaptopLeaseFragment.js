@@ -71,7 +71,7 @@ class LaptopLeaseFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.props.presenter.getLaptopLease()
+    this.presenter.validateLaptopLease()
   }
 
   validator (input) {
@@ -79,7 +79,6 @@ class LaptopLeaseFragment extends BaseMVPView {
   }
 
   showLaptopLeaseValidate (laptopValidate) {
-    console.log(laptopValidate)
     this.setState({ laptopValidate })
   }
 
@@ -309,6 +308,7 @@ class LaptopLeaseFragment extends BaseMVPView {
       attachmentsRequired,
       solId,
       solIdErrorMessage,
+      showLaptopDeliveryOption,
     } = this.state
 
     const { history }=this.props
@@ -394,19 +394,19 @@ class LaptopLeaseFragment extends BaseMVPView {
           />
         }
         {
-          showLaptopBrands &&
+          showDeliveryOptions &&
           <SingleInputModal
-            label = { 'Laptop Brands' }
+            label = { 'Delivery Options' }
             inputArray = { carValidate && carValidate.brands }
             selectedArray = { (carId, carBrand) =>
               this.setState({
                 carId,
                 carBrand,
-                showLaptopBrands : false,
+                showDeliveryOptions : false,
                 carBrandErrorMessage : ''
               })
             }
-            onClose = { () => this.setState({ showLaptopBrands : false }) }
+            onClose = { () => this.setState({ showDeliveryOptions : false }) }
           />
         }
         {
@@ -465,7 +465,7 @@ class LaptopLeaseFragment extends BaseMVPView {
               solRCErrorMessage = { solRCErrorMessage }
               getFileArray = { (resp) => this.setFileAttachments(resp) }
               onShowInsurancePaymentFunc = { () => this.setState({ showInsurancePaymentModal : true }) }
-              onGetLaptopBrandsFunc = { () => this.setState({ showLaptopBrands : true }) }
+              showLaptopDeliveryOption = { () => this.setState({ showLaptopDeliveryOption : true }) }
               onlaptopModelValidateFunc = { (resp) => this.validateInputLaptopModelValue(resp) }
               onValidateyearFunc = { (resp) => this.validateYear(resp) }
               onValidatePrimaryColor = { (resp) => this.validateInputPrimaryColor(resp) }

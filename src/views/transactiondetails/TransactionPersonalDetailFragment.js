@@ -146,10 +146,11 @@ function  TransactionDetails (props)  {
       agreementsMethod = { (resp) => agreementsMethod(resp) }
       details = { transactionDetails }
      />
-  }
-  else {
+  } else if (transactionId === 16) {
+   return <h1>Transaction for LaptopLease</h1>
+  } else {
    return <h1>No Transaction Occured please reload</h1> // No  Transaction
-   }
+  }
 }
 
 class TransactionPersonalDetailsFragment extends BaseMVPView {
