@@ -69,153 +69,36 @@ class LaptopLeaseFragment extends BaseMVPView {
     this.validator = this.validator.bind(this)
   }
 
+  /* Life Cycle */
+
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.validateLaptopLease()
   }
 
-  validator (input) {
-   return new RequiredValidation().isValid(input)
+  /* Presenter Functions */
+
+  setTerms (terms) {
+    this.setState({ terms })
   }
 
-  showLaptopLeaseValidate (laptopValidate) {
-    this.setState({ laptopValidate })
+  setAmount (amount) {
+    this.setState({ amount })
   }
 
-  setFileAttachments (file) {
+  setColor (color) {
+    this.setState({ color })
+  }
+
+  setDeliveryOption (deliveryOption) {
+    this.setState({ deliveryOption })
+  }
+
+  setFile (file) {
     this.setState({ file })
   }
 
-  validateSolRC (e) {
-    const validate = LaptopLeaseFunctions.checkedValidateInputNumber(e)
-    this.setState({ solRC : validate, solRCErrorMessage : '' })
-  }
-
-  validateSolId (e) {
-    const validate = LaptopLeaseFunctions.checkedValidateInputNumber(e)
-    this.setState({ solId : validate, solIdErrorMessage : '' })
-  }
-
-  validateInputLaptopModelValue (e) {
-    const validate = LaptopLeaseFunctions.checkedValidatedInput(e)
-    this.setState({ laptopModel : validate })
-  }
-
-  validateInputPrimaryColor (e) {
-    const validate = LaptopLeaseFunctions.checkedValidateAlphabet(e)
-    this.setState({ primaryColor : validate })
-  }
-
-  validateInputSecondaryColor (e) {
-    const validate = LaptopLeaseFunctions.checkedValidateAlphabet(e)
-    this.setState({ secondaryColor : validate })
-  }
-
-  validateYear (e) {
-    const currentDate = moment().format('YYYY')
-    const validate = LaptopLeaseFunctions.checkedValidateInputNumber(e)
-    if(validate > currentDate) {
-      this.setState({ yearErrorMessage : 'Future year are not allowed' })
-    } else {
-      this.setState({ screenSize : validate, yearErrorMessage : '' })
-    }
-  }
-
-  sendFormData () {
-    const {
-      carBrand,
-      laptopModel,
-      screenSize,
-      solRC,
-      insurancePayment,
-      cMUnit,
-      primaryColor,
-      secondaryColor,
-      file,
-      leaseMode,
-      insuranceId,
-      solId,
-      carValidate
-    } = this.state
-
-    let validateAttachments = false
-    file && file.map(
-      (attachment, key) => {
-        if(!attachment.file) {
-          validateAttachments = true
-        }
-      }
-    )
-
-    const solRCChecked = carValidate.solRC ? carValidate.solRC : solRC
-      if (!this.validator(carBrand)) {
-          store.dispatch(NotifyActions.addNotify({
-              title : 'My Benefits',
-              message : 'Car Brand fields are required',
-              type: 'warning'
-          })
-        )
-      }
-      else if (!this.validator(laptopModel)) {
-          store.dispatch(NotifyActions.addNotify({
-            title : 'My Benefits',
-            message : 'Car Model fields are required',
-            type: 'warning'
-          })
-        )
-      }
-      else if (!this.validator(screenSize)) {
-          store.dispatch(NotifyActions.addNotify({
-            title : 'My Benefits',
-            message : 'Year fields are required',
-            type: 'warning'
-          })
-        )
-      }
-      else if (!this.validator(primaryColor)) {
-        store.dispatch(NotifyActions.addNotify({
-            title : 'My Benefits',
-            message : 'Primary Color fields are required',
-            type: 'warning'
-          })
-        )
-      } else if (!this.validator(secondaryColor)) {
-        store.dispatch(NotifyActions.addNotify({
-            title : 'My Benefits',
-            message : 'Secondary Color fields are required',
-            type: 'warning'
-          })
-        )
-      } else if (!this.validator(insurancePayment)) {
-        store.dispatch(NotifyActions.addNotify({
-            title : 'My Benefits',
-            message : 'Insurance Payment is required',
-            type: 'warning'
-          })
-        )
-      } else if (!this.validator(solId)) {
-        this.setState({ solIdErrorMessage : 'sol id is required' })
-      } else if (validateAttachments) {
-        file && file.map(
-          (attachment, key) => {
-            if(!attachment.file) {
-              store.dispatch(NotifyActions.addNotify({
-                 title : 'My Benefits' ,
-                 message : attachment.name + ' is required',
-                 type : 'warning',
-                 duration : 2000
-               })
-             )
-            }
-          }
-        )
-       } else {
-        this.setState({ showEditMode : true })
-      }
-  }
-
   /* Notice Response*/
-
   noticeOfUndertaking (noticeResponse) {
    this.setState({ showNoticeModal : true, noticeResponse })
   }
@@ -229,7 +112,6 @@ class LaptopLeaseFragment extends BaseMVPView {
   }
 
   /* Loader*/
-
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
   }
@@ -237,6 +119,7 @@ class LaptopLeaseFragment extends BaseMVPView {
   showCircularLoader () {
     this.setState({ enabledLoader : true })
   }
+
   /* Navigage back to loans Option*/
   navigate () {
     this.props.history.push('/mybenefits/benefits/')
@@ -245,38 +128,13 @@ class LaptopLeaseFragment extends BaseMVPView {
 
   render () {
     const {
-      showLaptopBrands,
-      showQuotation,
-      showFileUpload,
-      enabledLoader,
-      formAttachments,
-      showNoticeModal,
-      noticeResponse,
-      showNoticeResponseModal,
-      showBenefitFeedbackModal,
-      showEnterSolRCModal,
-      response,
-      carBrand,
-      laptopModel,
-      screenSize,
-      primaryColor,
-      secondaryColor,
+      terms,
+      amount,
+      color,
+      deliveryOption,
+      deliveryOptionList,
+      showDeliveryOption,
       file,
-      leaseMode,
-      loanType,
-      carValidate,
-      solRC,
-      solRCErrorMessage,
-      solRCInput,
-      insurancePayment,
-      insuranceId,
-      showInsurancePaymentModal,
-      yearErrorMessage,
-      showEditMode,
-      attachmentsRequired,
-      solId,
-      solIdErrorMessage,
-      showLaptopDeliveryOption,
     } = this.state
 
     const { history }=this.props
@@ -287,61 +145,20 @@ class LaptopLeaseFragment extends BaseMVPView {
         name : 'Salary Deduction',
       }
     ]
+
     return (
       <div>
-        {
-          showInsurancePaymentModal &&
-          <SingleInputModal
-            label = { 'Insurance Payment' }
-            inputArray = { insurancePaymentData && insurancePaymentData }
-            selectedArray = { (insuranceId, insurancePayment) =>
-              this.setState({
-                insuranceId,
-                insurancePayment,
-                showInsurancePaymentModal : false,
-              })
-            }
-            onClose = { () => this.setState({ showInsurancePaymentModal : false }) }
-          />
-        }
-        {
-          showEnterSolRCModal &&
-          <Modal>
-            <center>
-              <GenericInput
-                value = { solRC }
-                text = { 'Enter Sol RC' }
-                hint = { 'Please Enter Required Sol RC' }
-                onChange = { (e) => this.validateInputNumber(e.target.value) }
-                />
-              <br/>
-              <div className = { 'grid-global' }>
-                <GenericButton
-                  text = { 'Cancel' }
-                  onClick = { () => this.setState({ showEnterSolRCModal : false }) }
-                  />
-                <GenericButton
-                  text = { 'Continue' }
-                  onClick = { () => {
-                    this.setState({ showEnterSolRCModal : false })
-                    }
-                  }
-                />
-              </div>
-            </center>
-          </Modal>
-        }
-
         {
           showNoticeModal &&
           <NoticeModal
             onClose={ () => this.setState({ showNoticeModal : false })}
             noticeResponse={ noticeResponse }
-            benefitId={ '15' }
+            benefitId={ '16' }
             onDismiss={ (showNoticeModal, noticeResponse) =>
               this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
           />
         }
+
         {
           showNoticeResponseModal &&
           <ResponseModal
@@ -351,6 +168,7 @@ class LaptopLeaseFragment extends BaseMVPView {
             noticeResponse={ noticeResponse }
           />
         }
+
         {
           showBenefitFeedbackModal &&
           <BenefitFeedbackModal
@@ -416,9 +234,15 @@ class LaptopLeaseFragment extends BaseMVPView {
               setAmount = { this.presenter::setAmount }
               setColor = { this.presenter::setColor }
               setTerms = { this.presenter::setTerms }
+              setFile = { this.presenter::setFile }
+              setDeliveryOption = { this.presenter::setDeliveryOption }
+              showDeliveryOptions = { this.presenter::showDeliveryOptions }
+              deliveryOption = { deliveryOption }
               amount = { amount }
               color = { color }
               terms = { terms }
+              file = { file }
+              deliveryOptionList = { deliveryOptionList }
               onContinue={ () =>
                 this.sendFormData()
               }

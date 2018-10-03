@@ -77,15 +77,6 @@ class LaptopLeaseCardComponent extends Component {
                 onClick = { () => showLaptopDeliveryOption() }
                 text = { 'Delivery Option' }
               />
-              {
-                showFileUpload &&
-                <MultipleFileUploader
-                  placeholder = { 'Dealer Quotations' }
-                  disabled = { showEditMode }
-                  fileArray = { attachments }
-                  setFile = { (file) => getFileArray(file) }
-                />
-              }
               <br/>
               <Line/>
               {

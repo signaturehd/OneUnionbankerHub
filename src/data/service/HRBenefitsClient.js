@@ -876,13 +876,22 @@ export default class HRBenefitsClient {
     accountToken,
     accountNumber,
     releasingCenter,
-    laptopLeaseParam) {
+    amount,
+    terms,
+    color,
+    deliveryOption,
+    file,
+  ) {
     return this.service.postlaptopLease(
       token,
       accountToken,
       accountNumber,
       releasingCenter,
-      laptopLeaseParam
+      amount,
+      terms,
+      color,
+      deliveryOption,
+      file,
     )
       .pipe(ServiceErrorOperator())
   }

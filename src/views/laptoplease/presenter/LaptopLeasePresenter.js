@@ -1,11 +1,15 @@
 import ValidateLaptopLeaseInteractor from
 '../../../domain/interactor/laptoplease/ValidateLaptopLeaseInteractor'
 
-let storedAmount = '', storedTerms = '', storedColor = ''
+import AddLaptopLeaseInteractor from
+'../../../domain/interactor/laptoplease/AddLaptopLeaseInteractor'
+
+let storedAmount = '', storedTerms = '', storedColor = '', storedDeliveryOption = '', storedFile = []
 
 export default class LaptopLeasePresenter {
   constructor (container) {
     this.validateLaptopLeaseInteractor = new ValidateLaptopLeaseInteractor(container.get('HRBenefitsClient'))
+    this.addLaptopLeaseInteractor = new AddLaptopLeaseInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -27,8 +31,15 @@ export default class LaptopLeasePresenter {
     this.view.setTerms(terms)
   }
 
+  setFile (file) {
+    storedFile = file
+    this.view.setFile(file)
+  }
 
-  setShow
+  setDeliveryOption (deliveryOption) {
+    storedDeliveryOption = deliveryOption
+    this.view.setDeliveryOption(deliveryOption)
+  }
 
   validateLaptopLease () {
     this.view.showCircularLoader()
@@ -54,7 +65,14 @@ export default class LaptopLeasePresenter {
   }
 
   addLaptopLease () {
-    this.addLaptopLeaseInteractor.execute(storedAmount, storedTerms,)
+    this.view.showCircularLoader()
+    this.addLaptopLeaseInteractor.execute(storedAmount, storedTerms, storedColor, storedDeliveryOption, storedFile)
+      .subscribe(data => {
+        this.view.hideCircularLoader()
+      }, e => {
+        this.view.hideCircularLoader()
+        console.log(e)
+      })
   }
 
 
