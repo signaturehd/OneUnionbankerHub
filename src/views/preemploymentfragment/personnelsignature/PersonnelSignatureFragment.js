@@ -169,7 +169,7 @@ class PersonnelSignatureFragment extends BaseMVPView {
         {
           personnelFormData.length !== 0  &&
           personnelArray.map((status) =>
-            status.status === 3 ?
+            status.status === 2 ?
             <div>
             <center>
               <h4 className = { 'font-size-14px font-weight-lighter' }>
