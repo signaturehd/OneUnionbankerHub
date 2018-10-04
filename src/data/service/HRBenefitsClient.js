@@ -1008,6 +1008,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getPagibiLoanDeduction (token) {
+    return this.service.getPagibiLoanDeduction(token)
+    .pipe(ServiceErrorOperator())
+  }
+
   /* Vaccines Requisitions */
 
 

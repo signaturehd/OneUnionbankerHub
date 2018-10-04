@@ -36,6 +36,7 @@ class PagIbigLoanFragment extends BaseMVPView {
       deductId : '',
       deductName : '',
       deductErrorMessage : '',
+      deductData : [],
       pagibigLoanAttachment : [{
         name : 'Pag-IBIG Loan'
       }],
@@ -45,10 +46,15 @@ class PagIbigLoanFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.onSendPageNumberToView(15)
+    this.presenter.getPagibiLoanDeduction()
   }
 
   setFileAttachments (pagibigLoanAttachment) {
     this.setState({ pagibigLoanAttachment })
+  }
+
+  getDeduction (deductData) {
+    this.setState({ deductName : deductData.deductionLoan })
   }
 
   saveForm () {

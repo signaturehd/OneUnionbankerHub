@@ -228,7 +228,7 @@ class PersonnelSignatureFragment extends BaseMVPView {
 PersonnelSignatureFragment.propTypes = {
   history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
-  birthArray : PropTypes.array
+  personnelArray : PropTypes.array
 }
 
 PersonnelSignatureFragment.defaultProps = {

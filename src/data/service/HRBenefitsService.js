@@ -1425,7 +1425,7 @@ export default class HRBenefitsService {
         contactNumber: spouseFormParam.contactNumber,
     }
     formData.append('uuid', 12345)
-    spouseFormParam.attachments.map((resp, key) => 
+    spouseFormParam.attachments.map((resp, key) =>
       formData.append(resp.name, resp.file)
     )
     formData.append('body', JSON.stringify(objectParam))
@@ -1451,7 +1451,7 @@ export default class HRBenefitsService {
         contactNumber: spouseFormParam.contactNumber,
     }
     formData.append('uuid', 12345)
-    spouseFormParam.attachments.map((resp, key) => 
+    spouseFormParam.attachments.map((resp, key) =>
       formData.append(resp.name, resp.file)
     )
     formData.append('body', JSON.stringify(objectParam))
@@ -1525,6 +1525,12 @@ export default class HRBenefitsService {
     }
 
     return this.onboardingClient.put('v1/employees/pagibig/deductions', objectParam, {
+      headers : { token }
+    })
+  }
+
+  getPagibiLoanDeduction (token) {
+    return this.onboardingClient.get('v1/employees/pagibig/deductions', {
       headers : { token }
     })
   }
