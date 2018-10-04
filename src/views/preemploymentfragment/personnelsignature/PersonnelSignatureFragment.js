@@ -22,6 +22,8 @@ import ResponseModal from '../../notice/NoticeResponseModal'
 import "react-sweet-progress/lib/style.css"
 import './styles/signatureStyle.css'
 
+import PersonnelSignaturePreviewModal from './modal/PersonnelSignaturePreviewModal'
+
 class PersonnelSignatureFragment extends BaseMVPView {
   constructor(props) {
     super(props)
@@ -30,12 +32,11 @@ class PersonnelSignatureFragment extends BaseMVPView {
       enabledLoader : false,
       showNoticeResponseModal : false,
       noticeResponse : '',
-      birthDataFormData: [{
-        name : 'Birth Certificate'
+      personnelFormData: [{
+        name : 'Personnel Signature'
       }],
       pdfFile: '',
       count : 2,
-      biographicalName : ''
     }
     this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
   }
@@ -57,21 +58,21 @@ class PersonnelSignatureFragment extends BaseMVPView {
     let newCount = tempCount + 1
     this.setState({ count : newCount })
     attachmentTemp.push({
-      name : 'Birth Certificate Attachments ' + tempCount
+      name : 'Personnel Signature ' + tempCount
     })
-    this.setState({ birthDataFormData : attachmentTemp })
+    this.setState({ personnelFormData : attachmentTemp })
   }
 
-  submitForm () {
+  uploadForm () {
     const {
-      birthDataFormData
+      personnelFormData
     } = this.state
 
     const {
-      birthArray
+      personnelArray
     } = this.props
-    birthArray.map((bio) =>
-      this.presenter.addBiographicalData(bio.id, birthDataFormData)
+    personnelArray.map((personnel) =>
+      this.presenter.addPersonnelSignature(personnel.id, personnelFormData)
     )
   }
 
@@ -92,26 +93,18 @@ class PersonnelSignatureFragment extends BaseMVPView {
       history,
       checkPEUndertaking,
       percentage,
-      birthArray
+      personnelArray
     } = this.props
 
     const {
       enabledLoader,
       showNoticeResponseModal,
       noticeResponse,
-      birthDataFormData,
-      biographicalData,
-      biographicalName,
+      personnelFormData,
       showPdfViewModal,
       pdfFile,
       count
     } = this.state
-
-    const bioAttachmentArray = [
-      {
-        name : 'Birth Certificate ' + count
-      }
-    ]
 
     return(
     <div>
@@ -123,6 +116,22 @@ class PersonnelSignatureFragment extends BaseMVPView {
       <CircularLoader show = { enabledLoader }/>
       </center>
       </Modal>
+    }
+    {
+      showNoticeResponseModal &&
+      <ResponseModal
+        onClose={ () => {
+          this.setState({ showNoticeResponseModal : false})
+        }}
+        noticeResponse={ noticeResponse }
+      />
+    }
+    {
+      showPdfViewModal &&
+      <PersonnelSignaturePreviewModal
+        pdfFile = { pdfFile }
+        onClose = { () => this.setState({ showPdfViewModal: false }) }
+        />
     }
       <div>
         <br/>
@@ -147,7 +156,7 @@ class PersonnelSignatureFragment extends BaseMVPView {
             }
             className = { 'abc-card' }>
             <div className = { 'abc-grid-x2' }>
-              <h2>Birth Certificate</h2>
+              <h2>Personnel Signature Card</h2>
               <div>
                 <span className = { 'abc-icon biographical-seemore-button' }/>
               </div>
@@ -157,15 +166,59 @@ class PersonnelSignatureFragment extends BaseMVPView {
         <br/>
         <Line />
         <br/>
-        <div className = { 'grid-global' }>
-          <h2></h2>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-              text = { 'Add Attachments' }
-              onClick = { () => this.addAttachmentsFunc(birthDataFormData, count) }
+        {
+          personnelFormData.length !== 0  &&
+          personnelArray.map((status) =>
+            status.status === 3 ?
+            <div>
+            <center>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents has been <b>submitted for confirmation</b>.
+              </h4>
+            </center>
+            </div>
+            :
+            status.status === 4 ?
+            <div>
+            <center>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents are <b>verified</b>.
+              </h4>
+            </center>
+            </div>
+            :
+            <div>
+            <div className = { 'grid-global' }>
+              <h2></h2>
+              <div className = { 'text-align-right' }>
+                <GenericButton
+                  text = { 'Add Attachments' }
+                  onClick = { () => this.addAttachmentsFunc(personnelFormData, count) }
+                  />
+              </div>
+            </div>
+            <h4>
+              <br/>
+              Form Attachments
+            </h4>
+            <MultipleAttachments
+              count = { count }
+              countFunc = { (count) => this.setState({ count }) }
+              placeholder = { '' }
+              fileArray = { personnelFormData }
+              setFile = { (personnelFormData) =>
+                  this.setState({ personnelFormData })
+              }
               />
-          </div>
-        </div>
+              <center>
+               <GenericButton
+                 text = { 'Upload' }
+                 onClick = { () => this.uploadForm()  }
+               />
+             </center>
+            </div>
+          )
+         }
       </div>
     </div>
     )

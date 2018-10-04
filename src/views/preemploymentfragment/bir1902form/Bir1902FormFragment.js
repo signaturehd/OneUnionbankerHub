@@ -22,6 +22,8 @@ import ResponseModal from '../../notice/NoticeResponseModal'
 import "react-sweet-progress/lib/style.css"
 import './styles/birStyle.css'
 
+import Bir1902FormPreviewModal from './modal/Bir1902FormPreviewModal'
+
 class Bir1902FormFragment extends BaseMVPView {
   constructor(props) {
     super(props)
@@ -123,6 +125,13 @@ class Bir1902FormFragment extends BaseMVPView {
         }}
         noticeResponse={ noticeResponse }
       />
+    }
+    {
+      showPdfViewModal &&
+      <Bir1902FormPreviewModal
+        pdfFile = { pdfFile }
+        onClose = { () => this.setState({ showPdfViewModal: false }) }
+        />
     }
       <div>
         <br/>

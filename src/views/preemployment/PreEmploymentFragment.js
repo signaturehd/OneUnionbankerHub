@@ -83,6 +83,7 @@ function  PreEmploymentFragments (props)  {
   const philHealthArray = props.philHealthArray
   const pagibigArray = props.pagibigArray
   const pagibigLoanArray = props.pagibigLoanArray
+  const personnelArray = props.personnelArray
   if (pageNumber === 0) {
     return <AffirmationDocumentFragment
       percentage = { percentage }
@@ -175,6 +176,7 @@ function  PreEmploymentFragments (props)  {
       />
   } else if (pageNumber === 16) {
     return <PersonnelSignatureFragment
+      personnelArray = { personnelArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
@@ -255,8 +257,8 @@ class PreEmploymentFragment extends BaseMVPView {
   incrementPage () {
     const index = this.state.preEmpPage + 1
     if(index === 1) {
-      const index1 = this.state.preEmpPage + 17     
-      this.setState({ preEmpPage : index1 }) 
+      const index1 = this.state.preEmpPage + 17
+      this.setState({ preEmpPage : index1 })
       // this.setState({ showFinancialObligationModal : true })
     } else if (index === 11) {
       this.setState({ showTaxPayerIdentificationModal : true })
@@ -426,6 +428,7 @@ class PreEmploymentFragment extends BaseMVPView {
                 bir1902Array = { this.getFormData(12) }
                 philHealthArray = { this.getFormData(13) }
                 pagibigArray = { this.getFormData(14) }
+                personnelArray = { this.getFormData(15) }
                 pagibigLoanArray = { this.getFormData(16) }
                 preEmpPage = { preEmpPage }
                 onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }

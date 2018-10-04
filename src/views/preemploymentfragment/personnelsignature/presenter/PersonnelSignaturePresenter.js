@@ -23,9 +23,9 @@ export default class PersonnelSignaturePresenter {
     })
   }
 
-  addBiographicalData (bioId, bioAttachment) {
+  addPersonnelSignature (personnelId, personnelAttachment) {
     this.view.showCircularLoader()
-    this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(bioId, bioAttachment))
+    this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(personnelId, personnelAttachment))
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.noticeResponseResp(data)
