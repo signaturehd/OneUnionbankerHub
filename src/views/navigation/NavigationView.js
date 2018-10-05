@@ -86,7 +86,7 @@ class NavigationView extends BaseMVPView {
       hasPIN: '',
       enabledLoader : false,
       profileHasCOC: '',
-      tempPreEmploymentModal: true,
+      tempPreEmploymentModal: false,
       hasFilledOut: ''
     }
 
