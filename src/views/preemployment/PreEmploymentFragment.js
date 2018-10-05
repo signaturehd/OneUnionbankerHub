@@ -264,7 +264,9 @@ class PreEmploymentFragment extends BaseMVPView {
   incrementPage () {
     const index = this.state.preEmpPage + 1
     if(index === 1) {
-      this.setState({ showFinancialObligationModal : true })
+      // this.setState({ showFinancialObligationModal : true })
+      const index1 = this.state.preEmpPage +17
+      this.setState({ preEmpPage : index1 })
     } else if (index === 11) {
       this.setState({ showTaxPayerIdentificationModal : true })
     } else if (index === 15) {

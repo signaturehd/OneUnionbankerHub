@@ -9,6 +9,59 @@ import * as func from '../functions/SpouseFunctions'
 import store from '../../../../store'
 import { NotifyActions } from '../../../../actions'
 
+let bloodObjectParam = [
+ {
+   id : 0,
+   name: 'A+'
+ },
+ {
+   id : 1,
+   name : 'A-'
+ },
+ {
+   id : 2,
+   name : 'B+'
+ },
+ {
+   id : 3,
+   name : 'B-'
+ },
+ {
+   id : 4,
+   name : '0+'
+ },
+ {
+   id : 5,
+   name : '0-'
+ },
+ {
+   id : 6,
+   name : 'AB+'
+ },
+ {
+   id : 7,
+   name : 'AB-'
+ }
+]
+
+let statusObject = [{
+ id: 0,
+ name : 'Deceased'
+}, {
+ id : 1,
+ name : 'Living'
+}]
+
+let genderObject = [{
+ id : 0,
+ code: 'M',
+ name : 'Male'
+},{
+ id: 1,
+ code: 'F',
+ name : 'Female'
+}]
+
 export default class SpousePresenter {
   constructor (container) {
     this.getSpouseInteractor = new GetSpouseInteractor(container.get('HRBenefitsClient'))
@@ -27,63 +80,9 @@ export default class SpousePresenter {
   getSpouse () {
     this.view.showCircularLoader()
     this.getSpouseInteractor.execute()
-    .do(() => {
-       const bloodObjectParam = [
-        {
-          id : 0,
-          name: 'Type A+'
-        },
-        {
-          id : 1,
-          name : 'Type A-'
-        },
-        {
-          id : 2,
-          name : 'Type B+'
-        },
-        {
-          id : 3,
-          name : 'Type B-'
-        },
-        {
-          id : 4,
-          name : 'Type 0+'
-        },
-        {
-          id : 5,
-          name : 'Type 0-'
-        },
-        {
-          id : 6,
-          name : 'Type AB+'
-        },
-        {
-          id : 7,
-          name : 'Type AB-'
-        }
-      ]
-
-      const statusObject = [{
-        id: 0,
-        name : 'Deceased'
-      }, {
-        id : 1,
-        name : 'Living'
-      }]
-
-      const genderObject = [{
-        id : 0,
-        code: 'M',
-        name : 'Male'
-      },{
-        id: 1,
-        code: 'F',
-        name : 'Female'
-      }]
-      this.view.showGender(genderObject)
-      this.view.showStatus(statusObject)
-      this.view.showBloodType(bloodObjectParam)
-    })
+    .do(data => this.view.showGender(genderObject))
+    .do(data => this.view.showStatus(statusObject))
+    .do(data => this.view.showBloodType(bloodObjectParam))
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.showSpouseDetails(data, true)
@@ -118,7 +117,6 @@ export default class SpousePresenter {
     // } else {
     // }
     this.view.showCircularLoader()
-    console.log('test')
     this.postSpouseInteractor.execute(addSpouseForm(
       firstName,
       middleName,
@@ -155,19 +153,6 @@ export default class SpousePresenter {
     groupLifeInsurance,
     spouseId
   ) {
-    console.log(
-    firstName,
-    middleName,
-    lastName,
-    birthDate,
-    occupation,
-    contact,
-    status,
-    gender,
-    bloodType,
-    healthHospitalizationPlan,
-    groupLifeInsurance,
-    spouseId)
     this.view.showCircularLoader()
     this.putSpouseInteractor.execute(addSpouseForm(
       firstName,

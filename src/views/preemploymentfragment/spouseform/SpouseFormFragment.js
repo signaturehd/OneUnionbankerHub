@@ -149,7 +149,7 @@ class SpouseFormFragment extends BaseMVPView {
   }
 
   showStatus (statusObject) {
-    this.setSate({ statusObject })
+    this.setState({ statusObject })
   }
 
   saveFunction () {
@@ -259,8 +259,7 @@ class SpouseFormFragment extends BaseMVPView {
       showStatusModal
     } = this.state
 
-
-    return(
+  return(
     <div>
     { super.render() }
     {
@@ -277,7 +276,7 @@ class SpouseFormFragment extends BaseMVPView {
 
       <SingleInputModal
         label = { 'Blood Type' }
-        inputArray = { bloodObjectParam && bloodObjectParam }
+        inputArray = { bloodObjectParam }
         selectedArray = { (bloodTypeId, bloodTypeName) =>
           this.setState({
             bloodTypeName,
@@ -293,7 +292,7 @@ class SpouseFormFragment extends BaseMVPView {
 
       <SingleInputModal
         label = { 'Status' }
-        inputArray = { statusObject && statusObject }
+        inputArray = { statusObject }
         selectedArray = { (statusId, statusName) =>
           this.setState({
             statusId,
@@ -358,8 +357,7 @@ class SpouseFormFragment extends BaseMVPView {
             <div>
               <h2 className = { 'font-size-12px' }>Gender</h2>
               <br/>
-              <div className = { 'grid-global' }>
-                <div className = { 'grid-global' } >
+              <div>
                 {
                   genderObject && genderObject.map((resp, key) => {
                     const selectedGenderCode = resp && resp.code
@@ -374,8 +372,6 @@ class SpouseFormFragment extends BaseMVPView {
                     )
                   })
                 }
-                </div>
-                <div></div>
               </div>
               <br/>
             </div>
