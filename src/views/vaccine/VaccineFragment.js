@@ -130,7 +130,7 @@ class VaccineFragment extends BaseMVPView {
     this.setState({showConfirmation: false, noticeResponse })
   }
 
-  addVaccine () {      
+  addVaccine () {
     this.presenter.addVaccine()
   }
 
@@ -167,6 +167,7 @@ class VaccineFragment extends BaseMVPView {
 
     return (
       <div>
+        { super.render() }
         {
           showNoticeModal &&
           <NoticeModal

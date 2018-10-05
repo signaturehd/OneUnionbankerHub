@@ -34,7 +34,7 @@ export default class VaccinePresenter {
 
       data &&
       data.dependents.map((dependent, key) => {
-        this.setDependentt({
+        this.setDependent({
           id : dependent.id,
           name : dependent.name
         })
@@ -55,10 +55,10 @@ export default class VaccinePresenter {
       this.view.showDependentMap(dependentArray)
       this.view.showAppModeMap(appModeArray)
     })
-    .subscribe(vaccine => {
+    .subscribe(data => {
         this.view.hideCircularLoader()
-      }, error => {
-          this.view.navigate()
+      },e => {
+        this.view.navigate()
       }
     )
   }
@@ -79,7 +79,7 @@ export default class VaccinePresenter {
 
     }
 
-    this.view.setDependentList(dependentArray)
+    this.view.setDependentList(storedDependentList)
     // if dependent paramenter is having the data -- remove then push
 
     // if not push lang

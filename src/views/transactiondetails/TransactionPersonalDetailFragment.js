@@ -23,6 +23,7 @@ import BereavementDetailsFragment from './fragments/BereavementDetailsFragment'
 import MedicalSchedulingDetailsFragment from './fragments/MedicalSchedulingDetailsFragment'
 import OutpatientDetailsFragment from './fragments/OutpatientDetailsFragment'
 import MaternityAssistanceDetailsFragment from './fragments/MaternityAssistanceDetailsFragment'
+import VaccineRequisitionDetailsFragment from './fragments/VaccineRequisitionDetailsFragment'
 
 import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreementsModal'
 import TransactionDetailsAgreementMPLModal from './modals/TransactionDetailsAgreementMPLModal'
@@ -146,10 +147,16 @@ function  TransactionDetails (props)  {
       agreementsMethod = { (resp) => agreementsMethod(resp) }
       details = { transactionDetails }
      />
-  }
-  else {
+  } else if (transactionId === 18) {
+    // Vaccine Requisition
+    return <VaccineRequisitionDetailsFragment
+        attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+        agreementsMethod = { (resp) => agreementsMethod(resp) }
+        details = { transactionDetails }
+     />
+  } else {
    return <h1>No Transaction Occured please reload</h1> // No  Transaction
-   }
+  }
 }
 
 class TransactionPersonalDetailsFragment extends BaseMVPView {
