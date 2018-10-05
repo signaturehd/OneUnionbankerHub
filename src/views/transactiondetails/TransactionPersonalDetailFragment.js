@@ -23,6 +23,7 @@ import BereavementDetailsFragment from './fragments/BereavementDetailsFragment'
 import MedicalSchedulingDetailsFragment from './fragments/MedicalSchedulingDetailsFragment'
 import OutpatientDetailsFragment from './fragments/OutpatientDetailsFragment'
 import MaternityAssistanceDetailsFragment from './fragments/MaternityAssistanceDetailsFragment'
+import LaptopLeaseDetailsFragment from './fragments/LaptopLeaseDetailsFragment'
 
 import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreementsModal'
 import TransactionDetailsAgreementMPLModal from './modals/TransactionDetailsAgreementMPLModal'
@@ -44,6 +45,7 @@ function  TransactionDetails (props)  {
   const setFileCarlease = props.setFileCarlease
   const fileCarLease = props.fileCarlease
   const onConfirmationReleaseFunc = props.onConfirmationReleaseFunc
+  const confirmmDetails = props.confirmmDetails
 
   if (transactionId === 6) {
     return <DentalRDetailsFragment
@@ -147,7 +149,14 @@ function  TransactionDetails (props)  {
       details = { transactionDetails }
      />
   } else if (transactionId === 16) {
-   return <h1>Transaction for LaptopLease</h1>
+    //Laptop Lease
+    return <LaptopLeaseDetailsFragment
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
+      confirmDetails = { (transactionId, isConfirm) => confirmmDetails(transactionId, isConfirm) }
+      details = { transactionDetails }
+    />
+   // return <h1>Transaction for LaptopLease</h1>
   } else {
    return <h1>No Transaction Occured please reload</h1> // No  Transaction
   }
@@ -218,6 +227,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
 
   getTransactionDetails (details) {
     this.setState({ details })
+  }
+
+  confirmRelease (transactionId, isConfirm) {
+    console.log(transactionId, isConfirm)
   }
 
   /* Circular Loader */
@@ -321,6 +334,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              attachments = { attachments }
              transactions = { transactions }
              showUploading = { response }
+             confirmmDetails = { (transactionId, isConfirm) => this.confirmRelease(transactionId, isConirm) }
              attachmentsMethod = { (resp) =>
                this.showAttachmentsMethod(resp)
              }
