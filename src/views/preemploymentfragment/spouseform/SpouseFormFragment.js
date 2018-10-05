@@ -31,11 +31,14 @@ class SpouseFormFragment extends BaseMVPView {
     super(props)
     this.state = {
       bloodObjectParam: [],
+      statusObject : [],
+      genderObject : [],
       spouseAttachments: [{
         id : 0,
         name : 'Spouse Attachments 1'
       }],
       spouseAttachmentsArray: [],
+      selectedGender : null,
       spouseData : '',
       count: 1,
       enabledLoader : false,
@@ -93,7 +96,7 @@ class SpouseFormFragment extends BaseMVPView {
   showSpouseDetails (spouseData, editMode) {
     const nullChecker = spouseData && spouseData
     const nullCheckerName = spouseData && spouseData.name
-    this.setState({ 
+    this.setState({
       firstName : nullCheckerName.first,
       middleName : nullCheckerName.middle,
       lastName : nullCheckerName.last,
@@ -141,9 +144,17 @@ class SpouseFormFragment extends BaseMVPView {
     this.setState({ genderErrorMessage })
   }
 
+  showGender (genderObject) {
+    this.setState({ genderObject })
+  }
+
+  showStatus (statusObject) {
+    this.setSate({ statusObject })
+  }
+
   saveFunction () {
     const {
-      firstName, 
+      firstName,
       middleName,
       lastName,
       birthDate,
@@ -157,7 +168,7 @@ class SpouseFormFragment extends BaseMVPView {
       spouseId
     } = this.state
     this.presenter.postSpouseForm(
-      firstName, 
+      firstName,
       middleName,
       lastName,
       birthDate,
@@ -173,7 +184,7 @@ class SpouseFormFragment extends BaseMVPView {
 
   updateFunction () {
     const {
-      firstName, 
+      firstName,
       middleName,
       lastName,
       birthDate,
@@ -188,7 +199,7 @@ class SpouseFormFragment extends BaseMVPView {
     } = this.state
 
     this.presenter.putSpouseForm(
-      firstName, 
+      firstName,
       middleName,
       lastName,
       birthDate,
@@ -212,9 +223,12 @@ class SpouseFormFragment extends BaseMVPView {
 
     const {
       bloodObjectParam,
+      statusObject,
+      genderObject,
       spouseAttachmentsArray,
       spouseAttachments,
       spouseData,
+      selectedGender,
       count,
       enabledLoader,
       lastName,
@@ -245,28 +259,21 @@ class SpouseFormFragment extends BaseMVPView {
       showStatusModal
     } = this.state
 
-    const statusObject = [{
-      id: 0,
-      name : 'Deceased'
-    }, {
-      id : 1,
-      name : 'Living'
-    }]
-    console.log(contact)
+
     return(
     <div>
     { super.render() }
     {
       showNoticeResponseModal &&
 
-      <NoticeResponseModal 
+      <NoticeResponseModal
         noticeResponse = { noticeResponse }
-        onClose = { () => 
+        onClose = { () =>
           this.setState({ showNoticeResponseModal: false }) }
       />
     }
     {
-      showBloodTypeModal && 
+      showBloodTypeModal &&
 
       <SingleInputModal
         label = { 'Blood Type' }
@@ -282,7 +289,7 @@ class SpouseFormFragment extends BaseMVPView {
       />
     }
     {
-      showStatusModal && 
+      showStatusModal &&
 
       <SingleInputModal
         label = { 'Status' }
@@ -312,7 +319,7 @@ class SpouseFormFragment extends BaseMVPView {
         />
         </div>
       <div>
-        <div> 
+        <div>
           <div>
             <GenericInput
               text = { 'First Name' }
@@ -353,12 +360,20 @@ class SpouseFormFragment extends BaseMVPView {
               <br/>
               <div className = { 'grid-global' }>
                 <div className = { 'grid-global' } >
-                  <Checkbox
-                    label = { 'Male' }
-                    />
-                  <Checkbox
-                    label = { 'Female' }
-                    />
+                {
+                  genderObject && genderObject.map((resp, key) => {
+                    const selectedGenderCode = resp && resp.code
+                    return (
+                      <Checkbox
+                        label = { resp.name }
+                        value = { resp.code }
+                        checked = { resp.code === gender }
+                        key = { key }
+                        onChange = { e => this.setState({ selectedGender : resp.code }) }
+                        />
+                    )
+                  })
+                }
                 </div>
                 <div></div>
               </div>
@@ -394,11 +409,11 @@ class SpouseFormFragment extends BaseMVPView {
               </div>
             </div>
           </div>
-        </div>  
+        </div>
         <div className = { 'grid-global' }>
           <div></div>
           <div className = { 'text-align-right' }>
-            <GenericButton 
+            <GenericButton
             text = { 'Add Atttachments' }
             onClick = { () => {
               const updatedAttachments = [...spouseAttachments]

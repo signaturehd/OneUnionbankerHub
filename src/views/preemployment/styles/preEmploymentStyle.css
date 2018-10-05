@@ -16,7 +16,7 @@
 .react-sweet-progress-symbol{
   width: auto !important;
 }
-
+/* 
 label {
   display: contents;
   margin: 0 0 -1px;
@@ -135,4 +135,4 @@ div.pre-container {
     -o-transform: translate(0px, -100px);
     -ms-transform: translate(0px, -100px);
   }
-}
+} */

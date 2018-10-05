@@ -45,6 +45,8 @@ import SpouseFormFragment
   from '../preemploymentfragment/spouseform/SpouseFormFragment'
 import ChildrenFragment
   from '../preemploymentfragment/childrenform/ChildrenFragment'
+import MedicalAppointmentFragment
+  from '../preemploymentfragment/medicalappointment/MedicalAppointmentFragment'
 /* Modal */
 import IsFinancialObilgationConfirmModal
   from './modals/IsFinancialObilgationConfirmModal'
@@ -187,6 +189,11 @@ function  PreEmploymentFragments (props)  {
     />
   } else if (pageNumber === 18) {
     return <ChildrenFragment
+      percentage = { percentage }
+      onSendPageNumberToView = { onSendPageNumberToView }
+    />
+} else if (pageNumber === 19) {
+    return <MedicalAppointmentFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
     />
@@ -433,7 +440,7 @@ class PreEmploymentFragment extends BaseMVPView {
                 preEmpPage = { preEmpPage }
                 onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
                 />
-                 <br/>
+              <br/>
               <div className = { 'grid-global-columns-x3' }>
                 {
                   preEmpPage !== 0 ?

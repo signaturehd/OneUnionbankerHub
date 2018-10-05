@@ -63,6 +63,25 @@ export default class SpousePresenter {
         }
       ]
 
+      const statusObject = [{
+        id: 0,
+        name : 'Deceased'
+      }, {
+        id : 1,
+        name : 'Living'
+      }]
+
+      const genderObject = [{
+        id : 0,
+        code: 'M',
+        name : 'Male'
+      },{
+        id: 1,
+        code: 'F',
+        name : 'Female'
+      }]
+      this.view.showGender(genderObject)
+      this.view.showStatus(statusObject)
       this.view.showBloodType(bloodObjectParam)
     })
     .subscribe(data => {
@@ -75,7 +94,7 @@ export default class SpousePresenter {
   }
 
   postSpouseForm (
-    firstName, 
+    firstName,
     middleName,
     lastName,
     birthDate,
@@ -92,7 +111,7 @@ export default class SpousePresenter {
     //   this.view.firstNameErrorMessageFunc('First Name field is required')
     // } else if(!this.validator(middleName)) {
     //   this.view.middleNameErrorMessageFunc('Middle Name field is required')
-    // } else if(!this.validator(lastName)) { 
+    // } else if(!this.validator(lastName)) {
     //   this.view.lastNameErrorMessageFunc('Last Name field is required')
     // } else if(!this.validator(occupation)) {
     //   this.view.occupationErrorMessageFunc('Occupation field is required')
@@ -101,7 +120,7 @@ export default class SpousePresenter {
     this.view.showCircularLoader()
     console.log('test')
     this.postSpouseInteractor.execute(addSpouseForm(
-      firstName, 
+      firstName,
       middleName,
       lastName,
       birthDate,
@@ -123,7 +142,7 @@ export default class SpousePresenter {
   }
 
   putSpouseForm (
-    firstName, 
+    firstName,
     middleName,
     lastName,
     birthDate,
@@ -136,8 +155,8 @@ export default class SpousePresenter {
     groupLifeInsurance,
     spouseId
   ) {
-    console.log(  
-    firstName, 
+    console.log(
+    firstName,
     middleName,
     lastName,
     birthDate,
@@ -151,7 +170,7 @@ export default class SpousePresenter {
     spouseId)
     this.view.showCircularLoader()
     this.putSpouseInteractor.execute(addSpouseForm(
-      firstName, 
+      firstName,
       middleName,
       lastName,
       birthDate,
