@@ -35,6 +35,21 @@ export default class HRBenefitsService {
     })
   }
 
+  updateDescription (token, description) {
+    const objectParam = {
+      description : description
+    }
+    return this.apiClient.put('v1/profile/description', objectParam,{
+      headers : { token }
+    })
+  }
+
+  getDevices (token) {
+    return this.apiClient.get('v1/devices', {
+      headers : { token }
+    })
+  }
+
   /* dental loa */
 
   getDentalLoa (token) {
