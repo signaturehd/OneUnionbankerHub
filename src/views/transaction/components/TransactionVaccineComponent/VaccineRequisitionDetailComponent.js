@@ -13,16 +13,21 @@ class VaccineRequisitionDetailComponent extends Component {
     super(props)
   }
 
+  componentWillMount() {
+    console.log(this.props)
+  }
+
   render () {
   const {
     details,
-    onClickAgreements
+    onClickAgreements,
+    viewTransactions
   } = this.props
 
   const transactionID = details.transactionId
   const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
-  const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
-  const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details)
+  const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details.AccountNo)
+  const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details.ReferenceNumber)
 
   return (
     <div  className = { 'transaction-component-otherdetails-form' }>
@@ -67,6 +72,28 @@ class VaccineRequisitionDetailComponent extends Component {
             onClick = { () => onClickAgreements(true) }
           />
           <br/>
+          <br/>
+          <div
+            className = { 'transaction-grid-button' }
+          >
+
+            <h3>Vaccine Details</h3>
+            {
+              details &&
+              details.details &&
+              details.details.Recepients.map((recipient, key) => (
+                <div>
+                  <small>{recipient.Name}</small>
+                  <GenericButton
+                    className = { 'transaction-details-button full-width-button' }
+                    text = { `${recipient.ApplicationMode} - View Details` }
+                    onClick = { () => viewTransactions(recipient.VaccineDetails) }
+                  />
+                  <br/>
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
     </div>

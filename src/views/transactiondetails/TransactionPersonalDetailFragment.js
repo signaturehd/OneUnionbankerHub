@@ -29,6 +29,7 @@ import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreem
 import TransactionDetailsAgreementMPLModal from './modals/TransactionDetailsAgreementMPLModal'
 import TransactionDetailsFormAttachmentsModal from './modals/TransactionDetailsFormAttachmentsModal'
 import TransactionDetailsFormAttachmentsMplModal from './modals/TransactionDetailsFormAttachmentsMplModal'
+import TransactionDetailsRecepientsModal from './modals/TransactionDetailsRecepientsModal'
 
 function  TransactionDetails (props)  {
   const transactionId = props.details ? props.details.benefitType.id : 0
@@ -45,6 +46,9 @@ function  TransactionDetails (props)  {
   const setFileCarlease = props.setFileCarlease
   const fileCarLease = props.fileCarlease
   const onConfirmationReleaseFunc = props.onConfirmationReleaseFunc
+  const viewTransactions = props.viewTransactions
+
+  console.log(props)
 
   if (transactionId === 6) {
     return <DentalRDetailsFragment
@@ -153,6 +157,7 @@ function  TransactionDetails (props)  {
         attachmentsMethod = { (resp) => attachmentsMethod(resp) }
         agreementsMethod = { (resp) => agreementsMethod(resp) }
         details = { transactionDetails }
+        viewTransactions = { (recepients) => viewTransactions(recepients) }
      />
   } else {
    return <h1>No Transaction Occured please reload</h1> // No  Transaction
@@ -254,7 +259,9 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     showAgreementsMethodMPL,
     showConfirmation,
     showConfirmationMessage,
-    fileCarLease
+    fileCarLease,
+    recepients,
+    showRecepients
   } = this.state
 
   return (
@@ -296,6 +303,14 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
           />
       }
       {
+        showRecepients &&
+        <TransactionDetailsRecepientsModal
+          isDismisable = { true }
+          onClose = { () => this.setState({ showRecepients: false }) }
+          recepients = { recepients }
+        />
+      }
+      {
         showConfirmation &&
         <Modal>
           <center>
@@ -327,6 +342,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              attachments = { attachments }
              transactions = { transactions }
              showUploading = { response }
+             viewTransactions = { (recepients) => this.setState({ recepients, showRecepients: true }) }
              attachmentsMethod = { (resp) =>
                this.showAttachmentsMethod(resp)
              }

@@ -20,7 +20,7 @@ class VaccineRequisitionDetailsFragment extends Component {
   }
 
   render () {
-    const { details, transactionsPerson, agreementsMethod } = this.props
+    const { details, transactionsPerson, agreementsMethod, viewTransactions } = this.props
 
     const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
     const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
@@ -59,6 +59,7 @@ class VaccineRequisitionDetailsFragment extends Component {
               <div>
                 <VaccineRequisitionDetailComponent
                   details = { details }
+                  viewTransactions = { (resp) => viewTransactions(resp) }
                   onClickAgreements = { (resp) => agreementsMethod(resp) }
                 />
               </div>
