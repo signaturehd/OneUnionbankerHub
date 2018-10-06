@@ -26,30 +26,42 @@ import NoticeResponseModal from '../../notice/NoticeResponseModal'
 
 import 'react-sweet-progress/lib/style.css'
 
+import moment from 'moment'
+
 class MedicalAppointmentFragment extends BaseMVPView {
   constructor(props) {
     super(props)
+    this.state = {
+      medicalAppointmentData : [],
+      preferredDate : ''
+    }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(19)
+    this.presenter.getMedicalAppointment()
   }
 
-  updateFunction () {
-
+  showMedicalAppointment (medicalAppointmentData) {
+    this.setState({ medicalAppointmentData })
   }
 
-  saveFunction () {
-
+  saveFunction (preferredDate) {
+    this.presenter.updateMedicalAppointment(preferredDate)
   }
 
   render() {
+    const {
+      medicalAppointmentData,
+      preferredDate
+    } = this.state
+
     const {
       history,
       percentage,
     } = this.props
 
-  return(
+  return (
     <div>
     { super.render() }
 
@@ -72,23 +84,44 @@ class MedicalAppointmentFragment extends BaseMVPView {
             <div className = { 'grid-global' }>
               <GenericInput
                 text = { 'Clinic' }
+                value = { `St. Luke's Medical Center - Global City` }
+                disabled = { true }
                 maxLength = { 30 }
                 />
               <GenericInput
                 text = { 'Package' }
+                value = { medicalAppointmentData.package }
+                disabled = { true }
                 maxLength = { 20 }
                 />
             </div>
             <DatePicker
               text = { 'Preferred Schedule' }
+              maxDate = {  moment() }
+              hint = { '(eg. MM/DD/YYYY)' }
+              selected = { preferredDate && moment(preferredDate) }
+              onChange = { (e)  =>
+                this.setState({ preferredDate: e.format('MM-DD-YYYY') })
+               }
               />
             <br/>
             <Line/>
             <br/>
             <div>
-              <h2 className={ 'text-align-left' }>Package Procedures</h2>
-              <h4 className = { 'font-weight-lighter' }>Procedures that are marked with asterisk(*) are required.</h4>
-            <br/>
+              <h2>Package Procedures</h2>
+              <h4 className = { 'font-weight-lighter font-size-16px' }>Procedures that are marked with asterisk(*) are required.</h4>
+              <br/>
+              {
+                medicalAppointmentData &&
+                medicalAppointmentData.procedures &&
+                medicalAppointmentData.procedures.map((resp, key) =>
+                  <div
+                    className = { 'font-size-14px' }
+                    key = { key }>
+                    { resp }
+                  </div>
+                )
+              }
             </div>
           </div>
         </div>
@@ -96,13 +129,8 @@ class MedicalAppointmentFragment extends BaseMVPView {
         <center>
           <GenericButton
             className = { 'global-button' }
-            text = { 'Edit' }
-            onClick = { () => this.updateFunction() }
-            />
-          <GenericButton
-            className = { 'global-button' }
-            text = { 'Save' }
-            onClick = { () => this.saveFunction() }
+            text = { 'Submit' }
+            onClick = { () => this.saveFunction(preferredDate) }
             />
         </center>
       </div>
