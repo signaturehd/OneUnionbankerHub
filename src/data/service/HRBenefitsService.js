@@ -1309,6 +1309,7 @@ export default class HRBenefitsService {
       relationship: putCharacterReferenceParam.relationship,
       numberOfYearsKnown: putCharacterReferenceParam.numberOfYearsKnown,
       contactNumber: putCharacterReferenceParam.contactNumber,
+      occupation : putCharacterReferenceParam.occupation,
       company : {
         position: putCharacterReferenceParam.company.company.position,
         name: putCharacterReferenceParam.company.company.name,
@@ -1531,6 +1532,21 @@ export default class HRBenefitsService {
 
   getPagibiLoanDeduction (token) {
     return this.onboardingClient.get('v1/employees/pagibig/deductions', {
+      headers : { token }
+    })
+  }
+
+  getMedicalAppointment (token) {
+    return this.onboardingClient.get('v1/employees/medical/details', {
+      headers : { token }
+    })
+  }
+
+  updateMedicalAppointment (token, date) {
+    const objectParam = {
+      preferredDate : date
+    }
+    return this.onboardingClient.post('v1/employees/medical/details', objectParam, {
       headers : { token }
     })
   }

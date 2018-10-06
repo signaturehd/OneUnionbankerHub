@@ -26,6 +26,8 @@ import store from '../../../store'
 import CharacterReferenceAddFormModal from './modals/CharacterReferenceAddFormModal'
 import MullptipleCardComponent from './components/CharacterReferenceMultipleCardComponent'
 
+import NoticeResponseModal from '../../notice/NoticeResponseModal'
+
 import * as func from './functions/CharacterReferenceFunctions'
 
 class CharacterReferenceFragment extends BaseMVPView {
@@ -34,6 +36,7 @@ class CharacterReferenceFragment extends BaseMVPView {
     this.state = {
       showCharacterReferenceModal : false,
       showOccupationModal : false,
+      showNoticeResponse : false,
       occupationId : '',
       occupationName : '',
       characterReferenceData : [],
@@ -68,7 +71,8 @@ class CharacterReferenceFragment extends BaseMVPView {
       townText: '',
       editData : '',
       editMode : false,
-      selectedId : ''
+      selectedId : '',
+      noticeResponse : '',
     }
   }
 
@@ -151,6 +155,10 @@ class CharacterReferenceFragment extends BaseMVPView {
 
   validatorEmail (string) {
     return func.checkValidateEmail(string)
+  }
+
+  noticeResponseModal (noticeResponse) {
+    this.setState({ noticeResponse, showNoticeResponse : true })
   }
 
   postEditMode () {
@@ -302,10 +310,18 @@ class CharacterReferenceFragment extends BaseMVPView {
   }
 
   putEditMode (resp) {
+    if(resp.occupation === 1) {
+      this.setState({ occupationName : 'Self-Employed' })
+    } else if (resp.occupation === 2) {
+      this.setState({ occupationName : 'Employed' })
+    } else if (resp.occupation === 3) {
+      this.setState({ occupationName : 'Unemployed' })
+    }
+
     this.setState({
       showCharacterReferenceModal : true,
       selectedId : resp.id,
-      occupationName : resp.occupation,
+      occupationId : resp.occupation,
       addressText : resp.address,
       fullNameText : resp.name,
       emailText : resp.numberOfYearsKnown,
@@ -326,25 +342,27 @@ class CharacterReferenceFragment extends BaseMVPView {
 
   putEditModeSave () {
     const {
-    selectedId,
-    occupationName,
-    addressText,
-    fullNameText,
-    emailText,
-    contactNumberText,
-    relationshipText,
-    periodOfProfessionExperienceText,
-    positionText,
-    companyNameText,
-    floorText,
-    buildingNameText,
-    barangayText,
-    streetText,
-    districtText,
-    townText,
-    cityText,
-    editData
+      selectedId,
+      occupationId,
+      occupationName,
+      addressText,
+      fullNameText,
+      emailText,
+      contactNumberText,
+      relationshipText,
+      periodOfProfessionExperienceText,
+      positionText,
+      companyNameText,
+      floorText,
+      buildingNameText,
+      barangayText,
+      streetText,
+      districtText,
+      townText,
+      cityText,
+      editData
     } = this.state
+
     let companyObject = {
      company : {
       position: positionText,
@@ -358,13 +376,15 @@ class CharacterReferenceFragment extends BaseMVPView {
       town: townText
       }
     }
+
     this.presenter.putCharacterReference(
       selectedId,
       fullNameText,
       relationshipText,
       periodOfProfessionExperienceText,
       contactNumberText,
-      companyObject
+      companyObject,
+      occupationId
     )
     this.setState({ showCharacterReferenceModal : false })
   }
@@ -378,6 +398,7 @@ class CharacterReferenceFragment extends BaseMVPView {
     const {
       showCharacterReferenceModal,
       showOccupationModal,
+      showNoticeResponse,
       occupationId,
       occupationName,
       occupationNameErrorMessage,
@@ -410,12 +431,20 @@ class CharacterReferenceFragment extends BaseMVPView {
       districtTextErrorMessage,
       townText,
       cityText,
-      editMode
+      editMode,
+      noticeResponse
     } = this.state
 
     return (
     <div>
       { super.render() }
+      {
+        showNoticeResponse &&
+        <NoticeResponseModal
+          noticeResponse = { noticeResponse }
+          onClose = { () => this.setState({ showNoticeResponse : false }) }
+          />
+      }
       {
         showCharacterReferenceModal &&
         <CharacterReferenceAddFormModal
@@ -485,17 +514,17 @@ class CharacterReferenceFragment extends BaseMVPView {
           />
       }
       <div>
-         <br/>
-          <div className = { 'percentage-grid' }>
-            <div>
-              <h2 className = { 'header-margin-default text-align-left' }>Character Reference</h2>
-              <h2>By nominating these persons as your personal character references, you provide consent that UnionBank of the Philippines may conduct a character reference check on your possible employment with the company. You also certify that the information you&#39;ve provided are true and corret</h2>
-            </div>
-            <Progress
-              type = { 'circle' }
-              height = { 100 }
-              width = { 100 }
-              percent = { percentage } />
+       <br/>
+        <div className = { 'percentage-grid' }>
+          <div>
+            <h2 className = { 'header-margin-default text-align-left' }>Character Reference</h2>
+            <h2>By nominating these persons as your personal character references, you provide consent that UnionBank of the Philippines may conduct a character reference check on your possible employment with the company. You also certify that the information you&#39;ve provided are true and correct</h2>
+          </div>
+          <Progress
+            type = { 'circle' }
+            height = { 100 }
+            width = { 100 }
+            percent = { percentage } />
           </div>
         <br/>
       </div>

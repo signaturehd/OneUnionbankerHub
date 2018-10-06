@@ -1010,7 +1010,17 @@ export default class HRBenefitsClient {
 
   getPagibiLoanDeduction (token) {
     return this.service.getPagibiLoanDeduction(token)
-    .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMedicalAppointment (token) {
+    return this.service.getMedicalAppointment(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateMedicalAppointment (token, date) {
+    return this.service.updateMedicalAppointment(token, date)
+      .pipe(ServiceErrorOperator())
   }
 
   /* Vaccines Requisitions */

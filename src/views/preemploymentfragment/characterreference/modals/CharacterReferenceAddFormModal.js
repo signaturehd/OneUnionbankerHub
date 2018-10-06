@@ -35,11 +35,11 @@ function CharacterReferenceComponents (props) {
   const relationshipTextFunc = props.relationshipTextFunc
   const addressTextErrorMessage = props.addressTextErrorMessage
   const cityText = props.cityText
-  const townText = props.townText  
+  const townText = props.townText
   const cityTextFunc = props.cityTextFunc
   const townTextFunc = props.townTextFunc
 
-  if(occupationId === 0) {
+  if(occupationId === 1) {
     return <CharacterSelfEmployedComponents
       positionText = { positionText }
       positionTextFunc = { (e) => positionTextFunc(e) }
@@ -62,7 +62,7 @@ function CharacterReferenceComponents (props) {
       townTextFunc = { (e) => townTextFunc(e) }
       cityTextFunc = { (e) => cityTextFunc(e) }
     />
-  } else if (occupationId === 1) {
+} else if (occupationId === 2) {
     return <CharacterEmployedComponents
       positionText = { positionText }
       positionTextFunc = { (e) => positionTextFunc(e) }
@@ -85,7 +85,7 @@ function CharacterReferenceComponents (props) {
       townTextFunc = { (e) => townTextFunc(e) }
       cityTextFunc = { (e) => cityTextFunc(e) }
       />
-  } else if (occupationId === 2) {
+  } else if (occupationId === 3) {
     return <CharacterUnemployedComponents
       addressTextFunc = { (e) => addressTextFunc(e) }
       addressText = { addressText }
@@ -104,15 +104,15 @@ class CharacterReferenceAddFormModal extends Component {
   render() {
     const occupationObject = [
     {
-      id : 0,
+      id : 1,
       name: 'Self-Employed'
     },
     {
-      id : 1,
+      id : 2,
       name : 'Employed'
     },
     {
-      id: 2,
+      id: 3,
       name : 'Unemployed'
     }]
 
@@ -123,7 +123,6 @@ class CharacterReferenceAddFormModal extends Component {
       showOccupationModalFunc,
       occupationId,
       occupationName,
-      onCloseInputModal,
       addressText,
       addressTextFunc,
       fullNameText,
@@ -264,7 +263,7 @@ class CharacterReferenceAddFormModal extends Component {
               onClick = { () => onSave() }
             />  :
             <GenericButton
-              text = { 'Save' }
+              text = { 'Edit' }
               onClick = { () => onEditSave() }
             />
           }

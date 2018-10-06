@@ -4,11 +4,13 @@ export default (
   relationship,
   numberOfYearsKnown,
   contactNumber,
-  company) => ({
+  company,
+  occupation) => ({
     id,
     name,
     relationship,
     numberOfYearsKnown,
     contactNumber,
-    company
+    company,
+    occupation
   })
