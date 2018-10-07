@@ -20,7 +20,7 @@ import { Progress } from 'react-sweet-progress'
 import 'react-sweet-progress/lib/style.css'
 import './styles/affirmDocumentStyle.css'
 
-import AffirmationDocumentPreviewModal from './modals/AffirmationDocumentPreviewModal'
+import AffirmationDocumentsViewerComponent from './components/AffirmationDocumentsViewerComponent'
 
 import { NotifyActions } from '../../../actions'
 import store from '../../../store'
@@ -33,7 +33,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
     this.state = {
       affirmationPreEmploymentStatus : [],
       previewDataPDF : [],
-      showPdfViewModal : false,
+      showPdfViewComponent : false,
       showPinCodeModal: false,
       enabledLoader: false,
       noticeResponseModal: false,
@@ -41,7 +41,8 @@ class AffirmationDocumentFragment extends BaseMVPView {
       noticeResponse : [],
       uniquePIN: '',
       preAffirmationEmpId: '',
-      nodeStatus : ''
+      nodeStatus : '',
+      affirmTitle : ''
     }
     this.onCheckedPdf = this.onCheckedPdf.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -144,7 +145,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
     const {
       affirmationPreEmploymentStatus,
       previewDataPDF,
-      showPdfViewModal,
+      showPdfViewComponent,
       showPinCodeModal,
       noticeResponseModal,
       pdfFile,
@@ -153,21 +154,12 @@ class AffirmationDocumentFragment extends BaseMVPView {
       uniquePIN,
       preAffirmationEmpId,
       nodeStatus,
+      affirmTitle
     } = this.state
 
     return(
     <div>
       { super.render() }
-      {
-        showPdfViewModal &&
-        <AffirmationDocumentPreviewModal
-          enabledLoader = { enabledLoader }
-          nodeStatus = { nodeStatus }
-          pdfFile = { pdfFile }
-          showPinCodeModalFunc = { () => this.setState({ showPinCodeModal: true, showPdfViewModal: false }) }
-          onClose = { () => this.setState({ showPdfViewModal: false }) }
-          />
-      }
       {
         noticeResponseModal &&
         <Modal>
@@ -253,33 +245,52 @@ class AffirmationDocumentFragment extends BaseMVPView {
         <br/>
         <div className = { 'affirmation-grid-card' }>
           {
-            affirmationPreEmploymentStatus.map((resp, key) =>
-            <Card
-              key = { key }
-              onClick = { () => {
-                this.onCheckedPdf(resp.link)
-                this.setState({
-                  showPdfViewModal : true ,
-                  preAffirmationEmpId : resp.id,
-                  nodeStatus : resp.nodeStatus
-                  })
-                }
+            affirmationPreEmploymentStatus.map((resp, key) => {
+              let respId = resp.id
+               return (
+                 <div>
+                   <Card
+                     key = { key }
+                     onClick = { () => {
+                       this.onCheckedPdf(resp.link)
+                       this.setState({
+                         showPdfViewComponent : true ,
+                         preAffirmationEmpId : resp.id,
+                         nodeStatus : resp.nodeStatus,
+                         affirmTitle : resp.title
+                         })
+                       }
+                     }
+                     className = { 'affirmation-card' }>
+                     <div className = { 'affirmation-grid-x2' }>
+                       <h2> { resp.title } </h2>
+                       <div>
+                         {
+                           resp.nodeStatus === 1 ?
+                           <span className = { 'affirmation-icon affirmation-success float-right' }/>
+                           :
+                           <span
+                             className = { 'affirmation-icon affirmation-seemore-button float-right' }/>
+                         }
+                       </div>
+                     </div>
+                   </Card>
+                 </div>
+               )
               }
-              className = { 'affirmation-card' }>
-              <div className = { 'affirmation-grid-x2' }>
-                <h2> { resp.title } </h2>
-                <div>
-                  {
-                    resp.nodeStatus === 1 ?
-                    <span className = { 'affirmation-icon affirmation-success float-right' }/>
-                    :
-                    <span
-                      className = { 'affirmation-icon affirmation-seemore-button float-right' }/>
-                  }
-                </div>
-              </div>
-            </Card>
             )
+          }
+
+          {
+            showPdfViewComponent &&
+            <AffirmationDocumentsViewerComponent
+              affirmTitle = { affirmTitle }
+              enabledLoader = { enabledLoader }
+              nodeStatus = { nodeStatus }
+              pdfFile = { pdfFile }
+              showPinCodeModalFunc = { () => this.setState({ showPinCodeModal: true, showPdfViewComponent: false }) }
+              onClose = { () => this.setState({ showPdfViewComponent: false }) }
+            />
           }
         </div>
       </div>
