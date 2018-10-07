@@ -26,7 +26,6 @@ class BirthCertificateFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      showPdfViewModal : false,
       enabledLoader : false,
       showNoticeResponseModal : false,
       noticeResponse : '',
@@ -42,10 +41,6 @@ class BirthCertificateFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.onSendPageNumberToView(3)
-  }
-
-  onCheckedPdf (link) {
-    this.presenter.getOnBoardingDocument(link)
   }
 
   showAttachments (pdfFile) {
@@ -101,7 +96,6 @@ class BirthCertificateFragment extends BaseMVPView {
       birthDataFormData,
       biographicalData,
       biographicalName,
-      showPdfViewModal,
       pdfFile,
       count
     } = this.state
@@ -128,7 +122,7 @@ class BirthCertificateFragment extends BaseMVPView {
       enabledLoader &&
       <Modal>
       <center>
-      <CircularLoader show = { enabledLoader }/>
+        <CircularLoader show = { enabledLoader }/>
       </center>
       </Modal>
     }
@@ -146,26 +140,8 @@ class BirthCertificateFragment extends BaseMVPView {
               percent={ percentage } />
           </div>
         <br/>
-        <div className = { 'birth-grid-card' }>
-          <Card
-            onClick = { () => {
-              this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
-              this.setState({ showPdfViewModal : true  })
-              }
-            }
-            className = { 'birth-card' }>
-            <div className = { 'birth-grid-x2' }>
-              <h2>Birth Certificate</h2>
-              <div>
-                <span className = { 'birth-icon biographical-seemore-button' }/>
-              </div>
-            </div>
-          </Card>
-        </div>
-        <br/>
         <Line />
         <br/>
-
         {
           birthDataFormData.length !== 0 &&
           birthCertifArray.map((status) =>
