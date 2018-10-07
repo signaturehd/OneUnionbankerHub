@@ -96,27 +96,27 @@ class CharacterReferenceFragment extends BaseMVPView {
   }
 
   positionTextValidate (e) {
-    const validate = func.checkedValidateText(e)
+    const validate = func.checkNoSymbol(e)
     this.setState({ positionText : validate })
   }
 
   companyNameTextValidate (e) {
-    const validate = func.checkedValidateText(e)
+    const validate = func.checkNoSymbol(e)
     this.setState({ companyNameText : validate })
   }
 
   floorTextValidate (e) {
-    const validate = func.checkedValidateText(e)
+    const validate = func.checkNoSymbol(e)
     this.setState({ floorText : validate })
   }
 
   districtTextValidate (e) {
-    const validate = func.checkedValidateText(e)
+    const validate = func.checkNoSymbol(e)
     this.setState({ districtText : validate })
   }
 
   barangayTextValidate (e) {
-    const validate = func.checkedValidateText(e)
+    const validate = func.checkNoSymbol(e)
     this.setState({ barangayText : validate })
   }
 
@@ -135,17 +135,17 @@ class CharacterReferenceFragment extends BaseMVPView {
   }
 
   addressTextValidate (e) {
-    const validate = func.checkedValidateText(e)
+    const validate = func.checkNoSymbol(e)
     this.setState({ addressText : validate })
   }
 
   streetTextValidate (e) {
-    const validate = func.checkedValidateText(e)
+    const validate = func.checkNoSymbol(e)
     this.setState({ streetText : validate })
   }
 
   buildingNameTextValidate (e) {
-    const validate = func.checkedValidateText(e)
+    const validate = func.checkNoSymbol(e)
     this.setState({ buildingNameText : validate })
   }
 

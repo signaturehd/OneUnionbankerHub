@@ -259,12 +259,12 @@ class CharacterReferenceAddFormModal extends Component {
           {
             editMode ?
             <GenericButton
-              text = { 'Save' }
-              onClick = { () => onSave() }
-            />  :
-            <GenericButton
               text = { 'Edit' }
               onClick = { () => onEditSave() }
+            /> :
+            <GenericButton
+              text = { 'Save' }
+              onClick = { () => onSave() }
             />
           }
 

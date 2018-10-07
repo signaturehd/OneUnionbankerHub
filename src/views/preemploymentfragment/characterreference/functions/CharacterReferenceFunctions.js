@@ -18,6 +18,11 @@ export function checkValidateEmail (email) {
   email : ''
 }
 
+export function checkNoSymbol (symbol) {
+  return ! new RequiredSymbolValidation().isValid(symbol) ?
+  symbol : ''
+}
+
 export function checkValidateNumber (number) {
   return new RequiredNumberValidation().isValid(number) ?
   number : ''
