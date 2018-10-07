@@ -45,6 +45,8 @@ import SpouseFormFragment
   from '../preemploymentfragment/spouseform/SpouseFormFragment'
 import ChildrenFragment
   from '../preemploymentfragment/childrenform/ChildrenFragment'
+import ParentFragment
+  from '../preemploymentfragment/parentform/ParentFragment'
 import MedicalAppointmentFragment
   from '../preemploymentfragment/medicalappointment/MedicalAppointmentFragment'
 /* Modal */
@@ -73,7 +75,7 @@ import './styles/preEmploymentStyle.css'
 function  PreEmploymentFragments (props)  {
   const pageNumber = props.preEmpPage
   const onSendPageNumberToView = props.onSendPageNumberToView
-  const percentageTemp = (pageNumber / 19) * 100
+  const percentageTemp = (pageNumber / 20) * 100
   const percentage = parseInt(percentageTemp)
   const biographicalArray = props.biographicalArray
   const sssArray = props.sssArray
@@ -192,7 +194,12 @@ function  PreEmploymentFragments (props)  {
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
     />
-} else if (pageNumber === 19) {
+  } else if (pageNumber === 19) {
+    return <ParentFragment
+      percentage = { percentage }
+      onSendPageNumberToView = { onSendPageNumberToView }
+    />
+  } else if (pageNumber === 20) {
     return <MedicalAppointmentFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
@@ -265,14 +272,16 @@ class PreEmploymentFragment extends BaseMVPView {
     const index = this.state.preEmpPage + 1
     if(index === 1) {
       this.setState({ showFinancialObligationModal : true })
-      // const index1 = this.state.preEmpPage +17
-      // this.setState({ preEmpPage : index1 })
     } else if (index === 11) {
       this.setState({ showTaxPayerIdentificationModal : true })
     } else if (index === 15) {
       this.setState({ showPagibigLoanModal : true })
     } else if (index === 17) {
       this.setState({ showMarriedConfirmModal : true })
+    } else if (index === 18) {
+      this.setState({ showChildrenConfirmModal : true })
+    } else if (index === 21) {
+      this.skipPage ()
     } else {
       this.setState({ preEmpPage : index })
     }
@@ -288,6 +297,8 @@ class PreEmploymentFragment extends BaseMVPView {
       this.setState({ preEmpPage : index - 1 })
     } else if (index === 17) {
       this.setState({ preEmpPage : index - 1 })
+    } else if (index === 18) {
+      this.setState({ preEmpPage : index - 1 })
     } else {
       this.setState({ preEmpPage : index })
     }
@@ -295,6 +306,7 @@ class PreEmploymentFragment extends BaseMVPView {
 
   skipPage () {
     this.props.onChangeStateGoBenefits(1)
+    this.props.history.push('/')
   }
 
   render() {
@@ -453,10 +465,9 @@ class PreEmploymentFragment extends BaseMVPView {
                 <GenericButton
                   className = { 'global-button' }
                   text = { 'Skip' }
-                  onClick = { () => {
+                  onClick = { () =>
                     this.skipPage()
-                    history.push('/')
-                  } }
+                  }
                 />
                 <GenericButton
                   className = { 'global-button' }

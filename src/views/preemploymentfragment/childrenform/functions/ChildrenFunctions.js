@@ -1,4 +1,4 @@
-import moment from 'moment' 
+import moment from 'moment'
 
 export function checkedDateFilled (birthDate) {
 	return birthDate ?
@@ -15,7 +15,7 @@ export function checkGender (gender) {
 }
 
 export function checkStatus (status) {
-	if(status === 1) {
+	if(status === 0) {
 	  return 'Living'
 	} else {
 	  return 'Deceased'

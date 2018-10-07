@@ -14,7 +14,6 @@ class IsChildrenConfirmModal extends Component {
 
   render() {
     const { onSendPageNumberToView } = this.props
-    console.log('test')
     return(
       <Modal>
         <br/>

@@ -27,7 +27,7 @@ class CharacterReferenceMultipleCardComponent extends Component {
           characterReferenceData.map((resp, key) =>
             <div>
               <Card
-                className = { 'educ-card-grid-option' }
+                className = { 'char-card-grid-option' }
                 key = { key }>
                 <div className = { 'character-multiple-card' }>
                   <div>

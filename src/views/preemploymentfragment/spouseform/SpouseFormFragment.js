@@ -107,7 +107,7 @@ class SpouseFormFragment extends BaseMVPView {
       gender : nullChecker.gender,
       spouseId : nullChecker.id,
       statusId : nullChecker.status,
-      statusName : nullChecker.status === 0 ? 'Deceased' : 'Living'
+      statusName : nullChecker.status === 1 ? 'Deceased' : 'Living'
     })
     this.setState({ spouseData, editMode })
   }
@@ -316,7 +316,7 @@ class SpouseFormFragment extends BaseMVPView {
           width = { 100 }
           percent={ percentage }
         />
-        </div>
+      </div>
       <div>
         <div>
           <div>

@@ -38,7 +38,7 @@ class MedicalAppointmentFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(19)
+    this.props.onSendPageNumberToView(20)
     this.presenter.getMedicalAppointment()
   }
 

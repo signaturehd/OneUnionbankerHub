@@ -1,5 +1,4 @@
 import moment from 'moment'
-import { format } from '../../../../utils/numberUtils'
 import {
   RequiredAlphabetValidation,
   RequiredSymbolValidation,

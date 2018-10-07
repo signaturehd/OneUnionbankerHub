@@ -188,7 +188,6 @@ class ChildrenFragment extends BaseMVPView {
       editMode
     } = this.state
 
-    console.log(childrenData)
 
     const isVisible = (childrenData && childrenData.length > 4) ? '' : 'hide'
 

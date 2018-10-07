@@ -39,7 +39,7 @@ class FinancialObligationMultipleCardComponent extends Component {
           financeDetailsHolder.slice(0, index).map((resp, key) => (
             <div>
               <Card
-                className = { 'educ-card-grid-option' }
+                className = { 'financial-card-grid-option' }
                 key = { key }>
                 <div className = { 'grid-global' }>
                   <div>
