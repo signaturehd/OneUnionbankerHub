@@ -32,7 +32,10 @@ class LaptopLeaseCardComponent extends Component {
       onSubmit,
       onEdit,
       onContinue,
-      showFileUpload
+      showFileUpload,
+      deliveryOption,
+      deliveryOptionName,
+      showLaptopDeliveryOption
     } = this.props
 
     return (
@@ -69,14 +72,14 @@ class LaptopLeaseCardComponent extends Component {
                 onChange = { (e) => setTerms(e.target.value) }
                 value = { terms }
                 />
-            </div>
               <GenericInput
-                value = { deliveryOption }
+                value = { deliveryOptionName }
                 disabled = { showEditMode }
                 readOnly
                 onClick = { () => showLaptopDeliveryOption() }
                 text = { 'Delivery Option' }
               />
+            </div>
               <br/>
               <Line/>
               {

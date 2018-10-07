@@ -65,8 +65,7 @@ class LaptopLeaseFragment extends BaseMVPView {
       yearErrorMessage : '',
       attachmentsRequired : [ {name : 'Dealer Quotations'}]
     }
-    this.sendFormData = this.sendFormData.bind(this)
-    this.validator = this.validator.bind(this)
+
   }
 
   /* Life Cycle */
@@ -96,6 +95,16 @@ class LaptopLeaseFragment extends BaseMVPView {
 
   setFile (file) {
     this.setState({ file })
+  }
+
+  setDeliveryOptionList (deliveryOptionList) {
+    this.setState({ deliveryOptionList })
+  }
+
+  isLaptopLeaseValidate (isValid) {
+    if (!isValid) {
+      this.props.history.push('/mybenefits/benefits/')
+    }
   }
 
   /* Notice Response*/
@@ -133,8 +142,14 @@ class LaptopLeaseFragment extends BaseMVPView {
       color,
       deliveryOption,
       deliveryOptionList,
-      showDeliveryOption,
       file,
+      showDeliveryOptions,
+      showNoticeModal,
+      showNoticeResponseModal,
+      showBenefitFeedbackModal,
+      enabledLoader,
+      showEditMode,
+      deliveryOptionName
     } = this.state
 
     const { history }=this.props
@@ -183,13 +198,11 @@ class LaptopLeaseFragment extends BaseMVPView {
           showDeliveryOptions &&
           <SingleInputModal
             label = { 'Delivery Options' }
-            inputArray = { carValidate && carValidate.brands }
-            selectedArray = { (carId, carBrand) =>
+            inputArray = { deliveryOptionList && deliveryOptionList }
+            selectedArray = { (deliveryOptionId, deliveryOptionName) =>
               this.setState({
-                carId,
-                carBrand,
+                deliveryOptionName,
                 showDeliveryOptions : false,
-                carBrandErrorMessage : ''
               })
             }
             onClose = { () => this.setState({ showDeliveryOptions : false }) }
@@ -231,18 +244,16 @@ class LaptopLeaseFragment extends BaseMVPView {
              </center> :
             <FormComponent
               showEditMode = { showEditMode }
-              setAmount = { this.presenter::setAmount }
-              setColor = { this.presenter::setColor }
-              setTerms = { this.presenter::setTerms }
-              setFile = { this.presenter::setFile }
-              setDeliveryOption = { this.presenter::setDeliveryOption }
-              showDeliveryOptions = { this.presenter::showDeliveryOptions }
-              deliveryOption = { deliveryOption }
+              setAmount = { (resp) => this.presenter.setAmount(resp) }
+              setColor = { (resp) =>  this.presenter.setColor(resp) }
+              setTerms = { resp => this.presenter.setTerms(resp) }
+              setFile = { (resp) => this.presenter.setFile(resp) }
+              showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
+              deliveryOptionName = { deliveryOptionName }
               amount = { amount }
               color = { color }
               terms = { terms }
               file = { file }
-              deliveryOptionList = { deliveryOptionList }
               onContinue={ () =>
                 this.sendFormData()
               }

@@ -38,7 +38,6 @@ export default class LaptopLeasePresenter {
 
   setDeliveryOption (deliveryOption) {
     storedDeliveryOption = deliveryOption
-    this.view.setDeliveryOption(deliveryOption)
   }
 
   validateLaptopLease () {
@@ -46,7 +45,6 @@ export default class LaptopLeasePresenter {
     this.validateLaptopLeaseInteractor.execute()
     .map(data => {
       let arrayOption = []
-
       data &&
       data.deliveryOptions.map((resp, key) => (
         arrayOption.push({
@@ -54,10 +52,18 @@ export default class LaptopLeasePresenter {
           name : resp.address
         })
       ))
-      this.view.showLaptopLeaseValidate(data)
-      this.view.showDeliveryOptions(arrayOption)
+
+      return data = {
+        attachments: data.attachments,
+        isValid: data.isValid == 1 ? true : false,
+        deliveryOptions: arrayOption
+      }
+
     })
     .subscribe(data => {
+      this.view.isLaptopLeaseValidate(data.isValid)
+      this.view.setDeliveryOptionList(data.deliveryOptions)
+      console.log(data)
       this.view.hideCircularLoader()
     }, error => {
       this.view.hideCircularLoader()
