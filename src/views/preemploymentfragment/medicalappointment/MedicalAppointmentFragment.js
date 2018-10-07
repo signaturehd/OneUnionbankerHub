@@ -97,11 +97,11 @@ class MedicalAppointmentFragment extends BaseMVPView {
             </div>
             <DatePicker
               text = { 'Preferred Schedule' }
-              maxDate = {  moment() }
+              minDate = {  moment() }
               hint = { '(eg. MM/DD/YYYY)' }
               selected = { preferredDate && moment(preferredDate) }
               onChange = { (e)  =>
-                this.setState({ preferredDate: e.format('MM-DD-YYYY') })
+                this.setState({ preferredDate: e.format('MM/DD/YYYY') })
                }
               />
             <br/>
