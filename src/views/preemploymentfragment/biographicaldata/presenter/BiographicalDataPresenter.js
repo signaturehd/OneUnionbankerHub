@@ -16,8 +16,10 @@ export default class BiographicalDataPresenter {
   }
 
   getOnBoardingDocument (link) {
+    this.view.showCircularLoader()
     this.getOnboardingPdfInteractor.execute(link)
     .subscribe(data => {
+      this.view.hideCircularLoader()
       this.view.showAttachments(data)
     }, error => {
     })

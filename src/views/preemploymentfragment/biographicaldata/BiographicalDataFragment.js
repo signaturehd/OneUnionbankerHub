@@ -17,7 +17,9 @@ import {
 } from '../../../ub-components/'
 
 import Presenter from './presenter/BiographicalDataPresenter'
-import BiographicalDocumentPreviewModal from './modal/BiographicalDocumentPreviewModal'
+
+import BiographicalViewerComponent from './components/BiographicalViewerComponent'
+
 import ResponseModal from '../../notice/NoticeResponseModal'
 
 import "react-sweet-progress/lib/style.css"
@@ -27,7 +29,7 @@ class BiographicalDataFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      showPdfViewModal : false,
+      showPdfViewComponent : false,
       enabledLoader : false,
       showNoticeResponseModal : false,
       noticeResponse : '',
@@ -36,7 +38,7 @@ class BiographicalDataFragment extends BaseMVPView {
       }],
       pdfFile: '',
       count : 2,
-      biographicalName : ''
+      biographicalName : '',
     }
     this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
   }
@@ -99,9 +101,9 @@ class BiographicalDataFragment extends BaseMVPView {
       biographicalDataFormData,
       biographicalData,
       biographicalName,
-      showPdfViewModal,
+      showPdfViewComponent,
       pdfFile,
-      count
+      count,
     } = this.state
 
     const bioAttachmentArray = [
@@ -114,13 +116,6 @@ class BiographicalDataFragment extends BaseMVPView {
     <div>
     { super.render() }
     {
-      showPdfViewModal &&
-      <BiographicalDocumentPreviewModal
-        pdfFile = { pdfFile }
-        onClose = { () => this.setState({ showPdfViewModal: false }) }
-        />
-    }
-    {
       showNoticeResponseModal &&
       <ResponseModal
         onClose={ () => {
@@ -132,9 +127,20 @@ class BiographicalDataFragment extends BaseMVPView {
     {
       enabledLoader &&
       <Modal>
-      <center>
-      <CircularLoader show = { enabledLoader }/>
-      </center>
+        <div>
+          <center>
+            <br/>
+            {
+              showPdfViewComponent ?
+
+              <h2>Please wait while we we&#39;re retrieving the documents</h2> :
+              <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+            }
+            <br/>
+            <CircularLoader show = { enabledLoader }/>
+            <br/>
+          </center>
+        </div>
       </Modal>
     }
       <div>
@@ -155,7 +161,7 @@ class BiographicalDataFragment extends BaseMVPView {
           <Card
             onClick = { () => {
               this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
-              this.setState({ showPdfViewModal : true  })
+              this.setState({ showPdfViewComponent : true  })
               }
             }
             className = { 'biographical-card' }>
@@ -166,6 +172,14 @@ class BiographicalDataFragment extends BaseMVPView {
               </div>
             </div>
           </Card>
+          {
+            showPdfViewComponent &&
+            <BiographicalViewerComponent
+              enabledLoader = { enabledLoader }
+              pdfFile = { pdfFile }
+              onClose = { () => this.setState({ showPdfViewComponent: false }) }
+            />
+          }
         </div>
         <br/>
         <Line />
