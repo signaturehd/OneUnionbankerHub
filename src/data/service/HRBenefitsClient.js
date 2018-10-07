@@ -1023,6 +1023,36 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getParents (token) {
+    return this.service.getParents(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateParentForm (token, parentsParam) {
+    return this.service.updateParentForm(token, parentsParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addParentForm (token, parentsParam) {
+    return this.service.addParentForm(token, parentsParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getSiblings (token) {
+    return this.service.getSiblings(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateSiblingsForm (token, siblingsParam) {
+    return this.service.updateSiblingsForm(token, siblingsParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addSiblingsForm (token, siblingsParam) {
+    return this.service.addSiblingsForm(token, siblingsParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Vaccines Requisitions */
 
 

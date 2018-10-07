@@ -1551,6 +1551,108 @@ export default class HRBenefitsService {
     })
   }
 
+  getParents (token) {
+    return this.onboardingClient.get('v1/employees/plans/hospitalization/parents', {
+      headers : { token }
+    })
+  }
+
+  updateParentForm (token, parentsParam) {
+    const objectParam = {
+      name : {
+        first : parentsParam.firstName,
+        middle : parentsParam.middleName,
+        last : parentsParam.lastName,
+      },
+      bloodType : parentsParam.bloodTypeName,
+      contactNumber : parentsParam.contact,
+      birthDate : parentsParam.birthDate,
+      gender : parentsParam.genderId,
+      occupation : parentsParam.occupationName,
+      healthHospitalizationPlan: parentsParam.healthHospitalizationPlan,
+      groupLifeInsurance : parentsParam.groupLifeInsurance,
+      status: parentsParam.status,
+    }
+
+    return this.onboardingClient.put(`v1/employees/plans/hospitalization/parents/${parentsParam.parentId}`, objectParam, {
+      headers : { token }
+    })
+  }
+
+  addParentForm (token, parentsParam) {
+    const objectParam = {
+      name : {
+        first : parentsParam.firstName,
+        middle : parentsParam.middleName,
+        last : parentsParam.lastName,
+      },
+      bloodType : parentsParam.bloodTypeName,
+      contactNumber : parentsParam.contact,
+      birthDate : parentsParam.birthDate,
+      gender : parentsParam.genderId,
+      occupation : parentsParam.occupationName,
+      healthHospitalizationPlan: parentsParam.healthHospitalizationPlan,
+      groupLifeInsurance : parentsParam.groupLifeInsurance,
+      status: parentsParam.status,
+    }
+
+    return this.onboardingClient.post(`v1/employees/plans/hospitalization/parents`, objectParam, {
+      headers : { token }
+    })
+  }
+
+
+  getSiblings (token) {
+    return this.onboardingClient.get('v1/employees/siblings', {
+      headers : { token }
+    })
+  }
+
+  updateSiblingsForm (token, siblingsParam) {
+    const objectParam = {
+      name : {
+        first : siblingsParam.firstName,
+        middle : siblingsParam.middleName,
+        last : siblingsParam.lastName,
+      },
+      bloodType : siblingsParam.bloodTypeName,
+      contactNumber : siblingsParam.contact,
+      birthDate : siblingsParam.birthDate,
+      gender : siblingsParam.genderId,
+      occupation : siblingsParam.occupationName,
+      healthHospitalizationPlan: siblingsParam.healthHospitalizationPlan,
+      groupLifeInsurance : siblingsParam.groupLifeInsurance,
+      status: siblingsParam.status,
+    }
+
+    return this.onboardingClient.put(`v1/employees/siblings/${siblingsParam.parentId}`, objectParam, {
+      headers : { token }
+    })
+  }
+
+  addSiblingsForm (token, parentsParam) {
+    const objectParam = {
+      name : {
+        first : parentsParam.firstName,
+        middle : parentsParam.middleName,
+        last : parentsParam.lastName,
+      },
+      bloodType : parentsParam.bloodTypeName,
+      contactNumber : parentsParam.contact,
+      birthDate : parentsParam.birthDate,
+      gender : parentsParam.genderId,
+      occupation : parentsParam.occupationName,
+      healthHospitalizationPlan: parentsParam.healthHospitalizationPlan,
+      groupLifeInsurance : parentsParam.groupLifeInsurance,
+      status: parentsParam.status,
+    }
+
+    return this.onboardingClient.post(`v1/employees/siblings`, objectParam, {
+      headers : { token }
+    })
+  }
+
+
   /* Vaccine Requisition */
 
   validateVaccine (token) {
