@@ -23,10 +23,20 @@ export default class SpousePresenter {
     })
   }
 
-  updateMedicalAppointment (date) {
-    this.updateMedicalAppointmentInteractor.execute(date)
+  getMedicalAppointmentProcedures () {
+    this.getMedicalAppointmentInteractor.executeProcedures()
     .subscribe(data => {
-      this.view.noticeResponseModal(data.message)
+      this.view.showMedicalAppointmentProcedure(data)
+    }, error => {
+    })
+  }
+
+  updateMedicalAppointment (date, id) {
+    this.updateMedicalAppointmentInteractor.execute(date, id)
+    .subscribe(data => {
+      this.view.noticeResponseModal(data)
+      this.getMedicalAppointmentProcedures()
+      this.getMedicalAppointment()
     }, error => {
     })
   }

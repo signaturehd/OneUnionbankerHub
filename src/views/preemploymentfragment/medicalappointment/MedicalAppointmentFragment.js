@@ -33,27 +33,42 @@ class MedicalAppointmentFragment extends BaseMVPView {
     super(props)
     this.state = {
       medicalAppointmentData : [],
-      preferredDate : ''
+      medicalAppointmentProcedureData : [],
+      preferredDate : '',
+      noticeResponse : '',
+      showNoticeResponseModal : false,
     }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(20)
     this.presenter.getMedicalAppointment()
+    this.presenter.getMedicalAppointmentProcedures()
   }
 
   showMedicalAppointment (medicalAppointmentData) {
     this.setState({ medicalAppointmentData })
   }
 
-  saveFunction (preferredDate) {
-    this.presenter.updateMedicalAppointment(preferredDate)
+  showMedicalAppointmentProcedure (medicalAppointmentProcedureData) {
+    this.setState({ medicalAppointmentProcedureData })
+  }
+
+  saveFunction (preferredDate, id) {
+    this.presenter.updateMedicalAppointment(preferredDate, id)
+  }
+
+  noticeResponseModal (noticeResponse) {
+    this.setState({ noticeResponse, showNoticeResponseModal : true })
   }
 
   render() {
     const {
       medicalAppointmentData,
-      preferredDate
+      preferredDate,
+      medicalAppointmentProcedureData,
+      showNoticeResponseModal,
+      noticeResponse
     } = this.state
 
     const {
@@ -64,7 +79,13 @@ class MedicalAppointmentFragment extends BaseMVPView {
   return (
     <div>
     { super.render() }
-
+    {
+      showNoticeResponseModal &&
+      <NoticeResponseModal
+        noticeResponse = { noticeResponse }
+        onClose = { () => this.setState({ showNoticeResponseModal : false }) }
+        />
+    }
       <div className = { 'percentage-grid' }>
         <div>
           <h2 className={ 'header-margin-default text-align-left' }>Medical Appointment</h2>
@@ -90,7 +111,7 @@ class MedicalAppointmentFragment extends BaseMVPView {
                 />
               <GenericInput
                 text = { 'Package' }
-                value = { medicalAppointmentData.package }
+                value = { medicalAppointmentProcedureData.package }
                 disabled = { true }
                 maxLength = { 20 }
                 />
@@ -99,9 +120,13 @@ class MedicalAppointmentFragment extends BaseMVPView {
               text = { 'Preferred Schedule' }
               minDate = {  moment() }
               hint = { '(eg. MM/DD/YYYY)' }
-              selected = { preferredDate && moment(preferredDate) }
+              selected = { preferredDate ? moment(preferredDate) : moment(medicalAppointmentData.date) }
               onChange = { (e)  =>
-                this.setState({ preferredDate: e.format('MM/DD/YYYY') })
+                this.setState({
+                  preferredDate: e ?
+                  e.format('MM/DD/YYYY') :
+                  medicalAppointmentProcedureData.date.format('MM/DD/YYYY')
+                  })
                }
               />
             <br/>
@@ -112,9 +137,9 @@ class MedicalAppointmentFragment extends BaseMVPView {
               <h4 className = { 'font-weight-lighter font-size-16px' }>Procedures that are marked with asterisk(*) are required.</h4>
               <br/>
               {
-                medicalAppointmentData &&
-                medicalAppointmentData.procedures &&
-                medicalAppointmentData.procedures.map((resp, key) =>
+                medicalAppointmentProcedureData &&
+                medicalAppointmentProcedureData.procedures &&
+                medicalAppointmentProcedureData.procedures.map((resp, key) =>
                   <div
                     className = { 'font-size-14px' }
                     key = { key }>
@@ -130,7 +155,7 @@ class MedicalAppointmentFragment extends BaseMVPView {
           <GenericButton
             className = { 'global-button' }
             text = { 'Submit' }
-            onClick = { () => this.saveFunction(preferredDate) }
+            onClick = { () => this.saveFunction(preferredDate, medicalAppointmentData.id) }
             />
         </center>
       </div>
