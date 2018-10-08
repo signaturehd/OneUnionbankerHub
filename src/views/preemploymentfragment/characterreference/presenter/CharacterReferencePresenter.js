@@ -34,6 +34,7 @@ export default class CharacterReferencePresenter {
     numberOfYearsKnown,
     contactNumber,
     company,
+    address,
     occupation,
   ) {
     this.postCharacterReferenceInteractor.execute(genericParam(
@@ -43,10 +44,12 @@ export default class CharacterReferencePresenter {
       numberOfYearsKnown,
       contactNumber,
       company,
+      address,
       occupation
     ))
     .subscribe(data => {
       this.view.noticeResponseModal(data)
+      this.getCharacterReference()
     }, error => {
     })
   }
@@ -58,6 +61,7 @@ export default class CharacterReferencePresenter {
     numberOfYearsKnown,
     contactNumber,
     company,
+    address,
     occupation
   ) {
     this.putCharacterReferenceInteractor.execute(genericParam(
@@ -67,10 +71,12 @@ export default class CharacterReferencePresenter {
       numberOfYearsKnown,
       contactNumber,
       company,
+      address,
       occupation
     ))
     .subscribe(data => {
       this.view.noticeResponseModal(data)
+      this.getCharacterReference()
     }, error => {
     })
   }

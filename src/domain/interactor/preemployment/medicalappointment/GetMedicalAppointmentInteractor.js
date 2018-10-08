@@ -6,4 +6,8 @@ export default class GetMedicalAppointmentInteractor {
   execute () {
     return this.client.getMedicalAppointment(this.client.getToken())
   }
+
+  executeProcedures () {
+    return this.client.getMedicalAppointmentProcedures(this.client.getToken())
+  }
 }

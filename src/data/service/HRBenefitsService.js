@@ -1286,6 +1286,8 @@ export default class HRBenefitsService {
       relationship: postCharacterReferenceParam.relationship,
       numberOfYearsKnown: postCharacterReferenceParam.numberOfYearsKnown,
       contactNumber: postCharacterReferenceParam.contactNumber,
+      address: postCharacterReferenceParam.address,
+      occupation: postCharacterReferenceParam.occupation,
       company : {
         position: postCharacterReferenceParam.company.company.position,
         name: postCharacterReferenceParam.company.company.name,
@@ -1309,7 +1311,8 @@ export default class HRBenefitsService {
       relationship: putCharacterReferenceParam.relationship,
       numberOfYearsKnown: putCharacterReferenceParam.numberOfYearsKnown,
       contactNumber: putCharacterReferenceParam.contactNumber,
-      occupation : putCharacterReferenceParam.occupation,
+      address: putCharacterReferenceParam.address,
+      occupation: putCharacterReferenceParam.occupation,
       company : {
         position: putCharacterReferenceParam.company.company.position,
         name: putCharacterReferenceParam.company.company.name,
@@ -1536,17 +1539,24 @@ export default class HRBenefitsService {
     })
   }
 
+  getMedicalAppointmentProcedures (token) {
+    return this.onboardingClient.get('v1/employees/medical/procedures', {
+      headers : { token }
+    })
+  }
+
   getMedicalAppointment (token) {
     return this.onboardingClient.get('v1/employees/medical/details', {
       headers : { token }
     })
   }
 
-  updateMedicalAppointment (token, date) {
+  updateMedicalAppointment (token, date, id) {
     const objectParam = {
+      id: id,
       preferredDate : date
     }
-    return this.onboardingClient.post('v1/employees/medical/details', objectParam, {
+    return this.onboardingClient.put('v1/employees/medical/schedules', objectParam, {
       headers : { token }
     })
   }

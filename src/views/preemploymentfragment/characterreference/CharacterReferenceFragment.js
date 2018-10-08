@@ -165,6 +165,7 @@ class CharacterReferenceFragment extends BaseMVPView {
     const {
       selectedId,
       occupationName,
+      occupationId,
       occupationNameErrorMessage,
       characterReferenceData,
       addressText,
@@ -195,7 +196,7 @@ class CharacterReferenceFragment extends BaseMVPView {
       districtTextErrorMessage,
       townText,
       cityText,
-      editData
+      editMode
     } = this.state
 
     let companyObject = {
@@ -211,14 +212,15 @@ class CharacterReferenceFragment extends BaseMVPView {
       town: townText
     }
   }
-    // const filterEmail = /^\w+[\+\.\w-]*@([\w-]+\.)*\w+[\w-]*\.([a-z]{2,4}|\d+)$/i
+  if(!editMode) {
     this.presenter.postCharacterReference(
       selectedId,
       fullNameText,
       relationshipText,
       periodOfProfessionExperienceText,
       contactNumberText,
-      companyObject
+      companyObject,
+      occupationId
      )
     this.setState({ showCharacterReferenceModal : false })
     this.setState({
@@ -254,129 +256,7 @@ class CharacterReferenceFragment extends BaseMVPView {
       districtTextErrorMessage : '',
       townText : '',
      })
-    // if(!this.validator(fullNameText)) {
-    //   this.setState({ fullNameTextErrorMessage : 'Fullname field is required' })
-    // } else if (!this.validator(occupationName)) {
-    //   this.setState({ occupationNameErrorMessage : 'Occupation field is required' })
-    // } else if (occupationId === 0) {
-    //     this.presenter.postCharacterReference(
-    //       occupationId,
-    //       fullNameText,
-    //       relationshipText,
-    //       periodOfProfessionExperienceText,
-    //       contactNumberText,
-    //       company : {
-    //         id : occupationId,
-    //         name: fullNameText,
-    //         relationship : relationshipText,
-    //         numberOfYearsKnown : periodOfProfessionExperienceText,
-    //         contactNumber : contactNumberText,
-    //         company : companyNameText,
-    //       })
-    //     console.log('test')
-    // } else if (occupationId === 1) {
-    //     this.presenter.postCharacterReference(
-    //       occupationId,
-    //       fullNameText,
-    //       relationshipText,
-    //       periodOfProfessionExperienceText,
-    //       contactNumberText,
-    //       company : {
-    //         id : occupationId,
-    //         name: fullNameText,
-    //         relationship : relationshipText,
-    //         numberOfYearsKnown : periodOfProfessionExperienceText,
-    //         contactNumber : contactNumberText,
-    //         company : companyNameText,
-    //       })
-    // } else if (occupationId === 2) {
-    //   if(!this.validator(addressText)) {
-    //     this.setState({ addressTextErrorMessage : 'Address field is required' })
-    //   } else if (!filterEmail.test(emailText)) {
-    //     this.setState({ emailTextErrorMessage : 'Email is invalid (e.g test@gmail.com)' })
-    //   } else if (!this.validator(contactNumberText)) {
-    //     this.setState({ contactNumberTextErrorMessage: 'Contact number field is required'})
-    //   } else {
-    //     console.log('test')
-    //     this.presenter.postCharacterReference(
-    //       occupationId,
-    //       fullNameText,
-    //       relationshipText,
-    //       periodOfProfessionExperienceText,
-    //       contactNumberText,
-    //       company : {})
-    //   }
-    // }
-  }
-
-  putEditMode (resp) {
-    if(resp.occupation === 1) {
-      this.setState({ occupationName : 'Self-Employed' })
-    } else if (resp.occupation === 2) {
-      this.setState({ occupationName : 'Employed' })
-    } else if (resp.occupation === 3) {
-      this.setState({ occupationName : 'Unemployed' })
-    }
-
-    this.setState({
-      showCharacterReferenceModal : true,
-      selectedId : resp.id,
-      occupationId : resp.occupation,
-      addressText : resp.address,
-      fullNameText : resp.name,
-      emailText : resp.numberOfYearsKnown,
-      contactNumberText : resp.contactNumber,
-      relationshipText : resp.relationship,
-      periodOfProfessionExperienceText : resp.numberOfYearsKnown,
-      positionText : resp.company.position,
-      companyNameText : resp.company.name,
-      floorText : resp.company.departmentFloor,
-      buildingNameText : resp.company.buildingName,
-      barangayText : resp.company.baranggay,
-      streetText : resp.company.street,
-      districtText : resp.company.district,
-      townText : resp.company.town,
-      cityText : resp.company.city
-    })
-  }
-
-  putEditModeSave () {
-    const {
-      selectedId,
-      occupationId,
-      occupationName,
-      addressText,
-      fullNameText,
-      emailText,
-      contactNumberText,
-      relationshipText,
-      periodOfProfessionExperienceText,
-      positionText,
-      companyNameText,
-      floorText,
-      buildingNameText,
-      barangayText,
-      streetText,
-      districtText,
-      townText,
-      cityText,
-      editData
-    } = this.state
-
-    let companyObject = {
-     company : {
-      position: positionText,
-      name: companyNameText,
-      departmentFloor: floorText,
-      buildingName:  buildingNameText,
-      street: streetText,
-      district: districtText,
-      baranggay: barangayText,
-      city: cityText,
-      town: townText
-      }
-    }
-
+  } else {
     this.presenter.putCharacterReference(
       selectedId,
       fullNameText,
@@ -384,9 +264,102 @@ class CharacterReferenceFragment extends BaseMVPView {
       periodOfProfessionExperienceText,
       contactNumberText,
       companyObject,
+      addressText,
       occupationId
-    )
+     )
     this.setState({ showCharacterReferenceModal : false })
+    this.setState({
+      occupationId : '',
+      selectedId: '',
+      occupationName : '',
+      occupationNameErrorMessage : '',
+      addressText : '',
+      addressTextErrorMessage : '',
+      fullNameText : '',
+      fullNameTextErrorMessage : '',
+      emailText : '',
+      emailTextErrorMessage : '',
+      contactNumberText : '',
+      contactNumberTextErrorMessage : '',
+      relationshipText : '',
+      relationshipTextErrorMessage : '',
+      periodOfProfessionExperienceText : '',
+      periodOfProfessionExperienceTextErrorMessage : '',
+      positionText : '',
+      positionTextErrorMessage : '',
+      companyNameText : '',
+      companyNameTextErrorMessage : '',
+      floorText : '',
+      floorTextErrorMessage : '',
+      buildingNameText : '',
+      buildingNameTextErrorMessage : '',
+      barangayText : '',
+      barangayTextTextErrorMessage : '',
+      streetText : '',
+      streetTextErrorMessage : '',
+      districtText : '',
+      districtTextErrorMessage : '',
+      townText : '',
+    })
+    }
+  }
+
+  putEditMode (resp) {
+    if(resp.occupation === 1) {
+      this.setState({
+        occupationName : 'Employed',
+        occupationId : resp.occupation,
+      })
+    } else if (resp.occupation === 2) {
+      this.setState({
+        occupationName : 'Self-Employed',
+        occupationId : resp.occupation,
+      })
+    } else if (resp.occupation === 3) {
+      this.setState({
+        occupationName : 'Unemployed',
+        occupationId : resp.occupation,
+      })
+    }
+    if(resp.company !== null) {
+      this.setState({
+        showCharacterReferenceModal : true,
+        selectedId : resp.id,
+        occupationId : resp.occupation,
+        addressText : resp.address,
+        fullNameText : resp.name,
+        emailText : resp.numberOfYearsKnown,
+        contactNumberText : resp.contactNumber,
+        relationshipText : resp.relationship,
+        periodOfProfessionExperienceText : resp.numberOfYearsKnown,
+        positionText : resp.company.position,
+        companyNameText : resp.company.name,
+        floorText : resp.company.departmentFloor,
+        buildingNameText : resp.company.buildingName,
+        barangayText : resp.company.baranggay,
+        streetText : resp.company.street,
+        districtText : resp.company.district,
+        townText : resp.company.town,
+        cityText : resp.company.city
+      })
+    } else {
+      this.setState({
+        showCharacterReferenceModal : true,
+        selectedId : resp.id,
+        occupationId : resp.occupation,
+        addressText : resp.address,
+        fullNameText : resp.name,
+        emailText : resp.numberOfYearsKnown,
+        contactNumberText : resp.contactNumber,
+        relationshipText : resp.relationship,
+        periodOfProfessionExperienceText : resp.numberOfYearsKnown,
+      })
+    }
+  }
+
+  onEditModeProperty (resp) {
+    this.putEditMode(resp)
+    this.setState({ editMode : true })
   }
 
   render() {
@@ -448,6 +421,7 @@ class CharacterReferenceFragment extends BaseMVPView {
       {
         showCharacterReferenceModal &&
         <CharacterReferenceAddFormModal
+          editMode = { editMode }
           onSave = { () => this.postEditMode() }
           occupationName = { occupationName }
           occupationId = { occupationId }
@@ -510,7 +484,7 @@ class CharacterReferenceFragment extends BaseMVPView {
           townText = { townText }
           cityTextFunc = { (e) => this.setState({ cityText : e })}
           townTextFunc = { (e) => this.setState({ townText : e }) }
-          onEditSave = { () => this.putEditModeSave() }
+          onEditSave = { () => this.postEditMode() }
           />
       }
       <div>
@@ -542,7 +516,7 @@ class CharacterReferenceFragment extends BaseMVPView {
         <br/>
           <MullptipleCardComponent
             characterReferenceData = { characterReferenceData }
-            onEditModeProperty = { (resp) => this.putEditMode(resp)  }
+            onEditModeProperty = { (resp) => this.onEditModeProperty(resp)  }
           />
       </div>
     </div>

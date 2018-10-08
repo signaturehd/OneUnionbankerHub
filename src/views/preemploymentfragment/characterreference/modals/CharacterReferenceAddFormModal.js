@@ -40,29 +40,6 @@ function CharacterReferenceComponents (props) {
   const townTextFunc = props.townTextFunc
 
   if(occupationId === 1) {
-    return <CharacterSelfEmployedComponents
-      positionText = { positionText }
-      positionTextFunc = { (e) => positionTextFunc(e) }
-      companyNameText = { companyNameText }
-      companyNameTextFunc = { (e) => companyNameTextFunc(e) }
-      floorText = { floorText }
-      floorTextFunc = { (e) => floorTextFunc(e) }
-      buildingNameText = { buildingNameText }
-      buildingNameTextFunc = { (e) => buildingNameTextFunc(e) }
-      streetText = { streetText }
-      streetTextFunc = { (e) => streetTextFunc(e) }
-      districtText = { districtText }
-      districtTextFunc = { (e) => districtTextFunc(e) }
-      barangayText = { barangayText }
-      barangayTextFunc = { (e) => barangayTextFunc(e) }
-      relationshipText = { relationshipText }
-      relationshipTextFunc = { (e) => relationshipTextFunc(e) }
-      townText = { townText }
-      cityText = { cityText }
-      townTextFunc = { (e) => townTextFunc(e) }
-      cityTextFunc = { (e) => cityTextFunc(e) }
-    />
-} else if (occupationId === 2) {
     return <CharacterEmployedComponents
       positionText = { positionText }
       positionTextFunc = { (e) => positionTextFunc(e) }
@@ -85,6 +62,29 @@ function CharacterReferenceComponents (props) {
       townTextFunc = { (e) => townTextFunc(e) }
       cityTextFunc = { (e) => cityTextFunc(e) }
       />
+  } else if (occupationId === 2) {
+    return <CharacterSelfEmployedComponents
+      positionText = { positionText }
+      positionTextFunc = { (e) => positionTextFunc(e) }
+      companyNameText = { companyNameText }
+      companyNameTextFunc = { (e) => companyNameTextFunc(e) }
+      floorText = { floorText }
+      floorTextFunc = { (e) => floorTextFunc(e) }
+      buildingNameText = { buildingNameText }
+      buildingNameTextFunc = { (e) => buildingNameTextFunc(e) }
+      streetText = { streetText }
+      streetTextFunc = { (e) => streetTextFunc(e) }
+      districtText = { districtText }
+      districtTextFunc = { (e) => districtTextFunc(e) }
+      barangayText = { barangayText }
+      barangayTextFunc = { (e) => barangayTextFunc(e) }
+      relationshipText = { relationshipText }
+      relationshipTextFunc = { (e) => relationshipTextFunc(e) }
+      townText = { townText }
+      cityText = { cityText }
+      townTextFunc = { (e) => townTextFunc(e) }
+      cityTextFunc = { (e) => cityTextFunc(e) }
+    />
   } else if (occupationId === 3) {
     return <CharacterUnemployedComponents
       addressTextFunc = { (e) => addressTextFunc(e) }
@@ -105,11 +105,11 @@ class CharacterReferenceAddFormModal extends Component {
     const occupationObject = [
     {
       id : 1,
-      name: 'Self-Employed'
+      name: 'Employed'
     },
     {
       id : 2,
-      name : 'Employed'
+      name : 'Self-Employed'
     },
     {
       id: 3,

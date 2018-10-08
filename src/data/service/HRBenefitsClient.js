@@ -1018,8 +1018,13 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  updateMedicalAppointment (token, date) {
-    return this.service.updateMedicalAppointment(token, date)
+  getMedicalAppointmentProcedures (token) {
+    return this.service.getMedicalAppointmentProcedures(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateMedicalAppointment (token, date, id) {
+    return this.service.updateMedicalAppointment(token, date, id)
       .pipe(ServiceErrorOperator())
   }
 

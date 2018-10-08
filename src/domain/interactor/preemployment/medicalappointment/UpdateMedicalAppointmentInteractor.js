@@ -3,7 +3,7 @@ export default class UpdateMedicalAppointmentInteractor {
     this.client = client
   }
 
-  execute (date) {
-    return this.client.updateMedicalAppointment(this.client.getToken(), date)
+  execute (date, id) {
+    return this.client.updateMedicalAppointment(this.client.getToken(), date, id)
   }
 }
