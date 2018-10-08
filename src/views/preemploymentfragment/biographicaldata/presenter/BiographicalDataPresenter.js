@@ -1,13 +1,17 @@
 import { NotifyActions } from '../../../../actions'
 import store from '../../../../store'
+
 import GetOnboardingPdfInteractor from
 '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
+import GetOnboardingAttachmentsInteractor from
+'../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 import AddEmploymentRequirementInteractor from '../../../../domain/interactor/preemployment/requirement/AddEmploymentRequirementInteractor'
 import employeeRequirementParam from '../../../../domain/param/AddEmployeeRequirementParam'
 
 export default class BiographicalDataPresenter {
   constructor (container) {
     this.getOnboardingPdfInteractor = new GetOnboardingPdfInteractor(container.get('HRBenefitsClient'))
+    this.getOnboardingAttachmentsInteractor = new GetOnboardingAttachmentsInteractor(container.get('HRBenefitsClient'))
     this.addEmployeeRequirementInteractor = new AddEmploymentRequirementInteractor(container.get('HRBenefitsClient'))
   }
 
@@ -35,5 +39,23 @@ export default class BiographicalDataPresenter {
       this.view.hideCircularLoader()
       this.view.noticeResponseResp(error)
     })
+  }
+
+  getOnboardingAttachments (attachments) {
+    this.getOnboardingAttachmentsInteractor.execute(attachments)
+    .subscribe(data => {
+      console.log(data)
+    }, error => {
+
+    })
+  }
+
+  getSelectedAttachments (biographicalArray) {
+    console.log(biographicalArray)
+    // biographicalArray.map((resp, key) =>
+    //   resp.url.map((resp1) =>
+    //     this.getOnboardingAttachments(resp)
+    //   )
+    // )
   }
 }

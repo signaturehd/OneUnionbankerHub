@@ -1108,7 +1108,7 @@ export default class HRBenefitsService {
   }
 
   getOnBoardingAttachments (token, file) {
-    return this.fileClient.get('v1/uploads?folder=attachments', {
+    return this.fileClient.get('v1/uploads?folder=onboarding-requirements', {
       headers: {
         token : token,
         file : file,
