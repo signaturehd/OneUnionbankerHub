@@ -34,7 +34,6 @@ export default class TinPresenter {
       this.view.noticeResponseResp(data)
     }, error => {
       this.view.hideCircularLoader()
-      this.view.noticeResponseResp(error)
     })
   }
 
@@ -46,7 +45,6 @@ export default class TinPresenter {
       this.view.noticeResponseResp(data)
     }, error => {
       this.view.hideCircularLoader()
-      this.view.noticeResponseResp(error)
     })
   }
 

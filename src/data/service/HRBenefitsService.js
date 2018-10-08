@@ -1164,7 +1164,7 @@ export default class HRBenefitsService {
       tin : employeeTinParam.tinId
     }
 
-    return this.onboardingClient.post('v1/employees/tin', objectParam, {
+    return this.onboardingClient.put('v1/employees/tin', objectParam, {
       headers : { token }
     })
   }
@@ -1180,7 +1180,7 @@ export default class HRBenefitsService {
       sss : employeeParam.sssInput
     }
 
-    return this.onboardingClient.post('v1/employees/sss', objectParam, {
+    return this.onboardingClient.put('v1/employees/sss', objectParam, {
       headers : { token }
     })
   }
