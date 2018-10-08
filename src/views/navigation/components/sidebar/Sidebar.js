@@ -53,6 +53,12 @@ class SideBar extends Component {
         className: 'benefits-icon'
       },
       {
+        id: 12 ,
+        title: 'My Travel',
+        action: () => history.push('/mytravel'),
+        className: 'travel-icon'
+      },
+      {
         id: 8 ,
         title: 'My Pay',
         action: () => history.push('/payslip'),
@@ -128,6 +134,7 @@ class SideBar extends Component {
             d.id !== 8 &&
             d.id !== 9 &&
             d.id !== 10 &&
+            d.id !== 12 &&
             <div key = { idx }>
               <li
                 className = { `_text-link ${selected === d.id && 'active'}` }
