@@ -10,6 +10,8 @@ import {
 } from '../../../ub-components/'
 
 import VaccineMultipleCardComponent from './VaccineMultipleCardComponent'
+import VaccineDependentMultipleCardComponent from './VaccineDependentMultipleCardComponent'
+
 
 import './styles/vaccineStyle.css'
 
@@ -39,64 +41,113 @@ class VaccineComponent extends Component {
       vaccineErrorMessage,
       appModeErrorMessage,
       onSubmitFunc,
-      vaccineList
+      vaccineList,
+      showVaccineList,
+      addVaccineList,
+      cancelToList,
+      addToList,
+      showClaimingType,
+      claimingName
     } = this.props
 
     return (
       <div className = { 'vaccine-form' } >
         {
-          vaccineList &&
-          vaccineList.length !== 0 &&
-            <div>
-              <h1>Vaccine List</h1>
-            </div>
+          showVaccineList &&
+            vaccineList.length > 0 ?
+              <div>
+                <GenericButton
+                  type = { 'button' }
+                  text = { 'Add' }
+                  onClick = { () => addVaccineList() }
+                />
+                <br/>
+                {
 
+                }
+                <br/>
+                {
+                  vaccineList.length !== 0 &&
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Submit' }
+                    onClick = { () => onSubmitFunc() }
+                    className = { 'vaccine-submit-form-button' }
+                  />
+                 }
+              </div>
+              :
+              <div>
+                <GenericInput
+                  text = { 'Dependents' }
+                  onClick = { () => showDependentFunc() }
+                  value = { dependentName }
+                  errorMessage = { dependentErrorMessage }
+                  disabled = { showEditSubmitButton }
+                  readOnly
+                />
+                <div className = { 'grid-global' }>
+                  <h2 className = { 'font-weight-bold text-align-left' }>Select vaccine(s)</h2>
+                  <div className = { 'text-align-right' }>
+                    <GenericButton
+                      text = { 'Add Vaccine' }
+                      onClick = { () => showVaccineFunc() }
+                      disabled = { showEditSubmitButton }
+                      />
+                      <br/>
+                    {
+                      vaccineErrorMessage &&
+                      <span className = { 'error-message' }>
+                        { vaccineErrorMessage }
+                      </span>
+                    }
+                  </div>
+                </div>
+                <br/>
+                {
+                vaccineCardHolder.length !==0 &&
+                  <VaccineMultipleCardComponent
+                    cardDataHolder = { vaccineCardHolder }
+                    setCard = { (resp) => setCardHolderDefaultyFunc(resp) }
+                    disabled = { showEditSubmitButton }
+                    errorMessage = { vaccineErrorMessage }
+                  />
+                }
+                <br/>
+                <Line/>
+                <GenericInput
+                  text = { 'Application Mode' }
+                  onClick = { () => showAppModesFunc() }
+                  value = { appModeName }
+                  errorMessage = { appModeErrorMessage }
+                  disabled = { showEditSubmitButton }
+                  readOnly
+                />
+                <GenericInput
+                  text = { 'Claiming Type' }
+                  onClick = { () => showClaimingType() }
+                  value = { claimingName }
+                  disabled = { showEditSubmitButton }
+                  readOnly
+                />
+                <div className = { 'vaccine-form-review' }>
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Cancel' }
+                    onClick = {
+                      () => cancelToList()
+                    }
+                    className = { 'vaccine-submit' } />
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Add to list' }
+                    onClick = {
+                      () => addToList()
+                    }
+                    className = { 'vaccine-submit' } />
+                </div>
+              </div>
         }
-        <GenericInput
-          text = { 'Dependents' }
-          onClick = { () => showDependentFunc() }
-          value = { dependentName }
-          errorMessage = { dependentErrorMessage }
-          disabled = { showEditSubmitButton }
-          readOnly
-        />
-        <div className = { 'grid-global' }>
-          <h2 className = { 'font-weight-bold text-align-left' }>Select vaccine(s)</h2>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-              text = { 'Add Vaccine' }
-              onClick = { () => showVaccineFunc() }
-              disabled = { showEditSubmitButton }
-              />
-              <br/>
-            {
-              vaccineErrorMessage &&
-              <span className = { 'error-message' }>
-                { vaccineErrorMessage }
-              </span>
-            }
-          </div>
-        </div>
-        <br/>
-        {
-        vaccineCardHolder.length !==0 &&
-          <VaccineMultipleCardComponent
-            cardDataHolder = { vaccineCardHolder }
-            setCard = { (resp) => setCardHolderDefaultyFunc(resp) }
-            disabled = { showEditSubmitButton }
-            errorMessage = { vaccineErrorMessage }
-          />
-        }
-        <br/>
-        <Line/>
-        <GenericInput
-          text = { 'Application Mode' }
-          onClick = { () => showAppModesFunc() }
-          value = { appModeName }
-          errorMessage = { appModeErrorMessage }
-          disabled = { showEditSubmitButton }
-          readOnly
-        />
         <br/>
         <Line/>
         {
@@ -106,7 +157,7 @@ class VaccineComponent extends Component {
           </center>
         }
         {
-          showEditSubmitButton ?
+          showEditSubmitButton &&
           <div className = { 'vaccine-form-review' }>
             <GenericButton
               type = { 'button' }
@@ -123,14 +174,6 @@ class VaccineComponent extends Component {
               className = { 'vaccine-submit-form-button' }
               />
           </div>
-          :
-            <GenericButton
-              type = { 'button' }
-              text = { 'Continue' }
-              onClick = {
-                () => showFormReview(true)
-              }
-              className = { 'vaccine-submit' } />
         }
       </div>
     )

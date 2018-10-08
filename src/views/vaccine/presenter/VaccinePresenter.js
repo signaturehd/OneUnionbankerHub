@@ -1,7 +1,7 @@
 import ValidateVaccineInteractor from '../../../domain/interactor/vaccine/ValidateVaccineInteractor'
 import AddVaccineInteractor from '../../../domain/interactor/vaccine/AddVaccineInteractor'
 
-let storedVaccineList = [], storedDependentList = []
+let storedVaccineList, storedDependentList = []
 export default class VaccinePresenter {
   constructor (container) {
     this.validateVaccineInteractor = new ValidateVaccineInteractor(container.get('HRBenefitsClient'))
@@ -10,6 +10,10 @@ export default class VaccinePresenter {
 
   setView (view) {
     this.view = view
+  }
+
+  setVaccineListSubmit (vaccineList) {
+      storedVaccineList = vaccineList
   }
 
   validateVaccine () {
@@ -54,10 +58,13 @@ export default class VaccinePresenter {
       this.view.showVaccineMap(vaccineArray)
       this.view.showDependentMap(dependentArray)
       this.view.showAppModeMap(appModeArray)
+
+      return data
     })
     .subscribe(data => {
         this.view.hideCircularLoader()
       },e => {
+        console.log(e)
         this.view.navigate()
       }
     )

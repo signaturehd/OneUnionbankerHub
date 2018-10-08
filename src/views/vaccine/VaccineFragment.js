@@ -30,6 +30,7 @@ class VaccineFragment extends BaseMVPView {
       showDependentsModal : false,
       showVaccinesModal : false,
       showAppModesModal : false,
+      showVaccineList: true,
       dependentId : '',
       dependentName : '',
       dependentErrorMessage : '',
@@ -45,10 +46,13 @@ class VaccineFragment extends BaseMVPView {
       vaccinesData : [],
       dependentsData : [],
       appModesData : [],
-      vaccineCardHolder : []
+      vaccineCardHolder : [],
+      vaccineListSubmit: [],
+      vaccineList: []
     }
 
     this.addVaccine = this.addVaccine.bind(this)
+    this.addToList = this.addToList.bind(this)
   }
 
   componentDidMount () {
@@ -68,6 +72,10 @@ class VaccineFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+
+  setDependentList (dependentList) {
+    this.setState({ dependentList })
+  }
 
   showVaccineMap (vaccinesData) {
     this.setState({ vaccinesData })
@@ -95,6 +103,67 @@ class VaccineFragment extends BaseMVPView {
 
   validateRequired (e) {
     return VaccineFunction.checkedValidateInput(e)
+  }
+
+  addToList () {
+    const {
+      vaccineCardHolder,
+      appModeId,
+      appModeName,
+      dependentId,
+      dependentName,
+      vaccineList,
+      vaccineListSubmit,
+      claimingName,
+      claimingId,
+    } = this.state
+
+    const updatedVaccineListArray = vaccineList.map(item => item.dependentId)
+
+    if ( !updatedVaccineListArray.includes(dependentId) ) {
+      const updatedVaccineList = [...vaccineList]
+      const updatedVaccineListSubmit = [...vaccineListSubmit]
+
+      updatedVaccineList.push({
+        vaccineCardHolder,
+        appModeId,
+        appModeName,
+        dependentId,
+        dependentName,
+        claimingId,
+        claimingName,
+      })
+      let vaccine = []
+
+
+      vaccineCardHolder.map((vaccines, key) => {
+        vaccine.push(vaccines.id)
+      })
+
+      updatedVaccineListSubmit.push({
+        vaccine,
+        modeId: appModeId,
+        dependentId,
+        isClaiming: claimingId,
+      })
+
+      this.presenter.setVaccineListSubmit(updatedVaccineListSubmit)
+    }
+
+
+
+    this.setState({
+      vaccineList: updatedVaccineList,
+      vaccineListSubmit: updatedVaccineListSubmit,
+      appModeName: '',
+      appModeId: '',
+      claimingId: '',
+      claimingName: '',
+      dependentId: '',
+      dependentName: '',
+      vaccineCardHolder: [],
+      showVaccineList: true
+    })
   }
 
   showFormReviewFieldDisabled (e) {
@@ -162,8 +231,14 @@ class VaccineFragment extends BaseMVPView {
       vaccinesData,
       dependentsData,
       appModesData,
-      vaccineList
+      vaccineList,
+      dependentList,
+      showVaccineList,
+      showClaimingType,
+      claimingName
     } = this.state
+
+    console.log(this.state)
 
     return (
       <div>
@@ -216,6 +291,32 @@ class VaccineFragment extends BaseMVPView {
             onClose = { () => this.setState({ showDependentsModal : false }) }
           />
         }
+
+        {
+          showClaimingType &&
+          <SingleInputModal
+            label = { 'Claiming Type' }
+            inputArray = { [{
+              id: 0,
+              name: 'Administered'
+            }, {
+              id: 1,
+              name: 'Claiming'
+            }] }
+            selectedArray = { (claimingId, claimingName) => {
+              this.setState({
+                showClaimingType: false,
+                claimingId,
+                claimingName,
+              })
+            } }
+            onClose = { () => {
+              this.setState({ showClaimingType : true })
+            }}
+          />
+        }
+
+
         {
           showVaccinesModal &&
           <VaccinesModal
@@ -223,16 +324,19 @@ class VaccineFragment extends BaseMVPView {
             inputArray = { vaccinesData }
             selectedArray = {
               (vaccineId, vaccineName, orderingStart, orderingEnd, cost) => {
+                const updatedVaccineArray = vaccineCardHolder.map(item => item.id)
                 const updatedVaccine = [...vaccineCardHolder]
-                updatedVaccine.push(
-                  {
-                    id : vaccineId,
-                    name : vaccineName,
-                    orderingStart : orderingStart,
-                    orderingEnd : orderingEnd,
-                    cost : cost
-                  }
-                )
+                if ( !updatedVaccineArray.includes(vaccineId) ) {
+                  updatedVaccine.push(
+                    {
+                      id : vaccineId,
+                      name : vaccineName,
+                      orderingStart : orderingStart,
+                      orderingEnd : orderingEnd,
+                      cost : cost
+                    }
+                  )
+                }
                 this.setState({
                   vaccineCardHolder : updatedVaccine,
                   showVaccinesModal : false,
@@ -293,6 +397,7 @@ class VaccineFragment extends BaseMVPView {
              cost = { cost }
              appModeName = { appModeName }
              vaccineList = { vaccineList }
+             showClaimingType = { () => { this.setState({ showClaimingType: true }) } }
              onSubmitFunc = { () => this.addVaccine() }
              vaccineCardHolder = { vaccineCardHolder }
              dependentErrorMessage = { dependentErrorMessage }
@@ -302,6 +407,11 @@ class VaccineFragment extends BaseMVPView {
              showVaccineFunc = { () => this.showVaccineFunc() }
              showAppModesFunc = { () => this.showAppModesFunc() }
              editFormDataFunc = { () => this.editFormReview() }
+             showVaccineList = { showVaccineList }
+             claimingName = { claimingName }
+             cancelToList = { () => this.setState({ showVaccineList: true }) }
+             addToList = { () => this.addToList() }
+             addVaccineList = { () => this.setState({ showVaccineList: false }) }
              showEditSubmitFunc = { (resp) => this.showEditSubmitFunc(resp) }
              showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
              setCardHolderDefaultyFunc = { (vaccineCardHolder) => this.setState({ vaccineCardHolder }) }
