@@ -7,7 +7,7 @@ import {
   GenericInput,
   Card,
   GenericButton,
-  FileUploader,
+  GenericFileInput,
   MultipleFileUploader,
   Line
 } from '../../../ub-components/'
@@ -35,7 +35,9 @@ class LaptopLeaseCardComponent extends Component {
       showFileUpload,
       deliveryOption,
       deliveryOptionName,
-      showLaptopDeliveryOption
+      showLaptopDeliveryOption,
+      laptopLeaseAttachment,
+      setAttachments
     } = this.props
 
     return (
@@ -80,6 +82,12 @@ class LaptopLeaseCardComponent extends Component {
                 text = { 'Delivery Option' }
               />
             </div>
+              <MultipleFileUploader
+                placeholder = { 'Form Attachments' }
+                fileArray = { laptopLeaseAttachment }
+                disabled = { showEditMode }
+                setFile = { (updatedFile) => setAttachments(updatedFile) }
+              />
               <br/>
               <Line/>
               {

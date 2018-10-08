@@ -54,7 +54,9 @@ export default class LaptopLeasePresenter {
       ))
 
       return data = {
-        attachments: data.attachments,
+        attachments: [{
+          name: 'Laptop Specifications'
+        }],
         isValid: data.isValid == 1 ? true : false,
         deliveryOptions: arrayOption
       }
@@ -63,6 +65,7 @@ export default class LaptopLeasePresenter {
     .subscribe(data => {
       this.view.isLaptopLeaseValidate(data.isValid)
       this.view.setDeliveryOptionList(data.deliveryOptions)
+      this.view.setAttachment(data.attachments)
       console.log(data)
       this.view.hideCircularLoader()
     }, error => {

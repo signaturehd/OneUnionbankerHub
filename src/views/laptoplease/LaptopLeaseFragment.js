@@ -101,11 +101,16 @@ class LaptopLeaseFragment extends BaseMVPView {
     this.setState({ deliveryOptionList })
   }
 
+  setAttachment (laptopLeaseAttachment) {
+    this.setState ({ laptopLeaseAttachment })
+  }
+
   isLaptopLeaseValidate (isValid) {
     if (!isValid) {
       this.props.history.push('/mybenefits/benefits/')
     }
   }
+
 
   /* Notice Response*/
   noticeOfUndertaking (noticeResponse) {
@@ -149,7 +154,8 @@ class LaptopLeaseFragment extends BaseMVPView {
       showBenefitFeedbackModal,
       enabledLoader,
       showEditMode,
-      deliveryOptionName
+      deliveryOptionName,
+      laptopLeaseAttachment
     } = this.state
 
     const { history }=this.props
@@ -250,10 +256,12 @@ class LaptopLeaseFragment extends BaseMVPView {
               setFile = { (resp) => this.presenter.setFile(resp) }
               showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
               deliveryOptionName = { deliveryOptionName }
+              laptopLeaseAttachment = { laptopLeaseAttachment }
               amount = { amount }
               color = { color }
               terms = { terms }
               file = { file }
+              setAttachments = { (laptopLeaseAttachment) => this.setState({ laptopLeaseAttachment }) }
               onContinue={ () =>
                 this.sendFormData()
               }
