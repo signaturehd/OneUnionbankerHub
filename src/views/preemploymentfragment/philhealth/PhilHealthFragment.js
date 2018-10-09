@@ -19,7 +19,9 @@ import {
 import { Progress } from 'react-sweet-progress'
 import ResponseModal from '../../notice/NoticeResponseModal'
 
-import PhilHealthFormPreviewModal from './modal/PhilHealthFormPreviewModal'
+import PhilHealthPdfViewerComponents from './components/PhilHealthPdfViewerComponents'
+
+import './styles/phStyle.css'
 
 class PhilHealthFragment extends BaseMVPView {
 
@@ -29,8 +31,9 @@ class PhilHealthFragment extends BaseMVPView {
       enabledLoader : false,
       showNoticeResponseModal : false,
       noticeResponse : '',
-      showPdfViewModal : false,
       pdfFile: '',
+      showPdfViewComponent : false,
+      enabledLoaderPdfModal : false,
       philHealthAttachment : [{
         name : 'PhilHealth'
       }],
@@ -48,6 +51,14 @@ class PhilHealthFragment extends BaseMVPView {
 
   showPdfFileView (pdfFile) {
     this.setState({ pdfFile })
+  }
+
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
   }
 
   addAttachmentsFunc (attachment, tempCount) {
@@ -88,8 +99,9 @@ class PhilHealthFragment extends BaseMVPView {
   render () {
     const {
       enabledLoader,
-      showPdfViewModal,
       pdfFile,
+      showPdfViewComponent,
+      enabledLoaderPdfModal,
       count,
       noticeResponse,
       showNoticeResponseModal,
@@ -119,11 +131,23 @@ class PhilHealthFragment extends BaseMVPView {
           />
         }
         {
-          showPdfViewModal &&
-          <PhilHealthFormPreviewModal
-            pdfFile = { pdfFile }
-            onClose = { () => this.setState({ showPdfViewModal: false }) }
-            />
+          enabledLoaderPdfModal &&
+          <Modal>
+            <div>
+              <center>
+                <br/>
+                {
+                  showPdfViewComponent ?
+
+                  <h2>Please wait while we we&#39;re retrieving the documents</h2> :
+                  <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+                }
+                <br/>
+                <CircularLoader show = { enabledLoaderPdfModal }/>
+                <br/>
+              </center>
+            </div>
+          </Modal>
         }
         <br/>
         <div className = { 'percentage-grid' }>
@@ -139,23 +163,30 @@ class PhilHealthFragment extends BaseMVPView {
             percent={ percentage } />
         </div>
         <br/>
-        <div className = { 'abc-grid-card' }>
-        <Card
-          className = { 'abc-card' }
-          onClick = { () => {
-            this.onCheckedPdf('/2018-09-28/12345-PhilHealth Form-1538123169079.pdf')
-            this.setState({ showPdfViewModal : true  })
-            }
-          }>
-          <div className = { 'abc-grid-x2' }>
-            <h2>PhilHealth Form</h2>
-            <div>
-              <span
-                className = { 'abc-icon biographical-seemore-button' }/>
+        <div className = { 'ph-grid-card' }>
+          <Card
+            className = { 'ph-card' }
+            onClick = { () => {
+              this.onCheckedPdf('/2018-09-28/12345-PhilHealth Form-1538123169079.pdf')
+              this.setState({ showPdfViewComponent : true  })
+              }
+            }>
+            <div className = { 'ph-grid-x2' }>
+              <h2>PhilHealth Form</h2>
+              <div>
+                <span
+                  className = { 'ph-icon biographical-seemore-button' }/>
+              </div>
             </div>
-          </div>
-        </Card>
+          </Card>
         </div>
+        {
+          showPdfViewComponent &&
+          <PhilHealthPdfViewerComponents
+            pdfFile = { pdfFile }
+            onClose = { () => this.setState({ showPdfViewComponent: false }) }
+          />
+        }
         <br/>
         <Line />
         <br/>

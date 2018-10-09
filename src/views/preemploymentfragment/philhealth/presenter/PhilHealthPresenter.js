@@ -1,13 +1,11 @@
-import { NotifyActions } from '../../../../actions'
-import store from '../../../../store'
-import GetBspCertificatePdfViewInteractor from
-'../../../../domain/interactor/preemployment/bspcertification/GetBspCertificatePdfViewInteractor'
 import AddEmploymentRequirementInteractor from '../../../../domain/interactor/preemployment/requirement/AddEmploymentRequirementInteractor'
+import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
+
 import employeeRequirementParam from '../../../../domain/param/AddEmployeeRequirementParam'
 
 export default class SSSPresenter {
   constructor (container) {
-    this.getBspPdf = new GetBspCertificatePdfViewInteractor(container.get('HRBenefitsClient'))
+    this.getOnboardingPdfInteractor = new GetOnboardingPdfInteractor(container.get('HRBenefitsClient'))
     this.addEmployeeRequirementInteractor = new AddEmploymentRequirementInteractor(container.get('HRBenefitsClient'))
   }
 
@@ -16,10 +14,13 @@ export default class SSSPresenter {
   }
 
   getOnBoardingDocument (link) {
-    this.getBspPdf.execute(link)
+    this.view.showDocumentLoader()
+    this.getOnboardingPdfInteractor.execute(link)
     .subscribe(data => {
+      this.view.hideDocumentLoader()
       this.view.showPdfFileView(data)
     }, error => {
+      this.view.hideDocumentLoader()
     })
   }
 
@@ -31,7 +32,6 @@ export default class SSSPresenter {
       this.view.noticeResponseResp(data)
     }, error => {
       this.view.hideCircularLoader()
-      this.view.noticeResponseResp(error)
     })
   }
 }
