@@ -1455,7 +1455,7 @@ export default class HRBenefitsService {
         contactNumber: spouseFormParam.contactNumber,
     }
     formData.append('uuid', 12345)
-    spouseFormParam.attachments.map((resp, key) =>
+    spouseFormParam.spouseAttachmentsArray.map((resp, key) =>
       formData.append(resp.name, resp.file)
     )
     formData.append('body', JSON.stringify(objectParam))

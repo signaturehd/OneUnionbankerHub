@@ -26,6 +26,8 @@ import NoticeResponseModal from '../../notice/NoticeResponseModal'
 import 'react-sweet-progress/lib/style.css'
 import './styles/spouseStyle.css'
 
+import moment from 'moment'
+
 class SpouseFormFragment extends BaseMVPView {
   constructor(props) {
     super(props)
@@ -42,6 +44,12 @@ class SpouseFormFragment extends BaseMVPView {
       spouseData : '',
       count: 1,
       enabledLoader : false,
+      editMode : false,
+      bloodTypeName: '',
+      showBloodTypeModal : false,
+      showNoticeResponseModal: false,
+      showStatusModal: false,
+      showGenderModal : false,
       spouseId: '',
       lastName: '',
       firstName : '',
@@ -51,6 +59,7 @@ class SpouseFormFragment extends BaseMVPView {
       birthDate: '',
       statusId: '',
       statusName: '',
+      genderId: '',
       gender: '',
       genderErrorMessage: '',
       bloodType: '',
@@ -64,11 +73,6 @@ class SpouseFormFragment extends BaseMVPView {
       lastNameErrorMessage: '',
       bloodTypeErrorMessage: '',
       noticeResponse: '',
-      editMode : false,
-      bloodTypeName: '',
-      showBloodTypeModal : false,
-      showNoticeResponseModal: false,
-      showStatusModal: false,
     }
   }
 
@@ -104,7 +108,8 @@ class SpouseFormFragment extends BaseMVPView {
       birthDate : nullChecker.birthDate,
       occupationName : nullChecker.occupation,
       contact : nullChecker.contactNumber,
-      gender : nullChecker.gender,
+      genderId : nullChecker.gender,
+      gender: nullChecker.gender === 'M' ? 'Male' : 'Female',
       spouseId : nullChecker.id,
       statusId : nullChecker.status,
       statusName : nullChecker.status === 1 ? 'Deceased' : 'Living'
@@ -179,7 +184,8 @@ class SpouseFormFragment extends BaseMVPView {
       bloodType,
       healthHospitalizationPlan,
       groupLifeInsurance,
-      spouseId)
+      spouseId,
+      spouseAttachmentsArray)
   }
 
   updateFunction () {
@@ -188,14 +194,15 @@ class SpouseFormFragment extends BaseMVPView {
       middleName,
       lastName,
       birthDate,
-      occupation,
+      occupationName,
       contact,
-      status,
+      statusId,
       gender,
       bloodType,
       healthHospitalizationPlan,
       groupLifeInsurance,
-      spouseId
+      spouseId,
+      spouseAttachmentsArray
     } = this.state
 
     this.presenter.putSpouseForm(
@@ -203,14 +210,15 @@ class SpouseFormFragment extends BaseMVPView {
       middleName,
       lastName,
       birthDate,
-      occupation,
+      occupationName,
       contact,
-      status,
+      statusId,
       gender,
       bloodType,
       healthHospitalizationPlan,
       groupLifeInsurance,
-      spouseId)
+      spouseId,
+      spouseAttachmentsArray)
   }
 
 
@@ -256,7 +264,8 @@ class SpouseFormFragment extends BaseMVPView {
       bloodTypeName,
       showBloodTypeModal,
       showNoticeResponseModal,
-      showStatusModal
+      showStatusModal,
+      showGenderModal
     } = this.state
 
   return(
@@ -302,6 +311,23 @@ class SpouseFormFragment extends BaseMVPView {
           })
         }
         onClose = { () => this.setState({ showStatusModal : false }) }
+      />
+    }
+    {
+      showGenderModal &&
+
+      <SingleInputModal
+        label = { 'Gender' }
+        inputArray = { genderObject }
+        selectedArray = { (genderId, gender) =>
+          this.setState({
+            genderId,
+            gender,
+            showGenderModal : false,
+            genderErrorMessage : ''
+          })
+        }
+        onClose = { () => this.setState({ showGenderModal : false }) }
       />
     }
       <div className = { 'percentage-grid' }>
@@ -354,27 +380,22 @@ class SpouseFormFragment extends BaseMVPView {
               errorMessage = { contact ? '' : contactNumberErrorMessage }
               onChange = { (e) => this.setState({ contact : e.target.value }) }
               />
-            <div>
-              <h2 className = { 'font-size-12px' }>Gender</h2>
-              <br/>
-              <div>
-                {
-                  genderObject && genderObject.map((resp, key) => {
-                    const selectedGenderCode = resp && resp.code
-                    return (
-                      <Checkbox
-                        label = { resp.name }
-                        value = { resp.code }
-                        checked = { resp.code === gender }
-                        key = { key }
-                        onChange = { e => this.setState({ selectedGender : resp.code }) }
-                        />
-                    )
-                  })
-                }
-              </div>
-              <br/>
+            <div className = { 'grid-global' }>
+              <GenericInput
+                text = { 'Gender' }
+                value = { gender }
+                maxLength = { 12 }
+                errorMessage = { gender ? '' : genderErrorMessage }
+                onClick = { () => this.setState({ showGenderModal : true }) }
+                />
+              <DatePicker
+                selected = { moment() }
+                maxDate = { moment() }
+                text = { 'Birth Date' }
+                hint = { '(eg. MM/DD/YYYY)' }
+                />
             </div>
+
             <div className = { 'grid-global' } >
               <GenericInput
                 text = { 'Blood Type' }

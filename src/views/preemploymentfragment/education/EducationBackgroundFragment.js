@@ -15,7 +15,7 @@ import {
 
 import ResponseModal from '../../notice/NoticeResponseModal'
 
-import EducationMultipleCardComponent from './EducationMultipleCardComponent'
+import EducationMultipleCardComponent from './components/EducationMultipleCardComponent'
 import EducationBackgroundModal from './modals/EducationBackgroundModal'
 
 import moment from 'moment'
@@ -411,6 +411,30 @@ class EducationBackgroundFragment extends BaseMVPView {
             percent={ percentage } />
         </div>
         <br/>
+        <div className = { 'biographical-grid-card' }>
+          <Card
+            onClick = { () => {
+              this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
+              this.setState({ showPdfViewComponent : true  })
+              }
+            }
+            className = { 'biographical-card' }>
+            <div className = { 'biographical-grid-x2' }>
+              <h2>Biographical Data Form</h2>
+              <div>
+                <span className = { 'biographical-icon biographical-seemore-button' }/>
+              </div>
+            </div>
+          </Card>
+          {
+            showPdfViewComponent &&
+            <BiographicalViewerComponent
+              enabledLoader = { enabledLoader }
+              pdfFile = { pdfFile }
+              onClose = { () => this.setState({ showPdfViewComponent: false }) }
+            />
+          }
+        </div>
         <br/>
         <Line />
         <br/>

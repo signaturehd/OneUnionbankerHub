@@ -54,11 +54,9 @@ let statusObject = [{
 
 let genderObject = [{
  id : 0,
- code: 'M',
  name : 'Male'
 },{
  id: 1,
- code: 'F',
  name : 'Female'
 }]
 
@@ -151,7 +149,8 @@ export default class SpousePresenter {
     bloodType,
     healthHospitalizationPlan,
     groupLifeInsurance,
-    spouseId
+    spouseId,
+    spouseAttachmentsArray
   ) {
     this.view.showCircularLoader()
     this.putSpouseInteractor.execute(addSpouseForm(
@@ -166,7 +165,8 @@ export default class SpousePresenter {
       bloodType,
       healthHospitalizationPlan,
       groupLifeInsurance,
-      spouseId
+      spouseId,
+      spouseAttachmentsArray
     ))
     .subscribe(data => {
       this.view.hideCircularLoader()

@@ -4,7 +4,6 @@ export default class PutSpouseInteractor {
   }
 
   execute (spouseFormParam) {
-  	console.log(spouseFormParam)
     return this.client.putSpouseForm(this.client.getToken(), spouseFormParam)
   }
 }

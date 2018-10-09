@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { format } from '../../../utils/numberUtils'
+import { format } from '../../../../utils/numberUtils'
 
-import defaultImage from '../../../images/icons/default_image_loading.png'
-import { Card }  from '../../../ub-components/'
+import defaultImage from '../../../../images/icons/default_image_loading.png'
+import { Card }  from '../../../../ub-components/'
 import moment from 'moment'
-import './styles/educationFragmentStyle.css'
+import '../styles/educationFragmentStyle.css'
 
 class EducationMultipleCardComponent extends Component {
   constructor (props) {
@@ -59,7 +59,7 @@ class EducationMultipleCardComponent extends Component {
                     !disabled &&
                     <img
                       className = { 'close-button-global' }
-                      src = { require('../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
+                      src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
                       onClick = { () =>
                         onEditModeProperty(
                           resp.id,

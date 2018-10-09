@@ -1,5 +1,5 @@
 export default (
-    firstName, 
+    firstName,
     middleName,
     lastName,
     birthDate,
@@ -10,9 +10,10 @@ export default (
     bloodType,
     healthHospitalizationPlan,
     groupLifeInsurance,
-    spouseId
+    spouseId,
+    spouseAttachmentsArray
 ) => ({
-    firstName, 
+    firstName,
     middleName,
     lastName,
     birthDate,
@@ -23,5 +24,6 @@ export default (
     bloodType,
     healthHospitalizationPlan,
     groupLifeInsurance,
-    spouseId
+    spouseId,
+    spouseAttachmentsArray
 })
