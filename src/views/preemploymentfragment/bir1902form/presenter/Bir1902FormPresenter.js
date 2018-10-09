@@ -1,7 +1,4 @@
-import { NotifyActions } from '../../../../actions'
-import store from '../../../../store'
-import GetOnboardingPdfInteractor from
-'../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
+import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
 import AddEmploymentRequirementInteractor from '../../../../domain/interactor/preemployment/requirement/AddEmploymentRequirementInteractor'
 import employeeRequirementParam from '../../../../domain/param/AddEmployeeRequirementParam'
 
@@ -14,12 +11,15 @@ export default class Bir1902FormPresenter {
   setView (view) {
     this.view = view
   }
-
+  
   getOnBoardingDocument (link) {
+    this.view.showDocumentLoader()
     this.getOnboardingPdfInteractor.execute(link)
     .subscribe(data => {
-      this.view.showAttachments(data)
+      this.view.hideDocumentLoader()
+      this.view.showPdfFileView(data)
     }, error => {
+      this.view.hideDocumentLoader()
     })
   }
 

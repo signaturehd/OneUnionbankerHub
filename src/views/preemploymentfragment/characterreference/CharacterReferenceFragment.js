@@ -364,7 +364,6 @@ class CharacterReferenceFragment extends BaseMVPView {
 
   render() {
     const {
-      history,
       percentage
     } = this.props
 
@@ -525,7 +524,6 @@ class CharacterReferenceFragment extends BaseMVPView {
 }
 
 CharacterReferenceFragment.propTypes = {
-  history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
 }
 

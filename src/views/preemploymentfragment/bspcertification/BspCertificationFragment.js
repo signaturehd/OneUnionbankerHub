@@ -13,10 +13,9 @@ import {
 } from '../../../ub-components/'
 
 import Presenter from './presenter/BspCertificationPresenter'
+import BspCertificationViewPdfComponent from './components/BspCertificationViewPdfComponent'
 
 import { Progress } from 'react-sweet-progress'
-
-import BspCertificateDocumentPreviewModal from './modal/BspCertificateDocumentPreviewModal'
 
 import "react-sweet-progress/lib/style.css"
 import './styles/bspCertificateStyle.css'
@@ -25,8 +24,9 @@ class BspCertificationFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      showPdfViewModal : false,
-      pdfFile : ''
+      pdfFile: '',
+      showPdfViewComponent : false,
+      enabledLoaderPdfModal : false,
     }
   }
 
@@ -42,21 +42,30 @@ class BspCertificationFragment extends BaseMVPView {
     this.setState({ pdfFile })
   }
 
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
+
   render() {
     const {
-      history,
       percentage
     } = this.props
 
     const {
-      showPdfViewModal,
-      pdfFile
+      pdfFile,
+      showPdfViewComponent,
+      enabledLoaderPdfModal,
     } = this.state
 
     const documentCardOptions = [
       {
         id: 0,
-        title: 'Download Banko Sentral ng Pilipinas(BSP) Certificate',
+        title: 'Banko Sentral ng Pilipinas(BSP) Certificate',
         link: '/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf',
       }
     ]
@@ -64,11 +73,23 @@ class BspCertificationFragment extends BaseMVPView {
     <div>
       { super.render() }
       {
-        showPdfViewModal &&
-        <BspCertificateDocumentPreviewModal
-          pdfFile = { pdfFile }
-          onClose = { () => this.setState({ showPdfViewModal: false }) }
-          />
+        enabledLoaderPdfModal &&
+        <Modal>
+          <div>
+            <center>
+              <br/>
+              {
+                showPdfViewComponent ?
+
+                <h2>Please wait while we we&#39;re retrieving the documents</h2> :
+                <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+              }
+              <br/>
+              <CircularLoader show = { enabledLoaderPdfModal }/>
+              <br/>
+            </center>
+          </div>
+        </Modal>
       }
       <div>
         <br/>
@@ -97,15 +118,22 @@ class BspCertificationFragment extends BaseMVPView {
               }>
               <div className = { 'bsp-grid-x2' }>
                 <h2> { resp.title } </h2>
-                <div>
+                <div className = { 'text-align-right' }>
                   <span
-                    className = { 'abc-icon biographical-seemore-button' }/>
+                    className = { 'bsp-icon biographical-seemore-button' }/>
                 </div>
               </div>
             </Card>
             )
           }
         </div>
+        {
+          showPdfViewComponent &&
+          <BspCertificationViewPdfComponent
+            pdfFile = { pdfFile }
+            onClose = { () => this.setState({ showPdfViewComponent: false }) }
+          />
+        }
       </div>
     </div>
     )
@@ -113,7 +141,6 @@ class BspCertificationFragment extends BaseMVPView {
 }
 
 BspCertificationFragment.propTypes = {
-  history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
 }
 

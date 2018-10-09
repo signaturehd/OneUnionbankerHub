@@ -1,11 +1,9 @@
-import { NotifyActions } from '../../../../actions'
-import store from '../../../../store'
-import GetBspCertificatePdfViewInteractor from
-'../../../../domain/interactor/preemployment/bspcertification/GetBspCertificatePdfViewInteractor'
+
+import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
 
 export default class AuthorizationBackgroundCheckPresenter {
   constructor (container) {
-    this.getBspPdf = new GetBspCertificatePdfViewInteractor(container.get('HRBenefitsClient'))
+    this.getOnboardingPdfInteractor = new GetOnboardingPdfInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -13,10 +11,13 @@ export default class AuthorizationBackgroundCheckPresenter {
   }
 
   getOnBoardingDocument (link) {
-    this.getBspPdf.execute(link)
+    this.view.showDocumentLoader()
+    this.getOnboardingPdfInteractor.execute(link)
     .subscribe(data => {
+      this.view.hideDocumentLoader()
       this.view.showPdfFileView(data)
     }, error => {
+      this.view.hideDocumentLoader()
     })
   }
 

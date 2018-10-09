@@ -10,7 +10,7 @@
 
 .bsp-grid-x2 {
   display: grid;
-  grid-template-columns: 1fr .15fr;
+  grid-template-columns: 1fr .005fr;
 }
 
 .bsp-button {

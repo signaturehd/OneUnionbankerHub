@@ -105,7 +105,6 @@ class BiographicalDataFragment extends BaseMVPView {
 
   render() {
     const {
-      history,
       checkPEUndertaking,
       percentage,
       biographicalArray,
@@ -261,7 +260,6 @@ class BiographicalDataFragment extends BaseMVPView {
 }
 
 BiographicalDataFragment.propTypes = {
-  history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
   biographicalArray : PropTypes.array
 }

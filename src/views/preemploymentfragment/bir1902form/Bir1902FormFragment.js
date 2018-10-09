@@ -22,14 +22,15 @@ import ResponseModal from '../../notice/NoticeResponseModal'
 import "react-sweet-progress/lib/style.css"
 import './styles/birStyle.css'
 
-import Bir1902FormPreviewModal from './modal/Bir1902FormPreviewModal'
+import Bir1902ViewPdfComponent from './components/Bir1902ViewPdfComponent'
 
 class Bir1902FormFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      showPdfViewModal : false,
+      showPdfViewComponent : false,
       enabledLoader : false,
+      enabledLoaderPdfModal : false,
       showNoticeResponseModal : false,
       noticeResponse : '',
       bir1902FormData: [{
@@ -49,7 +50,15 @@ class Bir1902FormFragment extends BaseMVPView {
     this.presenter.getOnBoardingDocument(link)
   }
 
-  showAttachments (pdfFile) {
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
+  showPdfFileView (pdfFile) {
     this.setState({ pdfFile })
   }
 
@@ -90,7 +99,6 @@ class Bir1902FormFragment extends BaseMVPView {
 
   render() {
     const {
-      history,
       checkPEUndertaking,
       percentage,
       bir1902Array
@@ -99,9 +107,10 @@ class Bir1902FormFragment extends BaseMVPView {
     const {
       enabledLoader,
       showNoticeResponseModal,
+      enabledLoaderPdfModal,
       noticeResponse,
       bir1902FormData,
-      showPdfViewModal,
+      showPdfViewComponent,
       pdfFile,
       count
     } = this.state
@@ -127,11 +136,23 @@ class Bir1902FormFragment extends BaseMVPView {
       />
     }
     {
-      showPdfViewModal &&
-      <Bir1902FormPreviewModal
-        pdfFile = { pdfFile }
-        onClose = { () => this.setState({ showPdfViewModal: false }) }
-        />
+      enabledLoaderPdfModal &&
+      <Modal>
+        <div>
+          <center>
+            <br/>
+            {
+              showPdfViewComponent ?
+
+              <h2>Please wait while we we&#39;re retrieving the documents</h2> :
+              <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+            }
+            <br/>
+            <CircularLoader show = { enabledLoaderPdfModal }/>
+            <br/>
+          </center>
+        </div>
+      </Modal>
     }
       <div>
         <br/>
@@ -147,26 +168,31 @@ class Bir1902FormFragment extends BaseMVPView {
               percent={ percentage } />
           </div>
         <br/>
-        <div className = { 'abc-grid-card' }>
+        <div className = { 'bir-grid-card' }>
           <Card
             onClick = { () => {
               this.onCheckedPdf('/2018-09-28/12345-BIR Form-1538123091552.pdf')
-              this.setState({ showPdfViewModal : true  })
+              this.setState({ showPdfViewComponent : true  })
               }
             }
-            className = { 'abc-card' }>
-            <div className = { 'abc-grid-x2' }>
-              <h2>Download BIR 1902 Form</h2>
+            className = { 'bir-card' }>
+            <div className = { 'bir-grid-x2' }>
+              <h2>BIR 1902 Form</h2>
               <div>
-                <span className = { 'abc-icon biographical-seemore-button' }/>
+                <span className = { 'bir-icon biographical-seemore-button' }/>
               </div>
             </div>
           </Card>
         </div>
+        {
+          showPdfViewComponent &&
+          <Bir1902ViewPdfComponent
+            pdfFile = { pdfFile }
+            onClose = { () => this.setState({ showPdfViewComponent: false }) }
+          />
+        }
         <br/>
         <Line />
-        <br/>
-
         <br/>
         {
           bir1902FormData.length !== 0  &&
@@ -228,7 +254,6 @@ class Bir1902FormFragment extends BaseMVPView {
 }
 
 Bir1902FormFragment.propTypes = {
-  history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
   birthArray : PropTypes.array
 }

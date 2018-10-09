@@ -1,6 +1,3 @@
-import { NotifyActions } from '../../../../actions'
-import store from '../../../../store'
-
 import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
 import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 import AddEmploymentRequirementInteractor from '../../../../domain/interactor/preemployment/requirement/AddEmploymentRequirementInteractor'
@@ -43,14 +40,12 @@ export default class BiographicalDataPresenter {
   getOnboardingAttachments (attachments) {
     this.getOnboardingAttachmentsInteractor.execute(attachments)
     .subscribe(data => {
-      console.log(data)
     }, error => {
 
     })
   }
 
   getSelectedAttachments (biographicalArray) {
-    console.log(biographicalArray)
     // biographicalArray.map((resp, key) =>
     //   resp.url.map((resp1) =>
     //     this.getOnboardingAttachments(resp)

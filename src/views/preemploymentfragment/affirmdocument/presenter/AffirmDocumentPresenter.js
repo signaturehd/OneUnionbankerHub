@@ -1,6 +1,3 @@
-import { NotifyActions } from '../../../../actions'
-import store from '../../../../store'
-
 import GetAffirmationStatusInteractor from
   '../../../../domain/interactor/preemployment/affirmation/GetAffirmationStatusInteractor'
 import GetAffirmationPdfViewInteractor from

@@ -82,7 +82,6 @@ class BirthCertificateFragment extends BaseMVPView {
 
   render() {
     const {
-      history,
       checkPEUndertaking,
       percentage,
       birthArray,
@@ -199,7 +198,6 @@ class BirthCertificateFragment extends BaseMVPView {
 }
 
 BirthCertificateFragment.propTypes = {
-  history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
   birthArray : PropTypes.array,
   birthCertifArray : PropTypes.array

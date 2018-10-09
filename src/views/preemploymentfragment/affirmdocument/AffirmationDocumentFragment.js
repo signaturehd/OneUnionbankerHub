@@ -146,7 +146,6 @@ class AffirmationDocumentFragment extends BaseMVPView {
 
   render() {
     const {
-      history,
       checkPEUndertaking,
       percentage
     } = this.props
@@ -329,7 +328,6 @@ class AffirmationDocumentFragment extends BaseMVPView {
 }
 
 AffirmationDocumentFragment.propTypes = {
-  history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
 }
 

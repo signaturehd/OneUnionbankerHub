@@ -7,6 +7,8 @@ import { Progress } from 'react-sweet-progress'
 import BaseMVPView from '../../common/base/BaseMVPView'
 import ConnectView from '../../../utils/ConnectView'
 
+import Presenter from './presenter/AuthorizationBackgroundCheckPresenter'
+
 import {
   Modal,
   GenericButton,
@@ -16,20 +18,20 @@ import {
   MultipleAttachments
 } from '../../../ub-components/'
 
-import Presenter from './presenter/AuthorizationBackgroundCheckPresenter'
 import ResponseModal from '../../notice/NoticeResponseModal'
+
+import AuthorizationBackgroundCheckViewPdfComponent from './components/AuthorizationBackgroundCheckViewPdfComponent'
 
 import "react-sweet-progress/lib/style.css"
 import './styles/authorizationStyle.css'
-
-import AuthorizationBackgroundPreviewModal from './modal/AuthorizationBackgroundPreviewModal'
 
 class AuthorizationBackgroundCheckFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      showPdfViewModal : false,
-      pdfFile: ''
+      pdfFile: '',
+      showPdfViewComponent : false,
+      enabledLoaderPdfModal : false,
     }
   }
 
@@ -45,34 +47,47 @@ class AuthorizationBackgroundCheckFragment extends BaseMVPView {
     this.setState({ pdfFile })
   }
 
-  hideCircularLoader () {
-    this.setState({ enabledLoader : false })
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
   }
 
-  showCircularLoader () {
-    this.setState({ enabledLoader : true })
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
   }
+
 
   render() {
     const {
-      history,
       percentage
     } = this.props
 
     const {
-      showPdfViewModal,
-      pdfFile
+      pdfFile,
+      showPdfViewComponent,
+      enabledLoaderPdfModal,
     } = this.state
 
     return(
     <div>
       { super.render() }
       {
-        showPdfViewModal &&
-        <AuthorizationBackgroundPreviewModal
-          pdfFile = { pdfFile }
-          onClose = { () => this.setState({ showPdfViewModal: false }) }
-          />
+        enabledLoaderPdfModal &&
+        <Modal>
+          <div>
+            <center>
+              <br/>
+              {
+                showPdfViewComponent ?
+
+                <h2>Please wait while we we&#39;re retrieving the documents</h2> :
+                <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+              }
+              <br/>
+              <CircularLoader show = { enabledLoaderPdfModal }/>
+              <br/>
+            </center>
+          </div>
+        </Modal>
       }
       <div>
         <br/>
@@ -93,7 +108,7 @@ class AuthorizationBackgroundCheckFragment extends BaseMVPView {
           className = { 'abc-card' }
           onClick = { () => {
             this.onCheckedPdf('/2018-10-01/12345-Authorization - Background Check-1538362916663.pdf')
-            this.setState({ showPdfViewModal : true  })
+            this.setState({ showPdfViewComponent : true  })
             }
           }>
           <div className = { 'abc-grid-x2' }>
@@ -104,6 +119,13 @@ class AuthorizationBackgroundCheckFragment extends BaseMVPView {
             </div>
           </div>
         </Card>
+        {
+          showPdfViewComponent &&
+          <AuthorizationBackgroundCheckViewPdfComponent
+            pdfFile = { pdfFile }
+            onClose = { () => this.setState({ showPdfViewComponent: false }) }
+          />
+        }
         </div>
         <br/>
         <Line />
@@ -114,7 +136,6 @@ class AuthorizationBackgroundCheckFragment extends BaseMVPView {
 }
 
 AuthorizationBackgroundCheckFragment.propTypes = {
-  history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
   birthArray : PropTypes.array
 }
