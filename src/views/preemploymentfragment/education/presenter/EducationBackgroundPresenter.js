@@ -25,10 +25,13 @@ export default class EducationBackgroundPresenter {
   }
 
   getOnBoardingDocument (link) {
+    this.view.showDocumentLoader()
     this.getOnboardingPdfInteractor.execute(link)
     .subscribe(data => {
-      this.view.showPdfFile(data)
+      this.view.hideDocumentLoader()
+      this.view.showPdfFileView(data)
     }, error => {
+      this.view.hideDocumentLoader()
     })
   }
 

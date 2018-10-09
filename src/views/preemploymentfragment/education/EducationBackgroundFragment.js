@@ -11,6 +11,7 @@ import {
   CircularLoader,
   Card,
   Line,
+  Modal
 } from '../../../ub-components/'
 
 import ResponseModal from '../../notice/NoticeResponseModal'
@@ -41,6 +42,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       showDegreeModal : false,
       showNoticeResponseModal : false,
       showPdfViewComponent : false,
+      enabledLoaderPdfModal : false,
       noticeResponse : '',
       pdfFile : '',
       pdfFileUrl : '',
@@ -115,17 +117,24 @@ class EducationBackgroundFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
   onCheckedPdf (link) {
     let stringLink = link + ''
     this.presenter.getOnBoardingDocument(stringLink)
   }
 
-  showAttachments (pdfFile) {
+  showPdfFileView (pdfFile) {
     this.setState({ pdfFile })
   }
 
   showPdfFileUrl (pdfFileUrl) {
-    console.log(pdfFileUrl)
     this.setState({ pdfFileUrl : pdfFileUrl.toString() })
   }
 
@@ -309,6 +318,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       showSchoolsModal,
       showDegreeModal,
       showNoticeResponseModal,
+      enabledLoaderPdfModal,
       showPdfViewComponent,
       noticeResponse,
       torFormData,
@@ -348,6 +358,26 @@ class EducationBackgroundFragment extends BaseMVPView {
 
     return (
       <div>
+      { super.render() }
+        {
+          enabledLoaderPdfModal &&
+          <Modal>
+            <div>
+              <center>
+                <br/>
+                {
+                  showPdfViewComponent ?
+
+                  <h2>Please wait while we we&#39;re retrieving the documents</h2> :
+                  <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+                }
+                <br/>
+                <CircularLoader show = { enabledLoaderPdfModal }/>
+                <br/>
+              </center>
+            </div>
+          </Modal>
+        }
         {
           showEducationFormModal &&
           <EducationBackgroundModal
@@ -432,8 +462,7 @@ class EducationBackgroundFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'font-size-30px text-align-left' }>Education Background</h2>
-            <br/>
+            <h2 className={ 'header-margin-default text-align-left' }>Education Background</h2>
             <h4>Setup your education background</h4>
           </div>
           <Progress
@@ -463,7 +492,6 @@ class EducationBackgroundFragment extends BaseMVPView {
             {
               showPdfViewComponent &&
               <EducationVerificationComponent
-                enabledLoader = { enabledLoader }
                 pdfFile = { pdfFile }
                 onClose = { () => this.setState({ showPdfViewComponent: false }) }
               />
