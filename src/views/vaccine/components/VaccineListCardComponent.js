@@ -35,7 +35,7 @@ class VaccineListCardComponent extends Component {
                 key = {key}>
                 <div className = { 'grid-global' }>
                 <div>
-                    <h2 className = { 'font-size-14px font-weight-lighter text-align-left' }>Dependent: { resp.dependentName }</h2>
+                    <h2 className = { 'font-size-14px font-weight-bold text-align-left' }>Dependent: { resp.dependentName }</h2>
                     <h2 className = { 'font-size-14px font-weight-lighter text-align-left' }>Application Mode: { resp.appModeName }</h2>
                     <h2 className = { 'font-size-14px font-weight-lighter text-align-left' }>Gender: { resp.genderName }</h2>
                     <h2 className = { 'font-size-14px font-weight-lighter text-align-left' }>Relationship: { resp.relationshipName }</h2>
