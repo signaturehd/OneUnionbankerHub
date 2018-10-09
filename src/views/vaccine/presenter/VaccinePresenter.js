@@ -23,6 +23,7 @@ export default class VaccinePresenter {
       let vaccineArray = []
       let dependentArray = []
       let appModeArray = []
+      let relationshipArray = []
 
       data &&
       data.vaccines.map((vaccine, key) => {
@@ -55,9 +56,19 @@ export default class VaccinePresenter {
           name : appMode.name
         })
       })
+
+      data &&
+      data.relationship.map((relation, key) => {
+        relationshipArray.push({
+          id: key,
+          name: relation
+        })
+      })
+
       this.view.showVaccineMap(vaccineArray)
       this.view.showDependentMap(dependentArray)
       this.view.showAppModeMap(appModeArray)
+      this.view.setRelationship(relationshipArray)
 
       return data
     })
@@ -71,9 +82,14 @@ export default class VaccinePresenter {
   }
 
   addVaccine () {
+    this.view.showCircularLoader()
     this.addVaccineInteractor.execute(storedVaccineList)
       .subscribe(data => {
-
+        console.log(data)
+        this.view.noticeOfUndertaking(data)
+        this.view.hideCircularLoader()
+      }, e => {
+        this.view.hideCircularLoader()
       })
   }
 

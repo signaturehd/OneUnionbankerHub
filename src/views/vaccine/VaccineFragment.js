@@ -5,6 +5,8 @@ import ConnectView from '../../utils/ConnectView'
 import BaseMVPView from  '../common/base/BaseMVPView'
 import Presenter from './presenter/VaccinePresenter'
 import VaccineComponent from './components/VaccineComponent'
+import NoticeModal from '../notice/Notice'
+import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import {
   CircularLoader,
@@ -77,6 +79,10 @@ class VaccineFragment extends BaseMVPView {
     this.setState({ dependentList })
   }
 
+  setRelationship (relationship) {
+    this.setState({ relationship })
+  }
+
   showVaccineMap (vaccinesData) {
     this.setState({ vaccinesData })
   }
@@ -116,13 +122,15 @@ class VaccineFragment extends BaseMVPView {
       vaccineListSubmit,
       claimingName,
       claimingId,
+      relationshipName,
+      genderName,
+      birthDate,
     } = this.state
 
     const updatedVaccineListArray = vaccineList.map(item => item.dependentId)
-
+    const updatedVaccineList = [...vaccineList]
+    const updatedVaccineListSubmit = [...vaccineListSubmit]
     if ( !updatedVaccineListArray.includes(dependentId) ) {
-      const updatedVaccineList = [...vaccineList]
-      const updatedVaccineListSubmit = [...vaccineListSubmit]
 
       updatedVaccineList.push({
         vaccineCardHolder,
@@ -132,6 +140,9 @@ class VaccineFragment extends BaseMVPView {
         dependentName,
         claimingId,
         claimingName,
+        relationshipName,
+        genderName,
+        birthDate,
       })
       let vaccine = []
 
@@ -144,6 +155,12 @@ class VaccineFragment extends BaseMVPView {
         vaccine,
         modeId: appModeId,
         dependentId,
+        others: {
+          name: dependentName,
+          relationship: relationshipName,
+          gender: genderName,
+          birthDate,
+        },
         isClaiming: claimingId,
       })
 
@@ -161,6 +178,9 @@ class VaccineFragment extends BaseMVPView {
       claimingName: '',
       dependentId: '',
       dependentName: '',
+      relationshipName: '',
+      genderName: '',
+      birthDate: '',
       vaccineCardHolder: [],
       showVaccineList: true
     })
@@ -192,7 +212,7 @@ class VaccineFragment extends BaseMVPView {
   }
 
   noticeOfUndertaking (noticeResponse) {
-  this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
+    this.setState({ showNoticeModal : true, noticeResponse })
   }
 
   noticeResponse (noticeResponse) {
@@ -235,7 +255,14 @@ class VaccineFragment extends BaseMVPView {
       dependentList,
       showVaccineList,
       showClaimingType,
-      claimingName
+      showRelationship,
+      relationshipName,
+      relationship,
+      claimingName,
+      showGender,
+      genderName,
+      birthDate,
+      setBirthDate,
     } = this.state
 
     console.log(this.state)
@@ -248,7 +275,7 @@ class VaccineFragment extends BaseMVPView {
           <NoticeModal
             onClose={ () => this.setState({ showNoticeModal : false })}
             noticeResponse={ noticeResponse }
-            benefitId={ '11' }
+            benefitId={ '18' }
             onDismiss={ (showNoticeModal, noticeResponse) =>
               this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
           />
@@ -364,6 +391,47 @@ class VaccineFragment extends BaseMVPView {
             onClose = { () => this.setState({ showAppModesModal : false }) }
           />
         }
+
+        {
+          showRelationship &&
+          <SingleInputModal
+            label = { 'Relationship' }
+            inputArray = { relationship }
+            selectedArray = { (relationshipId, relationshipName) => {
+              this.setState({
+                relationshipId,
+                relationshipName,
+                showRelationship : false,
+                })
+              }
+            }
+            onClose = { () => this.setState({ showRelationship : false }) }
+          />
+        }
+
+        {
+          showGender &&
+          <SingleInputModal
+            label = { 'Relationship' }
+            inputArray = { [{
+              id: 0,
+              name: 'Female'
+            }, {
+              id: 1,
+              name: 'Male'
+            }] }
+            selectedArray = { (genderId, genderName) => {
+              this.setState({
+                  genderId,
+                  genderName,
+                  showGender : false,
+                })
+              }
+            }
+            onClose = { () => this.setState({ showGender : false }) }
+          />
+        }
+
         <div>
           <i
             className={ 'back-arrow' }
@@ -408,12 +476,18 @@ class VaccineFragment extends BaseMVPView {
              showAppModesFunc = { () => this.showAppModesFunc() }
              editFormDataFunc = { () => this.editFormReview() }
              showVaccineList = { showVaccineList }
+             relationshipName = { relationshipName }
              claimingName = { claimingName }
+             showRelationship = { () => this.setState({ showRelationship: true }) }
              cancelToList = { () => this.setState({ showVaccineList: true }) }
              addToList = { () => this.addToList() }
              addVaccineList = { () => this.setState({ showVaccineList: false }) }
              showEditSubmitFunc = { (resp) => this.showEditSubmitFunc(resp) }
              showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
+             showGender = { () => this.setState({ showGender: true }) }
+             genderName = { genderName }
+             birthDate = { birthDate }
+             setBirthDate = { (birthDate) => this.setState({ birthDate }) }
              setCardHolderDefaultyFunc = { (vaccineCardHolder) => this.setState({ vaccineCardHolder }) }
            />
         }

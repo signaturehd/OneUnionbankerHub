@@ -6,7 +6,8 @@ import {
   Line,
   GenericInput,
   GenericButton,
-  MultipleFileUploader
+  MultipleFileUploader,
+  DatePicker,
 } from '../../../ub-components/'
 
 import VaccineMultipleCardComponent from './VaccineMultipleCardComponent'
@@ -47,7 +48,13 @@ class VaccineComponent extends Component {
       cancelToList,
       addToList,
       showClaimingType,
-      claimingName
+      claimingName,
+      showRelationship,
+      relationshipName,
+      setBirthDate,
+      birthDate,
+      showGender,
+      genderName
     } = this.props
 
     return (
@@ -129,6 +136,27 @@ class VaccineComponent extends Component {
                   value = { claimingName }
                   disabled = { showEditSubmitButton }
                   readOnly
+                />
+                <GenericInput
+                  text = { 'Relationship' }
+                  onClick = { () => showRelationship() }
+                  value = { relationshipName }
+                  disabled = { showEditSubmitButton }
+                  readOnly
+                />
+                <DatePicker
+                  text = { 'Birthdate' }
+                  readOnly
+                  selected = { birthDate }
+                  disabled = { showEditSubmitButton }
+                  onChange = { (data) => setBirthDate(data) }
+                />
+                <GenericInput
+                  text = { 'Gender' }
+                  readOnly
+                  value = { genderName }
+                  disabled = { showEditSubmitButton }
+                  onClick = { () => showGender() }
                 />
                 <div className = { 'vaccine-form-review' }>
                   <GenericButton
