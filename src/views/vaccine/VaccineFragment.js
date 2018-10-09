@@ -7,6 +7,7 @@ import Presenter from './presenter/VaccinePresenter'
 import VaccineComponent from './components/VaccineComponent'
 import NoticeModal from '../notice/Notice'
 import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
+import ResponseModal from '../notice/NoticeResponseModal'
 
 import {
   CircularLoader,

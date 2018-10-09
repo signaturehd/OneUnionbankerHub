@@ -130,34 +130,38 @@ class VaccineComponent extends Component {
                   disabled = { showEditSubmitButton }
                   readOnly
                 />
-                <GenericInput
-                  text = { 'Claiming Type' }
-                  onClick = { () => showClaimingType() }
-                  value = { claimingName }
-                  disabled = { showEditSubmitButton }
-                  readOnly
-                />
-                <GenericInput
-                  text = { 'Relationship' }
-                  onClick = { () => showRelationship() }
-                  value = { relationshipName }
-                  disabled = { showEditSubmitButton }
-                  readOnly
-                />
-                <DatePicker
-                  text = { 'Birthdate' }
-                  readOnly
-                  selected = { birthDate }
-                  disabled = { showEditSubmitButton }
-                  onChange = { (data) => setBirthDate(data) }
-                />
-                <GenericInput
-                  text = { 'Gender' }
-                  readOnly
-                  value = { genderName }
-                  disabled = { showEditSubmitButton }
-                  onClick = { () => showGender() }
-                />
+                <div className = { 'vaccine-form-review' }>
+                  <GenericInput
+                    text = { 'Claiming Type' }
+                    onClick = { () => showClaimingType() }
+                    value = { claimingName }
+                    disabled = { showEditSubmitButton }
+                    readOnly
+                  />
+                  <GenericInput
+                    text = { 'Relationship' }
+                    onClick = { () => showRelationship() }
+                    value = { relationshipName }
+                    disabled = { showEditSubmitButton }
+                    readOnly
+                  />
+                </div>
+                <div className = { 'vaccine-form-review' }>
+                  <DatePicker
+                    text = { 'Birthdate' }
+                    readOnly
+                    selected = { birthDate }
+                    disabled = { showEditSubmitButton }
+                    onChange = { (data) => setBirthDate(data) }
+                  />
+                  <GenericInput
+                    text = { 'Gender' }
+                    readOnly
+                    value = { genderName }
+                    disabled = { showEditSubmitButton }
+                    onClick = { () => showGender() }
+                  />
+                </div>
                 <div className = { 'vaccine-form-review' }>
                   <GenericButton
                     type = { 'button' }
