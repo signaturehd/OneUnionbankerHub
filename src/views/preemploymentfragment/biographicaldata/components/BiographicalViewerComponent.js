@@ -31,6 +31,8 @@ class BiographicalViewerComponent extends Component {
           </h2>
           <br/>
           <div className = { 'bio-document-padding' }>
+          {
+            pdfFile ?
             <iframe
               src = { pdfFile }
               style = {{
@@ -39,6 +41,9 @@ class BiographicalViewerComponent extends Component {
               }}
             >
             </iframe>
+            :
+            <center>File not found</center>
+          }
           </div>
           <br/>
           <div>

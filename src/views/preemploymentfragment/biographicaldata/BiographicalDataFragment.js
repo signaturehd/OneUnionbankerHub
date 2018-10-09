@@ -30,6 +30,7 @@ class BiographicalDataFragment extends BaseMVPView {
     super(props)
     this.state = {
       showPdfViewComponent : false,
+      enabledLoaderPdfModal : false,
       enabledLoader : false,
       showNoticeResponseModal : false,
       noticeResponse : '',
@@ -60,7 +61,7 @@ class BiographicalDataFragment extends BaseMVPView {
     this.presenter.getSelectedAttachments(biographicalArray)
   }
 
-  showAttachments (pdfFile) {
+  showPdfFileView (pdfFile) {
     this.setState({ pdfFile })
   }
 
@@ -94,6 +95,14 @@ class BiographicalDataFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
   render() {
     const {
       history,
@@ -105,6 +114,7 @@ class BiographicalDataFragment extends BaseMVPView {
 
     const {
       enabledLoader,
+      enabledLoaderPdfModal,
       showNoticeResponseModal,
       noticeResponse,
       biographicalDataFormData,
@@ -134,7 +144,7 @@ class BiographicalDataFragment extends BaseMVPView {
       />
     }
     {
-      enabledLoader &&
+      enabledLoaderPdfModal &&
       <Modal>
         <div>
           <center>
@@ -146,7 +156,7 @@ class BiographicalDataFragment extends BaseMVPView {
               <h2>Please wait while we we&#39;re validating your submitted documents</h2>
             }
             <br/>
-            <CircularLoader show = { enabledLoader }/>
+            <CircularLoader show = { enabledLoaderPdfModal }/>
             <br/>
           </center>
         </div>
@@ -184,7 +194,6 @@ class BiographicalDataFragment extends BaseMVPView {
           {
             showPdfViewComponent &&
             <BiographicalViewerComponent
-              enabledLoader = { enabledLoader }
               pdfFile = { pdfFile }
               onClose = { () => this.setState({ showPdfViewComponent: false }) }
             />

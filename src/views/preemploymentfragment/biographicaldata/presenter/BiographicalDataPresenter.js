@@ -1,10 +1,8 @@
 import { NotifyActions } from '../../../../actions'
 import store from '../../../../store'
 
-import GetOnboardingPdfInteractor from
-'../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
-import GetOnboardingAttachmentsInteractor from
-'../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
+import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
+import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 import AddEmploymentRequirementInteractor from '../../../../domain/interactor/preemployment/requirement/AddEmploymentRequirementInteractor'
 import employeeRequirementParam from '../../../../domain/param/AddEmployeeRequirementParam'
 
@@ -20,12 +18,13 @@ export default class BiographicalDataPresenter {
   }
 
   getOnBoardingDocument (link) {
-    this.view.showCircularLoader()
+    this.view.showDocumentLoader()
     this.getOnboardingPdfInteractor.execute(link)
     .subscribe(data => {
-      this.view.hideCircularLoader()
-      this.view.showAttachments(data)
+      this.view.hideDocumentLoader()
+      this.view.showPdfFileView(data)
     }, error => {
+      this.view.hideDocumentLoader()
     })
   }
 
