@@ -21,13 +21,19 @@ class PagibigFormPreviewModal extends Component {
       onClose = { onClose }
       isDismisable = { true }
       >
-      <iframe src = { pdfFile }
-        style = {{
-          height: 500,
-          width: '100%'
-        }}
-      >
-      </iframe>
+      {
+        pdfFile ?
+        <iframe
+          src = { pdfFile }
+          style = {{
+            height: 750,
+            width: '100%'
+          }}
+        >
+        </iframe>
+        :
+        <center>File not found</center>
+      }
       <br/>
       <br/>
       <center>

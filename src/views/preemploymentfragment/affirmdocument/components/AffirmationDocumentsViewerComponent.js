@@ -46,6 +46,8 @@ class AffirmationDocumentViewerComponent extends Component {
             </h2>
             <br/>
             <div className = { 'affirm-document-padding' }>
+            {
+              pdfFile ?
               <iframe
                 src = { pdfFile }
                 style = {{
@@ -54,6 +56,9 @@ class AffirmationDocumentViewerComponent extends Component {
                 }}
               >
               </iframe>
+              :
+              <center>File not found</center>
+            }
             </div>
             <br/>
             {

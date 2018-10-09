@@ -35,8 +35,9 @@ class AffirmationDocumentFragment extends BaseMVPView {
       previewDataPDF : [],
       showPdfViewComponent : false,
       showPinCodeModal: false,
-      enabledLoader: false,
+      enabledLoaderPdfModal: false,
       noticeResponseModal: false,
+      enabledLoaderPdf: false,
       pdfFile: '',
       noticeResponse : [],
       uniquePIN: '',
@@ -131,6 +132,14 @@ class AffirmationDocumentFragment extends BaseMVPView {
     this.setState({ enabledLoader : false })
   }
 
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
   noticeResponse (noticeResponse, noticeResponseModal, showPinCodeModal) {
     this.setState({ noticeResponse, noticeResponseModal, showPinCodeModal })
   }
@@ -148,6 +157,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
       showPdfViewComponent,
       showPinCodeModal,
       noticeResponseModal,
+      enabledLoaderPdfModal,
       pdfFile,
       noticeResponse,
       enabledLoader,
@@ -172,6 +182,25 @@ class AffirmationDocumentFragment extends BaseMVPView {
               />
             <br/>
           </center>
+        </Modal>
+      }
+      {
+        enabledLoaderPdfModal &&
+        <Modal>
+          <div>
+            <center>
+              <br/>
+              {
+                showPdfViewComponent ?
+
+                <h2>Please wait while we we&#39;re retrieving the documents</h2> :
+                <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+              }
+              <br/>
+              <CircularLoader show = { enabledLoaderPdfModal }/>
+              <br/>
+            </center>
+          </div>
         </Modal>
       }
       {

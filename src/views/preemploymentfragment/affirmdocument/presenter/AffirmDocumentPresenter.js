@@ -43,13 +43,13 @@ export default class AffirmDocumentPresenter {
   }
 
   getOnBoardingDocument (link) {
-    this.view.showPinLoader()
+    this.view.showDocumentLoader()
     this.getAffirmationPdf.execute(link)
     .subscribe(data => {
-      this.view.hidePinLoader()
+      this.view.hideDocumentLoader()
       this.view.showPdfFileView(data)
     }, error => {
-      this.view.hidePinLoader()
+      this.view.hideDocumentLoader()
     })
   }
 
