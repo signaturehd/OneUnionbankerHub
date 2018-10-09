@@ -26,7 +26,7 @@ class LaptopLeaseCardComponent extends Component {
       amount,
       setColor,
       color,
-      setTerms,
+      showTerms,
       terms,
       showEditMode,
       onSubmit,
@@ -53,16 +53,17 @@ class LaptopLeaseCardComponent extends Component {
               <GenericInput
                 placeholder = { 'Amount' }
                 errorMessage = { '' }
-                onChange ={ () => setAmount(e.target.value) }
-                text = { 'Brands' }
+                onChange ={ (e) => setAmount(e.target.value) }
+                text = { 'Amount' }
                 disabled = { showEditMode }
                 value = { amount }
+                maxLength = { 7 }
                 />
               <GenericInput
                 placeholder = { 'Color' }
                 errorMessage = { '' }
                 disabled = { showEditMode }
-                text = { 'Model' }
+                text = { 'Color' }
                 onChange = { (e) => setColor(e.target.value) }
                 value = { color }
                 />
@@ -70,9 +71,11 @@ class LaptopLeaseCardComponent extends Component {
                 placeholder = { 'Terms' }
                 errorMessage = { '' }
                 disabled = { showEditMode }
-                text = { 'Model' }
-                onChange = { (e) => setTerms(e.target.value) }
+                text = { 'Terms' }
+                readOnly
+                onClick = { () => showTerms() }
                 value = { terms }
+
                 />
               <GenericInput
                 value = { deliveryOptionName }
@@ -102,17 +105,14 @@ class LaptopLeaseCardComponent extends Component {
                 <div className = { 'grid-global' }>
                   <GenericButton
                     text={ 'Edit' }
-                    onClick={ () =>
-                      onEdit()
-                      }
+                    type = { 'button' }
+                    onClick={ () => onEdit() }
                     className={ 'carview-submit' } />
                   <GenericButton
                     text={ 'Submit' }
-                    onClick={ () =>
-                      onSubmit()
-                      }
+                    type = { 'button' }
+                    onClick={ () => onSubmit() }
                     className={ 'carview-submit' } />
-
                 </div>
                 :
                 <GenericButton

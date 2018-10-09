@@ -94,6 +94,7 @@ class LaptopLeaseFragment extends BaseMVPView {
   }
 
   setFile (file) {
+    console.log(file)
     this.setState({ file })
   }
 
@@ -155,7 +156,11 @@ class LaptopLeaseFragment extends BaseMVPView {
       enabledLoader,
       showEditMode,
       deliveryOptionName,
-      laptopLeaseAttachment
+      laptopLeaseAttachment,
+      showTermsSelection,
+      termsId,
+      termsName,
+      noticeResponse
     } = this.state
 
     const { history }=this.props
@@ -193,9 +198,9 @@ class LaptopLeaseFragment extends BaseMVPView {
         {
           showBenefitFeedbackModal &&
           <BenefitFeedbackModal
-            benefitId={ '15' }
+            benefitId={ '16' }
             onClose={ () => {
-              this.props.history.push('/mybenefits/benefits/medical'),
+              this.props.history.push('/mybenefits/benefits/'),
               this.setState({ showBenefitFeedbackModal : false })
             }}
           />
@@ -205,33 +210,42 @@ class LaptopLeaseFragment extends BaseMVPView {
           <SingleInputModal
             label = { 'Delivery Options' }
             inputArray = { deliveryOptionList && deliveryOptionList }
-            selectedArray = { (deliveryOptionId, deliveryOptionName) =>
-              this.setState({
-                deliveryOptionName,
-                showDeliveryOptions : false,
-              })
+            selectedArray = { (deliveryOptionId, deliveryOptionName) => {
+                this.setState({
+                  deliveryOptionName,
+                  showDeliveryOptions : false,
+                }),
+                this.presenter.setDeliveryOption(deliveryOptionId)
+              }
             }
             onClose = { () => this.setState({ showDeliveryOptions : false }) }
           />
         }
-        {
-          showNoticeResponseModal &&
-          <ResponseModal
-            onClose={ () => {
-              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
-            }}
-            noticeResponse={ noticeResponse }
-          />
-        }
 
         {
-          showBenefitFeedbackModal &&
-          <BenefitFeedbackModal
-            benefitId={ loanType }
-            onClose={ () => {
-              this.props.history.push('/mybenefits/benefits/education'),
-              this.setState({ showBenefitFeedbackModal : false })
-            }}
+          showTermsSelection &&
+          <SingleInputModal
+            label = { 'Terms' }
+            inputArray = { [{
+              id: 1,
+              name: '12 Months'
+            }, {
+              id: 2,
+              name: '24 Months'
+            },{
+              id: 3,
+              name: '36 Months'
+            }] }
+            selectedArray = { (termsId, termsName) =>
+              {
+                this.setState({
+                  termsName,
+                  showTermsSelection : false,
+                }),
+                this.presenter.setTerms(termsId)
+              }
+            }
+            onClose = { () => this.setState({ showTermsSelection : false }) }
           />
         }
         <div>
@@ -250,23 +264,20 @@ class LaptopLeaseFragment extends BaseMVPView {
              </center> :
             <FormComponent
               showEditMode = { showEditMode }
-              setAmount = { (resp) => this.presenter.setAmount(resp) }
+              setAmount = { (resp) => this.presenter.setAmount(parseInt(resp) || 0) }
               setColor = { (resp) =>  this.presenter.setColor(resp) }
-              setTerms = { resp => this.presenter.setTerms(resp) }
-              setFile = { (resp) => this.presenter.setFile(resp) }
               showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
+              showTerms = { () => this.setState({ showTermsSelection: true }) }
               deliveryOptionName = { deliveryOptionName }
               laptopLeaseAttachment = { laptopLeaseAttachment }
               amount = { amount }
               color = { color }
-              terms = { terms }
+              terms = { termsName }
               file = { file }
-              setAttachments = { (laptopLeaseAttachment) => this.setState({ laptopLeaseAttachment }) }
-              onContinue={ () =>
-                this.sendFormData()
-              }
+              setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
+              onContinue={ () => this.setState({ showEditMode: true }) }
               onEdit = { () => this.setState({ showEditMode : false })  }
-              onSubmit = { () => this.formSubmission()  }
+              onSubmit = { () => this.presenter.addLaptopLease()  }
             />
           }
       </div>

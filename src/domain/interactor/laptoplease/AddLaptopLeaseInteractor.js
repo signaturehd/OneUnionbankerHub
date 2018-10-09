@@ -3,18 +3,13 @@ export default class AddLaptopLeaseInteractor {
     this.client = client
   }
 
-  execute (amount, terms, color, deliveryOption, file) {
+  execute (addLaptopLeaseParam) {
     return this.client.addLaptopLease(
-      this.client.getToken(),
       this.client.getToken(),
       this.client.getAccountToken(),
       this.client.getAccountNumber(),
       this.client.getReleasingCenter(),
-      amount,
-      terms,
-      color,
-      deliveryOption,
-      file,
+      addLaptopLeaseParam
     )
   }
 

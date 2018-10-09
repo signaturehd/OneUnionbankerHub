@@ -4,7 +4,9 @@ import ValidateLaptopLeaseInteractor from
 import AddLaptopLeaseInteractor from
 '../../../domain/interactor/laptoplease/AddLaptopLeaseInteractor'
 
-let storedAmount = '', storedTerms = '', storedColor = '', storedDeliveryOption = '', storedFile = []
+import AddLaptopLeaseParam from '../../../domain/param/AddLaptopLeaseParam'
+
+let storedAmount = '', storedTerms = '', storedColor = '', storedDeliveryOption = '', storedFile
 
 export default class LaptopLeasePresenter {
   constructor (container) {
@@ -18,7 +20,7 @@ export default class LaptopLeasePresenter {
 
   setColor (color) {
     storedColor = color
-    this.view.setColor(terms)
+    this.view.setColor(color)
   }
 
   setAmount (amount) {
@@ -70,17 +72,19 @@ export default class LaptopLeasePresenter {
       this.view.hideCircularLoader()
     }, error => {
       this.view.hideCircularLoader()
+      this.view.navigate()
     })
   }
 
   addLaptopLease () {
     this.view.showCircularLoader()
-    this.addLaptopLeaseInteractor.execute(storedAmount, storedTerms, storedColor, storedDeliveryOption, storedFile)
+    this.addLaptopLeaseInteractor.execute(AddLaptopLeaseParam(storedColor, storedAmount, storedTerms, storedDeliveryOption, storedFile))
       .subscribe(data => {
+        this.view.noticeOfUndertaking(data)
         this.view.hideCircularLoader()
       }, e => {
-        this.view.hideCircularLoader()
         console.log(e)
+        this.view.hideCircularLoader()
       })
   }
 
