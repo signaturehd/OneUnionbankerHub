@@ -477,7 +477,7 @@ class EducationBackgroundFragment extends BaseMVPView {
           <h2></h2>
           <div className = { 'text-align-right' }>
             <GenericButton
-              text = { 'Add Education' }
+              text = { 'ADD' }
               onClick = { () => this.onShowEducationFormModalFunc() }
               />
           </div>
