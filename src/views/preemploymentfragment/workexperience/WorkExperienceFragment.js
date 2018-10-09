@@ -12,21 +12,21 @@ import {
   CircularLoader,
   Card,
   Line,
+  Modal
 } from '../../../ub-components/'
 
-import ResponseModal from '../../notice/NoticeResponseModal'
-
-import WorkExperienceMultipleCardComponent from './WorkExperienceMultipleCardComponent'
-import WorkExperienceAddModal from './modals/WorkExperienceAddModal'
-
 import { Progress } from 'react-sweet-progress'
-
-import { RequiredValidation } from '../../../utils/validate/'
-
 import moment from 'moment'
 import { format } from '../../../utils/numberUtils'
 
 import * as func from './functions/WorkExperienceFunctions'
+import { RequiredValidation } from '../../../utils/validate/'
+
+import WorkExperienceAddModal from './modals/WorkExperienceAddModal'
+import ResponseModal from '../../notice/NoticeResponseModal'
+
+import WorkExperienceMultipleCardComponent from './components/WorkExperienceMultipleCardComponent'
+import WorkExperienceViewPdfComponent from './components/WorkExperienceViewPdfComponent'
 
 class WorkExperienceFragment extends BaseMVPView {
 
@@ -38,8 +38,12 @@ class WorkExperienceFragment extends BaseMVPView {
       showAddWorkExperienceModal : false,
       updateMode : false,
       showNoticeResponseModal : false,
-      noticeResponse : '',
+      enabledLoaderPdfModal : false,
+      showPdfViewComponent : false,
       workExperienceCardHolder : [],
+      noticeResponse : '',
+      pdfFile: '',
+      pdfFileUrl: '',
       workExpId : '',
       index : 4,
       viewMoreText : 'View more',
@@ -82,9 +86,12 @@ class WorkExperienceFragment extends BaseMVPView {
 
   }
 
+  /* Implementation */
+
   componentDidMount () {
     this.props.onSendPageNumberToView(5)
     this.presenter.getWorkExperience()
+    this.presenter.getWorkExperienceForm()
   }
 
   checkedWorkExperience (workExperienceCardHolder) {
@@ -118,6 +125,30 @@ class WorkExperienceFragment extends BaseMVPView {
   showCircularLoader () {
     this.setState({ enabledLoader : true })
   }
+
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
+  onCheckedPdf (link) {
+    let stringLink = link + ''
+    this.presenter.getOnBoardingDocument(stringLink)
+  }
+
+  showPdfFileView (pdfFile) {
+    this.setState({ pdfFile })
+  }
+
+  showPdfFileUrl (pdfFileUrl) {
+    this.setState({ pdfFileUrl : pdfFileUrl.toString() })
+  }
+
+
+  /* validation and form submission*/
 
   companyFunc(companyName) {
     this.setState({ companyName, companyErrorMessage : '' })
@@ -277,9 +308,13 @@ class WorkExperienceFragment extends BaseMVPView {
       showEditSubmitButton,
       showAddWorkExperienceModal,
       showNoticeResponseModal,
+      enabledLoaderPdfModal,
+      showPdfViewComponent,
       workExperienceCardHolder,
       noticeResponse,
       updateMode,
+      pdfFile,
+      pdfFileUrl,
       index,
       viewMoreText,
       monthData,
@@ -380,7 +415,25 @@ class WorkExperienceFragment extends BaseMVPView {
             noticeResponse={ noticeResponse }
           />
         }
+        {
+          enabledLoaderPdfModal &&
+          <Modal>
+            <div>
+              <center>
+                <br/>
+                {
+                  showPdfViewComponent ?
 
+                  <h2>Please wait while we we&#39;re retrieving the documents</h2> :
+                  <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+                }
+                <br/>
+                <CircularLoader show = { enabledLoaderPdfModal }/>
+                <br/>
+              </center>
+            </div>
+          </Modal>
+        }
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
@@ -394,6 +447,32 @@ class WorkExperienceFragment extends BaseMVPView {
             percent={ percentage } />
         </div>
         <br/>
+        {
+          pdfFileUrl &&
+          <div className = { 'work-grid-card' }>
+            <Card
+              onClick = { () => {
+                this.onCheckedPdf(pdfFileUrl)
+                this.setState({ showPdfViewComponent : true  })
+                }
+              }
+              className = { 'work-card' }>
+              <div className = { 'work-grid-x2' }>
+                <h2>Employment Verification Form</h2>
+                <div>
+                  <span className = { 'work-icon work-seemore-button' }/>
+                </div>
+              </div>
+            </Card>
+            {
+              showPdfViewComponent &&
+              <WorkExperienceViewPdfComponent
+                pdfFile = { pdfFile }
+                onClose = { () => this.setState({ showPdfViewComponent: false }) }
+              />
+            }
+          </div>
+        }
         <br/>
         <Line />
         <br/>

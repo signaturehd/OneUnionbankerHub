@@ -1233,6 +1233,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getWorkExperienceForm (token) {
+    return this.onboardingClient.get('v1/employees/employers/forms/verify', {
+      headers: { token }
+    })
+  }
+
   addWorkExperience (token, workExperienceParam) {
     const objectParam = {
       companyName : workExperienceParam.companyName,

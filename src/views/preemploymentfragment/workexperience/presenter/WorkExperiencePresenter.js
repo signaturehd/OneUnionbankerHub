@@ -1,8 +1,10 @@
 import { NotifyActions } from '../../../../actions'
 import store from '../../../../store'
 import GetWorkExperienceInteractor from '../../../../domain/interactor/preemployment/workexperience/GetWorkExperienceInteractor'
+import GetWorkExperienceFormInteractor from '../../../../domain/interactor/preemployment/workexperience/GetWorkExperienceFormInteractor'
 import AddWorkExperienceInteractor from '../../../../domain/interactor/preemployment/workexperience/AddWorkExperienceInteractor'
 import PutWorkExperienceInteractor from '../../../../domain/interactor/preemployment/workexperience/PutWorkExperienceInteractor'
+import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
 
 import addWorkExperienceParam from '../../../../domain/param/AddWorkExperienceParam'
 import putWorkExperienceParam from '../../../../domain/param/PutWorkExperienceParam'
@@ -10,12 +12,32 @@ import putWorkExperienceParam from '../../../../domain/param/PutWorkExperiencePa
 export default class WorkExperiencePresenter {
   constructor (container) {
     this.workExperienceInteractor = new GetWorkExperienceInteractor(container.get('HRBenefitsClient'))
+    this.getWorkExperienceFormInteractor = new GetWorkExperienceFormInteractor(container.get('HRBenefitsClient'))
     this.addWorkExperienceInteractor = new AddWorkExperienceInteractor(container.get('HRBenefitsClient'))
     this.putWorkExperienceInteractor = new PutWorkExperienceInteractor(container.get('HRBenefitsClient'))
+    this.getOnboardingPdfInteractor = new GetOnboardingPdfInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
+  }
+
+  getOnBoardingDocument (link) {
+    this.view.showDocumentLoader()
+    this.getOnboardingPdfInteractor.execute(link)
+    .subscribe(data => {
+      this.view.hideDocumentLoader()
+      this.view.showPdfFileView(data)
+    }, error => {
+      this.view.hideDocumentLoader()
+    })
+  }
+
+  getWorkExperienceForm () {
+    this.getWorkExperienceFormInteractor.execute()
+    .subscribe(data => {
+      this.view.showPdfFileUrl(data.url)
+    }, error =>{})
   }
 
   getWorkExperience () {

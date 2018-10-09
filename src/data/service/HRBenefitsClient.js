@@ -923,6 +923,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getWorkExperienceForm (token) {
+    return this.service.getWorkExperienceForm(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   addWorkExperience (token, workExperienceParam) {
     return this.service.addWorkExperience(token, workExperienceParam)
       .pipe(ServiceErrorOperator())
