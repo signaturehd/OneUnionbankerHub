@@ -46,6 +46,7 @@ function  TransactionDetails (props)  {
   const fileCarLease = props.fileCarlease
   const onConfirmationReleaseFunc = props.onConfirmationReleaseFunc
   const confirmmDetails = props.confirmmDetails
+  const claimLaptopLease = props.claimLaptopLease
 
   if (transactionId === 6) {
     return <DentalRDetailsFragment
@@ -153,6 +154,7 @@ function  TransactionDetails (props)  {
     return <LaptopLeaseDetailsFragment
       attachmentsMethod = { (resp) => attachmentsMethod(resp) }
       agreementsMethod = { (resp) => agreementsMethod(resp) }
+      claimLaptopLease = { (transactionId) => claimLaptopLease(transactionId) }
       confirmDetails = { (transactionId, isConfirm) => confirmmDetails(transactionId, isConfirm) }
       details = { transactionDetails }
     />
@@ -229,8 +231,8 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     this.setState({ details })
   }
 
-  confirmRelease (transactionId, isConfirm) {
-    console.log(transactionId, isConfirm)
+  claimLaptopLease (transactionId) {
+    this.presenter.confirmLaptopLease(transactionId)
   }
 
   /* Circular Loader */
@@ -335,6 +337,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              transactions = { transactions }
              showUploading = { response }
              confirmmDetails = { (transactionId, isConfirm) => this.confirmRelease(transactionId, isConirm) }
+             claimLaptopLease = { (transactionId) => this.claimLaptopLease(transactionId) }
              attachmentsMethod = { (resp) =>
                this.showAttachmentsMethod(resp)
              }

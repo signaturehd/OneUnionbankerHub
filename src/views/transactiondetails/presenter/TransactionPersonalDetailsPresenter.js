@@ -167,23 +167,32 @@ export default class TransactionPersonalDetailsPresenter {
       })
   }
 
-  confirmLaptopLease (transactionId, isConfirm) {
-    this.view.showCircularLoader()
-    this.confirmLaptopLeaseInteractor.execute(transactionId, isConfirm)
-      .subscribe(trasactions => {
-        this.view.showConfirmButton(false)
-        this.view.hideCircularLoader()
-        let message = isConfirm == 1 ? 'Confirmed' : 'Rejected'
-        store.dispatch(NotifyActions.addNotify({
-            title : 'Laptop Lease Confirmation',
-            message : `You've successfully ${message} the Laptop Lease`,
-            type : 'success',
-            duration : 2000
-         })
-        )
-      }, e => {
-        this.view.hideCircularLoader()
-      })
+  confirmLaptopLease (transactionId) {
+    this.view.hideCircularLoader()
+    try {
+      this.confirmLaptopLeaseInteractor.execute(transactionId, 1)
+        .do(data => {
+          this.getTransactionDetails(transactionId)
+        }, e => {
+          console.log(e)
+        })
+        .subscribe(trasactions => {
+          this.view.showCircularLoader()
+          store.dispatch(NotifyActions.addNotify({
+              title : 'Laptop Lease Confirmation',
+              message : `You've successfully Confirmed the Laptop Lease`,
+              type : 'success',
+              duration : 2000
+           })
+          )
+        }, e => {
+          console.log(e)
+          this.view.showCircularLoader()
+        })
+    } catch (e) {
+      console.log(e)
+    }
+
   }
 
 }

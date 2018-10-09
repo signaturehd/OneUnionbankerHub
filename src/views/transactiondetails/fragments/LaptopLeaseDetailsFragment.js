@@ -3,10 +3,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import moment from 'moment'
-import { Card } from '../../../ub-components'
+import { Card, Button } from '../../../ub-components'
 import './styles/detailsFragment.css'
 
 import * as TransactionDetailsFunction from '../controller/TransactionDetailsFunction'
+
+import LaptopLeaseDetailCardComponent from
+  '../../transaction/components/TransactionLaptopLeaseComponent/LaptopLeaseDetailCardComponent'
 
 class LaptopLeaseDetailsFragment extends Component {
   constructor (props) {
@@ -19,11 +22,17 @@ class LaptopLeaseDetailsFragment extends Component {
 
   render () {
     const {
+      claimLaptopLease,
       attachmentsMethod,
       agreementsMethod,
-      confirmDetails,
       details,
-    } = this.state
+    } = this.props
+
+    const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
+    const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
+    const dateFiled = TransactionDetailsFunction.checkedDateFilled(details)
+    const benefitLabel = TransactionDetailsFunction.getBenefitLabelStatus(details.status)
+
     return (
       <div className={ 'transaction-details-global-x3' }>
         <div></div>
@@ -56,7 +65,12 @@ class LaptopLeaseDetailsFragment extends Component {
             </div>
             <br/>
             <div>
-
+              <LaptopLeaseDetailCardComponent
+                details = { details }
+                claimLaptopLease = { (transactionId) => claimLaptopLease(transactionId) }
+                onClickAttachments = { (resp) => attachmentsMethod(resp) }
+                onClickAgreements = { (resp) => agreementsMethod(resp) }
+              />
             </div>
           </Card>
         <div></div>

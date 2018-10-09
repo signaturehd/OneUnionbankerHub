@@ -1142,7 +1142,7 @@ export default class HRBenefitsService {
   confirmLaptopLease (token, transactionId, isConfirm) {
     return this.apiClient.post('v1/leases/laptop/confirm', {
       transactionId,
-      isConirm,
+      isConfirm,
     }, {
       headers: { token }
     })
