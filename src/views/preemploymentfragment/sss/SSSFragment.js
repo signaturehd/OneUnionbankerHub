@@ -86,7 +86,6 @@ class SSSFragment extends BaseMVPView {
 
   inputSSSValidate (e) {
     const validate = new RequiredNumberValidation().isValid(e)
-
     this.setState({ sssInput : validate ? e : '' })
   }
 
@@ -139,7 +138,7 @@ class SSSFragment extends BaseMVPView {
             value = { sssInput }
             text = { 'SSS Number' }
             maxLength = { 10 }
-            onChange = { e => this.inputSSSValidate(e.targe.value) }
+            onChange = { e => this.inputSSSValidate(e.target.value) }
           />
         <br/>
         <center>

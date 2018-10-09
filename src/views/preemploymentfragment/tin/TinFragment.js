@@ -134,7 +134,6 @@ class TinFragment extends BaseMVPView {
           <GenericInput
             text = { 'Taxpayer Identification Number(TIN)' }
             value = { tinInput }
-            maxLength = { 9 }
             minLength = { 9 }
             onChange = { e => this.inputTinValidate(e.target.value) }
           />

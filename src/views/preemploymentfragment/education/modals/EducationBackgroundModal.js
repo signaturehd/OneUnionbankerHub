@@ -122,6 +122,7 @@ class EducationBackgroundModal extends Component {
           text = { 'School' }
           value = { schoolName }
           maxLength = { 25 }
+          readOnly
           onClick = { () => showSchoolsFunc() }
           errorMessage = { schoolNameErrorMessage }/>
         <GenericInput
@@ -139,6 +140,7 @@ class EducationBackgroundModal extends Component {
         <GenericInput
           text = { 'Degree' }
           value = { degree }
+          readOnly
           onChange = { (e) => degreeFunc(e.target.value) }
           onClick = { () => showDegreeFunc(true) }
           errorMessage = { degreeErrorMessage }/>

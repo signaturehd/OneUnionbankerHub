@@ -16,6 +16,7 @@ import {
 import ResponseModal from '../../notice/NoticeResponseModal'
 
 import EducationMultipleCardComponent from './components/EducationMultipleCardComponent'
+import EducationVerificationComponent from './components/EducationVerificationComponent'
 import EducationBackgroundModal from './modals/EducationBackgroundModal'
 
 import moment from 'moment'
@@ -39,7 +40,10 @@ class EducationBackgroundFragment extends BaseMVPView {
       showSchoolsModal : false,
       showDegreeModal : false,
       showNoticeResponseModal : false,
+      showPdfViewComponent : false,
       noticeResponse : '',
+      pdfFile : '',
+      pdfFileUrl : '',
       isUpdated : 0,
       educationCardHolder : [],
       schools : [],
@@ -77,6 +81,7 @@ class EducationBackgroundFragment extends BaseMVPView {
   componentDidMount () {
     this.props.onSendPageNumberToView(4)
     this.presenter.getEmployeeSchool()
+    this.presenter.getSchoolRecordVerificationForm()
   }
 
   onShowEducationFormModalFunc () {
@@ -96,6 +101,34 @@ class EducationBackgroundFragment extends BaseMVPView {
     })
   }
 
+  /* Data Implementation */
+
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse , showNoticeResponseModal : true})
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  onCheckedPdf (link) {
+    let stringLink = link + ''
+    this.presenter.getOnBoardingDocument(stringLink)
+  }
+
+  showAttachments (pdfFile) {
+    this.setState({ pdfFile })
+  }
+
+  showPdfFileUrl (pdfFileUrl) {
+    console.log(pdfFileUrl)
+    this.setState({ pdfFileUrl : pdfFileUrl.toString() })
+  }
+
   checkedEducationData(educationCardHolder) {
     this.setState({ educationCardHolder })
   }
@@ -103,6 +136,8 @@ class EducationBackgroundFragment extends BaseMVPView {
   checkedSchoolData(schools) {
     this.setState({ schools })
   }
+
+  /* validation amd submission */
 
   studentNoFunc(studentNo) {
     const validate = func.checkValidateNumber(studentNo)
@@ -265,18 +300,6 @@ class EducationBackgroundFragment extends BaseMVPView {
     }
   }
 
-  noticeResponseResp (noticeResponse) {
-    this.setState({ noticeResponse , showNoticeResponseModal : true})
-  }
-
-  hideCircularLoader () {
-    this.setState({ enabledLoader : false })
-  }
-
-  showCircularLoader () {
-    this.setState({ enabledLoader : true })
-  }
-
   render () {
     const {
       updateMode,
@@ -286,8 +309,11 @@ class EducationBackgroundFragment extends BaseMVPView {
       showSchoolsModal,
       showDegreeModal,
       showNoticeResponseModal,
+      showPdfViewComponent,
       noticeResponse,
       torFormData,
+      pdfFile,
+      pdfFileUrl,
       educId,
       count,
       schools,
@@ -417,6 +443,33 @@ class EducationBackgroundFragment extends BaseMVPView {
             percent={ percentage } />
         </div>
         <br/>
+        {
+          pdfFileUrl &&
+          <div className = { 'educ-grid-card' }>
+            <Card
+              onClick = { () => {
+                this.onCheckedPdf(pdfFileUrl)
+                this.setState({ showPdfViewComponent : true  })
+                }
+              }
+              className = { 'educ-card' }>
+              <div className = { 'educ-grid-x2' }>
+                <h2>School Verification Form</h2>
+                <div>
+                  <span className = { 'educ-icon educ-seemore-button' }/>
+                </div>
+              </div>
+            </Card>
+            {
+              showPdfViewComponent &&
+              <EducationVerificationComponent
+                enabledLoader = { enabledLoader }
+                pdfFile = { pdfFile }
+                onClose = { () => this.setState({ showPdfViewComponent: false }) }
+              />
+            }
+          </div>
+        }
         <br/>
         <Line />
         <br/>
