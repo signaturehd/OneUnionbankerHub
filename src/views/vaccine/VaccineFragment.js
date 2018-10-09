@@ -266,8 +266,6 @@ class VaccineFragment extends BaseMVPView {
       setBirthDate,
     } = this.state
 
-    console.log(this.state)
-
     return (
       <div>
         { super.render() }
@@ -343,8 +341,6 @@ class VaccineFragment extends BaseMVPView {
             }}
           />
         }
-
-
         {
           showVaccinesModal &&
           <VaccinesModal

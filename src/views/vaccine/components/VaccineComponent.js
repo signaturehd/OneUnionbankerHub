@@ -11,6 +11,7 @@ import {
 } from '../../../ub-components/'
 
 import VaccineMultipleCardComponent from './VaccineMultipleCardComponent'
+import VaccineListCardComponent from './VaccineListCardComponent'
 import VaccineDependentMultipleCardComponent from './VaccineDependentMultipleCardComponent'
 
 
@@ -63,14 +64,22 @@ class VaccineComponent extends Component {
           showVaccineList &&
             vaccineList.length > 0 ?
               <div>
+              <div className = { 'text-align-right' }>
                 <GenericButton
                   type = { 'button' }
                   text = { 'Add' }
                   onClick = { () => addVaccineList() }
                 />
+                </div>
                 <br/>
                 {
-
+                  vaccineList.length !==0 &&
+                    <VaccineListCardComponent
+                      cardDataHolder = { vaccineList }
+                      setCard = { (resp) => setCardHolderDefaultyFunc(resp) }
+                      disabled = { showEditSubmitButton }
+                      errorMessage = { vaccineErrorMessage }
+                    />
                 }
                 <br/>
                 {
