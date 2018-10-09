@@ -893,11 +893,6 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getEmployeeSchool (token) {
-    return this.service.getEmployeeSchool(token)
-      .pipe(ServiceErrorOperator())
-  }
-
   getPreEmploymentForm (token) {
     return this.service.getPreEmploymentForm(token)
       .pipe(ServiceErrorOperator())
@@ -950,6 +945,16 @@ export default class HRBenefitsClient {
 
   putCharacterReference (token, putCharacterReferenceParam) {
     return this.service.putCharacterReference(token, putCharacterReferenceParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getEmployeeSchool (token) {
+    return this.service.getEmployeeSchool(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getSchoolRecordVerificationForm (token) {
+    return this.service.getSchoolRecordVerificationForm(token)
       .pipe(ServiceErrorOperator())
   }
 

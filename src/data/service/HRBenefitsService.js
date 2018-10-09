@@ -16,7 +16,7 @@ export default class HRBenefitsService {
   }
 
   otp (otpParam) {
-    return this.apiClient.post('v2/otp', otpParam)
+    return this.apiClient.post('v1/otp', otpParam)
   }
 
   resend (resendOtpParam) {
@@ -1085,18 +1085,6 @@ export default class HRBenefitsService {
 
   /* Pre-Employment */
 
-  postAffirmPreEmploymentUndertaking (token) {
-    return this.onboardingClient.post('v1/affirm/pre-emp-undertaking', {
-      headers : { token }
-    })
-  }
-
-  getAffirmationsStatus (token) {
-    return this.onboardingClient.get('v1/employees/affirmations/status', {
-      headers : { token }
-    })
-  }
-
   getOnBoardingDocument (token, link) {
     return this.fileClient.get('v1/uploads?folder=documents', {
       headers: {
@@ -1114,6 +1102,18 @@ export default class HRBenefitsService {
         file : file,
       },
       responseType : 'blob'
+    })
+  }
+
+  postAffirmPreEmploymentUndertaking (token) {
+    return this.onboardingClient.post('v1/affirm/pre-emp-undertaking', {
+      headers : { token }
+    })
+  }
+
+  getAffirmationsStatus (token) {
+    return this.onboardingClient.get('v1/employees/affirmations/status', {
+      headers : { token }
     })
   }
 
@@ -1182,12 +1182,6 @@ export default class HRBenefitsService {
 
     return this.onboardingClient.put('v1/employees/sss', objectParam, {
       headers : { token }
-    })
-  }
-
-  getEmployeeSchool (token) {
-    return this.onboardingClient.get('v1/employees/school', {
-      headers: { token }
     })
   }
 
@@ -1326,6 +1320,18 @@ export default class HRBenefitsService {
     }
     return this.onboardingClient.put(`v1/employees/references/{${ putCharacterReferenceParam.id }}`, objectParam, {
       headers : { token }
+    })
+  }
+
+  getEmployeeSchool (token) {
+    return this.onboardingClient.get('v1/employees/school', {
+      headers: { token }
+    })
+  }
+
+  getSchoolRecordVerificationForm (token) {
+    return this.onboardingClient.get('v1/employees/school/forms/verify', {
+      headers: { token }
     })
   }
 
