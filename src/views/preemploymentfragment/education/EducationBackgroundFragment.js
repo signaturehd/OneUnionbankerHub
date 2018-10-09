@@ -25,6 +25,8 @@ import { RequiredValidation } from '../../../utils/validate/'
 
 import { Progress } from 'react-sweet-progress'
 
+import * as func from './functions/EducationFunctions'
+
 class EducationBackgroundFragment extends BaseMVPView {
 
   constructor(props) {
@@ -103,11 +105,13 @@ class EducationBackgroundFragment extends BaseMVPView {
   }
 
   studentNoFunc(studentNo) {
-    this.setState({ studentNo, studentNoErrorMessage : '' })
+    const validate = func.checkValidateNumber(studentNo)
+    this.setState({ studentNo: validate, studentNoErrorMessage : '' })
   }
 
   termFunc(term) {
-    this.setState({ term, termErrorMessage : ''})
+    const validate = func.checkNoSymbol(term)
+    this.setState({ term : validate, termErrorMessage : ''})
   }
 
   degreeFunc(id, degree) {
@@ -119,11 +123,13 @@ class EducationBackgroundFragment extends BaseMVPView {
   }
 
   courseFunc(course) {
-    this.setState({ course, courseErrorMessage : '' })
+    const validate = func.checkNoSymbol(course)
+    this.setState({ course: validate, courseErrorMessage : '' })
   }
 
   addressFunc(address) {
-    this.setState({ address, addressErrorMessage : '' })
+    const validate = func.checkNoSymbol(address)
+    this.setState({ address: validate, addressErrorMessage : '' })
   }
 
   startYearFunc(startYear) {
@@ -411,30 +417,6 @@ class EducationBackgroundFragment extends BaseMVPView {
             percent={ percentage } />
         </div>
         <br/>
-        <div className = { 'biographical-grid-card' }>
-          <Card
-            onClick = { () => {
-              this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
-              this.setState({ showPdfViewComponent : true  })
-              }
-            }
-            className = { 'biographical-card' }>
-            <div className = { 'biographical-grid-x2' }>
-              <h2>Biographical Data Form</h2>
-              <div>
-                <span className = { 'biographical-icon biographical-seemore-button' }/>
-              </div>
-            </div>
-          </Card>
-          {
-            showPdfViewComponent &&
-            <BiographicalViewerComponent
-              enabledLoader = { enabledLoader }
-              pdfFile = { pdfFile }
-              onClose = { () => this.setState({ showPdfViewComponent: false }) }
-            />
-          }
-        </div>
         <br/>
         <Line />
         <br/>

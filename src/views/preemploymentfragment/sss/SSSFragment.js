@@ -18,6 +18,10 @@ import {
 
 import ResponseModal from '../../notice/NoticeResponseModal'
 
+import {
+  RequiredNumberValidation
+} from '../../../utils/validate'
+
 import { Progress } from 'react-sweet-progress'
 
 class SSSFragment extends BaseMVPView {
@@ -80,6 +84,12 @@ class SSSFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  inputSSSValidate (e) {
+    const validate = new RequiredNumberValidation().isValid(e)
+
+    this.setState({ sssInput : validate ? e : '' })
+  }
+
   render () {
 
     const {
@@ -129,7 +139,7 @@ class SSSFragment extends BaseMVPView {
             value = { sssInput }
             text = { 'SSS Number' }
             maxLength = { 10 }
-            onChange = { e => this.setState({ sssInput : e.target.value }) }
+            onChange = { e => this.inputSSSValidate(e.targe.value) }
           />
         <br/>
         <center>

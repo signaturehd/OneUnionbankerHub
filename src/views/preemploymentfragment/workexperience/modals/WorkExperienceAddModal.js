@@ -97,7 +97,7 @@ class WorkExperienceAddModal extends Component {
         <GenericInput
           text = { 'Company Name' }
           value = { companyName }
-          maxLength = { 30 }
+          maxLength = { 20 }
           onChange = { (e) => companyFunc(e.target.value) }
           errorMessage = { companyErrorMessage }
           />
@@ -105,7 +105,7 @@ class WorkExperienceAddModal extends Component {
           text = { 'Address' }
           onChange = { (e) => addressFunc(e.target.value) }
           value = { address }
-          maxLength = { 40 }
+          maxLength = { 35 }
           errorMessage = { addressErrorMessage }
           />
         <GenericInput
@@ -119,7 +119,6 @@ class WorkExperienceAddModal extends Component {
           value = { contactNo }
           maxLength = { 12 }
           onChange = { (e) => contactNoFunc(e.target.value) }
-          type = { 'number' }
           errorMessage = { contactNoErrorMessage }
           />
         <h2 className = { 'text-align-left' }>Inclusive Dates</h2>
@@ -135,7 +134,6 @@ class WorkExperienceAddModal extends Component {
           <GenericInput
             text = { 'Year' }
             value = { fromYear }
-            type = { 'number' }
             maxLength = { 4 }
             onChange = { (e) => {
               fromYearFunc(e.target.value)
@@ -157,7 +155,6 @@ class WorkExperienceAddModal extends Component {
             text = { 'Year' }
             value = { toYear }
             maxLength = { 4 }
-            type = { 'number' }
             onChange = { (e) => {
                 toYearFunc(e.target.value)
                 toYearValidate(e.target.value)
@@ -169,6 +166,7 @@ class WorkExperienceAddModal extends Component {
         <GenericInput
           text = { 'Brief Description of Duties' }
           value = { briefDescDuties }
+          maxLength = { 35 }
           onChange = { (e) => briefDescDutiesFunc(e.target.value) }
           errorMessage = { briefDescDutiesErrorMessage }
           />

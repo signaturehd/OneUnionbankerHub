@@ -142,7 +142,7 @@ class PagIbigFragment extends BaseMVPView {
           <Card
             className = { 'abc-card' }
             onClick = { () => {
-              this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
+              this.onCheckedPdf('/2018-09-28/12345-Pagibig Form-1538123144111.pdf')
               this.setState({ showPdfViewModal : true  })
               }
             }>

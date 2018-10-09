@@ -26,6 +26,7 @@ import { RequiredValidation } from '../../../utils/validate/'
 import moment from 'moment'
 import { format } from '../../../utils/numberUtils'
 
+import * as func from './functions/WorkExperienceFunctions'
 
 class WorkExperienceFragment extends BaseMVPView {
 
@@ -123,19 +124,23 @@ class WorkExperienceFragment extends BaseMVPView {
   }
 
   addressFunc(address) {
-    this.setState({ address, addressErrorMessage : '' })
+    const validate = func.checkedValidateText(address)
+    this.setState({ address: validate, addressErrorMessage : '' })
   }
 
   positionFunc(position) {
-    this.setState({ position, positionErrorMessage : '' })
+    const validate = func.checkedValidateText(position)
+    this.setState({ position: validate, positionErrorMessage : '' })
   }
 
   contactNoFunc(contactNo) {
-    this.setState({ contactNo, contactNoErrorMessage : '' })
+    const validate = func.checkValidateNumber(contactNo)
+    this.setState({ contactNo: validate, contactNoErrorMessage : '' })
   }
 
   fromYearFunc(fromYear) {
-    this.setState({ fromYear, fromMonthErrorMessage : '' })
+    const validate = func.checkValidateNumber(fromYear)
+    this.setState({ fromYear: validate, fromMonthErrorMessage : '' })
   }
 
   fromYearValidate(value) {
@@ -151,7 +156,8 @@ class WorkExperienceFragment extends BaseMVPView {
   }
 
   toYearFunc(toYear) {
-    this.setState({ toYear, toYearErrorMessage : '' })
+    const validate = func.checkValidateNumber(toYear)
+    this.setState({ toYear : validate, toYearErrorMessage : '' })
   }
 
   toYearValidate(value) {
@@ -167,7 +173,8 @@ class WorkExperienceFragment extends BaseMVPView {
   }
 
   briefDescDutiesFunc(briefDescDuties) {
-    this.setState({ briefDescDuties, briefDescDutiesErrorMessage : '' })
+    const validate = func.checkedValidateText(briefDescDutiesbriefDescDuties)
+    this.setState({ briefDescDuties: validate, briefDescDutiesErrorMessage : '' })
   }
 
   validateRequired(value) {

@@ -121,10 +121,12 @@ class EducationBackgroundModal extends Component {
         <GenericInput
           text = { 'School' }
           value = { schoolName }
+          maxLength = { 25 }
           onClick = { () => showSchoolsFunc() }
           errorMessage = { schoolNameErrorMessage }/>
         <GenericInput
           text = { 'School Address' }
+          maxLength = { 30 }
           value = { address }
           onChange = { (e) => addressFunc(e.target.value) }
           errorMessage = { addressErrorMessage }/>
@@ -143,11 +145,13 @@ class EducationBackgroundModal extends Component {
         <GenericInput
           text = { 'Course' }
           value = { course }
+          maxLength = { 25 }
           onChange = { (e) => courseFunc(e.target.value) }
           errorMessage = { courseErrorMessage }/>
         <GenericInput
           text = { 'Term' }
           value = { term }
+          maxLength = { 12 }
           onChange = { (e) => termFunc(e.target.value) }
           errorMessage = { termErrorMessage }/>
         <GenericInput

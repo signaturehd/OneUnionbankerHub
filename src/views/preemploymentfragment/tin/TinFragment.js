@@ -16,6 +16,10 @@ import {
   Line,
 } from '../../../ub-components/'
 
+import {
+  RequiredNumberValidation
+} from '../../../utils/validate'
+
 import ResponseModal from '../../notice/NoticeResponseModal'
 
 import { Progress } from 'react-sweet-progress'
@@ -76,6 +80,12 @@ class TinFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  inputTinValidate (e) {
+    const validate = new RequiredNumberValidation().isValid(e)
+
+    this.setState({ tinInput : validate ? e : '' })
+  }
+
   render () {
 
     const {
@@ -126,7 +136,7 @@ class TinFragment extends BaseMVPView {
             value = { tinInput }
             maxLength = { 9 }
             minLength = { 9 }
-            onChange = { e => this.setState({ tinInput : e.target.value }) }
+            onChange = { e => this.inputTinValidate(e.target.value) }
           />
         <br/>
           <center>
