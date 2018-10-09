@@ -1,7 +1,7 @@
 import ValidateVaccineInteractor from '../../../domain/interactor/vaccine/ValidateVaccineInteractor'
 import AddVaccineInteractor from '../../../domain/interactor/vaccine/AddVaccineInteractor'
 
-let storedVaccineList, storedDependentList = []
+let storedVaccineList, storedDependentList = [], storedDependents
 export default class VaccinePresenter {
   constructor (container) {
     this.validateVaccineInteractor = new ValidateVaccineInteractor(container.get('HRBenefitsClient'))
@@ -65,6 +65,8 @@ export default class VaccinePresenter {
         })
       })
 
+      storedDependents = dependentArray
+
       this.view.showVaccineMap(vaccineArray)
       this.view.showDependentMap(dependentArray)
       this.view.showAppModeMap(appModeArray)
@@ -91,6 +93,18 @@ export default class VaccinePresenter {
       }, e => {
         this.view.hideCircularLoader()
       })
+  }
+
+  updatesDependent (dependent) {
+    console.log(storedDependents)
+    const updatedStoredDependents = storedDependents.map(item => item.id)
+    if ( !updatedStoredDependents.includes(dependent.id) ) {
+      storedDependents.push(dependent)
+    } else {
+      storedDependents.map((item, key) => item.id == dependent.id && storedDependents.splice(key, 1))
+    }
+
+    this.view.showDependentMap(storedDependents)
   }
 
   setDependent(dependent) {

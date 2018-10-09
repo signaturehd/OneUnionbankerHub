@@ -131,6 +131,12 @@ class VaccineFragment extends BaseMVPView {
     const updatedVaccineListArray = vaccineList.map(item => item.dependentId)
     const updatedVaccineList = [...vaccineList]
     const updatedVaccineListSubmit = [...vaccineListSubmit]
+
+    try {
+      this.presenter.updatesDependent({ id: dependentId, name: dependentName })
+    } catch (e) {
+      console.log(e)
+    }
     if ( !updatedVaccineListArray.includes(dependentId) ) {
 
       updatedVaccineList.push({
@@ -484,8 +490,9 @@ class VaccineFragment extends BaseMVPView {
              showGender = { () => this.setState({ showGender: true }) }
              genderName = { genderName }
              birthDate = { birthDate }
+             dependents = { dependentsData }
              setBirthDate = { (birthDate) => this.setState({ birthDate }) }
-             setCardHolderDefaultyFunc = { (vaccineCardHolder) => this.setState({ vaccineCardHolder }) }
+             setCardHolderDefaultyFunc = { (vaccineCardHolder, dependentObj) => { this.setState({ vaccineCardHolder }), this.presenter.updatesDependent(dependentObj)} }
            />
         }
       </div>

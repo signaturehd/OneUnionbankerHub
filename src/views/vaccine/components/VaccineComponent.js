@@ -55,7 +55,8 @@ class VaccineComponent extends Component {
       setBirthDate,
       birthDate,
       showGender,
-      genderName
+      genderName,
+      dependents
     } = this.props
 
     return (
@@ -65,18 +66,21 @@ class VaccineComponent extends Component {
             vaccineList.length > 0 ?
               <div>
               <div className = { 'text-align-right' }>
-                <GenericButton
-                  type = { 'button' }
-                  text = { 'Add' }
-                  onClick = { () => addVaccineList() }
-                />
+                {
+                  dependents.length > 0 &&
+                  <GenericButton
+                    type = { 'button' }
+                    text = { 'Add' }
+                    onClick = { () => addVaccineList() }
+                  />
+                }
                 </div>
                 <br/>
                 {
                   vaccineList.length !==0 &&
                     <VaccineListCardComponent
                       cardDataHolder = { vaccineList }
-                      setCard = { (resp) => setCardHolderDefaultyFunc(resp) }
+                      setCard = { (resp, dependentObj) => setCardHolderDefaultyFunc(resp, dependentObj) }
                       disabled = { showEditSubmitButton }
                       errorMessage = { vaccineErrorMessage }
                     />

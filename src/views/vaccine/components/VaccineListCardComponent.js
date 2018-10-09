@@ -54,7 +54,7 @@ class VaccineListCardComponent extends Component {
                       src = { require('../../../images/x-circle-global.png') }
                       onClick = { () => {
                         cardDataHolder.splice(key, 1)
-                        setCard(cardDataHolder)
+                        setCard(cardDataHolder, {name: resp.dependentName, id: resp.dependentId})
                       }}
                     />
                   }
