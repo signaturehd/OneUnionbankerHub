@@ -7,6 +7,7 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/TravelPresenter'
 
 import RequestFlightFragment from '../request/RequestFlightFragment'
+import LiquidationFragment from '../liquidation/LiquidationFragment'
 
 import {
   InputModal,
@@ -131,13 +132,29 @@ class TravelFragment extends BaseMVPView {
     } = this.state
 
 
-    const travelOptions = [{
-      id: 0 ,
-      styleName: 'travel-option-cards-1 travel-option-default font-weight-bold',
-      title: 'Request Flight Quotation',
-      path: '/mytravel/travel/request',
-      subTitle: ''
-    }]
+    const travelOptions = [
+      {
+        id: 0 ,
+        styleName: 'travel-option-cards-1 travel-option-default font-weight-bold',
+        title: 'Request Flight Quotation',
+        path: '/mytravel/travel/request',
+        subTitle: ''
+      },
+      {
+        id: 1 ,
+        styleName: 'travel-option-cards-1 travel-option-default font-weight-bold',
+        title: 'Book Flight',
+        path: '/mytravel/travel/book',
+        subTitle: ''
+      },
+      {
+        id: 2 ,
+        styleName: 'travel-option-cards-1 travel-option-default font-weight-bold',
+        title: 'Liquidation My Flight',
+        path: '/mytravel/travel/liquidation',
+        subTitle: ''
+      }
+    ]
 
   const travel = () => (
     <div className={ 'travel-container' }>
@@ -198,7 +215,6 @@ class TravelFragment extends BaseMVPView {
           <div className={ 'travel-card-container' }>
             {
             travelOptions.map((value, idx) => (
-
               <Card
                 className={ 'travel-card' }
                 onClick={ () => history.push(value.path) }
@@ -250,8 +266,10 @@ class TravelFragment extends BaseMVPView {
           <Switch>
             <Route path='/mytravel'
               render={ travel } />
-            <Route exact path='/mytravel/request/RequestFlightFragment'
+            <Route exact path='/mytravel/travel/request/RequestFlightFragment'
               render={ props => <RequestFlightFragment { ...props } />}/>
+            <Route exact path='/mytravel/travel/liquidation/LiquidationFragment'
+              render={ props => <LiquidationFragment { ...props } />}/>
            </Switch>
         </section>
       </div>

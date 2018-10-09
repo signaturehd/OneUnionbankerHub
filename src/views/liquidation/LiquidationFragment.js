@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 
-import Presenter from './presenter/RequestFlightPresenter'
+import Presenter from './presenter/LiquidationPresenter'
 
 import {
   GenericButton,
@@ -13,12 +13,12 @@ import {
   Line,
 } from '../../ub-components/'
 
-import RequestFlightComponent from './components/RequestFlightComponent'
+import LiquidationComponent from './components/LiquidationComponent'
 
 import { Progress } from 'react-sweet-progress'
-import './styles/request.css'
+import './styles/liquidation.css'
 
-class RequestFlightFragment extends BaseMVPView {
+class LiquidationFragment extends BaseMVPView {
 
   constructor(props) {
     super(props)
@@ -152,9 +152,9 @@ class RequestFlightFragment extends BaseMVPView {
       <div>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'font-size-30px text-align-left' }>List of Request Flights</h2>
+            <h2 className={ 'font-size-30px text-align-left' }>List of Flights for liquidation</h2>
             <br/>
-            <h4>Below are the list of your requests flights</h4>
+            <h4>Below are the list of your flights that are requested for liquidation</h4>
           </div>
         </div>
         <br/>
@@ -163,7 +163,7 @@ class RequestFlightFragment extends BaseMVPView {
         <br/>
             {
               requestFlightArray.length !==0 &&
-                <RequestFlightComponent
+                <LiquidationComponent
                   cardDataHolder = { requestFlightArray }/>
             }
       </div>
@@ -171,8 +171,8 @@ class RequestFlightFragment extends BaseMVPView {
   }
 }
 
-RequestFlightFragment.propTypes = {
+LiquidationFragment.propTypes = {
   onSendPageNumberToView : PropTypes.func
 }
 
-export default ConnectView(RequestFlightFragment, Presenter )
+export default ConnectView(LiquidationFragment, Presenter )

@@ -6,9 +6,9 @@ import { format } from '../../../utils/numberUtils'
 import defaultImage from '../../../images/icons/default_image_loading.png'
 import { Card }  from '../../../ub-components/'
 import moment from 'moment'
-import './styles/requestStyles.css'
+import './styles/liquidationStyles.css'
 
-class RequestFlightComponent extends Component {
+class LiquidationComponent extends Component {
   constructor (props) {
     super(props)
   }
@@ -18,12 +18,12 @@ class RequestFlightComponent extends Component {
       cardDataHolder
     } = this.props
     return (
-      <div className = { 'request-div' }>
+      <div className = { 'liquidation-div' }>
         {
           cardDataHolder.length !== 0 &&
           cardDataHolder.map((resp, key) => (
               <Card key = {key}>
-                <div className = { 'request-card-grid-option' }>
+                <div className = { 'liquidation-card-grid-option' }>
                   <div>
                       <h2 className = { 'font-size-14px font-weight-lighter margin-bottom' }>{ resp.referenceNumber }</h2>
                       <h2 className = { 'font-size-16px font-weight-bold margin-bottom' }>{ resp.departure.origin.location }</h2>
@@ -47,7 +47,7 @@ class RequestFlightComponent extends Component {
   }
 }
 
-RequestFlightComponent.propTypes = {
+LiquidationComponent.propTypes = {
   cardDataHolder : PropTypes.arrayOf(
       PropTypes.objectOf(
         PropTypes.shape({
@@ -59,8 +59,8 @@ RequestFlightComponent.propTypes = {
   )
 }
 
-RequestFlightComponent.defaultProps = {
+LiquidationComponent.defaultProps = {
   cardDataHolder : [],
 }
 
-export default RequestFlightComponent
+export default LiquidationComponent
