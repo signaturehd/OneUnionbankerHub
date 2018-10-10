@@ -852,10 +852,13 @@ export default class HRBenefitsClient {
   }
 
   /* Vaccines Requisitions */
-
-
   validateVaccine (token) {
     return this.service.validateVaccine(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addVaccine (token, data) {
+    return this.service.addVaccine(token, data)
       .pipe(ServiceErrorOperator())
   }
 
