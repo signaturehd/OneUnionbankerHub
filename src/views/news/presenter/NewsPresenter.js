@@ -19,8 +19,8 @@ export default class NewsPresenter {
           dateArrayList.push(resp.date)
         })
         function max_date(all_dates) {
-          let max_dt = all_dates[0],
-          max_dtObj = new Date(all_dates[0])
+          let max_dt = moment(all_dates[0]).format('MM/DD/YYYY'),
+          max_dtObj = new Date(moment(all_dates[0]).format('MM/DD/YYYY'))
           all_dates.forEach(function (date, index)
           {
             if (new Date(date) > max_dtObj)

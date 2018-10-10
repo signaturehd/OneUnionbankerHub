@@ -1,4 +1,4 @@
-  import React from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import ConnectView from '../../utils/ConnectView'
 import NewsInteractor from '../../domain/interactor/news/NewsInteractor'
