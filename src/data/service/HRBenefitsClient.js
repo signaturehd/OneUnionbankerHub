@@ -862,32 +862,41 @@ export default class HRBenefitsClient {
   }
 
   /* Vaccines Requisitions */
-
-
   validateVaccine (token) {
     return this.service.validateVaccine(token)
       .pipe(ServiceErrorOperator())
   }
 
-  /* Laptop Lease */
-
-  getLaptopLease (token) {
-    return this.service.getLaptopLease(token)
+  addVaccine (token, data) {
+    return this.service.addVaccine(token, data)
       .pipe(ServiceErrorOperator())
   }
 
-  postlaptopLease (
+  /* Laptop Lease */
+
+  confirmLaptopLease (token, transactionId, isConfirm) {
+    return this.service.confirmLaptopLease(token, transactionId, isConfirm)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateLaptopLease (token) {
+    return this.service.validateLaptopLease(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addLaptopLease (
     token,
     accountToken,
     accountNumber,
     releasingCenter,
-    laptopLeaseParam) {
-    return this.service.postlaptopLease(
+    addLaptopLeaseParam,
+    ) {
+    return this.service.addLaptopLease(
       token,
       accountToken,
       accountNumber,
       releasingCenter,
-      laptopLeaseParam
+      addLaptopLeaseParam,
     )
       .pipe(ServiceErrorOperator())
   }
