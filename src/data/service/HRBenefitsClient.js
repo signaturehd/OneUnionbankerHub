@@ -882,4 +882,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Travel */
+
+  getRequestFlightData (token) {
+    return this.service.getRequestFlightData(token)
+      .pipe(ServiceErrorOperator())
+  }
+
 }

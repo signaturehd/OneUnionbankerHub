@@ -23,6 +23,7 @@ class RequestFlightFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
+      enabledLoader : false,
       requestFlightArray : [
         {
           "id": 1,
@@ -142,8 +143,21 @@ class RequestFlightFragment extends BaseMVPView {
     }
   }
 
+  getRequestFlightData(requestFlightArray) {
+    this.setState({ requestFlightArray })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
   render () {
     const {
+      enabledLoader,
       requestFlightArray
     } = this.state
 
@@ -162,6 +176,11 @@ class RequestFlightFragment extends BaseMVPView {
         <Line />
         <br/>
             {
+              enabledLoader ?
+              <center>
+                <CircularLoader show = { enabledLoader }/>
+              </center>
+              :
               requestFlightArray.length !==0 &&
                 <RequestFlightComponent
                   cardDataHolder = { requestFlightArray }/>
