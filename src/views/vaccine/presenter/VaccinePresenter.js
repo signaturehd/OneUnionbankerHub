@@ -77,7 +77,6 @@ export default class VaccinePresenter {
     .subscribe(data => {
         this.view.hideCircularLoader()
       },e => {
-        console.log(e)
         this.view.navigate()
       }
     )
@@ -87,7 +86,6 @@ export default class VaccinePresenter {
     this.view.showCircularLoader()
     this.addVaccineInteractor.execute(storedVaccineList)
       .subscribe(data => {
-        console.log(data)
         this.view.noticeOfUndertaking(data)
         this.view.hideCircularLoader()
       }, e => {
@@ -96,7 +94,6 @@ export default class VaccinePresenter {
   }
 
   updatesDependent (dependent) {
-    console.log(storedDependents)
     const updatedStoredDependents = storedDependents.map(item => item.id)
     if ( !updatedStoredDependents.includes(dependent.id) ) {
       storedDependents.push(dependent)
