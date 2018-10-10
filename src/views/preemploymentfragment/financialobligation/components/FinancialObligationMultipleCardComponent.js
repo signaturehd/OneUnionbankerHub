@@ -48,7 +48,7 @@ class FinancialObligationMultipleCardComponent extends Component {
                       <h2 className = { 'font-size-12px font-weight-bold' }>Status: { this.checkStatus(resp.status) }</h2>
                   </div>
                   <div>
-                    <h2 className = { 'font-size-12px font-weight-lighter' }>Obligation: { resp.obligation }</h2>
+                    <h2 className = { 'font-size-12px font-weight-lighter' }>Nature of Obligation: { resp.obligation }</h2>
                   </div>
                 </div>
                 <div className = { 'grid-global-rows' }>

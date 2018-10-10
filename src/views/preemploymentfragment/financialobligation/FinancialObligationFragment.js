@@ -19,6 +19,8 @@ import FinancialObligationModal from './modals/FinancialObligationModal'
 import FinancialObligationMultipleCardComponent from './components/FinancialObligationMultipleCardComponent'
 import Presenter from './presenter/FinancialObligationPresenter'
 
+import * as func from './functions/FinancialFunction'
+
 import { Progress } from 'react-sweet-progress'
 
 import "react-sweet-progress/lib/style.css"
@@ -87,6 +89,16 @@ class FinancialObligationFragment extends BaseMVPView {
     this.setState({ noticeResponse })
   }
 
+  natureObligationValidate (validate) {
+    const isValid = func.checkedValidateText(validate)
+    this.setState({ natureObligation : isValid })
+  }
+
+  bankNameInstitutionValidate (validate) {
+    const isValid = func.checkedValidateText(validate)
+    this.setState({ bankNameInstitution : isValid })
+  }
+
   submitForm () {
     const {
       bankNameInstitution,
@@ -119,36 +131,30 @@ class FinancialObligationFragment extends BaseMVPView {
           statusId,
           financeId
         )
-        this.setState({ showFinancialFormModal : false })
-        this.setState({
-          bankNameInstitution : '',
-          natureObligation : '',
-          amount : '',
-          statusId : '',
-          fiananceId : '',
-          editMode: false,
-        })
+        this.resetValue()
       } else {
-      this.presenter.addFinancialStatus(
-        bankNameInstitution,
-        natureObligation,
-        amount,
-        statusId,
-        financeId)
-
-        this.setState({ showFinancialFormModal : false })
-        this.setState({
-          bankNameInstitution : '',
-          natureObligation : '',
-          amount : '',
-          statusId : '',
-          fiananceId : '',
-          editMode: false,
-        })
+        this.presenter.addFinancialStatus(
+          bankNameInstitution,
+          natureObligation,
+          amount,
+          statusId,
+          financeId)
+          this.resetValue()
       }
     }
   }
 
+  resetValue() {
+    this.setState({ showFinancialFormModal : false })
+    this.setState({
+      bankNameInstitution : '',
+      natureObligation : '',
+      amount : '',
+      statusId : '',
+      fiananceId : '',
+      editMode: false,
+    })
+  }
 
   render() {
     const {
@@ -202,15 +208,15 @@ class FinancialObligationFragment extends BaseMVPView {
       {
         showFinancialFormModal &&
         <FinancialObligationModal
-          natureObligationFunc = { (natureObligation) =>  this.setState({ natureObligation }) }
+          natureObligationFunc = { (natureObligation) =>  this.natureObligationValidate(natureObligation) }
           statusName = { statusName }
           bankNameInstitution = { bankNameInstitution }
           natureObligation = { natureObligation }
           amount = { amount }
-          bankNameInstitutionFunc = { (bankNameInstitution) => this.setState({ bankNameInstitution }) }
+          bankNameInstitutionFunc = { (bankNameInstitution) => this.bankNameInstitutionValidate(bankNameInstitution) }
           amountFunc = { (amount) => this.setState({ amount }) }
           submitForm = { () => this.submitForm() }
-          onClose = { () => this.setState({ showFinancialFormModal : false }) }
+          onClose = { () => this.resetValue() }
           bankNameInstitutionErrorMessage = { bankNameInstitutionErrorMessage }
           natureObligationErrorMessage = { natureObligationErrorMessage }
           amountErrorMessage = { amountErrorMessage }
