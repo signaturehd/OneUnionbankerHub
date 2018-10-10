@@ -6,6 +6,7 @@ import UploadTransactionImageInteractor from '../../../domain/interactor/transac
 import PostNewCarConfirmationInteractor from '../../../domain/interactor/transactions/PostNewCarConfirmationInteractor'
 import PostNewPaymentInteractor from '../../../domain/interactor/transactions/PostNewPaymentInteractor'
 import PostNewReleasingInteractor from '../../../domain/interactor/transactions/PostNewReleasingInteractor'
+import ConfirmLaptopLeaseInteractor from '../../../domain/interactor/transactions/ConfirmLaptopLeaseInteractor'
 
 import leasesCarConfirm from '../../../domain/param/AddCarLeaseConfirmationParam'
 import leasesCarLeaseReleasingParam from '../../../domain/param/AddCarLeaseReleasingParam'
@@ -34,6 +35,9 @@ export default class TransactionPersonalDetailsPresenter {
 
     this.postNewPaymentInteractor =
       new PostNewPaymentInteractor(container.get('HRBenefitsClient'))
+
+    this.confirmLaptopLeaseInteractor =
+      new ConfirmLaptopLeaseInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -162,4 +166,25 @@ export default class TransactionPersonalDetailsPresenter {
           this.view.hideCircularLoader()
       })
   }
+
+  confirmLaptopLease (transactionId) {
+    this.view.hideCircularLoader()
+    this.confirmLaptopLeaseInteractor.execute(transactionId, 1)
+      .do(data => {
+        this.getTransactionDetails(transactionId)
+      })
+      .subscribe(trasactions => {
+        this.view.showCircularLoader()
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Laptop Lease Confirmation',
+            message : `You've successfully Confirmed the Laptop Lease`,
+            type : 'success',
+            duration : 2000
+         })
+        )
+      }, e => {
+        this.view.showCircularLoader()
+      })
+  }
+
 }
