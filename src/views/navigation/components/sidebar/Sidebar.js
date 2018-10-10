@@ -131,7 +131,6 @@ class SideBar extends Component {
             d.id !== 6 &&
             d.id !== 8 &&
             d.id !== 9 &&
-            d.id !== 10 &&
             <div key = { idx }>
               <li
                 className = { `_text-link ${selected === d.id && 'active'}` }
