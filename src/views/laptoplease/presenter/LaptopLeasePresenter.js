@@ -68,7 +68,6 @@ export default class LaptopLeasePresenter {
       this.view.isLaptopLeaseValidate(data.isValid)
       this.view.setDeliveryOptionList(data.deliveryOptions)
       this.view.setAttachment(data.attachments)
-      console.log(data)
       this.view.hideCircularLoader()
     }, error => {
       this.view.hideCircularLoader()
@@ -83,7 +82,6 @@ export default class LaptopLeasePresenter {
         this.view.noticeOfUndertaking(data)
         this.view.hideCircularLoader()
       }, e => {
-        console.log(e)
         this.view.hideCircularLoader()
       })
   }

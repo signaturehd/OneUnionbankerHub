@@ -16,10 +16,6 @@ class LaptopLeaseDetailsFragment extends Component {
     super(props)
   }
 
-  componentWillMount () {
-    console.log(this.props)
-  }
-
   render () {
     const {
       claimLaptopLease,

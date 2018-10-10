@@ -169,30 +169,22 @@ export default class TransactionPersonalDetailsPresenter {
 
   confirmLaptopLease (transactionId) {
     this.view.hideCircularLoader()
-    try {
-      this.confirmLaptopLeaseInteractor.execute(transactionId, 1)
-        .do(data => {
-          this.getTransactionDetails(transactionId)
-        }, e => {
-          console.log(e)
-        })
-        .subscribe(trasactions => {
-          this.view.showCircularLoader()
-          store.dispatch(NotifyActions.addNotify({
-              title : 'Laptop Lease Confirmation',
-              message : `You've successfully Confirmed the Laptop Lease`,
-              type : 'success',
-              duration : 2000
-           })
-          )
-        }, e => {
-          console.log(e)
-          this.view.showCircularLoader()
-        })
-    } catch (e) {
-      console.log(e)
-    }
-
+    this.confirmLaptopLeaseInteractor.execute(transactionId, 1)
+      .do(data => {
+        this.getTransactionDetails(transactionId)
+      })
+      .subscribe(trasactions => {
+        this.view.showCircularLoader()
+        store.dispatch(NotifyActions.addNotify({
+            title : 'Laptop Lease Confirmation',
+            message : `You've successfully Confirmed the Laptop Lease`,
+            type : 'success',
+            duration : 2000
+         })
+        )
+      }, e => {
+        this.view.showCircularLoader()
+      })
   }
 
 }

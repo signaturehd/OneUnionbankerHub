@@ -94,7 +94,6 @@ class LaptopLeaseFragment extends BaseMVPView {
   }
 
   setFile (file) {
-    console.log(file)
     this.setState({ file })
   }
 
