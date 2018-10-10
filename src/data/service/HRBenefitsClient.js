@@ -864,23 +864,29 @@ export default class HRBenefitsClient {
 
   /* Laptop Lease */
 
-  getLaptopLease (token) {
-    return this.service.getLaptopLease(token)
+  confirmLaptopLease (token, transactionId, isConfirm) {
+    return this.service.confirmLaptopLease(token, transactionId, isConfirm)
       .pipe(ServiceErrorOperator())
   }
 
-  postlaptopLease (
+  validateLaptopLease (token) {
+    return this.service.validateLaptopLease(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addLaptopLease (
     token,
     accountToken,
     accountNumber,
     releasingCenter,
-    laptopLeaseParam) {
-    return this.service.postlaptopLease(
+    addLaptopLeaseParam,
+    ) {
+    return this.service.addLaptopLease(
       token,
       accountToken,
       accountNumber,
       releasingCenter,
-      laptopLeaseParam
+      addLaptopLeaseParam,
     )
       .pipe(ServiceErrorOperator())
   }

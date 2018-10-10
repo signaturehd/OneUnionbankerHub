@@ -23,6 +23,7 @@ import BereavementDetailsFragment from './fragments/BereavementDetailsFragment'
 import MedicalSchedulingDetailsFragment from './fragments/MedicalSchedulingDetailsFragment'
 import OutpatientDetailsFragment from './fragments/OutpatientDetailsFragment'
 import MaternityAssistanceDetailsFragment from './fragments/MaternityAssistanceDetailsFragment'
+import LaptopLeaseDetailsFragment from './fragments/LaptopLeaseDetailsFragment'
 import VaccineRequisitionDetailsFragment from './fragments/VaccineRequisitionDetailsFragment'
 
 import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreementsModal'
@@ -46,6 +47,8 @@ function  TransactionDetails (props)  {
   const setFileCarlease = props.setFileCarlease
   const fileCarLease = props.fileCarlease
   const onConfirmationReleaseFunc = props.onConfirmationReleaseFunc
+  const confirmmDetails = props.confirmmDetails
+  const claimLaptopLease = props.claimLaptopLease
   const viewTransactions = props.viewTransactions
 
   if (transactionId === 6) {
@@ -149,6 +152,16 @@ function  TransactionDetails (props)  {
       agreementsMethod = { (resp) => agreementsMethod(resp) }
       details = { transactionDetails }
      />
+  } else if (transactionId === 16) {
+    //Laptop Lease
+    return <LaptopLeaseDetailsFragment
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
+      claimLaptopLease = { (transactionId) => claimLaptopLease(transactionId) }
+      confirmDetails = { (transactionId, isConfirm) => confirmmDetails(transactionId, isConfirm) }
+      details = { transactionDetails }
+    />
+   // return <h1>Transaction for LaptopLease</h1>
   } else if (transactionId === 18) {
     // Vaccine Requisition
     return <VaccineRequisitionDetailsFragment
@@ -227,6 +240,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
 
   getTransactionDetails (details) {
     this.setState({ details })
+  }
+
+  claimLaptopLease (transactionId) {
+    this.presenter.confirmLaptopLease(transactionId)
   }
 
   /* Circular Loader */
@@ -340,6 +357,8 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              attachments = { attachments }
              transactions = { transactions }
              showUploading = { response }
+             confirmmDetails = { (transactionId, isConfirm) => this.confirmRelease(transactionId, isConirm) }
+             claimLaptopLease = { (transactionId) => this.claimLaptopLease(transactionId) }
              viewTransactions = { (recepients) => this.setState({ recepients, showRecepients: true }) }
              attachmentsMethod = { (resp) =>
                this.showAttachmentsMethod(resp)
