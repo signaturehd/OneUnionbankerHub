@@ -1180,7 +1180,7 @@ export default class HRBenefitsService {
   /* Travel */
 
   getRequestFlightData (token) {
-    return this.apiClient.get('v1/travel/request/details', {
+    return this.apiClient.get('v1/travels', {
       headers : { token }
     })
   }
