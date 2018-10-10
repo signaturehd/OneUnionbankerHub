@@ -1074,7 +1074,37 @@ export default class HRBenefitsService {
     })
   }
 
+  putStaffAccounts (token, putStaffAccountsParam) {
+    const putStafftAccountsObject = {
+
+    }
+    return this.accountClient.post('v1/', putStafftAccountsObject, {
+      headers : { token }
+    })
+  }
+
   /* Pre-Employment */
+
+  getOnBoardingDocument (token, link) {
+    return this.fileClient.get('v1/uploads?folder=documents', {
+      headers: {
+        token : token,
+        file : link,
+      },
+      responseType : 'blob'
+    })
+  }
+
+  getOnBoardingAttachments (token, file) {
+    return this.fileClient.get('v1/uploads?folder=onboarding-requirements', {
+      headers: {
+        token : token,
+        file : file,
+      },
+      responseType : 'blob'
+    })
+  }
+
   postAffirmPreEmploymentUndertaking (token) {
     return this.onboardingClient.post('v1/affirm/pre-emp-undertaking', {
       headers : { token }
@@ -1093,6 +1123,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getFinancialDetails (token) {
+    return this.onboardingClient.get('v1/employees/finances', {
+      headers : { token }
+    })
+  }
+
   addFinancialStatus (token, financialStatusParam) {
     const objectParam = {
       bank : financialStatusParam.bank,
@@ -1100,19 +1136,35 @@ export default class HRBenefitsService {
       amount: financialStatusParam.amount,
       status: financialStatusParam.statusId,
     }
-    return this.onboardingClient.post('v1/employees/finances/details', objectParam, {
+    return this.onboardingClient.post('v1/employees/finances', objectParam, {
+      headers : { token }
+    })
+  }
+
+  putFinancialStatus (token, financialStatusParam) {
+    const objectParam = {
+      bank : financialStatusParam.bank,
+      obligation: financialStatusParam.obligation,
+      amount: financialStatusParam.amount,
+      status: financialStatusParam.statusId,
+    }
+    return this.onboardingClient.put(`v1/employees/finances/${financialStatusParam.financeId}`, objectParam, {
       headers : { token }
     })
   }
 
   getEmployeeTin (token) {
-    return this.onboardingClient.get('v1/employee/tin', {
+    return this.onboardingClient.get('v1/employees/tin', {
       headers : { token }
     })
   }
 
-  createEmployeeTin (token) {
-    return this.onboardingClient.post('v1/employee/tin', {
+  addEmployeeTin (token, employeeTinParam) {
+    const objectParam = {
+      tin : employeeTinParam.tinId
+    }
+
+    return this.onboardingClient.put('v1/employees/tin', objectParam, {
       headers : { token }
     })
   }
@@ -1123,64 +1175,542 @@ export default class HRBenefitsService {
     })
   }
 
-  getEmployeeSchool (token) {
-    return this.onboardingClient.get('employees/school')
-    headers: { token }
+  addEmployeeSSS (token, employeeParam) {
+    const objectParam = {
+      sss : employeeParam.sssInput
+    }
+
+    return this.onboardingClient.put('v1/employees/sss', objectParam, {
+      headers : { token }
+    })
   }
 
-  /* Vaccine Requisition */
-
-
-  validateVaccine (token) {
-    return this.apiClient.get('v1/vaccinations/validate', {
+  getPreEmploymentForm (token) {
+    return this.onboardingClient.get('v1/employees/requirements', {
       headers: { token }
     })
   }
 
-  addVaccine (token, data) {
-    return this.apiClient.post('v1/vaccinations/submit', data, {
+  postEnrollPinAffirmationsEmployment (token, pin) {
+    const objectParam = {
+      code : pin,
+    }
+    return this.onboardingClient.post('v1/employees/affirmations/employment', objectParam,{
       headers : { token }
     })
+  }
+
+  postEnrollPinAffirmationsPolicy (token, pin) {
+    const objectParam = {
+      code : pin,
+    }
+    return this.onboardingClient.post('v1/employees/affirmations/policy', objectParam,{
+      headers : { token }
+    })
+  }
+
+  postEnrollPinAffirmationsConfidential (token, pin) {
+    const objectParam = {
+      code : pin,
+    }
+    return this.onboardingClient.post('v1/employees/affirmations/confidentiality', objectParam,{
+      headers : { token }
+    })
+  }
+
+  postEnrollPinAffirmationsSecrecy (token, pin) {
+    const objectParam = {
+      code : pin,
+    }
+    return this.onboardingClient.post('v1/employees/affirmations/secrecy', objectParam,{
+      headers : { token }
+    })
+  }
+
+  getWorkExperience (token) {
+    return this.onboardingClient.get('v1/employees/employers', {
+      headers: { token }
+    })
+  }
+
+  getWorkExperienceForm (token) {
+    return this.onboardingClient.get('v1/employees/employers/forms/verify', {
+      headers: { token }
+    })
+  }
+
+  addWorkExperience (token, workExperienceParam) {
+    const objectParam = {
+      companyName : workExperienceParam.companyName,
+      address : workExperienceParam.address,
+      position : workExperienceParam.position,
+      description : workExperienceParam.description,
+      contactNumber : workExperienceParam.contactNo,
+      startMonth : workExperienceParam.fromMonthName,
+      startYear : workExperienceParam.fromYear,
+      endMonth : workExperienceParam.toMonthName,
+      endYear : workExperienceParam.toYear
+    }
+    return this.onboardingClient.post('v1/employees/employers', objectParam, {
+      headers : { token }
+    })
+  }
+
+  addEmployeeRequirement (token, requirementParam) {
+    const formData = new FormData()
+    formData.append('uuid', '12345')
+    const objectParam = {
+      documentType : requirementParam.documentId
+    }
+    requirementParam.attachments.map((resp) =>
+      (
+        formData.append(resp.name.replace('/', '-'), resp.file)
+      )
+    )
+
+    formData.append('body', JSON.stringify(objectParam))
+    return this.onboardingClient.post('v1/employees/requirements', formData, {
+      headers : { token }
+    })
+  }
+
+  getCharacterReference (token) {
+    return this.onboardingClient.get('v1/employees/references' , {
+      headers : { token }
+    })
+  }
+
+  postCharacterReference (token, postCharacterReferenceParam) {
+    const objectParam = {
+      name : postCharacterReferenceParam.name,
+      relationship: postCharacterReferenceParam.relationship,
+      numberOfYearsKnown: postCharacterReferenceParam.numberOfYearsKnown,
+      contactNumber: postCharacterReferenceParam.contactNumber,
+      address: postCharacterReferenceParam.address,
+      occupation: postCharacterReferenceParam.occupation,
+      company : {
+        position: postCharacterReferenceParam.company.company.position,
+        name: postCharacterReferenceParam.company.company.name,
+        departmentFloor: postCharacterReferenceParam.company.company.departmentFloor,
+        buildingName:  postCharacterReferenceParam.company.company.buildingName,
+        street: postCharacterReferenceParam.company.company.street,
+        district: postCharacterReferenceParam.company.company.district,
+        baranggay: postCharacterReferenceParam.company.company.baranggay,
+        city: postCharacterReferenceParam.company.company.city,
+        town: postCharacterReferenceParam.company.company.town
+      }
+    }
+    return this.onboardingClient.post('v1/employees/references', objectParam, {
+      headers : { token }
+    })
+  }
+
+  putCharacterReference (token, putCharacterReferenceParam) {
+    const objectParam = {
+      name : putCharacterReferenceParam.name,
+      relationship: putCharacterReferenceParam.relationship,
+      numberOfYearsKnown: putCharacterReferenceParam.numberOfYearsKnown,
+      contactNumber: putCharacterReferenceParam.contactNumber,
+      address: putCharacterReferenceParam.address,
+      occupation: putCharacterReferenceParam.occupation,
+      company : {
+        position: putCharacterReferenceParam.company.company.position,
+        name: putCharacterReferenceParam.company.company.name,
+        departmentFloor: putCharacterReferenceParam.company.company.departmentFloor,
+        buildingName:  putCharacterReferenceParam.company.company.buildingName,
+        street: putCharacterReferenceParam.company.company.street,
+        district: putCharacterReferenceParam.company.company.district,
+        baranggay: putCharacterReferenceParam.company.company.baranggay,
+        city: putCharacterReferenceParam.company.company.city,
+      }
+    }
+    return this.onboardingClient.put(`v1/employees/references/{${ putCharacterReferenceParam.id }}`, objectParam, {
+      headers : { token }
+    })
+  }
+
+  getEmployeeSchool (token) {
+    return this.onboardingClient.get('v1/employees/school', {
+      headers: { token }
+    })
+  }
+
+  getSchoolRecordVerificationForm (token) {
+    return this.onboardingClient.get('v1/employees/school/forms/verify', {
+      headers: { token }
+    })
+  }
+
+  getSchoolData (token, pageNumber) {
+    return this.accountClient.get('v1/schools?pageNumber=${ pageNumber }', {
+      headers : { token }
+    })
+  }
+
+  addEducationSchool (token, educationParam) {
+    const formData = new FormData()
+    formData.append('uuid', '12345')
+    const objectParam = {
+        schoolName : educationParam.schoolName,
+        studentNo : educationParam.studentNo,
+        startYear : educationParam.startYear,
+        endYear : educationParam.endYear,
+        term : educationParam.term,
+        degree : educationParam.degree,
+        honor : educationParam.honor,
+        course : educationParam.course,
+        address : educationParam.address,
+        isUpdated : educationParam.isUpdated
+      }
+      educationParam.attachments.map((resp) =>
+        (
+          formData.append(resp.name.replace('/', '-'), resp.file)
+        )
+      )
+    formData.append('body', JSON.stringify(objectParam))
+
+    return this.onboardingClient.post('v1/employees/school', formData, {
+      headers : { token }
+    })
+  }
+
+  putWorkExperience (token, workExperienceParam) {
+    const objectParam = {
+      companyName : workExperienceParam.companyName,
+      address : workExperienceParam.address,
+      position : workExperienceParam.position,
+      description : workExperienceParam.description,
+      contactNumber : workExperienceParam.contactNo,
+      startMonth : workExperienceParam.fromMonthName,
+      startYear : workExperienceParam.fromYear,
+      endMonth : workExperienceParam.toMonthName,
+      endYear : workExperienceParam.toYear
+    }
+    return this.onboardingClient.put(`v1/employees/employers/${workExperienceParam.workExpId}`, objectParam, {
+      headers :{ token }
+    })
+  }
+
+  putEducationSchool (token, educationParam) {
+    const formData = new FormData()
+    formData.append('uuid', '12345')
+    const objectParam = {
+        schoolName : educationParam.schoolName,
+        studentNo : educationParam.studentNo,
+        startYear : educationParam.startYear,
+        endYear : educationParam.endYear,
+        term : educationParam.term,
+        degree : educationParam.degree,
+        honor : educationParam.honor,
+        course : educationParam.course,
+        address : educationParam.address,
+        isUpdated : educationParam.isUpdated
+      }
+      educationParam.attachments.map((resp) =>
+        (
+          formData.append(resp.name.replace('/', '-'), resp.file)
+        )
+      )
+    formData.append('body', JSON.stringify(objectParam))
+
+    return this.onboardingClient.put(`v1/employees/school/${educationParam.educId}`, formData, {
+      headers : { token }
+    })
+  }
+
+  getSpouse (token) {
+    return this.onboardingClient.get('v1/employees/spouse', {
+      headers : { token }
+    })
+  }
+
+  postSpouseForm (token, spouseFormParam) {
+    const formData = new FormData()
+    const objectParam = {
+      name : {
+        first : spouseFormParam.firstName,
+        middle: spouseFormParam.middleName,
+        last : spouseFormParam.lastName
+      },
+        birthDate: spouseFormParam.birthDate,
+        occupation: spouseFormParam.occupation,
+        status: spouseFormParam.status,
+        healthHospitalizationPlan : spouseFormParam.healthHospitalizationPlan,
+        groupLifeInsurance: spouseFormParam.groupLifeInsurance,
+        bloodType : spouseFormParam.bloodType,
+        contactNumber: spouseFormParam.contactNumber,
+    }
+    formData.append('uuid', 12345)
+    spouseFormParam.attachments.map((resp, key) =>
+      formData.append(resp.name, resp.file)
+    )
+    formData.append('body', JSON.stringify(objectParam))
+    return this.onboardingClient.post('v1/employees/spouse', formData, {
+      headers : { token }
+    })
+  }
+
+  putSpouseForm (token, spouseFormParam) {
+    const formData = new FormData()
+    const objectParam = {
+      name : {
+        first : spouseFormParam.firstName,
+        middle: spouseFormParam.middleName,
+        last : spouseFormParam.lastName
+      },
+        birthDate: spouseFormParam.birthDate,
+        occupation: spouseFormParam.occupation,
+        status: spouseFormParam.status,
+        healthHospitalizationPlan : spouseFormParam.healthHospitalizationPlan,
+        groupLifeInsurance: spouseFormParam.groupLifeInsurance,
+        bloodType : spouseFormParam.bloodType,
+        contactNumber: spouseFormParam.contactNumber,
+    }
+    formData.append('uuid', 12345)
+    spouseFormParam.spouseAttachmentsArray.map((resp, key) =>
+      formData.append(resp.name, resp.file)
+    )
+    formData.append('body', JSON.stringify(objectParam))
+    return this.onboardingClient.put(`v1/employees/spouse/${ spouseFormParam.spouseId }`, formData, {
+      headers : { token }
+    })
+  }
+
+  getChildren (token) {
+    return this.onboardingClient.get('v1/employees/children', {
+      headers : { token }
+    })
+  }
+
+  postChildren (token, childrenParam) {
+    const formData = new FormData()
+    const objectParam = {
+      name : {
+        first : childrenParam.firstName,
+        middle : childrenParam.middleName,
+        last : childrenParam.lastName,
+      },
+      bloodType : childrenParam.bloodType,
+      contactNumber : childrenParam.contactNumber,
+      birthDate : childrenParam.birthDate,
+      gender : childrenParam.birthDate,
+      healthHospitalizationPlan: childrenParam.healthHospitalizationPlan,
+      groupLifeInsurance : childrenParam.groupLifeInsurance,
+      status: childrenParam.status,
+    }
+    formData.append('body', JSON.stringify(objectParam))
+    formData.append('uuid', 12345)
+    childrenParam.attachments.map((resp, key) => {
+      formData.append(resp.name, resp.file)
+    })
+    return this.onboardingClient.post('v1/employees/children', formData, {
+      headers : { token }
+    })
+  }
+
+  putChildren (token, childrenParam) {
+    const formData = new FormData()
+    const objectParam = {
+      name : {
+        first : childrenParam.firstName,
+        middle : childrenParam.middleName,
+        last : childrenParam.lastName,
+      },
+      bloodType : childrenParam.bloodType,
+      contactNumber : childrenParam.contactNumber,
+      birthDate : childrenParam.birthDate,
+      gender : childrenParam.birthDate,
+      occupation : childrenParam.occupation,
+      healthHospitalizationPlan: childrenParam.healthHospitalizationPlan,
+      groupLifeInsurance : childrenParam.groupLifeInsurance,
+      status: childrenParam.status,
+    }
+    formData.append('body', JSON.stringify(objectParam))
+    formData.append('uuid', 12345)
+    childrenParam.attachments.map((resp, key) => {
+      formData.append(resp.name, resp.file)
+    })
+    return this.onboardingClient.put(`v1/employees/children/${ childrenParam.childrenId }`, formData, {
+      headers : { token }
+    })
+  }
+
+  addPagibigLoan (token, pagibigParam) {
+    const objectParam = {
+      deductionLoan : pagibigParam.pagibigInput
+    }
+
+    return this.onboardingClient.put('v1/employees/pagibig/deductions', objectParam, {
+      headers : { token }
+    })
+  }
+
+  getPagibiLoanDeduction (token) {
+    return this.onboardingClient.get('v1/employees/pagibig/deductions', {
+      headers : { token }
+    })
+  }
+
+  getMedicalAppointmentProcedures (token) {
+    return this.onboardingClient.get('v1/employees/medical/procedures', {
+      headers : { token }
+    })
+  }
+
+  getMedicalAppointment (token) {
+    return this.onboardingClient.get('v1/employees/medical/details', {
+      headers : { token }
+    })
+  }
+
+  updateMedicalAppointment (token, date, id) {
+    const objectParam = {
+      id: id,
+      preferredDate : date
+    }
+    return this.onboardingClient.put('v1/employees/medical/schedules', objectParam, {
+      headers : { token }
+    })
+  }
+
+  getParents (token) {
+    return this.onboardingClient.get('v1/employees/plans/hospitalization/parents', {
+      headers : { token }
+    })
+  }
+
+  updateParentForm (token, parentsParam) {
+    const objectParam = {
+      name : {
+        first : parentsParam.firstName,
+        middle : parentsParam.middleName,
+        last : parentsParam.lastName,
+      },
+      bloodType : parentsParam.bloodTypeName,
+      contactNumber : parentsParam.contact,
+      birthDate : parentsParam.birthDate,
+      gender : parentsParam.genderId,
+      occupation : parentsParam.occupationName,
+      healthHospitalizationPlan: parentsParam.healthHospitalizationPlan,
+      groupLifeInsurance : parentsParam.groupLifeInsurance,
+      status: parentsParam.status,
+    }
+
+    return this.onboardingClient.put(`v1/employees/plans/hospitalization/parents/${parentsParam.parentId}`, objectParam, {
+      headers : { token }
+    })
+  }
+
+  addParentForm (token, parentsParam) {
+    const objectParam = {
+      name : {
+        first : parentsParam.firstName,
+        middle : parentsParam.middleName,
+        last : parentsParam.lastName,
+      },
+      bloodType : parentsParam.bloodTypeName,
+      contactNumber : parentsParam.contact,
+      birthDate : parentsParam.birthDate,
+      gender : parentsParam.genderId,
+      occupation : parentsParam.occupationName,
+      healthHospitalizationPlan: parentsParam.healthHospitalizationPlan,
+      groupLifeInsurance : parentsParam.groupLifeInsurance,
+      status: parentsParam.status,
+    }
+
+    return this.onboardingClient.post(`v1/employees/plans/hospitalization/parents`, objectParam, {
+      headers : { token }
+    })
+  }
+
+
+  getSiblings (token) {
+    return this.onboardingClient.get('v1/employees/siblings', {
+      headers : { token }
+    })
+  }
+
+  updateSiblingsForm (token, siblingsParam) {
+    const objectParam = {
+      name : {
+        first : siblingsParam.firstName,
+        middle : siblingsParam.middleName,
+        last : siblingsParam.lastName,
+      },
+      bloodType : siblingsParam.bloodTypeName,
+      contactNumber : siblingsParam.contact,
+      birthDate : siblingsParam.birthDate,
+      gender : siblingsParam.genderId,
+      occupation : siblingsParam.occupationName,
+      healthHospitalizationPlan: siblingsParam.healthHospitalizationPlan,
+      groupLifeInsurance : siblingsParam.groupLifeInsurance,
+      status: siblingsParam.status,
+    }
+
+    return this.onboardingClient.put(`v1/employees/siblings/${siblingsParam.parentId}`, objectParam, {
+      headers : { token }
+    })
+  }
+
+  addSiblingsForm (token, parentsParam) {
+    const objectParam = {
+      name : {
+        first : parentsParam.firstName,
+        middle : parentsParam.middleName,
+        last : parentsParam.lastName,
+      },
+      bloodType : parentsParam.bloodTypeName,
+      contactNumber : parentsParam.contact,
+      birthDate : parentsParam.birthDate,
+      gender : parentsParam.genderId,
+      occupation : parentsParam.occupationName,
+      healthHospitalizationPlan: parentsParam.healthHospitalizationPlan,
+      groupLifeInsurance : parentsParam.groupLifeInsurance,
+      status: parentsParam.status,
+    }
+
+    return this.onboardingClient.post(`v1/employees/siblings`, objectParam, {
+      headers : { token }
+    })
+  }
+
+  /* Vaccines Requisitions */
+  validateVaccine (token) {
+    return this.service.validateVaccine(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addVaccine (token, data) {
+    return this.service.addVaccine(token, data)
+      .pipe(ServiceErrorOperator())
   }
 
   /* Laptop Lease */
 
   confirmLaptopLease (token, transactionId, isConfirm) {
-    return this.apiClient.post('v1/leases/laptop/confirm', {
-      transactionId,
-      isConfirm,
-    }, {
-      headers: { token }
-    })
+    return this.service.confirmLaptopLease(token, transactionId, isConfirm)
+      .pipe(ServiceErrorOperator())
   }
 
   validateLaptopLease (token) {
-    return this.apiClient.get('v1/leases/laptop/validate', {
-      headers : { token }
-    })
+    return this.service.validateLaptopLease(token)
+      .pipe(ServiceErrorOperator())
   }
 
   addLaptopLease (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addLaptopLeaseParam,
+    ) {
+    return this.service.addLaptopLease(
       token,
       accountToken,
       accountNumber,
       releasingCenter,
-      laptopLeaseParam) {
-    const formData = new FormData()
-    const object = {
-      color: laptopLeaseParam.color,
-      term: laptopLeaseParam.terms,
-      estimatedCost : laptopLeaseParam.estimatedAmount,
-      deliveryOptionId: laptopLeaseParam.deliveryOption
-    }
-    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
-    laptopLeaseParam.attachments &&
-    laptopLeaseParam.attachments.map((resp, key) =>(
-      formData.append('qoutation', resp.file)
-    ))
-    formData.append('body', JSON.stringify(object))
-    return this.apiClient.post('v1/leases/laptop',  formData, {
-      headers : { token }
-    })
+      addLaptopLeaseParam,
+    )
+      .pipe(ServiceErrorOperator())
   }
 }

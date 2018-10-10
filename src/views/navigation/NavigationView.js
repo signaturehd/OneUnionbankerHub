@@ -369,11 +369,12 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/phenom' render = { props =>
                     <PhenomFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <PreEmploymentFragment { ...props }
-                    onChangeStateGoBenefits = { (e) => this.hasFilledOutFunc(e) }
-                    onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
-                    tempPreEmploymentModal = { tempPreEmploymentModal }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/preemployment' render = { props =>
+                    <PreEmploymentFragment { ...props }
+                      onChangeStateGoBenefits = { (e) => this.hasFilledOutFunc(e) }
+                      onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
+                      tempPreEmploymentModal = { tempPreEmploymentModal }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
               }
             </Drawer>

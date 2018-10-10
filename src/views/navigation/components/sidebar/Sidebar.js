@@ -131,6 +131,7 @@ class SideBar extends Component {
             d.id !== 6 &&
             d.id !== 8 &&
             d.id !== 9 &&
+            d.id !== 10 &&
             <div key = { idx }>
               <li
                 className = { `_text-link ${selected === d.id && 'active'}` }
@@ -148,7 +149,6 @@ class SideBar extends Component {
         <div>
         {
           modules.map((d, idx) =>
-          d.id === 10 ?
           <div key = { idx }>
             <li
               className = { `_text-link ${selected === d.id && 'active'}` }
@@ -159,19 +159,6 @@ class SideBar extends Component {
                   { d.title }
             </li>
             <Line />
-          </div>              :
-          d.id !== 11 &&
-          <div
-            key = { idx }
-          >
-            <li
-              className = { `_text-link ${selected === d.id && 'active'}` }
-              onClick = { d.action }>
-              <a key = { idx }
-                className =
-                { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                { d.title }
-            </li>
           </div>
           )
         }
