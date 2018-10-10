@@ -132,11 +132,8 @@ class VaccineFragment extends BaseMVPView {
     const updatedVaccineList = [...vaccineList]
     const updatedVaccineListSubmit = [...vaccineListSubmit]
 
-    try {
-      this.presenter.updatesDependent({ id: dependentId, name: dependentName })
-    } catch (e) {
-      console.log(e)
-    }
+    this.presenter.updatesDependent({ id: dependentId, name: dependentName })
+
     if ( !updatedVaccineListArray.includes(dependentId) ) {
 
       updatedVaccineList.push({

@@ -8,13 +8,11 @@ import { Card, GenericButton } from '../../../../ub-components/'
 
 import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
 
+import VaccineRequisitionDetailCardComponent from './VaccineRequisitionDetailCardComponent'
+
 class VaccineRequisitionDetailComponent extends Component {
   constructor (props) {
     super(props)
-  }
-
-  componentWillMount() {
-    console.log(this.props)
   }
 
   render () {
@@ -62,6 +60,14 @@ class VaccineRequisitionDetailComponent extends Component {
           </div>
         }
         <br/>
+        {
+          details &&
+          details.details.VaccinationDetails &&
+          <VaccineRequisitionDetailCardComponent
+            detailsVaccine = { details && details.details.VaccinationDetails }
+          />
+        }
+        <br/>
       </div>
       <div className = { 'transaction-attachments-agreements-grid' }>
         <div>
@@ -77,11 +83,11 @@ class VaccineRequisitionDetailComponent extends Component {
             className = { 'transaction-grid-button' }
           >
 
-            <h3>Vaccine Details</h3>
+            <h3>Recipients Details</h3>
             {
               details &&
               details.details &&
-              details.details.Recepients.map((recipient, key) => (
+              details.details.Recipients.map((recipient, key) => (
                 <div>
                   <small>{recipient.Name}</small>
                   <GenericButton

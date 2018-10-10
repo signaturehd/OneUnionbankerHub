@@ -48,8 +48,6 @@ function  TransactionDetails (props)  {
   const onConfirmationReleaseFunc = props.onConfirmationReleaseFunc
   const viewTransactions = props.viewTransactions
 
-  console.log(props)
-
   if (transactionId === 6) {
     return <DentalRDetailsFragment
       details = { transactionDetails }

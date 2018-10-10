@@ -15,90 +15,98 @@ class VaccineRequisitionDetailCardComponent extends Component {
   }
 
   render () {
-  const { details } = this.props
-
-  const { index } = this.state
-
-  const hospital = details.MedicalScheduleDetails.HospitalPackage.Clinic.Hospital
-  const packages = details.MedicalScheduleDetails.HospitalPackage.Package
-  const procedures = details.MedicalScheduleDetails.HospitalPackage.Procedures
-  const preferredDate = TransactionPersonalFunction.checkedMDYDate(
-    details &&
-    details.MedicalScheduleDetails &&
-    details.MedicalScheduleDetails.HospitalPackage &&
-    details.MedicalScheduleDetails.HospitalPackage.PreferredDate)
-
+  const { detailsVaccine } = this.props
   return (
     <div  className = { 'transaction-component-otherdetails-form' }>
       <div>
         <div>
-          <h2 className = { 'font-weight-bolder' }> Clinic Details </h2>
+          <h2 className = { 'font-weight-bolder' }> Vaccine Details </h2>
           <br/>
         </div>
         <div className = { 'transaction-icons-details-grid' }>
-          <span></span>
-          <div>
-            <h2 className = { 'font-weight-ligter' }>
-              { hospital }
-            </h2>
-            <h2 className = { 'unionbank-color font-size-12px' }>
-              Hospital
-            </h2>
-            <br/>
-            <br/>
-          </div>
-        </div>
-        <br/>
-        <div>
-          <h2 className = { 'font-weight-bolder' }> Package Details </h2>
-          <br/>
-        </div>
-        <div className = { 'transaction-icons-details-grid' }>
-          <span></span>
-          <div>
-            <h2 className = { 'font-weight-ligter' }>
-              { packages }
-            </h2>
-            <h2 className = { 'unionbank-color font-size-12px' }>
-              Package
-            </h2>
-            <br/>
-            <br/>
-          </div>
-        </div>
-        <div className = { 'transaction-icons-details-grid' }>
-          <span></span>
-          <div>
-            <h2 className = { 'font-weight-ligter' }>
-              { preferredDate }
-            </h2>
-            <h2 className = { 'unionbank-color font-size-12px' }>
-              Preferred Date
-            </h2>
-            <br/>
-            <br/>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div>
-          <h2 className = { 'font-weight-bolder' }> Package Procedures </h2>
-          <br/>
-        </div>
-        {
-          procedures && procedures.map((resp ,key) => (
-            <div key = {key}>
-              <div>
-                <h2 className = { 'font-size-13px font-weight-lighter' } >
-                  { resp.Procedure }
-                </h2>
-              </div>
+          <span className = { ' transaction-card-icon-settings' }></span>
+            <div>
+              <h2 className = { 'font-weight-ligter' }>
+                { detailsVaccine.Location }
+              </h2>
+              <h2 className = { 'unionbank-color font-size-12px' }>
+                Location
+              </h2>
+              <br/>
             </div>
-          )
-        )
-        }
-        <br/>
-        <br/>
+        </div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
+            <div>
+              <h2 className = { 'font-weight-ligter' }>
+                { detailsVaccine.EventTitle }
+              </h2>
+              <h2 className = { 'unionbank-color font-size-12px' }>
+                Event
+              </h2>
+              <br/>
+            </div>
+        </div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
+            <div>
+              <h2 className = { 'font-weight-ligter' }>
+                { detailsVaccine.ThingsToBring }
+              </h2>
+              <h2 className = { 'unionbank-color font-size-12px' }>
+                Things to Bring
+              </h2>
+              <br/>
+            </div>
+        </div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
+            <div>
+              <h2 className = { 'font-weight-ligter' }>
+                { detailsVaccine.AdministrationStart }
+              </h2>
+              <h2 className = { 'unionbank-color font-size-12px' }>
+                Administration Start
+              </h2>
+              <br/>
+            </div>
+        </div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
+            <div>
+              <h2 className = { 'font-weight-ligter' }>
+                { detailsVaccine.AdministrationEnd }
+              </h2>
+              <h2 className = { 'unionbank-color font-size-12px' }>
+                Administration End
+              </h2>
+              <br/>
+            </div>
+        </div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
+            <div>
+              <h2 className = { 'font-weight-ligter' }>
+                { detailsVaccine.OrderingStart }
+              </h2>
+              <h2 className = { 'unionbank-color font-size-12px' }>
+                Ordering Start
+              </h2>
+              <br/>
+            </div>
+        </div>
+        <div className = { 'transaction-icons-details-grid' }>
+          <span className = { ' transaction-card-icon-settings' }></span>
+            <div>
+              <h2 className = { 'font-weight-ligter' }>
+                { detailsVaccine.OrderingEnd }
+              </h2>
+              <h2 className = { 'unionbank-color font-size-12px' }>
+                Ordering End
+              </h2>
+              <br/>
+            </div>
+        </div>
       </div>
     </div>
     )
