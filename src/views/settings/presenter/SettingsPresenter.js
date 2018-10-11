@@ -2,7 +2,8 @@ import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInte
 import GenericPutNewCodeInteractor from '../../../domain/interactor/pinCode/GenericPutNewCodeInteractor'
 import GetForConfirmationInteractor from '../../../domain/interactor/staffaccounts/GetForConfirmationInteractor'
 import PostStaffAccountsInteractor from '../../../domain/interactor/staffaccounts/PostStaffAccountsInteractor'
-import GetEmployeeDevicesInteractor from '../../../domain/interactor/account/GetEmployeeDevicesInteractor'
+import UpdateDescriptionInteractor from '../../../domain/interactor/account/UpdateDescriptionInteractor'
+import GetDevicesInteractor from '../../../domain/interactor/account/GetDevicesInteractor'
 
 import { NotifyActions } from '../../../actions'
 import store from '../../../store'
@@ -15,7 +16,8 @@ export default class SettingsPresenter {
     this.genericPutNewCodeInteractor = new GenericPutNewCodeInteractor(container.get('HRBenefitsClient'))
     this.getForConfirmationInteractor = new GetForConfirmationInteractor(container.get('HRBenefitsClient'))
     this.postStaffAccountsInteractor = new PostStaffAccountsInteractor(container.get('HRBenefitsClient'))
-    this.getEmployeeDevicesInteractor = new GetEmployeeDevicesInteractor(container.get('HRBenefitsClient'))
+    this.updateDescriptionInteractor = new UpdateDescriptionInteractor(container.get('HRBenefitsClient'))
+    this.getDevicesInteractor = new GetDevicesInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -48,6 +50,14 @@ export default class SettingsPresenter {
     })
    }
 
+   getDevices () {
+     this.getDevicesInteractor.execute()
+     .subscribe(data => {
+       this.view.showDevicesData(data)
+     }, error => {
+     })
+   }
+
    putEnrollPin (objectPINParam) {
      this.view.showCircularLoader()
      this.genericPutNewCodeInteractor.execute(objectPINParam)
@@ -72,7 +82,16 @@ export default class SettingsPresenter {
        sequence
      ))
      .subscribe(data => {
-       this.view.showStaffAccountConfirmation(data.message)
+       this.view.noticeResponseModal(data.message)
+     }, error => {
+     })
+   }
+
+   updateDescription (description) {
+     this.updateDescriptionInteractor.execute(description)
+     .subscribe(data => {
+       this.view.noticeResponseModal(data.message)
+       this.getProfile()
      }, error => {
      })
    }
