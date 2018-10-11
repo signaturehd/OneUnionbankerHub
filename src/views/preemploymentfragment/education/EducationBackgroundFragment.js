@@ -205,7 +205,8 @@ class EducationBackgroundFragment extends BaseMVPView {
   }
 
   endYearValidate(value) {
-    if(value.length === 4) {
+    const { startYear } = this.state
+    if(value.length === 4 && value >= startYear) {
       if(value <= moment().format('YYYY')) {
         this.setState({ endYearErrorMessage : '' })
       } else {
