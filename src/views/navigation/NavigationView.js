@@ -139,6 +139,11 @@ class NavigationView extends BaseMVPView {
     })
     store.dispatch(NotifyActions.resetNotify())
     this.presenter.getLibraries()
+    if(this.state.hasFilledOut !== 0) {
+      this.props.history.push('/preemployment')
+    } else {
+      this.props.history.push('/')
+    }
   }
 
   setSelectedNavigation (id) {
@@ -259,7 +264,7 @@ class NavigationView extends BaseMVPView {
               {
                 hasFilledOut !== 1 ?
                 <Switch>
-                  <Route path = '/' render = { props =>
+                  <Route path = '/preemployment' render = { props =>
                     <PreEmploymentFragment { ...props }
                       onChangeStateGoBenefits = { (e) => this.hasFilledOutFunc(e) }
                       onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
