@@ -46,7 +46,7 @@ class BiographicalDataFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.onSendPageNumberToView(2)
-    this.checkAttachments()
+    // this.checkAttachments()
   }
 
   onCheckedPdf (link) {

@@ -39,6 +39,8 @@ class ParentModal extends Component {
       contact,
       bloodType,
       birthDate,
+      hospitalization,
+      groupPlan,
       statusName,
       gender,
       relationship,
@@ -56,12 +58,15 @@ class ParentModal extends Component {
       showStatusModal,
       showBloodTypeModal,
       showGenderModal,
+      isParentOrSiblings,
       selectedBloodTypeFunc,
       selectedStatusFunc,
       selectedGenderFunc,
       birthDateFunc,
       relationshipNameFunc,
       genderFunc,
+      hospitalizationFunc,
+      groupPlanFunc,
       saveForm
     } = this.props
 
@@ -199,13 +204,17 @@ class ParentModal extends Component {
             <div className = { 'grid-global-rows' }>
               <div>
                 <Checkbox
-                  label = { 'Group Life Insurance' }
+                  checked = { hospitalization }
+                  label = { 'Hospitalization Plan' }
+                  onChange = { () => hospitalizationFunc() }
                   />
                 <br/>
               </div>
               <div>
                 <Checkbox
-                  label = { 'Hospitalization Plan' }
+                  checked = { groupPlan }
+                  label = { 'Group Life Insurance' }
+                  onChange = { () => groupPlanFunc() }
                 />
               </div>
             </div>
