@@ -4,7 +4,7 @@
 
 .preemployment-container {
   display: grid;
-  grid-template-columns: .2fr 1fr .2fr
+  grid-template-columns: .15fr 1fr .15fr;
 }
 
 .percentage-grid {
@@ -16,7 +16,7 @@
 .react-sweet-progress-symbol{
   width: auto !important;
 }
-/* 
+/*
 label {
   display: contents;
   margin: 0 0 -1px;
