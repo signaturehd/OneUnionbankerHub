@@ -82,7 +82,7 @@ class EducationBackgroundFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.onSendPageNumberToView(4)
-    this.presenter.getEmployeeSchool()
+    this.presenter.getEmployeeSchool(schoolPageNumber)
     this.presenter.getSchoolRecordVerificationForm()
   }
 
