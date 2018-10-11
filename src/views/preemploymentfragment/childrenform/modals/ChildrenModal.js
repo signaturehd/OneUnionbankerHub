@@ -71,6 +71,10 @@ class ChildrenModal extends Component {
       <Modal
         isDismisable = { true }
         onClose = { onClose }>
+        <center>
+          <h2>Children Form</h2>
+        </center>
+        <br/>
         {
           showBloodTypeModal &&
           <SingleInputModal
@@ -120,103 +124,104 @@ class ChildrenModal extends Component {
             onClose = { () => genderFunc(false) }
           />
         }
-        <h2>Children Form</h2>
         <div>
-          <GenericInput
-            text = { 'First Name' }
-            value = { firstName }
-            maxLength = { 30 }
-            errorMessage = { firstName ? '' : firstNameErrorMessage }
-            onChange = { (e) => firstNameFunc(e.target.value) }
-            />
-          <GenericInput
-            text = { 'Middle Name' }
-            value = { middleName }
-            maxLength = { 20 }
-            errorMessage = { middleName ? '' : middleNameErrorMessage }
-            onChange = { (e) => middleNameFunc(e.target.value) }
-            />
-          <GenericInput
-            text = { 'Last Name' }
-            value = { lastName }
-            maxLength = { 20 }
-            errorMessage = { lastName ? '' : lastNameErrorMessage }
-            onChange = { (e) => lastNameFunc(e.target.value) }
-            />
-          <DatePicker
-            text = { 'Birth Date' }
-            maxDate = {  moment() }
-            hint = { '(eg. MM/DD/YYYY)' }
-            selected = { birthDate && moment(birthDate) }
-            onChange = { (e)  =>
-              birthDateFunc(e.format('MM/DD/YYYY'))
-             }
-            />
-          <GenericInput
-            text = { 'Occupation' }
-            value = { occupationName }
-            errorMessage = { occupationName ? '' : occupationNameErrorMessage }
-            onChange = { (e) => occupationNameFunc( e.target.value) }
-            />
-          <GenericInput
-            text = { 'Contact Number' }
-            value = { contact }
-            maxLength = { 12 }
-            errorMessage = { contact ? '' : contactNumberErrorMessage }
-            onChange = { (e) => contactNumberFunc(e.target.value) }
-            />
-          <div className = { 'grid-global' } >
+          <div>
             <GenericInput
-              value = { relationship  }
-              text = { 'Relationship' }
-              disabled
-              errorMessage = { relationship ? '' : relationshipErrorMessage }
-              onChange = { () => relationshipNameFunc(true) }
+              text = { 'First Name' }
+              value = { firstName }
+              maxLength = { 30 }
+              errorMessage = { firstName ? '' : firstNameErrorMessage }
+              onChange = { (e) => firstNameFunc(e.target.value) }
               />
             <GenericInput
-              value = { statusName  }
-              text = { 'Status' }
-              errorMessage = { statusName ? '' : statusNameErrorMessage }
-              onClick = { () => statusNameFunc(true) }
-              />
-          </div>
-          <div className = { 'grid-global' } >
-            <GenericInput
-              value = { gender  }
-              text = { 'Gender' }
-              errorMessage = { gender ? '' : genderErrorMessage }
-              onClick = { () => genderFunc(true) }
+              text = { 'Middle Name' }
+              value = { middleName }
+              maxLength = { 20 }
+              errorMessage = { middleName ? '' : middleNameErrorMessage }
+              onChange = { (e) => middleNameFunc(e.target.value) }
               />
             <GenericInput
-              text = { 'Blood Type' }
-              value = { bloodTypeName }
-              errorMessage = { bloodTypeName ? '' : bloodTypeErrorMessage }
-              onClick = { () => bloodTypeFunc(true) }
+              text = { 'Last Name' }
+              value = { lastName }
+              maxLength = { 20 }
+              errorMessage = { lastName ? '' : lastNameErrorMessage }
+              onChange = { (e) => lastNameFunc(e.target.value) }
               />
-          </div>
-          <div className = { 'grid-global-rows' }>
-            <div>
-              <Checkbox
-                checked = { hospitalization }
-                label = { 'Hospitalization Plan' }
-                onChange = { () => hospitalizationFunc() }
+            <DatePicker
+              text = { 'Birth Date' }
+              maxDate = {  moment() }
+              hint = { '(eg. MM/DD/YYYY)' }
+              selected = { birthDate && moment(birthDate) }
+              onChange = { (e)  =>
+                birthDateFunc(e.format('MM/DD/YYYY'))
+               }
+              />
+            <GenericInput
+              text = { 'Occupation' }
+              value = { occupationName }
+              errorMessage = { occupationName ? '' : occupationNameErrorMessage }
+              onChange = { (e) => occupationNameFunc( e.target.value) }
+              />
+            <GenericInput
+              text = { 'Contact Number' }
+              value = { contact }
+              maxLength = { 12 }
+              errorMessage = { contact ? '' : contactNumberErrorMessage }
+              onChange = { (e) => contactNumberFunc(e.target.value) }
+              />
+            <div className = { 'grid-global' } >
+              <GenericInput
+                value = { relationship  }
+                text = { 'Relationship' }
+                disabled
+                errorMessage = { relationship ? '' : relationshipErrorMessage }
+                onChange = { () => relationshipNameFunc(true) }
                 />
-              <br/>
+              <GenericInput
+                value = { statusName  }
+                text = { 'Status' }
+                errorMessage = { statusName ? '' : statusNameErrorMessage }
+                onClick = { () => statusNameFunc(true) }
+                />
             </div>
-            <div>
-              <Checkbox
-                checked = { groupPlan }
-                label = { 'Group Life Insurance' }
-                onChange = { () => groupPlanFunc() }
-              />
+            <div className = { 'grid-global' } >
+              <GenericInput
+                value = { gender  }
+                text = { 'Gender' }
+                errorMessage = { gender ? '' : genderErrorMessage }
+                onClick = { () => genderFunc(true) }
+                />
+              <GenericInput
+                text = { 'Blood Type' }
+                value = { bloodTypeName }
+                errorMessage = { bloodTypeName ? '' : bloodTypeErrorMessage }
+                onClick = { () => bloodTypeFunc(true) }
+                />
+            </div>
+            <div className = { 'grid-global-rows' }>
+              <div>
+                <Checkbox
+                  checked = { hospitalization }
+                  label = { 'Hospitalization Plan' }
+                  onChange = { () => hospitalizationFunc() }
+                  />
+                <br/>
+              </div>
+              <div>
+                <Checkbox
+                  checked = { groupPlan }
+                  label = { 'Group Life Insurance' }
+                  onChange = { () => groupPlanFunc() }
+                />
+              </div>
             </div>
           </div>
-        <center>
-          <GenericButton
-            text = { 'Save' }
-            onClick = { () => saveForm() }
-          />
-        </center>
+          <center>
+            <GenericButton
+              text = { 'Save' }
+              onClick = { () => saveForm() }
+            />
+          </center>
         </div>
       </Modal>
     )
