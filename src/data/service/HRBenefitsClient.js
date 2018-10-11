@@ -42,6 +42,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  updateDescription (token, description) {
+    return this.service.updateDescription(token, description)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getDevices (token) {
+    return this.service.getDevices(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
