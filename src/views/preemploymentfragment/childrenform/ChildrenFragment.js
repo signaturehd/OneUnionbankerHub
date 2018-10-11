@@ -21,6 +21,10 @@ import Presenter from './presenter/ChildrenPresenter'
 
 import { Progress } from 'react-sweet-progress'
 
+
+import NoticeResponse from '../../notice/NoticeResponseModal'
+
+
 import "react-sweet-progress/lib/style.css"
 import './styles/childrenStyle.css'
 
@@ -28,35 +32,50 @@ class ChildrenFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      financeStatus : [],
       childrenData : [],
-      showFinanceStatusModal : false,
-      enabledLoader : false,
-      showFinanceStatusErrorMessage : '',
-      statusId: '',
-      financeId: '',
-      statusName: '',
-      bankNameInstitution : '',
-      natureObligation: '',
-      amount: '',
-      bankNameInstitutionErrorMessage : '',
-      natureObligationErrorMessage: '',
-      amountErrorMessage: '',
-      statusNameErrorMessage: '',
-      noticeResponse: '',
-      showFinanceModal : false,
-      showChildrenFormModal : false,
-      editMode : false,
-      financeDetailsHolder : [],
+      bloodObject: [],
+      statusObject : [],
+      genderObject : [],
+      showNoticeResponse : false,
+      showBloodTypeModal : false,
+      showStatusModal : false,
+      showEditModeModal : false,
+      showGenderModal : false,
+      isParentOrSiblings : null,
       index : 4,
       viewMoreText : 'View more',
+      parentId : '',
+      lastName: '',
+      firstName : '',
+      middleName: '',
+      occupationName : '',
+      contact : '',
+      birthDate: '',
+      statusId: '',
+      statusName: '',
+      gender: '',
+      genderId : '',
+      hospitalization : '',
+      groupPlan : '',
+      relationship: '',
+      bloodTypeName: '',
+      noticeResponse: '',
+      genderErrorMessage: '',
+      statusNameErrorMessage: '',
+      birthDateErrorMessage : '',
+      contactNumberErrorMessage : '',
+      occupationNameErrorMessage : '',
+      firstNameErrorMessage : '',
+      middleNameErrorMessage: '',
+      lastNameErrorMessage: '',
+      bloodTypeErrorMessage: '',
+      relationshipErrorMessage: '',
     }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(18)
-    this.presenter.getFinancialStatus()
-    this.presenter.getFinancialDetails()
+    this.presenter.getObjectData()
     this.presenter.getChildren()
   }
 
@@ -269,8 +288,7 @@ class ChildrenFragment extends BaseMVPView {
     } = this.props
 
     const {
-      parentDetails,
-      siblingDetails,
+      childrenData,
       bloodObject,
       statusObject,
       genderObject,
@@ -310,24 +328,17 @@ class ChildrenFragment extends BaseMVPView {
       groupPlan,
     } = this.state
 
-
     const isVisible = (childrenData && childrenData.length > 4) ? '' : 'hide'
 
     return(
     <div>
     { super.render() }
       {
-        showFinanceModal &&
-        <Modal>
-          <center>
-            <h2>{ noticeResponse }</h2>
-            <br/>
-            <GenericButton
-              onClick = { () => this.setState({ showFinanceModal : false }) }
-              text = { 'Ok' }
-              />
-          </center>
-        </Modal>
+        showNoticeResponse &&
+        <NoticeResponse
+          noticeResponse = { noticeResponse }
+          onClose = { () => this.setState({ showNoticeResponse : false }) }
+        />
       }
       {
         showChildrenFormModal &&
@@ -433,41 +444,32 @@ class ChildrenFragment extends BaseMVPView {
           <div className = { 'text-align-right' }>
             <GenericButton
               text = { 'Add' }
-              onClick = { () => this.setState({ showChildrenFormModal : true }) }
-              />
+              onClick  = { () => this.addForm() }
+            />
           </div>
         </div>
         <br/>
-        {
-          enabledLoader ?
-          <center>
-            <CircularLoader show = { enabledLoader }/>
-          </center>
-          :
-          <div>
-            <ChildrenMultipleCardComponent
-              index = { index }
-              childrenData = { childrenData }
-              financeDetailsHolder = { financeDetailsHolder }
-              onEditModeProperty = { (resp) => this.editMode(resp) }
-              />
-            <br/>
-            <button
-              type = { 'button' }
-              className = { `viewmore tooltip ${ isVisible }` }
-              onClick = {
-                () => {
-                  if(index === childrenData.length)
-                    this.setState({ index : 4, viewMoreText : 'View more' })
-                  else
-                    this.setState({ index : childrenData.length, viewMoreText : 'View less' })
-                }
-              }>
-              <img src={ require('../../../images/icons/horizontal.png') } />
-              <span className={ 'tooltiptext' }>{ viewMoreText }</span>
-            </button>
-          </div>
-        }
+        <ChildrenMultipleCardComponent
+          index = { index }
+          childrenData = { childrenData }
+          financeDetailsHolder = { financeDetailsHolder }
+          onEditModeProperty = { (e, e1) => this.editMode(e, e1) }
+          />
+        <br/>
+        <button
+          type = { 'button' }
+          className = { `viewmore tooltip ${ isVisible }` }
+          onClick = {
+            () => {
+              if(index === siblingDetails.length)
+                this.setState({ index : 4, viewMoreText : 'View more' })
+              else
+                this.setState({ index : siblingDetails.length, viewMoreText : 'View less' })
+            }
+          }>
+          <img src={ require('../../../images/icons/horizontal.png') } />
+          <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+        </button>
       </div>
     </div>
     )
