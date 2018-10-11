@@ -8,12 +8,9 @@ import {
   GenericButton,
   GenericInput,
   DatePicker,
+  Checkbox,
   SingleInputModal
 } from '../../../../ub-components/'
-
-import { format } from '../../../../utils/numberUtils'
-
-import imageDefault from '../../../../images/profile-picture.png'
 
 import { RequiredValidation } from '../../../../utils/validate/'
 
@@ -25,28 +22,54 @@ class ChildrenModal extends Component {
 
   render () {
     const {
-      bankNameInstitutionFunc,
-      natureObligationFunc,
-      amountFunc,
+      genderObject,
+      bloodObject,
+      statusObject,
+      firstNameFunc,
+      lastNameFunc,
+      middleNameFunc,
+      occupationNameFunc,
+      contactNumberFunc,
+      bloodTypeFunc,
       statusNameFunc,
-      submitForm,
-      hideModalEducationFormFunc,
-      bankNameInstitutionErrorMessage,
-      natureObligationErrorMessage,
-      amountErrorMessage,
-      statusNameErrorMessage,
-      showFinanceStatusErrorMessage,
+      genderCodeFunc,
+      lastName,
+      firstName,
+      middleName,
+      occupationName,
+      bloodTypeName,
+      contact,
+      bloodType,
+      birthDate,
+      hospitalization,
+      groupPlan,
       statusName,
-      bankNameInstitution,
-      natureObligation,
-      amount,
+      gender,
+      relationship,
+      birthDateErrorMessage,
+      statusNameErrorMessage,
+      firstNameErrorMessage,
+      middleNameErrorMessage,
+      lastNameErrorMessage,
+      occupationNameErrorMessage,
+      contactNumberErrorMessage,
+      bloodTypeErrorMessage,
+      relationshipErrorMessage,
+      genderErrorMessage,
       onClose,
-      showFinanceStatusModal,
-      financeStatusFunc,
-      financeStatus,
-      showFinanceStatusModalFunc,
-      editForm,
-      editMode
+      showStatusModal,
+      showBloodTypeModal,
+      showGenderModal,
+      isParentOrSiblings,
+      selectedBloodTypeFunc,
+      selectedStatusFunc,
+      selectedGenderFunc,
+      birthDateFunc,
+      relationshipNameFunc,
+      genderFunc,
+      hospitalizationFunc,
+      groupPlanFunc,
+      saveForm
     } = this.props
 
     return (
@@ -54,67 +77,151 @@ class ChildrenModal extends Component {
         isDismisable = { true }
         onClose = { onClose }>
         {
-          showFinanceStatusModal &&
+          showBloodTypeModal &&
           <SingleInputModal
-            label = { 'Finance Status' }
-            inputArray = { financeStatus && financeStatus }
+            label = { 'Blood Type' }
+            inputArray = { bloodObject }
+            selectedArray = { (bloodTypeId, bloodTypeName) =>
+              selectedBloodTypeFunc(
+                bloodTypeName,
+                false,
+                ''
+              )
+            }
+            onClose = { () => bloodTypeFunc(false) }
+          />
+        }
+        {
+          showStatusModal &&
+
+          <SingleInputModal
+            label = { 'Status' }
+            inputArray = { statusObject }
             selectedArray = { (statusId, statusName) =>
-              financeStatusFunc(
+              selectedStatusFunc(
                 statusId,
                 statusName,
                 false,
                 ''
               )
             }
-            onClose = { () => showFinanceStatusModalFunc() }
+            onClose = { () => statusNameFunc(false) }
           />
         }
-        <h2>Financial Obligation Form</h2>
+        {
+          showGenderModal &&
+
+          <SingleInputModal
+            label = { 'Gender' }
+            inputArray = { genderObject }
+            selectedArray = { (genderCode, gender) =>
+              selectedGenderFunc(
+                genderCode,
+                gender,
+                false,
+                ''
+              )
+            }
+            onClose = { () => genderFunc(false) }
+          />
+        }
+        <h2>Children Form</h2>
         <div>
           <GenericInput
-            text = { 'Name of the Bank/ Financial Institution' }
-            value = { bankNameInstitution }
+            text = { 'First Name' }
+            value = { firstName }
             maxLength = { 30 }
-            onChange = { (e) => bankNameInstitutionFunc(e.target.value) }
-            errorMessage = { bankNameInstitution ? '' : bankNameInstitutionErrorMessage }
+            errorMessage = { firstName ? '' : firstNameErrorMessage }
+            onChange = { (e) => firstNameFunc(e.target.value) }
             />
           <GenericInput
-            text = { 'Nature of Obligation' }
-            value = { natureObligation }
+            text = { 'Middle Name' }
+            value = { middleName }
             maxLength = { 20 }
-            onChange = { (e) => natureObligationFunc(e.target.value) }
-            errorMessage = { natureObligation ? '' : natureObligationErrorMessage }
+            errorMessage = { middleName ? '' : middleNameErrorMessage }
+            onChange = { (e) => middleNameFunc(e.target.value) }
             />
           <GenericInput
-            text = { 'Amount' }
-            value = { (amount) }
-            type = { 'number' }
-            onChange = { (e) => amountFunc(e.target.value) }
-            errorMessage = { amount ? '' : amountErrorMessage }
+            text = { 'Last Name' }
+            value = { lastName }
+            maxLength = { 20 }
+            errorMessage = { lastName ? '' : lastNameErrorMessage }
+            onChange = { (e) => lastNameFunc(e.target.value) }
+            />
+          <DatePicker
+            text = { 'Birth Date' }
+            maxDate = {  moment() }
+            hint = { '(eg. MM/DD/YYYY)' }
+            selected = { birthDate && moment(birthDate) }
+            onChange = { (e)  =>
+              birthDateFunc(e.format('MM/DD/YYYY'))
+             }
+            />
+          <GenericInput
+            text = { 'Occupation' }
+            value = { occupationName }
+            errorMessage = { occupationName ? '' : occupationNameErrorMessage }
+            onChange = { (e) => occupationNameFunc( e.target.value) }
+            />
+          <GenericInput
+            text = { 'Contact Number' }
+            value = { contact }
             maxLength = { 12 }
+            errorMessage = { contact ? '' : contactNumberErrorMessage }
+            onChange = { (e) => contactNumberFunc(e.target.value) }
             />
-          <GenericInput
-            text = { 'Status' }
-            value = { statusName }
-            onClick = { () => statusNameFunc() }
-            errorMessage = { statusName ? '' : statusNameErrorMessage }
-            />
-          <center>
-            {
-              editMode ?
-              <GenericButton
-                className = { 'global-button' }
-                text = { 'Edit' }
-                onClick = { () => submitForm() }
+          <div className = { 'grid-global' } >
+            <GenericInput
+              value = { relationship  }
+              text = { 'Relationship' }
+              disabled
+              errorMessage = { relationship ? '' : relationshipErrorMessage }
+              onChange = { () => relationshipNameFunc(true) }
+              />
+            <GenericInput
+              value = { statusName  }
+              text = { 'Status' }
+              errorMessage = { statusName ? '' : statusNameErrorMessage }
+              onClick = { () => statusNameFunc(true) }
+              />
+          </div>
+          <div className = { 'grid-global' } >
+            <GenericInput
+              value = { gender  }
+              text = { 'Gender' }
+              errorMessage = { gender ? '' : genderErrorMessage }
+              onClick = { () => genderFunc(true) }
+              />
+            <GenericInput
+              text = { 'Blood Type' }
+              value = { bloodTypeName }
+              errorMessage = { bloodTypeName ? '' : bloodTypeErrorMessage }
+              onClick = { () => bloodTypeFunc(true) }
+              />
+          </div>
+          <div className = { 'grid-global-rows' }>
+            <div>
+              <Checkbox
+                checked = { hospitalization }
+                label = { 'Hospitalization Plan' }
+                onChange = { () => hospitalizationFunc() }
                 />
-                :
-              <GenericButton
-                className = { 'global-button' }
-                text = { 'Save' }
-                onClick = { () => submitForm() }
-                />
-            }
-          </center>
+              <br/>
+            </div>
+            <div>
+              <Checkbox
+                checked = { groupPlan }
+                label = { 'Group Life Insurance' }
+                onChange = { () => groupPlanFunc() }
+              />
+            </div>
+          </div>
+        <center>
+          <GenericButton
+            text = { 'Save' }
+            onClick = { () => saveForm() }
+          />
+        </center>
         </div>
       </Modal>
     )
@@ -122,13 +229,6 @@ class ChildrenModal extends Component {
 }
 
 ChildrenModal.propTypes = {
-  amountFunc : PropTypes.func,
-  bankNameInstitutionFunc : PropTypes.func,
-  natureObligationFunc : PropTypes.func,
-  statusNameFunc : PropTypes.func,
-  onClose : PropTypes.func,
-  submitForm : PropTypes.func,
-  financeStatusFunc : PropTypes.func,
 }
 ChildrenModal.defaultProps={
 }

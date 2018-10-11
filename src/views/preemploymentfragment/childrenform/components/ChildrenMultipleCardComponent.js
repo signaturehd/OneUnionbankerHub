@@ -17,11 +17,8 @@ class ChildrenMultipleCardComponent extends Component {
 
   render () {
     const {
-      financeDetailsHolder,
       disabled,
-      errorMessage,
       count,
-      index,
       onEditModeProperty,
       childrenData
     } = this.props
@@ -29,35 +26,34 @@ class ChildrenMultipleCardComponent extends Component {
     return (
       <div>
         {
-          childrenData.length !== 0 &&
-          childrenData.slice(0, index).map((resp, key) => (
+          childrenData.map((resp, key) => (
             <div>
               <Card
-                className = { 'educ-card-grid-option' }
+                className = { 'parent-card-grid-option' }
                 key = { key }>
                 <div className = { 'grid-global' }>
                   <div>
                     <h2 className = { 'font-size-16apx font-weight-bold' }>
-                      { resp.name && resp.name.first }, 
-                      { resp.name && resp.name.last } { resp.name && resp.name.middle }.
+                      { resp.name && resp.name.first }, { resp.name && resp.name.last } { resp.name && resp.name.middle }.
                     </h2>
                     <h2 className = { 'font-size-14px font-weight-normal' }>
-                      { 
-                        functions.checkedDateFilled(resp.birthDate)
-                      }
-                    </h2>                    
+                      { resp.occupation }
+                    </h2>
                     <h2 className = { 'font-size-14px font-weight-normal' }>
-                      { 
-                        resp.contactNumber
+                      {
+                        functions.checkedDateFilled(resp.birthDate)
                       }
                     </h2>
                   </div>
                   <div>
+                    <h2 className = { 'font-size-14px font-weight-normal' }>
+                      { resp.relationship }
+                    </h2>
                     <h2 className = { 'font-size-12px font-weight-lighter' }>
                       { functions.checkStatus(resp.status) }
                     </h2>
                     <h2 className = { 'font-size-10px font-weight-lighter' }>
-                      { 
+                      {
                         functions.checkGender(resp.gender)
                       }
                     </h2>
@@ -70,7 +66,7 @@ class ChildrenMultipleCardComponent extends Component {
                       className = { 'close-button-global' }
                       src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
                       onClick = { () =>
-                        onEditModeProperty()
+                        onEditModeProperty(resp, true)
                       }
                     />
                   }
@@ -99,10 +95,6 @@ ChildrenMultipleCardComponent.propTypes = {
   errorMessage : PropTypes.string,
   onEditModeProperty : PropTypes.func,
   disabled : PropTypes.bool,
-}
-
-ChildrenMultipleCardComponent.defaultProps = {
-  financeDetailsHolder : [],
 }
 
 export default ChildrenMultipleCardComponent
