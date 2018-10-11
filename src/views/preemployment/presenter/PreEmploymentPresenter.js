@@ -20,7 +20,7 @@ export default class PreEmploymentPresenter {
           this.view.checkedPreEmploymentForm(data)
         },
         error => {
-          // this.view.navigate()
+          this.view.hideCircularLoader()
        }
     )
   }

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import store from '../../../../store'
-import { NotifyActions } from '../../../../actions'
 
 import {
   Modal,
@@ -11,8 +9,6 @@ import {
   Checkbox,
   SingleInputModal
 } from '../../../../ub-components/'
-
-import { RequiredValidation } from '../../../../utils/validate/'
 
 class ChildrenModal extends Component {
 
@@ -60,7 +56,6 @@ class ChildrenModal extends Component {
       showStatusModal,
       showBloodTypeModal,
       showGenderModal,
-      isParentOrSiblings,
       selectedBloodTypeFunc,
       selectedStatusFunc,
       selectedGenderFunc,

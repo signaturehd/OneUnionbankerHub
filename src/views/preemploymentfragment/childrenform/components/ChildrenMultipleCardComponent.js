@@ -17,8 +17,6 @@ class ChildrenMultipleCardComponent extends Component {
 
   render () {
     const {
-      disabled,
-      count,
       onEditModeProperty,
       childrenData
     } = this.props
@@ -26,6 +24,7 @@ class ChildrenMultipleCardComponent extends Component {
     return (
       <div>
         {
+          childrenData &&
           childrenData.map((resp, key) => (
             <div>
               <Card
@@ -66,7 +65,7 @@ class ChildrenMultipleCardComponent extends Component {
                       className = { 'close-button-global' }
                       src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
                       onClick = { () =>
-                        onEditModeProperty(resp, true)
+                        onEditModeProperty(resp)
                       }
                     />
                   }

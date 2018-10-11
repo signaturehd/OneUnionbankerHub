@@ -79,20 +79,12 @@ class ChildrenFragment extends BaseMVPView {
     this.presenter.getChildren()
   }
 
-  circularLoader (enabledLoader) {
-    this.setState({ enabledLoader })
-  }
-
   showCircularLoader () {
     this.setState({ enabledLoader : true })
   }
 
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
-  }
-
-  validator (input) {
-   return new RequiredValidation().isValid(input)
   }
 
   showChildrenDetails (childrenData) {
@@ -115,10 +107,6 @@ class ChildrenFragment extends BaseMVPView {
     this.setState({ statusObject })
   }
 
-  circularLoader (enabledLoader) {
-    this.setState({ enabledLoader })
-  }
-
   showCircularLoader () {
     this.setState({ enabledLoader : true })
   }
@@ -126,7 +114,6 @@ class ChildrenFragment extends BaseMVPView {
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
   }
-
 
   /* Validation */
 
@@ -166,12 +153,11 @@ class ChildrenFragment extends BaseMVPView {
 
   /*edit mode*/
 
-  editForm (selectedCard, isParentOrSiblings) {
+  editForm (selectedCard) {
     const nullChecker = selectedCard && selectedCard
     const nullCheckerName = selectedCard && selectedCard.name
     this.setState({ showEditModeModal : true })
     this.setState({
-      isParentOrSiblings : isParentOrSiblings,
       firstName : nullCheckerName.first,
       middleName : nullCheckerName.middle,
       lastName : nullCheckerName.last,
@@ -210,53 +196,53 @@ class ChildrenFragment extends BaseMVPView {
     const gender = genderId === 'M' ? 'M' : 'F'
     this.setState({ showEditModeModal : false })
     if(isParentOrSiblings === true) {
-      this.presenter.updateParentForm(
-        parentId,
-        firstName,
-        lastName,
-        middleName,
-        gender,
-        relationship,
-        statusId,
-        contact,
-        occupationName,
-        birthDate,
-        bloodTypeName,
-        hospitalization,
-        groupPlan,
-      )
+      // this.presenter.updateParentForm(
+      //   parentId,
+      //   firstName,
+      //   lastName,
+      //   middleName,
+      //   gender,
+      //   relationship,
+      //   statusId,
+      //   contact,
+      //   occupationName,
+      //   birthDate,
+      //   bloodTypeName,
+      //   hospitalization,
+      //   groupPlan,
+      // )
     } else if (isParentOrSiblings === false) {
-      this.presenter.updateSiblingsForm(
-        parentId,
-        firstName,
-        lastName,
-        middleName,
-        gender,
-        relationship,
-        statusId,
-        contact,
-        occupationName,
-        birthDate,
-        bloodTypeName,
-        hospitalization,
-        groupPlan,
-      )
+      // this.presenter.updateSiblingsForm(
+      //   parentId,
+      //   firstName,
+      //   lastName,
+      //   middleName,
+      //   gender,
+      //   relationship,
+      //   statusId,
+      //   contact,
+      //   occupationName,
+      //   birthDate,
+      //   bloodTypeName,
+      //   hospitalization,
+      //   groupPlan,
+      // )
     } else {
-      this.presenter.addSiblingsForm(
-        parentId,
-        firstName,
-        lastName,
-        middleName,
-        gender,
-        relationship,
-        statusId,
-        contact,
-        occupationName,
-        birthDate,
-        bloodTypeName,
-        hospitalization,
-        groupPlan,
-      )
+      // this.presenter.addSiblingsForm(
+      //   parentId,
+      //   firstName,
+      //   lastName,
+      //   middleName,
+      //   gender,
+      //   relationship,
+      //   statusId,
+      //   contact,
+      //   occupationName,
+      //   birthDate,
+      //   bloodTypeName,
+      //   hospitalization,
+      //   groupPlan,
+      // )
     }
   }
 
@@ -341,9 +327,8 @@ class ChildrenFragment extends BaseMVPView {
         />
       }
       {
-        showChildrenFormModal &&
+        showEditModeModal &&
         <ChildrenFormModal
-          isParentOrSiblings = { isParentOrSiblings }
           showStatusModal = { showStatusModal }
           showBloodTypeModal = { showBloodTypeModal }
           showGenderModal = { showGenderModal }
@@ -450,10 +435,9 @@ class ChildrenFragment extends BaseMVPView {
         </div>
         <br/>
         <ChildrenMultipleCardComponent
-          index = { index }
           childrenData = { childrenData }
-          financeDetailsHolder = { financeDetailsHolder }
-          onEditModeProperty = { (e, e1) => this.editMode(e, e1) }
+          onEditModeProperty = { (e) => this.editForm(e) }
+          index = { index }
           />
         <br/>
         <button
@@ -461,10 +445,10 @@ class ChildrenFragment extends BaseMVPView {
           className = { `viewmore tooltip ${ isVisible }` }
           onClick = {
             () => {
-              if(index === siblingDetails.length)
+              if(index === childrenData.length)
                 this.setState({ index : 4, viewMoreText : 'View more' })
               else
-                this.setState({ index : siblingDetails.length, viewMoreText : 'View less' })
+                this.setState({ index : childrenData.length, viewMoreText : 'View less' })
             }
           }>
           <img src={ require('../../../images/icons/horizontal.png') } />
