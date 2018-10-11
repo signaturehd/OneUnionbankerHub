@@ -1509,6 +1509,7 @@ export default class HRBenefitsService {
       contactNumber : childrenParam.contactNumber,
       birthDate : childrenParam.birthDate,
       gender : childrenParam.genderId,
+      relationship: childrenParam.relationship,
       occupation : childrenParam.occupationName,
       healthHospitalizationPlan: childrenParam.hospitalization,
       groupLifeInsurance : childrenParam.groupPlan,
@@ -1538,6 +1539,7 @@ export default class HRBenefitsService {
       contactNumber : childrenParam.contactNumber,
       birthDate : childrenParam.birthDate,
       gender : childrenParam.genderId,
+      relationship : childrenParam.relationship,
       occupation : childrenParam.occupationName,
       healthHospitalizationPlan: childrenParam.hospitalization,
       groupLifeInsurance : childrenParam.groupPlan,
@@ -1609,9 +1611,10 @@ export default class HRBenefitsService {
       birthDate : parentsParam.birthDate,
       gender : parentsParam.genderId,
       occupation : parentsParam.occupationName,
+      relationship : parentsParam.relationship,
       healthHospitalizationPlan: parentsParam.healthHospitalizationPlan,
       groupLifeInsurance : parentsParam.groupLifeInsurance,
-      status: parentsParam.status,
+      status: parentsParam.statusId,
     }
 
     return this.onboardingClient.put(`v1/employees/plans/hospitalization/parents/${parentsParam.parentId}`, objectParam, {
@@ -1631,9 +1634,10 @@ export default class HRBenefitsService {
       birthDate : parentsParam.birthDate,
       gender : parentsParam.genderId,
       occupation : parentsParam.occupationName,
+      relationship : parentsParam.relationship,
       healthHospitalizationPlan: parentsParam.healthHospitalizationPlan,
       groupLifeInsurance : parentsParam.groupLifeInsurance,
-      status: parentsParam.status,
+      status: parentsParam.statusId,
     }
 
     return this.onboardingClient.post(`v1/employees/plans/hospitalization/parents`, objectParam, {
@@ -1660,9 +1664,9 @@ export default class HRBenefitsService {
       birthDate : siblingsParam.birthDate,
       gender : siblingsParam.genderId,
       occupation : siblingsParam.occupationName,
-      healthHospitalizationPlan: siblingsParam.healthHospitalizationPlan,
-      groupLifeInsurance : siblingsParam.groupLifeInsurance,
-      status: siblingsParam.status,
+      healthHospitalizationPlan: siblingsParam.hospitalization,
+      groupLifeInsurance : siblingsParam.groupPlan,
+      status: siblingsParam.statusId,
     }
 
     return this.onboardingClient.put(`v1/employees/siblings/${siblingsParam.parentId}`, objectParam, {
@@ -1670,21 +1674,21 @@ export default class HRBenefitsService {
     })
   }
 
-  addSiblingsForm (token, parentsParam) {
+  addSiblingsForm (token, siblingsParam) {
     const objectParam = {
       name : {
-        first : parentsParam.firstName,
-        middle : parentsParam.middleName,
-        last : parentsParam.lastName,
+        first : siblingsParam.firstName,
+        middle : siblingsParam.middleName,
+        last : siblingsParam.lastName,
       },
-      bloodType : parentsParam.bloodTypeName,
-      contactNumber : parentsParam.contact,
-      birthDate : parentsParam.birthDate,
-      gender : parentsParam.genderId,
-      occupation : parentsParam.occupationName,
-      healthHospitalizationPlan: parentsParam.healthHospitalizationPlan,
-      groupLifeInsurance : parentsParam.groupLifeInsurance,
-      status: parentsParam.status,
+      bloodType : siblingsParam.bloodTypeName,
+      contactNumber : siblingsParam.contact,
+      birthDate : siblingsParam.birthDate,
+      gender : siblingsParam.genderId,
+      occupation : siblingsParam.occupationName,
+      healthHospitalizationPlan: siblingsParam.hospitalization,
+      groupLifeInsurance : siblingsParam.groupPlan,
+      status: siblingsParam.statusId,
     }
 
     return this.onboardingClient.post(`v1/employees/siblings`, objectParam, {

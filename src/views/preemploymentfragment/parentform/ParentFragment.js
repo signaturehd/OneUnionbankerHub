@@ -18,7 +18,7 @@ import {
 
 import { RequiredValidation } from '../../../utils/validate/'
 
-import ParentModal from './modals/ParentModal'
+import ParentModal from './modals/GenericModal'
 
 import ParentComponent from './components/ParentComponent'
 import SiblingComponent from './components/SiblingComponent'
@@ -42,6 +42,7 @@ class ParentFragment extends BaseMVPView {
       statusObject : [],
       genderObject : [],
       showNoticeResponse : false,
+      editMode : false,
       showBloodTypeModal : false,
       showStatusModal : false,
       showEditModeModal : false,
@@ -159,12 +160,13 @@ class ParentFragment extends BaseMVPView {
 
   /*edit mode*/
 
-  editForm (selectedCard, isParentOrSiblings) {
+  editForm (selectedCard, isParentOrSiblings, editMode) {
     const nullChecker = selectedCard && selectedCard
     const nullCheckerName = selectedCard && selectedCard.name
     this.setState({ showEditModeModal : true })
     this.setState({
-      isParentOrSiblings : isParentOrSiblings,
+      isParentOrSiblings,
+      editMode,
       firstName : nullCheckerName.first,
       middleName : nullCheckerName.middle,
       lastName : nullCheckerName.last,
@@ -183,7 +185,7 @@ class ParentFragment extends BaseMVPView {
     })
   }
 
-  submitForm () {
+  updateForm () {
     const {
       parentId,
       firstName,
@@ -202,7 +204,7 @@ class ParentFragment extends BaseMVPView {
     } = this.state
     const gender = genderId === 'M' ? 'M' : 'F'
     this.setState({ showEditModeModal : false })
-    if(isParentOrSiblings === true) {
+    if(isParentOrSiblings) {
       this.presenter.updateParentForm(
         parentId,
         firstName,
@@ -218,7 +220,8 @@ class ParentFragment extends BaseMVPView {
         hospitalization,
         groupPlan,
       )
-    } else if (isParentOrSiblings === false) {
+      this.resetValue()
+    } else {
       this.presenter.updateSiblingsForm(
         parentId,
         firstName,
@@ -234,6 +237,48 @@ class ParentFragment extends BaseMVPView {
         hospitalization,
         groupPlan,
       )
+      this.resetValue()
+    }
+  }
+
+  /* add form */
+
+  addForm () {
+    const {
+      parentId,
+      firstName,
+      lastName,
+      middleName,
+      genderId,
+      relationship,
+      statusId,
+      contact,
+      occupationName,
+      birthDate,
+      bloodTypeName,
+      hospitalization,
+      groupPlan,
+      isParentOrSiblings
+    } = this.state
+    const gender = genderId === 'M' ? 'M' : 'F'
+    this.setState({ showEditModeModal : false })
+    if(isParentOrSiblings) {
+      this.presenter.addParentForm(
+        parentId,
+        firstName,
+        lastName,
+        middleName,
+        gender,
+        relationship,
+        statusId,
+        contact,
+        occupationName,
+        birthDate,
+        bloodTypeName,
+        hospitalization,
+        groupPlan,
+      )
+      this.resetValue()
     } else {
       this.presenter.addSiblingsForm(
         parentId,
@@ -250,29 +295,33 @@ class ParentFragment extends BaseMVPView {
         hospitalization,
         groupPlan,
       )
+      this.resetValue()
     }
   }
 
-  addForm () {
-    this.setState({ showEditModeModal : true })
+  /* reset value */
+
+  resetValue () {
     this.setState({
-      isParentOrSiblings : null,
+      isParentOrSiblings: null,
+      editMode: false,
       firstName : '',
       middleName : '',
-      lastName  : '',
+      lastName : '',
       bloodTypeName : '',
-      birthDate : nullChecker.birthDate,
+      birthDate : '',
       occupationName : '',
-      contact :  '',
-      gender  : '',
+      contact : '',
+      gender : '',
       genderId : '',
-      parentId  : '',
-      relationship  : '',
-      statusId  : '',
-      statusName  : '',
+      parentId : '',
+      relationship : '',
+      statusId : '',
+      statusName : '',
+      hospitalization : '',
+      groupPlan : '',
     })
   }
-
 
   render() {
     const {
@@ -321,6 +370,7 @@ class ParentFragment extends BaseMVPView {
       isParentOrSiblings,
       hospitalization,
       groupPlan,
+      editMode
     } = this.state
 
     const isVisible = (siblingDetails && siblingDetails.length > 4) ? '' : 'hide'
@@ -338,6 +388,7 @@ class ParentFragment extends BaseMVPView {
         {
           showEditModeModal &&
           <ParentModal
+            editMode = { editMode }
             isParentOrSiblings = { isParentOrSiblings }
             showStatusModal = { showStatusModal }
             showBloodTypeModal = { showBloodTypeModal }
@@ -357,7 +408,6 @@ class ParentFragment extends BaseMVPView {
             groupPlanFunc = { () => this.setState({ groupPlan : groupPlan === 1 ? 0 : 1 }) }
             hospitalizationFunc = { () => this.setState({ hospitalization : hospitalization === 1 ? 0 : 1 }) }
             genderFunc = { (showGenderModal) => this.setShospitalizationFunctate({ showGenderModal }) }
-            genderCodeFunc = { (e) => {} }
             lastName = { lastName }
             firstName = { firstName }
             middleName = { middleName }
@@ -383,7 +433,8 @@ class ParentFragment extends BaseMVPView {
             contactNumberErrorMessage = { contactNumberErrorMessage }
             bloodTypeErrorMessage = { bloodTypeErrorMessage }
             onClose = { () => this.setState({ showEditModeModal : false }) }
-            saveForm = { () => this.submitForm() }
+            editFormSubmission = { () => this.updateForm() }
+            saveFormSubmission = { () => this.addForm() }
             selectedStatusFunc = {
             (
               statusId,
@@ -446,7 +497,7 @@ class ParentFragment extends BaseMVPView {
               <div className = { 'text-align-right' }>
                 <GenericButton
                   text = { 'Add' }
-                  onClick = { () => this.addForm() }
+                  onClick = { () => this.setState({ showEditModeModal : true }) }
                 />
               </div>
             </div>
@@ -458,7 +509,7 @@ class ParentFragment extends BaseMVPView {
 
           <ParentComponent
             parentDetails = { parentDetails }
-            onEditModeProperty = { (e, e1) => this.editForm(e, e1) }
+            onEditModeProperty = { (e, e1) => this.editForm(e, e1, e2) }
             />
         }
         <br/>
@@ -467,7 +518,7 @@ class ParentFragment extends BaseMVPView {
           <div className = { 'text-align-right' }>
             <GenericButton
               text = { 'Add' }
-              onClick  = { () => this.addForm() }
+              onClick  = { () => this.setState({ showEditModeModal: true }) }
             />
           </div>
         </div>
@@ -477,7 +528,7 @@ class ParentFragment extends BaseMVPView {
           <div>
             <SiblingComponent
               siblingDetails = { siblingDetails }
-              onEditModeProperty = { (e, e1) => this.editForm(e, e1) }
+              onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
               index = { index }
               />
               <br/>

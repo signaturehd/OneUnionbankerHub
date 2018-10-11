@@ -20,6 +20,7 @@ class ParentModal extends Component {
 
   render () {
     const {
+      editMode,
       genderObject,
       bloodObject,
       statusObject,
@@ -67,7 +68,8 @@ class ParentModal extends Component {
       genderFunc,
       hospitalizationFunc,
       groupPlanFunc,
-      saveForm
+      saveFormSubmission,
+      editFormSubmission,
     } = this.props
 
     return (
@@ -75,7 +77,7 @@ class ParentModal extends Component {
         isDismisable = { true }
         onClose = { onClose }>
         <center>
-          <h2>Parent Form</h2>
+          <h2>{ isParentOrSiblings ? 'Parent' : 'Siblings' } Form</h2>
         </center>
         <br/>
         {
@@ -219,12 +221,24 @@ class ParentModal extends Component {
               </div>
             </div>
           </div>
-          <center>
-            <GenericButton
-              text = { 'Save' }
-              onClick = { () => saveForm() }
-            />
-          </center>
+          {
+            editMode ?
+
+            <center>
+              <GenericButton
+                text = { 'Edit' }
+                onClick = { () => editFormSubmission() }
+              />
+            </center>
+            :
+
+            <center>
+              <GenericButton
+                text = { 'Save' }
+                onClick = { () => saveFormSubmission() }
+              />
+            </center>
+          }
         </div>
       </Modal>
     )

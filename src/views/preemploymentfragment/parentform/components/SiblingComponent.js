@@ -27,6 +27,7 @@ class SiblingComponent extends Component {
     return (
       <div>
         {
+          siblingDetails &&
           siblingDetails.slice(0, index).map((resp, key) => (
             <div>
               <Card
@@ -64,7 +65,7 @@ class SiblingComponent extends Component {
                       className = { 'close-button-global' }
                       src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
                       onClick = { () =>
-                        onEditModeProperty(resp, false)
+                        onEditModeProperty(resp, false, true)
                       }
                     />
                   }
