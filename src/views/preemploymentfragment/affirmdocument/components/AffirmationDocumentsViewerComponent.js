@@ -62,14 +62,13 @@ class AffirmationDocumentViewerComponent extends Component {
             </div>
             <br/>
             {
-              nodeStatus === 0 ||
-              nodeStatus === null ?
+              nodeStatus === 0 ?
             <div>
               <br/>
               <center>
               <GenericButton
                 onClick = { () => showPinCodeModalFunc() }
-                text = { 'I Affirm' }/>
+                text = { 'I Acknowledge' }/>
               </center>
             </div>
             :

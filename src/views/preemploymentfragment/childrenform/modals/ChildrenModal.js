@@ -10,6 +10,8 @@ import {
   SingleInputModal
 } from '../../../../ub-components/'
 
+import moment from 'moment'
+
 class ChildrenModal extends Component {
 
   constructor (props) {
