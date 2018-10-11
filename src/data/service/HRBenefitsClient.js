@@ -903,8 +903,8 @@ export default class HRBenefitsClient {
 
   /* Travel */
 
-  getRequestFlightData (token) {
-    return this.service.getRequestFlightData(token)
+  getAreaData (token) {
+    return this.service.getAreaData(token)
       .pipe(ServiceErrorOperator())
   }
 

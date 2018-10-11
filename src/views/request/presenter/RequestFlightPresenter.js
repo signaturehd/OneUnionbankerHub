@@ -1,20 +1,20 @@
-import GetRequestFlightInteractor from '../../../domain/interactor/travel/getRequestFlightInteractor'
+import GetAreaInteractor from '../../../domain/interactor/travel/getAreaInteractor'
 
 export default class RequestFlightPresenter {
   constructor (container) {
-    this.getRequestFlightInteractor = new GetRequestFlightInteractor(container.get('HRBenefitsClient'))
+    this.getAreaInteractor = new GetAreaInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
   }
 
-  getRequestFlightData () {
+  getAreaData () {
     this.view.showCircularLoader()
-    this.getRequestFlightInteractor.execute()
-      .subscribe(request => {
+    this.getAreaInteractor.execute()
+      .subscribe(area => {
           this.view.hideCircularLoader()
-          this.view.getRequestFlightData(request)
+          this.view.getAreaData(area)
         }, e => {
           this.view.hideCircularLoader()
           // TODO prompt generic error

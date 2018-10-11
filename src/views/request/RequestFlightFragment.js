@@ -43,12 +43,128 @@ class RequestFlightFragment extends BaseMVPView {
       returnDestination : '',
       returnDate : '',
       returnRemarks : '',
-      requestFlightArray : []
+      areaArray : [],
+      requestFlightArray : [
+          {
+            "id": 1,
+            "referenceNumber": "TR20181003160949",
+            "purpose": {
+                "id": 2,
+                "purpose": "Training"
+            },
+            "status": {
+                "id": 1,
+                "status": "Submitted"
+            },
+            "remark": "",
+            "approvedBy": null,
+            "approvedDate": null,
+            "applicationDate": "2018-10-10",
+            "departure": {
+                "origin": {
+                    "id": 1,
+                    "areaCode": "ZMH",
+                    "airport": "108 Mile Ranch",
+                    "location": "108 Mile Ranch, Canada"
+                },
+                "destination": {
+                    "id": 2,
+                    "areaCode": "AAH",
+                    "airport": "Aachen/Merzbruck",
+                    "location": "Aachen, Germany"
+                },
+                "date": "2019-01-26",
+                "time": "13:00:00",
+                "remarks": null
+            },
+            "return": {
+                "origin": {
+                    "id": 2,
+                    "areaCode": "AAH",
+                    "airport": "Aachen/Merzbruck",
+                    "location": "Aachen, Germany"
+                },
+                "destination": {
+                    "id": 1,
+                    "areaCode": "ZMH",
+                    "airport": "108 Mile Ranch",
+                    "location": "108 Mile Ranch, Canada"
+                },
+                "date": "2019-01-28",
+                "time": "13:00:00",
+                "remarks": null
+            },
+            "liquidation": {
+                "id": 1,
+                "cost": 2000,
+                "serviceCharge": 500,
+                "isTicketUsed": null,
+                "reason": ""
+            }
+        },
+        {
+            "id": 2,
+            "referenceNumber": "TR20181003160949",
+            "purpose": {
+                "id": 2,
+                "purpose": "Team Building"
+            },
+            "status": {
+                "id": 1,
+                "status": "Submitted"
+            },
+            "remark": "",
+            "approvedBy": null,
+            "approvedDate": null,
+            "applicationDate": "2018-10-10",
+            "departure": {
+                "origin": {
+                    "id": 1,
+                    "areaCode": "ZMH",
+                    "airport": "108 Mile Ranch",
+                    "location": "108 Mile Ranch, Canada"
+                },
+                "destination": {
+                    "id": 2,
+                    "areaCode": "AAH",
+                    "airport": "Aachen/Merzbruck",
+                    "location": "Aachen, Germany"
+                },
+                "date": "2019-01-26",
+                "time": "13:00:00",
+                "remarks": null
+            },
+            "return": {
+                "origin": {
+                    "id": 2,
+                    "areaCode": "AAH",
+                    "airport": "Aachen/Merzbruck",
+                    "location": "Aachen, Germany"
+                },
+                "destination": {
+                    "id": 1,
+                    "areaCode": "ZMH",
+                    "airport": "108 Mile Ranch",
+                    "location": "108 Mile Ranch, Canada"
+                },
+                "date": "2019-01-28",
+                "time": "13:00:00",
+                "remarks": null
+            },
+            "liquidation": {
+                "id": 1,
+                "cost": 2000,
+                "serviceCharge": 500,
+                "isTicketUsed": null,
+                "reason": ""
+            }
+        }
+      ]
     }
   }
 
   componentDidMount() {
-    this.presenter.getRequestFlightData()
+    this.presenter.getAreaData()
   }
 
   departurePurposeFunc (departurePurpose) {
@@ -91,8 +207,8 @@ class RequestFlightFragment extends BaseMVPView {
     this.setState({ returnRemarks })
   }
 
-  getRequestFlightData(requestFlightArray) {
-    this.setState({ requestFlightArray })
+  getAreaData(areaArray) {
+    this.setState({ areaArray })
   }
 
   hideCircularLoader () {
@@ -118,7 +234,8 @@ class RequestFlightFragment extends BaseMVPView {
       returnDestination,
       returnDate,
       returnRemarks,
-      requestFlightArray
+      requestFlightArray,
+      areaArray
     } = this.state
 
     const { percentage } = this.props

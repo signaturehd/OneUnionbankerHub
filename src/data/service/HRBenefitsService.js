@@ -1201,8 +1201,8 @@ export default class HRBenefitsService {
 
   /* Travel */
 
-  getRequestFlightData (token) {
-    return this.apiClient.get('v1/travels', {
+  getAreaData (token) {
+    return this.apiClient.get('v1/travels/areas?find=PH&pageNumber=2', {
       headers : { token }
     })
   }
