@@ -977,6 +977,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getNonExistingLoans (token) {
+    return this.apiClient.get('v1/loans', {
+      headers : { token }
+    })
+  }
+
   /* Code of Conduct  */
 
   getCompliancesPdf (token) {

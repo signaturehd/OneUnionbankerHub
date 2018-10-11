@@ -6,6 +6,7 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/MyExistingLoansPresenter'
 
 import ExistingLoansSummaryCardComponent from './components/ExistingLoansSummaryCardComponent'
+import NonExistingLoansSummaryCardComponent from './components/NonExistingLoansSummaryCardComponent'
 
 import {
   CircularLoader,
@@ -28,11 +29,13 @@ class MyExistingLoansFragment extends BaseMVPView {
     super(props)
     this.state = {
       existingLoans : [],
-      enabledLoader: false,
+      nonExistingLoans : [],
+      enabledLoader: false
     }
   }
 
   componentDidMount () {
+    this.presenter.getNonExistingLoans()
     this.presenter.getExistingLoans()
   }
 
@@ -40,18 +43,27 @@ class MyExistingLoansFragment extends BaseMVPView {
     this.setState({ existingLoans })
   }
 
+  showGetNonExistingLoans (resp) {
+    this.setState({ nonExistingLoans : resp })
+  }
+
   showCircularLoader (enabledLoader) {
     this.setState({ enabledLoader })
   }
 
   render () {
-    const { existingLoans, enabledLoader } = this.state
+    const { existingLoans, nonExistingLoans, enabledLoader } = this.state
 
     const existingLoansTotal = existingLoans.map(function(resp) {
       return resp.balance
     })
 
+    const nonExistingLoansTotal = nonExistingLoans.map(function(resp) {
+      return resp.carLoans.outstandingBalance
+    })
+
     const totalAmount = existingLoansTotal.reduce((a, b) => a + b, 0)
+    const nonTotalAmount = nonExistingLoansTotal.reduce((a, b) => a + b, 0)
 
     return (
       <div>
@@ -117,6 +129,28 @@ class MyExistingLoansFragment extends BaseMVPView {
                  <ExistingLoansSummaryCardComponent
                    totalAmount = { totalAmount }
                    existingLoans = { existingLoans }
+                   />
+                 }
+              <br/>
+              </div>
+              <div>
+              <div className = { 'existing-loan-summary-grid' }>
+                <div>
+                  <br/>
+                  Non-Multi Purpose Loan History
+                </div>
+                <div>
+                  <Line/>
+                </div>
+              </div>
+              <br/>
+                {
+                 nonTotalAmount == 0 ?
+                 <h2>No record(s)</h2>
+                 :
+                 <NonExistingLoansSummaryCardComponent
+                   nonTotalAmount = { nonTotalAmount }
+                   nonExistingLoans = { nonExistingLoans.carLoans }
                    />
                  }
               <br/>
