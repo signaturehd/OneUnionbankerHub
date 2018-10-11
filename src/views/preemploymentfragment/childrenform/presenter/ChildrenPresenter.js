@@ -8,6 +8,59 @@ import addFinancialStatusParam from '../../../../domain/param/AddFinancialStatus
 
 import GetChildrenInteractor from '../../../../domain/interactor/preemployment/children/GetChildrenInteractor'
 
+
+  let bloodObjectParam = [
+   {
+     id : 0,
+     name: 'A+'
+   },
+   {
+     id : 1,
+     name : 'A-'
+   },
+   {
+     id : 2,
+     name : 'B+'
+   },
+   {
+     id : 3,
+     name : 'B-'
+   },
+   {
+     id : 4,
+     name : '0+'
+   },
+   {
+     id : 5,
+     name : '0-'
+   },
+   {
+     id : 6,
+     name : 'AB+'
+   },
+   {
+     id : 7,
+     name : 'AB-'
+   }
+  ]
+
+  let statusObject = [{
+   id: 0,
+   name : 'Deceased'
+  }, {
+   id : 1,
+   name : 'Living'
+  }]
+
+  let genderObject = [{
+   id : 0,
+   name : 'Male'
+  },{
+   id: 1,
+   name : 'Female'
+  }]
+
+
 export default class ChildrenPresenter {
   constructor (container) {
     this.getChildrenInteractor = new GetChildrenInteractor(container.get('HRBenefitsClient'))
@@ -62,7 +115,7 @@ export default class ChildrenPresenter {
       this.view.hideCircularLoader()
     })
   }
- 
+
   addFinancialStatus (
     bankNameInstitution,
     natureObligation,

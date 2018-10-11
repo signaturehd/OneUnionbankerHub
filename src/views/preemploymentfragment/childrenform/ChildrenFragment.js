@@ -80,83 +80,185 @@ class ChildrenFragment extends BaseMVPView {
     this.setState({ childrenData })
   }
 
-  showFinanceStatus (financeStatus) {
-    this.setState({ financeStatus })
-  }
-
-  showFinanceDetails (financeDetailsHolder) {
-    this.setState({ financeDetailsHolder })
-  }
-
   noticeResponseFunc (noticeResponse) {
-    this.setState({ showFinanceModal : true })
-    this.setState({ noticeResponse })
+    this.setState({ noticeResponse, showNoticeResponse : true })
+  }
+
+  showGender (genderObject) {
+    this.setState({ genderObject })
+  }
+
+  showBloodType (bloodObject) {
+    this.setState({ bloodObject })
+  }
+
+  showStatus (statusObject) {
+    this.setState({ statusObject })
+  }
+
+  circularLoader (enabledLoader) {
+    this.setState({ enabledLoader })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+
+  /* Validation */
+
+  validator (input) {
+   return new RequiredValidation().isValid(input)
+  }
+
+  firstNameValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ firstName : validate })
+  }
+
+  middleNameValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ middleName : validate })
+  }
+
+  lastNameValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ lastName : validate })
+  }
+
+  contactValidate (e) {
+    const validate = func.checkValidateNumber(e)
+    this.setState({ contact : validate })
+  }
+
+  occupationNameValidate (e) {
+    const validate = func.checkNoSymbol(e)
+    this.setState({ occupationName : validate })
+  }
+
+  relationshipValidate (e) {
+    const validate = func.checkedValidateText(e)
+    this.setState({ relationship : validate })
+  }
+
+  /*edit mode*/
+
+  editForm (selectedCard, isParentOrSiblings) {
+    const nullChecker = selectedCard && selectedCard
+    const nullCheckerName = selectedCard && selectedCard.name
+    this.setState({ showEditModeModal : true })
+    this.setState({
+      isParentOrSiblings : isParentOrSiblings,
+      firstName : nullCheckerName.first,
+      middleName : nullCheckerName.middle,
+      lastName : nullCheckerName.last,
+      bloodTypeName : nullChecker.bloodType,
+      birthDate : nullChecker.birthDate,
+      occupationName : nullChecker.occupation,
+      contact : nullChecker.contactNumber,
+      gender : nullChecker.gender === 'M' ? 'Male' : 'Female',
+      genderId : nullChecker.gender === 'M' ? 'M' : 'F',
+      parentId : nullChecker.id,
+      relationship : nullChecker.relationship,
+      statusId : nullChecker.status,
+      statusName : nullChecker.status === 1 ? 'Deceased' : 'Living',
+      hospitalization : nullChecker.healthHospitalizationPlan,
+      groupPlan : nullChecker.groupLifeInsurance,
+    })
   }
 
   submitForm () {
     const {
-      bankNameInstitution,
-      natureObligation,
-      amount,
-      statusName,
+      parentId,
+      firstName,
+      lastName,
+      middleName,
+      genderId,
+      relationship,
       statusId,
-      bankNameInstitutionErrorMessage,
-      natureObligationErrorMessage,
-      amountErrorMessage,
-      statusNameErrorMessage,
-      financeId,
-      editMode
+      contact,
+      occupationName,
+      birthDate,
+      bloodTypeName,
+      hospitalization,
+      groupPlan,
+      isParentOrSiblings
     } = this.state
-
-    if (!this.validator(bankNameInstitution)) {
-      this.setState({ bankNameInstitutionErrorMessage: 'Name of the Bank/ Financial Institution field is required' })
-    } else if (!this.validator(natureObligation)) {
-      this.setState({ natureObligationErrorMessage : 'Nature of Obligation field is required'  })
-    } else if (!this.validator(amount)) {
-      this.setState({ amountErrorMessage : 'Amount field is required'  })
-    } else if (!this.validator(statusName)) {
-      this.setState({ statusNameErrorMessage : 'Status field is required' })
-    } else {
-      if(editMode) {
-        this.presenter.putFinancialStatus(
-          bankNameInstitution,
-          natureObligation,
-          amount,
-          statusId,
-          financeId
-        )
-        this.setState({ showChildrenFormModal : false })
-        this.setState({
-          bankNameInstitution : '',
-          natureObligation : '',
-          amount : '',
-          statusId : '',
-          fiananceId : '',
-          editMode: false,
-        })
-      } else {
-      this.presenter.addFinancialStatus(
-        bankNameInstitution,
-        natureObligation,
-        amount,
+    const gender = genderId === 'M' ? 'M' : 'F'
+    this.setState({ showEditModeModal : false })
+    if(isParentOrSiblings === true) {
+      this.presenter.updateParentForm(
+        parentId,
+        firstName,
+        lastName,
+        middleName,
+        gender,
+        relationship,
         statusId,
-        financeId)
-
-        this.setState({ showChildrenFormModal : false })
-        this.setState({
-          bankNameInstitution : '',
-          natureObligation : '',
-          amount : '',
-          statusId : '',
-          fiananceId : '',
-          editMode: false,
-        })
-      }
+        contact,
+        occupationName,
+        birthDate,
+        bloodTypeName,
+        hospitalization,
+        groupPlan,
+      )
+    } else if (isParentOrSiblings === false) {
+      this.presenter.updateSiblingsForm(
+        parentId,
+        firstName,
+        lastName,
+        middleName,
+        gender,
+        relationship,
+        statusId,
+        contact,
+        occupationName,
+        birthDate,
+        bloodTypeName,
+        hospitalization,
+        groupPlan,
+      )
+    } else {
+      this.presenter.addSiblingsForm(
+        parentId,
+        firstName,
+        lastName,
+        middleName,
+        gender,
+        relationship,
+        statusId,
+        contact,
+        occupationName,
+        birthDate,
+        bloodTypeName,
+        hospitalization,
+        groupPlan,
+      )
     }
   }
 
-  editMode (resp) {
-    this.setState({ showChildrenFormModal : true })
+  addForm () {
+    this.setState({ showEditModeModal : true })
+    this.setState({
+      isParentOrSiblings : null,
+      firstName : '',
+      middleName : '',
+      lastName  : '',
+      bloodTypeName : '',
+      birthDate : nullChecker.birthDate,
+      occupationName : '',
+      contact :  '',
+      gender  : '',
+      genderId : '',
+      parentId  : '',
+      relationship  : '',
+      statusId  : '',
+      statusName  : '',
+    })
   }
 
   render() {
@@ -167,28 +269,45 @@ class ChildrenFragment extends BaseMVPView {
     } = this.props
 
     const {
+      parentDetails,
+      siblingDetails,
+      bloodObject,
+      statusObject,
+      genderObject,
       enabledLoader,
-      childrenData,
-      financeStatus,
-      financeDetailsHolder,
+      lastName,
+      firstName,
+      middleName,
+      occupationName,
+      contact,
+      birthDate,
       statusId,
       statusName,
-      bankNameInstitution,
-      natureObligation,
-      amount,
-      showFinanceStatusModal,
-      bankNameInstitutionErrorMessage,
-      natureObligationErrorMessage,
-      amountErrorMessage,
+      gender,
+      genderId,
+      relationship,
+      bloodTypeName,
+      genderErrorMessage,
+      birthDateErrorMessage,
       statusNameErrorMessage,
-      showFinanceStatusErrorMessage,
+      firstNameErrorMessage,
+      middleNameErrorMessage,
+      lastNameErrorMessage,
+      occupationNameErrorMessage,
+      contactNumberErrorMessage,
+      bloodTypeErrorMessage,
+      relationshipErrorMessage,
       noticeResponse,
-      showFinanceModal,
-      showChildrenFormModal,
-      index,
       viewMoreText,
-      financeId,
-      editMode
+      index,
+      showNoticeResponse,
+      showStatusModal,
+      showBloodTypeModal,
+      showEditModeModal,
+      showGenderModal,
+      isParentOrSiblings,
+      hospitalization,
+      groupPlan,
     } = this.state
 
 
@@ -213,38 +332,87 @@ class ChildrenFragment extends BaseMVPView {
       {
         showChildrenFormModal &&
         <ChildrenFormModal
-          natureObligationFunc = { (natureObligation) =>  this.setState({ natureObligation }) }
+          isParentOrSiblings = { isParentOrSiblings }
+          showStatusModal = { showStatusModal }
+          showBloodTypeModal = { showBloodTypeModal }
+          showGenderModal = { showGenderModal }
+          bloodObject = { bloodObject }
+          statusObject = { statusObject }
+          genderObject = { genderObject }
+          firstNameFunc = { (e) => this.firstNameValidate(e) }
+          lastNameFunc = { (e) => this.lastNameValidate(e) }
+          middleNameFunc = { (e) => this.middleNameValidate(e) }
+          occupationNameFunc = { (e) => this.occupationNameValidate(e) }
+          contactNumberFunc = { (e) => this.contactValidate(e) }
+          birthDateFunc = { (birthDate) => this.setState({ birthDate }) }
+          relationshipNameFunc = { (relationship) => this.relationshipValidate(relationship) }
+          bloodTypeFunc = { (showBloodTypeModal) => this.setState({ showBloodTypeModal }) }
+          statusNameFunc = { (showStatusModal) => this.setState({ showStatusModal }) }
+          groupPlanFunc = { () => this.setState({ groupPlan : groupPlan === 1 ? 0 : 1 }) }
+          hospitalizationFunc = { () => this.setState({ hospitalization : hospitalization === 1 ? 0 : 1 }) }
+          genderFunc = { (showGenderModal) => this.setShospitalizationFunctate({ showGenderModal }) }
+          genderCodeFunc = { (e) => {} }
+          lastName = { lastName }
+          firstName = { firstName }
+          middleName = { middleName }
+          occupationName = { occupationName }
+          contact = { contact }
+          birthDate = { birthDate }
+          statusId = { statusId }
           statusName = { statusName }
-          bankNameInstitution = { bankNameInstitution }
-          natureObligation = { natureObligation }
-          amount = { amount }
-          bankNameInstitutionFunc = { (bankNameInstitution) => this.setState({ bankNameInstitution }) }
-          amountFunc = { (amount) => this.setState({ amount }) }
-          submitForm = { () => this.submitForm() }
-          onClose = { () => this.setState({ showChildrenFormModal : false }) }
-          bankNameInstitutionErrorMessage = { bankNameInstitutionErrorMessage }
-          natureObligationErrorMessage = { natureObligationErrorMessage }
-          amountErrorMessage = { amountErrorMessage }
+          gender = { gender }
+          relationship = { relationship }
+          hospitalization = { hospitalization }
+          groupPlan = { groupPlan }
+          relationshipErrorMessage = { relationshipErrorMessage }
+          bloodTypeName = { bloodTypeName }
+          birthDateErrorMessage = { birthDateErrorMessage }
+          genderErrorMessage = { genderErrorMessage }
+          birthDateErrorMessage = { birthDateErrorMessage }
           statusNameErrorMessage = { statusNameErrorMessage }
-          showFinanceStatusModal = { showFinanceStatusModal }
-          showFinanceStatusErrorMessage = { showFinanceStatusErrorMessage }
-          financeStatus = { financeStatus }
-          showFinanceStatusModalFunc = { (showFinanceStatusModal) => this.setState({ showFinanceStatusModal : false })}
-          statusNameFunc = { () => this.setState({ showFinanceStatusModal : true })}
-          editMode = { editMode }
-          financeStatusFunc = { (
+          firstNameErrorMessage = { firstNameErrorMessage }
+          middleNameErrorMessage = { middleNameErrorMessage }
+          lastNameErrorMessage = { lastNameErrorMessage }
+          occupationNameErrorMessage = { occupationNameErrorMessage }
+          contactNumberErrorMessage = { contactNumberErrorMessage }
+          bloodTypeErrorMessage = { bloodTypeErrorMessage }
+          onClose = { () => this.setState({ showEditModeModal : false }) }
+          saveForm = { () => this.submitForm() }
+          selectedStatusFunc = {
+          (
             statusId,
             statusName,
-            showFinanceStatusModal,
-            showFinanceStatusErrorMessage
-          ) =>
-            this.setState({
-              statusId,
-              statusName,
-              showFinanceStatusModal,
-              showFinanceStatusErrorMessage,
-            }) }
-          />
+            showStatusModal,
+            statusNameErrorMessage) =>  this.setState({
+            statusId,
+            statusName,
+            showStatusModal,
+            statusNameErrorMessage })
+          }
+          selectedBloodTypeFunc = {
+            (
+              bloodTypeName,
+              showBloodTypeModal,
+              bloodTypeErrorMessage
+            ) => this.setState({
+              bloodTypeName,
+              showBloodTypeModal,
+              bloodTypeErrorMessage
+            })
+          }
+          selectedGenderFunc = { (
+            genderId,
+            gender,
+            showGenderModal,
+            genderErrorMessage
+          ) => this.setState({
+            genderId : genderId === 0 ? 'M' : 'F',
+            gender : gender === 'Male' ? 'Male' : 'Female',
+            showGenderModal,
+            genderErrorMessage
+          })
+        }
+        />
       }
       <div>
         <br/>
@@ -264,7 +432,7 @@ class ChildrenFragment extends BaseMVPView {
           <div></div>
           <div className = { 'text-align-right' }>
             <GenericButton
-              text = { 'Add Financial Obligation' }
+              text = { 'Add' }
               onClick = { () => this.setState({ showChildrenFormModal : true }) }
               />
           </div>
