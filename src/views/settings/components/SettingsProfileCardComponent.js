@@ -10,6 +10,7 @@ import CompanyInfoModal from '../modals/CompanyInformationModal'
 import PersonalInfoModal from '../modals/PersonalInfoModal'
 import StaffAccountsModal from '../modals/StaffAccountsModal'
 import ChangePINModal from '../modals/ChangePINModal'
+import DevicesModal from '../modals/SettingDevicesModal'
 
 import SkillsFragment from '../../common/fragments/ProfileFragments/SkillsFragment'
 import ExperienceFragment from '../../common/fragments/ProfileFragments/ExperienceFragment'
@@ -33,9 +34,12 @@ class SettingsProfileCardComponent extends Component {
   render () {
     const {
       profile,
+      descriptionEditMode,
+      descriptionText,
       profileBackground,
       onClick,
       rank,
+      devices,
       lineManager,
       profileImageUrl,
       profileDependent,
@@ -58,7 +62,11 @@ class SettingsProfileCardComponent extends Component {
       staffLoader,
       staffAccounts,
       onClickEmployeeConfirmationFunc,
-      devices
+      onChangeToEditMode,
+      descriptionTextFunc,
+      onUpdateDescription,
+      showDevicesModal,
+      showDevicesModalFunc
     } = this.props
 
 
@@ -128,6 +136,13 @@ class SettingsProfileCardComponent extends Component {
             onClose={ () => showStaffAccountsModalFunc(false) }
           />
         }
+        {
+          showDevicesModal &&
+          <DevicesModal
+            devices = { devices }
+            onClose = { () => showDevicesModalFunc(false) }
+            />
+        }
         <div>
           <Card className={ 'profile-settings-card-view' }>
             <div className={ 'profile-banner' }>
@@ -150,6 +165,20 @@ class SettingsProfileCardComponent extends Component {
                 <h2 className={ 'profile-margin-label' }>
                   { profile.address ? profile.address  : '(Not Yet Provided)' }
                 </h2>
+                <br/>
+                <br/>
+                <div
+                  onClick = { () => showDevicesModalFunc(true) }
+                  className={ 'profile-information-view-right' }>
+                  <div>
+                    <span className={ 'profile-icon-settings pinlock-icon' }/>
+                  </div>
+                  <div>
+                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
+                      { 'Registered Devices'  }
+                    </h5>
+                  </div>
+                </div>
               </div>
               <div className = { 'profile-information-modal-view' }>
                 <div
@@ -231,6 +260,11 @@ class SettingsProfileCardComponent extends Component {
             </div>
             <div>
               <SettingsProfileDescriptions
+                onUpdateDescription = { () => onUpdateDescription() }
+                descriptionTextFunc = { (e) => descriptionTextFunc(e) }
+                onChangeToEditMode = { (e) => onChangeToEditMode(e) }
+                descriptionText = { descriptionText }
+                descriptionEditMode = { descriptionEditMode }
                 profileDescriptions={ profile && profile.description }
                 profileRatings={ profile && profile.performanceRating }
               />
