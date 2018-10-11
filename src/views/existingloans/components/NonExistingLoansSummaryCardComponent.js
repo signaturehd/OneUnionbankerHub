@@ -31,13 +31,10 @@ class NonExistingLoansSummaryCardComponent extends Component {
       nonTotalAmount
     } = this.props
 
-    const convertBalance = MyExistitngLoansFunctions.checkedDesiredAmount(balance)
-    const convertDatePresentation = MyExistitngLoansFunctions.checkedMDYDate(date)
-
     return (
       <div>
         {
-          nonExistingLoans.map((resp, key) =>
+          nonExistingLoans.carLease.map((resp, key) =>
           <Card className = { 'existing-loans-grid-x6' }>
             <span  className = { `existing-icon-fixed-${ MyExistitngLoansFunctions.checkIcon(resp.description) }` }/>
             <div className = { 'existing-loans-grid-label' }>
