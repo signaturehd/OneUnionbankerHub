@@ -41,9 +41,30 @@ class AffirmationDocumentViewerComponent extends Component {
           :
           <div>
           <br/>
-            <h2 className = { 'font-weight-bold text-align-center' }>
-              { affirmTitle }
-            </h2>
+            <div className = { 'grid-global' }>
+              <div>
+                <br/>
+                <h2 className = { 'font-weight-bold text-align-center' }>
+                  { affirmTitle }
+                </h2>
+              </div>
+              <div className = { 'text-align-right' }>
+                {
+                  nodeStatus === 0 ?
+                <div>
+                  <GenericButton
+                    onClick = { () => showPinCodeModalFunc() }
+                    text = { 'I Acknowledge' }/>
+                </div>
+                :
+                <div>
+                  <GenericButton
+                    onClick = { () => onClose() }
+                    text = { 'Close' }/>
+                </div>
+                }
+              </div>
+            </div>
             <br/>
             <div className = { 'affirm-document-padding' }>
             {
@@ -60,27 +81,6 @@ class AffirmationDocumentViewerComponent extends Component {
               <center>File not found</center>
             }
             </div>
-            <br/>
-            {
-              nodeStatus === 0 ?
-            <div>
-              <br/>
-              <center>
-              <GenericButton
-                onClick = { () => showPinCodeModalFunc() }
-                text = { 'I Acknowledge' }/>
-              </center>
-            </div>
-            :
-            <div>
-              <br/>
-              <center>
-              <GenericButton
-                onClick = { () => onClose() }
-                text = { 'Close' }/>
-              </center>
-            </div>
-            }
             <br/>
           </div>
         }

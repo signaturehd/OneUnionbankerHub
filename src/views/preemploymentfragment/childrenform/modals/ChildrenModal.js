@@ -7,7 +7,8 @@ import {
   GenericInput,
   DatePicker,
   Checkbox,
-  SingleInputModal
+  SingleInputModal,
+  MultipleAttachments,
 } from '../../../../ub-components/'
 
 import moment from 'moment'
@@ -66,7 +67,12 @@ class ChildrenModal extends Component {
       genderFunc,
       hospitalizationFunc,
       groupPlanFunc,
-      saveForm
+      saveForm,
+      count,
+      defaultAttachmentsArray,
+      countFunc,
+      genericFileAttachmentArray,
+      editMode
     } = this.props
 
     return (
@@ -74,7 +80,7 @@ class ChildrenModal extends Component {
         isDismisable = { true }
         onClose = { onClose }>
         <center>
-          <h2>Children Form</h2>
+          <h2>Children { editMode ? 'Update' : 'Submit' } Form</h2>
         </center>
         <br/>
         {
@@ -153,6 +159,7 @@ class ChildrenModal extends Component {
               text = { 'Birth Date' }
               maxDate = {  moment() }
               hint = { '(eg. MM/DD/YYYY)' }
+              readOnly
               selected = { birthDate && moment(birthDate) }
               onChange = { (e)  =>
                 birthDateFunc(e.format('MM/DD/YYYY'))
@@ -175,9 +182,8 @@ class ChildrenModal extends Component {
               <GenericInput
                 value = { relationship  }
                 text = { 'Relationship' }
-                disabled
                 errorMessage = { relationship ? '' : relationshipErrorMessage }
-                onChange = { () => relationshipNameFunc(true) }
+                onChange = { (e) => relationshipNameFunc(e.target.value) }
                 />
               <GenericInput
                 value = { statusName  }
@@ -217,12 +223,42 @@ class ChildrenModal extends Component {
                 />
               </div>
             </div>
+            <div className = { 'grid-global' }>
+              <h2></h2>
+              <div className = { 'text-align-right' }>
+                <GenericButton
+                  text = { 'ADD' }
+                  onClick = { () => genericFileAttachmentArray(defaultAttachmentsArray, count) }
+                  />
+              </div>
+            </div>
+            <br/>
+            {
+              defaultAttachmentsArray.length !== 0  &&
+              <MultipleAttachments
+                count = { count }
+                countFunc = { (count) => this.setState({ count }) }
+                placeholder = { 'Form Attachments' }
+                fileArray = { defaultAttachmentsArray }
+                setFile = { (defaultAttachmentsArray) =>
+                    this.setState({ defaultAttachmentsArray })
+                }
+                />
+             }
           </div>
           <center>
-            <GenericButton
-              text = { 'Save' }
-              onClick = { () => saveForm() }
-            />
+          {
+            editMode ?
+              <GenericButton
+                text = { 'Edit' }
+                onClick = { () => saveForm() }
+              />
+            :
+              <GenericButton
+                text = { 'Save' }
+                onClick = { () => saveForm() }
+              />
+          }
           </center>
         </div>
       </Modal>

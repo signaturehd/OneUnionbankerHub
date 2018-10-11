@@ -1019,7 +1019,7 @@ export default class HRBenefitsClient {
   }
 
   putChildren (token, childrenParam) {
-    return this.service.postChildren(token, childrenParam)
+    return this.service.putChildren(token, childrenParam)
       .pipe(ServiceErrorOperator())
   }
 

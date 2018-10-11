@@ -1410,22 +1410,22 @@ export default class HRBenefitsService {
     const formData = new FormData()
     formData.append('uuid', '12345')
     const objectParam = {
-        schoolName : educationParam.schoolName,
-        studentNo : educationParam.studentNo,
-        startYear : educationParam.startYear,
-        endYear : educationParam.endYear,
-        term : educationParam.term,
-        degree : educationParam.degree,
-        honor : educationParam.honor,
-        course : educationParam.course,
-        address : educationParam.address,
-        isUpdated : educationParam.isUpdated
-      }
-      educationParam.attachments.map((resp) =>
-        (
-          formData.append(resp.name.replace('/', '-'), resp.file)
-        )
+      schoolName : educationParam.schoolName,
+      studentNo : educationParam.studentNo,
+      startYear : educationParam.startYear,
+      endYear : educationParam.endYear,
+      term : educationParam.term,
+      degree : educationParam.degree,
+      honor : educationParam.honor,
+      course : educationParam.course,
+      address : educationParam.address,
+      isUpdated : educationParam.isUpdated
+    }
+    educationParam.attachments.map((resp) =>
+      (
+        formData.append(resp.name.replace('/', '-'), resp.file)
       )
+    )
     formData.append('body', JSON.stringify(objectParam))
 
     return this.onboardingClient.put(`v1/employees/school/${educationParam.educId}`, formData, {
@@ -1505,19 +1505,22 @@ export default class HRBenefitsService {
         middle : childrenParam.middleName,
         last : childrenParam.lastName,
       },
-      bloodType : childrenParam.bloodType,
+      bloodType : childrenParam.bloodTypeName,
       contactNumber : childrenParam.contactNumber,
       birthDate : childrenParam.birthDate,
-      gender : childrenParam.birthDate,
-      healthHospitalizationPlan: childrenParam.healthHospitalizationPlan,
-      groupLifeInsurance : childrenParam.groupLifeInsurance,
-      status: childrenParam.status,
+      gender : childrenParam.genderId,
+      occupation : childrenParam.occupationName,
+      healthHospitalizationPlan: childrenParam.hospitalization,
+      groupLifeInsurance : childrenParam.groupPlan,
+      status: childrenParam.statusId,
     }
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     formData.append('body', JSON.stringify(objectParam))
-    formData.append('uuid', 12345)
-    childrenParam.attachments.map((resp, key) => {
-      formData.append(resp.name, resp.file)
-    })
+    childrenParam.defaultAttachmentsArray.map((resp) => (
+      formData.append(resp.name.replace('/', '-'), resp.file)
+      )
+    )
+
     return this.onboardingClient.post('v1/employees/children', formData, {
       headers : { token }
     })
@@ -1531,20 +1534,20 @@ export default class HRBenefitsService {
         middle : childrenParam.middleName,
         last : childrenParam.lastName,
       },
-      bloodType : childrenParam.bloodType,
+      bloodType : childrenParam.bloodTypeName,
       contactNumber : childrenParam.contactNumber,
       birthDate : childrenParam.birthDate,
-      gender : childrenParam.birthDate,
-      occupation : childrenParam.occupation,
-      healthHospitalizationPlan: childrenParam.healthHospitalizationPlan,
-      groupLifeInsurance : childrenParam.groupLifeInsurance,
-      status: childrenParam.status,
+      gender : childrenParam.genderId,
+      occupation : childrenParam.occupationName,
+      healthHospitalizationPlan: childrenParam.hospitalization,
+      groupLifeInsurance : childrenParam.groupPlan,
+      status: childrenParam.statusId,
     }
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     formData.append('body', JSON.stringify(objectParam))
-    formData.append('uuid', 12345)
-    childrenParam.attachments.map((resp, key) => {
-      formData.append(resp.name, resp.file)
-    })
+    childrenParam.defaultAttachmentsArray.map((resp) =>
+      formData.append(resp.name.replace('/', '-'), resp.file)
+    )
     return this.onboardingClient.put(`v1/employees/children/${ childrenParam.childrenId }`, formData, {
       headers : { token }
     })

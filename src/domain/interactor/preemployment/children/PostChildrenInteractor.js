@@ -4,7 +4,7 @@ export default class PostChildrenInteractor {
   }
 
   execute (childrenFormParam) {
-    return this.client.postChildrenForm(
+    return this.client.postChildren(
       this.client.getToken(), childrenFormParam)
   }
 }

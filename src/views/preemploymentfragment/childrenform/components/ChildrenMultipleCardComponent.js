@@ -18,14 +18,15 @@ class ChildrenMultipleCardComponent extends Component {
   render () {
     const {
       onEditModeProperty,
-      childrenData
+      childrenData,
+      index,
     } = this.props
 
     return (
       <div>
         {
           childrenData &&
-          childrenData.map((resp, key) => (
+          childrenData.slice(0, index).map((resp, key) => (
             <div>
               <Card
                 className = { 'parent-card-grid-option' }
@@ -59,16 +60,13 @@ class ChildrenMultipleCardComponent extends Component {
                   </div>
                 </div>
                 <div className = { 'grid-global-rows' }>
-                  {
-                    !disabled &&
-                    <img
-                      className = { 'close-button-global' }
-                      src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
-                      onClick = { () =>
-                        onEditModeProperty(resp)
-                      }
-                    />
-                  }
+                  <img
+                    className = { 'close-button-global' }
+                    src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
+                    onClick = { () =>
+                      onEditModeProperty(resp)
+                    }
+                  />
                 </div>
               </Card>
               <br/>
@@ -93,7 +91,6 @@ ChildrenMultipleCardComponent.propTypes = {
   placeholder : PropTypes.string,
   errorMessage : PropTypes.string,
   onEditModeProperty : PropTypes.func,
-  disabled : PropTypes.bool,
 }
 
 export default ChildrenMultipleCardComponent

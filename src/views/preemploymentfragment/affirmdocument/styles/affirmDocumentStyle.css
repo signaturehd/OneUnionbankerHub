@@ -1,12 +1,27 @@
 .affirmation-card {
-  padding: 20px;
+  padding: 10px;
   cursor: pointer;
 }
 
 .affirmation-grid-card {
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-rows: .01fr .01fr .01fr .01fr;
   column-gap: 2%;
+}
+
+.affirmation-grid-pdf-card {
+  display: grid;
+  grid-template-columns: .25fr 1fr;
+  column-gap: 2%;
+}
+
+
+@media (max-width: 768px) {
+  .affirmation-grid-pdf-card {
+    display: grid;
+    grid-template-rows: .5 1fr;
+    column-gap: 2%;
+  }
 }
 
 .affirmation-grid-x2 {

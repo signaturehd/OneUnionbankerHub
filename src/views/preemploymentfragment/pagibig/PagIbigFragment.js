@@ -147,7 +147,7 @@ class PagIbigFragment extends BaseMVPView {
               }
             }>
             <div className = { 'abc-grid-x2' }>
-              <h2>Taxpayer Identification Number(TIN)</h2>
+              <h2>Pag Ibig MDR Form</h2>
               <div>
                 <span
                   className = { 'abc-icon biographical-seemore-button' }/>
@@ -196,7 +196,7 @@ class PagIbigFragment extends BaseMVPView {
               <MultipleAttachments
                 count = { count }
                 countFunc = { (count) => this.setState({ count }) }
-                placeholder = { '' }
+                placeholder = { 'Pag Ibig MDR Attachments' }
                 fileArray = { pagibigAttachment }
                 setFile = { (pagibigAttachment) =>
                     this.setState({ pagibigAttachment })

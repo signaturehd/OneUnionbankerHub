@@ -4,7 +4,7 @@ export default class PutChildrenInteractor {
   }
 
   execute (childrenFormParam) {
-    return this.client.putChildrenForm(
+    return this.client.putChildren(
       this.client.getToken(), childrenFormParam)
   }
 }

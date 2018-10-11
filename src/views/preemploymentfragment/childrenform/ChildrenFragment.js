@@ -21,9 +21,9 @@ import Presenter from './presenter/ChildrenPresenter'
 
 import { Progress } from 'react-sweet-progress'
 
-
 import NoticeResponse from '../../notice/NoticeResponseModal'
 
+import * as func from './functions/ChildrenFunctions'
 
 import "react-sweet-progress/lib/style.css"
 import './styles/childrenStyle.css'
@@ -36,15 +36,18 @@ class ChildrenFragment extends BaseMVPView {
       bloodObject: [],
       statusObject : [],
       genderObject : [],
+      defaultAttachmentsArray : [{
+        name : 'Birth Certificate'
+      }],
+      enabledLoader : false,
       showNoticeResponse : false,
       showBloodTypeModal : false,
       showStatusModal : false,
       showEditModeModal : false,
       showGenderModal : false,
-      isParentOrSiblings : null,
       index : 4,
       viewMoreText : 'View more',
-      parentId : '',
+      childrenId : '',
       lastName: '',
       firstName : '',
       middleName: '',
@@ -70,6 +73,8 @@ class ChildrenFragment extends BaseMVPView {
       lastNameErrorMessage: '',
       bloodTypeErrorMessage: '',
       relationshipErrorMessage: '',
+      count : 2,
+      editMode: false,
     }
   }
 
@@ -105,14 +110,6 @@ class ChildrenFragment extends BaseMVPView {
 
   showStatus (statusObject) {
     this.setState({ statusObject })
-  }
-
-  showCircularLoader () {
-    this.setState({ enabledLoader : true })
-  }
-
-  hideCircularLoader () {
-    this.setState({ enabledLoader : false })
   }
 
   /* Validation */
@@ -156,8 +153,8 @@ class ChildrenFragment extends BaseMVPView {
   editForm (selectedCard) {
     const nullChecker = selectedCard && selectedCard
     const nullCheckerName = selectedCard && selectedCard.name
-    this.setState({ showEditModeModal : true })
     this.setState({
+      showEditModeModal : true,
       firstName : nullCheckerName.first,
       middleName : nullCheckerName.middle,
       lastName : nullCheckerName.last,
@@ -167,7 +164,7 @@ class ChildrenFragment extends BaseMVPView {
       contact : nullChecker.contactNumber,
       gender : nullChecker.gender === 'M' ? 'Male' : 'Female',
       genderId : nullChecker.gender === 'M' ? 'M' : 'F',
-      parentId : nullChecker.id,
+      childrenId : nullChecker.id,
       relationship : nullChecker.relationship,
       statusId : nullChecker.status,
       statusName : nullChecker.status === 1 ? 'Deceased' : 'Living',
@@ -176,9 +173,30 @@ class ChildrenFragment extends BaseMVPView {
     })
   }
 
+  defaultValueForm () {
+    this.setState({
+      editMode : false,
+      firstName : '',
+      middleName  : '',
+      lastName : '',
+      bloodTypeName : '',
+      birthDate : '',
+      occupationName  : '',
+      contact : '',
+      gender : '',
+      genderId : '',
+      childrenId : '',
+      relationship : '',
+      statusId : '',
+      statusName : '',
+      hospitalization : '',
+      groupPlan : '',
+    })
+  }
+
   submitForm () {
     const {
-      parentId,
+      childrenId,
       firstName,
       lastName,
       middleName,
@@ -191,79 +209,53 @@ class ChildrenFragment extends BaseMVPView {
       bloodTypeName,
       hospitalization,
       groupPlan,
-      isParentOrSiblings
+      editMode,
+      defaultAttachmentsArray
     } = this.state
-    const gender = genderId === 'M' ? 'M' : 'F'
-    this.setState({ showEditModeModal : false })
-    if(isParentOrSiblings === true) {
-      // this.presenter.updateParentForm(
-      //   parentId,
-      //   firstName,
-      //   lastName,
-      //   middleName,
-      //   gender,
-      //   relationship,
-      //   statusId,
-      //   contact,
-      //   occupationName,
-      //   birthDate,
-      //   bloodTypeName,
-      //   hospitalization,
-      //   groupPlan,
-      // )
-    } else if (isParentOrSiblings === false) {
-      // this.presenter.updateSiblingsForm(
-      //   parentId,
-      //   firstName,
-      //   lastName,
-      //   middleName,
-      //   gender,
-      //   relationship,
-      //   statusId,
-      //   contact,
-      //   occupationName,
-      //   birthDate,
-      //   bloodTypeName,
-      //   hospitalization,
-      //   groupPlan,
-      // )
-    } else {
-      // this.presenter.addSiblingsForm(
-      //   parentId,
-      //   firstName,
-      //   lastName,
-      //   middleName,
-      //   gender,
-      //   relationship,
-      //   statusId,
-      //   contact,
-      //   occupationName,
-      //   birthDate,
-      //   bloodTypeName,
-      //   hospitalization,
-      //   groupPlan,
-      // )
-    }
-  }
 
-  addForm () {
-    this.setState({ showEditModeModal : true })
-    this.setState({
-      isParentOrSiblings : null,
-      firstName : '',
-      middleName : '',
-      lastName  : '',
-      bloodTypeName : '',
-      birthDate : nullChecker.birthDate,
-      occupationName : '',
-      contact :  '',
-      gender  : '',
-      genderId : '',
-      parentId  : '',
-      relationship  : '',
-      statusId  : '',
-      statusName  : '',
-    })
+    let gender = genderId === 'M' ? 'M' : 'F'
+
+    if(editMode) {
+      this.presenter.putChildren(
+        childrenId,
+        firstName,
+        lastName,
+        middleName,
+        gender,
+        relationship,
+        statusId,
+        contact,
+        occupationName,
+        birthDate,
+        bloodTypeName,
+        hospitalization,
+        groupPlan,
+        defaultAttachmentsArray
+      )
+      this.setState({ showEditModeModal : false })
+      this.editForm()
+      this.defaultValueForm()
+    } else {
+      this.presenter.postChildren(
+        childrenId,
+        firstName,
+        lastName,
+        middleName,
+        genderId,
+        relationship,
+        statusId,
+        contact,
+        occupationName,
+        birthDate,
+        bloodTypeName,
+        hospitalization,
+        groupPlan,
+        defaultAttachmentsArray
+      )
+      this.setState({ showEditModeModal : false })
+      this.editForm()
+      this.defaultValueForm()
+    }
   }
 
   render() {
@@ -278,6 +270,7 @@ class ChildrenFragment extends BaseMVPView {
       bloodObject,
       statusObject,
       genderObject,
+      defaultAttachmentsArray,
       enabledLoader,
       lastName,
       firstName,
@@ -312,8 +305,10 @@ class ChildrenFragment extends BaseMVPView {
       isParentOrSiblings,
       hospitalization,
       groupPlan,
+      count,
+      editMode
     } = this.state
-
+    console.log(editMode)
     const isVisible = (childrenData && childrenData.length > 4) ? '' : 'hide'
 
     return(
@@ -329,6 +324,9 @@ class ChildrenFragment extends BaseMVPView {
       {
         showEditModeModal &&
         <ChildrenFormModal
+          count = { count }
+          defaultAttachmentsArray = { defaultAttachmentsArray }
+          editMode = { editMode }
           showStatusModal = { showStatusModal }
           showBloodTypeModal = { showBloodTypeModal }
           showGenderModal = { showGenderModal }
@@ -346,8 +344,17 @@ class ChildrenFragment extends BaseMVPView {
           statusNameFunc = { (showStatusModal) => this.setState({ showStatusModal }) }
           groupPlanFunc = { () => this.setState({ groupPlan : groupPlan === 1 ? 0 : 1 }) }
           hospitalizationFunc = { () => this.setState({ hospitalization : hospitalization === 1 ? 0 : 1 }) }
-          genderFunc = { (showGenderModal) => this.setShospitalizationFunctate({ showGenderModal }) }
-          genderCodeFunc = { (e) => {} }
+          genderFunc = { (showGenderModal) => this.setState({ showGenderModal }) }
+          genericFileAttachmentArray = { (attachment, tempCount) => {
+            const attachmentTemp = [...attachment]
+            let newCount = tempCount + 1
+            this.setState({ count : newCount })
+              attachmentTemp.push({
+                name : 'Birth Certificate ' + tempCount
+              })
+            this.setState({ defaultAttachmentsArray : attachmentTemp })
+            }
+          }
           lastName = { lastName }
           firstName = { firstName }
           middleName = { middleName }
@@ -429,16 +436,26 @@ class ChildrenFragment extends BaseMVPView {
           <div className = { 'text-align-right' }>
             <GenericButton
               text = { 'Add' }
-              onClick  = { () => this.addForm() }
+              onClick  = { () => this.setState({ showEditModeModal : true }) }
             />
           </div>
         </div>
         <br/>
-        <ChildrenMultipleCardComponent
-          childrenData = { childrenData }
-          onEditModeProperty = { (e) => this.editForm(e) }
-          index = { index }
-          />
+        {
+          enabledLoader ?
+          <center>
+            <CircularLoader show = { enabledLoader }/>
+          </center>
+          :
+          <ChildrenMultipleCardComponent
+            childrenData = { childrenData }
+            onEditModeProperty = { (e) => {
+              this.setState({ editMode: true })
+              this.editForm(e)
+            } }
+            index = { index }
+            />
+        }
         <br/>
         <button
           type = { 'button' }
