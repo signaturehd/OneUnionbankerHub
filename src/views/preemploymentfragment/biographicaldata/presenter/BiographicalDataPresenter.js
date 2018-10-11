@@ -46,10 +46,10 @@ export default class BiographicalDataPresenter {
   }
 
   getSelectedAttachments (biographicalArray) {
-    // biographicalArray.map((resp, key) =>
-    //   resp.url.map((resp1) =>
-    //     this.getOnboardingAttachments(resp)
-    //   )
-    // )
+    biographicalArray.map((resp, key) =>
+      resp.url.map((resp1) =>
+        this.getOnboardingAttachments(resp)
+      )
+    )
   }
 }

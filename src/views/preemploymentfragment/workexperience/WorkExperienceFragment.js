@@ -203,7 +203,7 @@ class WorkExperienceFragment extends BaseMVPView {
     }
   }
 
-  briefDescDutiesFunc(briefDescDuties) {
+  briefDescDutiesFunc(briefDescDutiesbriefDescDuties) {
     const validate = func.checkedValidateText(briefDescDutiesbriefDescDuties)
     this.setState({ briefDescDuties: validate, briefDescDutiesErrorMessage : '' })
   }

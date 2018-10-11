@@ -177,7 +177,9 @@ class ParentFragment extends BaseMVPView {
       parentId : nullChecker.id,
       relationship : nullChecker.relationship,
       statusId : nullChecker.status,
-      statusName : nullChecker.status === 1 ? 'Deceased' : 'Living'
+      statusName : nullChecker.status === 1 ? 'Deceased' : 'Living',
+      hospitalization : nullChecker.healthHospitalizationPlan,
+      groupPlan : nullChecker.groupLifeInsurance,
     })
   }
 
@@ -336,6 +338,7 @@ class ParentFragment extends BaseMVPView {
         {
           showEditModeModal &&
           <ParentModal
+            isParentOrSiblings = { isParentOrSiblings }
             showStatusModal = { showStatusModal }
             showBloodTypeModal = { showBloodTypeModal }
             showGenderModal = { showGenderModal }
@@ -351,7 +354,9 @@ class ParentFragment extends BaseMVPView {
             relationshipNameFunc = { (relationship) => this.relationshipValidate(relationship) }
             bloodTypeFunc = { (showBloodTypeModal) => this.setState({ showBloodTypeModal }) }
             statusNameFunc = { (showStatusModal) => this.setState({ showStatusModal }) }
-            genderFunc = { (showGenderModal) => this.setState({ showGenderModal }) }
+            groupPlanFunc = { () => this.setState({ groupPlan : groupPlan === 1 ? 0 : 1 }) }
+            hospitalizationFunc = { () => this.setState({ hospitalization : hospitalization === 1 ? 0 : 1 }) }
+            genderFunc = { (showGenderModal) => this.setShospitalizationFunctate({ showGenderModal }) }
             genderCodeFunc = { (e) => {} }
             lastName = { lastName }
             firstName = { firstName }
@@ -363,6 +368,8 @@ class ParentFragment extends BaseMVPView {
             statusName = { statusName }
             gender = { gender }
             relationship = { relationship }
+            hospitalization = { hospitalization }
+            groupPlan = { groupPlan }
             relationshipErrorMessage = { relationshipErrorMessage }
             bloodTypeName = { bloodTypeName }
             birthDateErrorMessage = { birthDateErrorMessage }
