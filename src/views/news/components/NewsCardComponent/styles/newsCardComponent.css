@@ -90,3 +90,8 @@
   -webkit-mask-repeat: no-repeat;
   background-color: #ff4436;
 }
+
+.news-grid {
+  display: grid;
+  grid-template-columns: 3fr .10fr;
+}

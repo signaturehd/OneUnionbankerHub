@@ -22,7 +22,7 @@ class NewsFragment extends BaseMVPView {
       news: [],
       show : false,
       searchString : '',
-      showLoader: true
+      showLoader: true,
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
@@ -36,6 +36,7 @@ class NewsFragment extends BaseMVPView {
   updateSearch (e) {
     this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
+
   showNews (news) {
     this.setState({ news })
   }
@@ -46,7 +47,7 @@ class NewsFragment extends BaseMVPView {
       show,
       details,
       showLoader,
-      searchString
+      searchString,
     } = this.state
 
     let newsList = news
@@ -67,7 +68,7 @@ class NewsFragment extends BaseMVPView {
         <div className = { 'news-grid-header' }>
           <div>
             <h2 className={ 'header-margin-default text-align-left news-header' }>News Feed</h2>
-            <h2>Be in the loop. Check out what's new below.</h2>
+            <h2>Be in the loop. Check out what&#39;s new below.</h2>
             <br/>
           </div>
           <div></div>
@@ -121,8 +122,9 @@ class NewsFragment extends BaseMVPView {
                       news = { news }
                       onClick = { details =>
                         this.setState({ details, show: true })
-                        }
-                      />
+                      }
+                      onChangeHeart = { (id, isHeart) => this.presenter.addNewsIsHeart(id, isHeart) }
+                    />
                     <br/>
                     <Line/>
                     <br/>

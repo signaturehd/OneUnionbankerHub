@@ -891,4 +891,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* News isHeart */
+
+  addNewsIsHeart (token, id, isHeart) {
+    return this.service.addNewsIsHeart(token, id, isHeart)
+      .pipe(ServiceErrorOperator())
+  }
+
 }

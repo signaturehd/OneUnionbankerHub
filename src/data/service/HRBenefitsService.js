@@ -1183,4 +1183,16 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* News isHeart */
+
+  addNewsIsHeart (token, id, isHeart) {
+    const objectNewsIsHeart = {
+      newsId : id,
+      isLike : isHeart
+    }
+    return this.apiClient.post('v1/news/likes', objectNewsIsHeart, {
+      headers : { token }
+    })
+  }
 }
