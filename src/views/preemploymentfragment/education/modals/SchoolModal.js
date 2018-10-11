@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 
 import PropTypes from 'prop-types'
-import { Modal, GenericButton } from '../../../../ub-components'
-
+import {
+  Modal,
+  GenericButton,
+  CircularLoader,
+  GenericInput
+} from '../../../../ub-components'
+import './styles/educationModal.css'
 class SchoolModal extends Component {
   constructor (props) {
     super(props)
@@ -12,11 +17,15 @@ class SchoolModal extends Component {
     const {
       inputArray,
       onClose,
+      enabledLoader,
       label,
+      schoolPageNumber,
       className,
       selectedArray,
       schoolViewMore,
-      schoolPageNumberFunc
+      nextSchoolPageNumberFunc,
+      previousSchoolPageNumberFunc,
+      schoolFindFunc
     } = this.props
 
     const isVisible = (inputArray && inputArray.length > 4) ? '' : 'hide'
@@ -29,11 +38,17 @@ class SchoolModal extends Component {
           <h2>{label}</h2>
         </center>
         <br/>
-        <div
-          className = { 'select-grid' }
-        >
-
+        <div className = { 'select-grid' }>
+        <GenericInput
+          text = { 'Search' }
+          onChange = { (e) => schoolFindFunc(e.target.value) }
+        />
         {
+          enabledLoader ?
+          <center>
+            <CircularLoader show = { enabledLoader } />
+          </center>
+          :
           inputArray.length !== 0 &&
           inputArray.map((inputs, key) => (
             <div>
@@ -48,14 +63,20 @@ class SchoolModal extends Component {
             </div>
           ))
         }
-        <div>
-          <button
+        <div className = { 'school-modal-grid text-align-center' }>
+          {
+            schoolPageNumber !== 1 &&
+            <GenericButton
+              text = { 'Previous' }
+              type = { 'button' }
+              onClick = { () => previousSchoolPageNumberFunc() }
+            />
+          }
+          <GenericButton
+            text = { 'Next' }
             type = { 'button' }
-            className = { `viewmore tooltip ${ isVisible }` }
-            onClick = { () => schoolPageNumberFunc() }>
-            <img src={ require('../../../../images/icons/horizontal.png') } />
-            <span className={ 'tooltiptext' }>{ schoolViewMore }</span>
-          </button>
+            onClick = { () => nextSchoolPageNumberFunc() }
+          />
         </div>
         </div>
       </Modal>

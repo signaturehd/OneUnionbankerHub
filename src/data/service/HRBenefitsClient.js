@@ -973,8 +973,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getSchoolData (token, pageNumber) {
-    return this.service.getSchoolData(token, pageNumber)
+  getSchoolData (token, pageNumber, find) {
+    return this.service.getSchoolData(token, pageNumber, find)
     .pipe(ServiceErrorOperator())
   }
 

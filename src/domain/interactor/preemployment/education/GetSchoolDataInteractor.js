@@ -3,7 +3,7 @@ export default class GetSchoolDataInteractor {
     this.client = client
   }
 
-  execute (pageNumber) {
-    return this.client.getSchoolData(this.client.getToken(), pageNumber)
+  execute (pageNumber, find) {
+    return this.client.getSchoolData(this.client.getToken(), pageNumber, find)
   }
 }

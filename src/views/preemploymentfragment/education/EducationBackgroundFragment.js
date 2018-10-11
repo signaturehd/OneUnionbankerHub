@@ -66,6 +66,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       address : '',
       index : 4,
       schoolPageNumber: 1,
+      schoolFind : '',
       schoolViewMore : 'View more',
       viewMoreText : 'View more',
       schoolNameErrorMessage : '',
@@ -82,7 +83,7 @@ class EducationBackgroundFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.onSendPageNumberToView(4)
-    this.presenter.getEmployeeSchool(schoolPageNumber)
+    this.presenter.getEmployeeSchool(this.state.schoolPageNumber, this.state.schoolFind)
     this.presenter.getSchoolRecordVerificationForm()
   }
 
@@ -142,8 +143,15 @@ class EducationBackgroundFragment extends BaseMVPView {
     this.setState({ educationCardHolder })
   }
 
-  checkedSchoolData(schools) {
-    this.setState({ schools })
+  checkedSchoolData(resp) {
+    this.setState({ schools : resp })
+  }
+
+  updateSchoolData (resp) {
+    const { schools } = this.state
+    const tempArray = [...schools]
+    tempArray.push(resp)
+    this.setState({ schools : tempArray })
   }
 
   /* validation amd submission */
@@ -339,6 +347,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       address,
       index,
       schoolPageNumber,
+      schoolFind,
       schoolViewMore,
       viewMoreText,
       schoolNameErrorMessage,
@@ -381,6 +390,7 @@ class EducationBackgroundFragment extends BaseMVPView {
         {
           showEducationFormModal &&
           <EducationBackgroundModal
+            enabledLoader = { enabledLoader }
             updateMode = { updateMode }
             torFormData = { torFormData }
             schools = { schools.school }
@@ -418,7 +428,21 @@ class EducationBackgroundFragment extends BaseMVPView {
             showDegreeModal = { showDegreeModal }
             schoolPageNumber = { schoolPageNumber }
             schoolViewMore = { schoolViewMore }
-            schoolPageNumberFunc = { () => this.setState({ schoolPageNumber : schoolPageNumber + 1 }) }
+            nextSchoolPageNumberFunc = { () => {
+                this.setState({ schoolPageNumber : schoolPageNumber + 1 })
+                this.presenter.getEmployeeSchool(schoolPageNumber)
+              }
+            }
+            previousSchoolPageNumberFunc = { () => {
+                this.setState({ schoolPageNumber : schoolPageNumber - 1 })
+                this.presenter.getEmployeeSchool(schoolPageNumber)
+              }
+            }
+            schoolFindFunc = { (resp) => {
+                this.setState({ schoolFind : resp })
+                this.presenter.getEmployeeSchool(schoolPageNumber, schoolFind)
+              }
+            }
             showSchoolsModal = { showSchoolsModal }
             onCloseModal = { () => this.setState({ showSchoolsModal : false }) }
             setSchoolFunc = { (schoolId, schoolName) =>

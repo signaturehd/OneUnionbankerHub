@@ -42,9 +42,9 @@ export default class EducationBackgroundPresenter {
     }, error =>{})
   }
 
-  getEmployeeSchool (pageNumber) {
+  getEmployeeSchool (pageNumber, find) {
     this.view.showCircularLoader()
-    this.schoolDataInteractor.execute(pageNumber)
+    this.schoolDataInteractor.execute(pageNumber, find)
     .subscribe(
       data => {
         this.view.checkedSchoolData(data)

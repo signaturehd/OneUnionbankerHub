@@ -1113,7 +1113,7 @@ export default class HRBenefitsService {
   getOnBoardingAttachments (token, file) {
     return this.fileClient.get('v1/uploads?folder=onboarding-requirements', {
       headers: {
-        token : token,
+        token,
         file : file,
       },
       responseType : 'blob'
@@ -1356,8 +1356,8 @@ export default class HRBenefitsService {
     })
   }
 
-  getSchoolData (token, pageNumber) {
-    return this.accountClient.get(`v1/schools?pageNumber=${ pageNumber }`, {
+  getSchoolData (token, pageNumber, find) {
+    return this.accountClient.get(`v1/schools?pageNumber=${ pageNumber }&find=${ find }`, {
       headers : { token }
     })
   }

@@ -40,12 +40,15 @@ class EducationBackgroundModal extends Component {
 
     const {
     hideModalEducationFormFunc,
+    enabledLoader,
     updateMode,
     count,
     schools,
     schoolPageNumber,
     schoolViewMore,
-    schoolPageNumberFunc,
+    nextSchoolPageNumberFunc,
+    previousSchoolPageNumberFunc,
+    schoolFindFunc,
     torFormData,
     addAttachmentsFunc,
     setSchoolFunc,
@@ -96,9 +99,13 @@ class EducationBackgroundModal extends Component {
         {
           showSchoolsModal &&
           <SchoolModal
+            enabledLoader = { enabledLoader }
             label = { 'School' }
+            schoolPageNumber = { schoolPageNumber }
             schoolViewMore = { schoolViewMore }
-            schoolPageNumberFunc = { () => schoolPageNumberFunc() }
+            nextSchoolPageNumberFunc = { () => nextSchoolPageNumberFunc() }
+            previousSchoolPageNumberFunc = { () => previousSchoolPageNumberFunc() }
+            schoolFindFunc = { (resp) => schoolFindFunc (resp) }
             inputArray = { schools }
             selectedArray = { (schoolId, schoolName) =>
               setSchoolFunc(schoolId, schoolName)
@@ -270,7 +277,9 @@ EducationBackgroundModal.propTypes = {
   honorErrorMessage : PropTypes.string,
   schoolPageNumber : PropTypes.number,
   schoolViewMore : PropTypes.string,
-  schoolPageNumberFunc : PropTypes.func,
+  nextSchoolPageNumberFunc : PropTypes.func,
+  previousSchoolPageNumberFunc : PropTypes.func,
+  schoolFindFunc : PropTypes.func,
   studentNoFunc : PropTypes.func,
   termFunc : PropTypes.func,
   addressFunc : PropTypes.func,
