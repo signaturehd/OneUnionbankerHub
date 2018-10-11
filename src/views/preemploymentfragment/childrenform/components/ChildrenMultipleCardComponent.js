@@ -38,16 +38,16 @@ class ChildrenMultipleCardComponent extends Component {
                 <div className = { 'grid-global' }>
                   <div>
                     <h2 className = { 'font-size-16apx font-weight-bold' }>
-                      { resp.name && resp.name.first }, 
+                      { resp.name && resp.name.first },
                       { resp.name && resp.name.last } { resp.name && resp.name.middle }.
                     </h2>
                     <h2 className = { 'font-size-14px font-weight-normal' }>
-                      { 
+                      {
                         functions.checkedDateFilled(resp.birthDate)
                       }
-                    </h2>                    
+                    </h2>
                     <h2 className = { 'font-size-14px font-weight-normal' }>
-                      { 
+                      {
                         resp.contactNumber
                       }
                     </h2>
@@ -57,7 +57,7 @@ class ChildrenMultipleCardComponent extends Component {
                       { functions.checkStatus(resp.status) }
                     </h2>
                     <h2 className = { 'font-size-10px font-weight-lighter' }>
-                      { 
+                      {
                         functions.checkGender(resp.gender)
                       }
                     </h2>
@@ -70,7 +70,7 @@ class ChildrenMultipleCardComponent extends Component {
                       className = { 'close-button-global' }
                       src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
                       onClick = { () =>
-                        onEditModeProperty()
+                        onEditModeProperty(resp)
                       }
                     />
                   }

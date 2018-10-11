@@ -45,7 +45,7 @@ class ChildrenFragment extends BaseMVPView {
       statusNameErrorMessage: '',
       noticeResponse: '',
       showFinanceModal : false,
-      showFinancialFormModal : false,
+      showChildrenFormModal : false,
       editMode : false,
       financeDetailsHolder : [],
       index : 4,
@@ -125,7 +125,7 @@ class ChildrenFragment extends BaseMVPView {
           statusId,
           financeId
         )
-        this.setState({ showFinancialFormModal : false })
+        this.setState({ showChildrenFormModal : false })
         this.setState({
           bankNameInstitution : '',
           natureObligation : '',
@@ -142,7 +142,7 @@ class ChildrenFragment extends BaseMVPView {
         statusId,
         financeId)
 
-        this.setState({ showFinancialFormModal : false })
+        this.setState({ showChildrenFormModal : false })
         this.setState({
           bankNameInstitution : '',
           natureObligation : '',
@@ -155,6 +155,9 @@ class ChildrenFragment extends BaseMVPView {
     }
   }
 
+  editMode (resp) {
+    this.setState({ showChildrenFormModal : true })
+  }
 
   render() {
     const {
@@ -181,7 +184,7 @@ class ChildrenFragment extends BaseMVPView {
       showFinanceStatusErrorMessage,
       noticeResponse,
       showFinanceModal,
-      showFinancialFormModal,
+      showChildrenFormModal,
       index,
       viewMoreText,
       financeId,
@@ -208,7 +211,7 @@ class ChildrenFragment extends BaseMVPView {
         </Modal>
       }
       {
-        showFinancialFormModal &&
+        showChildrenFormModal &&
         <ChildrenFormModal
           natureObligationFunc = { (natureObligation) =>  this.setState({ natureObligation }) }
           statusName = { statusName }
@@ -218,7 +221,7 @@ class ChildrenFragment extends BaseMVPView {
           bankNameInstitutionFunc = { (bankNameInstitution) => this.setState({ bankNameInstitution }) }
           amountFunc = { (amount) => this.setState({ amount }) }
           submitForm = { () => this.submitForm() }
-          onClose = { () => this.setState({ showFinancialFormModal : false }) }
+          onClose = { () => this.setState({ showChildrenFormModal : false }) }
           bankNameInstitutionErrorMessage = { bankNameInstitutionErrorMessage }
           natureObligationErrorMessage = { natureObligationErrorMessage }
           amountErrorMessage = { amountErrorMessage }
@@ -262,7 +265,7 @@ class ChildrenFragment extends BaseMVPView {
           <div className = { 'text-align-right' }>
             <GenericButton
               text = { 'Add Financial Obligation' }
-              onClick = { () => this.setState({ showFinancialFormModal : true }) }
+              onClick = { () => this.setState({ showChildrenFormModal : true }) }
               />
           </div>
         </div>
@@ -278,7 +281,7 @@ class ChildrenFragment extends BaseMVPView {
               index = { index }
               childrenData = { childrenData }
               financeDetailsHolder = { financeDetailsHolder }
-              onEditModeProperty = { () => {} }
+              onEditModeProperty = { (resp) => this.editMode(resp) }
               />
             <br/>
             <button
