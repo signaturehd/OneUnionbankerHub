@@ -158,7 +158,6 @@ class SideBar extends Component {
                 { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
                   { d.title }
             </li>
-            <Line />
           </div>
           )
         }

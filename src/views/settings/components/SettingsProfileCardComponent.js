@@ -288,11 +288,6 @@ class SettingsProfileCardComponent extends Component {
       </div>
       <div className={ 'profile-settings-grid-column-mobile' }>
       </div>
-      {
-      // <FloatingActionButton
-      //   text="+"
-      // />
-      }
     </div>
     )
   }

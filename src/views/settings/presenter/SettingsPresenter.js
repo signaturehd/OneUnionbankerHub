@@ -1,6 +1,7 @@
 import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInteractor'
 import GenericPutNewCodeInteractor from '../../../domain/interactor/pinCode/GenericPutNewCodeInteractor'
 import GetForConfirmationInteractor from '../../../domain/interactor/staffaccounts/GetForConfirmationInteractor'
+import AddStaffAccountInteractor from '../../../domain/interactor/staffaccounts/AddStaffAccountInteractor'
 import PostStaffAccountsInteractor from '../../../domain/interactor/staffaccounts/PostStaffAccountsInteractor'
 import UpdateDescriptionInteractor from '../../../domain/interactor/account/UpdateDescriptionInteractor'
 import GetDevicesInteractor from '../../../domain/interactor/account/GetDevicesInteractor'
@@ -16,6 +17,7 @@ export default class SettingsPresenter {
     this.genericPutNewCodeInteractor = new GenericPutNewCodeInteractor(container.get('HRBenefitsClient'))
     this.getForConfirmationInteractor = new GetForConfirmationInteractor(container.get('HRBenefitsClient'))
     this.postStaffAccountsInteractor = new PostStaffAccountsInteractor(container.get('HRBenefitsClient'))
+    this.addStaffAccountInteractor = new AddStaffAccountInteractor(container.get('HRBenefitsClient'))
     this.updateDescriptionInteractor = new UpdateDescriptionInteractor(container.get('HRBenefitsClient'))
     this.getDevicesInteractor = new GetDevicesInteractor(container.get('HRBenefitsClient'))
   }
@@ -76,14 +78,52 @@ export default class SettingsPresenter {
      })
    }
 
-   addStaffAccounts (employeeName, sequence) {
+   addStaffAccounts (
+     employeeName,
+     sequence,
+     fullName,
+     accountNumber,
+     type,
+     capacity,
+     remarks
+   ) {
      this.postStaffAccountsInteractor.execute(addStaffAcountsParam(
        employeeName,
-       sequence
+       sequence,
+       fullName,
+       accountNumber,
+       type,
+       capacity,
+       remarks
      ))
      .subscribe(data => {
        this.view.noticeResponseModal(data.message)
      }, error => {
+     })
+   }
+
+   addStaffAccount (
+     employeeName,
+     sequence,
+     fullName,
+     accountNumber,
+     type,
+     capacity,
+     remarks
+   ) {
+     this.addStaffAccountInteractor.execute(addStaffAccounts(
+       employeeName,
+       sequence,
+       fullName,
+       accountNumber,
+       type,
+       capacity,
+       remarks
+     ))
+     .subscribe(data => {
+       this.view.noticeResponseModal(data.message)
+     }, error => {
+
      })
    }
 

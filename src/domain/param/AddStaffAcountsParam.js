@@ -1,7 +1,17 @@
 export default (
-    employeeName,
-    sequence
+  employeeName,
+  sequence,
+  fullName,
+  accountNumber,
+  type,
+  capacity,
+  remarks
   ) => ({
     employeeName,
-    sequence
+    sequence,
+    fullName,
+    accountNumber,
+    type,
+    capacity,
+    remarks
   })

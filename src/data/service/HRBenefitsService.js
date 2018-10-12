@@ -1089,11 +1089,18 @@ export default class HRBenefitsService {
     })
   }
 
-  putStaffAccounts (token, putStaffAccountsParam) {
+  addStaffAccount (token, putStaffAccountsParam) {
     const putStafftAccountsObject = {
-
+     employeeName: putStaffAccountsParam.fullName,
+     account:{
+       name: putStaffAccountsParam.fullName,
+       number: putStaffAccountsParam.accountNumber,
+       type: putStaffAccountsParam.type,
+       capacity: putStaffAccountsParam.capacity,
+       remarks:putStaffAccountsParam.remarks,
+     }
     }
-    return this.accountClient.post('v1/', putStafftAccountsObject, {
+    return this.accountClient.post('v1/employees/details ', putStafftAccountsObject, {
       headers : { token }
     })
   }

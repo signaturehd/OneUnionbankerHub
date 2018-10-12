@@ -1,7 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { GenericButton, Modal, Line, ConfirmationModal, CircularLoader } from '../../../ub-components/'
+import {
+  GenericButton,
+  GenericInput,
+  Modal,
+  Line,
+  ConfirmationModal,
+  CircularLoader,
+  FloatingActionButton,
+  SingleInputModal
+} from '../../../ub-components/'
+
 import StaffAccountCardComponent from '../components/StaffAccountCardComponent'
 import './styles/staffAccountModal.css'
 
@@ -12,8 +22,54 @@ class StaffAccountsModal extends Component {
     this.state={
       isDismisable : true,
       showConfirmationModal : false,
+      showTypeModal : false,
+      showCapacityModal : false,
       employeeName : '',
       sequence : '',
+      fullName : '',
+      accountNumber : '',
+      accountType : '',
+      accountTypeCode : '',
+      accountCapacity : '',
+      accountCapacityCode : '',
+      accountRemarks: '',
+      accountTypeObject : [
+      {
+        id : 'CA',
+        name : 'Current'
+      },{
+        id : 'EO',
+        name : 'EON'
+      },{
+        id : 'OT',
+        name : 'Others'
+      }, {
+        id : 'SA',
+        name : 'Savings'
+      }, {
+        id : 'TD',
+        name : 'Time Deposit'
+      }, {
+        id : 'TE',
+        name : 'Treasury'
+      }, {
+        id : 'TU',
+        name : 'Trust'
+      }],
+    accountCapacityObject : [
+      {
+        id : 'CS',
+        name : 'Corp. Signatory'
+      },{
+        id : 'JO',
+        name : 'Joint'
+      },{
+        id : 'OT',
+        name : 'Others'
+      }, {
+        id : 'SI',
+        name : 'Single'
+      }]
     }
   }
 
@@ -53,20 +109,36 @@ class StaffAccountsModal extends Component {
     return ret
   }
 
+  addStaffAccounts () {
+
+  }
+
   render () {
     const {
       onClose,
       staffLoader,
       staffAccounts,
-      onClickEmployeeConfirmation
+      onClickEmployeeConfirmation,
     }=this.props
 
     const {
-      isDismisable,
-      showConfirmationModal,
-      enabledLoader,
-      employeeName,
-      sequence
+     fullName,
+     accountNumber,
+     accountType,
+     accountTypeCode,
+     accountTypeObject,
+     showTypeModal,
+     accountCapacity,
+     accountCapacityCode,
+     accountCapacityObject,
+     showCapacityModal,
+     accountRemarks,
+     isDismisable,
+     showConfirmationModal,
+     enabledLoader,
+     employeeName,
+     sequence,
+     showUpdateComponent
     }=this.state
 
     return (
@@ -97,51 +169,125 @@ class StaffAccountsModal extends Component {
             </center>
           </Modal>
         }
-        <div>
+        {
+          showTypeModal &&
+          <SingleInputModal
+            label = { 'Account Type' }
+            inputArray = { accountTypeObject }
+            selectedArray = { (accountTypeCode, accountType) =>
+              this.setState({ accountTypeCode, accountType, showTypeModal: false }) }
+            onClose = { () =>
+              this.setState({ showTypeModal : false }) }
+            />
+        }
+        {
+          showCapacityModal &&
+          <SingleInputModal
+            label = { 'Account Capacity' }
+            inputArray = { accountCapacityObject }
+            selectedArray = { (accountCapacityCode, accountCapacity) =>
+              this.setState({ accountCapacityCode, accountCapacity, showCapacityModal: false }) }
+            onClose = { () =>
+              this.setState({ showCapacityModal : false }) }
+            />
+        }
+        {
+          showUpdateComponent ?
           <div>
-          <br/>
-            <h2 className={ 'font-weight-normal' }>STAFF ACCOUNTS</h2>
-            <p className={ 'modal-description' }>If you find any discrepancy in your account number, please visit any UnionBank branch.</p>
-            <Line/>
+            <h2 className={ 'font-weight-normal' }>ADD STAFF ACCOUNTS</h2>
             <br/>
-          </div>
-
-          {
-            staffLoader ?
-            <center>
-              <CircularLoader show = { true }/>
-            </center> :
-            <div className={ 'staff-account-body' }>
-            {
-              staffAccounts && staffAccounts.map(
-                (resp, key) => (
-                  <div className={ `back-color-default staff-account-card back-color-${resp.line2}` }>
-                    <div className = { 'staff-account-card-details' }>
-                      <div className = { 'staff-account-card-icon staff-account-card-icon-card' }>
-                      </div>
-                      <div>
-                        <h3 className = { 'staff-account-card-title' }>{ resp.employeeName }</h3>
-                        <h3 className = { 'staff-account-card-description' }>{ this.getAccountType(resp.line2) }</h3>
-                      </div>
-                    </div>
-                    <br/>
-                    <div className = { 'staff-account-grid-2' }>
-                      <h3 className = { 'staff-account-card-number' }>{ resp.account.number }</h3>
-                      <GenericButton
-                        text = { resp.status }
-                        onClick = { () => this.confirmationModal(true, resp.employeeName, resp.sequence) }
-                        disabled = { resp.status.toLowerCase() === 'confirmed' ? true : false  }
-                        className = { resp.status.toLowerCase() === 'confirmed' ? 'confirmed-button' : 'not-confirmed-button' }
-                      />
-                    </div>
-                  </div>
-                )
-              )
-            }
-
+              <GenericInput
+                text = { 'Fullname' }
+                maxLength = { 30 }
+                value = { fullName }
+                onChange = { (e) => this.setState({ fullName : e.target.value }) }
+                />
+              <GenericInput
+                text = { 'Account Number' }
+                maxLength = { 30 }
+                value = { accountNumber }
+                type = { 'number' }
+                onChange = { (e) => this.setState({ accountNumber : e.target.value }) }
+                />
+              <GenericInput
+                text = { 'Account Type' }
+                value = { accountType }
+                onClick = { () => this.setState({ showTypeModal : true }) }
+                />
+              <GenericInput
+                text = { 'Account Capacity' }
+                value = { accountCapacity }
+                onClick = { () => this.setState({ showCapacityModal : true }) }
+                />
+              <GenericInput
+                text = { 'Account Remarks' }
+                maxLength = { 30 }
+                value = { accountRemarks }
+                onChange = { (e) => this.setState({ accountRemarks : e.target.value }) }
+                />
+              <br/>
+            <div className = { 'grid-global' }>
+              <GenericButton
+                text = { 'Cancel' }
+                onClick = { () => this.setState({ showUpdateComponent : false }) }
+                />
+              <GenericButton
+                text = { 'Save' }
+                onClick = { () => this.addStaffAccounts() }
+                />
             </div>
-          }
-        </div>
+            <br/>
+          </div> :
+          <div>
+            <div>
+            <br/>
+              <h2 className={ 'font-weight-normal' }>STAFF ACCOUNTS</h2>
+              <p className={ 'modal-description' }>If you find any discrepancy in your account number, please visit any UnionBank branch.</p>
+              <Line/>
+              <br/>
+            </div>
+
+            {
+              staffLoader ?
+              <center>
+                <CircularLoader show = { true }/>
+              </center> :
+              <div className={ 'staff-account-body' }>
+              {
+                staffAccounts && staffAccounts.map(
+                  (resp, key) => (
+                    <div className={ `back-color-default staff-account-card back-color-${resp.line2}` }>
+                      <div className = { 'staff-account-card-details' }>
+                        <div className = { 'staff-account-card-icon staff-account-card-icon-card' }>
+                        </div>
+                        <div>
+                          <h3 className = { 'staff-account-card-title' }>{ resp.employeeName }</h3>
+                          <h3 className = { 'staff-account-card-description' }>{ this.getAccountType(resp.line2) }</h3>
+                        </div>
+                      </div>
+                      <br/>
+                      <div className = { 'staff-account-grid-2' }>
+                        <h3 className = { 'staff-account-card-number' }>{ resp.account.number }</h3>
+                        <GenericButton
+                          text = { resp.status }
+                          onClick = { () => this.confirmationModal(true, resp.employeeName, resp.sequence) }
+                          disabled = { resp.status.toLowerCase() === 'confirmed' ? true : false  }
+                          className = { resp.status.toLowerCase() === 'confirmed' ? 'confirmed-button' : 'not-confirmed-button' }
+                        />
+                      </div>
+                    </div>
+                  )
+                )
+              }
+              </div>
+            }
+            <FloatingActionButton
+              text = { '+' }
+              onClick = { () => this.setState({ showUpdateComponent : true }) }
+              />
+          </div>
+        }
+
       </Modal>
       )
     }
