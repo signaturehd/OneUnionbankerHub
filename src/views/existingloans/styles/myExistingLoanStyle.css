@@ -47,6 +47,13 @@
   font-weight: bold;
 }
 
+.existing-loan-summary-grid {
+  display: grid;
+  grid-template-columns: .5fr 1fr;
+  align-items: center;
+  font-weight: bold;
+}
+
 .existing-loans-grid-x6 {
   padding: 20px 10px 10px 10px;
   display: grid;

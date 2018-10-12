@@ -770,6 +770,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getNonExistingLoans (token) {
+    return this.service.getNonExistingLoans(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Phenom Loans */
   getPhenomDiscounts (token) {
     return this.service.getPhenomDiscounts(token)
@@ -1137,4 +1142,12 @@ export default class HRBenefitsClient {
     )
       .pipe(ServiceErrorOperator())
   }
+
+  /* News isHeart */
+
+  addNewsIsHeart (token, id, isHeart) {
+    return this.service.addNewsIsHeart(token, id, isHeart)
+      .pipe(ServiceErrorOperator())
+  }
+
 }
