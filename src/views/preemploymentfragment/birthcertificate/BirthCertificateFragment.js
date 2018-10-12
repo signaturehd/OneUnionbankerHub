@@ -142,27 +142,36 @@ class BirthCertificateFragment extends BaseMVPView {
         <Line />
         <br/>
         {
-          birthDataFormData.length !== 0 &&
+          birthCertifArray.length !== 0 &&
           birthCertifArray.map((status) =>
-            status.status === 2 ?
-            <div>
-            <center>
-              <h4 className = { 'font-size-14px font-weight-lighter' }>
-                Your documents has been <b>submitted for confirmation</b>.
-              </h4>
-            </center>
-            </div>
-            :
-            status.status === 4 ?
-            <div>
-            <center>
-              <h4 className = { 'font-size-14px font-weight-lighter' }>
-                Your documents are <b>verified</b>.
-              </h4>
-            </center>
-            </div>
-            :
-            <div className = { 'grid-global' }>
+          <div>
+            {
+              status.status === 2 &&
+              <div>
+              <center>
+                <h4 className = { 'font-size-14px font-weight-lighter' }>
+                  Your documents has been <b>submitted for confirmation</b>.
+                </h4>
+              </center>
+              </div>
+            }
+            {
+              status.status === 4 &&
+              <div>
+              <center>
+                <h4 className = { 'font-size-14px font-weight-lighter' }>
+                  Your documents are <b>verified</b>.
+                </h4>
+              </center>
+              </div>
+            }
+          </div>
+          )
+        }
+        {
+          birthCertifArray &&
+        <div>
+          <div className = { 'grid-global' }>
             <h2></h2>
             <div className = { 'text-align-right' }>
               <GenericButton
@@ -170,8 +179,9 @@ class BirthCertificateFragment extends BaseMVPView {
                 onClick = { () => this.addAttachmentsFunc(birthDataFormData, count) }
                 />
             </div>
+          </div>
           <h4>
-            Biographical Data Attachments
+            Birth Certitificate Attachments
           </h4>
           <br/>
           <MultipleAttachments
@@ -188,8 +198,7 @@ class BirthCertificateFragment extends BaseMVPView {
             text = { 'Save' }
             onClick = { () => this.submitForm() }/>
             </center>
-          </div>
-          )
+        </div>
         }
       </div>
     </div>

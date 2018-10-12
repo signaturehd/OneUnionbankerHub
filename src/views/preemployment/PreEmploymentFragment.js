@@ -221,9 +221,11 @@ class PreEmploymentFragment extends BaseMVPView {
       preEmpPage  : 0,
       showFinancialObligationModal: false,
       showTaxPayerIdentificationModal: false,
+      showSkipMessage: false,
       showPagibigLoanModal : false,
       showMarriedConfirmModal : false,
       showChildrenConfirmModal : false,
+      hideSubmitButton : true,
       preEmploymentData : [],
     }
   }
@@ -283,7 +285,7 @@ class PreEmploymentFragment extends BaseMVPView {
     } else if (index === 18) {
       this.setState({ showChildrenConfirmModal : true })
     } else if (index === 21) {
-      this.skipPage ()
+      this.setState({ hideSubmitButton : false })
     } else {
       this.setState({ preEmpPage : index })
     }
@@ -307,8 +309,7 @@ class PreEmploymentFragment extends BaseMVPView {
   }
 
   skipPage () {
-    this.props.onChangeStateGoBenefits(1)
-    this.props.history.push('/')
+    this.setState({ showSkipMessage : true })
   }
 
   render() {
@@ -328,15 +329,37 @@ class PreEmploymentFragment extends BaseMVPView {
       preEmpPage,
       showFinancialObligationModal,
       showTaxPayerIdentificationModal,
+      showSkipMessage,
       showPagibigLoanModal,
       showMarriedConfirmModal,
       preEmploymentData,
-      showChildrenConfirmModal
+      showChildrenConfirmModal,
+      hideSubmitButton
     } = this.state
 
     return(
       <div>
       { super.render() }
+      {
+        showSkipMessage &&
+        <Modal>
+          <h2 className = { 'font-weight-bold' }>Skip</h2>
+          <h2>Do you want to skip pre-employment process? You can still updates this on 1UHub > Drawer > Pre-Employment.</h2>
+          <div className = { 'grid-global' }>
+            <GenericButton
+              onClick = { () => this.setState({ showSkipMessage : false }) }
+              text = { 'No' }
+              />
+            <GenericButton
+              onClick = { () => {
+                this.props.onChangeStateGoBenefits(1)
+                this.props.history.push('/')
+              } }
+              text = { 'Yes' }
+              />
+          </div>
+      </Modal>
+      }
       {
         showFinancialObligationModal &&
         <IsFinancialObilgationConfirmModal
@@ -471,10 +494,13 @@ class PreEmploymentFragment extends BaseMVPView {
                     this.skipPage()
                   }
                 />
+              {
+                hideSubmitButton &&
                 <GenericButton
                   className = { 'global-button' }
                   text = { 'Next' }
                   onClick = { () => this.incrementPage() } />
+              }
               </div>
             </div>
             }

@@ -498,7 +498,7 @@ class EducationBackgroundFragment extends BaseMVPView {
         </div>
         <br/>
         {
-          pdfFileUrl &&
+          educationCardHolder.length > 0 &&
           <div className = { 'educ-grid-card' }>
             <Card
               onClick = { () => {

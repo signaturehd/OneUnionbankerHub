@@ -75,12 +75,15 @@ export default class SpousePresenter {
     return func.checkValidateInput(string)
   }
 
+  getObjectData () {
+    this.view.showGender(genderObject)
+    this.view.showStatus(statusObject)
+    this.view.showBloodType(bloodObjectParam)
+  }
+
   getSpouse () {
     this.view.showCircularLoader()
     this.getSpouseInteractor.execute()
-    .do(data => this.view.showGender(genderObject))
-    .do(data => this.view.showStatus(statusObject))
-    .do(data => this.view.showBloodType(bloodObjectParam))
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.showSpouseDetails(data, true)

@@ -104,43 +104,51 @@ class NbiClearanceFragment extends BaseMVPView {
         <br/>
         {
           nbiArray.map((status) =>
-            status.status === 2 ?
             <div>
-            <center>
-              <h4 className = { 'font-size-14px font-weight-lighter' }>
-                Your documents has been <b>submitted for confirmation</b>.
-              </h4>
-            </center>
-            </div>
-            :
-            status.status === 4 ?
-            <div>
-            <center>
-              <h4 className = { 'font-size-14px font-weight-lighter' }>
-                Your documents are <b>verified</b>.
-              </h4>
-            </center>
-            </div>
-            :
-            <div>
-              <h4>
-                NBI Clearance Attachments
-              </h4>
-              <br/>
-              <MultipleFileUploader
-                placeholder = { '' }
-                fileArray = { nbiClearance }
-                setFile = { (nbiClearance) =>
-                  this.setState({ nbiClearance })
-                  }
-                />
-              <center>
-                <GenericButton
-                text = { 'Save' }
-                onClick = { () => this.submitForm(status.id) }/>
-              </center>
+              {
+                status.status === 2 &&
+                <div>
+                <center>
+                  <h4 className = { 'font-size-14px font-weight-lighter' }>
+                    Your documents has been <b>submitted for confirmation</b>.
+                  </h4>
+                </center>
+                </div>
+              }
+              {
+                status.status === 4 &&
+                <div>
+                <center>
+                  <h4 className = { 'font-size-14px font-weight-lighter' }>
+                    Your documents are <b>verified</b>.
+                  </h4>
+                </center>
+                </div>
+              }
             </div>
           )
+        }
+        {
+          nbiArray &&
+          nbiArray.length === 0 &&
+          <div>
+            <h4>
+              NBI Clearance Attachments
+            </h4>
+            <br/>
+            <MultipleFileUploader
+              placeholder = { '' }
+              fileArray = { nbiClearance }
+              setFile = { (nbiClearance) =>
+                this.setState({ nbiClearance })
+                }
+              />
+            <center>
+              <GenericButton
+              text = { 'Save' }
+              onClick = { () => this.submitForm(status.id) }/>
+            </center>
+          </div>
         }
       </div>
     )

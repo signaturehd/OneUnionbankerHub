@@ -19,7 +19,7 @@ import {
 import { Progress } from 'react-sweet-progress'
 import ResponseModal from '../../notice/NoticeResponseModal'
 
-import PagibigFormPreviewModal from './modal/PagibigFormPreviewModal'
+import PagIbigViewPdfComponent from './components/PagIbigViewPdfComponent'
 
 class PagIbigFragment extends BaseMVPView {
 
@@ -29,7 +29,7 @@ class PagIbigFragment extends BaseMVPView {
       enabledLoader : false,
       showNoticeResponseModal : false,
       noticeResponse : '',
-      showPdfViewModal : false,
+      showPdfViewComponent : false,
       pdfFile: '',
       pagibigAttachment : [{
         name : 'Pag-IBIG Form'
@@ -88,7 +88,7 @@ class PagIbigFragment extends BaseMVPView {
   render () {
     const {
       enabledLoader,
-      showPdfViewModal,
+      showPdfViewComponent,
       pdfFile,
       count,
       noticeResponse,
@@ -118,13 +118,6 @@ class PagIbigFragment extends BaseMVPView {
             noticeResponse={ noticeResponse }
           />
         }
-        {
-          showPdfViewModal &&
-          <PagibigFormPreviewModal
-            pdfFile = { pdfFile }
-            onClose = { () => this.setState({ showPdfViewModal: false }) }
-            />
-        }
         <div className = { 'percentage-grid' }>
           <div>
           <h2 className={ 'header-margin-default text-align-left' }>Pag-IBIG</h2>
@@ -143,7 +136,7 @@ class PagIbigFragment extends BaseMVPView {
             className = { 'abc-card' }
             onClick = { () => {
               this.onCheckedPdf('/2018-09-28/12345-Pagibig Form-1538123144111.pdf')
-              this.setState({ showPdfViewModal : true  })
+              this.setState({ showPdfViewComponent : true  })
               }
             }>
             <div className = { 'abc-grid-x2' }>
@@ -154,6 +147,13 @@ class PagIbigFragment extends BaseMVPView {
               </div>
             </div>
           </Card>
+          {
+            showPdfViewComponent &&
+            <PagIbigViewPdfComponent
+              pdfFile = { pdfFile }
+              onClose = { () => this.setState({ showPdfViewComponent: false }) }
+            />
+          }
           </div>
         <br/>
         <Line />
@@ -161,25 +161,33 @@ class PagIbigFragment extends BaseMVPView {
           {
             pagibigAttachment.length !== 0  &&
             pagibigArray.map((status) =>
-              status.status === 2 ?
               <div>
-              <center>
-                <h4 className = { 'font-size-14px font-weight-lighter' }>
-                  Your documents has been <b>submitted for confirmation</b>.
-                </h4>
-              </center>
+                {
+                  status.status === 2 &&
+                  <div>
+                  <center>
+                    <h4 className = { 'font-size-14px font-weight-lighter' }>
+                      Your documents has been <b>submitted for confirmation</b>.
+                    </h4>
+                  </center>
+                  </div>
+                }
+                {
+                  status.status === 4 &&
+                  <div>
+                  <center>
+                    <h4 className = { 'font-size-14px font-weight-lighter' }>
+                      Your documents are <b>verified</b>.
+                    </h4>
+                  </center>
+                  </div>
+                }
               </div>
-              :
-              status.status === 4 ?
-              <div>
-              <center>
-                <h4 className = { 'font-size-14px font-weight-lighter' }>
-                  Your documents are <b>verified</b>.
-                </h4>
-              </center>
-              </div>
-              :
-              <div>
+            )
+          }
+          {
+            pagibigArray.length === 0 &&
+            <div>
               <div className = { 'grid-global' }>
                 <h2></h2>
                 <div className = { 'text-align-right' }>
@@ -202,14 +210,13 @@ class PagIbigFragment extends BaseMVPView {
                     this.setState({ pagibigAttachment })
                 }
                 />
-                <center>
-                 <GenericButton
-                   text = { 'Upload' }
-                   onClick = { () => this.uploadForm()  }
-                 />
-               </center>
-              </div>
-            )
+              <center>
+               <GenericButton
+                 text = { 'Save' }
+                 onClick = { () => this.uploadForm()  }
+               />
+             </center>
+            </div>
           }
       </div>
     )

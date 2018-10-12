@@ -151,41 +151,49 @@ class SSSFragment extends BaseMVPView {
         <br/>
         {
           sssArray.map((status) =>
-          status.status === 2 ?
           <div>
-          <center>
-            <h4 className = { 'font-size-14px font-weight-lighter' }>
-              Your documents has been <b>submitted for confirmation</b>.
-            </h4>
-          </center>
+            {
+              status.status === 2 &&
+              <div>
+              <center>
+                <h4 className = { 'font-size-14px font-weight-lighter' }>
+                  Your documents has been <b>submitted for confirmation</b>.
+                </h4>
+              </center>
+              </div>
+            }
+            {
+              status.status === 4 &&
+              <div>
+              <center>
+                <h4 className = { 'font-size-14px font-weight-lighter' }>
+                  Your documents are <b>verified</b>.
+                </h4>
+              </center>
+              </div>
+              }
           </div>
-          :
-          status.status === 4 ?
-          <div>
-          <center>
-            <h4 className = { 'font-size-14px font-weight-lighter' }>
-              Your documents are <b>verified</b>.
-            </h4>
-          </center>
-          </div>
-          :
-          <div>
-            <h4>
-              SSS Attachments
-            </h4>
-            <br/>
+          )
+        }
+        {
+          sssArray.length === 0 &&
+
+        <div>
+          <h4>
+            SSS Attachments
+          </h4>
+          <br/>
           <MultipleFileUploader
             placeholder = { '' }
             fileArray = { sssAttachment }
             setFile = { (resp) => this.setAttachments(resp) }
             />
           <center>
-          <GenericButton
-          text = { 'Upload' }
-          onClick = { () => this.uploadForm() }/>
+            <GenericButton
+            text = { 'Save' }
+            onClick = { () => this.uploadForm() }/>
           </center>
         </div>
-        )
         }
       </div>
     )

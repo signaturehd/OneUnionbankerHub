@@ -197,55 +197,62 @@ class Bir1902FormFragment extends BaseMVPView {
         {
           bir1902FormData.length !== 0  &&
           bir1902Array.map((status) =>
-            status.status === 2 ?
             <div>
-            <center>
-              <h4 className = { 'font-size-14px font-weight-lighter' }>
-                Your documents has been <b>submitted for confirmation</b>.
-              </h4>
-            </center>
-            </div>
-            :
-            status.status === 4 ?
-            <div>
-            <center>
-              <h4 className = { 'font-size-14px font-weight-lighter' }>
-                Your documents are <b>verified</b>.
-              </h4>
-            </center>
-            </div>
-            :
-            <div>
-            <div className = { 'grid-global' }>
-              <h2></h2>
-              <div className = { 'text-align-right' }>
-                <GenericButton
-                  text = { 'Add Attachments' }
-                  onClick = { () => this.addAttachmentsFunc(bir1902FormData, count) }
-                  />
-              </div>
-            </div>
-            <h4>
-              <br/>
-              Form Attachments
-            </h4>
-            <MultipleAttachments
-              count = { count }
-              countFunc = { (count) => this.setState({ count }) }
-              placeholder = { '' }
-              fileArray = { bir1902FormData }
-              setFile = { (bir1902FormData) =>
-                  this.setState({ bir1902FormData })
+              {
+                status.status === 2 &&
+                <div>
+                <center>
+                  <h4 className = { 'font-size-14px font-weight-lighter' }>
+                    Your documents has been <b>submitted for confirmation</b>.
+                  </h4>
+                </center>
+                </div>
               }
-              />
-              <center>
-               <GenericButton
-                 text = { 'Upload' }
-                 onClick = { () => this.uploadForm()  }
-               />
-             </center>
+              {
+                status.status === 4 &&
+                <div>
+                <center>
+                  <h4 className = { 'font-size-14px font-weight-lighter' }>
+                    Your documents are <b>verified</b>.
+                  </h4>
+                </center>
+                </div>
+              }
             </div>
-          )
+            )
+         }
+         {
+          bir1902Array.length  === 0 &&
+           <div>
+             <div className = { 'grid-global' }>
+               <h2></h2>
+               <div className = { 'text-align-right' }>
+                 <GenericButton
+                   text = { 'Add Attachments' }
+                   onClick = { () => this.addAttachmentsFunc(bir1902FormData, count) }
+                   />
+               </div>
+             </div>
+             <h4>
+               <br/>
+               Form Attachments
+             </h4>
+             <MultipleAttachments
+               count = { count }
+               countFunc = { (count) => this.setState({ count }) }
+               placeholder = { '' }
+               fileArray = { bir1902FormData }
+               setFile = { (bir1902FormData) =>
+                   this.setState({ bir1902FormData })
+               }
+               />
+               <center>
+                <GenericButton
+                  text = { 'Save' }
+                  onClick = { () => this.uploadForm()  }
+                />
+              </center>
+           </div>
          }
       </div>
     </div>

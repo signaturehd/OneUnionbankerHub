@@ -448,7 +448,7 @@ class WorkExperienceFragment extends BaseMVPView {
         </div>
         <br/>
         {
-          pdfFileUrl &&
+          workExperienceCardHolder.length > 0  &&
           <div className = { 'work-grid-card' }>
             <Card
               onClick = { () => {

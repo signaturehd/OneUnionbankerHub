@@ -1071,7 +1071,7 @@ export default class HRBenefitsService {
 
   /* Staff accounts */
   getForConfirmation (token, id) {
-    return this.apiClient.get(`v1/employees/${id}/details?status=confirmation`, {
+    return this.accountClient.get('v1/employees/details', {
       headers : { token }
     })
   }
@@ -1128,7 +1128,7 @@ export default class HRBenefitsService {
   }
 
   postAffirmPreEmploymentUndertaking (token) {
-    return this.onboardingClient.post('v1/affirm/pre-emp-undertaking', {
+    return this.onboardingClient.post('v1/employees/affirmations/employers', {
       headers : { token }
     })
   }
@@ -1217,7 +1217,7 @@ export default class HRBenefitsService {
     const objectParam = {
       code : pin,
     }
-    return this.onboardingClient.post('v1/employees/affirmations/employment', objectParam,{
+    return this.onboardingClient.post('v1/employees/affirmations/employers', objectParam,{
       headers : { token }
     })
   }

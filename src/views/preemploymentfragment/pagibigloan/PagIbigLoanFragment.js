@@ -199,55 +199,62 @@ class PagIbigLoanFragment extends BaseMVPView {
         {
           pagibigLoanAttachment.length !== 0  &&
           pagibigLoanArray.map((status) =>
-            status.status === 2 ?
             <div>
-            <center>
-              <h4 className = { 'font-size-14px font-weight-lighter' }>
-                Your documents has been <b>submitted for confirmation</b>.
-              </h4>
-            </center>
-            </div>
-            :
-            status.status === 4 ?
-            <div>
-            <center>
-              <h4 className = { 'font-size-14px font-weight-lighter' }>
-                Your documents are <b>verified</b>.
-              </h4>
-            </center>
-            </div>
-            :
-            <div>
-            <div className = { 'grid-global' }>
-              <h2></h2>
-              <div className = { 'text-align-right' }>
-                <GenericButton
-                  text = { 'Add Attachments' }
-                  onClick = { () => this.addAttachmentsFunc(pagibigLoanAttachment, count) }
-                  />
-              </div>
-            </div>
-            <h4>
-              <br/>
-              Form Attachments
-            </h4>
-            <MultipleAttachments
-              count = { count }
-              countFunc = { (count) => this.setState({ count }) }
-              placeholder = { '' }
-              fileArray = { pagibigLoanAttachment }
-              setFile = { (pagibigLoanAttachment) =>
-                  this.setState({ pagibigLoanAttachment })
+              {
+                status.status === 2 &&
+                <div>
+                <center>
+                  <h4 className = { 'font-size-14px font-weight-lighter' }>
+                    Your documents has been <b>submitted for confirmation</b>.
+                  </h4>
+                </center>
+                </div>
               }
-              />
-              <center>
-               <GenericButton
-                 text = { 'Upload' }
-                 onClick = { () => this.uploadForm()  }
-               />
-             </center>
+              {
+                status.status === 4 &&
+                <div>
+                <center>
+                  <h4 className = { 'font-size-14px font-weight-lighter' }>
+                    Your documents are <b>verified</b>.
+                  </h4>
+                </center>
+                </div>
+              }
             </div>
-          )
+            )
+         }
+         {
+           pagibigLoanArray.length === 0 &&
+           <div>
+             <div className = { 'grid-global' }>
+               <h2></h2>
+               <div className = { 'text-align-right' }>
+                 <GenericButton
+                   text = { 'Add Attachments' }
+                   onClick = { () => this.addAttachmentsFunc(pagibigLoanAttachment, count) }
+                   />
+               </div>
+             </div>
+             <h4>
+               <br/>
+               Form Attachments
+             </h4>
+             <MultipleAttachments
+               count = { count }
+               countFunc = { (count) => this.setState({ count }) }
+               placeholder = { '' }
+               fileArray = { pagibigLoanAttachment }
+               setFile = { (pagibigLoanAttachment) =>
+                   this.setState({ pagibigLoanAttachment })
+               }
+               />
+             <center>
+              <GenericButton
+                text = { 'Save' }
+                onClick = { () => this.uploadForm()  }
+              />
+            </center>
+           </div>
          }
       </div>
     </div>

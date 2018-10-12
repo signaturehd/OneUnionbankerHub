@@ -64,6 +64,8 @@ class SpouseFormFragment extends BaseMVPView {
       genderErrorMessage: '',
       bloodType: '',
       statusName: '',
+      hospitalization: '',
+      groupPlan: '',
       statusNameErrorMessage: '',
       birthDateErrorMessage : '',
       contactNumberErrorMessage : '',
@@ -79,6 +81,7 @@ class SpouseFormFragment extends BaseMVPView {
   componentDidMount () {
     this.props.onSendPageNumberToView(17)
     this.presenter.getSpouse()
+    this.presenter.getObjectData()
   }
 
   showCircularLoader () {
@@ -265,7 +268,9 @@ class SpouseFormFragment extends BaseMVPView {
       showBloodTypeModal,
       showNoticeResponseModal,
       showStatusModal,
-      showGenderModal
+      showGenderModal,
+      hospitalization,
+      groupPlan
     } = this.state
 
   return(
@@ -415,13 +420,17 @@ class SpouseFormFragment extends BaseMVPView {
             <div className = { 'grid-global-rows' }>
               <div>
                 <Checkbox
-                  label = { 'Group Life Insurance' }
+                  checked = { hospitalization }
+                  label = { 'Hospitalization Plan' }
+                  onChange = { () => this.setState({  hospitalization : hospitalization === 1 ? 0 : 1  }) }
                   />
                 <br/>
               </div>
               <div>
                 <Checkbox
-                  label = { 'Hospitalization Plan' }
+                  checked = { groupPlan }
+                  label = { 'Group Life Insurance' }
+                  onChange = { () => this.setState({ groupPlan : groupPlan === 1 ? 0 : 1 }) }
                 />
               </div>
             </div>
