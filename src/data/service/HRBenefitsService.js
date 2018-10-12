@@ -992,6 +992,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getNonExistingLoans (token) {
+    return this.apiClient.get('v1/loans', {
+      headers : { token }
+    })
+  }
+
   /* Code of Conduct  */
 
   getCompliancesPdf (token) {
@@ -1195,6 +1201,18 @@ export default class HRBenefitsService {
     ))
     formData.append('body', JSON.stringify(object))
     return this.apiClient.post('v1/leases/laptop',  formData, {
+      headers : { token }
+    })
+  }
+
+  /* News isHeart */
+
+  addNewsIsHeart (token, id, isHeart) {
+    const objectNewsIsHeart = {
+      newsId : id,
+      isLike : isHeart
+    }
+    return this.apiClient.post('v1/news/likes', objectNewsIsHeart, {
       headers : { token }
     })
   }

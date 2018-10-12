@@ -51,6 +51,17 @@ p {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
 }
+
+.back-arrow {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.forward-arrow {
+  transform: rotate(315deg);
+  -webkit-transform: rotate(315deg);
+}
+
 .header-margin-default {
   align-items: center;
   margin-bottom: 20px;
