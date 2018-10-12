@@ -316,7 +316,6 @@ class PreEmploymentFragment extends BaseMVPView {
     const {
       setSelectedNavigation,
       selected,
-      tempPreEmploymentModal,
       history,
       onChangeStatusPreEmploymentModal,
       checkPEUndertaking,
@@ -324,6 +323,7 @@ class PreEmploymentFragment extends BaseMVPView {
     } = this.props
 
     const {
+      welcomeModal,
       isDismisable,
       enabledLoader,
       preEmpPage,
@@ -414,31 +414,38 @@ class PreEmploymentFragment extends BaseMVPView {
         />
       }
       {
-        tempPreEmploymentModal &&
+        welcomeModal &&
         <Modal
-          isDismisable = { true }
-          onClose = { onClose }
-          boxShadow = { 'none' }
-          backgroundColor = { 'transparent' }
           width = { 50 }>
-          <div className = { 'pre-container' }>
-            <div className = { 'pre-env' }>
-              <label for = { 'open-env' }>
-                <input
-                  type='checkbox'
-                  id='open-env' />
-                <label
-                  className = { 'pre-top' }
-                  for = { 'open-env' }>
-                </label>
-                <div className = { 'pre-content' }>
-                  <h2 className = { 'unionbank-color font-weight-bold font-size-14px' }>Welcome to Unionbank!</h2>
-                  <h2 className = { 'font-size-12px' } >Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it&#39;s your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
-                  <h2 className = { 'font-size-12px' }>We&#39;re stoked to have you onboard, UnionBanker!</h2>
-                </div>
-                <div className = { 'pre-rest' }></div>
-              </label>
-            </div>
+          {
+            // <div className = { 'pre-container' }>
+            //   <div className = { 'pre-env' }>
+            //     <label for = { 'open-env' }>
+            //       <input
+            //         type='checkbox'
+            //         id='open-env' />
+            //       <label
+            //         className = { 'pre-top' }
+            //         for = { 'open-env' }>
+            //       </label>
+            //       <div className = { 'pre-content' }>
+            //       </div>
+            //       <div className = { 'pre-rest' }></div>
+            //     </label>
+            //   </div>
+            // </div>
+          }
+          <div>
+            <center>
+              <h2 className = { 'unionbank-color font-weight-bold font-size-18px' }>Welcome to Unionbank!</h2>
+            </center>
+            <br/>
+            <center>
+              <h2 className = { 'font-size-16px font-size-normal' } >Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it&#39;s your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
+              <br/>
+              <br/>
+              <h2 className = { 'font-size-16px font-size-normal' }>We&#39;re stoked to have you onboard, UnionBanker!</h2>
+            </center>
           </div>
           <br/>
           <center className = { 'open-env' } >
@@ -446,8 +453,8 @@ class PreEmploymentFragment extends BaseMVPView {
               className = { 'pre-emp-setup-button' }
               text = { 'SETUP MY ACCOUNT' }
               onClick = { () =>
-                onChangeStatusPreEmploymentModal()
-                }
+                this.setState({ welcomeModal : false })
+              }
            />
           </center>
         </Modal>

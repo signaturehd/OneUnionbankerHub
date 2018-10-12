@@ -37,7 +37,7 @@ class SpouseFormFragment extends BaseMVPView {
       genderObject : [],
       spouseAttachments: [{
         id : 0,
-        name : 'Spouse Attachments 1'
+        name : 'Birth Certificate'
       }],
       spouseAttachmentsArray: [],
       selectedGender : null,
@@ -171,8 +171,8 @@ class SpouseFormFragment extends BaseMVPView {
       status,
       gender,
       bloodType,
-      healthHospitalizationPlan,
-      groupLifeInsurance,
+      hospitalization,
+      groupPlan,
       spouseId
     } = this.state
     this.presenter.postSpouseForm(
@@ -185,8 +185,8 @@ class SpouseFormFragment extends BaseMVPView {
       status,
       gender,
       bloodType,
-      healthHospitalizationPlan,
-      groupLifeInsurance,
+      hospitalization,
+      groupPlan,
       spouseId,
       spouseAttachmentsArray)
   }
@@ -202,8 +202,8 @@ class SpouseFormFragment extends BaseMVPView {
       statusId,
       gender,
       bloodType,
-      healthHospitalizationPlan,
-      groupLifeInsurance,
+      hospitalization,
+      groupPlan,
       spouseId,
       spouseAttachmentsArray
     } = this.state
@@ -218,8 +218,8 @@ class SpouseFormFragment extends BaseMVPView {
       statusId,
       gender,
       bloodType,
-      healthHospitalizationPlan,
-      groupLifeInsurance,
+      hospitalization,
+      groupPlan,
       spouseId,
       spouseAttachmentsArray)
   }
@@ -348,139 +348,145 @@ class SpouseFormFragment extends BaseMVPView {
           percent={ percentage }
         />
       </div>
-      <div>
+      {
+        enabledLoader ?
+        <center className={ 'circular-loader-center' }>
+          <CircularLoader show={ enabledLoader }/>
+        </center> :
         <div>
           <div>
-            <GenericInput
-              text = { 'First Name' }
-              value = { firstName }
-              maxLength = { 30 }
-              errorMessage = { firstName ? '' : firstNameErrorMessage }
-              onChange = { (e) => this.setState({ firstName : e.target.value }) }
-              />
-            <GenericInput
-              text = { 'Middle Name' }
-              value = { middleName }
-              maxLength = { 20 }
-              errorMessage = { middleName ? '' : middleNameErrorMessage }
-              onChange = { (e) => this.setState({ middleName : e.target.value }) }
-              />
-            <GenericInput
-              text = { 'Last Name' }
-              value = { lastName }
-              maxLength = { 20 }
-              errorMessage = { lastName ? '' : lastNameErrorMessage }
-              onChange = { (e) => this.setState({ lastName : e.target.value }) }
-              />
-            <GenericInput
-              text = { 'Occupation' }
-              value = { occupationName }
-              errorMessage = { occupationName ? '' : occupationNameErrorMessage }
-              onChange = { (e) => this.setState({ occupationName : e.target.value }) }
-              />
-            <GenericInput
-              text = { 'Contact Number' }
-              value = { contact }
-              maxLength = { 12 }
-              errorMessage = { contact ? '' : contactNumberErrorMessage }
-              onChange = { (e) => this.setState({ contact : e.target.value }) }
-              />
-            <div className = { 'grid-global' }>
+            <div>
               <GenericInput
-                text = { 'Gender' }
-                value = { gender }
+                text = { 'First Name' }
+                value = { firstName }
+                maxLength = { 30 }
+                errorMessage = { firstName ? '' : firstNameErrorMessage }
+                onChange = { (e) => this.setState({ firstName : e.target.value }) }
+                />
+              <GenericInput
+                text = { 'Middle Name' }
+                value = { middleName }
+                maxLength = { 20 }
+                errorMessage = { middleName ? '' : middleNameErrorMessage }
+                onChange = { (e) => this.setState({ middleName : e.target.value }) }
+                />
+              <GenericInput
+                text = { 'Last Name' }
+                value = { lastName }
+                maxLength = { 20 }
+                errorMessage = { lastName ? '' : lastNameErrorMessage }
+                onChange = { (e) => this.setState({ lastName : e.target.value }) }
+                />
+              <GenericInput
+                text = { 'Occupation' }
+                value = { occupationName }
+                errorMessage = { occupationName ? '' : occupationNameErrorMessage }
+                onChange = { (e) => this.setState({ occupationName : e.target.value }) }
+                />
+              <GenericInput
+                text = { 'Contact Number' }
+                value = { contact }
                 maxLength = { 12 }
-                errorMessage = { gender ? '' : genderErrorMessage }
-                onClick = { () => this.setState({ showGenderModal : true }) }
+                errorMessage = { contact ? '' : contactNumberErrorMessage }
+                onChange = { (e) => this.setState({ contact : e.target.value }) }
                 />
-              <DatePicker
-                selected = { moment() }
-                maxDate = { moment() }
-                text = { 'Birth Date' }
-                hint = { '(eg. MM/DD/YYYY)' }
-                />
-            </div>
-
-            <div className = { 'grid-global' } >
-              <GenericInput
-                text = { 'Blood Type' }
-                value = { bloodTypeName }
-                errorMessage = { bloodTypeName ? '' : bloodTypeErrorMessage }
-                onClick = { () => this.setState({ showBloodTypeModal : true }) }
-                />
-              <div className = { 'status-margin text-align-center' }>
+              <div className = { 'grid-global' }>
                 <GenericInput
-                  value = { statusName  }
-                  text = { 'Status' }
-                  errorMessage = { statusName ? '' : statusNameErrorMessage }
-                  onClick = { () => this.setState({ showStatusModal : true }) }
+                  text = { 'Gender' }
+                  value = { gender }
+                  maxLength = { 12 }
+                  errorMessage = { gender ? '' : genderErrorMessage }
+                  onClick = { () => this.setState({ showGenderModal : true }) }
+                  />
+                <DatePicker
+                  selected = { moment() }
+                  maxDate = { moment() }
+                  text = { 'Birth Date' }
+                  hint = { '(eg. MM/DD/YYYY)' }
                   />
               </div>
-            </div>
-            <div className = { 'grid-global-rows' }>
-              <div>
-                <Checkbox
-                  checked = { hospitalization }
-                  label = { 'Hospitalization Plan' }
-                  onChange = { () => this.setState({  hospitalization : hospitalization === 1 ? 0 : 1  }) }
+
+              <div className = { 'grid-global' } >
+                <GenericInput
+                  text = { 'Blood Type' }
+                  value = { bloodTypeName }
+                  errorMessage = { bloodTypeName ? '' : bloodTypeErrorMessage }
+                  onClick = { () => this.setState({ showBloodTypeModal : true }) }
                   />
-                <br/>
+                <div className = { 'status-margin text-align-center' }>
+                  <GenericInput
+                    value = { statusName  }
+                    text = { 'Status' }
+                    errorMessage = { statusName ? '' : statusNameErrorMessage }
+                    onClick = { () => this.setState({ showStatusModal : true }) }
+                    />
+                </div>
               </div>
-              <div>
-                <Checkbox
-                  checked = { groupPlan }
-                  label = { 'Group Life Insurance' }
-                  onChange = { () => this.setState({ groupPlan : groupPlan === 1 ? 0 : 1 }) }
-                />
+              <div className = { 'grid-global-rows' }>
+                <div>
+                  <Checkbox
+                    checked = { hospitalization }
+                    label = { 'Hospitalization Plan' }
+                    onChange = { () => this.setState({  hospitalization : hospitalization === 1 ? 0 : 1  }) }
+                    />
+                  <br/>
+                </div>
+                <div>
+                  <Checkbox
+                    checked = { groupPlan }
+                    label = { 'Group Life Insurance' }
+                    onChange = { () => this.setState({ groupPlan : groupPlan === 1 ? 0 : 1 }) }
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className = { 'grid-global' }>
-          <div></div>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-            text = { 'Add Atttachments' }
-            onClick = { () => {
-              const updatedAttachments = [...spouseAttachments]
-              let newCount = count + 1
-              this.setState({ count : newCount })
-              updatedAttachments.push({
-                name : 'Spouse Attachments ' + count
-              })
-              this.setState({ spouseAttachments : updatedAttachments })
+          <div className = { 'grid-global' }>
+            <div></div>
+            <div className = { 'text-align-right' }>
+              <GenericButton
+              text = { 'Add Atttachments' }
+              onClick = { () => {
+                const updatedAttachments = [...spouseAttachments]
+                let newCount = count + 1
+                this.setState({ count : newCount })
+                updatedAttachments.push({
+                  name : 'Birth Certificate ' + count
+                })
+                this.setState({ spouseAttachments : updatedAttachments })
+                  }
                 }
-              }
-            />
+              />
+            </div>
           </div>
+          <MultipleAttachments
+            count = { count }
+            countFunc = { (count) => this.setState({ count }) }
+            placeholder = { '.' }
+            fileArray = { spouseAttachments }
+            setFile = { (spouseAttachmentsArray) =>
+                this.setState({ spouseAttachmentsArray })
+            }
+          />
+          <br/>
+          <center>
+            {
+              editMode ?
+              <GenericButton
+                className = { 'global-button' }
+                text = { 'Edit' }
+                onClick = { () => this.updateFunction() }
+                />
+                :
+              <GenericButton
+                className = { 'global-button' }
+                text = { 'Save' }
+                onClick = { () => this.saveFunction() }
+                />
+            }
+          </center>
         </div>
-        <MultipleAttachments
-          count = { count }
-          countFunc = { (count) => this.setState({ count }) }
-          placeholder = { '.' }
-          fileArray = { spouseAttachments }
-          setFile = { (spouseAttachmentsArray) =>
-              this.setState({ spouseAttachmentsArray })
-          }
-        />
-        <br/>
-        <center>
-          {
-            editMode ?
-            <GenericButton
-              className = { 'global-button' }
-              text = { 'Edit' }
-              onClick = { () => this.updateFunction() }
-              />
-              :
-            <GenericButton
-              className = { 'global-button' }
-              text = { 'Save' }
-              onClick = { () => this.saveFunction() }
-              />
-          }
-        </center>
-      </div>
+      }
     </div>
     )
   }

@@ -171,29 +171,28 @@ class SSSFragment extends BaseMVPView {
                 </h4>
               </center>
               </div>
-              }
+            }
+            {
+              status.status === 1 &&
+              <div>
+                <h4>
+                  SSS Attachments
+                </h4>
+                <br/>
+                <MultipleFileUploader
+                  placeholder = { '' }
+                  fileArray = { sssAttachment }
+                  setFile = { (resp) => this.setAttachments(resp) }
+                  />
+                <center>
+                  <GenericButton
+                  text = { 'Save' }
+                  onClick = { () => this.uploadForm() }/>
+                </center>
+              </div>
+            }
           </div>
           )
-        }
-        {
-          sssArray.length === 0 &&
-
-        <div>
-          <h4>
-            SSS Attachments
-          </h4>
-          <br/>
-          <MultipleFileUploader
-            placeholder = { '' }
-            fileArray = { sssAttachment }
-            setFile = { (resp) => this.setAttachments(resp) }
-            />
-          <center>
-            <GenericButton
-            text = { 'Save' }
-            onClick = { () => this.uploadForm() }/>
-          </center>
-        </div>
         }
       </div>
     )

@@ -51,17 +51,17 @@ class AffirmationDocumentViewerComponent extends Component {
               <div className = { 'text-align-right' }>
                 {
                   nodeStatus === 0 ?
-                <div>
-                  <GenericButton
-                    onClick = { () => showPinCodeModalFunc() }
-                    text = { 'I Acknowledge' }/>
-                </div>
-                :
-                <div>
-                  <GenericButton
-                    onClick = { () => onClose() }
-                    text = { 'Close' }/>
-                </div>
+                  <div className = { 'affirm-acknowledge' }>
+                    <GenericButton
+                      onClick = { () => showPinCodeModalFunc() }
+                      text = { 'I Acknowledge' }/>
+                  </div>
+                  :
+                  <div>
+                    <GenericButton
+                      onClick = { () => onClose() }
+                      text = { 'Close' }/>
+                  </div>
                 }
               </div>
             </div>

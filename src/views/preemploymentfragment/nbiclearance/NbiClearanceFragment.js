@@ -125,30 +125,29 @@ class NbiClearanceFragment extends BaseMVPView {
                 </center>
                 </div>
               }
+              {
+                status.status === 1 &&
+                <div>
+                  <h4>
+                    NBI Clearance Attachments
+                  </h4>
+                  <br/>
+                  <MultipleFileUploader
+                    placeholder = { '' }
+                    fileArray = { nbiClearance }
+                    setFile = { (nbiClearance) =>
+                      this.setState({ nbiClearance })
+                      }
+                    />
+                  <center>
+                    <GenericButton
+                    text = { 'Save' }
+                    onClick = { () => this.submitForm(status.id) }/>
+                  </center>
+                </div>
+              }
             </div>
           )
-        }
-        {
-          nbiArray &&
-          nbiArray.length === 0 &&
-          <div>
-            <h4>
-              NBI Clearance Attachments
-            </h4>
-            <br/>
-            <MultipleFileUploader
-              placeholder = { '' }
-              fileArray = { nbiClearance }
-              setFile = { (nbiClearance) =>
-                this.setState({ nbiClearance })
-                }
-              />
-            <center>
-              <GenericButton
-              text = { 'Save' }
-              onClick = { () => this.submitForm(status.id) }/>
-            </center>
-          </div>
         }
       </div>
     )

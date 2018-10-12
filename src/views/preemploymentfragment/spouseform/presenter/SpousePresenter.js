@@ -135,6 +135,7 @@ export default class SpousePresenter {
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.noticeResponseFunc(data, true)
+      this.getSpouse()
     }, error => {
       this.view.hideCircularLoader()
     })
@@ -173,6 +174,7 @@ export default class SpousePresenter {
     ))
     .subscribe(data => {
       this.view.hideCircularLoader()
+      this.getSpouse()
       this.view.noticeResponseFunc(data, true)
     }, error => {
       this.view.hideCircularLoader()

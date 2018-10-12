@@ -165,40 +165,40 @@ class BirthCertificateFragment extends BaseMVPView {
               </center>
               </div>
             }
+            {
+              status.status === 1 &&
+            <div>
+              <div className = { 'grid-global' }>
+                <h2></h2>
+                <div className = { 'text-align-right' }>
+                  <GenericButton
+                    text = { 'Add Attachments' }
+                    onClick = { () => this.addAttachmentsFunc(birthDataFormData, count) }
+                    />
+                </div>
+              </div>
+              <h4>
+                Birth Certitificate Attachments
+              </h4>
+              <br/>
+              <MultipleAttachments
+                count = { count }
+                countFunc = { (count) => this.setState({ count }) }
+                placeholder = { '' }
+                fileArray = { birthDataFormData }
+                setFile = { (birthDataFormData) =>
+                    this.setState({ birthDataFormData })
+                }
+                />
+                <center>
+                <GenericButton
+                text = { 'Save' }
+                onClick = { () => this.submitForm() }/>
+                </center>
+            </div>
+            }
           </div>
           )
-        }
-        {
-          birthCertifArray &&
-        <div>
-          <div className = { 'grid-global' }>
-            <h2></h2>
-            <div className = { 'text-align-right' }>
-              <GenericButton
-                text = { 'Add Attachments' }
-                onClick = { () => this.addAttachmentsFunc(birthDataFormData, count) }
-                />
-            </div>
-          </div>
-          <h4>
-            Birth Certitificate Attachments
-          </h4>
-          <br/>
-          <MultipleAttachments
-            count = { count }
-            countFunc = { (count) => this.setState({ count }) }
-            placeholder = { '' }
-            fileArray = { birthDataFormData }
-            setFile = { (birthDataFormData) =>
-                this.setState({ birthDataFormData })
-            }
-            />
-            <center>
-            <GenericButton
-            text = { 'Save' }
-            onClick = { () => this.submitForm() }/>
-            </center>
-        </div>
         }
       </div>
     </div>

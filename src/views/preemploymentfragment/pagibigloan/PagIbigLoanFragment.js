@@ -220,41 +220,41 @@ class PagIbigLoanFragment extends BaseMVPView {
                 </center>
                 </div>
               }
+              {
+                status.status === 1 &&
+                <div>
+                  <div className = { 'grid-global' }>
+                    <h2></h2>
+                    <div className = { 'text-align-right' }>
+                      <GenericButton
+                        text = { 'Add Attachments' }
+                        onClick = { () => this.addAttachmentsFunc(pagibigLoanAttachment, count) }
+                        />
+                    </div>
+                  </div>
+                  <h4>
+                    <br/>
+                    Form Attachments
+                  </h4>
+                  <MultipleAttachments
+                    count = { count }
+                    countFunc = { (count) => this.setState({ count }) }
+                    placeholder = { '' }
+                    fileArray = { pagibigLoanAttachment }
+                    setFile = { (pagibigLoanAttachment) =>
+                        this.setState({ pagibigLoanAttachment })
+                    }
+                    />
+                  <center>
+                   <GenericButton
+                     text = { 'Save' }
+                     onClick = { () => this.uploadForm()  }
+                   />
+                 </center>
+                </div>
+              }
             </div>
             )
-         }
-         {
-           pagibigLoanArray.length === 0 &&
-           <div>
-             <div className = { 'grid-global' }>
-               <h2></h2>
-               <div className = { 'text-align-right' }>
-                 <GenericButton
-                   text = { 'Add Attachments' }
-                   onClick = { () => this.addAttachmentsFunc(pagibigLoanAttachment, count) }
-                   />
-               </div>
-             </div>
-             <h4>
-               <br/>
-               Form Attachments
-             </h4>
-             <MultipleAttachments
-               count = { count }
-               countFunc = { (count) => this.setState({ count }) }
-               placeholder = { '' }
-               fileArray = { pagibigLoanAttachment }
-               setFile = { (pagibigLoanAttachment) =>
-                   this.setState({ pagibigLoanAttachment })
-               }
-               />
-             <center>
-              <GenericButton
-                text = { 'Save' }
-                onClick = { () => this.uploadForm()  }
-              />
-            </center>
-           </div>
          }
       </div>
     </div>

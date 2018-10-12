@@ -218,42 +218,43 @@ class Bir1902FormFragment extends BaseMVPView {
                 </center>
                 </div>
               }
+              {
+               bir1902Array.length  === 1 &&
+                <div>
+                  <div className = { 'grid-global' }>
+                    <h2></h2>
+                    <div className = { 'text-align-right' }>
+                      <GenericButton
+                        text = { 'Add Attachments' }
+                        onClick = { () => this.addAttachmentsFunc(bir1902FormData, count) }
+                        />
+                    </div>
+                  </div>
+                  <h4>
+                    <br/>
+                    Form Attachments
+                  </h4>
+                  <MultipleAttachments
+                    count = { count }
+                    countFunc = { (count) => this.setState({ count }) }
+                    placeholder = { '' }
+                    fileArray = { bir1902FormData }
+                    setFile = { (bir1902FormData) =>
+                        this.setState({ bir1902FormData })
+                    }
+                    />
+                    <center>
+                     <GenericButton
+                       text = { 'Save' }
+                       onClick = { () => this.uploadForm()  }
+                     />
+                   </center>
+                </div>
+              }
             </div>
             )
          }
-         {
-          bir1902Array.length  === 0 &&
-           <div>
-             <div className = { 'grid-global' }>
-               <h2></h2>
-               <div className = { 'text-align-right' }>
-                 <GenericButton
-                   text = { 'Add Attachments' }
-                   onClick = { () => this.addAttachmentsFunc(bir1902FormData, count) }
-                   />
-               </div>
-             </div>
-             <h4>
-               <br/>
-               Form Attachments
-             </h4>
-             <MultipleAttachments
-               count = { count }
-               countFunc = { (count) => this.setState({ count }) }
-               placeholder = { '' }
-               fileArray = { bir1902FormData }
-               setFile = { (bir1902FormData) =>
-                   this.setState({ bir1902FormData })
-               }
-               />
-               <center>
-                <GenericButton
-                  text = { 'Save' }
-                  onClick = { () => this.uploadForm()  }
-                />
-              </center>
-           </div>
-         }
+
       </div>
     </div>
     )

@@ -203,7 +203,6 @@ class BiographicalDataFragment extends BaseMVPView {
         <br/>
         {
           biographicalDataFormData.length !== 0  &&
-
             biographicalArray.map((status) =>
             <div>
               {
@@ -226,41 +225,40 @@ class BiographicalDataFragment extends BaseMVPView {
                 </center>
                 </div>
               }
+              {
+                status.status === 1 &&
+                <div>
+                  <h2></h2>
+                  <div className = { 'text-align-right' }>
+                    <GenericButton
+                      text = { 'Add Attachments' }
+                      onClick = { () => this.addAttachmentsFunc(biographicalDataFormData, count) }
+                      />
+                  </div>
+                  <h4>
+                    Biographical Data Attachments
+                  </h4>
+                  <br/>
+                  <MultipleAttachments
+                    count = { count }
+                    countFunc = { (count) => this.setState({ count }) }
+                    placeholder = { '' }
+                    fileArray = { biographicalDataFormData }
+                    setFile = { (biographicalDataFormData) =>
+                        this.setState({ biographicalDataFormData })
+                    }
+                    />
+                  <center>
+                    <GenericButton
+                    text = { 'Save' }
+                    onClick = { () => this.submitForm(status.id) }/>
+                  </center>
+                </div>
+              }
             </div>
             )
          }
       </div>
-      {
-        biographicalArray.length ===0 &&
-        <div>
-          <h2></h2>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-              text = { 'Add Attachments' }
-              onClick = { () => this.addAttachmentsFunc(biographicalDataFormData, count) }
-              />
-          </div>
-
-          <h4>
-            Biographical Data Attachments
-          </h4>
-          <br/>
-          <MultipleAttachments
-            count = { count }
-            countFunc = { (count) => this.setState({ count }) }
-            placeholder = { '' }
-            fileArray = { biographicalDataFormData }
-            setFile = { (biographicalDataFormData) =>
-                this.setState({ biographicalDataFormData })
-            }
-            />
-            <center>
-            <GenericButton
-            text = { 'Save' }
-            onClick = { () => this.submitForm(status.id) }/>
-            </center>
-        </div>
-      }
     </div>
     )
   }
