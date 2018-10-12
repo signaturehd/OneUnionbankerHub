@@ -58,12 +58,7 @@ class MyExistingLoansFragment extends BaseMVPView {
       return resp.balance
     })
 
-    const nonExistingLoansTotal = nonExistingLoans.map(function(resp) {
-      return resp.carLoans.outstandingBalance
-    })
-
     const totalAmount = existingLoansTotal.reduce((a, b) => a + b, 0)
-    const nonTotalAmount = nonExistingLoansTotal.reduce((a, b) => a + b, 0)
 
     return (
       <div>
@@ -144,15 +139,10 @@ class MyExistingLoansFragment extends BaseMVPView {
                 </div>
               </div>
               <br/>
-                {
-                 nonTotalAmount == 0 ?
-                 <h2>No record(s)</h2>
-                 :
-                 <NonExistingLoansSummaryCardComponent
-                   nonTotalAmount = { nonTotalAmount }
-                   nonExistingLoans = { nonExistingLoans.carLoans }
+              <NonExistingLoansSummaryCardComponent
+                   nonTotalAmount = { totalAmount }
+                   nonExistingLoans = { nonExistingLoans }
                    />
-                 }
               <br/>
             </div>
           </div>

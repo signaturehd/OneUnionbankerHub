@@ -34,7 +34,8 @@ class NonExistingLoansSummaryCardComponent extends Component {
     return (
       <div>
         {
-          nonExistingLoans.carLease.map((resp, key) =>
+          nonExistingLoans.carLeases &&
+          nonExistingLoans.carLeases.map((resp, key) =>
           <Card className = { 'existing-loans-grid-x6' }>
             <span  className = { `existing-icon-fixed-${ MyExistitngLoansFunctions.checkIcon(resp.description) }` }/>
             <div className = { 'existing-loans-grid-label' }>
