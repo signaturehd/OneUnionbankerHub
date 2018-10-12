@@ -38,7 +38,7 @@ class PagIbigLoanFragment extends BaseMVPView {
       deductErrorMessage : '',
       deductData : [],
       pagibigLoanAttachment : [{
-        name : 'Pag-IBIG Loan'
+        name : 'PAG-IBIG Loan'
       }],
       count : 2
     }
@@ -82,7 +82,7 @@ class PagIbigLoanFragment extends BaseMVPView {
     let newCount = tempCount + 1
     this.setState({ count : newCount })
     attachmentTemp.push({
-      name : 'Pag-IBIG Loan ' + tempCount
+      name : 'PAG-IBIG Loan ' + tempCount
     })
     this.setState({ pagibigLoanAttachment : attachmentTemp })
   }
@@ -169,8 +169,8 @@ class PagIbigLoanFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>Pag-IBIG Loan</h2>
-            <h2>Setup your Pag-IBIG.</h2>
+            <h2 className={ 'header-margin-default text-align-left' }>PAG-IBIG Loan</h2>
+            <h2>Setup your PAG-IBIG.</h2>
           </div>
           <Progress
             type = { 'circle' }

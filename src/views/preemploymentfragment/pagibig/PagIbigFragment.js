@@ -19,7 +19,7 @@ import {
 import { Progress } from 'react-sweet-progress'
 import ResponseModal from '../../notice/NoticeResponseModal'
 
-import PagIbigViewPdfComponent from './components/PagIbigViewPdfComponent'
+import PagibigFormPreviewModal from './modal/PagibigFormPreviewModal'
 
 class PagIbigFragment extends BaseMVPView {
 
@@ -29,7 +29,7 @@ class PagIbigFragment extends BaseMVPView {
       enabledLoader : false,
       showNoticeResponseModal : false,
       noticeResponse : '',
-      showPdfViewComponent : false,
+      showPdfViewModal : false,
       pdfFile: '',
       pagibigAttachment : [{
         name : 'Pag-IBIG Form'
@@ -88,7 +88,7 @@ class PagIbigFragment extends BaseMVPView {
   render () {
     const {
       enabledLoader,
-      showPdfViewComponent,
+      showPdfViewModal,
       pdfFile,
       count,
       noticeResponse,
@@ -118,6 +118,13 @@ class PagIbigFragment extends BaseMVPView {
             noticeResponse={ noticeResponse }
           />
         }
+        {
+          showPdfViewModal &&
+          <PagibigFormPreviewModal
+            pdfFile = { pdfFile }
+            onClose = { () => this.setState({ showPdfViewModal: false }) }
+            />
+        }
         <div className = { 'percentage-grid' }>
           <div>
           <h2 className={ 'header-margin-default text-align-left' }>Pag-IBIG</h2>
@@ -136,24 +143,17 @@ class PagIbigFragment extends BaseMVPView {
             className = { 'abc-card' }
             onClick = { () => {
               this.onCheckedPdf('/2018-09-28/12345-Pagibig Form-1538123144111.pdf')
-              this.setState({ showPdfViewComponent : true  })
+              this.setState({ showPdfViewModal : true  })
               }
             }>
             <div className = { 'abc-grid-x2' }>
-              <h2>Pag Ibig MDR Form</h2>
+              <h2>PAG-IBIG MDR Form</h2>
               <div>
                 <span
                   className = { 'abc-icon biographical-seemore-button' }/>
               </div>
             </div>
           </Card>
-          {
-            showPdfViewComponent &&
-            <PagIbigViewPdfComponent
-              pdfFile = { pdfFile }
-              onClose = { () => this.setState({ showPdfViewComponent: false }) }
-            />
-          }
           </div>
         <br/>
         <Line />
@@ -161,33 +161,25 @@ class PagIbigFragment extends BaseMVPView {
           {
             pagibigAttachment.length !== 0  &&
             pagibigArray.map((status) =>
+              status.status === 2 ?
               <div>
-                {
-                  status.status === 2 &&
-                  <div>
-                  <center>
-                    <h4 className = { 'font-size-14px font-weight-lighter' }>
-                      Your documents has been <b>submitted for confirmation</b>.
-                    </h4>
-                  </center>
-                  </div>
-                }
-                {
-                  status.status === 4 &&
-                  <div>
-                  <center>
-                    <h4 className = { 'font-size-14px font-weight-lighter' }>
-                      Your documents are <b>verified</b>.
-                    </h4>
-                  </center>
-                  </div>
-                }
+              <center>
+                <h4 className = { 'font-size-14px font-weight-lighter' }>
+                  Your documents has been <b>submitted for confirmation</b>.
+                </h4>
+              </center>
               </div>
-            )
-          }
-          {
-            pagibigArray.length === 0 &&
-            <div>
+              :
+              status.status === 4 ?
+              <div>
+              <center>
+                <h4 className = { 'font-size-14px font-weight-lighter' }>
+                  Your documents are <b>verified</b>.
+                </h4>
+              </center>
+              </div>
+              :
+              <div>
               <div className = { 'grid-global' }>
                 <h2></h2>
                 <div className = { 'text-align-right' }>
@@ -204,19 +196,20 @@ class PagIbigFragment extends BaseMVPView {
               <MultipleAttachments
                 count = { count }
                 countFunc = { (count) => this.setState({ count }) }
-                placeholder = { 'Pag Ibig MDR Attachments' }
+                placeholder = { '' }
                 fileArray = { pagibigAttachment }
                 setFile = { (pagibigAttachment) =>
                     this.setState({ pagibigAttachment })
                 }
                 />
-              <center>
-               <GenericButton
-                 text = { 'Save' }
-                 onClick = { () => this.uploadForm()  }
-               />
-             </center>
-            </div>
+                <center>
+                 <GenericButton
+                   text = { 'Upload' }
+                   onClick = { () => this.uploadForm()  }
+                 />
+               </center>
+              </div>
+            )
           }
       </div>
     )

@@ -121,7 +121,7 @@ class TinFragment extends BaseMVPView {
         <div className = { 'percentage-grid' }>
           <div>
             <h2 className={ 'header-margin-default text-align-left' }>TIN Form</h2>
-            <h2>Please input your Taxpayer Identification Number(TIN) and attach your BIR 1902 Form or TIN Form</h2>
+            <h2></h2>
           <br/>
           </div>
           <Progress
@@ -148,50 +148,41 @@ class TinFragment extends BaseMVPView {
         <br/>
         {
           tinArray.map((status) =>
+          status.status === 2 ?
           <div>
-            {
-              status.status === 2 &&
-              <div>
-              <center>
-                <h4 className = { 'font-size-14px font-weight-lighter' }>
-                  Your documents has been <b>submitted for confirmation</b>.
-                </h4>
-              </center>
-              </div>
-            }
-            {
-              status.status === 4 &&
-              <div>
-              <center>
-                <h4 className = { 'font-size-14px font-weight-lighter' }>
-                  Your documents are <b>verified</b>.
-                </h4>
-              </center>
-              </div>
-              }
-            </div>
-          )
-        }
-        <div>
-          {
-            tinArray.length === 0 &&
+          <center>
+            <h4 className = { 'font-size-14px font-weight-lighter' }>
+              Your documents has been <b>submitted for confirmation</b>.
+            </h4>
+          </center>
+          </div>
+          :
+          status.status === 4 ?
+          <div>
+          <center>
+            <h4 className = { 'font-size-14px font-weight-lighter' }>
+              Your documents are <b>verified</b>.
+            </h4>
+          </center>
+          </div>
+          :
           <div>
             <h4>
               TIN Attachments
             </h4>
             <br/>
-            <MultipleFileUploader
-              placeholder = { '' }
-              fileArray = { tinAttachment }
-              />
-              <center>
-                <GenericButton
-                text = { 'Save' }
-                onClick = { () => this.uploadForm() }/>
-              </center>
+          <MultipleFileUploader
+            placeholder = { '' }
+            fileArray = { tinAttachment }
+            />
+            <center>
+            <GenericButton
+            text = { 'Upload' }
+            onClick = { () => this.uploadForm() }/>
+            </center>
           </div>
-          }
-        </div>
+        )
+      }
       </div>
     )
   }

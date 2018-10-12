@@ -166,7 +166,7 @@ class BiographicalDataFragment extends BaseMVPView {
           <div className = { 'percentage-grid' }>
             <div>
               <h2 className={ 'header-margin-default text-align-left' }>Biographical Data</h2>
-              <h2>Setup your work experience</h2>
+              <h2>Setup your biographical data</h2>
             </div>
             <Progress
               type = { 'circle' }

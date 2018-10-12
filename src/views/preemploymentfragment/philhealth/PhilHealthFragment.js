@@ -193,33 +193,25 @@ class PhilHealthFragment extends BaseMVPView {
         {
           philHealthAttachment.length !== 0  &&
           philHealthArray.map((status) =>
-          <div>
-            {
-              status.status === 2 &&
-              <div>
-              <center>
-                <h4 className = { 'font-size-14px font-weight-lighter' }>
-                  Your documents has been <b>submitted for confirmation</b>.
-                </h4>
-              </center>
-              </div>
-            }
-            {
-              status.status === 4 &&
-              <div>
-              <center>
-                <h4 className = { 'font-size-14px font-weight-lighter' }>
-                  Your documents are <b>verified</b>.
-                </h4>
-              </center>
-              </div>
-            }
-          </div>
-          )
-        }
-        {
-          philHealthArray.length === 0  &&
-          <div>
+            status.status === 2 ?
+            <div>
+            <center>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents has been <b>submitted for confirmation</b>.
+              </h4>
+            </center>
+            </div>
+            :
+            status.status === 4 ?
+            <div>
+            <center>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents are <b>verified</b>.
+              </h4>
+            </center>
+            </div>
+            :
+            <div>
             <div className = { 'grid-global' }>
               <h2></h2>
               <div className = { 'text-align-right' }>
@@ -244,12 +236,13 @@ class PhilHealthFragment extends BaseMVPView {
               />
               <center>
                <GenericButton
-                 text = { 'Save' }
+                 text = { 'Upload' }
                  onClick = { () => this.uploadForm()  }
                />
              </center>
             </div>
-        }
+          )
+         }
       </div>
     )
   }
