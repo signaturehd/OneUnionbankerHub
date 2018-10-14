@@ -23,7 +23,6 @@ export default class WorkExperiencePresenter {
   }
 
   getOnBoardingDocument (link) {
-    this.view.showDocumentLoader()
     this.getOnboardingPdfInteractor.execute(link)
     .subscribe(data => {
       this.view.hideDocumentLoader()
@@ -37,7 +36,9 @@ export default class WorkExperiencePresenter {
     this.getWorkExperienceFormInteractor.execute()
     .subscribe(data => {
       this.view.showPdfFileUrl(data.url)
-    }, error =>{})
+    }, error =>{
+      this.view.hideDocumentLoader()
+    })
   }
 
   getWorkExperience () {

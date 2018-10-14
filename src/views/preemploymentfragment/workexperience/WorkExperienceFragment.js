@@ -91,7 +91,6 @@ class WorkExperienceFragment extends BaseMVPView {
   componentDidMount () {
     this.props.onSendPageNumberToView(5)
     this.presenter.getWorkExperience()
-    this.presenter.getWorkExperienceForm()
   }
 
   checkedWorkExperience (workExperienceCardHolder) {
@@ -126,25 +125,21 @@ class WorkExperienceFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
-  showDocumentLoader () {
-    this.setState({ enabledLoaderPdfModal : true })
-  }
-
   hideDocumentLoader () {
     this.setState({ enabledLoaderPdfModal : false })
   }
 
-  onCheckedPdf (link) {
-    let stringLink = link + ''
-    this.presenter.getOnBoardingDocument(stringLink)
+  onCheckedPdf () {
+    this.setState({ enabledLoaderPdfModal : true })
+    this.presenter.getWorkExperienceForm()
   }
 
   showPdfFileView (pdfFile) {
-    this.setState({ pdfFile })
+    this.setState({ showPdfViewComponent : true, pdfFile })
   }
 
   showPdfFileUrl (pdfFileUrl) {
-    this.setState({ pdfFileUrl : pdfFileUrl.toString() })
+    this.presenter.getOnBoardingDocument(pdfFileUrl)
   }
 
 
@@ -451,10 +446,8 @@ class WorkExperienceFragment extends BaseMVPView {
           workExperienceCardHolder.length > 0  &&
           <div className = { 'work-grid-card' }>
             <Card
-              onClick = { () => {
+              onClick = { () =>
                 this.onCheckedPdf(pdfFileUrl)
-                this.setState({ showPdfViewComponent : true  })
-                }
               }
               className = { 'work-card' }>
               <div className = { 'work-grid-x2' }>

@@ -84,7 +84,6 @@ class EducationBackgroundFragment extends BaseMVPView {
   componentDidMount () {
     this.props.onSendPageNumberToView(4)
     this.presenter.getEmployeeSchool(this.state.schoolPageNumber, this.state.schoolFind)
-    this.presenter.getSchoolRecordVerificationForm()
   }
 
   onShowEducationFormModalFunc () {
@@ -118,25 +117,21 @@ class EducationBackgroundFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
-  showDocumentLoader () {
-    this.setState({ enabledLoaderPdfModal : true })
-  }
-
   hideDocumentLoader () {
     this.setState({ enabledLoaderPdfModal : false })
   }
 
-  onCheckedPdf (link) {
-    let stringLink = link + ''
-    this.presenter.getOnBoardingDocument(stringLink)
+  onCheckedPdf () {
+    this.setState({ enabledLoaderPdfModal : true })
+    this.presenter.getSchoolRecordVerificationForm()
   }
 
   showPdfFileView (pdfFile) {
-    this.setState({ pdfFile })
+    this.setState({ showPdfViewComponent : true, pdfFile })
   }
 
   showPdfFileUrl (pdfFileUrl) {
-    this.setState({ pdfFileUrl : pdfFileUrl.toString() })
+    this.presenter.getOnBoardingDocument(pdfFileUrl)
   }
 
   checkedEducationData(educationCardHolder) {
@@ -369,184 +364,196 @@ class EducationBackgroundFragment extends BaseMVPView {
     return (
       <div>
       { super.render() }
-        {
-          enabledLoaderPdfModal &&
-          <Modal>
-            <div>
-              <center>
-                <br/>
-                {
-                  showPdfViewComponent ?
-
-                  <h2>Please wait while we we&#39;re retrieving the documents</h2> :
-                  <h2>Please wait while we we&#39;re validating your submitted documents</h2>
-                }
-                <br/>
-                <CircularLoader show = { enabledLoaderPdfModal }/>
-                <br/>
-              </center>
-            </div>
-          </Modal>
-        }
-        {
-          showEducationFormModal &&
-          <EducationBackgroundModal
-            enabledLoader = { enabledLoader }
-            updateMode = { updateMode }
-            torFormData = { torFormData }
-            schools = { schools.school }
-            count = { count }
-            schoolId = { schoolId }
-            schoolName = { schoolName }
-            studentNo = { studentNo }
-            startYear = { startYear }
-            startYearErrorMessage = { startYearErrorMessage }
-            startYearFunc = { (resp) => this.startYearFunc(resp) }
-            startYearValidate = { (resp) => this.startYearValidate(resp) }
-            endYear = { endYear }
-            endYearErrorMessage = { endYearErrorMessage }
-            endYearFunc = { (resp) => this.endYearFunc(resp) }
-            endYearValidate = { (resp) => this.endYearValidate(resp) }
-            term = { term }
-            degree = { degree }
-            honor = { honor }
-            course = { course }
-            address = { address }
-            schoolNameErrorMessage = { schoolNameErrorMessage }
-            studentNoErrorMessage = { studentNoErrorMessage }
-            addressErrorMessage = { addressErrorMessage }
-            degreeErrorMessage = { degreeErrorMessage }
-            courseErrorMessage = { courseErrorMessage }
-            termErrorMessage = { termErrorMessage }
-            honorErrorMessage = { honorErrorMessage }
-            studentNoFunc = { (resp) => this.studentNoFunc(resp) }
-            termFunc = { (resp) => this.termFunc(resp) }
-            degreeFunc = { (respId, respName) => this.degreeFunc(respId, respName) }
-            honorFunc = { (resp) => this.honorFunc(resp) }
-            courseFunc = { (resp) => this.courseFunc(resp) }
-            addressFunc = { (resp) => this.addressFunc(resp) }
-            showDegreeFunc = { (resp) => this.setState({ showDegreeModal : resp }) }
-            showDegreeModal = { showDegreeModal }
-            schoolPageNumber = { schoolPageNumber }
-            schoolViewMore = { schoolViewMore }
-            nextSchoolPageNumberFunc = { () => {
-                this.setState({ schoolPageNumber : schoolPageNumber + 1 })
-                this.presenter.getEmployeeSchool(schoolPageNumber)
-              }
-            }
-            previousSchoolPageNumberFunc = { () => {
-                this.setState({ schoolPageNumber : schoolPageNumber - 1 })
-                this.presenter.getEmployeeSchool(schoolPageNumber)
-              }
-            }
-            schoolFindFunc = { (resp) => {
-                this.setState({ schoolFind : resp })
-                this.presenter.getEmployeeSchool(schoolPageNumber, schoolFind)
-              }
-            }
-            showSchoolsModal = { showSchoolsModal }
-            onCloseModal = { () => this.setState({ showSchoolsModal : false }) }
-            setSchoolFunc = { (schoolId, schoolName) =>
-              this.setState({
-                schoolId,
-                schoolName,
-                showSchoolsModal : false,
-                schoolNameErrorMessage : ''
-              })
-            }
-            showSchoolsFunc = { () => this.setState({ showSchoolsModal : true }) }
-            submission = { () => this.submission() }
-            addAttachmentsFunc = { (attachment, tempCount) =>
+      {
+        enabledLoaderPdfModal &&
+        <Modal>
+          <div>
+            <center>
+              <br/>
               {
-                const attachmentTemp = [...attachment]
-                let newCount = tempCount + 1
-                this.setState({ count : newCount })
-                attachmentTemp.push({
-                  name : 'Transcript of Records ' + tempCount
-                })
-                this.setState({ torFormData : attachmentTemp })
+                showPdfViewComponent ?
+
+                <h2>Please wait while we we&#39;re retrieving the documents</h2> :
+                <h2>Please wait while we we&#39;re validating your submitted documents</h2>
               }
-            }
-            hideModalEducationFormFunc = { (showEducationFormModal) => this.setState({ showEducationFormModal }) }
-            getEducationHolderFunc = { (resp) => {
-              const updatePropertyHolder = [...educationCardHolder]
-              updatePropertyHolder.push(resp)
-              this.setState({ educationCardHolder : updatePropertyHolder})
-            }}
-          />
-        }
-        {
-          showNoticeResponseModal &&
-          <ResponseModal
-            onClose={ () => {
-              this.setState({ showNoticeResponseModal : false})
-            }}
-            noticeResponse={ noticeResponse }
-          />
-        }
-        <br/>
-        <div className = { 'percentage-grid' }>
-          <div>
-            <h2 className={ 'header-margin-default text-align-left' }>Education Background</h2>
-            <h4>Setup your education background</h4>
+              <br/>
+              <CircularLoader show = { enabledLoaderPdfModal }/>
+              <br/>
+            </center>
           </div>
-          <Progress
-            type = { 'circle' }
-            height = { 100 }
-            width = { 100 }
-            percent={ percentage } />
-        </div>
-        <br/>
-        {
-          educationCardHolder.length > 0 &&
-          <div className = { 'educ-grid-card' }>
-            <Card
-              onClick = { () => {
-                this.onCheckedPdf(pdfFileUrl)
-                this.setState({ showPdfViewComponent : true  })
-                }
-              }
-              className = { 'educ-card' }>
-              <div className = { 'educ-grid-x2' }>
-                <h2>School Verification Form</h2>
-                <div>
-                  <span className = { 'educ-icon educ-seemore-button' }/>
-                </div>
-              </div>
-            </Card>
+        </Modal>
+      }
+      {
+        showEducationFormModal &&
+        <EducationBackgroundModal
+          enabledLoader = { enabledLoader }
+          updateMode = { updateMode }
+          torFormData = { torFormData }
+          schools = { schools.school }
+          count = { count }
+          schoolId = { schoolId }
+          schoolName = { schoolName }
+          studentNo = { studentNo }
+          startYear = { startYear }
+          startYearErrorMessage = { startYearErrorMessage }
+          startYearFunc = { (resp) => this.startYearFunc(resp) }
+          startYearValidate = { (resp) => this.startYearValidate(resp) }
+          endYear = { endYear }
+          endYearErrorMessage = { endYearErrorMessage }
+          endYearFunc = { (resp) => this.endYearFunc(resp) }
+          endYearValidate = { (resp) => this.endYearValidate(resp) }
+          term = { term }
+          degree = { degree }
+          honor = { honor }
+          course = { course }
+          address = { address }
+          schoolNameErrorMessage = { schoolNameErrorMessage }
+          studentNoErrorMessage = { studentNoErrorMessage }
+          addressErrorMessage = { addressErrorMessage }
+          degreeErrorMessage = { degreeErrorMessage }
+          courseErrorMessage = { courseErrorMessage }
+          termErrorMessage = { termErrorMessage }
+          honorErrorMessage = { honorErrorMessage }
+          studentNoFunc = { (resp) => this.studentNoFunc(resp) }
+          termFunc = { (resp) => this.termFunc(resp) }
+          degreeFunc = { (respId, respName) => this.degreeFunc(respId, respName) }
+          honorFunc = { (resp) => this.honorFunc(resp) }
+          courseFunc = { (resp) => this.courseFunc(resp) }
+          addressFunc = { (resp) => this.addressFunc(resp) }
+          showDegreeFunc = { (resp) => this.setState({ showDegreeModal : resp }) }
+          showDegreeModal = { showDegreeModal }
+          schoolPageNumber = { schoolPageNumber }
+          schoolViewMore = { schoolViewMore }
+          nextSchoolPageNumberFunc = { () => {
+              this.setState({ schoolPageNumber : schoolPageNumber + 1 })
+              this.presenter.getEmployeeSchool(schoolPageNumber)
+            }
+          }
+          previousSchoolPageNumberFunc = { () => {
+              this.setState({ schoolPageNumber : schoolPageNumber - 1 })
+              this.presenter.getEmployeeSchool(schoolPageNumber)
+            }
+          }
+          schoolFindFunc = { (resp) => {
+              this.setState({ schoolFind : resp })
+              this.presenter.getEmployeeSchool(schoolPageNumber, schoolFind)
+            }
+          }
+          showSchoolsModal = { showSchoolsModal }
+          onCloseModal = { () => this.setState({ showSchoolsModal : false }) }
+          setSchoolFunc = { (schoolId, schoolName) =>
+            this.setState({
+              schoolId,
+              schoolName,
+              showSchoolsModal : false,
+              schoolNameErrorMessage : ''
+            })
+          }
+          showSchoolsFunc = { () => this.setState({ showSchoolsModal : true }) }
+          submission = { () => this.submission() }
+          addAttachmentsFunc = { (attachment, tempCount) =>
             {
-              showPdfViewComponent &&
-              <EducationVerificationComponent
-                pdfFile = { pdfFile }
-                onClose = { () => this.setState({ showPdfViewComponent: false }) }
-              />
+              const attachmentTemp = [...attachment]
+              let newCount = tempCount + 1
+              this.setState({ count : newCount })
+              attachmentTemp.push({
+                name : 'Transcript of Records ' + tempCount
+              })
+              this.setState({ torFormData : attachmentTemp })
             }
-          </div>
-        }
-        <br/>
-        <Line />
-        <br/>
-        <div className = { 'grid-global' }>
-          <h2></h2>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-              text = { 'ADD' }
-              onClick = { () => this.onShowEducationFormModalFunc() }
-              />
-          </div>
+          }
+          hideModalEducationFormFunc = { (showEducationFormModal) => this.setState({ showEducationFormModal }) }
+          getEducationHolderFunc = { (resp) => {
+            const updatePropertyHolder = [...educationCardHolder]
+            updatePropertyHolder.push(resp)
+            this.setState({ educationCardHolder : updatePropertyHolder})
+          }}
+        />
+      }
+      {
+        showNoticeResponseModal &&
+        <ResponseModal
+          onClose={ () => {
+            this.setState({ showNoticeResponseModal : false})
+          }}
+          noticeResponse={ noticeResponse }
+        />
+      }
+      <br/>
+      <div className = { 'percentage-grid' }>
+        <div>
+          <h2 className={ 'header-margin-default text-align-left' }>Education Background</h2>
+          <h4>Setup your education background</h4>
         </div>
-        <br/>
-        {
-          enabledLoader ?
-          <center>
-          <CircularLoader show = { enabledLoader }/>
-          </center>
-          :
-          <div>
-          <EducationMultipleCardComponent
-            cardDataHolder = { educationCardHolder }
-            index = { index }
-            onEditModeProperty = { (
+        <Progress
+          type = { 'circle' }
+          height = { 100 }
+          width = { 100 }
+          percent={ percentage } />
+      </div>
+      <br/>
+      {
+        educationCardHolder.length > 0 &&
+        <div className = { 'educ-grid-card' }>
+          <Card
+            onClick = { () =>
+              this.onCheckedPdf(pdfFileUrl)
+            }
+            className = { 'educ-card' }>
+            <div className = { 'educ-grid-x2' }>
+              <h2>School Verification Form</h2>
+              <div>
+                <span className = { 'educ-icon educ-seemore-button' }/>
+              </div>
+            </div>
+          </Card>
+          {
+            showPdfViewComponent &&
+            <EducationVerificationComponent
+              pdfFile = { pdfFile }
+              onClose = { () => this.setState({ showPdfViewComponent: false }) }
+            />
+          }
+        </div>
+      }
+      <br/>
+      <Line />
+      <br/>
+      <div className = { 'grid-global' }>
+        <h2></h2>
+        <div className = { 'text-align-right' }>
+          <GenericButton
+            text = { 'ADD' }
+            onClick = { () => this.onShowEducationFormModalFunc() }
+            />
+        </div>
+      </div>
+      <br/>
+      {
+        enabledLoader ?
+        <center>
+        <CircularLoader show = { enabledLoader }/>
+        </center>
+        :
+        <div>
+        <EducationMultipleCardComponent
+          cardDataHolder = { educationCardHolder }
+          index = { index }
+          onEditModeProperty = { (
+            educId,
+            schoolName,
+            address,
+            course,
+            degree,
+            honor,
+            studentNo,
+            term,
+            startYear,
+            endYear,
+            showEducationFormModal,
+            updateMode,
+            isUpdated) =>
+            this.setState({
               educId,
               schoolName,
               address,
@@ -559,44 +566,30 @@ class EducationBackgroundFragment extends BaseMVPView {
               endYear,
               showEducationFormModal,
               updateMode,
-              isUpdated) =>
-              this.setState({
-                educId,
-                schoolName,
-                address,
-                course,
-                degree,
-                honor,
-                studentNo,
-                term,
-                startYear,
-                endYear,
-                showEducationFormModal,
-                updateMode,
-                isUpdated
-              }) }
-            />
-            <br/>
-            <button
-              type = { 'button' }
-              className = { `viewmore tooltip ${ isVisible }` }
-              onClick = {
-                () => {
-                  if(index === educationCardHolder.length)
-                    this.setState({ index : 4, viewMoreText : 'View more' })
-                  else
-                    this.setState({ index : educationCardHolder.length, viewMoreText : 'View less' })
-                }
-              }>
-              <img src={ require('../../../images/icons/horizontal.png') } />
-              <span className={ 'tooltiptext' }>{ viewMoreText }</span>
-            </button>
-            </div>
-        }
-        <div>
-          <Card></Card>
-        </div>
+              isUpdated
+            }) }
+          />
+          <br/>
+          <button
+            type = { 'button' }
+            className = { `viewmore tooltip ${ isVisible }` }
+            onClick = {
+              () => {
+                if(index === educationCardHolder.length)
+                  this.setState({ index : 4, viewMoreText : 'View more' })
+                else
+                  this.setState({ index : educationCardHolder.length, viewMoreText : 'View less' })
+              }
+            }>
+            <img src={ require('../../../images/icons/horizontal.png') } />
+            <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+          </button>
+          </div>
+      }
+      <div>
+        <Card></Card>
       </div>
+    </div>
     )
   }
 }

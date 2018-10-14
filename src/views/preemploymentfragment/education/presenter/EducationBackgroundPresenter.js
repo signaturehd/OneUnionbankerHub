@@ -25,21 +25,22 @@ export default class EducationBackgroundPresenter {
   }
 
   getOnBoardingDocument (link) {
-    this.view.showDocumentLoader()
     this.getOnboardingPdfInteractor.execute(link)
     .subscribe(data => {
-      this.view.hideDocumentLoader()
       this.view.showPdfFileView(data)
+      this.view.hideDocumentLoader()
     }, error => {
       this.view.hideDocumentLoader()
     })
   }
 
-  getSchoolRecordVerificationForm () {
-    this.getSchoolRecordVerificationFormInteractor.execute()
+  getSchoolRecordVerificationForm (link) {
+    this.getSchoolRecordVerificationFormInteractor.execute(link)
     .subscribe(data => {
       this.view.showPdfFileUrl(data.url)
-    }, error =>{})
+    }, error =>{
+      this.view.hideDocumentLoader()
+    })
   }
 
   getEmployeeSchool (pageNumber, find) {
