@@ -1297,7 +1297,7 @@ export default class HRBenefitsService {
     )
 
     formData.append('body', JSON.stringify(objectParam))
-    return this.onboardingClient.post('v1/employees/requirements', formData, {
+    return this.onboardingClient.post('v1/employees/requirements?phase=1', formData, {
       headers : { token }
     })
   }
