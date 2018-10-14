@@ -1113,6 +1113,12 @@ export default class HRBenefitsService {
 
   /* Pre-Employment */
 
+  getPreemploymentStatus (token) {
+    return this.onboardingClient.get('v1/employees/requirements/status', {
+      headers : { token }
+    })
+  }
+
   getOnBoardingDocument (token, link) {
     return this.fileClient.get('v1/uploads?folder=documents', {
       headers: {
