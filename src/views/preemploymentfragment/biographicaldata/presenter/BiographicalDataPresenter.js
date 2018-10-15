@@ -40,6 +40,7 @@ export default class BiographicalDataPresenter {
   getOnboardingAttachments (attachments) {
     this.getOnboardingAttachmentsInteractor.execute(attachments)
     .subscribe(data => {
+      this.view.showAttachmentsFileView(data)
     }, error => {
 
     })
@@ -48,7 +49,7 @@ export default class BiographicalDataPresenter {
   getSelectedAttachments (biographicalArray) {
     biographicalArray.map((resp, key) =>
       resp.url.map((resp1) =>
-        this.getOnboardingAttachments(resp)
+        this.getOnboardingAttachments(resp1)
       )
     )
   }

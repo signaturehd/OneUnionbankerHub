@@ -40,13 +40,14 @@ class BiographicalDataFragment extends BaseMVPView {
       pdfFile: '',
       count : 2,
       biographicalName : '',
+      attachments : [],
     }
     this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(2)
-    // this.checkAttachments()
+    this.checkAttachments()
   }
 
   onCheckedPdf (link) {
@@ -63,6 +64,12 @@ class BiographicalDataFragment extends BaseMVPView {
 
   showPdfFileView (pdfFile) {
     this.setState({ pdfFile })
+  }
+
+  showAttachmentsFileView (data) {
+    let arrayNew = [...this.state.attachments]
+    arrayNew.push(data)
+    this.setState({ attachments : arrayNew })
   }
 
   addAttachmentsFunc (attachment, tempCount) {
@@ -122,6 +129,7 @@ class BiographicalDataFragment extends BaseMVPView {
       showPdfViewComponent,
       pdfFile,
       count,
+      attachments
     } = this.state
 
     const bioAttachmentArray = [
