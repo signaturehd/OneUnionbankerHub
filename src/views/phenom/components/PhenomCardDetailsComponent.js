@@ -15,7 +15,7 @@ import { NotifyActions } from '../../../actions/'
 
 
 import defaultImageIcon from '../../../images/mcdologo.jpg'
-import defaultImageBackground from '../../../images/phenomtest.jpg'
+import defaultImageBackground from '../../../images/profile-picture.png'
 
 import moment from 'moment'
 
@@ -50,7 +50,7 @@ class PhenomCardDetailsComponent extends Component {
           <div>
             <Card>
               <div style = {{
-                  backgroundImage : `url(${ rewardImage ? rewardImage : defaultImageBackground })`,
+                  backgroundImage : `url(${ rewardImage ? defaultImageBackground : rewardImage })`,
                   height: '200px',
                   paddingTop: '135px',
                   backgroundRepeat: 'no-repeat',
