@@ -317,9 +317,9 @@ class PreEmploymentFragment extends BaseMVPView {
       setSelectedNavigation,
       selected,
       history,
-      onChangeStatusPreEmploymentModal,
       checkPEUndertaking,
-      onClose
+      onClose,
+      onBoardingSkipPage
     } = this.props
 
     const {
@@ -341,7 +341,7 @@ class PreEmploymentFragment extends BaseMVPView {
       <div>
       { super.render() }
       {
-        showSkipMessage &&
+      showSkipMessage &&
         <Modal>
           <h2 className = { 'font-weight-bold' }>Skip</h2>
           <h2>Do you want to skip pre-employment process? You can still updates this on 1UHub > Drawer > Pre-Employment.</h2>
@@ -352,13 +352,14 @@ class PreEmploymentFragment extends BaseMVPView {
               />
             <GenericButton
               onClick = { () => {
-                this.props.onChangeStateGoBenefits(1)
+                onBoardingSkipPage (0)
                 this.props.history.push('/')
-              } }
+                }
+              }
               text = { 'Yes' }
               />
           </div>
-      </Modal>
+        </Modal>
       }
       {
         showFinancialObligationModal &&
