@@ -125,7 +125,7 @@ class PagIbigLoanFragment extends BaseMVPView {
       },
       {
         id: 2,
-        name: 'One-Time Payment'
+        name: 'One-Time Payment to Pag-IBIG'
       }
     ]
 
