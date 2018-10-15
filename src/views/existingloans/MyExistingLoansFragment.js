@@ -6,7 +6,6 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/MyExistingLoansPresenter'
 
 import ExistingLoansSummaryCardComponent from './components/ExistingLoansSummaryCardComponent'
-import NonExistingLoansSummaryCardComponent from './components/NonExistingLoansSummaryCardComponent'
 
 import {
   CircularLoader,
@@ -29,7 +28,6 @@ class MyExistingLoansFragment extends BaseMVPView {
     super(props)
     this.state = {
       existingLoans : [],
-      nonExistingLoans : [],
       enabledLoader: false
     }
   }
@@ -39,12 +37,13 @@ class MyExistingLoansFragment extends BaseMVPView {
     this.presenter.getExistingLoans()
   }
 
-  showGetExistingLoans (existingLoans) {
-    this.setState({ existingLoans })
-  }
-
-  showGetNonExistingLoans (resp) {
-    this.setState({ nonExistingLoans : resp })
+  showGetLoans (loans) {
+    const { existingLoans } = this.state
+    const arrayList = [...existingLoans]
+    loans.map((resp) => {
+      arrayList.push(resp)
+    })
+    this.setState({ existingLoans : arrayList })
   }
 
   showCircularLoader (enabledLoader) {
@@ -52,8 +51,7 @@ class MyExistingLoansFragment extends BaseMVPView {
   }
 
   render () {
-    const { existingLoans, nonExistingLoans, enabledLoader } = this.state
-
+    const { existingLoans, enabledLoader } = this.state
     const existingLoansTotal = existingLoans.map(function(resp) {
       return resp.balance
     })
@@ -93,7 +91,7 @@ class MyExistingLoansFragment extends BaseMVPView {
                   <span />
                   <div className = { 'text-align-right' }>
                     <h2 className = { 'existing-loan-title-header' }>
-                      &#8369; { format(totalAmount  ) }
+                       &#8369;{ format(totalAmount) }
                     </h2>
                     <br/>
                     <h2>
@@ -110,7 +108,7 @@ class MyExistingLoansFragment extends BaseMVPView {
               <div className = { 'existing-loan-summary-grid-x2' }>
                 <div>
                   <br/>
-                  Multi Purpose Loan History
+                  Recently Loans
                 </div>
                 <div>
                   <Line/>
@@ -129,25 +127,6 @@ class MyExistingLoansFragment extends BaseMVPView {
               <br/>
               </div>
               <div>
-              <div className = { 'existing-loan-summary-grid' }>
-                <div>
-                  <br/>
-                  Non-Multi Purpose Loan History
-                </div>
-                <div>
-                  <Line/>
-                </div>
-              </div>
-              <br/>
-              {
-                nonExistingLoans ?
-                <h2>No record(s)</h2>
-                :
-                <NonExistingLoansSummaryCardComponent
-                     nonTotalAmount = { totalAmount }
-                     nonExistingLoans = { nonExistingLoans }
-                     />
-              }
               <br/>
             </div>
           </div>
