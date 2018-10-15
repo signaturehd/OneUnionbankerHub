@@ -188,7 +188,24 @@ class SettingsFragment extends BaseMVPView {
            showStaffAccountsModalFunc = { (showStaffAccountsModal) =>  this.setState({ showStaffAccountsModal }) }
            changePinSendToFragment = { (uniqueOldPIN, uniqueNewPIN) => this.submitUpdatedPIN(uniqueOldPIN, uniqueNewPIN) }
            getStaffAccounts = { (id) => this.presenter.getForConfirmation(id) }
-           onClickEmployeeConfirmationFunc = { (resp, resp1) => this.presenter.addStaffAccounts(resp, resp1)  }
+           onUpdateStaffAccountsFunc = { (fullName, employeeName, selectedAccountNumber, sequence) =>
+              this.presenter.updateStaffAccounts(fullName, employeeName, selectedAccountNumber, sequence)
+            }
+           onClickEmployeeConfirmationFunc = {
+          (  fullName,
+             accountNumber,
+             accountTypeCode,
+             accountCapacityCode,
+             accountRemarks
+           ) =>
+           this.presenter.addStaffAccounts(
+             fullName,
+             accountNumber,
+             accountTypeCode,
+             accountCapacityCode,
+             accountRemarks
+           )
+          }
            onChangeToEditMode = { (descriptionEditMode) => this.setState({ descriptionEditMode }) }
            descriptionTextFunc = { (descriptionText) => this.setState({ descriptionText }) }
            onUpdateDescription = { () => this.updateDescription() }

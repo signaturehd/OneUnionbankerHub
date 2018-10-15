@@ -25,6 +25,7 @@ class StaffAccountsModal extends Component {
       showTypeModal : false,
       showCapacityModal : false,
       employeeName : '',
+      selectedAccountNumber : '',
       sequence : '',
       fullName : '',
       accountNumber : '',
@@ -76,14 +77,15 @@ class StaffAccountsModal extends Component {
   componentDidMount () {
     const {
       getStaffAccounts,
-      employeeNumber
+      employeeNumber,
+      onClickEmployeeConfirmationFunc
     } = this.props
 
-    getStaffAccounts(employeeNumber)
+    // getStaffAccounts(employeeNumber)
   }
 
-  confirmationModal (showConfirmationModal, employeeName, sequence) {
-    this.setState({ showConfirmationModal, employeeName, sequence })
+  confirmationModal (showConfirmationModal, employeeName, selectedAccountNumber, sequence) {
+    this.setState({ showConfirmationModal, employeeName, selectedAccountNumber, sequence })
   }
 
   getAccountType (type) {
@@ -109,16 +111,13 @@ class StaffAccountsModal extends Component {
     return ret
   }
 
-  addStaffAccounts () {
-
-  }
-
   render () {
     const {
       onClose,
       staffLoader,
       staffAccounts,
       onClickEmployeeConfirmation,
+      onUpdateStaffAccounts,
     }=this.props
 
     const {
@@ -137,8 +136,9 @@ class StaffAccountsModal extends Component {
      showConfirmationModal,
      enabledLoader,
      employeeName,
+     selectedAccountNumber,
      sequence,
-     showUpdateComponent
+     showAddComponent
     }=this.state
 
     return (
@@ -160,7 +160,7 @@ class StaffAccountsModal extends Component {
                 <GenericButton
                   text = { 'Yes' }
                   onClick = { () => {
-                    onClickEmployeeConfirmation(employeeName, sequence)
+                    onUpdateStaffAccounts(fullName, employeeName, selectedAccountNumber, sequence)
                     this.setState({ showConfirmationModal : false })
                   }
                 }
@@ -192,7 +192,7 @@ class StaffAccountsModal extends Component {
             />
         }
         {
-          showUpdateComponent ?
+          showAddComponent ?
           <div>
             <h2 className={ 'font-weight-normal' }>ADD STAFF ACCOUNTS</h2>
             <br/>
@@ -204,7 +204,7 @@ class StaffAccountsModal extends Component {
                 />
               <GenericInput
                 text = { 'Account Number' }
-                maxLength = { 30 }
+                maxLength = { 12 }
                 value = { accountNumber }
                 type = { 'number' }
                 onChange = { (e) => this.setState({ accountNumber : e.target.value }) }
@@ -229,11 +229,17 @@ class StaffAccountsModal extends Component {
             <div className = { 'grid-global' }>
               <GenericButton
                 text = { 'Cancel' }
-                onClick = { () => this.setState({ showUpdateComponent : false }) }
+                onClick = { () => this.setState({ showAddComponent : false }) }
                 />
               <GenericButton
                 text = { 'Save' }
-                onClick = { () => this.addStaffAccounts() }
+                onClick = { () => onClickEmployeeConfirmation(
+                  fullName,
+                  accountNumber,
+                  accountTypeCode,
+                  accountCapacityCode,
+                  accountRemarks,
+                ) }
                 />
             </div>
             <br/>
@@ -270,7 +276,7 @@ class StaffAccountsModal extends Component {
                         <h3 className = { 'staff-account-card-number' }>{ resp.account.number }</h3>
                         <GenericButton
                           text = { resp.status }
-                          onClick = { () => this.confirmationModal(true, resp.employeeName, resp.sequence) }
+                          onClick = { () => this.confirmationModal(true, resp.employeeName, resp.account.number, resp.sequence) }
                           disabled = { resp.status.toLowerCase() === 'confirmed' ? true : false  }
                           className = { resp.status.toLowerCase() === 'confirmed' ? 'confirmed-button' : 'not-confirmed-button' }
                         />
@@ -283,7 +289,7 @@ class StaffAccountsModal extends Component {
             }
             <FloatingActionButton
               text = { '+' }
-              onClick = { () => this.setState({ showUpdateComponent : true }) }
+              onClick = { () => this.setState({ showAddComponent : true }) }
               />
           </div>
         }

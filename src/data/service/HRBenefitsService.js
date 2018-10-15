@@ -1082,31 +1082,31 @@ export default class HRBenefitsService {
     })
   }
 
-  addStaffAccounts (token, accountNumber, staffAccountsParam) {
-    const staffAccontObject = {
-      employeeName : staffAccountsParam.employeeName,
+  addStaffAccounts (token, staffAccountsParam) {
+    const staffAccountObject = {
+      employeeName : staffAccountsParam.fullName,
       accounts: {
-        accountNumber: accountNumber,
-      },
-      sequence : staffAccountsParam.sequence
+        name: staffAccountsParam.fullName,
+        number: staffAccountsParam.accountNumber,
+        type: staffAccountsParam.type,
+        capacity : staffAccountsParam.capacity,
+        remarks: staffAccountsParam.remarks,
+      }
     }
-    return this.accountClient.post('v1/employees/accounts/confirm', staffAccontObject , {
+    return this.accountClient.post('v1/employees/details', staffAccountObject , {
       headers : { token }
     })
   }
 
-  addStaffAccount (token, putStaffAccountsParam) {
-    const putStafftAccountsObject = {
-     employeeName: putStaffAccountsParam.fullName,
-     account:{
-       name: putStaffAccountsParam.fullName,
-       number: putStaffAccountsParam.accountNumber,
-       type: putStaffAccountsParam.type,
-       capacity: putStaffAccountsParam.capacity,
-       remarks:putStaffAccountsParam.remarks,
-     }
+  updateStaffAccounts (token, staffAccountsParam) {
+    const staffAccontObject = {
+      employeeName : staffAccountsParam.fullName,
+      accounts: {
+        accountNumber: staffAccountsParam.accountNumber,
+      },
+      sequence : staffAccountsParam.sequence
     }
-    return this.accountClient.post('v1/employees/details ', putStafftAccountsObject, {
+    return this.accountClient.put('v1/employees/details', staffAccontObject , {
       headers : { token }
     })
   }

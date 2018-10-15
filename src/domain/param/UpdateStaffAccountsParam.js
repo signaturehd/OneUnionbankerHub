@@ -1,13 +1,11 @@
 export default (
   fullName,
   accountNumber,
-  type,
-  capacity,
-  remarks
+  status,
+  sequence
   ) => ({
     fullName,
     accountNumber,
-    type,
-    capacity,
-    remarks
+    status,
+    sequence
   })

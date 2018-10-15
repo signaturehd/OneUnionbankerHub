@@ -66,7 +66,8 @@ class SettingsProfileCardComponent extends Component {
       descriptionTextFunc,
       onUpdateDescription,
       showDevicesModal,
-      showDevicesModalFunc
+      showDevicesModalFunc,
+      onUpdateStaffAccountsFunc,
     } = this.props
 
 
@@ -132,7 +133,21 @@ class SettingsProfileCardComponent extends Component {
             staffAccounts = { staffAccounts }
             employeeNumber = { profile.employeeNumber }
             getStaffAccounts = { getStaffAccounts }
-            onClickEmployeeConfirmation = { (resp, resp1) => onClickEmployeeConfirmationFunc(resp, resp1) }
+            onUpdateStaffAccounts = { (fullName, employeeName, selectedAccountNumber, sequence) =>
+              onUpdateStaffAccountsFunc(fullName, employeeName, selectedAccountNumber, sequence) }
+            onClickEmployeeConfirmation = { (
+              fullName,
+              accountNumber,
+              accountTypeCode,
+              accountCapacityCode,
+              accountRemarks
+            ) => onClickEmployeeConfirmationFunc(
+              fullName,
+              accountNumber,
+              accountTypeCode,
+              accountCapacityCode,
+              accountRemarks
+            ) }
             onClose={ () => showStaffAccountsModalFunc(false) }
           />
         }

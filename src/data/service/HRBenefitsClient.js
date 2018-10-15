@@ -819,13 +819,13 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addStaffAccounts (token, accountNumber, staffAccountsParam) {
-    return this.service.addStaffAccounts(token, accountNumber, staffAccountsParam)
+  addStaffAccounts (token, staffAccountsParam) {
+    return this.service.addStaffAccounts(token, staffAccountsParam)
       .pipe(ServiceErrorOperator())
   }
 
-  addStaffAccount (token, staffAccountsParam) {
-    return this.service.addStaffAccount(token, staffAccountsParam)
+  updateStaffAccounts (token, staffAccountsParam) {
+    return this.service.updateStaffAccounts(token, staffAccountsParam)
       .pipe(ServiceErrorOperator())
   }
 

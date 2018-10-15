@@ -1,8 +1,8 @@
 import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInteractor'
 import GenericPutNewCodeInteractor from '../../../domain/interactor/pinCode/GenericPutNewCodeInteractor'
 import GetForConfirmationInteractor from '../../../domain/interactor/staffaccounts/GetForConfirmationInteractor'
-import AddStaffAccountInteractor from '../../../domain/interactor/staffaccounts/AddStaffAccountInteractor'
 import PostStaffAccountsInteractor from '../../../domain/interactor/staffaccounts/PostStaffAccountsInteractor'
+import UpdateStaffAccountsInteractor from '../../../domain/interactor/staffaccounts/UpdateStaffAccountsInteractor'
 import UpdateDescriptionInteractor from '../../../domain/interactor/account/UpdateDescriptionInteractor'
 import GetDevicesInteractor from '../../../domain/interactor/account/GetDevicesInteractor'
 
@@ -17,7 +17,7 @@ export default class SettingsPresenter {
     this.genericPutNewCodeInteractor = new GenericPutNewCodeInteractor(container.get('HRBenefitsClient'))
     this.getForConfirmationInteractor = new GetForConfirmationInteractor(container.get('HRBenefitsClient'))
     this.postStaffAccountsInteractor = new PostStaffAccountsInteractor(container.get('HRBenefitsClient'))
-    this.addStaffAccountInteractor = new AddStaffAccountInteractor(container.get('HRBenefitsClient'))
+    this.updateStaffAccountsInteractor = new UpdateStaffAccountsInteractor(container.get('HRBenefitsClient'))
     this.updateDescriptionInteractor = new UpdateDescriptionInteractor(container.get('HRBenefitsClient'))
     this.getDevicesInteractor = new GetDevicesInteractor(container.get('HRBenefitsClient'))
   }
@@ -79,8 +79,6 @@ export default class SettingsPresenter {
    }
 
    addStaffAccounts (
-     employeeName,
-     sequence,
      fullName,
      accountNumber,
      type,
@@ -88,8 +86,6 @@ export default class SettingsPresenter {
      remarks
    ) {
      this.postStaffAccountsInteractor.execute(addStaffAcountsParam(
-       employeeName,
-       sequence,
        fullName,
        accountNumber,
        type,
@@ -102,28 +98,21 @@ export default class SettingsPresenter {
      })
    }
 
-   addStaffAccount (
-     employeeName,
-     sequence,
+   updateStaffAccounts (
      fullName,
      accountNumber,
-     type,
-     capacity,
-     remarks
+     status,
+     sequence
    ) {
-     this.addStaffAccountInteractor.execute(addStaffAccounts(
-       employeeName,
-       sequence,
+     this.updateStaffAccountsInteractor.execute(addStaffAcountsParam(
        fullName,
        accountNumber,
-       type,
-       capacity,
-       remarks
+       status,
+       sequence
      ))
      .subscribe(data => {
        this.view.noticeResponseModal(data.message)
      }, error => {
-
      })
    }
 
