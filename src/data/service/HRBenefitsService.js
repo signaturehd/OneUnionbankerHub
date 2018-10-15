@@ -1113,8 +1113,14 @@ export default class HRBenefitsService {
 
   /* Pre-Employment */
 
-  getPreemploymentStatus (token) {
+  getPreEmploymentStatus (token) {
     return this.onboardingClient.get('v1/employees/requirements/status', {
+      headers : { token }
+    })
+  }
+
+  getPreEmploymentAffirmationId (token, id) {
+    return this.service.onboardingClient.get(`v1/employees/affirmation/${id}?page=1`, {
       headers : { token }
     })
   }

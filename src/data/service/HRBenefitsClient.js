@@ -831,8 +831,13 @@ export default class HRBenefitsClient {
 
   /* Pre Employment */
 
-  getPreemploymentStatus (token) {
-    return this.service.getPreemploymentStatus (token)
+  getPreEmploymentStatus (token) {
+    return this.service.getPreEmploymentStatus (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPreEmploymentAffirmationId (token, id) {
+    return this.service.getPreEmploymentAffirmationId(token, id)
       .pipe(ServiceErrorOperator())
   }
 

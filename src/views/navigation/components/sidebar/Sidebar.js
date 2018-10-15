@@ -36,8 +36,14 @@ class SideBar extends Component {
       },
       {
         id: 11 ,
-        title: 'Onboarding Requirements',
+        title: 'Pre Employment',
         action: () => history.push('/preemployment'),
+        className: 'compliance-icon'
+      },
+      {
+        id: 12 ,
+        title: 'Post Pre-Employment',
+        action: () => history.push('/postpreemployment'),
         className: 'compliance-icon'
       },
       {
@@ -118,37 +124,23 @@ class SideBar extends Component {
           </h5>
         }
         {
-          tempPreEmployment !== 1 ?
-        <div>
-        {
-            modules.map((d, idx) =>
-            d.id !== 0 &&
-            d.id !== 1 &&
-            d.id !== 2 &&
-            d.id !== 3 &&
-            d.id !== 4 &&
-            d.id !== 5 &&
-            d.id !== 6 &&
-            d.id !== 8 &&
-            d.id !== 9 &&
-            d.id !== 10 &&
-            <div key = { idx }>
-              <li
-                className = { `_text-link ${selected === d.id && 'active'}` }
-                onClick = { d.action }>
-                <a key = { idx }
-                  className =
-                  { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                  { d.title }
-              </li>
-            </div>
-            )
-          }
-        </div>
-        :
+          tempPreEmployment === 1 ||
+          tempPreEmployment === 2 ||
+          tempPreEmployment === 3 ?
         <div>
         {
           modules.map((d, idx) =>
+          d.id !== 0 &&
+          d.id !== 1 &&
+          d.id !== 2 &&
+          d.id !== 3 &&
+          d.id !== 4 &&
+          d.id !== 5 &&
+          d.id !== 6 &&
+          d.id !== 8 &&
+          d.id !== 9 &&
+          d.id !== 10 &&
+          d.id !== 12 &&
           <div key = { idx }>
             <li
               className = { `_text-link ${selected === d.id && 'active'}` }
@@ -156,10 +148,74 @@ class SideBar extends Component {
               <a key = { idx }
                 className =
                 { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                  { d.title }
+                { d.title }
             </li>
           </div>
           )
+        }
+        </div>
+        :
+        <div>
+        {
+          tempPreEmployment === 1 ||
+          tempPreEmployment === 2 ||
+          tempPreEmployment === 3 ?
+          <div>
+            {
+              modules.map((d, idx) =>
+              <div key = { idx }>
+                <li
+                  className = { `_text-link ${selected === d.id && 'active'}` }
+                  onClick = { d.action }>
+                  <a key = { idx }
+                    className =
+                    { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                      { d.title }
+                </li>
+              </div>
+              )
+            }
+          </div> :
+          <div>
+            {
+              tempPreEmployment === 4 ?
+              <div>
+                {
+                  modules.map((d, idx) =>
+                  d.id !== 11 &&
+                  <div key = { idx }>
+                    <li
+                      className = { `_text-link ${selected === d.id && 'active'}` }
+                      onClick = { d.action }>
+                      <a key = { idx }
+                        className =
+                        { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                          { d.title }
+                    </li>
+                  </div>
+                  )
+                }
+              </div> :
+              <div>
+                {
+                  modules.map((d, idx) =>
+                  d.id !== 11 &&
+                  d.id !== 12 &&
+                  <div key = { idx }>
+                    <li
+                      className = { `_text-link ${selected === d.id && 'active'}` }
+                      onClick = { d.action }>
+                      <a key = { idx }
+                        className =
+                        { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                          { d.title }
+                    </li>
+                  </div>
+                  )
+                }
+              </div>
+            }
+          </div>
         }
         </div>
       }

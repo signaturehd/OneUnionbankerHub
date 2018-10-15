@@ -1,9 +1,9 @@
-export default class GetPreemploymentStatusInteractor {
+export default class GetPreEmploymentStatusInteractor {
   constructor (client) {
     this.client = client
   }
 
   execute () {
-    return this.client.getPreemploymentStatus(this.client.getToken())
+    return this.client.getPreEmploymentStatus(this.client.getToken())
   }
 }
