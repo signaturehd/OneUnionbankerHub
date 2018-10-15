@@ -86,6 +86,10 @@ class TinFragment extends BaseMVPView {
     this.setState({ tinInput : validate ? e : '' })
   }
 
+  setFileAttachments (tinAttachment) {
+    this.setState({ tinAttachment })
+  }
+
   render () {
 
     const {
@@ -182,6 +186,7 @@ class TinFragment extends BaseMVPView {
             <MultipleFileUploader
               placeholder = { '' }
               fileArray = { tinAttachment }
+              setFile = { (resp) => this.setFileAttachments(resp) }
               />
               <center>
               <GenericButton

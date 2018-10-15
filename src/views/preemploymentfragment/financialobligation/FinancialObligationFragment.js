@@ -151,6 +151,7 @@ class FinancialObligationFragment extends BaseMVPView {
       natureObligation : '',
       amount : '',
       statusId : '',
+      statusName : '',
       fiananceId : '',
       editMode: false,
     })
