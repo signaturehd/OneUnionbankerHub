@@ -185,7 +185,7 @@ class SSSFragment extends BaseMVPView {
                 <MultipleFileUploader
                   placeholder = { '' }
                   fileArray = { sssAttachment }
-                  setFile = { (resp) => this.setAttachments(resp) }
+                  setFile = { (resp) => this.setFileAttachments(resp) }
                   />
                 <center>
                   <GenericButton
