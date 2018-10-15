@@ -187,7 +187,7 @@ class BiographicalDataFragment extends BaseMVPView {
         <div className = { 'biographical-grid-card' }>
           <Card
             onClick = { () => {
-              this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
+              this.onCheckedPdf('/2018-10-15/12345-BSP Biographical Data-1539596592662.pdf')
               this.setState({ showPdfViewComponent : true  })
               }
             }
