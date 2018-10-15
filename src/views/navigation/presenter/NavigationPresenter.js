@@ -91,10 +91,9 @@ export default class NavigationPresenter {
 
   getPreEmploymentStatus () {
     this.getPreEmploymentStatusInteractor.execute()
-    this.view.showPreemploymentStatus(0)
     .subscribe(data => {
+      this.view.showPreemploymentStatus(data && data)
       }, error => {
-    this.view.showPreemploymentStatus(0)
     })
   }
 }

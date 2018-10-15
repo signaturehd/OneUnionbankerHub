@@ -26,82 +26,82 @@ class SideBar extends Component {
       splitUserInitial
     } = this.props
 
-    const modules =
-    [
-      {
-        id: 0 ,
-        title: 'News Feed',
-        action: () => history.push('/'),
-        className: 'newsfeed-icon'
-      },
-      {
-        id: 11 ,
-        title: 'Pre Employment',
-        action: () => history.push('/preemployment'),
-        className: 'compliance-icon'
-      },
-      {
-        id: 12 ,
-        title: 'Post Pre-Employment',
-        action: () => history.push('/postpreemployment'),
-        className: 'compliance-icon'
-      },
-      {
-        id: 4 ,
-        title: 'My Learning',
-        action: () => history.push('/mylearning'),
-        className: 'mylearning-icon'
-      },
-      {
-        id: 1 ,
-        title: 'My Benefits',
-        action: () => history.push('/mybenefits'),
-        className: 'benefits-icon'
-      },
-      {
-        id: 8 ,
-        title: 'My Pay',
-        action: () => history.push('/payslip'),
-        className: 'payslip-icon'
-      },
-      {
-        id: 9 ,
-        title: 'My Compliance',
-        action: () => history.push('/mycompliance'),
-        className: 'compliance-icon'
-      },
-      {
-        id: 10 ,
-        title: 'Phenom Prime',
-        action: () => history.push('/phenom'),
-        className: 'phenom-sidebar-icon'
-      },
-      {
-        id: 3 ,
-        title: 'My Personal Information',
-        action: () => history.push('/settings'),
-        className: 'settings-icon'
-      },
-      {
-        id: 2 ,
-        title: 'FAQs',
-        action: () => history.push('/faqs'),
-        className: 'faqs-icon'
-      },
-      {
-        id: 6 ,
-        title: 'Feedback',
-        action: () => history.push('/feedback'),
-        className: 'feedback-icon'
-      },
-      {
-        id: 7 ,
-        title: 'Logout',
-        action: logout,
-        className: 'logout-icon'
-      },
-    ]
-
+  const modules =
+  [
+    {
+      id: 0 ,
+      title: 'News Feed',
+      action: () => history.push('/'),
+      className: 'newsfeed-icon'
+    },
+    {
+      id: 11 ,
+      title: 'Onboarding Pre-Employment',
+      action: () => history.push('/preemployment'),
+      className: 'compliance-icon'
+    },
+    {
+      id: 12 ,
+      title: 'Post Pre-Employment',
+      action: () => history.push('/postpreemployment'),
+      className: 'compliance-icon'
+    },
+    {
+      id: 4 ,
+      title: 'My Learning',
+      action: () => history.push('/mylearning'),
+      className: 'mylearning-icon'
+    },
+    {
+      id: 1 ,
+      title: 'My Benefits',
+      action: () => history.push('/mybenefits'),
+      className: 'benefits-icon'
+    },
+    {
+      id: 8 ,
+      title: 'My Pay',
+      action: () => history.push('/payslip'),
+      className: 'payslip-icon'
+    },
+    {
+      id: 9 ,
+      title: 'My Compliance',
+      action: () => history.push('/mycompliance'),
+      className: 'compliance-icon'
+    },
+    {
+      id: 10 ,
+      title: 'Phenom Prime',
+      action: () => history.push('/phenom'),
+      className: 'phenom-sidebar-icon'
+    },
+    {
+      id: 3 ,
+      title: 'My Personal Information',
+      action: () => history.push('/settings'),
+      className: 'settings-icon'
+    },
+    {
+      id: 2 ,
+      title: 'FAQs',
+      action: () => history.push('/faqs'),
+      className: 'faqs-icon'
+    },
+    {
+      id: 6 ,
+      title: 'Feedback',
+      action: () => history.push('/feedback'),
+      className: 'feedback-icon'
+    },
+    {
+      id: 7 ,
+      title: 'Logout',
+      action: logout,
+      className: 'logout-icon'
+    },
+  ]
+    console.log(tempPreEmployment)
   return (
     <div className = { '_sidebar-overlay' }>
       <ul className = { '_link-list ul' }>
@@ -125,8 +125,7 @@ class SideBar extends Component {
         }
         {
           tempPreEmployment === 1 ||
-          tempPreEmployment === 2 ||
-          tempPreEmployment === 3 ?
+          tempPreEmployment === 2 ?
         <div>
         {
           modules.map((d, idx) =>
@@ -156,67 +155,21 @@ class SideBar extends Component {
         </div>
         :
         <div>
-        {
-          tempPreEmployment === 1 ||
-          tempPreEmployment === 2 ||
-          tempPreEmployment === 3 ?
-          <div>
-            {
-              modules.map((d, idx) =>
-              <div key = { idx }>
-                <li
-                  className = { `_text-link ${selected === d.id && 'active'}` }
-                  onClick = { d.action }>
-                  <a key = { idx }
-                    className =
-                    { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                      { d.title }
-                </li>
-              </div>
-              )
-            }
-          </div> :
-          <div>
-            {
-              tempPreEmployment === 4 ?
-              <div>
-                {
-                  modules.map((d, idx) =>
-                  d.id !== 11 &&
-                  <div key = { idx }>
-                    <li
-                      className = { `_text-link ${selected === d.id && 'active'}` }
-                      onClick = { d.action }>
-                      <a key = { idx }
-                        className =
-                        { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                          { d.title }
-                    </li>
-                  </div>
-                  )
-                }
-              </div> :
-              <div>
-                {
-                  modules.map((d, idx) =>
-                  d.id !== 11 &&
-                  d.id !== 12 &&
-                  <div key = { idx }>
-                    <li
-                      className = { `_text-link ${selected === d.id && 'active'}` }
-                      onClick = { d.action }>
-                      <a key = { idx }
-                        className =
-                        { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                          { d.title }
-                    </li>
-                  </div>
-                  )
-                }
-              </div>
-            }
-          </div>
-        }
+          {
+            modules.map((d, idx) =>
+            d.id !== 11 &&
+            <div key = { idx }>
+              <li
+                className = { `_text-link ${selected === d.id && 'active'}` }
+                onClick = { d.action }>
+                <a key = { idx }
+                  className =
+                  { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                  { d.title }
+              </li>
+            </div>
+            )
+          }
         </div>
       }
       </ul>

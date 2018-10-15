@@ -88,7 +88,7 @@ class NavigationView extends BaseMVPView {
       profileHasCOC: '',
       tempPreEmploymentModal: false,
       hasFilledOut: '',
-      preEmploymentStatus: 1,
+      preEmploymentStatus: null,
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -124,11 +124,25 @@ class NavigationView extends BaseMVPView {
     }
   }
 
-  showPreemploymentStatus (preEmploymentStatus) {
-    this.setState({ preEmploymentStatus })
+  showPreemploymentStatus (data) {
+    const status = data && data.id
+    const statusName = data && data.status
+    this.setState({ preEmploymentStatus : status })
+
+    if(status === 1 || status === 2) {
+      this.props.history.push('/preemployment')
+    } else {
+      this.props.history.push('/')
+    }
   }
 
   componentDidMount () {
+    const {
+      preEmploymentStatus
+    } = this.state
+
+    store.dispatch(NotifyActions.resetNotify())
+    this.presenter.getLibraries()
     const mediaQuery = window.matchMedia('(min-width: 1201px)')
       if (mediaQuery.matches) {
         this.setDisplay('block', 'none')
@@ -142,18 +156,7 @@ class NavigationView extends BaseMVPView {
         this.setDisplay('none', 'block')
       }
     })
-    store.dispatch(NotifyActions.resetNotify())
-    this.presenter.getLibraries()
-    // this.presenter.getPreEmploymentStatus()
-    if(
-      this.state.preEmploymentStatus === 1 ||
-      this.state.preEmploymentStatus === 2 ||
-      this.state.preEmploymentStatus === 3
-    ) {
-      this.props.history.push('/preemployment')
-    } else {
-      this.props.history.push('/')
-    }
+    this.presenter.getPreEmploymentStatus()
   }
 
   setSelectedNavigation (id) {
@@ -176,12 +179,8 @@ class NavigationView extends BaseMVPView {
     this.props.history.push('/')
   }
 
-  onChangeStatusPreEmploymentModal () {
-    this.setState({ tempPreEmploymentModal : false  })
-  }
-
-  hasFilledOutFunc (hasFilledOut) {
-    this.setState({ hasFilledOut })
+  skipPage (e) {
+    this.setState({ preEmploymentStatus : e })
   }
 
   render () {
@@ -209,7 +208,6 @@ class NavigationView extends BaseMVPView {
       }
     }
     const locationPath = history.location.pathname
-
     const name = profile && profile.fullname
     let initials = []
     let splitUserInitial
@@ -230,7 +228,7 @@ class NavigationView extends BaseMVPView {
     })
 
     splitUserInitial = initials[0] + initials[initials.length - 1]
-
+    console.log(preEmploymentStatus)
     return (
       <div className = { 'navigation-body-div' }>
         { super.render() }
@@ -273,12 +271,11 @@ class NavigationView extends BaseMVPView {
             <Drawer >
               {
                 preEmploymentStatus === 1 ||
-                preEmploymentStatus === 2 ||
-                preEmploymentStatus === 3 ?
+                preEmploymentStatus === 2 ?
                 <Switch>
                   <Route path = '/preemployment' render = { props =>
                     <PreEmploymentFragment { ...props }
-                      onChangeStateGoBenefits = { (e) => this.hasFilledOutFunc(e) }
+                      onBoardingSkipPage = { (e) => this.skipPage(e)}
                       onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
                       tempPreEmploymentModal = { tempPreEmploymentModal }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
@@ -382,21 +379,18 @@ class NavigationView extends BaseMVPView {
                     <ComplianceFragment { ...props }
                       profileHasCOC = { profileHasCOC }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/phenom' render = { props =>
                     <PhenomFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                    {
-                      preEmploymentStatus !== 5 ||
-                      preEmploymentStatus !== '' ||
-                      preEmploymentStatus !== 0 &&
-                      <Route path = '/preemployment' render = { props =>
-                        <PreEmploymentFragment { ...props }
-                          onChangeStateGoBenefits = { (e) => this.hasFilledOutFunc(e) }
-                          onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
-                          tempPreEmploymentModal = { tempPreEmploymentModal }
-                          setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                    }
+                  {
+                    preEmploymentStatus === 3 ||
+                    preEmploymentStatus === 4 ||
+                    preEmploymentStatus === 5 &&
+                  <Route path = '/postpreemployment' render = { props =>
+                    <PreEmploymentFragment { ...props }
+                      tempPreEmploymentModal = { tempPreEmploymentModal }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  }
                </Switch>
               }
             </Drawer>
