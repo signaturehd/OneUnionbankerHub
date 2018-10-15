@@ -33,8 +33,7 @@ class BirthCertificateFragment extends BaseMVPView {
         name : 'Birth Certificate'
       }],
       pdfFile: '',
-      count : 2,
-      biographicalName : ''
+      count : 2
     }
     this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
   }
@@ -65,7 +64,9 @@ class BirthCertificateFragment extends BaseMVPView {
     const {
       birthCertifArray
     } = this.props
-      this.presenter.addBiographicalData(birthCertifArray.id, birthDataFormData)
+    birthCertifArray.map((resp) =>
+    this.presenter.addBirthCertificateData(resp.id, birthDataFormData)
+    )
   }
 
   noticeResponseResp (noticeResponse) {
@@ -93,8 +94,6 @@ class BirthCertificateFragment extends BaseMVPView {
       showNoticeResponseModal,
       noticeResponse,
       birthDataFormData,
-      biographicalData,
-      biographicalName,
       pdfFile,
       count
     } = this.state
@@ -120,9 +119,15 @@ class BirthCertificateFragment extends BaseMVPView {
     {
       enabledLoader &&
       <Modal>
-      <center>
-        <CircularLoader show = { enabledLoader }/>
-      </center>
+        <div>
+          <center>
+            <br/>
+            <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+            <br/>
+            <CircularLoader show = { enabledLoader }/>
+            <br/>
+          </center>
+        </div>
       </Modal>
     }
       <div>
@@ -192,8 +197,9 @@ class BirthCertificateFragment extends BaseMVPView {
                 />
                 <center>
                 <GenericButton
-                text = { 'Save' }
-                onClick = { () => this.submitForm() }/>
+                text = { 'Upload' }
+                onClick = { () => this.submitForm()
+              }/>
                 </center>
             </div>
             }

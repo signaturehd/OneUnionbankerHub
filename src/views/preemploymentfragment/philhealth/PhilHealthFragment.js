@@ -193,16 +193,19 @@ class PhilHealthFragment extends BaseMVPView {
         {
           philHealthAttachment.length !== 0  &&
           philHealthArray.map((status) =>
-            status.status === 2 ?
-            <div>
-            <center>
-              <h4 className = { 'font-size-14px font-weight-lighter' }>
-                Your documents has been <b>submitted for confirmation</b>.
-              </h4>
-            </center>
-            </div>
-            :
-            status.status === 4 ?
+          <div>
+          {
+            status.status === 2 &&
+              <div>
+              <center>
+                <h4 className = { 'font-size-14px font-weight-lighter' }>
+                  Your documents has been <b>submitted for confirmation</b>.
+                </h4>
+              </center>
+              </div>
+          }
+          {
+            status.status === 4 &&
             <div>
             <center>
               <h4 className = { 'font-size-14px font-weight-lighter' }>
@@ -210,7 +213,9 @@ class PhilHealthFragment extends BaseMVPView {
               </h4>
             </center>
             </div>
-            :
+          }
+          {
+            status.status === 1 &&
             <div>
             <div className = { 'grid-global' }>
               <h2></h2>
@@ -241,6 +246,8 @@ class PhilHealthFragment extends BaseMVPView {
                />
              </center>
             </div>
+          }
+          </div>
           )
          }
       </div>

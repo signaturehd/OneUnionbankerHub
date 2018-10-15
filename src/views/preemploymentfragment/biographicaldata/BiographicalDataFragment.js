@@ -81,6 +81,7 @@ class BiographicalDataFragment extends BaseMVPView {
     } = this.state
 
     this.presenter.addBiographicalData(id, biographicalDataFormData)
+    this.setState({ enabledLoader : false })
   }
 
   noticeResponseResp (noticeResponse) {
@@ -250,8 +251,12 @@ class BiographicalDataFragment extends BaseMVPView {
                     />
                   <center>
                     <GenericButton
-                    text = { 'Save' }
-                    onClick = { () => this.submitForm(status.id) }/>
+                    text = { 'Upload' }
+                    onClick = { () => {
+                      this.setState({ enabledLoader : true })
+                      this.submitForm(status.id)
+                    }
+                  }/>
                   </center>
                 </div>
               }

@@ -113,6 +113,9 @@ class TinFragment extends BaseMVPView {
           enabledLoader &&
           <Modal>
           <center>
+          <br/>
+          <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+          <br/>
           <CircularLoader show = { enabledLoader }/>
           </center>
           </Modal>
@@ -148,38 +151,45 @@ class TinFragment extends BaseMVPView {
         <br/>
         {
           tinArray.map((status) =>
-          status.status === 2 ?
           <div>
-          <center>
-            <h4 className = { 'font-size-14px font-weight-lighter' }>
-              Your documents has been <b>submitted for confirmation</b>.
-            </h4>
-          </center>
-          </div>
-          :
-          status.status === 4 ?
-          <div>
-          <center>
-            <h4 className = { 'font-size-14px font-weight-lighter' }>
-              Your documents are <b>verified</b>.
-            </h4>
-          </center>
-          </div>
-          :
-          <div>
-            <h4>
-              TIN Attachments
-            </h4>
-            <br/>
-          <MultipleFileUploader
-            placeholder = { '' }
-            fileArray = { tinAttachment }
-            />
+          {
+            status.status === 2 &&
+            <div>
             <center>
-            <GenericButton
-            text = { 'Upload' }
-            onClick = { () => this.uploadForm() }/>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents has been <b>submitted for confirmation</b>.
+              </h4>
             </center>
+            </div>
+          }
+          {
+            status.status === 4 &&
+            <div>
+            <center>
+              <h4 className = { 'font-size-14px font-weight-lighter' }>
+                Your documents are <b>verified</b>.
+              </h4>
+            </center>
+            </div>
+          }
+          {
+            status.status === 1 &&
+            <div>
+              <h4>
+                TIN Attachments
+              </h4>
+              <br/>
+            <MultipleFileUploader
+              placeholder = { '' }
+              fileArray = { tinAttachment }
+              />
+              <center>
+              <GenericButton
+              text = { 'Upload' }
+              onClick = { () => this.uploadForm() }/>
+              </center>
+            </div>
+          }
           </div>
         )
       }
