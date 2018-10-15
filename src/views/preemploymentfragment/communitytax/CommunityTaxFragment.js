@@ -51,7 +51,9 @@ class CommunityTaxFragment extends BaseMVPView {
           </div>
           <Progress
             type = { 'circle' }
-            percent={ percentage } />
+            height = { 65 }
+            width = { 65 }
+            percent = { percentage } />
         </div>
         <br/>
         <GenericInput

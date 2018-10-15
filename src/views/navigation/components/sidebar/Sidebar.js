@@ -36,7 +36,7 @@ class SideBar extends Component {
     },
     {
       id: 11 ,
-      title: 'Onboarding Pre-Employment',
+      title: 'Pre-Employment',
       action: () => history.push('/preemployment'),
       className: 'compliance-icon'
     },
@@ -101,7 +101,7 @@ class SideBar extends Component {
       className: 'logout-icon'
     },
   ]
-    console.log(tempPreEmployment)
+
   return (
     <div className = { '_sidebar-overlay' }>
       <ul className = { '_link-list ul' }>

@@ -228,7 +228,7 @@ class NavigationView extends BaseMVPView {
     })
 
     splitUserInitial = initials[0] + initials[initials.length - 1]
-    console.log(preEmploymentStatus)
+
     return (
       <div className = { 'navigation-body-div' }>
         { super.render() }

@@ -836,8 +836,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getPreEmploymentAffirmationId (token, id) {
-    return this.service.getPreEmploymentAffirmationId(token, id)
+  getPreEmploymentAffirmationId (token, affirmId, affirmPage) {
+    return this.service.getPreEmploymentAffirmationId(token, affirmId, affirmPage)
       .pipe(ServiceErrorOperator())
   }
 

@@ -129,9 +129,9 @@ class TinFragment extends BaseMVPView {
           </div>
           <Progress
             type = { 'circle' }
-            height = { 100 }
-            width = { 100 }
-            percent={ percentage } />
+            height = { 65 }
+            width = { 65 }
+            percent = { percentage } />
         </div>
         <br/>
           <GenericInput

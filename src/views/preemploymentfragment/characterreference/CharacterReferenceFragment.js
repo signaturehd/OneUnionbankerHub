@@ -495,8 +495,8 @@ class CharacterReferenceFragment extends BaseMVPView {
           </div>
           <Progress
             type = { 'circle' }
-            height = { 100 }
-            width = { 100 }
+            height = { 65 }
+            width = { 65 }
             percent = { percentage } />
           </div>
         <br/>

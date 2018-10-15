@@ -1,5 +1,7 @@
 import GetAffirmationStatusInteractor from
   '../../../../domain/interactor/preemployment/affirmation/GetAffirmationStatusInteractor'
+import GetAffirmationInteractor from
+  '../../../../domain/interactor/preemployment/affirmation/GetAffirmationInteractor'
 import GetAffirmationPdfViewInteractor from
   '../../../../domain/interactor/preemployment/affirmation/GetAffirmationPdfViewInteractor'
 import PostPinEnrollAffirmationEmploymentInteractor from
@@ -13,6 +15,8 @@ import PostEnrollPinAffirmationsSecrecyInteractor from
 
 export default class AffirmDocumentPresenter {
   constructor (container) {
+    this.getAffirmationInteractor =
+      new GetAffirmationInteractor(container.get('HRBenefitsClient'))
     this.getAffirmationStatusInteractor =
       new GetAffirmationStatusInteractor(container.get('HRBenefitsClient'))
     this.getAffirmationPdf =
@@ -35,6 +39,14 @@ export default class AffirmDocumentPresenter {
     this.getAffirmationStatusInteractor.execute()
     .subscribe(data => {
       this.view.checkedAffirmationPreEmploymentStatus(data)
+    }, error => {
+    })
+  }
+
+  getPreEmploymentAffirmationId (id, page) {
+    this.getAffirmationInteractor.execute(id, page)
+    .subscribe(data => {
+      this.view.preEmploymentDocuments(data)
     }, error => {
     })
   }

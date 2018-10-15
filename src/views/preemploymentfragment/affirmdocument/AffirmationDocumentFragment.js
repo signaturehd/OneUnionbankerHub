@@ -52,6 +52,10 @@ class AffirmationDocumentFragment extends BaseMVPView {
   componentDidMount () {
     this.props.onSendPageNumberToView(0)
     this.presenter.getAffirmationsStatus()
+    this.presenter.getPreEmploymentAffirmationId(1,1)
+    this.presenter.getPreEmploymentAffirmationId(2,1)
+    this.presenter.getPreEmploymentAffirmationId(3,1)
+    this.presenter.getPreEmploymentAffirmationId(4,1)
   }
 
   validator (input) {
@@ -266,18 +270,20 @@ class AffirmationDocumentFragment extends BaseMVPView {
           </div>
           <Progress
             type = { 'circle' }
-            height = { 100 }
-            width = { 100 }
+            height = { 65 }
+            width = { 65 }
             percent = { percentage } />
         </div>
         <br/>
-        <div className = { 'affirmation-grid-pdf-card' }>
-          <div className = { 'affirmation-grid-card font-size-12px' }>
-            {
-              affirmationPreEmploymentStatus.map((resp, key) => {
-                let respId = resp.id
-                 return (
-                   <div>
+          {
+            showPdfViewComponent ?
+            <div></div>
+            :
+            <div className = { 'affirmation-grid-pdf-card' }>
+              {
+                affirmationPreEmploymentStatus.map((resp, key) => {
+                  let respId = resp.id
+                   return (
                      <Card
                        key = { key }
                        onClick = { () => {
@@ -301,36 +307,33 @@ class AffirmationDocumentFragment extends BaseMVPView {
                              <span
                                className = { 'affirmation-icon affirmation-seemore-button float-right' }/>
                            }
+                           </div>
                          </div>
-                       </div>
-                     </Card>
-                   </div>
-                 )
+                       </Card>
+                     )
+                    }
+                  )
                 }
-              )
-            }
-          </div>
-          <div>
-            {
-              showPdfViewComponent ?
-              <AffirmationDocumentsViewerComponent
-                affirmTitle = { affirmTitle }
-                enabledLoader = { enabledLoader }
-                nodeStatus = { nodeStatus }
-                pdfFile = { pdfFile }
-                showPinCodeModalFunc = { () => this.setState({ showPinCodeModal: true, showPdfViewComponent: false }) }
-                onClose = { () => this.setState({ showPdfViewComponent: false }) }
-              />
-            :
-            <div>
-              <br/>
-              <br/>
-              <br/>
-              <h2 className = { 'header-margin-default' }>No Documents</h2>
-            </div>
-            }
-          </div>
-        </div>
+              </div>
+          }
+          {
+          //   showPdfViewComponent ?
+          //   <AffirmationDocumentsViewerComponent
+          //     affirmTitle = { affirmTitle }
+          //     enabledLoader = { enabledLoader }
+          //     nodeStatus = { nodeStatus }
+          //     pdfFile = { pdfFile }
+          //     showPinCodeModalFunc = { () => this.setState({ showPinCodeModal: true, showPdfViewComponent: false }) }
+          //     onClose = { () => this.setState({ showPdfViewComponent: false }) }
+          //   />
+          // :
+          // <div>
+          //   <br/>
+          //   <br/>
+          //   <br/>
+          //   <h2 className = { 'header-margin-default' }>No Documents</h2>
+          // </div>
+          }
       </div>
     </div>
     )
