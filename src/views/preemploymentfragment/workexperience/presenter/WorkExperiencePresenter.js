@@ -35,6 +35,7 @@ export default class WorkExperiencePresenter {
   getWorkExperienceForm () {
     this.getWorkExperienceFormInteractor.execute()
     .subscribe(data => {
+      this.view.hideDocumentLoader()
       this.view.showPdfFileUrl(data.url)
     }, error =>{
       this.view.hideDocumentLoader()
