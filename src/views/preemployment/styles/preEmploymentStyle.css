@@ -16,6 +16,11 @@
 .react-sweet-progress-symbol{
   width: auto !important;
 }
+
+.preemp-next-button {
+  background-color: #ff8a00;
+  color:white;
+}
 /*
 label {
   display: contents;

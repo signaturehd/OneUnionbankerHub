@@ -20,8 +20,6 @@ import { Progress } from 'react-sweet-progress'
 import 'react-sweet-progress/lib/style.css'
 import './styles/affirmDocumentStyle.css'
 
-import AffirmationDocumentsViewerComponent from './components/AffirmationDocumentsViewerComponent'
-
 import { NotifyActions } from '../../../actions'
 import store from '../../../store'
 
@@ -32,6 +30,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
     super(props)
     this.state = {
       affirmationPreEmploymentStatus : [],
+      affirmationContent : [],
       previewDataPDF : [],
       showPdfViewComponent : false,
       showPinCodeModal: false,
@@ -52,10 +51,6 @@ class AffirmationDocumentFragment extends BaseMVPView {
   componentDidMount () {
     this.props.onSendPageNumberToView(0)
     this.presenter.getAffirmationsStatus()
-    this.presenter.getPreEmploymentAffirmationId(1,1)
-    this.presenter.getPreEmploymentAffirmationId(2,1)
-    this.presenter.getPreEmploymentAffirmationId(3,1)
-    this.presenter.getPreEmploymentAffirmationId(4,1)
   }
 
   validator (input) {
@@ -115,13 +110,20 @@ class AffirmationDocumentFragment extends BaseMVPView {
     }
   }
 
-
   checkedAffirmationPreEmploymentStatus (affirmationPreEmploymentStatus) {
     this.setState({ affirmationPreEmploymentStatus })
   }
 
-  onCheckedPdf (link) {
-    this.presenter.getOnBoardingDocument(link)
+  setDocumentContents (data) {
+    let oldArray = [...this.state.affirmationContent]
+    oldArray.push(data)
+
+    this.setState({ affirmationContent : oldArray })
+  }
+
+  onCheckedPdf (id) {
+    let count = 1
+    this.presenter.getPreEmploymentAffirmationId(id, count)
   }
 
   showPdfFileView (pdfFile) {
@@ -156,6 +158,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
 
     const {
       affirmationPreEmploymentStatus,
+      affirmationContent,
       previewDataPDF,
       showPdfViewComponent,
       showPinCodeModal,
@@ -241,7 +244,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
                   />
                 <br/>
                 {
-                  pdfFile &&
+                  affirmationContent &&
                   <GenericButton
                     type = { 'button' }
                     text = { 'Submit' }
@@ -275,9 +278,40 @@ class AffirmationDocumentFragment extends BaseMVPView {
             percent = { percentage } />
         </div>
         <br/>
+        <br/>
           {
             showPdfViewComponent ?
-            <div></div>
+            <div>
+              {
+                affirmationContent && affirmationContent.map((resp, key) =>
+                <Card
+                  key = { key }
+                  className = { 'affirmation-padding-documents' }>
+                  {
+                    <div dangerouslySetInnerHTML = {{ __html : resp }} />
+                  }
+                </Card>
+                )
+              }
+              <br/>
+              <center>
+                {
+                  nodeStatus === 0 ?
+                  <div className = { 'affirm-acknowledge' }>
+                    <GenericButton
+                      onClick = { () => this.setState({ showPinCodeModal: true, showPdfViewComponent: false }) }
+                      text = { 'I Acknowledge' }/>
+                  </div>
+                  :
+                  <div>
+                    <GenericButton
+                      onClick = { () => this.setState({ showPdfViewComponent: false, affirmationContent : [] }) }
+                      text = { 'Close' }/>
+                  </div>
+                }
+              </center>
+            </div>
+
             :
             <div className = { 'affirmation-grid-pdf-card' }>
               {
@@ -287,7 +321,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
                      <Card
                        key = { key }
                        onClick = { () => {
-                         this.onCheckedPdf(resp.link)
+                         this.onCheckedPdf(resp.id)
                          this.setState({
                            showPdfViewComponent : true ,
                            preAffirmationEmpId : resp.id,
@@ -316,24 +350,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
                 }
               </div>
           }
-          {
-          //   showPdfViewComponent ?
-          //   <AffirmationDocumentsViewerComponent
-          //     affirmTitle = { affirmTitle }
-          //     enabledLoader = { enabledLoader }
-          //     nodeStatus = { nodeStatus }
-          //     pdfFile = { pdfFile }
-          //     showPinCodeModalFunc = { () => this.setState({ showPinCodeModal: true, showPdfViewComponent: false }) }
-          //     onClose = { () => this.setState({ showPdfViewComponent: false }) }
-          //   />
-          // :
-          // <div>
-          //   <br/>
-          //   <br/>
-          //   <br/>
-          //   <h2 className = { 'header-margin-default' }>No Documents</h2>
-          // </div>
-          }
+
       </div>
     </div>
     )

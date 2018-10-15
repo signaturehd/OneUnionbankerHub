@@ -12,6 +12,11 @@
   column-gap: 2%;
 }
 
+.affirmation-padding-documents {
+  margin-bottom: 20px;
+  padding: 50px;
+}
+
 .affirmation-grid-pdf-card {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr 1fr;

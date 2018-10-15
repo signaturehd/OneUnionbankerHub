@@ -43,11 +43,27 @@ export default class AffirmDocumentPresenter {
     })
   }
 
+  getAllDocuments (data, page, id) {
+    let totalPage = data.totalPages
+    let pageNumber = page
+    let affirmId = id
+
+    this.view.setDocumentContents(data.content)
+    if(pageNumber === data.totalPages) {
+      this.view.hideDocumentLoader()
+    } else {
+      pageNumber += 1
+      this.getPreEmploymentAffirmationId(affirmId, pageNumber)
+    }
+  }
+
   getPreEmploymentAffirmationId (id, page) {
+    this.view.showDocumentLoader()
     this.getAffirmationInteractor.execute(id, page)
     .subscribe(data => {
-      this.view.preEmploymentDocuments(data)
+      this.getAllDocuments(data, page, id)
     }, error => {
+      this.view.hideDocumentLoader()
     })
   }
 
