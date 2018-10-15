@@ -25,13 +25,13 @@ export default class SSSPresenter {
   }
 
   uploadPhilHealthForm (philId, philAttachment) {
-    this.view.showCircularLoader()
+    this.view.showDocumentLoader()
     this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(philId, philAttachment))
     .subscribe(data => {
-      this.view.hideCircularLoader()
+      this.view.hideDocumentLoader()
       this.view.noticeResponseResp(data)
     }, error => {
-      this.view.hideCircularLoader()
+      this.view.hideDocumentLoader()
     })
   }
 }

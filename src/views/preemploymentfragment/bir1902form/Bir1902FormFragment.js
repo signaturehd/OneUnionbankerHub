@@ -122,6 +122,9 @@ class Bir1902FormFragment extends BaseMVPView {
       enabledLoader &&
       <Modal>
       <center>
+      <br/>
+      <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+      <br/>
       <CircularLoader show = { enabledLoader }/>
       </center>
       </Modal>
@@ -219,7 +222,7 @@ class Bir1902FormFragment extends BaseMVPView {
                 </div>
               }
               {
-               bir1902Array.length  === 1 &&
+               status.status  === 1 &&
                 <div>
                   <div className = { 'grid-global' }>
                     <h2></h2>
@@ -245,8 +248,9 @@ class Bir1902FormFragment extends BaseMVPView {
                     />
                     <center>
                      <GenericButton
-                       text = { 'Save' }
-                       onClick = { () => this.uploadForm()  }
+                       text = { 'Upload' }
+                       onClick = { () => this.uploadForm()
+                     }
                      />
                    </center>
                 </div>

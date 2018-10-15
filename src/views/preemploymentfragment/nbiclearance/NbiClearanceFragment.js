@@ -82,6 +82,9 @@ class NbiClearanceFragment extends BaseMVPView {
           enabledLoader &&
           <Modal>
           <center>
+          <br/>
+          <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+          <br/>
           <CircularLoader show = { enabledLoader }/>
           </center>
           </Modal>
@@ -141,7 +144,7 @@ class NbiClearanceFragment extends BaseMVPView {
                     />
                   <center>
                     <GenericButton
-                    text = { 'Save' }
+                    text = { 'Upload' }
                     onClick = { () => this.submitForm(status.id) }/>
                   </center>
                 </div>
