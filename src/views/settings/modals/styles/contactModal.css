@@ -1,3 +1,19 @@
+.device-grid {
+  display: grid;
+  grid-template-columns:  .1fr 1fr;
+  padding : 10px;
+  column-gap: 2%;
+}
+
+.devices-alignment {
+  margin-top: 10px;
+}
+
+.device-information-grid {
+  display: grid;
+  grid-template-columns: .3fr 1fr;
+}
+
 .contact-info-grid {
   display: grid;
   grid-template-rows: 1fr;
@@ -10,7 +26,7 @@
 
 .contact-number-grid {
   display: grid;
-  grid-template-columns: .15fr 1fr;
+  grid-template-columns: .1fr 1fr;
 }
 
 .contact-card-background {
