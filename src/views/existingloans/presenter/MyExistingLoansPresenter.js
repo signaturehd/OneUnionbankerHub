@@ -17,7 +17,7 @@ export default class MyExistingLoansPresenter {
     this.view.showCircularLoader(true)
     this.getExistingLoansInteractor.execute()
     .subscribe(data => {
-      this.view.showGetExistingLoans(data)
+      this.view.showGetLoans(data)
       this.view.showCircularLoader(false)
     }, errors => {
       this.view.showCircularLoader(false)
@@ -28,7 +28,7 @@ export default class MyExistingLoansPresenter {
     this.view.showCircularLoader(true)
     this.getNonExistingLoansInteractor.execute()
     .subscribe(data => {
-      this.view.showGetNonExistingLoans(data)
+      this.view.showGetLoans(data)
       this.view.showCircularLoader(false)
     }, errors => {
       this.view.showCircularLoader(false)
