@@ -3,7 +3,7 @@ export default class getAreaInteractor {
     this.client = client
   }
 
-  execute () {
-    return this.client.getAreaData(this.client.getToken())
+  execute (pageNumber, find) {
+    return this.client.getAreaData(this.client.getToken(), pageNumber, find)
   }
 }

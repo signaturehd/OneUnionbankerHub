@@ -32,6 +32,7 @@ class RequestFlightFragment extends BaseMVPView {
     this.state = {
       enabledLoader : false,
       showRequestModal : false,
+      showAreaModal : false,
       typeOfFlight : '',
       departurePurpose : '',
       departureOrigin : '',
@@ -50,7 +51,7 @@ class RequestFlightFragment extends BaseMVPView {
             "referenceNumber": "TR20181003160949",
             "purpose": {
                 "id": 2,
-                "purpose": "Training"
+                "purpose": "ROUND-TRIP"
             },
             "status": {
                 "id": 1,
@@ -107,7 +108,7 @@ class RequestFlightFragment extends BaseMVPView {
             "referenceNumber": "TR20181003160949",
             "purpose": {
                 "id": 2,
-                "purpose": "Team Building"
+                "purpose": "ONE-WAY"
             },
             "status": {
                 "id": 1,
@@ -131,23 +132,6 @@ class RequestFlightFragment extends BaseMVPView {
                     "location": "Aachen, Germany"
                 },
                 "date": "2019-01-26",
-                "time": "13:00:00",
-                "remarks": null
-            },
-            "return": {
-                "origin": {
-                    "id": 2,
-                    "areaCode": "AAH",
-                    "airport": "Aachen/Merzbruck",
-                    "location": "Aachen, Germany"
-                },
-                "destination": {
-                    "id": 1,
-                    "areaCode": "ZMH",
-                    "airport": "108 Mile Ranch",
-                    "location": "108 Mile Ranch, Canada"
-                },
-                "date": "2019-01-28",
                 "time": "13:00:00",
                 "remarks": null
             },
@@ -223,6 +207,7 @@ class RequestFlightFragment extends BaseMVPView {
     const {
       enabledLoader,
       showRequestModal,
+      showAreaModal,
       typeOfFlight,
       departurePurpose,
       departureOrigin,
@@ -273,6 +258,7 @@ class RequestFlightFragment extends BaseMVPView {
               <GenericInput
                 text = { 'Purpose' }
                 value = { departurePurpose }
+                onClick = { () => this.setState({ showAreaModal : true }) }
                 onChange = { (e) => this.departurePurposeFunc(e.target.value) }
               />
               <div className = { 'request-grid-option' }>

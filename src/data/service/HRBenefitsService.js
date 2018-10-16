@@ -1207,9 +1207,10 @@ export default class HRBenefitsService {
 
   /* Travel */
 
-  getAreaData (token) {
-    return this.apiClient.get('v1/travels/areas?find=PH&pageNumber=2', {
+  getAreaData (token, pageNumber, find) {
+    return this.apiClient.get(`v1/travels/areas?find=${find}&pageNumber=${pageNumber}`, {
       headers : { token }
+    })
   }
 
   /* News isHeart */

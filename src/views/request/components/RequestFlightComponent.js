@@ -27,16 +27,25 @@ class RequestFlightComponent extends Component {
                   <div>
                       <h2 className = { 'font-size-14px font-weight-lighter margin-bottom' }>{ resp.referenceNumber }</h2>
                       <h2 className = { 'font-size-16px font-weight-bold margin-bottom' }>{ resp.departure.origin.location }</h2>
-                      <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.return.origin.location }</h2>
+                      {
+                        resp.return &&
+                        <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.return.origin.location }</h2>
+                      }
                   </div>
                   <div className = { 'padding-top' }>
                       <h2 className = { 'airplane-icon' }></h2>
-                      <h2 className = { 'airplane-icon' }></h2>
+                      {
+                        resp.return &&
+                        <h2 className = { 'airplane-icon' }></h2>
+                      }
                   </div>
                   <div>
                       <h2 className = { 'font-size-12px font-weight-lighter margin-bottom text-align-right' }><span className = { 'border' }>{ resp.purpose.purpose }</span></h2>
                       <h2 className = { 'font-size-16px font-weight-bold margin-bottom text-align-right' }>{ resp.departure.destination.location }</h2>
-                      <h2 className = { 'font-size-16px font-weight-bold text-align-right' }>{ resp.return.destination.location }</h2>
+                      {
+                        resp.return &&
+                        <h2 className = { 'font-size-16px font-weight-bold text-align-right' }>{ resp.return.destination.location }</h2>
+                      }
                   </div>
                 </div>
               </Card>
