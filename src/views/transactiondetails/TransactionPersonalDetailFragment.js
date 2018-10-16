@@ -23,11 +23,14 @@ import BereavementDetailsFragment from './fragments/BereavementDetailsFragment'
 import MedicalSchedulingDetailsFragment from './fragments/MedicalSchedulingDetailsFragment'
 import OutpatientDetailsFragment from './fragments/OutpatientDetailsFragment'
 import MaternityAssistanceDetailsFragment from './fragments/MaternityAssistanceDetailsFragment'
+import LaptopLeaseDetailsFragment from './fragments/LaptopLeaseDetailsFragment'
+import VaccineRequisitionDetailsFragment from './fragments/VaccineRequisitionDetailsFragment'
 
 import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreementsModal'
 import TransactionDetailsAgreementMPLModal from './modals/TransactionDetailsAgreementMPLModal'
 import TransactionDetailsFormAttachmentsModal from './modals/TransactionDetailsFormAttachmentsModal'
 import TransactionDetailsFormAttachmentsMplModal from './modals/TransactionDetailsFormAttachmentsMplModal'
+import TransactionDetailsRecepientsModal from './modals/TransactionDetailsRecepientsModal'
 
 function  TransactionDetails (props)  {
   const transactionId = props.details ? props.details.benefitType.id : 0
@@ -44,6 +47,9 @@ function  TransactionDetails (props)  {
   const setFileCarlease = props.setFileCarlease
   const fileCarLease = props.fileCarlease
   const onConfirmationReleaseFunc = props.onConfirmationReleaseFunc
+  const confirmmDetails = props.confirmmDetails
+  const claimLaptopLease = props.claimLaptopLease
+  const viewTransactions = props.viewTransactions
 
   if (transactionId === 6) {
     return <DentalRDetailsFragment
@@ -146,10 +152,27 @@ function  TransactionDetails (props)  {
       agreementsMethod = { (resp) => agreementsMethod(resp) }
       details = { transactionDetails }
      />
-  }
-  else {
+  } else if (transactionId === 16) {
+    //Laptop Lease
+    return <LaptopLeaseDetailsFragment
+      attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+      agreementsMethod = { (resp) => agreementsMethod(resp) }
+      claimLaptopLease = { (transactionId) => claimLaptopLease(transactionId) }
+      confirmDetails = { (transactionId, isConfirm) => confirmmDetails(transactionId, isConfirm) }
+      details = { transactionDetails }
+    />
+   // return <h1>Transaction for LaptopLease</h1>
+  } else if (transactionId === 18) {
+    // Vaccine Requisition
+    return <VaccineRequisitionDetailsFragment
+        attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+        agreementsMethod = { (resp) => agreementsMethod(resp) }
+        details = { transactionDetails }
+        viewTransactions = { (recepients) => viewTransactions(recepients) }
+     />
+  } else {
    return <h1>No Transaction Occured please reload</h1> // No  Transaction
-   }
+  }
 }
 
 class TransactionPersonalDetailsFragment extends BaseMVPView {
@@ -219,6 +242,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     this.setState({ details })
   }
 
+  claimLaptopLease (transactionId) {
+    this.presenter.confirmLaptopLease(transactionId)
+  }
+
   /* Circular Loader */
 
   showCircularLoader () {
@@ -247,7 +274,9 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     showAgreementsMethodMPL,
     showConfirmation,
     showConfirmationMessage,
-    fileCarLease
+    fileCarLease,
+    recepients,
+    showRecepients
   } = this.state
 
   return (
@@ -289,6 +318,14 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
           />
       }
       {
+        showRecepients &&
+        <TransactionDetailsRecepientsModal
+          isDismisable = { true }
+          onClose = { () => this.setState({ showRecepients: false }) }
+          recepients = { recepients }
+        />
+      }
+      {
         showConfirmation &&
         <Modal>
           <center>
@@ -320,6 +357,9 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              attachments = { attachments }
              transactions = { transactions }
              showUploading = { response }
+             confirmmDetails = { (transactionId, isConfirm) => this.confirmRelease(transactionId, isConirm) }
+             claimLaptopLease = { (transactionId) => this.claimLaptopLease(transactionId) }
+             viewTransactions = { (recepients) => this.setState({ recepients, showRecepients: true }) }
              attachmentsMethod = { (resp) =>
                this.showAttachmentsMethod(resp)
              }

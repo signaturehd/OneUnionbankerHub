@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal, GenericButton, CircularLoader, GenericInput } from '../../../ub-components/'
+import {
+  Modal,
+  GenericButton,
+  CircularLoader,
+  GenericInput
+} from '../../../ub-components/'
 
 import { RequiredNumberValidation } from '../../../utils/validate/'
 
