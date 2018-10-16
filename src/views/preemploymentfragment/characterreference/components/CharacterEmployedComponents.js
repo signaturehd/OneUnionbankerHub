@@ -9,7 +9,7 @@ class CharacterEmployedComponents extends Component {
   }
 
   render () {
-    const { 
+    const {
       positionText,
       positionTextFunc,
       companyNameText,
@@ -19,9 +19,9 @@ class CharacterEmployedComponents extends Component {
       buildingNameText,
       buildingNameTextFunc,
       streetText,
-      streetTextFunc,      
+      streetTextFunc,
       districtText,
-      districtTextFunc,      
+      districtTextFunc,
       barangayText,
       barangayTextFunc,
       townTextFunc,
@@ -29,7 +29,7 @@ class CharacterEmployedComponents extends Component {
       cityText,
       cityTextFunc,
   } = this.props
-  
+
    return (
       <div>
         <GenericInput
@@ -60,14 +60,14 @@ class CharacterEmployedComponents extends Component {
           onChange = { (e) => streetTextFunc(e.target.value) }
           />
           <GenericInput
-            value = { cityText } 
+            value = { cityText }
             onChange = { (e) => cityTextFunc(e.target.value) }
-            text = { 'City/Municipality' } 
-          />          
+            text = { 'City/Municipality' }
+          />
           <GenericInput
-            value = { townText } 
+            value = { townText }
             onChange = { (e) => townTextFunc(e.target.value) }
-            text = { 'Town' } 
+            text = { 'Town' }
           />
 
         <div className = { 'character-grid-input' }>

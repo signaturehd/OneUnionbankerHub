@@ -4,6 +4,7 @@ import store from '../../../../store'
 import GetCharacterReferenceInteractor from '../../../../domain/interactor/preemployment/characterreference/GetCharacterReferenceInteractor'
 import PostCharacterReferenceInteractor from '../../../../domain/interactor/preemployment/characterreference/PostCharacterReferenceInteractor'
 import PutCharacterReferenceInteractor from '../../../../domain/interactor/preemployment/characterreference/PutCharacterReferenceInteractor'
+import DeleteCharacterReferenceInteractor from '../../../../domain/interactor/preemployment/characterreference/DeleteCharacterReferenceInteractor'
 
 import genericParam from '../../../../domain/param/PostCharacterReferenceParam'
 
@@ -13,6 +14,7 @@ export default class CharacterReferencePresenter {
     this.getCharacterReferenceInteractor = new GetCharacterReferenceInteractor(container.get('HRBenefitsClient'))
     this.postCharacterReferenceInteractor = new PostCharacterReferenceInteractor(container.get('HRBenefitsClient'))
     this.putCharacterReferenceInteractor = new PutCharacterReferenceInteractor(container.get('HRBenefitsClient'))
+    this.deleteCharacterReferenceInteractor = new DeleteCharacterReferenceInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -23,6 +25,15 @@ export default class CharacterReferencePresenter {
     this.getCharacterReferenceInteractor.execute()
     .subscribe(data => {
       this.view.showCharacterReferenceMap(data)
+    }, error => {
+    })
+  }
+
+  deleteCharacterReference (id) {
+    this.deleteCharacterReferenceInteractor.execute(id)
+    .subscribe(data => {
+      this.view.noticeResponseModal(data)
+      this.getCharacterReference()
     }, error => {
     })
   }

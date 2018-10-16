@@ -18,6 +18,7 @@ class CharacterReferenceMultipleCardComponent extends Component {
       errorMessage,
       count,
       onEditModeProperty,
+      onDeleteProperty,
     } = this.props
 
     return (
@@ -55,16 +56,33 @@ class CharacterReferenceMultipleCardComponent extends Component {
                   </div>
                 </div>
                 <div className = { 'grid-global-rows' }>
-                  {
-                    !disabled &&
-                    <img
-                      className = { 'close-button-global' }
-                      src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
-                      onClick = { () =>
-                        onEditModeProperty(resp)
+                  <div className = { 'grid-global' }>
+                    <div>
+                      {
+                        !disabled &&
+                        <img
+                          className = { 'close-button-global' }
+                          src = { require('../../../../images/icons/baseline_delete_black_18dp.png') }
+                          onClick = { () =>
+                            onDeleteProperty(resp.id)
+                          }
+                        />
                       }
-                    />
-                  }
+                    </div>
+                    <div>
+                      {
+                        !disabled &&
+                        <img
+                          className = { 'close-button-global' }
+                          src = { require('../../../../images/icons/baseline_edit_black_18dp.png') }
+                          onClick = { () =>
+                            onEditModeProperty(resp)
+                          }
+                        />
+                      }
+                    </div>
+                  </div>
+                  <div></div>
                 </div>
               </Card>
               <br/>
@@ -88,6 +106,7 @@ CharacterReferenceMultipleCardComponent.propTypes = {
   ),
   placeholder : PropTypes.string,
   onEditModeProperty : PropTypes.func,
+  onDeleteProperty : PropTypes.func,
 }
 
 CharacterReferenceMultipleCardComponent.defaultProps = {

@@ -362,6 +362,14 @@ class CharacterReferenceFragment extends BaseMVPView {
     this.setState({ editMode : true })
   }
 
+  onDeleteProperty (id) {
+    try {
+      this.presenter.deleteCharacterReference(id)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   render() {
     const {
       percentage
@@ -516,6 +524,7 @@ class CharacterReferenceFragment extends BaseMVPView {
           <MullptipleCardComponent
             characterReferenceData = { characterReferenceData }
             onEditModeProperty = { (resp) => this.onEditModeProperty(resp)  }
+            onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
           />
       </div>
     </div>

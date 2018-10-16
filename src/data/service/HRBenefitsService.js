@@ -1320,6 +1320,12 @@ export default class HRBenefitsService {
     })
   }
 
+  deleteCharacterReference (token, id) {
+    return this.onboardingClient.delete(`v1/employees/references/${ id }`, {
+      headers : { token }
+    })
+  }
+
   postCharacterReference (token, postCharacterReferenceParam) {
     const objectParam = {
       name : postCharacterReferenceParam.name,

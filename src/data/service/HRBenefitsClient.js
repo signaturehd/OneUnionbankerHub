@@ -973,6 +973,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  deleteCharacterReference (token, id) {
+    return this.service.deleteCharacterReference(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
   postCharacterReference (token, postCharacterReferenceParam) {
     return this.service.postCharacterReference(token, postCharacterReferenceParam)
       .pipe(ServiceErrorOperator())
