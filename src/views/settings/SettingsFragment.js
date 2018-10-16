@@ -46,7 +46,6 @@ class SettingsFragment extends BaseMVPView {
   }
   componentDidMount () {
     this.presenter.getProfile()
-    this.presenter.getForConfirmation()
     this.props.setSelectedNavigation(3)
   }
   showCircularLoader () {
@@ -188,6 +187,7 @@ class SettingsFragment extends BaseMVPView {
            showStaffAccountsModalFunc = { (showStaffAccountsModal) =>  this.setState({ showStaffAccountsModal }) }
            changePinSendToFragment = { (uniqueOldPIN, uniqueNewPIN) => this.submitUpdatedPIN(uniqueOldPIN, uniqueNewPIN) }
            getStaffAccounts = { (id) => this.presenter.getForConfirmation(id) }
+           getForConfirmation = { () => this.presenter.getForConfirmation() }
            onUpdateStaffAccountsFunc = { (fullName, employeeName, selectedAccountNumber, sequence) =>
               this.presenter.updateStaffAccounts(fullName, employeeName, selectedAccountNumber, sequence)
             }

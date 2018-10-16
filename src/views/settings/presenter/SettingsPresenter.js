@@ -26,14 +26,6 @@ export default class SettingsPresenter {
     this.view = view
   }
 
-   getEmployeeDevice () {
-     this.getEmployeeDevicesInteractor.execute()
-     .subscribe(data => {
-       this.view.showDevices(data)
-     }, error => {
-     })
-   }
-
    getProfile () {
     this.view.showLoading()
 
@@ -53,6 +45,7 @@ export default class SettingsPresenter {
    }
 
    getDevices () {
+     store.dispatch(NotifyActions.resetNotify())
      this.getDevicesInteractor.execute()
      .subscribe(data => {
        this.view.showDevicesData(data)

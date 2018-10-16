@@ -74,6 +74,10 @@ class StaffAccountsModal extends Component {
     }
   }
 
+  componentDidMount () {
+      this.props.getForConfirmation()
+  }
+
   confirmationModal (showConfirmationModal, employeeName, selectedAccountNumber, sequence) {
     this.setState({ showConfirmationModal, employeeName, selectedAccountNumber, sequence })
   }
@@ -132,10 +136,8 @@ class StaffAccountsModal extends Component {
     }=this.state
 
     const {
-      profile
+      name
     } = this.props
-
-    this.setState({ fullName : profile.fullname })
 
     return (
       <Modal
@@ -223,13 +225,16 @@ class StaffAccountsModal extends Component {
                 />
               <GenericButton
                 text = { 'Save' }
-                onClick = { () => onClickEmployeeConfirmation(
-                  fullName,
-                  accountNumber,
-                  accountTypeCode,
-                  accountCapacityCode,
-                  accountRemarks,
-                ) }
+                onClick = { () => {
+                  onClickEmployeeConfirmation(
+                    name,
+                    accountNumber,
+                    accountTypeCode,
+                    accountCapacityCode,
+                    accountRemarks,
+                  )
+                  this.setState({ showAddComponent : false })
+                } }
                 />
             </div>
             <br/>
@@ -250,7 +255,8 @@ class StaffAccountsModal extends Component {
               </center> :
               <div className={ 'staff-account-body' }>
               {
-                staffAccounts && staffAccounts.map(
+                staffAccounts &&
+                staffAccounts.map(
                   (resp, key) => (
                     <div className={ `back-color-default staff-account-card back-color-${resp.line2}` }>
                       <div className = { 'staff-account-card-details' }>

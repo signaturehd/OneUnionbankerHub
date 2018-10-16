@@ -68,6 +68,7 @@ class SettingsProfileCardComponent extends Component {
       showDevicesModal,
       showDevicesModalFunc,
       onUpdateStaffAccountsFunc,
+      getForConfirmation
     } = this.props
 
 
@@ -132,8 +133,9 @@ class SettingsProfileCardComponent extends Component {
             staffLoader = { staffLoader }
             staffAccounts = { staffAccounts }
             employeeNumber = { profile.employeeNumber }
-            profile = { profile }
+            name = { profile.fullname }
             getStaffAccounts = { getStaffAccounts }
+            getForConfirmation = { () => getForConfirmation() }
             onUpdateStaffAccounts = { (fullName, employeeName, selectedAccountNumber, sequence) =>
               onUpdateStaffAccountsFunc(fullName, employeeName, selectedAccountNumber, sequence) }
             onClickEmployeeConfirmation = { (
@@ -258,7 +260,8 @@ class SettingsProfileCardComponent extends Component {
                   </div>
                 </div>
                 <div
-                  onClick={ () => showStaffAccountsModalFunc(true) }
+                  onClick={ () =>
+                    showStaffAccountsModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
                     <span className={ 'profile-icon-settings staffAccount' }/>
