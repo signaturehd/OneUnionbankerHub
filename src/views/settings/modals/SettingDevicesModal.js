@@ -18,7 +18,7 @@ class SettingDevicesModal extends Component {
       devices,
       backgroundColor
     }=this.props
-    
+
     return (
         <Modal
           isDismisable={ true }
@@ -41,7 +41,7 @@ class SettingDevicesModal extends Component {
                     </div>
                     <div>
                       <div className = { 'device-information-grid' }>
-                        <h2 className = { 'font-weight-normal font-size-14px' }>
+                        <h2 className = { 'unionbank-color font-weight-normal font-size-14px' }>
                           Device ID:
                         </h2>
                         <h2 className = { 'font-weight-lighter font-size-14px' }>
@@ -49,7 +49,7 @@ class SettingDevicesModal extends Component {
                         </h2>
                       </div>
                       <div className = { 'device-information-grid' }>
-                        <h2 className = { 'font-weight-normal font-size-14px' }>
+                        <h2 className = { 'unionbank-color font-weight-normal font-size-14px' }>
                           Device Name:
                         </h2>
                         <h2 className = { 'font-weight-lighter font-size-14px' }>
@@ -57,7 +57,7 @@ class SettingDevicesModal extends Component {
                         </h2>
                       </div>
                       <div className = { 'device-information-grid' }>
-                        <h2 className = { 'font-weight-normal font-size-14px' }>
+                        <h2 className = { 'unionbank-color font-weight-normal font-size-14px' }>
                           Employee ID:
                         </h2>
                         <h2 className = { 'font-weight-lighter font-size-14px' }>
@@ -65,15 +65,15 @@ class SettingDevicesModal extends Component {
                         </h2>
                       </div>
                       <div className = { 'device-information-grid' }>
-                        <h2 className = { 'font-weight-normal font-size-14px' }>
+                        <h2 className = { 'unionbank-color font-weight-normal font-size-14px' }>
                           Status:
                         </h2>
-                        <h2 className = { 'font-weight-lighter font-size-14px' }>
+                        <h2 className = { `${resp.status === 1 ? 'device-green' : 'device-red'} font-weight-lighter font-size-14px` }>
                           { resp.status === 1 ? 'Active' : 'Inactive' }
                         </h2>
                       </div>
                       <div className = { 'device-information-grid' }>
-                        <h2 className = { 'font-weight-normal font-size-14px' }>
+                        <h2 className = { 'unionbank-color font-weight-normal font-size-14px' }>
                           Date Added:
                         </h2>
                         <h2 className = { 'font-weight-lighter font-size-14px' }>
@@ -81,7 +81,7 @@ class SettingDevicesModal extends Component {
                         </h2>
                       </div>
                       <div className = { 'device-information-grid' }>
-                        <h2 className = { 'font-weight-normal font-size-14px' }>
+                        <h2 className = { 'unionbank-color font-weight-normal font-size-14px' }>
                           Date Deleted:
                         </h2>
                         <h2 className = { 'font-weight-lighter font-size-14px' }>

@@ -5,6 +5,14 @@
   column-gap: 2%;
 }
 
+.device-green {
+  color : green;
+}
+
+.device-red {
+  color : red;
+}
+
 .devices-alignment {
   margin-top: 10px;
 }
