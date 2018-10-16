@@ -9,11 +9,16 @@ class EventsBudgetFragment extends BaseMVPView {
     super(props)
   }
 
+  componentDidMount () {
+    this.props.setSelectedNavigation(1)
+  }
+
   render () {
 
     return (
       <div>
         { super.render() }
+        test
       </div>
     )
   }

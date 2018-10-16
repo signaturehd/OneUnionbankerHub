@@ -69,6 +69,10 @@ import PreEmploymentFragment from '../preemployment/PreEmploymentFragment'
 /* Laptop Lease */
 import LaptopLeaseFragment from '../laptoplease/LaptopLeaseFragment'
 
+/* Event Budget Requisition */
+
+import EventsBudgetFragment from '../eventbudget/EventsBudgetFragment'
+
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
@@ -344,6 +348,9 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits/benefits/calamity' render = { props =>
                     <CalamityFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                    <Route path = '/mybenefits/benefits/eventbudgetrequisition' render = { props =>
+                    <EventsBudgetFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits' render = { props =>
                     <BenefitsFragment { ...props }
