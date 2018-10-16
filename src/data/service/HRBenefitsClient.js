@@ -919,4 +919,9 @@ export default class HRBenefitsClient {
     return this.service.validateEventsBudget(token)
       .pipe(ServiceErrorOperator())
   }
+
+  addEventsBudget (token, addEventParam) {
+    return this.service.addEventsBudget(token, addEventParam)
+      .pipe(ServiceErrorOperator())
+  }
 }

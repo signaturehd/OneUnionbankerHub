@@ -1224,4 +1224,19 @@ export default class HRBenefitsService {
       header: { token }
     })
   }
+
+  addEventsBudget (token, addEventParam) {
+    const objectParam = {
+      requestId: addEventParam.requestId,
+        venueName: addEventParam.venueName,
+        address: addEventParam.address,
+        region: addEventParam.region,
+        province: addEventParam.province,
+        city: addEventParam.city,
+        attendees: addEventParam.attendees,
+      }
+    return this.apiClient.post('v1/events/submit', objectParam, {
+      headers : { token }
+    })
+  }
 }
