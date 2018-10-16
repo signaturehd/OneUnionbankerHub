@@ -167,7 +167,7 @@ class BenefitsFragment extends BaseMVPView {
       path: '/mybenefits/benefits/education',
       subTitle: 'Avail of a wide range of educational benefits.'
     }, {
-      id: 1 ,
+      id: 6 ,
       styleName: 'benefits-option-cards-7 benefits-option-default font-weight-bold',
       title: 'Laptop Lease',
       path: '/mybenefits/benefits/laptoplease',

@@ -68,7 +68,11 @@ class BiographicalDataFragment extends BaseMVPView {
 
   showAttachmentsFileView (data) {
     let arrayNew = [...this.state.attachments]
-    arrayNew.push(data)
+    const objectArray = {
+      name : 'test',
+      file : data
+    }
+    arrayNew.push(objectArray)
     this.setState({ attachments : arrayNew })
   }
 
@@ -256,7 +260,7 @@ class BiographicalDataFragment extends BaseMVPView {
                     setFile = { (biographicalDataFormData) =>
                         this.setState({ biographicalDataFormData })
                     }
-                    />
+                  />
                   <center>
                     <GenericButton
                     text = { 'Upload' }
