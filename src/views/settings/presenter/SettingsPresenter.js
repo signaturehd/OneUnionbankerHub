@@ -90,7 +90,8 @@ export default class SettingsPresenter {
        accountNumber,
        type,
        capacity,
-       remarks
+       remarks,
+       '',
      ))
      .subscribe(data => {
        this.view.noticeResponseModal(data.message)
@@ -107,7 +108,9 @@ export default class SettingsPresenter {
      this.updateStaffAccountsInteractor.execute(addStaffAcountsParam(
        fullName,
        accountNumber,
-       status,
+       '',
+       capacity,
+       '',
        sequence
      ))
      .subscribe(data => {

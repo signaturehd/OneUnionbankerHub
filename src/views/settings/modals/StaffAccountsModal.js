@@ -74,16 +74,6 @@ class StaffAccountsModal extends Component {
     }
   }
 
-  componentDidMount () {
-    const {
-      getStaffAccounts,
-      employeeNumber,
-      onClickEmployeeConfirmationFunc
-    } = this.props
-
-    // getStaffAccounts(employeeNumber)
-  }
-
   confirmationModal (showConfirmationModal, employeeName, selectedAccountNumber, sequence) {
     this.setState({ showConfirmationModal, employeeName, selectedAccountNumber, sequence })
   }
@@ -141,6 +131,12 @@ class StaffAccountsModal extends Component {
      showAddComponent
     }=this.state
 
+    const {
+      profile
+    } = this.props
+
+    this.setState({ fullName : profile.fullname })
+
     return (
       <Modal
         isDismisable = { isDismisable }
@@ -196,12 +192,6 @@ class StaffAccountsModal extends Component {
           <div>
             <h2 className={ 'font-weight-normal' }>ADD STAFF ACCOUNTS</h2>
             <br/>
-              <GenericInput
-                text = { 'Fullname' }
-                maxLength = { 30 }
-                value = { fullName }
-                onChange = { (e) => this.setState({ fullName : e.target.value }) }
-                />
               <GenericInput
                 text = { 'Account Number' }
                 maxLength = { 12 }

@@ -132,6 +132,7 @@ class SettingsProfileCardComponent extends Component {
             staffLoader = { staffLoader }
             staffAccounts = { staffAccounts }
             employeeNumber = { profile.employeeNumber }
+            profile = { profile }
             getStaffAccounts = { getStaffAccounts }
             onUpdateStaffAccounts = { (fullName, employeeName, selectedAccountNumber, sequence) =>
               onUpdateStaffAccountsFunc(fullName, employeeName, selectedAccountNumber, sequence) }

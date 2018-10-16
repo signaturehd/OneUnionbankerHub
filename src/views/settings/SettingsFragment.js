@@ -46,6 +46,7 @@ class SettingsFragment extends BaseMVPView {
   }
   componentDidMount () {
     this.presenter.getProfile()
+    this.presenter.getForConfirmation()
     this.props.setSelectedNavigation(3)
   }
   showCircularLoader () {

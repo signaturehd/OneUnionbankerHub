@@ -1077,7 +1077,7 @@ export default class HRBenefitsService {
 
   /* Staff accounts */
   getForConfirmation (token, id) {
-    return this.accountClient.get('v1/employees/details', {
+    return this.accountClient.get('v1/accounts', {
       headers : { token }
     })
   }
@@ -1093,7 +1093,7 @@ export default class HRBenefitsService {
         remarks: staffAccountsParam.remarks,
       }
     }
-    return this.accountClient.post('v1/employees/details', staffAccountObject , {
+    return this.accountClient.post('v1/accounts', staffAccountObject , {
       headers : { token }
     })
   }
@@ -1106,7 +1106,7 @@ export default class HRBenefitsService {
       },
       sequence : staffAccountsParam.sequence
     }
-    return this.accountClient.put('v1/employees/details', staffAccontObject , {
+    return this.accountClient.put('v1/accounts', staffAccontObject , {
       headers : { token }
     })
   }
