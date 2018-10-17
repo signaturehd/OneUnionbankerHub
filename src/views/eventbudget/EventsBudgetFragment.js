@@ -36,6 +36,14 @@ class EventsBudgetFragment extends BaseMVPView {
     this.setState({ venueText })
   }
 
+  setRegion (regionText) {
+    this.setState({ regionText })
+  }
+
+  setAmount (amountText) {
+    this.setState({ amountText })
+  }
+
   /* Navigage back to benefits Option*/
   navigate () {
     this.props.history.push('/mybenefits/benefits/')
