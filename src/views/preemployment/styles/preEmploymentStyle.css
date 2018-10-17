@@ -21,6 +21,21 @@
   background-color: #ff8a00;
   color:white;
 }
+
+.preemp-refresh {
+  background-image: url('../../../images/icons/refresh.png');
+}
+
+
+.preemp-icon {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 36px;
+  width:  36px;
+  background-repeat: no-repeat;
+}
 /*
 label {
   display: contents;

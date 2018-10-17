@@ -75,8 +75,7 @@ import './styles/preEmploymentStyle.css'
 function  PreEmploymentFragments (props)  {
   const pageNumber = props.preEmpPage
   const onSendPageNumberToView = props.onSendPageNumberToView
-  const percentageTemp = (pageNumber / 20) * 100
-  const percentage = parseInt(percentageTemp)
+  const percentage = props.percentage
   const biographicalArray = props.biographicalArray
   const sssArray = props.sssArray
   const tinArray = props.tinArray
@@ -88,6 +87,10 @@ function  PreEmploymentFragments (props)  {
   const pagibigArray = props.pagibigArray
   const pagibigLoanArray = props.pagibigLoanArray
   const personnelArray = props.personnelArray
+  const characterReferenceData = props.characterReferenceData
+  const characterReferencePresenter = props.characterReferencePresenter
+  const educationData = props.educationData
+  const educationPresenter = props.educationPresenter
   if (pageNumber === 0) {
     return <AffirmationDocumentFragment
       percentage = { percentage }
@@ -113,6 +116,8 @@ function  PreEmploymentFragments (props)  {
   } else if (pageNumber === 4) {
     return <EducationBackgroundFragment
       percentage = { percentage }
+      educationData = { educationData }
+      educationPresenter = { educationPresenter }
       educationVerificationForm = { educationVerificationForm }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
@@ -124,6 +129,8 @@ function  PreEmploymentFragments (props)  {
   } else if (pageNumber === 6) {
     return <CharacterReferenceFragment
       percentage = { percentage }
+      characterReferenceData = { characterReferenceData }
+      characterReferencePresenter = { characterReferencePresenter }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 7) {
@@ -218,7 +225,6 @@ class PreEmploymentFragment extends BaseMVPView {
       welcomeModal : true,
       isDismisable : true,
       enabledLoader: false,
-      preEmpPage  : 0,
       showFinancialObligationModal: false,
       showTaxPayerIdentificationModal: false,
       showSkipMessage: false,
@@ -227,16 +233,40 @@ class PreEmploymentFragment extends BaseMVPView {
       showChildrenConfirmModal : false,
       hideSubmitButton : true,
       preEmploymentData : [],
+      characterReferenceData : [],
+      educationData : [],
+      preEmpPage  : 0,
+      percentage : 0,
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(11)
     this.presenter.getPreEmploymentForm()
+    this.presenter.getCharacterReference()
+    this.presenter.getEmployeeSchool()
   }
+
+  /* Documents */
 
   checkedPreEmploymentForm (preEmploymentData) {
     this.setState({ preEmploymentData })
+  }
+
+  /* Character Reference */
+  showCharacterReferenceMap (characterReferenceData) {
+    this.setState({ characterReferenceData })
+  }
+
+  /* Education */
+  showEducationMap (educationData) {
+    this.setState({ educationData })
+  }
+
+  /* Percentage */
+
+  showPercentageOfPreEmployment (value) {
+    this.setState({ percentage : parseInt(value) })
   }
 
   getFormData (id) {
@@ -319,7 +349,7 @@ class PreEmploymentFragment extends BaseMVPView {
       history,
       checkPEUndertaking,
       onClose,
-      onBoardingSkipPage
+      onBoardingSkipPage,
     } = this.props
 
     const {
@@ -334,7 +364,10 @@ class PreEmploymentFragment extends BaseMVPView {
       showMarriedConfirmModal,
       preEmploymentData,
       showChildrenConfirmModal,
-      hideSubmitButton
+      hideSubmitButton,
+      characterReferenceData,
+      educationData,
+      percentage,
     } = this.state
 
     return(
@@ -483,10 +516,20 @@ class PreEmploymentFragment extends BaseMVPView {
                 personnelArray = { this.getFormData(15) }
                 pagibigLoanArray = { this.getFormData(16) }
                 preEmpPage = { preEmpPage }
+                percentage = { percentage }
+                characterReferencePresenter = { () => this.presenter.getCharacterReference() }
+                characterReferenceData = { characterReferenceData }
+                educationPresenter = { () => this.presenter.getEmployeeSchool() }
+                educationData = { educationData }
                 onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
                 />
               <br/>
-              <div className = { 'grid-global-columns-x3' }>
+              <div className = { 'grid-global-columns-x4' }>
+                <span
+                  onClick = { () =>
+                      this.onSendPageNumberToView(preEmpPage)
+                  }
+                  className = { 'preemp-icon  preemp-refresh' }/>
                 {
                   preEmpPage !== 0 ?
                   <GenericButton
@@ -503,11 +546,13 @@ class PreEmploymentFragment extends BaseMVPView {
                   }
                 />
               {
-                hideSubmitButton &&
+                hideSubmitButton ?
                 <GenericButton
                   className = { 'preemp-next-button' }
                   text = { 'Next' }
                   onClick = { () => this.incrementPage() } />
+                  :
+                <div></div>
               }
               </div>
             </div>
@@ -524,6 +569,7 @@ PreEmploymentFragment.propTypes = {
   setSelectedNavigation : PropTypes.func,
   selected : PropTypes.number,
   tempPreEmployment : PropTypes.number,
+  refreshOptions : PropTypes.func,
 }
 
 PreEmploymentFragment.defaultProps = {
