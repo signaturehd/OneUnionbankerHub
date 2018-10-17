@@ -1,17 +1,14 @@
 import { NotifyActions } from '../../../../actions'
 import store from '../../../../store'
 
-import GetCharacterReferenceInteractor from '../../../../domain/interactor/preemployment/characterreference/GetCharacterReferenceInteractor'
 import PostCharacterReferenceInteractor from '../../../../domain/interactor/preemployment/characterreference/PostCharacterReferenceInteractor'
 import PutCharacterReferenceInteractor from '../../../../domain/interactor/preemployment/characterreference/PutCharacterReferenceInteractor'
 import DeleteCharacterReferenceInteractor from '../../../../domain/interactor/preemployment/characterreference/DeleteCharacterReferenceInteractor'
 
 import genericParam from '../../../../domain/param/PostCharacterReferenceParam'
 
-
 export default class CharacterReferencePresenter {
   constructor (container) {
-    this.getCharacterReferenceInteractor = new GetCharacterReferenceInteractor(container.get('HRBenefitsClient'))
     this.postCharacterReferenceInteractor = new PostCharacterReferenceInteractor(container.get('HRBenefitsClient'))
     this.putCharacterReferenceInteractor = new PutCharacterReferenceInteractor(container.get('HRBenefitsClient'))
     this.deleteCharacterReferenceInteractor = new DeleteCharacterReferenceInteractor(container.get('HRBenefitsClient'))
@@ -21,19 +18,11 @@ export default class CharacterReferencePresenter {
     this.view = view
   }
 
-  getCharacterReference () {
-    this.getCharacterReferenceInteractor.execute()
-    .subscribe(data => {
-      this.view.showCharacterReferenceMap(data)
-    }, error => {
-    })
-  }
-
   deleteCharacterReference (id) {
     this.deleteCharacterReferenceInteractor.execute(id)
     .subscribe(data => {
       this.view.noticeResponseModal(data)
-      this.getCharacterReference()
+      this.view.callBackCharacterReference()
     }, error => {
     })
   }
@@ -45,24 +34,100 @@ export default class CharacterReferencePresenter {
     numberOfYearsKnown,
     contactNumber,
     company,
+    email,
     address,
-    occupation,
+    occupation
   ) {
-    this.postCharacterReferenceInteractor.execute(genericParam(
-      id,
-      name,
-      relationship,
-      numberOfYearsKnown,
-      contactNumber,
-      company,
-      address,
-      occupation
-    ))
-    .subscribe(data => {
-      this.view.noticeResponseModal(data)
-      this.getCharacterReference()
-    }, error => {
-    })
+   //  company : {
+   //   position: positionText,
+   //   name: companyNameText,
+   //   departmentFloor: floorText,
+   //   buildingName:  buildingNameText,
+   //   street: streetText,
+   //   district: districtText,
+   //   baranggay: barangayText,
+   //   city: cityText,
+   //   town: townText
+   // }
+    if(name === '') {
+      this.view.setFullNameErrorMessage('Full Name is required')
+    } else if (occupation === 0) {
+      this.view.setOccupationNameErrorMessage('Please specify your work status (eg. Employed, Unemployed, Self-Employed)')
+    } else if (occupation === 2 || occupation === 1) {
+      if (company.company.position === '') {
+          this.view.setPositionErrorMessage('Position is required')
+      } else if (company.company.name === '') {
+        this.view.setCompanyNameErrorMessage('Company name is required')
+      } else if (company.company.departmentFloor === '') {
+        this.view.setFloorErrorMessage('Floor is required')
+      } else if (company.company.buildingName === '') {
+        this.view.setBuildingErrorMessage('Building Name is required')
+      } else if (company.company.street === '') {
+        this.view.setStreetErrorMessage('Street is required')
+      } else if (company.company.city === '') {
+        this.view.setCityErrorMessage('City is required')
+      } else if (company.company.town === '') {
+        this.view.setTownErrorMessage('Town is required')
+      } else if (company.company.district === '') {
+        this.view.setDistrictErrorMessage('District is required')
+      } else if (company.company.baranggay === '') {
+        this.setBarangayErrorMessage('Barangay is required')
+      } else if (email === '') {
+        this.view.setEmailErrorMessage('Email is required (e.g 1uhub@test.com etc.)')
+      } else if (contactNumber === '') {
+        this.view.setContactNumberErrorMessage('Contact Number is required and must atleast 11 digit')
+      } else if (relationship === '') {
+        this.view.setRelationshipErrorMessage('Relationship is required')
+      } else if (numberOfYearsKnown === '') {
+        this.view.setYearsKnown('Please specify his/her period of work experience')
+      } else {
+        this.postCharacterReferenceInteractor.execute(genericParam(
+          id,
+          name,
+          relationship,
+          numberOfYearsKnown,
+          contactNumber,
+          company,
+          email,
+          address,
+          occupation
+        ))
+        .subscribe(data => {
+          this.view.noticeResponseModal(data)
+          this.view.callBackCharacterReference()
+        }, error => {
+        })
+      }
+    } else if (occupation === 3) {
+      if (address === '') {
+        this.view.setAddressErrorMessage('Address is required')
+      } else if (email === '') {
+        this.view.setEmailErrorMessage('Email is required (e.g 1uhub@test.com etc.)')
+      } else if (contactNumber === '') {
+        this.view.setContactNumberErrorMessage('Contact Number is required and must atleast 11 digit')
+      } else if (relationship === '') {
+        this.view.setRelationshipErrorMessage('Relationship is required')
+      } else if (numberOfYearsKnown === '') {
+        this.view.setYearsKnown('Please specify his/her period of work experience')
+      }
+    } else {
+      console.log('success')
+      // this.postCharacterReferenceInteractor.execute(genericParam(
+      //   id,
+      //   name,
+      //   relationship,
+      //   numberOfYearsKnown,
+      //   contactNumber,
+      //   company,
+      //   address,
+      //   occupation
+      // ))
+      // .subscribe(data => {
+      //   this.view.noticeResponseModal(data)
+      //   this.view.callBackCharacterReference()
+      // }, error => {
+      // })
+    }
   }
 
   putCharacterReference (
@@ -87,7 +152,7 @@ export default class CharacterReferencePresenter {
     ))
     .subscribe(data => {
       this.view.noticeResponseModal(data)
-      this.getCharacterReference()
+      this.view.callBackCharacterReference()
     }, error => {
     })
   }

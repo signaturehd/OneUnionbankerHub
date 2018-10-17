@@ -37,9 +37,8 @@ class CharacterReferenceFragment extends BaseMVPView {
       showCharacterReferenceModal : false,
       showOccupationModal : false,
       showNoticeResponse : false,
-      occupationId : '',
+      occupationId : 0,
       occupationName : '',
-      characterReferenceData : [],
       addressText: '',
       addressTextErrorMessage: '',
       fullNameText : '',
@@ -63,12 +62,14 @@ class CharacterReferenceFragment extends BaseMVPView {
       districtText: '',
       districtTextErrorMessage: '',
       barangayText: '',
-      barangayTextTextErrorMessage: '',
+      barangayTextErrorMessage: '',
       streetText: '',
       streetTextErrorMessage: '',
       occupationNameErrorMessage: '',
       cityText: '',
+      cityTextErrorMessage: '',
       townText: '',
+      townTextErrorMessage: '',
       editData : '',
       editMode : false,
       selectedId : '',
@@ -78,12 +79,83 @@ class CharacterReferenceFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.onSendPageNumberToView(6)
-    this.presenter.getCharacterReference()
   }
 
-  showCharacterReferenceMap (characterReferenceData) {
-    this.setState({ characterReferenceData })
+  callBackCharacterReference () {
+    this.props.characterReferencePresenter()
   }
+
+  noticeResponseModal (noticeResponse) {
+    this.setState({ noticeResponse, showNoticeResponse : true })
+  }
+
+  /* Error Message Method */
+
+  setFullNameErrorMessage (fullNameTextErrorMessage) {
+    this.setState({ fullNameTextErrorMessage })
+  }
+
+  setAddressErrorMessage (addressTextErrorMessage) {
+    this.setState({ addressTextErrorMessage })
+  }
+
+  setEmailErrorMessage (emailTextErrorMessage) {
+    this.setState({ emailTextErrorMessage })
+  }
+
+  setPositionErrorMessage (positionTextErrorMessage) {
+    this.setState({ positionTextErrorMessage })
+  }
+
+  setCompanyNameErrorMessage (companyNameTextErrorMessage) {
+    this.setState({ companyNameTextErrorMessage })
+  }
+
+  setOccupationNameErrorMessage (occupationNameErrorMessage) {
+    this.setState({ occupationNameErrorMessage })
+  }
+
+  setContactNumberErrorMessage (contactNumberTextErrorMessage) {
+    this.setState({ contactNumberTextErrorMessage })
+  }
+
+  setRelationshipErrorMessage (relationshipTextErrorMessage) {
+    this.setState({ relationshipTextErrorMessage })
+  }
+
+  setYearsKnown (periodOfProfessionExperienceTextErrorMessage) {
+    this.setState({ periodOfProfessionExperienceTextErrorMessage })
+  }
+
+  setFloorErrorMessage (floorTextErrorMessage) {
+    this.setState({ floorTextErrorMessage })
+  }
+
+  setBuildingErrorMessage (buildingNameTextErrorMessage) {
+    this.setState({ buildingNameTextErrorMessage })
+  }
+
+  setStreetErrorMessage (streetTextErrorMessage) {
+    this.setState({ streetTextErrorMessage })
+  }
+
+  setCityErrorMessage (cityTextErrorMessage) {
+    this.setState({ cityTextErrorMessage })
+  }
+
+  setTownErrorMessage (townTextErrorMessage) {
+    this.setState({ townTextErrorMessage })
+  }
+
+  setDistrictErrorMessage (districtTextErrorMessage) {
+    this.setState({ districtTextErrorMessage })
+  }
+
+  setBarangayErrorMessage (barangayTextErrorMessage) {
+    this.setState({ barangayTextErrorMessage })
+  }
+
+  /* Validation */
 
   fullNameTextValidate (e) {
     const validate = func.checkedValidateText(e)
@@ -157,47 +229,33 @@ class CharacterReferenceFragment extends BaseMVPView {
     return func.checkValidateEmail(string)
   }
 
-  noticeResponseModal (noticeResponse) {
-    this.setState({ noticeResponse, showNoticeResponse : true })
-  }
-
+  /* Posting  */
   postEditMode () {
     const {
       selectedId,
       occupationName,
       occupationId,
-      occupationNameErrorMessage,
-      characterReferenceData,
       addressText,
-      addressTextErrorMessage,
       fullNameText,
-      fullNameTextErrorMessage,
       emailText,
-      emailTextErrorMessage,
       contactNumberText,
-      contactNumberTextErrorMessage,
       relationshipText,
-      relationshipTextErrorMessage,
       periodOfProfessionExperienceText,
-      periodOfProfessionExperienceTextErrorMessage,
       positionText,
-      positionTextErrorMessage,
       companyNameText,
-      companyNameTextErrorMessage,
       floorText,
-      floorTextErrorMessage,
       buildingNameText,
-      buildingNameTextErrorMessage,
       barangayText,
-      barangayTextTextErrorMessage,
       streetText,
-      streetTextErrorMessage,
       districtText,
-      districtTextErrorMessage,
       townText,
       cityText,
       editMode
     } = this.state
+
+    const {
+      characterReferenceData
+    } = this.props
 
     let companyObject = {
      company : {
@@ -220,42 +278,10 @@ class CharacterReferenceFragment extends BaseMVPView {
       periodOfProfessionExperienceText,
       contactNumberText,
       companyObject,
+      emailText,
+      addressText,
       occupationId
      )
-    this.setState({ showCharacterReferenceModal : false })
-    this.setState({
-      occupationId : '',
-      selectedId: '',
-      occupationName : '',
-      occupationNameErrorMessage : '',
-      addressText : '',
-      addressTextErrorMessage : '',
-      fullNameText : '',
-      fullNameTextErrorMessage : '',
-      emailText : '',
-      emailTextErrorMessage : '',
-      contactNumberText : '',
-      contactNumberTextErrorMessage : '',
-      relationshipText : '',
-      relationshipTextErrorMessage : '',
-      periodOfProfessionExperienceText : '',
-      periodOfProfessionExperienceTextErrorMessage : '',
-      positionText : '',
-      positionTextErrorMessage : '',
-      companyNameText : '',
-      companyNameTextErrorMessage : '',
-      floorText : '',
-      floorTextErrorMessage : '',
-      buildingNameText : '',
-      buildingNameTextErrorMessage : '',
-      barangayText : '',
-      barangayTextTextErrorMessage : '',
-      streetText : '',
-      streetTextErrorMessage : '',
-      districtText : '',
-      districtTextErrorMessage : '',
-      townText : '',
-     })
   } else {
     this.presenter.putCharacterReference(
       selectedId,
@@ -264,10 +290,14 @@ class CharacterReferenceFragment extends BaseMVPView {
       periodOfProfessionExperienceText,
       contactNumberText,
       companyObject,
+      emailText,
       addressText,
       occupationId
      )
-    this.setState({ showCharacterReferenceModal : false })
+  }
+}
+
+  resetMode () {
     this.setState({
       occupationId : '',
       selectedId: '',
@@ -294,14 +324,13 @@ class CharacterReferenceFragment extends BaseMVPView {
       buildingNameText : '',
       buildingNameTextErrorMessage : '',
       barangayText : '',
-      barangayTextTextErrorMessage : '',
+      barangayTextErrorMessage : '',
       streetText : '',
       streetTextErrorMessage : '',
       districtText : '',
       districtTextErrorMessage : '',
       townText : '',
     })
-    }
   }
 
   putEditMode (resp) {
@@ -363,11 +392,7 @@ class CharacterReferenceFragment extends BaseMVPView {
   }
 
   onDeleteProperty (id) {
-    try {
-      this.presenter.deleteCharacterReference(id)
-    } catch (e) {
-      console.log(e)
-    }
+    this.presenter.deleteCharacterReference(id)
   }
 
   render() {
@@ -382,7 +407,6 @@ class CharacterReferenceFragment extends BaseMVPView {
       occupationId,
       occupationName,
       occupationNameErrorMessage,
-      characterReferenceData,
       addressText,
       addressTextErrorMessage,
       fullNameText,
@@ -404,16 +428,23 @@ class CharacterReferenceFragment extends BaseMVPView {
       buildingNameText,
       buildingNameTextErrorMessage,
       barangayText,
-      barangayTextTextErrorMessage,
+      barangayTextErrorMessage,
       streetText,
       streetTextErrorMessage,
       districtText,
       districtTextErrorMessage,
       townText,
+      townTextErrorMessage,
       cityText,
+      cityTextErrorMessage,
       editMode,
       noticeResponse
     } = this.state
+
+
+    const {
+      characterReferenceData
+    } = this.props
 
     return (
     <div>
@@ -441,12 +472,21 @@ class CharacterReferenceFragment extends BaseMVPView {
             this.setState({ showCharacterReferenceModal : false }) }
 
           fullNameTextErrorMessage = { fullNameTextErrorMessage }
-          occupationNameErrorMessage = { occupationNameErrorMessage }
           addressTextErrorMessage = { addressTextErrorMessage }
           emailTextErrorMessage = { emailTextErrorMessage }
           contactNumberTextErrorMessage = { contactNumberTextErrorMessage }
           relationshipTextErrorMessage = { relationshipTextErrorMessage }
           periodOfProfessionExperienceTextErrorMessage = { periodOfProfessionExperienceTextErrorMessage }
+          occupationNameErrorMessage = { occupationNameErrorMessage }
+          townTextErrorMessage = { townTextErrorMessage }
+          cityTextErrorMessage = { cityTextErrorMessage }
+          streetTextErrorMessage = { streetTextErrorMessage }
+          floorTextErrorMessage = { floorTextErrorMessage }
+          barangayTextErrorMessage = { barangayTextErrorMessage }
+          districtTextErrorMessage = { districtTextErrorMessage }
+          companyNameTextErrorMessage = { companyNameTextErrorMessage }
+          buildingNameTextErrorMessage = { buildingNameTextErrorMessage }
+          positionTextErrorMessage = { positionTextErrorMessage }
 
           addressText = { addressText }
           addressTextFunc = { (e) =>
@@ -521,11 +561,22 @@ class CharacterReferenceFragment extends BaseMVPView {
         </div>
 
         <br/>
-          <MullptipleCardComponent
-            characterReferenceData = { characterReferenceData }
-            onEditModeProperty = { (resp) => this.onEditModeProperty(resp)  }
-            onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
-          />
+          {
+            characterReferenceData.length > 0 ?
+            <MullptipleCardComponent
+              characterReferenceData = { characterReferenceData }
+              onEditModeProperty = { (resp) => this.onEditModeProperty(resp)  }
+              onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
+            />
+            :
+            <div>
+              <br/>
+              <center>
+                <h2 className = { 'font-weight-normal' }> No Character Reference </h2>
+              </center>
+              <br/>
+            </div>
+          }
       </div>
     </div>
     )

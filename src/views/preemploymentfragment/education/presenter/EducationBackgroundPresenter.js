@@ -1,6 +1,5 @@
 import { NotifyActions } from '../../../../actions'
 import store from '../../../../store'
-import EmployeeSchoolInteractor from '../../../../domain/interactor/preemployment/education/GetEmployeeSchoolInteractor'
 import SchoolDataInteractor from '../../../../domain/interactor/preemployment/education/GetSchoolDataInteractor'
 import AddEducationSchoolInteractor from '../../../../domain/interactor/preemployment/education/AddEducationSchoolInteractor'
 import PutEducationSchoolInteractor from '../../../../domain/interactor/preemployment/education/PutEducationSchoolInteractor'
@@ -13,7 +12,6 @@ import putEducationParam from '../../../../domain/param/PutEmployeeEducationPara
 export default class EducationBackgroundPresenter {
   constructor (container) {
     this.getOnboardingPdfInteractor = new GetOnboardingPdfInteractor(container.get('HRBenefitsClient'))
-    this.employeeSchoolInteractor = new EmployeeSchoolInteractor(container.get('HRBenefitsClient'))
     this.schoolDataInteractor = new SchoolDataInteractor(container.get('HRBenefitsClient'))
     this.addEducationSchoolInteractor = new AddEducationSchoolInteractor(container.get('HRBenefitsClient'))
     this.putEducationSchoolInteractor = new PutEducationSchoolInteractor(container.get('HRBenefitsClient'))
@@ -37,6 +35,7 @@ export default class EducationBackgroundPresenter {
   getSchoolRecordVerificationForm (link) {
     this.getSchoolRecordVerificationFormInteractor.execute(link)
     .subscribe(data => {
+      this.view.hideDocumentLoader()
       this.view.showPdfFileUrl(data.url)
     }, error =>{
       this.view.hideDocumentLoader()
@@ -48,20 +47,13 @@ export default class EducationBackgroundPresenter {
     this.schoolDataInteractor.execute(pageNumber, find)
     .subscribe(
       data => {
+        this.view.hideCircularLoader()
         this.view.checkedSchoolData(data)
+        this.callBackEducationPresenter()
       },
-      error => {}
-    )
-    this.employeeSchoolInteractor.execute()
-    .subscribe(
-        data => {
-          this.view.checkedEducationData(data)
-          this.view.hideCircularLoader()
-        },
-        error => {
-          this.view.hideCircularLoader()
-          // this.view.navigate()
-       }
+      error => {
+        this.view.hideCircularLoader()
+      }
     )
   }
 
@@ -95,6 +87,7 @@ export default class EducationBackgroundPresenter {
         data => {
           this.view.hideCircularLoader()
           this.view.noticeResponseResp(data)
+          this.callBackEducationPresenter()
         }, error => {
           this.view.hideCircularLoader()
         }
@@ -133,6 +126,7 @@ export default class EducationBackgroundPresenter {
           data => {
             this.view.hideCircularLoader()
             this.view.noticeResponseResp(data)
+            this.callBackEducationPresenter()
           }, error => {
             this.view.hideCircularLoader()
           }

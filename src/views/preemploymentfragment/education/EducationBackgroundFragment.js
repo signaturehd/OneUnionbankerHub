@@ -47,7 +47,6 @@ class EducationBackgroundFragment extends BaseMVPView {
       pdfFile : '',
       pdfFileUrl : '',
       isUpdated : 0,
-      educationCardHolder : [],
       schools : [],
       torFormData: [{
         name : 'Transcript of Records'
@@ -84,6 +83,10 @@ class EducationBackgroundFragment extends BaseMVPView {
   componentDidMount () {
     this.props.onSendPageNumberToView(4)
     this.presenter.getEmployeeSchool(this.state.schoolPageNumber, this.state.schoolFind)
+  }
+
+  callBackEducationPresenter () {
+    this.props.educationPresenter()
   }
 
   onShowEducationFormModalFunc () {
@@ -132,10 +135,6 @@ class EducationBackgroundFragment extends BaseMVPView {
 
   showPdfFileUrl (pdfFileUrl) {
     this.presenter.getOnBoardingDocument(pdfFileUrl)
-  }
-
-  checkedEducationData(educationCardHolder) {
-    this.setState({ educationCardHolder })
   }
 
   checkedSchoolData(resp) {
@@ -317,7 +316,6 @@ class EducationBackgroundFragment extends BaseMVPView {
     const {
       updateMode,
       enabledLoader,
-      educationCardHolder,
       showEducationFormModal,
       showSchoolsModal,
       showDegreeModal,
@@ -357,9 +355,9 @@ class EducationBackgroundFragment extends BaseMVPView {
       endYearErrorMessage
     } = this.state
 
-    const { percentage } = this.props
+    const { percentage, educationData} = this.props
 
-    const isVisible = (educationCardHolder && educationCardHolder.length > 4) ? '' : 'hide'
+    const isVisible = (educationData && educationData.length > 4) ? '' : 'hide'
 
     return (
       <div>
@@ -425,18 +423,20 @@ class EducationBackgroundFragment extends BaseMVPView {
           schoolPageNumber = { schoolPageNumber }
           schoolViewMore = { schoolViewMore }
           nextSchoolPageNumberFunc = { () => {
-              this.setState({ schoolPageNumber : schoolPageNumber + 1 })
-              this.presenter.getEmployeeSchool(schoolPageNumber)
+              let page = schoolPageNumber === schools.totalCount ? schoolPageNumber : schoolPageNumber + 1
+              this.setState({ schoolPageNumber : page })
+              this.presenter.getEmployeeSchool(page, schoolFind)
             }
           }
           previousSchoolPageNumberFunc = { () => {
-              this.setState({ schoolPageNumber : schoolPageNumber - 1 })
-              this.presenter.getEmployeeSchool(schoolPageNumber)
+            let page = schoolPageNumber === 0 ? 1 : schoolPageNumber - 1
+              this.setState({ schoolPageNumber : page })
+              this.presenter.getEmployeeSchool(page, schoolFind)
             }
           }
           schoolFindFunc = { (resp) => {
               this.setState({ schoolFind : resp })
-              this.presenter.getEmployeeSchool(schoolPageNumber, schoolFind)
+              this.presenter.getEmployeeSchool(schoolPageNumber, resp)
             }
           }
           showSchoolsModal = { showSchoolsModal }
@@ -464,9 +464,9 @@ class EducationBackgroundFragment extends BaseMVPView {
           }
           hideModalEducationFormFunc = { (showEducationFormModal) => this.setState({ showEducationFormModal }) }
           getEducationHolderFunc = { (resp) => {
-            const updatePropertyHolder = [...educationCardHolder]
+            const updatePropertyHolder = [...educationData]
             updatePropertyHolder.push(resp)
-            this.setState({ educationCardHolder : updatePropertyHolder})
+            this.setState({ educationData : updatePropertyHolder})
           }}
         />
       }
@@ -493,7 +493,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       </div>
       <br/>
       {
-        educationCardHolder.length > 0 &&
+        educationData.length > 0 &&
         <div className = { 'educ-grid-card' }>
           <Card
             onClick = { () =>
@@ -537,7 +537,7 @@ class EducationBackgroundFragment extends BaseMVPView {
         :
         <div>
         <EducationMultipleCardComponent
-          cardDataHolder = { educationCardHolder }
+          cardDataHolder = { educationData }
           index = { index }
           onEditModeProperty = { (
             educId,
@@ -575,10 +575,10 @@ class EducationBackgroundFragment extends BaseMVPView {
             className = { `viewmore tooltip ${ isVisible }` }
             onClick = {
               () => {
-                if(index === educationCardHolder.length)
+                if(index === educationData.length)
                   this.setState({ index : 4, viewMoreText : 'View more' })
                 else
-                  this.setState({ index : educationCardHolder.length, viewMoreText : 'View less' })
+                  this.setState({ index : educationData.length, viewMoreText : 'View less' })
               }
             }>
             <img src={ require('../../../images/icons/horizontal.png') } />

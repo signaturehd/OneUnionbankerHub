@@ -19,23 +19,33 @@ function CharacterReferenceComponents (props) {
   const addressText = props.addressText
   const positionText = props.positionText
   const positionTextFunc = props.positionTextFunc
+  const positionTextErrorMessage = props.positionTextErrorMessage
   const companyNameText = props.companyNameText
   const companyNameTextFunc = props.companyNameTextFunc
+  const companyNameTextErrorMessage = props.companyNameTextErrorMessage
   const floorText = props.floorText
   const floorTextFunc = props.floorTextFunc
+  const floorTextErrorMessage = props.floorTextErrorMessage
   const buildingNameText = props.buildingNameText
   const buildingNameTextFunc = props.buildingNameTextFunc
+  const buildingNameTextErrorMessage = props.buildingNameTextErrorMessage
   const streetText = props.streetText
   const streetTextFunc = props.streetTextFunc
+  const streetTextErrorMessage = props.streetTextErrorMessage
   const districtText = props.districtText
   const districtTextFunc = props.districtTextFunc
+  const districtTextErrorMessage = props.districtTextErrorMessage
   const barangayText = props.barangayText
   const barangayTextFunc = props.barangayTextFunc
+  const barangayTextErrorMessage = props.barangayTextErrorMessage
   const relationshipText = props.relationshipText
   const relationshipTextFunc = props.relationshipTextFunc
+  const relationshipTextErrorMessage = props.relationshipTextErrorMessage
   const addressTextErrorMessage = props.addressTextErrorMessage
   const cityText = props.cityText
+  const cityTextErrorMessage = props.cityTextErrorMessage
   const townText = props.townText
+  const townTextErrorMessage = props.townTextErrorMessage
   const cityTextFunc = props.cityTextFunc
   const townTextFunc = props.townTextFunc
 
@@ -61,6 +71,15 @@ function CharacterReferenceComponents (props) {
       cityText = { cityText }
       townTextFunc = { (e) => townTextFunc(e) }
       cityTextFunc = { (e) => cityTextFunc(e) }
+      townTextErrorMessage = { townTextErrorMessage }
+      cityTextErrorMessage = { cityTextErrorMessage }
+      streetTextErrorMessage = { streetTextErrorMessage }
+      floorTextErrorMessage = { floorTextErrorMessage }
+      barangayTextErrorMessage = { barangayTextErrorMessage }
+      districtTextErrorMessage = { districtTextErrorMessage }
+      companyNameTextErrorMessage = { companyNameTextErrorMessage }
+      buildingNameTextErrorMessage = { buildingNameTextErrorMessage }
+      positionTextErrorMessage = { positionTextErrorMessage }
       />
   } else if (occupationId === 2) {
     return <CharacterSelfEmployedComponents
@@ -84,6 +103,15 @@ function CharacterReferenceComponents (props) {
       cityText = { cityText }
       townTextFunc = { (e) => townTextFunc(e) }
       cityTextFunc = { (e) => cityTextFunc(e) }
+      townTextErrorMessage = { townTextErrorMessage }
+      cityTextErrorMessage = { cityTextErrorMessage }
+      streetTextErrorMessage = { streetTextErrorMessage }
+      floorTextErrorMessage = { floorTextErrorMessage }
+      barangayTextErrorMessage = { barangayTextErrorMessage }
+      districtTextErrorMessage = { districtTextErrorMessage }
+      companyNameTextErrorMessage = { companyNameTextErrorMessage }
+      buildingNameTextErrorMessage = { buildingNameTextErrorMessage }
+      positionTextErrorMessage = { positionTextErrorMessage }
     />
   } else if (occupationId === 3) {
     return <CharacterUnemployedComponents
@@ -157,12 +185,21 @@ class CharacterReferenceAddFormModal extends Component {
       contactNumberTextErrorMessage,
       relationshipTextErrorMessage,
       periodOfProfessionExperienceTextErrorMessage,
+      positionTextErrorMessage,
+      companyNameTextErrorMessage,
+      floorTextErrorMessage,
+      buildingNameTextErrorMessage,
+      barangayTextErrorMessage,
+      streetTextErrorMessage,
+      districtTextErrorMessage,
+      townTextErrorMessage,
+      cityTextErrorMessage,
       cityText,
       townText,
       townTextFunc,
       cityTextFunc,
       editMode,
-      onEditSave
+      onEditSave,
     } = this.props
 
     return(
@@ -225,6 +262,22 @@ class CharacterReferenceAddFormModal extends Component {
             townText = { townText }
             cityTextFunc = { (e) => cityTextFunc(e) }
             townTextFunc = { (e) => townTextFunc(e) }
+            fullNameTextErrorMessage = { fullNameTextErrorMessage }
+            addressTextErrorMessage = { addressTextErrorMessage }
+            emailTextErrorMessage = { emailTextErrorMessage }
+            contactNumberTextErrorMessage = { contactNumberTextErrorMessage }
+            relationshipTextErrorMessage = { relationshipTextErrorMessage }
+            periodOfProfessionExperienceTextErrorMessage = { periodOfProfessionExperienceTextErrorMessage }
+            occupationNameErrorMessage = { occupationNameErrorMessage }
+            townTextErrorMessage = { townTextErrorMessage }
+            cityTextErrorMessage = { cityTextErrorMessage }
+            streetTextErrorMessage = { streetTextErrorMessage }
+            floorTextErrorMessage = { floorTextErrorMessage }
+            barangayTextErrorMessage = { barangayTextErrorMessage }
+            districtTextErrorMessage = { districtTextErrorMessage }
+            companyNameTextErrorMessage = { companyNameTextErrorMessage }
+            buildingNameTextErrorMessage = { buildingNameTextErrorMessage }
+            positionTextErrorMessage = { positionTextErrorMessage }
             />
           <GenericInput
             text = { 'Email' }

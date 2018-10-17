@@ -5,6 +5,7 @@ export default (
   numberOfYearsKnown,
   contactNumber,
   company,
+  email,
   address,
   occupation) => ({
     id,
@@ -13,6 +14,7 @@ export default (
     numberOfYearsKnown,
     contactNumber,
     company,
+    email,
     address,
     occupation
   })

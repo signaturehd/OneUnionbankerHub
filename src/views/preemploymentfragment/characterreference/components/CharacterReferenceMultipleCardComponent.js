@@ -24,7 +24,7 @@ class CharacterReferenceMultipleCardComponent extends Component {
     return (
       <div>
         {
-          characterReferenceData.length !== 0 &&
+          characterReferenceData.length > 0 && 
           characterReferenceData.map((resp, key) =>
             <div>
               <Card

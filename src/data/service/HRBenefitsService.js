@@ -1333,6 +1333,7 @@ export default class HRBenefitsService {
       numberOfYearsKnown: postCharacterReferenceParam.numberOfYearsKnown,
       contactNumber: postCharacterReferenceParam.contactNumber,
       address: postCharacterReferenceParam.address,
+      email: postCharacterReferenceParam.email,
       occupation: postCharacterReferenceParam.occupation,
       company : {
         position: postCharacterReferenceParam.company.company.position,

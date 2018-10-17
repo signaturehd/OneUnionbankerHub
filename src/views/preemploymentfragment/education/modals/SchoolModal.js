@@ -39,29 +39,37 @@ class SchoolModal extends Component {
         </center>
         <br/>
         <div className = { 'select-grid' }>
-        <GenericInput
-          text = { 'Search' }
-          onChange = { (e) => schoolFindFunc(e.target.value) }
-        />
+          <GenericInput
+            text = { 'Search' }
+            onChange = { (e) => schoolFindFunc(e.target.value) }
+          />
         {
           enabledLoader ?
           <center>
             <CircularLoader show = { enabledLoader } />
           </center>
           :
-          inputArray.length !== 0 &&
-          inputArray.map((inputs, key) => (
-            <div>
-              <GenericButton
-                className = { 'single-input-modal-button' }
-                key = { key }
-                className = { 'select-button' }
-                onClick = { () => selectedArray(inputs.id, inputs.name) }
-                text = { inputs.name }
-              />
-              <br/>
-            </div>
-          ))
+          <div>
+          {
+            inputArray.length !== 0 ?
+            inputArray.map((inputs, key) => (
+              <div className = { 'education-modal-margin' }>
+                <GenericButton
+                  className = { 'single-input-modal-button' }
+                  key = { key }
+                  className = { 'select-button' }
+                  onClick = { () => selectedArray(inputs.id, inputs.name) }
+                  text = { inputs.name }
+                />
+                <br/>
+              </div>
+            ))
+            :
+            <center>
+              <h2>School Not Found</h2>
+            </center>
+          }
+          </div>
         }
         <div className = { 'school-modal-grid text-align-center' }>
           {
