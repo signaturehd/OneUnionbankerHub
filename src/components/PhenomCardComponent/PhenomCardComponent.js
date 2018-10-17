@@ -9,7 +9,7 @@ import GenericButton from '../../ub-components/UButton/GenericButton'
 import moment from 'moment'
 
 import defaultImageIcon from '../../images/mcdologo.jpg'
-import defaultImageBackground from '../../images/phenomtest.jpg'
+import defaultImageBackground from '../../images/profile-picture.png'
 
 class PhenomCardComponent extends Component {
   constructor (props) {
