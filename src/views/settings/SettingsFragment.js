@@ -18,6 +18,7 @@ class SettingsFragment extends BaseMVPView {
      profile: [],
      profileInfo: [],
      rank: [],
+     devices: [],
      lineManager: [],
      profileDependent: [],
      staffAccounts : [],
@@ -34,9 +35,12 @@ class SettingsFragment extends BaseMVPView {
      showCompanyInfoModal : false,
      showPersonalInfoModal : false,
      showStaffAccountsModal : false,
+     showDevicesModal : false,
      staffLoader : false,
      noticeResponseModal : false,
+     descriptionEditMode : false,
      noticeResponse : '',
+     descriptionText : '',
      profileBackground : []
     }
   }
@@ -69,7 +73,7 @@ class SettingsFragment extends BaseMVPView {
     this.setState({ rank })
   }
 
-  showStaffAccountConfirmation (noticeResponse) {
+  noticeResponseModal (noticeResponse) {
     this.setState({ noticeResponse, noticeResponseModal : true })
   }
 
@@ -100,11 +104,24 @@ class SettingsFragment extends BaseMVPView {
     this.presenter.putEnrollPin(objectPINParam)
   }
 
+  showDevicesData (devices) {
+    this.setState({ devices })
+  }
+
+  updateDescription () {
+    const {
+      descriptionText
+    } = this.state
+    this.presenter.updateDescription(descriptionText)
+    this.setState({ descriptionEditMode : false })
+  }
+
   render () {
     const {
       lineManager,
       profile,
       details,
+      devices,
       className,
       rank,
       profileDependent,
@@ -116,11 +133,14 @@ class SettingsFragment extends BaseMVPView {
       showCompanyInfoModal,
       showPersonalInfoModal,
       showStaffAccountsModal,
+      showDevicesModal,
       staffLoader,
       staffAccounts,
       noticeResponse,
+      descriptionText,
       noticeResponseModal,
-      profileBackground
+      profileBackground,
+      descriptionEditMode,
     }=this.state
 
     return (
@@ -140,7 +160,11 @@ class SettingsFragment extends BaseMVPView {
           </Modal>
         }
         <SettingsProfileCardComponent
-          profileBackground = { profileBackground }
+           devices = { devices }
+           showDevicesModal = { showDevicesModal }
+           profileBackground = { profileBackground }
+           descriptionEditMode = { descriptionEditMode }
+           descriptionText = { descriptionText }
            accountNumber = { accountNumber }
            profile={ profile }
            lineManager={ lineManager }
@@ -164,6 +188,14 @@ class SettingsFragment extends BaseMVPView {
            changePinSendToFragment = { (uniqueOldPIN, uniqueNewPIN) => this.submitUpdatedPIN(uniqueOldPIN, uniqueNewPIN) }
            getStaffAccounts = { (id) => this.presenter.getForConfirmation(id) }
            onClickEmployeeConfirmationFunc = { (resp, resp1) => this.presenter.addStaffAccounts(resp, resp1)  }
+           onChangeToEditMode = { (descriptionEditMode) => this.setState({ descriptionEditMode }) }
+           descriptionTextFunc = { (descriptionText) => this.setState({ descriptionText }) }
+           onUpdateDescription = { () => this.updateDescription() }
+           showDevicesModalFunc = { (showDevicesModal) => {
+             this.presenter.getDevices()
+             this.setState({ showDevicesModal })
+           }
+         }
         />
       </div>
     )

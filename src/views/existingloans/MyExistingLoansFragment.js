@@ -28,16 +28,22 @@ class MyExistingLoansFragment extends BaseMVPView {
     super(props)
     this.state = {
       existingLoans : [],
-      enabledLoader: false,
+      enabledLoader: false
     }
   }
 
   componentDidMount () {
+    this.presenter.getNonExistingLoans()
     this.presenter.getExistingLoans()
   }
 
-  showGetExistingLoans (existingLoans) {
-    this.setState({ existingLoans })
+  showGetLoans (loans) {
+    const { existingLoans } = this.state
+    const arrayList = [...existingLoans]
+    loans.map((resp) => {
+      arrayList.push(resp)
+    })
+    this.setState({ existingLoans : arrayList })
   }
 
   showCircularLoader (enabledLoader) {
@@ -46,7 +52,6 @@ class MyExistingLoansFragment extends BaseMVPView {
 
   render () {
     const { existingLoans, enabledLoader } = this.state
-
     const existingLoansTotal = existingLoans.map(function(resp) {
       return resp.balance
     })
@@ -86,7 +91,7 @@ class MyExistingLoansFragment extends BaseMVPView {
                   <span />
                   <div className = { 'text-align-right' }>
                     <h2 className = { 'existing-loan-title-header' }>
-                      &#8369; { format(totalAmount  ) }
+                       &#8369;{ format(totalAmount) }
                     </h2>
                     <br/>
                     <h2>
@@ -103,7 +108,7 @@ class MyExistingLoansFragment extends BaseMVPView {
               <div className = { 'existing-loan-summary-grid-x2' }>
                 <div>
                   <br/>
-                  Multi Purpose Loan History
+                  Recently Loans
                 </div>
                 <div>
                   <Line/>
@@ -119,6 +124,9 @@ class MyExistingLoansFragment extends BaseMVPView {
                    existingLoans = { existingLoans }
                    />
                  }
+              <br/>
+              </div>
+              <div>
               <br/>
             </div>
           </div>

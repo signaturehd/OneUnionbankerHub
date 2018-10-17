@@ -42,6 +42,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  updateDescription (token, description) {
+    return this.service.updateDescription(token, description)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getDevices (token) {
+    return this.service.getDevices(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
@@ -760,6 +770,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getNonExistingLoans (token) {
+    return this.service.getNonExistingLoans(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Phenom Loans */
   getPhenomDiscounts (token) {
     return this.service.getPhenomDiscounts(token)
@@ -852,32 +867,41 @@ export default class HRBenefitsClient {
   }
 
   /* Vaccines Requisitions */
-
-
   validateVaccine (token) {
     return this.service.validateVaccine(token)
       .pipe(ServiceErrorOperator())
   }
 
-  /* Laptop Lease */
-
-  getLaptopLease (token) {
-    return this.service.getLaptopLease(token)
+  addVaccine (token, data) {
+    return this.service.addVaccine(token, data)
       .pipe(ServiceErrorOperator())
   }
 
-  postlaptopLease (
+  /* Laptop Lease */
+
+  confirmLaptopLease (token, transactionId, isConfirm) {
+    return this.service.confirmLaptopLease(token, transactionId, isConfirm)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateLaptopLease (token) {
+    return this.service.validateLaptopLease(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addLaptopLease (
     token,
     accountToken,
     accountNumber,
     releasingCenter,
-    laptopLeaseParam) {
-    return this.service.postlaptopLease(
+    addLaptopLeaseParam,
+    ) {
+    return this.service.addLaptopLease(
       token,
       accountToken,
       accountNumber,
       releasingCenter,
-      laptopLeaseParam
+      addLaptopLeaseParam,
     )
       .pipe(ServiceErrorOperator())
   }
@@ -888,4 +912,11 @@ export default class HRBenefitsClient {
     return this.service.validateEventsBudget(token)
       .pipe(ServiceErrorOperator())
   }
+  /* News isHeart */
+
+  addNewsIsHeart (token, id, isHeart) {
+    return this.service.addNewsIsHeart(token, id, isHeart)
+      .pipe(ServiceErrorOperator())
+  }
+
 }

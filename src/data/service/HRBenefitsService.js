@@ -35,6 +35,21 @@ export default class HRBenefitsService {
     })
   }
 
+  updateDescription (token, description) {
+    const objectParam = {
+      description : description
+    }
+    return this.apiClient.put('v1/profile/description', objectParam,{
+      headers : { token }
+    })
+  }
+
+  getDevices (token) {
+    return this.apiClient.get('v1/devices', {
+      headers : { token }
+    })
+  }
+
   /* dental loa */
 
   getDentalLoa (token) {
@@ -977,6 +992,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getNonExistingLoans (token) {
+    return this.apiClient.get('v1/loans', {
+      headers : { token }
+    })
+  }
+
   /* Code of Conduct  */
 
   getCompliancesPdf (token) {
@@ -1137,15 +1158,30 @@ export default class HRBenefitsService {
     })
   }
 
+  addVaccine (token, data) {
+    return this.apiClient.post('v1/vaccinations/submit', data, {
+      headers : { token }
+    })
+  }
+
   /* Laptop Lease */
 
-  getLaptopLease (token) {
+  confirmLaptopLease (token, transactionId, isConfirm) {
+    return this.apiClient.post('v1/leases/laptop/confirm', {
+      transactionId,
+      isConfirm,
+    }, {
+      headers: { token }
+    })
+  }
+
+  validateLaptopLease (token) {
     return this.apiClient.get('v1/leases/laptop/validate', {
       headers : { token }
     })
   }
 
-  postlaptopLease (
+  addLaptopLease (
       token,
       accountToken,
       accountNumber,
@@ -1153,26 +1189,30 @@ export default class HRBenefitsService {
       laptopLeaseParam) {
     const formData = new FormData()
     const object = {
-      benefitId : laptopLeaseParam.benefitId,
-      brand : laptopLeaseParam.brand,
-      brand : laptopLeaseParam.brand,
-      color: laptopLeaseParam.colorFamily,
-      deliveryOptionId: laptopLeaseParam.deliveryOptionId,
-      estimatedCost: laptopLeaseParam.estimatedCost,
-      graphicsCard: laptopLeaseParam.graphicsCard,
-      hardDriveCapacity: laptopLeaseParam.hardDriveCapacity,
-      model: laptopLeaseParam.model,
-      operatingSystem: laptopLeaseParam.operatingSystem,
-      processorType: laptopLeaseParam.processorType,
-      screenSize: laptopLeaseParam.screenSize,
-      systemMemory: laptopLeaseParam.systemMemory
+      color: laptopLeaseParam.color,
+      term: laptopLeaseParam.terms,
+      estimatedCost : laptopLeaseParam.estimatedAmount,
+      deliveryOptionId: laptopLeaseParam.deliveryOption
     }
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     laptopLeaseParam.attachments &&
     laptopLeaseParam.attachments.map((resp, key) =>(
-      formData.append(resp.name, resp.file)
+      formData.append('qoutation', resp.file)
     ))
     formData.append('body', JSON.stringify(object))
-    return this.apiClient.get('v1/leases/laptop',  formData, {
+    return this.apiClient.post('v1/leases/laptop',  formData, {
+      headers : { token }
+    })
+  }
+
+  /* News isHeart */
+
+  addNewsIsHeart (token, id, isHeart) {
+    const objectNewsIsHeart = {
+      newsId : id,
+      isLike : isHeart
+    }
+    return this.apiClient.post('v1/news/likes', objectNewsIsHeart, {
       headers : { token }
     })
   }
