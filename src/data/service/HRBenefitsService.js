@@ -1015,6 +1015,27 @@ export default class HRBenefitsService {
     })
   }
 
+  getPhenomImage (token, file) {
+    return this.fileClient.get('v1/uploads?folder=phenom', {
+      headers : {
+        token,
+        file : file
+      },
+      responseType : 'blob'
+    })
+  }
+
+  getVendorImage (token, file) {
+    return this.fileClient.get('v1/uploads?folder=phenom', {
+      headers : {
+        token,
+        file : file
+      },
+      responseType : 'blob'
+    })
+  }
+
+
   /* Leave Filing  */
   addLeaveFiling (token, leaveFilingParam) {
     const objectLeaveFiling = {

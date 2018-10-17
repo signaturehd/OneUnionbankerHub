@@ -8,7 +8,7 @@ import GenericButton from '../../ub-components/UButton/GenericButton'
 
 import moment from 'moment'
 
-import defaultImageIcon from '../../images/mcdologo.jpg'
+import defaultImageIcon from '../../images/profile-picture.png'
 import defaultImageBackground from '../../images/profile-picture.png'
 
 class PhenomCardComponent extends Component {
@@ -51,7 +51,7 @@ class PhenomCardComponent extends Component {
               className = { 'phenom-content-grid-column-right' }>
               <img
                 className = { 'phenom-logo-icon-default' }
-                src = { `${ vendor.image ? vendor.image : defaultImageIcon }` }/>
+                src = { `${ vendor.imageBlob ? vendor.imageBlob : defaultImageIcon }` }/>
               <div>
                 <h2 className = { 'phenom-label-reward' }>
                   { vendor.name }

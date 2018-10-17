@@ -776,6 +776,36 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getPhenomImage (token, file) {
+    return this.service.getPhenomImage(token, file)
+      .pipe(ServiceErrorOperator())
+      .flatMap(resp =>
+        Observable.create(observer => {
+          const reader = new FileReader()
+          reader.onerror = err => observer.error(err)
+          reader.onabort = err => observer.error(err)
+          reader.onload = () => observer.next(reader.result)
+          reader.onloadend = () => observer.complete()
+          reader.readAsDataURL(resp)
+        })
+      )
+  }
+
+  getVendorImage (token, file) {
+    return this.service.getVendorImage(token, file)
+      .pipe(ServiceErrorOperator())
+      .flatMap(resp =>
+        Observable.create(observer => {
+          const reader = new FileReader()
+          reader.onerror = err => observer.error(err)
+          reader.onabort = err => observer.error(err)
+          reader.onload = () => observer.next(reader.result)
+          reader.onloadend = () => observer.complete()
+          reader.readAsDataURL(resp)
+        })
+      )
+  }
+
   /* Leave Filing  */
   addLeaveFiling (token, leaveFilingParam) {
     return this.service.addLeaveFiling(token, leaveFilingParam)

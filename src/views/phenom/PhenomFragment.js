@@ -47,6 +47,7 @@ class PhenomFragment extends BaseMVPView {
     this.setState({ phenomDataList })
   }
 
+
   showPhenomDetails (phenomDetails, showPhenomCardDetails) {
     this.setState({ phenomDetails, showPhenomCardDetails })
   }
@@ -68,13 +69,15 @@ class PhenomFragment extends BaseMVPView {
       phenomDetails,
       loader,
       selectedDetails,
-      showPhenomCardDetails
+      showPhenomCardDetails,
     } = this.state
 
     const {
       setSelectedNavigation,
       selected,
     } = this.props
+
+    console.log(phenomDataList);
 
     return (
       <div className = { 'phenom-fragment' }>
@@ -118,7 +121,7 @@ class PhenomFragment extends BaseMVPView {
                       selectedDetails = { resp }
                       vendor = { resp.vendor }
                       id = { resp.id }
-                      rewardImage = { resp.rewardImage }
+                      rewardImage = { resp.rewardImageBlob }
                       startDate = { resp.startDate }
                       endDate = { resp.endDate }
                       isHeart = { resp.isHeart }
