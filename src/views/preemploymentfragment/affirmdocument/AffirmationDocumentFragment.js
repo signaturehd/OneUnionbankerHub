@@ -359,6 +359,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
 
 AffirmationDocumentFragment.propTypes = {
   onSendPageNumberToView  : PropTypes.func,
+  refreshOptions  : PropTypes.func,
 }
 
 AffirmationDocumentFragment.defaultProps = {
