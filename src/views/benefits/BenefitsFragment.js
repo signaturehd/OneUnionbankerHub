@@ -170,7 +170,7 @@ class BenefitsFragment extends BaseMVPView {
     }, {
       id: 7 ,
       styleName: 'benefits-option-cards-1 benefits-option-default font-weight-bold',
-      title: 'Event Budget Requisition',
+      title: 'Events Budget Requisition',
       path: '/mybenefits/benefits/eventbudgetrequisition',
       subTitle: 'Avail of a wide range of educational benefits.'
     },{

@@ -1,0 +1,9 @@
+.events-container {
+  max-width: 100%;
+}
+
+.events-grid-column-2 {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  column-gap: 2%;
+}

@@ -3,6 +3,8 @@ import AddEventsBudgetInteractor from '../../../domain/interactor/eventsbudget/A
 
 import AddEventsBudgetParam from '../../../domain/param/AddEventsBudgetParam'
 
+let storedCelebrationText = '', storedVenueText= '', storedAddressText = '', storedRegionText = '', storedFile
+
 export default class EventsBudgetPresenter {
   constructor (container) {
     this.validateEventsBudgetInteractor = new ValidateEventsBudgetInteractor(container.get('HRBenefitsClient'))
@@ -11,6 +13,31 @@ export default class EventsBudgetPresenter {
 
   setView (view) {
     this.view = view
+  }
+
+  setVenue (venueText) {
+    storedVenue = venueText
+    this.view.setVenue(venueText)
+  }
+
+  setCelebration (celebrationText) {
+    storedCelebrationText = celebrationText
+    this.view.setCelebration(celebrationText)
+  }
+
+  setAddress (addressText) {
+    storedAddressText = addressText
+    this.view.setAddress(addressText)
+  }
+
+  setRegion (regionText) {
+    storedRegionText = regionText
+    this.view.setRegion(storedRegionText)
+  }
+
+  setAmount (amountText) {
+    storedAmount = amountText
+    this.view.setAmount(amountText)
   }
 
   validateEventsBudget () {
