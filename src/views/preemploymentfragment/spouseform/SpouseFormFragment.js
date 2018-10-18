@@ -23,6 +23,9 @@ import { Progress } from 'react-sweet-progress'
 
 import NoticeResponseModal from '../../notice/NoticeResponseModal'
 
+import PreEmploymentViewAttachmentsComponent from '../../preemployment/components/PreEmploymentViewAttachmentsComponent'
+import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
+
 import 'react-sweet-progress/lib/style.css'
 import './styles/spouseStyle.css'
 
@@ -35,6 +38,7 @@ class SpouseFormFragment extends BaseMVPView {
       bloodObjectParam: [],
       statusObject : [],
       genderObject : [],
+      attachments : [],
       spouseAttachments: [{
         id : 0,
         name : 'Birth Certificate'
@@ -50,6 +54,7 @@ class SpouseFormFragment extends BaseMVPView {
       showNoticeResponseModal: false,
       showStatusModal: false,
       showGenderModal : false,
+      showViewModal : false,
       spouseId: '',
       lastName: '',
       firstName : '',
@@ -75,6 +80,7 @@ class SpouseFormFragment extends BaseMVPView {
       lastNameErrorMessage: '',
       bloodTypeErrorMessage: '',
       noticeResponse: '',
+      viewFile: '',
     }
   }
 
@@ -118,8 +124,18 @@ class SpouseFormFragment extends BaseMVPView {
       statusName : nullChecker.status === 1 ? 'Deceased' : 'Living',
       hospitalization : nullChecker.healthHospitalizationPlan,
       groupPlan : nullChecker.groupLifeInsurance,
+      editMode: editMode
     })
-    this.setState({ spouseData, editMode })
+    this.setState({ spouseData  })
+  }
+
+  showAttachmentsFileView (data) {
+    let arrayNew = [...this.state.attachments]
+    const objectArray = {
+      file : data
+    }
+    arrayNew.push(objectArray)
+    this.setState({ attachments : arrayNew })
   }
 
   noticeResponseFunc (noticeResponse, showNoticeResponseModal) {
@@ -238,6 +254,7 @@ class SpouseFormFragment extends BaseMVPView {
       bloodObjectParam,
       statusObject,
       genderObject,
+      attachments,
       spouseAttachmentsArray,
       spouseAttachments,
       spouseData,
@@ -271,8 +288,10 @@ class SpouseFormFragment extends BaseMVPView {
       showNoticeResponseModal,
       showStatusModal,
       showGenderModal,
+      showViewModal,
       hospitalization,
-      groupPlan
+      groupPlan,
+      viewFile,
     } = this.state
 
   return(
@@ -285,6 +304,13 @@ class SpouseFormFragment extends BaseMVPView {
         noticeResponse = { noticeResponse }
         onClose = { () =>
           this.setState({ showNoticeResponseModal: false }) }
+      />
+    }
+    {
+      showViewModal &&
+      <ViewAttachmentModal
+        file = { viewFile }
+        onClose = { () => this.setState({ showViewModal : false }) }
       />
     }
     {
@@ -442,23 +468,31 @@ class SpouseFormFragment extends BaseMVPView {
               </div>
             </div>
           </div>
-          <div className = { 'grid-global' }>
-            <div></div>
-            <div className = { 'text-align-right' }>
-              <GenericButton
+          {
+            attachments.length !== 0 &&
+              enabledLoader ?
+              <center>
+              <CircularLoader show = { enabledLoader } />
+              </center>
+              :
+              <PreEmploymentViewAttachmentsComponent
+                file = { attachments }
+                onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+          }
+          <div className = { 'text-align-right' }>
+            <GenericButton
               text = { 'Add Atttachments' }
               onClick = { () => {
-                const updatedAttachments = [...spouseAttachments]
-                let newCount = count + 1
-                this.setState({ count : newCount })
-                updatedAttachments.push({
-                  name : 'Birth Certificate ' + count
-                })
-                this.setState({ spouseAttachments : updatedAttachments })
-                  }
+              const updatedAttachments = [...spouseAttachments]
+              let newCount = count + 1
+              this.setState({ count : newCount })
+              updatedAttachments.push({
+                name : 'Birth Certificate ' + count
+              })
+              this.setState({ spouseAttachments : updatedAttachments })
                 }
-              />
-            </div>
+              }
+            />
           </div>
           <MultipleAttachments
             count = { count }

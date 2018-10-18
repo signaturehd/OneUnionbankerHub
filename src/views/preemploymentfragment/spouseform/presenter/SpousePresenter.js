@@ -2,6 +2,7 @@ import GetSpouseInteractor from '../../../../domain/interactor/preemployment/spo
 import PostSpouseInteractor from '../../../../domain/interactor/preemployment/spouse/PostSpouseInteractor'
 import PutSpouseInteractor from '../../../../domain/interactor/preemployment/spouse/PutSpouseInteractor'
 import addSpouseForm from '../../../../domain/param/AddSpouseParam'
+import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 
 import { RequiredValidation }  from '../../../../utils/validate'
 import * as func from '../functions/SpouseFunctions'
@@ -65,6 +66,7 @@ export default class SpousePresenter {
     this.getSpouseInteractor = new GetSpouseInteractor(container.get('HRBenefitsClient'))
     this.putSpouseInteractor = new PutSpouseInteractor(container.get('HRBenefitsClient'))
     this.postSpouseInteractor = new PostSpouseInteractor(container.get('HRBenefitsClient'))
+    this.getOnboardingAttachmentsInteractor = new GetOnboardingAttachmentsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -81,16 +83,36 @@ export default class SpousePresenter {
     this.view.showBloodType(bloodObjectParam)
   }
 
+  getOnboardingAttachments (attachments) {
+    this.view.showCircularLoader()
+    this.getOnboardingAttachmentsInteractor.execute(attachments)
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.showAttachmentsFileView(data)
+    }, error => {
+      this.view.hideCircularLoader()
+    })
+  }
+
   getSpouse () {
     this.view.showCircularLoader()
     this.getSpouseInteractor.execute()
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.showSpouseDetails(data, true)
+      this.getSelectedAttachments(data)
     }, error => {
       this.view.showSpouseDetails(error, false)
       this.view.hideCircularLoader()
     })
+  }
+
+
+  getSelectedAttachments (array) {
+    array && array.attachments.map((resp, key) => {
+      this.getOnboardingAttachments(resp)
+      }
+    )
   }
 
   postSpouseForm (
