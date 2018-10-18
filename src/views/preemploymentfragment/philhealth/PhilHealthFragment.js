@@ -245,7 +245,7 @@ class PhilHealthFragment extends BaseMVPView {
               <div>
               <center>
                 <h4 className = { 'font-size-14px font-weight-lighter' }>
-                  Your documents has been <b>submitted for confirmation</b>.
+                  Your documents has been submitted for confirmation.
                 </h4>
               </center>
               </div>
@@ -255,7 +255,7 @@ class PhilHealthFragment extends BaseMVPView {
             <div>
             <center>
               <h4 className = { 'font-size-14px font-weight-lighter' }>
-                Your documents are <b>verified</b>.
+                Your documents are verified.
               </h4>
             </center>
             </div>

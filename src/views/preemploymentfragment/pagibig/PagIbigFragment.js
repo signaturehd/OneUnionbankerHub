@@ -19,6 +19,9 @@ import {
 import { Progress } from 'react-sweet-progress'
 import ResponseModal from '../../notice/NoticeResponseModal'
 
+import PreEmploymentViewAttachmentsComponent from '../../preemployment/components/PreEmploymentViewAttachmentsComponent'
+import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
+
 import PagibigFormPreviewModal from './modal/PagibigFormPreviewModal'
 
 class PagIbigFragment extends BaseMVPView {
@@ -27,19 +30,24 @@ class PagIbigFragment extends BaseMVPView {
     super(props)
     this.state = {
       enabledLoader : false,
+      enabledLoaderPdfModal : false,
       showNoticeResponseModal : false,
+      showViewModal : false,
       noticeResponse : '',
       showPdfViewModal : false,
       pdfFile: '',
       pagibigAttachment : [{
         name : 'Pag-IBIG Form'
       }],
-      count : 2
+      count : 2,
+      viewFile : '',
+      attachments : []
     }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(14)
+    this.checkAttachments()
   }
 
   onCheckedPdf (link) {
@@ -48,6 +56,23 @@ class PagIbigFragment extends BaseMVPView {
 
   showPdfFileView (pdfFile) {
     this.setState({ pdfFile })
+  }
+
+  checkAttachments () {
+    const {
+      pagibigArray
+    } = this.props
+
+    this.presenter.getSelectedAttachments(pagibigArray)
+  }
+
+  showAttachmentsFileView (data) {
+    let arrayNew = [...this.state.attachments]
+    const objectArray = {
+      file : data
+    }
+    arrayNew.push(objectArray)
+    this.setState({ attachments : arrayNew })
   }
 
   addAttachmentsFunc (attachment, tempCount) {
@@ -85,15 +110,27 @@ class PagIbigFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
   render () {
     const {
       enabledLoader,
+      enabledLoaderPdfModal,
       showPdfViewModal,
+      showViewModal,
       pdfFile,
       count,
       noticeResponse,
       showNoticeResponseModal,
-      pagibigAttachment
+      pagibigAttachment,
+      viewFile,
+      attachments
     } = this.state
 
     const { percentage, pagibigArray } = this.props
@@ -101,14 +138,6 @@ class PagIbigFragment extends BaseMVPView {
     return (
       <div>
         { super.render() }
-        {
-          enabledLoader &&
-          <Modal>
-          <center>
-          <CircularLoader show = { enabledLoader }/>
-          </center>
-          </Modal>
-        }
         {
           showNoticeResponseModal &&
           <ResponseModal
@@ -124,6 +153,32 @@ class PagIbigFragment extends BaseMVPView {
             pdfFile = { pdfFile }
             onClose = { () => this.setState({ showPdfViewModal: false }) }
             />
+        }
+        {
+          enabledLoaderPdfModal &&
+          <Modal>
+            <div>
+              <center>
+                <br/>
+                {
+                  showPdfViewComponent ?
+
+                  <h2>Please wait while we we&#39;re retrieving the documents</h2> :
+                  <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+                }
+                <br/>
+                <CircularLoader show = { enabledLoaderPdfModal }/>
+                <br/>
+              </center>
+            </div>
+          </Modal>
+        }
+        {
+          showViewModal &&
+          <ViewAttachmentModal
+            file = { viewFile }
+            onClose = { () => this.setState({ showViewModal : false }) }
+          />
         }
         <div className = { 'percentage-grid' }>
           <div>
@@ -161,54 +216,72 @@ class PagIbigFragment extends BaseMVPView {
           {
             pagibigAttachment.length !== 0  &&
             pagibigArray.map((status) =>
-              status.status === 2 ?
-              <div>
-              <center>
-                <h4 className = { 'font-size-14px font-weight-lighter' }>
-                  Your documents has been <b>submitted for confirmation</b>.
-                </h4>
-              </center>
-              </div>
-              :
-              status.status === 4 ?
-              <div>
-              <center>
-                <h4 className = { 'font-size-14px font-weight-lighter' }>
-                  Your documents are <b>verified</b>.
-                </h4>
-              </center>
-              </div>
-              :
-              <div>
-              <div className = { 'grid-global' }>
-                <h2></h2>
+            <div>
+              {
+                status.status === 2 || status.status === 4 &&
                 <div className = { 'text-align-right' }>
                   <GenericButton
                     text = { 'Add Attachments' }
                     onClick = { () => this.addAttachmentsFunc(pagibigAttachment, count) }
                     />
                 </div>
-              </div>
-              <h4>
-                <br/>
-                Form Attachments
-              </h4>
-              <MultipleAttachments
-                count = { count }
-                countFunc = { (count) => this.setState({ count }) }
-                placeholder = { '' }
-                fileArray = { pagibigAttachment }
-                setFile = { (pagibigAttachment) =>
-                    this.setState({ pagibigAttachment })
-                }
-                />
+              }
+              {
+                attachments.lenght !== 0 &&
+                  enabledLoader ?
+                  <center>
+                  <CircularLoader show = { enabledLoader } />
+                  </center>
+                  :
+                  <PreEmploymentViewAttachmentsComponent
+                    file = { attachments }
+                    onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+              }
+              {
+                status.status === 2 &&
+                <div>
                 <center>
-                 <GenericButton
-                   text = { 'Upload' }
-                   onClick = { () => this.uploadForm()  }
-                 />
-               </center>
-              </div>
+                  <h4 className = { 'font-size-14px font-weight-lighter' }>
+                    Your documents has been submitted for confirmation.
+                  </h4>
+                </center>
+                </div>
+              }
+              {
+                status.status === 4 &&
+                <div>
+                <center>
+                  <h4 className = { 'font-size-14px font-weight-lighter' }>
+                    Your documents are verified.
+                  </h4>
+                </center>
+                </div>
+              }
+              {
+                status.status ===1 &&
+                <div>
+                <h4>
+                  <br/>
+                  Form Attachments
+                </h4>
+                <MultipleAttachments
+                  count = { count }
+                  countFunc = { (count) => this.setState({ count }) }
+                  placeholder = { '' }
+                  fileArray = { pagibigAttachment }
+                  setFile = { (pagibigAttachment) =>
+                      this.setState({ pagibigAttachment })
+                  }
+                  />
+                  <center>
+                   <GenericButton
+                     text = { 'Upload' }
+                     onClick = { () => this.uploadForm()  }
+                   />
+                 </center>
+                </div>
+              }
+            </div>
             )
           }
       </div>

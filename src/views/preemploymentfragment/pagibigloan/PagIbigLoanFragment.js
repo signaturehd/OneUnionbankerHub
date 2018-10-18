@@ -22,6 +22,9 @@ import { Progress } from 'react-sweet-progress'
 
 import ResponseModal from '../../notice/NoticeResponseModal'
 
+import PreEmploymentViewAttachmentsComponent from '../../preemployment/components/PreEmploymentViewAttachmentsComponent'
+import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
+
 import "react-sweet-progress/lib/style.css"
 import './styles/loanStyle.css'
 
@@ -30,7 +33,9 @@ class PagIbigLoanFragment extends BaseMVPView {
     super(props)
     this.state = {
       showDeductModal : false,
+      enabledLoaderPdfModal : false,
       enabledLoader : false,
+      showViewModal : false,
       showNoticeResponseModal : false,
       noticeResponse : '',
       deductId : '',
@@ -40,13 +45,33 @@ class PagIbigLoanFragment extends BaseMVPView {
       pagibigLoanAttachment : [{
         name : 'PAG-IBIG Loan'
       }],
-      count : 2
+      count : 2,
+      viewFile : '',
+      attachments : []
     }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(15)
     this.presenter.getPagibiLoanDeduction()
+    this.checkAttachments()
+  }
+
+  checkAttachments () {
+    const {
+      pagibigLoanArray
+    } = this.props
+
+    this.presenter.getSelectedAttachments(pagibigLoanArray)
+  }
+
+  showAttachmentsFileView (data) {
+    let arrayNew = [...this.state.attachments]
+    const objectArray = {
+      file : data
+    }
+    arrayNew.push(objectArray)
+    this.setState({ attachments : arrayNew })
   }
 
   setFileAttachments (pagibigLoanAttachment) {
@@ -99,6 +124,14 @@ class PagIbigLoanFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
   render() {
     const {
       history,
@@ -108,14 +141,18 @@ class PagIbigLoanFragment extends BaseMVPView {
 
     const {
       showDeductModal,
+      enabledLoaderPdfModal,
       enabledLoader,
       showNoticeResponseModal,
       noticeResponse,
+      showViewModal,
       deductId,
       deductName,
       deductErrorMessage,
       pagibigLoanAttachment,
-      count
+      count,
+      viewFile,
+      attachments
     } = this.state
 
     const deductArray = [
@@ -133,13 +170,13 @@ class PagIbigLoanFragment extends BaseMVPView {
     <div>
       { super.render() }
       {
-        enabledLoader &&
+        enabledLoaderPdfModal &&
         <Modal>
         <center>
         <br/>
         <h2>Please wait while we we&#39;re validating your submitted documents</h2>
         <br/>
-        <CircularLoader show = { enabledLoader }/>
+        <CircularLoader show = { enabledLoaderPdfModal }/>
         </center>
         </Modal>
       }
@@ -166,6 +203,13 @@ class PagIbigLoanFragment extends BaseMVPView {
             this.setState({ showNoticeResponseModal : false})
           }}
           noticeResponse={ noticeResponse }
+        />
+      }
+      {
+        showViewModal &&
+        <ViewAttachmentModal
+          file = { viewFile }
+          onClose = { () => this.setState({ showViewModal : false }) }
         />
       }
       <div>
@@ -204,11 +248,31 @@ class PagIbigLoanFragment extends BaseMVPView {
           pagibigLoanArray.map((status) =>
             <div>
               {
+                status.status === 2 || status.status === 4 &&
+                <div className = { 'text-align-right' }>
+                  <GenericButton
+                    text = { 'Add Attachments' }
+                    onClick = { () => this.addAttachmentsFunc(pagibigLoanAttachment, count) }
+                    />
+                </div>
+              }
+              {
+                attachments.lenght !== 0 &&
+                  enabledLoader ?
+                  <center>
+                  <CircularLoader show = { enabledLoader } />
+                  </center>
+                  :
+                  <PreEmploymentViewAttachmentsComponent
+                    file = { attachments }
+                    onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+              }
+              {
                 status.status === 2 &&
                 <div>
                 <center>
                   <h4 className = { 'font-size-14px font-weight-lighter' }>
-                    Your documents has been <b>submitted for confirmation</b>.
+                    Your documents has been submitted for confirmation.
                   </h4>
                 </center>
                 </div>
@@ -218,7 +282,7 @@ class PagIbigLoanFragment extends BaseMVPView {
                 <div>
                 <center>
                   <h4 className = { 'font-size-14px font-weight-lighter' }>
-                    Your documents are <b>verified</b>.
+                    Your documents are verified.
                   </h4>
                 </center>
                 </div>
@@ -226,15 +290,6 @@ class PagIbigLoanFragment extends BaseMVPView {
               {
                 status.status === 1 &&
                 <div>
-                  <div className = { 'grid-global' }>
-                    <h2></h2>
-                    <div className = { 'text-align-right' }>
-                      <GenericButton
-                        text = { 'Add Attachments' }
-                        onClick = { () => this.addAttachmentsFunc(pagibigLoanAttachment, count) }
-                        />
-                    </div>
-                  </div>
                   <h4>
                     <br/>
                     Form Attachments

@@ -2,6 +2,7 @@ import { NotifyActions } from '../../../../actions'
 import store from '../../../../store'
 
 import GetPagibiLoanDeductionInteractor from '../../../../domain/interactor/preemployment/pagibig/GetPagibiLoanDeductionInteractor'
+import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 import AddPagibigLoanInteractor from '../../../../domain/interactor/preemployment/pagibig/AddPagibigLoanInteractor'
 import AddEmploymentRequirementInteractor from '../../../../domain/interactor/preemployment/requirement/AddEmploymentRequirementInteractor'
 import pagibigLoanParam from '../../../../domain/param/AddPagibigLoanParam'
@@ -10,6 +11,7 @@ import employeeRequirementParam from '../../../../domain/param/AddEmployeeRequir
 export default class PagIbigLoanPresenter {
   constructor (container) {
     this.getPagibigLoanInteractor = new GetPagibiLoanDeductionInteractor(container.get('HRBenefitsClient'))
+    this.getOnboardingAttachmentsInteractor = new GetOnboardingAttachmentsInteractor(container.get('HRBenefitsClient'))
     this.addPagibigLoanInteractor = new AddPagibigLoanInteractor(container.get('HRBenefitsClient'))
     this.addEmployeeRequirementInteractor = new AddEmploymentRequirementInteractor(container.get('HRBenefitsClient'))
   }
@@ -49,5 +51,24 @@ export default class PagIbigLoanPresenter {
       this.view.hideCircularLoader()
       this.view.noticeResponseResp(error)
     })
+  }
+
+  getOnboardingAttachments (attachments) {
+    this.view.showCircularLoader()
+    this.getOnboardingAttachmentsInteractor.execute(attachments)
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.showAttachmentsFileView(data)
+    }, error => {
+      this.view.hideCircularLoader()
+    })
+  }
+
+  getSelectedAttachments (array) {
+    array.map((resp, key) =>
+      resp.url.map((resp1) =>
+        this.getOnboardingAttachments(resp1)
+      )
+    )
   }
 }
