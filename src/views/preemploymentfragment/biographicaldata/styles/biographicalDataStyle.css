@@ -9,6 +9,11 @@
   grid-template-columns: 1fr .005fr;
 }
 
+.biographical-grid-attachment {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
 .biographical-button {
   border: none;
   box-shadow: none;

@@ -22,6 +22,9 @@ import BiographicalViewerComponent from './components/BiographicalViewerComponen
 
 import ResponseModal from '../../notice/NoticeResponseModal'
 
+import PreEmploymentViewAttachmentsComponent from '../../preemployment/components/PreEmploymentViewAttachmentsComponent'
+import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
+
 import "react-sweet-progress/lib/style.css"
 import './styles/biographicalDataStyle.css'
 
@@ -33,6 +36,7 @@ class BiographicalDataFragment extends BaseMVPView {
       enabledLoaderPdfModal : false,
       enabledLoader : false,
       showNoticeResponseModal : false,
+      showViewModal : false,
       noticeResponse : '',
       biographicalDataFormData: [{
         name : 'Biographical Data Form'
@@ -40,6 +44,7 @@ class BiographicalDataFragment extends BaseMVPView {
       pdfFile: '',
       count : 2,
       biographicalName : '',
+      viewFile : '',
       attachments : [],
     }
     this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
@@ -47,7 +52,7 @@ class BiographicalDataFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.onSendPageNumberToView(2)
-    // this.checkAttachments()
+    this.checkAttachments()
   }
 
   onCheckedPdf (link) {
@@ -69,7 +74,6 @@ class BiographicalDataFragment extends BaseMVPView {
   showAttachmentsFileView (data) {
     let arrayNew = [...this.state.attachments]
     const objectArray = {
-      name : 'test',
       file : data
     }
     arrayNew.push(objectArray)
@@ -128,12 +132,14 @@ class BiographicalDataFragment extends BaseMVPView {
       enabledLoaderPdfModal,
       showNoticeResponseModal,
       noticeResponse,
+      showViewModal,
       biographicalDataFormData,
       biographicalData,
       biographicalName,
       showPdfViewComponent,
       pdfFile,
       count,
+      viewFile,
       attachments
     } = this.state
 
@@ -174,6 +180,13 @@ class BiographicalDataFragment extends BaseMVPView {
         </div>
       </Modal>
     }
+      {
+        showViewModal &&
+        <ViewAttachmentModal
+          file = { viewFile }
+          onClose = { () => this.setState({ showViewModal : false }) }
+        />
+      }
       <div>
         <br/>
           <div className = { 'percentage-grid' }>
@@ -214,10 +227,36 @@ class BiographicalDataFragment extends BaseMVPView {
         <br/>
         <Line />
         <br/>
+
+        <br/>
         {
           biographicalDataFormData.length !== 0  &&
             biographicalArray.map((status) =>
             <div>
+              {
+                status.status === 2 || status.status === 4 &&
+                <div className = { 'text-align-right' }>
+                  <GenericButton
+                    text = { 'Add Attachments' }
+                    onClick = { () => this.addAttachmentsFunc(biographicalDataFormData, count) }
+                    />
+                </div>
+              }
+              {
+                attachments.lenght !== 0 &&
+                  enabledLoader ?
+                  <center>
+                  <CircularLoader show = { enabledLoader } />
+                  </center>
+                  :
+                  attachments.map((resp) =>
+                  <div className = { 'biographical-grid-attachment' }>
+                    <PreEmploymentViewAttachmentsComponent
+                    file = { resp.file }
+                    onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+                  </div>
+                )
+              }
               {
                 status.status === 2 &&
                 <div>
@@ -241,13 +280,6 @@ class BiographicalDataFragment extends BaseMVPView {
               {
                 status.status === 1 &&
                 <div>
-                  <h2></h2>
-                  <div className = { 'text-align-right' }>
-                    <GenericButton
-                      text = { 'Add Attachments' }
-                      onClick = { () => this.addAttachmentsFunc(biographicalDataFormData, count) }
-                      />
-                  </div>
                   <h4>
                     Biographical Data Attachments
                   </h4>

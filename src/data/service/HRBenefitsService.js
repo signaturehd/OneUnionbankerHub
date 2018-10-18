@@ -1728,6 +1728,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getEmployeeAttachments (token, id) {
+    return this.onboardingClient.get(`v1/employees/requirements/document?type=${id}`, {
+      headers: { token }
+    })
+  }
+
   /* Vaccines Requisitions */
   validateVaccine (token) {
     return this.service.validateVaccine(token)

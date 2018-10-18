@@ -1,6 +1,7 @@
 import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
 import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 import AddEmploymentRequirementInteractor from '../../../../domain/interactor/preemployment/requirement/AddEmploymentRequirementInteractor'
+import GetEmployeeAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetEmployeeAttachmentsInteractor'
 import employeeRequirementParam from '../../../../domain/param/AddEmployeeRequirementParam'
 
 export default class BiographicalDataPresenter {
@@ -8,6 +9,7 @@ export default class BiographicalDataPresenter {
     this.getOnboardingPdfInteractor = new GetOnboardingPdfInteractor(container.get('HRBenefitsClient'))
     this.getOnboardingAttachmentsInteractor = new GetOnboardingAttachmentsInteractor(container.get('HRBenefitsClient'))
     this.addEmployeeRequirementInteractor = new AddEmploymentRequirementInteractor(container.get('HRBenefitsClient'))
+    this.getEmployeeAttachmentsInteractor = new GetEmployeeAttachmentsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -25,6 +27,16 @@ export default class BiographicalDataPresenter {
     })
   }
 
+  getEmployeeAttachments (id) {
+    this.getEmployeeAttachmentsInteractor.execute(id)
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.getEmployeeAttachments(data)
+    }, error => {
+      this.view.hideCircularLoader()
+    })
+  }
+
   addBiographicalData (bioId, bioAttachment) {
     this.view.showDocumentLoader()
     this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(bioId, bioAttachment))
@@ -38,11 +50,13 @@ export default class BiographicalDataPresenter {
   }
 
   getOnboardingAttachments (attachments) {
+    this.view.showCircularLoader()
     this.getOnboardingAttachmentsInteractor.execute(attachments)
     .subscribe(data => {
+      this.view.hideCircularLoader()
       this.view.showAttachmentsFileView(data)
     }, error => {
-
+      this.view.hideCircularLoader()
     })
   }
 
