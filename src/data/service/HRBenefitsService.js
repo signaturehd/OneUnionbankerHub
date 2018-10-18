@@ -1730,43 +1730,57 @@ export default class HRBenefitsService {
 
   /* Vaccines Requisitions */
   validateVaccine (token) {
-    return this.service.validateVaccine(token)
-      .pipe(ServiceErrorOperator())
+    return this.apiClient.get('v1/vaccinations/validate', {
+      headers: { token }
+    })
   }
 
   addVaccine (token, data) {
-    return this.service.addVaccine(token, data)
-      .pipe(ServiceErrorOperator())
+    return this.apiClient.post('v1/vaccinations/submit', data, {
+      headers : { token }
+    })
   }
 
   /* Laptop Lease */
 
   confirmLaptopLease (token, transactionId, isConfirm) {
-    return this.service.confirmLaptopLease(token, transactionId, isConfirm)
-      .pipe(ServiceErrorOperator())
+    return this.apiClient.post('v1/leases/laptop/confirm', {
+      transactionId,
+      isConfirm,
+    }, {
+      headers: { token }
+    })
   }
 
   validateLaptopLease (token) {
-    return this.service.validateLaptopLease(token)
-      .pipe(ServiceErrorOperator())
-  }
+     return this.apiClient.get('v1/leases/laptop/validate', {
+       headers : { token }
+     })
+   }
 
-  addLaptopLease (
-    token,
-    accountToken,
-    accountNumber,
-    releasingCenter,
-    addLaptopLeaseParam,
-    ) {
-    return this.service.addLaptopLease(
-      token,
-      accountToken,
-      accountNumber,
-      releasingCenter,
-      addLaptopLeaseParam,
-    )
-      .pipe(ServiceErrorOperator())
-  }
+   addLaptopLease (
+       token,
+       accountToken,
+       accountNumber,
+       releasingCenter,
+       laptopLeaseParam) {
+     const formData = new FormData()
+     const object = {
+       color: laptopLeaseParam.color,
+       term: laptopLeaseParam.terms,
+       estimatedCost : laptopLeaseParam.estimatedAmount,
+       deliveryOptionId: laptopLeaseParam.deliveryOption
+     }
+     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+     laptopLeaseParam.attachments &&
+     laptopLeaseParam.attachments.map((resp, key) =>(
+       formData.append('qoutation', resp.file)
+     ))
+     formData.append('body', JSON.stringify(object))
+     return this.apiClient.post('v1/leases/laptop',  formData, {
+       headers : { token }
+     })
+   }
 
   addNewsIsHeart (token, id, isHeart) {
     const objectNewsIsHeart = {
