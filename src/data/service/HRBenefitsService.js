@@ -1354,7 +1354,7 @@ export default class HRBenefitsService {
 
   putCharacterReference (token, putCharacterReferenceParam) {
     const objectParam = {
-      name : putCharacterReferenceParam.name,1234
+      name : putCharacterReferenceParam.name,
       relationship: putCharacterReferenceParam.relationship,
       numberOfYearsKnown: putCharacterReferenceParam.numberOfYearsKnown,
       contactNumber: putCharacterReferenceParam.contactNumber,
@@ -1397,7 +1397,7 @@ export default class HRBenefitsService {
   addEducationSchool (token, educationParam) {
     const formData = new FormData()
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
-    const objectParam = {1234
+    const objectParam = {
         schoolName : educationParam.schoolName,
         studentNo : educationParam.studentNo,
         startYear : educationParam.startYear,
