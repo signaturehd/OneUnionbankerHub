@@ -21,6 +21,9 @@ import ResponseModal from '../../notice/NoticeResponseModal'
 
 import PhilHealthPdfViewerComponents from './components/PhilHealthPdfViewerComponents'
 
+import PreEmploymentViewAttachmentsComponent from '../../preemployment/components/PreEmploymentViewAttachmentsComponent'
+import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
+
 import './styles/phStyle.css'
 
 class PhilHealthFragment extends BaseMVPView {
@@ -30,6 +33,7 @@ class PhilHealthFragment extends BaseMVPView {
     this.state = {
       enabledLoader : false,
       showNoticeResponseModal : false,
+      showViewModal : false,
       noticeResponse : '',
       pdfFile: '',
       showPdfViewComponent : false,
@@ -37,12 +41,32 @@ class PhilHealthFragment extends BaseMVPView {
       philHealthAttachment : [{
         name : 'PhilHealth'
       }],
-      count : 2
+      count : 2,
+      viewFile : '',
+      attachments : []
     }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(13)
+    this.checkAttachments()
+  }
+
+  checkAttachments () {
+    const {
+      philHealthArray
+    } = this.props
+
+    this.presenter.getSelectedAttachments(philHealthArray)
+  }
+
+  showAttachmentsFileView (data) {
+    let arrayNew = [...this.state.attachments]
+    const objectArray = {
+      file : data
+    }
+    arrayNew.push(objectArray)
+    this.setState({ attachments : arrayNew })
   }
 
   onCheckedPdf (link) {
@@ -99,13 +123,16 @@ class PhilHealthFragment extends BaseMVPView {
   render () {
     const {
       enabledLoader,
+      showViewModal,
       pdfFile,
       showPdfViewComponent,
       enabledLoaderPdfModal,
       count,
       noticeResponse,
       showNoticeResponseModal,
-      philHealthAttachment
+      philHealthAttachment,
+      viewFile,
+      attachments
     } = this.state
 
     const { percentage, philHealthArray } = this.props
@@ -113,14 +140,6 @@ class PhilHealthFragment extends BaseMVPView {
     return (
       <div>
         { super.render() }
-        {
-          enabledLoader &&
-          <Modal>
-          <center>
-          <CircularLoader show = { enabledLoader }/>
-          </center>
-          </Modal>
-        }
         {
           showNoticeResponseModal &&
           <ResponseModal
@@ -148,6 +167,13 @@ class PhilHealthFragment extends BaseMVPView {
               </center>
             </div>
           </Modal>
+        }
+        {
+          showViewModal &&
+          <ViewAttachmentModal
+            file = { viewFile }
+            onClose = { () => this.setState({ showViewModal : false }) }
+          />
         }
         <br/>
         <div className = { 'percentage-grid' }>
@@ -195,6 +221,26 @@ class PhilHealthFragment extends BaseMVPView {
           philHealthArray.map((status) =>
           <div>
           {
+            status.status === 2 || status.status === 4 &&
+            <div className = { 'text-align-right' }>
+              <GenericButton
+                text = { 'Add Attachments' }
+                onClick = { () => this.addAttachmentsFunc(philHealthAttachment, count) }
+                />
+            </div>
+          }
+          {
+            attachments.lenght !== 0 &&
+              enabledLoader ?
+              <center>
+              <CircularLoader show = { enabledLoader } />
+              </center>
+              :
+              <PreEmploymentViewAttachmentsComponent
+                file = { attachments }
+                onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+          }
+          {
             status.status === 2 &&
               <div>
               <center>
@@ -217,15 +263,6 @@ class PhilHealthFragment extends BaseMVPView {
           {
             status.status === 1 &&
             <div>
-            <div className = { 'grid-global' }>
-              <h2></h2>
-              <div className = { 'text-align-right' }>
-                <GenericButton
-                  text = { 'Add Attachments' }
-                  onClick = { () => this.addAttachmentsFunc(philHealthAttachment, count) }
-                  />
-              </div>
-            </div>
             <h4>
               <br/>
               Form Attachments

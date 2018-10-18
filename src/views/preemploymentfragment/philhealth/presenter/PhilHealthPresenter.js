@@ -1,11 +1,13 @@
 import AddEmploymentRequirementInteractor from '../../../../domain/interactor/preemployment/requirement/AddEmploymentRequirementInteractor'
 import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
+import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 
 import employeeRequirementParam from '../../../../domain/param/AddEmployeeRequirementParam'
 
 export default class SSSPresenter {
   constructor (container) {
     this.getOnboardingPdfInteractor = new GetOnboardingPdfInteractor(container.get('HRBenefitsClient'))
+    this.getOnboardingAttachmentsInteractor = new GetOnboardingAttachmentsInteractor(container.get('HRBenefitsClient'))
     this.addEmployeeRequirementInteractor = new AddEmploymentRequirementInteractor(container.get('HRBenefitsClient'))
   }
 
@@ -33,5 +35,24 @@ export default class SSSPresenter {
     }, error => {
       this.view.hideDocumentLoader()
     })
+  }
+
+  getOnboardingAttachments (attachments) {
+    this.view.showCircularLoader()
+    this.getOnboardingAttachmentsInteractor.execute(attachments)
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.showAttachmentsFileView(data)
+    }, error => {
+      this.view.hideCircularLoader()
+    })
+  }
+
+  getSelectedAttachments (array) {
+    array.map((resp, key) =>
+      resp.url.map((resp1) =>
+        this.getOnboardingAttachments(resp1)
+      )
+    )
   }
 }
