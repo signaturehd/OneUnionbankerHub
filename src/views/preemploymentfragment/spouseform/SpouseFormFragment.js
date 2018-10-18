@@ -180,37 +180,7 @@ class SpouseFormFragment extends BaseMVPView {
 
   saveFunction () {
     const {
-      firstName,
-      middleName,
-      lastName,
-      birthDate,
-      occupation,
-      contact,
-      status,
-      gender,
-      bloodType,
-      hospitalization,
-      groupPlan,
-      spouseId
-    } = this.state
-    this.presenter.postSpouseForm(
-      firstName,
-      middleName,
-      lastName,
-      birthDate,
-      occupation,
-      contact,
-      status,
-      gender,
-      bloodType,
-      hospitalization,
-      groupPlan,
-      spouseId,
-      spouseAttachmentsArray)
-  }
-
-  updateFunction () {
-    const {
+      editMode,
       firstName,
       middleName,
       lastName,
@@ -225,23 +195,45 @@ class SpouseFormFragment extends BaseMVPView {
       spouseId,
       spouseAttachmentsArray
     } = this.state
-
-    this.presenter.putSpouseForm(
-      firstName,
-      middleName,
-      lastName,
-      birthDate,
-      occupationName,
-      contact,
-      statusId,
-      gender,
-      bloodType,
-      hospitalization,
-      groupPlan,
-      spouseId,
-      spouseAttachmentsArray)
+    if(editMode) {
+      this.presenter.putSpouseForm(
+        firstName,
+        middleName,
+        lastName,
+        birthDate,
+        occupationName,
+        contact,
+        statusId,
+        gender,
+        bloodType,
+        hospitalization,
+        groupPlan,
+        spouseId,
+        spouseAttachmentsArray)
+    } else {
+      this.presenter.postSpouseForm(
+        firstName,
+        middleName,
+        lastName,
+        birthDate,
+        occupation,
+        contact,
+        status,
+        gender,
+        bloodType,
+        hospitalization,
+        groupPlan,
+        spouseId,
+        spouseAttachmentsArray)
+    }
   }
 
+  /* Remove Option */
+
+  deleteFunction () {
+    const { spouseId } = this.state
+  try{  this.presenter.removeSpouse(spouseId)} catch (e) {console.log(e)}
+  }
 
   render() {
     const {
@@ -505,20 +497,27 @@ class SpouseFormFragment extends BaseMVPView {
           />
           <br/>
           <center>
-            {
-              editMode ?
-              <GenericButton
-                className = { 'global-button' }
-                text = { 'Edit' }
-                onClick = { () => this.updateFunction() }
-                />
-                :
-              <GenericButton
-                className = { 'global-button' }
-                text = { 'Save' }
-                onClick = { () => this.saveFunction() }
-                />
-            }
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  className = { 'global-button' }
+                  text = { 'Delete' }
+                  onClick = { () => this.deleteFunction() }
+                  />
+                {
+                  editMode ?
+                  <GenericButton
+                    className = { 'global-button' }
+                    text = { 'Edit' }
+                    onClick = { () => this.saveFunction() }
+                    />
+                    :
+                  <GenericButton
+                    className = { 'global-button' }
+                    text = { 'Save' }
+                    onClick = { () => this.saveFunction() }
+                    />
+                }
+              </div>
           </center>
         </div>
       }

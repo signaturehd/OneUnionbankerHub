@@ -262,7 +262,7 @@ class ChildrenFragment extends BaseMVPView {
     const {
       history,
       checkPEUndertaking,
-      percentage
+      percentage,
     } = this.props
 
     const {
@@ -449,6 +449,7 @@ class ChildrenFragment extends BaseMVPView {
           :
           <ChildrenMultipleCardComponent
             childrenData = { childrenData }
+            onDeleteModeProperty = { (e) => this.presenter.removeChildren(e) }
             onEditModeProperty = { (e) => {
               this.setState({ editMode: true })
               this.editForm(e)

@@ -1,6 +1,7 @@
 import GetSpouseInteractor from '../../../../domain/interactor/preemployment/spouse/GetSpouseInteractor'
 import PostSpouseInteractor from '../../../../domain/interactor/preemployment/spouse/PostSpouseInteractor'
 import PutSpouseInteractor from '../../../../domain/interactor/preemployment/spouse/PutSpouseInteractor'
+import RemoveSpouseInteractor from '../../../../domain/interactor/preemployment/spouse/RemoveSpouseInteractor'
 import addSpouseForm from '../../../../domain/param/AddSpouseParam'
 import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 
@@ -66,6 +67,7 @@ export default class SpousePresenter {
     this.getSpouseInteractor = new GetSpouseInteractor(container.get('HRBenefitsClient'))
     this.putSpouseInteractor = new PutSpouseInteractor(container.get('HRBenefitsClient'))
     this.postSpouseInteractor = new PostSpouseInteractor(container.get('HRBenefitsClient'))
+    this.removeSpouseInteractor = new RemoveSpouseInteractor(container.get('HRBenefitsClient'))
     this.getOnboardingAttachmentsInteractor = new GetOnboardingAttachmentsInteractor(container.get('HRBenefitsClient'))
   }
 
@@ -75,6 +77,18 @@ export default class SpousePresenter {
 
   validator (string) {
     return func.checkValidateInput(string)
+  }
+
+  removeSpouse (id) {
+    this.view.showCircularLoader()
+    this.removeSpouseInteractor.execute(id)
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.noticeResponseFunc(data, true)
+      this.getSpouse()
+    }, error => {
+        this.view.hideCircularLoader()
+    })
   }
 
   getObjectData () {

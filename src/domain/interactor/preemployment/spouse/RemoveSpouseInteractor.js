@@ -1,5 +1,5 @@
 export default class RemoveSpouseInteractor {
-  container (client) {
+  constructor (client) {
     this.client = client
   }
   execute (id) {

@@ -1743,7 +1743,13 @@ export default class HRBenefitsService {
   }
 
   removeSpouse (token, id) {
-    return this.onboardingClient.delete(`v1/employees/spouse${id}`, {
+    return this.onboardingClient.delete(`v1/employees/spouse/${id}`, {
+      headers : { token }
+    })
+  }
+
+  removeChildren (token, id) {
+    return this.onboardingClient.delete(`v1/employees/children/${id}`, {
       headers : { token }
     })
   }
