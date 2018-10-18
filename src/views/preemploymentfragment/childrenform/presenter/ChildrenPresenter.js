@@ -1,6 +1,7 @@
 import GetChildrenInteractor from '../../../../domain/interactor/preemployment/children/GetChildrenInteractor'
 import PutChildrenInteractor from '../../../../domain/interactor/preemployment/children/PutChildrenInteractor'
 import PostChildrenInteractor from '../../../../domain/interactor/preemployment/children/PostChildrenInteractor'
+import RemoveChildrenInteractor from '../../../../domain/interactor/preemployment/children/RemoveChildrenInteractor'
 
 import childrenParam from '../../../../domain/param/AddChildrenParam'
 
@@ -59,11 +60,26 @@ export default class ChildrenPresenter {
   constructor (container) {
     this.getChildrenInteractor = new GetChildrenInteractor(container.get('HRBenefitsClient'))
     this.putChildrenInteractor = new PutChildrenInteractor(container.get('HRBenefitsClient'))
+    this.removeChildrenInteractor = new RemoveChildrenInteractor(container.get('HRBenefitsClient'))
     this.postChildrenInteractor = new PostChildrenInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
+  }
+
+  /* Remove Method */
+
+  removeChildren (id) {
+    this.view.showCircularLoader()
+    this.removeChildrenInteractor.execute(id)
+    .subscribe(data => {
+      this.view.noticeResponseFunc(data)
+      this.view.hideCircularLoader()
+      this.getChildren()
+    }, error => {
+      this.view.hideCircularLoader()
+    })
   }
 
   /* Get Method */
@@ -78,7 +94,7 @@ export default class ChildrenPresenter {
     this.getChildrenInteractor.execute()
     .subscribe(data => {
       this.view.showChildrenDetails(data)
-    }, erro => {
+    }, error => {
     })
   }
 

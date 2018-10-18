@@ -103,22 +103,15 @@ export default class PreEmploymentPresenter {
       totalValue += 1 // education
       totalValue += 1 // character reference
       totalValue += 1 // medical scheduling
-      totalValue -= 0 // tin (optional)
-      totalValue -= 0  // bir 1902 (optional)
-      totalValue -= 0 // pagibig loan (optional)
 
-      console.log(requiredDocuments.length)
       requiredDocuments.map((documents) => {
-        documents && documents.url.map((attachments) => {
-          if(documents.status === 2) {
-            progress +=1 // If document status is equal submitted (2) progress increment to 1
-          }
-        })
+        if(documents.status === 2) {
+          progress +=1 // If document status is equal submitted (2) progress increment to 1
+        }
       })
 
       data.map((resp) => {
         if(resp.nodeStatus === 1) {
-          console.log(resp.nodeStatus)
           progress +=1 // If affirmation status is equal 1 progress increment to 1
         }
       })

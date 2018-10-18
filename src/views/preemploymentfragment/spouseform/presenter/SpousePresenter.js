@@ -1,7 +1,9 @@
 import GetSpouseInteractor from '../../../../domain/interactor/preemployment/spouse/GetSpouseInteractor'
 import PostSpouseInteractor from '../../../../domain/interactor/preemployment/spouse/PostSpouseInteractor'
 import PutSpouseInteractor from '../../../../domain/interactor/preemployment/spouse/PutSpouseInteractor'
+import RemoveSpouseInteractor from '../../../../domain/interactor/preemployment/spouse/RemoveSpouseInteractor'
 import addSpouseForm from '../../../../domain/param/AddSpouseParam'
+import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 
 import { RequiredValidation }  from '../../../../utils/validate'
 import * as func from '../functions/SpouseFunctions'
@@ -65,6 +67,8 @@ export default class SpousePresenter {
     this.getSpouseInteractor = new GetSpouseInteractor(container.get('HRBenefitsClient'))
     this.putSpouseInteractor = new PutSpouseInteractor(container.get('HRBenefitsClient'))
     this.postSpouseInteractor = new PostSpouseInteractor(container.get('HRBenefitsClient'))
+    this.removeSpouseInteractor = new RemoveSpouseInteractor(container.get('HRBenefitsClient'))
+    this.getOnboardingAttachmentsInteractor = new GetOnboardingAttachmentsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -75,10 +79,33 @@ export default class SpousePresenter {
     return func.checkValidateInput(string)
   }
 
+  removeSpouse (id) {
+    this.view.showCircularLoader()
+    this.removeSpouseInteractor.execute(id)
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.noticeResponseFunc(data, true)
+      this.getSpouse()
+    }, error => {
+        this.view.hideCircularLoader()
+    })
+  }
+
   getObjectData () {
     this.view.showGender(genderObject)
     this.view.showStatus(statusObject)
     this.view.showBloodType(bloodObjectParam)
+  }
+
+  getOnboardingAttachments (attachments) {
+    this.view.showCircularLoader()
+    this.getOnboardingAttachmentsInteractor.execute(attachments)
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.showAttachmentsFileView(data)
+    }, error => {
+      this.view.hideCircularLoader()
+    })
   }
 
   getSpouse () {
@@ -87,10 +114,19 @@ export default class SpousePresenter {
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.showSpouseDetails(data, true)
+      this.getSelectedAttachments(data)
     }, error => {
       this.view.showSpouseDetails(error, false)
       this.view.hideCircularLoader()
     })
+  }
+
+
+  getSelectedAttachments (array) {
+    array && array.attachments.map((resp, key) => {
+      this.getOnboardingAttachments(resp)
+      }
+    )
   }
 
   postSpouseForm (

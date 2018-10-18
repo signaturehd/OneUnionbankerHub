@@ -23,6 +23,9 @@ import { Progress } from 'react-sweet-progress'
 
 import NoticeResponseModal from '../../notice/NoticeResponseModal'
 
+import PreEmploymentViewAttachmentsComponent from '../../preemployment/components/PreEmploymentViewAttachmentsComponent'
+import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
+
 import 'react-sweet-progress/lib/style.css'
 import './styles/spouseStyle.css'
 
@@ -35,6 +38,7 @@ class SpouseFormFragment extends BaseMVPView {
       bloodObjectParam: [],
       statusObject : [],
       genderObject : [],
+      attachments : [],
       spouseAttachments: [{
         id : 0,
         name : 'Birth Certificate'
@@ -50,6 +54,7 @@ class SpouseFormFragment extends BaseMVPView {
       showNoticeResponseModal: false,
       showStatusModal: false,
       showGenderModal : false,
+      showViewModal : false,
       spouseId: '',
       lastName: '',
       firstName : '',
@@ -75,6 +80,7 @@ class SpouseFormFragment extends BaseMVPView {
       lastNameErrorMessage: '',
       bloodTypeErrorMessage: '',
       noticeResponse: '',
+      viewFile: '',
     }
   }
 
@@ -118,8 +124,18 @@ class SpouseFormFragment extends BaseMVPView {
       statusName : nullChecker.status === 1 ? 'Deceased' : 'Living',
       hospitalization : nullChecker.healthHospitalizationPlan,
       groupPlan : nullChecker.groupLifeInsurance,
+      editMode: editMode
     })
-    this.setState({ spouseData, editMode })
+    this.setState({ spouseData  })
+  }
+
+  showAttachmentsFileView (data) {
+    let arrayNew = [...this.state.attachments]
+    const objectArray = {
+      file : data
+    }
+    arrayNew.push(objectArray)
+    this.setState({ attachments : arrayNew })
   }
 
   noticeResponseFunc (noticeResponse, showNoticeResponseModal) {
@@ -164,37 +180,7 @@ class SpouseFormFragment extends BaseMVPView {
 
   saveFunction () {
     const {
-      firstName,
-      middleName,
-      lastName,
-      birthDate,
-      occupation,
-      contact,
-      status,
-      gender,
-      bloodType,
-      hospitalization,
-      groupPlan,
-      spouseId
-    } = this.state
-    this.presenter.postSpouseForm(
-      firstName,
-      middleName,
-      lastName,
-      birthDate,
-      occupation,
-      contact,
-      status,
-      gender,
-      bloodType,
-      hospitalization,
-      groupPlan,
-      spouseId,
-      spouseAttachmentsArray)
-  }
-
-  updateFunction () {
-    const {
+      editMode,
       firstName,
       middleName,
       lastName,
@@ -209,23 +195,45 @@ class SpouseFormFragment extends BaseMVPView {
       spouseId,
       spouseAttachmentsArray
     } = this.state
-
-    this.presenter.putSpouseForm(
-      firstName,
-      middleName,
-      lastName,
-      birthDate,
-      occupationName,
-      contact,
-      statusId,
-      gender,
-      bloodType,
-      hospitalization,
-      groupPlan,
-      spouseId,
-      spouseAttachmentsArray)
+    if(editMode) {
+      this.presenter.putSpouseForm(
+        firstName,
+        middleName,
+        lastName,
+        birthDate,
+        occupationName,
+        contact,
+        statusId,
+        gender,
+        bloodType,
+        hospitalization,
+        groupPlan,
+        spouseId,
+        spouseAttachmentsArray)
+    } else {
+      this.presenter.postSpouseForm(
+        firstName,
+        middleName,
+        lastName,
+        birthDate,
+        occupation,
+        contact,
+        status,
+        gender,
+        bloodType,
+        hospitalization,
+        groupPlan,
+        spouseId,
+        spouseAttachmentsArray)
+    }
   }
 
+  /* Remove Option */
+
+  deleteFunction () {
+    const { spouseId } = this.state
+  try{  this.presenter.removeSpouse(spouseId)} catch (e) {console.log(e)}
+  }
 
   render() {
     const {
@@ -238,6 +246,7 @@ class SpouseFormFragment extends BaseMVPView {
       bloodObjectParam,
       statusObject,
       genderObject,
+      attachments,
       spouseAttachmentsArray,
       spouseAttachments,
       spouseData,
@@ -271,8 +280,10 @@ class SpouseFormFragment extends BaseMVPView {
       showNoticeResponseModal,
       showStatusModal,
       showGenderModal,
+      showViewModal,
       hospitalization,
-      groupPlan
+      groupPlan,
+      viewFile,
     } = this.state
 
   return(
@@ -285,6 +296,13 @@ class SpouseFormFragment extends BaseMVPView {
         noticeResponse = { noticeResponse }
         onClose = { () =>
           this.setState({ showNoticeResponseModal: false }) }
+      />
+    }
+    {
+      showViewModal &&
+      <ViewAttachmentModal
+        file = { viewFile }
+        onClose = { () => this.setState({ showViewModal : false }) }
       />
     }
     {
@@ -442,23 +460,31 @@ class SpouseFormFragment extends BaseMVPView {
               </div>
             </div>
           </div>
-          <div className = { 'grid-global' }>
-            <div></div>
-            <div className = { 'text-align-right' }>
-              <GenericButton
+          {
+            attachments.length !== 0 &&
+              enabledLoader ?
+              <center>
+              <CircularLoader show = { enabledLoader } />
+              </center>
+              :
+              <PreEmploymentViewAttachmentsComponent
+                file = { attachments }
+                onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+          }
+          <div className = { 'text-align-right' }>
+            <GenericButton
               text = { 'Add Atttachments' }
               onClick = { () => {
-                const updatedAttachments = [...spouseAttachments]
-                let newCount = count + 1
-                this.setState({ count : newCount })
-                updatedAttachments.push({
-                  name : 'Birth Certificate ' + count
-                })
-                this.setState({ spouseAttachments : updatedAttachments })
-                  }
+              const updatedAttachments = [...spouseAttachments]
+              let newCount = count + 1
+              this.setState({ count : newCount })
+              updatedAttachments.push({
+                name : 'Birth Certificate ' + count
+              })
+              this.setState({ spouseAttachments : updatedAttachments })
                 }
-              />
-            </div>
+              }
+            />
           </div>
           <MultipleAttachments
             count = { count }
@@ -471,20 +497,27 @@ class SpouseFormFragment extends BaseMVPView {
           />
           <br/>
           <center>
-            {
-              editMode ?
-              <GenericButton
-                className = { 'global-button' }
-                text = { 'Edit' }
-                onClick = { () => this.updateFunction() }
-                />
-                :
-              <GenericButton
-                className = { 'global-button' }
-                text = { 'Save' }
-                onClick = { () => this.saveFunction() }
-                />
-            }
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  className = { 'global-button' }
+                  text = { 'Delete' }
+                  onClick = { () => this.deleteFunction() }
+                  />
+                {
+                  editMode ?
+                  <GenericButton
+                    className = { 'global-button' }
+                    text = { 'Edit' }
+                    onClick = { () => this.saveFunction() }
+                    />
+                    :
+                  <GenericButton
+                    className = { 'global-button' }
+                    text = { 'Save' }
+                    onClick = { () => this.saveFunction() }
+                    />
+                }
+              </div>
           </center>
         </div>
       }
