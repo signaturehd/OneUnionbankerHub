@@ -15,6 +15,9 @@ import {
   Line,
 } from '../../../ub-components/'
 
+import PreEmploymentViewAttachmentsComponent from '../../preemployment/components/PreEmploymentViewAttachmentsComponent'
+import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
+
 import { Progress } from 'react-sweet-progress'
 import ResponseModal from '../../notice/NoticeResponseModal'
 
@@ -24,16 +27,38 @@ class NbiClearanceFragment extends BaseMVPView {
     super(props)
     this.state = {
       enabledLoader : false,
+      enabledLoaderPdfModal : false,
       showNoticeResponseModal : false,
+      showViewModal : false,
       noticeResponse : '',
       nbiClearance : [{
         name : 'NBI Clearance'
-      }]
+      }],
+      viewFile : '',
+      attachments : []
     }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(7)
+    this.checkAttachments()
+  }
+
+  checkAttachments () {
+    const {
+      nbiArray
+    } = this.props
+
+    this.presenter.getSelectedAttachments(nbiArray)
+  }
+
+  showAttachmentsFileView (data) {
+    let arrayNew = [...this.state.attachments]
+    const objectArray = {
+      file : data
+    }
+    arrayNew.push(objectArray)
+    this.setState({ attachments : arrayNew })
   }
 
   submitForm (id) {
@@ -56,12 +81,24 @@ class NbiClearanceFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
   render () {
     const {
       enabledLoader,
+      enabledLoaderPdfModal,
+      showViewModal,
       nbiClearance,
       showNoticeResponseModal,
-      noticeResponse
+      noticeResponse,
+      viewFile,
+      attachments
      } = this.state
 
     const { percentage, nbiArray } = this.props
@@ -79,15 +116,22 @@ class NbiClearanceFragment extends BaseMVPView {
           />
         }
         {
-          enabledLoader &&
+          enabledLoaderPdfModal &&
           <Modal>
           <center>
           <br/>
           <h2>Please wait while we we&#39;re validating your submitted documents</h2>
           <br/>
-          <CircularLoader show = { enabledLoader }/>
+          <CircularLoader show = { enabledLoaderPdfModal }/>
           </center>
           </Modal>
+        }
+        {
+          showViewModal &&
+          <ViewAttachmentModal
+            file = { viewFile }
+            onClose = { () => this.setState({ showViewModal : false }) }
+          />
         }
         <br/>
         <div className = { 'percentage-grid' }>
@@ -109,11 +153,22 @@ class NbiClearanceFragment extends BaseMVPView {
           nbiArray.map((status) =>
             <div>
               {
+                attachments.lenght !== 0 &&
+                  enabledLoader ?
+                  <center>
+                  <CircularLoader show = { enabledLoader } />
+                  </center>
+                  :
+                  <PreEmploymentViewAttachmentsComponent
+                    file = { attachments }
+                    onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+              }
+              {
                 status.status === 2 &&
                 <div>
                 <center>
                   <h4 className = { 'font-size-14px font-weight-lighter' }>
-                    Your documents has been <b>submitted for confirmation</b>.
+                    Your documents has been submitted for confirmation.
                   </h4>
                 </center>
                 </div>
@@ -123,7 +178,7 @@ class NbiClearanceFragment extends BaseMVPView {
                 <div>
                 <center>
                   <h4 className = { 'font-size-14px font-weight-lighter' }>
-                    Your documents are <b>verified</b>.
+                    Your documents are verified.
                   </h4>
                 </center>
                 </div>
