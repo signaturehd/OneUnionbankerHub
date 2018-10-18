@@ -35,6 +35,7 @@ class SSSFragment extends BaseMVPView {
     super(props)
     this.state = {
       enabledLoader : false,
+      enabledLoaderPdfModal : false,
       showNoticeResponseModal : false,
       showViewModal : false,
       noticeResponse : '',
@@ -119,6 +120,14 @@ class SSSFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
   inputSSSValidate (e) {
     const validate = new RequiredNumberValidation().isValid(e)
     this.setState({ sssInput : validate ? e : '' })
@@ -128,6 +137,7 @@ class SSSFragment extends BaseMVPView {
 
     const {
       enabledLoader,
+      enabledLoaderPdfModal,
       showViewModal,
       showNoticeResponseModal,
       noticeResponse,
@@ -152,13 +162,13 @@ class SSSFragment extends BaseMVPView {
           />
         }
         {
-          enabledLoader &&
+          enabledLoaderPdfModal &&
           <Modal>
           <center>
           <br/>
           <h2>Please wait while we we&#39;re validating your submitted documents</h2>
           <br/>
-          <CircularLoader show = { enabledLoader }/>
+          <CircularLoader show = { enabledLoaderPdfModal }/>
           </center>
           </Modal>
         }
@@ -208,13 +218,9 @@ class SSSFragment extends BaseMVPView {
                 <CircularLoader show = { enabledLoader } />
                 </center>
                 :
-                attachments.map((resp) =>
-                <div className = { 'sss-grid-attachment' }>
-                  <PreEmploymentViewAttachmentsComponent
-                    file = { resp.file }
-                    onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
-                </div>
-              )
+                <PreEmploymentViewAttachmentsComponent
+                  file = { attachments }
+                  onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
             }
             {
               status.status === 2 &&
