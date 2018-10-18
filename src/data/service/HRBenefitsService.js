@@ -1728,14 +1728,18 @@ export default class HRBenefitsService {
     })
   }
 
+  /* Remove */
+
   removeWorkExperience (token, id) {
-    return this.onboardingCLient.delete(`v1/emplyoees/employeers/${id}`, {
+    return this.onboardingClient.delete(`v1/employees/employers/${id}`, {
       headers: { token }
     })
   }
 
   removeSchool (token, id) {
-    return this.onboardingClient.delete(`v1/employees/school/${id}`)
+    return this.onboardingClient.delete(`v1/employees/school/${id}`, {
+      headers : { token }
+    })
   }
 
   /*  Post Employment */
