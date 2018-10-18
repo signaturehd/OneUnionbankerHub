@@ -53,6 +53,7 @@ class App extends BaseMVPView {
             }
               return <LoginView { ...props } />
           }} />
+        <Route path = '/downloadPhenom' />
         </Switch>
       </div>
     )

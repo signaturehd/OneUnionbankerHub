@@ -115,7 +115,9 @@ class SpouseFormFragment extends BaseMVPView {
       gender: nullChecker.gender === 'M' ? 'Male' : 'Female',
       spouseId : nullChecker.id,
       statusId : nullChecker.status,
-      statusName : nullChecker.status === 1 ? 'Deceased' : 'Living'
+      statusName : nullChecker.status === 1 ? 'Deceased' : 'Living',
+      hospitalization : nullChecker.healthHospitalizationPlan,
+      groupPlan : nullChecker.groupLifeInsurance,
     })
     this.setState({ spouseData, editMode })
   }

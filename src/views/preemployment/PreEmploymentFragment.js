@@ -524,6 +524,7 @@ class PreEmploymentFragment extends BaseMVPView {
                   }
                 />
               </div>
+              <br/>
                <PreEmploymentFragments
                 biographicalArray = { this.getFormData(1) }
                 birthCertifArray = { this.getFormData(2) }
