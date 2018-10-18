@@ -22,6 +22,9 @@ import {
 
 import ResponseModal from '../../notice/NoticeResponseModal'
 
+import PreEmploymentViewAttachmentsComponent from '../../preemployment/components/PreEmploymentViewAttachmentsComponent'
+import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
+
 import { Progress } from 'react-sweet-progress'
 
 class TinFragment extends BaseMVPView {
@@ -30,18 +33,40 @@ class TinFragment extends BaseMVPView {
     super(props)
     this.state = {
       enabledLoader : false,
+      enabledLoaderPdfModal : false,
       showNoticeResponseModal : false,
+      showViewModal : false,
       noticeResponse : '',
       tinInput : '',
       tinAttachment : [{
         name : 'TIN ID/ BIR FORM',
-      }]
+      }],
+      viewFile : '',
+      attachments : [],
     }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(11)
     this.presenter.getEmployeeTin()
+    this.checkAttachments()
+  }
+
+  checkAttachments () {
+    const {
+      tinArray
+    } = this.props
+
+    this.presenter.getSelectedAttachments(tinArray)
+  }
+
+  showAttachmentsFileView (data) {
+    let arrayNew = [...this.state.attachments]
+    const objectArray = {
+      file : data
+    }
+    arrayNew.push(objectArray)
+    this.setState({ attachments : arrayNew })
   }
 
   showEmployeeTinData (tinData) {
@@ -88,6 +113,14 @@ class TinFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
   inputTinValidate (e) {
     const validate = new RequiredNumberValidation().isValid(e)
 
@@ -102,10 +135,14 @@ class TinFragment extends BaseMVPView {
 
     const {
       enabledLoader,
+      enabledLoaderPdfModal,
       showNoticeResponseModal,
       noticeResponse,
+      showViewModal,
       tinInput,
-      tinAttachment
+      tinAttachment,
+      viewFile,
+      attachments
     } = this.state
     const { percentage, tinArray } = this.props
 
@@ -122,15 +159,22 @@ class TinFragment extends BaseMVPView {
           />
         }
         {
-          enabledLoader &&
+          enabledLoaderPdfModal &&
           <Modal>
           <center>
           <br/>
           <h2>Please wait while we we&#39;re validating your submitted documents</h2>
           <br/>
-          <CircularLoader show = { enabledLoader }/>
+          <CircularLoader show = { enabledLoaderPdfModal }/>
           </center>
           </Modal>
+        }
+        {
+          showViewModal &&
+          <ViewAttachmentModal
+            file = { viewFile }
+            onClose = { () => this.setState({ showViewModal : false }) }
+          />
         }
         <br/>
         <div className = { 'percentage-grid' }>
@@ -163,6 +207,17 @@ class TinFragment extends BaseMVPView {
         {
           tinArray.map((status) =>
           <div>
+          {
+            attachments.lenght !== 0 &&
+              enabledLoader ?
+              <center>
+              <CircularLoader show = { enabledLoader } />
+              </center>
+              :
+              <PreEmploymentViewAttachmentsComponent
+                file = { attachments }
+                onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+          }
           {
             status.status === 2 &&
             <div>
