@@ -17,12 +17,17 @@ import {
 } from '../../../ub-components/'
 
 import ResponseModal from '../../notice/NoticeResponseModal'
+import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
+
+import PreEmploymentViewAttachmentsComponent from '../../preemployment/components/PreEmploymentViewAttachmentsComponent'
 
 import {
   RequiredNumberValidation
 } from '../../../utils/validate'
 
 import { Progress } from 'react-sweet-progress'
+
+import './styles/sssStyle.css'
 
 class SSSFragment extends BaseMVPView {
 
@@ -31,17 +36,46 @@ class SSSFragment extends BaseMVPView {
     this.state = {
       enabledLoader : false,
       showNoticeResponseModal : false,
+      showViewModal : false,
       noticeResponse : '',
       sssInput : '',
       sssAttachment : [{
         name : 'SSS ID / E1 Form',
-      }]
+      }],
+      attachments: [],
+      viewFile : '',
     }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(10)
     this.presenter.getEmployeeSSS()
+    this.checkAttachments()
+  }
+
+  setSSSAttachments () {
+    this.setState({
+      sssAttachment : [{
+        name : 'SSS ID / E1 Form',
+    }] })
+    this.props.reloadPreEmploymentForm()
+  }
+
+  checkAttachments () {
+    const {
+      sssArray
+    } = this.props
+
+    this.presenter.getSelectedAttachments(sssArray)
+  }
+
+  showAttachmentsFileView (data) {
+    let arrayNew = [...this.state.attachments]
+    const objectArray = {
+      file : data
+    }
+    arrayNew.push(objectArray)
+    this.setState({ attachments : arrayNew })
   }
 
   showEmployeeSSSData (sssData) {
@@ -67,6 +101,7 @@ class SSSFragment extends BaseMVPView {
     const {
       sssArray
     } = this.props
+
     sssArray.map((sss) =>
       this.presenter.uploadEmployeeSSS(sss.id, sssAttachment)
     )
@@ -93,11 +128,15 @@ class SSSFragment extends BaseMVPView {
 
     const {
       enabledLoader,
+      showViewModal,
       showNoticeResponseModal,
       noticeResponse,
       sssInput,
-      sssAttachment
+      sssAttachment,
+      attachments,
+      viewFile,
     } = this.state
+
     const { percentage, sssArray } = this.props
 
     return (
@@ -123,6 +162,13 @@ class SSSFragment extends BaseMVPView {
           </center>
           </Modal>
         }
+        {
+          showViewModal &&
+          <ViewAttachmentModal
+            file = { viewFile }
+            onClose = { () => this.setState({ showViewModal : false }) }
+          />
+        }
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
@@ -145,9 +191,9 @@ class SSSFragment extends BaseMVPView {
           />
         <br/>
         <center>
-        <GenericButton
-        text = { 'Save' }
-        onClick = { () => this.saveForm() }/>
+          <GenericButton
+          text = { 'Save' }
+          onClick = { () => this.saveForm() }/>
         </center>
         <br/>
         <Line />
@@ -155,6 +201,21 @@ class SSSFragment extends BaseMVPView {
         {
           sssArray.map((status) =>
           <div>
+            {
+              attachments.length !== 0 &&
+                enabledLoader ?
+                <center>
+                <CircularLoader show = { enabledLoader } />
+                </center>
+                :
+                attachments.map((resp) =>
+                <div className = { 'sss-grid-attachment' }>
+                  <PreEmploymentViewAttachmentsComponent
+                    file = { resp.file }
+                    onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+                </div>
+              )
+            }
             {
               status.status === 2 &&
               <div>
