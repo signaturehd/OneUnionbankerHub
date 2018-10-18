@@ -83,6 +83,7 @@ export default class AffirmDocumentPresenter {
     this.postEnrollPinAffirmationsEmploymentInteractor.execute(pin)
     .subscribe(data => {
       this.view.hidePinLoader()
+      this.getAffirmationsStatus()
       this.view.noticeResponse(data.message, true, false)
     }, error => {
       this.view.hidePinLoader()

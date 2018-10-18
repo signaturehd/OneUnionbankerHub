@@ -1742,6 +1742,12 @@ export default class HRBenefitsService {
     })
   }
 
+  removeSpouse (token, id) {
+    return this.onboardingClient.delete(`v1/employees/spouse${id}`, {
+      headers : { token }
+    })
+  }
+
   /*  Post Employment */
   addPostRequirement (token, requirementParam) {
     const formData = new FormData()

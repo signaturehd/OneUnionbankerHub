@@ -59,7 +59,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
 
   onSubmit (pin) {
     const { preAffirmationEmpId } = this.state
-    if(preAffirmationEmpId === 0) {
+    if(preAffirmationEmpId === 1) {
       if(!this.validator(pin)) {
         store.dispatch(NotifyActions.addNotify({
            title : 'Authentication' ,
@@ -71,7 +71,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
      } else {
        this.presenter.postEnrollPinAffirmationsEmployment(pin)
       }
-    } else if (preAffirmationEmpId === 1) {
+    } else if (preAffirmationEmpId === 2) {
       if(!this.validator(pin)) {
         store.dispatch(NotifyActions.addNotify({
            title : 'Authentication' ,
@@ -83,7 +83,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
      } else {
        this.presenter.postEnrollPinAffirmationsPolicy(pin)
       }
-    } else if (preAffirmationEmpId === 2) {
+    } else if (preAffirmationEmpId === 3) {
       if(!this.validator(pin)) {
         store.dispatch(NotifyActions.addNotify({
            title : 'Authentication' ,
@@ -95,7 +95,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
      } else {
        this.presenter.postEnrollPinAffirmationsConfidential(pin)
       }
-    } else if (preAffirmationEmpId === 3) {
+    } else if (preAffirmationEmpId === 4) {
       if(!this.validator(pin)) {
         store.dispatch(NotifyActions.addNotify({
            title : 'Authentication' ,
