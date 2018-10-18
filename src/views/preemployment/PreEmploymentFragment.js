@@ -91,6 +91,8 @@ function  PreEmploymentFragments (props)  {
   const characterReferencePresenter = props.characterReferencePresenter
   const educationData = props.educationData
   const educationPresenter = props.educationPresenter
+  const reloadPreEmploymentForm = props.reloadPreEmploymentForm
+
   if (pageNumber === 0) {
     return <AffirmationDocumentFragment
       percentage = { percentage }
@@ -153,12 +155,14 @@ function  PreEmploymentFragments (props)  {
     return <SSSFragment
       sssArray = { sssArray }
       percentage = { percentage }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 11) {
     return <TinFragment
       tinArray = { tinArray }
       percentage = { percentage }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 12) {
@@ -245,6 +249,14 @@ class PreEmploymentFragment extends BaseMVPView {
     this.presenter.getPreEmploymentForm()
     this.presenter.getCharacterReference()
     this.presenter.getEmployeeSchool()
+    this.presenter.getParents()
+  }
+
+  reloadPreEmploymentForm() {
+    this.presenter.getPreEmploymentForm()
+    this.presenter.getCharacterReference()
+    this.presenter.getEmployeeSchool()
+    this.presenter.getParents()
   }
 
   /* Documents */
@@ -517,6 +529,7 @@ class PreEmploymentFragment extends BaseMVPView {
                 pagibigLoanArray = { this.getFormData(16) }
                 preEmpPage = { preEmpPage }
                 percentage = { percentage }
+                reloadPreEmploymentForm = { () => this.reloadPreEmploymentForm() }
                 characterReferencePresenter = { () => this.presenter.getCharacterReference() }
                 characterReferenceData = { characterReferenceData }
                 educationPresenter = { () => this.presenter.getEmployeeSchool() }
