@@ -1728,6 +1728,16 @@ export default class HRBenefitsService {
     })
   }
 
+  removeWorkExperience (token, id) {
+    return this.onboardingCLient.delete(`v1/emplyoees/employeers/${id}`, {
+      headers: { token }
+    })
+  }
+
+  removeSchool (token, id) {
+    return this.onboardingClient.delete(`v1/employees/school/${id}`)
+  }
+
   /* Vaccines Requisitions */
   validateVaccine (token) {
     return this.apiClient.get('v1/vaccinations/validate', {
