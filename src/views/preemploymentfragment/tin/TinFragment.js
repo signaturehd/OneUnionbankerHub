@@ -68,6 +68,14 @@ class TinFragment extends BaseMVPView {
     )
   }
 
+  setTinAttachments () {
+    this.setState({
+      tinAttachment : [{
+        name : 'TIN ID/ BIR FORM',
+    }] })
+    this.props.reloadPreEmploymentForm()
+  }
+
   noticeResponseResp (noticeResponse) {
     this.setState({ noticeResponse , showNoticeResponseModal : true})
   }
@@ -144,11 +152,10 @@ class TinFragment extends BaseMVPView {
             minLength = { 9 }
             onChange = { e => this.inputTinValidate(e.target.value) }
           />
-        <br/>
           <center>
           <GenericButton
-          text = { 'Save' }
-          onClick = { () => this.saveForm() }/>
+            text = { 'Save' }
+            onClick = { () => this.saveForm() }/>
           </center>
         <br/>
         <Line />

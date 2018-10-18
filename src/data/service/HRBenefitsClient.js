@@ -1108,6 +1108,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  removeWorkExperience (token, id) {
+    return this.service.removeWorkExperience(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  removeSchool (token, id) {
+    return this.service.removeSchool(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Vaccines Requisitions */
 
 
