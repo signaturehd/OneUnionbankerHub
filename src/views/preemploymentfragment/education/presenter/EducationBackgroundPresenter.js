@@ -5,6 +5,7 @@ import AddEducationSchoolInteractor from '../../../../domain/interactor/preemplo
 import PutEducationSchoolInteractor from '../../../../domain/interactor/preemployment/education/PutEducationSchoolInteractor'
 import GetSchoolRecordVerificationFormInteractor from '../../../../domain/interactor/preemployment/education/GetSchoolRecordVerificationFormInteractor'
 import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
+import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 
 import addEducationParam from '../../../../domain/param/AddEmployeeEducationParam'
 import putEducationParam from '../../../../domain/param/PutEmployeeEducationParam'
@@ -12,6 +13,7 @@ import putEducationParam from '../../../../domain/param/PutEmployeeEducationPara
 export default class EducationBackgroundPresenter {
   constructor (container) {
     this.getOnboardingPdfInteractor = new GetOnboardingPdfInteractor(container.get('HRBenefitsClient'))
+    this.getOnboardingAttachmentsInteractor = new GetOnboardingAttachmentsInteractor(container.get('HRBenefitsClient'))
     this.schoolDataInteractor = new SchoolDataInteractor(container.get('HRBenefitsClient'))
     this.addEducationSchoolInteractor = new AddEducationSchoolInteractor(container.get('HRBenefitsClient'))
     this.putEducationSchoolInteractor = new PutEducationSchoolInteractor(container.get('HRBenefitsClient'))
@@ -22,8 +24,8 @@ export default class EducationBackgroundPresenter {
     this.view = view
   }
 
-  getOnBoardingDocument (link) {
-    this.getOnboardingPdfInteractor.execute(link)
+  getOnBoardingAttachments (link) {
+    this.getOnboardingAttachmentsInteractor.execute(link)
     .subscribe(data => {
       this.view.showPdfFileView(data)
       this.view.hideDocumentLoader()
@@ -36,7 +38,7 @@ export default class EducationBackgroundPresenter {
     this.getSchoolRecordVerificationFormInteractor.execute(link)
     .subscribe(data => {
       this.view.hideDocumentLoader()
-      this.view.showPdfFileUrl(data.url)
+      this.view.showPdfFileUrl(data)
     }, error =>{
       this.view.hideDocumentLoader()
     })
