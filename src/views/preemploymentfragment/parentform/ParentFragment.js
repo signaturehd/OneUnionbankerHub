@@ -493,58 +493,89 @@ class ParentFragment extends BaseMVPView {
             :
             <div className = { 'grid-global' }>
               <h2 className = { 'font-weight-bold' }>Parent</h2>
+              {
+                !enabledLoader &&
+                <div className = { 'text-align-right' }>
+                  <GenericButton
+                    text = { 'Add' }
+                    onClick = { () => this.setState({ showEditModeModal : true }) }
+                  />
+                </div>
+              }
+            </div>
+          }
+        </div>
+        <br/>
+        {
+          enabledLoader  ?
+          <center>
+            <br/>
+            <CircularLoader show = { enabledLoader }/>
+            <br/>
+          </center>
+          :
+          <div>
+            {
+              parentDetails.length !== 0 &&
+              <ParentComponent
+                parentDetails = { parentDetails }
+                onEditModeProperty = { (e, e1) => this.editForm(e, e1, e2) }
+                />
+            }
+          </div>
+        }
+        <br/>
+        {
+          siblingDetails.length !== 0 ?
+          <h2 className = { 'font-weight-bold' }>Siblings</h2> :
+          <div className = { 'grid-global' }>
+            <h2 className = { 'font-weight-bold' }>Siblings</h2>
+            {
+              !enabledLoader &&
               <div className = { 'text-align-right' }>
                 <GenericButton
                   text = { 'Add' }
                   onClick = { () => this.setState({ showEditModeModal : true }) }
                 />
               </div>
-            </div>
-          }
-        </div>
-        <br/>
-        {
-          parentDetails &&
-
-          <ParentComponent
-            parentDetails = { parentDetails }
-            onEditModeProperty = { (e, e1) => this.editForm(e, e1, e2) }
-            />
+            }
+          </div>
         }
         <br/>
-        <div className = { 'grid-global' }>
-          <h2 className = { 'font-weight-bold' }>Siblings</h2>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-              text = { 'Add' }
-              onClick  = { () => this.setState({ showEditModeModal: true }) }
-            />
-          </div>
-        </div>
-        <br/>
         {
-          siblingDetails &&
+          enabledLoader  ?
+          <center>
+            <br/>
+            <CircularLoader show = { enabledLoader }/>
+            <br/>
+          </center>
+          :
           <div>
-            <SiblingComponent
-              siblingDetails = { siblingDetails }
-              onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
-              index = { index }
-              />
-              <br/>
-            <button
-              type = { 'button' }
-              className = { `viewmore tooltip ${ isVisible }` }
-              onClick = {
-                () => {
-                  if(index === siblingDetails.length)
-                    this.setState({ index : 4, viewMoreText : 'View more' })
-                  else
-                    this.setState({ index : siblingDetails.length, viewMoreText : 'View less' })
-                }
-              }>
-              <img src={ require('../../../images/icons/horizontal.png') } />
-              <span className={ 'tooltiptext' }>{ viewMoreText }</span>
-            </button>
+            {
+              siblingDetails.length !== 0 &&
+              <div>
+                <SiblingComponent
+                  siblingDetails = { siblingDetails }
+                  onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
+                  index = { index }
+                  />
+                  <br/>
+                <button
+                  type = { 'button' }
+                  className = { `viewmore tooltip ${ isVisible }` }
+                  onClick = {
+                    () => {
+                      if(index === siblingDetails.length)
+                        this.setState({ index : 4, viewMoreText : 'View more' })
+                      else
+                        this.setState({ index : siblingDetails.length, viewMoreText : 'View less' })
+                    }
+                  }>
+                  <img src={ require('../../../images/icons/horizontal.png') } />
+                  <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+                </button>
+              </div>
+            }
           </div>
         }
       </div>
