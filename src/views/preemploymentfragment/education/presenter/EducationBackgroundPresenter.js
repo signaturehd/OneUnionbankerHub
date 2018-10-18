@@ -6,6 +6,7 @@ import PutEducationSchoolInteractor from '../../../../domain/interactor/preemplo
 import GetSchoolRecordVerificationFormInteractor from '../../../../domain/interactor/preemployment/education/GetSchoolRecordVerificationFormInteractor'
 import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
 import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
+import RemoveSchoolInteractor from '../../../../domain/interactor/preemployment/education/RemoveSchoolInteractor'
 
 import addEducationParam from '../../../../domain/param/AddEmployeeEducationParam'
 import putEducationParam from '../../../../domain/param/PutEmployeeEducationParam'
@@ -18,11 +19,14 @@ export default class EducationBackgroundPresenter {
     this.addEducationSchoolInteractor = new AddEducationSchoolInteractor(container.get('HRBenefitsClient'))
     this.putEducationSchoolInteractor = new PutEducationSchoolInteractor(container.get('HRBenefitsClient'))
     this.getSchoolRecordVerificationFormInteractor = new GetSchoolRecordVerificationFormInteractor(container.get('HRBenefitsClient'))
+    this.removeSchoolInteractor = new RemoveSchoolInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
   }
+
+  /* Get Method */
 
   getOnBoardingAttachments (link) {
     this.getOnboardingAttachmentsInteractor.execute(link)
@@ -51,13 +55,15 @@ export default class EducationBackgroundPresenter {
       data => {
         this.view.hideCircularLoader()
         this.view.checkedSchoolData(data)
-        this.callBackEducationPresenter()
+        this.view.callBackEducationPresenter()
       },
       error => {
         this.view.hideCircularLoader()
       }
     )
   }
+
+  /* Post Method */
 
   addEducationSchool(
     schoolName,
@@ -89,14 +95,30 @@ export default class EducationBackgroundPresenter {
         data => {
           this.view.hideCircularLoader()
           this.view.noticeResponseResp(data)
-          this.callBackEducationPresenter()
+          this.view.callBackEducationPresenter()
         }, error => {
           this.view.hideCircularLoader()
         }
       )
     }
 
-    putEducationSchool(
+    /* Update Method */
+
+  putEducationSchool(
+    educId,
+    schoolName,
+    studentNo,
+    startYear,
+    endYear,
+    term,
+    degree,
+    honor,
+    course,
+    address,
+    isUpdated,
+    torFormData) {
+    this.view.showCircularLoader()
+    this.putEducationSchoolInteractor.execute(putEducationParam(
       educId,
       schoolName,
       studentNo,
@@ -108,30 +130,28 @@ export default class EducationBackgroundPresenter {
       course,
       address,
       isUpdated,
-      torFormData) {
-        this.view.showCircularLoader()
-        this.putEducationSchoolInteractor.execute(putEducationParam(
-          educId,
-          schoolName,
-          studentNo,
-          startYear,
-          endYear,
-          term,
-          degree,
-          honor,
-          course,
-          address,
-          isUpdated,
-          torFormData
-        ))
-        .subscribe(
-          data => {
-            this.view.hideCircularLoader()
-            this.view.noticeResponseResp(data)
-            this.callBackEducationPresenter()
-          }, error => {
-            this.view.hideCircularLoader()
-          }
-        )
+      torFormData
+    ))
+    .subscribe(
+      data => {
+        this.view.hideCircularLoader()
+        this.view.noticeResponseResp(data)
+        this.view.callBackEducationPresenter()
+      }, error => {
+        this.view.hideCircularLoader()
       }
+    )
+  }
+
+  removeSchool (id) {
+    this.view.showCircularLoader()
+    this.removeSchoolInteractor.execute(id)
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.noticeResponseResp(data)
+      this.view.callBackEducationPresenter()
+    }, error => {
+      this.view.hideCircularLoader()
+    })
+  }
 }

@@ -6,6 +6,7 @@ import AddWorkExperienceInteractor from '../../../../domain/interactor/preemploy
 import PutWorkExperienceInteractor from '../../../../domain/interactor/preemployment/workexperience/PutWorkExperienceInteractor'
 import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
 import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
+import RemoveWorkExperienceInteractor from '../../../../domain/interactor/preemployment/workexperience/RemoveWorkExperienceInteractor'
 
 import addWorkExperienceParam from '../../../../domain/param/AddWorkExperienceParam'
 import putWorkExperienceParam from '../../../../domain/param/PutWorkExperienceParam'
@@ -18,6 +19,7 @@ export default class WorkExperiencePresenter {
     this.addWorkExperienceInteractor = new AddWorkExperienceInteractor(container.get('HRBenefitsClient'))
     this.putWorkExperienceInteractor = new PutWorkExperienceInteractor(container.get('HRBenefitsClient'))
     this.getOnboardingPdfInteractor = new GetOnboardingPdfInteractor(container.get('HRBenefitsClient'))
+    this.removeWorkExperienceInteractor = new RemoveWorkExperienceInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -81,49 +83,63 @@ export default class WorkExperiencePresenter {
         toMonthName,
         toYear
       ))
-      .subscribe(
-        data => {
-          this.view.hideCircularLoader()
-          this.view.noticeResponseResp(data)
-          this.getWorkExperience()
-        }, error => {
-          this.view.hideCircularLoader()
-        }
-      )
-    }
-
-    putWorkExperience (
-      workExpId,
-      companyName,
-      address,
-      position,
-      description,
-      contactNo,
-      fromMonthName,
-      fromYear,
-      toMonthName,
-      toYear) {
-        this.view.showCircularLoader()
-        this.putWorkExperienceInteractor.execute(putWorkExperienceParam(
-          workExpId,
-          companyName,
-          address,
-          position,
-          description,
-          contactNo,
-          fromMonthName,
-          fromYear,
-          toMonthName,
-          toYear
-        ))
-        .subscribe(
-          data => {
-            this.view.hideCircularLoader()
-            this.view.noticeResponseResp(data)
-            this.getWorkExperience()
-          }, error => {
-            this.view.hideCircularLoader()
-          }
-        )
+    .subscribe(
+      data => {
+        this.view.hideCircularLoader()
+        this.view.noticeResponseResp(data)
+        this.getWorkExperience()
+      }, error => {
+        this.view.hideCircularLoader()
       }
+    )
+  }
+
+  putWorkExperience (
+    workExpId,
+    companyName,
+    address,
+    position,
+    description,
+    contactNo,
+    fromMonthName,
+    fromYear,
+    toMonthName,
+    toYear) {
+      this.view.showCircularLoader()
+      this.putWorkExperienceInteractor.execute(putWorkExperienceParam(
+        workExpId,
+        companyName,
+        address,
+        position,
+        description,
+        contactNo,
+        fromMonthName,
+        fromYear,
+        toMonthName,
+        toYear
+      ))
+    .subscribe(
+      data => {
+        this.view.hideCircularLoader()
+        this.view.noticeResponseResp(data)
+        this.getWorkExperience()
+      }, error => {
+        this.view.hideCircularLoader()
+      }
+    )
+  }
+
+  /* Remove */
+
+  removeWorkExperience (id) {
+    this.view.showCircularLoader()
+    this.removeWorkExperienceInteractor.execute(id)
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.noticeResponseResp(data)
+      this.getWorkExperience()
+    },error => {
+        this.view.showCircularLoader()
+    })
+  }
 }
