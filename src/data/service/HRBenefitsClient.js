@@ -1113,6 +1113,12 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /*  Post Employment */
+  addPostRequirement (token requirementsParam) {
+    return this.service.addPostRequirement(token, requirementParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Vaccines Requisitions */
 
 
