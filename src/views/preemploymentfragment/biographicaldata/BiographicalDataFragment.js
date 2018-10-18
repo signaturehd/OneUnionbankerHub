@@ -59,16 +59,16 @@ class BiographicalDataFragment extends BaseMVPView {
     this.presenter.getOnBoardingDocument(link)
   }
 
+  showPdfFileView (pdfFile) {
+    this.setState({ pdfFile })
+  }
+
   checkAttachments () {
     const {
       biographicalArray
     } = this.props
 
     this.presenter.getSelectedAttachments(biographicalArray)
-  }
-
-  showPdfFileView (pdfFile) {
-    this.setState({ pdfFile })
   }
 
   showAttachmentsFileView (data) {
@@ -249,13 +249,9 @@ class BiographicalDataFragment extends BaseMVPView {
                   <CircularLoader show = { enabledLoader } />
                   </center>
                   :
-                  attachments.map((resp) =>
-                  <div className = { 'biographical-grid-attachment' }>
-                    <PreEmploymentViewAttachmentsComponent
-                    file = { resp.file }
+                  <PreEmploymentViewAttachmentsComponent
+                    file = { attachments }
                     onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
-                  </div>
-                )
               }
               {
                 status.status === 2 &&

@@ -6,6 +6,7 @@ import {
   GenericButton,
 } from '../../../ub-components/'
 
+import './styles/modalStyles.css'
 
 class ViewAttachmentModal extends Component {
   constructor(props) {
@@ -20,9 +21,11 @@ class ViewAttachmentModal extends Component {
     return(
       <Modal
       isDismissable = { true }
-      width = { 80 }>
-        <div>
-          <img src = { file } width = { '100%' } height = { '100%' }/>
+      width = { 80 }
+      >
+      <center>
+      <iframe src = { file }  className = { 'image-size' }/>
+      </center>
           <br/>
           <center>
             <GenericButton
@@ -30,7 +33,6 @@ class ViewAttachmentModal extends Component {
              onClick = { () => onClose() }
             />
           </center>
-        </div>
       </Modal>
     )
   }

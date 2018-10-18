@@ -22,9 +22,16 @@ class PreEmploymentViewAttachmentsComponent extends Component {
     } = this.props
 
     return (
-      <Card onClick = { () => onClick(file) }>
-          <img src = { file } className = { 'view-size' }/>
-      </Card>
+      <div className = { 'grid-attachment' }>
+        {
+          file.map((resp) =>
+          <Card onClick = { () => onClick(resp.file) }>
+              <img src = { resp.file } className = { 'view-size' }/>
+          </Card>
+          )
+        }
+      </div>
+
     )
   }
 }

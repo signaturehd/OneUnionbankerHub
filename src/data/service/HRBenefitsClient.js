@@ -928,11 +928,6 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getEmployeeAttachments (token, id) {
-    return this.service.getEmployeeAttachments(token, id)
-      .pipe(ServiceErrorOperator())
-  }
-
   postEnrollPinAffirmationsEmployment (token, pin) {
     return this.service.postEnrollPinAffirmationsEmployment(token, pin)
       .pipe(ServiceErrorOperator())

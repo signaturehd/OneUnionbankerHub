@@ -19,6 +19,9 @@ import {
 import Presenter from './presenter/BirthCertificatePresenter'
 import ResponseModal from '../../notice/NoticeResponseModal'
 
+import PreEmploymentViewAttachmentsComponent from '../../preemployment/components/PreEmploymentViewAttachmentsComponent'
+import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
+
 import "react-sweet-progress/lib/style.css"
 import './styles/birthCertificateStyle.css'
 
@@ -27,19 +30,41 @@ class BirthCertificateFragment extends BaseMVPView {
     super(props)
     this.state = {
       enabledLoader : false,
+      enabledLoaderPdfModal : false,
       showNoticeResponseModal : false,
+      showViewModal : false,
       noticeResponse : '',
       birthDataFormData: [{
         name : 'Birth Certificate'
       }],
       pdfFile: '',
-      count : 2
+      count : 2,
+      viewFile : '',
+      attachments : [],
     }
     this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(3)
+    this.checkAttachments()
+  }
+
+  checkAttachments () {
+    const {
+      birthCertifArray
+    } = this.props
+
+    this.presenter.getSelectedAttachments(birthCertifArray)
+  }
+
+  showAttachmentsFileView (data) {
+    let arrayNew = [...this.state.attachments]
+    const objectArray = {
+      file : data
+    }
+    arrayNew.push(objectArray)
+    this.setState({ attachments : arrayNew })
   }
 
   showAttachments (pdfFile) {
@@ -81,6 +106,14 @@ class BirthCertificateFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
   render() {
     const {
       checkPEUndertaking,
@@ -91,11 +124,15 @@ class BirthCertificateFragment extends BaseMVPView {
 
     const {
       enabledLoader,
+      enabledLoaderPdfModal,
       showNoticeResponseModal,
+      showViewModal,
       noticeResponse,
       birthDataFormData,
       pdfFile,
-      count
+      count,
+      viewFile,
+      attachments
     } = this.state
 
     const bioAttachmentArray = [
@@ -117,19 +154,26 @@ class BirthCertificateFragment extends BaseMVPView {
       />
     }
     {
-      enabledLoader &&
+      enabledLoaderPdfModal &&
       <Modal>
         <div>
           <center>
             <br/>
             <h2>Please wait while we we&#39;re validating your submitted documents</h2>
             <br/>
-            <CircularLoader show = { enabledLoader }/>
+            <CircularLoader show = { enabledLoaderPdfModal }/>
             <br/>
           </center>
         </div>
       </Modal>
     }
+      {
+        showViewModal &&
+        <ViewAttachmentModal
+          file = { viewFile }
+          onClose = { () => this.setState({ showViewModal : false }) }
+        />
+      }
       <div>
         <br/>
           <div className = { 'percentage-grid' }>
@@ -150,6 +194,26 @@ class BirthCertificateFragment extends BaseMVPView {
           birthCertifArray.length !== 0 &&
           birthCertifArray.map((status) =>
           <div>
+            {
+              status.status === 2 || status.status === 4 &&
+              <div className = { 'text-align-right' }>
+                <GenericButton
+                  text = { 'Add Attachments' }
+                  onClick = { () => this.addAttachmentsFunc(birthDataFormData, count) }
+                  />
+              </div>
+            }
+            {
+              attachments.lenght !== 0 &&
+                enabledLoader ?
+                <center>
+                <CircularLoader show = { enabledLoader } />
+                </center>
+                :
+                <PreEmploymentViewAttachmentsComponent
+                file = { attachments }
+                onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+            }
             {
               status.status === 2 &&
               <div>
@@ -173,15 +237,6 @@ class BirthCertificateFragment extends BaseMVPView {
             {
               status.status === 1 &&
             <div>
-              <div className = { 'grid-global' }>
-                <h2></h2>
-                <div className = { 'text-align-right' }>
-                  <GenericButton
-                    text = { 'Add Attachments' }
-                    onClick = { () => this.addAttachmentsFunc(birthDataFormData, count) }
-                    />
-                </div>
-              </div>
               <h4>
                 Birth Certitificate Attachments
               </h4>
