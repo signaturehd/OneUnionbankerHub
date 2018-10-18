@@ -7,6 +7,10 @@ import DeleteCharacterReferenceInteractor from '../../../../domain/interactor/pr
 
 import genericParam from '../../../../domain/param/PostCharacterReferenceParam'
 
+import {
+  RequiredEmailValidation
+} from '../../../../utils/validate'
+
 export default class CharacterReferencePresenter {
   constructor (container) {
     this.postCharacterReferenceInteractor = new PostCharacterReferenceInteractor(container.get('HRBenefitsClient'))
@@ -49,6 +53,8 @@ export default class CharacterReferencePresenter {
    //   city: cityText,
    //   town: townText
    // }
+
+     console.log(new RequiredEmailValidation.isValid(email))
     if(name === '') {
       this.view.setFullNameErrorMessage('Full Name is required')
     } else if (occupation === 0) {

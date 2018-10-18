@@ -1123,6 +1123,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  removeParents (token, id) {
+    return this.service.removeParents(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
   /*  Post Employment */
   addPostRequirement (token, requirementsParam) {
     return this.service.addPostRequirement(token, requirementParam)

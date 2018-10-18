@@ -1754,6 +1754,12 @@ export default class HRBenefitsService {
     })
   }
 
+  removeParents (token, id) {
+    return this.onboardingClient.delete(`v1/employees/parent/${id}`, {
+      headers : { token }
+    })
+  }
+
   /*  Post Employment */
   addPostRequirement (token, requirementParam) {
     const formData = new FormData()
