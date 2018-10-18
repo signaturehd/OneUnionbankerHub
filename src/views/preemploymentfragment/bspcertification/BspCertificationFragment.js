@@ -39,7 +39,7 @@ class BspCertificationFragment extends BaseMVPView {
   }
 
   showPdfFileView (pdfFile) {
-    this.setState({ pdfFile })
+    this.setState({ pdfFile, showPdfViewComponent : true })
   }
 
   showDocumentLoader () {
@@ -66,7 +66,7 @@ class BspCertificationFragment extends BaseMVPView {
       {
         id: 0,
         title: 'Banko Sentral ng Pilipinas(BSP) Certificate',
-        link: '/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf',
+        link: '/2018-10-16/12345-BSP Certification-1539624445855.pdf',
       }
     ]
     return(
@@ -112,7 +112,7 @@ class BspCertificationFragment extends BaseMVPView {
               key = { key }
               className = { 'bsp-card' }
               onClick = { () => {
-                this.onCheckedPdf('/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf')
+                this.onCheckedPdf(resp.link)
                 this.setState({ showPdfViewModal : true  })
                 }
               }>

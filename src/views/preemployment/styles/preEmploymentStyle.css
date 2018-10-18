@@ -22,6 +22,12 @@
   color:white;
 }
 
+.pre-employment-button {
+  min-width: 100px;
+  height: 30px;
+  border-radius: 50px;
+}
+
 .preemp-refresh {
   background-image: url('../../../images/icons/refresh.png');
 }

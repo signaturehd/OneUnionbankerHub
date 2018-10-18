@@ -213,6 +213,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
         showPinCodeModal &&
         <Modal
           isDismisable = { true }
+          onClose = { () => this.setState({ showPinLoaderModal : false }) }
           >
           {
             enabledLoader ?

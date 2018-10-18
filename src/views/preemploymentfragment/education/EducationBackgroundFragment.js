@@ -130,11 +130,12 @@ class EducationBackgroundFragment extends BaseMVPView {
   }
 
   showPdfFileView (pdfFile) {
-    this.setState({ showPdfViewComponent : true, pdfFile })
+    this.setState({ pdfFile, showPdfViewComponent : true })
   }
 
   showPdfFileUrl (pdfFileUrl) {
-    this.presenter.getOnBoardingDocument(pdfFileUrl)
+    let url = pdfFileUrl.url + ''
+      this.presenter.getOnBoardingAttachments(url)
   }
 
   checkedSchoolData(resp) {
@@ -497,7 +498,7 @@ class EducationBackgroundFragment extends BaseMVPView {
         <div className = { 'educ-grid-card' }>
           <Card
             onClick = { () =>
-              this.onCheckedPdf(pdfFileUrl)
+              this.onCheckedPdf()
             }
             className = { 'educ-card' }>
             <div className = { 'educ-grid-x2' }>

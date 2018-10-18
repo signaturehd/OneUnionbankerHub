@@ -98,7 +98,7 @@ export default class HRBenefitsService {
       orDate : dentalReimbursementParam.orDate.format('MM/DD/YYYY')
     }
 
-    formData.append('uuid', 12345)
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     formData.append('body', JSON.stringify(dentalRObject))
     dentalReimbursementParam.attachments.map((resp, key) => (
       formData.append(resp.name.replace('/', '-'), resp.file)
@@ -406,7 +406,7 @@ export default class HRBenefitsService {
         promissoryNoteNumbers : mplPurposeLoanAddParam.selectedOffsetLoan,
         distributor : mplPurposeLoanAddParam.dealerName,
       }
-      formData.append('uuid', 12345)
+      formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
       formData.append('body', JSON.stringify(multiLoanBodyObject))
       mplPurposeLoanAddParam.attachments &&
       mplPurposeLoanAddParam.attachments.map((attachment, key) => (
@@ -437,7 +437,7 @@ export default class HRBenefitsService {
         term : addMotorLoanParam.termId,
       },
     }
-    formData.append('uuid', 12345)
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
     addMotorLoanParam.attachments.map((attachment, key) => (
       formData.append(attachment.label, attachment.file)
@@ -467,7 +467,7 @@ export default class HRBenefitsService {
       promissoryNoteNumbers : addComputerLoanParam.selectedOffsetLoan,
       distributor : addComputerLoanParam.supplierName,
     }
-    formData.append('uuid', 12345)
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     formData.append('body', JSON.stringify(multiLoanBodyObject))
     addComputerLoanParam.attachments.map((attachment, key) => (
       formData.append(attachment.label, attachment.file)
@@ -490,7 +490,7 @@ export default class HRBenefitsService {
     releasingCenter,
     carRequestParam) {
     const formData = new FormData()
-    formData.append('uuid', 12345)
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     const addCarleaseObject = {
       accountNumber,
       releasingCenter,
@@ -519,7 +519,7 @@ export default class HRBenefitsService {
     const formData = new FormData()
     const leasesConfirmpaymentObject = {
       transactionId : leasesConfirmpaymentParam.transactionId,
-      uuid : '12345'
+      uuid : Math.floor(Math.random()*90000) + 10000
     }
     leasesConfirmpaymentParam.file.map((resp, key) =>
       formData.append(file.name.replace('/', '-'), file.file)
@@ -608,7 +608,7 @@ export default class HRBenefitsService {
         orNumber : educationAidParam.orNumber,
         orDate : educationAidParam.orDate
       }
-      formData.append('uuid', 12345)
+      formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
       formData.append('body', JSON.stringify(educationAidObject))
 
       educationAidParam.attachments.map((resp, key ) => formData.append(resp.name.replace('/', '-'), resp.file))
@@ -626,7 +626,7 @@ export default class HRBenefitsService {
         accountNumber,
         releasingCenter
       }
-      formData.append('uuid', 12345)
+      formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
       formData.append('cert', grantAidParam.file)
       formData.append('body', JSON.stringify(grantAidObject))
       return this.apiClient.post('v2/grants/education/personal/submit', formData, {
@@ -636,7 +636,7 @@ export default class HRBenefitsService {
 
   addGrantPlan (token, accountToken, accountNumber, releasingCenter, grantPlanParam) {
     const formData = new FormData()
-    formData.append('uuid', 12345)
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     const grantPlanObject = {
       grantType : grantPlanParam.grantId,
       accountNumber,
@@ -665,7 +665,7 @@ export default class HRBenefitsService {
 
    addGroupAid (token, accountToken, accountNumber, releasingCenter, groupAidParam) {
      const formData = new FormData()
-     formData.append('uuid', 12345)
+     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
      const groupPlanObject = {
         accountNumber,
         releasingCenter,
@@ -710,7 +710,7 @@ export default class HRBenefitsService {
       funeral : addBereavementParam.objectFuneral,
       memorial: addBereavementParam.objectMemorial,
     }
-    formData.append('uuid', 12345)
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     addBereavementParam.file.map((resp, key) =>
       formData.append(resp.name, resp.file)
     )
@@ -774,7 +774,7 @@ export default class HRBenefitsService {
 
   uploadTransactionCalamity (token, id, files) {
     const formData = new FormData()
-    formData.append('uuid', 12345)
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     files.map((file, key) => (
       formData.append(file.name.replace('/', '-'), file.file)
     ))
@@ -788,7 +788,7 @@ export default class HRBenefitsService {
 
   uploadTransactionBereavement (token, id, files) {
     const formData = new FormData()
-    formData.append('uuid', 12345)
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     files.map((file, key) => (
       formData.append(file.name.replace('/', '-'), file.file)
     ))
@@ -841,7 +841,7 @@ export default class HRBenefitsService {
     outPatientParam
   ) {
     const formData = new FormData()
-    formData.append('uuid', 12345)
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
       const objectOutPatient = {
         accountNumber,
         releasingCenter,
@@ -930,7 +930,7 @@ export default class HRBenefitsService {
     addMaternityAssistanceParam
   ) {
     const formData = new FormData()
-    formData.append('uuid', 12345)
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     const objectMaternity = {
       accountNumber,
       releasingCenter,
@@ -1298,7 +1298,7 @@ export default class HRBenefitsService {
 
   addEmployeeRequirement (token, requirementParam) {
     const formData = new FormData()
-    formData.append('uuid', '12345')
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     const objectParam = {
       documentType : requirementParam.documentId
     }
@@ -1396,7 +1396,7 @@ export default class HRBenefitsService {
 
   addEducationSchool (token, educationParam) {
     const formData = new FormData()
-    formData.append('uuid', '12345')
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     const objectParam = {
         schoolName : educationParam.schoolName,
         studentNo : educationParam.studentNo,
@@ -1440,7 +1440,7 @@ export default class HRBenefitsService {
 
   putEducationSchool (token, educationParam) {
     const formData = new FormData()
-    formData.append('uuid', '12345')
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     const objectParam = {
       schoolName : educationParam.schoolName,
       studentNo : educationParam.studentNo,
@@ -1487,7 +1487,7 @@ export default class HRBenefitsService {
         bloodType : spouseFormParam.bloodType,
         contactNumber: spouseFormParam.contactNumber,
     }
-    formData.append('uuid', 12345)
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     spouseFormParam.attachments.map((resp, key) =>
       formData.append(resp.name, resp.file)
     )
@@ -1513,7 +1513,7 @@ export default class HRBenefitsService {
         bloodType : spouseFormParam.bloodType,
         contactNumber: spouseFormParam.contactNumber,
     }
-    formData.append('uuid', 12345)
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     spouseFormParam.spouseAttachmentsArray.map((resp, key) =>
       formData.append(resp.name, resp.file)
     )
@@ -1736,6 +1736,25 @@ export default class HRBenefitsService {
 
   removeSchool (token, id) {
     return this.onboardingClient.delete(`v1/employees/school/${id}`)
+  }
+
+  /*  Post Employment */
+  addPostRequirement (token, requirementParam) {
+    const formData = new FormData()
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    const objectParam = {
+      documentType : requirementParam.documentId
+    }
+    requirementParam.attachments.map((resp) =>
+      (
+        formData.append(resp.name.replace('/', '-'), resp.file)
+      )
+    )
+
+    formData.append('body', JSON.stringify(objectParam))
+    return this.onboardingClient.post('v1/employees/requirements?phase=2', formData, {
+      headers : { token }
+    })
   }
 
   /* Vaccines Requisitions */
