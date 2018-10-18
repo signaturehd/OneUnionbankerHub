@@ -112,7 +112,7 @@ class AuthorizationBackgroundCheckFragment extends BaseMVPView {
             }
           }>
           <div className = { 'abc-grid-x2' }>
-            <h2> Authorization For Background Check </h2>
+            <h2> Authorization of Background Check </h2>
             <div>
               <span
                 className = { 'abc-icon biographical-seemore-button' }/>
