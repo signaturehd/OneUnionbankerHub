@@ -43,6 +43,7 @@ export default class TinPresenter {
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.noticeResponseResp(data)
+      this.view.setTinAttachments()
     }, error => {
       this.view.hideCircularLoader()
     })
