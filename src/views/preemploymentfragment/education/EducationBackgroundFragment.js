@@ -313,6 +313,12 @@ class EducationBackgroundFragment extends BaseMVPView {
     }
   }
 
+  /* Delete Education */
+
+  onDeleteProperty (id) {
+    this.presenter.removeSchool(id)
+  }
+
   render () {
     const {
       updateMode,
@@ -540,6 +546,7 @@ class EducationBackgroundFragment extends BaseMVPView {
         <EducationMultipleCardComponent
           cardDataHolder = { educationData }
           index = { index }
+          onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
           onEditModeProperty = { (
             educId,
             schoolName,
