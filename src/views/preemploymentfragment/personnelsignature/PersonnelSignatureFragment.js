@@ -19,6 +19,9 @@ import {
 import Presenter from './presenter/PersonnelSignaturePresenter'
 import ResponseModal from '../../notice/NoticeResponseModal'
 
+import PreEmploymentViewAttachmentsComponent from '../../preemployment/components/PreEmploymentViewAttachmentsComponent'
+import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
+
 import "react-sweet-progress/lib/style.css"
 import './styles/signatureStyle.css'
 
@@ -29,7 +32,9 @@ class PersonnelSignatureFragment extends BaseMVPView {
     super(props)
     this.state = {
       showPdfViewModal : false,
+      enabledLoaderPdfModal : false,
       enabledLoader : false,
+      showViewModal : false,
       showNoticeResponseModal : false,
       noticeResponse : '',
       personnelFormData: [{
@@ -37,12 +42,32 @@ class PersonnelSignatureFragment extends BaseMVPView {
       }],
       pdfFile: '',
       count : 2,
+      viewFile : '',
+      attachments : []
     }
     this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(16)
+    this.checkAttachments()
+  }
+
+  checkAttachments () {
+    const {
+      personnelArray
+    } = this.props
+
+    this.presenter.getSelectedAttachments(personnelArray)
+  }
+
+  showAttachmentsFileView (data) {
+    let arrayNew = [...this.state.attachments]
+    const objectArray = {
+      file : data
+    }
+    arrayNew.push(objectArray)
+    this.setState({ attachments : arrayNew })
   }
 
   onCheckedPdf (link) {
@@ -88,6 +113,14 @@ class PersonnelSignatureFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
   render() {
     const {
       history,
@@ -98,25 +131,21 @@ class PersonnelSignatureFragment extends BaseMVPView {
 
     const {
       enabledLoader,
+      enabledLoaderPdfModal,
       showNoticeResponseModal,
       noticeResponse,
+      showViewModal,
       personnelFormData,
       showPdfViewModal,
       pdfFile,
-      count
+      count,
+      viewFile,
+      attachments
     } = this.state
 
     return(
     <div>
     { super.render() }
-    {
-      enabledLoader &&
-      <Modal>
-      <center>
-      <CircularLoader show = { enabledLoader }/>
-      </center>
-      </Modal>
-    }
     {
       showNoticeResponseModal &&
       <ResponseModal
@@ -132,6 +161,13 @@ class PersonnelSignatureFragment extends BaseMVPView {
         pdfFile = { pdfFile }
         onClose = { () => this.setState({ showPdfViewModal: false }) }
         />
+    }
+    {
+      showViewModal &&
+      <ViewAttachmentModal
+        file = { viewFile }
+        onClose = { () => this.setState({ showViewModal : false }) }
+      />
     }
       <div>
         <br/>
@@ -169,54 +205,72 @@ class PersonnelSignatureFragment extends BaseMVPView {
         {
           personnelFormData.length !== 0  &&
           personnelArray.map((status) =>
-            status.status === 2 ?
-            <div>
-            <center>
-              <h4 className = { 'font-size-14px font-weight-lighter' }>
-                Your documents has been <b>submitted for confirmation</b>.
-              </h4>
-            </center>
-            </div>
-            :
-            status.status === 4 ?
-            <div>
-            <center>
-              <h4 className = { 'font-size-14px font-weight-lighter' }>
-                Your documents are <b>verified</b>.
-              </h4>
-            </center>
-            </div>
-            :
-            <div>
-            <div className = { 'grid-global' }>
-              <h2></h2>
+          <div>
+            {
+              status.status === 2 || status.status === 4 &&
               <div className = { 'text-align-right' }>
                 <GenericButton
                   text = { 'Add Attachments' }
                   onClick = { () => this.addAttachmentsFunc(personnelFormData, count) }
                   />
               </div>
-            </div>
-            <h4>
-              <br/>
-              Form Attachments
-            </h4>
-            <MultipleAttachments
-              count = { count }
-              countFunc = { (count) => this.setState({ count }) }
-              placeholder = { '' }
-              fileArray = { personnelFormData }
-              setFile = { (personnelFormData) =>
-                  this.setState({ personnelFormData })
-              }
-              />
+            }
+            {
+              attachments.lenght !== 0 &&
+                enabledLoader ?
+                <center>
+                <CircularLoader show = { enabledLoader } />
+                </center>
+                :
+                <PreEmploymentViewAttachmentsComponent
+                  file = { attachments }
+                  onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+            }
+            {
+              status.status === 2 &&
+              <div>
               <center>
-               <GenericButton
-                 text = { 'Upload' }
-                 onClick = { () => this.uploadForm()  }
-               />
-             </center>
-            </div>
+                <h4 className = { 'font-size-14px font-weight-lighter' }>
+                  Your documents has been submitted for confirmation.
+                </h4>
+              </center>
+              </div>
+            }
+            {
+              status.status === 4 &&
+              <div>
+              <center>
+                <h4 className = { 'font-size-14px font-weight-lighter' }>
+                  Your documents are verified.
+                </h4>
+              </center>
+              </div>
+            }
+            {
+              status.status === 1 &&
+              <div>
+              <h4>
+                <br/>
+                Form Attachments
+              </h4>
+              <MultipleAttachments
+                count = { count }
+                countFunc = { (count) => this.setState({ count }) }
+                placeholder = { '' }
+                fileArray = { personnelFormData }
+                setFile = { (personnelFormData) =>
+                    this.setState({ personnelFormData })
+                }
+                />
+                <center>
+                 <GenericButton
+                   text = { 'Upload' }
+                   onClick = { () => this.uploadForm()  }
+                 />
+               </center>
+              </div>
+            }
+          </div>
           )
          }
       </div>

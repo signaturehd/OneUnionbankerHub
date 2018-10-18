@@ -8,3 +8,11 @@
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 2%;
 }
+
+.pdf-img {
+  background: url('../../../../images/icons/icons_pdf.png');
+  background-repeat: no-repeat;
+  background-size: 100px;
+  background-position: center;
+  display: block;
+}

@@ -107,7 +107,7 @@ class PagIbigLoanFragment extends BaseMVPView {
     let newCount = tempCount + 1
     this.setState({ count : newCount })
     attachmentTemp.push({
-      name : 'PAG-IBIG Loan ' + tempCount
+      name : 'Pag-IBIG Loan ' + tempCount
     })
     this.setState({ pagibigLoanAttachment : attachmentTemp })
   }
@@ -217,7 +217,7 @@ class PagIbigLoanFragment extends BaseMVPView {
         <div className = { 'percentage-grid' }>
           <div>
             <h2 className={ 'header-margin-default text-align-left' }>PAG-IBIG Loan</h2>
-            <h2>Setup your PAG-IBIG.</h2>
+            <h2>Setup your Pag-IBIG.</h2>
           </div>
           <Progress
             type = { 'circle' }

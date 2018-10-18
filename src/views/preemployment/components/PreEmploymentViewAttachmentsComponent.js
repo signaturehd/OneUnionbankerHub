@@ -14,6 +14,19 @@ class PreEmploymentViewAttachmentsComponent extends Component {
   constructor (props) {
     super(props)
   }
+  consolelog(file) {
+    let bool = false
+    let extension = file.split(';')
+
+    extension[0] == 'data:image/png' ||
+    extension[0] == 'data:image/jpg' ||
+    extension[0] == 'data:image/jpeg' ?
+    bool = true
+    :
+    bool = false
+
+    return bool
+  }
 
   render () {
     const {
@@ -25,9 +38,16 @@ class PreEmploymentViewAttachmentsComponent extends Component {
       <div className = { 'grid-attachment' }>
         {
           file.map((resp) =>
-          <Card onClick = { () => onClick(resp.file) }>
-              <img src = { resp.file } className = { 'view-size' }/>
-          </Card>
+            <Card onClick = { () => onClick(resp.file) }>
+            <div>
+            {
+              this.consolelog(resp.file) ?
+                <img src = { resp.file } className = { 'view-size' }/>
+                :
+                <span className = { 'view-size pdf-img' }/>
+            }
+            </div>
+            </Card>
           )
         }
       </div>
