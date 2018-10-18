@@ -139,7 +139,8 @@ class WorkExperienceFragment extends BaseMVPView {
   }
 
   showPdfFileUrl (pdfFileUrl) {
-    this.presenter.getOnBoardingDocument(pdfFileUrl)
+    const url = pdfFileUrl.url + ''
+    this.presenter.getOnBoardingAttachments(url)
   }
 
 
