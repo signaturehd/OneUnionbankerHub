@@ -515,6 +515,15 @@ class PreEmploymentFragment extends BaseMVPView {
             </center>
             :
             <div>
+              <div className = { 'text-align-right' }>
+                <GenericButton
+                  className = { 'global-button pre-employment-button' }
+                  text = { 'Skip' }
+                  onClick = { () =>
+                    this.skipPage()
+                  }
+                />
+              </div>
                <PreEmploymentFragments
                 biographicalArray = { this.getFormData(1) }
                 birthCertifArray = { this.getFormData(2) }
@@ -537,12 +546,7 @@ class PreEmploymentFragment extends BaseMVPView {
                 onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
                 />
               <br/>
-              <div className = { 'grid-global-columns-x4' }>
-                <span
-                  onClick = { () =>
-                      this.onSendPageNumberToView(preEmpPage)
-                  }
-                  className = { 'preemp-icon  preemp-refresh' }/>
+              <div className = { 'grid-global ' }>
                 {
                   preEmpPage !== 0 ?
                   <GenericButton
@@ -551,22 +555,15 @@ class PreEmploymentFragment extends BaseMVPView {
                     onClick = { () => this.decerementPage() } /> :
                   <div></div>
                 }
-                <GenericButton
-                  className = { 'global-button' }
-                  text = { 'Skip' }
-                  onClick = { () =>
-                    this.skipPage()
-                  }
-                />
-              {
-                hideSubmitButton ?
-                <GenericButton
-                  className = { 'preemp-next-button' }
-                  text = { 'Next' }
-                  onClick = { () => this.incrementPage() } />
-                  :
-                <div></div>
-              }
+                {
+                  hideSubmitButton ?
+                  <GenericButton
+                    className = { 'preemp-next-button' }
+                    text = { 'Next' }
+                    onClick = { () => this.incrementPage() } />
+                    :
+                  <div></div>
+                }
               </div>
             </div>
             }
