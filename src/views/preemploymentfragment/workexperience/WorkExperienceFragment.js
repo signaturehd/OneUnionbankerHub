@@ -297,6 +297,13 @@ class WorkExperienceFragment extends BaseMVPView {
     }
   }
 
+  /* Delete Education */
+
+  onDeleteProperty (id) {
+    this.presenter.removeWorkExperience(id)
+    this.presenter.getWorkExperience()
+  }
+
   render () {
     const {
       workExpId,
@@ -490,6 +497,7 @@ class WorkExperienceFragment extends BaseMVPView {
             <WorkExperienceMultipleCardComponent
               cardDataHolder = { workExperienceCardHolder }
               index = { index }
+              onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
               disabled = { showEditSubmitButton }
               onEditModeProperty = { (
                 workExpId,
