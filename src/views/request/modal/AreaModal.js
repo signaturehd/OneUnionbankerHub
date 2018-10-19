@@ -6,8 +6,8 @@ import {
   GenericButton,
   CircularLoader,
   GenericInput
-} from '../../../../ub-components'
-import './styles/educationModal.css'
+} from '../../../ub-components'
+
 class AreaModal extends Component {
   constructor (props) {
     super(props)

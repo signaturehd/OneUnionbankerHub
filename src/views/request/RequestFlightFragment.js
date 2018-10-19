@@ -19,7 +19,7 @@ import {
 } from '../../ub-components/'
 
 import RequestFlightComponent from './components/RequestFlightComponent'
-import AreaModal from './../AreaModal'
+import AreaModal from './modal/AreaModal'
 
 import { format } from '../../utils/numberUtils'
 import moment from 'moment'
@@ -74,7 +74,7 @@ class RequestFlightFragment extends BaseMVPView {
             "referenceNumber": "TR20181003160949",
             "purpose": {
                 "id": 2,
-                "purpose": "ROUND-TRIP"
+                "purpose": "Business Meeting"
             },
             "status": {
                 "id": 1,
@@ -131,7 +131,7 @@ class RequestFlightFragment extends BaseMVPView {
             "referenceNumber": "TR20181003160949",
             "purpose": {
                 "id": 2,
-                "purpose": "ONE-WAY"
+                "purpose": "Training"
             },
             "status": {
                 "id": 1,
