@@ -7,10 +7,6 @@ import DeleteCharacterReferenceInteractor from '../../../../domain/interactor/pr
 
 import genericParam from '../../../../domain/param/PostCharacterReferenceParam'
 
-import {
-  RequiredEmailValidation
-} from '../../../../utils/validate'
-
 export default class CharacterReferencePresenter {
   constructor (container) {
     this.postCharacterReferenceInteractor = new PostCharacterReferenceInteractor(container.get('HRBenefitsClient'))
@@ -42,19 +38,6 @@ export default class CharacterReferencePresenter {
     address,
     occupation
   ) {
-   //  company : {
-   //   position: positionText,
-   //   name: companyNameText,
-   //   departmentFloor: floorText,
-   //   buildingName:  buildingNameText,
-   //   street: streetText,
-   //   district: districtText,
-   //   baranggay: barangayText,
-   //   city: cityText,
-   //   town: townText
-   // }
-
-     console.log(new RequiredEmailValidation.isValid(email))
     if(name === '') {
       this.view.setFullNameErrorMessage('Full Name is required')
     } else if (occupation === 0) {
@@ -87,6 +70,9 @@ export default class CharacterReferencePresenter {
       } else if (numberOfYearsKnown === '') {
         this.view.setYearsKnown('Please specify his/her period of work experience')
       } else {
+
+        this.view.proceedOption()
+        this.view.showCircularLoader()
         this.postCharacterReferenceInteractor.execute(genericParam(
           id,
           name,
@@ -101,6 +87,7 @@ export default class CharacterReferencePresenter {
         .subscribe(data => {
           this.view.noticeResponseModal(data)
           this.view.callBackCharacterReference()
+          this.view.hideCircularLoader()
         }, error => {
         })
       }
@@ -115,24 +102,28 @@ export default class CharacterReferencePresenter {
         this.view.setRelationshipErrorMessage('Relationship is required')
       } else if (numberOfYearsKnown === '') {
         this.view.setYearsKnown('Please specify his/her period of work experience')
+      } else {
+
+        this.view.proceedOption()
+        this.view.showCircularLoader()
+        this.postCharacterReferenceInteractor.execute(genericParam(
+          id,
+          name,
+          relationship,
+          numberOfYearsKnown,
+          contactNumber,
+          company,
+          email,
+          address,
+          occupation
+        ))
+        .subscribe(data => {
+          this.view.noticeResponseModal(data)
+          this.view.callBackCharacterReference()
+          this.view.hideCircularLoader()
+        }, error => {
+        })
       }
-    } else {
-      console.log('success')
-      // this.postCharacterReferenceInteractor.execute(genericParam(
-      //   id,
-      //   name,
-      //   relationship,
-      //   numberOfYearsKnown,
-      //   contactNumber,
-      //   company,
-      //   address,
-      //   occupation
-      // ))
-      // .subscribe(data => {
-      //   this.view.noticeResponseModal(data)
-      //   this.view.callBackCharacterReference()
-      // }, error => {
-      // })
     }
   }
 
@@ -143,23 +134,96 @@ export default class CharacterReferencePresenter {
     numberOfYearsKnown,
     contactNumber,
     company,
+    email,
     address,
     occupation
   ) {
-    this.putCharacterReferenceInteractor.execute(genericParam(
-      id,
-      name,
-      relationship,
-      numberOfYearsKnown,
-      contactNumber,
-      company,
-      address,
-      occupation
-    ))
-    .subscribe(data => {
-      this.view.noticeResponseModal(data)
-      this.view.callBackCharacterReference()
-    }, error => {
-    })
+
+    if(name === '') {
+      this.view.setFullNameErrorMessage('Full Name is required')
+    } else if (occupation === 0) {
+      this.view.setOccupationNameErrorMessage('Please specify your work status (eg. Employed, Unemployed, Self-Employed)')
+    } else if (occupation === 2 || occupation === 1) {
+      if (company.company.position === '') {
+          this.view.setPositionErrorMessage('Position is required')
+      } else if (company.company.name === '') {
+        this.view.setCompanyNameErrorMessage('Company name is required')
+      } else if (company.company.departmentFloor === '') {
+        this.view.setFloorErrorMessage('Floor is required')
+      } else if (company.company.buildingName === '') {
+        this.view.setBuildingErrorMessage('Building Name is required')
+      } else if (company.company.street === '') {
+        this.view.setStreetErrorMessage('Street is required')
+      } else if (company.company.city === '') {
+        this.view.setCityErrorMessage('City is required')
+      } else if (company.company.town === '') {
+        this.view.setTownErrorMessage('Town is required')
+      } else if (company.company.district === '') {
+        this.view.setDistrictErrorMessage('District is required')
+      } else if (company.company.baranggay === '') {
+        this.setBarangayErrorMessage('Barangay is required')
+      } else if (email === '') {
+        this.view.setEmailErrorMessage('Email is required (e.g 1uhub@test.com etc.)')
+      } else if (contactNumber === '') {
+        this.view.setContactNumberErrorMessage('Contact Number is required and must atleast 11 digit')
+      } else if (relationship === '') {
+        this.view.setRelationshipErrorMessage('Relationship is required')
+      } else if (numberOfYearsKnown === '') {
+        this.view.setYearsKnown('Please specify his/her period of work experience')
+      } else {
+        this.view.proceedOption()
+        this.view.showCircularLoader()
+        this.putCharacterReferenceInteractor.execute(genericParam(
+          id,
+          name,
+          relationship,
+          numberOfYearsKnown,
+          contactNumber,
+          company,
+          email,
+          address,
+          occupation
+        ))
+        .subscribe(data => {
+          this.view.noticeResponseModal(data)
+          this.view.callBackCharacterReference()
+          this.view.hideCircularLoader()
+        }, error => {
+        })
+      }
+    } else if (occupation === 3) {
+      if (address === '') {
+        this.view.setAddressErrorMessage('Address is required')
+      } else if (email === '') {
+        this.view.setEmailErrorMessage('Email is required (e.g 1uhub@test.com etc.)')
+      } else if (contactNumber === '') {
+        this.view.setContactNumberErrorMessage('Contact Number is required and must atleast 11 digit')
+      } else if (relationship === '') {
+        this.view.setRelationshipErrorMessage('Relationship is required')
+      } else if (numberOfYearsKnown === '') {
+        this.view.setYearsKnown('Please specify his/her period of work experience')
+      } else {
+
+        this.view.proceedOption()
+        this.view.showCircularLoader()
+        this.putCharacterReferenceInteractor.execute(genericParam(
+          id,
+          name,
+          relationship,
+          numberOfYearsKnown,
+          contactNumber,
+          company,
+          email,
+          address,
+          occupation
+        ))
+        .subscribe(data => {
+          this.view.noticeResponseModal(data)
+          this.view.callBackCharacterReference()
+          this.view.hideCircularLoader()
+        }, error => {
+        })
+      }
+    }
   }
 }

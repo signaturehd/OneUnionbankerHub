@@ -37,6 +37,7 @@ class CharacterReferenceFragment extends BaseMVPView {
       showCharacterReferenceModal : false,
       showOccupationModal : false,
       showNoticeResponse : false,
+      enabledLoader : false,
       occupationId : 0,
       occupationName : '',
       addressText: '',
@@ -87,6 +88,14 @@ class CharacterReferenceFragment extends BaseMVPView {
 
   noticeResponseModal (noticeResponse) {
     this.setState({ noticeResponse, showNoticeResponse : true })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
   }
 
   /* Error Message Method */
@@ -268,38 +277,39 @@ class CharacterReferenceFragment extends BaseMVPView {
       baranggay: barangayText,
       city: cityText,
       town: townText
+      }
+    }
+    if(!editMode) {
+      this.presenter.postCharacterReference(
+        selectedId,
+        fullNameText,
+        relationshipText,
+        periodOfProfessionExperienceText,
+        contactNumberText,
+        companyObject,
+        emailText,
+        addressText,
+        occupationId
+       )
+    } else {
+      this.presenter.putCharacterReference(
+        selectedId,
+        fullNameText,
+        relationshipText,
+        periodOfProfessionExperienceText,
+        contactNumberText,
+        companyObject,
+        emailText,
+        addressText,
+        occupationId
+       )
     }
   }
-  if(!editMode) {
-    this.presenter.postCharacterReference(
-      selectedId,
-      fullNameText,
-      relationshipText,
-      periodOfProfessionExperienceText,
-      contactNumberText,
-      companyObject,
-      emailText,
-      addressText,
-      occupationId
-     )
-  } else {
-    this.presenter.putCharacterReference(
-      selectedId,
-      fullNameText,
-      relationshipText,
-      periodOfProfessionExperienceText,
-      contactNumberText,
-      companyObject,
-      emailText,
-      addressText,
-      occupationId
-     )
-  }
-}
 
   resetMode () {
     this.setState({
       occupationId : '',
+      showCharacterReferenceModal : false,
       selectedId: '',
       occupationName : '',
       occupationNameErrorMessage : '',
@@ -402,6 +412,7 @@ class CharacterReferenceFragment extends BaseMVPView {
 
     const {
       showCharacterReferenceModal,
+      enabledLoader,
       showOccupationModal,
       showNoticeResponse,
       occupationId,
@@ -561,22 +572,36 @@ class CharacterReferenceFragment extends BaseMVPView {
         </div>
 
         <br/>
+        <div>
           {
-            characterReferenceData.length > 0 ?
-            <MullptipleCardComponent
-              characterReferenceData = { characterReferenceData }
-              onEditModeProperty = { (resp) => this.onEditModeProperty(resp)  }
-              onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
-            />
+            enabledLoader ?
+
+            <center>
+              <CircularLoader show = { enabledLoader }/>
+            </center>
+
             :
+
             <div>
-              <br/>
-              <center>
-                <h2 className = { 'font-weight-normal' }> No Character Reference </h2>
-              </center>
-              <br/>
+            {
+              characterReferenceData.length > 0 ?
+              <MullptipleCardComponent
+                characterReferenceData = { characterReferenceData }
+                onEditModeProperty = { (resp) => this.onEditModeProperty(resp)  }
+                onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
+              />
+              :
+              <div>
+                <br/>
+                <center>
+                  <h2 className = { 'font-weight-normal' }> No Character Reference </h2>
+                </center>
+                <br/>
+              </div>
+            }
             </div>
           }
+        </div>
       </div>
     </div>
     )
