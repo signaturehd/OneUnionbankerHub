@@ -67,7 +67,7 @@ class ExistingLoansSummaryCardComponent extends Component {
               <div className = { 'font-weight-lighter font-size-12px' }>{ resp.amortization }</div>
             </div>
             <div className = { 'existing-loans-grid-label' }>
-              <div  className = { 'font-weight-bold font-size-12px' }>Outstanding Balance</div>
+              <div  className = { 'font-weight-bold font-size-12px' }>Principal Amount</div>
               <div className = { 'font-weight-lighter font-size-12px' }>&#8369; { format(resp.balance) }</div>
             </div>
             <div  className = { 'font-weight-bold font-size-12px existingloans-progressbar' }>
@@ -77,7 +77,7 @@ class ExistingLoansSummaryCardComponent extends Component {
                 percent = { this.computePercentage(resp.balance) } />
             </div>
             <div className = { 'existing-loans-grid-label' }>
-              <div  className = { 'font-weight-bold font-size-12px' }>Principal Amount</div>
+              <div  className = { 'font-weight-bold font-size-12px' }>Outstanding Balance</div>
               <div className = { 'font-weight-lighter font-size-12px' }>
                 &#8369; { format(totalAmount) }
               </div>
