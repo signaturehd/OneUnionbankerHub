@@ -231,10 +231,11 @@ class CharacterReferenceAddFormModal extends Component {
             onChange = { (e) => fullNameTextFunc(e.target.value) }
           />
           <GenericInput
+            className = { 'text-align-left' }
             text = { 'Occupation' }
             value = { occupationName }
+            readOnly
             errorMessage = { occupationName ? '' : occupationNameErrorMessage }
-            type = { 'button' }
             onClick = { () => showOccupationModalFunc() }
           />
           <CharacterReferenceComponents

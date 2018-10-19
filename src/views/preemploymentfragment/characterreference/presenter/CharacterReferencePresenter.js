@@ -23,6 +23,7 @@ export default class CharacterReferencePresenter {
     .subscribe(data => {
       this.view.noticeResponseModal(data)
       this.view.callBackCharacterReference()
+      this.view.resetMode()
     }, error => {
     })
   }
@@ -71,7 +72,7 @@ export default class CharacterReferencePresenter {
         this.view.setYearsKnown('Please specify his/her period of work experience')
       } else {
 
-        this.view.proceedOption()
+        this.view.resetMode()
         this.view.showCircularLoader()
         this.postCharacterReferenceInteractor.execute(genericParam(
           id,
@@ -104,7 +105,7 @@ export default class CharacterReferencePresenter {
         this.view.setYearsKnown('Please specify his/her period of work experience')
       } else {
 
-        this.view.proceedOption()
+        this.view.resetMode()
         this.view.showCircularLoader()
         this.postCharacterReferenceInteractor.execute(genericParam(
           id,
@@ -171,7 +172,7 @@ export default class CharacterReferencePresenter {
       } else if (numberOfYearsKnown === '') {
         this.view.setYearsKnown('Please specify his/her period of work experience')
       } else {
-        this.view.proceedOption()
+        this.view.resetMode()
         this.view.showCircularLoader()
         this.putCharacterReferenceInteractor.execute(genericParam(
           id,
@@ -204,7 +205,7 @@ export default class CharacterReferencePresenter {
         this.view.setYearsKnown('Please specify his/her period of work experience')
       } else {
 
-        this.view.proceedOption()
+        this.view.resetMode()
         this.view.showCircularLoader()
         this.putCharacterReferenceInteractor.execute(genericParam(
           id,
