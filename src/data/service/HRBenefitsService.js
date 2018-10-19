@@ -1227,7 +1227,7 @@ export default class HRBenefitsService {
   }
 
   getPreEmploymentForm (token) {
-    return this.onboardingClient.get('v1/employees/requirements', {
+    return this.onboardingClient.get('v1/employees/requirements?phase=1', {
       headers: { token }
     })
   }
