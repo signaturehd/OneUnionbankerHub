@@ -1473,6 +1473,7 @@ export default class HRBenefitsService {
   }
 
   postSpouseForm (token, spouseFormParam) {
+    console.log(spouseFormParam)
     const formData = new FormData()
     const objectParam = {
       name : {
@@ -1486,10 +1487,12 @@ export default class HRBenefitsService {
         healthHospitalizationPlan : spouseFormParam.healthHospitalizationPlan,
         groupLifeInsurance: spouseFormParam.groupLifeInsurance,
         bloodType : spouseFormParam.bloodType,
-        contactNumber: spouseFormParam.contactNumber,
+        contactNumber: spouseFormParam.contact,
     }
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
-    spouseFormParam.attachments.map((resp, key) =>
+
+    spouseFormParam.spouseAttachmentsArray &&
+    spouseFormParam.spouseAttachmentsArray.map((resp, key) =>
       formData.append(resp.name, resp.file)
     )
     formData.append('body', JSON.stringify(objectParam))

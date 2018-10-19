@@ -29,6 +29,8 @@ import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
 import 'react-sweet-progress/lib/style.css'
 import './styles/spouseStyle.css'
 
+import * as validate from './functions/SpouseFunctions'
+
 import moment from 'moment'
 
 class SpouseFormFragment extends BaseMVPView {
@@ -98,12 +100,12 @@ class SpouseFormFragment extends BaseMVPView {
     this.setState({ enabledLoader : false })
   }
 
-  validator (input) {
-   return new RequiredValidation().isValid(input)
-  }
-
   showBloodType (bloodObjectParam) {
     this.setState({ bloodObjectParam })
+  }
+
+  validator (input) {
+   return new RequiredValidation().isValid(input)
   }
 
   showSpouseDetails (spouseData, editMode) {
@@ -120,7 +122,7 @@ class SpouseFormFragment extends BaseMVPView {
       genderId : nullChecker.gender,
       gender: nullChecker.gender === 'M' ? 'Male' : 'Female',
       spouseId : nullChecker.id,
-      statusId : nullChecker.status,
+      statusId : nullChecker.status === 1 ? 1 : 0,
       statusName : nullChecker.status === 1 ? 'Deceased' : 'Living',
       hospitalization : nullChecker.healthHospitalizationPlan,
       groupPlan : nullChecker.groupLifeInsurance,
@@ -174,6 +176,19 @@ class SpouseFormFragment extends BaseMVPView {
     this.setState({ genderObject })
   }
 
+  statusNameErrorMessageFunc (statusNameErrorMessage) {
+    this.setState({ statusNameErrorMessage })
+  }
+
+  birthDateErrorMessageFunc (birthDateErrorMessage) {
+    this.setState({ birthDateErrorMessage })
+  }
+
+  bloodTypeErrorMessageFunc (bloodTypeErrorMessage) {
+    this.setState({ bloodTypeErrorMessage })
+  }
+
+
   showStatus (statusObject) {
     this.setState({ statusObject })
   }
@@ -189,43 +204,43 @@ class SpouseFormFragment extends BaseMVPView {
       contact,
       statusId,
       gender,
-      bloodType,
+      bloodTypeName,
       hospitalization,
       groupPlan,
       spouseId,
       spouseAttachmentsArray
     } = this.state
-    if(editMode) {
-      this.presenter.putSpouseForm(
-        firstName,
-        middleName,
-        lastName,
-        birthDate,
-        occupationName,
-        contact,
-        statusId,
-        gender,
-        bloodType,
-        hospitalization,
-        groupPlan,
-        spouseId,
-        spouseAttachmentsArray)
-    } else {
-      this.presenter.postSpouseForm(
-        firstName,
-        middleName,
-        lastName,
-        birthDate,
-        occupation,
-        contact,
-        status,
-        gender,
-        bloodType,
-        hospitalization,
-        groupPlan,
-        spouseId,
-        spouseAttachmentsArray)
-    }
+      if(editMode) {
+        this.presenter.putSpouseForm(
+          firstName,
+          middleName,
+          lastName,
+          moment(birthDate).format('MM/DD/YYYY'),
+          occupationName,
+          contact,
+          statusId,
+          gender,
+          bloodTypeName,
+          hospitalization,
+          groupPlan,
+          spouseId,
+          spouseAttachmentsArray)
+      } else {
+        this.presenter.postSpouseForm(
+          firstName,
+          middleName,
+          lastName,
+          moment(birthDate).format('MM/DD/YYYY'),
+          occupationName,
+          contact,
+          statusId,
+          gender,
+          bloodTypeName,
+          hospitalization,
+          groupPlan,
+          spouseId,
+          spouseAttachmentsArray)
+      }
   }
 
   /* Remove Option */
@@ -241,6 +256,33 @@ class SpouseFormFragment extends BaseMVPView {
       statusName : '',
       birthDate : '',
     })
+  }
+
+  /* Validation */
+
+  firstNameValidate (e) {
+    const isValid = validate.checkAlphabetInput(e)
+    this.setState({ firstName : isValid })
+  }
+
+  middleNameValidate (e) {
+    const isValid = validate.checkAlphabetInput(e)
+    this.setState({ middleName : isValid })
+  }
+
+  lastNameValidate (e) {
+    const isValid = validate.checkAlphabetInput(e)
+    this.setState({ lastName : isValid })
+  }
+
+  occupationNameValidate (e) {
+    const isValid = validate.checkAlphabetInput(e)
+    this.setState({ occupationName : isValid })
+  }
+
+  contactNumberValidate (e) {
+    const isValid = validate.checkNumberInput(e)
+    this.setState({ contact : isValid })
   }
 
   render() {
@@ -388,48 +430,52 @@ class SpouseFormFragment extends BaseMVPView {
                 value = { firstName }
                 maxLength = { 30 }
                 errorMessage = { firstName ? '' : firstNameErrorMessage }
-                onChange = { (e) => this.setState({ firstName : e.target.value }) }
+                onChange = { (e) => this.firstNameValidate(e.target.value) }
                 />
               <GenericInput
                 text = { 'Middle Name' }
                 value = { middleName }
                 maxLength = { 20 }
                 errorMessage = { middleName ? '' : middleNameErrorMessage }
-                onChange = { (e) => this.setState({ middleName : e.target.value }) }
+                onChange = { (e) => this.middleNameValidate(e.target.value) }
                 />
               <GenericInput
                 text = { 'Last Name' }
                 value = { lastName }
                 maxLength = { 20 }
                 errorMessage = { lastName ? '' : lastNameErrorMessage }
-                onChange = { (e) => this.setState({ lastName : e.target.value }) }
+                onChange = { (e) => this.lastNameValidate(e.target.value) }
                 />
               <GenericInput
                 text = { 'Occupation' }
                 value = { occupationName }
                 errorMessage = { occupationName ? '' : occupationNameErrorMessage }
-                onChange = { (e) => this.setState({ occupationName : e.target.value }) }
+                onChange = { (e) => this.occupationNameValidate(e.target.value) }
                 />
               <GenericInput
                 text = { 'Contact Number' }
                 value = { contact }
-                maxLength = { 12 }
+                maxLength = { 11 }
                 errorMessage = { contact ? '' : contactNumberErrorMessage }
-                onChange = { (e) => this.setState({ contact : e.target.value }) }
+                onChange = { (e) => this.contactNumberValidate(e.target.value) }
                 />
               <div className = { 'grid-global' }>
                 <GenericInput
                   text = { 'Gender' }
                   value = { gender }
+                  readOnly
                   maxLength = { 12 }
                   errorMessage = { gender ? '' : genderErrorMessage }
                   onClick = { () => this.setState({ showGenderModal : true }) }
                   />
                 <DatePicker
-                  selected = { moment() }
+                  selected = { moment(birthDate) }
                   maxDate = { moment() }
                   text = { 'Birth Date' }
+                  readOnly
+                  errorMessage = { birthDate ? '' : birthDateErrorMessage }
                   hint = { '(eg. MM/DD/YYYY)' }
+                  onChange = { (e) => this.dateFunc(e) }
                   />
               </div>
 
@@ -437,6 +483,7 @@ class SpouseFormFragment extends BaseMVPView {
                 <GenericInput
                   text = { 'Blood Type' }
                   value = { bloodTypeName }
+                  readOnly
                   errorMessage = { bloodTypeName ? '' : bloodTypeErrorMessage }
                   onClick = { () => this.setState({ showBloodTypeModal : true }) }
                   />
@@ -444,6 +491,7 @@ class SpouseFormFragment extends BaseMVPView {
                   <GenericInput
                     value = { statusName  }
                     text = { 'Status' }
+                    readOnly
                     errorMessage = { statusName ? '' : statusNameErrorMessage }
                     onClick = { () => this.setState({ showStatusModal : true }) }
                     />
@@ -503,29 +551,31 @@ class SpouseFormFragment extends BaseMVPView {
                 this.setState({ spouseAttachmentsArray })
             }
           />
-          <br/>
           <center>
-              <div className = { 'grid-global' }>
+          <div className = { 'grid-global-columns-x3' }>
+            <div></div>
+            <div className = { 'grid-global' }>
+              <GenericButton
+                className = { 'global-button spouse-employment-button' }
+                text = { 'Delete' }
+                onClick = { () => this.deleteFunction() }
+                />
+              {
+                editMode ?
                 <GenericButton
-                  className = { 'global-button' }
-                  text = { 'Delete' }
-                  onClick = { () => this.deleteFunction() }
+                  className = { 'global-button spouse-employment-button' }
+                  text = { 'Edit' }
+                  onClick = { () => this.saveFunction() }
                   />
-                {
-                  editMode ?
-                  <GenericButton
-                    className = { 'global-button' }
-                    text = { 'Edit' }
-                    onClick = { () => this.saveFunction() }
-                    />
-                    :
-                  <GenericButton
-                    className = { 'global-button' }
-                    text = { 'Save' }
-                    onClick = { () => this.saveFunction() }
-                    />
-                }
-              </div>
+                  :
+                <GenericButton
+                  className = { 'global-button spouse-employment-button' }
+                  text = { 'Save' }
+                  onClick = { () => this.saveFunction() }
+                  />
+              }
+            </div>
+          </div>
           </center>
         </div>
       }

@@ -143,6 +143,7 @@ export default class ChildrenPresenter {
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.noticeResponseFunc(data)
+      this.view.resetValue()
       this.getParents()
     }, error => {
       this.view.hideCircularLoader()
@@ -183,6 +184,7 @@ export default class ChildrenPresenter {
       this.view.hideCircularLoader()
       this.view.noticeResponseFunc(data)
       this.getSiblings()
+      this.view.resetValue()
     }, error => {
       this.view.hideCircularLoader()
     })
@@ -224,6 +226,7 @@ export default class ChildrenPresenter {
       this.view.hideCircularLoader()
       this.view.noticeResponseFunc(data)
       this.getSiblings()
+      this.view.resetValue()
     }, error => {
       this.view.hideCircularLoader()
     })
@@ -263,6 +266,7 @@ export default class ChildrenPresenter {
       this.view.hideCircularLoader()
       this.view.noticeResponseFunc(data)
       this.getSiblings()
+      this.view.resetValue()
     }, error => {
       this.view.hideCircularLoader()
     })

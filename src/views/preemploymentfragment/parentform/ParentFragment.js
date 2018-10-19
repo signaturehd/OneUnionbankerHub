@@ -278,7 +278,6 @@ class ParentFragment extends BaseMVPView {
         hospitalization,
         groupPlan,
       )
-      this.resetValue()
     } else {
       this.presenter.addSiblingsForm(
         parentId,
@@ -295,7 +294,6 @@ class ParentFragment extends BaseMVPView {
         hospitalization,
         groupPlan,
       )
-      this.resetValue()
     }
   }
 
@@ -488,7 +486,7 @@ class ParentFragment extends BaseMVPView {
         <br/>
         <div>
           {
-            parentDetails.length !== 0 ?
+            parentDetails.length === 2 ?
             <h2 className = { 'font-weight-bold' }>Parent</h2>
             :
             <div className = { 'grid-global' }>
@@ -525,22 +523,18 @@ class ParentFragment extends BaseMVPView {
           </div>
         }
         <br/>
-        {
-          siblingDetails.length !== 0 ?
-          <h2 className = { 'font-weight-bold' }>Siblings</h2> :
-          <div className = { 'grid-global' }>
-            <h2 className = { 'font-weight-bold' }>Siblings</h2>
-            {
-              !enabledLoader &&
-              <div className = { 'text-align-right' }>
-                <GenericButton
-                  text = { 'Add' }
-                  onClick = { () => this.setState({ showEditModeModal : true }) }
-                />
-              </div>
-            }
-          </div>
-        }
+        <div className = { 'grid-global' }>
+          <h2 className = { 'font-weight-bold' }>Siblings</h2>
+          {
+            !enabledLoader &&
+            <div className = { 'text-align-right' }>
+              <GenericButton
+                text = { 'Add' }
+                onClick = { () => this.setState({ showEditModeModal : true }) }
+              />
+            </div>
+          }
+        </div>
         <br/>
         {
           enabledLoader  ?
