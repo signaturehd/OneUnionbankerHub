@@ -1099,6 +1099,7 @@ export default class HRBenefitsService {
   }
 
   updateStaffAccounts (token, staffAccountsParam) {
+    console.log(staffAccountsParam)
     const staffAccontObject = {
       employeeName : staffAccountsParam.fullName,
       accounts: {

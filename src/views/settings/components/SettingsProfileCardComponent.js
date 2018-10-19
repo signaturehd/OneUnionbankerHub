@@ -136,8 +136,8 @@ class SettingsProfileCardComponent extends Component {
             name = { profile.fullname }
             getStaffAccounts = { getStaffAccounts }
             getForConfirmation = { () => getForConfirmation() }
-            onUpdateStaffAccounts = { (fullName, employeeName, selectedAccountNumber, sequence) =>
-              onUpdateStaffAccountsFunc(fullName, employeeName, selectedAccountNumber, sequence) }
+            onUpdateStaffAccounts = { (employeeName, selectedAccountNumber, sequence) =>
+              onUpdateStaffAccountsFunc(employeeName, selectedAccountNumber, sequence) }
             onClickEmployeeConfirmation = { (
               fullName,
               accountNumber,

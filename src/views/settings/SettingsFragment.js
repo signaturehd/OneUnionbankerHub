@@ -188,8 +188,8 @@ class SettingsFragment extends BaseMVPView {
            changePinSendToFragment = { (uniqueOldPIN, uniqueNewPIN) => this.submitUpdatedPIN(uniqueOldPIN, uniqueNewPIN) }
            getStaffAccounts = { (id) => this.presenter.getForConfirmation(id) }
            getForConfirmation = { () => this.presenter.getForConfirmation() }
-           onUpdateStaffAccountsFunc = { (fullName, employeeName, selectedAccountNumber, sequence) =>
-              this.presenter.updateStaffAccounts(fullName, employeeName, selectedAccountNumber, sequence)
+           onUpdateStaffAccountsFunc = { (employeeName, selectedAccountNumber, sequence) =>
+              this.presenter.updateStaffAccounts(employeeName, selectedAccountNumber, sequence)
             }
            onClickEmployeeConfirmationFunc = {
           (  fullName,

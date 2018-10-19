@@ -95,14 +95,13 @@ export default class SettingsPresenter {
    updateStaffAccounts (
      fullName,
      accountNumber,
-     status,
      sequence
    ) {
      this.updateStaffAccountsInteractor.execute(addStaffAcountsParam(
        fullName,
        accountNumber,
        '',
-       capacity,
+       '',
        '',
        sequence
      ))

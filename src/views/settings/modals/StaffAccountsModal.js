@@ -158,8 +158,12 @@ class StaffAccountsModal extends Component {
                 <GenericButton
                   text = { 'Yes' }
                   onClick = { () => {
-                    onUpdateStaffAccounts(fullName, employeeName, selectedAccountNumber, sequence)
-                    this.setState({ showConfirmationModal : false })
+                    try {
+                      onUpdateStaffAccounts(employeeName, selectedAccountNumber, sequence)
+                      this.setState({ showConfirmationModal : false })
+                    } catch(e) {
+                      console.log(e)
+                    }
                   }
                 }
                 />
