@@ -72,6 +72,12 @@ class EventsBudgetFormComponent extends Component {
             onChange = { (e) => cityTextFunc(e.target.value) }
             value = { cityText }
           />
+          <div>
+            <GenericButton
+              text = { 'Continue' }
+              onClick = { () => this.presenter.addEventsBudget() }
+            />
+          </div>
         </div>
         <div></div>
         </div>

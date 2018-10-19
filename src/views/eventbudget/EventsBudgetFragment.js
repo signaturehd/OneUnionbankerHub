@@ -20,6 +20,7 @@ class EventsBudgetFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
+    this.presenter.validateEventsBudget()
   }
 
   showEventBudget (eventBudgetData) {
