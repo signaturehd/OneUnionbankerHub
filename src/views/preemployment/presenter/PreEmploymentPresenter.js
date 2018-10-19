@@ -131,8 +131,6 @@ export default class PreEmploymentPresenter {
       if(storedEducation.length > 0) {
         progress += 1 // If Education is greater 0 progress increment to 1
       }
-      console.log(progress)
-      console.log(totalValue)
       this.view.showPercentageOfPreEmployment((progress / totalValue) * 100)
     })
     .subscribe(data => {}, error => {})

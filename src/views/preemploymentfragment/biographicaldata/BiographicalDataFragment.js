@@ -234,7 +234,7 @@ class BiographicalDataFragment extends BaseMVPView {
             biographicalArray.map((status) =>
             <div>
               {
-                status.status === 2 || status.status === 4 &&
+                status.status === 1  &&
                 <div className = { 'text-align-right' }>
                   <GenericButton
                     text = { 'Add Attachments' }
