@@ -397,7 +397,7 @@ class PreEmploymentFragment extends BaseMVPView {
               />
             <GenericButton
               onClick = { () => {
-                onBoardingSkipPage (0)
+                onBoardingSkipPage (null)
                 this.props.history.push('/')
                 }
               }

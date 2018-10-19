@@ -285,6 +285,25 @@ class NavigationView extends BaseMVPView {
                   <Route exact path = '/' render = {props =>
                     <NewsFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> }/>
+
+                  {
+                    preEmploymentStatus === 3 ||
+                    preEmploymentStatus === 4 ||
+                    preEmploymentStatus === 5 &&
+                  <Route path = '/postpreemployment' render = { props =>
+                    <PreEmploymentFragment { ...props }
+                      tempPreEmploymentModal = { tempPreEmploymentModal }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  }
+                  {
+                    preEmploymentStatus === null &&
+                  <Route path = '/preemployment' render = { props =>
+                    <PreEmploymentFragment { ...props }
+                      onBoardingSkipPage = { (e) => this.skipPage(e)}
+                      onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
+                      tempPreEmploymentModal = { tempPreEmploymentModal }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  }
                   <Route path = '/mybenefits/transactions/personal/:id' render = { props =>
                     <TransactionPersonalDetailFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
@@ -382,15 +401,6 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/phenom' render = { props =>
                     <PhenomFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  {
-                    preEmploymentStatus === 3 ||
-                    preEmploymentStatus === 4 ||
-                    preEmploymentStatus === 5 &&
-                  <Route path = '/postpreemployment' render = { props =>
-                    <PreEmploymentFragment { ...props }
-                      tempPreEmploymentModal = { tempPreEmploymentModal }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  }
                </Switch>
               }
             </Drawer>
