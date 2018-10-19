@@ -232,7 +232,15 @@ class SpouseFormFragment extends BaseMVPView {
 
   deleteFunction () {
     const { spouseId } = this.state
-  try{  this.presenter.removeSpouse(spouseId)} catch (e) {console.log(e)}
+    this.presenter.removeSpouse(spouseId)
+  }
+
+  resetOption () {
+    this.setState({
+      gender : '',
+      statusName : '',
+      birthDate : '',
+    })
   }
 
   render() {

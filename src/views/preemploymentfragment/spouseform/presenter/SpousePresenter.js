@@ -86,6 +86,7 @@ export default class SpousePresenter {
       this.view.hideCircularLoader()
       this.view.noticeResponseFunc(data, true)
       this.getSpouse()
+      this.view.resetOption()
     }, error => {
         this.view.hideCircularLoader()
     })
