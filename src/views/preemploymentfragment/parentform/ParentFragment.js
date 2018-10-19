@@ -517,7 +517,7 @@ class ParentFragment extends BaseMVPView {
               parentDetails.length !== 0 &&
               <ParentComponent
                 parentDetails = { parentDetails }
-                onEditModeProperty = { (e, e1) => this.editForm(e, e1, e2) }
+                onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
                 />
             }
           </div>
