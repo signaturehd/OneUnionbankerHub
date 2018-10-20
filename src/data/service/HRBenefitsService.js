@@ -1221,7 +1221,7 @@ export default class HRBenefitsService {
 
   validateEventsBudget (token) {
     return this.apiClient.get('v1/events/validate', {
-      header: { token }
+      headers: { token }
     })
   }
 

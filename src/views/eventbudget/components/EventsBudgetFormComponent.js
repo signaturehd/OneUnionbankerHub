@@ -12,6 +12,10 @@ import {
 
 import './styles/eventsComponentStyle.css'
 
+import Attendees from '../components/EventsFormComponentAttendeesComponent'
+
+import { format } from '../../../utils/numberUtils'
+
 class EventsBudgetFormComponent extends Component {
   constructor (props) {
     super(props)
@@ -31,10 +35,18 @@ class EventsBudgetFormComponent extends Component {
       provinceTextFunc,
       cityText,
       cityTextFunc,
+      amountTextFunc,
+      amountText,
+      index,
+      viewMoreText,
+      viewMore,
+      viewLess,
+      eventBudgetData,
+      events,
     } = this.props
 
     return (
-      <div className = { 'events-containe' }>
+      <div className = { 'events-container' }>
         <div className = { 'events-grid-column-2' }>
         <div></div>
         <div>
@@ -45,7 +57,7 @@ class EventsBudgetFormComponent extends Component {
           <GenericInput
             text = { 'Celebration' }
             onChange = { (e) => celebrationTextFunc(e.target.value) }
-            value = { celebrationText }
+            value = { events && events.name ? events.name : celebrationText }
           />
           <GenericInput
             text = { 'Venue' }
@@ -72,9 +84,29 @@ class EventsBudgetFormComponent extends Component {
             onChange = { (e) => cityTextFunc(e.target.value) }
             value = { cityText }
           />
-          <div>
+          <GenericInput
+            text = { 'Amount' }
+            onChange = { (e) => amountTextFunc(e.target.value) }
+            value = { events && events.amount ? format(events.amount) : format(amountText) }
+          />
+          <br/>
+
+          <Attendees
+            index = { index }
+            viewMoreText = { viewMoreText }
+            viewMore = { viewMore }
+            viewLess = { viewLess }
+            eventBudgetData = { eventBudgetData }
+          />
+
+          <br/>
+          <div className = { 'grid-global' }>
             <GenericButton
               text = { 'Continue' }
+              onClick = { () => this.presenter.addEventsBudget() }
+            />
+            <GenericButton
+              text = { 'Edit' }
               onClick = { () => this.presenter.addEventsBudget() }
             />
           </div>

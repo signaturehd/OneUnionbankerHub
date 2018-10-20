@@ -4,6 +4,10 @@ import Presenter from './presenter/EventsBudgetPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 
+import {
+  CircularLoader
+} from '../../ub-components/'
+
 /* Components */
 
 import EventsBudgetFormComponent from './components/EventsBudgetFormComponent'
@@ -13,6 +17,10 @@ class EventsBudgetFragment extends BaseMVPView {
     super(props)
     this.state = {
       eventBudgetData : [],
+      enabledLoader : false,
+      index : null,
+      viewMoreText : 'Hide Attendees',
+      requestId : '',
     }
   }
 
@@ -24,7 +32,17 @@ class EventsBudgetFragment extends BaseMVPView {
   }
 
   showEventBudget (eventBudgetData) {
+    this.setState({ index : eventBudgetData.attendees.length })
+    this.setState({ requestId : eventBudgetData.events.requestId })
     this.setState({ eventBudgetData })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
   }
 
   /* Storing of fields value */
@@ -45,6 +63,10 @@ class EventsBudgetFragment extends BaseMVPView {
     this.setState({ amountText })
   }
 
+  setCity (cityText) {
+    this.setState({ cityText })
+  }
+
   /* Navigage back to benefits Option*/
   navigate () {
     this.props.history.push('/mybenefits/benefits/')
@@ -59,7 +81,11 @@ class EventsBudgetFragment extends BaseMVPView {
       regionText,
       provinceText,
       cityText,
-      amountText
+      amountText,
+      index,
+      viewMoreText,
+      enabledLoader,
+      requestId,
     } = this.state
 
     return (
@@ -70,25 +96,42 @@ class EventsBudgetFragment extends BaseMVPView {
             className={ 'back-arrow' }
             onClick={ this.navigate.bind(this) }>
           </i>
-          <h2 className={ 'header-margin-default' }>
-            Event Budget Requisition
-          </h2>
-          <br/>
-          <EventsBudgetFormComponent
-            celebrationText = { celebrationText }
-            celebrationTextFunc = { (e) => this.presenter.setCelebration(e) }
-            venueText = { venueText }
-            venueTextFunc = { (e) => this.presenter.setVenue(e) }
-            addressText = { addressText }
-            addressTextFunc = { (e) => this.presenter.setAddress(e) }
-            regionText = { regionText }
-            regionTextFunc = { (e) => this.presenter.setRegion(e) }
-            provinceText = { provinceText }
-            provinceTextFunc = { (e) => this.presenter.setProvince(e) }
-            cityText = { cityText }
-            cityTextFun = { (e) => {} }
-            amountText = { (e) => this.presemter.setAmount(e) }
-          />
+          {
+            enabledLoader ?
+
+            <center className = { 'circular-loader-center' }>
+              <CircularLoader show = { true }/>
+            </center>
+            :
+          <div>
+            <h2 className={ 'header-margin-default' }>
+              Event Budget Requisition
+            </h2>
+            <br/>
+            <EventsBudgetFormComponent
+              celebrationText = { celebrationText }
+              celebrationTextFunc = { (e) => this.presenter.setCelebration(e) }
+              venueText = { venueText }
+              venueTextFunc = { (e) => this.presenter.setVenue(e) }
+              addressText = { addressText }
+              addressTextFunc = { (e) => this.presenter.setAddress(e) }
+              regionText = { regionText }
+              regionTextFunc = { (e) => this.presenter.setRegion(e) }
+              provinceText = { provinceText }
+              provinceTextFunc = { (e) => this.presenter.setProvince(e) }
+              cityText = { cityText }
+              cityTextFun = { (e) =>this.presenter.setCity(e) }
+              amountText = { amountText }
+              amountTextFunc = { (e) => this.presenter.setAmount(e) }
+              index = { index }
+              eventBudgetData = { eventBudgetData && eventBudgetData }
+              events = { eventBudgetData && eventBudgetData.events }
+              viewMoreText = { viewMoreText }
+              viewMore = { () => this.setState({ index : eventBudgetData.attendees.length, viewMoreText : 'Hide Attendees' }) }
+              viewLess = { () => this.setState({ index : 0, viewMoreText : 'Show Attendees' }) }
+            />
+          </div>
+          }
         </div>
       </div>
     )
