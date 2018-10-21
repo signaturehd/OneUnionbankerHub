@@ -543,25 +543,22 @@ class EducationBackgroundFragment extends BaseMVPView {
         </center>
         :
         <div>
-        <EducationMultipleCardComponent
-          cardDataHolder = { educationData }
-          index = { index }
-          onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
-          onEditModeProperty = { (
-            educId,
-            schoolName,
-            address,
-            course,
-            degree,
-            honor,
-            studentNo,
-            term,
-            startYear,
-            endYear,
-            showEducationFormModal,
-            updateMode,
-            isUpdated) =>
-            this.setState({
+        {
+          educationData.length === 0 ?
+          <div>
+            <br/>
+            <center>
+              <h2>No School Record</h2>
+            </center>
+            <br/>
+          </div>
+          :
+          <div>
+          <EducationMultipleCardComponent
+            cardDataHolder = { educationData }
+            index = { index }
+            onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
+            onEditModeProperty = { (
               educId,
               schoolName,
               address,
@@ -574,25 +571,41 @@ class EducationBackgroundFragment extends BaseMVPView {
               endYear,
               showEducationFormModal,
               updateMode,
-              isUpdated
-            }) }
-          />
-          <br/>
-          <button
-            type = { 'button' }
-            className = { `viewmore tooltip ${ isVisible }` }
-            onClick = {
-              () => {
-                if(index === educationData.length)
-                  this.setState({ index : 4, viewMoreText : 'View more' })
-                else
-                  this.setState({ index : educationData.length, viewMoreText : 'View less' })
-              }
-            }>
-            <img src={ require('../../../images/icons/horizontal.png') } />
-            <span className={ 'tooltiptext' }>{ viewMoreText }</span>
-          </button>
-          </div>
+              isUpdated) =>
+              this.setState({
+                educId,
+                schoolName,
+                address,
+                course,
+                degree,
+                honor,
+                studentNo,
+                term,
+                startYear,
+                endYear,
+                showEducationFormModal,
+                updateMode,
+                isUpdated
+              }) }
+            />
+            <br/>
+            <button
+              type = { 'button' }
+              className = { `viewmore tooltip ${ isVisible }` }
+              onClick = {
+                () => {
+                  if(index === educationData.length)
+                    this.setState({ index : 4, viewMoreText : 'View more' })
+                  else
+                    this.setState({ index : educationData.length, viewMoreText : 'View less' })
+                }
+              }>
+              <img src={ require('../../../images/icons/horizontal.png') } />
+              <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+            </button>
+            </div>
+        }
+        </div>
       }
       <div>
         <Card></Card>

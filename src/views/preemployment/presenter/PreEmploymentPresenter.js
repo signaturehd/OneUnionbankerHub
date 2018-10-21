@@ -48,6 +48,7 @@ export default class PreEmploymentPresenter {
         this.view.showEducationMap(data)
       },
       error => {
+        store.dispatch(NotifyActions.resetNotify())
         this.setEducationReferenceValue([])
      }
     )
