@@ -43,10 +43,6 @@ class EducationMultipleCardComponent extends Component {
                   </div>
                   <div>
                     <h2 className = { 'font-size-14px font-weight-bold' }>Student ID: { resp.studentNo && resp.studentNo }</h2>
-
-                    <h2 className = { 'font-size-12px font-weight-lighter' }>
-                      Term: { resp.term && resp.term }
-                    </h2>
                     <h2 className = { 'font-size-12px font-weight-lighter' }>
                       Start year: { resp.startYear && moment(resp.startYear).format('MMMM DD, YYYY') }
                     </h2>
@@ -77,16 +73,7 @@ class EducationMultipleCardComponent extends Component {
                           src = { require('../../../../images/icons/baseline_edit_black_18dp.png') }
                           onClick = { () =>
                             onEditModeProperty(
-                              resp.id,
-                              resp.schoolName,
-                              resp.address,
-                              resp.course,
-                              resp.degree,
-                              resp.honor,
-                              resp.studentNo,
-                              resp.term,
-                              resp.startYear,
-                              resp.endYear,
+                              resp,
                               true,
                               true,
                               1)

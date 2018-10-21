@@ -6,7 +6,7 @@ import { NotifyActions } from '../../../../actions'
 import {
   Modal,
   GenericButton,
-  MultipleFileUploader,
+  CircularLoader,
   MultipleAttachments,
   GenericInput,
   SingleInputModal,
@@ -22,6 +22,9 @@ import imageDefault from '../../../../images/profile-picture.png'
 
 import { RequiredValidation } from '../../../../utils/validate/'
 import moment from 'moment'
+
+import PreEmploymentViewAttachmentsComponent from '../../../preemployment/components/PreEmploymentViewAttachmentsComponent'
+import ViewAttachmentModal from '../../../preemployment/modals/ViewAttachmentModal'
 
 class EducationBackgroundModal extends Component {
 
@@ -39,55 +42,59 @@ class EducationBackgroundModal extends Component {
     ]
 
     const {
-    hideModalEducationFormFunc,
-    enabledLoader,
-    updateMode,
-    count,
-    schools,
-    schoolPageNumber,
-    schoolViewMore,
-    nextSchoolPageNumberFunc,
-    previousSchoolPageNumberFunc,
-    schoolFindFunc,
-    torFormData,
-    addAttachmentsFunc,
-    setSchoolFunc,
-    onCloseModal,
-    showSchoolsFunc,
-    showSchoolsModal,
-    schoolId,
-    schoolName,
-    studentNo,
-    startYear,
-    endYear,
-    term,
-    showDegreeModal,
-    showDegreeFunc,
-    setDegreeFunc,
-    degree,
-    honor,
-    course,
-    address,
-    studentNoFunc,
-    termFunc,
-    addressFunc,
-    degreeFunc,
-    courseFunc,
-    honorFunc,
-    startYearFunc,
-    startYearValidate,
-    endYearFunc,
-    endYearValidate,
-    submission,
-    schoolNameErrorMessage,
-    studentNoErrorMessage,
-    addressErrorMessage,
-    degreeErrorMessage,
-    courseErrorMessage,
-    termErrorMessage,
-    honorErrorMessage,
-    startYearErrorMessage,
-    endYearErrorMessage
+      attachmentUrl,
+      viewFile,
+      enabledAttachmentLoader,
+      showViewModal,
+      hideModalEducationFormFunc,
+      enabledLoader,
+      updateMode,
+      count,
+      schools,
+      schoolPageNumber,
+      schoolViewMore,
+      nextSchoolPageNumberFunc,
+      previousSchoolPageNumberFunc,
+      schoolFindFunc,
+      torFormData,
+      addAttachmentsFunc,
+      setSchoolFunc,
+      onCloseModal,
+      showSchoolsFunc,
+      showSchoolsModal,
+      schoolId,
+      schoolName,
+      studentNo,
+      startYear,
+      endYear,
+      term,
+      showDegreeModal,
+      showDegreeFunc,
+      setDegreeFunc,
+      degree,
+      honor,
+      course,
+      address,
+      studentNoFunc,
+      termFunc,
+      addressFunc,
+      degreeFunc,
+      courseFunc,
+      honorFunc,
+      startYearFunc,
+      startYearValidate,
+      endYearFunc,
+      endYearValidate,
+      submission,
+      schoolNameErrorMessage,
+      studentNoErrorMessage,
+      addressErrorMessage,
+      degreeErrorMessage,
+      courseErrorMessage,
+      termErrorMessage,
+      honorErrorMessage,
+      startYearErrorMessage,
+      endYearErrorMessage
     } = this.props
 
     return (
@@ -112,6 +119,13 @@ class EducationBackgroundModal extends Component {
             }
             onClose = { () => onCloseModal() }
             />
+        }
+        {
+          showViewModal &&
+          <ViewAttachmentModal
+            file = { attachmentUrl }
+            onClose = { () => this.setState({ showViewModal : false }) }
+          />
         }
         {
           showDegreeModal &&
@@ -198,6 +212,28 @@ class EducationBackgroundModal extends Component {
           />
           <br/>
           <Line/>
+          <div>
+            {
+              enabledAttachmentLoader ?
+              <center>
+                <br/>
+                <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                <br/>
+                <CircularLoader show = { enabledAttachmentLoader } />
+                <br/>
+              </center>
+              :
+              <div>
+                {
+                  attachmentUrl !== 0 &&
+                  <PreEmploymentViewAttachmentsComponent
+                    file = { attachmentUrl }
+                    onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+                }
+              </div>
+
+            }
+          </div>
           <br/>
           <div className = { 'grid-global' }>
             <h2></h2>

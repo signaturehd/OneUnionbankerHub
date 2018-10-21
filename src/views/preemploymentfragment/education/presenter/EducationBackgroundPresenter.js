@@ -35,7 +35,26 @@ export default class EducationBackgroundPresenter {
       this.view.hideDocumentLoader()
     }, error => {
       this.view.hideDocumentLoader()
+      this.view.showPdfFileView([])
     })
+  }
+
+
+  getEditOnBoardingAttachments (link) {
+    this.view.showRetrievingAttachmentsLoader()
+    this.getOnboardingAttachmentsInteractor.execute(link)
+    .subscribe(data => {
+      this.view.showEditModeAttachments(data)
+      this.view.hideRetrievingAttachmentsLoader()
+    }, error => {
+    this.view.hideRetrievingAttachmentsLoader()
+    })
+  }
+
+  checkAttachments (data) {
+    data && data.tor.map((resp) =>
+      this.getEditOnBoardingAttachments(resp)
+    )
   }
 
   getSchoolRecordVerificationForm (link) {
