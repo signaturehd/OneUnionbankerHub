@@ -110,6 +110,7 @@ class PhilHealthFragment extends BaseMVPView {
 
   noticeResponseResp (noticeResponse) {
     this.setState({ noticeResponse , showNoticeResponseModal : true})
+    this.props.reloadPreEmploymentForm()
   }
 
   hideCircularLoader () {
@@ -178,7 +179,7 @@ class PhilHealthFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>PhilHealth</h2>
+            <h2 className={ 'header-margin-default text-align-left' }>Philippine Health Insurance(PhilHealth) Form </h2>
             <h2>Setup your PhilHealth</h2>
           <br/>
           </div>
@@ -233,7 +234,11 @@ class PhilHealthFragment extends BaseMVPView {
             attachments.lenght !== 0 &&
               enabledLoader ?
               <center>
-              <CircularLoader show = { enabledLoader } />
+                <br/>
+                <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                <br/>
+                <CircularLoader show = { enabledLoader } />
+                <br/>
               </center>
               :
               <PreEmploymentViewAttachmentsComponent
