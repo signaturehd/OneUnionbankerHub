@@ -148,6 +148,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
 
   noticeResponse (noticeResponse, noticeResponseModal, showPinCodeModal) {
     this.setState({ noticeResponse, noticeResponseModal, showPinCodeModal })
+    this.props.reloadPreEmploymentForm()
   }
 
   render() {
@@ -213,7 +214,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
         showPinCodeModal &&
         <Modal
           isDismisable = { true }
-          onClose = { () => this.setState({ showPinLoaderModal : false }) }
+          onClose = { () => this.setState({ showPinCodeModal : false }) }
           >
           {
             enabledLoader ?
