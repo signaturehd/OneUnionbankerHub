@@ -1473,7 +1473,6 @@ export default class HRBenefitsService {
   }
 
   postSpouseForm (token, spouseFormParam) {
-    console.log(spouseFormParam)
     const formData = new FormData()
     const objectParam = {
       name : {
@@ -1619,10 +1618,11 @@ export default class HRBenefitsService {
     })
   }
 
-  updateMedicalAppointment (token, date, id) {
+  updateMedicalAppointment (token, date, date2, id) {
     const objectParam = {
-      id: id,
-      preferredDate : date
+      preferredDate : [
+        date, date2
+      ]
     }
     return this.onboardingClient.put('v1/employees/medical/schedules', objectParam, {
       headers : { token }

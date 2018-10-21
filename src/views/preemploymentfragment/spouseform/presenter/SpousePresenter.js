@@ -179,7 +179,6 @@ export default class SpousePresenter {
            this.view.hideCircularLoader()
          })
        } catch (e) {
-         console.log(e)
       }
     }
   }
