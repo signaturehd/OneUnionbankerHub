@@ -8,8 +8,6 @@ import {
   CircularLoader
 }  from '../../../../ub-components/'
 
-import '../styles/pagibigStyle.css'
-
 class PersonnelSignatureViewPdfComponent extends Component {
   constructor (props) {
     super(props)
