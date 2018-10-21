@@ -368,7 +368,7 @@ class CharacterReferenceFragment extends BaseMVPView {
         occupationId : resp.occupation,
         addressText : resp.address,
         fullNameText : resp.name,
-        emailText : resp.numberOfYearsKnown,
+        emailText : resp.email,
         contactNumberText : resp.contactNumber,
         relationshipText : resp.relationship,
         periodOfProfessionExperienceText : resp.numberOfYearsKnown,
@@ -389,7 +389,7 @@ class CharacterReferenceFragment extends BaseMVPView {
         occupationId : resp.occupation,
         addressText : resp.address,
         fullNameText : resp.name,
-        emailText : resp.numberOfYearsKnown,
+        emailText : resp.email,
         contactNumberText : resp.contactNumber,
         relationshipText : resp.relationship,
         periodOfProfessionExperienceText : resp.numberOfYearsKnown,
@@ -481,7 +481,7 @@ class CharacterReferenceFragment extends BaseMVPView {
           showRequiredFieldsFunc = { (occupationId, occupationName, showOccupationModal) =>
             this.setState({ occupationId, occupationName, showOccupationModal }) }
           onClose = { () => {
-            this.setState({ showCharacterReferenceModal : false }) 
+            this.setState({ showCharacterReferenceModal : false })
             this.resetMode()
           }}
 

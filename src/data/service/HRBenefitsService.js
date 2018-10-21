@@ -1360,6 +1360,7 @@ export default class HRBenefitsService {
       numberOfYearsKnown: putCharacterReferenceParam.numberOfYearsKnown,
       contactNumber: putCharacterReferenceParam.contactNumber,
       address: putCharacterReferenceParam.address,
+      email: putCharacterReferenceParam.email,
       occupation: putCharacterReferenceParam.occupation,
       company : {
         position: putCharacterReferenceParam.company.company.position,
@@ -1370,6 +1371,7 @@ export default class HRBenefitsService {
         district: putCharacterReferenceParam.company.company.district,
         baranggay: putCharacterReferenceParam.company.company.baranggay,
         city: putCharacterReferenceParam.company.company.city,
+        town: putCharacterReferenceParam.company.company.town
       }
     }
     return this.onboardingClient.put(`v1/employees/references/{${ putCharacterReferenceParam.id }}`, objectParam, {

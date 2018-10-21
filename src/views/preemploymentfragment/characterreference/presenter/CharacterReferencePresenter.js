@@ -91,6 +91,7 @@ export default class CharacterReferencePresenter {
           this.view.noticeResponseModal(data)
           this.view.hideCircularLoader()
         }, error => {
+        this.view.hideCircularLoader()
         })
       }
     } else if (occupation === 3) {
@@ -123,6 +124,7 @@ export default class CharacterReferencePresenter {
           this.view.noticeResponseModal(data)
           this.view.hideCircularLoader()
         }, error => {
+        this.view.hideCircularLoader()
         })
       }
     }
@@ -189,6 +191,7 @@ export default class CharacterReferencePresenter {
           this.view.noticeResponseModal(data)
           this.view.hideCircularLoader()
         }, error => {
+        this.view.hideCircularLoader()
         })
       }
     } else if (occupation === 3) {
@@ -221,6 +224,7 @@ export default class CharacterReferencePresenter {
           this.view.noticeResponseModal(data)
           this.view.hideCircularLoader()
         }, error => {
+        this.view.hideCircularLoader()
         })
       }
     }
