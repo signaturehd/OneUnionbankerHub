@@ -178,7 +178,6 @@ class ParentModal extends Component {
               <GenericInput
                 value = { relationship  }
                 text = { 'Relationship' }
-                disabled
                 errorMessage = { relationship ? '' : relationshipErrorMessage }
                 onChange = { () => relationshipNameFunc(true) }
                 />
@@ -204,14 +203,16 @@ class ParentModal extends Component {
                 />
             </div>
             <div className = { 'grid-global-rows' }>
-              <div>
-                <Checkbox
-                  checked = { hospitalization }
-                  label = { 'Hospitalization Plan' }
-                  onChange = { () => hospitalizationFunc() }
-                  />
-                <br/>
-              </div>
+              {
+                // <div>
+                //   <Checkbox
+                //     checked = { hospitalization }
+                //     label = { 'Hospitalization Plan' }
+                //     onChange = { () => hospitalizationFunc() }
+                //     />
+                //   <br/>
+                // </div>
+              }
               <div>
                 <Checkbox
                   checked = { groupPlan }

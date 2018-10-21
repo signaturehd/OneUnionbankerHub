@@ -36,6 +36,7 @@ class ChildrenFragment extends BaseMVPView {
       bloodObject: [],
       statusObject : [],
       genderObject : [],
+      attachments : [],
       defaultAttachmentsArray : [{
         name : 'Birth Certificate'
       }],
@@ -45,7 +46,11 @@ class ChildrenFragment extends BaseMVPView {
       showStatusModal : false,
       showEditModeModal : false,
       showGenderModal : false,
+      showViewModal : false,
+      showPdfViewComponent : false,
+      enabledLoaderPdfModal : false,
       index : 4,
+      viewFile : '',
       viewMoreText : 'View more',
       childrenId : '',
       lastName: '',
@@ -90,6 +95,14 @@ class ChildrenFragment extends BaseMVPView {
 
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
+  }
+
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
   }
 
   showChildrenDetails (childrenData) {
@@ -148,6 +161,15 @@ class ChildrenFragment extends BaseMVPView {
     this.setState({ relationship : validate })
   }
 
+  showAttachmentsFileView (data) {
+    let arrayNew = [...this.state.attachments]
+    const objectArray = {
+      file : data
+    }
+    arrayNew.push(objectArray)
+    this.setState({ attachments : arrayNew })
+  }
+
   /*edit mode*/
 
   editForm (selectedCard) {
@@ -171,6 +193,7 @@ class ChildrenFragment extends BaseMVPView {
       hospitalization : nullChecker.healthHospitalizationPlan,
       groupPlan : nullChecker.groupLifeInsurance,
     })
+    this.presenter.checkAttachments(nullChecker)
   }
 
   defaultValueForm () {
@@ -191,6 +214,7 @@ class ChildrenFragment extends BaseMVPView {
       statusName : '',
       hospitalization : '',
       groupPlan : '',
+      attachments: [],
     })
   }
 
@@ -222,7 +246,6 @@ class ChildrenFragment extends BaseMVPView {
         lastName,
         middleName,
         gender,
-        relationship,
         statusId,
         contact,
         occupationName,
@@ -242,7 +265,6 @@ class ChildrenFragment extends BaseMVPView {
         lastName,
         middleName,
         genderId,
-        relationship,
         statusId,
         contact,
         occupationName,
@@ -306,7 +328,12 @@ class ChildrenFragment extends BaseMVPView {
       hospitalization,
       groupPlan,
       count,
-      editMode
+      editMode,
+      showViewModal,
+      showPdfViewComponent,
+      viewFile,
+      attachments,
+      enabledLoaderPdfModal
     } = this.state
 
     const isVisible = (childrenData && childrenData.length > 4) ? '' : 'hide'
@@ -324,6 +351,13 @@ class ChildrenFragment extends BaseMVPView {
       {
         showEditModeModal &&
         <ChildrenFormModal
+          showViewModal = { showViewModal }
+          showPdfViewComponent = { showPdfViewComponent }
+          viewFile = { viewFile }
+          closeViewAttachments = { () => this.setState({ showViewModal : false }) }
+          viewAttachments = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }
+          attachments = { attachments }
+          enabledLoaderPdfModal = { enabledLoaderPdfModal }
           count = { count }
           defaultAttachmentsArray = { defaultAttachmentsArray }
           editMode = { editMode }
@@ -379,7 +413,10 @@ class ChildrenFragment extends BaseMVPView {
           occupationNameErrorMessage = { occupationNameErrorMessage }
           contactNumberErrorMessage = { contactNumberErrorMessage }
           bloodTypeErrorMessage = { bloodTypeErrorMessage }
-          onClose = { () => this.setState({ showEditModeModal : false }) }
+          onClose = { () => {
+            this.setState({ showEditModeModal : false })
+            this.defaultValueForm()
+          } }
           saveForm = { () => this.submitForm() }
           selectedStatusFunc = {
           (
@@ -444,7 +481,11 @@ class ChildrenFragment extends BaseMVPView {
         {
           enabledLoader ?
           <center>
+            <br/>
+            <h2>Please wait while we we&#39;re retrieving your children record/s </h2>
+            <br/>
             <CircularLoader show = { enabledLoader }/>
+            <br/>
           </center>
           :
           <ChildrenMultipleCardComponent

@@ -405,7 +405,7 @@ class ParentFragment extends BaseMVPView {
             statusNameFunc = { (showStatusModal) => this.setState({ showStatusModal }) }
             groupPlanFunc = { () => this.setState({ groupPlan : groupPlan === 1 ? 0 : 1 }) }
             hospitalizationFunc = { () => this.setState({ hospitalization : hospitalization === 1 ? 0 : 1 }) }
-            genderFunc = { (showGenderModal) => this.setShospitalizationFunctate({ showGenderModal }) }
+            genderFunc = { (showGenderModal) => this.setState({ showGenderModal }) }
             lastName = { lastName }
             firstName = { firstName }
             middleName = { middleName }

@@ -1547,7 +1547,6 @@ export default class HRBenefitsService {
       contactNumber : childrenParam.contactNumber,
       birthDate : childrenParam.birthDate,
       gender : childrenParam.genderId,
-      relationship: childrenParam.relationship,
       occupation : childrenParam.occupationName,
       healthHospitalizationPlan: childrenParam.hospitalization,
       groupLifeInsurance : childrenParam.groupPlan,
@@ -1577,7 +1576,6 @@ export default class HRBenefitsService {
       contactNumber : childrenParam.contactNumber,
       birthDate : childrenParam.birthDate,
       gender : childrenParam.genderId,
-      relationship : childrenParam.relationship,
       occupation : childrenParam.occupationName,
       healthHospitalizationPlan: childrenParam.hospitalization,
       groupLifeInsurance : childrenParam.groupPlan,
@@ -1651,8 +1649,8 @@ export default class HRBenefitsService {
       gender : parentsParam.genderId,
       occupation : parentsParam.occupationName,
       relationship : parentsParam.relationship,
-      healthHospitalizationPlan: parentsParam.healthHospitalizationPlan,
-      groupLifeInsurance : parentsParam.groupLifeInsurance,
+      healthHospitalizationPlan: parentsParam.hospitalization,
+      groupLifeInsurance : parentsParam.groupPlan,
       status: parentsParam.statusId,
     }
 
