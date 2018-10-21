@@ -219,6 +219,12 @@ p {
   text-align: justify;
 }
 
+/* alignment */
+
+.text-align-self {
+  align-self: center;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }

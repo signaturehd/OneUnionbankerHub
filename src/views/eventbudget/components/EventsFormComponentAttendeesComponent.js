@@ -17,6 +17,25 @@ class EventsFormComponentAttendeesComponent extends Component {
     super(props)
   }
 
+  checkIfTrue (attend) {
+
+    let employeesLength = attend.employees.length
+    let attendeesCount = 0
+
+    attend.employees.map((resp2) => {
+      if(resp2.hasRecord === true) {
+        attendeesCount += 1
+      }
+    })
+
+    if(attendeesCount === employeesLength) {
+      this.setState
+      return true
+    } else {
+      return false
+    }
+  }
+
   render () {
     const {
       eventBudgetData,
@@ -53,6 +72,7 @@ class EventsFormComponentAttendeesComponent extends Component {
               <EventsBudgetDepartmentComponent
                 attend = { attend }
                 key = { key }
+                check = { this.checkIfTrue(attend) }
             />
             )
           }

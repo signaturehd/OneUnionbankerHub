@@ -10,7 +10,7 @@
 
 .events-employees-column-3 {
   display: grid;
-  grid-template-columns: .1fr 1fr .1fr;
+  grid-template-columns: .08fr 1fr .08fr;
 }
 
 .events-grid-rows-2 {
