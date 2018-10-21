@@ -95,7 +95,7 @@ class BspCertificationFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>BSP Certificate Download</h2>
+            <h2 className={ 'header-margin-default text-align-left' }>Bangko Sentral ng Pilipinas(BSP) Certificate</h2>
             <h2>Please download the Banko Sentral Pilipinas(BSP) Certificate by clicking the button below.</h2>
           </div>
           <Progress
