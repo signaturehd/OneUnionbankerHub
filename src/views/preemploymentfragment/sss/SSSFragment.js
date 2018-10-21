@@ -112,12 +112,12 @@ class SSSFragment extends BaseMVPView {
     this.setState({ noticeResponse , showNoticeResponseModal : true})
   }
 
-  hideCircularLoader () {
-    this.setState({ enabledLoader : false })
-  }
-
   showCircularLoader () {
     this.setState({ enabledLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
   }
 
   showDocumentLoader () {
@@ -212,10 +212,14 @@ class SSSFragment extends BaseMVPView {
           sssArray.map((status) =>
           <div>
             {
-              attachments.length !== 0 &&
+              attachments.length !== sssArray.length &&
                 enabledLoader ?
                 <center>
-                <CircularLoader show = { enabledLoader } />
+                  <br/>
+                  <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                  <br/>
+                  <CircularLoader show = { enabledLoader } />
+                  <br/>
                 </center>
                 :
                 <PreEmploymentViewAttachmentsComponent
