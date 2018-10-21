@@ -47,7 +47,7 @@ export default class EducationBackgroundPresenter {
       this.view.showEditModeAttachments(data)
       this.view.hideRetrievingAttachmentsLoader()
     }, error => {
-    this.view.hideRetrievingAttachmentsLoader()
+      this.view.hideRetrievingAttachmentsLoader()
     })
   }
 
@@ -60,7 +60,6 @@ export default class EducationBackgroundPresenter {
   getSchoolRecordVerificationForm (link) {
     this.getSchoolRecordVerificationFormInteractor.execute(link)
     .subscribe(data => {
-      this.view.hideDocumentLoader()
       this.view.showPdfFileUrl(data)
     }, error =>{
       this.view.hideDocumentLoader()

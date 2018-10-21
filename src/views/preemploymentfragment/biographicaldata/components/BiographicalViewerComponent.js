@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import {
-  Card,
   Modal,
   GenericButton,
   CircularLoader
@@ -23,8 +22,7 @@ class BiographicalViewerComponent extends Component {
     } = this.props
 
     return (
-      <Card>
-        <div>
+      <div>
         <br/>
           <h2 className = { 'font-weight-bold text-align-center' }>
             { bioTitle }
@@ -55,8 +53,7 @@ class BiographicalViewerComponent extends Component {
             </center>
           </div>
           <br/>
-        </div>
-      </Card>
+      </div>
     )
   }
 }

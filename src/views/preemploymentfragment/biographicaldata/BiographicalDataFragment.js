@@ -227,8 +227,6 @@ class BiographicalDataFragment extends BaseMVPView {
         <br/>
         <Line />
         <br/>
-
-        <br/>
         {
           biographicalDataFormData.length !== 0  &&
             biographicalArray.map((status) =>
@@ -254,6 +252,7 @@ class BiographicalDataFragment extends BaseMVPView {
                   </center>
                   :
                   <PreEmploymentViewAttachmentsComponent
+                    title = { 'Biographical' }
                     file = { attachments }
                     onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
               }

@@ -131,7 +131,7 @@ class EducationBackgroundFragment extends BaseMVPView {
   }
 
   hideDocumentLoader () {
-    this.setState({ enabledAttachmentLoader : false })
+    this.setState({ enabledLoaderPdfModal : false })
   }
 
   showRetrievingAttachmentsLoader  () {
