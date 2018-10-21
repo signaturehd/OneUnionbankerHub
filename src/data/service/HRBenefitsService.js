@@ -1114,6 +1114,12 @@ export default class HRBenefitsService {
 
   /* Pre-Employment */
 
+  getPreEmploymentForm (token) {
+    return this.onboardingClient.get('v1/employees/requirements?phase=1', {
+      headers: { token }
+    })
+  }
+
   getPreEmploymentStatus (token) {
     return this.onboardingClient.get('v1/employees/requirements/status', {
       headers : { token }
@@ -1223,12 +1229,6 @@ export default class HRBenefitsService {
 
     return this.onboardingClient.put('v1/employees/sss', objectParam, {
       headers : { token }
-    })
-  }
-
-  getPreEmploymentForm (token) {
-    return this.onboardingClient.get('v1/employees/requirements?phase=1', {
-      headers: { token }
     })
   }
 
@@ -1765,6 +1765,13 @@ export default class HRBenefitsService {
   }
 
   /*  Post Employment */
+
+  getPostEmployment (token) {
+    return this.onboardingClient.get('v1/employees/requirements?phase=2', {
+      headers: { token }
+    })
+  }
+
   addPostRequirement (token, requirementParam) {
     const formData = new FormData()
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
