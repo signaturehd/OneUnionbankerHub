@@ -101,6 +101,7 @@ class BiographicalDataFragment extends BaseMVPView {
 
   noticeResponseResp (noticeResponse) {
     this.setState({ noticeResponse , showNoticeResponseModal : true})
+    this.props.reloadPreEmploymentForm()
   }
 
   hideCircularLoader () {

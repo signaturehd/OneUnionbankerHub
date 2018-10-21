@@ -22,7 +22,7 @@ class BiographicalViewerComponent extends Component {
     } = this.props
 
     return (
-      <div>
+      <div className = { 'cursor-pointer' }>
         <br/>
           <h2 className = { 'font-weight-bold text-align-center' }>
             { bioTitle }
