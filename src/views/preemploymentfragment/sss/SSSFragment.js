@@ -110,6 +110,7 @@ class SSSFragment extends BaseMVPView {
 
   noticeResponseResp (noticeResponse) {
     this.setState({ noticeResponse , showNoticeResponseModal : true})
+    this.props.reloadPreEmploymentForm()
   }
 
   showCircularLoader () {
@@ -182,7 +183,7 @@ class SSSFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>SSS Form</h2>
+            <h2 className={ 'header-margin-default text-align-left' }>Social Security System(SSS) Form</h2>
             <h2>Please input your SSS number and attach the missing requirements to settle the transaction.</h2>
           <br/>
           </div>
@@ -224,6 +225,7 @@ class SSSFragment extends BaseMVPView {
                 :
                 <PreEmploymentViewAttachmentsComponent
                   file = { attachments }
+                  title = { 'SSS' }
                   onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
             }
             {
