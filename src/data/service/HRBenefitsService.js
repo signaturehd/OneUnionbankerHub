@@ -1483,6 +1483,7 @@ export default class HRBenefitsService {
         birthDate: spouseFormParam.birthDate,
         occupation: spouseFormParam.occupation,
         status: spouseFormParam.status,
+        gender : spouseFormParam.gender,
         healthHospitalizationPlan : spouseFormParam.healthHospitalizationPlan,
         groupLifeInsurance: spouseFormParam.groupLifeInsurance,
         bloodType : spouseFormParam.bloodType,
