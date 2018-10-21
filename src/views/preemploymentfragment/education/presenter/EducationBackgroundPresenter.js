@@ -113,7 +113,7 @@ export default class EducationBackgroundPresenter {
         data => {
           this.view.hideCircularLoader()
           this.view.noticeResponseResp(data)
-          this.view.callBackEducationPresenter()
+          this.view.resetMode()
         }, error => {
           this.view.hideCircularLoader()
         }
@@ -154,7 +154,7 @@ export default class EducationBackgroundPresenter {
       data => {
         this.view.hideCircularLoader()
         this.view.noticeResponseResp(data)
-        this.view.callBackEducationPresenter()
+        this.view.resetMode()
       }, error => {
         this.view.hideCircularLoader()
       }
@@ -167,7 +167,7 @@ export default class EducationBackgroundPresenter {
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.noticeResponseResp(data)
-      this.view.callBackEducationPresenter()
+      this.view.resetMode()
     }, error => {
       this.view.hideCircularLoader()
     })

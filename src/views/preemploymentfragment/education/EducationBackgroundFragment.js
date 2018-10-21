@@ -111,6 +111,7 @@ class EducationBackgroundFragment extends BaseMVPView {
 
   noticeResponseResp (noticeResponse) {
     this.setState({ noticeResponse , showNoticeResponseModal : true})
+    this.props.reloadPreEmploymentForm()
   }
 
   showAttachmentsFileView (data) {
@@ -277,19 +278,6 @@ class EducationBackgroundFragment extends BaseMVPView {
           isUpdated,
           torFormData)
         this.setState({ showEducationFormModal : false })
-        this.setState({
-          educId : '',
-          schoolName : '',
-          studentNo : '',
-          startYear : '',
-          endYear : '',
-          degree : '',
-          honor : '',
-          course : '',
-          address : '',
-          isUpdated : 0,
-          updateMode : false
-        })
       } else {
         this.presenter.addEducationSchool(
           schoolName,
@@ -303,20 +291,24 @@ class EducationBackgroundFragment extends BaseMVPView {
           isUpdated,
           torFormData)
         this.setState({ showEducationFormModal : false })
-        this.setState({
-          schoolName : '',
-          studentNo : '',
-          startYear : '',
-          endYear : '',
-          degree : '',
-          honor : '',
-          course : '',
-          address : '',
-          isUpdated : 0,
-          updateMode : false
-        })
       }
     }
+  }
+
+  resetMode () {
+    this.setState({
+      educId : '',
+      schoolName : '',
+      studentNo : '',
+      startYear : '',
+      endYear : '',
+      degree : '',
+      honor : '',
+      course : '',
+      address : '',
+      isUpdated : 0,
+      updateMode : false
+    })
   }
 
   /* Delete Education */
@@ -456,7 +448,10 @@ class EducationBackgroundFragment extends BaseMVPView {
             }
           }
           showSchoolsModal = { showSchoolsModal }
-          onCloseModal = { () => this.setState({ showSchoolsModal : false }) }
+          onCloseModal = { () => {
+            this.setState({ showSchoolsModal : false })
+            this.resetMode()
+          } }
           setSchoolFunc = { (schoolId, schoolName) =>
             this.setState({
               schoolId,
