@@ -88,6 +88,7 @@ class CharacterReferenceFragment extends BaseMVPView {
 
   noticeResponseModal (noticeResponse) {
     this.setState({ noticeResponse, showNoticeResponse : true })
+    this.props.reloadPreEmploymentForm()
   }
 
   showCircularLoader () {
@@ -479,8 +480,10 @@ class CharacterReferenceFragment extends BaseMVPView {
             this.setState({ showOccupationModal : true }) }
           showRequiredFieldsFunc = { (occupationId, occupationName, showOccupationModal) =>
             this.setState({ occupationId, occupationName, showOccupationModal }) }
-          onClose = { () =>
-            this.setState({ showCharacterReferenceModal : false }) }
+          onClose = { () => {
+            this.setState({ showCharacterReferenceModal : false }) 
+            this.resetMode()
+          }}
 
           fullNameTextErrorMessage = { fullNameTextErrorMessage }
           addressTextErrorMessage = { addressTextErrorMessage }
