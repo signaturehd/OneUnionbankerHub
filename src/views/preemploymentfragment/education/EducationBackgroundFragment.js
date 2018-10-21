@@ -189,7 +189,7 @@ class EducationBackgroundFragment extends BaseMVPView {
   }
 
   addressFunc(address) {
-    const validate = func.checkNoSymbol(address)
+    const validate = func.checkedValidateAddressText(address)
     this.setState({ address: validate, addressErrorMessage : '' })
   }
 
