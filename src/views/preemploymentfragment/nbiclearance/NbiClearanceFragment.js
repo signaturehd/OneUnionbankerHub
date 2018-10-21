@@ -156,11 +156,16 @@ class NbiClearanceFragment extends BaseMVPView {
                 attachments.lenght !== 0 &&
                   enabledLoader ?
                   <center>
-                  <CircularLoader show = { enabledLoader } />
+                    <br/>
+                    <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                    <br/>
+                    <CircularLoader show = { enabledLoader } />
+                    <br/>
                   </center>
                   :
                   <PreEmploymentViewAttachmentsComponent
                     file = { attachments }
+                    title = { 'NBI Clearance Attachments' }
                     onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
               }
               {
