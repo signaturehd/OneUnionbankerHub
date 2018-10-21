@@ -145,7 +145,7 @@
 }
 
 .transaction-details-status {
-  border-radius: 1px;
+  border-radius: 50px;
   color: #fff;
   border: 0px;
   background: #09af00;
@@ -154,7 +154,7 @@
 }
 
 .transaction-details-status-credited {
-  border-radius: 1px;
+  border-radius: 50px;
   color: #fff;
   border: 0px;
   background: #00c853;
@@ -163,7 +163,7 @@
 }
 
 .transaction-details-status-cancel {
-  border-radius: 1px;
+  border-radius: 50px;
   color: #fff;
   border: 0px;
   background: #d50000;
@@ -172,7 +172,7 @@
 }
 
 .transaction-details-status-reconciliation {
-  border-radius: 1px;
+  border-radius: 50px;
   color: #fff;
   border: 0px;
   background: #ff8a00;
@@ -181,7 +181,7 @@
 }
 
 .transaction-details-status-confirmation {
-  border-radius: 1px;
+  border-radius: 50px;
   color: #fff;
   border: 0px;
   background: #2d9ee0;
@@ -190,7 +190,7 @@
 }
 
 .transaction-details-status-crediting {
-  border-radius: 1px;
+  border-radius: 50px;
   color: #fff;
   border: 0px;
   background: #09af00;
@@ -199,7 +199,7 @@
 }
 
 .transaction-details-status-process {
-  border-radius: 1px;
+  border-radius: 50px;
   color: #fff;
   border: 0px;
   background: #00a1ff;
@@ -208,7 +208,7 @@
 }
 
 .transaction-details-status-clear {
-  border-radius: 1px;
+  border-radius: 50px;
   color: #ff8a00;
   border: 0px;
   background: #fff;
