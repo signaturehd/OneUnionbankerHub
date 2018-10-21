@@ -108,25 +108,41 @@ class SpouseFormFragment extends BaseMVPView {
    return new RequiredValidation().isValid(input)
   }
 
+  checkGender (gender) {
+    if(gender === 'M') {
+      return 'Male'
+    } else {
+      return 'F'
+    }
+  }
+
+  checkStatus (status) {
+    if(gender === 0) {
+      return 'Living'
+    } else {
+      return 'F'
+    }
+  }
+
   showSpouseDetails (spouseData, editMode) {
     const nullChecker = spouseData && spouseData
     const nullCheckerName = spouseData && spouseData.name
     this.setState({
-      firstName : nullCheckerName.first,
-      middleName : nullCheckerName.middle,
-      lastName : nullCheckerName.last,
-      bloodTypeName : nullChecker.bloodType,
-      birthDate : nullChecker.birthDate,
-      occupationName : nullChecker.occupation,
-      contact : nullChecker.contactNumber,
-      genderId : nullChecker.gender,
-      gender: nullChecker.gender === 'M' ? 'Male' : 'Female',
-      spouseId : nullChecker.id,
-      statusId : nullChecker.status === 1 ? 1 : 0,
-      statusName : nullChecker.status === 1 ? 'Deceased' : 'Living',
-      hospitalization : nullChecker.healthHospitalizationPlan,
-      groupPlan : nullChecker.groupLifeInsurance,
-      editMode: editMode
+      firstName : nullCheckerName.first ? nullCheckerName.first : '',
+      middleName : nullCheckerName.middle ?nullCheckerName.middle : '',
+      lastName : nullCheckerName.last ? nullCheckerName.last : '',
+      bloodTypeName : nullChecker.bloodType ? nullChecker.bloodType : '',
+      birthDate : nullChecker.birthDate ? nullChecker.birthDate : '',
+      occupationName : nullChecker.occupation ? nullChecker.occupation : '',
+      contact : nullChecker.contactNumber ?nullChecker.contactNumber : '',
+      genderId : nullChecker.gender? nullChecker.gender : '',
+      gender: nullChecker.gender ? this.checkGender(ullChecker.gender) : '',
+      spouseId : nullChecker.id ? nullChecker.id : '',
+      statusId : nullChecker.status ? nullChecker.status : '',
+      statusName : nullChecker.status ? this.checkStatus(nullChecker.status) : '',
+      hospitalization : nullChecker.healthHospitalizationPlan ?  nullChecker.healthHospitalizationPlan : 0,
+      groupPlan : nullChecker.groupLifeInsurance ? nullChecker.groupLifeInsurance : 0,
+      editMode
     })
     this.setState({ spouseData  })
   }
@@ -142,6 +158,7 @@ class SpouseFormFragment extends BaseMVPView {
 
   noticeResponseFunc (noticeResponse, showNoticeResponseModal) {
     this.setState({ noticeResponse, showNoticeResponseModal })
+    this.props.reloadPreEmploymentForm()
   }
 
   dateFunc (data) {
@@ -248,14 +265,6 @@ class SpouseFormFragment extends BaseMVPView {
   deleteFunction () {
     const { spouseId } = this.state
     this.presenter.removeSpouse(spouseId)
-  }
-
-  resetOption () {
-    this.setState({
-      gender : '',
-      statusName : '',
-      birthDate : '',
-    })
   }
 
   /* Validation */
@@ -469,7 +478,7 @@ class SpouseFormFragment extends BaseMVPView {
                   onClick = { () => this.setState({ showGenderModal : true }) }
                   />
                 <DatePicker
-                  selected = { moment(birthDate) }
+                  selected = { birthDate ? moment(birthDate) : '' }
                   maxDate = { moment() }
                   text = { 'Birth Date' }
                   readOnly
@@ -516,17 +525,28 @@ class SpouseFormFragment extends BaseMVPView {
               </div>
             </div>
           </div>
+          <br/>
           {
             attachments.length !== 0 &&
               enabledLoader ?
               <center>
-              <CircularLoader show = { enabledLoader } />
+                <br/>
+                <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                <br/>
+                <CircularLoader show = { enabledLoader } />
+                <br/>
               </center>
               :
-              <PreEmploymentViewAttachmentsComponent
-                file = { attachments }
-                onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+              <div>
+              {
+                attachments === null &&
+                <PreEmploymentViewAttachmentsComponent
+                  file = { attachments }
+                  onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+              }
+              </div>
           }
+          <br/>
           <div className = { 'text-align-right' }>
             <GenericButton
               text = { 'Add Atttachments' }
@@ -545,7 +565,7 @@ class SpouseFormFragment extends BaseMVPView {
           <MultipleAttachments
             count = { count }
             countFunc = { (count) => this.setState({ count }) }
-            placeholder = { '.' }
+            placeholder = { 'Form Attachments' }
             fileArray = { spouseAttachments }
             setFile = { (spouseAttachmentsArray) =>
                 this.setState({ spouseAttachmentsArray })
@@ -554,19 +574,21 @@ class SpouseFormFragment extends BaseMVPView {
           <center>
           <div className = { 'grid-global-columns-x3' }>
             <div></div>
-            <div className = { 'grid-global' }>
-              <GenericButton
-                className = { 'global-button spouse-employment-button' }
-                text = { 'Delete' }
-                onClick = { () => this.deleteFunction() }
-                />
+            <div>
               {
                 editMode ?
-                <GenericButton
-                  className = { 'global-button spouse-employment-button' }
-                  text = { 'Edit' }
-                  onClick = { () => this.saveFunction() }
-                  />
+                <div className = { 'grid-global' }>
+                  <GenericButton
+                    className = { 'global-button spouse-employment-button' }
+                    text = { 'Delete' }
+                    onClick = { () => this.deleteFunction() }
+                    />
+                  <GenericButton
+                    className = { 'global-button spouse-employment-button' }
+                    text = { 'Edit' }
+                    onClick = { () => this.saveFunction() }
+                    />
+                </div>
                   :
                 <GenericButton
                   className = { 'global-button spouse-employment-button' }

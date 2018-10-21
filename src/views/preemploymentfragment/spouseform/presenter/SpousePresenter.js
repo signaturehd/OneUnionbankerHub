@@ -111,6 +111,7 @@ export default class SpousePresenter {
       this.getSelectedAttachments(data)
     }, error => {
       this.view.showSpouseDetails(error, false)
+      this.view.showAttachmentsFileView(null)
       this.view.hideCircularLoader()
     })
   }
@@ -138,7 +139,6 @@ export default class SpousePresenter {
     spouseId,
     spouseAttachmentsArray
   ) {
-
     if(firstName === '') {
       this.view.firstNameErrorMessageFunc('First Name field is required')
     } else if(middleName === '') {
@@ -149,37 +149,37 @@ export default class SpousePresenter {
       this.view.occupationErrorMessageFunc('Occupation field is required')
     } else if(contact === '') {
       this.view.contactNumberErrorMessageFunc('Contact Number field is required')
+    } else if(gender === '') {
+      this.view.genderErrorMessageFunc('Gender field is required')
     } else if(birthDate === '') {
       this.view.birthDateErrorMessageFunc('Date field is required')
     } else if (bloodType === '') {
       this.view.bloodTypeErrorMessageFunc('Please specify your blood type')
-    } else {
-      try {
-         this.view.showCircularLoader()
-         this.postSpouseInteractor.execute(addSpouseForm(
-           firstName,
-           middleName,
-           lastName,
-           birthDate,
-           occupation,
-           contact,
-           status,
-           gender,
-           bloodType,
-           healthHospitalizationPlan,
-           groupLifeInsurance,
-           spouseId,
-           spouseAttachmentsArray
-         ))
-         .subscribe(data => {
-           this.view.hideCircularLoader()
-           this.view.noticeResponseFunc(data, true)
-           this.getSpouse()
-         }, error => {
-           this.view.hideCircularLoader()
-         })
-       } catch (e) {
-      }
+    } else if (status === '') {
+      this.view.statusNameErrorMessageFunc('Please specify spouse status')
+    }  else {
+       this.view.showCircularLoader()
+       this.postSpouseInteractor.execute(addSpouseForm(
+         firstName,
+         middleName,
+         lastName,
+         birthDate,
+         occupation,
+         contact,
+         status,
+         gender,
+         bloodType,
+         healthHospitalizationPlan,
+         groupLifeInsurance,
+         spouseId,
+         spouseAttachmentsArray
+       ))
+       .subscribe(data => {
+         this.view.hideCircularLoader()
+         this.view.noticeResponseFunc(data, true)
+       }, error => {
+         this.view.hideCircularLoader()
+       })
     }
   }
 

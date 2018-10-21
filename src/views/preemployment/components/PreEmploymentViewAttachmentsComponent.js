@@ -37,7 +37,7 @@ class PreEmploymentViewAttachmentsComponent extends Component {
 
     return (
       <div>
-        <h2 className = { 'text-align-left font-weight-bold font-size-20px' }>{ title } Attachments</h2>
+        <h2 className = { 'text-align-left font-weight-bold font-size-18px' }>{ title } Attachments</h2>
         <br/>
         <div className = { 'grid-attachment' }>
           {
