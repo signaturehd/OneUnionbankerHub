@@ -920,8 +920,20 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addEventsBudget (token, addEventParam) {
-    return this.service.addEventsBudget(token, addEventParam)
+  addEventsBudget (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    addEventParam
+  ) {
+    return this.service.addEventsBudget(
+      token,
+      accountToken,
+      accountNo,
+      releasingCenter,
+      addEventParam
+    )
       .pipe(ServiceErrorOperator())
   }
 }

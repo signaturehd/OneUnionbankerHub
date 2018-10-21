@@ -1,7 +1,7 @@
 import ValidateEventsBudgetInteractor from '../../../domain/interactor/eventsbudget/ValidateEventsBudgetInteractor'
 import AddEventsBudgetInteractor from '../../../domain/interactor/eventsbudget/AddEventsBudgetInteractor'
 
-import AddEventsBudgetParam from '../../../domain/param/AddEventsBudgetParam'
+import addEventsBudgetParam from '../../../domain/param/AddEventsBudgetParam'
 
 let storedCelebrationText = '',
     storedVenueText= '',
@@ -10,7 +10,8 @@ let storedCelebrationText = '',
     storedCityText = '',
     storedFile ,
     storedProvinceText = '' ,
-    storedRequestId = ''
+    storedRequestId = '',
+    storedBenefitId = '42'
 
 export default class EventsBudgetPresenter {
   constructor (container) {
@@ -48,8 +49,8 @@ export default class EventsBudgetPresenter {
   }
 
   setCity (cityText) {
-    storedcityText = cityText
-    this.view.setRegion(storedcityText)
+    storedCityText = cityText
+    this.view.setCity(storedCityText)
   }
 
   setAmount (amountText) {
@@ -66,7 +67,7 @@ export default class EventsBudgetPresenter {
     this.view.showCircularLoader()
     this.validateEventsBudgetInteractor.execute()
     .subscribe(data => {
-      this.view.showEventBudget(data)
+      this.view.showEventBudget(data, storedBenefitId)
       this.view.hideCircularLoader()
     }, error => {
       this.view.hideCircularLoader()
@@ -74,8 +75,9 @@ export default class EventsBudgetPresenter {
   }
 
   addEventsBudget (attendees) {
+    this.view.showCircularLoader()
     this.addEventsBudgetInteractor.execute(
-      AddEventsBudgetParam(
+      addEventsBudgetParam(
         storedRequestId,
         storedVenueText,
         storedAddressText,
@@ -86,7 +88,11 @@ export default class EventsBudgetPresenter {
       )
     )
     .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.noticeOfUndertaking(true)
+      this.view.noticeOfUndertakingForm(data)
     }, error => {
+      this.view.hideCircularLoader()
     })
   }
 }

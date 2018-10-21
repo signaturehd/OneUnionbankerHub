@@ -1225,16 +1225,23 @@ export default class HRBenefitsService {
     })
   }
 
-  addEventsBudget (token, addEventParam) {
+  addEventsBudget (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    addEventParam) {
     const objectParam = {
+      accountNumber : accountNo,
+      releasingCenter: releasingCenter,
       requestId: addEventParam.requestId,
-        venueName: addEventParam.venueName,
-        address: addEventParam.address,
-        region: addEventParam.region,
-        province: addEventParam.province,
-        city: addEventParam.city,
-        attendees: addEventParam.attendees,
-      }
+      venueName: addEventParam.venueName,
+      address: addEventParam.address,
+      region: addEventParam.region,
+      province: addEventParam.province,
+      city: addEventParam.city,
+      attendees: addEventParam.attendees,
+    }
     return this.apiClient.post('v1/events/submit', objectParam, {
       headers : { token }
     })

@@ -43,6 +43,7 @@ class EventsBudgetFormComponent extends Component {
       viewLess,
       eventBudgetData,
       events,
+      submitPresenter
     } = this.props
 
     return (
@@ -103,7 +104,7 @@ class EventsBudgetFormComponent extends Component {
           <div className = { 'grid-global' }>
             <GenericButton
               text = { 'Continue' }
-              onClick = { () => this.presenter.addEventsBudget() }
+              onClick = { () => submitPresenter() }
             />
             <GenericButton
               text = { 'Edit' }

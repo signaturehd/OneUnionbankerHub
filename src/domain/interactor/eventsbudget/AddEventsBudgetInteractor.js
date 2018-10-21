@@ -2,7 +2,12 @@ export default class AddEventsBudgetInteractor {
   constructor (client) {
     this.client = client
   }
-  execute (addEventsParam) {
-    return this.client.addEventsBudget(this.client.getToken(), addEventParam)
+  execute (addEventsBudgetParam) {
+    return this.client.addEventsBudget(
+      this.client.getToken(),
+      this.client.getAccountToken(),
+      this.client.getAccountNumber(),
+      this.client.getReleasingCenter(),
+      addEventsBudgetParam)
   }
 }
