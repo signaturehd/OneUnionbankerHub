@@ -94,6 +94,8 @@ export default class NavigationPresenter {
     .subscribe(data => {
       this.view.showPreemploymentStatus(data && data)
       }, error => {
+        this.view.showPreemploymentStatus(null)
+        store.dispatch(NotifyActions.resetNotify())
     })
   }
 }

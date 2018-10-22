@@ -42,8 +42,8 @@ class SideBar extends Component {
     },
     {
       id: 12 ,
-      title: 'Post Pre-Employment',
-      action: () => history.push('/postpreemployment'),
+      title: 'Post-Employment',
+      action: () => history.push('/postemployment'),
       className: 'compliance-icon'
     },
     {
@@ -156,70 +156,45 @@ class SideBar extends Component {
         :
         <div>
           {
-            tempPreEmployment === 3 &&
-            tempPreEmployment === 4 &&
-            tempPreEmployment === 5 &&
+            tempPreEmployment === 6 ||
+            tempPreEmployment === 0 ||
+            tempPreEmployment === null ?
             <div>
-              {
-                modules.map((d, idx) =>
-                d.id !== 11 &&
-                d.id !== 1 &&
-                <div key = { idx }>
-                  <li
-                    className = { `_text-link ${selected === d.id && 'active'}` }
-                    onClick = { d.action }>
-                    <a key = { idx }
-                      className =
-                      { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                      { d.title }
-                  </li>
-                </div>
-                )
-              }
+            {
+              modules.map((d, idx) =>
+              d.id !== 12 &&
+              d.id !== 11 &&
+              <div key = { idx }>
+                <li
+                  className = { `_text-link ${selected === d.id && 'active'}` }
+                  onClick = { d.action }>
+                  <a key = { idx }
+                    className =
+                    { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                    { d.title }
+                </li>
+              </div>
+              )
+            }
             </div>
-          }
-          {
-            tempPreEmployment === 6 &&
-            tempPreEmployment === '' &&
-            tempPreEmployment === 0 &&
+            :
             <div>
-              {
-                modules.map((d, idx) =>
-                d.id !== 11 &&
-                d.id !== 12 &&
-                <div key = { idx }>
-                  <li
-                    className = { `_text-link ${selected === d.id && 'active'}` }
-                    onClick = { d.action }>
-                    <a key = { idx }
-                      className =
-                      { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                      { d.title }
-                  </li>
-                </div>
-                )
-              }
-            </div>
-          }
-          {
-            tempPreEmployment === null &&
-            <div>
-              {
-                modules.map((d, idx) =>
-                d.id !== 12 &&
-                d.id !== 1 &&
-                <div key = { idx }>
-                  <li
-                    className = { `_text-link ${selected === d.id && 'active'}` }
-                    onClick = { d.action }>
-                    <a key = { idx }
-                      className =
-                      { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                      { d.title }
-                  </li>
-                </div>
-                )
-              }
+            {
+              modules.map((d, idx) =>
+              d.id !== 11 &&
+              d.id !== 1 &&
+              <div key = { idx }>
+                <li
+                  className = { `_text-link ${selected === d.id && 'active'}` }
+                  onClick = { d.action }>
+                  <a key = { idx }
+                    className =
+                    { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                    { d.title }
+                </li>
+              </div>
+              )
+            }
             </div>
           }
         </div>
