@@ -57,7 +57,7 @@ export default class LaptopLeasePresenter {
 
       return data = {
         attachments: [{
-          name: 'Laptop Specifications'
+          name: 'Laptop Quotation'
         }],
         isValid: data.isValid == 1 ? true : false,
         deliveryOptions: arrayOption
