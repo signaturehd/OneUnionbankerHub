@@ -1,26 +1,12 @@
-import GetAreaInteractor from '../../../domain/interactor/travel/GetAreaInteractor'
 import GetTravelsInteractor from '../../../domain/interactor/travel/GetTravelsInteractor'
 
-export default class RequestFlightPresenter {
+export default class BookFlightPresenter {
   constructor (container) {
-    this.getAreaInteractor = new GetAreaInteractor(container.get('HRBenefitsClient'))
     this.getTravelsInteractor = new GetTravelsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
-  }
-
-  getAreaData () {
-    this.view.showCircularLoader()
-    this.getAreaInteractor.execute()
-      .subscribe(area => {
-          this.view.hideCircularLoader()
-          this.view.getAreaData(area)
-        }, e => {
-          this.view.hideCircularLoader()
-          // TODO prompt generic error
-      })
   }
 
   getTravels () {

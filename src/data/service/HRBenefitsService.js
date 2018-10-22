@@ -1213,6 +1213,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getTravels (token) {
+    return this.apiClient.get('v1/travels', {
+      headers : { token }
+    })
+  }
+
   /* News isHeart */
 
   addNewsIsHeart (token, id, isHeart) {

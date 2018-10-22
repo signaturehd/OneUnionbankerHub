@@ -1,4 +1,4 @@
-.request-card-grid-option {
+.book-card-grid-option {
   padding: 20px;
   display: grid;
   grid-template-columns: 3fr 1fr 3fr;
@@ -6,12 +6,20 @@
   margin: auto;
 }
 
-.margin-bottom {
-  margin-bottom: 20px;
+.border-radius {
+  border-radius: 50px;
+}
+
+.margin-bottom-10px {
+  margin-bottom: 10px;
+}
+
+.margin-bottom-35px {
+  margin-bottom: 35px;
 }
 
 .padding-top {
-  padding-top: 40px;
+  padding-top: 10px;
 }
 
 .border {
@@ -20,9 +28,10 @@
   padding: 5px;
 }
 
-.request-airplane-icon {
+.book-airplane-icon {
   background: url('../../../../images/icons/airplane-icon.gif') no-repeat;
   background-size: contain;
+  background-position: center;
   height: 60px;
   width: 200px;
   display: block;

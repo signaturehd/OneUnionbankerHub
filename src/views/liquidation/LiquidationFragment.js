@@ -8,7 +8,11 @@ import Presenter from './presenter/LiquidationPresenter'
 
 import {
   GenericButton,
+  GenericInput,
   CircularLoader,
+  MultipleAttachments,
+  DatePicker,
+  Modal,
   Card,
   Line,
 } from '../../ub-components/'
@@ -17,139 +21,138 @@ import LiquidationComponent from './components/LiquidationComponent'
 
 import { Progress } from 'react-sweet-progress'
 import './styles/liquidation.css'
+import moment from 'moment'
 
 class LiquidationFragment extends BaseMVPView {
 
   constructor(props) {
     super(props)
     this.state = {
-      requestFlightArray : [
+      enabledLoader : false,
+      showTicketModal : false,
+      showFormModal: false,
+      ticketMode : false,
+      liquidationArray : [],
+      attachmentsData : [
         {
-          "id": 1,
-          "referenceNumber": "TR20181003160949",
-          "purpose": {
-              "id": 2,
-              "purpose": "Training"
-          },
-          "status": {
-              "id": 1,
-              "status": "Submitted"
-          },
-          "remark": "",
-          "approvedBy": null,
-          "approvedDate": null,
-          "applicationDate": "2018-10-10",
-          "departure": {
-              "origin": {
-                  "id": 1,
-                  "areaCode": "ZMH",
-                  "airport": "108 Mile Ranch",
-                  "location": "108 Mile Ranch, Canada"
-              },
-              "destination": {
-                  "id": 2,
-                  "areaCode": "AAH",
-                  "airport": "Aachen/Merzbruck",
-                  "location": "Aachen, Germany"
-              },
-              "date": "2019-01-26",
-              "time": "13:00:00",
-              "remarks": null
-          },
-          "return": {
-              "origin": {
-                  "id": 2,
-                  "areaCode": "AAH",
-                  "airport": "Aachen/Merzbruck",
-                  "location": "Aachen, Germany"
-              },
-              "destination": {
-                  "id": 1,
-                  "areaCode": "ZMH",
-                  "airport": "108 Mile Ranch",
-                  "location": "108 Mile Ranch, Canada"
-              },
-              "date": "2019-01-28",
-              "time": "13:00:00",
-              "remarks": null
-          },
-          "liquidation": {
-              "id": 1,
-              "cost": 2000,
-              "serviceCharge": 500,
-              "isTicketUsed": null,
-              "reason": ""
-          }
+          name : 'Ticket Attachment'
         },
         {
-          "id": 2,
-          "referenceNumber": "TR20181003160949",
-          "purpose": {
-              "id": 2,
-              "purpose": "Team Building"
-          },
-          "status": {
-              "id": 1,
-              "status": "Submitted"
-          },
-          "remark": "",
-          "approvedBy": null,
-          "approvedDate": null,
-          "applicationDate": "2018-10-10",
-          "departure": {
-              "origin": {
-                  "id": 1,
-                  "areaCode": "ZMH",
-                  "airport": "108 Mile Ranch",
-                  "location": "108 Mile Ranch, Canada"
-              },
-              "destination": {
-                  "id": 2,
-                  "areaCode": "AAH",
-                  "airport": "Aachen/Merzbruck",
-                  "location": "Aachen, Germany"
-              },
-              "date": "2019-01-26",
-              "time": "13:00:00",
-              "remarks": null
-          },
-          "return": {
-              "origin": {
-                  "id": 2,
-                  "areaCode": "AAH",
-                  "airport": "Aachen/Merzbruck",
-                  "location": "Aachen, Germany"
-              },
-              "destination": {
-                  "id": 1,
-                  "areaCode": "ZMH",
-                  "airport": "108 Mile Ranch",
-                  "location": "108 Mile Ranch, Canada"
-              },
-              "date": "2019-01-28",
-              "time": "13:00:00",
-              "remarks": null
-          },
-          "liquidation": {
-              "id": 1,
-              "cost": 2000,
-              "serviceCharge": 500,
-              "isTicketUsed": null,
-              "reason": ""
-          }
+          name : 'Invoice Attachment'
         }
       ]
     }
   }
 
+  componentDidMount() {
+    this.presenter.getTravels()
+  }
+
+  getTravels(liquidationArray) {
+    this.setState({ liquidationArray })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
   render () {
     const {
-      requestFlightArray
+      enabledLoader,
+      showTicketModal,
+      showFormModal,
+      ticketMode,
+      liquidationArray,
+      attachmentsData
     } = this.state
 
     const { percentage } = this.props
     return (
       <div>
+        {
+          showTicketModal &&
+          <Modal
+          isDismisable = { true }
+          onClose = { () => this.setState({ showTicketModal : false }) }>
+            <h2 className = { 'font-size-16px font-weight-bold text-align-center' }>Is the ticket used?</h2>
+            <br/>
+            <div className = { 'grid-global' }>
+              <GenericButton
+                text = { 'No' }
+                onClick = { () => this.setState({
+                  ticketMode : false,
+                  showFormModal : true,
+                  showTicketModal : false })
+                }
+              />
+              <GenericButton
+                  text = { 'Yes' }
+                  onClick = { () => this.setState({
+                    ticketMode : true,
+                    showFormModal : true,
+                    showTicketModal : false })
+                  }
+                />
+            </div>
+          </Modal>
+        }
+        {
+          showFormModal &&
+          <Modal
+          isDismisable = { true }
+          onClose = { () => this.setState({ showFormModal : false }) }>
+            <h2 className = { 'font-size-18px font-weight-bold text-align-center' }>Flight Liquidation Form</h2>
+            <br/>
+            <DatePicker
+              text = { 'Date of Flight' }
+              selected = { moment() }
+            />
+            <DatePicker
+              text = { 'Preferred Date' }
+              selected = { moment() }
+            />
+            <GenericInput
+              text = { 'Cost of Ticket' }
+              type = { 'number' }
+            />
+            <GenericInput
+              text = { 'Cost of Service Charge' }
+              type = { 'number' }
+            />
+            <GenericInput
+              text = { 'Total Cost of Flight' }
+              type = { 'number' }
+            />
+            <GenericInput
+              text = { 'Official Receipt Number' }
+            />
+            <DatePicker
+              text = { 'Date of Official Receipt' }
+              selected = { moment() }
+            />
+            {
+              ticketMode ?
+              <MultipleAttachments
+                placeholder = { 'Form Attachments' }
+                fileArray = { attachmentsData }
+                setFile = { (attachmentsData) => this.setState(attachmentsData) }
+              />
+              :
+              <GenericInput
+                text = { 'Why ticket was unused' }
+              />
+            }
+            <center>
+              <GenericButton
+                text = { 'Continue' }
+              />
+            </center>
+          </Modal>
+        }
         <div className = { 'percentage-grid' }>
           <div>
             <h2 className={ 'font-size-30px text-align-left' }>List of Flights for liquidation</h2>
@@ -162,9 +165,15 @@ class LiquidationFragment extends BaseMVPView {
         <Line />
         <br/>
             {
-              requestFlightArray.length !==0 &&
+              enabledLoader ?
+              <center>
+                <CircularLoader show = { enabledLoader }/>
+              </center>
+              :
+              liquidationArray.length !==0 &&
                 <LiquidationComponent
-                  cardDataHolder = { requestFlightArray }/>
+                  showTicketFunc = { () => this.setState({ showTicketModal : true }) }
+                  cardDataHolder = { liquidationArray }/>
             }
       </div>
     )

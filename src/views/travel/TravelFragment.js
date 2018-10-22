@@ -7,6 +7,7 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/TravelPresenter'
 
 import RequestFlightFragment from '../request/RequestFlightFragment'
+import BookFlightFragment from '../bookflight/BookFlightFragment'
 import LiquidationFragment from '../liquidation/LiquidationFragment'
 
 import {
@@ -267,9 +268,11 @@ class TravelFragment extends BaseMVPView {
             <Route path='/mytravel'
               render={ travel } />
             <Route exact path='/mytravel/travel/request/RequestFlightFragment'
-              render={ props => <RequestFlightFragment { ...props } />}/>
+              render={ props => <RequestFlightFragment { ...props } /> }/>
+            <Route exact path='/mytravel/travel/book/BookFlightFragment'
+              render={ props => <BookFlightFragment { ...props } /> }/>
             <Route exact path='/mytravel/travel/liquidation/LiquidationFragment'
-              render={ props => <LiquidationFragment { ...props } />}/>
+              render={ props => <LiquidationFragment { ...props } /> }/>
            </Switch>
         </section>
       </div>

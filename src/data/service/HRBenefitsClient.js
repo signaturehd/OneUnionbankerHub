@@ -913,6 +913,11 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  getTravels (token) {
+    return this.service.getTravels(token)
+    .pipe(ServiceErrorOperator())
+  }
+
   /* News isHeart */
 
   addNewsIsHeart (token, id, isHeart) {

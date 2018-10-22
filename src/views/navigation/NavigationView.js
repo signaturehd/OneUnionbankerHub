@@ -72,6 +72,7 @@ import LaptopLeaseFragment from '../laptoplease/LaptopLeaseFragment'
 /* Travel */
 import TravelFragment from '../travel/TravelFragment'
 import RequestFlightFragment from '../request/RequestFlightFragment'
+import BookFlightFragment from '../bookflight/BookFlightFragment'
 import LiquidationFragment from '../liquidation/LiquidationFragment'
 
 /* Modals */
@@ -355,6 +356,9 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mytravel/travel/request' render = { props =>
                     <RequestFlightFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel/travel/book' render = { props =>
+                    <BookFlightFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mytravel/travel/liquidation' render = { props =>
                     <LiquidationFragment { ...props }

@@ -18,7 +18,7 @@ class RequestFlightComponent extends Component {
       cardDataHolder
     } = this.props
     return (
-      <div className = { 'request-div' }>
+      <div className = { 'grid-global' }>
         {
           cardDataHolder.length !== 0 &&
           cardDataHolder.map((resp, key) => (
@@ -32,13 +32,13 @@ class RequestFlightComponent extends Component {
                         <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.return.origin.location }</h2>
                     </div>
                     <div className = { 'padding-top' }>
-                        <h2 className = { 'airplane-icon' }></h2>
-                        <h2 className = { 'airplane-icon' }></h2>
+                        <h2 className = { 'request-airplane-icon' }></h2>
+                        <h2 className = { 'request-airplane-icon' }></h2>
                     </div>
                     <div>
-                        <h2 className = { 'font-size-12px font-weight-lighter margin-bottom text-align-right' }><span className = { 'border' }>{ resp.purpose.purpose }</span></h2>
-                        <h2 className = { 'font-size-16px font-weight-bold margin-bottom text-align-right' }>{ resp.departure.destination.location }</h2>
-                        <h2 className = { 'font-size-16px font-weight-bold text-align-right' }>{ resp.return.destination.location }</h2>
+                        <h2 className = { 'font-size-12px font-weight-lighter margin-bottom text-align-right' }><span className = { 'border' }>{ resp.purpose.name }</span></h2>
+                        <h2 className = { 'font-size-16px font-weight-bold margin-bottom text-align-center' }>{ resp.departure.destination.location }</h2>
+                        <h2 className = { 'font-size-16px font-weight-bold text-align-center' }>{ resp.return.destination.location }</h2>
                     </div>
                     </div>
                   :
@@ -48,11 +48,11 @@ class RequestFlightComponent extends Component {
                       <h2 className = { 'font-size-16px font-weight-bold margin-bottom' }>{ resp.departure.origin.location }</h2>
                   </div>
                   <div className = { 'padding-top' }>
-                      <h2 className = { 'airplane-icon' }></h2>
+                      <h2 className = { 'request-airplane-icon' }></h2>
                   </div>
                   <div>
-                      <h2 className = { 'font-size-12px font-weight-lighter margin-bottom text-align-right' }><span className = { 'border' }>{ resp.purpose.purpose }</span></h2>
-                      <h2 className = { 'font-size-16px font-weight-bold margin-bottom text-align-right' }>{ resp.departure.destination.location }</h2>
+                      <h2 className = { 'font-size-12px font-weight-lighter margin-bottom text-align-right' }><span className = { 'border' }>{ resp.purpose.name }</span></h2>
+                      <h2 className = { 'font-size-16px font-weight-bold margin-bottom text-align-center' }>{ resp.departure.destination.location }</h2>
                   </div>
                   </div>
                 }

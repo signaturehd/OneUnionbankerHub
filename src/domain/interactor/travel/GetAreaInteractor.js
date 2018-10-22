@@ -1,4 +1,4 @@
-export default class getAreaInteractor {
+export default class GetAreaInteractor {
   constructor (client) {
     this.client = client
   }
