@@ -120,13 +120,7 @@ class EducationBackgroundModal extends Component {
             onClose = { () => onCloseModal() }
             />
         }
-        {
-          showViewModal &&
-          <ViewAttachmentModal
-            file = { attachmentUrl }
-            onClose = { () => this.setState({ showViewModal : false }) }
-          />
-        }
+
         {
           showDegreeModal &&
           <SingleInputModal
@@ -172,12 +166,6 @@ class EducationBackgroundModal extends Component {
           onChange = { (e) => courseFunc(e.target.value) }
           errorMessage = { courseErrorMessage }/>
         <GenericInput
-          text = { 'Term' }
-          value = { term }
-          maxLength = { 12 }
-          onChange = { (e) => termFunc(e.target.value) }
-          errorMessage = { termErrorMessage }/>
-        <GenericInput
           text = { 'Special Honor' }
           value = { honor }
           onChange = { (e) => honorFunc(e.target.value) }
@@ -213,26 +201,7 @@ class EducationBackgroundModal extends Component {
           <br/>
           <Line/>
           <div>
-            {
-              enabledAttachmentLoader ?
-              <center>
-                <br/>
-                <h2>Please wait while we we&#39;re retrieving your documents </h2>
-                <br/>
-                <CircularLoader show = { enabledAttachmentLoader } />
-                <br/>
-              </center>
-              :
-              <div>
-                {
-                  attachmentUrl !== 0 &&
-                  <PreEmploymentViewAttachmentsComponent
-                    file = { attachmentUrl }
-                    onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
-                }
-              </div>
 
-            }
           </div>
           <br/>
           <div className = { 'grid-global' }>

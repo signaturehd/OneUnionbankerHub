@@ -73,7 +73,6 @@ export default class EducationBackgroundPresenter {
       data => {
         this.view.hideCircularLoader()
         this.view.checkedSchoolData(data)
-        this.view.callBackEducationPresenter()
       },
       error => {
         this.view.hideCircularLoader()
