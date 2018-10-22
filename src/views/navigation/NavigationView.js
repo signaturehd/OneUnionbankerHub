@@ -66,6 +66,9 @@ import Carousel from '../carousel/Carousel'
 /* Pre Employment */
 import PreEmploymentFragment from '../preemployment/PreEmploymentFragment'
 
+/* Post Employment */
+import PostEmploymentFragment from '../postemployment/PostEmploymentFragment'
+
 /* Laptop Lease */
 import LaptopLeaseFragment from '../laptoplease/LaptopLeaseFragment'
 
@@ -285,16 +288,9 @@ class NavigationView extends BaseMVPView {
                   <Route exact path = '/' render = {props =>
                     <NewsFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> }/>
-
-                  {
-                    preEmploymentStatus === 3 ||
-                    preEmploymentStatus === 4 ||
-                    preEmploymentStatus === 5 &&
-                  <Route path = '/postpreemployment' render = { props =>
-                    <PreEmploymentFragment { ...props }
-                      tempPreEmploymentModal = { tempPreEmploymentModal }
+                  <Route path = '/postemployment' render = { props =>
+                    <PostEmploymentFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  }
                   {
                     preEmploymentStatus === null &&
                   <Route path = '/preemployment' render = { props =>
