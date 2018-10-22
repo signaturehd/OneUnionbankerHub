@@ -56,7 +56,7 @@ class LaptopLeaseCardComponent extends Component {
                 placeholder = { 'Amount' }
                 errorMessage = { '' }
                 onChange ={ (e) => setAmount(e.target.value) }
-                text = { 'Amount' }
+                text = { 'Estimated Cost' }
                 disabled = { showEditMode }
                 value = { amount }
                 maxLength = { 6 }
