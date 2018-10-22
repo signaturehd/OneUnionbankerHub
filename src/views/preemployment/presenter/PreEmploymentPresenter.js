@@ -73,6 +73,7 @@ export default class PreEmploymentPresenter {
           this.getAffirmStatus()
         },
         error => {
+          store.dispatch(NotifyActions.resetNotify())
           this.view.hideCircularLoader()
           this.getAffirmStatus()
        }
@@ -134,7 +135,9 @@ export default class PreEmploymentPresenter {
       }
       this.view.showPercentageOfPreEmployment((progress / totalValue) * 100)
     })
-    .subscribe(data => {}, error => {})
+    .subscribe(data => {}, error => {
+      store.dispatch(NotifyActions.resetNotify())
+    })
   }
 
 }
