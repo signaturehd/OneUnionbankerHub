@@ -102,7 +102,7 @@ class WorkExperienceAddModal extends Component {
           errorMessage = { companyErrorMessage }
           />
         <GenericInput
-          text = { 'Address' }
+          text = { 'Complete Address' }
           onChange = { (e) => addressFunc(e.target.value) }
           value = { address }
           maxLength = { 35 }

@@ -104,7 +104,9 @@ export default class PreEmploymentPresenter {
       totalValue += 2 // parents
       totalValue += 1 // education
       totalValue += 1 // character reference
-  
+      totalValue -= 1 // character reference
+      totalValue -= 1 // character reference
+
 
       requiredDocuments.map((documents) => {
         if(documents.status === 2) {

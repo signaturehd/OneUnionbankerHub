@@ -82,6 +82,7 @@ export default class SpousePresenter {
       this.view.resetOption()
     }, error => {
         this.view.hideCircularLoader()
+        this.view.reload()
     })
   }
 
@@ -110,7 +111,6 @@ export default class SpousePresenter {
       this.view.showSpouseDetails(data, true)
       this.getSelectedAttachments(data)
     }, error => {
-      this.view.showSpouseDetails(error, false)
       this.view.showAttachmentsFileView(null)
       this.view.hideCircularLoader()
     })
@@ -179,6 +179,7 @@ export default class SpousePresenter {
          this.view.noticeResponseFunc(data, true)
        }, error => {
          this.view.hideCircularLoader()
+         this.view.reload()
        })
     }
   }
@@ -220,6 +221,7 @@ export default class SpousePresenter {
       this.view.noticeResponseFunc(data, true)
     }, error => {
       this.view.hideCircularLoader()
+      this.view.reload()
     })
   }
 }

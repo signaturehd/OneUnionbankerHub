@@ -43,7 +43,7 @@ class SpouseFormFragment extends BaseMVPView {
       attachments : [],
       spouseAttachments: [{
         id : 0,
-        name : 'Birth Certificate'
+        name : 'Marriage Certificate'
       }],
       spouseAttachmentsArray: [],
       selectedGender : null,
@@ -117,10 +117,10 @@ class SpouseFormFragment extends BaseMVPView {
   }
 
   checkStatus (status) {
-    if(gender === 0) {
+    if(status === 0) {
       return 'Living'
     } else {
-      return 'F'
+      return 'Deceased'
     }
   }
 
@@ -128,17 +128,17 @@ class SpouseFormFragment extends BaseMVPView {
     const nullChecker = spouseData && spouseData
     const nullCheckerName = spouseData && spouseData.name
     this.setState({
-      firstName : nullCheckerName.first ? nullCheckerName.first : '',
-      middleName : nullCheckerName.middle ?nullCheckerName.middle : '',
-      lastName : nullCheckerName.last ? nullCheckerName.last : '',
-      bloodTypeName : nullChecker.bloodType ? nullChecker.bloodType : '',
-      birthDate : nullChecker.birthDate ? nullChecker.birthDate : '',
-      occupationName : nullChecker.occupation ? nullChecker.occupation : '',
-      contact : nullChecker.contactNumber ?nullChecker.contactNumber : '',
-      genderId : nullChecker.gender? nullChecker.gender : '',
-      gender: nullChecker.gender ? this.checkGender(ullChecker.gender) : '',
-      spouseId : nullChecker.id ? nullChecker.id : '',
-      statusId : nullChecker.status ? nullChecker.status : '',
+      firstName : nullCheckerName.first,
+      middleName : nullCheckerName.middle,
+      lastName : nullCheckerName.last,
+      bloodTypeName : nullChecker.bloodType,
+      birthDate : nullChecker.birthDate,
+      occupationName : nullChecker.occupation ,
+      contact : nullChecker.contactNumber,
+      genderId : nullChecker.gender,
+      gender: nullChecker.gender ? this.checkGender(nullChecker.gender) : '',
+      spouseId : nullChecker.id ,
+      statusId : nullChecker.status ,
       statusName : nullChecker.status ? this.checkStatus(nullChecker.status) : '',
       hospitalization : nullChecker.healthHospitalizationPlan ?  nullChecker.healthHospitalizationPlan : 0,
       groupPlan : nullChecker.groupLifeInsurance ? nullChecker.groupLifeInsurance : 0,
@@ -158,6 +158,10 @@ class SpouseFormFragment extends BaseMVPView {
 
   noticeResponseFunc (noticeResponse, showNoticeResponseModal) {
     this.setState({ noticeResponse, showNoticeResponseModal })
+    this.props.reloadPreEmploymentForm()
+  }
+
+  reload () {
     this.props.reloadPreEmploymentForm()
   }
 
@@ -429,6 +433,8 @@ class SpouseFormFragment extends BaseMVPView {
       {
         enabledLoader ?
         <center className={ 'circular-loader-center' }>
+          <br/>
+          <h2>Please wait while we we&#39;re retrieving spouse information</h2>
           <CircularLoader show={ enabledLoader }/>
         </center> :
         <div>
@@ -527,7 +533,6 @@ class SpouseFormFragment extends BaseMVPView {
           </div>
           <br/>
           {
-            attachments.length !== 0 &&
               enabledLoader ?
               <center>
                 <br/>
@@ -555,7 +560,7 @@ class SpouseFormFragment extends BaseMVPView {
               let newCount = count + 1
               this.setState({ count : newCount })
               updatedAttachments.push({
-                name : 'Birth Certificate ' + count
+                name : 'Marriage Certificate ' + count
               })
               this.setState({ spouseAttachments : updatedAttachments })
                 }

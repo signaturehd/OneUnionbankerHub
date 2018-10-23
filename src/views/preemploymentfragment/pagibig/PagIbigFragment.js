@@ -196,7 +196,7 @@ class PagIbigFragment extends BaseMVPView {
               }
             }>
             <div className = { 'abc-grid-x2' }>
-              <h2>PAG-IBIG MDR Form</h2>
+              <h2>PAG-IBIG MDF Form</h2>
               <div>
                 <span
                   className = { 'abc-icon biographical-seemore-button' }/>
