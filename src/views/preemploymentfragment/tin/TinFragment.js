@@ -98,7 +98,6 @@ class TinFragment extends BaseMVPView {
       tinAttachment : [{
         name : 'TIN ID/ BIR FORM',
     }] })
-    this.props.reloadPreEmploymentForm()
   }
 
   noticeResponseResp (noticeResponse) {
@@ -154,6 +153,7 @@ class TinFragment extends BaseMVPView {
           <ResponseModal
             onClose={ () => {
               this.setState({ showNoticeResponseModal : false})
+              this.props.reloadPreEmploymentForm()
             }}
             noticeResponse={ noticeResponse }
           />

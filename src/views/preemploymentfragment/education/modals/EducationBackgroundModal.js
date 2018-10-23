@@ -85,7 +85,7 @@ class EducationBackgroundModal extends Component {
       startYearValidate,
       endYearFunc,
       endYearValidate,
-      submission,
+      submissionFunc,
       schoolNameErrorMessage,
       studentNoErrorMessage,
       addressErrorMessage,
@@ -120,7 +120,13 @@ class EducationBackgroundModal extends Component {
             onClose = { () => onCloseModal() }
             />
         }
-
+        {
+          showViewModal &&
+          <ViewAttachmentModal
+            file = { viewFile }
+            onClose = { () => this.setState({ showViewModal : false }) }
+          />
+        }
         {
           showDegreeModal &&
           <SingleInputModal
@@ -201,7 +207,21 @@ class EducationBackgroundModal extends Component {
           <br/>
           <Line/>
           <div>
-
+            {
+                enabledAttachmentLoader ?
+                <center>
+                  <br/>
+                  <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                  <br/>
+                  <CircularLoader show = { enabledAttachmentLoader } />
+                  <br/>
+                </center>
+                :
+                <PreEmploymentViewAttachmentsComponent
+                  title = { 'TOR Attachments' }
+                  file = { attachmentUrl }
+                  onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+            }
           </div>
           <br/>
           <div className = { 'grid-global' }>
@@ -240,11 +260,11 @@ class EducationBackgroundModal extends Component {
               updateMode ?
               <GenericButton
                 text={ 'Update' }
-                onClick = { () => submission() }
+                onClick = { () => submissionFunc() }
                 /> :
               <GenericButton
                 text={ 'Add' }
-                onClick = { () => submission() }
+                onClick = { () => submissionFunc() }
                 />
             }
           </div>
@@ -291,7 +311,7 @@ EducationBackgroundModal.propTypes = {
   degreeFunc : PropTypes.func,
   courseFunc : PropTypes.func,
   honorFunc : PropTypes.func,
-  submission : PropTypes.func
+  submissionFunc : PropTypes.func
 }
 EducationBackgroundModal.defaultProps={
 }

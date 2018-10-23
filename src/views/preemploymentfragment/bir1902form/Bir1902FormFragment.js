@@ -111,7 +111,6 @@ class Bir1902FormFragment extends BaseMVPView {
 
   noticeResponseResp (noticeResponse) {
     this.setState({ noticeResponse , showNoticeResponseModal : true})
-    this.props.reloadPreEmploymentForm()
   }
 
   hideCircularLoader () {
@@ -152,6 +151,7 @@ class Bir1902FormFragment extends BaseMVPView {
       <ResponseModal
         onClose={ () => {
           this.setState({ showNoticeResponseModal : false})
+          this.props.reloadPreEmploymentForm()
         }}
         noticeResponse={ noticeResponse }
       />

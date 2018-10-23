@@ -1405,14 +1405,14 @@ export default class HRBenefitsService {
         studentNo : educationParam.studentNo,
         startYear : educationParam.startYear,
         endYear : educationParam.endYear,
-        term : educationParam.term,
         degree : educationParam.degree,
         honor : educationParam.honor,
         course : educationParam.course,
         address : educationParam.address,
-        isUpdated : educationParam.isUpdated
       }
-      educationParam.attachments.map((resp) =>
+      educationParam &&
+      educationParam.torFormData &&
+      educationParam.torFormData.map((resp) =>
         (
           formData.append(resp.name.replace('/', '-'), resp.file)
         )
@@ -1449,14 +1449,14 @@ export default class HRBenefitsService {
       studentNo : educationParam.studentNo,
       startYear : educationParam.startYear,
       endYear : educationParam.endYear,
-      term : educationParam.term,
       degree : educationParam.degree,
       honor : educationParam.honor,
       course : educationParam.course,
       address : educationParam.address,
-      isUpdated : educationParam.isUpdated
     }
-    educationParam.attachments.map((resp) =>
+    educationParam &&
+    educationParam.torFormData &&
+    educationParam.torFormData.map((resp) =>
       (
         formData.append(resp.name.replace('/', '-'), resp.file)
       )

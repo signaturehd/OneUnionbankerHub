@@ -88,7 +88,6 @@ class CharacterReferenceFragment extends BaseMVPView {
 
   noticeResponseModal (noticeResponse) {
     this.setState({ noticeResponse, showNoticeResponse : true })
-    this.props.reloadPreEmploymentForm()
   }
 
   showCircularLoader () {
@@ -465,7 +464,10 @@ class CharacterReferenceFragment extends BaseMVPView {
         showNoticeResponse &&
         <NoticeResponseModal
           noticeResponse = { noticeResponse }
-          onClose = { () => this.setState({ showNoticeResponse : false }) }
+          onClose = { () => {
+            this.setState({ showNoticeResponse : false })
+            this.props.reloadPreEmploymentForm()
+          }}
           />
       }
       {

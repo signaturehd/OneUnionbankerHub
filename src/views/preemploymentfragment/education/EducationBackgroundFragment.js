@@ -111,7 +111,6 @@ class EducationBackgroundFragment extends BaseMVPView {
 
   noticeResponseResp (noticeResponse) {
     this.setState({ noticeResponse , showNoticeResponseModal : true})
-    this.props.reloadPreEmploymentForm()
   }
 
   showAttachmentsFileView (data) {
@@ -150,6 +149,15 @@ class EducationBackgroundFragment extends BaseMVPView {
 
   showPdfFileView (pdfFile) {
     this.setState({ pdfFile, showPdfViewComponent : true })
+  }
+
+  showEditModeAttachments (data) {
+    let arrayNew = [...this.state.attachmentUrl]
+    const objectArray = {
+      file : data
+    }
+    arrayNew.push(objectArray)
+    this.setState({ attachmentUrl : arrayNew })
   }
 
   showPdfFileUrl (pdfFileUrl) {
@@ -265,7 +273,20 @@ class EducationBackgroundFragment extends BaseMVPView {
       this.setState({ endYearErrorMessage : 'Required field' })
     } else {
       if(updateMode) {
-        this.presenter.putEducationSchool(
+      this.presenter.putEducationSchool(
+        educId,
+        schoolName,
+        studentNo,
+        startYear,
+        endYear,
+        degree,
+        honor,
+        course,
+        address,
+        torFormData)
+      this.setState({ showEducationFormModal : false })
+      } else {
+        this.presenter.addEducationSchool(
           educId,
           schoolName,
           studentNo,
@@ -275,20 +296,6 @@ class EducationBackgroundFragment extends BaseMVPView {
           honor,
           course,
           address,
-          isUpdated,
-          torFormData)
-        this.setState({ showEducationFormModal : false })
-      } else {
-        this.presenter.addEducationSchool(
-          schoolName,
-          studentNo,
-          startYear,
-          endYear,
-          degree,
-          honor,
-          course,
-          address,
-          isUpdated,
           torFormData)
         this.setState({ showEducationFormModal : false })
       }
@@ -461,7 +468,7 @@ class EducationBackgroundFragment extends BaseMVPView {
             })
           }
           showSchoolsFunc = { () => this.setState({ showSchoolsModal : true }) }
-          submission = { () => this.submission() }
+          submissionFunc = { () => this.submission() }
           addAttachmentsFunc = { (attachment, tempCount) =>
             {
               const attachmentTemp = [...attachment]
@@ -486,6 +493,7 @@ class EducationBackgroundFragment extends BaseMVPView {
         <ResponseModal
           onClose={ () => {
             this.setState({ showNoticeResponseModal : false})
+            this.props.reloadPreEmploymentForm()
           }}
           noticeResponse={ noticeResponse }
         />
@@ -573,7 +581,7 @@ class EducationBackgroundFragment extends BaseMVPView {
               isUpdated) =>
               {
                 this.setState({
-                  educIdr: resp.id,
+                  educId: resp.id,
                   schoolName: resp.schoolName,
                   address: resp.address,
                   course: resp.course,
@@ -586,11 +594,7 @@ class EducationBackgroundFragment extends BaseMVPView {
                   updateMode,
                   isUpdated ,
                 })
-                try {
                   this.presenter.checkAttachments(resp)
-                } catch(e) {
-                  console.log(e)
-                }
               }
               }
             />
