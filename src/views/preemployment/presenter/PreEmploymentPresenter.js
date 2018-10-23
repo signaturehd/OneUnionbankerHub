@@ -104,7 +104,9 @@ export default class PreEmploymentPresenter {
       totalValue += 2 // parents
       totalValue += 1 // education
       totalValue += 1 // character reference
-      totalValue += 1 // medical scheduling
+      totalValue -= 1; // tin (optional)
+      totalValue -= 1; // bir 1902 (optional)
+      totalValue -= 1; // pagibig loan (optional)
 
       requiredDocuments.map((documents) => {
         if(documents.status === 2) {

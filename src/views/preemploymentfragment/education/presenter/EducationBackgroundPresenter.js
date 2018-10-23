@@ -9,7 +9,6 @@ import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/pr
 import RemoveSchoolInteractor from '../../../../domain/interactor/preemployment/education/RemoveSchoolInteractor'
 
 import addEducationParam from '../../../../domain/param/AddEmployeeEducationParam'
-import putEducationParam from '../../../../domain/param/PutEmployeeEducationParam'
 
 export default class EducationBackgroundPresenter {
   constructor (container) {
@@ -83,29 +82,27 @@ export default class EducationBackgroundPresenter {
   /* Post Method */
 
   addEducationSchool(
+    educId,
     schoolName,
     studentNo,
     startYear,
     endYear,
-    term,
     degree,
     honor,
     course,
     address,
-    isUpdated,
     torFormData) {
       this.view.showCircularLoader()
       this.addEducationSchoolInteractor.execute(addEducationParam(
+        educId,
         schoolName,
         studentNo,
         startYear,
         endYear,
-        term,
         degree,
         honor,
         course,
         address,
-        isUpdated,
         torFormData
       ))
       .subscribe(
@@ -127,26 +124,22 @@ export default class EducationBackgroundPresenter {
     studentNo,
     startYear,
     endYear,
-    term,
     degree,
     honor,
     course,
     address,
-    isUpdated,
     torFormData) {
     this.view.showCircularLoader()
-    this.putEducationSchoolInteractor.execute(putEducationParam(
+    this.putEducationSchoolInteractor.execute(addEducationParam(
       educId,
       schoolName,
       studentNo,
       startYear,
       endYear,
-      term,
       degree,
       honor,
       course,
       address,
-      isUpdated,
       torFormData
     ))
     .subscribe(
