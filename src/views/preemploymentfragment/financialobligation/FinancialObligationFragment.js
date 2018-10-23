@@ -200,7 +200,10 @@ class FinancialObligationFragment extends BaseMVPView {
             <h2>{ noticeResponse }</h2>
             <br/>
             <GenericButton
-              onClick = { () => this.setState({ showFinanceModal : false }) }
+              onClick = { () => {
+                this.setState({ showFinanceModal : false })
+                this.props.reloadPreEmploymentForm()
+              } }
               text = { 'Ok' }
               />
           </center>

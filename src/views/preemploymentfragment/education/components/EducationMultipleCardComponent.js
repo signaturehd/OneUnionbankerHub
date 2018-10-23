@@ -33,6 +33,7 @@ class EducationMultipleCardComponent extends Component {
               <Card
                 className = { 'educ-card-grid-option' }
                 key = {resp.id}>
+                <span className = { 'educ-user-icon educ-icon-unique' }/>
                 <div className = { 'grid-global' }>
                   <div>
                       <h2 className = { 'font-size-14px font-weight-bold' }>{ resp.schoolName && resp.schoolName }</h2>
@@ -44,10 +45,7 @@ class EducationMultipleCardComponent extends Component {
                   <div>
                     <h2 className = { 'font-size-14px font-weight-bold' }>Student ID: { resp.studentNo && resp.studentNo }</h2>
                     <h2 className = { 'font-size-12px font-weight-lighter' }>
-                      Start year: { resp.startYear && moment(resp.startYear).format('MMMM DD, YYYY') }
-                    </h2>
-                    <h2 className = { 'font-size-12px font-weight-lighter' }>
-                      Start end: { resp.endYear && moment(resp.endYear).format('MMMM DD, YYYY') }
+                      S.Y: { resp.startYear && resp.startYear } - { resp.endYear && resp.endYear }
                     </h2>
                   </div>
                 </div>

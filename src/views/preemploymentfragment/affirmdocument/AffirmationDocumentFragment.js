@@ -148,7 +148,6 @@ class AffirmationDocumentFragment extends BaseMVPView {
 
   noticeResponse (noticeResponse, noticeResponseModal, showPinCodeModal) {
     this.setState({ noticeResponse, noticeResponseModal, showPinCodeModal })
-    this.props.reloadPreEmploymentForm()
   }
 
   render() {
@@ -184,7 +183,9 @@ class AffirmationDocumentFragment extends BaseMVPView {
             <h2>{ noticeResponse }</h2>
             <br/>
             <GenericButton
-              onClick = { () => this.setState({ noticeResponseModal : false }) }
+              onClick = { () => {this.setState({ noticeResponseModal : false })
+              this.props.reloadPreEmploymentForm()
+            } }
               text = { 'Ok' }
               />
             <br/>

@@ -59,7 +59,6 @@ class SSSFragment extends BaseMVPView {
       sssAttachment : [{
         name : 'SSS ID / E1 Form',
     }] })
-    this.props.reloadPreEmploymentForm()
   }
 
   checkAttachments () {
@@ -110,7 +109,6 @@ class SSSFragment extends BaseMVPView {
 
   noticeResponseResp (noticeResponse) {
     this.setState({ noticeResponse , showNoticeResponseModal : true})
-    this.props.reloadPreEmploymentForm()
   }
 
   showCircularLoader () {
@@ -158,6 +156,7 @@ class SSSFragment extends BaseMVPView {
           <ResponseModal
             onClose={ () => {
               this.setState({ showNoticeResponseModal : false})
+              this.props.reloadPreEmploymentForm()
             }}
             noticeResponse={ noticeResponse }
           />

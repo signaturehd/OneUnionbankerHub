@@ -96,7 +96,10 @@ class MedicalAppointmentFragment extends BaseMVPView {
       showNoticeResponseModal &&
       <NoticeResponseModal
         noticeResponse = { noticeResponse }
-        onClose = { () => this.setState({ showNoticeResponseModal : false }) }
+        onClose = { () => {
+          this.props.reloadPreEmploymentForm()
+          this.setState({ showNoticeResponseModal : false })
+        } }
         />
     }
       <div className = { 'percentage-grid' }>
