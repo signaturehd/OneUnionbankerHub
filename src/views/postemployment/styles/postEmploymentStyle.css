@@ -1,0 +1,31 @@
+.postemployment-container {
+  display: grid;
+  grid-template-columns: .15fr 1fr .15fr;
+}
+
+.postemployment-grid-x2 {
+  display: grid;
+  grid-template-columns: 1fr .15fr;
+}
+
+.postemployment-seemore-button {
+  background-image: url('../../../images/icons/ic_next.png');
+}
+
+.postemployment-padding-documents {
+  margin-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 25px;
+  padding-top: 25px;
+}
+
+.postemployment-icon {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 25px;
+  width: 25px;
+  background-repeat: no-repeat;
+}
