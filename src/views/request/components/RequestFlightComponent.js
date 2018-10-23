@@ -22,7 +22,7 @@ class RequestFlightComponent extends Component {
         {
           cardDataHolder.length !== 0 &&
           cardDataHolder.map((resp, key) => (
-              <Card key = {key}>
+              <Card key = {key} className = { 'border-radius' }>
                   {
                     resp.return ?
                     <div className = { 'request-card-grid-option' }>

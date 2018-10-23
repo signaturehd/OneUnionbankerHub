@@ -19,11 +19,11 @@ class BookFlightComponent extends Component {
       showFormFunc
     } = this.props
     return (
-      <div className = { 'grid-global border-radius' }>
+      <div className = { 'grid-global' }>
         {
           cardDataHolder.length !== 0 &&
           cardDataHolder.map((resp, key) => (
-              <Card key = {key} className = { 'cursor-pointer' }
+              <Card key = {key} className = { 'cursor-pointer  border-radius' }
               onClick = { () => {showFormFunc(
                 resp.departure.origin.location,
                 resp.departure.destination.location,
@@ -37,31 +37,31 @@ class BookFlightComponent extends Component {
                       <div className = { 'book-card-grid-option' }>
                       <div>
                           <h2 className = { 'font-size-14px font-weight-lighter margin-bottom' }>{ resp.referenceNumber }</h2>
-                          <h2 className = { 'font-size-16px font-weight-bold margin-bottom' }>{ resp.departure.origin.location }</h2>
-                          <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.return.origin.location }</h2>
+                          <h2 className = { 'font-size-16px font-weight-bold margin-bottom' }>{ `${resp.departure.origin.areaCode} | ${resp.departure.origin.location}` }</h2>
+                          <h2 className = { 'font-size-16px font-weight-bold' }>{ `${resp.return.origin.areaCode} | ${resp.return.origin.location}` }</h2>
                       </div>
-                      <div className = { 'padding-top' }>
+                      <div className = { 'padding-top-20px' }>
                           <h2 className = { 'book-airplane-icon' }></h2>
                           <h2 className = { 'book-airplane-icon' }></h2>
                       </div>
                       <div>
-                          <h2 className = { 'font-size-12px font-weight-lighter margin-bottom text-align-right' }><span className = { 'border' }>{ resp.purpose.name }</span></h2>
-                          <h2 className = { 'font-size-16px font-weight-bold margin-bottom text-align-center' }>{ resp.departure.destination.location }</h2>
-                          <h2 className = { 'font-size-16px font-weight-bold text-align-center' }>{ resp.return.destination.location }</h2>
+                          <h2 className = { 'font-size-14px font-weight-lighter margin-bottom text-align-right' }><span className = { 'border' }>{ resp.purpose.name }</span></h2>
+                          <h2 className = { 'font-size-16px font-weight-bold margin-bottom text-align-center' }>{ `${resp.departure.destination.areaCode} | ${resp.departure.destination.location}` }</h2>
+                          <h2 className = { 'font-size-16px font-weight-bold text-align-center' }>{ `${resp.return.destination.areaCode} | ${resp.return.destination.location}` }</h2>
                       </div>
                       </div>
                     :
                     <div className = { 'book-card-grid-option' }>
                     <div>
                         <h2 className = { 'font-size-14px font-weight-lighter margin-bottom' }>{ resp.referenceNumber }</h2>
-                        <h2 className = { 'font-size-16px font-weight-bold margin-bottom' }>{ resp.departure.origin.location }</h2>
+                        <h2 className = { 'font-size-16px font-weight-bold margin-bottom' }>{ `${resp.departure.origin.areaCode} | ${resp.departure.origin.location}` }</h2>
                     </div>
-                    <div className = { 'padding-top' }>
+                    <div className = { 'padding-top-20px' }>
                         <h2 className = { 'book-airplane-icon' }></h2>
                     </div>
                     <div>
-                        <h2 className = { 'font-size-12px font-weight-lighter margin-bottom text-align-right' }><span className = { 'border' }>{ resp.purpose.name }</span></h2>
-                        <h2 className = { 'font-size-16px font-weight-bold margin-bottom text-align-center' }>{ resp.departure.destination.location }</h2>
+                        <h2 className = { 'font-size-14px font-weight-lighter margin-bottom text-align-right' }><span className = { 'border' }>{ resp.purpose.name }</span></h2>
+                        <h2 className = { 'font-size-16px font-weight-bold margin-bottom text-align-center' }>{ `${resp.departure.destination.areaCode} | ${resp.departure.destination.location}` }</h2>
                     </div>
                     </div>
                 }

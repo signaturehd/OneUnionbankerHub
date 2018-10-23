@@ -107,13 +107,13 @@ class BookFlightFragment extends BaseMVPView {
             <Card>
               <div className = { 'book-card-grid-option' }>
                 <div>
-                  <h2 className = { 'font-size-14px font-weight-lighter text-align-left' }>DEPARTURE</h2>
+                  <h2 className = { 'font-size-14px font-weight-bold text-align-left unionbank-color' }>DEPARTURE</h2>
                   <h2 className = { 'font-size-16px font-weight-bold' }>{ departureOrigin }</h2>
                 </div>
                 <div>
                   <h2 className = { 'book-airplane-icon' }></h2>
                 </div>
-                <div>
+                <div className = { 'padding-top-20px' }>
                   <h2 className = { 'font-size-16px font-weight-bold text-align-center' }>{ departureDestination }</h2>
                 </div>
               </div>
@@ -121,13 +121,13 @@ class BookFlightFragment extends BaseMVPView {
                 rturn === 'RoundTrip' &&
                 <div className = { 'book-card-grid-option' }>
                   <div>
-                    <h2 className = { 'font-size-14px font-weight-lighter text-align-left' }>RETURN</h2>
+                    <h2 className = { 'font-size-14px font-weight-bold text-align-left unionbank-color' }>RETURN</h2>
                     <h2 className = { 'font-size-14px font-weight-lighter' }>{ returnOrigin }</h2>
                   </div>
-                  <div className = { 'padding-top' }>
+                  <div>
                     <h2 className = { 'book-airplane-icon' }></h2>
                   </div>
-                  <div>
+                  <div className = { 'padding-top-20px' }>
                     <h2 className = { 'font-size-16px font-weight-bold text-align-center' }>{ returnDestination }</h2>
                   </div>
                 </div>

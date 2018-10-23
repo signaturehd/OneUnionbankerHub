@@ -23,7 +23,7 @@ class LiquidationComponent extends Component {
         {
           cardDataHolder.length !== 0 &&
           cardDataHolder.map((resp, key) => (
-              <Card key = {key} className = { 'cursor-pointer' } onClick = { () => showTicketFunc() }>
+              <Card key = {key} className = { 'cursor-pointer border-radius' } onClick = { () => showTicketFunc() }>
                   {
                       resp.return ?
                       <div className = { 'liquidation-card-grid-option' }>
