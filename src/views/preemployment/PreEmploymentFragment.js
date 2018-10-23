@@ -344,6 +344,8 @@ class PreEmploymentFragment extends BaseMVPView {
     } else if (index === 18) {
       this.setState({ showChildrenConfirmModal : true })
     } else if (index === 21) {
+      this.props.onBoardingSkipPage (7)
+      this.props.history.push('/')
       this.setState({ hideSubmitButton : false })
     } else {
       this.setState({ preEmpPage : index })
