@@ -110,7 +110,6 @@ class PhilHealthFragment extends BaseMVPView {
 
   noticeResponseResp (noticeResponse) {
     this.setState({ noticeResponse , showNoticeResponseModal : true})
-    this.props.reloadPreEmploymentForm()
   }
 
   hideCircularLoader () {
@@ -146,6 +145,7 @@ class PhilHealthFragment extends BaseMVPView {
           <ResponseModal
             onClose={ () => {
               this.setState({ showNoticeResponseModal : false})
+              this.props.reloadPreEmploymentForm()
             }}
             noticeResponse={ noticeResponse }
           />

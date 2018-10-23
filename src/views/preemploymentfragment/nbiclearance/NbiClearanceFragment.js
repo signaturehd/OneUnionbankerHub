@@ -111,6 +111,7 @@ class NbiClearanceFragment extends BaseMVPView {
           <ResponseModal
             onClose={ () => {
               this.setState({ showNoticeResponseModal : false})
+              this.props.reloadPreEmploymentForm()
             }}
             noticeResponse={ noticeResponse }
           />

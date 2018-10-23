@@ -345,7 +345,10 @@ class ChildrenFragment extends BaseMVPView {
         showNoticeResponse &&
         <NoticeResponse
           noticeResponse = { noticeResponse }
-          onClose = { () => this.setState({ showNoticeResponse : false }) }
+          onClose = { () => {
+            this.props.reloadPreEmploymentForm()
+            this.setState({ showNoticeResponse : false })
+          } }
         />
       }
       {
