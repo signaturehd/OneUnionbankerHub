@@ -400,6 +400,8 @@ class EducationBackgroundFragment extends BaseMVPView {
         <EducationBackgroundModal
           showViewModal = { showViewModal }
           viewFile = { viewFile }
+          viewFileFunc = { (viewFile) => this.setState({ viewFile, showViewModal : true })}
+          onClose = { () => this.setState({ showViewModal : false }) }
           enabledAttachmentLoader = { enabledAttachmentLoader }
           attachmentUrl = { attachmentUrl }
           enabledLoader = { enabledLoader }

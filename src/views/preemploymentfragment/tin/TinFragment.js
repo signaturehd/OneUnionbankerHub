@@ -208,6 +208,7 @@ class TinFragment extends BaseMVPView {
           tinArray.map((status) =>
           <div>
           {
+            status.status === 2 ?
             attachments.lenght !== 0 &&
               enabledLoader ?
               <center>
@@ -222,6 +223,8 @@ class TinFragment extends BaseMVPView {
                 file = { attachments }
                 title = { 'TIN' }
                 onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+              :
+              <div></div>  
           }
           {
             status.status === 2 &&

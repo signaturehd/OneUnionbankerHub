@@ -217,6 +217,7 @@ class PersonnelSignatureFragment extends BaseMVPView {
               </div>
             }
             {
+              status.status === 2 ?
               attachments.lenght !== 0 &&
                 enabledLoader ?
                 <center>
@@ -231,6 +232,8 @@ class PersonnelSignatureFragment extends BaseMVPView {
                   file = { attachments }
                   title = { 'Personnel Signature' }
                   onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+                  :
+                  <div></div>
             }
             {
               status.status === 2 &&

@@ -579,7 +579,7 @@ class PreEmploymentFragment extends BaseMVPView {
                   hideSubmitButton ?
                   <GenericButton
                     className = { 'preemp-next-button' }
-                    text = { 'Next' }
+                    text = { preEmpPage === 20 ? 'Finish' : 'Next' }
                     onClick = { () => this.incrementPage() } />
                     :
                   <div></div>

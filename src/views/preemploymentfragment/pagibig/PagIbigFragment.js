@@ -228,6 +228,7 @@ class PagIbigFragment extends BaseMVPView {
                 </div>
               }
               {
+                status.status === 2 ?
                 attachments.lenght !== 0 &&
                   enabledLoader ?
                   <center>
@@ -242,6 +243,8 @@ class PagIbigFragment extends BaseMVPView {
                     file = { attachments }
                     title = { 'Pag-IBIG' }
                     onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+                  :
+                  <div></div>
               }
               {
                 status.status === 2 &&

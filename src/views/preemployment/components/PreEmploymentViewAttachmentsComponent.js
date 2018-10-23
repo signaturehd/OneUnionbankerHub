@@ -14,7 +14,7 @@ class PreEmploymentViewAttachmentsComponent extends Component {
   constructor (props) {
     super(props)
   }
-  consolelog(file) {
+  extensionFunc(file) {
     let bool = false
     let extension = file.split(';')
 
@@ -45,7 +45,7 @@ class PreEmploymentViewAttachmentsComponent extends Component {
               <Card onClick = { () => onClick(resp.file) }>
               <div>
               {
-                this.consolelog(resp.file) ?
+                this.extensionFunc(resp.file) ?
                   <img src = { resp.file } className = { 'view-size' }/>
                   :
                   <span className = { 'view-size pdf-img' }/>

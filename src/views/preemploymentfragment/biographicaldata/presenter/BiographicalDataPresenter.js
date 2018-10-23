@@ -1,3 +1,5 @@
+import { NotifyActions } from '../../../../actions'
+import store from '../../../../store'
 import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
 import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 import AddEmploymentRequirementInteractor from '../../../../domain/interactor/preemployment/requirement/AddEmploymentRequirementInteractor'
@@ -44,6 +46,7 @@ export default class BiographicalDataPresenter {
       this.view.hideCircularLoader()
       this.view.showAttachmentsFileView(data)
     }, error => {
+      store.dispatch(NotifyActions.resetNotify())
       this.view.hideCircularLoader()
     })
   }

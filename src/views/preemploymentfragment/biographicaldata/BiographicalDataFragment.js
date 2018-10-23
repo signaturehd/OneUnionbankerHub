@@ -242,6 +242,7 @@ class BiographicalDataFragment extends BaseMVPView {
                 </div>
               }
               {
+                status.status === 2 ?
                 attachments.length !== biographicalArray.length &&
                   enabledLoader ?
                   <center>
@@ -256,6 +257,8 @@ class BiographicalDataFragment extends BaseMVPView {
                     title = { 'Biographical' }
                     file = { attachments }
                     onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+                  :
+                  <div></div>
               }
               {
                 status.status === 2 &&

@@ -154,6 +154,7 @@ class NbiClearanceFragment extends BaseMVPView {
           nbiArray.map((status) =>
             <div>
               {
+                status.status === 2 ?
                 attachments.lenght !== 0 &&
                   enabledLoader ?
                   <center>
@@ -168,6 +169,8 @@ class NbiClearanceFragment extends BaseMVPView {
                     file = { attachments }
                     title = { 'NBI Clearance Attachments' }
                     onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+                    :
+                    <div></div>
               }
               {
                 status.status === 2 &&

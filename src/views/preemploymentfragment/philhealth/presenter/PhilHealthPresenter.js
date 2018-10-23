@@ -1,3 +1,5 @@
+import { NotifyActions } from '../../../../actions'
+import store from '../../../../store'
 import AddEmploymentRequirementInteractor from '../../../../domain/interactor/preemployment/requirement/AddEmploymentRequirementInteractor'
 import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
 import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
@@ -44,6 +46,7 @@ export default class SSSPresenter {
       this.view.hideCircularLoader()
       this.view.showAttachmentsFileView(data)
     }, error => {
+      store.dispatch(NotifyActions.resetNotify())
       this.view.hideCircularLoader()
     })
   }

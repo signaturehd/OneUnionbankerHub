@@ -205,6 +205,7 @@ class BirthCertificateFragment extends BaseMVPView {
               </div>
             }
             {
+              status.status === 2 ?
               attachments.length !== birthCertifArray.length &&
                 enabledLoader ?
                 <center>
@@ -219,6 +220,8 @@ class BirthCertificateFragment extends BaseMVPView {
                 file = { attachments }
                 title = { 'Birth Certificate Attachments' }
                 onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+                :
+                <div></div>
             }
             {
               status.status === 2 &&

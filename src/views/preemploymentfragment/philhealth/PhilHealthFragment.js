@@ -231,6 +231,7 @@ class PhilHealthFragment extends BaseMVPView {
             </div>
           }
           {
+            status.status === 2 ?
             attachments.lenght !== 0 &&
               enabledLoader ?
               <center>
@@ -244,6 +245,8 @@ class PhilHealthFragment extends BaseMVPView {
               <PreEmploymentViewAttachmentsComponent
                 file = { attachments }
                 onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+              :
+              <div></div>
           }
           {
             status.status === 2 &&

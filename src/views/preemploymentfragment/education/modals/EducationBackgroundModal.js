@@ -44,6 +44,8 @@ class EducationBackgroundModal extends Component {
     const {
       attachmentUrl,
       viewFile,
+      viewFileFunc,
+      onClose,
       enabledAttachmentLoader,
       showViewModal,
       hideModalEducationFormFunc,
@@ -124,7 +126,7 @@ class EducationBackgroundModal extends Component {
           showViewModal &&
           <ViewAttachmentModal
             file = { viewFile }
-            onClose = { () => this.setState({ showViewModal : false }) }
+            onClose = { () => onClose() }
           />
         }
         {
@@ -220,7 +222,7 @@ class EducationBackgroundModal extends Component {
                 <PreEmploymentViewAttachmentsComponent
                   title = { 'TOR Attachments' }
                   file = { attachmentUrl }
-                  onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+                  onClick = { (viewFile) => viewFileFunc(viewFile) }/>
             }
           </div>
           <br/>

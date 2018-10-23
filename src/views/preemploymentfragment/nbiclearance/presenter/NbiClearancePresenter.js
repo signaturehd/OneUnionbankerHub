@@ -34,6 +34,7 @@ export default class NbiClearancePresenter {
       this.view.hideCircularLoader()
       this.view.showAttachmentsFileView(data)
     }, error => {
+      store.dispatch(NotifyActions.resetNotify())
       this.view.hideCircularLoader()
     })
   }

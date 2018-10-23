@@ -212,6 +212,7 @@ class SSSFragment extends BaseMVPView {
           sssArray.map((status) =>
           <div>
             {
+              status.status === 2 ?
               attachments.length !== sssArray.length &&
                 enabledLoader ?
                 <center>
@@ -226,6 +227,8 @@ class SSSFragment extends BaseMVPView {
                   file = { attachments }
                   title = { 'SSS' }
                   onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+                  :
+                  <div></div>
             }
             {
               status.status === 2 &&
