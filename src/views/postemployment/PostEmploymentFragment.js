@@ -9,9 +9,16 @@ import {
 
 import './styles/postEmploymentStyle.css'
 
+import PostEmploymentComponent from './components/PostEmploymentComponent'
+
 class PostEmploymentFragment extends BaseMVPView {
   constructor (props) {
     super (props)
+    this.state = {
+      showPostEmploymentComponent : true,
+      pageId : '',
+      postEmp : '',
+    }
   }
 
   componentDidMount () {
@@ -19,7 +26,25 @@ class PostEmploymentFragment extends BaseMVPView {
     this.presenter.getPostEmployment()
   }
 
+  showPercentageOfPreEmployment (postEmp) {
+    this.setState({ postEmp })
+  }
+
+  setPage (pageId) {
+    this.setState({ pageId })
+  }
+
+  showPostEmploymentData (dataRequirements) {
+    this.setState({ dataRequirements })
+  }
+
   render () {
+    const {
+      showPostEmploymentComponent,
+      dataRequirements,
+      postEmp
+    } = this.state
+
     const arrayCard = [{
       id: 1,
       name : 'Bureau of Internal Revenue(BIR) Form 1905',
@@ -32,31 +57,49 @@ class PostEmploymentFragment extends BaseMVPView {
     }]
 
     return (
-      <div className={ 'postemployment-container' }>
-        <div></div>
-        <div>
-          <div>
-            <h2 className={ 'font-size-30px text-align-left' }> Post Employment</h2>
-            <br/>
-            <h4>Below are the list of pre-employment, please complete/ comply all the requirements.</h4>
+      <div>
+        {
+          showPostEmploymentComponent &&
+          <div className={ 'postemployment-container' }>
+            <div></div>
+            <div>
+              <div>
+                <h2 className={ 'font-size-30px text-align-left' }> Post Employment</h2>
+                <br/>
+                <h4>Below are the list of pre-employment, please complete/ comply all the requirements.</h4>
+              </div>
+              <br/>
+              {
+                arrayCard.map((resp, key) =>
+                  <Card
+                    onClick = { () => {
+                      this.setPage(resp.id)
+                      this.setState({ showPostEmploymentComponent : false })
+                    } }
+                    className = { 'postemployment-padding-documents' }
+                    key = { key }>
+                    <div className = { 'postemployment-grid-x2' }>
+                      <h2> { resp.name } </h2>
+                      <div>
+                        <span className = { 'postemployment-icon postemployment-seemore-button float-right' }/>
+                      </div>
+                    </div>
+                  </Card>
+                )
+              }
+            </div>
+            <div></div>
           </div>
-          <br/>
+        }
+        <div>
           {
-            arrayCard.map((resp, key) =>
-              <Card
-                className = { 'postemployment-padding-documents' }
-                key = { key }>
-                <div className = { 'postemployment-grid-x2' }>
-                  <h2> { resp.name } </h2>
-                  <div>
-                    <span className = { 'postemployment-icon postemployment-seemore-button float-right' }/>
-                  </div>
-                </div>
-              </Card>
-            )
+            !showPostEmploymentComponent &&
+            <PostEmploymentComponent
+              postEmp = { postEmp }
+              pageId = { pageId }
+              />
           }
         </div>
-        <div></div>
       </div>
     )
   }
