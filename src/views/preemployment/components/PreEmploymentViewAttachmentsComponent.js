@@ -31,25 +31,30 @@ class PreEmploymentViewAttachmentsComponent extends Component {
   render () {
     const {
       file,
-      onClick
+      onClick,
+      title
     } = this.props
 
     return (
-      <div className = { 'grid-attachment' }>
-        {
-          file.map((resp) =>
-            <Card onClick = { () => onClick(resp.file) }>
-            <div>
-            {
-              this.consolelog(resp.file) ?
-                <img src = { resp.file } className = { 'view-size' }/>
-                :
-                <span className = { 'view-size pdf-img' }/>
-            }
-            </div>
-            </Card>
-          )
-        }
+      <div>
+        <h2 className = { 'text-align-left font-weight-bold font-size-18px' }>{ title } Attachments</h2>
+        <br/>
+        <div className = { 'grid-attachment' }>
+          {
+            file.map((resp) =>
+              <Card onClick = { () => onClick(resp.file) }>
+              <div>
+              {
+                this.consolelog(resp.file) ?
+                  <img src = { resp.file } className = { 'view-size' }/>
+                  :
+                  <span className = { 'view-size pdf-img' }/>
+              }
+              </div>
+              </Card>
+            )
+          }
+        </div>
       </div>
 
     )
@@ -57,8 +62,7 @@ class PreEmploymentViewAttachmentsComponent extends Component {
 }
 
 PreEmploymentViewAttachmentsComponent.propTypes = {
-}
-PreEmploymentViewAttachmentsComponent.defaultProps = {
+
 }
 
 export default PreEmploymentViewAttachmentsComponent

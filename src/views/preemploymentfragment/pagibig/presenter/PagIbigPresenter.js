@@ -18,10 +18,13 @@ export default class PagIbigPresenter {
   }
 
   getOnBoardingDocument (link) {
+    this.view.showDocumentLoader()
     this.getBspPdf.execute(link)
     .subscribe(data => {
       this.view.showPdfFileView(data)
+      this.view.hideDocumentLoader()
     }, error => {
+      this.view.hideDocumentLoader()
     })
   }
 

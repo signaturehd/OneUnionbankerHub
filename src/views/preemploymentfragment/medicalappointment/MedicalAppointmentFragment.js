@@ -35,6 +35,7 @@ class MedicalAppointmentFragment extends BaseMVPView {
       medicalAppointmentData : [],
       medicalAppointmentProcedureData : [],
       preferredDate : '',
+      alternativeDate : '',
       noticeResponse : '',
       showNoticeResponseModal : false,
     }
@@ -48,14 +49,25 @@ class MedicalAppointmentFragment extends BaseMVPView {
 
   showMedicalAppointment (medicalAppointmentData) {
     this.setState({ medicalAppointmentData })
+    this.setState({
+      preferredDate : moment(medicalAppointmentData.preferredDate),
+      alternativeDate : moment(medicalAppointmentData.preferredDate),
+    })
   }
 
   showMedicalAppointmentProcedure (medicalAppointmentProcedureData) {
     this.setState({ medicalAppointmentProcedureData })
   }
 
-  saveFunction (preferredDate, id) {
-    this.presenter.updateMedicalAppointment(preferredDate, id)
+  saveFunction (id) {
+    const {
+      preferredDate, alternativeDate,
+    } = this.state
+
+    this.presenter.updateMedicalAppointment(
+      moment(preferredDate).format('MM/DD/YYYY'),
+      moment(alternativeDate).format('MM/DD/YYYY'),
+      id)
   }
 
   noticeResponseModal (noticeResponse) {
@@ -66,6 +78,7 @@ class MedicalAppointmentFragment extends BaseMVPView {
     const {
       medicalAppointmentData,
       preferredDate,
+      alternativeDate,
       medicalAppointmentProcedureData,
       showNoticeResponseModal,
       noticeResponse
@@ -83,12 +96,15 @@ class MedicalAppointmentFragment extends BaseMVPView {
       showNoticeResponseModal &&
       <NoticeResponseModal
         noticeResponse = { noticeResponse }
-        onClose = { () => this.setState({ showNoticeResponseModal : false }) }
+        onClose = { () => {
+          this.props.reloadPreEmploymentForm()
+          this.setState({ showNoticeResponseModal : false })
+        } }
         />
     }
       <div className = { 'percentage-grid' }>
         <div>
-          <h2 className={ 'header-margin-default text-align-left' }>Medical Appointment</h2>
+          <h2 className={ 'header-margin-default text-align-left' }>Medical Scheduling Form</h2>
           <h2>Please fill up the form below by choosing your preferred clinic, packages, and date to complete the transaction.</h2>
         <br/>
         </div>
@@ -119,13 +135,20 @@ class MedicalAppointmentFragment extends BaseMVPView {
               text = { 'Preferred Schedule' }
               minDate = {  moment() }
               hint = { '(eg. MM/DD/YYYY)' }
-              selected = { preferredDate ? moment(preferredDate) : moment(medicalAppointmentData.date) }
+              selected = { preferredDate }
               onChange = { (e)  =>
                 this.setState({
-                  preferredDate: e ?
-                  e.format('MM/DD/YYYY') :
-                  medicalAppointmentProcedureData.date.format('MM/DD/YYYY')
+                  preferredDate:  moment(e).format('MM/DD/YYYY')
                   })
+               }
+              />
+            <DatePicker
+              text = { 'Alternative Schedule' }
+              minDate = {  moment() }
+              hint = { '(eg. MM/DD/YYYY)' }
+              selected = { alternativeDate }
+              onChange = { (e)  =>
+                this.setState({ alternativeDate : e })
                }
               />
             <br/>
@@ -154,7 +177,7 @@ class MedicalAppointmentFragment extends BaseMVPView {
           <GenericButton
             className = { 'global-button' }
             text = { 'Submit' }
-            onClick = { () => this.saveFunction(preferredDate, medicalAppointmentData.id) }
+            onClick = { () => this.saveFunction(medicalAppointmentProcedureData.id) }
             />
         </center>
       </div>

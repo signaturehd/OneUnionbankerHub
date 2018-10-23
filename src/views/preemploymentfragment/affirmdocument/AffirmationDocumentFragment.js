@@ -183,7 +183,9 @@ class AffirmationDocumentFragment extends BaseMVPView {
             <h2>{ noticeResponse }</h2>
             <br/>
             <GenericButton
-              onClick = { () => this.setState({ noticeResponseModal : false }) }
+              onClick = { () => {this.setState({ noticeResponseModal : false })
+              this.props.reloadPreEmploymentForm()
+            } }
               text = { 'Ok' }
               />
             <br/>
@@ -213,7 +215,7 @@ class AffirmationDocumentFragment extends BaseMVPView {
         showPinCodeModal &&
         <Modal
           isDismisable = { true }
-          onClose = { () => this.setState({ showPinLoaderModal : false }) }
+          onClose = { () => this.setState({ showPinCodeModal : false }) }
           >
           {
             enabledLoader ?

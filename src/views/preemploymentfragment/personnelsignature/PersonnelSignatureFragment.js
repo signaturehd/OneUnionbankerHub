@@ -25,13 +25,13 @@ import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
 import "react-sweet-progress/lib/style.css"
 import './styles/signatureStyle.css'
 
-import PersonnelSignaturePreviewModal from './modal/PersonnelSignaturePreviewModal'
+import PersonnelSignatureViewPdfComponent from './components/PersonnelSignatureViewPdfComponent'
 
 class PersonnelSignatureFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      showPdfViewModal : false,
+      showPdfViewComponents : false,
       enabledLoaderPdfModal : false,
       enabledLoader : false,
       showViewModal : false,
@@ -136,7 +136,7 @@ class PersonnelSignatureFragment extends BaseMVPView {
       noticeResponse,
       showViewModal,
       personnelFormData,
-      showPdfViewModal,
+      showPdfViewComponents,
       pdfFile,
       count,
       viewFile,
@@ -151,16 +151,10 @@ class PersonnelSignatureFragment extends BaseMVPView {
       <ResponseModal
         onClose={ () => {
           this.setState({ showNoticeResponseModal : false})
+          this.props.reloadPreEmploymentForm()
         }}
         noticeResponse={ noticeResponse }
       />
-    }
-    {
-      showPdfViewModal &&
-      <PersonnelSignaturePreviewModal
-        pdfFile = { pdfFile }
-        onClose = { () => this.setState({ showPdfViewModal: false }) }
-        />
     }
     {
       showViewModal &&
@@ -187,7 +181,7 @@ class PersonnelSignatureFragment extends BaseMVPView {
           <Card
             onClick = { () => {
               this.onCheckedPdf('/2018-10-15/12345-Employee Specimen Signature-1539596489673.pdf')
-              this.setState({ showPdfViewModal : true  })
+              this.setState({ showPdfViewComponents : true  })
               }
             }
             className = { 'abc-card' }>
@@ -199,6 +193,13 @@ class PersonnelSignatureFragment extends BaseMVPView {
             </div>
           </Card>
         </div>
+        {
+          showPdfViewComponents &&
+          <PersonnelSignatureViewPdfComponent
+            pdfFile = { pdfFile }
+            onClose = { () => this.setState({ showPdfViewComponents: false }) }
+          />
+        }
         <br/>
         <Line />
         <br/>
@@ -219,11 +220,16 @@ class PersonnelSignatureFragment extends BaseMVPView {
               attachments.lenght !== 0 &&
                 enabledLoader ?
                 <center>
-                <CircularLoader show = { enabledLoader } />
+                  <br/>
+                  <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                  <br/>
+                  <CircularLoader show = { enabledLoader } />
+                  <br/>
                 </center>
                 :
                 <PreEmploymentViewAttachmentsComponent
                   file = { attachments }
+                  title = { 'Personnel Signature' }
                   onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
             }
             {

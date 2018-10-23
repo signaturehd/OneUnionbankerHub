@@ -9,9 +9,13 @@ import {
   Checkbox,
   SingleInputModal,
   MultipleAttachments,
+  CircularLoader,
 } from '../../../../ub-components/'
 
 import moment from 'moment'
+
+import PreEmploymentViewAttachmentsComponent from '../../../preemployment/components/PreEmploymentViewAttachmentsComponent'
+import ViewAttachmentModal from '../../../preemployment/modals/ViewAttachmentModal'
 
 class ChildrenModal extends Component {
 
@@ -72,7 +76,12 @@ class ChildrenModal extends Component {
       defaultAttachmentsArray,
       countFunc,
       genericFileAttachmentArray,
-      editMode
+      editMode,
+      showViewModal,
+      viewFile,
+      attachments,
+      enabledLoaderPdfModal,
+      showPdfViewComponent
     } = this.props
 
     return (
@@ -96,6 +105,13 @@ class ChildrenModal extends Component {
               )
             }
             onClose = { () => bloodTypeFunc(false) }
+          />
+        }
+        {
+          showViewModal &&
+          <ViewAttachmentModal
+            file = { viewFile }
+            onClose = { () => this.props.closeViewAttachments() }
           />
         }
         {
@@ -171,19 +187,13 @@ class ChildrenModal extends Component {
               errorMessage = { occupationName ? '' : occupationNameErrorMessage }
               onChange = { (e) => occupationNameFunc( e.target.value) }
               />
-            <GenericInput
-              text = { 'Contact Number' }
-              value = { contact }
-              maxLength = { 12 }
-              errorMessage = { contact ? '' : contactNumberErrorMessage }
-              onChange = { (e) => contactNumberFunc(e.target.value) }
-              />
             <div className = { 'grid-global' } >
               <GenericInput
-                value = { relationship  }
-                text = { 'Relationship' }
-                errorMessage = { relationship ? '' : relationshipErrorMessage }
-                onChange = { (e) => relationshipNameFunc(e.target.value) }
+                text = { 'Contact Number' }
+                value = { contact }
+                maxLength = { 12 }
+                errorMessage = { contact ? '' : contactNumberErrorMessage }
+                onChange = { (e) => contactNumberFunc(e.target.value) }
                 />
               <GenericInput
                 value = { statusName  }
@@ -223,6 +233,29 @@ class ChildrenModal extends Component {
                 />
               </div>
             </div>
+            <br/>
+            {
+              attachments.length === 0 &&
+                enabledLoaderPdfModal ?
+                <center>
+                  <br/>
+                  <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                  <br/>
+                  <CircularLoader show = { enabledLoaderPdfModal } />
+                  <br/>
+                </center>
+                :
+                <div>
+                  {
+                    attachments.length !==0 &&
+                    <PreEmploymentViewAttachmentsComponent
+                      title = { 'Birth Certificate Attachments' }
+                      file = { attachments }
+                      onClick = { (viewFile) => this.props.viewAttachments(viewFile)  }/>
+                  }
+                </div>
+            }
+            <br/>
             <div className = { 'grid-global' }>
               <h2></h2>
               <div className = { 'text-align-right' }>

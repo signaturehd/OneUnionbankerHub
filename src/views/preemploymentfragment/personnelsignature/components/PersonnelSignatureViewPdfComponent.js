@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import {
+  Card,
   Modal,
   GenericButton,
   CircularLoader
 }  from '../../../../ub-components/'
 
-import './styles/bioComponentStyle.css'
-
-class BiographicalViewerComponent extends Component {
+class PersonnelSignatureViewPdfComponent extends Component {
   constructor (props) {
     super(props)
   }
@@ -18,17 +17,17 @@ class BiographicalViewerComponent extends Component {
     const {
       onClose,
       pdfFile,
-      bioTitle
+      title
     } = this.props
 
     return (
-      <div className = { 'cursor-pointer' }>
+      <div>
         <br/>
           <h2 className = { 'font-weight-bold text-align-center' }>
-            { bioTitle }
+            { title }
           </h2>
           <br/>
-          <div className = { 'bio-document-padding' }>
+          <div className = { 'pagibig-document-padding' }>
           {
             pdfFile ?
             <iframe
@@ -58,12 +57,12 @@ class BiographicalViewerComponent extends Component {
   }
 }
 
-BiographicalViewerComponent.propTypes = {
+PersonnelSignatureViewPdfComponent.propTypes = {
   onClose : PropTypes.func,
-  bioTitle : PropTypes.bool,
+  title : PropTypes.string,
 }
-BiographicalViewerComponent.defaultProps = {
-  bioTitle : 'Biographical Data Form'
+PersonnelSignatureViewPdfComponent.defaultProps = {
+  title : 'Pag-IBIG MDR Form'
 }
 
-export default BiographicalViewerComponent
+export default PersonnelSignatureViewPdfComponent

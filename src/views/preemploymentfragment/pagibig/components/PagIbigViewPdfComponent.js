@@ -23,8 +23,7 @@ class PagIbigViewPdfComponent extends Component {
     } = this.props
 
     return (
-      <Card>
-        <div>
+      <div>
         <br/>
           <h2 className = { 'font-weight-bold text-align-center' }>
             { title }
@@ -55,8 +54,7 @@ class PagIbigViewPdfComponent extends Component {
             </center>
           </div>
           <br/>
-        </div>
-      </Card>
+      </div>
     )
   }
 }

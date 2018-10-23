@@ -631,16 +631,10 @@ export default class HRBenefitsClient {
 
   addMedicalScheduling (
     token,
-    accounToken,
-    accountNumber,
-    releasingCenter,
     addMedicalSchedulingParam
   ) {
     return this.service.addMedicalScheduling (
       token,
-      accounToken,
-      accountNumber,
-      releasingCenter,
       addMedicalSchedulingParam)
     .pipe(ServiceErrorOperator())
   }
@@ -1068,8 +1062,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  updateMedicalAppointment (token, date, id) {
-    return this.service.updateMedicalAppointment(token, date, id)
+  updateMedicalAppointment (token, date, date2, id) {
+    return this.service.updateMedicalAppointment(token, date, date2, id)
       .pipe(ServiceErrorOperator())
   }
 
@@ -1129,6 +1123,12 @@ export default class HRBenefitsClient {
   }
 
   /*  Post Employment */
+
+  getPostEmployment (token) {
+    return this.service.getPostEmployment(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   addPostRequirement (token, requirementsParam) {
     return this.service.addPostRequirement(token, requirementParam)
       .pipe(ServiceErrorOperator())

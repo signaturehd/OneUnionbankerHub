@@ -2,6 +2,7 @@ import GetChildrenInteractor from '../../../../domain/interactor/preemployment/c
 import PutChildrenInteractor from '../../../../domain/interactor/preemployment/children/PutChildrenInteractor'
 import PostChildrenInteractor from '../../../../domain/interactor/preemployment/children/PostChildrenInteractor'
 import RemoveChildrenInteractor from '../../../../domain/interactor/preemployment/children/RemoveChildrenInteractor'
+import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 
 import childrenParam from '../../../../domain/param/AddChildrenParam'
 
@@ -62,10 +63,24 @@ export default class ChildrenPresenter {
     this.putChildrenInteractor = new PutChildrenInteractor(container.get('HRBenefitsClient'))
     this.removeChildrenInteractor = new RemoveChildrenInteractor(container.get('HRBenefitsClient'))
     this.postChildrenInteractor = new PostChildrenInteractor(container.get('HRBenefitsClient'))
+    this.getOnboardingAttachmentsInteractor = new GetOnboardingAttachmentsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
+  }
+
+  /* Retrieve image from file server */
+
+  getOnboardingAttachments (attachments) {
+    this.view.showDocumentLoader()
+    this.getOnboardingAttachmentsInteractor.execute(attachments)
+    .subscribe(data => {
+      this.view.hideDocumentLoader()
+      this.view.showAttachmentsFileView(data)
+    }, error => {
+      this.view.hideDocumentLoader()
+    })
   }
 
   /* Remove Method */
@@ -76,6 +91,7 @@ export default class ChildrenPresenter {
     .subscribe(data => {
       this.view.noticeResponseFunc(data)
       this.view.hideCircularLoader()
+      this.view.defaultValueForm()
       this.getChildren()
     }, error => {
       this.view.hideCircularLoader()
@@ -91,11 +107,23 @@ export default class ChildrenPresenter {
   }
 
   getChildren () {
+    this.view.showCircularLoader()
     this.getChildrenInteractor.execute()
     .subscribe(data => {
+      this.view.hideCircularLoader()
       this.view.showChildrenDetails(data)
+      this.view.defaultValueForm()
     }, error => {
+      this.view.hideCircularLoader()
     })
+  }
+
+  /* Load file url */
+
+  checkAttachments (file) {
+    file.attachments.map((resp) =>
+      this.getOnboardingAttachments(resp)
+    )
   }
 
   putChildren (
@@ -104,7 +132,6 @@ export default class ChildrenPresenter {
     lastName,
     middleName,
     genderId,
-    relationship,
     statusId,
     contact,
     occupationName,
@@ -122,7 +149,6 @@ export default class ChildrenPresenter {
       lastName,
       middleName,
       genderId,
-      relationship,
       statusId,
       contact,
       occupationName,
@@ -133,8 +159,9 @@ export default class ChildrenPresenter {
       defaultAttachmentsArray
     ))
     .subscribe(data => {
-      this.view.noticeResponseFunc(data)
       this.view.hideCircularLoader()
+      this.view.noticeResponseFunc(data)
+      this.view.defaultValueForm()
       this.getChildren()
     }, erro => {
       this.view.hideCircularLoader()
@@ -147,7 +174,6 @@ export default class ChildrenPresenter {
     lastName,
     middleName,
     genderId,
-    relationship,
     statusId,
     contact,
     occupationName,
@@ -164,7 +190,6 @@ export default class ChildrenPresenter {
       lastName,
       middleName,
       genderId,
-      relationship,
       statusId,
       contact,
       occupationName,
@@ -175,9 +200,10 @@ export default class ChildrenPresenter {
       defaultAttachmentsArray
     ))
     .subscribe(data => {
+      this.view.hideCircularLoader()
       this.view.noticeResponseFunc(data)
       this.getChildren()
-      this.view.hideCircularLoader()
+      this.view.defaultValueForm()
     }, erro => {
       this.view.hideCircularLoader()
     })

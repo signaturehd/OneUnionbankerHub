@@ -157,6 +157,7 @@ class BiographicalDataFragment extends BaseMVPView {
       <ResponseModal
         onClose={ () => {
           this.setState({ showNoticeResponseModal : false})
+          this.props.reloadPreEmploymentForm()
         }}
         noticeResponse={ noticeResponse }
       />
@@ -227,8 +228,6 @@ class BiographicalDataFragment extends BaseMVPView {
         <br/>
         <Line />
         <br/>
-
-        <br/>
         {
           biographicalDataFormData.length !== 0  &&
             biographicalArray.map((status) =>
@@ -243,13 +242,18 @@ class BiographicalDataFragment extends BaseMVPView {
                 </div>
               }
               {
-                attachments.lenght !== 0 &&
+                attachments.length !== biographicalArray.length &&
                   enabledLoader ?
                   <center>
-                  <CircularLoader show = { enabledLoader } />
+                    <br/>
+                    <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                    <br/>
+                    <CircularLoader show = { enabledLoader } />
+                    <br/>
                   </center>
                   :
                   <PreEmploymentViewAttachmentsComponent
+                    title = { 'Biographical' }
                     file = { attachments }
                     onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
               }

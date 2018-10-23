@@ -5,9 +5,6 @@ import RemoveSpouseInteractor from '../../../../domain/interactor/preemployment/
 import addSpouseForm from '../../../../domain/param/AddSpouseParam'
 import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 
-import { RequiredValidation }  from '../../../../utils/validate'
-import * as func from '../functions/SpouseFunctions'
-
 import store from '../../../../store'
 import { NotifyActions } from '../../../../actions'
 
@@ -75,10 +72,6 @@ export default class SpousePresenter {
     this.view = view
   }
 
-  validator (string) {
-    return func.checkValidateInput(string)
-  }
-
   removeSpouse (id) {
     this.view.showCircularLoader()
     this.removeSpouseInteractor.execute(id)
@@ -118,6 +111,7 @@ export default class SpousePresenter {
       this.getSelectedAttachments(data)
     }, error => {
       this.view.showSpouseDetails(error, false)
+      this.view.showAttachmentsFileView(null)
       this.view.hideCircularLoader()
     })
   }
@@ -142,40 +136,51 @@ export default class SpousePresenter {
     bloodType,
     healthHospitalizationPlan,
     groupLifeInsurance,
-    spouseId
+    spouseId,
+    spouseAttachmentsArray
   ) {
-    // if(!this.validator(firstName)) {
-    //   this.view.firstNameErrorMessageFunc('First Name field is required')
-    // } else if(!this.validator(middleName)) {
-    //   this.view.middleNameErrorMessageFunc('Middle Name field is required')
-    // } else if(!this.validator(lastName)) {
-    //   this.view.lastNameErrorMessageFunc('Last Name field is required')
-    // } else if(!this.validator(occupation)) {
-    //   this.view.occupationErrorMessageFunc('Occupation field is required')
-    // } else {
-    // }
-    this.view.showCircularLoader()
-    this.postSpouseInteractor.execute(addSpouseForm(
-      firstName,
-      middleName,
-      lastName,
-      birthDate,
-      occupation,
-      contact,
-      status,
-      gender,
-      bloodType,
-      healthHospitalizationPlan,
-      groupLifeInsurance,
-      spouseId
-    ))
-    .subscribe(data => {
-      this.view.hideCircularLoader()
-      this.view.noticeResponseFunc(data, true)
-      this.getSpouse()
-    }, error => {
-      this.view.hideCircularLoader()
-    })
+    if(firstName === '') {
+      this.view.firstNameErrorMessageFunc('First Name field is required')
+    } else if(middleName === '') {
+      this.view.middleNameErrorMessageFunc('Middle Name field is required')
+    } else if(lastName === '') {
+      this.view.lastNameErrorMessageFunc('Last Name field is required')
+    } else if(occupation === '') {
+      this.view.occupationErrorMessageFunc('Occupation field is required')
+    } else if(contact === '') {
+      this.view.contactNumberErrorMessageFunc('Contact Number field is required')
+    } else if(gender === '') {
+      this.view.genderErrorMessageFunc('Gender field is required')
+    } else if(birthDate === '') {
+      this.view.birthDateErrorMessageFunc('Date field is required')
+    } else if (bloodType === '') {
+      this.view.bloodTypeErrorMessageFunc('Please specify your blood type')
+    } else if (status === '') {
+      this.view.statusNameErrorMessageFunc('Please specify spouse status')
+    }  else {
+       this.view.showCircularLoader()
+       this.postSpouseInteractor.execute(addSpouseForm(
+         firstName,
+         middleName,
+         lastName,
+         birthDate,
+         occupation,
+         contact,
+         status,
+         gender,
+         bloodType,
+         healthHospitalizationPlan,
+         groupLifeInsurance,
+         spouseId,
+         spouseAttachmentsArray
+       ))
+       .subscribe(data => {
+         this.view.hideCircularLoader()
+         this.view.noticeResponseFunc(data, true)
+       }, error => {
+         this.view.hideCircularLoader()
+       })
+    }
   }
 
   putSpouseForm (

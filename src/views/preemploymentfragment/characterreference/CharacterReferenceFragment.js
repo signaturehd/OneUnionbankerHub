@@ -367,7 +367,7 @@ class CharacterReferenceFragment extends BaseMVPView {
         occupationId : resp.occupation,
         addressText : resp.address,
         fullNameText : resp.name,
-        emailText : resp.numberOfYearsKnown,
+        emailText : resp.email,
         contactNumberText : resp.contactNumber,
         relationshipText : resp.relationship,
         periodOfProfessionExperienceText : resp.numberOfYearsKnown,
@@ -388,7 +388,7 @@ class CharacterReferenceFragment extends BaseMVPView {
         occupationId : resp.occupation,
         addressText : resp.address,
         fullNameText : resp.name,
-        emailText : resp.numberOfYearsKnown,
+        emailText : resp.email,
         contactNumberText : resp.contactNumber,
         relationshipText : resp.relationship,
         periodOfProfessionExperienceText : resp.numberOfYearsKnown,
@@ -464,7 +464,10 @@ class CharacterReferenceFragment extends BaseMVPView {
         showNoticeResponse &&
         <NoticeResponseModal
           noticeResponse = { noticeResponse }
-          onClose = { () => this.setState({ showNoticeResponse : false }) }
+          onClose = { () => {
+            this.setState({ showNoticeResponse : false })
+            this.props.reloadPreEmploymentForm()
+          }}
           />
       }
       {
@@ -479,8 +482,10 @@ class CharacterReferenceFragment extends BaseMVPView {
             this.setState({ showOccupationModal : true }) }
           showRequiredFieldsFunc = { (occupationId, occupationName, showOccupationModal) =>
             this.setState({ occupationId, occupationName, showOccupationModal }) }
-          onClose = { () =>
-            this.setState({ showCharacterReferenceModal : false }) }
+          onClose = { () => {
+            this.setState({ showCharacterReferenceModal : false })
+            this.resetMode()
+          }}
 
           fullNameTextErrorMessage = { fullNameTextErrorMessage }
           addressTextErrorMessage = { addressTextErrorMessage }

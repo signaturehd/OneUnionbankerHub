@@ -34,8 +34,10 @@ class EducationBackgroundFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
+      showViewModal : false,
       updateMode : false,
       enabledLoader : false,
+      enabledAttachmentLoader : false,
       showEditSubmitButton : false,
       showEducationFormModal : false,
       showSchoolsModal : false,
@@ -51,6 +53,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       torFormData: [{
         name : 'Transcript of Records'
       }],
+      viewFile : '',
       educId : '',
       count : 2,
       schoolId : '',
@@ -58,7 +61,6 @@ class EducationBackgroundFragment extends BaseMVPView {
       studentNo : '',
       startYear : '',
       endYear : '',
-      term : '',
       degree : '',
       honor : '',
       course : '',
@@ -73,10 +75,10 @@ class EducationBackgroundFragment extends BaseMVPView {
       addressErrorMessage : '',
       degreeErrorMessage : '',
       courseErrorMessage : '',
-      termErrorMessage : '',
       honorErrorMessage : '',
       startYearErrorMessage : '',
-      endYearErrorMessage : ''
+      endYearErrorMessage : '',
+      attachmentUrl : [],
     }
   }
 
@@ -96,7 +98,6 @@ class EducationBackgroundFragment extends BaseMVPView {
       studentNo : '',
       startYear : '',
       endYear : '',
-      term : '',
       degree : '',
       honor : '',
       course : '',
@@ -112,6 +113,15 @@ class EducationBackgroundFragment extends BaseMVPView {
     this.setState({ noticeResponse , showNoticeResponseModal : true})
   }
 
+  showAttachmentsFileView (data) {
+    let arrayNew = [...this.state.attachmentUrl]
+    const objectArray = {
+      file : data
+    }
+    arrayNew.push(objectArray)
+    this.setState({ attachmentUrl : arrayNew })
+  }
+
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
   }
@@ -124,6 +134,14 @@ class EducationBackgroundFragment extends BaseMVPView {
     this.setState({ enabledLoaderPdfModal : false })
   }
 
+  showRetrievingAttachmentsLoader  () {
+    this.setState({ enabledAttachmentLoader : true })
+  }
+
+  hideRetrievingAttachmentsLoader  () {
+    this.setState({ enabledAttachmentLoader : false })
+  }
+
   onCheckedPdf () {
     this.setState({ enabledLoaderPdfModal : true })
     this.presenter.getSchoolRecordVerificationForm()
@@ -131,6 +149,15 @@ class EducationBackgroundFragment extends BaseMVPView {
 
   showPdfFileView (pdfFile) {
     this.setState({ pdfFile, showPdfViewComponent : true })
+  }
+
+  showEditModeAttachments (data) {
+    let arrayNew = [...this.state.attachmentUrl]
+    const objectArray = {
+      file : data
+    }
+    arrayNew.push(objectArray)
+    this.setState({ attachmentUrl : arrayNew })
   }
 
   showPdfFileUrl (pdfFileUrl) {
@@ -156,11 +183,6 @@ class EducationBackgroundFragment extends BaseMVPView {
     this.setState({ studentNo: validate, studentNoErrorMessage : '' })
   }
 
-  termFunc(term) {
-    const validate = func.checkNoSymbol(term)
-    this.setState({ term : validate, termErrorMessage : ''})
-  }
-
   degreeFunc(id, degree) {
     this.setState({ degree, showDegreeModal : false, degreeErrorMessage : ''})
   }
@@ -175,7 +197,7 @@ class EducationBackgroundFragment extends BaseMVPView {
   }
 
   addressFunc(address) {
-    const validate = func.checkNoSymbol(address)
+    const validate = func.checkedValidateAddressText(address)
     this.setState({ address: validate, addressErrorMessage : '' })
   }
 
@@ -225,7 +247,6 @@ class EducationBackgroundFragment extends BaseMVPView {
       studentNo,
       startYear,
       endYear,
-      term,
       degree,
       honor,
       course,
@@ -244,8 +265,6 @@ class EducationBackgroundFragment extends BaseMVPView {
       this.setState({ degreeErrorMessage : 'Required field' })
     } else if(!this.validateRequired(course)) {
       this.setState({ courseErrorMessage : 'Required field' })
-    } else if(!this.validateRequired(term)) {
-      this.setState({ termErrorMessage : 'Required field' })
     } else if(!this.validateRequired(honor)) {
       this.setState({ honorErrorMessage : 'Required field' })
     } else if(!this.validateRequired(startYear)) {
@@ -254,63 +273,49 @@ class EducationBackgroundFragment extends BaseMVPView {
       this.setState({ endYearErrorMessage : 'Required field' })
     } else {
       if(updateMode) {
-        this.presenter.putEducationSchool(
+      this.presenter.putEducationSchool(
+        educId,
+        schoolName,
+        studentNo,
+        startYear,
+        endYear,
+        degree,
+        honor,
+        course,
+        address,
+        torFormData)
+      this.setState({ showEducationFormModal : false })
+      } else {
+        this.presenter.addEducationSchool(
           educId,
           schoolName,
           studentNo,
           startYear,
           endYear,
-          term,
           degree,
           honor,
           course,
           address,
-          isUpdated,
           torFormData)
         this.setState({ showEducationFormModal : false })
-        this.setState({
-          educId : '',
-          schoolName : '',
-          studentNo : '',
-          startYear : '',
-          endYear : '',
-          term : '',
-          degree : '',
-          honor : '',
-          course : '',
-          address : '',
-          isUpdated : 0,
-          updateMode : false
-        })
-      } else {
-        this.presenter.addEducationSchool(
-          schoolName,
-          studentNo,
-          startYear,
-          endYear,
-          term,
-          degree,
-          honor,
-          course,
-          address,
-          isUpdated,
-          torFormData)
-        this.setState({ showEducationFormModal : false })
-        this.setState({
-          schoolName : '',
-          studentNo : '',
-          startYear : '',
-          endYear : '',
-          term : '',
-          degree : '',
-          honor : '',
-          course : '',
-          address : '',
-          isUpdated : 0,
-          updateMode : false
-        })
       }
     }
+  }
+
+  resetMode () {
+    this.setState({
+      educId : '',
+      schoolName : '',
+      studentNo : '',
+      startYear : '',
+      endYear : '',
+      degree : '',
+      honor : '',
+      course : '',
+      address : '',
+      isUpdated : 0,
+      updateMode : false
+    })
   }
 
   /* Delete Education */
@@ -321,8 +326,12 @@ class EducationBackgroundFragment extends BaseMVPView {
 
   render () {
     const {
+      attachmentUrl,
+      viewFile,
       updateMode,
       enabledLoader,
+      enabledAttachmentLoader,
+      showViewModal,
       showEducationFormModal,
       showSchoolsModal,
       showDegreeModal,
@@ -341,7 +350,6 @@ class EducationBackgroundFragment extends BaseMVPView {
       studentNo,
       startYear,
       endYear,
-      term,
       degree,
       honor,
       course,
@@ -356,7 +364,6 @@ class EducationBackgroundFragment extends BaseMVPView {
       addressErrorMessage,
       degreeErrorMessage,
       courseErrorMessage,
-      termErrorMessage,
       honorErrorMessage,
       startYearErrorMessage,
       endYearErrorMessage
@@ -391,6 +398,10 @@ class EducationBackgroundFragment extends BaseMVPView {
       {
         showEducationFormModal &&
         <EducationBackgroundModal
+          showViewModal = { showViewModal }
+          viewFile = { viewFile }
+          enabledAttachmentLoader = { enabledAttachmentLoader }
+          attachmentUrl = { attachmentUrl }
           enabledLoader = { enabledLoader }
           updateMode = { updateMode }
           torFormData = { torFormData }
@@ -407,7 +418,6 @@ class EducationBackgroundFragment extends BaseMVPView {
           endYearErrorMessage = { endYearErrorMessage }
           endYearFunc = { (resp) => this.endYearFunc(resp) }
           endYearValidate = { (resp) => this.endYearValidate(resp) }
-          term = { term }
           degree = { degree }
           honor = { honor }
           course = { course }
@@ -417,10 +427,8 @@ class EducationBackgroundFragment extends BaseMVPView {
           addressErrorMessage = { addressErrorMessage }
           degreeErrorMessage = { degreeErrorMessage }
           courseErrorMessage = { courseErrorMessage }
-          termErrorMessage = { termErrorMessage }
           honorErrorMessage = { honorErrorMessage }
           studentNoFunc = { (resp) => this.studentNoFunc(resp) }
-          termFunc = { (resp) => this.termFunc(resp) }
           degreeFunc = { (respId, respName) => this.degreeFunc(respId, respName) }
           honorFunc = { (resp) => this.honorFunc(resp) }
           courseFunc = { (resp) => this.courseFunc(resp) }
@@ -447,7 +455,10 @@ class EducationBackgroundFragment extends BaseMVPView {
             }
           }
           showSchoolsModal = { showSchoolsModal }
-          onCloseModal = { () => this.setState({ showSchoolsModal : false }) }
+          onCloseModal = { () => {
+            this.setState({ showSchoolsModal : false })
+            this.resetMode()
+          } }
           setSchoolFunc = { (schoolId, schoolName) =>
             this.setState({
               schoolId,
@@ -457,7 +468,7 @@ class EducationBackgroundFragment extends BaseMVPView {
             })
           }
           showSchoolsFunc = { () => this.setState({ showSchoolsModal : true }) }
-          submission = { () => this.submission() }
+          submissionFunc = { () => this.submission() }
           addAttachmentsFunc = { (attachment, tempCount) =>
             {
               const attachmentTemp = [...attachment]
@@ -482,6 +493,7 @@ class EducationBackgroundFragment extends BaseMVPView {
         <ResponseModal
           onClose={ () => {
             this.setState({ showNoticeResponseModal : false})
+            this.props.reloadPreEmploymentForm()
           }}
           noticeResponse={ noticeResponse }
         />
@@ -539,64 +551,72 @@ class EducationBackgroundFragment extends BaseMVPView {
       {
         enabledLoader ?
         <center>
+        <br/>
+        <h2>Please wait while we we&#39;re retrieving your school record/s</h2>
+        <br/>
         <CircularLoader show = { enabledLoader }/>
+        <br/>
         </center>
         :
         <div>
-        <EducationMultipleCardComponent
-          cardDataHolder = { educationData }
-          index = { index }
-          onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
-          onEditModeProperty = { (
-            educId,
-            schoolName,
-            address,
-            course,
-            degree,
-            honor,
-            studentNo,
-            term,
-            startYear,
-            endYear,
-            showEducationFormModal,
-            updateMode,
-            isUpdated) =>
-            this.setState({
-              educId,
-              schoolName,
-              address,
-              course,
-              degree,
-              honor,
-              studentNo,
-              term,
-              startYear,
-              endYear,
+        {
+          educationData.length === 0 ?
+          <div>
+            <br/>
+            <center>
+              <h2>No School Record</h2>
+            </center>
+            <br/>
+          </div>
+          :
+          <div>
+          <EducationMultipleCardComponent
+            cardDataHolder = { educationData }
+            index = { index }
+            onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
+            onEditModeProperty = { (
+              resp,
               showEducationFormModal,
               updateMode,
-              isUpdated
-            }) }
-          />
-          <br/>
-          <button
-            type = { 'button' }
-            className = { `viewmore tooltip ${ isVisible }` }
-            onClick = {
-              () => {
-                if(index === educationData.length)
-                  this.setState({ index : 4, viewMoreText : 'View more' })
-                else
-                  this.setState({ index : educationData.length, viewMoreText : 'View less' })
+              isUpdated) =>
+              {
+                this.setState({
+                  educId: resp.id,
+                  schoolName: resp.schoolName,
+                  address: resp.address,
+                  course: resp.course,
+                  degree: resp.degree,
+                  honor: resp.honor,
+                  studentNo: resp.studentNo,
+                  startYear: resp.startYear,
+                  endYear: resp.endYear,
+                  showEducationFormModal,
+                  updateMode,
+                  isUpdated ,
+                })
+                  this.presenter.checkAttachments(resp)
               }
-            }>
-            <img src={ require('../../../images/icons/horizontal.png') } />
-            <span className={ 'tooltiptext' }>{ viewMoreText }</span>
-          </button>
-          </div>
+              }
+            />
+            <br/>
+            <button
+              type = { 'button' }
+              className = { `viewmore tooltip ${ isVisible }` }
+              onClick = {
+                () => {
+                  if(index === educationData.length)
+                    this.setState({ index : 4, viewMoreText : 'View more' })
+                  else
+                    this.setState({ index : educationData.length, viewMoreText : 'View less' })
+                }
+              }>
+              <img src={ require('../../../images/icons/horizontal.png') } />
+              <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+            </button>
+            </div>
+        }
+        </div>
       }
-      <div>
-        <Card></Card>
-      </div>
     </div>
     )
   }

@@ -22,7 +22,7 @@ import ResponseModal from '../../notice/NoticeResponseModal'
 import PreEmploymentViewAttachmentsComponent from '../../preemployment/components/PreEmploymentViewAttachmentsComponent'
 import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
 
-import PagibigFormPreviewModal from './modal/PagibigFormPreviewModal'
+import PagIbigViewPdfComponent from './components/PagIbigViewPdfComponent'
 
 class PagIbigFragment extends BaseMVPView {
 
@@ -34,7 +34,7 @@ class PagIbigFragment extends BaseMVPView {
       showNoticeResponseModal : false,
       showViewModal : false,
       noticeResponse : '',
-      showPdfViewModal : false,
+      showPdfViewComponents : false,
       pdfFile: '',
       pagibigAttachment : [{
         name : 'Pag-IBIG Form'
@@ -122,7 +122,7 @@ class PagIbigFragment extends BaseMVPView {
     const {
       enabledLoader,
       enabledLoaderPdfModal,
-      showPdfViewModal,
+      showPdfViewComponents,
       showViewModal,
       pdfFile,
       count,
@@ -143,16 +143,10 @@ class PagIbigFragment extends BaseMVPView {
           <ResponseModal
             onClose={ () => {
               this.setState({ showNoticeResponseModal : false})
+              this.props.reloadPreEmploymentForm()
             }}
             noticeResponse={ noticeResponse }
           />
-        }
-        {
-          showPdfViewModal &&
-          <PagibigFormPreviewModal
-            pdfFile = { pdfFile }
-            onClose = { () => this.setState({ showPdfViewModal: false }) }
-            />
         }
         {
           enabledLoaderPdfModal &&
@@ -161,7 +155,7 @@ class PagIbigFragment extends BaseMVPView {
               <center>
                 <br/>
                 {
-                  showPdfViewComponent ?
+                  showPdfViewComponents ?
 
                   <h2>Please wait while we we&#39;re retrieving the documents</h2> :
                   <h2>Please wait while we we&#39;re validating your submitted documents</h2>
@@ -182,7 +176,7 @@ class PagIbigFragment extends BaseMVPView {
         }
         <div className = { 'percentage-grid' }>
           <div>
-          <h2 className={ 'header-margin-default text-align-left' }>Pag-IBIG</h2>
+          <h2 className={ 'header-margin-default text-align-left' }>Pag-IBIG Form</h2>
           <br/>
           <h2>Set up your Pag-IBIG</h2>
           </div>
@@ -193,12 +187,12 @@ class PagIbigFragment extends BaseMVPView {
             percent = { percentage } />
         </div>
         <br/>
-          <div className = { 'abc-grid-card' }>
+        <div className = { 'abc-grid-card' }>
           <Card
             className = { 'abc-card' }
             onClick = { () => {
               this.onCheckedPdf('/2018-09-28/12345-Pagibig Form-1538123144111.pdf')
-              this.setState({ showPdfViewModal : true  })
+              this.setState({ showPdfViewComponents : true  })
               }
             }>
             <div className = { 'abc-grid-x2' }>
@@ -209,7 +203,14 @@ class PagIbigFragment extends BaseMVPView {
               </div>
             </div>
           </Card>
-          </div>
+        </div>
+        {
+          showPdfViewComponents &&
+          <PagIbigViewPdfComponent
+            pdfFile = { pdfFile }
+            onClose = { () => this.setState({ showPdfViewComponents: false }) }
+          />
+        }
         <br/>
         <Line />
         <br/>
@@ -230,11 +231,16 @@ class PagIbigFragment extends BaseMVPView {
                 attachments.lenght !== 0 &&
                   enabledLoader ?
                   <center>
-                  <CircularLoader show = { enabledLoader } />
+                    <br/>
+                    <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                    <br/>
+                    <CircularLoader show = { enabledLoader } />
+                    <br/>
                   </center>
                   :
                   <PreEmploymentViewAttachmentsComponent
                     file = { attachments }
+                    title = { 'Pag-IBIG' }
                     onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
               }
               {

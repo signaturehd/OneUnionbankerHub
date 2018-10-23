@@ -32,7 +32,6 @@ class AffirmationEnrollPinModal extends Component {
        })
      )
    } else {
-     console.log(pin)
      // this.presenter.validateEmployeePin(pin)
     }
   }

@@ -19,12 +19,14 @@ export default class CharacterReferencePresenter {
   }
 
   deleteCharacterReference (id) {
+    this.view.showCircularLoader()
     this.deleteCharacterReferenceInteractor.execute(id)
     .subscribe(data => {
       this.view.noticeResponseModal(data)
-      this.view.callBackCharacterReference()
       this.view.resetMode()
+      this.view.hideCircularLoader()
     }, error => {
+      this.view.hideCircularLoader()
     })
   }
 
@@ -87,9 +89,9 @@ export default class CharacterReferencePresenter {
         ))
         .subscribe(data => {
           this.view.noticeResponseModal(data)
-          this.view.callBackCharacterReference()
           this.view.hideCircularLoader()
         }, error => {
+        this.view.hideCircularLoader()
         })
       }
     } else if (occupation === 3) {
@@ -120,9 +122,9 @@ export default class CharacterReferencePresenter {
         ))
         .subscribe(data => {
           this.view.noticeResponseModal(data)
-          this.view.callBackCharacterReference()
           this.view.hideCircularLoader()
         }, error => {
+        this.view.hideCircularLoader()
         })
       }
     }
@@ -187,9 +189,9 @@ export default class CharacterReferencePresenter {
         ))
         .subscribe(data => {
           this.view.noticeResponseModal(data)
-          this.view.callBackCharacterReference()
           this.view.hideCircularLoader()
         }, error => {
+        this.view.hideCircularLoader()
         })
       }
     } else if (occupation === 3) {
@@ -220,9 +222,9 @@ export default class CharacterReferencePresenter {
         ))
         .subscribe(data => {
           this.view.noticeResponseModal(data)
-          this.view.callBackCharacterReference()
           this.view.hideCircularLoader()
         }, error => {
+        this.view.hideCircularLoader()
         })
       }
     }

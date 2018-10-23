@@ -1114,6 +1114,12 @@ export default class HRBenefitsService {
 
   /* Pre-Employment */
 
+  getPreEmploymentForm (token) {
+    return this.onboardingClient.get('v1/employees/requirements?phase=1', {
+      headers: { token }
+    })
+  }
+
   getPreEmploymentStatus (token) {
     return this.onboardingClient.get('v1/employees/requirements/status', {
       headers : { token }
@@ -1223,12 +1229,6 @@ export default class HRBenefitsService {
 
     return this.onboardingClient.put('v1/employees/sss', objectParam, {
       headers : { token }
-    })
-  }
-
-  getPreEmploymentForm (token) {
-    return this.onboardingClient.get('v1/employees/requirements', {
-      headers: { token }
     })
   }
 
@@ -1360,6 +1360,7 @@ export default class HRBenefitsService {
       numberOfYearsKnown: putCharacterReferenceParam.numberOfYearsKnown,
       contactNumber: putCharacterReferenceParam.contactNumber,
       address: putCharacterReferenceParam.address,
+      email: putCharacterReferenceParam.email,
       occupation: putCharacterReferenceParam.occupation,
       company : {
         position: putCharacterReferenceParam.company.company.position,
@@ -1370,6 +1371,7 @@ export default class HRBenefitsService {
         district: putCharacterReferenceParam.company.company.district,
         baranggay: putCharacterReferenceParam.company.company.baranggay,
         city: putCharacterReferenceParam.company.company.city,
+        town: putCharacterReferenceParam.company.company.town
       }
     }
     return this.onboardingClient.put(`v1/employees/references/{${ putCharacterReferenceParam.id }}`, objectParam, {
@@ -1403,14 +1405,14 @@ export default class HRBenefitsService {
         studentNo : educationParam.studentNo,
         startYear : educationParam.startYear,
         endYear : educationParam.endYear,
-        term : educationParam.term,
         degree : educationParam.degree,
         honor : educationParam.honor,
         course : educationParam.course,
         address : educationParam.address,
-        isUpdated : educationParam.isUpdated
       }
-      educationParam.attachments.map((resp) =>
+      educationParam &&
+      educationParam.torFormData &&
+      educationParam.torFormData.map((resp) =>
         (
           formData.append(resp.name.replace('/', '-'), resp.file)
         )
@@ -1447,14 +1449,14 @@ export default class HRBenefitsService {
       studentNo : educationParam.studentNo,
       startYear : educationParam.startYear,
       endYear : educationParam.endYear,
-      term : educationParam.term,
       degree : educationParam.degree,
       honor : educationParam.honor,
       course : educationParam.course,
       address : educationParam.address,
-      isUpdated : educationParam.isUpdated
     }
-    educationParam.attachments.map((resp) =>
+    educationParam &&
+    educationParam.torFormData &&
+    educationParam.torFormData.map((resp) =>
       (
         formData.append(resp.name.replace('/', '-'), resp.file)
       )
@@ -1483,13 +1485,16 @@ export default class HRBenefitsService {
         birthDate: spouseFormParam.birthDate,
         occupation: spouseFormParam.occupation,
         status: spouseFormParam.status,
+        gender : spouseFormParam.gender,
         healthHospitalizationPlan : spouseFormParam.healthHospitalizationPlan,
         groupLifeInsurance: spouseFormParam.groupLifeInsurance,
         bloodType : spouseFormParam.bloodType,
-        contactNumber: spouseFormParam.contactNumber,
+        contactNumber: spouseFormParam.contact,
     }
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
-    spouseFormParam.attachments.map((resp, key) =>
+
+    spouseFormParam.spouseAttachmentsArray &&
+    spouseFormParam.spouseAttachmentsArray.map((resp, key) =>
       formData.append(resp.name, resp.file)
     )
     formData.append('body', JSON.stringify(objectParam))
@@ -1542,7 +1547,6 @@ export default class HRBenefitsService {
       contactNumber : childrenParam.contactNumber,
       birthDate : childrenParam.birthDate,
       gender : childrenParam.genderId,
-      relationship: childrenParam.relationship,
       occupation : childrenParam.occupationName,
       healthHospitalizationPlan: childrenParam.hospitalization,
       groupLifeInsurance : childrenParam.groupPlan,
@@ -1572,7 +1576,6 @@ export default class HRBenefitsService {
       contactNumber : childrenParam.contactNumber,
       birthDate : childrenParam.birthDate,
       gender : childrenParam.genderId,
-      relationship : childrenParam.relationship,
       occupation : childrenParam.occupationName,
       healthHospitalizationPlan: childrenParam.hospitalization,
       groupLifeInsurance : childrenParam.groupPlan,
@@ -1616,10 +1619,11 @@ export default class HRBenefitsService {
     })
   }
 
-  updateMedicalAppointment (token, date, id) {
+  updateMedicalAppointment (token, date, date2, id) {
     const objectParam = {
-      id: id,
-      preferredDate : date
+      preferredDate : [
+        date, date2
+      ]
     }
     return this.onboardingClient.put('v1/employees/medical/schedules', objectParam, {
       headers : { token }
@@ -1645,8 +1649,8 @@ export default class HRBenefitsService {
       gender : parentsParam.genderId,
       occupation : parentsParam.occupationName,
       relationship : parentsParam.relationship,
-      healthHospitalizationPlan: parentsParam.healthHospitalizationPlan,
-      groupLifeInsurance : parentsParam.groupLifeInsurance,
+      healthHospitalizationPlan: parentsParam.hospitalization,
+      groupLifeInsurance : parentsParam.groupPlan,
       status: parentsParam.statusId,
     }
 
@@ -1762,6 +1766,13 @@ export default class HRBenefitsService {
   }
 
   /*  Post Employment */
+
+  getPostEmployment (token) {
+    return this.onboardingClient.get('v1/employees/requirements?phase=2', {
+      headers: { token }
+    })
+  }
+
   addPostRequirement (token, requirementParam) {
     const formData = new FormData()
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)

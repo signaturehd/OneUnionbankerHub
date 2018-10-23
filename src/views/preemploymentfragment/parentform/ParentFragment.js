@@ -278,7 +278,6 @@ class ParentFragment extends BaseMVPView {
         hospitalization,
         groupPlan,
       )
-      this.resetValue()
     } else {
       this.presenter.addSiblingsForm(
         parentId,
@@ -295,7 +294,6 @@ class ParentFragment extends BaseMVPView {
         hospitalization,
         groupPlan,
       )
-      this.resetValue()
     }
   }
 
@@ -382,7 +380,10 @@ class ParentFragment extends BaseMVPView {
         showNoticeResponse &&
         <NoticeResponse
           noticeResponse = { noticeResponse }
-          onClose = { () => this.setState({ showNoticeResponse : false }) }
+          onClose = { () => {
+            this.setState({ showNoticeResponse : false })
+            this.prop.reloadPreEmploymentForm()
+          } }
         />
       }
         {
@@ -407,7 +408,7 @@ class ParentFragment extends BaseMVPView {
             statusNameFunc = { (showStatusModal) => this.setState({ showStatusModal }) }
             groupPlanFunc = { () => this.setState({ groupPlan : groupPlan === 1 ? 0 : 1 }) }
             hospitalizationFunc = { () => this.setState({ hospitalization : hospitalization === 1 ? 0 : 1 }) }
-            genderFunc = { (showGenderModal) => this.setShospitalizationFunctate({ showGenderModal }) }
+            genderFunc = { (showGenderModal) => this.setState({ showGenderModal }) }
             lastName = { lastName }
             firstName = { firstName }
             middleName = { middleName }
@@ -488,7 +489,7 @@ class ParentFragment extends BaseMVPView {
         <br/>
         <div>
           {
-            parentDetails.length !== 0 ?
+            parentDetails.length === 2 ?
             <h2 className = { 'font-weight-bold' }>Parent</h2>
             :
             <div className = { 'grid-global' }>
@@ -519,28 +520,24 @@ class ParentFragment extends BaseMVPView {
               parentDetails.length !== 0 &&
               <ParentComponent
                 parentDetails = { parentDetails }
-                onEditModeProperty = { (e, e1) => this.editForm(e, e1, e2) }
+                onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
                 />
             }
           </div>
         }
         <br/>
-        {
-          siblingDetails.length !== 0 ?
-          <h2 className = { 'font-weight-bold' }>Siblings</h2> :
-          <div className = { 'grid-global' }>
-            <h2 className = { 'font-weight-bold' }>Siblings</h2>
-            {
-              !enabledLoader &&
-              <div className = { 'text-align-right' }>
-                <GenericButton
-                  text = { 'Add' }
-                  onClick = { () => this.setState({ showEditModeModal : true }) }
-                />
-              </div>
-            }
-          </div>
-        }
+        <div className = { 'grid-global' }>
+          <h2 className = { 'font-weight-bold' }>Siblings</h2>
+          {
+            !enabledLoader &&
+            <div className = { 'text-align-right' }>
+              <GenericButton
+                text = { 'Add' }
+                onClick = { () => this.setState({ showEditModeModal : true }) }
+              />
+            </div>
+          }
+        </div>
         <br/>
         {
           enabledLoader  ?

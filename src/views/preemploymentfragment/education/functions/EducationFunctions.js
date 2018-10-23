@@ -13,6 +13,11 @@ export function checkedValidateText (text) {
    text : ''
 }
 
+export function checkedValidateAddressText (text) {
+  return new RequiredAlphabetValidation().isValidAddress(text) ?
+   text : ''
+}
+
 export function checkNoSymbol (symbol) {
   return ! new RequiredSymbolValidation().isValid(symbol) ?
   symbol : ''

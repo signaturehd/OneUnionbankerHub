@@ -1,24 +1,22 @@
 export default (
+  educId,
   schoolName,
   studentNo,
   startYear,
   endYear,
-  term,
   degree,
   honor,
   course,
   address,
-  isUpdated,
-  attachments) => ({
+  torFormData) => ({
+    educId,
     schoolName,
     studentNo,
     startYear,
     endYear,
-    term,
     degree,
     honor,
     course,
     address,
-    isUpdated,
-    attachments
+    torFormData
 })

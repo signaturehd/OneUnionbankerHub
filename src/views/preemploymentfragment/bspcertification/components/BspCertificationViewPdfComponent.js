@@ -23,40 +23,38 @@ class BspCertificationViewPdfComponent extends Component {
     } = this.props
 
     return (
-      <Card>
-        <div>
+      <div className = { 'cursor-pointer' }>
         <br/>
-          <h2 className = { 'font-weight-bold text-align-center' }>
-            { title }
-          </h2>
-          <br/>
-          <div className = { 'bsp-document-padding' }>
-          {
-            pdfFile ?
-            <iframe
-              src = { pdfFile }
-              style = {{
-                height: 750,
-                width: '100%'
-              }}
-            >
-            </iframe>
-            :
-            <center>File not found</center>
-          }
-          </div>
-          <br/>
-          <div>
-            <br/>
-            <center>
-            <GenericButton
-              onClick = { () => onClose() }
-              text = { 'Close' }/>
-            </center>
-          </div>
-          <br/>
+        <h2 className = { 'font-weight-bold text-align-center' }>
+          { title }
+        </h2>
+        <br/>
+        <div className = { 'bsp-document-padding' }>
+        {
+          pdfFile ?
+          <iframe
+            src = { pdfFile }
+            style = {{
+              height: 750,
+              width: '100%'
+            }}
+          >
+          </iframe>
+          :
+          <center>File not found</center>
+        }
         </div>
-      </Card>
+        <br/>
+        <div>
+          <br/>
+          <center>
+          <GenericButton
+            onClick = { () => onClose() }
+            text = { 'Close' }/>
+          </center>
+        </div>
+        <br/>
+      </div>
     )
   }
 }

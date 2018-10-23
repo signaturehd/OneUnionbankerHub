@@ -151,7 +151,7 @@ class WorkExperienceFragment extends BaseMVPView {
   }
 
   addressFunc(address) {
-    const validate = func.checkedValidateText(address)
+    const validate = func.checkedValidateTextAddress(address)
     this.setState({ address: validate, addressErrorMessage : '' })
   }
 
@@ -207,6 +207,21 @@ class WorkExperienceFragment extends BaseMVPView {
   validateRequired(value) {
     const validate = new RequiredValidation().isValid(value)
     return validate ? true : false
+  }
+
+  checkMonth (id) {
+    if(id === 1) { return 'January' }
+    else if (id ===2) { return 'February'}
+    else if (id ===3) { return 'March' }
+    else if (id ===4) { return 'April' }
+    else if (id ===5) { return 'May' }
+    else if (id ===6) { return 'June' }
+    else if (id ===7) { return 'July' }
+    else if (id ===8) { return 'August' }
+    else if (id ===9) { return 'September' }
+    else if (id ===10) { return 'October' }
+    else if (id ===11) { return 'November' }
+    else if (id ===12) { return 'December' }
   }
 
   submission() {
@@ -414,6 +429,7 @@ class WorkExperienceFragment extends BaseMVPView {
           <ResponseModal
             onClose={ () => {
               this.setState({ showNoticeResponseModal : false})
+              this.props.reloadPreEmploymentForm()
             }}
             noticeResponse={ noticeResponse }
           />
@@ -490,61 +506,77 @@ class WorkExperienceFragment extends BaseMVPView {
         {
           enabledLoader ?
           <center>
-          <CircularLoader show = { enabledLoader }/>
+            <br/>
+            <h2>Please wait while we we&#39;re retrieving your work experience record/s </h2>
+            <br/>
+            <CircularLoader show = { enabledLoader } />
+            <br/>
           </center>
           :
           <div>
-            <WorkExperienceMultipleCardComponent
-              cardDataHolder = { workExperienceCardHolder }
-              index = { index }
-              onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
-              disabled = { showEditSubmitButton }
-              onEditModeProperty = { (
-                workExpId,
-                companyName,
-                address,
-                contactNo,
-                position,
-                briefDescDuties,
-                fromMonth,
-                fromYear,
-                toMonth,
-                toYear,
-                showAddWorkExperienceModal,
-                updateMode) =>
-                this.setState({
-                  workExpId,
-                  companyName,
-                  address,
-                  contactNo,
-                  position,
-                  briefDescDuties,
-                  fromMonth,
-                  fromYear,
-                  toMonth,
-                  toYear,
-                  showAddWorkExperienceModal,
-                  updateMode
-                }) }/>
-                <button
-                  type = { 'button' }
-                  className = { `viewmore tooltip ${ isVisible }` }
-                  onClick = {
-                    () => {
-                      if(index === workExperienceCardHolder.length)
-                        this.setState({ index : 4, viewMoreText : 'View more' })
-                      else
-                        this.setState({ index : workExperienceCardHolder.length, viewMoreText : 'View less' })
-                    }
-                  }>
-                  <img src={ require('../../../images/icons/horizontal.png') } />
-                  <span className={ 'tooltiptext' }>{ viewMoreText }</span>
-                </button>
+            {
+              workExperienceCardHolder !==0 ?
+              <div>
+                <br/>
+                <center>
+                  <h2>No Work Experience Record</h2>
+                </center>
+                <br/>
+              </div>
+              :
+              <div>
+                <WorkExperienceMultipleCardComponent
+                  cardDataHolder = { workExperienceCardHolder }
+                  index = { index }
+                  onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
+                  disabled = { showEditSubmitButton }
+                  onEditModeProperty = { (
+                    workExpId,
+                    companyName,
+                    address,
+                    contactNo,
+                    position,
+                    briefDescDuties,
+                    fromMonthId,
+                    fromYear,
+                    toMonthId,
+                    toYear,
+                    showAddWorkExperienceModal,
+                    updateMode) =>
+                    this.setState({
+                      workExpId,
+                      companyName,
+                      address,
+                      contactNo,
+                      position,
+                      briefDescDuties,
+                      fromMonthId,
+                      fromMonthName: this.checkMonth(fromMonthId),
+                      fromYear,
+                      toMonthId,
+                      toMonthName: this.checkMonth(toMonthId),
+                      toYear,
+                      showAddWorkExperienceModal,
+                      updateMode
+                    }) }/>
+                    <button
+                      type = { 'button' }
+                      className = { `viewmore tooltip ${ isVisible }` }
+                      onClick = {
+                        () => {
+                          if(index === workExperienceCardHolder.length)
+                            this.setState({ index : 4, viewMoreText : 'View more' })
+                          else
+                            this.setState({ index : workExperienceCardHolder.length, viewMoreText : 'View less' })
+                        }
+                      }>
+                      <img src={ require('../../../images/icons/horizontal.png') } />
+                      <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+                    </button>
+              </div>
+            }
           </div>
         }
-        <div>
-          <Card></Card>
-        </div>
       </div>
     )
   }

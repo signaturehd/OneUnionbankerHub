@@ -131,8 +131,10 @@ class NavigationView extends BaseMVPView {
 
     if(status === 1 || status === 2) {
       this.props.history.push('/preemployment')
-    } else {
+    } else if (status === null || status === 6) {
       this.props.history.push('/')
+    } else if (status === 3 || status === 4 || status === 5) {
+      this.props.history.push('/postemployment')
     }
   }
 
@@ -140,8 +142,8 @@ class NavigationView extends BaseMVPView {
     const {
       preEmploymentStatus
     } = this.state
-
     store.dispatch(NotifyActions.resetNotify())
+    this.presenter.getPreEmploymentStatus()
     this.presenter.getLibraries()
     const mediaQuery = window.matchMedia('(min-width: 1201px)')
       if (mediaQuery.matches) {
@@ -156,7 +158,6 @@ class NavigationView extends BaseMVPView {
         this.setDisplay('none', 'block')
       }
     })
-    this.presenter.getPreEmploymentStatus()
   }
 
   setSelectedNavigation (id) {
@@ -269,41 +270,20 @@ class NavigationView extends BaseMVPView {
                 />
               }
             <Drawer >
-              {
-                preEmploymentStatus === 1 ||
-                preEmploymentStatus === 2 ?
-                <Switch>
-                  <Route path = '/preemployment' render = { props =>
-                    <PreEmploymentFragment { ...props }
-                      onBoardingSkipPage = { (e) => this.skipPage(e)}
-                      onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
-                      tempPreEmploymentModal = { tempPreEmploymentModal }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                </Switch>
-                :
                 <Switch>
                   <Route exact path = '/' render = {props =>
                     <NewsFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> }/>
-
-                  {
-                    preEmploymentStatus === 3 ||
-                    preEmploymentStatus === 4 ||
-                    preEmploymentStatus === 5 &&
                   <Route path = '/postpreemployment' render = { props =>
                     <PreEmploymentFragment { ...props }
                       tempPreEmploymentModal = { tempPreEmploymentModal }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  }
-                  {
-                    preEmploymentStatus === null &&
                   <Route path = '/preemployment' render = { props =>
                     <PreEmploymentFragment { ...props }
                       onBoardingSkipPage = { (e) => this.skipPage(e)}
                       onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
                       tempPreEmploymentModal = { tempPreEmploymentModal }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  }
                   <Route path = '/mybenefits/transactions/personal/:id' render = { props =>
                     <TransactionPersonalDetailFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
@@ -402,7 +382,6 @@ class NavigationView extends BaseMVPView {
                     <PhenomFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
-              }
             </Drawer>
           </main>
           <aside

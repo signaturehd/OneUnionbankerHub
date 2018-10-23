@@ -96,6 +96,7 @@ function  PreEmploymentFragments (props)  {
   if (pageNumber === 0) {
     return <AffirmationDocumentFragment
       percentage = { percentage }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 1) {
@@ -108,12 +109,14 @@ function  PreEmploymentFragments (props)  {
       biographicalArray = { biographicalArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       />
   } else if (pageNumber === 3) {
     return <BirthCertificateFragment
       birthCertifArray = { birthCertifArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       />
   } else if (pageNumber === 4) {
     return <EducationBackgroundFragment
@@ -122,11 +125,13 @@ function  PreEmploymentFragments (props)  {
       educationPresenter = { educationPresenter }
       educationVerificationForm = { educationVerificationForm }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       />
   } else if (pageNumber === 5) {
     return <WorkExperienceFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       />
   } else if (pageNumber === 6) {
     return <CharacterReferenceFragment
@@ -134,12 +139,14 @@ function  PreEmploymentFragments (props)  {
       characterReferenceData = { characterReferenceData }
       characterReferencePresenter = { characterReferencePresenter }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       />
   } else if (pageNumber === 7) {
     return <NbiClearanceFragment
       nbiArray = { nbiArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       />
   } else if (pageNumber === 8) {
     return <AuthorizationBackgroundCheckFragment
@@ -150,6 +157,7 @@ function  PreEmploymentFragments (props)  {
     return <BspCertificationFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       />
   } else if (pageNumber === 10) {
     return <SSSFragment
@@ -170,53 +178,62 @@ function  PreEmploymentFragments (props)  {
       bir1902Array = { bir1902Array }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
     />
   } else if (pageNumber === 13) {
     return <PhilHealthFragment
       philHealthArray = { philHealthArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       />
   } else if (pageNumber === 14) {
     return <PagibigFragment
       pagibigArray = { pagibigArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       />
   } else if (pageNumber === 15) {
     return <PagIbigLoanFragment
       pagibigLoanArray = { pagibigLoanArray }
       percentage = { percentage }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 16) {
     return <PersonnelSignatureFragment
       personnelArray = { personnelArray }
       percentage = { percentage }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   } else if (pageNumber === 17) {
     return <SpouseFormFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
     />
   } else if (pageNumber === 18) {
     return <ChildrenFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
     />
   } else if (pageNumber === 19) {
     return <ParentFragment
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
     />
   } else if (pageNumber === 20) {
     return <MedicalAppointmentFragment
       percentage = { percentage }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       onSendPageNumberToView = { onSendPageNumberToView }
     />
   } else {
-    return <PagibigFragment
+    return <MedicalAppointmentFragment
       onSendPageNumberToView = { onSendPageNumberToView }
       />
   }
@@ -397,7 +414,7 @@ class PreEmploymentFragment extends BaseMVPView {
               />
             <GenericButton
               onClick = { () => {
-                onBoardingSkipPage (null)
+                onBoardingSkipPage (7)
                 this.props.history.push('/')
                 }
               }

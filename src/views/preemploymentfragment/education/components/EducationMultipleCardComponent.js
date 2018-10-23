@@ -33,6 +33,7 @@ class EducationMultipleCardComponent extends Component {
               <Card
                 className = { 'educ-card-grid-option' }
                 key = {resp.id}>
+                <span className = { 'educ-user-icon educ-icon-unique' }/>
                 <div className = { 'grid-global' }>
                   <div>
                       <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.schoolName && resp.schoolName }</h2>
@@ -71,16 +72,7 @@ class EducationMultipleCardComponent extends Component {
                           src = { require('../../../../images/icons/baseline_edit_black_18dp.png') }
                           onClick = { () =>
                             onEditModeProperty(
-                              resp.id,
-                              resp.schoolName,
-                              resp.address,
-                              resp.course,
-                              resp.degree,
-                              resp.honor,
-                              resp.studentNo,
-                              resp.term,
-                              resp.startYear,
-                              resp.endYear,
+                              resp,
                               true,
                               true,
                               1)

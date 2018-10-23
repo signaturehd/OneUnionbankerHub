@@ -6,7 +6,7 @@ import { NotifyActions } from '../../../../actions'
 import {
   Modal,
   GenericButton,
-  MultipleFileUploader,
+  CircularLoader,
   MultipleAttachments,
   GenericInput,
   SingleInputModal,
@@ -22,6 +22,9 @@ import imageDefault from '../../../../images/profile-picture.png'
 
 import { RequiredValidation } from '../../../../utils/validate/'
 import moment from 'moment'
+
+import PreEmploymentViewAttachmentsComponent from '../../../preemployment/components/PreEmploymentViewAttachmentsComponent'
+import ViewAttachmentModal from '../../../preemployment/modals/ViewAttachmentModal'
 
 class EducationBackgroundModal extends Component {
 
@@ -39,55 +42,59 @@ class EducationBackgroundModal extends Component {
     ]
 
     const {
-    hideModalEducationFormFunc,
-    enabledLoader,
-    updateMode,
-    count,
-    schools,
-    schoolPageNumber,
-    schoolViewMore,
-    nextSchoolPageNumberFunc,
-    previousSchoolPageNumberFunc,
-    schoolFindFunc,
-    torFormData,
-    addAttachmentsFunc,
-    setSchoolFunc,
-    onCloseModal,
-    showSchoolsFunc,
-    showSchoolsModal,
-    schoolId,
-    schoolName,
-    studentNo,
-    startYear,
-    endYear,
-    term,
-    showDegreeModal,
-    showDegreeFunc,
-    setDegreeFunc,
-    degree,
-    honor,
-    course,
-    address,
-    studentNoFunc,
-    termFunc,
-    addressFunc,
-    degreeFunc,
-    courseFunc,
-    honorFunc,
-    startYearFunc,
-    startYearValidate,
-    endYearFunc,
-    endYearValidate,
-    submission,
-    schoolNameErrorMessage,
-    studentNoErrorMessage,
-    addressErrorMessage,
-    degreeErrorMessage,
-    courseErrorMessage,
-    termErrorMessage,
-    honorErrorMessage,
-    startYearErrorMessage,
-    endYearErrorMessage
+      attachmentUrl,
+      viewFile,
+      enabledAttachmentLoader,
+      showViewModal,
+      hideModalEducationFormFunc,
+      enabledLoader,
+      updateMode,
+      count,
+      schools,
+      schoolPageNumber,
+      schoolViewMore,
+      nextSchoolPageNumberFunc,
+      previousSchoolPageNumberFunc,
+      schoolFindFunc,
+      torFormData,
+      addAttachmentsFunc,
+      setSchoolFunc,
+      onCloseModal,
+      showSchoolsFunc,
+      showSchoolsModal,
+      schoolId,
+      schoolName,
+      studentNo,
+      startYear,
+      endYear,
+      term,
+      showDegreeModal,
+      showDegreeFunc,
+      setDegreeFunc,
+      degree,
+      honor,
+      course,
+      address,
+      studentNoFunc,
+      termFunc,
+      addressFunc,
+      degreeFunc,
+      courseFunc,
+      honorFunc,
+      startYearFunc,
+      startYearValidate,
+      endYearFunc,
+      endYearValidate,
+      submissionFunc,
+      schoolNameErrorMessage,
+      studentNoErrorMessage,
+      addressErrorMessage,
+      degreeErrorMessage,
+      courseErrorMessage,
+      termErrorMessage,
+      honorErrorMessage,
+      startYearErrorMessage,
+      endYearErrorMessage
     } = this.props
 
     return (
@@ -112,6 +119,13 @@ class EducationBackgroundModal extends Component {
             }
             onClose = { () => onCloseModal() }
             />
+        }
+        {
+          showViewModal &&
+          <ViewAttachmentModal
+            file = { viewFile }
+            onClose = { () => this.setState({ showViewModal : false }) }
+          />
         }
         {
           showDegreeModal &&
@@ -158,12 +172,6 @@ class EducationBackgroundModal extends Component {
           onChange = { (e) => courseFunc(e.target.value) }
           errorMessage = { courseErrorMessage }/>
         <GenericInput
-          text = { 'Term' }
-          value = { term }
-          maxLength = { 12 }
-          onChange = { (e) => termFunc(e.target.value) }
-          errorMessage = { termErrorMessage }/>
-        <GenericInput
           text = { 'Special Honor' }
           value = { honor }
           onChange = { (e) => honorFunc(e.target.value) }
@@ -198,6 +206,23 @@ class EducationBackgroundModal extends Component {
           />
           <br/>
           <Line/>
+          <div>
+            {
+                enabledAttachmentLoader ?
+                <center>
+                  <br/>
+                  <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                  <br/>
+                  <CircularLoader show = { enabledAttachmentLoader } />
+                  <br/>
+                </center>
+                :
+                <PreEmploymentViewAttachmentsComponent
+                  title = { 'TOR Attachments' }
+                  file = { attachmentUrl }
+                  onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+            }
+          </div>
           <br/>
           <div className = { 'grid-global' }>
             <h2></h2>
@@ -235,11 +260,11 @@ class EducationBackgroundModal extends Component {
               updateMode ?
               <GenericButton
                 text={ 'Update' }
-                onClick = { () => submission() }
+                onClick = { () => submissionFunc() }
                 /> :
               <GenericButton
                 text={ 'Add' }
-                onClick = { () => submission() }
+                onClick = { () => submissionFunc() }
                 />
             }
           </div>
@@ -286,7 +311,7 @@ EducationBackgroundModal.propTypes = {
   degreeFunc : PropTypes.func,
   courseFunc : PropTypes.func,
   honorFunc : PropTypes.func,
-  submission : PropTypes.func
+  submissionFunc : PropTypes.func
 }
 EducationBackgroundModal.defaultProps={
 }

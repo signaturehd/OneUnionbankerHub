@@ -201,6 +201,7 @@ class PagIbigLoanFragment extends BaseMVPView {
         <ResponseModal
           onClose={ () => {
             this.setState({ showNoticeResponseModal : false})
+            this.props.reloadPreEmploymentForm()
           }}
           noticeResponse={ noticeResponse }
         />
@@ -216,7 +217,7 @@ class PagIbigLoanFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>PAG-IBIG Loan</h2>
+            <h2 className={ 'header-margin-default text-align-left' }>Pag-IBIG Loan Form</h2>
             <h2>Setup your Pag-IBIG.</h2>
           </div>
           <Progress
@@ -260,11 +261,16 @@ class PagIbigLoanFragment extends BaseMVPView {
                 attachments.lenght !== 0 &&
                   enabledLoader ?
                   <center>
-                  <CircularLoader show = { enabledLoader } />
+                    <br/>
+                    <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                    <br/>
+                    <CircularLoader show = { enabledLoader } />
+                    <br/>
                   </center>
                   :
                   <PreEmploymentViewAttachmentsComponent
                     file = { attachments }
+                    title = { 'Pag-IBIG Loan' }
                     onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
               }
               {

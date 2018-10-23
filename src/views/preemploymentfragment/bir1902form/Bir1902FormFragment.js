@@ -151,6 +151,7 @@ class Bir1902FormFragment extends BaseMVPView {
       <ResponseModal
         onClose={ () => {
           this.setState({ showNoticeResponseModal : false})
+          this.props.reloadPreEmploymentForm()
         }}
         noticeResponse={ noticeResponse }
       />
@@ -185,7 +186,7 @@ class Bir1902FormFragment extends BaseMVPView {
         <br/>
           <div className = { 'percentage-grid' }>
             <div>
-            <h2 className={ 'header-margin-default text-align-left' }>BIR 1902 Form</h2>
+            <h2 className={ 'header-margin-default text-align-left' }>Bureau of Internal Revenue(BIR) Form</h2>
             <h2>Please download the BIR 1902 form by clicking the button below</h2>
             </div>
             <Progress

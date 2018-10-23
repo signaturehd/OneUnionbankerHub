@@ -31,8 +31,8 @@ export default class SpousePresenter {
     })
   }
 
-  updateMedicalAppointment (date, id) {
-    this.updateMedicalAppointmentInteractor.execute(date, id)
+  updateMedicalAppointment (date, date2, id) {
+    this.updateMedicalAppointmentInteractor.execute(date, date2, id)
     .subscribe(data => {
       this.view.noticeResponseModal(data)
       this.getMedicalAppointmentProcedures()

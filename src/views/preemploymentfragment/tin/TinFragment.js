@@ -98,7 +98,6 @@ class TinFragment extends BaseMVPView {
       tinAttachment : [{
         name : 'TIN ID/ BIR FORM',
     }] })
-    this.props.reloadPreEmploymentForm()
   }
 
   noticeResponseResp (noticeResponse) {
@@ -154,6 +153,7 @@ class TinFragment extends BaseMVPView {
           <ResponseModal
             onClose={ () => {
               this.setState({ showNoticeResponseModal : false})
+              this.props.reloadPreEmploymentForm()
             }}
             noticeResponse={ noticeResponse }
           />
@@ -179,8 +179,8 @@ class TinFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>TIN Form</h2>
-            <h2></h2>
+            <h2 className={ 'header-margin-default text-align-left' }>Tax Identification Number(TIN) Form</h2>
+            <h2>Please input your Taxpayer Identification Number(TIN) and attach your BIR 1902 Form or TIN Form.</h2>
           <br/>
           </div>
           <Progress
@@ -211,11 +211,16 @@ class TinFragment extends BaseMVPView {
             attachments.lenght !== 0 &&
               enabledLoader ?
               <center>
-              <CircularLoader show = { enabledLoader } />
+                <br/>
+                <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                <br/>
+                <CircularLoader show = { enabledLoader } />
+                <br/>
               </center>
               :
               <PreEmploymentViewAttachmentsComponent
                 file = { attachments }
+                title = { 'TIN' }
                 onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
           }
           {

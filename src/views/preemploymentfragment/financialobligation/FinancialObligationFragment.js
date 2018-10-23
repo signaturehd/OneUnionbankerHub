@@ -200,7 +200,10 @@ class FinancialObligationFragment extends BaseMVPView {
             <h2>{ noticeResponse }</h2>
             <br/>
             <GenericButton
-              onClick = { () => this.setState({ showFinanceModal : false }) }
+              onClick = { () => {
+                this.setState({ showFinanceModal : false })
+                this.props.reloadPreEmploymentForm()
+              } }
               text = { 'Ok' }
               />
           </center>
@@ -246,7 +249,7 @@ class FinancialObligationFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-          <h2 className={ 'header-margin-default text-align-left' }>Financial Obligation List</h2>
+          <h2 className={ 'header-margin-default text-align-left' }>Financial Obligations</h2>
           <h2>Below is the list of your financial obligations.</h2>
           </div>
           <Progress
