@@ -25,35 +25,68 @@ class RequestFlightComponent extends Component {
               <Card key = {key} className = { 'border-radius' }>
                   {
                     resp.return ?
-                    <div className = { 'request-card-grid-option' }>
-                    <div>
-                        <h2 className = { 'font-size-14px font-weight-lighter margin-bottom' }>{ resp.referenceNumber }</h2>
-                        <h2 className = { 'font-size-16px font-weight-bold margin-bottom' }>{ resp.departure.origin.location }</h2>
-                        <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.return.origin.location }</h2>
-                    </div>
-                    <div className = { 'padding-top' }>
-                        <h2 className = { 'request-airplane-icon' }></h2>
-                        <h2 className = { 'request-airplane-icon' }></h2>
-                    </div>
-                    <div>
-                        <h2 className = { 'font-size-12px font-weight-lighter margin-bottom text-align-right' }><span className = { 'border' }>{ resp.purpose.name }</span></h2>
-                        <h2 className = { 'font-size-16px font-weight-bold margin-bottom text-align-center' }>{ resp.departure.destination.location }</h2>
-                        <h2 className = { 'font-size-16px font-weight-bold text-align-center' }>{ resp.return.destination.location }</h2>
-                    </div>
+                    <div className = { 'request-card-grid-row' }>
+                      <div className = { 'request-card-grid-column' }>
+                        <div>
+                          <h2 className = { 'font-size-16px font-weight-lighter' }>{ resp.referenceNumber }</h2>
+                        </div>
+                        <div>
+                        </div>
+                        <div className = { 'align-self-center' }>
+                          <h2 className = { 'font-size-16px font-weight-lighter text-align-right margin-bottom-10px' }><span className = { 'border' }>{ resp.purpose.name }</span></h2>
+                        </div>
+                      </div>
+
+                      <div className = { 'request-card-grid-column' }>
+                        <div className = { 'align-self-center' }>
+                          <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.departure.origin.location }</h2>
+                        </div>
+                        <div className = { 'align-self-center' }>
+                          <h2 className = { 'request-airplane-icon' }></h2>
+                        </div>
+                        <div className = { 'align-self-center' }>
+                          <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.departure.destination.location }</h2>
+                        </div>
+                      </div>
+
+                      <div className = { 'request-card-grid-column' }>
+                        <div className = { 'align-self-center' }>
+                          <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.return.origin.location }</h2>
+                        </div>
+                        <div className = { 'align-self-center' }>
+                          <h2 className = { 'request-airplane-icon' }></h2>
+                        </div>
+                        <div className = { 'align-self-center' }>
+                          <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.return.destination.location }</h2>
+                        </div>
+                      </div>
                     </div>
                   :
-                  <div className = { 'request-card-grid-option' }>
-                  <div>
-                      <h2 className = { 'font-size-14px font-weight-lighter margin-bottom' }>{ resp.referenceNumber }</h2>
-                      <h2 className = { 'font-size-16px font-weight-bold margin-bottom' }>{ resp.departure.origin.location }</h2>
-                  </div>
-                  <div className = { 'padding-top' }>
-                      <h2 className = { 'request-airplane-icon' }></h2>
-                  </div>
-                  <div>
-                      <h2 className = { 'font-size-12px font-weight-lighter margin-bottom text-align-right' }><span className = { 'border' }>{ resp.purpose.name }</span></h2>
-                      <h2 className = { 'font-size-16px font-weight-bold margin-bottom text-align-center' }>{ resp.departure.destination.location }</h2>
-                  </div>
+                  <div className = { 'request-card-grid-row' }>
+                    <div className = { 'request-card-grid-column' }>
+                      <div>
+                        <h2 className = { 'font-size-16px font-weight-lighter' }>{ resp.referenceNumber }</h2>
+                      </div>
+                      <div>
+                      </div>
+                      <div className = { 'align-self-center' }>
+                        <h2 className = { 'font-size-16px font-weight-lighter text-align-right margin-bottom-10px' }><span className = { 'border' }>{ resp.purpose.name }</span></h2>
+                      </div>
+                    </div>
+
+                    <div className = { 'request-card-grid-column' }>
+                      <div className = { 'align-self-center' }>
+                        <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.departure.origin.location }</h2>
+                      </div>
+                      <div className = { 'align-self-center' }>
+                        <h2 className = { 'request-airplane-icon' }></h2>
+                      </div>
+                      <div className = { 'align-self-center' }>
+                        <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.departure.destination.location }</h2>
+                      </div>
+                    </div>
+
+                    <div></div>
                   </div>
                 }
               </Card>

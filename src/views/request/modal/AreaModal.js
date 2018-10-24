@@ -19,13 +19,12 @@ class AreaModal extends Component {
       onClose,
       enabledLoader,
       label,
-      schoolPageNumber,
+      pageNumber,
       className,
       selectedArray,
-      schoolViewMore,
-      nextSchoolPageNumberFunc,
-      previousSchoolPageNumberFunc,
-      schoolFindFunc
+      nextPageNumberFunc,
+      previousPageNumberFunc,
+      findFunc
     } = this.props
 
     const isVisible = (inputArray && inputArray.length > 4) ? '' : 'hide'
@@ -41,7 +40,7 @@ class AreaModal extends Component {
         <div className = { 'select-grid' }>
         <GenericInput
           text = { 'Search' }
-          onChange = { (e) => schoolFindFunc(e.target.value) }
+          onChange = { (e) => findFunc(e.target.value) }
         />
         {
           enabledLoader ?
@@ -50,14 +49,14 @@ class AreaModal extends Component {
           </center>
           :
           inputArray.length !== 0 &&
-          inputArray.map((inputs, key) => (
+          inputArray.areaLists.map((inputs, key) => (
             <div>
               <GenericButton
                 className = { 'single-input-modal-button' }
                 key = { key }
                 className = { 'select-button' }
-                onClick = { () => selectedArray(inputs.id, inputs.name) }
-                text = { inputs.name }
+                onClick = { () => selectedArray(inputs.id, inputs.location) }
+                text = { inputs.location }
               />
               <br/>
             </div>
@@ -65,17 +64,17 @@ class AreaModal extends Component {
         }
         <div className = { 'school-modal-grid text-align-center' }>
           {
-            schoolPageNumber !== 1 &&
+            pageNumber !== 1 &&
             <GenericButton
               text = { 'Previous' }
               type = { 'button' }
-              onClick = { () => previousSchoolPageNumberFunc() }
+              onClick = { () => previousPageNumberFunc(pageNumber) }
             />
           }
           <GenericButton
             text = { 'Next' }
             type = { 'button' }
-            onClick = { () => nextSchoolPageNumberFunc() }
+            onClick = { () => nextPageNumberFunc(pageNumber) }
           />
         </div>
         </div>
@@ -86,7 +85,6 @@ class AreaModal extends Component {
 
 AreaModal.propTypes = {
   label : PropTypes.string,
-  schoolPageNumberFunc : PropTypes.func,
   onClose : PropTypes.func,
   selectedArray : PropTypes.func,
   inputArray : PropTypes.arrayOf(
@@ -103,7 +101,7 @@ AreaModal.propTypes = {
 }
 
 AreaModal.defaultProps = {
-  label : 'School',
+  label : 'Area',
   inputArray : [],
 }
 

@@ -913,8 +913,30 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  getTravels (token) {
-    return this.service.getTravels(token)
+  getTravels (token, statusId) {
+    return this.service.getTravels(token, statusId)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addRequestOneWay (
+    token,
+    requestParam,
+    ) {
+    return this.service.addRequestOneWay(
+      token,
+      requestParam,
+    )
+    .pipe(ServiceErrorOperator())
+  }
+
+  addRequestRoundTrip (
+    token,
+    requestParam,
+    ) {
+    return this.service.addRequestRoundTrip(
+      token,
+      requestParam,
+    )
     .pipe(ServiceErrorOperator())
   }
 

@@ -3,7 +3,7 @@ export default class GetTravelsInteractor {
     this.client = client
   }
 
-  execute () {
-    return this.client.getTravels(this.client.getToken())
+  execute (statusId) {
+    return this.client.getTravels(this.client.getToken(), statusId)
   }
 }

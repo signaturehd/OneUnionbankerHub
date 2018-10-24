@@ -1213,8 +1213,48 @@ export default class HRBenefitsService {
     })
   }
 
-  getTravels (token) {
+  getTravels (token, statusId) {
+    // return this.apiClient.get(`v1/travels?status=${statusId}`, {
     return this.apiClient.get('v1/travels', {
+      headers : { token }
+    })
+  }
+
+  addRequestOneWay (token, requestParam) {
+    const object = {
+      purposeId : requestParam.purposeId,
+      departure: {
+        origin: requestParam.departureOriginId,
+        destination: requestParam.departureDestinationId,
+        date: requestParam.departureDate,
+        time: requestParam.departureTime,
+        remarks: requestParam.departureRemarks
+      }
+    }
+    return this.apiClient.post('v1/travels', object, {
+      headers : { token }
+    })
+  }
+
+  addRequestRoundTrip (token, requestParam) {
+    const object = {
+      purposeId : requestParam.purposeId,
+      departure: {
+        origin: requestParam.departureOriginId,
+        destination: requestParam.departureDestinationId,
+        date: requestParam.departureDate,
+        time: requestParam.departureTime,
+        remarks: requestParam.departureRemarks
+      },
+      return: {
+        origin: requestParam.returnOriginId,
+        destination: requestParam.returnDestinationId,
+        date: requestParam.returnDate,
+        time: requestParam.returnTime,
+        remarks: requestParam.returnRemarks
+      }
+    }
+    return this.apiClient.post('v1/travels', object, {
       headers : { token }
     })
   }

@@ -11,7 +11,7 @@ export default class LiquidationPresenter {
 
   getTravels () {
     this.view.showCircularLoader()
-    this.getTravelsInteractor.execute()
+    this.getTravelsInteractor.execute(3)
       .subscribe(travel => {
           this.view.hideCircularLoader()
           this.view.getTravels(travel)

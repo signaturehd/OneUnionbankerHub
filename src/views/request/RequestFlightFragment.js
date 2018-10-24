@@ -21,6 +21,8 @@ import {
 import RequestFlightComponent from './components/RequestFlightComponent'
 import AreaModal from './modal/AreaModal'
 
+import ResponseModal from '../notice/NoticeResponseModal'
+
 import { format } from '../../utils/numberUtils'
 import moment from 'moment'
 
@@ -36,8 +38,9 @@ class RequestFlightFragment extends BaseMVPView {
       showRequestModal : false,
       showAreaModal : false,
       showPurposeModal : false,
-      origin : false,
-      rturn : false,
+      showNoticeResponseModal : false,
+      areaSwitch : 0,
+      noticeResponse : '',
       typeOfFlight : '',
       purposeId : '',
       purposeName : '',
@@ -73,7 +76,7 @@ class RequestFlightFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    this.presenter.getAreaData()
+    this.presenter.getAreaData(this.state.pageNumber, this.state.findArea)
     this.presenter.getTravels()
   }
 
@@ -89,8 +92,8 @@ class RequestFlightFragment extends BaseMVPView {
     this.setState({ departureDate : date.format('MM-DD-YYYY') })
   }
 
-  departureTimeFunc (time) {
-    this.setState({ departureTime : time })
+  departureTimeFunc (departureTime) {
+    this.setState({ departureTime })
   }
 
   departureRemarksFunc (departureRemarks) {
@@ -109,8 +112,8 @@ class RequestFlightFragment extends BaseMVPView {
     this.setState({ returnDate : date.format('MM-DD-YYYY') })
   }
 
-  returnTimeFunc (time) {
-    this.setState({ returnTime : time })
+  returnTimeFunc (returnTime) {
+    this.setState({ returnTime })
   }
 
   returnRemarksFunc (returnRemarks) {
@@ -125,55 +128,90 @@ class RequestFlightFragment extends BaseMVPView {
     this.setState({ requestFlightArray })
   }
 
+  noticeResponse (noticeResponse) {
+    this.setState({ noticeResponse, showNoticeResponseModal : true })
+  }
+
+  submit () {
+    const {
+      purposeId,
+      departureOriginId,
+      departureDestinationId,
+      departureDate,
+      departureTime,
+      departureRemarks,
+      returnOriginId,
+      returnDestinationId,
+      returnDate,
+      returnTime,
+      returnRemarks,
+      typeOfFlight
+    } = this.state
+
+    this.presenter.addRequestFlight(
+      purposeId,
+      departureOriginId,
+      departureDestinationId,
+      departureDate,
+      departureTime,
+      departureRemarks,
+      returnOriginId,
+      returnDestinationId,
+      returnDate,
+      returnTime,
+      returnRemarks,
+      typeOfFlight
+    )
+  }
+
   resetValue () {
-    this.setState({ typeOfFlight : '' })
-    this.setState({ purposeId : '' })
-    this.setState({ purposeName : '' })
-    this.setState({ departureOriginId : '' })
-    this.setState({ departureDestinationId : '' })
-    this.setState({ departureOrigin : '' })
-    this.setState({ departureDestination : '' })
-    this.setState({ departureDate : '' })
-    this.setState({ departureTime : '' })
-    this.setState({ departureRemarks : '' })
-    this.setState({ returnOriginId : '' })
-    this.setState({ returnDestinationId : '' })
-    this.setState({ returnOrigin : '' })
-    this.setState({ returnDestination : '' })
-    this.setState({ returnDate : '' })
-    this.setState({ returnTime : '' })
-    this.setState({ returnRemarks : '' })
-    this.setState({ pageNumber : 1 })
-    this.setState({ findArea : '' })
+    this.setState({
+      typeOfFlight : '',
+      purposeId : '',
+      purposeName : '',
+      departureOriginId : '',
+      departureDestinationId : '',
+      departureOrigin : '',
+      departureDestination : '',
+      departureDate : '',
+      departureTime : '',
+      departureRemarks : '',
+      returnOriginId : '',
+      returnDestinationId : '',
+      returnOrigin : '',
+      returnDestination : '',
+      returnDate : '',
+      returnTime : '',
+      returnRemarks : '',
+      pageNumber : 1,
+      findArea : ''
+    })
   }
 
   setAreaFunc(areaId, areaName) {
-    const { origin, rturn } = this.state
-    if(rturn) {
-      origin ?
-      this.setState({
-        returnOriginId : areaId,
-        returnOrigin : areaName,
-        showAreaModal : false
-      })
-      :
-      this.setState({
-        returnDestinationId : areaId,
-        returnDestination : areaName,
-        showAreaModal : false
-      })
-    }
-    else {
-      origin ?
+    const { areaSwitch } = this.state
+    if(areaSwitch === 1) {
       this.setState({
         departureOriginId : areaId,
         departureOrigin : areaName,
         showAreaModal : false
       })
-      :
+    } else if(areaSwitch === 2) {
       this.setState({
         departureDestinationId : areaId,
         departureDestination : areaName,
+        showAreaModal : false
+      })
+    } else if(areaSwitch === 3) {
+      this.setState({
+        returnOriginId : areaId,
+        returnOrigin : areaName,
+        showAreaModal : false
+      })
+    } else if(areaSwitch === 4) {
+      this.setState({
+        returnDestinationId : areaId,
+        returnDestination : areaName,
         showAreaModal : false
       })
     }
@@ -193,8 +231,9 @@ class RequestFlightFragment extends BaseMVPView {
       showRequestModal,
       showAreaModal,
       showPurposeModal,
-      origin,
-      rturn,
+      showNoticeResponseModal,
+      noticeResponse,
+      areaSwitch,
       typeOfFlight,
       purposeId,
       purposeName,
@@ -223,6 +262,15 @@ class RequestFlightFragment extends BaseMVPView {
     return (
       <div>
         { super.render() }
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false })
+            }}
+            noticeResponse={ noticeResponse }
+          />
+        }
         {
           showRequestModal &&
           <Modal
@@ -269,19 +317,23 @@ class RequestFlightFragment extends BaseMVPView {
                 showAreaModal &&
                 <AreaModal
                   enabledLoader = { enabledLoader }
-                  label = { 'School' }
+                  label = { 'Area' }
                   pageNumber = { pageNumber }
-                  previousSchoolPageNumberFunc = { () => {
+                  nextPageNumberFunc = { (resp) => {
+                      this.setState({ pageNumber : pageNumber + 1 })
+                      this.presenter.getAreaData(resp, findArea)
+                    }
+                  }
+                  previousPageNumberFunc = { (resp) => {
                       this.setState({ pageNumber : pageNumber - 1 })
-                      this.presenter.getAreaData(pageNumber)
+                      this.presenter.getAreaData(resp, findArea)
                     }
                   }
-                  schoolFindFunc = { (resp) => {
+                  findFunc = { (resp) => {
                       this.setState({ findArea : resp })
-                      this.presenter.getAreaData(pageNumber, findArea)
+                      this.presenter.getAreaData(pageNumber, resp)
                     }
                   }
-                  findFunc = { (resp) => FindFunc (resp) }
                   inputArray = { areaArray }
                   selectedArray = { (areaId, areaName) =>
                     this.setAreaFunc(areaId, areaName)
@@ -300,12 +352,12 @@ class RequestFlightFragment extends BaseMVPView {
                 <GenericInput
                   text = { 'Origin' }
                   value = { departureOrigin }
-                  onClick = { () => this.setState({ showAreaModal : true, origin : true, rturn : false }) }
+                  onClick = { () => this.setState({ showAreaModal : true, areaSwitch : 1, rturn : false }) }
                 />
                 <GenericInput
                   text = { 'Destination' }
                   value = { departureDestination }
-                  onClick = { () => this.setState({ showAreaModal : true, origin : true, rturn : false}) }
+                  onClick = { () => this.setState({ showAreaModal : true, areaSwitch : 2, rturn : true}) }
                 />
               </div>
               <div className = { 'request-grid-option' }>
@@ -336,12 +388,12 @@ class RequestFlightFragment extends BaseMVPView {
                   <GenericInput
                     text = { 'Origin' }
                     value = { returnOrigin }
-                    onClick = { () => this.setState({ showAreaModal : true, origin : true, rturn : true}) }
+                    onClick = { () => this.setState({ showAreaModal : true, areaSwitch : 3, rturn : true}) }
                   />
                   <GenericInput
                     text = { 'Destination' }
                     value = { returnDestination }
-                    onClick = { () => this.setState({ showAreaModal : true, origin : false, rturn : true}) }
+                    onClick = { () => this.setState({ showAreaModal : true, areaSwitch : 4, rturn : true}) }
                   />
                 </div>
                 <div className = { 'request-grid-option' }>
@@ -368,15 +420,20 @@ class RequestFlightFragment extends BaseMVPView {
             <div className = { 'text-align-center' }>
               <GenericButton
                 text = { 'Continue' }
+                onClick = { () => {
+                    this.setState({ showRequestModal : false })
+                    this.submit()
+                  }
+                }
               />
             </div>
           </Modal>
         }
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'font-size-30px text-align-left' }>List of Request Flights</h2>
+            <h2 className={ 'font-size-30px text-align-left' }>Flight Requests</h2>
             <br/>
-            <h4>Below are the list of your requests flights</h4>
+            <h4>Below are the list of your requested flights</h4>
           </div>
         </div>
         <br/>
@@ -395,8 +452,8 @@ class RequestFlightFragment extends BaseMVPView {
             }
 
             <FloatingActionButton
-              text="+"
-              onClick={ () => this.setState({ showRequestModal : true })
+              image = { true }
+              onClick = { () => this.setState({ showRequestModal : true })
               }
             />
       </div>
