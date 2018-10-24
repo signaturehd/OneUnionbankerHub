@@ -43,6 +43,7 @@ class EventsBudgetFormComponent extends Component {
       viewLess,
       eventBudgetData,
       events,
+      venue,
       submitPresenter
     } = this.props
 
@@ -61,35 +62,49 @@ class EventsBudgetFormComponent extends Component {
             value = { events && events.name ? events.name : celebrationText }
           />
           <GenericInput
-            text = { 'Venue' }
+            text = { 'Venue Name' }
             onChange = { (e) => venueTextFunc(e.target.value) }
-            value = { venueText }
+            value = { venue && venue.name ? venue.name :  venueText }
           />
           <GenericInput
             text = { 'Address' }
             onChange = { (e) => addressTextFunc(e.target.value) }
-            value = { addressText }
+            value = { venue && venue.address ? venue.address : addressText }
           />
           <GenericInput
             text = { 'Region' }
             onChange = { (e) => regionTextFunc(e.target.value) }
-            value = { regionText }
+            value = { venue && venue.region ? venue.region : regionText }
           />
           <GenericInput
             text = { 'Province' }
             onChange = { (e) => provinceTextFunc(e.target.value) }
-            value = { provinceText }
+            value = { venue && venue.province ? venue.province : provinceText }
           />
           <GenericInput
             text = { 'City' }
             onChange = { (e) => cityTextFunc(e.target.value) }
-            value = { cityText }
+            value = { venue && venue.city ? venue.city : cityText }
           />
           <GenericInput
             text = { 'Amount' }
             onChange = { (e) => amountTextFunc(e.target.value) }
             value = { events && events.amount ? format(events.amount) : format(amountText) }
           />
+          <GenericInput
+            text = { 'Events Date' }
+            onChange = { (e) => eventDateTextFunc(e.target.value) }
+            value = { events && events.targetDate ? events.targetDate : format(amountText) }
+          />
+          <DatePicker
+            selected = { preferredDate }
+            disabled = { showEditSubmitButton }
+            onChange = { (e) => dateFunc(e) }
+            maxDate = { moment() }
+            readOnly
+            text = { 'Events Date' }
+            errorMessage = { dateErrorMessage }
+            />
           <br/>
 
           <Attendees
