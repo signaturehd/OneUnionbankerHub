@@ -69,11 +69,17 @@ class EventsFormComponentAttendeesComponent extends Component {
             eventBudgetData &&
             eventBudgetData.attendees &&
             eventBudgetData.attendees.slice(0, index).map((attend, key) =>
-              <EventsBudgetDepartmentComponent
-                attend = { attend }
-                key = { key }
-                check = { this.checkIfTrue(attend) }
-            />
+              {
+                const setDepartmentKey = key
+                return (
+                  <EventsBudgetDepartmentComponent
+                    setDepartmentKey = { setDepartmentKey }
+                    attend = { attend }
+                    key = { key }
+                    check = { this.checkIfTrue(attend) }
+                  />
+                )
+              }
             )
           }
         </div>
