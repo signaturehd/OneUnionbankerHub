@@ -39,6 +39,7 @@ class SettingsFragment extends BaseMVPView {
      staffLoader : false,
      noticeResponseModal : false,
      descriptionEditMode : false,
+     enabledStaffLoader : false,
      noticeResponse : '',
      descriptionText : '',
      profileBackground : []
@@ -96,6 +97,14 @@ class SettingsFragment extends BaseMVPView {
     this.setState({ showChangePINModal })
   }
 
+  hideStaffLoader () {
+    this.setState({ enabledStaffLoader : false, showStaffAccountsModal : false })
+  }
+
+  showStaffLoader () {
+    this.setState({ enabledStaffLoader : true })
+  }
+
   submitUpdatedPIN (uniqueOldPIN, uniqueNewPIN) {
     const objectPINParam = {
       oldCode : uniqueOldPIN,
@@ -141,6 +150,7 @@ class SettingsFragment extends BaseMVPView {
       noticeResponseModal,
       profileBackground,
       descriptionEditMode,
+      enabledStaffLoader,
     }=this.state
 
     return (
@@ -169,6 +179,7 @@ class SettingsFragment extends BaseMVPView {
            profile={ profile }
            lineManager={ lineManager }
            profileDependent={ profileDependent }
+           enabledStaffLoader = { enabledStaffLoader }
            rank={ rank }
            enabledLoader = { enabledLoader }
            staffLoader = { staffLoader }

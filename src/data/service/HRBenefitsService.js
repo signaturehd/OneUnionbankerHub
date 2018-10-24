@@ -1085,7 +1085,7 @@ export default class HRBenefitsService {
   addStaffAccounts (token, staffAccountsParam) {
     const staffAccountObject = {
       employeeName : staffAccountsParam.fullName,
-      accounts: {
+      account: {
         name: staffAccountsParam.fullName,
         number: staffAccountsParam.accountNumber,
         type: staffAccountsParam.type,
@@ -1099,11 +1099,10 @@ export default class HRBenefitsService {
   }
 
   updateStaffAccounts (token, staffAccountsParam) {
-    console.log(staffAccountsParam)
     const staffAccontObject = {
       employeeName : staffAccountsParam.fullName,
-      accounts: {
-        accountNumber: staffAccountsParam.accountNumber,
+      account: {
+        number: staffAccountsParam.accountNumber,
       },
       sequence : staffAccountsParam.sequence
     }

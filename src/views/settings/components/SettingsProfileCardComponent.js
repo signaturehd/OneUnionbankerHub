@@ -68,7 +68,8 @@ class SettingsProfileCardComponent extends Component {
       showDevicesModal,
       showDevicesModalFunc,
       onUpdateStaffAccountsFunc,
-      getForConfirmation
+      getForConfirmation,
+      enabledStaffLoader
     } = this.props
 
 
@@ -130,6 +131,7 @@ class SettingsProfileCardComponent extends Component {
         {
           showStaffAccountsModal &&
           <StaffAccountsModal
+            enabledStaffLoader = { enabledStaffLoader }
             staffLoader = { staffLoader }
             staffAccounts = { staffAccounts }
             employeeNumber = { profile.employeeNumber }

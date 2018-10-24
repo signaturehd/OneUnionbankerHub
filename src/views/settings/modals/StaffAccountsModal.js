@@ -112,6 +112,8 @@ class StaffAccountsModal extends Component {
       staffAccounts,
       onClickEmployeeConfirmation,
       onUpdateStaffAccounts,
+      hideStaffAccountModalFunc ,
+      enabledStaffLoader,
     }=this.props
 
     const {
@@ -193,53 +195,68 @@ class StaffAccountsModal extends Component {
         {
           showAddComponent ?
           <div>
-            <h2 className={ 'font-weight-normal' }>ADD STAFF ACCOUNTS</h2>
-            <br/>
-              <GenericInput
-                text = { 'Account Number' }
-                maxLength = { 12 }
-                value = { accountNumber }
-                type = { 'number' }
-                onChange = { (e) => this.setState({ accountNumber : e.target.value }) }
-                />
-              <GenericInput
-                text = { 'Account Type' }
-                value = { accountType }
-                onClick = { () => this.setState({ showTypeModal : true }) }
-                />
-              <GenericInput
-                text = { 'Account Capacity' }
-                value = { accountCapacity }
-                onClick = { () => this.setState({ showCapacityModal : true }) }
-                />
-              <GenericInput
-                text = { 'Account Remarks' }
-                maxLength = { 30 }
-                value = { accountRemarks }
-                onChange = { (e) => this.setState({ accountRemarks : e.target.value }) }
-                />
-              <br/>
-            <div className = { 'grid-global' }>
-              <GenericButton
-                text = { 'Cancel' }
-                onClick = { () => this.setState({ showAddComponent : false }) }
-                />
-              <GenericButton
-                text = { 'Save' }
-                onClick = { () => {
-                  onClickEmployeeConfirmation(
-                    name,
-                    accountNumber,
-                    accountTypeCode,
-                    accountCapacityCode,
-                    accountRemarks,
-                  )
-                  this.setState({ showAddComponent : false })
-                } }
-                />
-            </div>
-            <br/>
-          </div> :
+            {
+              enabledStaffLoader ?
+
+              <center>
+                <br/>
+                <h2>Please wait while we we&#39;re validating the creation of staff accounts</h2>
+                <br/>
+                <CircularLoader  show = { enabledStaffLoader }/>
+                <br/>
+              </center> :
+              <div>
+                <h2 className={ 'font-weight-normal' }>ADD STAFF ACCOUNTS</h2>
+                <br/>
+                  <GenericInput
+                    text = { 'Account Number' }
+                    maxLength = { 12 }
+                    value = { accountNumber }
+                    type = { 'number' }
+                    onChange = { (e) => this.setState({ accountNumber : e.target.value }) }
+                    />
+                  <GenericInput
+                    text = { 'Account Type' }
+                    value = { accountType }
+                    onClick = { () => this.setState({ showTypeModal : true }) }
+                    />
+                  <GenericInput
+                    text = { 'Account Capacity' }
+                    value = { accountCapacity }
+                    onClick = { () => this.setState({ showCapacityModal : true }) }
+                    />
+                  <GenericInput
+                    text = { 'Account Remarks' }
+                    maxLength = { 30 }
+                    value = { accountRemarks }
+                    onChange = { (e) => this.setState({ accountRemarks : e.target.value }) }
+                    />
+                  <br/>
+                <div className = { 'grid-global' }>
+                  <GenericButton
+                    text = { 'Cancel' }
+                    onClick = { () => this.setState({ showAddComponent : false }) }
+                    />
+                  <GenericButton
+                    text = { 'Save' }
+                    onClick = { () => {
+                      onClickEmployeeConfirmation(
+                        name,
+                        accountNumber,
+                        accountTypeCode,
+                        accountCapacityCode,
+                        accountRemarks,
+                      )
+                      this.setState({ showAddComponent : false })
+                    } }
+                    />
+                </div>
+                <br/>
+              </div>
+            }
+
+          </div>
+          :
           <div>
             <div>
             <br/>

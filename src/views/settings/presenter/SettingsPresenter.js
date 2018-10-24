@@ -78,6 +78,7 @@ export default class SettingsPresenter {
      capacity,
      remarks
    ) {
+     this.view.showStaffLoader()
      this.postStaffAccountsInteractor.execute(addStaffAcountsParam(
        fullName,
        accountNumber,
@@ -87,8 +88,10 @@ export default class SettingsPresenter {
        '',
      ))
      .subscribe(data => {
+       this.view.hideStaffLoader()
        this.view.noticeResponseModal(data.message)
      }, error => {
+       this.view.hideStaffLoader()
      })
    }
 
@@ -97,6 +100,7 @@ export default class SettingsPresenter {
      accountNumber,
      sequence
    ) {
+     this.view.showStaffLoader()
      this.updateStaffAccountsInteractor.execute(addStaffAcountsParam(
        fullName,
        accountNumber,
@@ -106,8 +110,10 @@ export default class SettingsPresenter {
        sequence
      ))
      .subscribe(data => {
+       this.view.hideStaffLoader()
        this.view.noticeResponseModal(data.message)
      }, error => {
+       this.view.hideStaffLoader()
      })
    }
 
