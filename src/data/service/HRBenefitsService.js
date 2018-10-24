@@ -1240,6 +1240,7 @@ export default class HRBenefitsService {
       region: addEventParam.region,
       province: addEventParam.province,
       city: addEventParam.city,
+      targetDate : addEventParam.date,
       attendees: addEventParam.attendees,
     }
     return this.apiClient.post('v1/events/submit', objectParam, {

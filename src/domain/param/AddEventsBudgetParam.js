@@ -5,6 +5,7 @@ export default (
   region,
   province,
   city,
+  date,
   attendees,
 ) => ({
   requestId,
@@ -13,5 +14,6 @@ export default (
   region,
   province,
   city,
+  date,
   attendees,
 })

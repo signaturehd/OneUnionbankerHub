@@ -7,6 +7,7 @@ import {
   MultipleFileUploader,
   Card,
   GenericButton,
+  DatePicker,
   Line,
 } from '../../../ub-components/'
 
@@ -14,6 +15,7 @@ import './styles/eventsComponentStyle.css'
 
 import Attendees from '../components/EventsFormComponentAttendeesComponent'
 
+import moment from 'moment'
 import { format } from '../../../utils/numberUtils'
 
 class EventsBudgetFormComponent extends Component {
@@ -44,9 +46,11 @@ class EventsBudgetFormComponent extends Component {
       eventBudgetData,
       events,
       venue,
-      submitPresenter
+      submitPresenter,
+      preferredDate,
+      dateFunc,
+      dateErrorMessage
     } = this.props
-
     return (
       <div className = { 'events-container' }>
         <div className = { 'events-grid-column-2' }>
@@ -89,19 +93,30 @@ class EventsBudgetFormComponent extends Component {
           <GenericInput
             text = { 'Amount' }
             onChange = { (e) => amountTextFunc(e.target.value) }
-            value = { events && events.amount ? format(events.amount) : format(amountText) }
+            value = { events && events.amount ? format(events.amount) : amountText }
           />
-          <GenericInput
-            text = { 'Events Date' }
-            onChange = { (e) => eventDateTextFunc(e.target.value) }
-            value = { events && events.targetDate ? events.targetDate : format(amountText) }
-          />
+        <div className = { 'grid-global' }>
           <DatePicker
-            selected = { preferredDate }
-            disabled = { showEditSubmitButton }
+            selected = { events && events.startDate }
+            readOnly
+            disabled = { true }
+            dateFormat = { 'YYYY/MM/DD' }
+            text = { 'From Date' }
+            />
+          <DatePicker
+            selected = { events && events.endDate  }
+            disabled = { true }
+            readOnly
+            dateFormat = { 'YYYY/MM/DD' }
+            text = { 'To Date' }
+            />
+        </div>
+          <DatePicker
+            selected = { events && events.targetDate ? events.targetDate : preferredDate }
             onChange = { (e) => dateFunc(e) }
             maxDate = { moment() }
             readOnly
+            dateFormat = { 'YYYY/MM/DD' }
             text = { 'Events Date' }
             errorMessage = { dateErrorMessage }
             />

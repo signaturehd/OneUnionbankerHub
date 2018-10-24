@@ -16,6 +16,8 @@ import {
 
 import EventsBudgetFormComponent from './components/EventsBudgetFormComponent'
 
+import * as validate from './functions/EventsBudgetFunction'
+
 class EventsBudgetFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -81,6 +83,14 @@ class EventsBudgetFragment extends BaseMVPView {
     this.setState({ requestId })
   }
 
+  setDate (preferredDate) {
+    this.setState({ preferredDate })
+  }
+
+  setAddress (addressText) {
+    this.setState({ addressText })
+  }
+
   /* Display Modal Notice of Undertaking*/
   noticeOfUndertaking (resp) {
     this.setState({ showNoticeResponseModal : resp })
@@ -118,7 +128,8 @@ class EventsBudgetFragment extends BaseMVPView {
       showNoticeResponseApprovalModal,
       showBenefitFeedbackModal,
       response,
-      benefitId
+      benefitId,
+      preferredDate
     } = this.state
 
     return (
@@ -173,29 +184,35 @@ class EventsBudgetFragment extends BaseMVPView {
             </h2>
             <br/>
             <EventsBudgetFormComponent
+              preferredDate = { preferredDate }
+              dateFunc = { (preferredDate) => this.presenter.setDate(preferredDate) }
               celebrationText = { celebrationText }
-              celebrationTextFunc = { (e) => this.presenter.setCelebration(e) }
+              celebrationTextFunc = { (e) => this.presenter.setCelebration(validate.checkedValidateAlphabet(e)) }
               venueText = { venueText }
-              venueTextFunc = { (e) => this.presenter.setVenue(e) }
+              venueTextFunc = { (e) => this.presenter.setVenue(validate.checkedValidateAlphabet(e)) }
               addressText = { addressText }
-              addressTextFunc = { (e) => this.presenter.setAddress(e) }
+              addressTextFunc = { (e) => this.presenter.setAddress(validate.checkedValidateAddress(e)) }
               regionText = { regionText }
-              regionTextFunc = { (e) => this.presenter.setRegion(e) }
+              regionTextFunc = { (e) => this.presenter.setRegion(validate.checkedValidateAlphabet(e)) }
               provinceText = { provinceText }
-              provinceTextFunc = { (e) => this.presenter.setProvince(e) }
+              provinceTextFunc = { (e) => this.presenter.setProvince(validate.checkedValidateAlphabet(e)) }
               cityText = { cityText }
-              cityTextFunc = { (e) => this.presenter.setCity(e) }
+              cityTextFunc = { (e) => this.presenter.setCity(validate.checkedValidateAlphabet(e)) }
               amountText = { amountText }
-              amountTextFunc = { (e) => this.presenter.setAmount(e) }
+              amountTextFunc = { (e) => this.presenter.setAmount(validate.checkValidateMoney(e)) }
               index = { index }
               eventBudgetData = { eventBudgetData && eventBudgetData }
               events = { eventBudgetData && eventBudgetData.events }
-              events = { eventBudgetData && eventBudgetData.venue }
+              venue = { eventBudgetData && eventBudgetData.venue }
               viewMoreText = { viewMoreText }
               viewMore = { () => this.setState({ index : eventBudgetData.attendees.length, viewMoreText : 'Hide Attendees' }) }
               viewLess = { () => this.setState({ index : 0, viewMoreText : 'Show Attendees' }) }
               submitPresenter = { () => {
-                  this.presenter.addEventsBudget([1671])
+                  try {
+                    this.presenter.addEventsBudget([1671])
+                  } catch(e) {
+                    console.log(e)
+                  }
               } }
             />
           </div>

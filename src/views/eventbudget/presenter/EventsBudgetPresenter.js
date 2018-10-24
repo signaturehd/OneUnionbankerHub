@@ -11,7 +11,9 @@ let storedCelebrationText = '',
     storedFile ,
     storedProvinceText = '' ,
     storedRequestId = '',
-    storedBenefitId = '42'
+    storedBenefitId = '42',
+    storedDate = '',
+    storedAmount = ''
 
 export default class EventsBudgetPresenter {
   constructor (container) {
@@ -35,7 +37,7 @@ export default class EventsBudgetPresenter {
 
   setAddress (addressText) {
     storedAddressText = addressText
-    this.view.setAddress(addressText)
+    this.view.setAddress(storedAddressText)
   }
 
   setRegion (regionText) {
@@ -55,7 +57,7 @@ export default class EventsBudgetPresenter {
 
   setAmount (amountText) {
     storedAmount = amountText
-    this.view.setAmount(amountText)
+    this.view.setAmount(storedAmount)
   }
 
   setRequestId (requestId) {
@@ -63,8 +65,13 @@ export default class EventsBudgetPresenter {
     this.view.setRequestId(storedRequestId)
   }
 
+  setDate (preferredDate) {
+    storedDate = preferredDate
+    this.view.setDate(storedDate)
+  }
+
   validateEventsBudget () {
-    this.view.showCircularLoader()
+    this.view.hideCircularLoader()
     this.validateEventsBudgetInteractor.execute()
     .subscribe(data => {
       this.view.showEventBudget(data, storedBenefitId)
@@ -84,6 +91,7 @@ export default class EventsBudgetPresenter {
         storedRegionText,
         storedProvinceText,
         storedCityText,
+        storedDate,
         attendees,
       )
     )
