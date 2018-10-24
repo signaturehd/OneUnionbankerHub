@@ -3,6 +3,8 @@ import AddEventsBudgetInteractor from '../../../domain/interactor/eventsbudget/A
 
 import addEventsBudgetParam from '../../../domain/param/AddEventsBudgetParam'
 
+import moment from 'moment'
+
 let storedCelebrationText = '',
     storedVenueText= '',
     storedAddressText = '',
@@ -65,13 +67,13 @@ export default class EventsBudgetPresenter {
     this.view.setRequestId(storedRequestId)
   }
 
-  setDate (preferredDate) {
+  setDateFunc (preferredDate) {
     storedDate = preferredDate
-    this.view.setDate(storedDate)
+    this.view.setDateFunc(storedDate)
   }
 
   validateEventsBudget () {
-    this.view.hideCircularLoader()
+    this.view.showCircularLoader()
     this.validateEventsBudgetInteractor.execute()
     .subscribe(data => {
       this.view.showEventBudget(data, storedBenefitId)
@@ -91,7 +93,7 @@ export default class EventsBudgetPresenter {
         storedRegionText,
         storedProvinceText,
         storedCityText,
-        storedDate,
+        moment(storedDate).format('YYYY-MM-DD'),
         attendees,
       )
     )

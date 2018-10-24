@@ -49,8 +49,12 @@ class EventsBudgetFormComponent extends Component {
       submitPresenter,
       preferredDate,
       dateFunc,
-      dateErrorMessage
+      dateErrorMessage,
+      endDate,
+      startDate
     } = this.props
+
+
     return (
       <div className = { 'events-container' }>
         <div className = { 'events-grid-column-2' }>
@@ -63,60 +67,66 @@ class EventsBudgetFormComponent extends Component {
           <GenericInput
             text = { 'Celebration' }
             onChange = { (e) => celebrationTextFunc(e.target.value) }
-            value = { events && events.name ? events.name : celebrationText }
+            value = { celebrationText }
+            readOnly
           />
           <GenericInput
             text = { 'Venue Name' }
             onChange = { (e) => venueTextFunc(e.target.value) }
-            value = { venue && venue.name ? venue.name :  venueText }
+            value = { venueText }
           />
           <GenericInput
             text = { 'Address' }
             onChange = { (e) => addressTextFunc(e.target.value) }
-            value = { venue && venue.address ? venue.address : addressText }
+            value = { addressText }
           />
           <GenericInput
             text = { 'Region' }
             onChange = { (e) => regionTextFunc(e.target.value) }
-            value = { venue && venue.region ? venue.region : regionText }
+            value = { regionText }
           />
           <GenericInput
             text = { 'Province' }
             onChange = { (e) => provinceTextFunc(e.target.value) }
-            value = { venue && venue.province ? venue.province : provinceText }
+            value = { provinceText }
           />
           <GenericInput
             text = { 'City' }
             onChange = { (e) => cityTextFunc(e.target.value) }
-            value = { venue && venue.city ? venue.city : cityText }
+            value = { cityText }
           />
           <GenericInput
             text = { 'Amount' }
             onChange = { (e) => amountTextFunc(e.target.value) }
-            value = { events && events.amount ? format(events.amount) : amountText }
+            value = { amountText ? amountText : format(events && events.amount)  }
           />
         <div className = { 'grid-global' }>
-          <DatePicker
-            selected = { events && events.startDate }
-            readOnly
-            disabled = { true }
-            dateFormat = { 'YYYY/MM/DD' }
-            text = { 'From Date' }
-            />
-          <DatePicker
-            selected = { events && events.endDate  }
-            disabled = { true }
-            readOnly
-            dateFormat = { 'YYYY/MM/DD' }
-            text = { 'To Date' }
-            />
+
         </div>
+          <div className = { 'grid-global' }>
+            <DatePicker
+              selected = { events && events.startDate ? moment(events.startDate) : startDate }
+              maxDate = { moment() }
+              readOnly
+              disabled = { true }
+              dateFormat = { 'MM/DD/YYYY' }
+              text = { 'From Date' }
+              />
+            <DatePicker
+              selected = { events && events.endDate ? moment(events.endDate) : endDate }
+              maxDate = { moment() }
+              readOnly
+              disabled = { true }
+              dateFormat = { 'MM/DD/YYYY' }
+              text = { 'To Date' }
+              />
+          </div>
           <DatePicker
-            selected = { events && events.targetDate ? events.targetDate : preferredDate }
+            selected = { venue && venue.targetDate ? moment(venue.targetDate) : moment(preferredDate) }
             onChange = { (e) => dateFunc(e) }
             maxDate = { moment() }
             readOnly
-            dateFormat = { 'YYYY/MM/DD' }
+            dateFormat = { 'MM/DD/YYYY' }
             text = { 'Events Date' }
             errorMessage = { dateErrorMessage }
             />

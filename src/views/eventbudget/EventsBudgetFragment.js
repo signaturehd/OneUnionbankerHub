@@ -18,6 +18,8 @@ import EventsBudgetFormComponent from './components/EventsBudgetFormComponent'
 
 import * as validate from './functions/EventsBudgetFunction'
 
+import { format } from '../../utils/numberUtils'
+
 class EventsBudgetFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -45,7 +47,17 @@ class EventsBudgetFragment extends BaseMVPView {
   showEventBudget (eventBudgetData, benefitId) {
     this.setState({ index : eventBudgetData.attendees.length })
     this.setState({ benefitId })
-    this.presenter.setRequestId(eventBudgetData.events.requestId)
+    let eventsNullChecker = eventBudgetData && eventBudgetData.events
+    let venueNullChecker = eventBudgetData && eventBudgetData.venue
+    this.presenter.setRequestId(eventsNullChecker && eventBudgetData.events.requestId)
+    this.presenter.setCelebration(venueNullChecker && eventBudgetData.events.name)
+    this.presenter.setVenue(eventsNullChecker && eventBudgetData.venue.name)
+    this.presenter.setAddress(eventsNullChecker && eventBudgetData.venue.address)
+    this.presenter.setProvince(eventsNullChecker && eventBudgetData.venue.province)
+    this.presenter.setRegion(eventsNullChecker && eventBudgetData.venue.region)
+    this.presenter.setCity(eventsNullChecker && eventBudgetData.venue.city)
+    this.presenter.setAmount(format(eventsNullChecker && eventBudgetData.events.amount))
+    this.presenter.setDateFunc(eventsNullChecker && eventBudgetData.events.targetDate)
     this.setState({ eventBudgetData })
   }
 
@@ -83,7 +95,11 @@ class EventsBudgetFragment extends BaseMVPView {
     this.setState({ requestId })
   }
 
-  setDate (preferredDate) {
+  setProvince (provinceText) {
+    this.setState({ provinceText })
+  }
+
+  setDateFunc (preferredDate) {
     this.setState({ preferredDate })
   }
 
@@ -97,11 +113,6 @@ class EventsBudgetFragment extends BaseMVPView {
   }
   noticeOfUndertakingForm (respForm) {
     this.setState({ noticeResponse : respForm })
-  }
-
-  /* navigate method, go back to MyBenefits*/
-  navigate () {
-      this.props.history.push('/mybenefits/benefits/medical')
   }
 
   /* Navigage back to benefits Option*/
@@ -185,7 +196,7 @@ class EventsBudgetFragment extends BaseMVPView {
             <br/>
             <EventsBudgetFormComponent
               preferredDate = { preferredDate }
-              dateFunc = { (preferredDate) => this.presenter.setDate(preferredDate) }
+              dateFunc = { (preferredDate) => this.presenter.setDateFunc(preferredDate) }
               celebrationText = { celebrationText }
               celebrationTextFunc = { (e) => this.presenter.setCelebration(validate.checkedValidateAlphabet(e)) }
               venueText = { venueText }
