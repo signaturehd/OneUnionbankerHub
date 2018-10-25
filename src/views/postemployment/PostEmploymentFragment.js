@@ -23,16 +23,16 @@ class PostEmploymentFragment extends BaseMVPView {
       showPostEmploymentComponent : true,
       hideSubmitButton : true,
       pageId : '',
-      postEmp : '',
+      postEmp : 0,
       title: '',
       subtitle : '',
-      percentage : 0,
+      dataRequirements : []
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    // this.presenter.getPostEmployment()
+    this.presenter.getPostEmployment()
   }
 
   showPercentageOfPreEmployment (postEmp) {
@@ -55,10 +55,24 @@ class PostEmploymentFragment extends BaseMVPView {
   decrementFunc () {
     let count = this.state.pageId - 1
 
-    if(this.state.pageId === 0) {
+    if(this.state.pageId === 1) {
     } else {
       this.setState({ pageId : count })
     }
+  }
+
+  getFormData (id) {
+    let formArray = []
+    this.state.dataRequirements.map((form, key) => {
+      form.documentId === id &&
+        formArray.push({
+          id : form.documentId,
+          name : form.documentType,
+          status : form.status,
+          url : form.url
+        })
+    })
+    return formArray
   }
 
   render () {
@@ -69,7 +83,6 @@ class PostEmploymentFragment extends BaseMVPView {
       pageId,
       title,
       subtitle,
-      percentage,
       hideSubmitButton
     } = this.state
 
@@ -98,7 +111,7 @@ class PostEmploymentFragment extends BaseMVPView {
               type = { 'circle' }
               height = { 65 }
               width = { 65 }
-              percent = { percentage } />
+              percent = { postEmp } />
           </div>
           <br/>
           <Line/>
@@ -129,7 +142,9 @@ class PostEmploymentFragment extends BaseMVPView {
               <PostEmploymentComponent
                 titleFunc = { (title) => this.setState({ title }) }
                 subtitleFunc = { (subtitle) => this.setState({ subtitle }) }
-                postEmp = { postEmp }
+                certificateArray = { this.getFormData(3) }
+                bir1905Array = { this.getFormData(1) }
+                bir2316Array = { this.getFormData(2) }
                 pageId = { pageId }
                 />
             </div>

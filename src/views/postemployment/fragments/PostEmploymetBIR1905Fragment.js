@@ -21,11 +21,20 @@ class PostEmploymetBIR1905Fragment extends Component {
   componentDidMount () {
     this.props.subtitle('Please download and fill-up the Bereau of Internal Revenue(BIR) 1905 Form then attach the document.')
     this.props.title('Bereau of Internal Revenue (BIR) Form 1905.')
+    this.checkAttachments()
+  }
+
+  checkAttachments () {
+    const {
+      bir1905Array
+    } = this.props
+
+    this.presenter.getSelectedAttachments(biographicalArray)
   }
 
   render () {
     const {
-      pageId
+      pageId,
     } = this.props
 
     return (
@@ -39,7 +48,7 @@ class PostEmploymetBIR1905Fragment extends Component {
             }
             className = { 'postemployment-card' }>
             <div className = { 'postemployment-grid-x2' }>
-              <h2>Download BIR 2316 Form</h2>
+              <h2>Download BIR 1905 Form</h2>
               <div>
                 <span className = { 'postemployment-icon postemployment-seemore-button' }/>
               </div>
