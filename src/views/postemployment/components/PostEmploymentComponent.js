@@ -15,17 +15,28 @@ import PostEmploymentCEAFragment from '../fragments/PostEmploymentCEAFragment'
 function PostEmploymentFragments(props) {
   const page = props.pageId
   const percentage = props.postEmp
+  const subtitle = props.subtitle
+  const title = props.title
 
   if(page === 1) {
-    return <div>das</div>
+    return <PostEmploymetBIR1905Fragment
+      page = { page }
+      subtitle = { (resp) => subtitle(resp) }
+      title = { (resp) => title(resp) }
+      percentage = { percentage }
+      />
   } else if (page === 2) {
     return <PostEmploymentBIR2316Fragment
       page = { page }
+      subtitle = { (resp) => subtitle(resp) }
+      title = { (resp) => title(resp) }
       percentage = { percentage }
     />
   } else if (page === 3) {
     return <PostEmploymentCEAFragment
       page = { page }
+      subtitle = { (resp) => subtitle(resp) }
+      title = { (resp) => title(resp) }
       percentage = { percentage }
     />
   }
@@ -40,14 +51,18 @@ class PostEmploymentComponent extends Component {
     const {
       pageId,
       postEmp,
+      subtitleFunc,
+      titleFunc,
     } = this.props
 
     return (
       <div>
         <PostEmploymentFragments
-          postEmp = { postEmp }
           pageId = { pageId }
-        />
+          subtitle = { (resp) => subtitleFunc(resp) }
+          title = { (resp) => titleFunc(resp) }
+          postEmp = { postEmp }
+          />
       </div>
     )
   }
