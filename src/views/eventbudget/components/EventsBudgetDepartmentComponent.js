@@ -16,10 +16,9 @@ class EventsBudgetDepartmentComponent extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isSelectedDepartment : false
+      isSelectedDepartment : null
     }
   }
-
 
   render () {
     const {
@@ -27,7 +26,6 @@ class EventsBudgetDepartmentComponent extends Component {
       key,
       event,
       check,
-      changeCheckDepartment
     } = this.props
 
     const {
@@ -49,16 +47,10 @@ class EventsBudgetDepartmentComponent extends Component {
               { attend.department }
             </h2>
             <Checkbox
-              key = { key }
               value = { isSelectedDepartment }
               checked = { isSelectedDepartment !== false ? isSelectedDepartment : check }
               onChange = { e => {
                 this.setState({ isSelectedDepartment : isSelectedDepartment !==true ? true : false } )
-                try {
-                  this.props.onChangeData(isSelectedDepartment !==true ? true : false, key)
-                } catch(e) {
-                  console.log(e)
-                }
               } }
            />
           </div>

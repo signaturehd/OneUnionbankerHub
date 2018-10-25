@@ -29,50 +29,10 @@ class EventsFormComponentAttendeesComponent extends Component {
     })
 
     if(attendeesCount === employeesLength) {
-      this.setState
       return true
     } else {
       return false
     }
-  }
-
-  /* Creation of logic WIP*/
-  reconstructData (eventData, id, attendData, isCheck) {
-    let newEventData = []
-    let oldEventData = []
-
-    eventData && eventData.attendees.map((resp, key) => {
-
-      resp.employees.map((resp2, key2) => {
-
-      if(id === key) {
-          const updateEmployees = [...resp.employees]
-          updateEmployees[key2].hasRecord = false
-          let employeeData
-          updateEmployees.map((data) => {
-            employeeData = data
-          })
-
-          const arrayObject = {
-            department : resp.department,
-            employees: [
-              updateEmployees
-            ]
-          }
-          newEventData.push(arrayObject)
-      } else if (id !== key){
-        const arrayObject = {
-          department : resp.department,
-          employees: [
-            resp2,
-          ]
-        }
-        oldEventData.push(arrayObject)
-        }
-      })
-    })
-    console.log(newEventData)
-    console.log(oldEventData)
   }
 
   render () {
@@ -116,10 +76,6 @@ class EventsFormComponentAttendeesComponent extends Component {
                     attend = { attend }
                     key = { key }
                     check = { this.checkIfTrue(attend) }
-                    onChangeData = { (result) => {
-                      this.reconstructData(eventBudgetData, key, attend, result)
-                      console.log(result)
-                    } }
                   />
                 )
               }

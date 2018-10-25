@@ -17,6 +17,83 @@ let storedCelebrationText = '',
     storedDate = '',
     storedAmount = ''
 
+let mockedData = {
+    "events": {
+      "requestId": 1,
+      "name": "Christmas",
+      "amount": 7000,
+      "startDate": "2018-10-11",
+      "endDate": "2018-10-27"
+    },
+    "venue": {
+      "name": "",
+      "address": "",
+      "region": "",
+      "province": "",
+      "city": "",
+      "targetDate": ""
+  },
+    "attendees": [
+        {
+            "department": "CMC-Ayala Alabang",
+            "employees": [
+                {
+                    "id": 15,
+                    "name": "UNIONBANKER9601015  SURNAME ",
+                    "rank": "Manager",
+                    "hasRecord": true
+                }
+            ]
+        },
+        {
+            "department": "CPS Client Services-Inward Clearing",
+            "employees": [
+                {
+                    "id": 252,
+                    "name": "UNIONBANKER1401980  SURNAME ",
+                    "rank": "Clerical Staff 3",
+                    "hasRecord": true
+                },
+                {
+                    "id": 1618,
+                    "name": "UNIONBANKER9800743  SURNAME ",
+                    "rank": "Junior Officer",
+                    "hasRecord": false
+                }
+            ]
+        },
+        {
+            "department": "Human Resource Services-Benefits, Payroll Administration and Separation",
+            "employees": [
+                {
+                    "id": 708,
+                    "name": "UNIONBANKER 9100164",
+                    "rank": "Assistant Vice President",
+                    "hasRecord": false
+                },
+                {
+                    "id": 1190,
+                    "name": "JENNIFER VERZOSA DYTUCO ",
+                    "rank": "Junior Officer",
+                    "hasRecord": false
+                },
+                {
+                    "id": 2437,
+                    "name": "JADA MARTININA AMACIO PARPAN ",
+                    "rank": "Junior Officer",
+                    "hasRecord": false
+                },
+                {
+                    "id": 3674,
+                    "name": "GLADYS FLORENDO BARCEBAL ",
+                    "rank": "Assistant Manager",
+                    "hasRecord": false
+                }
+            ]
+        }
+    ]
+}
+
 export default class EventsBudgetPresenter {
   constructor (container) {
     this.validateEventsBudgetInteractor = new ValidateEventsBudgetInteractor(container.get('HRBenefitsClient'))
@@ -73,10 +150,11 @@ export default class EventsBudgetPresenter {
   }
 
   validateEventsBudget () {
-    this.view.showCircularLoader()
+    this.view.hideCircularLoader()
+    this.view.showEventBudget(mockedData, storedBenefitId)
     this.validateEventsBudgetInteractor.execute()
     .subscribe(data => {
-      this.view.showEventBudget(data, storedBenefitId)
+      this.view.showEventBudget(mockedData, storedBenefitId)
       this.view.hideCircularLoader()
     }, error => {
       this.view.hideCircularLoader()

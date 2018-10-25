@@ -11,6 +11,14 @@ class EventsBudgetAttendeesComponent extends Component {
     }
   }
 
+  checkEmployeeCheck (hasRecord) {
+    if(hasRecord === true) {
+      return 'check'
+    } else {
+      return ''
+    }
+  }
+
   render () {
     const {
       selectedAttendees
@@ -21,10 +29,10 @@ class EventsBudgetAttendeesComponent extends Component {
       employee,
       isSelectedDepartment
     } = this.props
-
+    console.log(isSelectedDepartment)
     return (
       <div
-        onClick = { () => this.setState({ selectedAttendees: employee.hasRecord !== false ? selectedAttendees : employee.hasRecord }) }
+        onClick = { () => this.setState({ selectedAttendees: employee.hasRecord !== false ? true: false }) }
         key2 = { key2 }
         className = { 'events-employees-column-3 cursor-pointer' }>
         <span className = { 'events-icon events-user-icon' }/>
@@ -38,7 +46,7 @@ class EventsBudgetAttendeesComponent extends Component {
           <br/>
         </div>
         <span
-          className = { `events-check events-icon-${ selectedAttendees !== false ? '' : 'check'  }` }/>
+          className = { `events-check events-icon-${ isSelectedDepartment ? 'check' : this.checkEmployeeCheck(employee.hasRecord) }` }/>
       </div>
     )
   }
