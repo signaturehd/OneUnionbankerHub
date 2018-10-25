@@ -31,7 +31,7 @@ export default class RequestFlightPresenter {
 
   getTravels () {
     this.view.showCircularLoader()
-    this.getTravelsInteractor.execute(2)
+    this.getTravelsInteractor.execute(1)
       .subscribe(travel => {
           this.view.hideCircularLoader()
           this.view.getTravels(travel)

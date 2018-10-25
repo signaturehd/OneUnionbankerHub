@@ -157,7 +157,7 @@ class TravelFragment extends BaseMVPView {
       }
     ]
 
-  const travel = () => (
+  const myTravel = () => (
     <div className={ 'travel-container' }>
       {
         showAccountNumberModal &&
@@ -262,11 +262,20 @@ class TravelFragment extends BaseMVPView {
           name = { 'tabs' }
           defaultChecked = { true }
           onClick = { () => this.props.history.push('/mytravel/travel') }/>
-        <label className = { 'travel-icon-tab' } htmlFor='tab1'>Travel</label>
+        <label className = { 'travel-icon-tab' } htmlFor='tab1'>My Travel</label>
+
+        <input
+          className = { 'input-tab' }
+          id = { 'tab2' }
+          type = { 'radio' }
+          name = { 'tabs' }
+          onClick = { () => this.props.history.push('/mytravel/approval') }/>
+        <label className = { 'travel-icon-tab' } htmlFor='tab2'>Approvals</label>
+
         <section id='content1'>
           <Switch>
             <Route path='/mytravel'
-              render={ travel } />
+              render={ myTravel } />
             <Route exact path='/mytravel/travel/request/RequestFlightFragment'
               render={ props => <RequestFlightFragment { ...props } /> }/>
             <Route exact path='/mytravel/travel/book/BookFlightFragment'

@@ -1214,8 +1214,8 @@ export default class HRBenefitsService {
   }
 
   getTravels (token, statusId) {
-    // return this.apiClient.get(`v1/travels?status=${statusId}`, {
-    return this.apiClient.get('v1/travels', {
+    return this.apiClient.get(`v1/travels?status=${statusId}`, {
+    // return this.apiClient.get('v1/travels', {
       headers : { token }
     })
   }
