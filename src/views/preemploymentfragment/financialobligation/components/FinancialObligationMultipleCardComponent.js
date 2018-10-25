@@ -29,7 +29,8 @@ class FinancialObligationMultipleCardComponent extends Component {
       errorMessage,
       count,
       index,
-      onEditModeProperty
+      onEditModeProperty,
+      onDeleteProperty,
     } = this.props
 
     return (
@@ -52,24 +53,41 @@ class FinancialObligationMultipleCardComponent extends Component {
                   </div>
                 </div>
                 <div className = { 'grid-global-rows' }>
-                  {
-                    !disabled &&
-                    <img
-                      className = { 'close-button-global' }
-                      src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
-                      onClick = { () =>
-                        onEditModeProperty(
-                          resp.id,
-                          resp.bank,
-                          resp.obligation,
-                          resp.amount,
-                          resp.status,
-                          true,
-                          true
-                        )
+                  <div className = { 'grid-global' }>
+                    <div>
+                      {
+                        !disabled &&
+                        <img
+                          className = { 'close-button-global' }
+                          src = { require('../../../../images/icons/baseline_delete_black_18dp.png') }
+                          onClick = { () =>
+                            onDeleteProperty(resp.id)
+                          }
+                        />
                       }
-                    />
-                  }
+                    </div>
+                    <div>
+                      {
+                        !disabled &&
+                        <img
+                          className = { 'close-button-global' }
+                          src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
+                          onClick = { () =>
+                            onEditModeProperty(
+                              resp.id,
+                              resp.bank,
+                              resp.obligation,
+                              resp.amount,
+                              resp.status,
+                              true,
+                              true
+                            )
+                          }
+                        />
+                      }
+                    </div>
+                  </div>
+                  <div></div>
                 </div>
               </Card>
               <br/>

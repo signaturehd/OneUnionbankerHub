@@ -1122,6 +1122,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  removeFinancial (token, id) {
+    return this.service.removeFinancial(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
   /*  Post Employment */
 
   getPostEmployment (token) {

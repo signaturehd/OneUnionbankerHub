@@ -1764,6 +1764,12 @@ export default class HRBenefitsService {
     })
   }
 
+  removeFinancial (token, id) {
+    return this.onboardingClient.delete(`v1/employees/finances/detauls${id}`, {
+      headers : { token }
+    })
+  }
+
   /*  Post Employment */
 
   getPostEmployment (token) {
