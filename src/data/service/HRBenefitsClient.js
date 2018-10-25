@@ -951,6 +951,17 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  addLiquidation (
+    token,
+    liquidationParam,
+    ) {
+    return this.service.addLiquidation(
+      token,
+      liquidationParam,
+    )
+    .pipe(ServiceErrorOperator())
+  }
+
   /* News isHeart */
 
   addNewsIsHeart (token, id, isHeart) {

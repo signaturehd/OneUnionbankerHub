@@ -16,14 +16,24 @@ class LiquidationComponent extends Component {
   render () {
     const {
       cardDataHolder,
-      showTicketFunc
+      showTicketFunc,
+      showFormFunc
     } = this.props
     return (
       <div className = { 'grid-global' }>
         {
           cardDataHolder.length !== 0 &&
           cardDataHolder.map((resp, key) => (
-              <Card key = {key} className = { 'cursor-pointer border-radius' } onClick = { () => showTicketFunc() }>
+              <Card key = {key} className = { 'cursor-pointer border-radius' } onClick = { () => {
+                showTicketFunc()
+                showFormFunc(
+                  resp.id,
+                  resp.liquidation.cost,
+                  resp.liquidation.serviceCharge,
+                  resp.liquidation.reason
+                )
+                }
+              }>
                   {
                     resp.return ?
                     <div className = { 'liquidation-card-grid-row' }>

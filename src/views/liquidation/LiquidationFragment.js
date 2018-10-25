@@ -18,6 +18,7 @@ import {
 } from '../../ub-components/'
 
 import LiquidationComponent from './components/LiquidationComponent'
+import ResponseModal from '../notice/NoticeResponseModal'
 
 import { Progress } from 'react-sweet-progress'
 import './styles/liquidation.css'
@@ -31,8 +32,124 @@ class LiquidationFragment extends BaseMVPView {
       enabledLoader : false,
       showTicketModal : false,
       showFormModal: false,
-      ticketMode : false,
-      liquidationArray : [],
+      showNoticeResponseModal : false,
+      ticketMode : 0,
+      noticeResponse : '',
+      requestId : '',
+      dateFlight : '',
+      preferredDate : '',
+      costTicket : '',
+      costServiceCharge : '',
+      totalCostFlight : '',
+      orNumber : '',
+      orDate : '',
+      whyTicketUsed : '',
+      liquidationArray : [
+        {
+          'id': 2,
+          'referenceNumber': 'TR20181008162834',
+          'purpose': {
+            'id': 1,
+            'name': 'Business Meeting'
+          },
+          'status': {
+            'id': 6,
+            'name': 'Requesting'
+          },
+          'remark': '',
+          'approvedBy': null,
+          'approvedDate': null,
+          'applicationDate': '2018-10-08',
+          'departure': {
+            'origin': {
+              'id': 1,
+              'areaCode': 'ZMH',
+              'airport': '108 Mile Ranch',
+              'location': '108 Mile Ranch, Canada',
+              'isDomestic': true
+            },
+            'destination': {
+              'id': 2,
+              'areaCode': 'AAH',
+              'airport': 'Aachen/Merzbruck',
+              'location': 'Aachen, Germany',
+              'isDomestic': false
+            },
+            'date': '2019-01-26',
+            'time': '13:00',
+            'remarks': null
+          },
+          'return': {
+            'origin': {
+              'id': 2,
+              'areaCode': 'AAH',
+              'airport': 'Aachen/Merzbruck',
+              'location': 'Aachen, Germany',
+              'isDomestic': false
+            },
+            'destination': {
+              'id': 1,
+              'areaCode': 'ZMH',
+              'airport': '108 Mile Ranch',
+              'location': '108 Mile Ranch, Canada',
+              'isDomestic': false
+            },
+            'date': '2019-01-28',
+            'time': '13:00',
+            'remarks': null
+          },
+          'liquidation': {
+            'id': 1,
+            'cost': 123,
+            'serviceCharge': 123,
+            'isTicketUsed': 1,
+            'reason': 'test'
+          }
+        },
+        {
+          'id': 1,
+          'referenceNumber': 'TR20181008162834',
+          'purpose': {
+            'id': 1,
+            'name': 'Training'
+          },
+          'status': {
+            'id': 6,
+            'name': 'Requesting'
+          },
+          'remark': '',
+          'approvedBy': null,
+          'approvedDate': null,
+          'applicationDate': '2018-10-08',
+          'departure': {
+            'origin': {
+              'id': 1,
+              'areaCode': 'ZMH',
+              'airport': '108 Mile Ranch',
+              'location': '108 Mile Ranch, Canada',
+              'isDomestic': true
+            },
+            'destination': {
+              'id': 2,
+              'areaCode': 'AAH',
+              'airport': 'Aachen/Merzbruck',
+              'location': 'Aachen, Germany',
+              'isDomestic': true
+            },
+            'date': '2019-01-26',
+            'time': '13:00',
+            'remarks': null
+          },
+          'return': '',
+          'liquidation': {
+            'id': null,
+            'cost': null,
+            'serviceCharge': null,
+            'isTicketUsed': null,
+            'reason': null
+          }
+        }
+      ],
       attachmentsData : [
         {
           name : 'Ticket Attachment'
@@ -45,11 +162,43 @@ class LiquidationFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    this.presenter.getTravels()
+    // this.presenter.getTravels()
   }
 
   getTravels(liquidationArray) {
     this.setState({ liquidationArray })
+  }
+
+  dateFlightFunc (dateFlight) {
+    this.setState({ dateFlight })
+  }
+
+  preferredDateFunc (preferredDate) {
+    this.setState({ preferredDate })
+  }
+
+  costTicketFunc (costTicket) {
+    this.setState({ costTicket })
+  }
+
+  costServiceChargeFunc (costServiceCharge) {
+    this.setState({ costServiceCharge })
+  }
+
+  totalCostFlightFunc (totalCostFlight) {
+    this.setState({ totalCostFlight })
+  }
+
+  orNumberFunc (orNumber) {
+    this.setState({ orNumber })
+  }
+
+  orDateFunc (orDate) {
+    this.setState({ orDate })
+  }
+
+  whyTicketUsedFunc (whyTicketUsed) {
+    this.setState({ whyTicketUsed })
   }
 
   hideCircularLoader () {
@@ -60,19 +209,63 @@ class LiquidationFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  noticeResponse (noticeResponse) {
+    this.setState({
+      noticeResponse,
+      showNoticeResponseModal : true,
+      showFormModal : false
+    })
+  }
+
+  submit () {
+    const {
+      requestId,
+      ticketMode,
+      whyTicketUsed,
+      attachmentsData
+    } = this.state
+
+    this.presenter.addLiquidation(
+      requestId,
+      ticketMode,
+      whyTicketUsed,
+      attachmentsData
+    )
+  }
+
   render () {
     const {
       enabledLoader,
       showTicketModal,
       showFormModal,
+      showNoticeResponseModal,
+      noticeResponse,
       ticketMode,
+      dateFlight,
+      preferredDate,
+      costTicket,
+      costServiceCharge,
+      totalCostFlight,
+      orNumber,
+      orDate,
+      whyTicketUsed,
       liquidationArray,
       attachmentsData
     } = this.state
 
     const { percentage } = this.props
+
     return (
       <div>
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false })
+            }}
+            noticeResponse={ noticeResponse }
+          />
+        }
         {
           showTicketModal &&
           <Modal
@@ -84,7 +277,7 @@ class LiquidationFragment extends BaseMVPView {
               <GenericButton
                 text = { 'No' }
                 onClick = { () => this.setState({
-                  ticketMode : false,
+                  ticketMode : 0,
                   showFormModal : true,
                   showTicketModal : false })
                 }
@@ -92,7 +285,7 @@ class LiquidationFragment extends BaseMVPView {
               <GenericButton
                   text = { 'Yes' }
                   onClick = { () => this.setState({
-                    ticketMode : true,
+                    ticketMode : 1,
                     showFormModal : true,
                     showTicketModal : false })
                   }
@@ -109,33 +302,44 @@ class LiquidationFragment extends BaseMVPView {
             <br/>
             <DatePicker
               text = { 'Date of Flight' }
-              selected = { moment() }
+              selected = { dateFlight && moment(dateFlight) }
+              onChange = { (e) => this.dateFlightFunc(e) }
             />
             <DatePicker
               text = { 'Preferred Date' }
-              selected = { moment() }
+              selected = { preferredDate && moment(preferredDate) }
+              onChange = { (e) => this.preferredDateFunc(e) }
             />
             <GenericInput
               text = { 'Cost of Ticket' }
               type = { 'number' }
+              value = { costTicket }
+              onChange = { (e) => this.costTicketFunc(e.target.value) }
             />
             <GenericInput
               text = { 'Cost of Service Charge' }
               type = { 'number' }
+              value = { costServiceCharge }
+              onChange = { (e) => this.costServiceChargeFunc(e.target.value) }
             />
             <GenericInput
               text = { 'Total Cost of Flight' }
               type = { 'number' }
+              value = { totalCostFlight }
+              onChange = { (e) => this.totalCostFlightFunc(e.target.value) }
             />
             <GenericInput
               text = { 'Official Receipt Number' }
+              value = { orNumber }
+              onChange = { (e) => this.orNumberFunc(e.target.value) }
             />
             <DatePicker
               text = { 'Date of Official Receipt' }
-              selected = { moment() }
+              selected = { orDate && moment(orDate) }
+              onChange = { (e) => this.orDateFunc(e) }
             />
             {
-              ticketMode ?
+              ticketMode === 1 ?
               <MultipleAttachments
                 placeholder = { 'Form Attachments' }
                 fileArray = { attachmentsData }
@@ -144,11 +348,14 @@ class LiquidationFragment extends BaseMVPView {
               :
               <GenericInput
                 text = { 'Why ticket was unused' }
+                value = { whyTicketUsed }
+                onChange = { (e) => this.whyTicketUsedFunc(e.target.value) }
               />
             }
             <center>
               <GenericButton
                 text = { 'Continue' }
+                onClick = { () => this.submit() }
               />
             </center>
           </Modal>
@@ -173,6 +380,18 @@ class LiquidationFragment extends BaseMVPView {
               liquidationArray.length !==0 &&
                 <LiquidationComponent
                   showTicketFunc = { () => this.setState({ showTicketModal : true }) }
+                  showFormFunc = { (
+                    requestId,
+                    costTicket,
+                    costServiceCharge,
+                    whyTicketUsed
+                    ) => this.setState({
+                      requestId,
+                      costTicket,
+                      costServiceCharge,
+                      whyTicketUsed
+                    })
+                  }
                   cardDataHolder = { liquidationArray }/>
             }
       </div>

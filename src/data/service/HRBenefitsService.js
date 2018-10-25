@@ -1283,6 +1283,26 @@ export default class HRBenefitsService {
     })
   }
 
+  addLiquidation (
+      token,
+      liquidationParam) {
+    const formData = new FormData()
+    const object = {
+      requestId: liquidationParam.requestId,
+      isTicketUsed: liquidationParam.ticketMode,
+      remarks : liquidationParam.whyTicketUsed
+    }
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    liquidationParam.attachmentsData &&
+    liquidationParam.attachmentsData.map((resp, key) =>(
+      formData.append('attachment', resp.file)
+    ))
+    formData.append('body', JSON.stringify(object))
+    return this.apiClient.post('v1/travels/liquidate',  formData, {
+      headers : { token }
+    })
+  }
+
   /* News isHeart */
 
   addNewsIsHeart (token, id, isHeart) {

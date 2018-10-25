@@ -45,6 +45,7 @@ export default class BookFlightPresenter {
     ))
       .subscribe(travel => {
           this.view.hideCircularLoader()
+          this.view.noticeResponse()
           this.view.resetValue()
         }, e => {
           this.view.hideCircularLoader()

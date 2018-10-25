@@ -70,6 +70,10 @@ class ApprovalFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  navigate () {
+    this.props.history.push('/mytravel/travel')
+  }
+
   render () {
     const {
       enabledLoader,
@@ -91,12 +95,14 @@ class ApprovalFragment extends BaseMVPView {
             noticeResponse={ noticeResponse }
           />
         }
-        <div className = { 'percentage-grid' }>
-          <div>
+        <div>
           <i
           className={ 'back-arrow' }
           onClick={ () => this.navigate() }>
           </i>
+        </div>
+        <div className = { 'percentage-grid' }>
+          <div>
             <h2 className={ 'font-size-30px text-align-left' }>Travel Approvals</h2>
             <br/>
             <h4>Below are the list travels for approval.</h4>

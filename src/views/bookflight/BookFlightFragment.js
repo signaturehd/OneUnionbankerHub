@@ -18,6 +18,7 @@ import {
 } from '../../ub-components/'
 
 import BookFlightComponent from './components/BookFlightComponent'
+import ResponseModal from '../notice/NoticeResponseModal'
 
 import { Progress } from 'react-sweet-progress'
 import './styles/bookStyles.css'
@@ -30,10 +31,12 @@ class BookFlightFragment extends BaseMVPView {
     super(props)
     this.state = {
       enabledLoader : false,
+      showNoticeResponseModal : false,
       showTicketModal : false,
       showFormModal: false,
       ticketMode : false,
       isDomestic : false,
+      noticeResponse : '',
       requestId : '',
       purposeName : '',
       departureOrigin : '',
@@ -47,112 +50,7 @@ class BookFlightFragment extends BaseMVPView {
       totalServiceCharge : '',
       valueAddedTax : '',
       totalAmount : '',
-      bookflightArray : [
-      {
-        'id': 2,
-        'referenceNumber': 'TR20181008162834',
-        'purpose': {
-          'id': 1,
-          'name': 'Business Meeting'
-        },
-        'status': {
-          'id': 6,
-          'name': 'Requesting'
-        },
-        'remark': '',
-        'approvedBy': null,
-        'approvedDate': null,
-        'applicationDate': '2018-10-08',
-        'departure': {
-          'origin': {
-            'id': 1,
-            'areaCode': 'ZMH',
-            'airport': '108 Mile Ranch',
-            'location': '108 Mile Ranch, Canada',
-            'isDomestic': true
-          },
-          'destination': {
-            'id': 2,
-            'areaCode': 'AAH',
-            'airport': 'Aachen/Merzbruck',
-            'location': 'Aachen, Germany',
-            'isDomestic': false
-          },
-          'date': '2019-01-26',
-          'time': '13:00',
-          'remarks': null
-        },
-        'return': {
-          'origin': {
-            'id': 2,
-            'areaCode': 'AAH',
-            'airport': 'Aachen/Merzbruck',
-            'location': 'Aachen, Germany',
-            'isDomestic': false
-          },
-          'destination': {
-            'id': 1,
-            'areaCode': 'ZMH',
-            'airport': '108 Mile Ranch',
-            'location': '108 Mile Ranch, Canada',
-            'isDomestic': false
-          },
-          'date': '2019-01-28',
-          'time': '13:00',
-          'remarks': null
-        },
-        'liquidation': {
-          'id': null,
-          'cost': null,
-          'serviceCharge': null,
-          'isTicketUsed': null,
-          'reason': null
-        }
-      },
-      {
-        'id': 1,
-        'referenceNumber': 'TR20181008162834',
-        'purpose': {
-          'id': 1,
-          'name': 'Training'
-        },
-        'status': {
-          'id': 6,
-          'name': 'Requesting'
-        },
-        'remark': '',
-        'approvedBy': null,
-        'approvedDate': null,
-        'applicationDate': '2018-10-08',
-        'departure': {
-          'origin': {
-            'id': 1,
-            'areaCode': 'ZMH',
-            'airport': '108 Mile Ranch',
-            'location': '108 Mile Ranch, Canada',
-            'isDomestic': true
-          },
-          'destination': {
-            'id': 2,
-            'areaCode': 'AAH',
-            'airport': 'Aachen/Merzbruck',
-            'location': 'Aachen, Germany',
-            'isDomestic': true
-          },
-          'date': '2019-01-26',
-          'time': '13:00',
-          'remarks': null
-        },
-        'return': '',
-        'liquidation': {
-          'id': null,
-          'cost': null,
-          'serviceCharge': null,
-          'isTicketUsed': null,
-          'reason': null
-        }
-      }
-      ],
+      bookflightArray : [],
       attachmentsData : [{ name : 'Flight Quatation Attachment' }],
       attachmentsData2 : [{ name : 'Flight Quatation Attachment' },
       { name : 'ERB Email Attachment' }]
@@ -160,7 +58,7 @@ class BookFlightFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    // this.presenter.getTravels()
+    this.presenter.getTravels()
   }
 
   getTravels(bookflightArray) {
@@ -199,6 +97,14 @@ class BookFlightFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  noticeResponse (noticeResponse) {
+    this.setState({
+      noticeResponse,
+      showNoticeResponseModal : true,
+      showFormModal : false
+    })
+  }
+
   resetValue () {
     this.setState({
       requestId : '',
@@ -209,8 +115,7 @@ class BookFlightFragment extends BaseMVPView {
       isDomestic : '',
       attachmentsData : [{ name : 'Flight Quatation Attachment' }],
       attachmentsData2 : [{ name : 'Flight Quatation Attachment' },
-      { name : 'ERB Email Attachment' }],
-      showFormModal : false
+      { name : 'ERB Email Attachment' }]
     })
   }
 
@@ -251,6 +156,8 @@ class BookFlightFragment extends BaseMVPView {
       enabledLoader,
       showTicketModal,
       showFormModal,
+      showNoticeResponseModal,
+      noticeResponse,
       ticketMode,
       isDomestic,
       departureOrigin,
@@ -277,6 +184,15 @@ class BookFlightFragment extends BaseMVPView {
 
     return (
       <div>
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false })
+            }}
+            noticeResponse={ noticeResponse }
+          />
+        }
         {
           showFormModal &&
           <Modal
