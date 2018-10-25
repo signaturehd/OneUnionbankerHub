@@ -157,6 +157,12 @@ class FinancialObligationFragment extends BaseMVPView {
     })
   }
 
+  /* Delete Financial */
+
+  onDeleteProperty (id) {
+    this.presenter.removeFinancial(id)
+  }
+
   render() {
     const {
       history,
@@ -279,6 +285,7 @@ class FinancialObligationFragment extends BaseMVPView {
             <FinancialObligationMultipleCardComponent
               index = { index }
               financeDetailsHolder = { financeDetailsHolder }
+              onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
               onEditModeProperty = { (
                 financeId,
                 bankNameInstitution,
