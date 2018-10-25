@@ -56,6 +56,28 @@
   background-repeat: no-repeat;
 }
 
+
+.update-profile-button {
+  min-width: 100px;
+  height: 30px;
+  border-radius: 50px;
+}
+
+
+.profile-address-grid-x2 {
+  display: grid;
+  grid-template-columns: 1fr .05fr; 
+}
+
+.profile-update-address-grid{
+  display: grid;
+  grid-template-columns: 1fr .09fr, .05fr; 
+}
+
+.alignment-center {
+  align-items: flex-end;  
+}
+
 .employeeMobileNumber {
   background-image: url('../../../../images/icons/MobileNumber.png');
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal, Line } from '../../../ub-components/'
+import { Modal, Line, GenericButton, GenericInput } from '../../../ub-components/'
 
 import './styles/contactModal.css'
 
@@ -11,6 +11,7 @@ class PersonalInfoModal extends Component {
     super(props)
     this.state={
       isDismisable : true,
+      updateAddress : false,
     }
   }
 
@@ -19,10 +20,10 @@ class PersonalInfoModal extends Component {
       onClose,
       profile,
       accountNumber,
-      backgroundColor
+      backgroundColor,
     }=this.props
 
-    const { isDismisable }=this.state
+    const { isDismisable, updateAddress }=this.state
 
     return (
       <Modal
@@ -120,22 +121,44 @@ class PersonalInfoModal extends Component {
                 </div>
               </div>
               <br/>
-              <div
-                className={ 'contact-number-grid' }>
-                <div>
-                  <span className={ 'contact-icon-settings employeeHomeAddress' }/>
-                </div>
-                <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-17px contact-title' }>
-                    <h2>Address</h2>
+              {
+                !updateAddress ?
+                <div className = { 'profile-address-grid-x2' } >
+                  <div
+                    className={ 'contact-number-grid' }>
+                    <div>
+                      <span className={ 'contact-icon-settings employeeHomeAddress' }/>
+                    </div>
+                    <div className={ 'contact-info-grid-row' }>
+                      <div className={ 'font-size-17px contact-title' }>
+                        <h2>Address</h2>
+                      </div>
+                      <div className={ 'font-size-16px' }>
+                        <a>
+                          { profile.address ?  profile.address : '(Not Yet Provided)' }
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                  <div className={ 'font-size-16px' }>
-                    <a>
-                      { profile.address ?  profile.address : '(Not Yet Provided)' }
-                    </a>
-                  </div>
+                    <span 
+                    onClick = { () => this.setState({ updateAddress : false }) }
+                    className = { 'alignment-center profile-icon-settings editIconImage' }/>
+                </div> :
+                <div className = { 'profile-update-address-grid' } >
+                  <GenericInput 
+                    text = { 'Enter new address' }
+                    onChange = { () => {} }
+                  />
+                  <GenericButton 
+                  className = { 'update-profile-button' } 
+                    text = { 'Update' }
+                    onClick = { () => {} }
+                  />
+                  span 
+                    onClick = { () => this.setState({ updateAddress : false }) }
+                    className = { 'alignment-center profile-icon-settings editIconImage' }/>
                 </div>
-              </div>
+              }
             </div>
         </Modal>
       )
