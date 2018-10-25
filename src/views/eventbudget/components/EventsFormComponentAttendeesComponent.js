@@ -36,6 +36,23 @@ class EventsFormComponentAttendeesComponent extends Component {
     }
   }
 
+  /* Creation of logic WIP*/
+  reconstructData (eventData, id, attendData, isCheck) {
+    let newEventData = []
+    let attendeesData = []
+
+    eventData && eventData.attendees.map((resp, key) => {
+      if(key === id) {
+        newEventData.push(resp)
+        resp.employees.map((resp2, key2) => {
+          const updateEmployees = [...resp.employees]
+          console.log(updateEmployees)
+          updateEmployees[key2].hasRecord = false
+        })
+      }
+    })
+  }
+
   render () {
     const {
       eventBudgetData,
@@ -77,6 +94,10 @@ class EventsFormComponentAttendeesComponent extends Component {
                     attend = { attend }
                     key = { key }
                     check = { this.checkIfTrue(attend) }
+                    onChangeData = { (result) => {
+                      this.reconstructData(eventBudgetData, key, attend, result)
+                      console.log(result)
+                    } }
                   />
                 )
               }

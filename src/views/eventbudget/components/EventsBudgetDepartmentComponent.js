@@ -51,8 +51,15 @@ class EventsBudgetDepartmentComponent extends Component {
             <Checkbox
               key = { key }
               value = { isSelectedDepartment }
-              checked = { check ?  check : isSelectedDepartment }
-              onChange = { e => this.setState({ isSelectedDepartment : isSelectedDepartment ? false : true }) }
+              checked = { isSelectedDepartment !== false ? isSelectedDepartment : check }
+              onChange = { e => {
+                this.setState({ isSelectedDepartment : isSelectedDepartment !==true ? true : false } )
+                try {
+                  this.props.onChangeData(isSelectedDepartment !==true ? true : false)
+                } catch(e) {
+                  console.log(e)
+                }
+              } }
            />
           </div>
           <Line/>
