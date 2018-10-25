@@ -1259,6 +1259,30 @@ export default class HRBenefitsService {
     })
   }
 
+  addBookFlight (
+      token,
+      bookParam) {
+    const formData = new FormData()
+    const object = {
+      requestId: bookParam.requestId,
+      cost: {
+        flight: bookParam.totalCostOfFlight,
+        serviceCharge: bookParam.totalServiceCharge
+      },
+      departureTime : bookParam.departureTime,
+      returnTime: bookParam.returnTime
+    }
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    bookParam.attachmentsData &&
+    bookParam.attachmentsData.map((resp, key) =>(
+      formData.append('attachment', resp.file)
+    ))
+    formData.append('body', JSON.stringify(object))
+    return this.apiClient.post('v1/travels/book',  formData, {
+      headers : { token }
+    })
+  }
+
   /* News isHeart */
 
   addNewsIsHeart (token, id, isHeart) {

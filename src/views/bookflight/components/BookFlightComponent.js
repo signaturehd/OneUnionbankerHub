@@ -24,14 +24,32 @@ class BookFlightComponent extends Component {
           cardDataHolder.length !== 0 &&
           cardDataHolder.map((resp, key) => (
               <Card key = {key} className = { 'cursor-pointer  border-radius' }
-              onClick = { () => {showFormFunc(
-                resp.departure.origin.location,
-                resp.departure.destination.location,
-                resp.return ? resp.return.origin.location : '',
-                resp.return ? resp.return.destination.location : '',
-                resp.return ? 'RoundTrip' : 'OneWay',
-                resp.purpose.name
-              )} }>
+              onClick = { () => {
+                showFormFunc(
+                  resp.id,
+                  resp.departure.origin.location,
+                  resp.departure.destination.location,
+                  resp.departure.date,
+                  resp.departure.time,
+                  resp.return ? resp.return.origin.location : '',
+                  resp.return ? resp.return.destination.location : '',
+                  resp.return ? resp.return.date : '',
+                  resp.return ? resp.return.time : '',
+                  resp.return ? 'RoundTrip' : 'OneWay',
+                  resp.purpose.name,
+                  resp.return ?
+                  resp.departure.origin.isDomestic &&
+                  resp.departure.destination.isDomestic &&
+                  resp.return.origin.isDomestic &&
+                  resp.return.destination.isDomestic ?
+                    true : false
+                  :
+                  resp.departure.origin.isDomestic &&
+                  resp.departure.destination.isDomestic ?
+                    true : false
+                )
+              }
+              }>
                   {
                     resp.return ?
                     <div className = { 'book-card-grid-row' }>

@@ -21,6 +21,7 @@ import BookFlightComponent from './components/BookFlightComponent'
 
 import { Progress } from 'react-sweet-progress'
 import './styles/bookStyles.css'
+import { format } from '../../utils/numberUtils'
 import moment from 'moment'
 
 class BookFlightFragment extends BaseMVPView {
@@ -32,6 +33,8 @@ class BookFlightFragment extends BaseMVPView {
       showTicketModal : false,
       showFormModal: false,
       ticketMode : false,
+      isDomestic : false,
+      requestId : '',
       purposeName : '',
       departureOrigin : '',
       departureDestination : '',
@@ -44,24 +47,148 @@ class BookFlightFragment extends BaseMVPView {
       totalServiceCharge : '',
       valueAddedTax : '',
       totalAmount : '',
-      bookflightArray : [],
-      attachmentsData : [
-        {
-          name : 'Flight Quatation Attachment'
+      bookflightArray : [
+      {
+        'id': 2,
+        'referenceNumber': 'TR20181008162834',
+        'purpose': {
+          'id': 1,
+          'name': 'Business Meeting'
         },
-        {
-          name : 'ERB Email Attachment'
+        'status': {
+          'id': 6,
+          'name': 'Requesting'
+        },
+        'remark': '',
+        'approvedBy': null,
+        'approvedDate': null,
+        'applicationDate': '2018-10-08',
+        'departure': {
+          'origin': {
+            'id': 1,
+            'areaCode': 'ZMH',
+            'airport': '108 Mile Ranch',
+            'location': '108 Mile Ranch, Canada',
+            'isDomestic': true
+          },
+          'destination': {
+            'id': 2,
+            'areaCode': 'AAH',
+            'airport': 'Aachen/Merzbruck',
+            'location': 'Aachen, Germany',
+            'isDomestic': false
+          },
+          'date': '2019-01-26',
+          'time': '13:00',
+          'remarks': null
+        },
+        'return': {
+          'origin': {
+            'id': 2,
+            'areaCode': 'AAH',
+            'airport': 'Aachen/Merzbruck',
+            'location': 'Aachen, Germany',
+            'isDomestic': false
+          },
+          'destination': {
+            'id': 1,
+            'areaCode': 'ZMH',
+            'airport': '108 Mile Ranch',
+            'location': '108 Mile Ranch, Canada',
+            'isDomestic': false
+          },
+          'date': '2019-01-28',
+          'time': '13:00',
+          'remarks': null
+        },
+        'liquidation': {
+          'id': null,
+          'cost': null,
+          'serviceCharge': null,
+          'isTicketUsed': null,
+          'reason': null
         }
-      ]
+      },
+      {
+        'id': 1,
+        'referenceNumber': 'TR20181008162834',
+        'purpose': {
+          'id': 1,
+          'name': 'Training'
+        },
+        'status': {
+          'id': 6,
+          'name': 'Requesting'
+        },
+        'remark': '',
+        'approvedBy': null,
+        'approvedDate': null,
+        'applicationDate': '2018-10-08',
+        'departure': {
+          'origin': {
+            'id': 1,
+            'areaCode': 'ZMH',
+            'airport': '108 Mile Ranch',
+            'location': '108 Mile Ranch, Canada',
+            'isDomestic': true
+          },
+          'destination': {
+            'id': 2,
+            'areaCode': 'AAH',
+            'airport': 'Aachen/Merzbruck',
+            'location': 'Aachen, Germany',
+            'isDomestic': true
+          },
+          'date': '2019-01-26',
+          'time': '13:00',
+          'remarks': null
+        },
+        'return': '',
+        'liquidation': {
+          'id': null,
+          'cost': null,
+          'serviceCharge': null,
+          'isTicketUsed': null,
+          'reason': null
+        }
+      }
+      ],
+      attachmentsData : [{ name : 'Flight Quatation Attachment' }],
+      attachmentsData2 : [{ name : 'Flight Quatation Attachment' },
+      { name : 'ERB Email Attachment' }]
     }
   }
 
   componentDidMount() {
-    this.presenter.getTravels()
+    // this.presenter.getTravels()
   }
 
   getTravels(bookflightArray) {
     this.setState({ bookflightArray })
+  }
+
+  departureTimeFunc (departureTime) {
+    this.setState({ departureTime })
+  }
+
+  returnTimeFunc (returnTime) {
+    this.setState({ returnTime })
+  }
+
+  totalAmountFunc(totalAmount) {
+    this.setState({ totalAmount })
+  }
+
+  totalCostOfFlightFunc(totalCostOfFlight) {
+    this.setState({ totalCostOfFlight })
+  }
+
+  totalServiceChargeFunc(totalServiceCharge) {
+    this.setState({ totalServiceCharge })
+  }
+
+  valueAddedTaxFunc(valueAddedTax) {
+    this.setState({ valueAddedTax })
   }
 
   hideCircularLoader () {
@@ -72,16 +199,65 @@ class BookFlightFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  resetValue () {
+    this.setState({
+      requestId : '',
+      totalCostOfFlight : '',
+      totalServiceCharge : '',
+      departureTime : '',
+      returnTime : '',
+      isDomestic : '',
+      attachmentsData : [{ name : 'Flight Quatation Attachment' }],
+      attachmentsData2 : [{ name : 'Flight Quatation Attachment' },
+      { name : 'ERB Email Attachment' }],
+      showFormModal : false
+    })
+  }
+
+  submit () {
+    const {
+      requestId,
+      totalCostOfFlight,
+      totalServiceCharge,
+      departureTime,
+      returnTime,
+      isDomestic,
+      attachmentsData,
+      attachmentsData2
+    } = this.state
+
+    isDomestic ?
+    this.presenter.addBookFlight(
+      requestId,
+      totalCostOfFlight,
+      totalServiceCharge,
+      departureTime,
+      returnTime,
+      attachmentsData
+    )
+    :
+    this.presenter.addBookFlight(
+      requestId,
+      totalCostOfFlight,
+      totalServiceCharge,
+      departureTime,
+      returnTime,
+      attachmentsData2
+    )
+  }
+
   render () {
     const {
       enabledLoader,
       showTicketModal,
       showFormModal,
       ticketMode,
+      isDomestic,
       departureOrigin,
       departureDestination,
       returnOrigin,
       returnDestination,
+      requestId,
       purposeName,
       rturn,
       departureTime,
@@ -91,17 +267,24 @@ class BookFlightFragment extends BaseMVPView {
       valueAddedTax,
       totalAmount,
       bookflightArray,
-      attachmentsData
+      attachmentsData,
+      attachmentsData2
     } = this.state
 
     const { percentage } = this.props
+    const depDate = moment(this.state.departureDate).format('MMMM DD, YYYY')
+    const retDate = moment(this.state.returnDate).format('MMMM DD, YYYY')
+
     return (
       <div>
         {
           showFormModal &&
           <Modal
           isDismisable = { true }
-          onClose = { () => this.setState({ showFormModal : false }) }>
+          onClose = { () => {
+            this.setState({ showFormModal : false, isDomestic: false })
+            }
+          }>
             <h2 className = { 'font-size-18px font-weight-bold text-align-center' }>{ `${purposeName}-${rturn}` }</h2>
             <br/>
             <Card>
@@ -138,43 +321,66 @@ class BookFlightFragment extends BaseMVPView {
             <h2>DEPARTURE</h2>
             </div>
             <GenericInput
-              text = { 'Oct 18, 2018' }
+              text = { depDate }
               type = { 'time' }
+              value = { departureTime }
+              onChange = { (e) => this.departureTimeFunc(e.target.value) }
             />
             {
               rturn === 'RoundTrip' &&
               <div>
               <h2>RETURN</h2>
               <GenericInput
-              text = { 'Oct 18, 2018' }
+              text = { retDate }
               type = { 'time' }
+              value = { returnTime }
+              onChange = { (e) => this.returnTimeFunc(e.target.value) }
               />
               </div>
             }
             <GenericInput
               text = { 'Total Cost of Flight' }
               type = { 'number' }
+              value = { totalCostOfFlight }
+              onChange = { (e) => this.totalCostOfFlightFunc(e.target.value) }
             />
             <GenericInput
               text = { 'Total Service Charge' }
               type = { 'number' }
+              value = { totalServiceCharge }
+              onChange = { (e) => this.totalServiceChargeFunc(e.target.value) }
             />
             <GenericInput
               text = { 'Value-Added Tax' }
               type = { 'numer' }
+              value = { valueAddedTax }
+              onChange = { (e) => this.valueAddedTaxFunc(e.target.value) }
             />
             <GenericInput
               text = { 'Total Amount' }
               type = { 'number' }
+              value = { totalAmount }
+              onChange = { (e) => this.totalAmountFunc(e.target.value) }
             />
-            <MultipleAttachments
-              placeholder = { 'Form Attachments' }
-              fileArray = { attachmentsData }
-              setFile = { (attachmentsData) => this.setState(attachmentsData) }
-            />
+            {
+              isDomestic ?
+              <MultipleAttachments
+                placeholder = { 'Form Attachments' }
+                fileArray = { attachmentsData }
+                setFile = { (attachmentsData) => this.setState(attachmentsData) }
+              />
+              :
+              <MultipleAttachments
+                placeholder = { 'Form Attachments' }
+                fileArray = { attachmentsData2 }
+                setFile = { (attachmentsData2) => this.setState(attachmentsData2) }
+              />
+            }
+
             <center>
               <GenericButton
                 text = { 'Continue' }
+                onClick = { () => this.submit() }
               />
             </center>
           </Modal>
@@ -199,19 +405,31 @@ class BookFlightFragment extends BaseMVPView {
           bookflightArray.length !==0 &&
             <BookFlightComponent
               showFormFunc = { (
+                requestId,
                 departureOrigin,
                 departureDestination,
+                departureDate,
+                departureTime,
                 returnOrigin,
                 returnDestination,
-                rturn,
-                purposeName
-              ) => this.setState({
-                departureOrigin,
-                departureDestination,
-                returnOrigin,
-                returnDestination,
+                returnDate,
+                returnTime,
                 rturn,
                 purposeName,
+                isDomestic
+              ) => this.setState({
+                requestId,
+                departureOrigin,
+                departureDestination,
+                departureDate,
+                departureTime,
+                returnOrigin,
+                returnDestination,
+                returnDate,
+                returnTime,
+                rturn,
+                purposeName,
+                isDomestic,
                 showFormModal : true }) }
               cardDataHolder = { bookflightArray }/>
         }
