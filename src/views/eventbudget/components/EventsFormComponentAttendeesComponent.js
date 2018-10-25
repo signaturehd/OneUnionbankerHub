@@ -39,18 +39,40 @@ class EventsFormComponentAttendeesComponent extends Component {
   /* Creation of logic WIP*/
   reconstructData (eventData, id, attendData, isCheck) {
     let newEventData = []
-    let attendeesData = []
+    let oldEventData = []
 
     eventData && eventData.attendees.map((resp, key) => {
-      if(key === id) {
-        newEventData.push(resp)
-        resp.employees.map((resp2, key2) => {
+
+      resp.employees.map((resp2, key2) => {
+
+      if(id === key) {
           const updateEmployees = [...resp.employees]
-          console.log(updateEmployees)
           updateEmployees[key2].hasRecord = false
-        })
-      }
+          let employeeData
+          updateEmployees.map((data) => {
+            employeeData = data
+          })
+
+          const arrayObject = {
+            department : resp.department,
+            employees: [
+              updateEmployees
+            ]
+          }
+          newEventData.push(arrayObject)
+      } else if (id !== key){
+        const arrayObject = {
+          department : resp.department,
+          employees: [
+            resp2,
+          ]
+        }
+        oldEventData.push(arrayObject)
+        }
+      })
     })
+    console.log(newEventData)
+    console.log(oldEventData)
   }
 
   render () {

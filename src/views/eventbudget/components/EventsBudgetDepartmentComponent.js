@@ -55,7 +55,7 @@ class EventsBudgetDepartmentComponent extends Component {
               onChange = { e => {
                 this.setState({ isSelectedDepartment : isSelectedDepartment !==true ? true : false } )
                 try {
-                  this.props.onChangeData(isSelectedDepartment !==true ? true : false)
+                  this.props.onChangeData(isSelectedDepartment !==true ? true : false, key)
                 } catch(e) {
                   console.log(e)
                 }
