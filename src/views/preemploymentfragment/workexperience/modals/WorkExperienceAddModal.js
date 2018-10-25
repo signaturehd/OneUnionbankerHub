@@ -112,6 +112,7 @@ class WorkExperienceAddModal extends Component {
           text = { 'Position' }
           onChange = { (e) => positionFunc(e.target.value) }
           value = { position }
+          maxLength = { 30 }
           errorMessage = { positionErrorMessage }
           />
         <GenericInput

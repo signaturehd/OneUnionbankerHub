@@ -102,6 +102,9 @@ class EducationBackgroundFragment extends BaseMVPView {
       honor : '',
       course : '',
       address : '',
+      torFormData: [{
+        name : 'Transcript of Records'
+      }],
       isUpdated : 0,
       updateMode : false
     })
@@ -314,6 +317,9 @@ class EducationBackgroundFragment extends BaseMVPView {
       course : '',
       address : '',
       isUpdated : 0,
+      torFormData: [{
+        name : 'Transcript of Records'
+      }],
       updateMode : false
     })
   }

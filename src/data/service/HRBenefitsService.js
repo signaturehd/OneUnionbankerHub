@@ -1400,15 +1400,18 @@ export default class HRBenefitsService {
     const formData = new FormData()
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     const objectParam = {
-        schoolName : educationParam.schoolName,
         studentNo : educationParam.studentNo,
+        schoolName : educationParam.schoolName,
         startYear : educationParam.startYear,
         endYear : educationParam.endYear,
+        course : educationParam.course,
         degree : educationParam.degree,
         honor : educationParam.honor,
-        course : educationParam.course,
         address : educationParam.address,
       }
+    formData.append('body', JSON.stringify(objectParam))
+
+
       educationParam &&
       educationParam.torFormData &&
       educationParam.torFormData.map((resp) =>
@@ -1416,7 +1419,6 @@ export default class HRBenefitsService {
           formData.append(resp.name.replace('/', '-'), resp.file)
         )
       )
-    formData.append('body', JSON.stringify(objectParam))
 
     return this.onboardingClient.post('v1/employees/school', formData, {
       headers : { token }
