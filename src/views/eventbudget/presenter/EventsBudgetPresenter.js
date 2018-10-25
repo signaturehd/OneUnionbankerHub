@@ -5,6 +5,9 @@ import addEventsBudgetParam from '../../../domain/param/AddEventsBudgetParam'
 
 import moment from 'moment'
 
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
+
 let storedCelebrationText = '',
     storedVenueText= '',
     storedAddressText = '',
@@ -15,7 +18,8 @@ let storedCelebrationText = '',
     storedRequestId = '',
     storedBenefitId = '42',
     storedDate = '',
-    storedAmount = ''
+    storedAmount = '',
+    storedId = []
 
 let mockedData = {
     "events": {
@@ -162,25 +166,80 @@ export default class EventsBudgetPresenter {
   }
 
   addEventsBudget (attendees) {
-    this.view.showCircularLoader()
-    this.addEventsBudgetInteractor.execute(
-      addEventsBudgetParam(
-        storedRequestId,
-        storedVenueText,
-        storedAddressText,
-        storedRegionText,
-        storedProvinceText,
-        storedCityText,
-        moment(storedDate).format('YYYY-MM-DD'),
-        attendees,
-      )
-    )
-    .subscribe(data => {
-      this.view.hideCircularLoader()
-      this.view.noticeOfUndertaking(true)
-      this.view.noticeOfUndertakingForm(data)
-    }, error => {
-      this.view.hideCircularLoader()
+    let newArrayId = []
+    attendees.attendees.map((resp, key) => {
+      resp.employees.map((resp2, key) => {
+        const arrayId = [...newArrayId]
+        arrayId.push(resp2.id)
+        newArrayId = arrayId
+      })
     })
+    if(storedVenueText === '') {
+      store.dispatch(NotifyActions.resetNotify())
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Events Budget',
+          message : 'Venue field is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (storedAddressText === '') {
+      store.dispatch(NotifyActions.resetNotify())
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Events Budget',
+          message : 'Address field is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (storedRegionText === '') {
+      store.dispatch(NotifyActions.resetNotify())
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Events Budget',
+          message : 'Region field is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (storedProvinceText === '') {
+      store.dispatch(NotifyActions.resetNotify())
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Events Budget',
+          message : 'Province field is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (storedCityText === '') {
+      store.dispatch(NotifyActions.resetNotify())
+      store.dispatch(NotifyActions.addNotify({
+          title: 'Events Budget',
+          message : 'City field is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else {
+      this.view.showCircularLoader()
+      this.addEventsBudgetInteractor.execute(
+        addEventsBudgetParam(
+          storedRequestId,
+          storedVenueText,
+          storedAddressText,
+          storedRegionText,
+          storedProvinceText,
+          storedCityText,
+          moment(storedDate).format('YYYY-MM-DD'),
+          newArrayId,
+        )
+      )
+      .subscribe(data => {
+        this.view.hideCircularLoader()
+        this.view.noticeOfUndertaking(true)
+        this.view.noticeOfUndertakingForm(data)
+      }, error => {
+        this.view.hideCircularLoader()
+      })
+    }
   }
 }

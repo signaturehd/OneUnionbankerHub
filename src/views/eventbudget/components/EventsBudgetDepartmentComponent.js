@@ -16,7 +16,8 @@ class EventsBudgetDepartmentComponent extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isSelectedDepartment : null
+      isSelectedDepartment : null,
+      selectedId : [],
     }
   }
 
@@ -30,6 +31,7 @@ class EventsBudgetDepartmentComponent extends Component {
 
     const {
       isSelectedDepartment,
+      selectedId
     } = this.state
 
     return (
@@ -60,11 +62,15 @@ class EventsBudgetDepartmentComponent extends Component {
           <br/>
           {
             attend && attend.employees.map((employee, key2) =>
-              <EventsBudgetAttendeesComponent
-                employee = { employee }
-                key2 = { key2 }
-                isSelectedDepartment = { isSelectedDepartment }
-              />
+            {
+              return (
+                <EventsBudgetAttendeesComponent
+                  employee = { employee }
+                  key2 = { key2 }
+                  isSelectedDepartment = { isSelectedDepartment }
+                />
+              )
+            }
             )
           }
         </div>

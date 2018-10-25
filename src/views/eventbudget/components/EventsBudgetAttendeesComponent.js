@@ -8,10 +8,12 @@ class EventsBudgetAttendeesComponent extends Component {
     super(props)
     this.state = {
       selectedAttendees: false,
+      selectedAttendeesArray: []
     }
   }
 
   checkEmployeeCheck (hasRecord) {
+
     if(hasRecord === true) {
       return 'check'
     } else {
@@ -21,7 +23,8 @@ class EventsBudgetAttendeesComponent extends Component {
 
   render () {
     const {
-      selectedAttendees
+      selectedAttendees,
+      selectedAttendeesArray
     } = this.state
 
     const {
@@ -29,7 +32,7 @@ class EventsBudgetAttendeesComponent extends Component {
       employee,
       isSelectedDepartment
     } = this.props
-    console.log(isSelectedDepartment)
+
     return (
       <div
         onClick = { () => this.setState({ selectedAttendees: employee.hasRecord !== false ? true: false }) }

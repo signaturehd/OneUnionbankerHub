@@ -218,13 +218,9 @@ class EventsBudgetFragment extends BaseMVPView {
               viewMoreText = { viewMoreText }
               viewMore = { () => this.setState({ index : eventBudgetData.attendees.length, viewMoreText : 'Hide Attendees' }) }
               viewLess = { () => this.setState({ index : 0, viewMoreText : 'Show Attendees' }) }
-              submitPresenter = { () => {
-                  try {
-                    this.presenter.addEventsBudget([1671])
-                  } catch(e) {
-                    console.log(e)
-                  }
-              } }
+              submitPresenter = { () =>
+                this.presenter.addEventsBudget(eventBudgetData)
+              }
             />
           </div>
           }
