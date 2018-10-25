@@ -1113,6 +1113,18 @@ export default class HRBenefitsService {
 
   /* Pre-Employment */
 
+  getPreEmploymentMessageStatus (token) {
+    return this.onboardingClient.get('v1/employees/letters/status', {
+      headers : { token }
+    })
+  }
+
+  postPreEmploymentMessageStatus (token, id) {
+    return this.onboardingClient.post(`v1/employees/letters?status=${ id }`, null, {
+      headers : { token }
+    })
+  }
+
   getPreEmploymentForm (token) {
     return this.onboardingClient.get('v1/employees/requirements?phase=1', {
       headers: { token }
@@ -1759,13 +1771,13 @@ export default class HRBenefitsService {
   }
 
   removeParents (token, id) {
-    return this.onboardingClient.delete(`v1/employees/parent/${id}`, {
+    return this.onboardingClient.delete(`v1/employees/plans/hospitalization/parents/${id}`, {
       headers : { token }
     })
   }
 
   removeFinancial (token, id) {
-    return this.onboardingClient.delete(`v1/employees/finances/detauls${id}`, {
+    return this.onboardingClient.delete(`v1/employees/finances/${id}`, {
       headers : { token }
     })
   }

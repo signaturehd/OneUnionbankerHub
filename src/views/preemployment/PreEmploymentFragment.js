@@ -60,6 +60,8 @@ import IsMarriedConfirmModal
   from './modals/IsMarriedConfirmModal'
 import IsChildrenConfirmModal
   from './modals/IsChildrenConfirmModal'
+import NoticeResponseModal
+  from '../notice/NoticeResponseModal'
 
 import {
   Modal,
@@ -243,9 +245,9 @@ class PreEmploymentFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      welcomeModal : true,
       isDismisable : true,
       enabledLoader: false,
+      showNoticeResponseModal: false,
       showFinancialObligationModal: false,
       showTaxPayerIdentificationModal: false,
       showSkipMessage: false,
@@ -258,6 +260,8 @@ class PreEmploymentFragment extends BaseMVPView {
       educationData : [],
       preEmpPage  : 0,
       percentage : 0,
+      messageStatus : null,
+      notice : '',
     }
   }
 
@@ -267,6 +271,16 @@ class PreEmploymentFragment extends BaseMVPView {
     this.presenter.getCharacterReference()
     this.presenter.getEmployeeSchool()
     this.presenter.getParents()
+   try {
+     this.presenter.getPreEmploymentMessageStatus()
+   } catch (e) {
+    console.log(e)
+   }
+  }
+
+  /* Validate if Preemployment message is display */
+  showMessageStatus (messageStatus) {
+    this.setState({ messageStatus })    
   }
 
   reloadPreEmploymentForm() {
@@ -274,6 +288,10 @@ class PreEmploymentFragment extends BaseMVPView {
     this.presenter.getCharacterReference()
     this.presenter.getEmployeeSchool()
     this.presenter.getParents()
+  }
+
+  noticeReponseModal (notice) {
+    this.setState({ notice, showNoticeResponseModal : true })
   }
 
   /* Documents */
@@ -384,9 +402,9 @@ class PreEmploymentFragment extends BaseMVPView {
     } = this.props
 
     const {
-      welcomeModal,
       isDismisable,
       enabledLoader,
+      showNoticeResponseModal,
       preEmpPage,
       showFinancialObligationModal,
       showTaxPayerIdentificationModal,
@@ -399,6 +417,8 @@ class PreEmploymentFragment extends BaseMVPView {
       characterReferenceData,
       educationData,
       percentage,
+      messageStatus,
+      notice
     } = this.state
 
     return(
@@ -424,6 +444,13 @@ class PreEmploymentFragment extends BaseMVPView {
               />
           </div>
         </Modal>
+      }
+      {
+        showNoticeResponseModal &&
+        <NoticeResponseModal 
+          noticeResponse = { notice && notice } 
+          onClose = { () => this.setState({ showNoticeResponseModal : false }) }
+        />
       }
       {
         showFinancialObligationModal &&
@@ -479,7 +506,7 @@ class PreEmploymentFragment extends BaseMVPView {
         />
       }
       {
-        welcomeModal &&
+        messageStatus && messageStatus.hasRead !== true &&
         <Modal
           width = { 50 }>
           {
@@ -518,7 +545,10 @@ class PreEmploymentFragment extends BaseMVPView {
               className = { 'pre-emp-setup-button' }
               text = { 'SETUP MY ACCOUNT' }
               onClick = { () =>
-                this.setState({ welcomeModal : false })
+                {
+                  this.setState({ messageStatus : false })
+                  this.presenter.postPreEmploymentMessageStatus(1)
+                }
               }
            />
           </center>

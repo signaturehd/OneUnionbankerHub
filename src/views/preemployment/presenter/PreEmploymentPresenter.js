@@ -5,6 +5,8 @@ import GetAffirmationStatusInteractor from '../../../domain/interactor/preemploy
 import GetCharacterReferenceInteractor from '../../../domain/interactor/preemployment/characterreference/GetCharacterReferenceInteractor'
 import EmployeeSchoolInteractor from '../../../domain/interactor/preemployment/education/GetEmployeeSchoolInteractor'
 import GetParentInteractor from '../../../domain/interactor/preemployment/parent/GetParentInteractor'
+import GetPreEmploymentMessageInteractor from '../../../domain/interactor/preemployment/preemployment/GetPreEmploymentMessageInteractor'
+import PostPreEmploymentMessageInteractor from '../../../domain/interactor/preemployment/preemployment/PostPreEmploymentMessageInteractor'
 
 let storedCharacterReference = []
 let storedEducation = []
@@ -18,6 +20,8 @@ export default class PreEmploymentPresenter {
     this.getCharacterReferenceInteractor = new GetCharacterReferenceInteractor(container.get('HRBenefitsClient'))
     this.getParentInteractor = new GetParentInteractor(container.get('HRBenefitsClient'))
     this.employeeSchoolInteractor = new EmployeeSchoolInteractor(container.get('HRBenefitsClient'))
+    this.getPreEmploymentMessageInteractor = new GetPreEmploymentMessageInteractor(container.get('HRBenefitsClient'))
+    this.postPreEmploymentMessageInteractor = new PostPreEmploymentMessageInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -38,6 +42,24 @@ export default class PreEmploymentPresenter {
 
   setParentValue(data){
     storedParent = data
+  }
+
+  getPreEmploymentMessageStatus () {
+    this.getPreEmploymentMessageInteractor.execute()
+    .subscribe(data => {
+      this.view.showMessageStatus(data)
+    }, error => {
+      store.dispatch(NotifyActions.resetNotify())
+    })
+  }
+
+  postPreEmploymentMessageStatus (status) {
+    this.postPreEmploymentMessageInteractor.execute(status)
+    .subscribe(data => { 
+      this.view.noticeReponseModal(data)
+    }, error => {
+      store.dispatch(NotifyActions.resetNotify())
+    })
   }
 
   getEmployeeSchool () {

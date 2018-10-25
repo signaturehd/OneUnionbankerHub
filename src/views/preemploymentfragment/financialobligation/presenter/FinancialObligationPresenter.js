@@ -99,7 +99,7 @@ export default class FinancialObligationPresenter {
     })
   }
 
-  removeSchool (id) {
+  removeFinancial (id) {
     this.view.showCircularLoader()
     this.removeFinancialObligationInteractor.execute(id)
     .subscribe(data => {

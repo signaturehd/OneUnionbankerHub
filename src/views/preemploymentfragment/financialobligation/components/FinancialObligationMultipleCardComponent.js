@@ -71,7 +71,7 @@ class FinancialObligationMultipleCardComponent extends Component {
                         !disabled &&
                         <img
                           className = { 'close-button-global' }
-                          src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
+                          src = { require('../../../../images/icons/baseline_edit_black_18dp.png') }
                           onClick = { () =>
                             onEditModeProperty(
                               resp.id,
