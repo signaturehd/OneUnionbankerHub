@@ -155,10 +155,10 @@ export default class EventsBudgetPresenter {
 
   validateEventsBudget () {
     this.view.hideCircularLoader()
-    this.view.showEventBudget(mockedData, storedBenefitId)
+    // this.view.showEventBudget(mockedData, storedBenefitId)
     this.validateEventsBudgetInteractor.execute()
     .subscribe(data => {
-      this.view.showEventBudget(mockedData, storedBenefitId)
+      this.view.showEventBudget(data, storedBenefitId)
       this.view.hideCircularLoader()
     }, error => {
       this.view.hideCircularLoader()
