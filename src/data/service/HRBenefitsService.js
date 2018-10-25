@@ -35,6 +35,9 @@ export default class HRBenefitsService {
     })
   }
 
+  /* Updated Profile */
+
+
   updateDescription (token, description) {
     const objectParam = {
       description : description
@@ -43,6 +46,22 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  updateAddress (token, address, file) {
+    const formData = new FormData()
+    const objectParam = {
+      address : description
+    }
+
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    formData.append('file', file)
+    formData.append('body', JSON.stringify(objectParam))
+    return this.apiClient.put('v1/profile/address', formData, {
+      headers : { token }
+    })
+  }
+
+  /* Get Registered Deveices*/
 
   getDevices (token) {
     return this.apiClient.get('v1/devices', {

@@ -5,6 +5,7 @@ import PostStaffAccountsInteractor from '../../../domain/interactor/staffaccount
 import UpdateStaffAccountsInteractor from '../../../domain/interactor/staffaccounts/UpdateStaffAccountsInteractor'
 import UpdateDescriptionInteractor from '../../../domain/interactor/account/UpdateDescriptionInteractor'
 import GetDevicesInteractor from '../../../domain/interactor/account/GetDevicesInteractor'
+import UpdateAddressInteractor from '../../../domain/interactor/account/UpdateAddressInteractor'
 
 import { NotifyActions } from '../../../actions'
 import store from '../../../store'
@@ -20,6 +21,7 @@ export default class SettingsPresenter {
     this.updateStaffAccountsInteractor = new UpdateStaffAccountsInteractor(container.get('HRBenefitsClient'))
     this.updateDescriptionInteractor = new UpdateDescriptionInteractor(container.get('HRBenefitsClient'))
     this.getDevicesInteractor = new GetDevicesInteractor(container.get('HRBenefitsClient'))
+    this.updateAddressInteractor = new UpdateAddressInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -123,6 +125,16 @@ export default class SettingsPresenter {
        this.view.noticeResponseModal(data.message)
        this.getProfile()
      }, error => {
+     })
+   }  
+
+   updateAddress (address, file) {
+     this.updateAddressInteractor.execute(address, file)
+     .subscribe(data => {
+       this.view.noticeResponseModal(data.message)
+       this.getProfile()
+     }, error => {
+      store.dispatch(NotifyActions.resetNotify())
      })
    }
 
