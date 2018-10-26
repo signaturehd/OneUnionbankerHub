@@ -126,14 +126,21 @@ export default class PreEmploymentPresenter {
       totalValue += 2 // parents
       totalValue += 1 // education
       totalValue += 1 // character reference
-      totalValue -= 1 // character reference
-      totalValue -= 1 // character reference
+      totalValue -=1 // tin
+      totalValue -=1 // sss
+      totalValue -=1 // pagibig loan
 
 
       requiredDocuments.map((documents) => {
-        if(documents.status === 2) {
+        if(documents.documentId === 10) {
+          progress-=1
+        } else if (documents.documentId === 11) {
+          progress-=1
+        } else if (documents.documentId === 16) {
+          progress-=1
+        } else if(documents.status === 2) {
           progress +=1 // If document status is equal submitted (2) progress increment to 1
-        }
+        } 
       })
 
       data.map((resp) => {

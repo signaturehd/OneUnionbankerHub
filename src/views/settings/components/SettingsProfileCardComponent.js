@@ -117,6 +117,7 @@ class SettingsProfileCardComponent extends Component {
               accountNumber={ accountNumber }
               profile={ profile && profile}
               onClose={ () => showPersonalInfoModalFunc(false) }
+              updateAddressFunc = { (e, e1) => this.props.updateAddressOption(e, e1) }
             />
         }
         {

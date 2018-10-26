@@ -42,10 +42,19 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Update Profile */
+
   updateDescription (token, description) {
     return this.service.updateDescription(token, description)
       .pipe(ServiceErrorOperator())
   }
+
+  updateAddress (token, address, file) {
+    return this.service.updateAddress(token, address, file)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Get Devices */
 
   getDevices (token) {
     return this.service.getDevices(token)

@@ -295,7 +295,7 @@ class LoginView extends BaseMVPView {
             </div>
               :
             <div>
-              <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
+              <img className = { 'login-logo' } src = { require('../../images/drawer/1uhub_halloween_logo.jpg')} />
                 <br/>
                 <GenericInput
                   onChange = { e =>
