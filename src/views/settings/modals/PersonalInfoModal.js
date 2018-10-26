@@ -15,7 +15,10 @@ class PersonalInfoModal extends Component {
       attachments : [{
         name : 'Proof Attachments'
       }],
-      addressText : ''
+      addressText : '',
+      regionText: '',
+      countryText: '',
+      postalCode : ''
     }
   }
 
@@ -27,7 +30,15 @@ class PersonalInfoModal extends Component {
       backgroundColor,
     }=this.props
 
-    const { isDismisable, updateAddress, attachments, addressText }=this.state
+    const { 
+      isDismisable, 
+      updateAddress, 
+      attachments, 
+      addressText,
+      postalCode,
+      countryText,
+      regionText,
+    }=this.state
 
     return (
       <Modal
@@ -153,9 +164,24 @@ class PersonalInfoModal extends Component {
                   onClose = { () => this.setState({ updateAddress : false }) }>
                   <div>
                     <GenericInput 
-                    text = { 'Enter new address' }
+                    text = { 'Address' }
                     onChange = { (e) => this.setState({ addressText : e.target.value }) }
-                    />
+                    />                    
+                    <div className = { 'grid-global-columns-x3' }>
+                      <GenericInput 
+                        text = { 'Country' }
+                        onChange = { (e) => this.setState({ countryText : e.target.value }) }
+                        />     
+                      <GenericInput 
+                        text = { 'Region' }
+                        onChange = { (e) => this.setState({ regionText : e.target.value }) }
+                        /> 
+                      <GenericInput 
+                        text = { 'Postal Code' }
+                        type = { 'number' }
+                        onChange = { (e) => this.setState({ postalCode : e.target.value }) }
+                        />    
+                    </div>
                     <MultipleAttachments 
                       fileArray = { attachments }
                       setFile = { (attachments) => this.setState({ attachments }) }
@@ -166,8 +192,15 @@ class PersonalInfoModal extends Component {
                       className = { 'update-profile-button' } 
                       text = { 'Update' }
                       onClick = { () => {
-                        this.props.updateAddressFunc(addressText, attachments)
+                        const objectParam = {
+                          postalCode: postalCode,
+                          address: addressText,
+                          country: countryText,
+                          region: regionText
+                        }
+                        this.props.updateAddressFunc(objectParam, attachments) 
                         this.setState({ updateAddress : false })
+                        this.props.onClose()
                       } }
                     />
                     <GenericButton 

@@ -50,7 +50,10 @@ export default class HRBenefitsService {
   updateAddress (token, address, file) {
     const formData = new FormData()
     const objectParam = {
-      address : address
+      address : address.address,
+      region: address.region,
+      country: address.country,
+      postalCode: address.postalCode,
     }
 
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)

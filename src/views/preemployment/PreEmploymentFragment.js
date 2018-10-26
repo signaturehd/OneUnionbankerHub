@@ -271,11 +271,7 @@ class PreEmploymentFragment extends BaseMVPView {
     this.presenter.getCharacterReference()
     this.presenter.getEmployeeSchool()
     this.presenter.getParents()
-   try {
-     this.presenter.getPreEmploymentMessageStatus()
-   } catch (e) {
-    console.log(e)
-   }
+    this.presenter.getPreEmploymentMessageStatus()
   }
 
   /* Validate if Preemployment message is display */

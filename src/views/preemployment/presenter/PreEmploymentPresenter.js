@@ -130,8 +130,6 @@ export default class PreEmploymentPresenter {
       totalValue -=1 // tin
       totalValue -=1 // sss
       totalValue -=1 // bir
-      totalValue -=1 // bir
-
 
       requiredDocuments.map((documents) => {
         if(documents.status === 2 &&
