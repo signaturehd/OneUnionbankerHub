@@ -62,6 +62,8 @@ import IsChildrenConfirmModal
   from './modals/IsChildrenConfirmModal'
 import NoticeResponseModal
   from '../notice/NoticeResponseModal'
+import IsSkipOptionModal
+  from './modals/IsSkipOptionModal'
 
 import {
   Modal,
@@ -262,6 +264,7 @@ class PreEmploymentFragment extends BaseMVPView {
       percentage : 0,
       messageStatus : null,
       notice : '',
+      showSkipOptionModal : false,
     }
   }
 
@@ -349,9 +352,15 @@ class PreEmploymentFragment extends BaseMVPView {
       this.setState({ showFinancialObligationModal : true })
       // const index1 = this.state.preEmpPage + 17
       // this.setState({ preEmpPage : index1 })
-    } else if (index === 1) {
-
-    } else if (index === 11) {
+    } else if (index === 3) {
+      this.setState({ showSkipOptionModal : true })
+    } else if (index === 4) {
+      this.setState({ showSkipOptionModal : true })
+    } else if (index === 8) {
+      this.setState({ showSkipOptionModal : true })
+    } else if (index === 9) {
+      this.setState({ showSkipOptionModal : true })
+    }  else if (index === 11) {
       this.setState({ showTaxPayerIdentificationModal : true })
     } else if (index === 15) {
       this.setState({ showPagibigLoanModal : true })
@@ -416,7 +425,8 @@ class PreEmploymentFragment extends BaseMVPView {
       educationData,
       percentage,
       messageStatus,
-      notice
+      notice,
+      showSkipOptionModal,
     } = this.state
 
     return(
@@ -442,6 +452,13 @@ class PreEmploymentFragment extends BaseMVPView {
               />
           </div>
         </Modal>
+      }
+      {
+        showSkipOptionModal && 
+        <IsSkipOptionModal 
+          preEmpPage = { preEmpPage }
+          onCloseOption = { (preEmpPage) => this.setState({ preEmpPage, showSkipOptionModal : false }) }
+        />
       }
       {
         showNoticeResponseModal &&

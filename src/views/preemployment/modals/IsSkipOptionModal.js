@@ -13,7 +13,7 @@ class IsSkipOptionModal extends Component {
   }
 
   render() {
-    const { onSendPageNumberToView } = this.props
+    const { onSendPageNumberToView, onCloseOption, preEmpPage } = this.props
 
     return(
       <Modal>
@@ -25,10 +25,10 @@ class IsSkipOptionModal extends Component {
           <GenericButton
             className = { 'global-button' }
             text = { 'No' }
-            onClick = { () => onSendPageNumberToView(15) }
+            onClick = { () => onCloseOption(preEmpPage) }
             />
           <GenericButton
-            onClick = { () => onSendPageNumberToView(16) }
+            onClick = { () => onCloseOption(preEmpPage + 1) }
             className = { 'global-button' }
             text = { 'Yes' }
             />
