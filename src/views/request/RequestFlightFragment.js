@@ -446,9 +446,13 @@ class RequestFlightFragment extends BaseMVPView {
                 <CircularLoader show = { enabledLoader }/>
               </center>
               :
-              requestFlightArray.length !==0 &&
+              requestFlightArray.length !==0 ?
                 <RequestFlightComponent
                   cardDataHolder = { requestFlightArray }/>
+                  :
+                  <center>
+                    <h2>No records</h2>
+                  </center>
             }
 
             <FloatingActionButton

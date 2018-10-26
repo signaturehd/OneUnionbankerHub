@@ -14,7 +14,7 @@ export default class BookFlightPresenter {
 
   getTravels () {
     this.view.showCircularLoader()
-    this.getTravelsInteractor.execute(4)
+    this.getTravelsInteractor.execute(2)
       .subscribe(travel => {
           this.view.hideCircularLoader()
           this.view.getTravels(travel)

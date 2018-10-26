@@ -44,112 +44,7 @@ class LiquidationFragment extends BaseMVPView {
       orNumber : '',
       orDate : '',
       whyTicketUsed : '',
-      liquidationArray : [
-        {
-          'id': 2,
-          'referenceNumber': 'TR20181008162834',
-          'purpose': {
-            'id': 1,
-            'name': 'Business Meeting'
-          },
-          'status': {
-            'id': 6,
-            'name': 'Requesting'
-          },
-          'remark': '',
-          'approvedBy': null,
-          'approvedDate': null,
-          'applicationDate': '2018-10-08',
-          'departure': {
-            'origin': {
-              'id': 1,
-              'areaCode': 'ZMH',
-              'airport': '108 Mile Ranch',
-              'location': '108 Mile Ranch, Canada',
-              'isDomestic': true
-            },
-            'destination': {
-              'id': 2,
-              'areaCode': 'AAH',
-              'airport': 'Aachen/Merzbruck',
-              'location': 'Aachen, Germany',
-              'isDomestic': false
-            },
-            'date': '2019-01-26',
-            'time': '13:00',
-            'remarks': null
-          },
-          'return': {
-            'origin': {
-              'id': 2,
-              'areaCode': 'AAH',
-              'airport': 'Aachen/Merzbruck',
-              'location': 'Aachen, Germany',
-              'isDomestic': false
-            },
-            'destination': {
-              'id': 1,
-              'areaCode': 'ZMH',
-              'airport': '108 Mile Ranch',
-              'location': '108 Mile Ranch, Canada',
-              'isDomestic': false
-            },
-            'date': '2019-01-28',
-            'time': '13:00',
-            'remarks': null
-          },
-          'liquidation': {
-            'id': 1,
-            'cost': 123,
-            'serviceCharge': 123,
-            'isTicketUsed': 1,
-            'reason': 'test'
-          }
-        },
-        {
-          'id': 1,
-          'referenceNumber': 'TR20181008162834',
-          'purpose': {
-            'id': 1,
-            'name': 'Training'
-          },
-          'status': {
-            'id': 6,
-            'name': 'Requesting'
-          },
-          'remark': '',
-          'approvedBy': null,
-          'approvedDate': null,
-          'applicationDate': '2018-10-08',
-          'departure': {
-            'origin': {
-              'id': 1,
-              'areaCode': 'ZMH',
-              'airport': '108 Mile Ranch',
-              'location': '108 Mile Ranch, Canada',
-              'isDomestic': true
-            },
-            'destination': {
-              'id': 2,
-              'areaCode': 'AAH',
-              'airport': 'Aachen/Merzbruck',
-              'location': 'Aachen, Germany',
-              'isDomestic': true
-            },
-            'date': '2019-01-26',
-            'time': '13:00',
-            'remarks': null
-          },
-          'return': '',
-          'liquidation': {
-            'id': null,
-            'cost': null,
-            'serviceCharge': null,
-            'isTicketUsed': null,
-            'reason': null
-          }
-        }
-      ],
+      liquidationArray : [],
       attachmentsData : [
         {
           name : 'Ticket Attachment'
@@ -162,7 +57,7 @@ class LiquidationFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    // this.presenter.getTravels()
+    this.presenter.getTravels()
   }
 
   getTravels(liquidationArray) {
@@ -377,7 +272,7 @@ class LiquidationFragment extends BaseMVPView {
                 <CircularLoader show = { enabledLoader }/>
               </center>
               :
-              liquidationArray.length !==0 &&
+              liquidationArray.length !==0 ?
                 <LiquidationComponent
                   showTicketFunc = { () => this.setState({ showTicketModal : true }) }
                   showFormFunc = { (
@@ -393,6 +288,10 @@ class LiquidationFragment extends BaseMVPView {
                     })
                   }
                   cardDataHolder = { liquidationArray }/>
+                  :
+                  <center>
+                    <h2>No records</h2>
+                  </center>
             }
       </div>
     )

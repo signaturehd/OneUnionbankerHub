@@ -46,10 +46,9 @@ class BookFlightFragment extends BaseMVPView {
       rturn : '',
       departureTime : '',
       returnTime : '',
-      totalCostOfFlight : '',
-      totalServiceCharge : '',
-      valueAddedTax : '',
-      totalAmount : '',
+      totalCostOfFlight : '0',
+      totalServiceCharge : '0',
+      valueAddedTax : '0',
       bookflightArray : [],
       attachmentsData : [{ name : 'Flight Quatation Attachment' }],
       attachmentsData2 : [{ name : 'Flight Quatation Attachment' },
@@ -73,9 +72,9 @@ class BookFlightFragment extends BaseMVPView {
     this.setState({ returnTime })
   }
 
-  totalAmountFunc(totalAmount) {
-    this.setState({ totalAmount })
-  }
+  // totalAmountFunc(totalAmount) {
+  //   this.setState({ totalAmount })
+  // }
 
   totalCostOfFlightFunc(totalCostOfFlight) {
     this.setState({ totalCostOfFlight })
@@ -172,7 +171,6 @@ class BookFlightFragment extends BaseMVPView {
       totalCostOfFlight,
       totalServiceCharge,
       valueAddedTax,
-      totalAmount,
       bookflightArray,
       attachmentsData,
       attachmentsData2
@@ -181,7 +179,7 @@ class BookFlightFragment extends BaseMVPView {
     const { percentage } = this.props
     const depDate = moment(this.state.departureDate).format('MMMM DD, YYYY')
     const retDate = moment(this.state.returnDate).format('MMMM DD, YYYY')
-
+    const totalAmount = (parseFloat(totalCostOfFlight) + parseFloat(totalServiceCharge) + parseFloat(valueAddedTax))
     return (
       <div>
         {
@@ -257,26 +255,26 @@ class BookFlightFragment extends BaseMVPView {
             <GenericInput
               text = { 'Total Cost of Flight' }
               type = { 'number' }
-              value = { totalCostOfFlight }
+              value = { totalCostOfFlight == 0 ? '' : totalCostOfFlight }
               onChange = { (e) => this.totalCostOfFlightFunc(e.target.value) }
             />
             <GenericInput
               text = { 'Total Service Charge' }
               type = { 'number' }
-              value = { totalServiceCharge }
+              value = { totalServiceCharge == 0 ? '' : totalServiceCharge }
               onChange = { (e) => this.totalServiceChargeFunc(e.target.value) }
             />
             <GenericInput
               text = { 'Value-Added Tax' }
               type = { 'numer' }
-              value = { valueAddedTax }
+              value = { valueAddedTax == 0 ? '' : valueAddedTax }
               onChange = { (e) => this.valueAddedTaxFunc(e.target.value) }
             />
             <GenericInput
               text = { 'Total Amount' }
               type = { 'number' }
+              disbled = { true }
               value = { totalAmount }
-              onChange = { (e) => this.totalAmountFunc(e.target.value) }
             />
             {
               isDomestic ?
@@ -318,7 +316,7 @@ class BookFlightFragment extends BaseMVPView {
             <CircularLoader show = { enabledLoader }/>
           </center>
           :
-          bookflightArray.length !==0 &&
+          bookflightArray.length !==0 ?
             <BookFlightComponent
               showFormFunc = { (
                 requestId,
@@ -348,6 +346,10 @@ class BookFlightFragment extends BaseMVPView {
                 isDomestic,
                 showFormModal : true }) }
               cardDataHolder = { bookflightArray }/>
+              :
+              <center>
+                <h2>No records</h2>
+              </center>
         }
       </div>
     )
