@@ -44,7 +44,7 @@ class TravelFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.setSelectedNavigation(12)
+    this.props.setSelectedNavigation(13)
     this.presenter.validateFabToShow()
     this.presenter.getReleasingCenters()
     this.presenter.getAccountNumber()
