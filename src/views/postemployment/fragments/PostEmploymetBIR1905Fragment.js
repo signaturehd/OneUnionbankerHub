@@ -18,164 +18,54 @@ class PostEmploymetBIR1905Fragment extends Component {
     super(props)
   }
 
+  componentDidMount () {
+    this.props.subtitle('Please download and fill-up the Bereau of Internal Revenue(BIR) 1905 Form then attach the document.')
+    this.props.title('Bereau of Internal Revenue (BIR) Form 1905.')
+    try {
+    this.checkAttachments()
+
+  } catch (e) {
+    console.log(e)
+  }
+  }
+
+  checkAttachments () {
+    const {
+      bir1905Array
+    } = this.props
+
+    this.props.getSelectedAttachments(bir1905Array)
+  }
+
   render () {
     const {
-      pageId
+      pageId,
     } = this.props
 
     return (
       <div>
-      { super.render() }
-
-      {
-        showNoticeResponseModal &&
-        <ResponseModal
-          onClose={ () => {
-            this.setState({ showNoticeResponseModal : false})
-            this.props.reloadPreEmploymentForm()
-          }}
-          noticeResponse={ noticeResponse }
-        />
-      }
-      {
-        enabledLoaderPdfModal &&
-        <Modal>
-          <div>
-            <center>
-              <br/>
-              {
-                showPdfViewComponent ?
-
-                <h2>Please wait while we we&#39;re retrieving the documents</h2> :
-                <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+        <div className = { 'postemployment-grid-card' }>
+          <Card
+            onClick = { () => {
+              this.onCheckedPdf('/2018-10-15/12345-BSP Biographical Data-1539596592662.pdf')
+              this.setState({ showPdfViewComponent : true  })
               }
-              <br/>
-              <CircularLoader show = { enabledLoaderPdfModal }/>
-              <br/>
-            </center>
-          </div>
-        </Modal>
-      }
-        {
-          showViewModal &&
-          <ViewAttachmentModal
-            file = { viewFile }
-            onClose = { () => this.setState({ showViewModal : false }) }
-          />
-        }
-        <div>
-          <br/>
-            <div className = { 'percentage-grid' }>
+            }
+            className = { 'postemployment-card' }>
+            <div className = { 'postemployment-grid-x2' }>
+              <h2>Download BIR 1905 Form</h2>
               <div>
-              <h2 className={ 'header-margin-default text-align-left' }>Bureau of Internal Revenue(BIR) Form</h2>
-              <h2>Please download the BIR 1902 form by clicking the button below</h2>
+                <span className = { 'postemployment-icon postemployment-seemore-button' }/>
               </div>
-              <Progress
-                type = { 'circle' }
-                height = { 65 }
-                width = { 65 }
-                percent = { percentage } />
             </div>
-          <br/>
-          <div className = { 'bir-grid-card' }>
-            <Card
-              onClick = { () => {
-                this.onCheckedPdf('/2018-09-28/12345-BIR Form-1538123091552.pdf')
-                this.setState({ showPdfViewComponent : true  })
-                }
-              }
-              className = { 'bir-card' }>
-              <div className = { 'bir-grid-x2' }>
-                <h2>BIR 1902 Form</h2>
-                <div>
-                  <span className = { 'bir-icon biographical-seemore-button' }/>
-                </div>
-              </div>
-            </Card>
-          </div>
+          </Card>
           {
-            showPdfViewComponent &&
-            <Bir1902ViewPdfComponent
-              pdfFile = { pdfFile }
-              onClose = { () => this.setState({ showPdfViewComponent: false }) }
-            />
+            // showPdfViewComponent &&
+            // <BiographicalViewerComponent
+            //   pdfFile = { pdfFile }
+            //   onClose = { () => this.setState({ showPdfViewComponent: false }) }
+            // />
           }
-          <br/>
-          <Line />
-          <br/>
-          {
-            bir1902FormData.length !== 0  &&
-            bir1902Array.map((status) =>
-              <div>
-                {
-                  status.status === 2 || status.status === 4 &&
-                  <div className = { 'text-align-right' }>
-                    <GenericButton
-                      text = { 'Add Attachments' }
-                      onClick = { () => this.addAttachmentsFunc(bir1902FormData, count) }
-                      />
-                  </div>
-                }
-                {
-                  attachments.lenght !== 0 &&
-                    enabledLoader ?
-                    <center>
-                    <CircularLoader show = { enabledLoader } />
-                    </center>
-                    :
-                    <PreEmploymentViewAttachmentsComponent
-                      file = { attachments }
-                      onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
-                }
-                {
-                  status.status === 2 &&
-                  <div>
-                  <center>
-                    <h4 className = { 'font-size-14px font-weight-lighter' }>
-                      Your documents has been submitted for confirmation.
-                    </h4>
-                  </center>
-                  </div>
-                }
-                {
-                  status.status === 4 &&
-                  <div>
-                  <center>
-                    <h4 className = { 'font-size-14px font-weight-lighter' }>
-                      Your documents are verified.
-                    </h4>
-                  </center>
-                  </div>
-                }
-                {
-                 status.status  === 1 &&
-                  <div>
-                    <h4>
-                      <br/>
-                      Form Attachments
-                    </h4>
-                    <MultipleAttachments
-                      count = { count }
-                      countFunc = { (count) => this.setState({ count }) }
-                      placeholder = { '' }
-                      fileArray = { bir1902FormData }
-                      setFile = { (bir1902FormData) =>
-                          this.setState({ bir1902FormData })
-                      }
-                      />
-                      <center>
-                       <GenericButton
-                         text = { 'Upload' }
-                         onClick = { () => this.uploadForm()
-                       }
-                       />
-                     </center>
-                  </div>
-                }
-              </div>
-              )
-           }
-
         </div>
       </div>
     )
