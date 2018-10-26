@@ -1,5 +1,6 @@
 import AddRequirementInteractor from '../../../domain/interactor/postemployment/postemployment/AddRequirementInteractor'
 import GetPostEmploymentInteractor from '../../../domain/interactor/postemployment/postemployment/GetPostEmploymentInteractor'
+import GetOnboardingAttachmentsInteractor from '../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 
 import { NotifyActions } from '../../../actions'
 import store from '../../../store'
@@ -25,6 +26,7 @@ let mockedData = [{
 
 export default class PostEmploymentPresenter {
   constructor (container) {
+    this.getOnboardingAttachmentsInteractor = new GetOnboardingAttachmentsInteractor(container.get('HRBenefitsClient'))
     this.addRequirementInteractor = new AddRequirementInteractor(container.get('HRBenefitsClient'))
     this.getPostEmploymentInteractor = new GetPostEmploymentInteractor(container.get('HRBenefitsClient'))
   }
@@ -37,15 +39,15 @@ export default class PostEmploymentPresenter {
     requiredDocuments = data
   }
 
-  
-  getOnBoardingDocument (link) {
-    this.view.showDocumentLoader()
-    this.getOnboardingPdfInteractor.execute(link)
+  getOnboardingAttachments (attachments) {
+    this.view.showCircularLoader()
+    this.getOnboardingAttachmentsInteractor.execute(attachments)
     .subscribe(data => {
-      this.view.hideDocumentLoader()
-      this.view.showPdfFileView(data)
+      this.view.hideCircularLoader()
+      this.view.showAttachmentsFileView(data)
     }, error => {
-      this.view.hideDocumentLoader()
+      store.dispatch(NotifyActions.resetNotify())
+      this.view.hideCircularLoader()
     })
   }
 

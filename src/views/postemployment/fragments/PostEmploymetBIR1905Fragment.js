@@ -21,7 +21,12 @@ class PostEmploymetBIR1905Fragment extends Component {
   componentDidMount () {
     this.props.subtitle('Please download and fill-up the Bereau of Internal Revenue(BIR) 1905 Form then attach the document.')
     this.props.title('Bereau of Internal Revenue (BIR) Form 1905.')
+    try {
     this.checkAttachments()
+
+  } catch (e) {
+    console.log(e)
+  }
   }
 
   checkAttachments () {
@@ -29,7 +34,7 @@ class PostEmploymetBIR1905Fragment extends Component {
       bir1905Array
     } = this.props
 
-    this.presenter.getSelectedAttachments(biographicalArray)
+    this.props.getSelectedAttachments(bir1905Array)
   }
 
   render () {

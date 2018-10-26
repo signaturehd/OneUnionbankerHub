@@ -26,7 +26,8 @@ class PostEmploymentFragment extends BaseMVPView {
       postEmp : 0,
       title: '',
       subtitle : '',
-      dataRequirements : []
+      dataRequirements : [],
+      enabledLoader: false,
     }
   }
 
@@ -37,6 +38,14 @@ class PostEmploymentFragment extends BaseMVPView {
 
   showPercentageOfPreEmployment (postEmp) {
     this.setState({ postEmp })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
   }
 
   showPostEmploymentData (dataRequirements) {
@@ -83,7 +92,8 @@ class PostEmploymentFragment extends BaseMVPView {
       pageId,
       title,
       subtitle,
-      hideSubmitButton
+      hideSubmitButton,
+      enabledLoader,
     } = this.state
 
     const arrayCard = [{
@@ -140,12 +150,14 @@ class PostEmploymentFragment extends BaseMVPView {
             :
             <div>
               <PostEmploymentComponent
+                enabledLoader = { enabledLoader }
                 titleFunc = { (title) => this.setState({ title }) }
                 subtitleFunc = { (subtitle) => this.setState({ subtitle }) }
                 certificateArray = { this.getFormData(3) }
                 bir1905Array = { this.getFormData(1) }
                 bir2316Array = { this.getFormData(2) }
                 pageId = { pageId }
+                getSelectedAttachments = { (resp) => this.presenter.getSelectedAttachments(resp) }
                 />
             </div>
           }
