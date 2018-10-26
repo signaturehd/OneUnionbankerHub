@@ -50,11 +50,13 @@ export default class HRBenefitsService {
   updateAddress (token, address, file) {
     const formData = new FormData()
     const objectParam = {
-      address : description
+      address : address
     }
 
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
-    formData.append('file', file)
+    file.map((resp, key) => (
+      formData.append('file', resp.file)
+    ))
     formData.append('body', JSON.stringify(objectParam))
     return this.apiClient.put('v1/profile/address', formData, {
       headers : { token }

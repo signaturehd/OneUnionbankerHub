@@ -51,7 +51,7 @@ class MedicalAppointmentFragment extends BaseMVPView {
     this.setState({ medicalAppointmentData })
     this.setState({
       preferredDate : moment(medicalAppointmentData.preferredDate),
-      alternativeDate : moment(medicalAppointmentData.preferredDate),
+      alternativeDate : moment(medicalAppointmentData.alternativeDate),
     })
   }
 

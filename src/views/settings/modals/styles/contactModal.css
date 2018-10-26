@@ -71,11 +71,12 @@
 
 .profile-update-address-grid{
   display: grid;
-  grid-template-columns: 1fr .09fr, .05fr; 
+  grid-template-columns: 1fr .09fr; 
+  column-gap: 2%;
 }
 
 .alignment-center {
-  align-items: flex-end;  
+  align-self: center;  
 }
 
 .employeeMobileNumber {

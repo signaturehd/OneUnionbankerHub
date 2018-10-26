@@ -129,7 +129,7 @@ export default class SettingsPresenter {
    }  
 
    updateAddress (address, file) {
-     this.updateAddressInteractor.execute(address, file)
+    this.updateAddressInteractor.execute(address, file)
      .subscribe(data => {
        this.view.noticeResponseModal(data.message)
        this.getProfile()

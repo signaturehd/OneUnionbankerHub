@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal, Line, GenericButton, GenericInput } from '../../../ub-components/'
+import { Modal, Line, GenericButton, GenericInput, MultipleAttachments } from '../../../ub-components/'
 
 import './styles/contactModal.css'
 
@@ -12,6 +12,10 @@ class PersonalInfoModal extends Component {
     this.state={
       isDismisable : true,
       updateAddress : false,
+      attachments : [{
+        name : 'Proof Attachments'
+      }],
+      addressText : ''
     }
   }
 
@@ -23,7 +27,7 @@ class PersonalInfoModal extends Component {
       backgroundColor,
     }=this.props
 
-    const { isDismisable, updateAddress }=this.state
+    const { isDismisable, updateAddress, attachments, addressText }=this.state
 
     return (
       <Modal
@@ -141,23 +145,38 @@ class PersonalInfoModal extends Component {
                     </div>
                   </div>
                     <span 
-                    onClick = { () => this.setState({ updateAddress : false }) }
+                    onClick = { () => this.setState({ updateAddress : true }) }
                     className = { 'alignment-center profile-icon-settings editIconImage' }/>
                 </div> :
-                <div className = { 'profile-update-address-grid' } >
-                  <GenericInput 
+                <Modal
+                  isDismisable = { true }
+                  onClose = { () => this.setState({ updateAddress : false }) }>
+                  <div>
+                    <GenericInput 
                     text = { 'Enter new address' }
-                    onChange = { () => {} }
-                  />
-                  <GenericButton 
-                  className = { 'update-profile-button' } 
-                    text = { 'Update' }
-                    onClick = { () => {} }
-                  />
-                  span 
-                    onClick = { () => this.setState({ updateAddress : false }) }
-                    className = { 'alignment-center profile-icon-settings editIconImage' }/>
-                </div>
+                    onChange = { (e) => this.setState({ addressText : e.target.value }) }
+                    />
+                    <MultipleAttachments 
+                      fileArray = { attachments }
+                      setFile = { (attachments) => this.setState({ attachments }) }
+                    />
+                  </div>
+                  <center className = { 'grid-global' }>
+                    <GenericButton 
+                      className = { 'update-profile-button' } 
+                      text = { 'Update' }
+                      onClick = { () => {
+                        this.props.updateAddressFunc(addressText, attachments)
+                        this.setState({ updateAddress : false })
+                      } }
+                    />
+                    <GenericButton 
+                      className = { 'update-profile-button' } 
+                      text = { 'Close' }
+                      onClick = { () => this.setState({ updateAddress : false }) }
+                    />
+                  </center>
+                </Modal>
               }
             </div>
         </Modal>
