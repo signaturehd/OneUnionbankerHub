@@ -126,8 +126,10 @@ export default class PreEmploymentPresenter {
       totalValue += 2 // parents
       totalValue += 1 // education
       totalValue += 1 // character reference
+      totalValue += 1 // medical sheduling
       totalValue -=1 // tin
       totalValue -=1 // sss
+      totalValue -=1 // bir
       totalValue -=1 // bir
 
 
