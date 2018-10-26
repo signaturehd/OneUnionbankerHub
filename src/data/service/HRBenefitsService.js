@@ -35,6 +35,9 @@ export default class HRBenefitsService {
     })
   }
 
+  /* Updated Profile */
+
+
   updateDescription (token, description) {
     const objectParam = {
       description : description
@@ -43,6 +46,24 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  updateAddress (token, address, file) {
+    const formData = new FormData()
+    const objectParam = {
+      address : address
+    }
+
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    file.map((resp, key) => (
+      formData.append('file', resp.file)
+    ))
+    formData.append('body', JSON.stringify(objectParam))
+    return this.apiClient.put('v1/profile/address', formData, {
+      headers : { token }
+    })
+  }
+
+  /* Get Registered Deveices*/
 
   getDevices (token) {
     return this.apiClient.get('v1/devices', {
@@ -1113,6 +1134,18 @@ export default class HRBenefitsService {
 
   /* Pre-Employment */
 
+  getPreEmploymentMessageStatus (token) {
+    return this.onboardingClient.get('v1/employees/letters/status', {
+      headers : { token }
+    })
+  }
+
+  postPreEmploymentMessageStatus (token, id) {
+    return this.onboardingClient.post(`v1/employees/letters?status=${ id }`, null, {
+      headers : { token }
+    })
+  }
+
   getPreEmploymentForm (token) {
     return this.onboardingClient.get('v1/employees/requirements?phase=1', {
       headers: { token }
@@ -1761,7 +1794,13 @@ export default class HRBenefitsService {
   }
 
   removeParents (token, id) {
-    return this.onboardingClient.delete(`v1/employees/parent/${id}`, {
+    return this.onboardingClient.delete(`v1/employees/plans/hospitalization/parents/${id}`, {
+      headers : { token }
+    })
+  }
+
+  removeFinancial (token, id) {
+    return this.onboardingClient.delete(`v1/employees/finances/${id}`, {
       headers : { token }
     })
   }

@@ -225,6 +225,7 @@ class SettingsFragment extends BaseMVPView {
              this.setState({ showDevicesModal })
            }
          }
+          updateAddressOption = { (address, attachments) => this.presenter.updateAddress(address, attachments) }
         />
       </div>
     )

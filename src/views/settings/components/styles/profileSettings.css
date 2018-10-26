@@ -132,6 +132,10 @@
   background-image:  url('../../../../images/icons/ic_mode_edit_grey_500_18dp.png');
 }
 
+.closeImage {
+  background-image:  url('../../../../images/x-circle-global.png');
+}
+
 .addIcon {
 
 }

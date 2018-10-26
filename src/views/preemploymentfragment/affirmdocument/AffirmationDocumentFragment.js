@@ -302,20 +302,31 @@ class AffirmationDocumentFragment extends BaseMVPView {
               }
               <br/>
               <center>
-                {
-                  nodeStatus === 0 ?
-                  <div className = { 'affirm-acknowledge' }>
-                    <GenericButton
-                      onClick = { () => this.setState({ showPinCodeModal: true, showPdfViewComponent: false }) }
-                      text = { 'I Acknowledge' }/>
-                  </div>
-                  :
+                <div className = { 'grid-global-columns-x3' }>
+                  <div></div>
                   <div>
+                  {
+                    nodeStatus === 0 ?
+                    <div className = { 'grid-global' }>
+                    {
+                    nodeStatus === 0 &&
+                      <div className = { 'affirm-acknowledge' }>
+                        <GenericButton
+                          onClick = { () => this.setState({ showPinCodeModal: true, showPdfViewComponent: false }) }
+                          text = { 'I Acknowledge' }/>
+                      </div>
+                    }
                     <GenericButton
                       onClick = { () => this.setState({ showPdfViewComponent: false, affirmationContent : [] }) }
                       text = { 'Close' }/>
+                    </div>:
+                    <GenericButton
+                      onClick = { () => this.setState({ showPdfViewComponent: false, affirmationContent : [] }) }
+                      text = { 'Close' }/>
+                  }
                   </div>
-                }
+                  <div></div>
+                </div>
               </center>
             </div>
 

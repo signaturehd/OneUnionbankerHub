@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal, Line } from '../../../ub-components/'
+import { Modal, Line, GenericButton, GenericInput, MultipleAttachments } from '../../../ub-components/'
 
 import './styles/contactModal.css'
 
@@ -11,6 +11,11 @@ class PersonalInfoModal extends Component {
     super(props)
     this.state={
       isDismisable : true,
+      updateAddress : false,
+      attachments : [{
+        name : 'Proof Attachments'
+      }],
+      addressText : ''
     }
   }
 
@@ -19,10 +24,10 @@ class PersonalInfoModal extends Component {
       onClose,
       profile,
       accountNumber,
-      backgroundColor
+      backgroundColor,
     }=this.props
 
-    const { isDismisable }=this.state
+    const { isDismisable, updateAddress, attachments, addressText }=this.state
 
     return (
       <Modal
@@ -120,22 +125,59 @@ class PersonalInfoModal extends Component {
                 </div>
               </div>
               <br/>
-              <div
-                className={ 'contact-number-grid' }>
-                <div>
-                  <span className={ 'contact-icon-settings employeeHomeAddress' }/>
-                </div>
-                <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-17px contact-title' }>
-                    <h2>Address</h2>
+              {
+                !updateAddress ?
+                <div className = { 'profile-address-grid-x2' } >
+                  <div
+                    className={ 'contact-number-grid' }>
+                    <div>
+                      <span className={ 'contact-icon-settings employeeHomeAddress' }/>
+                    </div>
+                    <div className={ 'contact-info-grid-row' }>
+                      <div className={ 'font-size-17px contact-title' }>
+                        <h2>Address</h2>
+                      </div>
+                      <div className={ 'font-size-16px' }>
+                        <a>
+                          { profile.address ?  profile.address : '(Not Yet Provided)' }
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                  <div className={ 'font-size-16px' }>
-                    <a>
-                      { profile.address ?  profile.address : '(Not Yet Provided)' }
-                    </a>
+                    <span 
+                    onClick = { () => this.setState({ updateAddress : true }) }
+                    className = { 'alignment-center profile-icon-settings editIconImage' }/>
+                </div> :
+                <Modal
+                  isDismisable = { true }
+                  onClose = { () => this.setState({ updateAddress : false }) }>
+                  <div>
+                    <GenericInput 
+                    text = { 'Enter new address' }
+                    onChange = { (e) => this.setState({ addressText : e.target.value }) }
+                    />
+                    <MultipleAttachments 
+                      fileArray = { attachments }
+                      setFile = { (attachments) => this.setState({ attachments }) }
+                    />
                   </div>
-                </div>
-              </div>
+                  <center className = { 'grid-global' }>
+                    <GenericButton 
+                      className = { 'update-profile-button' } 
+                      text = { 'Update' }
+                      onClick = { () => {
+                        this.props.updateAddressFunc(addressText, attachments)
+                        this.setState({ updateAddress : false })
+                      } }
+                    />
+                    <GenericButton 
+                      className = { 'update-profile-button' } 
+                      text = { 'Close' }
+                      onClick = { () => this.setState({ updateAddress : false }) }
+                    />
+                  </center>
+                </Modal>
+              }
             </div>
         </Modal>
       )
