@@ -486,7 +486,10 @@ class ParentFragment extends BaseMVPView {
             occupationNameErrorMessage = { occupationNameErrorMessage }
             contactNumberErrorMessage = { contactNumberErrorMessage }
             bloodTypeErrorMessage = { bloodTypeErrorMessage }
-            onClose = { () => this.setState({ showEditModeModal : false }) }
+            onClose = { () => {
+              this.setState({ showEditModeModal : false })
+              this.resetValue()
+            } }
             editFormSubmission = { () => this.updateForm() }
             saveFormSubmission = { () => this.addForm() }
             selectedStatusFunc = {
@@ -550,16 +553,19 @@ class ParentFragment extends BaseMVPView {
               {
                 !enabledParentLoader &&
                 <div className = { 'text-align-right' }>
-                  <GenericButton
-                    className = { 'employment-button global-button' }
-                    text = { 'Add Parent' }
-                    onClick = { () =>
-                      this.setState({
-                        showEditModeModal : true,
-                        isParentOrSiblings : true
-                      })
-                    }
-                  />
+                  {
+                    parentDetails.length === 0 &&
+                    <GenericButton
+                      className = { 'employment-button global-button' }
+                      text = { 'Add Mother' }
+                      onClick = { () =>
+                        this.setState({
+                          showEditModeModal : true,
+                          isParentOrSiblings : true
+                        })
+                        }
+                    />
+                   }
                 </div>
               }
             </div>

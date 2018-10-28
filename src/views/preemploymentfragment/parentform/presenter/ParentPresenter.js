@@ -274,7 +274,7 @@ export default class ChildrenPresenter {
     firstName,
     lastName,
     middleName,
-    genderId,
+    gender,
     relationship,
     statusId,
     contact,
@@ -283,25 +283,25 @@ export default class ChildrenPresenter {
     bloodTypeName,
     hospitalization,
     groupPlan) {
-      if(firstName === '') {
-        this.view.showFirsNameErrorMessage('First Name is required')
-      } else if (middleName === '') {
-        this.view.showMiddleNameErrorMessage('Middle Name is required')
-      } else if (lastName === '') {
-        this.view.showLastNameErrorMessage('Last Name is required')
-      } else if (occupationName === '') {
-        this.view.showOccupationErrorMessage('Occupation field is required')
-      } else if (contact === '') {
-        this.view.showContactErrorMessage('Contact # is required')
-      } else if (relationship === '') {
-        this.view.showRelationshipErrorMessage('Relationship field is required')
-      } else if (statusId === '') {
-        this.view.showStatusErrorMessage('Status is required')
-      } else if (genderId === '') {
-        this.view.showGenderErrorMessage('Gender is required')
-      } else if (bloodTypeName === '') {
-        this.view.showBloodTypeErrorMessage('Blood Type is required')
-      } else {
+    if(firstName === '') {
+      this.view.showFirsNameErrorMessage('First Name is required')
+    } else if (middleName === '') {
+      this.view.showMiddleNameErrorMessage('Middle Name is required')
+    } else if (lastName === '') {
+      this.view.showLastNameErrorMessage('Last Name is required')
+    } else if (occupationName === '') {
+      this.view.showOccupationErrorMessage('Occupation field is required')
+    } else if (contact === '') {
+      this.view.showContactErrorMessage('Contact # is required')
+    } else if (relationship === '') {
+      this.view.showRelationshipErrorMessage('Relationship field is required')
+    } else if (statusId === '') {
+      this.view.showStatusErrorMessage('Status is required')
+    } else if (genderId === '') {
+      this.view.showGenderErrorMessage('Gender is required')
+    } else if (bloodTypeName === '') {
+      this.view.showBloodTypeErrorMessage('Blood Type is required')
+    } else {
       this.view.setModal()
       this.view.showSiblingsCircularLoader()
       this.addSiblingsInteractor.execute(parentParam(
@@ -335,7 +335,7 @@ export default class ChildrenPresenter {
     firstName,
     lastName,
     middleName,
-    gender,
+    genderId,
     relationship,
     statusId,
     contact,
@@ -383,7 +383,7 @@ export default class ChildrenPresenter {
       .subscribe(data => {
         this.view.hideParentCircularLoader()
         this.view.noticeResponseFunc(data)
-        this.getSiblings()
+        this.getParents()
         this.view.resetValue()
       }, error => {
         this.view.hideParentCircularLoader()

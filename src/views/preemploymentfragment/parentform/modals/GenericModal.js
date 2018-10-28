@@ -155,6 +155,7 @@ class ParentModal extends Component {
             <DatePicker
               text = { 'Birth Date' }
               maxDate = {  moment() }
+              readOnly
               hint = { '(eg. MM/DD/YYYY)' }
               selected = { birthDate && moment(birthDate) }
               onChange = { (e)  =>
