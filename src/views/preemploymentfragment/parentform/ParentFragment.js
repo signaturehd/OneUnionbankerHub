@@ -498,7 +498,7 @@ class ParentFragment extends BaseMVPView {
                 !enabledLoader &&
                 <div className = { 'text-align-right' }>
                   <GenericButton
-                    text = { 'Add' }
+                    text = { 'Add Parent' }
                     onClick = { () => this.setState({ showEditModeModal : true }) }
                   />
                 </div>
@@ -532,7 +532,7 @@ class ParentFragment extends BaseMVPView {
             !enabledLoader &&
             <div className = { 'text-align-right' }>
               <GenericButton
-                text = { 'Add' }
+                text = { 'Add Siblings' }
                 onClick = { () => this.setState({ showEditModeModal : true }) }
               />
             </div>
