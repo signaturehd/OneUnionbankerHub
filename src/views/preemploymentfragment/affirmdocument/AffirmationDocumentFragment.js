@@ -150,6 +150,10 @@ class AffirmationDocumentFragment extends BaseMVPView {
     this.setState({ noticeResponse, noticeResponseModal, showPinCodeModal })
   }
 
+  resetPin (uniquePIN) {
+    this.setState({ uniquePIN })
+  }
+
   render() {
     const {
       checkPEUndertaking,
