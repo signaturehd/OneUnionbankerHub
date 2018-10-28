@@ -4,6 +4,6 @@ export default class RemoveParentInteractor {
   }
 
   execute (id) {
-    return this.client.removeParent(this.client.getToken(), id)
+    return this.client.removeParents(this.client.getToken(), id)
   }
 }

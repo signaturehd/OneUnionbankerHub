@@ -1800,6 +1800,12 @@ export default class HRBenefitsService {
     })
   }
 
+  removeSiblings (token, id) {
+    return this.onboardingClient.delete(`v1/employees/siblings/${id}`, {
+      headers : { token }
+    })
+  }
+
   removeFinancial (token, id) {
     return this.onboardingClient.delete(`v1/employees/finances/${id}`, {
       headers : { token }

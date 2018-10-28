@@ -837,11 +837,11 @@ export default class HRBenefitsClient {
   getPreEmploymentMessageStatus (token) {
     return this.service.getPreEmploymentMessageStatus (token)
     .pipe(ServiceErrorOperator())
-  } 
-  
+  }
+
   postPreEmploymentMessageStatus (token, id) {
     return this.service.postPreEmploymentMessageStatus (token, id)
-      .pipe(ServiceErrorOperator()) 
+      .pipe(ServiceErrorOperator())
   }
 
 
@@ -1139,6 +1139,11 @@ export default class HRBenefitsClient {
 
   removeParents (token, id) {
     return this.service.removeParents(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  removeSiblings (token, id) {
+    return this.service.removeSiblings(token, id)
       .pipe(ServiceErrorOperator())
   }
 
