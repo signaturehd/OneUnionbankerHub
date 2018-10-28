@@ -308,15 +308,18 @@ class AffirmationDocumentFragment extends BaseMVPView {
                     nodeStatus === 0 &&
                       <div className = { 'affirm-acknowledge' }>
                         <GenericButton
+                          className = { 'employment-button global-button' }
                           onClick = { () => this.setState({ showPinCodeModal: true, showPdfViewComponent: false }) }
                           text = { 'I Acknowledge' }/>
                       </div>
                     }
                     <GenericButton
+                      className = { 'employment-button global-button' }
                       onClick = { () => this.setState({ showPdfViewComponent: false, affirmationContent : [] }) }
                       text = { 'Close' }/>
                     </div>:
                     <GenericButton
+                      className = { 'employment-button global-button' }
                       onClick = { () => this.setState({ showPdfViewComponent: false, affirmationContent : [] }) }
                       text = { 'Close' }/>
                   }

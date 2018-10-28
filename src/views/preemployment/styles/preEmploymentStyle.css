@@ -42,6 +42,14 @@
   width:  36px;
   background-repeat: no-repeat;
 }
+
+.employment-button {
+  min-width: 100px;
+  height: 30px;
+  border-radius: 50px;
+}
+
+
 /*
 label {
   display: contents;

@@ -78,10 +78,12 @@ export default class PreEmploymentPresenter {
   }
 
   getParents () {
+    store.dispatch(NotifyActions.resetNotify())
     this.getParentInteractor.execute()
     .subscribe(data => {
       this.setParentValue(data)
     }, error => {
+      store.dispatch(NotifyActions.resetNotify())
     })
   }
 
