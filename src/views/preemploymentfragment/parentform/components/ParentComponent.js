@@ -20,7 +20,8 @@ class ParentComponent extends Component {
       disabled,
       count,
       onEditModeProperty,
-      parentDetails
+      parentDetails,
+      onDeleteProperty
     } = this.props
 
     return (
@@ -60,16 +61,33 @@ class ParentComponent extends Component {
                   </div>
                 </div>
                 <div className = { 'grid-global-rows' }>
-                  {
-                    !disabled &&
-                    <img
-                      className = { 'close-button-global' }
-                      src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
-                      onClick = { () =>
-                        onEditModeProperty(resp, true, true)
+                  <div className = { 'grid-global' }>
+                    <div>
+                      {
+                        !disabled &&
+                        <img
+                          className = { 'close-button-global' }
+                          src = { require('../../../../images/icons/baseline_delete_black_18dp.png') }
+                          onClick = { () =>
+                            onDeleteProperty(resp.id, true)
+                          }
+                        />
                       }
-                    />
-                  }
+                    </div>
+                    <div>
+                      {
+                        !disabled &&
+                        <img
+                          className = { 'close-button-global' }
+                          src = { require('../../../../images/icons/baseline_edit_black_18dp.png') }
+                          onClick = { () =>
+                            onEditModeProperty(resp, true, true)
+                          }
+                        />
+                      }
+                    </div>
+                  </div>
+                  <div></div>
                 </div>
               </Card>
               <br/>

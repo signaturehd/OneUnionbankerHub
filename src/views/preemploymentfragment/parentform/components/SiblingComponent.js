@@ -21,7 +21,8 @@ class SiblingComponent extends Component {
       count,
       onEditModeProperty,
       siblingDetails,
-      index
+      index,
+      onDeleteProperty
     } = this.props
 
     return (
@@ -59,16 +60,33 @@ class SiblingComponent extends Component {
                   </div>
                 </div>
                 <div className = { 'grid-global-rows' }>
-                  {
-                    !disabled &&
-                    <img
-                      className = { 'close-button-global' }
-                      src = { require('../../../../images/icons/ic_mode_edit_grey_500_18dp.png') }
-                      onClick = { () =>
-                        onEditModeProperty(resp, false, true)
+                  <div className = { 'grid-global' }>
+                    <div>
+                      {
+                        !disabled &&
+                        <img
+                          className = { 'close-button-global' }
+                          src = { require('../../../../images/icons/baseline_delete_black_18dp.png') }
+                          onClick = { () =>
+                            onDeleteProperty(resp.id, false)
+                          }
+                        />
                       }
-                    />
-                  }
+                    </div>
+                    <div>
+                      {
+                        !disabled &&
+                        <img
+                          className = { 'close-button-global' }
+                          src = { require('../../../../images/icons/baseline_edit_black_18dp.png') }
+                          onClick = { () =>
+                            onEditModeProperty(resp, false, true)
+                          }
+                        />
+                      }
+                    </div>
+                  </div>
+                  <div></div>
                 </div>
               </Card>
               <br/>

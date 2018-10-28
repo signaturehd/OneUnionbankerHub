@@ -47,6 +47,8 @@ class ParentFragment extends BaseMVPView {
       showStatusModal : false,
       showEditModeModal : false,
       showGenderModal : false,
+      enabledParentLoader : false,
+      enabledSiblingsLoader : false,
       isParentOrSiblings : null,
       index : 4,
       viewMoreText : 'View more',
@@ -110,16 +112,20 @@ class ParentFragment extends BaseMVPView {
     this.setState({ statusObject })
   }
 
-  circularLoader (enabledLoader) {
-    this.setState({ enabledLoader })
+  showParentCircularLoader () {
+    this.setState({ enabledParentLoader : true })
   }
 
-  showCircularLoader () {
-    this.setState({ enabledLoader : true })
+  hideParentCircularLoader () {
+    this.setState({ enabledParentLoader : false })
   }
 
-  hideCircularLoader () {
-    this.setState({ enabledLoader : false })
+  showSiblingsCircularLoader () {
+    this.setState({ enabledSiblingsLoader : true })
+  }
+
+  hideSiblingsCircularLoader () {
+    this.setState({ enabledSiblingsLoader : false })
   }
 
   /* Validation */
@@ -158,6 +164,42 @@ class ParentFragment extends BaseMVPView {
     this.setState({ relationship : validate })
   }
 
+  showFirsNameErrorMessage (firstNameErrorMessage) {
+    this.setState({ firstNameErrorMessage })
+  }
+
+  showMiddleNameErrorMessage (middleNameErrorMessage) {
+    this.setState({ middleNameErrorMessage })
+  }
+
+  showLastNameErrorMessage (lastNameErrorMessage) {
+    this.setState({ lastNameErrorMessage })
+  }
+
+  showOccupationErrorMessage (occupationNameErrorMessage) {
+    this.setState({ occupationNameErrorMessage })
+  }
+
+  showContactErrorMessage (contactNumberErrorMessage) {
+    this.setState({ contactNumberErrorMessage })
+  }
+
+  showRelationshipErrorMessage (relationshipErrorMessage) {
+    this.setState({ relationshipErrorMessage })
+  }
+
+  showStatusErrorMessage (statusNameErrorMessage) {
+    this.setState({ statusNameErrorMessage })
+  }
+
+  showGenderErrorMessage (genderErrorMessage) {
+    this.setState({ genderErrorMessage })
+  }
+
+  showBloodTypeErrorMessage (bloodTypeErrorMessage) {
+    this.setState({ bloodTypeErrorMessage })
+  }
+
   /*edit mode*/
 
   editForm (selectedCard, isParentOrSiblings, editMode) {
@@ -179,7 +221,7 @@ class ParentFragment extends BaseMVPView {
       parentId : nullChecker.id,
       relationship : nullChecker.relationship,
       statusId : nullChecker.status,
-      statusName : nullChecker.status === 1 ? 'Deceased' : 'Living',
+      statusName : nullChecker.status === 0 ? 'Living' : 'Deceased',
       hospitalization : nullChecker.healthHospitalizationPlan,
       groupPlan : nullChecker.groupLifeInsurance,
     })
@@ -203,7 +245,6 @@ class ParentFragment extends BaseMVPView {
       isParentOrSiblings
     } = this.state
     const gender = genderId === 'M' ? 'M' : 'F'
-    this.setState({ showEditModeModal : false })
     if(isParentOrSiblings) {
       this.presenter.updateParentForm(
         parentId,
@@ -220,7 +261,6 @@ class ParentFragment extends BaseMVPView {
         hospitalization,
         groupPlan,
       )
-      this.resetValue()
     } else {
       this.presenter.updateSiblingsForm(
         parentId,
@@ -260,7 +300,6 @@ class ParentFragment extends BaseMVPView {
       isParentOrSiblings
     } = this.state
     const gender = genderId === 'M' ? 'M' : 'F'
-    this.setState({ showEditModeModal : false })
     if(isParentOrSiblings) {
       this.presenter.addParentForm(
         parentId,
@@ -330,6 +369,10 @@ class ParentFragment extends BaseMVPView {
     }
   }
 
+  setModal () {
+    this.setState({ showEditModeModal : false  })
+  }
+
   render() {
     const {
       history,
@@ -343,7 +386,8 @@ class ParentFragment extends BaseMVPView {
       bloodObject,
       statusObject,
       genderObject,
-      enabledLoader,
+      enabledParentLoader,
+      enabledSiblingsLoader,
       lastName,
       firstName,
       middleName,
@@ -504,11 +548,17 @@ class ParentFragment extends BaseMVPView {
             <div className = { 'grid-global' }>
               <h2 className = { 'font-weight-bold' }>Parent</h2>
               {
-                !enabledLoader &&
+                !enabledParentLoader &&
                 <div className = { 'text-align-right' }>
                   <GenericButton
+                    className = { 'employment-button global-button' }
                     text = { 'Add Parent' }
-                    onClick = { () => this.setState({ showEditModeModal : true }) }
+                    onClick = { () =>
+                      this.setState({
+                        showEditModeModal : true,
+                        isParentOrSiblings : true
+                      })
+                    }
                   />
                 </div>
               }
@@ -517,10 +567,13 @@ class ParentFragment extends BaseMVPView {
         </div>
         <br/>
         {
-          enabledLoader  ?
+          enabledParentLoader  ?
           <center>
             <br/>
-            <CircularLoader show = { enabledLoader }/>
+            <br/>
+              <h2>Please wait while we we&#39;re updating your information.</h2>
+            <br/>
+            <CircularLoader show = { enabledParentLoader }/>
             <br/>
           </center>
           :
@@ -536,24 +589,35 @@ class ParentFragment extends BaseMVPView {
           </div>
         }
         <br/>
+        <Line/>
+        <br/>
         <div className = { 'grid-global' }>
           <h2 className = { 'font-weight-bold' }>Siblings</h2>
           {
-            !enabledLoader &&
+            !enabledSiblingsLoader &&
             <div className = { 'text-align-right' }>
               <GenericButton
+                className = { 'employment-button global-button' }
                 text = { 'Add Siblings' }
-                onClick = { () => this.setState({ showEditModeModal : true }) }
+                onClick = { () =>
+                  this.setState({
+                    showEditModeModal : true,
+                    isParentOrSiblings : false
+                  })
+                }
               />
             </div>
           }
         </div>
         <br/>
         {
-          enabledLoader  ?
+          enabledSiblingsLoader  ?
           <center>
             <br/>
-            <CircularLoader show = { enabledLoader }/>
+            <br/>
+              <h2>Please wait while we we&#39;re updating your information.</h2>
+            <br/>
+            <CircularLoader show = { enabledSiblingsLoader }/>
             <br/>
           </center>
           :

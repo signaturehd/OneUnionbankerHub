@@ -179,7 +179,7 @@ class ParentModal extends Component {
                 value = { relationship  }
                 text = { 'Relationship' }
                 errorMessage = { relationship ? '' : relationshipErrorMessage }
-                onChange = { () => relationshipNameFunc(true) }
+                onChange = { (e) => relationshipNameFunc(e.target.value) }
                 />
               <GenericInput
                 value = { statusName  }

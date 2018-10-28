@@ -4,7 +4,7 @@ import store from '../../../../store'
 import GetParentInteractor from '../../../../domain/interactor/preemployment/parent/GetParentInteractor'
 import UpdateParentInteractor from '../../../../domain/interactor/preemployment/parent/UpdateParentInteractor'
 import AddParentInteractor from '../../../../domain/interactor/preemployment/parent/AddParentInteractor'
-import RemoveParentInteractor from '../../../../domain/interactor/preemployment/parent/RemoveParentInteractor'
+import RemoveParentsInteractor from '../../../../domain/interactor/preemployment/parent/RemoveParentInteractor'
 
 import GetSiblingsInteractor from '../../../../domain/interactor/preemployment/siblings/GetSiblingsInteractor'
 import UpdateSiblingsInteractor from '../../../../domain/interactor/preemployment/siblings/UpdateSiblingsInteractor'
@@ -51,10 +51,10 @@ let bloodObjectParam = [
 
 let statusObject = [{
  id: 0,
- name : 'Deceased'
+ name : 'Living'
 }, {
  id : 1,
- name : 'Living'
+ name : 'Deceased'
 }]
 
 let genderObject = [{
@@ -90,52 +90,53 @@ export default class ChildrenPresenter {
   }
 
   getParents () {
-    this.view.showCircularLoader()
+    store.dispatch(NotifyActions.resetNotify())
+    this.view.showParentCircularLoader()
     this.getParentInteractor.execute()
     .subscribe(data => {
       this.view.showParentDetails(data)
-      this.view.hideCircularLoader()
+      this.view.hideParentCircularLoader()
     }, erro => {
-      this.view.hideCircularLoader()
+      this.view.hideParentCircularLoader()
     })
   }
 
   getSiblings () {
-    this.view.showCircularLoader()
+    this.view.showSiblingsCircularLoader()
     this.getSiblingsInteractor.execute()
     .subscribe(data => {
       this.view.showSiblingDetails(data)
-      this.view.hideCircularLoader()
+      this.view.hideSiblingsCircularLoader()
     }, erro => {
-      this.view.hideCircularLoader()
+      this.view.hideSiblingsCircularLoader()
     })
   }
 
   /* Delete Method */
 
   removeSiblings (id) {
-    this.view.showCircularLoader()
+    this.view.showSiblingsCircularLoader()
     this.removeSiblingsInteractor.execute(id)
     .subscribe(data => {
-      this.view.hideCircularLoader()
+      this.view.hideSiblingsCircularLoader()
       this.view.noticeResponseFunc(data)
       this.view.resetValue()
-      this.getParents()
+      this.getSiblings()
     }, error => {
-      this.view.hideCircularLoader()
+      this.view.hideSiblingsCircularLoader()
     })
   }
 
   removeParents (id) {
-    this.view.showCircularLoader()
+    this.view.showParentCircularLoader()
     this.removeParentsInteractor.execute(id)
     .subscribe(data => {
-      this.view.hideCircularLoader()
+      this.view.hideParentCircularLoader()
       this.view.noticeResponseFunc(data)
       this.view.resetValue()
       this.getParents()
     }, error => {
-      this.view.hideCircularLoader()
+      this.view.hideParentCircularLoader()
     })
   }
 
@@ -156,30 +157,52 @@ export default class ChildrenPresenter {
     hospitalization,
     groupPlan,
   ) {
-    this.view.showCircularLoader()
-    this.updateParentInteractor.execute(parentParam(
-      parentId,
-      firstName,
-      lastName,
-      middleName,
-      genderId,
-      relationship,
-      statusId,
-      contact,
-      occupationName,
-      birthDate,
-      bloodTypeName,
-      hospitalization,
-      groupPlan,
-    ))
-    .subscribe(data => {
-      this.view.hideCircularLoader()
-      this.view.noticeResponseFunc(data)
-      this.view.resetValue()
-      this.getParents()
-    }, error => {
-      this.view.hideCircularLoader()
-    })
+    if(firstName === '') {
+      this.view.showFirsNameErrorMessage('First Name is required')
+    } else if (middleName === '') {
+      this.view.showMiddleNameErrorMessage('Middle Name is required')
+    } else if (lastName === '') {
+      this.view.showLastNameErrorMessage('Last Name is required')
+    } else if (occupationName === '') {
+      this.view.showOccupationErrorMessage('Occupation field is required')
+    } else if (contact === '') {
+      this.view.showContactErrorMessage('Contact # is required')
+    } else if (relationship === '') {
+      this.view.showRelationshipErrorMessage('Relationship field is required')
+    } else if (statusId === '') {
+      this.view.showStatusErrorMessage('Status is required')
+    } else if (genderId === '') {
+      this.view.showGenderErrorMessage('Gender is required')
+    } else if (bloodTypeName === '') {
+      this.view.showBloodTypeErrorMessage('Blood Type is required')
+    } else {
+      this.view.setModal()
+      this.view.showParentCircularLoader()
+      this.updateParentInteractor.execute(parentParam(
+        parentId,
+        firstName,
+        lastName,
+        middleName,
+        genderId,
+        relationship,
+        statusId,
+        contact,
+        occupationName,
+        birthDate,
+        bloodTypeName,
+        hospitalization,
+        groupPlan,
+      ))
+      .subscribe(data => {
+        this.view.hideParentCircularLoader()
+        this.view.noticeResponseFunc(data)
+        this.view.resetValue()
+        this.getParents()
+      }, error => {
+        this.view.resetValue()
+        this.view.hideParentCircularLoader()
+      })
+    }
   }
 
   updateSiblingsForm (
@@ -196,30 +219,52 @@ export default class ChildrenPresenter {
     bloodTypeName,
     hospitalization,
     groupPlan) {
-    this.view.showCircularLoader()
-    this.updateSiblingsInteractor.execute(parentParam(
-      parentId,
-      firstName,
-      lastName,
-      middleName,
-      genderId,
-      relationship,
-      statusId,
-      contact,
-      occupationName,
-      birthDate,
-      bloodTypeName,
-      hospitalization,
-      groupPlan,
-    ))
-    .subscribe(data => {
-      this.view.hideCircularLoader()
-      this.view.noticeResponseFunc(data)
-      this.getSiblings()
-      this.view.resetValue()
-    }, error => {
-      this.view.hideCircularLoader()
-    })
+    if(firstName === '') {
+      this.view.showFirsNameErrorMessage('First Name is required')
+    } else if (middleName === '') {
+      this.view.showMiddleNameErrorMessage('Middle Name is required')
+    } else if (lastName === '') {
+      this.view.showLastNameErrorMessage('Last Name is required')
+    } else if (occupationName === '') {
+      this.view.showOccupationErrorMessage('Occupation field is required')
+    } else if (contact === '') {
+      this.view.showContactErrorMessage('Contact # is required')
+    } else if (relationship === '') {
+      this.view.showRelationshipErrorMessage('Relationship field is required')
+    } else if (statusId === '') {
+      this.view.showStatusErrorMessage('Status is required')
+    } else if (genderId === '') {
+      this.view.showGenderErrorMessage('Gender is required')
+    } else if (bloodTypeName === '') {
+      this.view.showBloodTypeErrorMessage('Blood Type is required')
+    }  else {
+      this.view.setModal()
+      this.view.showSiblingsCircularLoader()
+      this.updateSiblingsInteractor.execute(parentParam(
+        parentId,
+        firstName,
+        lastName,
+        middleName,
+        genderId,
+        relationship,
+        statusId,
+        contact,
+        occupationName,
+        birthDate,
+        bloodTypeName,
+        hospitalization,
+        groupPlan,
+      ))
+      .subscribe(data => {
+        this.view.hideSiblingsCircularLoader()
+        this.view.noticeResponseFunc(data)
+        this.getSiblings()
+        this.view.resetValue()
+      }, error => {
+        this.view.resetValue()
+        this.view.hideSiblingsCircularLoader()
+      })
+    }
   }
 
   /* Post Method */
@@ -238,30 +283,51 @@ export default class ChildrenPresenter {
     bloodTypeName,
     hospitalization,
     groupPlan) {
-    this.view.showCircularLoader()
-    this.addSiblingsInteractor.execute(parentParam(
-      parentId,
-      firstName,
-      lastName,
-      middleName,
-      genderId,
-      relationship,
-      statusId,
-      contact,
-      occupationName,
-      birthDate,
-      bloodTypeName,
-      hospitalization,
-      groupPlan,
-    ))
-    .subscribe(data => {
-      this.view.hideCircularLoader()
-      this.view.noticeResponseFunc(data)
-      this.getSiblings()
-      this.view.resetValue()
-    }, error => {
-      this.view.hideCircularLoader()
-    })
+      if(firstName === '') {
+        this.view.showFirsNameErrorMessage('First Name is required')
+      } else if (middleName === '') {
+        this.view.showMiddleNameErrorMessage('Middle Name is required')
+      } else if (lastName === '') {
+        this.view.showLastNameErrorMessage('Last Name is required')
+      } else if (occupationName === '') {
+        this.view.showOccupationErrorMessage('Occupation field is required')
+      } else if (contact === '') {
+        this.view.showContactErrorMessage('Contact # is required')
+      } else if (relationship === '') {
+        this.view.showRelationshipErrorMessage('Relationship field is required')
+      } else if (statusId === '') {
+        this.view.showStatusErrorMessage('Status is required')
+      } else if (genderId === '') {
+        this.view.showGenderErrorMessage('Gender is required')
+      } else if (bloodTypeName === '') {
+        this.view.showBloodTypeErrorMessage('Blood Type is required')
+      } else {
+      this.view.setModal()
+      this.view.showSiblingsCircularLoader()
+      this.addSiblingsInteractor.execute(parentParam(
+        parentId,
+        firstName,
+        lastName,
+        middleName,
+        genderId,
+        relationship,
+        statusId,
+        contact,
+        occupationName,
+        birthDate,
+        bloodTypeName,
+        hospitalization,
+        groupPlan,
+      ))
+      .subscribe(data => {
+        this.view.hideSiblingsCircularLoader()
+        this.view.noticeResponseFunc(data)
+        this.getSiblings()
+        this.view.resetValue()
+      }, error => {
+        this.view.hideSiblingsCircularLoader()
+      })
+    }
   }
 
   addParentForm (
@@ -278,29 +344,50 @@ export default class ChildrenPresenter {
     bloodTypeName,
     hospitalization,
     groupPlan) {
-    this.view.showCircularLoader()
-    this.addParentInteractor.execute(parentParam(
-      parentId,
-      firstName,
-      lastName,
-      middleName,
-      genderId,
-      relationship,
-      statusId,
-      contact,
-      occupationName,
-      birthDate,
-      bloodTypeName,
-      hospitalization,
-      groupPlan,
-    ))
-    .subscribe(data => {
-      this.view.hideCircularLoader()
-      this.view.noticeResponseFunc(data)
-      this.getSiblings()
-      this.view.resetValue()
-    }, error => {
-      this.view.hideCircularLoader()
-    })
-  }
+    if(firstName === '') {
+      this.view.showFirsNameErrorMessage('First Name is required')
+    } else if (middleName === '') {
+      this.view.showMiddleNameErrorMessage('Middle Name is required')
+    } else if (lastName === '') {
+      this.view.showLastNameErrorMessage('Last Name is required')
+    } else if (occupationName === '') {
+      this.view.showOccupationErrorMessage('Occupation field is required')
+    } else if (contact === '') {
+      this.view.showContactErrorMessage('Contact # is required')
+    } else if (relationship === '') {
+      this.view.showRelationshipErrorMessage('Relationship field is required')
+    } else if (statusId === '') {
+      this.view.showStatusErrorMessage('Status is required')
+    } else if (genderId === '') {
+      this.view.showGenderErrorMessage('Gender is required')
+    } else if (bloodTypeName === '') {
+      this.view.showBloodTypeErrorMessage('Blood Type is required')
+    } else {
+      this.view.setModal()
+      this.view.showParentCircularLoader()
+      this.addParentInteractor.execute(parentParam(
+        parentId,
+        firstName,
+        lastName,
+        middleName,
+        genderId,
+        relationship,
+        statusId,
+        contact,
+        occupationName,
+        birthDate,
+        bloodTypeName,
+        hospitalization,
+        groupPlan,
+      ))
+      .subscribe(data => {
+        this.view.hideParentCircularLoader()
+        this.view.noticeResponseFunc(data)
+        this.getSiblings()
+        this.view.resetValue()
+      }, error => {
+        this.view.hideParentCircularLoader()
+      })
+    }
+    }
 }
