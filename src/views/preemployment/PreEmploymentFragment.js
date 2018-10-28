@@ -279,7 +279,7 @@ class PreEmploymentFragment extends BaseMVPView {
 
   /* Validate if Preemployment message is display */
   showMessageStatus (messageStatus) {
-    this.setState({ messageStatus })    
+    this.setState({ messageStatus })
   }
 
   reloadPreEmploymentForm() {
@@ -348,22 +348,95 @@ class PreEmploymentFragment extends BaseMVPView {
 
   incrementPage () {
     const index = this.state.preEmpPage + 1
+
     if(index === 1) {
       this.setState({ showFinancialObligationModal : true })
       // const index1 = this.state.preEmpPage + 17
       // this.setState({ preEmpPage : index1 })
     } else if (index === 3) {
-      this.setState({ showSkipOptionModal : true })
+      this.getFormData(1).map((resp) => {
+        if(resp.status === 2) {
+          this.setState({ preEmpPage : index })
+        } else {
+          this.setState({ showSkipOptionModal : true })
+        }
+      })
     } else if (index === 4) {
-      this.setState({ showSkipOptionModal : true })
+      this.getFormData(2).map((resp) => {
+        if(resp.status === 2) {
+          this.setState({ preEmpPage : index })
+        } else {
+          this.setState({ showSkipOptionModal : true })
+        }
+      })
+    } else if (index === 5) {
+      if(this.state.educationData.length > 0) {
+        this.setState({ preEmpPage : index })
+      } else {
+        this.setState({ showSkipOptionModal : true })
+      }
+    } else if (index === 7) {
+      if(this.state.characterReferenceData.length > 0) {
+        this.setState({ preEmpPage : index })
+      } else {
+        this.setState({ showSkipOptionModal : true })
+      }
     } else if (index === 8) {
-      this.setState({ showSkipOptionModal : true })
-    } else if (index === 9) {
-      this.setState({ showSkipOptionModal : true })
-    }  else if (index === 11) {
-      this.setState({ showTaxPayerIdentificationModal : true })
+      this.getFormData(6).map((resp) => {
+        if(resp.status === 2) {
+          this.setState({ preEmpPage : index })
+        } else {
+          this.setState({ showSkipOptionModal : true })
+        }
+      })
+    } else if (index === 11) {
+      this.getFormData(10).map((resp) => {
+        if(resp.status !== 2) {
+          this.setState({ showSkipOptionModal : true })
+        } else {
+          this.setState({ showTaxPayerIdentificationModal : true })
+        }
+      })
+    } else if (index === 12) {
+      this.getFormData(11).map((resp) => {
+        if(resp.status === 2) {
+          this.setState({ preEmpPage : index })
+        } else {
+          this.setState({ showSkipOptionModal : true })
+        }
+      })
+    } else if (index === 13) {
+      this.getFormData(12).map((resp) => {
+        if(resp.status === 2) {
+          this.setState({ preEmpPage : index })
+        } else {
+          this.setState({ showSkipOptionModal : true })
+        }
+      })
+    } else if (index === 14) {
+      this.getFormData(13).map((resp) => {
+        if(resp.status === 2) {
+          this.setState({ preEmpPage : index })
+        } else {
+          this.setState({ showSkipOptionModal : true })
+        }
+      })
     } else if (index === 15) {
-      this.setState({ showPagibigLoanModal : true })
+      this.getFormData(14).map((resp) => {
+        if(resp.status !== 2) {
+          this.setState({ showSkipOptionModal : true })
+        } else {
+          this.setState({ showPagibigLoanModal : true })
+        }
+      })
+    } else if (index === 16) {
+      this.getFormData(14).map((resp) => {
+        if(resp.status == 2) {
+          this.setState({ preEmpPage : index })
+        } else {
+          this.setState({ showPagibigLoanModal : true })
+        }
+      })
     } else if (index === 17) {
       this.setState({ showMarriedConfirmModal : true })
     } else if (index === 18) {
@@ -383,6 +456,14 @@ class PreEmploymentFragment extends BaseMVPView {
       this.setState({ preEmpPage : index - 1 })
     } else if (index === 11) {
       this.setState({ preEmpPage : index - 1 })
+    } else if (index === 12) {
+      this.getFormData(10).map((resp) => {
+        if(resp.status !== 2) {
+          this.setState({ showSkipOptionModal : true })
+        } else {
+          this.setState({ showTaxPayerIdentificationModal : true })
+        }
+      })
     } else if (index === 15) {
       this.setState({ preEmpPage : index - 1 })
     } else if (index === 17) {
@@ -454,16 +535,16 @@ class PreEmploymentFragment extends BaseMVPView {
         </Modal>
       }
       {
-        showSkipOptionModal && 
-        <IsSkipOptionModal 
+        showSkipOptionModal &&
+        <IsSkipOptionModal
           preEmpPage = { preEmpPage }
           onCloseOption = { (preEmpPage) => this.setState({ preEmpPage, showSkipOptionModal : false }) }
         />
       }
       {
         showNoticeResponseModal &&
-        <NoticeResponseModal 
-          noticeResponse = { notice && notice } 
+        <NoticeResponseModal
+          noticeResponse = { notice && notice }
           onClose = { () => this.setState({ showNoticeResponseModal : false }) }
         />
       }

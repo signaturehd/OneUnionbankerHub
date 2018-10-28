@@ -25,10 +25,10 @@ class IsTaxPayerConfirmModal extends Component {
           <GenericButton
             className = { 'global-button' }
             text = { 'No' }
-            onClick = { () => onSendPageNumberToView(15) }
+            onClick = { () => onSendPageNumberToView(16) }
             />
           <GenericButton
-            onClick = { () => onSendPageNumberToView(16) }
+            onClick = { () => onSendPageNumberToView(15) }
             className = { 'global-button' }
             text = { 'Yes' }
             />

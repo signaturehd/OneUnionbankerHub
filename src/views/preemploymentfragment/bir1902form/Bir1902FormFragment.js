@@ -244,6 +244,7 @@ class Bir1902FormFragment extends BaseMVPView {
                   </center>
                   :
                   <PreEmploymentViewAttachmentsComponent
+                    title = { 'BIR' }
                     file = { attachments }
                     onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
                   :

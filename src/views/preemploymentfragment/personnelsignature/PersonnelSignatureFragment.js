@@ -218,7 +218,7 @@ class PersonnelSignatureFragment extends BaseMVPView {
             }
             {
               status.status === 2 ?
-              attachments.lenght !== 0 &&
+              attachments.length !== 0 &&
                 enabledLoader ?
                 <center>
                   <br/>

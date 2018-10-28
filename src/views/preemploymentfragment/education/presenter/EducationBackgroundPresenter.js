@@ -112,6 +112,7 @@ export default class EducationBackgroundPresenter {
           this.view.resetMode()
         }, error => {
           this.view.hideCircularLoader()
+          this.view.callback()
         }
       )
     }
@@ -148,6 +149,7 @@ export default class EducationBackgroundPresenter {
         this.view.noticeResponseResp(data)
         this.view.resetMode()
       }, error => {
+        this.view.callback()
         this.view.hideCircularLoader()
       }
     )

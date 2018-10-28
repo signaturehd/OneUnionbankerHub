@@ -55,7 +55,7 @@ export default class PreEmploymentPresenter {
 
   postPreEmploymentMessageStatus (status) {
     this.postPreEmploymentMessageInteractor.execute(status)
-    .subscribe(data => { 
+    .subscribe(data => {
       this.view.noticeReponseModal(data)
     }, error => {
       store.dispatch(NotifyActions.resetNotify())
@@ -72,6 +72,7 @@ export default class PreEmploymentPresenter {
       error => {
         store.dispatch(NotifyActions.resetNotify())
         this.setEducationReferenceValue([])
+        this.view.showEducationMap([])
      }
     )
   }
@@ -110,6 +111,7 @@ export default class PreEmploymentPresenter {
     }, error => {
       store.dispatch(NotifyActions.resetNotify())
       this.view.showCharacterReferenceMap([])
+      this.setCharacterReferenceValue([])
     })
 
   }
@@ -137,7 +139,7 @@ export default class PreEmploymentPresenter {
           documents.documentId !== 12 &&
           documents.documentId !== 16) {
           progress +=1 // If document status is equal submitted (2) progress increment to 1
-        } 
+        }
       })
 
       data.map((resp) => {

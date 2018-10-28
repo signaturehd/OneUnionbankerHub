@@ -22,12 +22,13 @@ import EducationBackgroundModal from './modals/EducationBackgroundModal'
 
 import moment from 'moment'
 import { format } from '../../../utils/numberUtils'
-
 import { RequiredValidation } from '../../../utils/validate/'
-
 import { Progress } from 'react-sweet-progress'
 
 import * as func from './functions/EducationFunctions'
+
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
 
 class EducationBackgroundFragment extends BaseMVPView {
 
@@ -255,6 +256,15 @@ class EducationBackgroundFragment extends BaseMVPView {
       torFormData
     } = this.state
 
+    let validateAttachments = false
+    torFormData && torFormData.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
+
     if(!this.validateRequired(schoolName)) {
       this.setState({ schoolNameErrorMessage : 'Required field' })
     } else if(!this.validateRequired(address)) {
@@ -271,7 +281,31 @@ class EducationBackgroundFragment extends BaseMVPView {
       this.setState({ startYearErrorMessage : 'Required field' })
     } else if(!this.validateRequired(endYear)) {
       this.setState({ endYearErrorMessage : 'Required field' })
-    } else {
+    } else if (!torFormData.length) {
+      store.dispatch(NotifyActions.resetNotify())
+       store.dispatch(NotifyActions.addNotify({
+          title : 'Warning' ,
+          message : 'Attachments is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (validateAttachments) {
+      store.dispatch(NotifyActions.resetNotify())
+      torFormData && torFormData.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'Warning' ,
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 2000
+             })
+           )
+          }
+        }
+      )
+     } else {
       if(updateMode) {
       this.presenter.putEducationSchool(
         educId,
@@ -322,6 +356,10 @@ class EducationBackgroundFragment extends BaseMVPView {
 
   onDeleteProperty (id) {
     this.presenter.removeSchool(id)
+  }
+
+  callback () {
+    this.props.reloadPreEmploymentForm()
   }
 
   render () {
@@ -483,18 +521,13 @@ class EducationBackgroundFragment extends BaseMVPView {
             }
           }
           hideModalEducationFormFunc = { (showEducationFormModal) => this.setState({ showEducationFormModal }) }
-          getEducationHolderFunc = { (resp) => {
-            const updatePropertyHolder = [...educationData]
-            updatePropertyHolder.push(resp)
-            this.setState({ educationData : updatePropertyHolder})
-          }}
         />
       }
       {
         showNoticeResponseModal &&
         <ResponseModal
           onClose={ () => {
-            this.setState({ showNoticeResponseModal : false})
+            this.setState({ showNoticeResponseModal : false })
             this.props.reloadPreEmploymentForm()
           }}
           noticeResponse={ noticeResponse }
