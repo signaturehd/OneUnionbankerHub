@@ -4,10 +4,12 @@ import store from '../../../../store'
 import GetParentInteractor from '../../../../domain/interactor/preemployment/parent/GetParentInteractor'
 import UpdateParentInteractor from '../../../../domain/interactor/preemployment/parent/UpdateParentInteractor'
 import AddParentInteractor from '../../../../domain/interactor/preemployment/parent/AddParentInteractor'
+import RemoveParentInteractor from '../../../../domain/interactor/preemployment/parent/RemoveParentInteractor'
 
 import GetSiblingsInteractor from '../../../../domain/interactor/preemployment/siblings/GetSiblingsInteractor'
 import UpdateSiblingsInteractor from '../../../../domain/interactor/preemployment/siblings/UpdateSiblingsInteractor'
 import AddSiblingsInteractor from '../../../../domain/interactor/preemployment/siblings/AddSiblingsInteractor'
+import RemoveSiblingsInteractor from '../../../../domain/interactor/preemployment/siblings/RemoveSiblingsInteractor'
 
 import parentParam from '../../../../domain/param/ParentParam'
 
@@ -71,6 +73,8 @@ export default class ChildrenPresenter {
     this.getSiblingsInteractor = new GetSiblingsInteractor(container.get('HRBenefitsClient'))
     this.updateSiblingsInteractor = new UpdateSiblingsInteractor(container.get('HRBenefitsClient'))
     this.addSiblingsInteractor = new AddSiblingsInteractor(container.get('HRBenefitsClient'))
+    this.removeParentsInteractor = new RemoveParentsInteractor(container.get('HRBenefitsClient'))
+    this.removeSiblingsInteractor = new RemoveSiblingsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -103,6 +107,34 @@ export default class ChildrenPresenter {
       this.view.showSiblingDetails(data)
       this.view.hideCircularLoader()
     }, erro => {
+      this.view.hideCircularLoader()
+    })
+  }
+
+  /* Delete Method */
+
+  removeSiblings (id) {
+    this.view.showCircularLoader()
+    this.removeSiblingsInteractor.execute(id)
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.noticeResponseFunc(data)
+      this.view.resetValue()
+      this.getParents()
+    }, error => {
+      this.view.hideCircularLoader()
+    })
+  }
+
+  removeParents (id) {
+    this.view.showCircularLoader()
+    this.removeParentsInteractor.execute(id)
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.noticeResponseFunc(data)
+      this.view.resetValue()
+      this.getParents()
+    }, error => {
       this.view.hideCircularLoader()
     })
   }

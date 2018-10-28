@@ -237,7 +237,6 @@ class ParentFragment extends BaseMVPView {
         hospitalization,
         groupPlan,
       )
-      this.resetValue()
     }
   }
 
@@ -319,6 +318,16 @@ class ParentFragment extends BaseMVPView {
       hospitalization : '',
       groupPlan : '',
     })
+  }
+
+  /* Delete Education */
+
+  onDeletePropertyFunc (id, isParent) {
+    if(isParent) {
+      this.presenter.removeParents(id)
+    } else {
+      this.presenter.removeSiblings(id)
+    }
   }
 
   render() {
@@ -521,6 +530,7 @@ class ParentFragment extends BaseMVPView {
               <ParentComponent
                 parentDetails = { parentDetails }
                 onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
+                onDeleteProperty = { (id, parentTrue) => this.onDeletePropertyFunc(id, parentTrue) }
                 />
             }
           </div>
@@ -554,6 +564,7 @@ class ParentFragment extends BaseMVPView {
                 <SiblingComponent
                   siblingDetails = { siblingDetails }
                   onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
+                  onDeleteProperty = { (id, parentTrue) => this.onDeletePropertyFunc(id, parentTrue) }
                   index = { index }
                   />
                   <br/>
