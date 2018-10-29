@@ -139,6 +139,16 @@ export default class SpousePresenter {
     spouseId,
     spouseAttachmentsArray
   ) {
+
+    let validateAttachments = false
+    spouseAttachmentsArray && spouseAttachmentsArray.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
+
     if(firstName === '') {
       this.view.firstNameErrorMessageFunc('First Name field is required')
     } else if(middleName === '') {
@@ -157,7 +167,31 @@ export default class SpousePresenter {
       this.view.bloodTypeErrorMessageFunc('Please specify your blood type')
     } else if (status === '') {
       this.view.statusNameErrorMessageFunc('Please specify spouse status')
-    }  else {
+    } else if (!torFormData.length) {
+       store.dispatch(NotifyActions.resetNotify())
+       store.dispatch(NotifyActions.addNotify({
+          title : 'Warning' ,
+          message : 'Attachments is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (validateAttachments) {
+      store.dispatch(NotifyActions.resetNotify())
+      spouseAttachmentsArray && spouseAttachmentsArray.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'Warning' ,
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 2000
+             })
+           )
+          }
+        }
+      )
+     } else {
        this.view.showCircularLoader()
        this.postSpouseInteractor.execute(addSpouseForm(
          firstName,

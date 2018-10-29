@@ -457,13 +457,7 @@ class PreEmploymentFragment extends BaseMVPView {
     } else if (index === 11) {
       this.setState({ preEmpPage : index - 1 })
     } else if (index === 12) {
-      this.getFormData(10).map((resp) => {
-        if(resp.status !== 2) {
-          this.setState({ showSkipOptionModal : true })
-        } else {
-          this.setState({ showTaxPayerIdentificationModal : true })
-        }
-      })
+      this.setState({ showTaxPayerIdentificationModal : true })
     } else if (index === 15) {
       this.setState({ preEmpPage : index - 1 })
     } else if (index === 17) {

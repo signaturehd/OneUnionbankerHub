@@ -158,7 +158,6 @@ class SpouseFormFragment extends BaseMVPView {
 
   noticeResponseFunc (noticeResponse, showNoticeResponseModal) {
     this.setState({ noticeResponse, showNoticeResponseModal })
-    this.props.reloadPreEmploymentForm()
   }
 
   reload () {
@@ -208,7 +207,6 @@ class SpouseFormFragment extends BaseMVPView {
   bloodTypeErrorMessageFunc (bloodTypeErrorMessage) {
     this.setState({ bloodTypeErrorMessage })
   }
-
 
   showStatus (statusObject) {
     this.setState({ statusObject })
@@ -350,15 +348,17 @@ class SpouseFormFragment extends BaseMVPView {
     } = this.state
 
   return(
-    <div>
+  <div>
     { super.render() }
     {
       showNoticeResponseModal &&
 
       <NoticeResponseModal
         noticeResponse = { noticeResponse }
-        onClose = { () =>
+        onClose = { () => {
+          this.props.reloadPreEmploymentForm()
           this.setState({ showNoticeResponseModal: false }) }
+        }
       />
     }
     {
@@ -543,12 +543,9 @@ class SpouseFormFragment extends BaseMVPView {
               </center>
               :
               <div>
-              {
-                attachments === null &&
                 <PreEmploymentViewAttachmentsComponent
                   file = { attachments }
                   onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
-              }
               </div>
           }
           <br/>

@@ -32,12 +32,15 @@ export default class SpousePresenter {
   }
 
   updateMedicalAppointment (date, date2, id) {
+    this.view.showCircularLoader()
     this.updateMedicalAppointmentInteractor.execute(date, date2, id)
     .subscribe(data => {
+      this.view.hideCircularLoader()
       this.view.noticeResponseModal(data)
       this.getMedicalAppointmentProcedures()
       this.getMedicalAppointment()
     }, error => {
+      this.view.hideCircularLoader()
     })
   }
 }

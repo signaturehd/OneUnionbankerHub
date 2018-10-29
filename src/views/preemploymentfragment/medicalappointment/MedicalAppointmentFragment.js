@@ -8,12 +8,11 @@ import {
   GenericButton,
   CircularLoader,
   GenericInput,
-  SingleInputModal,
   Card,
   Line,
   DatePicker,
   Checkbox,
-  MultipleAttachments,
+  Modal
 } from '../../../ub-components/'
 
 import { RequiredValidation } from '../../../utils/validate/'
@@ -38,6 +37,7 @@ class MedicalAppointmentFragment extends BaseMVPView {
       alternativeDate : '',
       noticeResponse : '',
       showNoticeResponseModal : false,
+      enabledLoader : false,
     }
   }
 
@@ -50,13 +50,21 @@ class MedicalAppointmentFragment extends BaseMVPView {
   showMedicalAppointment (medicalAppointmentData) {
     this.setState({ medicalAppointmentData })
     this.setState({
-      preferredDate : moment(medicalAppointmentData.preferredDate),
-      alternativeDate : moment(medicalAppointmentData.alternativeDate),
+      preferredDate : preferredDate ? moment(medicalAppointmentData.preferredDate) : '',
+      alternativeDate : alternativeDate ? moment(medicalAppointmentData.alternativeDate) : '',
     })
   }
 
   showMedicalAppointmentProcedure (medicalAppointmentProcedureData) {
     this.setState({ medicalAppointmentProcedureData })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
   }
 
   saveFunction (id) {
@@ -81,7 +89,8 @@ class MedicalAppointmentFragment extends BaseMVPView {
       alternativeDate,
       medicalAppointmentProcedureData,
       showNoticeResponseModal,
-      noticeResponse
+      noticeResponse,
+      enabledLoader
     } = this.state
 
     const {
@@ -101,6 +110,18 @@ class MedicalAppointmentFragment extends BaseMVPView {
           this.setState({ showNoticeResponseModal : false })
         } }
         />
+    }
+    {
+      enabledLoader &&
+      <Modal>
+        <center>
+          <br/>
+            <CircularLoader show = { enabledLoader } />
+          <br/>
+          <h2>Please wait...</h2>
+          <br/>
+        </center>
+      </Modal>
     }
       <div className = { 'percentage-grid' }>
         <div>
@@ -137,16 +158,14 @@ class MedicalAppointmentFragment extends BaseMVPView {
               hint = { '(eg. MM/DD/YYYY)' }
               selected = { preferredDate }
               onChange = { (e)  =>
-                this.setState({
-                  preferredDate:  moment(e).format('MM/DD/YYYY')
-                  })
+                this.setState({ preferredDate: e })
                }
               />
             <DatePicker
               text = { 'Alternative Schedule' }
               minDate = {  moment() }
               hint = { '(eg. MM/DD/YYYY)' }
-              selected = { alternativeDate }
+              selected = { alternativeDate ? alternativeDate : '' }
               onChange = { (e)  =>
                 this.setState({ alternativeDate : e })
                }
