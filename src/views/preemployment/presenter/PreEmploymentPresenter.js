@@ -88,18 +88,15 @@ export default class PreEmploymentPresenter {
   }
 
   getPreEmploymentForm () {
-    this.view.showCircularLoader()
     this.preEmploymentFormInteractor.execute()
     .subscribe(
         data => {
-          this.view.hideCircularLoader()
           this.view.checkedPreEmploymentForm(data)
           this.setDocumentsValue(data)
           this.getAffirmStatus()
         },
         error => {
           store.dispatch(NotifyActions.resetNotify())
-          this.view.hideCircularLoader()
           this.getAffirmStatus()
        }
     )
