@@ -553,19 +553,16 @@ class ParentFragment extends BaseMVPView {
               {
                 !enabledParentLoader &&
                 <div className = { 'text-align-right' }>
-                  {
-                    parentDetails.length === 0 &&
-                    <GenericButton
-                      className = { 'employment-button global-button' }
-                      text = { 'Add Mother' }
-                      onClick = { () =>
-                        this.setState({
-                          showEditModeModal : true,
-                          isParentOrSiblings : true
-                        })
-                        }
-                    />
-                   }
+                <GenericButton
+                  className = { 'employment-button global-button' }
+                  text = { 'Add Mother' }
+                  onClick = { () =>
+                    this.setState({
+                      showEditModeModal : true,
+                      isParentOrSiblings : true
+                    })
+                    }
+                  />
                 </div>
               }
             </div>
@@ -629,7 +626,7 @@ class ParentFragment extends BaseMVPView {
           :
           <div>
             {
-              siblingDetails.length !== 0 &&
+              siblingDetails.length != 0 &&
               <div>
                 <SiblingComponent
                   siblingDetails = { siblingDetails }

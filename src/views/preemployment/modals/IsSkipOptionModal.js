@@ -19,7 +19,7 @@ class IsSkipOptionModal extends Component {
       <Modal>
         <h2 className = { 'font-weight-bold font-size-20px' }></h2>
         <br/>
-        <h2>Do you want to skip this form? You still haven\'t saved your data.</h2>
+        <h2>Do you want to skip this form? You still haven&#39;t saved your data.</h2>
         <br/>
         <div className = { 'grid-global ' }>
           <GenericButton

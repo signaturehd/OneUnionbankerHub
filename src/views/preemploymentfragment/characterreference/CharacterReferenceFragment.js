@@ -331,6 +331,8 @@ class CharacterReferenceFragment extends BaseMVPView {
       companyNameTextErrorMessage : '',
       floorText : '',
       floorTextErrorMessage : '',
+      cityText : '',
+      cityTextErrorMessage : '',
       buildingNameText : '',
       buildingNameTextErrorMessage : '',
       barangayText : '',
@@ -452,7 +454,6 @@ class CharacterReferenceFragment extends BaseMVPView {
       noticeResponse
     } = this.state
 
-
     const {
       characterReferenceData
     } = this.props
@@ -468,7 +469,7 @@ class CharacterReferenceFragment extends BaseMVPView {
             this.setState({ showNoticeResponse : false })
             this.props.reloadPreEmploymentForm()
           }}
-          />
+        />
       }
       {
         showCharacterReferenceModal &&
