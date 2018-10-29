@@ -169,7 +169,7 @@ class LoginView extends BaseMVPView {
         }
 
         <Card className = {'login-form'}>
-          <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
+          <img className = { 'login-logo' } src = { require('../../images/1uhub.png')} />
             <br/>
             <GenericInput
               autocomplete='off'
