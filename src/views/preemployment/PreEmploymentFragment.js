@@ -390,13 +390,7 @@ class PreEmploymentFragment extends BaseMVPView {
         }
       })
     } else if (index === 11) {
-      this.getFormData(10).map((resp) => {
-        if(resp.status !== 2) {
-          this.setState({ showSkipOptionModal : true })
-        } else {
-          this.setState({ showTaxPayerIdentificationModal : true })
-        }
-      })
+      this.setState({ showTaxPayerIdentificationModal : true })
     } else if (index === 12) {
       this.getFormData(11).map((resp) => {
         if(resp.status === 2) {
@@ -422,13 +416,7 @@ class PreEmploymentFragment extends BaseMVPView {
         }
       })
     } else if (index === 15) {
-      this.getFormData(14).map((resp) => {
-        if(resp.status !== 2) {
-          this.setState({ showSkipOptionModal : true })
-        } else {
-          this.setState({ showPagibigLoanModal : true })
-        }
-      })
+      this.setState({ showPagibigLoanModal : true })
     } else if (index === 16) {
       this.getFormData(14).map((resp) => {
         if(resp.status == 2) {
