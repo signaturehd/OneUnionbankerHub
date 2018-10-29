@@ -218,7 +218,7 @@ class BirthCertificateFragment extends BaseMVPView {
                 :
                 <PreEmploymentViewAttachmentsComponent
                 file = { attachments }
-                title = { 'Birth Certificate Attachments' }
+                title = { 'Birth Certificate' }
                 onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
                 :
                 <div></div>

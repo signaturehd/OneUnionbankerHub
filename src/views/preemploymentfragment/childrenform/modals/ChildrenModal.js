@@ -249,7 +249,7 @@ class ChildrenModal extends Component {
                   {
                     attachments.length !==0 &&
                     <PreEmploymentViewAttachmentsComponent
-                      title = { 'Birth Certificate Attachments' }
+                      title = { 'Birth Certificate' }
                       file = { attachments }
                       onClick = { (viewFile) => this.props.viewAttachments(viewFile)  }/>
                   }

@@ -220,7 +220,7 @@ class EducationBackgroundModal extends Component {
                 </center>
                 :
                 <PreEmploymentViewAttachmentsComponent
-                  title = { 'TOR Attachments' }
+                  title = { 'TOR' }
                   file = { attachmentUrl }
                   onClick = { (viewFile) => viewFileFunc(viewFile) }/>
             }
