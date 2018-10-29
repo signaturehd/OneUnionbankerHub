@@ -41,11 +41,15 @@ class ParentFragment extends BaseMVPView {
       bloodObject: [],
       statusObject : [],
       genderObject : [],
+      siblingRelationshipObject : [],
+      parentRelationshipObject : [],
       showNoticeResponse : false,
       editMode : false,
       showBloodTypeModal : false,
       showStatusModal : false,
       showEditModeModal : false,
+      showParentRelationshipModal : false,
+      showSiblingRelationshipModal : false,
       showGenderModal : false,
       isParentOrSiblings : null,
       index : 4,
@@ -109,6 +113,15 @@ class ParentFragment extends BaseMVPView {
   showStatus (statusObject) {
     this.setState({ statusObject })
   }
+
+  showParentRelationship (parentRelationshipObject) {
+    this.setState({ parentRelationshipObject })
+  }
+
+  showSiblingRelationship (siblingRelationshipObject) {
+    this.setState({ siblingRelationshipObject })
+  }
+
 
   circularLoader (enabledLoader) {
     this.setState({ enabledLoader })
@@ -334,6 +347,8 @@ class ParentFragment extends BaseMVPView {
       bloodObject,
       statusObject,
       genderObject,
+      parentRelationshipObject,
+      siblingRelationshipObject,
       enabledLoader,
       lastName,
       firstName,
@@ -368,7 +383,7 @@ class ParentFragment extends BaseMVPView {
       isParentOrSiblings,
       hospitalization,
       groupPlan,
-      editMode
+      editMode,
     } = this.state
 
     const isVisible = (siblingDetails && siblingDetails.length > 4) ? '' : 'hide'
@@ -397,6 +412,8 @@ class ParentFragment extends BaseMVPView {
             bloodObject = { bloodObject }
             statusObject = { statusObject }
             genderObject = { genderObject }
+            parentRelationshipObject = { parentRelationshipObject }
+            siblingRelationshipObject = { siblingRelationshipObject }
             firstNameFunc = { (e) => this.firstNameValidate(e) }
             lastNameFunc = { (e) => this.lastNameValidate(e) }
             middleNameFunc = { (e) => this.middleNameValidate(e) }

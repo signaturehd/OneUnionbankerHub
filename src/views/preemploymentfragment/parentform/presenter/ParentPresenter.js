@@ -11,6 +11,27 @@ import AddSiblingsInteractor from '../../../../domain/interactor/preemployment/s
 
 import parentParam from '../../../../domain/param/ParentParam'
 
+let parentRelationshipStatusObject = [
+  {
+    id : 0,
+    name : 'Father'
+  },
+  {
+    id : 1,
+    name : 'Mother'
+  },
+]
+
+let siblingsRelationshipStatusObject = [
+   {
+    id : 0,
+    name : 'Brother'
+  },
+  {
+    id : 1,
+    name : 'Sister'
+  },
+]
 
 let bloodObjectParam = [
  {
@@ -80,6 +101,8 @@ export default class ChildrenPresenter {
   /* Get Method */
 
   getObjectData () {
+    this.view.showParentRelationship(parentRelationshipStatusObject)
+    this.view.showSiblingRelationship(siblingsRelationshipStatusObject)
     this.view.showGender(genderObject)
     this.view.showStatus(statusObject)
     this.view.showBloodType(bloodObjectParam)
