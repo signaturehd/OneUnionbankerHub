@@ -167,7 +167,7 @@ export default class SpousePresenter {
       this.view.bloodTypeErrorMessageFunc('Please specify your blood type')
     } else if (status === '') {
       this.view.statusNameErrorMessageFunc('Please specify spouse status')
-    } else if (!torFormData.length) {
+    } else if (!spouseAttachmentsArray.length) {
        store.dispatch(NotifyActions.resetNotify())
        store.dispatch(NotifyActions.addNotify({
           title : 'Warning' ,
@@ -211,6 +211,7 @@ export default class SpousePresenter {
        .subscribe(data => {
          this.view.hideCircularLoader()
          this.view.noticeResponseFunc(data, true)
+         this.getSpouse()
        }, error => {
          this.view.hideCircularLoader()
          this.view.reload()
