@@ -41,15 +41,11 @@ class ParentFragment extends BaseMVPView {
       bloodObject: [],
       statusObject : [],
       genderObject : [],
-      siblingRelationshipObject : [],
-      parentRelationshipObject : [],
       showNoticeResponse : false,
       editMode : false,
       showBloodTypeModal : false,
       showStatusModal : false,
       showEditModeModal : false,
-      showParentRelationshipModal : false,
-      showSiblingRelationshipModal : false,
       showGenderModal : false,
       enabledParentLoader : false,
       enabledSiblingsLoader : false,
@@ -454,8 +450,6 @@ class ParentFragment extends BaseMVPView {
             bloodObject = { bloodObject }
             statusObject = { statusObject }
             genderObject = { genderObject }
-            parentRelationshipObject = { parentRelationshipObject }
-            siblingRelationshipObject = { siblingRelationshipObject }
             firstNameFunc = { (e) => this.firstNameValidate(e) }
             lastNameFunc = { (e) => this.lastNameValidate(e) }
             middleNameFunc = { (e) => this.middleNameValidate(e) }
