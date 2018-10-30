@@ -99,6 +99,7 @@ export default class AffirmDocumentPresenter {
       this.getAffirmationsStatus()
       this.view.noticeResponse(data.message, true, false)
     }, error => {
+      this.view.resetPin('')
       this.view.hidePinLoader()
     })
   }
@@ -111,6 +112,7 @@ export default class AffirmDocumentPresenter {
       this.getAffirmationsStatus()
       this.view.noticeResponse(data.message, true, false)
     }, error => {
+      this.view.resetPin('')
       this.view.hidePinLoader()
     })
   }
@@ -123,7 +125,7 @@ export default class AffirmDocumentPresenter {
       this.getAffirmationsStatus()
       this.view.noticeResponse(data.message, true, false)
     }, error => {
-      this.getAffirmationsStatus()
+      this.view.resetPin('')
       this.view.hidePinLoader()
     })
   }
