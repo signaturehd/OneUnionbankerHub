@@ -24,8 +24,6 @@ class ParentModal extends Component {
       genderObject,
       bloodObject,
       statusObject,
-      parentRelationshipObject,
-      siblingRelationshipObject,
       firstNameFunc,
       lastNameFunc,
       middleNameFunc,
@@ -72,10 +70,6 @@ class ParentModal extends Component {
       groupPlanFunc,
       saveFormSubmission,
       editFormSubmission,
-      selectedParentRelationshipFunc,
-      parentRelationshipFunc,
-      selectedSiblingRelationshipFunc,
-      siblingRelationshipFunc,
     } = this.props
 
     return (
@@ -86,38 +80,6 @@ class ParentModal extends Component {
           <h2>{ isParentOrSiblings ? 'Parent' : 'Siblings' } Form</h2>
         </center>
         <br/>
-         {
-          showParentRelationshipModal &&
-          <SingleInputModal
-            label = { 'Parent Relationship' }
-            inputArray = { parentRelationshipObject }
-            selectedArray = { (parentRelationshipID, parentRelationshipName) =>
-              selectedParentRelationshipFunc(
-                parentRelationshipID,
-                parentRelationshipName,
-                false,
-                ''
-              )
-            }
-            onClose = { () => parentRelationshipFunc(false) }
-          />
-        }
-         {
-          showSiblingRelationshipModal &&
-          <SingleInputModal
-            label = { 'Sibling Relationship' }
-            inputArray = { siblingRelationshipObject }
-            selectedArray = { (siblingRelationshipID, siblingRelationshipName) =>
-              selectedSiblingRelationshipFunc(
-                siblingRelationshipID,
-                siblingRelationshipName,
-                false,
-                ''
-              )
-            }
-            onClose = { () => siblingRelationshipFunc(false) }
-          />
-        }
         {
           showBloodTypeModal &&
           <SingleInputModal
