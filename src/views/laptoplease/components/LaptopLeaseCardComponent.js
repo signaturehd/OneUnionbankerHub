@@ -53,7 +53,7 @@ class LaptopLeaseCardComponent extends Component {
 
             <div className = { 'grid-global' }>
               <GenericInput
-                placeholder = { 'Amount' }
+                placeholder = { 'Estimated Cost' }
                 errorMessage = { '' }
                 onChange ={ (e) => setAmount(e.target.value) }
                 text = { 'Estimated Cost' }
@@ -65,15 +65,15 @@ class LaptopLeaseCardComponent extends Component {
                 placeholder = { 'Colour Family' }
                 errorMessage = { '' }
                 disabled = { showEditMode }
-                text = { 'Color' }
+                text = { 'Colour Family' }
                 onChange = { (e) => setColor(e.target.value) }
                 value = { color }
                 />
               <GenericInput
-                placeholder = { 'Terms' }
+                placeholder = { 'Payment Terms' }
                 errorMessage = { '' }
                 disabled = { showEditMode }
-                text = { 'Terms' }
+                text = { 'Payment Terms' }
                 readOnly
                 onClick = { () => showTerms() }
                 value = { terms }
