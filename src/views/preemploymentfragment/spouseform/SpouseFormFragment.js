@@ -543,9 +543,13 @@ class SpouseFormFragment extends BaseMVPView {
               </center>
               :
               <div>
-                <PreEmploymentViewAttachmentsComponent
-                  file = { attachments }
-                  onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+                {
+                  attachments.length !== 0 ||
+                  attachments !== null &&
+                  <PreEmploymentViewAttachmentsComponent
+                    file = { attachments }
+                    onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+                }
               </div>
           }
           <br/>

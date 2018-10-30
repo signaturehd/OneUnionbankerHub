@@ -89,7 +89,7 @@ class ChildrenModal extends Component {
         isDismisable = { true }
         onClose = { onClose }>
         <center>
-          <h2>Children { editMode ? 'Update' : 'Submit' } Form</h2>
+          <h2>Child Form</h2>
         </center>
         <br/>
         {
