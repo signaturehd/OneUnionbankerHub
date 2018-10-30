@@ -77,8 +77,6 @@ class PhenomFragment extends BaseMVPView {
       selected,
     } = this.props
 
-    console.log(phenomDataList);
-
     return (
       <div className = { 'phenom-fragment' }>
         {

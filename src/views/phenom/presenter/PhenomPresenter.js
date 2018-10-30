@@ -27,7 +27,6 @@ export default class PhenomPresenter {
           this.view.showPhenomDiscountList(resp)
           this.view.showCircularLoader()
         }, e => {
-          console.log(e)
           this.view.showCircularLoader()
       })
     // .subscribe(data => {
