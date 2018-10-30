@@ -392,13 +392,14 @@ class PreEmploymentFragment extends BaseMVPView {
     } else if (index === 11) {
       this.setState({ showTaxPayerIdentificationModal : true })
     } else if (index === 12) {
-      this.getFormData(11).map((resp) => {
-        if(resp.status === 2) {
-          this.setState({ preEmpPage : index })
-        } else {
-          this.setState({ showSkipOptionModal : true })
-        }
-      })
+      this.setState({ preEmpPage : index + 1 })
+      // this.getFormData(11).map((resp) => {
+      //   if(resp.status === 2) {
+      //     this.setState({ preEmpPage : index })
+      //   } else {
+      //     this.setState({ showSkipOptionModal : true })
+      //   }
+      // })
     } else if (index === 13) {
       this.getFormData(12).map((resp) => {
         if(resp.status === 2) {
@@ -417,14 +418,6 @@ class PreEmploymentFragment extends BaseMVPView {
       })
     } else if (index === 15) {
       this.setState({ showPagibigLoanModal : true })
-    } else if (index === 16) {
-      this.getFormData(14).map((resp) => {
-        if(resp.status == 2) {
-          this.setState({ preEmpPage : index })
-        } else {
-          this.setState({ showPagibigLoanModal : true })
-        }
-      })
     } else if (index === 17) {
       this.setState({ showMarriedConfirmModal : true })
     } else if (index === 18) {
