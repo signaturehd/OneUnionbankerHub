@@ -105,8 +105,8 @@ export default class ChildrenPresenter {
   /* Get Method */
 
   getObjectData () {
-    this.view.showParentRelationship(parentRelationshipStatusObject)
-    this.view.showSiblingRelationship(siblingsRelationshipStatusObject)
+    // this.view.showParentRelationship(parentRelationshipStatusObject)
+    // this.view.showSiblingRelationship(siblingsRelationshipStatusObject)
     this.view.showGender(genderObject)
     this.view.showStatus(statusObject)
     this.view.showBloodType(bloodObjectParam)
