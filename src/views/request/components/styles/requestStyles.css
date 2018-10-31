@@ -13,6 +13,16 @@
   margin: auto;
 }
 
+.request-container {
+  max-width: 100%;
+}
+
+.request-grid-column-x3 {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  column-gap: 2%;
+}
+
 .align-self-center {
   align-self: center;
 }

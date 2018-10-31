@@ -19,6 +19,7 @@ import {
 } from '../../ub-components/'
 
 import RequestFlightComponent from './components/RequestFlightComponent'
+import RequestFlightFormComponent from './components/RequestFlightFormComponent'
 import AreaModal from './modal/AreaModal'
 
 import ResponseModal from '../notice/NoticeResponseModal'
@@ -35,10 +36,13 @@ class RequestFlightFragment extends BaseMVPView {
     super(props)
     this.state = {
       enabledLoader : false,
+      submitLoader : false,
       showRequestModal : false,
       showAreaModal : false,
       showPurposeModal : false,
       showNoticeResponseModal : false,
+      showDepartureTime : false,
+      showReturnTime : false,
       areaSwitch : 0,
       noticeResponse : '',
       typeOfFlight : '',
@@ -49,6 +53,7 @@ class RequestFlightFragment extends BaseMVPView {
       departureDestinationId : '',
       departureDestination : '',
       departureDate : '',
+      departureTimeId : '',
       departureTime : '',
       departureRemarks : '',
       returnOriginId : '',
@@ -56,20 +61,20 @@ class RequestFlightFragment extends BaseMVPView {
       returnDestinationId : '',
       returnDestination : '',
       returnDate : '',
+      returnTimeId : '',
       returnTime : '',
       returnRemarks : '',
       pageNumber : 1,
       findArea : '',
+      timeArray : [
+        { id: 1, name: 'Morning' },
+        { id: 2, name: 'Afternoon' },
+        { id: 3, name: 'Evening' }
+      ],
       areaArray : [],
       purposeArray : [
-        {
-          id : 1,
-          name : 'Business Meeting'
-        },
-        {
-          id : 2,
-          name : 'Training'
-        }
+        { id: 1, name: 'Business Meeting' },
+        { id: 2, name: 'Training' }
       ],
       requestFlightArray : []
     }
@@ -225,9 +230,22 @@ class RequestFlightFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  hideSubmitLoader () {
+    this.setState({ submitLoader : false })
+  }
+
+  showSubmitLoader () {
+    this.setState({ submitLoader : true })
+  }
+
+  navigate () {
+    this.props.history.push('/mytravel/travel')
+  }
+
   render () {
     const {
       enabledLoader,
+      submitLoader,
       showRequestModal,
       showAreaModal,
       showPurposeModal,
@@ -235,6 +253,8 @@ class RequestFlightFragment extends BaseMVPView {
       noticeResponse,
       areaSwitch,
       typeOfFlight,
+      showDepartureTime,
+      showReturnTime,
       purposeId,
       purposeName,
       departureOriginId,
@@ -242,6 +262,7 @@ class RequestFlightFragment extends BaseMVPView {
       departureDestinationId,
       departureDestination,
       departureDate,
+      departureTimeId,
       departureTime,
       departureRemarks,
       returnOriginId,
@@ -249,10 +270,12 @@ class RequestFlightFragment extends BaseMVPView {
       returnDestinationId,
       returnDestination,
       returnDate,
+      returnTimeId,
       returnTime,
       returnRemarks,
       pageNumber,
       findArea,
+      timeArray,
       requestFlightArray,
       purposeArray,
       areaArray
@@ -263,6 +286,13 @@ class RequestFlightFragment extends BaseMVPView {
       <div>
         { super.render() }
         {
+          submitLoader ?
+          <Modal>
+            <center>
+              <CircularLoader show = { submitLoader }/>
+            </center>
+          </Modal>
+          :
           showNoticeResponseModal &&
           <ResponseModal
             onClose={ () => {
@@ -292,174 +322,117 @@ class RequestFlightFragment extends BaseMVPView {
           </Modal>
         }
         {
-          typeOfFlight &&
-          <Modal
-          isDismisable = { true }
-          onClose = { () => this.resetValue() }>
-            <div>
-              {
-                showPurposeModal &&
-                <SingleInputModal
-                  label = { 'Select the purpose of your travel.' }
-                  inputArray = { purposeArray }
-                  selectedArray = { (purposeId, purposeName) => {
-                      this.setState({
-                        purposeId,
-                        purposeName,
-                        showPurposeModal : false
-                        })
-                    }
-                  }
-                  onClose = { () => this.setState({ showPurposeModal : false }) }
-                />
-              }
-              {
-                showAreaModal &&
-                <AreaModal
-                  enabledLoader = { enabledLoader }
-                  label = { 'Area' }
-                  pageNumber = { pageNumber }
-                  nextPageNumberFunc = { (resp) => {
-                      this.setState({ pageNumber : pageNumber + 1 })
-                      this.presenter.getAreaData(resp, findArea)
-                    }
-                  }
-                  previousPageNumberFunc = { (resp) => {
-                      this.setState({ pageNumber : pageNumber - 1 })
-                      this.presenter.getAreaData(resp, findArea)
-                    }
-                  }
-                  findFunc = { (resp) => {
-                      this.setState({ findArea : resp })
-                      this.presenter.getAreaData(pageNumber, resp)
-                    }
-                  }
-                  inputArray = { areaArray }
-                  selectedArray = { (areaId, areaName) =>
-                    this.setAreaFunc(areaId, areaName)
-                  }
-                  onClose = { () => this.setState({ showAreaModal : false }) }
-                  />
-              }
-              <h2 className = { 'font-size-18px font-weight-bold text-align-center' }>Select your departing flight details.</h2>
-              <br/>
-              <GenericInput
-                text = { 'Purpose' }
-                value = { purposeName }
-                onClick = { () => this.setState({ showPurposeModal : true }) }
-              />
-              <div className = { 'request-grid-option' }>
-                <GenericInput
-                  text = { 'Origin' }
-                  value = { departureOrigin }
-                  onClick = { () => this.setState({ showAreaModal : true, areaSwitch : 1, rturn : false }) }
-                />
-                <GenericInput
-                  text = { 'Destination' }
-                  value = { departureDestination }
-                  onClick = { () => this.setState({ showAreaModal : true, areaSwitch : 2, rturn : true}) }
-                />
-              </div>
-              <div className = { 'request-grid-option' }>
-                <DatePicker
-                  text = { 'Preferred Date of Departure' }
-                  selected = { departureDate && moment(departureDate) }
-                  onChange = { (e) => this.departureDateFunc(e) }
-                />
-                <GenericInput
-                  text = { 'Preferred Time' }
-                  type = { 'time' }
-                  value = { departureTime }
-                  onChange = { (e) => this.departureTimeFunc(e.target.value) }
-                />
-              </div>
-              <GenericInput
-                text = { 'Remarks' }
-                value = { departureRemarks }
-                onChange = { (e) => this.departureRemarksFunc(e.target.value) }
-              />
-            </div>
-            {
-              typeOfFlight === 'RoundTrip' &&
-              <div>
-                <h2 className = { 'font-size-18px font-weight-bold text-align-center' }>Select your return flight details.</h2>
-                <br/>
-                <div className = { 'request-grid-option' }>
-                  <GenericInput
-                    text = { 'Origin' }
-                    value = { returnOrigin }
-                    onClick = { () => this.setState({ showAreaModal : true, areaSwitch : 3, rturn : true}) }
-                  />
-                  <GenericInput
-                    text = { 'Destination' }
-                    value = { returnDestination }
-                    onClick = { () => this.setState({ showAreaModal : true, areaSwitch : 4, rturn : true}) }
-                  />
-                </div>
-                <div className = { 'request-grid-option' }>
-                  <DatePicker
-                    readOnly
-                    text = { 'Preferred Date of Departure' }
-                    selected = { returnDate && moment(returnDate) }
-                    onChange = { (e) => this.returnDateFunc(e) }
-                  />
-                  <GenericInput
-                    text = { 'Preferred Time' }
-                    type = { 'time' }
-                    value = { returnTime }
-                    onChange = { (e) => this.returnTimeFunc(e.target.value) }
-                  />
-                </div>
-                <GenericInput
-                  text = { 'Remarks' }
-                  value = { returnRemarks }
-                  onChange = { (e) => this.returnRemarksFunc(e.target.value) }
-                />
-              </div>
-            }
-            <div className = { 'text-align-center' }>
-              <GenericButton
-                text = { 'Continue' }
-                onClick = { () => {
-                    this.setState({ showRequestModal : false })
-                    this.submit()
-                  }
-                }
-              />
-            </div>
-          </Modal>
-        }
-        <div className = { 'percentage-grid' }>
+          typeOfFlight ?
           <div>
-            <h2 className={ 'font-size-30px text-align-left' }>Flight Requests</h2>
-            <br/>
-            <h4>Below are the list of your requested flights</h4>
-          </div>
-        </div>
-        <br/>
-        <br/>
-        <Line />
-        <br/>
-            {
-              enabledLoader ?
-              <center>
-                <CircularLoader show = { enabledLoader }/>
-              </center>
-              :
-              requestFlightArray.length !==0 ?
-                <RequestFlightComponent
-                  cardDataHolder = { requestFlightArray }/>
-                  :
-                  <center>
-                    <h2>No records</h2>
-                  </center>
-            }
-
-            <FloatingActionButton
-              image = { true }
-              onClick = { () => this.setState({ showRequestModal : true })
+          <i
+            className={ 'back-arrow' }
+            onClick={ () => this.setState({ typeOfFlight : '' }) }>
+          </i>
+          <RequestFlightFormComponent
+            nextPageNumberFunc = { (resp) => {
+                this.setState({ pageNumber : pageNumber + 1 })
+                this.presenter.getAreaData(resp, findArea)
               }
-            />
+            }
+            previousPageNumberFunc = { (resp) => {
+                this.setState({ pageNumber : pageNumber - 1 })
+                this.presenter.getAreaData(resp, findArea)
+              }
+            }
+            findFunc = { (resp) => {
+                this.setState({ findArea : resp })
+                this.presenter.getAreaData(pageNumber, resp)
+              }
+            }
+            showAreaModal = { showAreaModal }
+            onCloseAreaModal = { () => this.setState({ showAreaModal : false }) }
+            showPurposeModal = { showPurposeModal }
+            showPurposeModalFunc = { () => this.setState({ showPurposeModal : true }) }
+            onClosePurposeModal = { () => this.setState({ showPurposeModal : false }) }
+            typeOfFlight = { typeOfFlight }
+            purposeId = { purposeId }
+            purposeName = { purposeName }
+            purposeFunc = { (purposeId, purposeName) => this.setState({
+                purposeId,
+                purposeName,
+                showPurposeModal : false
+              })
+            }
+            departureOriginId = { departureOriginId }
+            departureOrigin = { departureOrigin }
+            departureOriginFunc = { () => this.setState({ showAreaModal : true, areaSwitch : 1 }) }
+            setAreaFunc = { (areaId, areaName) => this.setAreaFunc(areaId, areaName) }
+            departureDestinationId = { departureDestinationId }
+            departureDestination = { departureDestination }
+            departureDestinationFunc = { () => this.setState({ showAreaModal : true, areaSwitch : 2 }) }
+            departureDate = { departureDate }
+            departureDateFunc = { (e) => this.departureDateFunc(e) }
+            departureTimeId = { departureTimeId }
+            departureTime = { departureTime }
+            showDepartureTime = { showDepartureTime }
+            showDepartureTimeFunc = { () => this.setState({ showDepartureTime : true }) }
+            departureTimeFunc = { (departureTimeId, departureTime) => this.setState({
+              departureTimeId,
+              departureTime,
+              showDepartureTime: false })
+            }
+            departureRemarks = { departureRemarks }
+            returnOriginId = { returnOriginId }
+            returnOrigin = { returnOrigin }
+            returnDestinationId = { returnDestinationId }
+            returnDestination = { returnDestination }
+            returnDate = { returnDate }
+            returnTimeId = { returnTimeId }
+            returnTime = { returnTime }
+            returnRemarks = { returnRemarks }
+            pageNumber = { pageNumber }
+            findArea = { findArea }
+            timeArray = { timeArray }
+            requestFlightArray = { requestFlightArray }
+            purposeArray = { purposeArray }
+            areaArray = { areaArray }
+          />
+          </div>
+          :
+          <div className = { 'percentage-grid' }>
+            <div>
+            <i
+            className={ 'back-arrow' }
+            onClick={ this.navigate.bind(this) }>
+            </i>
+            <br/>
+            <br/>
+            <h2 className={ 'font-size-30px text-align-left' }>Flight Requests</h2>
+              <br/>
+              <h4>Below are the list of your requested flights</h4>
+            </div>
+          <br/>
+          <br/>
+          <Line />
+          <br/>
+          {
+            enabledLoader ?
+            <center>
+              <CircularLoader show = { enabledLoader }/>
+            </center>
+            :
+            requestFlightArray.length !==0 ?
+              <RequestFlightComponent
+                cardDataHolder = { requestFlightArray }
+                />
+                :
+                <center>
+                  <h2>No records</h2>
+                </center>
+          }
+
+          <FloatingActionButton
+            image = { true }
+            onClick = { () => this.setState({ showRequestModal : true })
+            }
+          />
+          </div>
+      }
       </div>
     )
   }

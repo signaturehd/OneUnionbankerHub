@@ -93,7 +93,8 @@ class NavigationView extends BaseMVPView {
       hasPIN: '',
       enabledLoader : false,
       profileHasCOC: '',
-      tempPreEmploymentModal: false
+      tempPreEmploymentModal: false,
+      isLineManager : false
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -167,6 +168,10 @@ class NavigationView extends BaseMVPView {
     this.setState({ profileHasCOC })
   }
 
+  isLineManagerData (isLineManager) {
+    this.setState({ isLineManager })
+  }
+
   relogin () {
     this.props.history.push('/')
   }
@@ -188,7 +193,8 @@ class NavigationView extends BaseMVPView {
       hasPIN,
       enabledLoader,
       profileHasCOC,
-      tempPreEmploymentModal
+      tempPreEmploymentModal,
+      isLineManager
     } = this.state
 
     const { history, login } = this.props
@@ -373,7 +379,8 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mytravel' render = { props =>
                     <TravelFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                      setSelectedNavigation = { this.setSelectedNavigation }
+                      isLineManager = { isLineManager } /> } />
                   <Route path = '/payslip' render = { props =>
                     <Payslip { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />

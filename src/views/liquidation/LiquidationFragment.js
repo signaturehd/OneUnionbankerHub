@@ -166,7 +166,7 @@ class LiquidationFragment extends BaseMVPView {
           <Modal
           isDismisable = { true }
           onClose = { () => this.setState({ showTicketModal : false }) }>
-            <h2 className = { 'font-size-16px font-weight-bold text-align-center' }>Is the ticket used?</h2>
+            <h2 className = { 'font-size-16px font-weight-bold text-align-center' }>Was the ticket used?</h2>
             <br/>
             <div className = { 'grid-global' }>
               <GenericButton
@@ -242,7 +242,7 @@ class LiquidationFragment extends BaseMVPView {
               />
               :
               <GenericInput
-                text = { 'Why ticket was unused' }
+                text = { 'Why the ticket was unused' }
                 value = { whyTicketUsed }
                 onChange = { (e) => this.whyTicketUsedFunc(e.target.value) }
               />

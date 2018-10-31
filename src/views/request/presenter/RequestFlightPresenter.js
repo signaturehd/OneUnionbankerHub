@@ -31,7 +31,7 @@ export default class RequestFlightPresenter {
 
   getTravels () {
     this.view.showCircularLoader()
-    this.getTravelsInteractor.execute(1)
+    this.getTravelsInteractor.execute(6)
       .subscribe(travel => {
           this.view.hideCircularLoader()
           this.view.getTravels(travel)
@@ -55,7 +55,7 @@ export default class RequestFlightPresenter {
     returnRemarks,
     typeOfFlight
   ) {
-    this.view.showCircularLoader()
+    this.view.showSubmitLoader()
     typeOfFlight === 'RoundTrip' ?
     this.addRequestRoundTripInteractor.execute(requestRoundTripParam(
       purposeId,
@@ -71,11 +71,11 @@ export default class RequestFlightPresenter {
       returnRemarks
     ))
       .subscribe(req => {
-          this.view.hideCircularLoader()
+          this.view.hideSubmitLoader()
           this.view.noticeResponse(req)
           this.view.resetValue()
         }, e => {
-          this.view.hideCircularLoader()
+          this.view.hideSubmitLoader()
           // TODO prompt generic error
       })
     :
@@ -88,11 +88,11 @@ export default class RequestFlightPresenter {
       departureRemarks,
     ))
       .subscribe(req => {
-          this.view.hideCircularLoader()
+          this.view.hideSubmitLoader()
           this.view.noticeResponse(req)
           this.view.resetValue()
         }, e => {
-          this.view.hideCircularLoader()
+          this.view.hideSubmitLoader()
           // TODO prompt generic error
       })
   }

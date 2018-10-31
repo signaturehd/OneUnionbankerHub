@@ -117,7 +117,7 @@ class TravelFragment extends BaseMVPView {
   }
 
   render () {
-    const { history, onClick } = this.props
+    const { history, onClick, isLineManager } = this.props
     const {
       accountNumber,
       showBereavementConfirmationModal,
@@ -264,13 +264,18 @@ class TravelFragment extends BaseMVPView {
           onClick = { () => this.props.history.push('/mytravel/travel') }/>
         <label className = { 'travel-icon-tab' } htmlFor='tab1'>My Travel</label>
 
-        <input
-          className = { 'input-tab' }
-          id = { 'tab2' }
-          type = { 'radio' }
-          name = { 'tabs' }
-          onClick = { () => this.props.history.push('/mytravel/approval') }/>
-        <label className = { 'travel-icon-tab' } htmlFor='tab2'>Approvals</label>
+        {
+          isLineManager &&
+          <label>
+            <input
+              className = { 'input-tab' }
+              id = { 'tab2' }
+              type = { 'radio' }
+              name = { 'tabs' }
+              onClick = { () => this.props.history.push('/mytravel/approval') }/>
+            <label className = { 'travel-icon-tab' } htmlFor='tab2'>Approvals</label>
+          </label>
+        }
 
         <section id='content1'>
           <Switch>
