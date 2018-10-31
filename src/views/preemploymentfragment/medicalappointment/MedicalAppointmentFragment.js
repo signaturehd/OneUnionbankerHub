@@ -125,7 +125,7 @@ class MedicalAppointmentFragment extends BaseMVPView {
     }
       <div className = { 'percentage-grid' }>
         <div>
-          <h2 className={ 'header-margin-default text-align-left' }>Medical Scheduling Form</h2>
+          <h2 className={ 'header-margin-default text-align-left' }>Medical Appointment</h2>
           <h2>Please fill up the form below by choosing your preferred clinic, packages, and date to complete the transaction.</h2>
         <br/>
         </div>

@@ -297,7 +297,7 @@ export default class ChildrenPresenter {
     firstName,
     lastName,
     middleName,
-    gender,
+    genderId,
     relationship,
     statusId,
     contact,
