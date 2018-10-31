@@ -112,8 +112,6 @@ class MedicalFragment extends Component {
               onClick = { () => {
                 if(value.id == 6) {
                   this.onCheckedProceed(value.path)
-                } else if (value.id === 5) {
-                  this.onCheckedOutpatient()
                 } else {
                   history.push(value.path)
                   }
