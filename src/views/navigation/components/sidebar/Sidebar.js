@@ -118,7 +118,7 @@ class SideBar extends Component {
           </h5>
         }
         {
-          tempPreEmployment !== 1 ?
+          tempPreEmployment ==1 ?
         <div>
         {
             modules.map((d, idx) =>

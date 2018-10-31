@@ -25,6 +25,38 @@ import { connect } from 'react-redux'
 import store from '../../store'
 import { NotifyActions } from '../../actions'
 
+import LoginForgotPasswordComponent from './fragments/LoginForgotPasswordFragment'
+import LoginUserIdGuideComponent from './fragments/LoginUserIdGuideFragment'
+import LoginGuideUnlockProfileFragment from './fragments/LoginGuideUnlockProfileFragment'
+import LoginGuideUserPasswordFragment from './fragments/LoginGuideUserPasswordFragment'
+import LoginOtpGuideFragment from './fragments/LoginOtpGuideFragment'
+
+function LoginComponent (props) {
+  const id = props.componentId
+  const idReplace = props.idReplace
+  if(id === 0) {
+    return <LoginForgotPasswordComponent
+      idReplace = { () => idReplace() }
+      />
+  } else if (id === 1) {
+    return <LoginGuideUnlockProfileFragment
+      idReplace = { () => idReplace() }
+      />
+  } else if (id === 2) {
+    return <LoginUserIdGuideComponent
+      idReplace = { () => idReplace() }
+      />
+  } else if (id === 3) {
+    return <LoginGuideUserPasswordFragment
+      idReplace = { () => idReplace() }
+      />
+  } else if (id === 4) {
+    return <LoginOtpGuideFragment
+      idReplace = { () => idReplace() }
+      />
+  }
+}
+
 class LoginView extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -32,9 +64,14 @@ class LoginView extends BaseMVPView {
     this.state = {
       showTermsAndCondition : false,
       showOtpModal: false,
+      showHelpDeskComponent: false,
+      showLoginComponent: false,
+      newPassword: false,
+      confirmNewPassword: false,
       disabled : false,
       username: '',
       password: '',
+      componentId: '',
       type: 'password',
       status : 'hide',
       terms : null,
@@ -43,7 +80,8 @@ class LoginView extends BaseMVPView {
     this.onLoginSuccess = this.onLoginSuccess.bind(this)
     this.proceedToValidation = this.proceedToValidation.bind(this)
   }
-   showHide (e) {
+
+  showHide (e) {
     e.preventDefault()
     e.stopPropagation()
 
@@ -123,17 +161,21 @@ class LoginView extends BaseMVPView {
     }
   }
 
-
   render () {
     const {
       showOtpModal,
       username,
       password,
+      newPassword,
+      confirmNewPassword,
       terms,
       showTermsAndCondition,
+      showHelpDeskComponent,
+      showLoginComponent,
       status,
       disabled,
       type,
+      componentId,
     } = this.state
     const {
       notify,
@@ -141,10 +183,26 @@ class LoginView extends BaseMVPView {
     } = this.props
 
     let version = 4
-    let majorVersion = 3
-    let minorVersion = 0
-    let formatVersion = 5
-    let versionNumber = version + '.' + majorVersion + '.' + minorVersion + '.' + formatVersion
+    let majorVersion = 11
+    let minorVersion = 5
+    let versionNumber = version + '.' + majorVersion + '.' + minorVersion
+
+    const objectValue = [{
+      id : 0,
+      name : 'I forgot my password'
+    }, {
+      id : 1,
+      name : 'I want to unlock my profile'
+    },{
+      id : 2,
+      name : 'What is my 1UHub user ID?'
+    }, {
+      id : 3,
+      name : 'What is my 1UHub password?'
+    }, {
+      id : 4,
+      name : `Why can't i receive my OTP?`
+    }]
 
     return (
       <div>
@@ -169,101 +227,174 @@ class LoginView extends BaseMVPView {
         }
 
         <Card className = {'login-form'}>
-          <img className = { 'login-logo' } src = { require('../../images/1uhub.png')} />
-            <br/>
-            <GenericInput
-              autocomplete='off'
-              onChange = { e =>
-                this.setState({ username: e.target.value }) }
-              text = { 'Employee ID' }
-              type = { 'text' }/>
-            <GenericInput
-              autocomplete = { 'off' }
-              onChange = { e =>
-                this.setState({ password: e.target.value }) }
-              text = { 'Password' }
-              type = { type }
-              className = { 'password__input' }/>
-            <span
-              className = { `password_icon password_${ status }` }
-              onClick = { this.showHide }>
-              { type === 'input' ? '' : ''}
-            </span>
-            {
-              disabled ?
-              <center className = { 'login-loader' }>
-                <CircularLoader show = { true }/>
-              </center>              :
-              <div>
-                <br/>
-                <br/>
-                  <GenericButton
-                    disabled = { disabled }
-                    text = { 'LOGIN' }
-                    onClick = { () =>
-                      this.proceedToValidation( username, password )
-                    }/>
-                <br/>
-                <br/>
-                <br/>
-              </div>
-            }
-            <div className = { 'login-layer-icons' }>
-                <img
-                  src = { require('../../images/icons/PAGIBIG.png') }
-                  className = { 'icon-1' } />
-                <img
-                  src = { require('../../images/icons/PHIC.png') }
-                  className = { 'icon-1' } />
-                <img
-                  src = { require('../../images/icons/sssOrange.png') }
-                  className = { 'icon-1' } />
-                <img
-                  src = { require('../../images/icons/PremiumBadgeOrange.png') }
-                  className = { 'icon-1' } />
-                <img
-                  src = { require('../../images/icons/RankOrange.png') }
-                  className = { 'icon-1' } />
-                <img
-                  src = { require('../../images/icons/taxOrange.png') }
-                  className = { 'icon-1' } />
-                <img
-                  src = { require('../../images/icons/DesignationOrange.png') }
-                  className = { 'icon-1' } />
+          {
+            showHelpDeskComponent ?
+
+            <div>
+              {
+                showLoginComponent ?
+                <div>
+                  <br/>
+                  <LoginComponent
+                    idReplace = { () => this.setState({ showLoginComponent : false }) }
+                    componentId = { componentId }
+                    />
+                </div>
+                :
+                <div>
+                  <br/>
+                  <br/>
+                  <div className = { '' }>
+                    <span/>
+                    <div>
+                      <h2 className = { 'font-size-18px text-align-left font-weight-bold' }>
+                        Having trouble signing in?
+                      </h2>
+                      <br/>
+                      <h4 className = { 'text-align-left font-weight-normal font-size-12px' }>
+                        Dont worry! Let us know your concern so we can assist you.
+                      </h4>
+                    </div>
+                  </div>
+                  <br/>
+                  <br/>
+                  {
+                    objectValue.map((resp, key) =>
+                    (
+                    <div>
+                      <Card
+                        className = { 'login-help-grid cursor-pointer' }
+                        key = { key }
+                        onClick = { () => this.setState({ componentId : resp.id, showLoginComponent : true }) }
+                        >
+                        <h2 className = { 'text-align-left' }>{ resp.name }</h2>
+                        <span className = { 'login-icon login-seemore-button' }/>
+                      </Card>
+                    </div>
+                      )
+                    )
+                  }
+                  <br/>
+                  <br/>
+                  {
+                    showLoginComponent ?
+                    <GenericButton
+                      className = { 'global-button' }
+                      onClick = { () => this.setState({ showLoginComponent : false }) }
+                      text = { 'Back' }
+                    />
+                    :
+                    <GenericButton
+                      className = { 'global-button' }
+                      onClick = { () => this.setState({ showHelpDeskComponent : false }) }
+                      text = { 'Back' }
+                    />
+                  }
+                </div>
+              }
             </div>
-            <br/>
-            <center>
-            </center>
-            <div className = {'download-container'}>
-              <button className = {'link-googleplay'} onClick = { () => this.downloadAndroid() } />
-              <button className = {'link-appstore'} onClick = { () => this.downloadIOS() } />
+              :
+            <div>
+              <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
+                <br/>
+                <GenericInput
+                  onChange = { e =>
+                    this.setState({ username: e.target.value }) }
+                  text = { 'Employee ID' }
+                  type = { 'text' }/>
+                <GenericInput
+                  autocomplete = { 'off' }
+                  onChange = { e =>
+                    this.setState({ password: e.target.value }) }
+                  text = { 'Password' }
+                  type = { type }
+                  className = { 'password__input' }/>
+                <span
+                  className = { `password_icon password_${ status }` }
+                  onClick = { this.showHide }>
+                  { type === 'input' ? '' : ''}
+                </span>
+                {
+                  disabled ?
+                  <center className = { 'login-loader' }>
+                    <CircularLoader show = { true }/>
+                  </center>              :
+                  <div>
+                    <GenericButton
+                      disabled = { disabled }
+                      text = { 'LOGIN' }
+                      onClick = { () =>
+                        this.proceedToValidation( username, password )
+                      }/>
+                    <br/>
+                    <br/>
+                    <h2
+                      onClick = { () => this.setState({ showHelpDeskComponent : true }) }
+                      className = { 'font-weight-normal font-size-11px cursor-pointer' }>
+                      Having trouble signing in?
+                    </h2>
+                    <br/>
+                    <br/>
+                  </div>
+                }
+                <div className = { 'login-layer-icons' }>
+                  <img
+                    src = { require('../../images/icons/PAGIBIG.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/PHIC.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/sssOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/PremiumBadgeOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/RankOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/taxOrange.png') }
+                    className = { 'icon-1' } />
+                  <img
+                    src = { require('../../images/icons/DesignationOrange.png') }
+                    className = { 'icon-1' } />
+                </div>
+                <br/>
+                <center>
+                </center>
+                <div className = {'download-container'}>
+                  <button className = {'link-googleplay'} onClick = { () => this.downloadAndroid() } />
+                  <button className = {'link-appstore'} onClick = { () => this.downloadIOS() } />
+                </div>
+                <br/>
+                <div className = { 'grid-global login-adjustment-for-version' }>
+                  <h2
+                    onClick = { () => window.open(this.getSupportURL()) }
+                    className = { 'unionbank-color font-size-12px text-align-left cursor-pointer' }>Learn More.</h2>
+                  <div className={ 'login-version' }>v { versionNumber }</div>
+                </div>
             </div>
-            <br/>
-            <div className = { 'grid-global login-adjustment-for-version' }>
-              <h2
-                onClick = { () => window.open(this.getSupportURL()) }
-                className = { 'unionbank-color font-size-12px text-align-left cursor-pointer' }>Learn More.</h2>
-              <div className={ 'login-version' }>v { versionNumber }</div>
-            </div>
+          }
         </Card>
 
-          <div className = { 'notify-container' }>
-          {
-            notify &&
-            notify.map((notify, i) => (
-              <Notify
-                onClick = { () => {
-                  store.dispatch(NotifyActions.removeNotify(i))
-                }}
-                key = { i }
-                title = { notify.title }
-                message = { notify.message }
-                type = { notify.type }
-                    />
-            ))
-          }
-          </div>
-      </div>
+        <div className = { 'notify-container' }>
+        {
+          notify &&
+          notify.map((notify, i) => (
+            <Notify
+              onClick = { () => {
+                store.dispatch(NotifyActions.removeNotify(i))
+              }}
+              key = { i }
+              title = { notify.title }
+              message = { notify.message }
+              type = { notify.type }
+                  />
+          ))
+        }
+        </div>
+    </div>
     )
   }
 }

@@ -42,6 +42,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  updateDescription (token, description) {
+    return this.service.updateDescription(token, description)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getDevices (token) {
+    return this.service.getDevices(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
@@ -760,6 +770,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getNonExistingLoans (token) {
+    return this.service.getNonExistingLoans(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Phenom Loans */
   getPhenomDiscounts (token) {
     return this.service.getPhenomDiscounts(token)
@@ -839,9 +854,93 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  /* Vaccine Requisition */
+  /* Pre Employment */
+
+  postAffirmPreEmploymentUndertaking (token) {
+    return this.service.postAffirmPreEmploymentUndertaking(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getAffirmationsStatus (token) {
+    return this.service.getAffirmationsStatus(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getFinancialStatus (token) {
+    return this.service.getFinancialStatus(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addFinancialStatus (token, financialStatusParam) {
+    return this.service.addFinancialStatus(token, financialStatusParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getEmployeeTin (token) {
+    return this.service.getEmployeeTin(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  createEmployeeTin () {
+    return this.service.createEmployeeTin(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getEmployeeSSS (token) {
+    return this.service.getEmployeeSSS(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getEmployeeSchool (token) {
+    return this.service.getEmployeeSchool(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Vaccines Requisitions */
   validateVaccine (token) {
     return this.service.validateVaccine(token)
       .pipe(ServiceErrorOperator())
   }
+
+  addVaccine (token, data) {
+    return this.service.addVaccine(token, data)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Laptop Lease */
+
+  confirmLaptopLease (token, transactionId, isConfirm) {
+    return this.service.confirmLaptopLease(token, transactionId, isConfirm)
+      .pipe(ServiceErrorOperator())
+  }
+
+  validateLaptopLease (token) {
+    return this.service.validateLaptopLease(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addLaptopLease (
+    token,
+    accountToken,
+    accountNumber,
+    releasingCenter,
+    addLaptopLeaseParam,
+    ) {
+    return this.service.addLaptopLease(
+      token,
+      accountToken,
+      accountNumber,
+      releasingCenter,
+      addLaptopLeaseParam,
+    )
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* News isHeart */
+
+  addNewsIsHeart (token, id, isHeart) {
+    return this.service.addNewsIsHeart(token, id, isHeart)
+      .pipe(ServiceErrorOperator())
+  }
+
 }
