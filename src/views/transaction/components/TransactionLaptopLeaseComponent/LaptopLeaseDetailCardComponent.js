@@ -20,11 +20,7 @@ class LaptopLeaseDetailCardComponent extends Component {
       onClickAttachments,
       claimLaptopLease
      } = this.props
-     console.log(details.details)
-     console.log(details.details.LaptopLeaseDetails.Brand)
-     console.log(details.details.LaptopLeaseDetails.ColorFamily)
-     console.log(details.details.LaptopLeaseDetails.DeliveryType)
-     console.log(details.details.LaptopLeaseDetails.EstimatedCost)
+    
      const transactionID = details.transactionId
      const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
      const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
