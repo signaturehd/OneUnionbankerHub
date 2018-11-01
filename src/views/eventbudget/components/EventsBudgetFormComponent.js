@@ -25,6 +25,7 @@ class EventsBudgetFormComponent extends Component {
 
   render () {
     const {
+      checkIdIfHasLoginFunc,
       celebrationText,
       celebrationTextFunc,
       venueText,
@@ -138,6 +139,7 @@ class EventsBudgetFormComponent extends Component {
             viewMore = { viewMore }
             viewLess = { viewLess }
             eventBudgetData = { eventBudgetData }
+            checkIdIfHasLogin = { (e, e1) => checkIdIfHasLoginFunc(e, e1) }
           />
 
           <br/>

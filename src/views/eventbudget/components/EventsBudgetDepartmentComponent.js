@@ -17,8 +17,14 @@ class EventsBudgetDepartmentComponent extends Component {
     super(props)
     this.state = {
       isSelectedDepartment : null,
+      attendeesLength : null,
+      storedListId : [],
       selectedId : [],
     }
+  }
+
+  componentWillReceiveProps (nextProp) {
+    this.setState({ attendeesLength : nextProp.attend.employees.length })
   }
 
   render () {
@@ -27,11 +33,14 @@ class EventsBudgetDepartmentComponent extends Component {
       key,
       event,
       check,
+      checkIdIfHasLoginFunc,
     } = this.props
 
     const {
       isSelectedDepartment,
-      selectedId
+      attendeesLength,
+      storedListId,
+      selectedId,
     } = this.state
 
     return (
@@ -66,7 +75,9 @@ class EventsBudgetDepartmentComponent extends Component {
               return (
                 <EventsBudgetAttendeesComponent
                   employee = { employee }
+                  employeeLength = { attend.employees.length }
                   key2 = { key2 }
+                  checkIdIfHasLogin = { (e, e1) => checkIdIfHasLoginFunc(e, e1) }
                   isSelectedDepartment = { isSelectedDepartment }
                 />
               )

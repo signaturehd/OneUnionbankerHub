@@ -24,6 +24,7 @@ class EventsBudgetFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
+      storedListId : [],
       eventBudgetData : [],
       enabledLoader : false,
       index : null,
@@ -120,8 +121,25 @@ class EventsBudgetFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/')
   }
 
+  /* remove duplicate value */
+
+  checkIdIfHasLoginFunc (hasRecord, id) {
+    let storedId = id
+    let newArrayList = [...this.state.storedListId]
+    // const dupArr = [1, 1, 2, 3, 1]
+    // const uniArr = [...(new Set(dupArr))]
+    console.log(hasRecord)
+    if(hasRecord) {
+      newArrayList.push(storedId)
+      this.setState({ storedListId : newArrayList })
+    }
+    console.log(this.state.storedListId)
+  }
+
+
   render () {
     const {
+      storedListId,
       eventBudgetData,
       celebrationText,
       venueText,
@@ -142,6 +160,7 @@ class EventsBudgetFragment extends BaseMVPView {
       benefitId,
       preferredDate
     } = this.state
+    console.log(storedListId)
 
     return (
       <div>
@@ -195,6 +214,17 @@ class EventsBudgetFragment extends BaseMVPView {
             </h2>
             <br/>
             <EventsBudgetFormComponent
+              checkIdIfHasLoginFunc = { (hasRecord,id) => {
+                let storedId = id
+                let storedHasRecordhasRecord = hasRecord !== true ? true : false
+                let newArrayList = [...storedListId]
+                // const dupArr = [1, 1, 2, 3, 1]
+                // const uniArr = [...(new Set(dupArr))]
+                if(storedHasRecordhasRecord) {
+                  newArrayList.push(storedId)
+                  this.setState({ storedListId : newArrayList })
+                }
+              } }
               preferredDate = { preferredDate }
               dateFunc = { (preferredDate) => this.presenter.setDateFunc(preferredDate) }
               celebrationText = { celebrationText }
@@ -219,7 +249,7 @@ class EventsBudgetFragment extends BaseMVPView {
               viewMore = { () => this.setState({ index : eventBudgetData.attendees.length, viewMoreText : 'Hide Attendees' }) }
               viewLess = { () => this.setState({ index : 0, viewMoreText : 'Show Attendees' }) }
               submitPresenter = { () =>
-                this.presenter.addEventsBudget(eventBudgetData)
+                this.presenter.addEventsBudget(storedListId)
               }
             />
           </div>

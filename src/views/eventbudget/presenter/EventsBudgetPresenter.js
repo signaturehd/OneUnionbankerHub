@@ -165,15 +165,10 @@ export default class EventsBudgetPresenter {
     })
   }
 
-  addEventsBudget (attendees) {
-    let newArrayId = []
-    attendees.attendees.map((resp, key) => {
-      resp.employees.map((resp2, key) => {
-        const arrayId = [...newArrayId]
-        arrayId.push(resp2.id)
-        newArrayId = arrayId
-      })
-    })
+  addEventsBudget (storedListId) {
+    const newArrayId = storedListId
+    const uniArr = [...(new Set(newArrayId))]
+    console.log(uniArr)
     if(storedVenueText === '') {
       store.dispatch(NotifyActions.resetNotify())
       store.dispatch(NotifyActions.addNotify({
@@ -230,7 +225,7 @@ export default class EventsBudgetPresenter {
           storedProvinceText,
           storedCityText,
           moment(storedDate).format('YYYY-MM-DD'),
-          newArrayId,
+          uniArr,
         )
       )
       .subscribe(data => {

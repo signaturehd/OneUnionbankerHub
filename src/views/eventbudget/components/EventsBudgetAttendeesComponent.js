@@ -8,8 +8,15 @@ class EventsBudgetAttendeesComponent extends Component {
     super(props)
     this.state = {
       selectedAttendees: false,
-      selectedAttendeesArray: []
+      selectedAttendeesArray: [],
+      employeeHasRecord: null,
+      employeeId: null,
     }
+  }
+
+  componentWillReceiveProps (nextProp) {
+    this.setState({ employeeHasRecord : nextProp.employee.hasRecord })
+    this.setState({ employeeId : nextProp.employee.id })
   }
 
   checkEmployeeCheck (hasRecord) {
@@ -24,18 +31,27 @@ class EventsBudgetAttendeesComponent extends Component {
   render () {
     const {
       selectedAttendees,
-      selectedAttendeesArray
+      selectedAttendeesArray,
+      employeeHasRecord,
+      employeeId,
+      employeeLength,
     } = this.state
 
     const {
       key2,
       employee,
-      isSelectedDepartment
+      isSelectedDepartment,
+      checkIdIfHasLogin
     } = this.props
 
     return (
       <div
-        onClick = { () => this.setState({ selectedAttendees: employee.hasRecord !== false ? true: false }) }
+        onClick = { () =>
+          {
+            this.setState({ employeeHasRecord: employeeHasRecord !== true ? true: false })
+            checkIdIfHasLogin (employeeHasRecord, employeeId)
+          }
+        }
         key2 = { key2 }
         className = { 'events-employees-column-3 cursor-pointer' }>
         <span className = { 'events-icon events-user-icon' }/>
@@ -49,7 +65,7 @@ class EventsBudgetAttendeesComponent extends Component {
           <br/>
         </div>
         <span
-          className = { `events-check events-icon-${ isSelectedDepartment ? 'check' : this.checkEmployeeCheck(employee.hasRecord) }` }/>
+          className = { `events-check events-icon-${ this.checkEmployeeCheck(employeeHasRecord) }` }/>
       </div>
     )
   }
