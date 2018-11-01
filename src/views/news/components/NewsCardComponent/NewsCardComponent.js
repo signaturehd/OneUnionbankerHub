@@ -35,7 +35,7 @@ class NewsCardComponent extends Component {
       height: 'unset',
       backgroundPosition: 'center',
     }
-
+    console.log(news)
     const detailsFiltered = news && news.details.substr(0, 200)
 
     return (
@@ -47,13 +47,17 @@ class NewsCardComponent extends Component {
         <div className = { 'news-details-card' }>
           <div className = { 'news-grid' }>
             <h2 className = { 'unionbank-color font-weight-bold font-size-22px' }>{ news.title }</h2>
-            <h2
-              onClick = { () => {
-                this.setState({ isHeartActive : isHeartActive === 0 ? 1 : 0  })
-                onChangeHeart(news.id, news.isHeart)
+            <div className = { 'news-like-grid' }>
+              <h2
+                className = { 'cursor-pointer' }
+                onClick = { () => {
+                  this.setState({ isHeartActive : isHeartActive === 0 ? 1 : 0  })
+                  onChangeHeart(news.id, news.isHeart)
+                }
               }
-            }
-            className = { (parseInt(isHeartActive) !== 1 ? 'news-status-icon' : 'news-heart-icon') + ' news-icon' }/>
+              className = { (parseInt(isHeartActive) !== 1 ? 'news-status-icon' : 'news-heart-icon') + ' news-icon' }/>
+              <h2 className = { 'unionbank-color font-size-12px text-align-center' }>{ news && news.total }</h2>
+            </div>
           </div>
           <br/>
           <h2 className= { 'news-limit-text font-size-16px font-weight-lighter text-align-justify' }>{ detailsFiltered } ...</h2>
