@@ -124,7 +124,7 @@ class EventsBudgetFormComponent extends Component {
           <DatePicker
             selected = { venue && venue.targetDate ? moment(venue.targetDate) : moment(preferredDate) }
             onChange = { (e) => dateFunc(e) }
-            maxDate = { moment() }
+            minDate = { moment() }
             readOnly
             dateFormat = { 'MM/DD/YYYY' }
             text = { 'Events Date' }

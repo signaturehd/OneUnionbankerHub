@@ -154,7 +154,7 @@ export default class EventsBudgetPresenter {
   }
 
   validateEventsBudget () {
-    this.view.hideCircularLoader()
+    this.view.showCircularLoader()
     // this.view.showEventBudget(mockedData, storedBenefitId)
     this.validateEventsBudgetInteractor.execute()
     .subscribe(data => {
