@@ -20,7 +20,8 @@ let storedCelebrationText = '',
     storedDate = '',
     storedAmount = '',
     storedId = []
-
+    
+/* Mock Data */
 let mockedData = {
     "events": {
       "requestId": 1,

@@ -125,15 +125,12 @@ class EventsBudgetFragment extends BaseMVPView {
 
   checkIdIfHasLoginFunc (hasRecord, id) {
     let storedId = id
-    let newArrayList = [...this.state.storedListId]
-    // const dupArr = [1, 1, 2, 3, 1]
-    // const uniArr = [...(new Set(dupArr))]
-    console.log(hasRecord)
-    if(hasRecord) {
+    let storedHasRecordhasRecord = hasRecord !== true ? true : false
+    let newArrayList = [...storedListId]
+    if(storedHasRecordhasRecord) {
       newArrayList.push(storedId)
       this.setState({ storedListId : newArrayList })
     }
-    console.log(this.state.storedListId)
   }
 
 
@@ -160,7 +157,6 @@ class EventsBudgetFragment extends BaseMVPView {
       benefitId,
       preferredDate
     } = this.state
-    console.log(storedListId)
 
     return (
       <div>
@@ -214,17 +210,9 @@ class EventsBudgetFragment extends BaseMVPView {
             </h2>
             <br/>
             <EventsBudgetFormComponent
-              checkIdIfHasLoginFunc = { (hasRecord,id) => {
-                let storedId = id
-                let storedHasRecordhasRecord = hasRecord !== true ? true : false
-                let newArrayList = [...storedListId]
-                // const dupArr = [1, 1, 2, 3, 1]
-                // const uniArr = [...(new Set(dupArr))]
-                if(storedHasRecordhasRecord) {
-                  newArrayList.push(storedId)
-                  this.setState({ storedListId : newArrayList })
-                }
-              } }
+              checkIdIfHasLoginFunc = { (hasRecord,id) =>
+                this.checkIdIfHasLoginFunc (hasRecord, id)
+              }
               preferredDate = { preferredDate }
               dateFunc = { (preferredDate) => this.presenter.setDateFunc(preferredDate) }
               celebrationText = { celebrationText }
