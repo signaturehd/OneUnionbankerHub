@@ -83,26 +83,22 @@ class EventsBudgetOtherDetailCardComponent extends Component {
           </div>
           {
             eventDetails.Attendees.map((resp, key) => {
-              const assign = resp.UnitAssignment
-                if(assign === resp.UnitAssignment) {
-                  return (
-                    <div
-                      key = { key }>
-                      <div>
-                        <h2 className = { 'font-weight-ligter' }>
-                          { resp.FullName ? resp.FullName : 'No Name' }
-                        </h2>
-                        <h2 className = { 'unionbank-color font-size-12px' }>
-                          Full Name
-                        <br/>
-                        <br/>
-                        </h2>
-                      </div>
-                    </div>
-                  )
-                }
-              }
-            )
+              return (
+                <div
+                  key = { key }>
+                  <div>
+                    <h2 className = { 'font-weight-ligter' }>
+                      { resp.FullName ? resp.FullName : 'No Name' }
+                    </h2>
+                    <h2 className = { 'unionbank-color font-size-12px' }>
+                      { resp.UnitAssignment ? resp.UnitAssignment : 'No Unit Assignment' }
+                    <br/>
+                    <br/>
+                    </h2>
+                  </div>
+                </div>
+              )
+            })
           }
         </div>
       </div>
