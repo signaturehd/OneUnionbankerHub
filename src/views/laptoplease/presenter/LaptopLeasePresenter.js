@@ -75,15 +75,32 @@ export default class LaptopLeasePresenter {
     })
   }
 
-  addLaptopLease () {
-    this.view.showCircularLoader()
-    this.addLaptopLeaseInteractor.execute(AddLaptopLeaseParam(storedColor, storedAmount, storedTerms, storedDeliveryOption, storedFile))
-      .subscribe(data => {
+  addLaptopLease (
+      storedColor, 
+      storedAmount, 
+      storedTerms, 
+      storedDeliveryOption, 
+      storedFile,
+    ) {
+
+    if (storedAmount >= 0) {
+       store.dispatch(NotifyActions.addNotify({
+                      message : 'Estimated Cost must be greater than 0',
+                      type : 'warning',
+                      duration : 2000
+                    })
+        )
+    } else {
+        this.view.showCircularLoader()
+        this.addLaptopLeaseInteractor.execute(AddLaptopLeaseParam(storedColor, storedAmount, storedTerms, storedDeliveryOption, storedFile))
+        .subscribe(data => {
         this.view.noticeOfUndertaking(data)
         this.view.hideCircularLoader()
       }, e => {
         this.view.hideCircularLoader()
       })
+    }
+    
   }
 
 
