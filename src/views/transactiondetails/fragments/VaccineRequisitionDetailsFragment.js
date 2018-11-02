@@ -32,7 +32,7 @@ class VaccineRequisitionDetailsFragment extends Component {
         <div></div>
           <Card>
             <div className={ 'transaction-details-container' }>
-              <div className = { 'transaction-banner transaction-dentalreimbursement' }>
+              <div className = { 'transaction-banner transaction-vaccine' }>
                 <div className={ 'transaction-banner-card' }>
                   <div className = { 'text-align-left' }>
                     <h1 className = { 'transaction-details-name font-weight-normal'}>
