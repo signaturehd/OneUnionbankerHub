@@ -176,7 +176,6 @@ function  TransactionDetails (props)  {
         attachmentsMethod = { (resp) => attachmentsMethod(resp) }
         agreementsMethod = { (resp) => agreementsMethod(resp) }
         details = { transactionDetails }
-        viewTransactions = { (recepients) => viewTransactions(recepients) }
      />
   }else {
    return <h1>No Transaction Occured please reload</h1> // No  Transaction

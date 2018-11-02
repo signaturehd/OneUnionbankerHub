@@ -24,6 +24,7 @@ class EventsBudgetFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
+      storedListId : [],
       eventBudgetData : [],
       enabledLoader : false,
       index : null,
@@ -122,6 +123,7 @@ class EventsBudgetFragment extends BaseMVPView {
 
   render () {
     const {
+      storedListId,
       eventBudgetData,
       celebrationText,
       venueText,
@@ -195,6 +197,16 @@ class EventsBudgetFragment extends BaseMVPView {
             </h2>
             <br/>
             <EventsBudgetFormComponent
+              checkIdIfHasLogin = { (hasRecord, id) =>
+                {
+                  let hasRecordTest = hasRecord !== true ? true : false
+                  if(hasRecordTest) {
+                    let newArrayList = [...storedListId]
+                    newArrayList.push(id)
+                    this.setState({ storedListId : newArrayList  })
+                  }
+                }
+              }
               preferredDate = { preferredDate }
               dateFunc = { (preferredDate) => this.presenter.setDateFunc(preferredDate) }
               celebrationText = { celebrationText }
@@ -219,7 +231,7 @@ class EventsBudgetFragment extends BaseMVPView {
               viewMore = { () => this.setState({ index : eventBudgetData.attendees.length, viewMoreText : 'Hide Attendees' }) }
               viewLess = { () => this.setState({ index : 0, viewMoreText : 'Show Attendees' }) }
               submitPresenter = { () =>
-                this.presenter.addEventsBudget(eventBudgetData)
+                this.presenter.addEventsBudget(storedListId)
               }
             />
           </div>

@@ -25,6 +25,7 @@ class EventsBudgetFormComponent extends Component {
 
   render () {
     const {
+      checkIdIfHasLogin,
       celebrationText,
       celebrationTextFunc,
       venueText,
@@ -124,7 +125,7 @@ class EventsBudgetFormComponent extends Component {
           <DatePicker
             selected = { venue && venue.targetDate ? moment(venue.targetDate) : moment(preferredDate) }
             onChange = { (e) => dateFunc(e) }
-            maxDate = { moment() }
+            minDate = { moment() }
             readOnly
             dateFormat = { 'MM/DD/YYYY' }
             text = { 'Events Date' }
@@ -138,6 +139,8 @@ class EventsBudgetFormComponent extends Component {
             viewMore = { viewMore }
             viewLess = { viewLess }
             eventBudgetData = { eventBudgetData }
+            checkIdIfHasLogin = { (e, e1) =>
+            {  checkIdIfHasLogin(e, e1)} }
           />
 
           <br/>

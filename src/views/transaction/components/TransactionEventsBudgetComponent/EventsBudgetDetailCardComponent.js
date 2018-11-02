@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { Card, GenericButton } from '../../../../ub-components/'
 
 import moment from 'moment'
-
 import * as TransactionPersonalFunction from '../../controller/TransactionPersonalFunction'
 import EventsBudgetOtherDetailCardComponent from './EventsBudgetOtherDetailCardComponent'
 
@@ -18,7 +17,6 @@ class EventsBudgetDetailCardComponent extends Component {
       details,
       onClickAgreements,
       onClickAttachments,
-      claimLaptopLease
      } = this.props
 
      const transactionID = details.transactionId
@@ -58,25 +56,10 @@ class EventsBudgetDetailCardComponent extends Component {
           </div>
           <br/>
           <EventsBudgetOtherDetailCardComponent
+            details = { details && details.details }
           />
         </div>
         <div className = { 'transaction-attachments-agreements-grid' }>
-          <div>
-            <br/>
-              {
-                details &&
-                details.details &&
-                details.details.Attachments ?
-
-                <GenericButton
-                  className = { 'transaction-details-button' }
-                  text = { 'View Attachments' }
-                  onClick = { () => onClickAttachments(true) }
-                /> :
-                <div></div>
-              }
-              <br/>
-          </div>
           <div>
             <br/>
             <GenericButton
@@ -86,18 +69,7 @@ class EventsBudgetDetailCardComponent extends Component {
             />
             <br/>
           </div>
-          <div>
-            <br/>
-            <GenericButton
-              className = { 'transaction-details-button' }
-              text = { 'Claim' }
-              onClick = { () => claimLaptopLease(transactionID) }
-            />
-            <br/>
-          </div>
         </div>
-
-
       </div>
     )
   }
