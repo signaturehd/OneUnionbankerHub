@@ -139,6 +139,9 @@ class LaptopLeaseFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/')
   }
 
+  validateInput () {
+    this.setState({ showEditMode : true })
+  }
 
   render () {
     const {
@@ -272,9 +275,8 @@ class LaptopLeaseFragment extends BaseMVPView {
               amount = { amount }
               color = { color }
               terms = { termsName }
-              file = { file }
               setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
-              onContinue={ () => this.setState({ showEditMode: true }) }
+              onContinue={ () => this.presenter.validateSubmission() }
               onEdit = { () => this.setState({ showEditMode : false })  }
               onSubmit = { () => this.presenter.addLaptopLease()  }
             />
