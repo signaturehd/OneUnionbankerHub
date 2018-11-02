@@ -9,12 +9,13 @@ class EventsBudgetAttendeesComponent extends Component {
     this.state = {
       selectedAttendees: false,
       selectedAttendeesArray: [],
-      employeeHasRecord: null,
+      employeeHasRecord: false,
       employeeId: null,
     }
   }
 
   componentWillReceiveProps (nextProp) {
+    console.log(nextProp)
     this.setState({ employeeHasRecord : nextProp.employee.hasRecord })
     this.setState({ employeeId : nextProp.employee.id })
   }
@@ -26,6 +27,12 @@ class EventsBudgetAttendeesComponent extends Component {
     } else {
       return ''
     }
+  }
+
+  onChangeData () {
+    this.setState({ employeeHasRecord: this.state.employeeHasRecord !== true ? true: false })
+    this.props.checkIdIfHasLogin (this.state.employeeHasRecord, this.state.employeeId)
+    console.log(this.state.employeeHasRecord)
   }
 
   render () {
@@ -46,11 +53,7 @@ class EventsBudgetAttendeesComponent extends Component {
 
     return (
       <div
-        onClick = { () =>
-          {
-            this.setState({ employeeHasRecord: employeeHasRecord !== true ? true: false })
-            checkIdIfHasLogin (employeeHasRecord, employeeId)
-          }
+        onClick = { () => this.onChangeData()
         }
         key2 = { key2 }
         className = { 'events-employees-column-3 cursor-pointer' }>

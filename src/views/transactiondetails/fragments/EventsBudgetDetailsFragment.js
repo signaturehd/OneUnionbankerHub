@@ -8,8 +8,8 @@ import './styles/detailsFragment.css'
 
 import * as TransactionDetailsFunction from '../controller/TransactionDetailsFunction'
 
-import LaptopLeaseDetailCardComponent from
-  '../../transaction/components/TransactionLaptopLeaseComponent/LaptopLeaseDetailCardComponent'
+import EventsBudgetDetailCardComponen from
+  '../../transaction/components/TransactionEventsBudgetComponent/EventsBudgetDetailCardComponent'
 
 class EventsBudgetDetailsFragment extends Component {
   constructor (props) {
@@ -18,7 +18,6 @@ class EventsBudgetDetailsFragment extends Component {
 
   render () {
     const {
-      claimLaptopLease,
       attachmentsMethod,
       agreementsMethod,
       details,
@@ -61,9 +60,8 @@ class EventsBudgetDetailsFragment extends Component {
             </div>
             <br/>
             <div>
-              <LaptopLeaseDetailCardComponent
+              <EventsBudgetDetailCardComponen
                 details = { details }
-                claimLaptopLease = { (transactionId) => claimLaptopLease(transactionId) }
                 onClickAttachments = { (resp) => attachmentsMethod(resp) }
                 onClickAgreements = { (resp) => agreementsMethod(resp) }
               />

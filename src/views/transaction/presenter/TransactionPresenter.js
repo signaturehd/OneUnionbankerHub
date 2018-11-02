@@ -17,6 +17,7 @@ export default class TransactionPresenter {
   getTransactionsPersonal () {
     this.getTransactionPersonalInteractor.execute()
       .subscribe(transactions => {
+          this.view.hideLoading()
           this.view.transactions(transactions)
         }, e => {
           this.view.hideLoading()
@@ -26,6 +27,7 @@ export default class TransactionPresenter {
   getTransactionsApproval () {
     this.getTransactionApprovalInteractor.execute()
       .subscribe(transactions => {
+        this.view.hideLoading()
           this.view.transactions(transactions)
         }, e => {
           this.view.hideLoading()
