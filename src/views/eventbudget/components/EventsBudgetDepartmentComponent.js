@@ -18,7 +18,6 @@ class EventsBudgetDepartmentComponent extends Component {
     this.state = {
       isSelectedDepartment : null,
       attendeesLength : null,
-      storedListId : [],
       selectedId : [],
     }
   }
@@ -39,7 +38,6 @@ class EventsBudgetDepartmentComponent extends Component {
     const {
       isSelectedDepartment,
       attendeesLength,
-      storedListId,
       selectedId,
     } = this.state
 
@@ -58,8 +56,8 @@ class EventsBudgetDepartmentComponent extends Component {
               { attend.department }
             </h2>
             <Checkbox
-              value = { isSelectedDepartment }
-              checked = { isSelectedDepartment !== false ? isSelectedDepartment : check }
+              value = { true }
+              checked = { true }
               onChange = { e => {
                 this.setState({ isSelectedDepartment : isSelectedDepartment !==true ? true : false } )
               } }
@@ -78,7 +76,6 @@ class EventsBudgetDepartmentComponent extends Component {
                   employeeLength = { attend.employees.length }
                   key2 = { key2 }
                   checkIdIfHasLogin = { (e, e1) => checkIdIfHasLoginFunc(e, e1) }
-                  isSelectedDepartment = { isSelectedDepartment }
                 />
               )
             }

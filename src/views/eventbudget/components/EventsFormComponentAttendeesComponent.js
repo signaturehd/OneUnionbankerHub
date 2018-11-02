@@ -76,7 +76,9 @@ class EventsFormComponentAttendeesComponent extends Component {
                     setDepartmentKey = { setDepartmentKey }
                     attend = { attend }
                     key = { key }
-                    checkIdIfHasLoginFunc = { (e, e1) => checkIdIfHasLogin(e, e1) }
+                    checkIdIfHasLoginFunc = { (e, e1) =>
+                    {  checkIdIfHasLogin(e, e1)}
+                    }
                     check = { this.checkIfTrue(attend) }
                   />
                 )

@@ -121,19 +121,6 @@ class EventsBudgetFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/')
   }
 
-  /* remove duplicate value */
-
-  checkIdIfHasLoginFunc (hasRecord, id) {
-    let storedId = id
-    let storedHasRecordhasRecord = hasRecord !== true ? true : false
-    let newArrayList = [...storedListId]
-    if(storedHasRecordhasRecord) {
-      newArrayList.push(storedId)
-      this.setState({ storedListId : newArrayList })
-    }
-  }
-
-
   render () {
     const {
       storedListId,
@@ -210,8 +197,15 @@ class EventsBudgetFragment extends BaseMVPView {
             </h2>
             <br/>
             <EventsBudgetFormComponent
-              checkIdIfHasLoginFunc = { (hasRecord,id) =>
-                this.checkIdIfHasLoginFunc (hasRecord, id)
+              checkIdIfHasLogin = { (hasRecord, id) =>
+                {
+                  let hasRecordTest = hasRecord !== true ? true : false
+                  if(hasRecordTest) {
+                    let newArrayList = [...storedListId]
+                    newArrayList.push(id)
+                    this.setState({ storedListId : newArrayList  })
+                  }
+                }
               }
               preferredDate = { preferredDate }
               dateFunc = { (preferredDate) => this.presenter.setDateFunc(preferredDate) }
