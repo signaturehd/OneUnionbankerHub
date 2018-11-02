@@ -43,7 +43,7 @@ class RequestFlightFormComponent extends Component {
       showDepartureTime,
       showReturnTime,
       showPurposeModalFunc,
-      onClosePurposeModal,
+      onClose,
       nextPageNumberFunc,
       previousPageNumberFunc,
       findFunc,
@@ -64,20 +64,28 @@ class RequestFlightFormComponent extends Component {
       departureTimeFunc,
       showDepartureTimeFunc,
       departureRemarks,
+      departureRemarksFunc,
       returnOriginId,
       returnOrigin,
+      returnOriginFunc,
       returnDestinationId,
       returnDestination,
+      returnDestinationFunc,
       returnDate,
+      returnDateFunc,
       returnTimeId,
       returnTime,
+      returnTimeFunc,
+      showReturnTimeFunc,
       returnRemarks,
+      returnRemarksFunc,
       pageNumber,
       findArea,
       timeArray,
       requestFlightArray,
       purposeArray,
-      areaArray
+      areaArray,
+      submit
     } = this.props
 
     const { percentage } = this.props
@@ -127,7 +135,7 @@ class RequestFlightFormComponent extends Component {
               selectedArray = { (purposeId, purposeName) =>
                   purposeFunc(purposeId, purposeName)
               }
-              onClose = { () => onClosePurposeModal() }
+              onClose = { () => onClose() }
             />
         }
         {
@@ -152,7 +160,7 @@ class RequestFlightFormComponent extends Component {
               selectedArray = { (areaId, areaName) =>
                 setAreaFunc(areaId, areaName)
               }
-              onClose = { () => onCloseAreaModal() }
+              onClose = { () => onClose() }
               />
           }
         <div className = { 'request-grid-column-x3' }>
@@ -191,7 +199,7 @@ class RequestFlightFormComponent extends Component {
                 selectedArray = { ( departureTimeId, departureTime ) =>
                   departureTimeFunc(departureTimeId, departureTime)
                 }
-                onClose = { () => this.setState({ showDepartureTime: false }) }
+                onClose = { () => onClose() }
               />
             }
             <GenericInput
@@ -203,7 +211,7 @@ class RequestFlightFormComponent extends Component {
           <GenericInput
             text = { 'Description' }
             value = { departureRemarks }
-            onChange = { (e) => this.departureRemarksFunc(e.target.value) }
+            onChange = { (e) => departureRemarksFunc(e.target.value) }
           />
         {
           typeOfFlight === 'RoundTrip' &&
@@ -214,12 +222,12 @@ class RequestFlightFormComponent extends Component {
               <GenericInput
                 text = { 'Origin' }
                 value = { returnOrigin }
-                onClick = { () => this.setState({ showAreaModal : true, areaSwitch : 3, rturn : true}) }
+                onClick = { () => returnOriginFunc() }
               />
               <GenericInput
                 text = { 'Destination' }
                 value = { returnDestination }
-                onClick = { () => this.setState({ showAreaModal : true, areaSwitch : 4, rturn : true}) }
+                onClick = { () => returnDestinationFunc() }
               />
             </div>
             <div className = { 'request-grid-option' }>
@@ -227,7 +235,7 @@ class RequestFlightFormComponent extends Component {
                 readOnly
                 text = { 'Preferred Date of Departure' }
                 selected = { returnDate && moment(returnDate) }
-                onChange = { (e) => this.returnDateFunc(e) }
+                onChange = { (e) => returnDateFunc(e) }
               />
               {
                 showReturnTime &&
@@ -235,35 +243,28 @@ class RequestFlightFormComponent extends Component {
                   label = { 'Preferred Time' }
                   inputArray = { timeArray }
                   selectedArray = { ( returnTimeId, returnTime ) =>
-                    this.setState({
-                      returnTimeId,
-                      returnTime,
-                      showReturnTime: false
-                    })
+                    showReturnTimeFunc(returnTimeId, returnTime)
                   }
-                  onClose = { () => this.setState({ showReturnTime: false }) }
+                  onClose = { () => onClose() }
                 />
               }
               <GenericInput
                 text = { 'Preferred Time' }
                 value = { returnTime }
-                onClick = { () => this.setState({ showReturnTime : true }) }
+                  onClick = { () => returnTimeFunc() }
               />
             </div>
             <GenericInput
               text = { 'Description' }
               value = { returnRemarks }
-              onChange = { (e) => this.returnRemarksFunc(e.target.value) }
+              onChange = { (e) => returnRemarksFunc(e.target.value) }
             />
             </div>
           }
             <center>
               <GenericButton
                 text = { 'Continue' }
-                onClick = { () => {
-                    this.setState({ showRequestModal : false })
-                    this.submit()
-                  }
+                onClick = { () => submit()
                 }
               />
             </center>

@@ -345,10 +345,16 @@ class RequestFlightFragment extends BaseMVPView {
               }
             }
             showAreaModal = { showAreaModal }
-            onCloseAreaModal = { () => this.setState({ showAreaModal : false }) }
+            onClose = { () =>
+              this.setState({
+                showAreaModal : false,
+                showPurposeModal : false,
+                showDepartureTime : false,
+                showReturnTime : false
+              })
+            }
             showPurposeModal = { showPurposeModal }
             showPurposeModalFunc = { () => this.setState({ showPurposeModal : true }) }
-            onClosePurposeModal = { () => this.setState({ showPurposeModal : false }) }
             typeOfFlight = { typeOfFlight }
             purposeId = { purposeId }
             purposeName = { purposeName }
@@ -377,20 +383,38 @@ class RequestFlightFragment extends BaseMVPView {
               showDepartureTime: false })
             }
             departureRemarks = { departureRemarks }
+            departureRemarksFunc = { (e) => this.departureRemarksFunc(e) }
             returnOriginId = { returnOriginId }
             returnOrigin = { returnOrigin }
+            returnOriginFunc = { () => this.setState({ showAreaModal : true, areaSwitch : 3, rturn : true }) }
             returnDestinationId = { returnDestinationId }
             returnDestination = { returnDestination }
+            returnDestinationFunc = { () => this.setState({ showAreaModal : true, areaSwitch : 4, rturn : true}) }
             returnDate = { returnDate }
+            returnDateFunc = { (e) => this.returnDateFunc(e) }
             returnTimeId = { returnTimeId }
             returnTime = { returnTime }
+            returnTimeFunc = { () => this.setState({ showReturnTime : true }) }
+            showReturnTime = { showReturnTime }
+            showReturnTimeFunc = { (returnTimeId, returnTime) => this.setState({
+                returnTimeId,
+                returnTime,
+                showReturnTime: false
+              })
+            }
             returnRemarks = { returnRemarks }
+            returnRemarksFunc = { (e) => this.returnRemarksFunc(e) }
             pageNumber = { pageNumber }
             findArea = { findArea }
             timeArray = { timeArray }
             requestFlightArray = { requestFlightArray }
             purposeArray = { purposeArray }
             areaArray = { areaArray }
+            submit = { () => {
+                this.setState({ showRequestModal : false })
+                this.submit()
+              }
+            }
           />
           </div>
           :
@@ -419,11 +443,11 @@ class RequestFlightFragment extends BaseMVPView {
             requestFlightArray.length !==0 ?
               <RequestFlightComponent
                 cardDataHolder = { requestFlightArray }
-                />
-                :
-                <center>
-                  <h2>No records</h2>
-                </center>
+              />
+              :
+              <center>
+                <h2>No records</h2>
+              </center>
           }
 
           <FloatingActionButton
