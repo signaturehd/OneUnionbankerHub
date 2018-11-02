@@ -28,7 +28,7 @@ class VaccineRequisitionDetailComponent extends Component {
   const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details.ReferenceNumber)
 
   return (
-    <div  className = { 'transaction-component-otherdetails-form' }>
+    <div  className = { 'transaction-component-details-form' }>
       <div>
         <div className = { 'transaction-icons-details-grid' }>
           <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
