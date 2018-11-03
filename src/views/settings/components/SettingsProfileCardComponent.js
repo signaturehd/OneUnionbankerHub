@@ -58,7 +58,6 @@ class SettingsProfileCardComponent extends Component {
       showCompanyInfoModal,
       showPersonalInfoModal,
       showStaffAccountsModal,
-      getStaffAccounts,
       staffLoader,
       staffAccounts,
       onClickEmployeeConfirmationFunc,
@@ -69,7 +68,10 @@ class SettingsProfileCardComponent extends Component {
       showDevicesModalFunc,
       onUpdateStaffAccountsFunc,
       getForConfirmation,
-      enabledStaffLoader
+      enabledStaffLoader,
+      staffResponseMessage,
+      showSuccessModal,
+      showConfirmationModal
     } = this.props
 
 
@@ -132,12 +134,15 @@ class SettingsProfileCardComponent extends Component {
         {
           showStaffAccountsModal &&
           <StaffAccountsModal
+            showConfirmationModal = { showConfirmationModal }
+            onCloseStaffResponse = { () => this.props.onCloseStaffResponseModalFunc() }
+            staffResponseMessage = { staffResponseMessage }
             enabledStaffLoader = { enabledStaffLoader }
             staffLoader = { staffLoader }
             staffAccounts = { staffAccounts }
             employeeNumber = { profile.employeeNumber }
             name = { profile.fullname }
-            getStaffAccounts = { getStaffAccounts }
+            showSuccessModal = { showSuccessModal }
             getForConfirmation = { () => getForConfirmation() }
             onUpdateStaffAccounts = { (employeeName, selectedAccountNumber, sequence) =>
               onUpdateStaffAccountsFunc(employeeName, selectedAccountNumber, sequence) }

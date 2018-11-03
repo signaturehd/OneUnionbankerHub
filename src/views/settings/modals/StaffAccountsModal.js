@@ -21,7 +21,6 @@ class StaffAccountsModal extends Component {
     super(props)
     this.state={
       isDismisable : true,
-      showConfirmationModal : false,
       showTypeModal : false,
       showCapacityModal : false,
       employeeName : '',
@@ -75,11 +74,22 @@ class StaffAccountsModal extends Component {
   }
 
   componentDidMount () {
-      this.props.getForConfirmation()
+    this.props.getForConfirmation()
   }
 
-  confirmationModal (showConfirmationModal, employeeName, selectedAccountNumber, sequence) {
-    this.setState({ showConfirmationModal, employeeName, selectedAccountNumber, sequence })
+  componentWillReceiveProps (nextProps) {
+    if(nextProps.showSuccessModal === true) {
+      this.setState({
+        accountNumber: '',
+        accountType: '',
+        accountCapacity : '',
+        accountRemarks: ''
+      })
+    }
+  }
+
+  confirmationModal (employeeName, selectedAccountNumber, sequence) {
+    this.setState({ employeeName, selectedAccountNumber, sequence })
   }
 
   getAccountType (type) {
@@ -114,6 +124,10 @@ class StaffAccountsModal extends Component {
       onUpdateStaffAccounts,
       hideStaffAccountModalFunc ,
       enabledStaffLoader,
+      staffResponseMessage,
+      showSuccessModal,
+      showConfirmationModal,
+      name,
     }=this.props
 
     const {
@@ -129,23 +143,31 @@ class StaffAccountsModal extends Component {
      showCapacityModal,
      accountRemarks,
      isDismisable,
-     showConfirmationModal,
      enabledLoader,
      employeeName,
      selectedAccountNumber,
      sequence,
-     showAddComponent
+     showAddComponent,
     }=this.state
-
-    const {
-      name
-    } = this.props
 
     return (
       <Modal
         isDismisable = { isDismisable }
         onClose = { onClose }
         >
+        {
+          showSuccessModal &&
+          <Modal>
+            <center>
+              <h2>{ staffResponseMessage }</h2>
+              <br/>
+              <GenericButton
+                text = { 'Ok' }
+                onClick = { () => this.props.onCloseStaffResponse() }
+                />
+            </center>
+          </Modal>
+        }
         {
           showConfirmationModal &&
           <Modal>
@@ -160,10 +182,7 @@ class StaffAccountsModal extends Component {
                 <GenericButton
                   text = { 'Yes' }
                   onClick = { () =>
-                    {
-                      onUpdateStaffAccounts(employeeName, selectedAccountNumber, sequence)
-                      this.setState({ showConfirmationModal : false })
-                    }
+                    onUpdateStaffAccounts(employeeName, selectedAccountNumber, sequence)
                   }
                 />
               </div>
@@ -239,7 +258,7 @@ class StaffAccountsModal extends Component {
                     />
                   <GenericButton
                     text = { 'Save' }
-                    onClick = { () => {
+                    onClick = { () => 
                       onClickEmployeeConfirmation(
                         name,
                         accountNumber,
@@ -247,8 +266,7 @@ class StaffAccountsModal extends Component {
                         accountCapacityCode,
                         accountRemarks,
                       )
-                      this.setState({ showAddComponent : false })
-                    } }
+                    }
                     />
                 </div>
                 <br/>

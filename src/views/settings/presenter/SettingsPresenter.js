@@ -80,21 +80,46 @@ export default class SettingsPresenter {
      capacity,
      remarks
    ) {
-     this.view.showStaffLoader()
-     this.postStaffAccountsInteractor.execute(addStaffAcountsParam(
-       fullName,
-       accountNumber,
-       type,
-       capacity,
-       remarks,
-       '',
-     ))
-     .subscribe(data => {
-       this.view.hideStaffLoader()
-       this.view.noticeResponseModal(data.message)
-     }, error => {
-       this.view.hideStaffLoader()
-     })
+     store.dispatch(NotifyActions.resetNotify())
+     if(accountNumber < 1 && accountNumber.length === 12) {
+       store.dispatch(NotifyActions.addNotify({
+         title: 'Staff Accounts',
+         message : 'Please input valid account number and must be atleast 12 digit',
+         type: 'warning',
+         duration: 2000
+       }))
+     } else if (type === '') {
+       store.dispatch(NotifyActions.addNotify({
+         title: 'Staff Accounts',
+         message : 'Please select the type of account',
+         type: 'warning',
+         duration: 2000
+       }))
+     } else if (capacity === '') {
+       store.dispatch(NotifyActions.addNotify({
+         title: 'Staff Accounts',
+         message : 'Please select the capacity of account',
+         type: 'warning',
+         duration: 2000
+       }))
+     } else {
+       this.view.staffCircularLoader(true)
+       this.postStaffAccountsInteractor.execute(addStaffAcountsParam(
+         fullName,
+         accountNumber,
+         type,
+         capacity,
+         remarks,
+         '',
+       ))
+       .subscribe(data => {
+         this.view.staffCircularLoader(false)
+         this.view.noticeResponseModalStaff(data.message)
+         this.getForConfirmation()
+       }, error => {
+         this.view.staffCircularLoader(false)
+       })
+     }
    }
 
    updateStaffAccounts (
@@ -102,7 +127,7 @@ export default class SettingsPresenter {
      accountNumber,
      sequence
    ) {
-     this.view.showStaffLoader()
+     this.view.staffCircularLoader(true)
      this.updateStaffAccountsInteractor.execute(addStaffAcountsParam(
        fullName,
        accountNumber,
@@ -112,10 +137,11 @@ export default class SettingsPresenter {
        sequence
      ))
      .subscribe(data => {
-       this.view.hideStaffLoader()
-       this.view.noticeResponseModal(data.message)
+       this.view.staffCircularLoader(false)
+       this.view.noticeResponseModalStaff(data.message)
+       this.getForConfirmation()
      }, error => {
-       this.view.hideStaffLoader()
+       this.view.staffCircularLoader(false)
      })
    }
 
@@ -126,7 +152,7 @@ export default class SettingsPresenter {
        this.getProfile()
      }, error => {
      })
-   }  
+   }
 
    updateAddress (address, file) {
     this.updateAddressInteractor.execute(address, file)
@@ -138,9 +164,9 @@ export default class SettingsPresenter {
      })
    }
 
-   getForConfirmation (id) {
+   getForConfirmation () {
      this.view.staffCircularLoader(true)
-     this.getForConfirmationInteractor.execute(id)
+     this.getForConfirmationInteractor.execute()
      .subscribe( data => {
        this.view.staffCircularLoader(false)
        this.view.setStaffAccounts(data)
