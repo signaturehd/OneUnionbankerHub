@@ -279,6 +279,7 @@ class CharacterReferenceFragment extends BaseMVPView {
       town: townText
       }
     }
+  try{
     if(!editMode) {
       this.presenter.postCharacterReference(
         selectedId,
@@ -304,6 +305,9 @@ class CharacterReferenceFragment extends BaseMVPView {
         occupationId
        )
     }
+  }catch(e) {
+    console.log(e)
+  }
   }
 
   resetMode () {

@@ -42,7 +42,6 @@ export default class CharacterReferencePresenter {
     occupation
   ) {
     let emailRegex = /[\w]+@[\w]+((\.)[a-z0-9]+)+/g
-
     if(name === '') {
       this.view.setFullNameErrorMessage('Full Name is required')
     } else if (occupation === 0) {
@@ -71,6 +70,7 @@ export default class CharacterReferencePresenter {
       } else if (!emailRegex.test(email)) {
         this.view.setEmailErrorMessage('Check your email format.')
       } else if (contactNumber === '') {
+        this.view.setEmailErrorMessage('')
         this.view.setContactNumberErrorMessage('Contact Number is required and must atleast 11 digit')
       } else if (relationship === '') {
         this.view.setRelationshipErrorMessage('Relationship is required')
@@ -106,6 +106,7 @@ export default class CharacterReferencePresenter {
       } else if (!emailRegex.test(email)) {
         this.view.setEmailErrorMessage('Check your email format.')
       } else if (contactNumber === '') {
+        this.view.setEmailErrorMessage('')
         this.view.setContactNumberErrorMessage('Contact Number is required and must atleast 11 digit')
       } else if (relationship === '') {
         this.view.setRelationshipErrorMessage('Relationship is required')
