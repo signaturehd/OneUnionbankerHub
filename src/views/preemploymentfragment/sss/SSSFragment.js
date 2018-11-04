@@ -28,6 +28,8 @@ import {
 import { Progress } from 'react-sweet-progress'
 
 import './styles/sssStyle.css'
+import { NotifyActions } from '../../../actions'
+import store from '../../../store'
 
 class SSSFragment extends BaseMVPView {
 
@@ -102,9 +104,47 @@ class SSSFragment extends BaseMVPView {
       sssArray
     } = this.props
 
-    sssArray.map((sss) =>
-      this.presenter.uploadEmployeeSSS(sss.id, sssAttachment)
+    let validateAttachments = false
+    sssAttachment && sssAttachment.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
     )
+    sssArray.map((sss) => {
+      if(sss.status === 1) {
+        if (!sssAttachment.length) {
+         store.dispatch(NotifyActions.resetNotify())
+          store.dispatch(NotifyActions.addNotify({
+             title : 'Warning' ,
+             message : 'Attachments is required',
+             type : 'warning',
+             duration : 2000
+           })
+         )
+        } else if (validateAttachments) {
+         store.dispatch(NotifyActions.resetNotify())
+         sssAttachment && sssAttachment.map(
+           (attachment, key) => {
+             if(!attachment.file) {
+               store.dispatch(NotifyActions.addNotify({
+                  title : 'Warning' ,
+                  message : attachment.name + ' is required',
+                  type : 'warning',
+                  duration : 2000
+                })
+              )
+             }
+           }
+          )
+        } else {
+          this.presenter.uploadEmployeeSSS(sss.id, sssAttachment)
+        }
+      } else {
+        this.presenter.uploadEmployeeSSS(sss.id, sssAttachment)
+      }
+    })
   }
 
   noticeResponseResp (noticeResponse) {

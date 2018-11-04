@@ -25,6 +25,8 @@ import ResponseModal from '../../notice/NoticeResponseModal'
 import PreEmploymentViewAttachmentsComponent from '../../preemployment/components/PreEmploymentViewAttachmentsComponent'
 import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
 
+import { NotifyActions } from '../../../actions'
+import store from '../../../store'
 import { Progress } from 'react-sweet-progress'
 
 class TinFragment extends BaseMVPView {
@@ -88,9 +90,49 @@ class TinFragment extends BaseMVPView {
     const {
       tinArray
     } = this.props
-    tinArray.map((tin) =>
-      this.presenter.uploadEmployeeTin(tin.id, tinAttachment)
+
+    let validateAttachments = false
+    tinAttachment && tinAttachment.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
     )
+
+    tinArray.map((tin) => {
+      if(tin.status === 1) {
+        if (!tinAttachment.length) {
+         store.dispatch(NotifyActions.resetNotify())
+          store.dispatch(NotifyActions.addNotify({
+             title : 'Warning' ,
+             message : 'Attachments is required',
+             type : 'warning',
+             duration : 2000
+           })
+         )
+        } else if (validateAttachments) {
+         store.dispatch(NotifyActions.resetNotify())
+         tinAttachment && tinAttachment.map(
+           (attachment, key) => {
+             if(!attachment.file) {
+               store.dispatch(NotifyActions.addNotify({
+                  title : 'Warning' ,
+                  message : attachment.name + ' is required',
+                  type : 'warning',
+                  duration : 2000
+                })
+              )
+             }
+           }
+          )
+        } else {
+          this.presenter.uploadEmployeeTin(tin.id, tinAttachment)
+        }
+      } else {
+        this.presenter.uploadEmployeeTin(tin.id, tinAttachment)
+      }
+    })
   }
 
   setTinAttachments () {
@@ -224,7 +266,7 @@ class TinFragment extends BaseMVPView {
                 title = { 'TIN' }
                 onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
               :
-              <div></div>  
+              <div></div>
           }
           {
             status.status === 2 &&
