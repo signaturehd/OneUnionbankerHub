@@ -283,7 +283,6 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/preemployment' render = { props =>
                     <PreEmploymentFragment { ...props }
                       onBoardingSkipPage = { (e) => this.skipPage(e)}
-                      onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
                       tempPreEmploymentModal = { tempPreEmploymentModal }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits/transactions/personal/:id' render = { props =>

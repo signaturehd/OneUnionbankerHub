@@ -350,9 +350,9 @@ class PreEmploymentFragment extends BaseMVPView {
     const index = this.state.preEmpPage + 1
 
     if(index === 1) {
-      // this.setState({ showFinancialObligationModal : true })
-      const index1 = this.state.preEmpPage + 16
-      this.setState({ preEmpPage : index1 })
+      this.setState({ showFinancialObligationModal : true })
+      // const index1 = this.state.preEmpPage + 16
+      // this.setState({ preEmpPage : index1 })
     } else if (index === 3) {
       this.getFormData(1).map((resp) => {
         if(resp.status === 2) {
@@ -416,7 +416,7 @@ class PreEmploymentFragment extends BaseMVPView {
     } else if (index === 18) {
       this.setState({ showChildrenConfirmModal : true })
     } else if (index === 21) {
-      this.props.onBoardingSkipPage (7)
+      this.props.onBoardingSkipPage (5)
       this.props.history.push('/')
       this.setState({ hideSubmitButton : false })
     } else {
@@ -493,7 +493,7 @@ class PreEmploymentFragment extends BaseMVPView {
               />
             <GenericButton
               onClick = { () => {
-                onBoardingSkipPage (7)
+                onBoardingSkipPage (5)
                 this.props.history.push('/')
                 }
               }
