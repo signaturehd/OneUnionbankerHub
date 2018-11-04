@@ -42,10 +42,10 @@ let bloodObjectParam = [
 ]
 
 let statusObject = [{
- id: 0,
+ id: 1,
  name : 'Deceased'
 }, {
- id : 1,
+ id : 0,
  name : 'Living'
 }]
 

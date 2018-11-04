@@ -64,7 +64,7 @@ PagIbigViewPdfComponent.propTypes = {
   title : PropTypes.string,
 }
 PagIbigViewPdfComponent.defaultProps = {
-  title : 'Pag-IBIG MDR Form'
+  title : 'Pag-IBIG MDF Form'
 }
 
 export default PagIbigViewPdfComponent

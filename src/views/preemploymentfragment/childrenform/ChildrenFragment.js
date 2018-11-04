@@ -215,6 +215,9 @@ class ChildrenFragment extends BaseMVPView {
       hospitalization : '',
       groupPlan : '',
       attachments: [],
+      defaultAttachmentsArray : [{
+        name : 'Birth Certificate'
+      }],
     })
   }
 
