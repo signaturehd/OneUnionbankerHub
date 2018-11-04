@@ -93,13 +93,13 @@ export default class SpousePresenter {
   }
 
   getOnboardingAttachments (attachments) {
-    this.view.showCircularLoader()
+    this.view.showAttachmentsCircularLoader()
     this.getOnboardingAttachmentsInteractor.execute(attachments)
     .subscribe(data => {
-      this.view.hideCircularLoader()
+      this.view.hideAttachmentsCircularLoader()
       this.view.showAttachmentsFileView(data)
     }, error => {
-      this.view.hideCircularLoader()
+      this.view.hideAttachmentsCircularLoader()
     })
   }
 

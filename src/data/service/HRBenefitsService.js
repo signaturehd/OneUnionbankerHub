@@ -1575,7 +1575,7 @@ export default class HRBenefitsService {
         healthHospitalizationPlan : spouseFormParam.healthHospitalizationPlan,
         groupLifeInsurance: spouseFormParam.groupLifeInsurance,
         bloodType : spouseFormParam.bloodType,
-        contactNumber: spouseFormParam.contactNumber,
+        contactNumber: spouseFormParam.contact,
     }
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     spouseFormParam.spouseAttachmentsArray.map((resp, key) =>

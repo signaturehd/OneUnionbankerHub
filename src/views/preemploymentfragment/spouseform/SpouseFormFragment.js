@@ -57,6 +57,7 @@ class SpouseFormFragment extends BaseMVPView {
       showStatusModal: false,
       showGenderModal : false,
       showViewModal : false,
+      enabledAttachmentsLoader : false,
       spouseId: '',
       lastName: '',
       firstName : '',
@@ -98,6 +99,14 @@ class SpouseFormFragment extends BaseMVPView {
 
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
+  }
+
+  showAttachmentsCircularLoader () {
+    this.setState({ enabledAttachmentsLoader : true })
+  }
+
+  hideAttachmentsCircularLoader () {
+    this.setState({ enabledAttachmentsLoader : false })
   }
 
   showBloodType (bloodObjectParam) {
@@ -345,6 +354,7 @@ class SpouseFormFragment extends BaseMVPView {
       hospitalization,
       groupPlan,
       viewFile,
+      enabledAttachmentsLoader,
     } = this.state
 
   return(
@@ -533,22 +543,23 @@ class SpouseFormFragment extends BaseMVPView {
           </div>
           <br/>
           {
-              enabledLoader ?
+              enabledAttachmentsLoader ?
               <center>
                 <br/>
                 <h2>Please wait while we we&#39;re retrieving your documents </h2>
                 <br/>
-                <CircularLoader show = { enabledLoader } />
+                <CircularLoader show = { enabledAttachmentsLoader } />
                 <br/>
               </center>
               :
               <div>
                 {
-                  attachments.length !== 0 ||
-                  attachments !== null &&
+                  attachments.length !== 0 &&
                   <PreEmploymentViewAttachmentsComponent
+                    title = { 'Spouse' }
                     file = { attachments }
                     onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+
                 }
               </div>
           }

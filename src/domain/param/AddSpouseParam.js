@@ -13,17 +13,17 @@ export default (
   spouseId,
   spouseAttachmentsArray
 ) => ({
-    firstName,
-    middleName,
-    lastName,
-    birthDate,
-    occupation,
-    contact,
-    status,
-    gender,
-    bloodType,
-    healthHospitalizationPlan,
-    groupLifeInsurance,
-    spouseId,
-    spouseAttachmentsArray
+  firstName,
+  middleName,
+  lastName,
+  birthDate,
+  occupation,
+  contact,
+  status,
+  gender,
+  bloodType,
+  healthHospitalizationPlan,
+  groupLifeInsurance,
+  spouseId,
+  spouseAttachmentsArray
 })
