@@ -41,6 +41,8 @@ export default class CharacterReferencePresenter {
     address,
     occupation
   ) {
+    let emailRegex = /[\w]+@[\w]+((\.)[a-z0-9]+)+/g
+
     if(name === '') {
       this.view.setFullNameErrorMessage('Full Name is required')
     } else if (occupation === 0) {
@@ -66,6 +68,8 @@ export default class CharacterReferencePresenter {
         this.setBarangayErrorMessage('Barangay is required')
       } else if (email === '') {
         this.view.setEmailErrorMessage('Email is required (e.g 1uhub@test.com etc.)')
+      } else if (!emailRegex.test(email)) {
+        this.view.setEmailErrorMessage('Check your email format.')
       } else if (contactNumber === '') {
         this.view.setContactNumberErrorMessage('Contact Number is required and must atleast 11 digit')
       } else if (relationship === '') {
@@ -99,6 +103,8 @@ export default class CharacterReferencePresenter {
         this.view.setAddressErrorMessage('Address is required')
       } else if (email === '') {
         this.view.setEmailErrorMessage('Email is required (e.g 1uhub@test.com etc.)')
+      } else if (!emailRegex.test(email)) {
+        this.view.setEmailErrorMessage('Check your email format.')
       } else if (contactNumber === '') {
         this.view.setContactNumberErrorMessage('Contact Number is required and must atleast 11 digit')
       } else if (relationship === '') {
@@ -141,6 +147,7 @@ export default class CharacterReferencePresenter {
     address,
     occupation
   ) {
+    let emailRegex = /[\w]+@[\w]+((\.)[a-z0-9]+)+/g
 
     if(name === '') {
       this.view.setFullNameErrorMessage('Full Name is required')
@@ -167,6 +174,8 @@ export default class CharacterReferencePresenter {
         this.setBarangayErrorMessage('Barangay is required')
       } else if (email === '') {
         this.view.setEmailErrorMessage('Email is required (e.g 1uhub@test.com etc.)')
+      } else if (!emailRegex.test(email)) {
+        this.view.setEmailErrorMessage('Check your email format.')
       } else if (contactNumber === '') {
         this.view.setContactNumberErrorMessage('Contact Number is required and must atleast 11 digit')
       } else if (relationship === '') {
@@ -199,6 +208,8 @@ export default class CharacterReferencePresenter {
         this.view.setAddressErrorMessage('Address is required')
       } else if (email === '') {
         this.view.setEmailErrorMessage('Email is required (e.g 1uhub@test.com etc.)')
+      } else if (!emailRegex.test(email)) {
+        this.view.setEmailErrorMessage('Check your email format.')
       } else if (contactNumber === '') {
         this.view.setContactNumberErrorMessage('Contact Number is required and must atleast 11 digit')
       } else if (relationship === '') {
