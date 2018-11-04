@@ -105,8 +105,8 @@ export default class ChildrenPresenter {
   /* Get Method */
 
   getObjectData () {
-    // this.view.showParentRelationship(parentRelationshipStatusObject)
-    // this.view.showSiblingRelationship(siblingsRelationshipStatusObject)
+    this.view.showParentRelationship(parentRelationshipStatusObject)
+    this.view.showSiblingRelationship(siblingsRelationshipStatusObject)
     this.view.showGender(genderObject)
     this.view.showStatus(statusObject)
     this.view.showBloodType(bloodObjectParam)
@@ -194,8 +194,6 @@ export default class ChildrenPresenter {
       this.view.showRelationshipErrorMessage('Relationship field is required')
     } else if (statusId === '') {
       this.view.showStatusErrorMessage('Status is required')
-    } else if (genderId === '') {
-      this.view.showGenderErrorMessage('Gender is required')
     } else if (bloodTypeName === '') {
       this.view.showBloodTypeErrorMessage('Blood Type is required')
     } else {
@@ -256,8 +254,6 @@ export default class ChildrenPresenter {
       this.view.showRelationshipErrorMessage('Relationship field is required')
     } else if (statusId === '') {
       this.view.showStatusErrorMessage('Status is required')
-    } else if (genderId === '') {
-      this.view.showGenderErrorMessage('Gender is required')
     } else if (bloodTypeName === '') {
       this.view.showBloodTypeErrorMessage('Blood Type is required')
     }  else {

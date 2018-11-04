@@ -40,13 +40,15 @@ class ParentFragment extends BaseMVPView {
       siblingDetails : [],
       bloodObject: [],
       statusObject : [],
+      relationshipObject: [],
+      siblingsObject: [],
       genderObject : [],
       showNoticeResponse : false,
       editMode : false,
       showBloodTypeModal : false,
       showStatusModal : false,
       showEditModeModal : false,
-      showGenderModal : false,
+      showRelationShipModal : false,
       enabledParentLoader : false,
       enabledSiblingsLoader : false,
       isParentOrSiblings : null,
@@ -90,6 +92,14 @@ class ParentFragment extends BaseMVPView {
 
   showParentDetails (parentDetails) {
     this.setState({ parentDetails })
+  }
+
+  showParentRelationship (relationshipObject) {
+     this.setState({ relationshipObject })
+  }
+
+  showSiblingRelationship (siblingsObject) {
+     this.setState({ siblingsObject })
   }
 
   showSiblingDetails (siblingDetails) {
@@ -300,42 +310,39 @@ class ParentFragment extends BaseMVPView {
       isParentOrSiblings
     } = this.state
     const gender = genderId === 'M' ? 'M' : 'F'
-    try {
-      if(isParentOrSiblings) {
-        this.presenter.addParentForm(
-          parentId,
-          firstName,
-          lastName,
-          middleName,
-          gender,
-          relationship,
-          statusId,
-          contact,
-          occupationName,
-          birthDate,
-          bloodTypeName,
-          hospitalization,
-          groupPlan,
-        )
-      } else {
-        this.presenter.addSiblingsForm(
-          parentId,
-          firstName,
-          lastName,
-          middleName,
-          gender,
-          relationship,
-          statusId,
-          contact,
-          occupationName,
-          birthDate,
-          bloodTypeName,
-          hospitalization,
-          groupPlan,
-        )
-      }
-    } catch (e) {
-      console.log(e)
+
+    if(isParentOrSiblings) {
+      this.presenter.addParentForm(
+        parentId,
+        firstName,
+        lastName,
+        middleName,
+        gender,
+        relationship,
+        statusId,
+        contact,
+        occupationName,
+        birthDate,
+        bloodTypeName,
+        hospitalization,
+        groupPlan,
+      )
+    } else {
+      this.presenter.addSiblingsForm(
+        parentId,
+        firstName,
+        lastName,
+        middleName,
+        gender,
+        relationship,
+        statusId,
+        contact,
+        occupationName,
+        birthDate,
+        bloodTypeName,
+        hospitalization,
+        groupPlan,
+      )
     }
   }
 
@@ -421,11 +428,13 @@ class ParentFragment extends BaseMVPView {
       showStatusModal,
       showBloodTypeModal,
       showEditModeModal,
-      showGenderModal,
+      showRelationShipModal,
       isParentOrSiblings,
       hospitalization,
       groupPlan,
       editMode,
+      relationshipObject,
+      siblingsObject
     } = this.state
 
     const isVisible = (siblingDetails && siblingDetails.length > 4) ? '' : 'hide'
@@ -446,11 +455,13 @@ class ParentFragment extends BaseMVPView {
         {
           showEditModeModal &&
           <ParentModal
+            relationshipObject = { relationshipObject }
+            siblingsObject = { siblingsObject }
             editMode = { editMode }
             isParentOrSiblings = { isParentOrSiblings }
             showStatusModal = { showStatusModal }
             showBloodTypeModal = { showBloodTypeModal }
-            showGenderModal = { showGenderModal }
+            showRelationShipModal = { showRelationShipModal }
             bloodObject = { bloodObject }
             statusObject = { statusObject }
             genderObject = { genderObject }
@@ -465,7 +476,7 @@ class ParentFragment extends BaseMVPView {
             statusNameFunc = { (showStatusModal) => this.setState({ showStatusModal }) }
             groupPlanFunc = { () => this.setState({ groupPlan : groupPlan === 1 ? 0 : 1 }) }
             hospitalizationFunc = { () => this.setState({ hospitalization : hospitalization === 1 ? 0 : 1 }) }
-            genderFunc = { (showGenderModal) => this.setState({ showGenderModal }) }
+            relationshipFunc = { (showRelationShipModal) => this.setState({ showRelationShipModal }) }
             lastName = { lastName }
             firstName = { firstName }
             middleName = { middleName }
@@ -518,16 +529,17 @@ class ParentFragment extends BaseMVPView {
                 bloodTypeErrorMessage
               })
             }
-            selectedGenderFunc = { (
-              genderId,
-              gender,
-              showGenderModal,
-              genderErrorMessage
+            selectedRelationshipFunc = { (
+              id,
+              relationship,
+              showRelationShipModal,
+              relationshipErrorMessage
             ) => this.setState({
-              genderId : genderId === 0 ? 'M' : 'F',
-              gender : gender === 'Male' ? 'Male' : 'Female',
-              showGenderModal,
-              genderErrorMessage
+              genderId : id === 0 ? 'M' : 'F',
+              gender: id === 0 ? 'Male' : 'Female',
+              relationship,
+              showRelationShipModal,
+              relationshipErrorMessage
             })
           }
           />

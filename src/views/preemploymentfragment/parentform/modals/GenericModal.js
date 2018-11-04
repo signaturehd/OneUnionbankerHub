@@ -22,6 +22,8 @@ class ParentModal extends Component {
     const {
       editMode,
       genderObject,
+      relationshipObject,
+      siblingsObject,
       bloodObject,
       statusObject,
       firstNameFunc,
@@ -58,14 +60,14 @@ class ParentModal extends Component {
       onClose,
       showStatusModal,
       showBloodTypeModal,
-      showGenderModal,
+      showRelationShipModal,
       isParentOrSiblings,
       selectedBloodTypeFunc,
       selectedStatusFunc,
-      selectedGenderFunc,
+      selectedRelationshipFunc,
       birthDateFunc,
       relationshipNameFunc,
-      genderFunc,
+      relationshipFunc,
       hospitalizationFunc,
       groupPlanFunc,
       saveFormSubmission,
@@ -113,20 +115,23 @@ class ParentModal extends Component {
           />
         }
         {
-          showGenderModal &&
+          showRelationShipModal &&
 
           <SingleInputModal
-            label = { 'Gender' }
-            inputArray = { genderObject }
-            selectedArray = { (genderCode, gender) =>
-              selectedGenderFunc(
-                genderCode,
-                gender,
-                false,
-                ''
-              )
+            label = { 'Relationship' }
+            inputArray = { isParentOrSiblings ? relationshipObject : siblingsObject }
+            selectedArray = { (id, relationship) =>
+              {
+                selectedRelationshipFunc(
+                  id,
+                  relationship,
+                  false,
+                  ''
+                )
+                relationshipNameFunc (relationship)
+              }
             }
-            onClose = { () => genderFunc(false) }
+            onClose = { () => relationshipFunc(false) }
           />
         }
         <div>
@@ -180,7 +185,7 @@ class ParentModal extends Component {
                 value = { relationship  }
                 text = { 'Relationship' }
                 errorMessage = { relationship ? '' : relationshipErrorMessage }
-                onChange = { (e) => relationshipNameFunc(e.target.value) }
+                onClick = { () => relationshipFunc(true) }
                 />
               <GenericInput
                 value = { statusName  }
@@ -193,8 +198,8 @@ class ParentModal extends Component {
               <GenericInput
                 value = { gender  }
                 text = { 'Gender' }
+                readOnly
                 errorMessage = { gender ? '' : genderErrorMessage }
-                onClick = { () => genderFunc(true) }
                 />
               <GenericInput
                 text = { 'Blood Type' }
