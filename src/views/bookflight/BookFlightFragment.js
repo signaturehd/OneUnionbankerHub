@@ -219,7 +219,7 @@ class BookFlightFragment extends BaseMVPView {
                 <div className = { 'book-card-grid-option' }>
                   <div>
                     <h2 className = { 'font-size-14px font-weight-bold text-align-left unionbank-color' }>RETURN</h2>
-                    <h2 className = { 'font-size-14px font-weight-lighter' }>{ returnOrigin }</h2>
+                    <h2 className = { 'font-size-14px font-weight-bold' }>{ returnOrigin }</h2>
                   </div>
                   <div>
                     <h2 className = { 'book-airplane-icon' }></h2>

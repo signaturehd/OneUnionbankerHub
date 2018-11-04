@@ -159,62 +159,9 @@ class TravelFragment extends BaseMVPView {
 
   const myTravel = () => (
     <div className={ 'travel-container' }>
-      {
-        showAccountNumberModal &&
-        <Modal
-          onClose = { () => this.setState({ showAccountNumberModal : false }) }
-          isDismisable={ true } >
-        <div>
+      <div className={ 'adjustment' }>
+        <div className={ 'travel-card-container' }>
           {
-          enabledAccountNumberLoader ?
-            <center>
-              <h4>Please wait while validating the Account Number</h4>
-              <br/>
-              <CircularLoader show={ true }/>
-            </center>
-            :
-              <div>
-                <h2 className = { 'font-weight-bold' }>UnionBank Account Enrollment</h2>
-                <br/>
-                <h4>All benefit requests and claims will be credited to this account. Payroll accounts will not be accepted.</h4>
-                <GenericTextBox
-                  onChange={ (e) => this.setState({ accountNumber: e.target.value }) }
-                  placeholder={ 'Account Number' }
-                  container={ 'travel-container-text' }
-                  group={ 'travel-container-group' }
-                  value={ accountNumber }
-                  type={ 'text' }
-                  maxLength = { 16 }
-                />
-              <br/>
-              <center>
-                <GenericButton
-                  onClick={ e => {
-                    e.preventDefault()
-                    this.presenter.validateAccountNumber(accountNumber)
-                    }
-                  }
-                  text={ 'Submit' }
-                  />
-              </center>
-            </div>
-            }
-          </div>
-        </Modal>
-        }
-        {
-          showReleasingCenterModal &&
-          <ReleasingCenterModal
-            isDismisable={ true }
-            releasingCenters={ releasingCenters }
-            onClick={ releasingCenter => this.setReleasingCenter(releasingCenter) }
-            onClose={ () => this.setState({ showReleasingCenterModal: false }) }
-            type={ 'text' }
-          />
-        }
-        <div className={ 'adjustment' }>
-          <div className={ 'travel-card-container' }>
-            {
             travelOptions.map((value, idx) => (
               <Card
                 className={ 'travel-card' }
@@ -230,18 +177,9 @@ class TravelFragment extends BaseMVPView {
                 </div>
               </Card>
             ))
-            }
+          }
         </div>
       </div>
-      <FloatingActionButton
-        text="+"
-        onClick={ () => {
-            isAccountNumber ?
-            this.setState({ showAccountNumberModal : true }):
-            this.setState({ showReleasingCenterModal : true })
-          }
-        }
-      />
     </div>
   )
 

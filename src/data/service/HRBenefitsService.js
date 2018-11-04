@@ -1215,7 +1215,12 @@ export default class HRBenefitsService {
 
   getTravels (token, statusId) {
     return this.apiClient.get(`v1/travels?status=${statusId}`, {
-    // return this.apiClient.get('v1/travels', {
+      headers : { token }
+    })
+  }
+
+  getApproval (token) {
+    return this.apiClient.get('v1/travels/approval', {
       headers : { token }
     })
   }
@@ -1299,6 +1304,17 @@ export default class HRBenefitsService {
     ))
     formData.append('body', JSON.stringify(object))
     return this.apiClient.post('v1/travels/liquidate',  formData, {
+      headers : { token }
+    })
+  }
+
+  addApproval (token, approvalParam) {
+    const object = {
+      requestId: approvalParam.requestId,
+      isApprove: approvalParam.isApprove,
+      remark : approvalParam.rejectedRemarks
+    }
+    return this.apiClient.post('v1/travels/approval', object, {
       headers : { token }
     })
   }

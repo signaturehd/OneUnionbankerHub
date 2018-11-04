@@ -15,14 +15,39 @@ class ApprovalComponent extends Component {
 
   render () {
     const {
-      cardDataHolder
+      cardDataHolder,
+      showFormFunc
     } = this.props
     return (
       <div className = { 'grid-global' }>
         {
           cardDataHolder.length !== 0 &&
-          cardDataHolder.map((resp, key) => (
-              <Card key = {key} className = { 'border-radius' }>
+          cardDataHolder.map((request, key) => (
+            request.travelRequest.map((resp) => (
+              <Card
+                className = { 'border-radius cursor-pointer' }
+                key = {key}
+                onClick = { () =>
+                  showFormFunc(
+                    resp.id,
+                    request.name.first,
+                    request.name.middle,
+                    request.name.last,
+                    resp.referenceNumber,
+                    resp.departure.origin.location,
+                    resp.departure.destination.location,
+                    resp.departure.date,
+                    resp.departure.time,
+                    resp.departure.remarks,
+                    resp.return ? resp.return.origin.location : '',
+                    resp.return ? resp.return.destination.location : '',
+                    resp.return ? resp.return.date : '',
+                    resp.return ? resp.return.time : '',
+                    resp.return ? resp.return.remarks : '',
+                    resp.return ? 'RoundTrip' : 'OneWay',
+                    resp.purpose.name
+                  )
+                }>
                   {
                     resp.return ?
                     <div className = { 'approval-card-grid-row' }>
@@ -90,6 +115,7 @@ class ApprovalComponent extends Component {
                   </div>
                 }
               </Card>
+            ))
           ))
         }
       </div>

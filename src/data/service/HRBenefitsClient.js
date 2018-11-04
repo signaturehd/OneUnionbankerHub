@@ -918,6 +918,11 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  getApproval (token) {
+    return this.service.getApproval(token)
+    .pipe(ServiceErrorOperator())
+  }
+
   addRequestOneWay (
     token,
     requestParam,
@@ -958,6 +963,17 @@ export default class HRBenefitsClient {
     return this.service.addLiquidation(
       token,
       liquidationParam,
+    )
+    .pipe(ServiceErrorOperator())
+  }
+
+  addApproval (
+    token,
+    approvalParam,
+    ) {
+    return this.service.addApproval(
+      token,
+      approvalParam,
     )
     .pipe(ServiceErrorOperator())
   }
