@@ -208,68 +208,70 @@ class EducationBackgroundModal extends Component {
           />
           <br/>
           <Line/>
-          <div>
-            {
-                enabledAttachmentLoader ?
-                <center>
-                  <br/>
-                  <h2>Please wait while we we&#39;re retrieving your documents </h2>
-                  <br/>
-                  <CircularLoader show = { enabledAttachmentLoader } />
-                  <br/>
-                </center>
-                :
+          {
+              enabledAttachmentLoader ?
+              <center>
+                <br/>
+                <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                <br/>
+                <CircularLoader show = { enabledAttachmentLoader } />
+                <br/>
+              </center>
+              :
+            <div>
+              <div>
                 <PreEmploymentViewAttachmentsComponent
                   title = { 'TOR' }
                   file = { attachmentUrl }
                   onClick = { (viewFile) => viewFileFunc(viewFile) }/>
-            }
-          </div>
-          <br/>
-          <div className = { 'grid-global' }>
-            <h2></h2>
-            <div className = { 'text-align-right' }>
-              <GenericButton
-                text = { 'Add Attachments' }
-                onClick = { () => addAttachmentsFunc(torFormData, count) }
-                />
-            </div>
-          </div>
-          {
-            torFormData.length !== 0  &&
-            <div>
-            <h4>
+              </div>
               <br/>
-              Form Attachments
-            </h4>
-            <MultipleAttachments
-              count = { count }
-              countFunc = { (count) => this.setState({ count }) }
-              placeholder = { '' }
-              fileArray = { torFormData }
-              setFile = { (torFormData) =>
-                  this.setState({ torFormData })
-              }
+              <div className = { 'grid-global' }>
+                <h2></h2>
+                <div className = { 'text-align-right' }>
+                  <GenericButton
+                    text = { 'Add Attachments' }
+                    onClick = { () => addAttachmentsFunc(torFormData, count) }
+                    />
+                </div>
+              </div>
+              {
+                torFormData.length !== 0  &&
+                <div>
+                <h4>
+                  <br/>
+                  Form Attachments
+                </h4>
+                <MultipleAttachments
+                  count = { count }
+                  countFunc = { (count) => this.setState({ count }) }
+                  placeholder = { '' }
+                  fileArray = { torFormData }
+                  setFile = { (torFormData) =>
+                      this.setState({ torFormData })
+                  }
+                  />
+                </div>
+               }
+            <div className = { 'grid-global' }>
+              <GenericButton
+              text = { 'Cancel' }
+              onClick = { () => hideModalEducationFormFunc(false)  }
               />
+              {
+                updateMode ?
+                <GenericButton
+                  text={ 'Update' }
+                  onClick = { () => submissionFunc() }
+                  /> :
+                <GenericButton
+                  text={ 'Add' }
+                  onClick = { () => submissionFunc() }
+                  />
+              }
             </div>
-           }
-        <div className = { 'grid-global' }>
-          <GenericButton
-            text = { 'Cancel' }
-            onClick = { () => hideModalEducationFormFunc(false)  }
-            />
-            {
-              updateMode ?
-              <GenericButton
-                text={ 'Update' }
-                onClick = { () => submissionFunc() }
-                /> :
-              <GenericButton
-                text={ 'Add' }
-                onClick = { () => submissionFunc() }
-                />
-            }
           </div>
+          }
         </div>
       </Modal>
     )

@@ -35,6 +35,7 @@ export default class EducationBackgroundPresenter {
     }, error => {
       this.view.hideDocumentLoader()
       this.view.showPdfFileView([])
+      store.dispatch(NotifyActions.resetNotify())
     })
   }
 
@@ -46,6 +47,7 @@ export default class EducationBackgroundPresenter {
       this.view.showEditModeAttachments(data)
       this.view.hideRetrievingAttachmentsLoader()
     }, error => {
+      store.dispatch(NotifyActions.resetNotify())
       this.view.hideRetrievingAttachmentsLoader()
     })
   }
@@ -66,6 +68,7 @@ export default class EducationBackgroundPresenter {
   }
 
   getEmployeeSchool (pageNumber, find) {
+    store.dispatch(NotifyActions.resetNotify())
     this.view.showCircularLoader()
     this.schoolDataInteractor.execute(pageNumber, find)
     .subscribe(
@@ -92,6 +95,7 @@ export default class EducationBackgroundPresenter {
     course,
     address,
     torFormData) {
+      store.dispatch(NotifyActions.resetNotify())
       this.view.showCircularLoader()
       this.addEducationSchoolInteractor.execute(addEducationParam(
         educId,
@@ -112,6 +116,7 @@ export default class EducationBackgroundPresenter {
           this.view.resetMode()
         }, error => {
           this.view.hideCircularLoader()
+          this.view.resetAttachmentUrl()
           this.view.callback()
         }
       )
@@ -130,6 +135,7 @@ export default class EducationBackgroundPresenter {
     course,
     address,
     torFormData) {
+    store.dispatch(NotifyActions.resetNotify())
     this.view.showCircularLoader()
     this.putEducationSchoolInteractor.execute(addEducationParam(
       educId,
@@ -149,13 +155,15 @@ export default class EducationBackgroundPresenter {
         this.view.noticeResponseResp(data)
         this.view.resetMode()
       }, error => {
-        this.view.callback()
         this.view.hideCircularLoader()
+        this.view.resetAttachmentUrl()
+        this.view.callback()
       }
     )
   }
 
   removeSchool (id) {
+    store.dispatch(NotifyActions.resetNotify())
     this.view.showCircularLoader()
     this.removeSchoolInteractor.execute(id)
     .subscribe(data => {

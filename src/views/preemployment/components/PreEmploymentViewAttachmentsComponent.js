@@ -38,7 +38,7 @@ class PreEmploymentViewAttachmentsComponent extends Component {
     return (
       <div>
         <h2 className = { 'text-align-left font-weight-bold font-size-18px' }>
-          { file.length !== 0 ? title : 'No' } Attachments
+          { file.length !== 0 ? title + ' Attachments' : 'No Attachments Found' }
         </h2>
         <br/>
         <div className = { 'grid-attachment' }>

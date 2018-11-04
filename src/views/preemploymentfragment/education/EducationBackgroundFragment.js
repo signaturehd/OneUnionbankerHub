@@ -30,6 +30,8 @@ import * as func from './functions/EducationFunctions'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
+let checkFileLength = ''
+
 class EducationBackgroundFragment extends BaseMVPView {
 
   constructor(props) {
@@ -107,7 +109,8 @@ class EducationBackgroundFragment extends BaseMVPView {
         name : 'Transcript of Records'
       }],
       isUpdated : 0,
-      updateMode : false
+      updateMode : false,
+      attachmentUrl : []
     })
   }
 
@@ -256,7 +259,8 @@ class EducationBackgroundFragment extends BaseMVPView {
       course,
       address,
       isUpdated,
-      torFormData
+      torFormData,
+      messageNotFound
     } = this.state
 
     let validateAttachments = false
@@ -267,7 +271,6 @@ class EducationBackgroundFragment extends BaseMVPView {
         }
       }
     )
-
     if(!this.validateRequired(schoolName)) {
       this.setState({ schoolNameErrorMessage : 'Required field' })
     } else if(!this.validateRequired(address)) {
@@ -284,31 +287,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       this.setState({ startYearErrorMessage : 'Required field' })
     } else if(!this.validateRequired(endYear)) {
       this.setState({ endYearErrorMessage : 'Required field' })
-    } else if (!torFormData.length) {
-      store.dispatch(NotifyActions.resetNotify())
-       store.dispatch(NotifyActions.addNotify({
-          title : 'Warning' ,
-          message : 'Attachments is required',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    } else if (validateAttachments) {
-      store.dispatch(NotifyActions.resetNotify())
-      torFormData && torFormData.map(
-        (attachment, key) => {
-          if(!attachment.file) {
-            store.dispatch(NotifyActions.addNotify({
-               title : 'Warning' ,
-               message : attachment.name + ' is required',
-               type : 'warning',
-               duration : 2000
-             })
-           )
-          }
-        }
-      )
-     } else {
+    } else if (checkFileLength > 0) {
       if(updateMode) {
       this.presenter.putEducationSchool(
         educId,
@@ -334,9 +313,66 @@ class EducationBackgroundFragment extends BaseMVPView {
           course,
           address,
           torFormData)
+         this.setState({ showEducationFormModal : false })
+       }
+    } else if (checkFileLength < 1) {
+      if (!torFormData.length) {
+       store.dispatch(NotifyActions.resetNotify())
+        store.dispatch(NotifyActions.addNotify({
+           title : 'Warning' ,
+           message : 'Attachments is required',
+           type : 'warning',
+           duration : 2000
+         })
+       )
+      } else if (validateAttachments) {
+       store.dispatch(NotifyActions.resetNotify())
+       torFormData && torFormData.map(
+         (attachment, key) => {
+           if(!attachment.file) {
+             store.dispatch(NotifyActions.addNotify({
+                title : 'Warning' ,
+                message : attachment.name + ' is required',
+                type : 'warning',
+                duration : 2000
+              })
+            )
+           }
+         }
+      )} else {
+        if(updateMode) {
+        this.presenter.putEducationSchool(
+          educId,
+          schoolName,
+          studentNo,
+          startYear,
+          endYear,
+          degree,
+          honor,
+          course,
+          address,
+          torFormData)
         this.setState({ showEducationFormModal : false })
+        } else {
+          this.presenter.addEducationSchool(
+            educId,
+            schoolName,
+            studentNo,
+            startYear,
+            endYear,
+            degree,
+            honor,
+            course,
+            address,
+            torFormData)
+           this.setState({ showEducationFormModal : false })
+        }
       }
     }
+  }
+
+  resetAttachmentUrl () {
+    this.setState({ attachmentUrl : [] })
   }
 
   resetMode () {
@@ -526,7 +562,11 @@ class EducationBackgroundFragment extends BaseMVPView {
               this.setState({ torFormData : attachmentTemp })
             }
           }
-          hideModalEducationFormFunc = { (showEducationFormModal) => this.setState({ showEducationFormModal }) }
+          hideModalEducationFormFunc = { (showEducationFormModal) => {
+            this.setState({ showEducationFormModal : false })
+            this.resetAttachmentUrl()
+          }
+        }
         />
       }
       {
@@ -584,8 +624,12 @@ class EducationBackgroundFragment extends BaseMVPView {
         <div className = { 'text-align-right' }>
           <GenericButton
             text = { 'Add Education' }
-            onClick = { () => this.onShowEducationFormModalFunc() }
-            />
+            onClick = { () => {
+              checkFileLength =  0
+              this.resetAttachmentUrl()
+              this.onShowEducationFormModalFunc()
+            }
+            }/>
         </div>
       </div>
       <br/>
@@ -635,7 +679,8 @@ class EducationBackgroundFragment extends BaseMVPView {
                   updateMode,
                   isUpdated ,
                 })
-                  this.presenter.checkAttachments(resp)
+                checkFileLength = resp.tor ? resp.tor.length : 0
+                this.presenter.checkAttachments(resp)
               }
               }
             />

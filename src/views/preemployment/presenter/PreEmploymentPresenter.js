@@ -83,32 +83,34 @@ export default class PreEmploymentPresenter {
     .subscribe(data => {
       this.setParentValue(data)
     }, error => {
-      store.dispatch(NotifyActions.resetNotify())
     })
   }
 
   getPreEmploymentForm () {
+    store.dispatch(NotifyActions.resetNotify())
+    this.view.showCircularLoader()
     this.preEmploymentFormInteractor.execute()
     .subscribe(
         data => {
+          this.view.hideCircularLoader()
           this.view.checkedPreEmploymentForm(data)
           this.setDocumentsValue(data)
           this.getAffirmStatus()
         },
         error => {
-          store.dispatch(NotifyActions.resetNotify())
+          this.view.hideCircularLoader()
           this.getAffirmStatus()
        }
     )
   }
 
   getCharacterReference () {
+    store.dispatch(NotifyActions.resetNotify())
     this.getCharacterReferenceInteractor.execute()
     .subscribe(data => {
       this.view.showCharacterReferenceMap(data)
       this.setCharacterReferenceValue(data)
     }, error => {
-      store.dispatch(NotifyActions.resetNotify())
       this.view.showCharacterReferenceMap([])
       this.setCharacterReferenceValue([])
     })
@@ -116,6 +118,7 @@ export default class PreEmploymentPresenter {
   }
 
   getAffirmStatus () {
+    store.dispatch(NotifyActions.resetNotify())
     this.getAffirmationStatusInteractor.execute()
     .map(data => {
       let totalValue = 0
@@ -165,7 +168,6 @@ export default class PreEmploymentPresenter {
       this.view.showPercentageOfPreEmployment((progress / totalValue) * 100)
     })
     .subscribe(data => {}, error => {
-      store.dispatch(NotifyActions.resetNotify())
     })
   }
 
