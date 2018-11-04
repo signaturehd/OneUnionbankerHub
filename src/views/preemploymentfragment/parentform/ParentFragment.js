@@ -300,38 +300,42 @@ class ParentFragment extends BaseMVPView {
       isParentOrSiblings
     } = this.state
     const gender = genderId === 'M' ? 'M' : 'F'
-    if(isParentOrSiblings) {
-      this.presenter.addParentForm(
-        parentId,
-        firstName,
-        lastName,
-        middleName,
-        gender,
-        relationship,
-        statusId,
-        contact,
-        occupationName,
-        birthDate,
-        bloodTypeName,
-        hospitalization,
-        groupPlan,
-      )
-    } else {
-      this.presenter.addSiblingsForm(
-        parentId,
-        firstName,
-        lastName,
-        middleName,
-        gender,
-        relationship,
-        statusId,
-        contact,
-        occupationName,
-        birthDate,
-        bloodTypeName,
-        hospitalization,
-        groupPlan,
-      )
+    try {
+      if(isParentOrSiblings) {
+        this.presenter.addParentForm(
+          parentId,
+          firstName,
+          lastName,
+          middleName,
+          gender,
+          relationship,
+          statusId,
+          contact,
+          occupationName,
+          birthDate,
+          bloodTypeName,
+          hospitalization,
+          groupPlan,
+        )
+      } else {
+        this.presenter.addSiblingsForm(
+          parentId,
+          firstName,
+          lastName,
+          middleName,
+          gender,
+          relationship,
+          statusId,
+          contact,
+          occupationName,
+          birthDate,
+          bloodTypeName,
+          hospitalization,
+          groupPlan,
+        )
+      }
+    } catch (e) {
+      console.log(e)
     }
   }
 
@@ -626,7 +630,7 @@ class ParentFragment extends BaseMVPView {
           :
           <div>
             {
-              siblingDetails.length != 0 &&
+              siblingDetails.length !== 0 &&
               <div>
                 <SiblingComponent
                   siblingDetails = { siblingDetails }
