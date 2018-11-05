@@ -23,6 +23,7 @@ class StaffAccountsModal extends Component {
       isDismisable : true,
       showTypeModal : false,
       showCapacityModal : false,
+      showConfirmationModal : false,
       employeeName : '',
       selectedAccountNumber : '',
       sequence : '',
@@ -88,8 +89,8 @@ class StaffAccountsModal extends Component {
     }
   }
 
-  confirmationModal (employeeName, selectedAccountNumber, sequence) {
-    this.setState({ employeeName, selectedAccountNumber, sequence })
+  confirmationModal (showConfirmationModal, employeeName, selectedAccountNumber, sequence) {
+    this.setState({ showConfirmationModal, employeeName, selectedAccountNumber, sequence })
   }
 
   getAccountType (type) {
@@ -126,7 +127,6 @@ class StaffAccountsModal extends Component {
       enabledStaffLoader,
       staffResponseMessage,
       showSuccessModal,
-      showConfirmationModal,
       name,
     }=this.props
 
@@ -148,6 +148,7 @@ class StaffAccountsModal extends Component {
      selectedAccountNumber,
      sequence,
      showAddComponent,
+     showConfirmationModal
     }=this.state
 
     return (
@@ -181,8 +182,10 @@ class StaffAccountsModal extends Component {
                   />
                 <GenericButton
                   text = { 'Yes' }
-                  onClick = { () =>
+                  onClick = { () => {
                     onUpdateStaffAccounts(employeeName, selectedAccountNumber, sequence)
+                    this.setState({ showConfirmationModal : false })
+                    }
                   }
                 />
               </div>
@@ -258,14 +261,15 @@ class StaffAccountsModal extends Component {
                     />
                   <GenericButton
                     text = { 'Save' }
-                    onClick = { () => 
+                    onClick = { () => {
+                      this.setState({ showAddComponent : false })
                       onClickEmployeeConfirmation(
                         name,
                         accountNumber,
                         accountTypeCode,
                         accountCapacityCode,
                         accountRemarks,
-                      )
+                      )}
                     }
                     />
                 </div>

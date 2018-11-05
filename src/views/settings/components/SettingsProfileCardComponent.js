@@ -71,7 +71,6 @@ class SettingsProfileCardComponent extends Component {
       enabledStaffLoader,
       staffResponseMessage,
       showSuccessModal,
-      showConfirmationModal
     } = this.props
 
 
@@ -134,7 +133,6 @@ class SettingsProfileCardComponent extends Component {
         {
           showStaffAccountsModal &&
           <StaffAccountsModal
-            showConfirmationModal = { showConfirmationModal }
             onCloseStaffResponse = { () => this.props.onCloseStaffResponseModalFunc() }
             staffResponseMessage = { staffResponseMessage }
             enabledStaffLoader = { enabledStaffLoader }

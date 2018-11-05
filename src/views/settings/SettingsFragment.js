@@ -41,7 +41,6 @@ class SettingsFragment extends BaseMVPView {
      descriptionEditMode : false,
      enabledStaffLoader : false,
      showSuccessModal : false,
-     showConfirmationModal : false,
      noticeResponse : '',
      descriptionText : '',
      staffResponseMessage : '',
@@ -84,7 +83,6 @@ class SettingsFragment extends BaseMVPView {
   noticeResponseModalStaff (staffResponseMessage) {
     this.setState({ staffResponseMessage })
     this.setState({ showSuccessModal : true })
-    this.setState({ showConfirmationModal : true })
   }
 
   showProfileDependent (profileDependent) {
@@ -154,7 +152,6 @@ class SettingsFragment extends BaseMVPView {
       enabledStaffLoader,
       staffResponseMessage,
       showSuccessModal,
-      showConfirmationModal
     }=this.state
 
     return (
@@ -174,7 +171,6 @@ class SettingsFragment extends BaseMVPView {
           </Modal>
         }
         <SettingsProfileCardComponent
-           showConfirmationModal = { showConfirmationModal }
            showSuccessModal = { showSuccessModal }
            onCloseStaffResponseModalFunc = { () => this.setState({ showSuccessModal : false  }) }
            staffResponseMessage = { staffResponseMessage }
