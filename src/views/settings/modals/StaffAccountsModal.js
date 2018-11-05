@@ -15,6 +15,8 @@ import {
 import StaffAccountCardComponent from '../components/StaffAccountCardComponent'
 import './styles/staffAccountModal.css'
 
+import * as func from '../functions/SettingFunctions'
+
 class StaffAccountsModal extends Component {
 
   constructor (props) {
@@ -114,6 +116,11 @@ class StaffAccountsModal extends Component {
       ret = 'Credit Card'
     }
     return ret
+  }
+
+  validateInputNumber (number) {
+    const validate = func.checkedValidateInputNumber(number)
+    this.setState({ accountNumber : validate })
   }
 
   render () {
@@ -234,8 +241,14 @@ class StaffAccountsModal extends Component {
                     text = { 'Account Number' }
                     maxLength = { 12 }
                     value = { accountNumber }
-                    type = { 'number' }
-                    onChange = { (e) => this.setState({ accountNumber : e.target.value }) }
+                    hint = { '(e.g 109350022082)' }
+                    onChange = { (e) => {
+                      try {
+                        this.validateInputNumber(e.target.value)
+                      } catch (e) {
+                        console.log(e)
+                      }
+                    } }
                     />
                   <GenericInput
                     text = { 'Account Type' }
