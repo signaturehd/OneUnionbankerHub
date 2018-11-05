@@ -20,7 +20,7 @@ class LaptopLeaseDetailCardComponent extends Component {
       onClickAttachments,
       claimLaptopLease
      } = this.props
-    
+
      const transactionID = details.transactionId
      const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
      const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
@@ -28,9 +28,9 @@ class LaptopLeaseDetailCardComponent extends Component {
      const brand = TransactionPersonalFunction.checkedBrand(details.details)
      const colorFamily = TransactionPersonalFunction.checkedColorFamily(details.details)
      const estimatedCost = TransactionPersonalFunction.checkedEstimatedCost(details.details)
-     const deliveryType = TransactionPersonalFunction.checkedDeliveryType(details.details) 
+     const deliveryType = TransactionPersonalFunction.checkedDeliveryType(details.details)
      const releasingCenter = TransactionPersonalFunction.checkedReleasingCenter(details.details)
-
+       console.log(details)
     return (
       <div className = { 'transaction-component-details-form' }>
         <div>
@@ -138,13 +138,20 @@ class LaptopLeaseDetailCardComponent extends Component {
             <br/>
           </div>
           <div>
-            <br/>
-            <GenericButton
-              className = { 'transaction-details-button' }
-              text = { 'Claim' }
-              onClick = { () => claimLaptopLease(transactionID) }
-            />
-            <br/>
+            {
+              details.status &&
+              details.status.id === 29 ||
+              details.status.id === 10 &&
+              <div>
+                <br/>
+                <GenericButton
+                  className = { 'transaction-details-button' }
+                  text = { 'Claim' }
+                  onClick = { () => claimLaptopLease(transactionID) }
+                />
+                <br/>
+              </div>
+            }
           </div>
         </div>
 
