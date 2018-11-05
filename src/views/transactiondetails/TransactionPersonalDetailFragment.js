@@ -25,6 +25,7 @@ import OutpatientDetailsFragment from './fragments/OutpatientDetailsFragment'
 import MaternityAssistanceDetailsFragment from './fragments/MaternityAssistanceDetailsFragment'
 import LaptopLeaseDetailsFragment from './fragments/LaptopLeaseDetailsFragment'
 import VaccineRequisitionDetailsFragment from './fragments/VaccineRequisitionDetailsFragment'
+import EventsBudgetRequisitionDetailsFragment from './fragments/EventsBudgetDetailsFragment'
 
 import TransactionDetailsAgreementsModal from './modals/TransactionDetailsAgreementsModal'
 import TransactionDetailsAgreementMPLModal from './modals/TransactionDetailsAgreementMPLModal'
@@ -161,7 +162,6 @@ function  TransactionDetails (props)  {
       confirmDetails = { (transactionId, isConfirm) => confirmmDetails(transactionId, isConfirm) }
       details = { transactionDetails }
     />
-   // return <h1>Transaction for LaptopLease</h1>
   } else if (transactionId === 18) {
     // Vaccine Requisition
     return <VaccineRequisitionDetailsFragment
@@ -170,7 +170,14 @@ function  TransactionDetails (props)  {
         details = { transactionDetails }
         viewTransactions = { (recepients) => viewTransactions(recepients) }
      />
-  } else {
+  } else if (transactionId === 42) {
+    // Events Budget Requisition
+    return <EventsBudgetRequisitionDetailsFragment
+        attachmentsMethod = { (resp) => attachmentsMethod(resp) }
+        agreementsMethod = { (resp) => agreementsMethod(resp) }
+        details = { transactionDetails }
+     />
+  }else {
    return <h1>No Transaction Occured please reload</h1> // No  Transaction
   }
 }

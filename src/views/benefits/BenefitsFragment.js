@@ -11,6 +11,7 @@ import LoansFragment from './fragments/loans/LoansFragment'
 import MedicalFragment from './fragments/medical/MedicalFragment'
 import CarLeaseFragment from './fragments/carlease/CarLeaseFragment'
 import CalamityFragment from '../calamity/CalamityFragment'
+import EventsBudgetFragment from '../eventbudget/EventsBudgetFragment'
 
 import TransactionPersonalFragment from '../transaction/TransactionPersonalFragment'
 import TransactionApprovalFragment from '../transaction/TransactionApprovalFragment'
@@ -167,7 +168,13 @@ class BenefitsFragment extends BaseMVPView {
       path: '/mybenefits/benefits/education',
       subTitle: 'Avail of a wide range of educational benefits.'
     }, {
-      id: 1 ,
+      id: 7 ,
+      styleName: 'benefits-option-cards-1 benefits-option-default font-weight-bold',
+      title: 'Events Budget Requisition',
+      path: '/mybenefits/benefits/eventbudgetrequisition',
+      subTitle: 'Avail of a wide range of educational benefits.'
+    },{
+      id: 6 ,
       styleName: 'benefits-option-cards-7 benefits-option-default font-weight-bold',
       title: 'Laptop Lease',
       path: '/mybenefits/benefits/laptoplease',
@@ -355,6 +362,8 @@ class BenefitsFragment extends BaseMVPView {
               render={ props => <MyExistingLoansFragment { ...props }/> } />
             <Route path='/mybenefits/benefits/education'
               render={ props => <EducationFragment { ...props } />}/>
+            <Route path='/mybenefits/benefits/eventbudgetrequisition'
+              render={ props => <EventsBudgetFragment { ...props } />}/>
             <Route exact path='/mybenefits/benefits/medical'
               render={ props => <MedicalFragment { ...props } />}/>
             <Route exact path='/mybenefits/benefits/loans'

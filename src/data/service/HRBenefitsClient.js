@@ -936,6 +936,13 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* News isHeart */
+
+  addNewsIsHeart (token, id, isHeart) {
+    return this.service.addNewsIsHeart(token, id, isHeart)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Events Budget */
 
   validateEventsBudget (token) {
@@ -944,8 +951,20 @@ export default class HRBenefitsClient {
   }
   /* News isHeart */
 
-  addNewsIsHeart (token, id, isHeart) {
-    return this.service.addNewsIsHeart(token, id, isHeart)
+  addEventsBudget (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    addEventParam
+  ) {
+    return this.service.addEventsBudget(
+      token,
+      accountToken,
+      accountNo,
+      releasingCenter,
+      addEventParam
+    )
       .pipe(ServiceErrorOperator())
   }
 
