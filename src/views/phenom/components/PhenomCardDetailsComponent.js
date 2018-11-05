@@ -15,7 +15,7 @@ import { NotifyActions } from '../../../actions/'
 
 
 import defaultImageIcon from '../../../images/mcdologo.jpg'
-import defaultImageBackground from '../../../images/phenomtest.jpg'
+import defaultImageBackground from '../../../images/profile-picture.png'
 
 import moment from 'moment'
 
