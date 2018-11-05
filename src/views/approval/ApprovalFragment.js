@@ -58,77 +58,12 @@ class ApprovalFragment extends BaseMVPView {
       rejectedRemarks : '',
       flightMode : '',
       purposeName : '',
-      approvalArray : [
-        {
-             "id": 1,
-             "name": {
-                 "first": "APPIAN",
-                 "middle": "DEVELOPER",
-                 "last": "TESTER"
-             },
-             "travelRequest": [
-                 {
-                     "id": 17,
-                     "referenceNumber": "TR20181029105938",
-                     "purpose": {
-                         "id": 1,
-                         "name": "Business Meeting"
-                     },
-                     "status": {
-                         "id": 2,
-                         "name": "For Approval"
-                     },
-                     "remarks": null,
-                     "departure": {
-                         "origin": {
-                             "id": 2000,
-                             "areaCode": "DNE",
-                             "airport": "Dallas North Airport",
-                             "location": "Dallas, United States"
-                         },
-                         "destination": {
-                             "id": 4820,
-                             "areaCode": "LXU",
-                             "airport": "Lukulu",
-                             "location": "Lukulu, Zambia"
-                         },
-                         "date": "2019-01-26",
-                         "time": "13:00",
-                         "remarks": "Going for Breakfast"
-                     },
-                     "return": {
-                         "origin": {
-                             "id": 4820,
-                             "areaCode": "LXU",
-                             "airport": "Lukulu",
-                             "location": "Lukulu, Zambia"
-                         },
-                         "destination": {
-                             "id": 2000,
-                             "areaCode": "DNE",
-                             "airport": "Dallas North Airport",
-                             "location": "Dallas, United States"
-                         },
-                         "date": "2019-01-26",
-                         "time": "20:00",
-                         "remarks": "Going for Dinner"
-                     },
-                     "liquidation": {
-                         "cost": 2000,
-                         "serviceCharge": 500,
-                         "VAT": null,
-                         "isTicketUsed": "",
-                         "reason": ""
-                     }
-                 }
-             ]
-         }
-      ]
+      approvalArray : []
     }
   }
 
   componentDidMount() {
-    // this.presenter.getApproval()
+    this.presenter.getApproval()
   }
 
   getApproval(approvalArray) {

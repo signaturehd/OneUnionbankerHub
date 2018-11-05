@@ -18,6 +18,7 @@ import {
 } from '../../ub-components/'
 
 import BookFlightComponent from './components/BookFlightComponent'
+import BookFlightFormComponent from './components/BookFlightFormComponent'
 import ResponseModal from '../notice/NoticeResponseModal'
 
 import { Progress } from 'react-sweet-progress'
@@ -298,6 +299,9 @@ class BookFlightFragment extends BaseMVPView {
               />
             </center>
           </Modal>
+        }
+        {
+
         }
         <div className = { 'percentage-grid' }>
           <div>
