@@ -13,6 +13,93 @@ let storedEducation = []
 let requiredDocuments = []
 let storedParent = []
 
+let preEmploymentList = [
+  {
+    id : 0,
+    name : 'Pre Employment Documents Affirmation'
+  },
+  {
+    id : 1,
+    name : 'Financial Obligations'
+  },
+  {
+    id : 2,
+    name : 'Biographical Data'
+  },
+  {
+    id : 3,
+    name : 'Birth Certificate'
+  },
+  {
+    id : 4,
+    name : 'Education Background'
+  },
+  {
+    id : 5,
+    name : 'Work Experience'
+  },
+  {
+    id : 6,
+    name : 'Character Reference'
+  },
+  {
+    id : 7,
+    name : 'NBI Clearance'
+  },
+  {
+    id : 8,
+    name : 'Authorization Background Check'
+  },
+  {
+    id : 9,
+    name : 'Banko Sentral of the Philippines(BSP) Certification'
+  },
+  {
+    id : 10,
+    name : 'Social Security System'
+  },
+  {
+    id : 10,
+    name : 'Tax Identification Number(TIN)'
+  },
+  {
+    id : 12,
+    name : 'Bureau of Internal Revenue(BIR) Form'
+  },
+  {
+    id : 13,
+    name : 'Philippine Health Insurance(PhilHealth) Form'
+  },
+  {
+    id : 14,
+    name : 'Pag-IBIG Form'
+  },
+  {
+    id : 15,
+    name : 'Pag-IBIG Loan Form'
+  },
+  {
+    id : 16,
+    name : 'Personnel Signature'
+  },
+  {
+    id : 17,
+    name : 'Spouse Form'
+  },
+  {
+    id : 18,
+    name : 'Child Form'
+  },
+  {
+    id : 19,
+    name : 'Parent/ Siblings Form'
+  },
+  {
+    id : 20,
+    name : 'Medical Appointment'
+  },
+]
+
 export default class PreEmploymentPresenter {
   constructor (container) {
     this.preEmploymentFormInteractor = new preEmploymentFormInteractor(container.get('HRBenefitsClient'))
@@ -94,6 +181,7 @@ export default class PreEmploymentPresenter {
         data => {
           this.view.hideCircularLoader()
           this.view.checkedPreEmploymentForm(data)
+          this.view.showPreEmploymentList(preEmploymentList)
           this.setDocumentsValue(data)
           this.getAffirmStatus()
         },
