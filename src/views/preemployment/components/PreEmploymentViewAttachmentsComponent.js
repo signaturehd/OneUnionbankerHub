@@ -14,9 +14,10 @@ class PreEmploymentViewAttachmentsComponent extends Component {
   constructor (props) {
     super(props)
   }
+
   extensionFunc(file) {
     let bool = false
-    let extension = file.split(';')
+    let extension = file && file.split(';')
 
     extension[0] == 'data:image/png' ||
     extension[0] == 'data:image/jpg' ||
@@ -37,25 +38,27 @@ class PreEmploymentViewAttachmentsComponent extends Component {
 
     return (
       <div>
-        <h2 className = { 'text-align-left font-weight-bold font-size-18px' }>
-          { file.length !== 0 ? title + ' Attachments' : 'No Attachments Found' }
-        </h2>
-        <br/>
-        <div className = { 'grid-attachment' }>
-          {
-            file.map((resp) =>
-              <Card onClick = { () => onClick(resp.file) }>
-              <div>
-              {
-                this.extensionFunc(resp.file) ?
-                  <img src = { resp.file } className = { 'view-size' }/>
-                  :
-                  <span className = { 'view-size pdf-img' }/>
-              }
-              </div>
-              </Card>
-            )
-          }
+        <div>
+          <h2 className = { 'text-align-left font-weight-bold font-size-18px' }>
+            { file && file.length !== 0 ? title + ' Attachments' : 'No Attachments Found' }
+          </h2>
+          <br/>
+          <div className = { 'grid-attachment' }>
+            {
+              file && file.map((resp) =>
+                <Card onClick = { () => onClick(resp.file) }>
+                <div>
+                {
+                  this.extensionFunc(resp.file) ?
+                    <img src = { resp.file } className = { 'view-size' }/>
+                    :
+                    <span className = { 'view-size pdf-img' }/>
+                }
+                </div>
+                </Card>
+              )
+            }
+          </div>
         </div>
       </div>
     )

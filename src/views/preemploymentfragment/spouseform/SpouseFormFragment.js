@@ -88,9 +88,13 @@ class SpouseFormFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(17)
-    this.presenter.getSpouse()
-    this.presenter.getObjectData()
+    try {
+      this.props.onSendPageNumberToView(17)
+      this.presenter.getSpouse()
+      this.presenter.getObjectData()
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   showCircularLoader () {
@@ -542,27 +546,34 @@ class SpouseFormFragment extends BaseMVPView {
             </div>
           </div>
           <br/>
-          {
-              enabledAttachmentsLoader ?
-              <center>
-                <br/>
-                <h2>Please wait while we we&#39;re retrieving your documents </h2>
-                <br/>
-                <CircularLoader show = { enabledAttachmentsLoader } />
-                <br/>
-              </center>
-              :
-              <div>
-                {
-                  attachments.length !== 0 &&
-                  <PreEmploymentViewAttachmentsComponent
-                    title = { 'Spouse' }
-                    file = { attachments }
-                    onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+          <div>
+            {
+              spouseData &&
+             <div>
+               {
+                   enabledAttachmentsLoader ?
+                   <center>
+                     <br/>
+                     <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                     <br/>
+                     <CircularLoader show = { enabledAttachmentsLoader } />
+                     <br/>
+                   </center>
+                   :
+                   <div>
+                     {
+                       attachments.length !== 0 &&
+                       <PreEmploymentViewAttachmentsComponent
+                         title = { 'Spouse' }
+                         file = { attachments }
+                         onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
 
-                }
-              </div>
-          }
+                     }
+                   </div>
+               }
+             </div>
+            }
+          </div>
           <br/>
           <div className = { 'text-align-right' }>
             <GenericButton
