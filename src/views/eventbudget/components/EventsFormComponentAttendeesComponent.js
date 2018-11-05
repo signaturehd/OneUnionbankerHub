@@ -67,7 +67,7 @@ class EventsFormComponentAttendeesComponent extends Component {
           <br/>
           {
             eventBudgetData &&
-            eventBudgetData.attendees &&
+            eventBudgetData.attendees.length !== 0 ?
             eventBudgetData.attendees.slice(0, index).map((attend, key) =>
               {
                 const setDepartmentKey = key
@@ -84,6 +84,8 @@ class EventsFormComponentAttendeesComponent extends Component {
                 )
               }
             )
+            :
+            <center><small>No Attendees Found</small></center>
           }
         </div>
         <br/>
