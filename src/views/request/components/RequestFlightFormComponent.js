@@ -190,6 +190,7 @@ class RequestFlightFormComponent extends Component {
               text = { 'Preferred Date of Departure' }
               selected = { departureDate && moment(departureDate) }
               onChange = { (e) => departureDateFunc(e) }
+              minDate = { moment() }
             />
             {
               showDepartureTime &&
@@ -236,6 +237,7 @@ class RequestFlightFormComponent extends Component {
                 text = { 'Preferred Date of Departure' }
                 selected = { returnDate && moment(returnDate) }
                 onChange = { (e) => returnDateFunc(e) }
+                minDate = { moment(departureDate).add(1,'day') }
               />
               {
                 showReturnTime &&
