@@ -573,7 +573,7 @@ class CharacterReferenceFragment extends BaseMVPView {
       <div>
         <div className = { 'grid-global' } >
           <h2 className = { 'font-weight-bold' }>Character Reference</h2>
-          <div className = { 'text-align-end' }>
+          <div className = { 'text-align-right' }>
             <GenericButton
               text = { 'Add Character Reference' }
               onClick = { () => this.setState({ showCharacterReferenceModal : true }) }
