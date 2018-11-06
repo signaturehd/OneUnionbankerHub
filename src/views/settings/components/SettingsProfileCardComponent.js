@@ -71,6 +71,7 @@ class SettingsProfileCardComponent extends Component {
       enabledStaffLoader,
       staffResponseMessage,
       showSuccessModal,
+      showEditDependentModalFunc
     } = this.props
 
 
@@ -241,21 +242,21 @@ class SettingsProfileCardComponent extends Component {
                     </h5>
                   </div>
                 </div>
-                <div className = { 'edit-dependents-grid' }>
-                  <div
-                    onClick={ () => showDependentModalFunc(true) }
-                    className={ 'profile-information-view-right' }>
-                    <div>
-                      <span className={ 'profile-icon-settings employeeDependent' }/>
-                    </div>
-                    <div>
-                      <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
-                        { 'See dependents list'  }
-                      </h5>
-                    </div>
+                <div
+                  className={ 'profile-information-view-right' }>
+                  <div >
+                    <span className={ 'profile-icon-settings employeeDependent' }/>
                   </div>
-                  <span
-                    className = { 'profile-icon-settings editIconImage' }/>
+                  <div className = { 'edit-dependents-grid' }>
+                    <h5
+                      onClick={ () => showDependentModalFunc(true) }
+                      className={ 'profile-margin-label profile-cursor-pointer' }>
+                      { 'See dependents list'  }
+                    </h5>
+                    <span
+                      onClick = { () => showEditDependentModalFunc(true) }
+                      className = { 'profile-icon-settings editIconImage' }/>
+                  </div>
                 </div>
                 <div
                   onClick={ () => showCompanyInfoModalFunc(true) }

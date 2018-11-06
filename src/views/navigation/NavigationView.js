@@ -65,6 +65,14 @@ import Carousel from '../carousel/Carousel'
 
 /* Pre Employment */
 import PreEmploymentFragment from '../preemployment/PreEmploymentFragment'
+import AddingDependentsFragment
+  from '../dependents/AddingDependentsFragment'
+import ChildrenFragment
+  from '../preemploymentfragment/childrenform/ChildrenFragment'
+import SpouseFragment
+  from '../preemploymentfragment/spouseform/SpouseFormFragment'
+import ParentFragment
+  from '../preemploymentfragment/parentform/ParentFragment'
 
 /* Post Employment */
 import PostEmploymentFragment from '../postemployment/PostEmploymentFragment'
@@ -299,6 +307,18 @@ class NavigationView extends BaseMVPView {
                       preEmploymentStatus = { preEmploymentStatus }
                       tempPreEmploymentModal = { tempPreEmploymentModal }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/dependent' render = { props =>
+                    <AddingDependentsFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path='/dependentchildren' render={ props => <ChildrenFragment{ ...props }
+                    reuse = { true }
+                    setSelectedNavigation = { this.setSelectedNavigation }  />}/>
+                  <Route path='/dependentspouse' render={ props => <SpouseFragment{ ...props }
+                    reuse = { true }
+                    setSelectedNavigation = { this.setSelectedNavigation }  />}/>
+                  <Route path='/dependentsiblings' render={ props => <ParentFragment{ ...props }
+                    reuse = { true }
+                    setSelectedNavigation = { this.setSelectedNavigation }  />}/>
                   <Route path = '/mybenefits/transactions/personal/:id' render = { props =>
                     <TransactionPersonalDetailFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
@@ -408,6 +428,9 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mycompliance' render = { props =>
                     <ComplianceFragment { ...props }
                       profileHasCOC = { profileHasCOC }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/phenom' render = { props =>
+                    <PhenomFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/phenom' render = { props =>
                     <PhenomFragment { ...props }

@@ -6,6 +6,7 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/SettingsPresenter'
 
 import SettingsProfileCardComponent from './components/SettingsProfileCardComponent'
+import SettingsAddDependentsComponent from './components/SettingsAddDependentsComponent'
 
 import { Card, Modal, GenericButton   } from '../../ub-components/'
 
@@ -45,6 +46,7 @@ class SettingsFragment extends BaseMVPView {
      descriptionText : '',
      staffResponseMessage : '',
      profileBackground : [],
+     showEditDependents: '',
     }
   }
   componentDidMount () {
@@ -152,6 +154,7 @@ class SettingsFragment extends BaseMVPView {
       enabledStaffLoader,
       staffResponseMessage,
       showSuccessModal,
+      showEditDependents,
     }=this.state
 
     return (
@@ -170,7 +173,9 @@ class SettingsFragment extends BaseMVPView {
             </center>
           </Modal>
         }
+
         <SettingsProfileCardComponent
+           showEditDependentModalFunc = { (showEditDependents) => this.props.history.push('/dependent') }
            showSuccessModal = { showSuccessModal }
            onCloseStaffResponseModalFunc = { () => this.setState({ showSuccessModal : false  }) }
            staffResponseMessage = { staffResponseMessage }
@@ -227,7 +232,7 @@ class SettingsFragment extends BaseMVPView {
              this.presenter.getDevices()
              this.setState({ showDevicesModal })
            }
-         }
+          }
           updateAddressOption = { (address, attachments) => this.presenter.updateAddress(address, attachments) }
         />
       </div>

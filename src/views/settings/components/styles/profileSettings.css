@@ -1,6 +1,6 @@
 .edit-dependents-grid {
   display: grid;
-  grid-template-columns: 1fr .2fr
+  grid-template-columns: .4fr .2fr;
 }
 
 /* Icon settings */
@@ -12,6 +12,27 @@
   height: 20px;
   width: 20px;
   background-repeat: no-repeat;
+}
+
+.profile-button-small {
+  min-width: 100px;
+  height: 30px;
+  border-radius: 50px;
+}
+
+.profile-card-list {
+  padding: 20px;
+}
+
+.percentage-grid {
+  display: grid;
+  column-gap: 2%;
+  grid-template-columns:  1fr .1fr;
+}
+
+.settings-dependent-container {
+  display: grid;
+  grid-template-columns: .4fr 1fr .4fr;
 }
 
 .profile-cursor-pointer {

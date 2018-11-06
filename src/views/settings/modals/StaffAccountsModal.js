@@ -12,7 +12,6 @@ import {
   SingleInputModal
 } from '../../../ub-components/'
 
-import StaffAccountCardComponent from '../components/StaffAccountCardComponent'
 import './styles/staffAccountModal.css'
 
 import * as func from '../functions/SettingFunctions'

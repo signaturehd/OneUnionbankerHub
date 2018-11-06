@@ -84,7 +84,10 @@ class ParentFragment extends BaseMVPView {
 
   /* Implementation */
   componentDidMount () {
-    this.props.onSendPageNumberToView(19)
+    if(this.props.reuse) {
+    } else {
+      this.props.onSendPageNumberToView(19)
+    }
     this.presenter.getParents()
     this.presenter.getSiblings()
     this.presenter.getObjectData()
@@ -544,131 +547,167 @@ class ParentFragment extends BaseMVPView {
           }
           />
         }
-        <div className = { 'percentage-grid' }>
+        <div className = { `${ this.props.reuse ? 'preemployment-container' : '' }` }>
+          <div></div>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>Parent Form</h2>
-            <h2>Fill up the form.</h2>
+            {
+              !this.props.reuse ?
+              <div className = { 'percentage-grid' }>
+                <div>
+                  <h2 className={ 'header-margin-default text-align-left' }>Parent Form</h2>
+                  <h2>Fill up the form.</h2>
+                  <br/>
+                </div>
+                <Progress
+                  type = { 'circle' }
+                  height = { 65 }
+                  width = { 65 }
+                  percent = { percentage } />
+              </div>
+              :
+              <div className = { 'percentage-grid' }>
+                <div>
+                  <div className = { 'text-align-left' }>
+                    <GenericButton
+                      className = { 'global-button profile-button-small' }
+                      text = { 'Back to Profile' }
+                      onClick = { () =>
+                        this.props.history.push('/settings')
+                      }
+                    />
+                  </div>
+                  <br/>
+                  <h2 className = { 'header-margin-default text-align-left' }>Adding of Siblings</h2>
+                </div>
+                <div></div>
+              </div>
+            }
             <br/>
-          </div>
-          <Progress
-            type = { 'circle' }
-            height = { 65 }
-            width = { 65 }
-            percent = { percentage } />
-        </div>
-        <br/>
-        <Line/>
-        <br/>
-        <div>
-          {
-            parentDetails.length === 2 ?
-            <h2 className = { 'font-weight-bold' }>Parent</h2>
-            :
-            <div className = { 'grid-global' }>
-              <h2 className = { 'font-weight-bold' }>Parent</h2>
+            <Line/>
+            <br/>
+            {
+              !this.props.reuse &&
+              <div>
+                {
+                  parentDetails.length === 2 ?
+                  <h2 className = { 'font-weight-bold' }>Parent</h2>
+                  :
+                  <div className = { 'grid-global' }>
+                    <h2 className = { 'font-weight-bold' }>Parent</h2>
+                    {
+                      !enabledParentLoader &&
+                      <div className = { 'text-align-right' }>
+                      <GenericButton
+                        className = { 'employment-button global-button' }
+                        text = { 'Add Mother' }
+                        onClick = { () =>
+                          this.setState({
+                            showEditModeModal : true,
+                            isParentOrSiblings : true
+                          })
+                          }
+                        />
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            }
+            <br/>
+            <div>
               {
-                !enabledParentLoader &&
+                !this.props.reuse &&
+                <div>
+                  {
+                    enabledParentLoader  ?
+                    <center>
+                      <br/>
+                      <br/>
+                        <h2>Please wait while we we&#39;re updating your information.</h2>
+                      <br/>
+                      <CircularLoader show = { enabledParentLoader }/>
+                      <br/>
+                    </center>
+                    :
+                    <div>
+                    {
+                      parentDetails.length !== 0 &&
+                      <ParentComponent
+                        parentDetails = { parentDetails }
+                        onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
+                        onDeleteProperty = { (id, parentTrue) => this.onDeletePropertyFunc(id, parentTrue) }
+                        />
+                    }
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+            <br/>
+            <Line/>
+            <br/>
+            <div className = { 'grid-global' }>
+              <h2 className = { 'font-weight-bold' }>Siblings</h2>
+              {
+                !enabledSiblingsLoader &&
                 <div className = { 'text-align-right' }>
-                <GenericButton
-                  className = { 'employment-button global-button' }
-                  text = { 'Add Mother' }
-                  onClick = { () =>
-                    this.setState({
-                      showEditModeModal : true,
-                      isParentOrSiblings : true
-                    })
+                  <GenericButton
+                    className = { 'employment-button global-button' }
+                    text = { 'Add Siblings' }
+                    onClick = { () =>
+                      this.setState({
+                        showEditModeModal : true,
+                        isParentOrSiblings : false
+                      })
                     }
                   />
                 </div>
               }
             </div>
-          }
-        </div>
-        <br/>
-        {
-          enabledParentLoader  ?
-          <center>
             <br/>
-            <br/>
-              <h2>Please wait while we we&#39;re updating your information.</h2>
-            <br/>
-            <CircularLoader show = { enabledParentLoader }/>
-            <br/>
-          </center>
-          :
-          <div>
             {
-              parentDetails.length !== 0 &&
-              <ParentComponent
-                parentDetails = { parentDetails }
-                onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
-                onDeleteProperty = { (id, parentTrue) => this.onDeletePropertyFunc(id, parentTrue) }
-                />
-            }
-          </div>
-        }
-        <br/>
-        <Line/>
-        <br/>
-        <div className = { 'grid-global' }>
-          <h2 className = { 'font-weight-bold' }>Siblings</h2>
-          {
-            !enabledSiblingsLoader &&
-            <div className = { 'text-align-right' }>
-              <GenericButton
-                className = { 'employment-button global-button' }
-                text = { 'Add Siblings' }
-                onClick = { () =>
-                  this.setState({
-                    showEditModeModal : true,
-                    isParentOrSiblings : false
-                  })
-                }
-              />
-            </div>
-          }
-        </div>
-        <br/>
-        {
-          enabledSiblingsLoader  ?
-          <center>
-            <br/>
-            <br/>
-              <h2>Please wait while we we&#39;re updating your information.</h2>
-            <br/>
-            <CircularLoader show = { enabledSiblingsLoader }/>
-            <br/>
-          </center>
-          :
-          <div>
-            {
-              siblingDetails.length !== 0 &&
+              enabledSiblingsLoader  ?
+              <center>
+                <br/>
+                <br/>
+                  <h2>Please wait while we we&#39;re updating your information.</h2>
+                <br/>
+                <CircularLoader show = { enabledSiblingsLoader }/>
+                <br/>
+              </center>
+              :
               <div>
-                <SiblingComponent
-                  siblingDetails = { siblingDetails }
-                  onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
-                  onDeleteProperty = { (id, parentTrue) => this.onDeletePropertyFunc(id, parentTrue) }
-                  index = { index }
-                  />
-                  <br/>
-                <button
-                  type = { 'button' }
-                  className = { `viewmore tooltip ${ isVisible }` }
-                  onClick = {
-                    () => {
-                      if(index === siblingDetails.length)
-                        this.setState({ index : 4, viewMoreText : 'View more' })
-                      else
-                        this.setState({ index : siblingDetails.length, viewMoreText : 'View less' })
-                    }
-                  }>
-                  <img src={ require('../../../images/icons/horizontal.png') } />
-                  <span className={ 'tooltiptext' }>{ viewMoreText }</span>
-                </button>
+                {
+                  siblingDetails.length !== 0 &&
+                  <div>
+                    <SiblingComponent
+                      siblingDetails = { siblingDetails }
+                      onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
+                      onDeleteProperty = { (id, parentTrue) => this.onDeletePropertyFunc(id, parentTrue) }
+                      index = { index }
+                      />
+                      <br/>
+                    <button
+                      type = { 'button' }
+                      className = { `viewmore tooltip ${ isVisible }` }
+                      onClick = {
+                        () => {
+                          if(index === siblingDetails.length)
+                            this.setState({ index : 4, viewMoreText : 'View more' })
+                          else
+                            this.setState({ index : siblingDetails.length, viewMoreText : 'View less' })
+                        }
+                      }>
+                      <img src={ require('../../../images/icons/horizontal.png') } />
+                      <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+                    </button>
+                  </div>
+                }
               </div>
             }
           </div>
-        }
+          <div></div>
+        </div>
       </div>
     )
   }

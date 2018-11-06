@@ -29,6 +29,7 @@ export default class SettingsPresenter {
   }
 
    getProfile () {
+    store.dispatch(NotifyActions.resetNotify())
     this.view.showLoading()
 
     this.getProfileInteractor.execute()

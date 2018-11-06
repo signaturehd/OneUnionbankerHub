@@ -150,6 +150,7 @@ export default class PreEmploymentPresenter {
   }
 
   getEmployeeSchool () {
+    store.dispatch(NotifyActions.resetNotify())
     this.employeeSchoolInteractor.execute()
     .subscribe(
       data => {
@@ -170,11 +171,11 @@ export default class PreEmploymentPresenter {
     .subscribe(data => {
       this.setParentValue(data)
     }, error => {
+      store.dispatch(NotifyActions.resetNotify())
     })
   }
 
   getPreEmploymentForm () {
-    store.dispatch(NotifyActions.resetNotify())
     this.view.showCircularLoader()
     this.preEmploymentFormInteractor.execute()
     .subscribe(
@@ -188,6 +189,7 @@ export default class PreEmploymentPresenter {
         error => {
           this.view.showPreEmploymentList(preEmploymentList)
           this.view.hideCircularLoader()
+          store.dispatch(NotifyActions.resetNotify())
           this.getAffirmStatus()
        }
     )
@@ -257,6 +259,7 @@ export default class PreEmploymentPresenter {
       this.view.showPercentageOfPreEmployment((progress / totalValue) * 100)
     })
     .subscribe(data => {}, error => {
+      store.dispatch(NotifyActions.resetNotify())
     })
   }
 
