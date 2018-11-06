@@ -110,7 +110,8 @@ class EducationBackgroundFragment extends BaseMVPView {
       }],
       isUpdated : 0,
       updateMode : false,
-      attachmentUrl : []
+      attachmentUrl : [],
+      attachmentFileObject : [],
     })
   }
 
@@ -156,6 +157,13 @@ class EducationBackgroundFragment extends BaseMVPView {
 
   showPdfFileView (pdfFile) {
     this.setState({ pdfFile, showPdfViewComponent : true })
+  }
+
+  showTest (newFile, newName, newBase64) {
+    let arrayNew = [...this.state.attachmentFileObject]
+
+    console.log(newName)
+    this.setState({ attachmentFileObject : arrayNew })
   }
 
   showEditModeAttachments (data) {
@@ -407,6 +415,7 @@ class EducationBackgroundFragment extends BaseMVPView {
   render () {
     const {
       attachmentUrl,
+      attachmentFileObject,
       viewFile,
       updateMode,
       enabledLoader,
