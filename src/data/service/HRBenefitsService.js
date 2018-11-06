@@ -50,6 +50,40 @@ export default class HRBenefitsService {
     })
   }
 
+
+  /* Reset Password */
+  requestEmailVerification (token, empId, date) {
+    const objectParam = {
+      employeeNumber: empId,
+      birthDate : date,
+    }
+    return this.apiClient.post('v1/password/reset/email', objectParam, {
+      headers : { token }
+    })
+  }
+
+  requestOtpVerification (token, otp) {
+    const objectParam = {
+      otp : otp
+    }
+    return this.apiClient.post('v1/password/email/otp', objectParam, {
+      headers : { token }
+    })
+  }
+
+  requestNewPassword (token, newPassword, otp, employeeId, birtDate) {
+    const objectParam = {
+      otp: otp,
+      password: newPassword,
+      employeeNo: employeeId,
+      birthDate: birtDate,
+      token: token,
+    }
+    return this.apiClient.post('v1/password/reset', objectParam, {
+      headers : { token }
+    })
+  }
+
   /* dental loa */
 
   getDentalLoa (token) {
