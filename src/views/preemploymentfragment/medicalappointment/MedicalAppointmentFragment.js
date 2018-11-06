@@ -155,6 +155,7 @@ class MedicalAppointmentFragment extends BaseMVPView {
             <DatePicker
               text = { 'Preferred Schedule' }
               minDate = {  moment() }
+              readOnly
               hint = { '(eg. MM/DD/YYYY)' }
               selected = { preferredDate }
               onChange = { (e)  =>
@@ -164,6 +165,7 @@ class MedicalAppointmentFragment extends BaseMVPView {
             <DatePicker
               text = { 'Alternative Schedule' }
               minDate = {  moment() }
+              readOnly
               hint = { '(eg. MM/DD/YYYY)' }
               selected = { alternativeDate ? alternativeDate : '' }
               onChange = { (e)  =>

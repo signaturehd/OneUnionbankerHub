@@ -161,7 +161,7 @@ class ParentModal extends Component {
               text = { 'Birth Date' }
               maxDate = {  moment() }
               hint = { '(eg. MM/DD/YYYY)' }
-              showYearDropdown
+              readOnly
               selected = { birthDate && moment(birthDate) }
               onChange = { (e)  =>
                 birthDateFunc(e.format('MM/DD/YYYY'))
