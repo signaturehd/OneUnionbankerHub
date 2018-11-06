@@ -4,18 +4,46 @@ import store from '../../../../store'
 import PostCharacterReferenceInteractor from '../../../../domain/interactor/preemployment/characterreference/PostCharacterReferenceInteractor'
 import PutCharacterReferenceInteractor from '../../../../domain/interactor/preemployment/characterreference/PutCharacterReferenceInteractor'
 import DeleteCharacterReferenceInteractor from '../../../../domain/interactor/preemployment/characterreference/DeleteCharacterReferenceInteractor'
-
+import GetCharacterReferenceFormInteractor from '../../../../domain/interactor/preemployment/characterreference/GetCharacterReferenceFormInteractor'
+import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
+import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
 import genericParam from '../../../../domain/param/PostCharacterReferenceParam'
 
 export default class CharacterReferencePresenter {
   constructor (container) {
     this.postCharacterReferenceInteractor = new PostCharacterReferenceInteractor(container.get('HRBenefitsClient'))
+    this.getOnboardingAttachmentsInteractor = new GetOnboardingAttachmentsInteractor(container.get('HRBenefitsClient'))
+    this.getCharacterReferenceFormInteractor = new GetCharacterReferenceFormInteractor(container.get('HRBenefitsClient'))
     this.putCharacterReferenceInteractor = new PutCharacterReferenceInteractor(container.get('HRBenefitsClient'))
+    this.getOnboardingPdfInteractor = new GetOnboardingPdfInteractor(container.get('HRBenefitsClient'))
     this.deleteCharacterReferenceInteractor = new DeleteCharacterReferenceInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
+  }
+
+  /* Get Method */
+
+  getOnBoardingAttachments (link) {
+    this.getOnboardingAttachmentsInteractor.execute(link)
+    .subscribe(data => {
+      this.view.showPdfFileView(data)
+      this.view.hideDocumentLoader()
+    }, error => {
+      this.view.hideDocumentLoader()
+      this.view.showPdfFileView('')
+      store.dispatch(NotifyActions.resetNotify())
+    })
+  }
+
+  getCharacterReferenceForm (link) {
+    this.getCharacterReferenceFormInteractor.execute(link)
+    .subscribe(data => {
+      this.view.showPdfFileUrl(data)
+    }, error =>{
+      this.view.hideDocumentLoader()
+    })
   }
 
   deleteCharacterReference (id) {

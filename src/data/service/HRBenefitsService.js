@@ -1377,6 +1377,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getCharacterReferenceForm (token) {
+    return this.onboardingClient.get('v1/employees/references/forms' , {
+      headers : { token }
+    })
+  }
+
   deleteCharacterReference (token, id) {
     return this.onboardingClient.delete(`v1/employees/references/${ id }`, {
       headers : { token }

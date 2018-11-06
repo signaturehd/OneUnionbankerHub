@@ -1017,6 +1017,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getCharacterReferenceForm (token) {
+    return this.service.getCharacterReferenceForm(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   deleteCharacterReference (token, id) {
     return this.service.deleteCharacterReference(token, id)
       .pipe(ServiceErrorOperator())
