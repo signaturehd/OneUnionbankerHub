@@ -69,6 +69,13 @@ import PreEmploymentFragment from '../preemployment/PreEmploymentFragment'
 /* Laptop Lease */
 import LaptopLeaseFragment from '../laptoplease/LaptopLeaseFragment'
 
+/* Travel */
+import TravelFragment from '../travel/TravelFragment'
+import RequestFlightFragment from '../request/RequestFlightFragment'
+import BookFlightFragment from '../bookflight/BookFlightFragment'
+import LiquidationFragment from '../liquidation/LiquidationFragment'
+import ApprovalFragment from '../approval/ApprovalFragment'
+
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
@@ -86,7 +93,8 @@ class NavigationView extends BaseMVPView {
       hasPIN: '',
       enabledLoader : false,
       profileHasCOC: '',
-      tempPreEmploymentModal: false
+      tempPreEmploymentModal: false,
+      isLineManager : false
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -120,6 +128,10 @@ class NavigationView extends BaseMVPView {
     else {
       this.presenter.postEnrollPin(e)
     }
+  }
+
+  navigate () {
+    this.props.history.push('/mytravel/travel')
   }
 
   componentDidMount () {
@@ -156,6 +168,10 @@ class NavigationView extends BaseMVPView {
     this.setState({ profileHasCOC })
   }
 
+  isLineManagerData (isLineManager) {
+    this.setState({ isLineManager })
+  }
+
   relogin () {
     this.props.history.push('/')
   }
@@ -177,7 +193,8 @@ class NavigationView extends BaseMVPView {
       hasPIN,
       enabledLoader,
       profileHasCOC,
-      tempPreEmploymentModal
+      tempPreEmploymentModal,
+      isLineManager
     } = this.state
 
     const { history, login } = this.props
@@ -348,6 +365,22 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mybenefits' render = { props =>
                     <BenefitsFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel/travel/request' render = { props =>
+                    <RequestFlightFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel/travel/book' render = { props =>
+                    <BookFlightFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel/travel/liquidation' render = { props =>
+                    <LiquidationFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel/approval' render = { props =>
+                    <ApprovalFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel' render = { props =>
+                    <TravelFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation }
+                      isLineManager = { isLineManager } /> } />
                   <Route path = '/payslip' render = { props =>
                     <Payslip { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />

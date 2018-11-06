@@ -60,6 +60,10 @@ ul {
   -webkit-mask-image: url('../../../../../images/drawer/Benefit.png');
   mask-image: url('../../../../../images/drawer/Benefit.png');
   }
+.travel-icon {
+  -webkit-mask-image: url('../../../../../images/drawer/mytravel.png');
+  mask-image: url('../../../../../images/drawer/mytravel.png');
+  }
 .transaction-icon {
   -webkit-mask-image: url('../../../../../images/drawer/Transaction.png');
   mask-image: url('../../../../../images/drawer/Transaction.png');
