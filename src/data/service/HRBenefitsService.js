@@ -1891,29 +1891,145 @@ export default class HRBenefitsService {
      })
    }
 
-   addLaptopLease (
-       token,
-       accountToken,
-       accountNumber,
-       releasingCenter,
-       laptopLeaseParam) {
-     const formData = new FormData()
-     const object = {
-       color: laptopLeaseParam.color,
-       term: laptopLeaseParam.terms,
-       estimatedCost : laptopLeaseParam.estimatedAmount,
-       deliveryOptionId: laptopLeaseParam.deliveryOption
-     }
-     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
-     laptopLeaseParam.attachments &&
-     laptopLeaseParam.attachments.map((resp, key) =>(
-       formData.append('qoutation', resp.file)
-     ))
-     formData.append('body', JSON.stringify(object))
-     return this.apiClient.post('v1/leases/laptop',  formData, {
-       headers : { token }
-     })
+  addLaptopLease (
+     token,
+     accountToken,
+     accountNumber,
+     releasingCenter,
+     laptopLeaseParam) {
+   const formData = new FormData()
+   const object = {
+     color: laptopLeaseParam.color,
+     term: laptopLeaseParam.terms,
+     estimatedCost : laptopLeaseParam.estimatedAmount,
+     deliveryOptionId: laptopLeaseParam.deliveryOption
    }
+   formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+   laptopLeaseParam.attachments &&
+   laptopLeaseParam.attachments.map((resp, key) =>(
+     formData.append('qoutation', resp.file)
+   ))
+   formData.append('body', JSON.stringify(object))
+   return this.apiClient.post('v1/leases/laptop',  formData, {
+     headers : { token }
+   })
+  }
+
+  /* Travel */
+
+  getAreaData (token, pageNumber, find) {
+    return this.apiClient.get(`v1/travels/areas?find=${find}&pageNumber=${pageNumber}`, {
+      headers : { token }
+    })
+  }
+
+  getTravels (token, statusId) {
+    return this.apiClient.get(`v1/travels?status=${statusId}`, {
+      headers : { token }
+    })
+  }
+
+  getApproval (token) {
+    return this.apiClient.get('v1/travels/approval', {
+      headers : { token }
+    })
+  }
+
+  addRequestOneWay (token, requestParam) {
+    const object = {
+      purposeId : requestParam.purposeId,
+      departure: {
+        origin: requestParam.departureOriginId,
+        destination: requestParam.departureDestinationId,
+        date: requestParam.departureDate,
+        time: requestParam.departureTime,
+        remarks: requestParam.departureRemarks
+      }
+    }
+    return this.apiClient.post('v1/travels', object, {
+      headers : { token }
+    })
+  }
+
+  addRequestRoundTrip (token, requestParam) {
+    const object = {
+      purposeId : requestParam.purposeId,
+      departure: {
+        origin: requestParam.departureOriginId,
+        destination: requestParam.departureDestinationId,
+        date: requestParam.departureDate,
+        time: requestParam.departureTime,
+        remarks: requestParam.departureRemarks
+      },
+      return: {
+        origin: requestParam.returnOriginId,
+        destination: requestParam.returnDestinationId,
+        date: requestParam.returnDate,
+        time: requestParam.returnTime,
+        remarks: requestParam.returnRemarks
+      }
+    }
+    return this.apiClient.post('v1/travels', object, {
+      headers : { token }
+    })
+  }
+
+  addBookFlight (
+      token,
+      bookParam) {
+    const formData = new FormData()
+    const object = {
+      requestId: bookParam.requestId,
+      cost: {
+        flight: bookParam.totalCostOfFlight,
+        serviceCharge: bookParam.totalServiceCharge
+      },
+      departureTime : bookParam.departureTime,
+      returnTime: bookParam.returnTime
+    }
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    bookParam.attachmentsData &&
+    bookParam.attachmentsData.map((resp, key) =>(
+      formData.append('attachment', resp.file)
+    ))
+    formData.append('body', JSON.stringify(object))
+    return this.apiClient.post('v1/travels/book',  formData, {
+      headers : { token }
+    })
+  }
+
+  addLiquidation (
+      token,
+      liquidationParam) {
+    const formData = new FormData()
+    const object = {
+      requestId: liquidationParam.requestId,
+      isTicketUsed: liquidationParam.ticketMode,
+      remarks : liquidationParam.whyTicketUsed
+    }
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    liquidationParam.attachmentsData &&
+    liquidationParam.attachmentsData.map((resp, key) =>(
+      formData.append('attachment', resp.file)
+    ))
+    formData.append('body', JSON.stringify(object))
+    return this.apiClient.post('v1/travels/liquidate',  formData, {
+      headers : { token }
+    })
+  }
+
+  addApproval (token, approvalParam) {
+    const object = {
+      requestId: approvalParam.requestId,
+      isApprove: approvalParam.isApprove,
+      remark : approvalParam.rejectedRemarks
+    }
+    return this.apiClient.post('v1/travels/approval', object, {
+      headers : { token }
+    })
+  }
+
+  /* News isHeart */
 
   addNewsIsHeart (token, id, isHeart) {
     const objectNewsIsHeart = {

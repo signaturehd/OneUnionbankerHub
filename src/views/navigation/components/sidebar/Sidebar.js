@@ -3,17 +3,14 @@ import PropTypes from 'prop-types'
 import './styles/sidebar.css'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { Line } from '../../../../ub-components'
-
 class SideBar extends Component {
   constructor (props) {
     super(props)
     this.callLogout = this.callLogout.bind(this)
   }
-
   callLogout () {
     this.props.logout()
   }
-
   render () {
     const {
       onClick,
@@ -45,6 +42,12 @@ class SideBar extends Component {
       title: 'Post-Employment',
       action: () => history.push('/postemployment'),
       className: 'compliance-icon'
+    },
+    {
+      id: 13 ,
+      title: 'My Travel',
+      action: () => history.push('/mytravel'),
+      className: 'travel-icon'
     },
     {
       id: 4 ,
@@ -140,6 +143,7 @@ class SideBar extends Component {
           d.id !== 9 &&
           d.id !== 10 &&
           d.id !== 12 &&
+          d.id !== 13 &&
           <div key = { idx }>
             <li
               className = { `_text-link ${selected === d.id && 'active'}` }
@@ -230,7 +234,6 @@ class SideBar extends Component {
     )
   }
 }
-
 SideBar.propTypes = {
   onClick : PropTypes.func,
   splitUserInitial : PropTypes.func,
@@ -239,9 +242,7 @@ SideBar.propTypes = {
   history : PropTypes.object,
   logout : PropTypes.func,
 }
-
 SideBar.defaultProps = {
   selected: -1,
 }
-
 export default SideBar
