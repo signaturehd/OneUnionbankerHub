@@ -81,6 +81,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       honorErrorMessage : '',
       startYearErrorMessage : '',
       endYearErrorMessage : '',
+      attachmentFileObject : [],
       attachmentUrl : [],
     }
   }
@@ -111,7 +112,6 @@ class EducationBackgroundFragment extends BaseMVPView {
       isUpdated : 0,
       updateMode : false,
       attachmentUrl : [],
-      attachmentFileObject : [],
     })
   }
 
@@ -119,15 +119,6 @@ class EducationBackgroundFragment extends BaseMVPView {
 
   noticeResponseResp (noticeResponse) {
     this.setState({ noticeResponse , showNoticeResponseModal : true})
-  }
-
-  showAttachmentsFileView (data) {
-    let arrayNew = [...this.state.attachmentUrl]
-    const objectArray = {
-      file : data
-    }
-    arrayNew.push(objectArray)
-    this.setState({ attachmentUrl : arrayNew })
   }
 
   hideCircularLoader () {
@@ -159,14 +150,18 @@ class EducationBackgroundFragment extends BaseMVPView {
     this.setState({ pdfFile, showPdfViewComponent : true })
   }
 
-  showTest (newFile, newName, newBase64) {
+  showRetrieveAttachments (file, name, base64) {
     let arrayNew = [...this.state.attachmentFileObject]
-
-    console.log(newName)
+    const objectFile = {
+      file,
+      name,
+      base64
+    }
+    arrayNew.push(objectFile)
     this.setState({ attachmentFileObject : arrayNew })
   }
 
-  showEditModeAttachments (data) {
+  showAttachmentsFileView (data) {
     let arrayNew = [...this.state.attachmentUrl]
     const objectArray = {
       file : data
@@ -268,7 +263,8 @@ class EducationBackgroundFragment extends BaseMVPView {
       address,
       isUpdated,
       torFormData,
-      messageNotFound
+      messageNotFound,
+      attachmentFileObject
     } = this.state
 
     let validateAttachments = false
@@ -359,7 +355,8 @@ class EducationBackgroundFragment extends BaseMVPView {
           honor,
           course,
           address,
-          torFormData)
+          torFormData,
+          attachmentFileObject)
         this.setState({ showEducationFormModal : false })
         } else {
           this.presenter.addEducationSchool(
@@ -381,6 +378,7 @@ class EducationBackgroundFragment extends BaseMVPView {
 
   resetAttachmentUrl () {
     this.setState({ attachmentUrl : [] })
+    this.setState({ attachmentFileObject : [] })
   }
 
   resetMode () {

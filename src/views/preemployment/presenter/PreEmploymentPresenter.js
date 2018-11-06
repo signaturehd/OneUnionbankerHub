@@ -186,6 +186,7 @@ export default class PreEmploymentPresenter {
           this.getAffirmStatus()
         },
         error => {
+          this.view.showPreEmploymentList(preEmploymentList)
           this.view.hideCircularLoader()
           this.getAffirmStatus()
        }
