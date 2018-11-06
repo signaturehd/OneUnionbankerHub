@@ -1,3 +1,8 @@
+.edit-dependents-grid {
+  display: grid;
+  grid-template-columns: 1fr .2fr
+}
+
 /* Icon settings */
 .profile-icon-settings {
   background-size: contain;

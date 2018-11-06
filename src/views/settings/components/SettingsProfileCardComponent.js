@@ -241,17 +241,21 @@ class SettingsProfileCardComponent extends Component {
                     </h5>
                   </div>
                 </div>
-                <div
-                  onClick={ () => showDependentModalFunc(true) }
-                  className={ 'profile-information-view-right' }>
-                  <div>
-                    <span className={ 'profile-icon-settings employeeDependent' }/>
+                <div className = { 'edit-dependents-grid' }>
+                  <div
+                    onClick={ () => showDependentModalFunc(true) }
+                    className={ 'profile-information-view-right' }>
+                    <div>
+                      <span className={ 'profile-icon-settings employeeDependent' }/>
+                    </div>
+                    <div>
+                      <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
+                        { 'See dependents list'  }
+                      </h5>
+                    </div>
                   </div>
-                  <div>
-                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
-                      { 'See dependents list'  }
-                    </h5>
-                  </div>
+                  <span
+                    className = { 'profile-icon-settings editIconImage' }/>
                 </div>
                 <div
                   onClick={ () => showCompanyInfoModalFunc(true) }
