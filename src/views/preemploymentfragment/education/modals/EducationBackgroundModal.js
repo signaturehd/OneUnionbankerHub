@@ -32,13 +32,25 @@ class EducationBackgroundModal extends Component {
     super (props)
   }
 
+  checkDegree (id) {
+    if(id === 0) {
+      return 'Bachelors'
+    } else if (id === 1) {
+      return 'Masteral'
+    } else if (id === 2) {
+      return 'Doctorate'
+    } else if (id === 3) {
+      return 'Vocational'
+    } 
+  }
+
   render () {
 
     const degreeArray = [
-      { id:1, name:'Bachelors' },
-      { id:2, name:'Masteral' },
-      { id:3, name:'Doctorate' },
-      { id:4, name:'Vocational' }
+      { id:0, name:'Bachelors' },
+      { id:1, name:'Masteral' },
+      { id:2, name:'Doctorate' },
+      { id:3, name:'Vocational' }
     ]
 
     const {
@@ -96,7 +108,8 @@ class EducationBackgroundModal extends Component {
       termErrorMessage,
       honorErrorMessage,
       startYearErrorMessage,
-      endYearErrorMessage
+      endYearErrorMessage,
+      degreeId
     } = this.props
 
     return (
@@ -162,7 +175,7 @@ class EducationBackgroundModal extends Component {
           errorMessage = { studentNoErrorMessage }/>
         <GenericInput
           text = { 'Degree' }
-          value = { degree }
+          value = { this.checkDegree(degreeId) }
           readOnly
           onChange = { (e) => degreeFunc(e.target.value) }
           onClick = { () => showDegreeFunc(true) }

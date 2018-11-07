@@ -83,6 +83,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       endYearErrorMessage : '',
       attachmentFileObject : [],
       attachmentUrl : [],
+      degreeId: ''
     }
   }
 
@@ -193,8 +194,8 @@ class EducationBackgroundFragment extends BaseMVPView {
     this.setState({ studentNo: validate, studentNoErrorMessage : '' })
   }
 
-  degreeFunc(id, degree) {
-    this.setState({ degree, showDegreeModal : false, degreeErrorMessage : ''})
+  degreeFunc(degreeId, degree) {
+    this.setState({ degreeId, degree, showDegreeModal : false, degreeErrorMessage : ''})
   }
 
   honorFunc(honor) {
@@ -264,7 +265,8 @@ class EducationBackgroundFragment extends BaseMVPView {
       isUpdated,
       torFormData,
       messageNotFound,
-      attachmentFileObject
+      attachmentFileObject,
+      degreeId
     } = this.state
 
     let validateAttachments = false
@@ -299,7 +301,7 @@ class EducationBackgroundFragment extends BaseMVPView {
         studentNo,
         startYear,
         endYear,
-        degree,
+        degreeId,
         honor,
         course,
         address,
@@ -313,7 +315,7 @@ class EducationBackgroundFragment extends BaseMVPView {
           studentNo,
           startYear,
           endYear,
-          degree,
+          degreeId,
           honor,
           course,
           address,
@@ -352,7 +354,7 @@ class EducationBackgroundFragment extends BaseMVPView {
           studentNo,
           startYear,
           endYear,
-          degree,
+          degreeId,
           honor,
           course,
           address,
@@ -366,7 +368,7 @@ class EducationBackgroundFragment extends BaseMVPView {
             studentNo,
             startYear,
             endYear,
-            degree,
+            degreeId,
             honor,
             course,
             address,
@@ -454,7 +456,8 @@ class EducationBackgroundFragment extends BaseMVPView {
       courseErrorMessage,
       honorErrorMessage,
       startYearErrorMessage,
-      endYearErrorMessage
+      endYearErrorMessage,
+      degreeId
     } = this.state
 
     const { percentage, educationData} = this.props
@@ -486,6 +489,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       {
         showEducationFormModal &&
         <EducationBackgroundModal
+          degreeId = { degreeId }
           showViewModal = { showViewModal }
           viewFile = { viewFile }
           viewFileFunc = { (viewFile) => this.setState({ viewFile, showViewModal : true })}

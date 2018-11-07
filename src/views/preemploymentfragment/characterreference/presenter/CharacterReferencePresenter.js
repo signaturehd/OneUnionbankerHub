@@ -37,8 +37,8 @@ export default class CharacterReferencePresenter {
     })
   }
 
-  getCharacterReferenceForm (link) {
-    this.getCharacterReferenceFormInteractor.execute(link)
+  getCharacterReferenceForm () {
+    this.getCharacterReferenceFormInteractor.execute()
     .subscribe(data => {
       this.view.showPdfFileUrl(data)
     }, error =>{
