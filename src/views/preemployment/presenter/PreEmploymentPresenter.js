@@ -249,12 +249,6 @@ export default class PreEmploymentPresenter {
           progress +=1 // If document status is equal submitted (2) progress increment to 1
         }
       })
-      console.log(storedMedical.length)
-      storedMedical.map((resp) => {
-        if(resp.alternativeDate !== '' && resp.preferredDate !== '') {
-          progress +1
-        }
-      })
 
       data.map((resp) => {
         if(resp.nodeStatus === 1) {
@@ -277,6 +271,11 @@ export default class PreEmploymentPresenter {
       if(storedEducation.length > 0) {
         progress += 1 // If Education is greater 0 progress increment to 1
       }
+
+      if(Object.keys(storedMedical).length === 2) {
+        progress +=1
+      }
+
       this.view.showPercentageOfPreEmployment((progress / totalValue) * 100)
     })
     .subscribe(data => {}, error => {
