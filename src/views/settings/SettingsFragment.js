@@ -6,7 +6,6 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/SettingsPresenter'
 
 import SettingsProfileCardComponent from './components/SettingsProfileCardComponent'
-import SettingsAddDependentsComponent from './components/SettingsAddDependentsComponent'
 
 import { Card, Modal, GenericButton   } from '../../ub-components/'
 

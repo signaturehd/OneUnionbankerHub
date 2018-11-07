@@ -282,6 +282,7 @@ class PreEmploymentFragment extends BaseMVPView {
     this.presenter.getEmployeeSchool()
     this.presenter.getParents()
     this.presenter.getPreEmploymentMessageStatus()
+    this.presenter.getMedicalAppointment()
   }
 
   /* Validate if Preemployment message is display */

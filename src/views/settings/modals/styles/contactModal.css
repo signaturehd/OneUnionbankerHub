@@ -59,7 +59,7 @@
 
 .profile-address-grid-x2 {
   display: grid;
-  grid-template-columns: .3fr .05fr;
+  grid-template-columns: .9fr .05fr;
 }
 
 .profile-update-address-grid{

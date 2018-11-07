@@ -193,7 +193,7 @@ class AuthorizationBackgroundCheckFragment extends BaseMVPView {
         <Card
           className = { 'abc-card' }
           onClick = { () => {
-            this.onCheckedPdf('/2018-10-01/12345-Authorization - Background Check-1538362916663.pdf')
+            this.onCheckedPdf('/2018-11-07/12345-Authorization - Background Check-1538362916663.pdf')
             this.setState({ showPdfViewComponent : true  })
             }
           }>

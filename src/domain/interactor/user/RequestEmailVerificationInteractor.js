@@ -13,11 +13,6 @@ export default class RequestEmailVerificationInteractor {
   }
 
   executeNewPassword (token, newPassword, otp) {
-    console.log(token, newPassword, otp, birtDate, employeeId)
-    try {
-      return this.client.requestNewPassword(token, newPassword, otp, employeeId, birtDate)
-    } catch(e) {
-      console.log(e)
-    }
+    return this.client.requestNewPassword(token, newPassword, otp, employeeId, birtDate)
   }
 }

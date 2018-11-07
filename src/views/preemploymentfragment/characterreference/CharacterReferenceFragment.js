@@ -103,8 +103,8 @@ class CharacterReferenceFragment extends BaseMVPView {
   }
 
 
-  showPdfFileView (pdfFile) {
-    this.setState({ pdfFile, showPdfViewComponent : true })
+  showPdfFileView (pdfFile ) {
+    this.setState({ pdfFile , showPdfViewComponent : true })
   }
 
   /* Error Message Method */
@@ -477,7 +477,8 @@ class CharacterReferenceFragment extends BaseMVPView {
       cityTextErrorMessage,
       editMode,
       noticeResponse,
-      showPdfViewComponent
+      showPdfViewComponent,
+      pdfFile
     } = this.state
 
     const {
@@ -626,7 +627,7 @@ class CharacterReferenceFragment extends BaseMVPView {
       {
         showPdfViewComponent &&
         <CharacterReferenceCardViewComponent
-          pdfFile = { pdfFile }
+          pdfFile = { pdfFile && pdfFile }
           onClose = { () => this.setState({ showPdfViewComponent: false }) }
         />
       }

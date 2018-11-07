@@ -25,20 +25,13 @@ class SettingsContactInfoComponent extends Component {
   }
 
   checkEmail () {
-    console.log(validateEmail(this.state.emailText))
-    try {
-      if(!validateEmail(this.state.emailText)) {
-        console.log('test')
-        this.setState({ emailTextErrorMessage : 'Please enter valid email' })
-      } else {
-        this.setState({ emailTextErrorMessage : '' })
-        this.props.onUpdateEmailAddressFunc(this.state.emailText)
+    if(!validateEmail(this.state.emailText)) {
+      this.setState({ emailTextErrorMessage : 'Please enter valid email' })
+    } else {
+      this.setState({ emailTextErrorMessage : '' })
+      this.props.onUpdateEmailAddressFunc(this.state.emailText)
 
-          console.log('test')
-        this.setState({ updateEmail: false })
-      }
-    }catch(e) {
-      console.log(e)
+      this.setState({ updateEmail: false })
     }
   }
 
