@@ -5,7 +5,15 @@ export default class GetProfileInteractor {
 
   execute () {
     return this.client.profile(this.client.getToken())
-      .do(profileResp => this.client.setProfile(profileResp))
+      .flatMap(profile =>
+        this.client.getProfilePicture(this.client.getToken(), profile.employee.image)
+        .map(data => {
+          const updatedProfile = profile
+          updatedProfile.employee.profileImage = data
+          return updatedProfile
+        })
+      )
+      .do(data => this.client.setProfile(data))
       .do(profileResp => this.client.setAccountNumber(profileResp.accountNumber))
   }
 }

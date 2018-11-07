@@ -7,7 +7,7 @@ import Presenter from './presenter/SettingsPresenter'
 
 import SettingsProfileCardComponent from './components/SettingsProfileCardComponent'
 
-import { Card, Modal, GenericButton   } from '../../ub-components/'
+import { Card, Modal, GenericButton, CircularLoader } from '../../ub-components/'
 
 class SettingsFragment extends BaseMVPView {
 
@@ -38,11 +38,15 @@ class SettingsFragment extends BaseMVPView {
      descriptionEditMode : false,
      enabledStaffLoader : false,
      showSuccessModal : false,
+     showProfilePhoto : false,
      noticeResponse : '',
      descriptionText : '',
      staffResponseMessage : '',
      profileBackground : [],
      showEditDependents: '',
+     profileAttachments : [{
+      name : 'Profile Photo Attachments'
+    }]
     }
   }
   componentDidMount () {
@@ -148,12 +152,22 @@ class SettingsFragment extends BaseMVPView {
       staffResponseMessage,
       showSuccessModal,
       showEditDependents,
+      showProfilePhoto,
+      profileAttachments
     }=this.state
 
     return (
       <div className={ 'profile-container' }>
         { super.render() }
         {
+          enabledLoader ?
+          <Modal>
+            <center>
+              <h2>Please wait...</h2>
+              <CircularLoader show = { enabledLoader }/>
+            </center>
+          </Modal>
+          :
           noticeResponseModal &&
           <Modal>
             <center>
@@ -168,6 +182,14 @@ class SettingsFragment extends BaseMVPView {
         }
 
         <SettingsProfileCardComponent
+           profileAttachments = { profileAttachments }
+           uploadAttachments = { () => {
+               this.setState({ showProfilePhoto : false })
+               this.presenter.updateProfilePicture(profileAttachments)
+           } }
+           setAttachmentsPhoto = { (profileAttachments) => this.setState({ profileAttachments }) }
+           changeProfilePhoto = { (showProfilePhoto) => this.setState({ showProfilePhoto }) }
+           showProfilePhoto = { showProfilePhoto }
            showEditDependentModalFunc = { (showEditDependents) => this.props.history.push('/dependent') }
            showSuccessModal = { showSuccessModal }
            onCloseStaffResponseModalFunc = { () => this.setState({ showSuccessModal : false  }) }
@@ -195,14 +217,17 @@ class SettingsFragment extends BaseMVPView {
            changePinSendToFragment = { (uniqueOldPIN, uniqueNewPIN) => this.submitUpdatedPIN(uniqueOldPIN, uniqueNewPIN) }
            getForConfirmation = { () => this.presenter.getForConfirmation() }
            onUpdateStaffAccountsFunc = { (employeeName, selectedAccountNumber, sequence) =>
-              this.presenter.updateStaffAccounts(employeeName, selectedAccountNumber, sequence)
-            }
+               this.presenter.updateStaffAccounts(employeeName, selectedAccountNumber, sequence)
+           }
            onUpdateEmailAddress = { (email) =>
-              this.presenter.updateEmailAddress(email)
-            }
+             this.presenter.updateEmailAddress(email)
+           }
+           onUpdateCivilStatus = { (civil) =>
+             this.presenter.updateCivilStatus(civil)
+           }
            onUpdateMobileNumber = { (number) =>
-              this.presenter.updateContactNumber(number)
-            }
+             this.presenter.updateContactNumber(number)
+           }
            onClickEmployeeConfirmationFunc = {
           (  fullName,
              accountNumber,

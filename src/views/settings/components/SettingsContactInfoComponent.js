@@ -25,9 +25,14 @@ class SettingsContactInfoComponent extends Component {
   }
 
   checkEmail () {
-    if(!validateEmail(this.state.emailText)) {
+    const email = this.state.emailText
+    const extension = email.split('@')
+
+    if(!validateEmail(email)) {
       this.setState({ emailTextErrorMessage : 'Please enter valid email' })
-    } else {
+    } else if (extension[1] !== 'unionbankph.com') {
+      this.setState({ emailTextErrorMessage : 'Invalid format.\n(e.g sample@unionbankph.com)' })
+    }else {
       this.setState({ emailTextErrorMessage : '' })
       this.props.onUpdateEmailAddressFunc(this.state.emailText)
 
