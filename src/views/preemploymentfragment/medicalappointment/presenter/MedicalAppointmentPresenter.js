@@ -18,16 +18,19 @@ export default class SpousePresenter {
   getMedicalAppointment () {
     this.getMedicalAppointmentInteractor.execute()
     .subscribe(data => {
-      this.view.showMedicalAppointment(data)
+      this.view.showMedicalAppointment(data && data)
     }, error => {
     })
   }
 
   getMedicalAppointmentProcedures () {
+    this.view.showCircularLoader()
     this.getMedicalAppointmentInteractor.executeProcedures()
     .subscribe(data => {
-      this.view.showMedicalAppointmentProcedure(data)
+      this.view.hideCircularLoader()
+      this.view.showMedicalAppointmentProcedure(data && data)
     }, error => {
+      this.view.hideCircularLoader()
     })
   }
 
@@ -36,7 +39,7 @@ export default class SpousePresenter {
     this.updateMedicalAppointmentInteractor.execute(date, date2, id)
     .subscribe(data => {
       this.view.hideCircularLoader()
-      this.view.noticeResponseModal(data)
+      this.view.noticeResponseModal(data && data)
       this.getMedicalAppointmentProcedures()
       this.getMedicalAppointment()
     }, error => {

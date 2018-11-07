@@ -7,11 +7,13 @@ import EmployeeSchoolInteractor from '../../../domain/interactor/preemployment/e
 import GetParentInteractor from '../../../domain/interactor/preemployment/parent/GetParentInteractor'
 import GetPreEmploymentMessageInteractor from '../../../domain/interactor/preemployment/preemployment/GetPreEmploymentMessageInteractor'
 import PostPreEmploymentMessageInteractor from '../../../domain/interactor/preemployment/preemployment/PostPreEmploymentMessageInteractor'
+import GetMedicalAppointmentInteractor from '../../../domain/interactor/preemployment/medicalappointment/GetMedicalAppointmentInteractor'
 
 let storedCharacterReference = []
 let storedEducation = []
 let requiredDocuments = []
 let storedParent = []
+let storedMedical = []
 
 let preEmploymentList = [
   {
@@ -109,6 +111,7 @@ export default class PreEmploymentPresenter {
     this.employeeSchoolInteractor = new EmployeeSchoolInteractor(container.get('HRBenefitsClient'))
     this.getPreEmploymentMessageInteractor = new GetPreEmploymentMessageInteractor(container.get('HRBenefitsClient'))
     this.postPreEmploymentMessageInteractor = new PostPreEmploymentMessageInteractor(container.get('HRBenefitsClient'))
+    this.getMedicalAppointmentInteractor = new GetMedicalAppointmentInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -131,6 +134,10 @@ export default class PreEmploymentPresenter {
     storedParent = data
   }
 
+  setMedical(data) {
+    storedMedical = data
+  }
+
   getPreEmploymentMessageStatus () {
     this.getPreEmploymentMessageInteractor.execute()
     .subscribe(data => {
@@ -146,6 +153,14 @@ export default class PreEmploymentPresenter {
       this.view.noticeReponseModal(data)
     }, error => {
       store.dispatch(NotifyActions.resetNotify())
+    })
+  }
+
+  getMedicalAppointment () {
+    this.getMedicalAppointmentInteractor.execute()
+    .subscribe(data => {
+      this.setMedical(data)
+    }, error => {
     })
   }
 
@@ -232,6 +247,12 @@ export default class PreEmploymentPresenter {
           documents.documentId !== 12 &&
           documents.documentId !== 16) {
           progress +=1 // If document status is equal submitted (2) progress increment to 1
+        }
+      })
+      console.log(storedMedical.length)
+      storedMedical.map((resp) => {
+        if(resp.alternativeDate !== '' && resp.preferredDate !== '') {
+          progress +1
         }
       })
 
