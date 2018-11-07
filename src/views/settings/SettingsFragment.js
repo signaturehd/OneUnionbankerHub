@@ -38,11 +38,15 @@ class SettingsFragment extends BaseMVPView {
      descriptionEditMode : false,
      enabledStaffLoader : false,
      showSuccessModal : false,
+     showProfilePhoto : false,
      noticeResponse : '',
      descriptionText : '',
      staffResponseMessage : '',
      profileBackground : [],
      showEditDependents: '',
+     profileAttachments : [{
+      name : 'Profile Photo Attachments'
+    }]
     }
   }
   componentDidMount () {
@@ -148,6 +152,8 @@ class SettingsFragment extends BaseMVPView {
       staffResponseMessage,
       showSuccessModal,
       showEditDependents,
+      showProfilePhoto,
+      profileAttachments
     }=this.state
 
     return (
@@ -176,6 +182,14 @@ class SettingsFragment extends BaseMVPView {
         }
 
         <SettingsProfileCardComponent
+           profileAttachments = { profileAttachments }
+           uploadAttachments = { () => {
+               this.setState({ showProfilePhoto : false })
+               this.presenter.updateProfilePicture(profileAttachments)
+           } }
+           setAttachmentsPhoto = { (profileAttachments) => this.setState({ profileAttachments }) }
+           changeProfilePhoto = { (showProfilePhoto) => this.setState({ showProfilePhoto }) }
+           showProfilePhoto = { showProfilePhoto }
            showEditDependentModalFunc = { (showEditDependents) => this.props.history.push('/dependent') }
            showSuccessModal = { showSuccessModal }
            onCloseStaffResponseModalFunc = { () => this.setState({ showSuccessModal : false  }) }

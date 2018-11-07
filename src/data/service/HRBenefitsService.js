@@ -83,11 +83,11 @@ export default class HRBenefitsService {
   updateProfilePicture (token, image) {
     const formData = new FormData()
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
-    image.map((resp, key) => (
+    console.log(image)
+    image.map((resp, key) =>
       formData.append('file', resp.file)
-    ))
-    formData.append('body', JSON.stringify(objectParam))
-    return this.accountClient.put('v1/profile/image', formData, {
+    )
+    return this.accountClient.put('v1/employees/profile/image', formData, {
       headers : { token }
     })
   }
@@ -101,7 +101,7 @@ export default class HRBenefitsService {
   }
 
   getProfilePicture (token, file) {
-    return this.fileClient.get('v1/uploads?folder=attachment', {
+    return this.fileClient.get('v1/uploads?folder=attachments', {
       headers : {
         token,
         file : file

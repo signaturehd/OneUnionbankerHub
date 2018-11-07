@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs'
+
 export default class GetLibrariesInteractor {
   constructor (client) {
     this.client = client
@@ -5,6 +7,14 @@ export default class GetLibrariesInteractor {
 
   execute () {
     return this.client.profile(this.client.getToken())
-      .do(profileResp => this.client.setProfile(profileResp))
+      .flatMap(profile =>
+        this.client.getProfilePicture(this.client.getToken(), profile.employee.image)
+        .map(data => {
+          const updatedProfile = profile
+          updatedProfile.employee.profileImage = data
+          return updatedProfile
+        })
+      )
+      .do(data => this.client.setProfile(data))
   }
 }
