@@ -44,13 +44,23 @@ export default class HRBenefitsClient {
 
   /* Update Profile */
 
-  updateDescription (token, description) {
+  updateDescription (token, emailAddress) {
     return this.service.updateDescription(token, description)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateEmailAddress (token, emailAddress) {
+    return this.service.updateEmailAddress(token, emailAddress)
       .pipe(ServiceErrorOperator())
   }
 
   updateAddress (token, address, file) {
     return this.service.updateAddress(token, address, file)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateContactNumber (token, number) {
+    return this.service.updateContactNumber(token, number)
       .pipe(ServiceErrorOperator())
   }
 

@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 
 import { Card, Line, FloatingActionButton } from '../../../ub-components/'
 import SettingsProfileDescriptions from './SettingsProfileDescriptions'
+import SettingsProfilePersonalInfoComponent from './SettingsProfilePersonalInfoComponent'
+import SettingsContactInfoComponent from './SettingsContactInfoComponent'
 
-import ContactInfoModal from '../modals/ContactsModal'
 import DependentsModal from '../modals/DependentsModal'
-import CompanyInfoModal from '../modals/CompanyInformationModal'
-import PersonalInfoModal from '../modals/PersonalInfoModal'
 import StaffAccountsModal from '../modals/StaffAccountsModal'
 import ChangePINModal from '../modals/ChangePINModal'
 import DevicesModal from '../modals/SettingDevicesModal'
@@ -25,11 +24,6 @@ class SettingsProfileCardComponent extends Component {
     super(props)
   }
 
-  renderEditable () {
-  }
-
-  renderSaveIntances () {
-  }
 
   render () {
     const {
@@ -47,16 +41,10 @@ class SettingsProfileCardComponent extends Component {
       changePinSendToFragment,
       enabledLoader,
       showChangePINModalFunc,
-      showContactInfoModalFunc,
       showDependentModalFunc,
-      showCompanyInfoModalFunc,
-      showPersonalInfoModalFunc,
       showStaffAccountsModalFunc,
       showChangePINModal,
-      showContactInfoModal,
       showDependentModal,
-      showCompanyInfoModal,
-      showPersonalInfoModal,
       showStaffAccountsModal,
       staffLoader,
       staffAccounts,
@@ -97,38 +85,11 @@ class SettingsProfileCardComponent extends Component {
           />
         }
         {
-          showContactInfoModal &&
-            <ContactInfoModal
-              profileName={ profile && profile.fullname }
-              profileEmail={ profile && profile.email }
-              profileNumber={ profile && profile.contactNumber }
-              onClose={ () => showContactInfoModalFunc(false) }
-            />
-        }
-        {
           showDependentModal &&
             <DependentsModal
               profileName={ profile && profile.fullname }
               dependents={ profileDependent && profileDependent }
               onClose={ () => showDependentModalFunc(false) }
-            />
-        }
-        {
-          showPersonalInfoModal &&
-            <PersonalInfoModal
-              accountNumber={ accountNumber }
-              profile={ profile && profile}
-              onClose={ () => showPersonalInfoModalFunc(false) }
-              updateAddressFunc = { (e, e1) => this.props.updateAddressOption(e, e1) }
-            />
-        }
-        {
-          showCompanyInfoModal &&
-            <CompanyInfoModal
-              profile={ profile && profile}
-              lineManager={ lineManager && lineManager.fullName }
-              rank={ rank && rank.rank }
-              onClose={ () => showCompanyInfoModalFunc(false) }
             />
         }
         {
@@ -191,19 +152,6 @@ class SettingsProfileCardComponent extends Component {
                   { profile.address ? profile.address  : '(Not Yet Provided)' }
                 </h2>
                 <br/>
-                <br/>
-                <div
-                  onClick = { () => showDevicesModalFunc(true) }
-                  className={ 'profile-information-view-right' }>
-                  <div>
-                    <span className={ 'profile-icon-settings pinlock-icon' }/>
-                  </div>
-                  <div>
-                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
-                      { 'Registered Devices'  }
-                    </h5>
-                  </div>
-                </div>
               </div>
               <div className = { 'profile-information-modal-view' }>
                 <div
@@ -219,26 +167,14 @@ class SettingsProfileCardComponent extends Component {
                   </div>
                 </div>
                 <div
-                  onClick={ () => showPersonalInfoModalFunc(true) }
+                  onClick = { () => showDevicesModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
-                    <span className={ 'profile-icon-settings employeeContactAddress' }/>
+                    <span className={ 'profile-icon-settings pinlock-icon' }/>
                   </div>
                   <div>
                     <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
-                      { 'See personal info'  }
-                    </h5>
-                  </div>
-                </div>
-                <div
-                  onClick={ () => showContactInfoModalFunc(true) }
-                  className={ 'profile-information-view-right' }>
-                  <div>
-                    <span className={ 'profile-icon-settings employeeContact' }/>
-                  </div>
-                  <div>
-                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
-                      { 'See contact info'  }
+                      { 'Registered Devices'  }
                     </h5>
                   </div>
                 </div>
@@ -258,32 +194,29 @@ class SettingsProfileCardComponent extends Component {
                       className = { 'profile-icon-settings editIconImage' }/>
                   </div>
                 </div>
-                <div
-                  onClick={ () => showCompanyInfoModalFunc(true) }
-                  className={ 'profile-information-view-right' }>
-                  <div>
-                    <span className={ 'profile-icon-settings employeeId' }/>
-                  </div>
-                  <div>
-                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
-                      { 'See company info'  }
-                    </h5>
-                  </div>
-                </div>
-                <div
-                  onClick={ () =>
-                    showStaffAccountsModalFunc(true) }
-                  className={ 'profile-information-view-right' }>
-                  <div>
-                    <span className={ 'profile-icon-settings staffAccount' }/>
-                  </div>
-                  <div>
-                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
-                      { 'View Staff Accounts'  }
-                    </h5>
-                  </div>
-                </div>
               </div>
+            </div>
+            <div className={ 'profile-padding' }>
+              <br/><Line/><br/>
+            </div>
+              <SettingsProfilePersonalInfoComponent
+                accountNumber={ accountNumber }
+                profile={ profile && profile}
+                updateAddressFunc = { (e, e1) => this.props.updateAddressOption(e, e1) }
+                lineManager={ lineManager && lineManager.fullName }
+                rank={ rank && rank.rank }
+              />
+            <div className={ 'profile-padding' }>
+              <br/><Line/><br/>
+            </div>
+            <div>
+              <SettingsContactInfoComponent
+                profileName={ profile && profile.fullname }
+                profileEmail={ profile && profile.email }
+                profileNumber={ profile && profile.contactNumber }
+                onUpdateEmailAddressFunc = { (e) => this.props.onUpdateEmailAddress(e) }
+                onUpdateMobileNumberFunc = { (e) => this.props.onUpdateMobileNumber(e) }
+              />
             </div>
             <div className={ 'profile-padding' }>
               <br/><Line/><br/>

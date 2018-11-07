@@ -34,7 +34,7 @@
 
 .contact-number-grid {
   display: grid;
-  grid-template-columns: .1fr 1fr;
+  grid-template-columns: .15fr 1fr;
 }
 
 .contact-card-background {
@@ -57,26 +57,19 @@
 }
 
 
-.update-profile-button {
-  min-width: 100px;
-  height: 30px;
-  border-radius: 50px;
-}
-
-
 .profile-address-grid-x2 {
   display: grid;
-  grid-template-columns: 1fr .05fr; 
+  grid-template-columns: .3fr .05fr;
 }
 
 .profile-update-address-grid{
   display: grid;
-  grid-template-columns: 1fr .09fr; 
+  grid-template-columns: 1fr .09fr;
   column-gap: 2%;
 }
 
 .alignment-center {
-  align-self: center;  
+  align-self: center;
 }
 
 .employeeMobileNumber {

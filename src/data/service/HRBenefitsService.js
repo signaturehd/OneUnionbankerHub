@@ -38,11 +38,29 @@ export default class HRBenefitsService {
   /* Updated Profile */
 
 
-  updateDescription (token, description) {
+  updateDescription (token, emailAddress) {
+    const objectParam = {
+      email : emailAddress
+    }
+    return this.apiClient.put('v1/profile/description', objectParam,{
+      headers : { token }
+    })
+  }
+
+  updateEmailAddress (token, description) {
     const objectParam = {
       description : description
     }
-    return this.apiClient.put('v1/profile/description', objectParam,{
+    return this.apiClient.put('v1/profile/email', objectParam,{
+      headers : { token }
+    })
+  }
+
+  updateContactNumber(token, number) {
+    const objectParam = {
+      mobileNumber : number
+    }
+    return this.apiClient.put('v1/profile/mobile', objectParam,{
       headers : { token }
     })
   }

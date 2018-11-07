@@ -6,6 +6,8 @@ import UpdateStaffAccountsInteractor from '../../../domain/interactor/staffaccou
 import UpdateDescriptionInteractor from '../../../domain/interactor/account/UpdateDescriptionInteractor'
 import GetDevicesInteractor from '../../../domain/interactor/account/GetDevicesInteractor'
 import UpdateAddressInteractor from '../../../domain/interactor/account/UpdateAddressInteractor'
+import UpdateEmailAddressInteractor from '../../../domain/interactor/account/UpdateEmailAddressInteractor'
+import UpdateContactNumberInteractor from '../../../domain/interactor/account/UpdateContactNumberInteractor'
 
 import { NotifyActions } from '../../../actions'
 import store from '../../../store'
@@ -22,6 +24,8 @@ export default class SettingsPresenter {
     this.updateDescriptionInteractor = new UpdateDescriptionInteractor(container.get('HRBenefitsClient'))
     this.getDevicesInteractor = new GetDevicesInteractor(container.get('HRBenefitsClient'))
     this.updateAddressInteractor = new UpdateAddressInteractor(container.get('HRBenefitsClient'))
+    this.updateEmailAddressInteractor = new UpdateEmailAddressInteractor(container.get('HRBenefitsClient'))
+    this.updateContactNumberInteractor = new UpdateContactNumberInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -74,6 +78,17 @@ export default class SettingsPresenter {
      })
    }
 
+   getForConfirmation () {
+     this.view.staffCircularLoader(true)
+     this.getForConfirmationInteractor.execute()
+     .subscribe( data => {
+       this.view.staffCircularLoader(false)
+       this.view.setStaffAccounts(data)
+     }, error => {
+      this.view.staffCircularLoader(false)
+     })
+   }
+
    addStaffAccounts (
      fullName,
      accountNumber,
@@ -123,6 +138,26 @@ export default class SettingsPresenter {
      }
    }
 
+   /* Profile Update */
+
+   updateEmailAddress (email) {
+     this.updateEmailAddressInteractor.execute(email)
+     .subscribe(data => {
+       this.view.noticeResponseModal(data.message)
+       this.getProfile()
+     }, error => {
+     })
+   }
+
+   updateContactNumber (number) {
+     this.updateContactNumberInteractor.execute(number)
+     .subscribe(data => {
+       this.view.noticeResponseModal(data.message)
+       this.getProfile()
+     }, error => {
+     })
+   }
+
    updateStaffAccounts (
      fullName,
      accountNumber,
@@ -162,17 +197,6 @@ export default class SettingsPresenter {
        this.getProfile()
      }, error => {
       store.dispatch(NotifyActions.resetNotify())
-     })
-   }
-
-   getForConfirmation () {
-     this.view.staffCircularLoader(true)
-     this.getForConfirmationInteractor.execute()
-     .subscribe( data => {
-       this.view.staffCircularLoader(false)
-       this.view.setStaffAccounts(data)
-     }, error => {
-      this.view.staffCircularLoader(false)
      })
    }
  }

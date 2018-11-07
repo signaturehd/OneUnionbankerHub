@@ -31,10 +31,7 @@ class SettingsFragment extends BaseMVPView {
      showProfileDependent : false,
      enabledLoader: false,
      showChangePINModal : false,
-     showContactInfoModal : false,
      showDependentModal : false,
-     showCompanyInfoModal : false,
-     showPersonalInfoModal : false,
      showStaffAccountsModal : false,
      showDevicesModal : false,
      staffLoader : false,
@@ -138,10 +135,7 @@ class SettingsFragment extends BaseMVPView {
       accountNumber,
       enabledLoader,
       showChangePINModal,
-      showContactInfoModal,
       showDependentModal,
-      showCompanyInfoModal,
-      showPersonalInfoModal,
       showStaffAccountsModal,
       showDevicesModal,
       staffLoader,
@@ -194,21 +188,21 @@ class SettingsFragment extends BaseMVPView {
            staffLoader = { staffLoader }
            staffAccounts = { staffAccounts }
            showChangePINModal = { showChangePINModal }
-           showContactInfoModal = { showContactInfoModal }
            showDependentModal = { showDependentModal }
-           showCompanyInfoModal = { showCompanyInfoModal }
-           showPersonalInfoModal = { showPersonalInfoModal }
            showStaffAccountsModal = { showStaffAccountsModal }
            showChangePINModalFunc = { (showChangePINModal) => this.setState({ showChangePINModal }) }
-           showContactInfoModalFunc = { (showContactInfoModal) => this.setState({ showContactInfoModal }) }
            showDependentModalFunc = { (showDependentModal) => this.setState({ showDependentModal }) }
-           showCompanyInfoModalFunc = { (showCompanyInfoModal) => this.setState({ showCompanyInfoModal }) }
-           showPersonalInfoModalFunc = { (showPersonalInfoModal) => this.setState({ showPersonalInfoModal }) }
            showStaffAccountsModalFunc = { (showStaffAccountsModal) =>  this.setState({ showStaffAccountsModal }) }
            changePinSendToFragment = { (uniqueOldPIN, uniqueNewPIN) => this.submitUpdatedPIN(uniqueOldPIN, uniqueNewPIN) }
            getForConfirmation = { () => this.presenter.getForConfirmation() }
            onUpdateStaffAccountsFunc = { (employeeName, selectedAccountNumber, sequence) =>
               this.presenter.updateStaffAccounts(employeeName, selectedAccountNumber, sequence)
+            }
+           onUpdateEmailAddress = { (email) =>
+              this.presenter.updateEmailAddress(email)
+            }
+           onUpdateMobileNumber = { (number) =>
+              this.presenter.updateContactNumber(number)
             }
            onClickEmployeeConfirmationFunc = {
           (  fullName,
