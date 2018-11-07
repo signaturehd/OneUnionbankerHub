@@ -2096,4 +2096,35 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Events Budget */
+
+  validateEventsBudget (token) {
+    return this.apiClient.get('v1/events/validate', {
+      headers: { token }
+    })
+  }
+
+  addEventsBudget (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    addEventParam) {
+    const objectParam = {
+      accountNumber : accountNo,
+      releasingCenter: releasingCenter,
+      requestId: addEventParam.requestId,
+      venueName: addEventParam.venueName,
+      address: addEventParam.address,
+      region: addEventParam.region,
+      province: addEventParam.province,
+      city: addEventParam.city,
+      targetDate : addEventParam.date,
+      attendees: addEventParam.attendees,
+    }
+    return this.apiClient.post('v1/events/submit', objectParam, {
+      headers : { token }
+    })
+  }
 }

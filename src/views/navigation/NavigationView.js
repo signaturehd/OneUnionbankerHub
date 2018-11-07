@@ -80,6 +80,9 @@ import PostEmploymentFragment from '../postemployment/PostEmploymentFragment'
 /* Laptop Lease */
 import LaptopLeaseFragment from '../laptoplease/LaptopLeaseFragment'
 
+/* Event Budget Requisition */
+
+import EventsBudgetFragment from '../eventbudget/EventsBudgetFragment'
 /* Travel */
 import TravelFragment from '../travel/TravelFragment'
 import RequestFlightFragment from '../request/RequestFlightFragment'
@@ -387,6 +390,9 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits/benefits/calamity' render = { props =>
                     <CalamityFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                    <Route path = '/mybenefits/benefits/eventbudgetrequisition' render = { props =>
+                    <EventsBudgetFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits' render = { props =>
                     <BenefitsFragment { ...props }
