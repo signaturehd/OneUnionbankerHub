@@ -9,6 +9,7 @@ import {
   Line,
   GenericButton,
   GenericInput,
+  MultipleAttachments,
   Modal
 }  from '../../../ub-components/'
 import moment from 'moment'
@@ -22,7 +23,6 @@ class BookFlightFormComponent extends Component {
   render () {
     const {
       showTicketModal,
-      showFormModal,
       showNoticeResponseModal,
       noticeResponse,
       ticketMode,
@@ -34,14 +34,18 @@ class BookFlightFormComponent extends Component {
       requestId,
       purposeName,
       rturn,
+      departureDate,
       departureTime,
+      returnDate,
       returnTime,
       totalCostOfFlight,
       totalServiceCharge,
       valueAddedTax,
+      totalAmount,
       bookflightArray,
       attachmentsData,
-      attachmentsData2
+      attachmentsData2,
+      submitFunc
     } = this.props
 
     const depTime = departureDate + " " + departureTime
@@ -51,7 +55,7 @@ class BookFlightFormComponent extends Component {
       <div className = { 'card-grid' }>
       <div></div>
       <div>
-        <h2 className = { 'font-size-18px font-weight-bold text-align-center' }>{ `${purposeName}-${rturn}` }</h2>
+        <h2 className = { 'font-size-20px font-weight-bold text-align-center' }>{ `${purposeName}-${rturn}` }</h2>
         <br/>
         <Card>
           <div className = { 'book-card-grid-option' }>
@@ -83,51 +87,59 @@ class BookFlightFormComponent extends Component {
           }
         </Card>
         <br/>
-        <div>
-        <h2>DEPARTURE</h2>
-        </div>
-        <GenericInput
-          text = { depDate }
-          type = { 'time' }
-          value = { departureTime }
-          onChange = { (e) => this.departureTimeFunc(e.target.value) }
-        />
-        {
-          rturn === 'RoundTrip' &&
+        <div className = { 'grid-global' }>
           <div>
-          <h2>RETURN</h2>
+          <h2>DEPARTURE</h2>
           <GenericInput
-          text = { retDate }
-          type = { 'time' }
-          value = { returnTime }
-          onChange = { (e) => this.returnTimeFunc(e.target.value) }
+            text = { departureDate }
+            type = { 'time' }
+            value = { departureTime }
+            onChange = { (e) => this.departureTimeFunc(e.target.value) }
           />
           </div>
-        }
-        <GenericInput
-          text = { 'Total Cost of Flight' }
-          type = { 'number' }
-          value = { totalCostOfFlight == 0 ? '' : totalCostOfFlight }
-          onChange = { (e) => this.totalCostOfFlightFunc(e.target.value) }
-        />
-        <GenericInput
-          text = { 'Total Service Charge' }
-          type = { 'number' }
-          value = { totalServiceCharge == 0 ? '' : totalServiceCharge }
-          onChange = { (e) => this.totalServiceChargeFunc(e.target.value) }
-        />
-        <GenericInput
-          text = { 'Value-Added Tax' }
-          type = { 'numer' }
-          value = { valueAddedTax == 0 ? '' : valueAddedTax }
-          onChange = { (e) => this.valueAddedTaxFunc(e.target.value) }
-        />
-        <GenericInput
-          text = { 'Total Amount' }
-          type = { 'number' }
-          disbled = { true }
-          value = { totalAmount }
-        />
+          {
+            rturn === 'RoundTrip' &&
+            <div>
+            <h2>RETURN</h2>
+            <GenericInput
+            text = { returnDate }
+            type = { 'time' }
+            value = { returnTime }
+            onChange = { (e) => this.returnTimeFunc(e.target.value) }
+            />
+            </div>
+          }
+        </div>
+        <div className = { 'grid-global' }>
+          <div>
+            <GenericInput
+              text = { 'Total Cost of Flight' }
+              type = { 'number' }
+              value = { totalCostOfFlight == 0 ? '' : totalCostOfFlight }
+              onChange = { (e) => this.totalCostOfFlightFunc(e.target.value) }
+            />
+            <GenericInput
+              text = { 'Total Service Charge' }
+              type = { 'number' }
+              value = { totalServiceCharge == 0 ? '' : totalServiceCharge }
+              onChange = { (e) => this.totalServiceChargeFunc(e.target.value) }
+            />
+          </div>
+          <div>
+            <GenericInput
+              text = { 'Value-Added Tax' }
+              type = { 'number' }
+              value = { valueAddedTax == 0 ? '' : valueAddedTax }
+              onChange = { (e) => this.valueAddedTaxFunc(e.target.value) }
+            />
+            <GenericInput
+              text = { 'Total Amount' }
+              type = { 'number' }
+              disbled = { true }
+              value = { totalAmount }
+            />
+          </div>
+        </div>
         {
           isDomestic ?
           <MultipleAttachments
@@ -146,7 +158,7 @@ class BookFlightFormComponent extends Component {
         <center>
           <GenericButton
             text = { 'Continue' }
-            onClick = { () => this.submit() }
+            onClick = { () => submitFunc() }
           />
         </center>
       </div>
