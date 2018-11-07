@@ -1,0 +1,86 @@
+.postemployment-container {
+  display: grid;
+  grid-template-columns: .15fr 1fr .15fr;
+}
+
+.postemployment-grid-card {
+  display: grid;
+  grid-template-rows: 1fr;
+  column-gap: 2%;
+}
+
+.postemployment-card {
+  padding: 20px;
+  cursor: pointer;
+}
+
+.postemployment-grid-x2 {
+  display: grid;
+  grid-template-columns: 1fr .005fr;
+}
+
+.postemployment-seemore-button {
+  background-image: url('../../../images/icons/ic_next.png');
+}
+
+.postemployment-padding-documents {
+  margin-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 25px;
+  padding-top: 25px;
+}
+
+.postemployment-icon {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 25px;
+  width: 25px;
+  background-repeat: no-repeat;
+}
+
+.pre-emp-setup-button {
+  min-width: 35%;
+}
+
+.preemployment-container {
+  display: grid;
+  grid-template-columns: .15fr 1fr .15fr;
+}
+
+.percentage-grid {
+  display: grid;
+  column-gap: 2%;
+  grid-template-columns:  1fr .1fr;
+}
+
+.react-sweet-progress-symbol{
+  width: auto !important;
+}
+
+.preemp-next-button {
+  background-color: #ff8a00;
+  color:white;
+}
+
+.pre-employment-button {
+  min-width: 100px;
+  height: 30px;
+  border-radius: 50px;
+}
+
+.preemp-refresh {
+  background-image: url('../../../images/icons/refresh.png');
+}
+
+.preemp-icon {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 36px;
+  width:  36px;
+  background-repeat: no-repeat;
+}

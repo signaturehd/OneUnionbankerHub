@@ -6,7 +6,7 @@
 
 .biographical-grid-x2 {
   display: grid;
-  grid-template-columns: 1fr .15fr;
+  grid-template-columns: 1fr .005fr;
 }
 
 .biographical-button {
@@ -16,6 +16,7 @@
 
 .biographical-card {
   padding: 20px;
+  cursor: pointer;
 }
 
 
@@ -24,7 +25,7 @@
 }
 
 .biographical-seemore-button {
-  background-image: url('../../../../images/icons/ic_see_icon_name.png');
+  background-image: url('../../../../images/icons/ic_next.png');
 }
 
 .biographical-icon {

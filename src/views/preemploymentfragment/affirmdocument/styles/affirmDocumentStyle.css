@@ -1,11 +1,35 @@
 .affirmation-card {
-  padding: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  cursor: pointer;
 }
 
 .affirmation-grid-card {
   display: grid;
+  grid-template-rows: .01fr .01fr .01fr .01fr;
+  column-gap: 2%;
+}
+
+.affirmation-padding-documents {
+  margin-bottom: 20px;
+  padding: 50px;
+}
+
+.affirmation-grid-pdf-card {
+  display: grid;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   column-gap: 2%;
+}
+
+
+@media (max-width: 768px) {
+  .affirmation-grid-pdf-card {
+    display: grid;
+    grid-template-rows: .5 1fr;
+    column-gap: 2%;
+  }
 }
 
 .affirmation-grid-x2 {
@@ -23,7 +47,11 @@
 }
 
 .affirmation-seemore-button {
-  background-image: url('../../../../images/icons/ic_see_icon_name.png');
+  background-image: url('../../../../images/icons/ic_next.png');
+}
+
+.affirmation-success {
+  background-image: url('../../../../images/icons/ic_check_green_500_24dp.png');
 }
 
 .affirmation-icon {

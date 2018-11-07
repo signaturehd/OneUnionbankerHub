@@ -6,6 +6,10 @@ import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInte
 import RelogInInteractor from '../../../domain/interactor/user/RelogInInteractor'
 import GenericPinCodeInteractor from '../../../domain/interactor/pinCode/GenericPinCodeInteractor'
 
+/* Preemployment Status */
+import GetPreEmploymentStatusInteractor from
+'../../../domain/interactor/preemployment/preemployment/GetPreEmploymentStatusInteractor'
+
 import { NotifyActions, LoginActions } from '../../../actions'
 import store from '../../../store'
 
@@ -18,6 +22,7 @@ export default class NavigationPresenter {
     // this.setWizardInteractor = new SetWizardInteractor(container.get('HRBenefitsClient'))
     this.relogInInteractor = new  RelogInInteractor(container.get('HRBenefitsClient'))
     this.genericPinCodeInteractor = new GenericPinCodeInteractor(container.get('HRBenefitsClient'))
+    this.getPreEmploymentStatusInteractor = new GetPreEmploymentStatusInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -42,6 +47,7 @@ export default class NavigationPresenter {
      .do(profile => this.view.showProfile(profile.employee))
      .do(profile => this.view.showPinIsValid(profile.hasPIN))
      .do(profile => this.view.isHasCOC(profile.hasCOC))
+     .do(profile => this.view.hasFilledOutFunc(profile.hasFilledOut))
      .do(profile => this.view.isLineManagerData(profile.isLineManager))
       .subscribe(resp => {
         this.view.hideLoading()
@@ -78,4 +84,19 @@ export default class NavigationPresenter {
   //   this.setWizardInteractor.execute(wizard)
   //   // this.view.showWizard(wizard)
   // }
+
+  // 123 = pre employment
+  // 4 = post employment
+  // 5 = hide both
+  // 0 or empty string, also hide both and show benefits if employee is regular
+
+  getPreEmploymentStatus () {
+    this.getPreEmploymentStatusInteractor.execute()
+    .subscribe(data => {
+      this.view.showPreemploymentStatus(data && data)
+      }, error => {
+        this.view.showPreemploymentStatus(null)
+        store.dispatch(NotifyActions.resetNotify())
+    })
+  }
 }

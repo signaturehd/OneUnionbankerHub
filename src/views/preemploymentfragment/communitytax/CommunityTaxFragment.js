@@ -25,7 +25,7 @@ class CommunityTaxFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(6)
+    this.props.onSendPageNumberToView(7)
   }
 
   render () {
@@ -51,7 +51,9 @@ class CommunityTaxFragment extends BaseMVPView {
           </div>
           <Progress
             type = { 'circle' }
-            percent={ percentage } />
+            height = { 65 }
+            width = { 65 }
+            percent = { percentage } />
         </div>
         <br/>
         <GenericInput

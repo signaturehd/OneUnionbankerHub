@@ -13,6 +13,7 @@ import {
 } from '../../../ub-components/'
 
 import Presenter from './presenter/BspCertificationPresenter'
+import BspCertificationViewPdfComponent from './components/BspCertificationViewPdfComponent'
 
 import { Progress } from 'react-sweet-progress'
 
@@ -22,41 +23,86 @@ import './styles/bspCertificateStyle.css'
 class BspCertificationFragment extends BaseMVPView {
   constructor(props) {
     super(props)
+    this.state = {
+      pdfFile: '',
+      showPdfViewComponent : false,
+      enabledLoaderPdfModal : false,
+    }
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(7)
+    this.props.onSendPageNumberToView(9)
+  }
+
+  onCheckedPdf (link) {
+    this.presenter.getOnBoardingDocument(link)
+  }
+
+  showPdfFileView (pdfFile) {
+    this.setState({ pdfFile, showPdfViewComponent : true })
+  }
+
+  showDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
   }
 
 
   render() {
     const {
-      history,
       percentage
     } = this.props
+
+    const {
+      pdfFile,
+      showPdfViewComponent,
+      enabledLoaderPdfModal,
+    } = this.state
 
     const documentCardOptions = [
       {
         id: 0,
-        title: 'Download Banko Sentral ng Pilipinas(BSP) Certificate',
-        link: '/2018-09-11/12345-Pre-employment Undertaking-1536641036614.pdf',
+        title: 'Banko Sentral ng Pilipinas(BSP) Certificate',
+        link: '/2018-10-16/12345-BSP Certification-1539624445855.pdf',
       }
     ]
     return(
     <div>
       { super.render() }
+      {
+        enabledLoaderPdfModal &&
+        <Modal>
+          <div>
+            <center>
+              <br/>
+              {
+                showPdfViewComponent ?
+
+                <h2>Please wait while we we&#39;re retrieving the documents</h2> :
+                <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+              }
+              <br/>
+              <CircularLoader show = { enabledLoaderPdfModal }/>
+              <br/>
+            </center>
+          </div>
+        </Modal>
+      }
       <div>
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>BSP Certificate Download</h2>
+            <h2 className={ 'header-margin-default text-align-left' }>Bangko Sentral ng Pilipinas(BSP) Certificate</h2>
             <h2>Please download the Banko Sentral Pilipinas(BSP) Certificate by clicking the button below.</h2>
           </div>
           <Progress
             type = { 'circle' }
-            height = { 100 }
-            width = { 100 }
-            percent={ percentage } />
+            height = { 65 }
+            width = { 65 }
+            percent = { percentage } />
         </div>
         <br/>
         <div className = { 'bsp-grid-card' }>
@@ -64,24 +110,30 @@ class BspCertificationFragment extends BaseMVPView {
             documentCardOptions.map((resp, key) =>
             <Card
               key = { key }
-              className = { 'bsp-card' }>
+              className = { 'bsp-card' }
+              onClick = { () => {
+                this.onCheckedPdf(resp.link)
+                this.setState({ showPdfViewModal : true  })
+                }
+              }>
               <div className = { 'bsp-grid-x2' }>
                 <h2> { resp.title } </h2>
-                <div className = { 'grid-global' }>
-                  <GenericButton
-                    className = { 'bsp-button' }
-                    onClick = { () => {} }
-                    text = { 'Download' }/>
-                  <GenericButton
-                    className = { 'bsp-button' }
-                    onClick = { () => {} }
-                    text = { 'Preview' }/>
+                <div className = { 'text-align-right' }>
+                  <span
+                    className = { 'bsp-icon biographical-seemore-button' }/>
                 </div>
               </div>
             </Card>
             )
           }
         </div>
+        {
+          showPdfViewComponent &&
+          <BspCertificationViewPdfComponent
+            pdfFile = { pdfFile }
+            onClose = { () => this.setState({ showPdfViewComponent: false }) }
+          />
+        }
       </div>
     </div>
     )
@@ -89,7 +141,6 @@ class BspCertificationFragment extends BaseMVPView {
 }
 
 BspCertificationFragment.propTypes = {
-  history : PropTypes.object,
   onSendPageNumberToView  : PropTypes.func,
 }
 

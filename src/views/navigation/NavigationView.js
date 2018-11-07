@@ -65,6 +65,17 @@ import Carousel from '../carousel/Carousel'
 
 /* Pre Employment */
 import PreEmploymentFragment from '../preemployment/PreEmploymentFragment'
+import AddingDependentsFragment
+  from '../dependents/AddingDependentsFragment'
+import ChildrenFragment
+  from '../preemploymentfragment/childrenform/ChildrenFragment'
+import SpouseFragment
+  from '../preemploymentfragment/spouseform/SpouseFormFragment'
+import ParentFragment
+  from '../preemploymentfragment/parentform/ParentFragment'
+
+/* Post Employment */
+import PostEmploymentFragment from '../postemployment/PostEmploymentFragment'
 
 /* Laptop Lease */
 import LaptopLeaseFragment from '../laptoplease/LaptopLeaseFragment'
@@ -97,6 +108,8 @@ class NavigationView extends BaseMVPView {
       enabledLoader : false,
       profileHasCOC: '',
       tempPreEmploymentModal: false,
+      hasFilledOut: '',
+      preEmploymentStatus: null,
       isLineManager : false
     }
 
@@ -133,11 +146,27 @@ class NavigationView extends BaseMVPView {
     }
   }
 
-  navigate () {
-    this.props.history.push('/mytravel/travel')
+  showPreemploymentStatus (data) {
+    const status = data && data.id
+    const statusName = data && data.status
+    this.setState({ preEmploymentStatus : status })
+
+    if(status === 1 || status === 2) {
+      this.props.history.push('/preemployment')
+    } else if (status === null || status === 6) {
+      this.props.history.push('/')
+    } else if (status === 3 || status === 4 || status === 5) {
+      this.props.history.push('/postemployment')
+    }
   }
 
   componentDidMount () {
+    const {
+      preEmploymentStatus
+    } = this.state
+    store.dispatch(NotifyActions.resetNotify())
+    this.presenter.getPreEmploymentStatus()
+    this.presenter.getLibraries()
     const mediaQuery = window.matchMedia('(min-width: 1201px)')
       if (mediaQuery.matches) {
         this.setDisplay('block', 'none')
@@ -151,8 +180,6 @@ class NavigationView extends BaseMVPView {
         this.setDisplay('none', 'block')
       }
     })
-    store.dispatch(NotifyActions.resetNotify())
-    this.presenter.getLibraries()
   }
 
   setSelectedNavigation (id) {
@@ -179,8 +206,8 @@ class NavigationView extends BaseMVPView {
     this.props.history.push('/')
   }
 
-  onChangeStatusPreEmploymentModal () {
-    this.setState({ tempPreEmploymentModal : false  })
+  skipPage (e) {
+    this.setState({ preEmploymentStatus : e })
   }
 
   render () {
@@ -197,18 +224,18 @@ class NavigationView extends BaseMVPView {
       enabledLoader,
       profileHasCOC,
       tempPreEmploymentModal,
+      hasFilledOut,
+      preEmploymentStatus,
       isLineManager
     } = this.state
 
     const { history, login } = this.props
-
     const style = {
       show: {
         display : displayShow
       }
     }
     const locationPath = history.location.pathname
-
     const name = profile && profile.fullname
     let initials = []
     let splitUserInitial
@@ -270,32 +297,31 @@ class NavigationView extends BaseMVPView {
                 />
               }
             <Drawer >
-              {
-                profile && profile.hasFilledOut === 1 ?
                 <Switch>
                   <Route exact path = '/' render = {props =>
                     <NewsFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> }/>
-                  <Route path = '/settings' render = { props =>
-                    <SettingsFragment { ...props }
+                  <Route path = '/postemployment' render = { props =>
+                    <PostEmploymentFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/preemployment' render = { props =>
                     <PreEmploymentFragment { ...props }
-                      onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
+                      onBoardingSkipPage = { (e) => this.skipPage(e)}
+                      preEmploymentStatus = { preEmploymentStatus }
                       tempPreEmploymentModal = { tempPreEmploymentModal }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/faqs' render = { props =>
-                    <FaqFragment { ...props }
+                  <Route path = '/dependent' render = { props =>
+                    <AddingDependentsFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/feedback' render = { props =>
-                    <FeedbackFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                </Switch>
-                :
-                <Switch>
-                  <Route exact path = '/' render = {props =>
-                    <NewsFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> }/>
+                  <Route path='/dependentchildren' render={ props => <ChildrenFragment{ ...props }
+                    reuse = { true }
+                    setSelectedNavigation = { this.setSelectedNavigation }  />}/>
+                  <Route path='/dependentspouse' render={ props => <SpouseFragment{ ...props }
+                    reuse = { true }
+                    setSelectedNavigation = { this.setSelectedNavigation }  />}/>
+                  <Route path='/dependentsiblings' render={ props => <ParentFragment{ ...props }
+                    reuse = { true }
+                    setSelectedNavigation = { this.setSelectedNavigation }  />}/>
                   <Route path = '/mybenefits/transactions/personal/:id' render = { props =>
                     <TransactionPersonalDetailFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
@@ -409,12 +435,13 @@ class NavigationView extends BaseMVPView {
                     <ComplianceFragment { ...props }
                       profileHasCOC = { profileHasCOC }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/phenom' render = { props =>
+                    <PhenomFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/phenom' render = { props =>
                     <PhenomFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
-              }
             </Drawer>
           </main>
           <aside
@@ -422,7 +449,7 @@ class NavigationView extends BaseMVPView {
             style = { style.show }>
             <SideBar
               splitUserInitial = { splitUserInitial }
-              tempPreEmployment = { profile && profile.hasFilledOut }
+              tempPreEmployment = { preEmploymentStatus }
               logout = { () => this.setState({ showLogoutModal : true }) }
               selected={ selected }
               profile = { profile }

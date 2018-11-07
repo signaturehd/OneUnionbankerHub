@@ -1,0 +1,8 @@
+.school-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.education-modal-margin {
+  margin-bottom: 10px;
+}

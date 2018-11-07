@@ -20,7 +20,7 @@ let storedCelebrationText = '',
     storedDate = '',
     storedAmount = '',
     storedId = []
-    
+
 /* Mock Data */
 let mockedData = {
     "events": {
@@ -169,7 +169,6 @@ export default class EventsBudgetPresenter {
   addEventsBudget (storedListId) {
     const newArrayId = storedListId
     const uniArr = [...(new Set(newArrayId))]
-    console.log(uniArr)
     if(storedVenueText === '') {
       store.dispatch(NotifyActions.resetNotify())
       store.dispatch(NotifyActions.addNotify({

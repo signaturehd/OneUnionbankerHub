@@ -6,38 +6,363 @@ import ConnectView from '../../../utils/ConnectView'
 
 import Presenter from './presenter/WorkExperiencePresenter'
 
-import WorkExperienceAddModal from './modals/WorkExperienceAddModal'
-
 import {
   GenericButton,
+  SingleInputModal,
   CircularLoader,
   Card,
   Line,
+  Modal
 } from '../../../ub-components/'
 
 import { Progress } from 'react-sweet-progress'
+import moment from 'moment'
+import { format } from '../../../utils/numberUtils'
 
-import "react-sweet-progress/lib/style.css"
+import * as func from './functions/WorkExperienceFunctions'
+import { RequiredValidation } from '../../../utils/validate/'
+
+import WorkExperienceAddModal from './modals/WorkExperienceAddModal'
+import ResponseModal from '../../notice/NoticeResponseModal'
+
+import WorkExperienceMultipleCardComponent from './components/WorkExperienceMultipleCardComponent'
+import WorkExperienceViewPdfComponent from './components/WorkExperienceViewPdfComponent'
 
 class WorkExperienceFragment extends BaseMVPView {
 
   constructor(props) {
     super(props)
     this.state = {
-      showAddWorkExperienceModal : false
+      enabledLoader : false,
+      showEditSubmitButton : false,
+      showAddWorkExperienceModal : false,
+      updateMode : false,
+      showNoticeResponseModal : false,
+      enabledLoaderPdfModal : false,
+      showPdfViewComponent : false,
+      workExperienceCardHolder : [],
+      noticeResponse : '',
+      pdfFile: '',
+      pdfFileUrl: '',
+      workExpId : '',
+      index : 4,
+      viewMoreText : 'View more',
+      monthData :
+      [{ id: 1, name: 'January' },
+       { id: 2, name: 'February' },
+       { id: 3, name: 'March' },
+       { id: 4, name: 'April' },
+       { id: 5, name: 'May' },
+       { id: 6, name: 'June' },
+       { id: 7, name: 'July' },
+       { id: 8, name: 'August' },
+       { id: 9, name: 'September' },
+       { id: 10, name: 'October' },
+       { id: 11, name: 'November' },
+       { id: 12, name: 'December' }],
+      fromMonthId : '',
+      fromMonthName : '',
+      fromMonthErrorMessage : '',
+      toMonthId : '',
+      toMonthName : '',
+      toMonthErrorMessage : '',
+      fromYear : '',
+      fromYearErrorMessage : '',
+      toYear : '',
+      toYearErrorMessage : '',
+      companyName : '',
+      companyErrorMessage : '',
+      address : '',
+      addressErrorMessage : '',
+      position : '',
+      positionErrorMessage : '',
+      contactNo : '',
+      contactNoErrorMessage : '',
+      briefDescDuties : '',
+      briefDescDutiesErrorMessage : '',
+      showFromMonthModal : false,
+      showToMonthModal : false
+    }
+
+  }
+
+  /* Implementation */
+
+  componentDidMount () {
+    this.props.onSendPageNumberToView(5)
+    this.presenter.getWorkExperience()
+  }
+
+  checkedWorkExperience (workExperienceCardHolder) {
+    this.setState({ workExperienceCardHolder })
+  }
+
+  onShowWorkExperienceFormModalFunc() {
+    this.setState({
+      showAddWorkExperienceModal : true,
+      companyName  : '',
+      address  : '',
+      position  : '',
+      contactNo  : '',
+      fromYear : '',
+      toYear : '',
+      fromMonthId : '',
+      toMonthId : '',
+      briefDescDuties : '',
+      updateMode : false
+    })
+  }
+
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse , showNoticeResponseModal : true})
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
+  onCheckedPdf () {
+    this.setState({ enabledLoaderPdfModal : true })
+    this.presenter.getWorkExperienceForm()
+  }
+
+  showPdfFileView (pdfFile) {
+    this.setState({ showPdfViewComponent : true, pdfFile })
+  }
+
+  showPdfFileUrl (pdfFileUrl) {
+    const url = pdfFileUrl.url + ''
+    this.presenter.getOnBoardingAttachments(url)
+  }
+
+
+  /* validation and form submission*/
+
+  companyFunc(companyName) {
+    this.setState({ companyName, companyErrorMessage : '' })
+  }
+
+  addressFunc(address) {
+    const validate = func.checkedValidateTextAddress(address)
+    this.setState({ address: validate, addressErrorMessage : '' })
+  }
+
+  positionFunc(position) {
+    const validate = func.checkedValidateText(position)
+    this.setState({ position: validate, positionErrorMessage : '' })
+  }
+
+  contactNoFunc(contactNo) {
+    const validate = func.checkValidateNumber(contactNo)
+    this.setState({ contactNo: validate, contactNoErrorMessage : '' })
+  }
+
+  fromYearFunc(fromYear) {
+    const validate = func.checkValidateNumber(fromYear)
+    this.setState({ fromYear: validate, fromMonthErrorMessage : '' })
+  }
+
+  fromYearValidate(value) {
+    if(value.length === 4) {
+      if(value <= moment().format('YYYY')) {
+        this.setState({ fromYearErrorMessage : '' })
+      } else {
+        this.setState({ fromYearErrorMessage : 'Future year is not valid.' })
+      }
+    } else {
+      this.setState({ fromYearErrorMessage : 'Please input a valid year.' })
     }
   }
 
-  componentDidMount () {
-    this.props.onSendPageNumberToView(4)
+  toYearFunc(toYear) {
+    const validate = func.checkValidateNumber(toYear)
+    this.setState({ toYear : validate, toYearErrorMessage : '' })
+  }
+
+  toYearValidate(value) {
+    if(value.length === 4) {
+      if(value <= moment().format('YYYY')) {
+        this.setState({ toYearErrorMessage : '' })
+      } else {
+        this.setState({ toYearErrorMessage : 'Future year is not valid.' })
+      }
+    } else {
+      this.setState({ toYearErrorMessage : 'Please input a valid year.' })
+    }
+  }
+
+  briefDescDutiesFunc(briefDescDutiesbriefDescDuties) {
+    const validate = func.checkedValidateText(briefDescDutiesbriefDescDuties)
+    this.setState({ briefDescDuties: validate, briefDescDutiesErrorMessage : '' })
+  }
+
+  validateRequired(value) {
+    const validate = new RequiredValidation().isValid(value)
+    return validate ? true : false
+  }
+
+  checkMonth (id) {
+    if(id === 1) { return 'January' }
+    else if (id ===2) { return 'February'}
+    else if (id ===3) { return 'March' }
+    else if (id ===4) { return 'April' }
+    else if (id ===5) { return 'May' }
+    else if (id ===6) { return 'June' }
+    else if (id ===7) { return 'July' }
+    else if (id ===8) { return 'August' }
+    else if (id ===9) { return 'September' }
+    else if (id ===10) { return 'October' }
+    else if (id ===11) { return 'November' }
+    else if (id ===12) { return 'December' }
+  }
+
+  submission() {
+    const {
+      workExpId,
+      companyName,
+      address,
+      position,
+      contactNo,
+      fromMonthId,
+      fromYear,
+      toMonthId,
+      toYear,
+      briefDescDuties,
+      updateMode
+    } = this.state
+
+    if(!this.validateRequired(companyName)) {
+      this.setState({ companyErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(address)) {
+      this.setState({ addressErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(position)) {
+      this.setState({ positionErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(contactNo)) {
+      this.setState({ contactNoErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(fromMonthId)) {
+      this.setState({ fromMonthErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(fromYear)) {
+      this.setState({ fromYearErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(toMonthId)) {
+      this.setState({ toMonthErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(toYear)) {
+      this.setState({ toYearErrorMessage : 'Required field' })
+    } else if(!this.validateRequired(briefDescDuties)) {
+      this.setState({ briefDescDutiesErrorMessage : 'Required field' })
+    } else {
+      if(updateMode) {
+        this.presenter.putWorkExperience(
+          workExpId,
+          companyName,
+          address,
+          position,
+          briefDescDuties,
+          contactNo,
+          fromMonthId,
+          fromYear,
+          toMonthId,
+          toYear)
+        this.setState({ showAddWorkExperienceModal : false })
+        this.setState({
+          workExpId : '',
+          companyName  : '',
+          address  : '',
+          position  : '',
+          contactNo  : '',
+          fromYear : '',
+          toYear : '',
+          fromMonthId : '',
+          toMonthId : '',
+          briefDescDuties : '',
+          updateMode: false
+        })
+      } else {
+        this.presenter.addWorkExperience(
+          companyName,
+          address,
+          position,
+          briefDescDuties,
+          contactNo,
+          fromMonthId,
+          fromYear,
+          toMonthId,
+          toYear)
+        this.setState({ showAddWorkExperienceModal : false })
+        this.setState({
+          companyName  : '',
+          address  : '',
+          position  : '',
+          contactNo  : '',
+          fromYear : '',
+          toYear : '',
+          fromMonthId : '',
+          toMonthId : '',
+          briefDescDuties : '',
+          updateMode: false
+        })
+      }
+    }
+  }
+
+  /* Delete Education */
+
+  onDeleteProperty (id) {
+    this.presenter.removeWorkExperience(id)
+    this.presenter.getWorkExperience()
   }
 
   render () {
     const {
-      showAddWorkExperienceModal
+      workExpId,
+      enabledLoader,
+      showEditSubmitButton,
+      showAddWorkExperienceModal,
+      showNoticeResponseModal,
+      enabledLoaderPdfModal,
+      showPdfViewComponent,
+      workExperienceCardHolder,
+      noticeResponse,
+      updateMode,
+      pdfFile,
+      pdfFileUrl,
+      index,
+      viewMoreText,
+      monthData,
+      fromMonthId,
+      fromMonthName,
+      fromMonthErrorMessage,
+      toMonthId,
+      toMonthName,
+      toMonthErrorMessage,
+      fromYear,
+      fromYearErrorMessage,
+      toYear,
+      toYearErrorMessage,
+      companyName,
+      companyErrorMessage,
+      address,
+      addressErrorMessage,
+      position,
+      positionErrorMessage,
+      contactNo,
+      contactNoErrorMessage,
+      briefDescDuties,
+      briefDescDutiesErrorMessage,
+      showFromMonthModal,
+      showToMonthModal
     } = this.state
 
     const { percentage } = this.props
+
+    const isVisible = (workExperienceCardHolder && workExperienceCardHolder.length > 4) ? '' : 'hide'
 
     return (
       <div>
@@ -45,7 +370,88 @@ class WorkExperienceFragment extends BaseMVPView {
         {
           showAddWorkExperienceModal &&
           <WorkExperienceAddModal
-            onClose = { () => this.setState({ showAddWorkExperienceModal : false }) }/>
+            workExpId = { workExpId }
+            onClose = { () => this.setState({ showAddWorkExperienceModal : false, updateMode: false }) }
+            updateMode = { updateMode }
+            submission = { () => this.submission() }
+            monthData = { monthData }
+            companyName = { companyName }
+            companyErrorMessage = { companyErrorMessage }
+            companyFunc = { (resp) => this.companyFunc(resp) }
+            address = { address }
+            addressErrorMessage = { addressErrorMessage }
+            addressFunc = { (resp) => this.addressFunc(resp) }
+            position = { position }
+            positionErrorMessage = { positionErrorMessage }
+            positionFunc = { (resp) => this.positionFunc(resp) }
+            contactNo = { contactNo }
+            contactNoErrorMessage = { contactNoErrorMessage }
+            contactNoFunc = { (resp) => this.contactNoFunc(resp) }
+            briefDescDuties = { briefDescDuties }
+            briefDescDutiesErrorMessage = { briefDescDutiesErrorMessage }
+            briefDescDutiesFunc = { (resp) => this.briefDescDutiesFunc(resp) }
+            toYear = { toYear }
+            toMonthName = { toMonthName }
+            toMonthErrorMessage = { toMonthErrorMessage }
+            toYearFunc = { (resp) => this.toYearFunc(resp) }
+            toYearValidate = { (resp) => this.toYearValidate(resp) }
+            toMonthFunc = {  (toMonthId, toMonthName) =>
+              this.setState({
+                toMonthId,
+                toMonthName,
+                showToMonthModal : false,
+                toMonthErrorMessage : ''
+              })
+            }
+            fromYear = { fromYear }
+            fromMonthName = { fromMonthName }
+            fromMonthErrorMessage = { fromMonthErrorMessage }
+            fromYearFunc = { (resp) => this.fromYearFunc(resp) }
+            fromYearValidate = { (resp) => this.fromYearValidate(resp) }
+            fromMonthFunc = { (fromMonthId, fromMonthName) =>
+              this.setState({
+                fromMonthId,
+                fromMonthName,
+                showFromMonthModal : false,
+                fromMonthErrorMessage : ''
+              })
+            }
+            fromYearErrorMessage = { fromYearErrorMessage }
+            toYearErrorMessage = { toYearErrorMessage }
+            showToMonthModal = { showToMonthModal }
+            showToMonthFunc = { (resp) => this.setState({ showToMonthModal : resp }) }
+            showFromMonthModal = { showFromMonthModal }
+            showFromMonthFunc = { (resp) => this.setState({ showFromMonthModal : resp }) }
+            />
+        }
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false})
+              this.props.reloadPreEmploymentForm()
+            }}
+            noticeResponse={ noticeResponse }
+          />
+        }
+        {
+          enabledLoaderPdfModal &&
+          <Modal>
+            <div>
+              <center>
+                <br/>
+                {
+                  showPdfViewComponent ?
+
+                  <h2>Please wait while we we&#39;re retrieving the documents</h2> :
+                  <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+                }
+                <br/>
+                <CircularLoader show = { enabledLoaderPdfModal }/>
+                <br/>
+              </center>
+            </div>
+          </Modal>
         }
         <br/>
         <div className = { 'percentage-grid' }>
@@ -55,11 +461,35 @@ class WorkExperienceFragment extends BaseMVPView {
           </div>
           <Progress
             type = { 'circle' }
-            height = { 100 }
-            width = { 100 }
-            percent={ percentage } />
+            height = { 65 }
+            width = { 65 }
+            percent = { percentage } />
         </div>
         <br/>
+        {
+          workExperienceCardHolder.length > 0  &&
+          <div className = { 'work-grid-card' }>
+            <Card
+              onClick = { () =>
+                this.onCheckedPdf(pdfFileUrl)
+              }
+              className = { 'work-card' }>
+              <div className = { 'work-grid-x2' }>
+                <h2>Employment Verification Form</h2>
+                <div>
+                  <span className = { 'work-icon work-seemore-button' }/>
+                </div>
+              </div>
+            </Card>
+            {
+              showPdfViewComponent &&
+              <WorkExperienceViewPdfComponent
+                pdfFile = { pdfFile }
+                onClose = { () => this.setState({ showPdfViewComponent: false }) }
+              />
+            }
+          </div>
+        }
         <br/>
         <Line />
         <br/>
@@ -68,13 +498,85 @@ class WorkExperienceFragment extends BaseMVPView {
           <div className = { 'text-align-right' }>
             <GenericButton
               text = { 'Add Work Experience' }
-              onClick = { () => this.setState({ showAddWorkExperienceModal : true }) }
+              onClick = { () => this.onShowWorkExperienceFormModalFunc() }
               />
           </div>
         </div>
-        <div>
-          <Card></Card>
-        </div>
+        <br/>
+        {
+          enabledLoader ?
+          <center>
+            <br/>
+            <h2>Please wait while we we&#39;re retrieving your work experience record/s </h2>
+            <br/>
+            <CircularLoader show = { enabledLoader } />
+            <br/>
+          </center>
+          :
+          <div>
+            {
+              workExperienceCardHolder ===0 ?
+              <div>
+                <br/>
+                <center>
+                  <h2>No Work Experience Record</h2>
+                </center>
+                <br/>
+              </div>
+              :
+              <div>
+                <WorkExperienceMultipleCardComponent
+                  cardDataHolder = { workExperienceCardHolder }
+                  index = { index }
+                  onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
+                  disabled = { showEditSubmitButton }
+                  onEditModeProperty = { (
+                    workExpId,
+                    companyName,
+                    address,
+                    contactNo,
+                    position,
+                    briefDescDuties,
+                    fromMonthId,
+                    fromYear,
+                    toMonthId,
+                    toYear,
+                    showAddWorkExperienceModal,
+                    updateMode) =>
+                    this.setState({
+                      workExpId,
+                      companyName,
+                      address,
+                      contactNo,
+                      position,
+                      briefDescDuties,
+                      fromMonthId,
+                      fromMonthName: this.checkMonth(fromMonthId),
+                      fromYear,
+                      toMonthId,
+                      toMonthName: this.checkMonth(toMonthId),
+                      toYear,
+                      showAddWorkExperienceModal,
+                      updateMode
+                    }) }/>
+                    <button
+                      type = { 'button' }
+                      className = { `viewmore tooltip ${ isVisible }` }
+                      onClick = {
+                        () => {
+                          if(index === workExperienceCardHolder.length)
+                            this.setState({ index : 4, viewMoreText : 'View more' })
+                          else
+                            this.setState({ index : workExperienceCardHolder.length, viewMoreText : 'View less' })
+                        }
+                      }>
+                      <img src={ require('../../../images/icons/horizontal.png') } />
+                      <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+                    </button>
+              </div>
+            }
+          </div>
+        }
       </div>
     )
   }
@@ -84,4 +586,4 @@ WorkExperienceFragment.propTypes = {
   onSendPageNumberToView : PropTypes.func
 }
 
-export default ConnectView(WorkExperienceFragment, Presenter )
+export default ConnectView(WorkExperienceFragment, Presenter)

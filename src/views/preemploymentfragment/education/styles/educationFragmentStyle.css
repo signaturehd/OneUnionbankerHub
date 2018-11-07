@@ -1,7 +1,23 @@
 .educ-card-grid-option {
   padding: 20px;
   display: grid;
-  grid-template-columns: 1fr .1fr;
+  grid-template-columns: .1fr 1fr .1fr;
   margin: 0px auto;
   align-items: center;
+}
+
+
+.educ-icon-unique {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 50px;
+  width: 40px;
+  background-repeat: no-repeat;
+  margin: auto;
+}
+
+.educ-user-icon {
+  background-image: url('../../../../images/icons/ic_school_grey_500_18dp.png')
 }
