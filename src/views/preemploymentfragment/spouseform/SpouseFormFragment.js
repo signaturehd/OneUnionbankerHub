@@ -124,7 +124,7 @@ class SpouseFormFragment extends BaseMVPView {
     if(gender === 'M') {
       return 'Male'
     } else {
-      return 'F'
+      return 'Female'
     }
   }
 
@@ -149,9 +149,9 @@ class SpouseFormFragment extends BaseMVPView {
       contact : nullChecker.contactNumber,
       genderId : nullChecker.gender,
       gender: nullChecker.gender ? this.checkGender(nullChecker.gender) : '',
-      spouseId : nullChecker.id ,
-      statusId : nullChecker.status ,
-      statusName : nullChecker.status ? this.checkStatus(nullChecker.status) : '',
+      spouseId : nullChecker.id,
+      statusId : nullChecker.status,
+      statusName : this.checkStatus(nullChecker.status),
       hospitalization : nullChecker.healthHospitalizationPlan ?  nullChecker.healthHospitalizationPlan : 0,
       groupPlan : nullChecker.groupLifeInsurance ? nullChecker.groupLifeInsurance : 0,
       editMode
