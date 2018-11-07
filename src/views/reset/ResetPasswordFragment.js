@@ -33,6 +33,7 @@ class ResetPasswordFragment extends BaseMVPView {
       showRequestOtpModal : true,
       enabledLoader : false,
       showNoticeResponseModal : false,
+      showPasswordNoticeResponseModal : false,
       otpData : '',
       passwordResetLoader: false,
       confirmPasswordErrorMessage: '',
