@@ -110,7 +110,7 @@ class NavigationView extends BaseMVPView {
       tempPreEmploymentModal: false,
       hasFilledOut: '',
       preEmploymentStatus: null,
-      isLineManager : false
+      isLineManager : null
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -199,6 +199,7 @@ class NavigationView extends BaseMVPView {
   }
 
   isLineManagerData (isLineManager) {
+    console.log(isLineManager)
     this.setState({ isLineManager })
   }
 
@@ -256,7 +257,6 @@ class NavigationView extends BaseMVPView {
     })
 
     splitUserInitial = initials[0] + initials[initials.length - 1]
-
     return (
       <div className = { 'navigation-body-div' }>
         { super.render() }

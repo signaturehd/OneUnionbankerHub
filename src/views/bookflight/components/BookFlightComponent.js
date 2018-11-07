@@ -37,6 +37,9 @@ class BookFlightComponent extends Component {
                   resp.return ? resp.return.time : '',
                   resp.return ? 'RoundTrip' : 'OneWay',
                   resp.purpose.name,
+                  resp.liquidation.cost,
+                  resp.liquidation.serviceCharge,
+                  resp.liquidation.vat,
                   resp.return ?
                   resp.departure.origin.isDomestic &&
                   resp.departure.destination.isDomestic &&
