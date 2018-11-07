@@ -299,7 +299,7 @@
 
 .profile-information-view-right {
   display: grid;
-  grid-template-columns: .08fr 1fr;
+  grid-template-columns: .15fr 1fr;
   margin-bottom: 5px;
 }
 
