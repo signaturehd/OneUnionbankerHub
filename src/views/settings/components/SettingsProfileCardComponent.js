@@ -203,6 +203,7 @@ class SettingsProfileCardComponent extends Component {
                 accountNumber={ accountNumber }
                 profile={ profile && profile}
                 updateAddressFunc = { (e, e1) => this.props.updateAddressOption(e, e1) }
+                onUpdateCivilStatusFunc = { (e) => this.props.onUpdateCivilStatus(e) }
                 lineManager={ lineManager && lineManager.fullName }
                 rank={ rank && rank.rank }
               />

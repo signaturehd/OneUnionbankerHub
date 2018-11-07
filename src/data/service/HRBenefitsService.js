@@ -46,7 +46,7 @@ export default class HRBenefitsService {
   }
 
   updateEmailAddress (token, emailAddress) {
-    return this.accountClient.put('v1/profile/email', {
+    return this.apiClient.put('v1/profile/email', {
       emailAddress
     },{
       headers : { token }
@@ -75,7 +75,7 @@ export default class HRBenefitsService {
       formData.append('file', resp.file)
     ))
     formData.append('body', JSON.stringify(objectParam))
-    return this.accountClient.put('v1/profile/address', formData, {
+    return this.apiClient.put('v1/profile/address', formData, {
       headers : { token }
     })
   }
@@ -93,7 +93,7 @@ export default class HRBenefitsService {
   }
 
   updateCivilStatus (token, civilStatus) {
-    return this.accountClient.put('v1/profile/civil-status', {
+    return this.apiClient.put('v1/profile/civil-status', {
       civilStatus
     }, {
       headers : { token }

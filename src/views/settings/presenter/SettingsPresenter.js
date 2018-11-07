@@ -149,20 +149,26 @@ export default class SettingsPresenter {
    /* Profile Update */
 
    updateEmailAddress (email) {
+     this.view.showCircularLoader()
      this.updateEmailAddressInteractor.execute(email)
      .subscribe(data => {
+       this.view.hideCircularLoader()
        this.view.noticeResponseModal(data.message)
        this.getProfile()
      }, error => {
+       this.view.hideCircularLoader()
      })
    }
 
    updateContactNumber (number) {
+     this.view.showCircularLoader()
      this.updateContactNumberInteractor.execute(number)
      .subscribe(data => {
+       this.view.hideCircularLoader()
        this.view.noticeResponseModal(data.message)
        this.getProfile()
      }, error => {
+       this.view.hideCircularLoader()
      })
    }
 
@@ -190,20 +196,26 @@ export default class SettingsPresenter {
    }
 
    updateDescription (description) {
+     this.view.showCircularLoader()
      this.updateDescriptionInteractor.execute(description)
      .subscribe(data => {
+       this.view.hideCircularLoader()
        this.view.noticeResponseModal(data.message)
        this.getProfile()
      }, error => {
+       this.view.hideCircularLoader()
      })
    }
 
    updateAddress (address, file) {
+   this.view.showCircularLoader()
     this.updateAddressInteractor.execute(address, file)
      .subscribe(data => {
+       this.view.hideCircularLoader()
        this.view.noticeResponseModal(data.message)
        this.getProfile()
      }, error => {
+       this.view.hideCircularLoader()
       store.dispatch(NotifyActions.resetNotify())
      })
    }
@@ -219,11 +231,14 @@ export default class SettingsPresenter {
    }
 
    updateCivilStatus (civilStatus) {
+    this.view.showCircularLoader()
     this.updateCivilStatusInteractor.execute(civilStatus)
      .subscribe(data => {
+       this.view.hideCircularLoader()
        this.view.noticeResponseModal(data.message)
        this.getProfile()
      }, error => {
+       this.view.hideCircularLoader()
       store.dispatch(NotifyActions.resetNotify())
      })
    }
