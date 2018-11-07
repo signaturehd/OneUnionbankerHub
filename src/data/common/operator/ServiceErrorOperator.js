@@ -22,7 +22,7 @@ export default function ServiceErrorOperator () {
         } else if (code === 400) {
           body.errors.map((error, key) => (
             store.dispatch(NotifyActions.addNotify({
-                title : 'My Benefits',
+                title : 'One UnionBanker Hub',
                 message : error.message,
                 type : 'warning',
                 duration : 2000
@@ -35,7 +35,7 @@ export default function ServiceErrorOperator () {
           subscriber.error(new ForbiddenError())
         } else {
           store.dispatch(NotifyActions.addNotify({
-              title : 'Internal Server Error',
+              title : 'One UnionBanker Hub',
               message : 'It seems that we\'ve encountered a problem.',
               type : 'danger',
               duration : 2000
