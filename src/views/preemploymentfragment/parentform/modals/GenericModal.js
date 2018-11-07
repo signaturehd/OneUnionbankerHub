@@ -70,8 +70,10 @@ class ParentModal extends Component {
       relationshipFunc,
       hospitalizationFunc,
       groupPlanFunc,
+      selectedGenderFunc,
       saveFormSubmission,
       editFormSubmission,
+      showGenderModal
     } = this.props
 
     return (
@@ -90,6 +92,22 @@ class ParentModal extends Component {
             selectedArray = { (bloodTypeId, bloodTypeName) =>
               selectedBloodTypeFunc(
                 bloodTypeName,
+                false,
+                ''
+              )
+            }
+            onClose = { () => bloodTypeFunc(false) }
+          />
+        }
+        {
+          showGenderModal &&
+          <SingleInputModal
+            label = { 'Select Gender' }
+            inputArray = { genderObject }
+            selectedArray = { (genderId, gender) =>
+              selectedGenderFunc(
+                genderId,
+                gender,
                 false,
                 ''
               )
@@ -180,27 +198,41 @@ class ParentModal extends Component {
               errorMessage = { contact ? '' : contactNumberErrorMessage }
               onChange = { (e) => contactNumberFunc(e.target.value) }
               />
-            <div className = { 'grid-global' } >
-              <GenericInput
-                value = { relationship  }
-                text = { 'Relationship' }
-                errorMessage = { relationship ? '' : relationshipErrorMessage }
-                onClick = { () => relationshipFunc(true) }
-                />
+            {
+              isParentOrSiblings ?
+              <div className = { 'grid-global' } >
+                <GenericInput
+                  value = { relationship  }
+                  text = { 'Relationship' }
+                  errorMessage = { relationship ? '' : relationshipErrorMessage }
+                  onClick = { () => relationshipFunc(true) }
+                  />
+                <GenericInput
+                  value = { statusName  }
+                  text = { 'Status' }
+                  errorMessage = { statusName ? '' : statusNameErrorMessage }
+                  onClick = { () => statusNameFunc(true) }
+                  />
+              </div>
+              :
               <GenericInput
                 value = { statusName  }
                 text = { 'Status' }
                 errorMessage = { statusName ? '' : statusNameErrorMessage }
                 onClick = { () => statusNameFunc(true) }
                 />
-            </div>
+            }
             <div className = { 'grid-global' } >
-              <GenericInput
-                value = { gender  }
-                text = { 'Gender' }
-                readOnly
-                errorMessage = { gender ? '' : genderErrorMessage }
-                />
+              {
+                !isParentOrSiblings &&
+                <GenericInput
+                  value = { gender  }
+                  text = { 'Gender' }
+                  readOnly
+                  errorMessage = { gender ? '' : genderErrorMessage }
+                  onClick = { () => genderCodeFunc(true) }
+                  />
+              }
               <GenericInput
                 text = { 'Blood Type' }
                 value = { bloodTypeName }
