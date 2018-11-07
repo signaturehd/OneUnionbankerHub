@@ -1327,7 +1327,8 @@ export default class HRBenefitsService {
       requestId: bookParam.requestId,
       cost: {
         flight: bookParam.totalCostOfFlight,
-        serviceCharge: bookParam.totalServiceCharge
+        serviceCharge: bookParam.totalServiceCharge,
+        VAT: bookParam.valueAddedTax
       },
       departureTime : bookParam.departureTime,
       returnTime: bookParam.returnTime

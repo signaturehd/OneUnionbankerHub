@@ -30,7 +30,7 @@ export default class BookFlightPresenter {
     totalServiceCharge,
     departureTime,
     returnTime,
-    isDomestic,
+    valueAddedTax,
     attachmentsData
   ) {
     this.view.showCircularLoader()
@@ -40,7 +40,7 @@ export default class BookFlightPresenter {
       totalServiceCharge,
       departureTime,
       returnTime,
-      isDomestic,
+      valueAddedTax,
       attachmentsData
     ))
       .subscribe(travel => {
