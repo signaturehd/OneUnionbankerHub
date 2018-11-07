@@ -1,15 +1,17 @@
 import { NotifyActions } from '../../../../actions'
 import store from '../../../../store'
 
-import GetParentInteractor from '../../../../domain/interactor/preemployment/parent/GetParentInteractor'
-import UpdateParentInteractor from '../../../../domain/interactor/preemployment/parent/UpdateParentInteractor'
 import AddParentInteractor from '../../../../domain/interactor/preemployment/parent/AddParentInteractor'
-import RemoveParentsInteractor from '../../../../domain/interactor/preemployment/parent/RemoveParentInteractor'
-
-import GetSiblingsInteractor from '../../../../domain/interactor/preemployment/siblings/GetSiblingsInteractor'
-import UpdateSiblingsInteractor from '../../../../domain/interactor/preemployment/siblings/UpdateSiblingsInteractor'
 import AddSiblingsInteractor from '../../../../domain/interactor/preemployment/siblings/AddSiblingsInteractor'
+
+import GetParentInteractor from '../../../../domain/interactor/preemployment/parent/GetParentInteractor'
+import GetSiblingsInteractor from '../../../../domain/interactor/preemployment/siblings/GetSiblingsInteractor'
+
+import UpdateSiblingsInteractor from '../../../../domain/interactor/preemployment/siblings/UpdateSiblingsInteractor'
+import UpdateParentInteractor from '../../../../domain/interactor/preemployment/parent/UpdateParentInteractor'
+
 import RemoveSiblingsInteractor from '../../../../domain/interactor/preemployment/siblings/RemoveSiblingsInteractor'
+import RemoveParentsInteractor from '../../../../domain/interactor/preemployment/parent/RemoveParentInteractor'
 
 import parentParam from '../../../../domain/param/ParentParam'
 
@@ -250,10 +252,10 @@ export default class ChildrenPresenter {
       this.view.showOccupationErrorMessage('Occupation field is required')
     } else if (contact === '') {
       this.view.showContactErrorMessage('Contact # is required')
-    } else if (relationship === '') {
-      this.view.showRelationshipErrorMessage('Relationship field is required')
     } else if (statusId === '') {
       this.view.showStatusErrorMessage('Status is required')
+    } else if (genderId === '') {
+      this.view.showGenderErrorMessage('Gender is required')
     } else if (bloodTypeName === '') {
       this.view.showBloodTypeErrorMessage('Blood Type is required')
     }  else {
@@ -312,8 +314,6 @@ export default class ChildrenPresenter {
       this.view.showOccupationErrorMessage('Occupation field is required')
     } else if (contact === '') {
       this.view.showContactErrorMessage('Contact # is required')
-    } else if (relationship === '') {
-      this.view.showRelationshipErrorMessage('Relationship field is required')
     } else if (statusId === '') {
       this.view.showStatusErrorMessage('Status is required')
     } else if (genderId === '') {
@@ -377,8 +377,6 @@ export default class ChildrenPresenter {
       this.view.showRelationshipErrorMessage('Relationship field is required')
     } else if (statusId === '') {
       this.view.showStatusErrorMessage('Status is required')
-    } else if (genderId === '') {
-      this.view.showGenderErrorMessage('Gender is required')
     } else if (bloodTypeName === '') {
       this.view.showBloodTypeErrorMessage('Blood Type is required')
     } else {
