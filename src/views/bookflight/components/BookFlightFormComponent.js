@@ -44,7 +44,8 @@ class BookFlightFormComponent extends Component {
       totalAmount,
       bookflightArray,
       attachmentsData,
-      attachmentsData2
+      attachmentsData2,
+      submitFunc
     } = this.props
 
     const depTime = departureDate + " " + departureTime
@@ -157,7 +158,7 @@ class BookFlightFormComponent extends Component {
         <center>
           <GenericButton
             text = { 'Continue' }
-            onClick = { () => this.submit() }
+            onClick = { () => submitFunc() }
           />
         </center>
       </div>

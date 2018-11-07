@@ -32,6 +32,7 @@ class BookFlightFragment extends BaseMVPView {
     super(props)
     this.state = {
       enabledLoader : false,
+      submitLoader : false,
       showNoticeResponseModal : false,
       showTicketModal : false,
       showForm: false,
@@ -162,6 +163,14 @@ class BookFlightFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  hideSubmitLoader () {
+    this.setState({ submitLoader : false })
+  }
+
+  showSubmitLoader () {
+    this.setState({ submitLoader : true })
+  }
+
   noticeResponse (noticeResponse) {
     this.setState({
       noticeResponse,
@@ -219,9 +228,14 @@ class BookFlightFragment extends BaseMVPView {
     )
   }
 
+  navigate () {
+    this.props.history.push('/mytravel/travel')
+  }
+
   render () {
     const {
       enabledLoader,
+      submitLoader,
       showTicketModal,
       showForm,
       showNoticeResponseModal,
@@ -254,14 +268,28 @@ class BookFlightFragment extends BaseMVPView {
     return (
       <div>
         {
+          submitLoader ?
+          <Modal>
+            <center>
+              <h2>Please wait...</h2>
+              <CircularLoader show = { submitLoader }/>
+            </center>
+          </Modal>
+          :
           showNoticeResponseModal &&
           <ResponseModal
             onClose={ () => {
-              this.setState({ showNoticeResponseModal : false })
+              this.setState({ showNoticeResponseModal : false, showForm : false })
             }}
             noticeResponse={ noticeResponse }
           />
         }
+        <i
+          className={ 'back-arrow' }
+          onClick={ () => this.navigate() }>
+        </i>
+        <br/>
+        <br/>
         <div className = { 'percentage-grid' }>
           <div>
             <h2 className={ 'font-size-30px text-align-left' }>List of Booked Flights</h2>
@@ -299,6 +327,7 @@ class BookFlightFragment extends BaseMVPView {
             bookflightArray = { bookflightArray }
             attachmentsData = { attachmentsData }
             attachmentsData2 = { attachmentsData2 }
+            submitFunc = { () => this.submit() }
           />
           :
           enabledLoader ?
