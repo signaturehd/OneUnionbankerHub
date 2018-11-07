@@ -18,6 +18,11 @@
 .news-limit-text {
 }
 
+.news-like-grid {
+  display: grid;
+  grid-template-rows: .5fr .005fr;
+}
+
 .news-icon-size {
   background-size: contain;
   cursor: pointer;

@@ -1033,4 +1033,29 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Events Budget */
+
+  validateEventsBudget (token) {
+    return this.service.validateEventsBudget(token)
+      .pipe(ServiceErrorOperator())
+  }
+  /* News isHeart */
+
+  addEventsBudget (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    addEventParam
+  ) {
+    return this.service.addEventsBudget(
+      token,
+      accountToken,
+      accountNo,
+      releasingCenter,
+      addEventParam
+    )
+      .pipe(ServiceErrorOperator())
+  }
+
 }
