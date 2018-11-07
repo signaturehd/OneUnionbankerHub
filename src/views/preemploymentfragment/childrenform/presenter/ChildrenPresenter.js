@@ -97,6 +97,22 @@ export default class ChildrenPresenter {
     })
   }
 
+  /* Attachments Get Type and Filename */
+
+  checkFileType (file) {
+    const str = file.split(';')
+    const strImage = str[0].replace(/^data:/, '')
+
+    return strImage
+  }
+
+  generateRandomName (resp) {
+    const name = Math.random().toString(36).substring(2, 18)
+    let fileExtension = this.checkFileType(resp).split('/')
+    fileExtension = fileExtension[fileExtension.length - 1]
+    return name + '.' + fileExtension
+  }
+
   /* Remove Method */
 
   removeChildren (id) {
@@ -153,33 +169,69 @@ export default class ChildrenPresenter {
     bloodTypeName,
     hospitalization,
     groupPlan,
-    defaultAttachmentsArray
+    defaultAttachmentsArray,
+    attachmentFileObject
   ) {
+    let validateAttachments = false
+    defaultAttachmentsArray && defaultAttachmentsArray.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
 
-    this.view.showCircularLoader()
-    this.putChildrenInteractor.execute(childrenParam(
-      childrenId,
-      firstName,
-      lastName,
-      middleName,
-      genderId,
-      statusId,
-      contact,
-      occupationName,
-      birthDate,
-      bloodTypeName,
-      hospitalization,
-      groupPlan,
-      defaultAttachmentsArray
-    ))
-    .subscribe(data => {
-      this.view.hideCircularLoader()
-      this.view.noticeResponseFunc(data)
-      this.view.defaultValueForm()
-      this.getChildren()
-    }, erro => {
-      this.view.hideCircularLoader()
-    })
+    if(validateAttachments) {
+      this.view.showCircularLoader()
+      this.putChildrenInteractor.execute(childrenParam(
+        childrenId,
+        firstName,
+        lastName,
+        middleName,
+        genderId,
+        statusId,
+        contact,
+        occupationName,
+        birthDate,
+        bloodTypeName,
+        hospitalization,
+        groupPlan,
+        defaultAttachmentsArray
+      ))
+      .subscribe(data => {
+        this.view.hideCircularLoader()
+        this.view.noticeResponseFunc(data)
+        this.view.defaultValueForm()
+        this.getChildren()
+      }, erro => {
+        this.view.hideCircularLoader()
+      })
+    } else {
+      this.view.showCircularLoader()
+      this.putChildrenInteractor.execute(childrenParam(
+        childrenId,
+        firstName,
+        lastName,
+        middleName,
+        genderId,
+        statusId,
+        contact,
+        occupationName,
+        birthDate,
+        bloodTypeName,
+        hospitalization,
+        groupPlan,
+        attachmentFileObject
+      ))
+      .subscribe(data => {
+        this.view.hideCircularLoader()
+        this.view.noticeResponseFunc(data)
+        this.view.defaultValueForm()
+        this.getChildren()
+      }, error => {
+        this.view.hideCircularLoader()
+      })
+    }
   }
 
   postChildren (

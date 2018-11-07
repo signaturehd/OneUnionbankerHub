@@ -266,7 +266,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       messageNotFound,
       attachmentFileObject
     } = this.state
-    console.log(attachmentFileObject)
+
     let validateAttachments = false
     torFormData && torFormData.map(
       (attachment, key) => {

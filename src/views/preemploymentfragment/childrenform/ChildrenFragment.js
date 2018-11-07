@@ -37,6 +37,7 @@ class ChildrenFragment extends BaseMVPView {
       statusObject : [],
       genderObject : [],
       attachments : [],
+      attachmentFileObject : [],
       defaultAttachmentsArray : [{
         name : 'Birth Certificate'
       }],
@@ -90,6 +91,17 @@ class ChildrenFragment extends BaseMVPView {
     }
     this.presenter.getObjectData()
     this.presenter.getChildren()
+  }
+
+  showRetrieveAttachments (file, name, base64) {
+    let arrayNew = [...this.state.attachmentFileObject]
+    const objectFile = {
+      file,
+      name,
+      base64
+    }
+    arrayNew.push(objectFile)
+    this.setState({ attachmentFileObject : arrayNew })
   }
 
   showCircularLoader () {
@@ -240,12 +252,13 @@ class ChildrenFragment extends BaseMVPView {
       hospitalization,
       groupPlan,
       editMode,
-      defaultAttachmentsArray
+      defaultAttachmentsArray,
+      attachmentFileObject
     } = this.state
 
     let gender = genderId === 'M' ? 'M' : 'F'
 
-    if(editMode) {
+    if (editMode) {
       this.presenter.putChildren(
         childrenId,
         firstName,
@@ -259,7 +272,8 @@ class ChildrenFragment extends BaseMVPView {
         bloodTypeName,
         hospitalization,
         groupPlan,
-        defaultAttachmentsArray
+        defaultAttachmentsArray,
+        attachmentFileObject
       )
       this.setState({ showEditModeModal : false })
       this.editForm()
@@ -294,6 +308,7 @@ class ChildrenFragment extends BaseMVPView {
     } = this.props
 
     const {
+      attachmentFileObject,
       childrenData,
       bloodObject,
       statusObject,
