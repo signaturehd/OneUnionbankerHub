@@ -71,6 +71,24 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Reset Password */
+
+  requestEmailVerification (token, empId, date) {
+    return this.service.requestEmailVerification(token, empId, date)
+      .pipe(ServiceErrorOperator())
+  }
+
+  requestOtpVerification (token, otp) {
+    return this.service.requestOtpVerification(token, otp)
+      .pipe(ServiceErrorOperator())
+  }
+
+  requestNewPassword (token, newPassword, confirmPassword, otp, employeeId, birtDate) {
+    return this.service.requestNewPassword(token, newPassword, confirmPassword, otp, employeeId, birtDate)
+      .pipe(ServiceErrorOperator)
+  }
+
+
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
