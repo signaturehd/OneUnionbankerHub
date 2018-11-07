@@ -53,70 +53,7 @@ class BookFlightFragment extends BaseMVPView {
       totalCostOfFlight : '0',
       totalServiceCharge : '0',
       valueAddedTax : '0',
-      bookflightArray : [
-        {
-            "id": 1,
-            "referenceNumber": "TR20181026111414",
-            "purpose": {
-                "id": 2,
-                "name": "Training"
-            },
-            "status": {
-                "id": 3,
-                "status": "For Liquidation"
-            },
-            "remark": "",
-            "approvedBy": "Unionbanker9602232 Surname",
-            "approvedDate": "2018-10-29",
-            "applicationDate": "2018-10-26",
-            "departure": {
-                "origin": {
-                    "id": 2000,
-                    "areaCode": "DNE",
-                    "airport": "Dallas North Airport",
-                    "location": "Dallas, United States",
-                    "isDomestic": false
-                },
-                "destination": {
-                    "id": 4820,
-                    "areaCode": "LXU",
-                    "airport": "Lukulu",
-                    "location": "Lukulu, Zambia",
-                    "isDomestic": false
-                },
-                "date": "2019-01-26",
-                "time": "13:00",
-                "remarks": "Going for Breakfast"
-            },
-            "return": {
-                "origin": {
-                    "id": 4820,
-                    "areaCode": "LXU",
-                    "airport": "Lukulu",
-                    "location": "Lukulu, Zambia",
-                    "isDomestic": false
-                },
-                "destination": {
-                    "id": 2000,
-                    "areaCode": "DNE",
-                    "airport": "Dallas North Airport",
-                    "location": "Dallas, United States",
-                    "isDomestic": false
-                },
-                "date": "2019-01-26",
-                "time": "20:00",
-                "remarks": "Going for Breakfast"
-            },
-            "liquidation": {
-                "id": 1,
-                "cost": 2000,
-                "serviceCharge": 500,
-                "vat": 1,
-                "isTicketUsed": true,
-                "reason": ""
-            }
-        }
-      ],
+      bookflightArray : [],
       attachmentsData : [{ name : 'Flight Quatation Attachment' }],
       attachmentsData2 : [{ name : 'Flight Quatation Attachment' },
       { name : 'ERB Email Attachment' }]
