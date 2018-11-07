@@ -50,6 +50,40 @@ export default class HRBenefitsService {
     })
   }
 
+
+  /* Reset Password */
+  requestEmailVerification (token, empId, date) {
+    const objectParam = {
+      employeeNumber: empId,
+      birthDate : date,
+    }
+    return this.apiClient.post('v1/password/reset/email', objectParam, {
+      headers : { token }
+    })
+  }
+
+  requestOtpVerification (token, otp) {
+    const objectParam = {
+      otp : otp
+    }
+    return this.apiClient.post('v1/password/email/otp', objectParam, {
+      headers : { token }
+    })
+  }
+
+  requestNewPassword (token, newPassword, otp, employeeId, birtDate) {
+    const objectParam = {
+      otp: otp,
+      password: newPassword,
+      employeeNo: employeeId,
+      birthDate: birtDate,
+      token: token,
+    }
+    return this.apiClient.post('v1/password/reset', objectParam, {
+      headers : { token }
+    })
+  }
+
   /* dental loa */
 
   getDentalLoa (token) {
@@ -1222,6 +1256,120 @@ export default class HRBenefitsService {
     ))
     formData.append('body', JSON.stringify(object))
     return this.apiClient.post('v1/leases/laptop',  formData, {
+      headers : { token }
+    })
+  }
+
+  /* Travel */
+
+  getAreaData (token, pageNumber, find) {
+    return this.apiClient.get(`v1/travels/areas?find=${find}&pageNumber=${pageNumber}`, {
+      headers : { token }
+    })
+  }
+
+  getTravels (token, statusId) {
+    return this.apiClient.get(`v1/travels?status=${statusId}`, {
+      headers : { token }
+    })
+  }
+
+  getApproval (token) {
+    return this.apiClient.get('v1/travels/approval', {
+      headers : { token }
+    })
+  }
+
+  addRequestOneWay (token, requestParam) {
+    const object = {
+      purposeId : requestParam.purposeId,
+      departure: {
+        origin: requestParam.departureOriginId,
+        destination: requestParam.departureDestinationId,
+        date: requestParam.departureDate,
+        time: requestParam.departureTime,
+        remarks: requestParam.departureRemarks
+      }
+    }
+    return this.apiClient.post('v1/travels', object, {
+      headers : { token }
+    })
+  }
+
+  addRequestRoundTrip (token, requestParam) {
+    const object = {
+      purposeId : requestParam.purposeId,
+      departure: {
+        origin: requestParam.departureOriginId,
+        destination: requestParam.departureDestinationId,
+        date: requestParam.departureDate,
+        time: requestParam.departureTime,
+        remarks: requestParam.departureRemarks
+      },
+      return: {
+        origin: requestParam.returnOriginId,
+        destination: requestParam.returnDestinationId,
+        date: requestParam.returnDate,
+        time: requestParam.returnTime,
+        remarks: requestParam.returnRemarks
+      }
+    }
+    return this.apiClient.post('v1/travels', object, {
+      headers : { token }
+    })
+  }
+
+  addBookFlight (
+      token,
+      bookParam) {
+    const formData = new FormData()
+    const object = {
+      requestId: bookParam.requestId,
+      cost: {
+        flight: bookParam.totalCostOfFlight,
+        serviceCharge: bookParam.totalServiceCharge
+      },
+      departureTime : bookParam.departureTime,
+      returnTime: bookParam.returnTime
+    }
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    bookParam.attachmentsData &&
+    bookParam.attachmentsData.map((resp, key) =>(
+      formData.append('attachment', resp.file)
+    ))
+    formData.append('body', JSON.stringify(object))
+    return this.apiClient.post('v1/travels/book',  formData, {
+      headers : { token }
+    })
+  }
+
+  addLiquidation (
+      token,
+      liquidationParam) {
+    const formData = new FormData()
+    const object = {
+      requestId: liquidationParam.requestId,
+      isTicketUsed: liquidationParam.ticketMode,
+      remarks : liquidationParam.whyTicketUsed
+    }
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    liquidationParam.attachmentsData &&
+    liquidationParam.attachmentsData.map((resp, key) =>(
+      formData.append('attachment', resp.file)
+    ))
+    formData.append('body', JSON.stringify(object))
+    return this.apiClient.post('v1/travels/liquidate',  formData, {
+      headers : { token }
+    })
+  }
+
+  addApproval (token, approvalParam) {
+    const object = {
+      requestId: approvalParam.requestId,
+      isApprove: approvalParam.isApprove,
+      remark : approvalParam.rejectedRemarks
+    }
+    return this.apiClient.post('v1/travels/approval', object, {
       headers : { token }
     })
   }

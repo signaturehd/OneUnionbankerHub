@@ -3,6 +3,8 @@ import { Switch, Route, withRouter } from 'react-router-dom'
 
 import LoginView from './login/LoginView'
 import NavigationView from './navigation/NavigationView'
+import ResetPasswordView from './reset/ResetPasswordFragment'
+
 import Presenter from './AppPresenter'
 
 import ConnectView from '../utils/ConnectView'
@@ -47,13 +49,17 @@ class App extends BaseMVPView {
     return (
       <div>
         <Switch>
-          <Route path = '/' render={props => {
+          <Route exact path = '/' render={props => {
             if (this.state.isLogin) {
               return <NavigationView  { ...props } />
             }
-              return <LoginView { ...props } />
+              return (<LoginView { ...props } />)
           }} />
-        </Switch>
+        <Route path = '/downloadPhenom' />
+        <Route
+          path = '/reset/:token'
+          render = { props => <ResetPasswordView  { ...props }/> }/>
+      </Switch>
       </div>
     )
   }

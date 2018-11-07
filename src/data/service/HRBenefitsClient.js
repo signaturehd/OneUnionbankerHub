@@ -52,6 +52,24 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Reset Password */
+
+  requestEmailVerification (token, empId, date) {
+    return this.service.requestEmailVerification(token, empId, date)
+      .pipe(ServiceErrorOperator())
+  }
+
+  requestOtpVerification (token, otp) {
+    return this.service.requestOtpVerification(token, otp)
+      .pipe(ServiceErrorOperator())
+  }
+
+  requestNewPassword (token, newPassword, confirmPassword, otp, employeeId, birtDate) {
+    return this.service.requestNewPassword(token, newPassword, confirmPassword, otp, employeeId, birtDate)
+      .pipe(ServiceErrorOperator)
+  }
+
+
   /* Session */
   setToken (token) {
     this.sessionProvider.setToken(token)
@@ -934,6 +952,78 @@ export default class HRBenefitsClient {
       addLaptopLeaseParam,
     )
       .pipe(ServiceErrorOperator())
+  }
+
+  /* Travel */
+
+  getAreaData (token, pageNumber, find) {
+    return this.service.getAreaData(token, pageNumber, find)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getTravels (token, statusId) {
+    return this.service.getTravels(token, statusId)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getApproval (token) {
+    return this.service.getApproval(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addRequestOneWay (
+    token,
+    requestParam,
+    ) {
+    return this.service.addRequestOneWay(
+      token,
+      requestParam,
+    )
+    .pipe(ServiceErrorOperator())
+  }
+
+  addRequestRoundTrip (
+    token,
+    requestParam,
+    ) {
+    return this.service.addRequestRoundTrip(
+      token,
+      requestParam,
+    )
+    .pipe(ServiceErrorOperator())
+  }
+
+  addBookFlight (
+    token,
+    bookParam,
+    ) {
+    return this.service.addBookFlight(
+      token,
+      bookParam,
+    )
+    .pipe(ServiceErrorOperator())
+  }
+
+  addLiquidation (
+    token,
+    liquidationParam,
+    ) {
+    return this.service.addLiquidation(
+      token,
+      liquidationParam,
+    )
+    .pipe(ServiceErrorOperator())
+  }
+
+  addApproval (
+    token,
+    approvalParam,
+    ) {
+    return this.service.addApproval(
+      token,
+      approvalParam,
+    )
+    .pipe(ServiceErrorOperator())
   }
 
   /* News isHeart */
