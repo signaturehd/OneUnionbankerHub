@@ -29,7 +29,7 @@ class PostEmploymentBIR2316Fragment extends Component {
         <div className = { 'postemployment-grid-card' }>
           <Card
             onClick = { () => {
-              this.onCheckedPdf('/2018-10-15/12345-BSP Biographical Data-1539596592662.pdf')
+              this.onCheckedPdf('/2018-11-07/12345-BIR Form 2316-1540879749374.pdf')
               this.setState({ showPdfViewComponent : true  })
               }
             }
@@ -41,13 +41,6 @@ class PostEmploymentBIR2316Fragment extends Component {
               </div>
             </div>
           </Card>
-          {
-            // showPdfViewComponent &&
-            // <BiographicalViewerComponent
-            //   pdfFile = { pdfFile }
-            //   onClose = { () => this.setState({ showPdfViewComponent: false }) }
-            // />
-          }
         </div>
       </div>
     )

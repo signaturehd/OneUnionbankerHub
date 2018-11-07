@@ -78,14 +78,6 @@ class PostEmploymentCEAFragment extends Component {
             }/>
             </center>
           </div>
-
-          {
-            // showPdfViewComponent &&
-            // <BiographicalViewerComponent
-            //   pdfFile = { pdfFile }
-            //   onClose = { () => this.setState({ showPdfViewComponent: false }) }
-            // />
-          }
       </div>
     )
   }
