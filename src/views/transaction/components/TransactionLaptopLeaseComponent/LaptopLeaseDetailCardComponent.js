@@ -20,7 +20,6 @@ class LaptopLeaseDetailCardComponent extends Component {
       onClickAttachments,
       claimLaptopLease
      } = this.props
-     const id = 29
      const transactionID = details.transactionId
      const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
      const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
@@ -139,8 +138,7 @@ class LaptopLeaseDetailCardComponent extends Component {
           </div>
           <div>
             {
-              details.status.id !== 29 &&
-              details.status.id !== 10 &&
+              details.status.id == 18 &&
               <div>
                 <br/>
                 <GenericButton

@@ -57,6 +57,14 @@ let genderObject = [{
  name : 'Female'
 }]
 
+// Convert base64 to file object
+function urltoFile(url, filename, fileType){
+  return (fetch(url)
+   .then((resp) => {return resp.arrayBuffer()})
+   .then((base64) => {return new File([base64], filename, {type:fileType})})
+  )
+}
+
 export default class ChildrenPresenter {
   constructor (container) {
     this.getChildrenInteractor = new GetChildrenInteractor(container.get('HRBenefitsClient'))
@@ -76,6 +84,12 @@ export default class ChildrenPresenter {
     this.view.showDocumentLoader()
     this.getOnboardingAttachmentsInteractor.execute(attachments)
     .subscribe(data => {
+      const name = data && this.generateRandomName(data)
+      const type = data && this.checkFileType(data)
+      urltoFile(data, name, type)
+      .then((file) => {
+        this.view.showRetrieveAttachments(file, name, data)
+      })
       this.view.hideDocumentLoader()
       this.view.showAttachmentsFileView(data)
     }, error => {
