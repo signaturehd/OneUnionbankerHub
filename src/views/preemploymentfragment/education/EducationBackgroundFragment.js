@@ -266,7 +266,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       messageNotFound,
       attachmentFileObject
     } = this.state
-
+    console.log(attachmentFileObject)
     let validateAttachments = false
     torFormData && torFormData.map(
       (attachment, key) => {
@@ -303,7 +303,8 @@ class EducationBackgroundFragment extends BaseMVPView {
         honor,
         course,
         address,
-        torFormData)
+        torFormData,
+        attachmentFileObject)
       this.setState({ showEducationFormModal : false })
       } else {
         this.presenter.addEducationSchool(

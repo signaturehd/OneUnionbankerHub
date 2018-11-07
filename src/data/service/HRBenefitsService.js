@@ -1570,12 +1570,10 @@ export default class HRBenefitsService {
       course : educationParam.course,
       address : educationParam.address,
     }
+
     educationParam &&
-    educationParam.torFormData &&
     educationParam.torFormData.map((resp) =>
-      (
-        formData.append(resp.name.replace('/', '-'), resp.file)
-      )
+      formData.append(resp.name, resp.file)
     )
     formData.append('body', JSON.stringify(objectParam))
 
@@ -1700,7 +1698,7 @@ export default class HRBenefitsService {
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     formData.append('body', JSON.stringify(objectParam))
     childrenParam.defaultAttachmentsArray.map((resp) =>
-      formData.append(resp.name.replace('/', '-'), resp.file)
+      formData.append(resp.name, resp.file)
     )
     return this.onboardingClient.put(`v1/employees/children/${ childrenParam.childrenId }`, formData, {
       headers : { token }
