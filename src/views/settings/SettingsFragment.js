@@ -30,18 +30,19 @@ class SettingsFragment extends BaseMVPView {
      showProfileDependent : false,
      enabledLoader: false,
      showChangePINModal : false,
-     showContactInfoModal : false,
      showDependentModal : false,
-     showCompanyInfoModal : false,
-     showPersonalInfoModal : false,
      showStaffAccountsModal : false,
      showDevicesModal : false,
      staffLoader : false,
      noticeResponseModal : false,
      descriptionEditMode : false,
+     enabledStaffLoader : false,
+     showSuccessModal : false,
      noticeResponse : '',
      descriptionText : '',
-     profileBackground : []
+     staffResponseMessage : '',
+     profileBackground : [],
+     showEditDependents: '',
     }
   }
   componentDidMount () {
@@ -75,6 +76,11 @@ class SettingsFragment extends BaseMVPView {
 
   noticeResponseModal (noticeResponse) {
     this.setState({ noticeResponse, noticeResponseModal : true })
+  }
+
+  noticeResponseModalStaff (staffResponseMessage) {
+    this.setState({ staffResponseMessage })
+    this.setState({ showSuccessModal : true })
   }
 
   showProfileDependent (profileDependent) {
@@ -128,10 +134,7 @@ class SettingsFragment extends BaseMVPView {
       accountNumber,
       enabledLoader,
       showChangePINModal,
-      showContactInfoModal,
       showDependentModal,
-      showCompanyInfoModal,
-      showPersonalInfoModal,
       showStaffAccountsModal,
       showDevicesModal,
       staffLoader,
@@ -141,6 +144,10 @@ class SettingsFragment extends BaseMVPView {
       noticeResponseModal,
       profileBackground,
       descriptionEditMode,
+      enabledStaffLoader,
+      staffResponseMessage,
+      showSuccessModal,
+      showEditDependents,
     }=this.state
 
     return (
@@ -159,7 +166,12 @@ class SettingsFragment extends BaseMVPView {
             </center>
           </Modal>
         }
+
         <SettingsProfileCardComponent
+           showEditDependentModalFunc = { (showEditDependents) => this.props.history.push('/dependent') }
+           showSuccessModal = { showSuccessModal }
+           onCloseStaffResponseModalFunc = { () => this.setState({ showSuccessModal : false  }) }
+           staffResponseMessage = { staffResponseMessage }
            devices = { devices }
            showDevicesModal = { showDevicesModal }
            profileBackground = { profileBackground }
@@ -169,25 +181,43 @@ class SettingsFragment extends BaseMVPView {
            profile={ profile }
            lineManager={ lineManager }
            profileDependent={ profileDependent }
+           enabledStaffLoader = { enabledStaffLoader }
            rank={ rank }
            enabledLoader = { enabledLoader }
            staffLoader = { staffLoader }
            staffAccounts = { staffAccounts }
            showChangePINModal = { showChangePINModal }
-           showContactInfoModal = { showContactInfoModal }
            showDependentModal = { showDependentModal }
-           showCompanyInfoModal = { showCompanyInfoModal }
-           showPersonalInfoModal = { showPersonalInfoModal }
            showStaffAccountsModal = { showStaffAccountsModal }
            showChangePINModalFunc = { (showChangePINModal) => this.setState({ showChangePINModal }) }
-           showContactInfoModalFunc = { (showContactInfoModal) => this.setState({ showContactInfoModal }) }
            showDependentModalFunc = { (showDependentModal) => this.setState({ showDependentModal }) }
-           showCompanyInfoModalFunc = { (showCompanyInfoModal) => this.setState({ showCompanyInfoModal }) }
-           showPersonalInfoModalFunc = { (showPersonalInfoModal) => this.setState({ showPersonalInfoModal }) }
            showStaffAccountsModalFunc = { (showStaffAccountsModal) =>  this.setState({ showStaffAccountsModal }) }
            changePinSendToFragment = { (uniqueOldPIN, uniqueNewPIN) => this.submitUpdatedPIN(uniqueOldPIN, uniqueNewPIN) }
-           getStaffAccounts = { (id) => this.presenter.getForConfirmation(id) }
-           onClickEmployeeConfirmationFunc = { (resp, resp1) => this.presenter.addStaffAccounts(resp, resp1)  }
+           getForConfirmation = { () => this.presenter.getForConfirmation() }
+           onUpdateStaffAccountsFunc = { (employeeName, selectedAccountNumber, sequence) =>
+              this.presenter.updateStaffAccounts(employeeName, selectedAccountNumber, sequence)
+            }
+           onUpdateEmailAddress = { (email) =>
+              this.presenter.updateEmailAddress(email)
+            }
+           onUpdateMobileNumber = { (number) =>
+              this.presenter.updateContactNumber(number)
+            }
+           onClickEmployeeConfirmationFunc = {
+          (  fullName,
+             accountNumber,
+             accountTypeCode,
+             accountCapacityCode,
+             accountRemarks
+           ) =>
+           this.presenter.addStaffAccounts(
+             fullName,
+             accountNumber,
+             accountTypeCode,
+             accountCapacityCode,
+             accountRemarks
+           )
+          }
            onChangeToEditMode = { (descriptionEditMode) => this.setState({ descriptionEditMode }) }
            descriptionTextFunc = { (descriptionText) => this.setState({ descriptionText }) }
            onUpdateDescription = { () => this.updateDescription() }
@@ -195,7 +225,8 @@ class SettingsFragment extends BaseMVPView {
              this.presenter.getDevices()
              this.setState({ showDevicesModal })
            }
-         }
+          }
+          updateAddressOption = { (address, attachments) => this.presenter.updateAddress(address, attachments) }
         />
       </div>
     )

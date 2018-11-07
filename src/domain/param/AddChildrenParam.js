@@ -1,0 +1,29 @@
+export default (
+  childrenId,
+  firstName,
+  lastName,
+  middleName,
+  genderId,
+  statusId,
+  contact,
+  occupationName,
+  birthDate,
+  bloodTypeName,
+  hospitalization,
+  groupPlan,
+  defaultAttachmentsArray
+  ) => ({
+    childrenId,
+    firstName,
+    lastName,
+    middleName,
+    genderId,
+    statusId,
+    contact,
+    occupationName,
+    birthDate,
+    bloodTypeName,
+    hospitalization,
+    groupPlan,
+    defaultAttachmentsArray
+  })

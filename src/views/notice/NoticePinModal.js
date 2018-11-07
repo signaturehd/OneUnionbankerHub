@@ -71,7 +71,7 @@ class NoticePinModal extends BaseMVPView {
      )
    } else {
      this.presenter.validateEmployeePin(pin)
-   }
+    }
   }
 
   render () {
@@ -81,6 +81,7 @@ class NoticePinModal extends BaseMVPView {
       onClose,
       onSubmitAgreement
     } = this.props
+    
     const {
       enabledLoader,
       noticeResponse,

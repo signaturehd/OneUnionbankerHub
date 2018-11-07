@@ -5,8 +5,6 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/LaptopLeasePresenter'
 import ConnectView from '../../utils/ConnectView'
 
-import * as LaptopLeaseFunctions from './functions/LaptopLeaseFunctions'
-
 import {
   CircularLoader,
   SingleInputModal,
@@ -26,6 +24,8 @@ import FormComponent from './components/LaptopLeaseCardComponent'
 import moment from 'moment'
 import store from '../../store'
 import { NotifyActions } from '../../actions'
+
+import * as controller from './functions/LaptopLeaseFunctions'
 
 class LaptopLeaseFragment extends BaseMVPView {
 
@@ -139,6 +139,9 @@ class LaptopLeaseFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/')
   }
 
+  validateInput () {
+    this.setState({ showEditMode : true })
+  }
 
   render () {
     const {
@@ -263,8 +266,8 @@ class LaptopLeaseFragment extends BaseMVPView {
              </center> :
             <FormComponent
               showEditMode = { showEditMode }
-              setAmount = { (resp) => this.presenter.setAmount(parseInt(resp) || 0) }
-              setColor = { (resp) =>  this.presenter.setColor(resp) }
+              setAmount = { (resp) => this.presenter.setAmount(controller.checkedAmount(resp)) }
+              setColor = { (resp) =>  this.presenter.setColor(controller.checkedValidateAlphabet(resp)) }
               showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
               showTerms = { () => this.setState({ showTermsSelection: true }) }
               deliveryOptionName = { deliveryOptionName }
@@ -272,9 +275,8 @@ class LaptopLeaseFragment extends BaseMVPView {
               amount = { amount }
               color = { color }
               terms = { termsName }
-              file = { file }
               setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
-              onContinue={ () => this.setState({ showEditMode: true }) }
+              onContinue={ () => this.presenter.validateSubmission() }
               onEdit = { () => this.setState({ showEditMode : false })  }
               onSubmit = { () => this.presenter.addLaptopLease()  }
             />

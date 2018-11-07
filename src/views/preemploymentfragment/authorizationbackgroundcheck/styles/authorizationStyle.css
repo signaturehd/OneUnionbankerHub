@@ -1,0 +1,39 @@
+.abc-grid-card {
+  display: grid;
+  grid-template-rows: 1fr;
+  column-gap: 2%;
+}
+
+.abc-grid-x2 {
+  display: grid;
+  grid-template-columns: 1fr .005fr;
+}
+
+.abc-button {
+  border: none;
+  box-shadow: none;
+}
+
+.abc-card {
+  padding: 20px;
+  cursor: pointer;
+}
+
+
+.abc-download-button {
+  background-image: url('../../../../images/icons/ic_file_icon_name.png');
+}
+
+.abc-seemore-button {
+  background-image: url('../../../../images/icons/ic_next.png');
+}
+
+.abc-icon {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 25px;
+  width: 25px;
+  background-repeat: no-repeat;
+}
