@@ -90,7 +90,7 @@ class SpouseFormFragment extends BaseMVPView {
   componentDidMount () {
     if(this.props.reuse) {
     } else {
-      this.props.onSendPageNumberToView(18)
+      this.props.onSendPageNumberToView(17)
     }
     this.presenter.getSpouse()
     this.presenter.getObjectData()
