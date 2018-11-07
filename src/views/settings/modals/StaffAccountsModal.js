@@ -241,13 +241,9 @@ class StaffAccountsModal extends Component {
                     maxLength = { 12 }
                     value = { accountNumber }
                     hint = { '(e.g 109350022082)' }
-                    onChange = { (e) => {
-                      try {
-                        this.validateInputNumber(e.target.value)
-                      } catch (e) {
-                        console.log(e)
-                      }
-                    } }
+                    onChange = { (e) =>
+                      this.validateInputNumber(e.target.value)
+                     }
                     />
                   <GenericInput
                     text = { 'Account Type' }

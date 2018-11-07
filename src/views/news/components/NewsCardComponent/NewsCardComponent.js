@@ -35,7 +35,6 @@ class NewsCardComponent extends Component {
       height: 'unset',
       backgroundPosition: 'center',
     }
-    console.log(news)
     const detailsFiltered = news && news.details.substr(0, 200)
 
     return (

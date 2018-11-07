@@ -180,58 +180,30 @@ export default class ChildrenPresenter {
         }
       }
     )
-
-    if(validateAttachments) {
-      this.view.showCircularLoader()
-      this.putChildrenInteractor.execute(childrenParam(
-        childrenId,
-        firstName,
-        lastName,
-        middleName,
-        genderId,
-        statusId,
-        contact,
-        occupationName,
-        birthDate,
-        bloodTypeName,
-        hospitalization,
-        groupPlan,
-        defaultAttachmentsArray
-      ))
-      .subscribe(data => {
-        this.view.hideCircularLoader()
-        this.view.noticeResponseFunc(data)
-        this.view.defaultValueForm()
-        this.getChildren()
-      }, erro => {
-        this.view.hideCircularLoader()
-      })
-    } else {
-      this.view.showCircularLoader()
-      this.putChildrenInteractor.execute(childrenParam(
-        childrenId,
-        firstName,
-        lastName,
-        middleName,
-        genderId,
-        statusId,
-        contact,
-        occupationName,
-        birthDate,
-        bloodTypeName,
-        hospitalization,
-        groupPlan,
-        attachmentFileObject
-      ))
-      .subscribe(data => {
-        this.view.hideCircularLoader()
-        this.view.noticeResponseFunc(data)
-        this.view.defaultValueForm()
-        this.getChildren()
-      }, error => {
-        this.view.hideCircularLoader()
-      })
-    }
+    this.view.showCircularLoader()
+    this.putChildrenInteractor.execute(childrenParam(
+      childrenId,
+      firstName,
+      lastName,
+      middleName,
+      genderId,
+      statusId,
+      contact,
+      occupationName,
+      birthDate,
+      bloodTypeName,
+      hospitalization,
+      groupPlan,
+      validateAttachments ? defaultAttachmentsArray : attachmentFileObject
+    ))
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.noticeResponseFunc(data)
+      this.view.defaultValueForm()
+      this.getChildren()
+    }, error => {
+      this.view.hideCircularLoader()
+    })
   }
 
   postChildren (
