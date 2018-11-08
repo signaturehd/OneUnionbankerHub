@@ -83,13 +83,8 @@ class PostEmploymetBIR1905Fragment extends Component {
           }
           <Card
             onClick = { () => {
-              try {
                 this.onCheckedPdf('/2018-10-30/12345-BIR Form 1905-1540879726833.pdf')
                 this.setState({ showPdfViewComponent : true  })
-                console.log('tst')
-              } catch (e) {
-                console.log(e)
-              }
               }
             }
             className = { 'postemployment-card' }>

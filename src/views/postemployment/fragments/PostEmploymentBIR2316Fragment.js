@@ -115,13 +115,9 @@ class PostEmploymentBIR2316Fragment extends Component {
                   <div className = { 'text-align-right' }>
                     <GenericButton
                       text = { 'Add Attachments' }
-                      onClick = { () => {
-                        try {
+                      onClick = { () =>
                           this.props.addAttachmentsFunc(attachmentsData, count)
-                        } catch (e) {
-                          console.log(e)
                         }
-                      } }
                       />
                   </div>
                 }

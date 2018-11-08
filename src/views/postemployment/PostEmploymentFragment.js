@@ -239,12 +239,8 @@ class PostEmploymentFragment extends BaseMVPView {
                 getSelectedAttachments = { (resp) => this.presenter.getSelectedAttachments(resp) }
                 submitForm = { (id) => {
                   {
-                    try {
-                      this.setState({ enabledLoader : true })
-                      this.submitForm(id)
-                    } catch (e) {
-                      console.log(e)
-                    }
+                    this.setState({ enabledLoader : true })
+                    this.submitForm(id)
                   }
                 } }
                 />
@@ -259,7 +255,12 @@ class PostEmploymentFragment extends BaseMVPView {
                 <GenericButton
                   className = { 'global-button' }
                   text = { 'Previous' }
-                  onClick = { () => this.decrementFunc() } /> :
+                  onClick = { () => {
+                    this.decrementFunc()
+                    this.setState({
+                      attachments : []
+                    })
+                  } } /> :
                 <div></div>
               }
               {
@@ -267,7 +268,12 @@ class PostEmploymentFragment extends BaseMVPView {
                 <GenericButton
                   className = { 'preemp-next-button' }
                   text = { pageId === 3 ? 'Finish' : 'Next' }
-                  onClick = { () => this.incrementFunc() } />
+                  onClick = { () => {
+                    this.setState({
+                      attachments : []
+                    })
+                    this.incrementFunc()
+                  } } />
                   :
                 <div></div>
               }
