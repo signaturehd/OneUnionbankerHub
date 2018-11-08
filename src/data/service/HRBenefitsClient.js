@@ -44,7 +44,7 @@ export default class HRBenefitsClient {
 
   /* Update Profile */
 
-  updateDescription (token, emailAddress) {
+  updateDescription (token, description) {
     return this.service.updateDescription(token, description)
       .pipe(ServiceErrorOperator())
   }
@@ -62,6 +62,31 @@ export default class HRBenefitsClient {
   updateContactNumber (token, number) {
     return this.service.updateContactNumber(token, number)
       .pipe(ServiceErrorOperator())
+  }
+
+  updateProfilePicture (token, image) {
+    return this.service.updateProfilePicture(token, image)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateCivilStatus (token, civilStatus) {
+    return this.service.updateCivilStatus(token, civilStatus)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getProfilePicture (token, file) {
+    return this.service.getProfilePicture(token, file)
+      .pipe(ServiceErrorOperator())
+      .flatMap(resp =>
+        Observable.create(observer => {
+          const reader = new FileReader()
+          reader.onerror = err => observer.error(err)
+          reader.onabort = err => observer.error(err)
+          reader.onload = () => observer.next(reader.result)
+          reader.onloadend = () => observer.complete()
+          reader.readAsDataURL(resp)
+        })
+      )
   }
 
   /* Get Devices */
@@ -83,9 +108,9 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  requestNewPassword (token, newPassword, confirmPassword, otp, employeeId, birtDate) {
-    return this.service.requestNewPassword(token, newPassword, confirmPassword, otp, employeeId, birtDate)
-      .pipe(ServiceErrorOperator)
+  requestNewPassword (token, newPassword, confirmPassword, otp) {
+    return this.service.requestNewPassword(token, newPassword, confirmPassword, otp)
+      .pipe(ServiceErrorOperator())
   }
 
 
@@ -1222,8 +1247,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addPostRequirement (token, requirementsParam) {
-    return this.service.addPostRequirement(token, requirementParam)
+  addPostRequirement (token, employeeParam) {
+    return this.service.addPostRequirement(token, employeeParam)
       .pipe(ServiceErrorOperator())
   }
 

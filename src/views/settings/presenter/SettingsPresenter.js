@@ -1,13 +1,17 @@
 import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInteractor'
 import GenericPutNewCodeInteractor from '../../../domain/interactor/pinCode/GenericPutNewCodeInteractor'
 import GetForConfirmationInteractor from '../../../domain/interactor/staffaccounts/GetForConfirmationInteractor'
+import GetDevicesInteractor from '../../../domain/interactor/account/GetDevicesInteractor'
+
 import PostStaffAccountsInteractor from '../../../domain/interactor/staffaccounts/PostStaffAccountsInteractor'
+
 import UpdateStaffAccountsInteractor from '../../../domain/interactor/staffaccounts/UpdateStaffAccountsInteractor'
 import UpdateDescriptionInteractor from '../../../domain/interactor/account/UpdateDescriptionInteractor'
-import GetDevicesInteractor from '../../../domain/interactor/account/GetDevicesInteractor'
 import UpdateAddressInteractor from '../../../domain/interactor/account/UpdateAddressInteractor'
 import UpdateEmailAddressInteractor from '../../../domain/interactor/account/UpdateEmailAddressInteractor'
 import UpdateContactNumberInteractor from '../../../domain/interactor/account/UpdateContactNumberInteractor'
+import UpdateProfilePictureInteractor from '../../../domain/interactor/account/UpdateProfilePictureInteractor'
+import UpdateCivilStatusInteractor from '../../../domain/interactor/account/UpdateCivilStatusInteractor'
 
 import { NotifyActions } from '../../../actions'
 import store from '../../../store'
@@ -19,13 +23,17 @@ export default class SettingsPresenter {
     this.getProfileInteractor = new GetProfileInteractor(container.get('HRBenefitsClient'))
     this.genericPutNewCodeInteractor = new GenericPutNewCodeInteractor(container.get('HRBenefitsClient'))
     this.getForConfirmationInteractor = new GetForConfirmationInteractor(container.get('HRBenefitsClient'))
+    this.getDevicesInteractor = new GetDevicesInteractor(container.get('HRBenefitsClient'))
+
     this.postStaffAccountsInteractor = new PostStaffAccountsInteractor(container.get('HRBenefitsClient'))
+
     this.updateStaffAccountsInteractor = new UpdateStaffAccountsInteractor(container.get('HRBenefitsClient'))
     this.updateDescriptionInteractor = new UpdateDescriptionInteractor(container.get('HRBenefitsClient'))
-    this.getDevicesInteractor = new GetDevicesInteractor(container.get('HRBenefitsClient'))
     this.updateAddressInteractor = new UpdateAddressInteractor(container.get('HRBenefitsClient'))
     this.updateEmailAddressInteractor = new UpdateEmailAddressInteractor(container.get('HRBenefitsClient'))
     this.updateContactNumberInteractor = new UpdateContactNumberInteractor(container.get('HRBenefitsClient'))
+    this.updateProfilePictureInteractor = new UpdateProfilePictureInteractor(container.get('HRBenefitsClient'))
+    this.updateCivilStatusInteractor = new UpdateCivilStatusInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -65,10 +73,10 @@ export default class SettingsPresenter {
      this.genericPutNewCodeInteractor.execute(objectPINParam)
      .subscribe(data => {
        store.dispatch(NotifyActions.addNotify({
-         title: 'My Security',
-         message : data.message,
-         type : 'success',
-         duration : 2000
+           title: 'My Security',
+           message : data.message,
+           type : 'success',
+           duration : 2000
          })
        )
        this.view.hideModal(false)
@@ -141,20 +149,27 @@ export default class SettingsPresenter {
    /* Profile Update */
 
    updateEmailAddress (email) {
+     this.view.showCircularLoader()
      this.updateEmailAddressInteractor.execute(email)
      .subscribe(data => {
+       this.view.hideCircularLoader()
        this.view.noticeResponseModal(data.message)
        this.getProfile()
      }, error => {
+       this.view.hideCircularLoader()
      })
    }
 
    updateContactNumber (number) {
+     this.view.showCircularLoader()
      this.updateContactNumberInteractor.execute(number)
      .subscribe(data => {
+       this.view.hideCircularLoader()
        this.view.noticeResponseModal(data.message)
        this.getProfile()
      }, error => {
+       this.view.hideCircularLoader()
+       store.dispatch(NotifyActions.resetNotify())
      })
    }
 
@@ -182,20 +197,49 @@ export default class SettingsPresenter {
    }
 
    updateDescription (description) {
+     this.view.showCircularLoader()
      this.updateDescriptionInteractor.execute(description)
      .subscribe(data => {
+       this.view.hideCircularLoader()
        this.view.noticeResponseModal(data.message)
        this.getProfile()
      }, error => {
+       this.view.hideCircularLoader()
      })
    }
 
    updateAddress (address, file) {
+   this.view.showCircularLoader()
     this.updateAddressInteractor.execute(address, file)
+     .subscribe(data => {
+       this.view.hideCircularLoader()
+       this.view.noticeResponseModal(data.message)
+       this.getProfile()
+     }, error => {
+       this.view.hideCircularLoader()
+      store.dispatch(NotifyActions.resetNotify())
+     })
+   }
+
+   updateProfilePicture (image) {
+    this.updateProfilePictureInteractor.execute(image)
      .subscribe(data => {
        this.view.noticeResponseModal(data.message)
        this.getProfile()
      }, error => {
+      store.dispatch(NotifyActions.resetNotify())
+     })
+   }
+
+   updateCivilStatus (civilStatus) {
+    this.view.showCircularLoader()
+    this.updateCivilStatusInteractor.execute(civilStatus)
+     .subscribe(data => {
+       this.view.hideCircularLoader()
+       this.view.noticeResponseModal(data.message)
+       this.getProfile()
+     }, error => {
+       this.view.hideCircularLoader()
       store.dispatch(NotifyActions.resetNotify())
      })
    }

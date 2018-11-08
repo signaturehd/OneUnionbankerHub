@@ -2,7 +2,14 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 
-import { Modal, Line, GenericButton, GenericInput, MultipleAttachments } from '../../../ub-components/'
+import {
+  Modal,
+  Line,
+  GenericButton,
+  GenericInput,
+  MultipleAttachments,
+  SingleInputModal
+} from '../../../ub-components/'
 
 import '../modals/styles/contactModal.css'
 
@@ -13,13 +20,47 @@ class SettingsProfilePersonalInfoComponent extends Component {
     this.state={
       isDismisable : true,
       updateAddress : false,
+      updateCivilStatus : false,
+      showCivilStatusModal : false,
       attachments : [{
         name : 'Proof Attachments'
       }],
       addressText : '',
       regionText: '',
       countryText: '',
-      postalCode : ''
+      postalCode : '',
+      civilStatusId : '',
+      civilStatus : '',
+      civilStatusErrorMessage : '',
+      civilStatusArray : [
+        {
+          id: 1,
+          name: 'Single'
+        },
+        {
+          id: 2,
+          name: 'Married'
+        },
+        {
+          id: 3,
+          name: 'Divorced'
+        },
+        {
+          id: 4,
+          name: 'Widowed'
+        }
+      ]
+    }
+  }
+
+  submitCivil () {
+    const { civilStatus } = this.state
+    const { onUpdateCivilStatusFunc } = this.props
+    if(civilStatus === '') {
+      this.setState({ civilStatusErrorMessage : 'Please select a civil status' })
+    } else {
+      onUpdateCivilStatusFunc(civilStatus)
+      this.setState({ civilStatusErrorMessage : '', updateCivilStatus: false })
     }
   }
 
@@ -36,11 +77,17 @@ class SettingsProfilePersonalInfoComponent extends Component {
     const {
       isDismisable,
       updateAddress,
+      updateCivilStatus,
       attachments,
       addressText,
       postalCode,
       countryText,
       regionText,
+      civilStatusId,
+      civilStatus,
+      civilStatusErrorMessage,
+      showCivilStatusModal,
+      civilStatusArray
     }=this.state
 
 
@@ -123,20 +170,63 @@ class SettingsProfilePersonalInfoComponent extends Component {
                     </div>
                   </div>
                   <br/>
-                  <div className={ 'contact-number-grid' }>
-                    <div>
-                      <span className={ 'contact-icon-settings employeeCivilStatus' }/>
-                    </div>
-                    <div className={ 'contact-info-grid-row' }>
-                      <div className={ 'font-size-17px contact-title' }>
-                        <h2>Civil Status</h2>
+                  {
+                    showCivilStatusModal &&
+                    <SingleInputModal
+                      label = { 'Select Civil Status' }
+                      inputArray = { civilStatusArray }
+                      selectedArray = { (civilStatusId, civilStatus) =>
+                        this.setState({
+                          civilStatusId,
+                          civilStatus,
+                          civilStatusErrorMessage: '',
+                          showCivilStatusModal: false })
+                      }
+                      onClose = { () => this.setState({ showCivilStatusModal: false }) }
+                    />
+                  }
+                  <div>
+                  {
+                      updateCivilStatus ?
+                      <div className = { 'profile-grid-description align-items-center' }>
+                        <div>
+                          <GenericInput
+                            errorMessage = { civilStatusErrorMessage }
+                            text = { 'Civil Status' }
+                            onClick = { () =>
+                              this.setState({ showCivilStatusModal : true })
+                            }
+                            value = { civilStatus }
+                          />
+                        </div>
+                        <div>
+                          <GenericButton
+                            className = { 'align-items-center global-button profile-button-small' }
+                            onClick = { () => this.submitCivil() }
+                            text = { 'Update' }
+                          />
+                        </div>
                       </div>
-                      <div className={ 'font-size-16px' }>
-                        <a>
-                          { profile.civilstatus ?  profile.civilstatus : '(Not Yet Provided)' }
-                        </a>
+                      :
+                      <div className={ 'contact-number-grid' }>
+                        <div>
+                          <span className={ 'contact-icon-settings employeeCivilStatus' }/>
+                        </div>
+                        <div className = { 'profile-address-grid-x2' } >
+                        <div className={ 'contact-info-grid-row' }>
+                          <div className={ 'font-size-17px contact-title' }>
+                            <h2>Civil Status</h2>
+                          </div>
+                          <div className={ 'font-size-16px' }>
+                            <a>
+                              { profile.civilstatus ?  profile.civilstatus : '(Not Yet Provided)' }
+                            </a>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    }
+
                   </div>
                   <br/>
                   {

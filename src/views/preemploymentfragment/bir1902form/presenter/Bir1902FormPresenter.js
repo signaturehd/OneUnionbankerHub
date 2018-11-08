@@ -35,7 +35,6 @@ export default class Bir1902FormPresenter {
       this.view.noticeResponseResp(data)
     }, error => {
       this.view.hideCircularLoader()
-      this.view.noticeResponseResp(error)
     })
   }
 

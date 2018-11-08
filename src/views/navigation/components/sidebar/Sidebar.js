@@ -105,15 +105,34 @@ class SideBar extends Component {
     },
   ]
 
+  const style = {
+    backgroundImage : `url(${profile && profile.profileImage})`,
+    backgroundRepeat : 'no-repeat',
+    backgroundSize: 'cover',
+    height: 'unset',
+    backgroundPosition: 'center',
+    boxShadow: 'inset 0px 0px 0px 0px #ffffff',
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    borderRadius: '50%',
+  }
+
   return (
     <div className = { '_sidebar-overlay' }>
       <ul className = { '_link-list ul' }>
         <div className = { 'sidebar-profile-body' }>
           <div className={ 'sidebar-picture-card' }>
             <div>
-              <div className = { 'sidebar-picture' }>
-                <h2 className = { 'sidebar-initial-text' }>{ splitUserInitial }</h2>
-              </div>
+              {
+                profile && profile.profileImage ?
+                <img style = { style }/>
+                :
+                <div className = { 'sidebar-picture' }>
+                  <h2 className = { 'sidebar-initial-text' }>{ splitUserInitial }</h2>
+                </div>
+
+              }
             </div>
           </div>
         </div>
