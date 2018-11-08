@@ -99,7 +99,7 @@ class EventsBudgetFormComponent extends Component {
           <GenericInput
             text = { 'Amount' }
             onChange = { (e) => amountTextFunc(e.target.value) }
-            value = { amountText }
+            value = { format(amountText) }
           />
         <div className = { 'grid-global' }>
 

@@ -68,7 +68,6 @@ class EventsBudgetFragment extends BaseMVPView {
     this.presenter.setProvince(eventsNullChecker && eventBudgetData.venue.province)
     this.presenter.setRegion(eventsNullChecker && eventBudgetData.venue.region)
     this.presenter.setCity(eventsNullChecker && eventBudgetData.venue.city)
-    this.presenter.setAmount(format(eventsNullChecker && eventBudgetData.events.amount))
     this.presenter.setDateFunc(eventsNullChecker && eventBudgetData.events.targetDate)
     this.setState({ eventBudgetData })
   }
@@ -125,6 +124,14 @@ class EventsBudgetFragment extends BaseMVPView {
   }
   noticeOfUndertakingForm (respForm) {
     this.setState({ noticeResponse : respForm })
+  }
+
+  showAttendees (updatedAttendees) {
+    this.setState({ storedListId : updatedAttendees })
+  }
+
+  showAmount (amount) {
+    this.setState({ amountText: amount })
   }
 
   /* Navigage back to benefits Option*/
@@ -227,8 +234,7 @@ class EventsBudgetFragment extends BaseMVPView {
                     newArrayList.push(id)
                   }
 
-                  this.setState({ amountText : newArrayList.length * 500 })
-                  this.setState({ storedListId : newArrayList })
+                  this.presenter.setAttendees(newArrayList)
                 }
               }
               preferredDate = { preferredDate }

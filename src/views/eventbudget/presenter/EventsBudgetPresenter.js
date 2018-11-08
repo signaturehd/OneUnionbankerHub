@@ -19,7 +19,8 @@ let storedCelebrationText = '',
     storedBenefitId = '42',
     storedDate = '',
     storedAmount = 0,
-    storedId = []
+    storedId = [],
+    storedAmountPerEmployee = 0
 
 export default class EventsBudgetPresenter {
   constructor (container) {
@@ -76,13 +77,19 @@ export default class EventsBudgetPresenter {
     this.view.setDateFunc(storedDate)
   }
 
+  setAttendees (updatedAttendees) {
+    storedId = updatedAttendees
+
+    this.view.showAttendees(storedId)
+    this.view.showAmount(storedId.length * storedAmountPerEmployee)
+  }
+
   validateEventsBudget () {
     this.view.showCircularLoader()
-    // this.view.showEventBudget(mockedData, storedBenefitId)
     this.validateEventsBudgetInteractor.execute()
     .subscribe(data => {
       this.view.showEventBudget(data, storedBenefitId)
-      this.setAmount()
+      storedAmountPerEmployee = data.events.amount
       this.view.hideCircularLoader()
     }, error => {
       this.view.hideCircularLoader()
