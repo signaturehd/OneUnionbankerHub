@@ -99,33 +99,16 @@ class EventsBudgetFormComponent extends Component {
           <GenericInput
             text = { 'Amount' }
             onChange = { (e) => amountTextFunc(e.target.value) }
-            value = { amountText ? amountText : format(events && events.amount)  }
+            value = { amountText }
           />
         <div className = { 'grid-global' }>
 
         </div>
-          <div className = { 'grid-global' }>
-            <DatePicker
-              selected = { events && events.startDate ? moment(events.startDate) : startDate }
-              maxDate = { moment() }
-              readOnly
-              disabled = { true }
-              dateFormat = { 'MM/DD/YYYY' }
-              text = { 'From Date' }
-              />
-            <DatePicker
-              selected = { events && events.endDate ? moment(events.endDate) : endDate }
-              maxDate = { moment() }
-              readOnly
-              disabled = { true }
-              dateFormat = { 'MM/DD/YYYY' }
-              text = { 'To Date' }
-              />
-          </div>
           <DatePicker
             selected = { venue && venue.targetDate ? moment(venue.targetDate) : moment(preferredDate) }
             onChange = { (e) => dateFunc(e) }
-            minDate = { moment() }
+            minDate = { events && moment(events.startDate) }
+            maxDate = { events && moment(events.endDate) }
             readOnly
             dateFormat = { 'MM/DD/YYYY' }
             text = { 'Events Date' }

@@ -20,6 +20,17 @@ import * as validate from './functions/EventsBudgetFunction'
 
 import { format } from '../../utils/numberUtils'
 
+function removeA(arr) {
+  let what, a = arguments, L = a.length, ax;
+  while (L > 1 && arr.length) {
+    what = a[--L];
+    while ((ax= arr.indexOf(what)) !== -1) {
+        arr.splice(ax, 1);
+    }
+  }
+  return arr;
+}
+
 class EventsBudgetFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -144,7 +155,7 @@ class EventsBudgetFragment extends BaseMVPView {
       benefitId,
       preferredDate
     } = this.state
-
+    console.log(storedListId)
     return (
       <div>
         { super.render() }
@@ -199,9 +210,10 @@ class EventsBudgetFragment extends BaseMVPView {
             <EventsBudgetFormComponent
               checkIdIfHasLogin = { (hasRecord, id) =>
                 {
-                  let hasRecordTest = hasRecord !== true ? true : false
-                  if(hasRecordTest) {
-                    let newArrayList = [...storedListId]
+                  let newArrayList = [...storedListId]
+                  let isBoolean = hasRecord !== true ? true : false
+                  if(hasRecord) {
+                    this.setState({ amountText : amountText + 500  })
                     newArrayList.push(id)
                     this.setState({ storedListId : newArrayList  })
                   }
@@ -222,7 +234,7 @@ class EventsBudgetFragment extends BaseMVPView {
               cityText = { cityText }
               cityTextFunc = { (e) => this.presenter.setCity(validate.checkedValidateAlphabet(e)) }
               amountText = { amountText }
-              amountTextFunc = { (e) => this.presenter.setAmount(validate.checkValidateMoney(e)) }
+              amountTextFunc = { (e) => this.presenter.setAmount(e) }
               index = { index }
               eventBudgetData = { eventBudgetData && eventBudgetData }
               events = { eventBudgetData && eventBudgetData.events }
