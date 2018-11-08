@@ -35,7 +35,6 @@ export default class AuthorizationBackgroundCheckPresenter {
       this.view.noticeResponseResp(data)
     }, error => {
       this.view.hideDocumentLoader()
-      this.view.noticeResponseResp(error)
     })
   }
 
