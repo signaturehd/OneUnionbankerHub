@@ -1758,9 +1758,8 @@ export default class HRBenefitsService {
 
   updateMedicalAppointment (token, date, date2, id) {
     const objectParam = {
-      preferredDate : [
-        date, date2
-      ]
+      preferredDate : date,
+      alternativeDate :date2
     }
     return this.onboardingClient.put('v1/employees/medical/schedules', objectParam, {
       headers : { token }
