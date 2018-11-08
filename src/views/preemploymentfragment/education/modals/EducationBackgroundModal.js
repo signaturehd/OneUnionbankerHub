@@ -45,7 +45,6 @@ class EducationBackgroundModal extends Component {
   }
 
   checkDegreeText (id) {
-    console.log(id)
     if(id.toLowerCase() === 'bachelors') {
       return 'Bachelors'
     } else if (id.toLowerCase() === 'masteral') {
