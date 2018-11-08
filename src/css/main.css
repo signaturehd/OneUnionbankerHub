@@ -74,6 +74,12 @@ p {
   background-color: #ff8a00;
 }
 
+.profile-button-small {
+  min-width: 100px;
+  height: 30px;
+  border-radius: 50px;
+}
+
 @media (max-width: 768px) {
   .header-margin-default {
     display: flex;
@@ -225,6 +231,10 @@ p {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.align-items-center{
+  align-items: center;
 }
 
 /* flaot position */

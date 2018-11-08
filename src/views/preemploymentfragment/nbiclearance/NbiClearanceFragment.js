@@ -167,7 +167,7 @@ class NbiClearanceFragment extends BaseMVPView {
                   :
                   <PreEmploymentViewAttachmentsComponent
                     file = { attachments }
-                    title = { 'NBI Clearance Attachments' }
+                    title = { 'NBI Clearance' }
                     onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
                     :
                     <div></div>

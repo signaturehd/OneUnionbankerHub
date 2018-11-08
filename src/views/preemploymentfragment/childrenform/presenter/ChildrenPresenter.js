@@ -42,10 +42,10 @@ let bloodObjectParam = [
 ]
 
 let statusObject = [{
- id: 0,
+ id: 1,
  name : 'Deceased'
 }, {
- id : 1,
+ id : 0,
  name : 'Living'
 }]
 
@@ -56,6 +56,14 @@ let genderObject = [{
  id: 1,
  name : 'Female'
 }]
+
+// Convert base64 to file object
+function urltoFile(url, filename, fileType){
+  return (fetch(url)
+   .then((resp) => {return resp.arrayBuffer()})
+   .then((base64) => {return new File([base64], filename, {type:fileType})})
+  )
+}
 
 export default class ChildrenPresenter {
   constructor (container) {
@@ -76,11 +84,33 @@ export default class ChildrenPresenter {
     this.view.showDocumentLoader()
     this.getOnboardingAttachmentsInteractor.execute(attachments)
     .subscribe(data => {
+      const name = data && this.generateRandomName(data)
+      const type = data && this.checkFileType(data)
+      urltoFile(data, name, type)
+      .then((file) => {
+        this.view.showRetrieveAttachments(file, name, data)
+      })
       this.view.hideDocumentLoader()
       this.view.showAttachmentsFileView(data)
     }, error => {
       this.view.hideDocumentLoader()
     })
+  }
+
+  /* Attachments Get Type and Filename */
+
+  checkFileType (file) {
+    const str = file.split(';')
+    const strImage = str[0].replace(/^data:/, '')
+
+    return strImage
+  }
+
+  generateRandomName (resp) {
+    const name = Math.random().toString(36).substring(2, 18)
+    let fileExtension = this.checkFileType(resp).split('/')
+    fileExtension = fileExtension[fileExtension.length - 1]
+    return name + '.' + fileExtension
   }
 
   /* Remove Method */
@@ -139,9 +169,17 @@ export default class ChildrenPresenter {
     bloodTypeName,
     hospitalization,
     groupPlan,
-    defaultAttachmentsArray
+    defaultAttachmentsArray,
+    attachmentFileObject
   ) {
-
+    let validateAttachments = false
+    defaultAttachmentsArray && defaultAttachmentsArray.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
     this.view.showCircularLoader()
     this.putChildrenInteractor.execute(childrenParam(
       childrenId,
@@ -156,14 +194,14 @@ export default class ChildrenPresenter {
       bloodTypeName,
       hospitalization,
       groupPlan,
-      defaultAttachmentsArray
+      validateAttachments ? defaultAttachmentsArray : attachmentFileObject
     ))
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.noticeResponseFunc(data)
       this.view.defaultValueForm()
       this.getChildren()
-    }, erro => {
+    }, error => {
       this.view.hideCircularLoader()
     })
   }

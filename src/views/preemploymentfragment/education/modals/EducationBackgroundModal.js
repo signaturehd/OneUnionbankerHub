@@ -32,13 +32,25 @@ class EducationBackgroundModal extends Component {
     super (props)
   }
 
+  checkDegree (id) {
+    if(id === 0) {
+      return 'Bachelors'
+    } else if (id === 1) {
+      return 'Masteral'
+    } else if (id === 2) {
+      return 'Doctorate'
+    } else if (id === 3) {
+      return 'Vocational'
+    } 
+  }
+
   render () {
 
     const degreeArray = [
-      { id:1, name:'Bachelors' },
-      { id:2, name:'Masteral' },
-      { id:3, name:'Doctorate' },
-      { id:4, name:'Vocational' }
+      { id:0, name:'Bachelors' },
+      { id:1, name:'Masteral' },
+      { id:2, name:'Doctorate' },
+      { id:3, name:'Vocational' }
     ]
 
     const {
@@ -96,7 +108,8 @@ class EducationBackgroundModal extends Component {
       termErrorMessage,
       honorErrorMessage,
       startYearErrorMessage,
-      endYearErrorMessage
+      endYearErrorMessage,
+      degreeId
     } = this.props
 
     return (
@@ -162,7 +175,7 @@ class EducationBackgroundModal extends Component {
           errorMessage = { studentNoErrorMessage }/>
         <GenericInput
           text = { 'Degree' }
-          value = { degree }
+          value = { this.checkDegree(degreeId) }
           readOnly
           onChange = { (e) => degreeFunc(e.target.value) }
           onClick = { () => showDegreeFunc(true) }
@@ -208,68 +221,70 @@ class EducationBackgroundModal extends Component {
           />
           <br/>
           <Line/>
-          <div>
-            {
-                enabledAttachmentLoader ?
-                <center>
-                  <br/>
-                  <h2>Please wait while we we&#39;re retrieving your documents </h2>
-                  <br/>
-                  <CircularLoader show = { enabledAttachmentLoader } />
-                  <br/>
-                </center>
-                :
+          {
+              enabledAttachmentLoader ?
+              <center>
+                <br/>
+                <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                <br/>
+                <CircularLoader show = { enabledAttachmentLoader } />
+                <br/>
+              </center>
+              :
+            <div>
+              <div>
                 <PreEmploymentViewAttachmentsComponent
-                  title = { 'TOR Attachments' }
+                  title = { 'TOR' }
                   file = { attachmentUrl }
                   onClick = { (viewFile) => viewFileFunc(viewFile) }/>
-            }
-          </div>
-          <br/>
-          <div className = { 'grid-global' }>
-            <h2></h2>
-            <div className = { 'text-align-right' }>
-              <GenericButton
-                text = { 'Add Attachments' }
-                onClick = { () => addAttachmentsFunc(torFormData, count) }
-                />
-            </div>
-          </div>
-          {
-            torFormData.length !== 0  &&
-            <div>
-            <h4>
+              </div>
               <br/>
-              Form Attachments
-            </h4>
-            <MultipleAttachments
-              count = { count }
-              countFunc = { (count) => this.setState({ count }) }
-              placeholder = { '' }
-              fileArray = { torFormData }
-              setFile = { (torFormData) =>
-                  this.setState({ torFormData })
-              }
+              <div className = { 'grid-global' }>
+                <h2></h2>
+                <div className = { 'text-align-right' }>
+                  <GenericButton
+                    text = { 'Add Attachments' }
+                    onClick = { () => addAttachmentsFunc(torFormData, count) }
+                    />
+                </div>
+              </div>
+              {
+                torFormData.length !== 0  &&
+                <div>
+                <h4>
+                  <br/>
+                  Form Attachments
+                </h4>
+                <MultipleAttachments
+                  count = { count }
+                  countFunc = { (count) => this.setState({ count }) }
+                  placeholder = { '' }
+                  fileArray = { torFormData }
+                  setFile = { (torFormData) =>
+                      this.setState({ torFormData })
+                  }
+                  />
+                </div>
+               }
+            <div className = { 'grid-global' }>
+              <GenericButton
+              text = { 'Cancel' }
+              onClick = { () => hideModalEducationFormFunc(false)  }
               />
+              {
+                updateMode ?
+                <GenericButton
+                  text={ 'Update' }
+                  onClick = { () => submissionFunc() }
+                  /> :
+                <GenericButton
+                  text={ 'Add' }
+                  onClick = { () => submissionFunc() }
+                  />
+              }
             </div>
-           }
-        <div className = { 'grid-global' }>
-          <GenericButton
-            text = { 'Cancel' }
-            onClick = { () => hideModalEducationFormFunc(false)  }
-            />
-            {
-              updateMode ?
-              <GenericButton
-                text={ 'Update' }
-                onClick = { () => submissionFunc() }
-                /> :
-              <GenericButton
-                text={ 'Add' }
-                onClick = { () => submissionFunc() }
-                />
-            }
           </div>
+          }
         </div>
       </Modal>
     )

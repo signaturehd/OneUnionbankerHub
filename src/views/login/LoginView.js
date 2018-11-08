@@ -33,10 +33,28 @@ import LoginOtpGuideFragment from './fragments/LoginOtpGuideFragment'
 
 function LoginComponent (props) {
   const id = props.componentId
+  const history = props.history
   const idReplace = props.idReplace
+  const onCheckUserName = props.onCheckUserName
+  const onChageBirthDate = props.onChageBirthDate
+  const birthDate = props.birthDate
+  const requestEmailFunc = props.requestEmailFunc
+  const usernameId = props.usernameId
+  const showEmailMessageModal = props.showEmailMessageModal
+  const emailSuccessMessage = props.emailSuccessMessage
+  const onCloseSuccessModal = props.onCloseSuccessModal
   if(id === 0) {
     return <LoginForgotPasswordComponent
       idReplace = { () => idReplace() }
+      history = { history }
+      emailSuccessMessage = { emailSuccessMessage }
+      usernameId = { usernameId }
+      requestEmailFunc = { () => requestEmailFunc() }
+      onCloseSuccessModal = { () => onCloseSuccessModal() }
+      birthDate = { birthDate }
+      onCheckUserName = { (e) => onCheckUserName(e) }
+      onChageBirthDate = { (e) => onChageBirthDate(e) }
+      showEmailMessageModal = { showEmailMessageModal }
       />
   } else if (id === 1) {
     return <LoginGuideUnlockProfileFragment
@@ -69,9 +87,14 @@ class LoginView extends BaseMVPView {
       newPassword: false,
       confirmNewPassword: false,
       disabled : false,
+      showEmailMessageModal : false,
+      resetLoader : false,
       username: '',
       password: '',
       componentId: '',
+      usernameId: '',
+      birthDate: '',
+      emailSuccessMessage: '',
       type: 'password',
       status : 'hide',
       terms : null,
@@ -114,12 +137,12 @@ class LoginView extends BaseMVPView {
     this.setState({ disabled : false })
   }
 
-  disabledButton () {
-    this.setState({ disabled : true })
+  showResetLoader () {
+    this.setState({ resetLoader : true })
   }
 
-  enabledButton () {
-    this.setState({ disabled : false })
+  hideResetLoader () {
+    this.setState({ resetLoader : false })
   }
 
   onLoginSuccess () {
@@ -140,6 +163,7 @@ class LoginView extends BaseMVPView {
 
   proceedToValidation (user, pass) {
     if(!new RequiredValidation().isValid(user)) {
+      store.dispatch(NotifyActions.resetNotify())
       store.dispatch(NotifyActions.addNotify({
         title : 'Login Credentials',
         message : 'Employee ID is required',
@@ -148,6 +172,7 @@ class LoginView extends BaseMVPView {
       })
     )
     } else if (!new RequiredValidation().isValid(pass)) {
+        store.dispatch(NotifyActions.resetNotify())
         store.dispatch(NotifyActions.addNotify({
           title : 'Login Credentials',
           message : 'Password is required',
@@ -159,6 +184,10 @@ class LoginView extends BaseMVPView {
     else {
       this.presenter.login(this.state.username, this.state.password)
     }
+  }
+
+  showNotificationMessage (emailSuccessMessage) {
+    this.setState({ emailSuccessMessage, showEmailMessageModal : true })
   }
 
   render () {
@@ -174,17 +203,23 @@ class LoginView extends BaseMVPView {
       showLoginComponent,
       status,
       disabled,
+      resetLoader,
       type,
       componentId,
+      usernameId,
+      birthDate,
+      showEmailMessageModal,
+      emailSuccessMessage
     } = this.state
+
     const {
       notify,
       history
     } = this.props
 
     let version = 5
-    let majorVersion = 9
-    let minorVersion = 12
+    let majorVersion = 10
+    let minorVersion = 2
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     const objectValue = [{
@@ -235,10 +270,35 @@ class LoginView extends BaseMVPView {
                 showLoginComponent ?
                 <div>
                   <br/>
-                  <LoginComponent
-                    idReplace = { () => this.setState({ showLoginComponent : false }) }
-                    componentId = { componentId }
-                    />
+                  {
+                    resetLoader ?
+                    <center className = { 'login-loader' }>
+                      <br/><br/><br/><br/>
+                      <h2>Please wait while we we&#39;re validating the information.</h2>
+                      <br/>
+                      <br/>
+                      <CircularLoader show = { resetLoader }/>
+                    </center>
+                    :
+                    <LoginComponent
+                      emailSuccessMessage = { emailSuccessMessage }
+                      showEmailMessageModal = { showEmailMessageModal }
+                      idReplace = { () => this.setState({ showLoginComponent : false }) }
+                      componentId = { componentId }
+                      birthDate = { birthDate }
+                      onCheckUserName = { (usernameId) => this.setState({ usernameId }) }
+                      hisptory = { history }
+                      usernameId = { usernameId }
+                      onChageBirthDate = { (birthDate) => this.setState({ birthDate }) }
+                      requestEmailFunc = { () =>
+                         this.presenter.requestEmailVerification(usernameId, birthDate)
+                       }
+                      onCloseSuccessModal = { () => {
+                        this.setState({ showEmailMessageModal : false, showHelpDeskComponent : false })
+                        history.push('/')
+                      } }
+                      />
+                  }
                 </div>
                 :
                 <div>

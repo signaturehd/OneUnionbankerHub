@@ -22,12 +22,15 @@ import EducationBackgroundModal from './modals/EducationBackgroundModal'
 
 import moment from 'moment'
 import { format } from '../../../utils/numberUtils'
-
 import { RequiredValidation } from '../../../utils/validate/'
-
 import { Progress } from 'react-sweet-progress'
 
 import * as func from './functions/EducationFunctions'
+
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
+
+let checkFileLength = ''
 
 class EducationBackgroundFragment extends BaseMVPView {
 
@@ -78,7 +81,9 @@ class EducationBackgroundFragment extends BaseMVPView {
       honorErrorMessage : '',
       startYearErrorMessage : '',
       endYearErrorMessage : '',
+      attachmentFileObject : [],
       attachmentUrl : [],
+      degreeId: ''
     }
   }
 
@@ -106,7 +111,8 @@ class EducationBackgroundFragment extends BaseMVPView {
         name : 'Transcript of Records'
       }],
       isUpdated : 0,
-      updateMode : false
+      updateMode : false,
+      attachmentUrl : [],
     })
   }
 
@@ -114,15 +120,6 @@ class EducationBackgroundFragment extends BaseMVPView {
 
   noticeResponseResp (noticeResponse) {
     this.setState({ noticeResponse , showNoticeResponseModal : true})
-  }
-
-  showAttachmentsFileView (data) {
-    let arrayNew = [...this.state.attachmentUrl]
-    const objectArray = {
-      file : data
-    }
-    arrayNew.push(objectArray)
-    this.setState({ attachmentUrl : arrayNew })
   }
 
   hideCircularLoader () {
@@ -154,7 +151,18 @@ class EducationBackgroundFragment extends BaseMVPView {
     this.setState({ pdfFile, showPdfViewComponent : true })
   }
 
-  showEditModeAttachments (data) {
+  showRetrieveAttachments (file, name, base64) {
+    let arrayNew = [...this.state.attachmentFileObject]
+    const objectFile = {
+      file,
+      name,
+      base64
+    }
+    arrayNew.push(objectFile)
+    this.setState({ attachmentFileObject : arrayNew })
+  }
+
+  showAttachmentsFileView (data) {
     let arrayNew = [...this.state.attachmentUrl]
     const objectArray = {
       file : data
@@ -186,8 +194,8 @@ class EducationBackgroundFragment extends BaseMVPView {
     this.setState({ studentNo: validate, studentNoErrorMessage : '' })
   }
 
-  degreeFunc(id, degree) {
-    this.setState({ degree, showDegreeModal : false, degreeErrorMessage : ''})
+  degreeFunc(degreeId, degree) {
+    this.setState({ degreeId, degree, showDegreeModal : false, degreeErrorMessage : ''})
   }
 
   honorFunc(honor) {
@@ -255,9 +263,20 @@ class EducationBackgroundFragment extends BaseMVPView {
       course,
       address,
       isUpdated,
-      torFormData
+      torFormData,
+      messageNotFound,
+      attachmentFileObject,
+      degreeId
     } = this.state
 
+    let validateAttachments = false
+    torFormData && torFormData.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
     if(!this.validateRequired(schoolName)) {
       this.setState({ schoolNameErrorMessage : 'Required field' })
     } else if(!this.validateRequired(address)) {
@@ -274,7 +293,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       this.setState({ startYearErrorMessage : 'Required field' })
     } else if(!this.validateRequired(endYear)) {
       this.setState({ endYearErrorMessage : 'Required field' })
-    } else {
+    } else if (checkFileLength > 0) {
       if(updateMode) {
       this.presenter.putEducationSchool(
         educId,
@@ -282,11 +301,12 @@ class EducationBackgroundFragment extends BaseMVPView {
         studentNo,
         startYear,
         endYear,
-        degree,
+        degreeId,
         honor,
         course,
         address,
-        torFormData)
+        torFormData,
+        attachmentFileObject)
       this.setState({ showEducationFormModal : false })
       } else {
         this.presenter.addEducationSchool(
@@ -295,14 +315,73 @@ class EducationBackgroundFragment extends BaseMVPView {
           studentNo,
           startYear,
           endYear,
-          degree,
+          degreeId,
           honor,
           course,
           address,
           torFormData)
+         this.setState({ showEducationFormModal : false })
+       }
+    } else if (checkFileLength < 1) {
+      if (!torFormData.length) {
+       store.dispatch(NotifyActions.resetNotify())
+        store.dispatch(NotifyActions.addNotify({
+           title : 'Warning' ,
+           message : 'Attachments is required',
+           type : 'warning',
+           duration : 2000
+         })
+       )
+      } else if (validateAttachments) {
+       store.dispatch(NotifyActions.resetNotify())
+       torFormData && torFormData.map(
+         (attachment, key) => {
+           if(!attachment.file) {
+             store.dispatch(NotifyActions.addNotify({
+                title : 'Warning' ,
+                message : attachment.name + ' is required',
+                type : 'warning',
+                duration : 2000
+              })
+            )
+           }
+         }
+      )} else {
+        if(updateMode) {
+        this.presenter.putEducationSchool(
+          educId,
+          schoolName,
+          studentNo,
+          startYear,
+          endYear,
+          degreeId,
+          honor,
+          course,
+          address,
+          torFormData,
+          attachmentFileObject)
         this.setState({ showEducationFormModal : false })
+        } else {
+          this.presenter.addEducationSchool(
+            educId,
+            schoolName,
+            studentNo,
+            startYear,
+            endYear,
+            degreeId,
+            honor,
+            course,
+            address,
+            torFormData)
+           this.setState({ showEducationFormModal : false })
+        }
       }
     }
+  }
+
+  resetAttachmentUrl () {
+    this.setState({ attachmentUrl : [] })
+    this.setState({ attachmentFileObject : [] })
   }
 
   resetMode () {
@@ -330,9 +409,14 @@ class EducationBackgroundFragment extends BaseMVPView {
     this.presenter.removeSchool(id)
   }
 
+  callback () {
+    this.props.reloadPreEmploymentForm()
+  }
+
   render () {
     const {
       attachmentUrl,
+      attachmentFileObject,
       viewFile,
       updateMode,
       enabledLoader,
@@ -372,7 +456,8 @@ class EducationBackgroundFragment extends BaseMVPView {
       courseErrorMessage,
       honorErrorMessage,
       startYearErrorMessage,
-      endYearErrorMessage
+      endYearErrorMessage,
+      degreeId
     } = this.state
 
     const { percentage, educationData} = this.props
@@ -404,6 +489,7 @@ class EducationBackgroundFragment extends BaseMVPView {
       {
         showEducationFormModal &&
         <EducationBackgroundModal
+          degreeId = { degreeId }
           showViewModal = { showViewModal }
           viewFile = { viewFile }
           viewFileFunc = { (viewFile) => this.setState({ viewFile, showViewModal : true })}
@@ -488,19 +574,18 @@ class EducationBackgroundFragment extends BaseMVPView {
               this.setState({ torFormData : attachmentTemp })
             }
           }
-          hideModalEducationFormFunc = { (showEducationFormModal) => this.setState({ showEducationFormModal }) }
-          getEducationHolderFunc = { (resp) => {
-            const updatePropertyHolder = [...educationData]
-            updatePropertyHolder.push(resp)
-            this.setState({ educationData : updatePropertyHolder})
-          }}
+          hideModalEducationFormFunc = { (showEducationFormModal) => {
+            this.setState({ showEducationFormModal : false })
+            this.resetAttachmentUrl()
+          }
+        }
         />
       }
       {
         showNoticeResponseModal &&
         <ResponseModal
           onClose={ () => {
-            this.setState({ showNoticeResponseModal : false})
+            this.setState({ showNoticeResponseModal : false })
             this.props.reloadPreEmploymentForm()
           }}
           noticeResponse={ noticeResponse }
@@ -550,9 +635,13 @@ class EducationBackgroundFragment extends BaseMVPView {
         <h2></h2>
         <div className = { 'text-align-right' }>
           <GenericButton
-            text = { 'ADD' }
-            onClick = { () => this.onShowEducationFormModalFunc() }
-            />
+            text = { 'Add Education' }
+            onClick = { () => {
+              checkFileLength =  0
+              this.resetAttachmentUrl()
+              this.onShowEducationFormModalFunc()
+            }
+            }/>
         </div>
       </div>
       <br/>
@@ -602,7 +691,8 @@ class EducationBackgroundFragment extends BaseMVPView {
                   updateMode,
                   isUpdated ,
                 })
-                  this.presenter.checkAttachments(resp)
+                checkFileLength = resp.tor ? resp.tor.length : 0
+                this.presenter.checkAttachments(resp)
               }
               }
             />

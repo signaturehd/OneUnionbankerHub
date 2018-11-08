@@ -10,6 +10,14 @@ import RemoveSchoolInteractor from '../../../../domain/interactor/preemployment/
 
 import addEducationParam from '../../../../domain/param/AddEmployeeEducationParam'
 
+// Convert base64 to file object
+function urltoFile(url, filename, fileType){
+  return (fetch(url)
+   .then((resp) => {return resp.arrayBuffer()})
+   .then((base64) => {return new File([base64], filename, {type:fileType})})
+  )
+}
+
 export default class EducationBackgroundPresenter {
   constructor (container) {
     this.getOnboardingPdfInteractor = new GetOnboardingPdfInteractor(container.get('HRBenefitsClient'))
@@ -35,19 +43,40 @@ export default class EducationBackgroundPresenter {
     }, error => {
       this.view.hideDocumentLoader()
       this.view.showPdfFileView([])
+      store.dispatch(NotifyActions.resetNotify())
     })
   }
-
 
   getEditOnBoardingAttachments (link) {
     this.view.showRetrievingAttachmentsLoader()
     this.getOnboardingAttachmentsInteractor.execute(link)
     .subscribe(data => {
-      this.view.showEditModeAttachments(data)
+      const name = data && this.generateRandomName(data)
+      const type = data && this.checkFileType(data)
+      urltoFile(data, name, type)
+      .then((file) => {
+        this.view.showRetrieveAttachments(file, name, data)
+      })
+      this.view.showAttachmentsFileView(data)
       this.view.hideRetrievingAttachmentsLoader()
     }, error => {
+      store.dispatch(NotifyActions.resetNotify())
       this.view.hideRetrievingAttachmentsLoader()
     })
+  }
+
+  checkFileType (file) {
+    const str = file.split(';')
+    const strImage = str[0].replace(/^data:/, '')
+
+    return strImage
+  }
+
+  generateRandomName (resp) {
+    const name = Math.random().toString(36).substring(2, 18)
+    let fileExtension = this.checkFileType(resp).split('/')
+    fileExtension = fileExtension[fileExtension.length - 1]
+    return name + '.' + fileExtension
   }
 
   checkAttachments (data) {
@@ -66,6 +95,7 @@ export default class EducationBackgroundPresenter {
   }
 
   getEmployeeSchool (pageNumber, find) {
+    store.dispatch(NotifyActions.resetNotify())
     this.view.showCircularLoader()
     this.schoolDataInteractor.execute(pageNumber, find)
     .subscribe(
@@ -92,6 +122,7 @@ export default class EducationBackgroundPresenter {
     course,
     address,
     torFormData) {
+      store.dispatch(NotifyActions.resetNotify())
       this.view.showCircularLoader()
       this.addEducationSchoolInteractor.execute(addEducationParam(
         educId,
@@ -112,6 +143,8 @@ export default class EducationBackgroundPresenter {
           this.view.resetMode()
         }, error => {
           this.view.hideCircularLoader()
+          this.view.resetAttachmentUrl()
+          this.view.callback()
         }
       )
     }
@@ -128,32 +161,74 @@ export default class EducationBackgroundPresenter {
     honor,
     course,
     address,
-    torFormData) {
-    this.view.showCircularLoader()
-    this.putEducationSchoolInteractor.execute(addEducationParam(
-      educId,
-      schoolName,
-      studentNo,
-      startYear,
-      endYear,
-      degree,
-      honor,
-      course,
-      address,
-      torFormData
-    ))
-    .subscribe(
-      data => {
-        this.view.hideCircularLoader()
-        this.view.noticeResponseResp(data)
-        this.view.resetMode()
-      }, error => {
-        this.view.hideCircularLoader()
+    torFormData,
+    attachmentFileObject) {
+    store.dispatch(NotifyActions.resetNotify())
+    let validateAttachments = false
+    torFormData && torFormData.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
       }
     )
+    if(validateAttachments) {
+      this.view.showCircularLoader()
+      this.putEducationSchoolInteractor.execute(addEducationParam(
+        educId,
+        schoolName,
+        studentNo,
+        startYear,
+        endYear,
+        degree,
+        honor,
+        course,
+        address,
+        attachmentFileObject
+      ))
+      .subscribe(
+        data => {
+          this.view.hideCircularLoader()
+          this.view.noticeResponseResp(data)
+          this.view.resetMode()
+          this.view.resetAttachmentUrl()
+        }, error => {
+          this.view.hideCircularLoader()
+          this.view.resetAttachmentUrl()
+          this.view.callback()
+        }
+      )
+    } else {
+      this.view.showCircularLoader()
+      this.putEducationSchoolInteractor.execute(addEducationParam(
+        educId,
+        schoolName,
+        studentNo,
+        startYear,
+        endYear,
+        degree,
+        honor,
+        course,
+        address,
+        torFormData
+      ))
+      .subscribe(
+        data => {
+          this.view.hideCircularLoader()
+          this.view.noticeResponseResp(data)
+          this.view.resetAttachmentUrl()
+          this.view.resetMode()
+        }, error => {
+          this.view.hideCircularLoader()
+          this.view.resetAttachmentUrl()
+          this.view.callback()
+        }
+      )
+    }
   }
 
   removeSchool (id) {
+    store.dispatch(NotifyActions.resetNotify())
     this.view.showCircularLoader()
     this.removeSchoolInteractor.execute(id)
     .subscribe(data => {

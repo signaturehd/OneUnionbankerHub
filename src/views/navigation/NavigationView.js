@@ -65,12 +65,30 @@ import Carousel from '../carousel/Carousel'
 
 /* Pre Employment */
 import PreEmploymentFragment from '../preemployment/PreEmploymentFragment'
+import AddingDependentsFragment
+  from '../dependents/AddingDependentsFragment'
+import ChildrenFragment
+  from '../preemploymentfragment/childrenform/ChildrenFragment'
+import SpouseFragment
+  from '../preemploymentfragment/spouseform/SpouseFormFragment'
+import ParentFragment
+  from '../preemploymentfragment/parentform/ParentFragment'
 
 /* Post Employment */
 import PostEmploymentFragment from '../postemployment/PostEmploymentFragment'
 
 /* Laptop Lease */
 import LaptopLeaseFragment from '../laptoplease/LaptopLeaseFragment'
+
+/* Event Budget Requisition */
+
+import EventsBudgetFragment from '../eventbudget/EventsBudgetFragment'
+/* Travel */
+import TravelFragment from '../travel/TravelFragment'
+import RequestFlightFragment from '../request/RequestFlightFragment'
+import BookFlightFragment from '../bookflight/BookFlightFragment'
+import LiquidationFragment from '../liquidation/LiquidationFragment'
+import ApprovalFragment from '../approval/ApprovalFragment'
 
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
@@ -92,6 +110,7 @@ class NavigationView extends BaseMVPView {
       tempPreEmploymentModal: false,
       hasFilledOut: '',
       preEmploymentStatus: null,
+      isLineManager : null
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -179,6 +198,11 @@ class NavigationView extends BaseMVPView {
     this.setState({ profileHasCOC })
   }
 
+  isLineManagerData (isLineManager) {
+    console.log(isLineManager)
+    this.setState({ isLineManager })
+  }
+
   relogin () {
     this.props.history.push('/')
   }
@@ -202,7 +226,8 @@ class NavigationView extends BaseMVPView {
       profileHasCOC,
       tempPreEmploymentModal,
       hasFilledOut,
-      preEmploymentStatus
+      preEmploymentStatus,
+      isLineManager
     } = this.state
 
     const { history, login } = this.props
@@ -232,7 +257,6 @@ class NavigationView extends BaseMVPView {
     })
 
     splitUserInitial = initials[0] + initials[initials.length - 1]
-
     return (
       <div className = { 'navigation-body-div' }>
         { super.render() }
@@ -283,9 +307,21 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/preemployment' render = { props =>
                     <PreEmploymentFragment { ...props }
                       onBoardingSkipPage = { (e) => this.skipPage(e)}
-                      onChangeStatusPreEmploymentModal = { () => this.onChangeStatusPreEmploymentModal() }
+                      preEmploymentStatus = { preEmploymentStatus }
                       tempPreEmploymentModal = { tempPreEmploymentModal }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/dependent' render = { props =>
+                    <AddingDependentsFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path='/dependentchildren' render={ props => <ChildrenFragment{ ...props }
+                    reuse = { true }
+                    setSelectedNavigation = { this.setSelectedNavigation }  />}/>
+                  <Route path='/dependentspouse' render={ props => <SpouseFragment{ ...props }
+                    reuse = { true }
+                    setSelectedNavigation = { this.setSelectedNavigation }  />}/>
+                  <Route path='/dependentsiblings' render={ props => <ParentFragment{ ...props }
+                    reuse = { true }
+                    setSelectedNavigation = { this.setSelectedNavigation }  />}/>
                   <Route path = '/mybenefits/transactions/personal/:id' render = { props =>
                     <TransactionPersonalDetailFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } />}/>
@@ -355,9 +391,28 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mybenefits/benefits/calamity' render = { props =>
                     <CalamityFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                    <Route path = '/mybenefits/benefits/eventbudgetrequisition' render = { props =>
+                    <EventsBudgetFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mybenefits' render = { props =>
                     <BenefitsFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel/travel/request' render = { props =>
+                    <RequestFlightFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel/travel/book' render = { props =>
+                    <BookFlightFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel/travel/liquidation' render = { props =>
+                    <LiquidationFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel/approval' render = { props =>
+                    <ApprovalFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel' render = { props =>
+                    <TravelFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation }
+                      isLineManager = { isLineManager } /> } />
                   <Route path = '/payslip' render = { props =>
                     <Payslip { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
@@ -379,6 +434,9 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mycompliance' render = { props =>
                     <ComplianceFragment { ...props }
                       profileHasCOC = { profileHasCOC }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/phenom' render = { props =>
+                    <PhenomFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/phenom' render = { props =>
                     <PhenomFragment { ...props }

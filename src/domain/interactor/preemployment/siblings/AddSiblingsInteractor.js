@@ -1,5 +1,5 @@
 export default class AddSiblingsInteractor {
-	construct (client) {
+	constructor (client) {
 		this.client = client
 	}
 

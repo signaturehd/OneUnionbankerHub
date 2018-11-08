@@ -57,6 +57,7 @@ class SpouseFormFragment extends BaseMVPView {
       showStatusModal: false,
       showGenderModal : false,
       showViewModal : false,
+      enabledAttachmentsLoader : false,
       spouseId: '',
       lastName: '',
       firstName : '',
@@ -87,7 +88,10 @@ class SpouseFormFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(17)
+    if(this.props.reuse) {
+    } else {
+      this.props.onSendPageNumberToView(17)
+    }
     this.presenter.getSpouse()
     this.presenter.getObjectData()
   }
@@ -98,6 +102,14 @@ class SpouseFormFragment extends BaseMVPView {
 
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
+  }
+
+  showAttachmentsCircularLoader () {
+    this.setState({ enabledAttachmentsLoader : true })
+  }
+
+  hideAttachmentsCircularLoader () {
+    this.setState({ enabledAttachmentsLoader : false })
   }
 
   showBloodType (bloodObjectParam) {
@@ -112,7 +124,7 @@ class SpouseFormFragment extends BaseMVPView {
     if(gender === 'M') {
       return 'Male'
     } else {
-      return 'F'
+      return 'Female'
     }
   }
 
@@ -137,9 +149,9 @@ class SpouseFormFragment extends BaseMVPView {
       contact : nullChecker.contactNumber,
       genderId : nullChecker.gender,
       gender: nullChecker.gender ? this.checkGender(nullChecker.gender) : '',
-      spouseId : nullChecker.id ,
-      statusId : nullChecker.status ,
-      statusName : nullChecker.status ? this.checkStatus(nullChecker.status) : '',
+      spouseId : nullChecker.id,
+      statusId : nullChecker.status,
+      statusName : this.checkStatus(nullChecker.status),
       hospitalization : nullChecker.healthHospitalizationPlan ?  nullChecker.healthHospitalizationPlan : 0,
       groupPlan : nullChecker.groupLifeInsurance ? nullChecker.groupLifeInsurance : 0,
       editMode
@@ -158,7 +170,6 @@ class SpouseFormFragment extends BaseMVPView {
 
   noticeResponseFunc (noticeResponse, showNoticeResponseModal) {
     this.setState({ noticeResponse, showNoticeResponseModal })
-    this.props.reloadPreEmploymentForm()
   }
 
   reload () {
@@ -208,7 +219,6 @@ class SpouseFormFragment extends BaseMVPView {
   bloodTypeErrorMessageFunc (bloodTypeErrorMessage) {
     this.setState({ bloodTypeErrorMessage })
   }
-
 
   showStatus (statusObject) {
     this.setState({ statusObject })
@@ -347,18 +357,21 @@ class SpouseFormFragment extends BaseMVPView {
       hospitalization,
       groupPlan,
       viewFile,
+      enabledAttachmentsLoader,
     } = this.state
 
   return(
-    <div>
+  <div>
     { super.render() }
     {
       showNoticeResponseModal &&
 
       <NoticeResponseModal
         noticeResponse = { noticeResponse }
-        onClose = { () =>
+        onClose = { () => {
+          this.props.reloadPreEmploymentForm()
           this.setState({ showNoticeResponseModal: false }) }
+        }
       />
     }
     {
@@ -418,194 +431,229 @@ class SpouseFormFragment extends BaseMVPView {
         onClose = { () => this.setState({ showGenderModal : false }) }
       />
     }
-      <div className = { 'percentage-grid' }>
+      <div className = { `${ this.props.reuse ? 'preemployment-container' : '' }` }>
+        <div></div>
         <div>
-          <h2 className={ 'header-margin-default text-align-left' }>Spouse Form</h2>
-          <h2>Fill up the spouse form.</h2>
-        <br/>
-        </div>
-        <Progress
-          type = { 'circle' }
-          height = { 65 }
-          width = { 65 }
-          percent = { percentage } />
-      </div>
-      {
-        enabledLoader ?
-        <center className={ 'circular-loader-center' }>
-          <br/>
-          <h2>Please wait while we we&#39;re retrieving spouse information</h2>
-          <CircularLoader show={ enabledLoader }/>
-        </center> :
-        <div>
-          <div>
-            <div>
-              <GenericInput
-                text = { 'First Name' }
-                value = { firstName }
-                maxLength = { 30 }
-                errorMessage = { firstName ? '' : firstNameErrorMessage }
-                onChange = { (e) => this.firstNameValidate(e.target.value) }
-                />
-              <GenericInput
-                text = { 'Middle Name' }
-                value = { middleName }
-                maxLength = { 20 }
-                errorMessage = { middleName ? '' : middleNameErrorMessage }
-                onChange = { (e) => this.middleNameValidate(e.target.value) }
-                />
-              <GenericInput
-                text = { 'Last Name' }
-                value = { lastName }
-                maxLength = { 20 }
-                errorMessage = { lastName ? '' : lastNameErrorMessage }
-                onChange = { (e) => this.lastNameValidate(e.target.value) }
-                />
-              <GenericInput
-                text = { 'Occupation' }
-                value = { occupationName }
-                errorMessage = { occupationName ? '' : occupationNameErrorMessage }
-                onChange = { (e) => this.occupationNameValidate(e.target.value) }
-                />
-              <GenericInput
-                text = { 'Contact Number' }
-                value = { contact }
-                maxLength = { 11 }
-                errorMessage = { contact ? '' : contactNumberErrorMessage }
-                onChange = { (e) => this.contactNumberValidate(e.target.value) }
-                />
-              <div className = { 'grid-global' }>
-                <GenericInput
-                  text = { 'Gender' }
-                  value = { gender }
-                  readOnly
-                  maxLength = { 12 }
-                  errorMessage = { gender ? '' : genderErrorMessage }
-                  onClick = { () => this.setState({ showGenderModal : true }) }
-                  />
-                <DatePicker
-                  selected = { birthDate ? moment(birthDate) : '' }
-                  maxDate = { moment() }
-                  text = { 'Birth Date' }
-                  readOnly
-                  errorMessage = { birthDate ? '' : birthDateErrorMessage }
-                  hint = { '(eg. MM/DD/YYYY)' }
-                  onChange = { (e) => this.dateFunc(e) }
-                  />
-              </div>
-
-              <div className = { 'grid-global' } >
-                <GenericInput
-                  text = { 'Blood Type' }
-                  value = { bloodTypeName }
-                  readOnly
-                  errorMessage = { bloodTypeName ? '' : bloodTypeErrorMessage }
-                  onClick = { () => this.setState({ showBloodTypeModal : true }) }
-                  />
-                <div className = { 'status-margin text-align-center' }>
-                  <GenericInput
-                    value = { statusName  }
-                    text = { 'Status' }
-                    readOnly
-                    errorMessage = { statusName ? '' : statusNameErrorMessage }
-                    onClick = { () => this.setState({ showStatusModal : true }) }
-                    />
-                </div>
-              </div>
-              <div className = { 'grid-global-rows' }>
-                <div>
-                  <Checkbox
-                    checked = { hospitalization }
-                    label = { 'Hospitalization Plan' }
-                    onChange = { () => this.setState({  hospitalization : hospitalization === 1 ? 0 : 1  }) }
-                    />
-                  <br/>
-                </div>
-                <div>
-                  <Checkbox
-                    checked = { groupPlan }
-                    label = { 'Group Life Insurance' }
-                    onChange = { () => this.setState({ groupPlan : groupPlan === 1 ? 0 : 1 }) }
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <br/>
           {
-              enabledLoader ?
-              <center>
-                <br/>
-                <h2>Please wait while we we&#39;re retrieving your documents </h2>
-                <br/>
-                <CircularLoader show = { enabledLoader } />
-                <br/>
-              </center>
-              :
+            !this.props.reuse ?
+            <div className = { 'percentage-grid' }>
               <div>
-              {
-                attachments === null &&
-                <PreEmploymentViewAttachmentsComponent
-                  file = { attachments }
-                  onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
-              }
+                <h2 className={ 'header-margin-default text-align-left' }>Spouse Form</h2>
+                <h2>Fill up the spouse form.</h2>
+              <br/>
               </div>
-          }
-          <br/>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-              text = { 'Add Atttachments' }
-              onClick = { () => {
-              const updatedAttachments = [...spouseAttachments]
-              let newCount = count + 1
-              this.setState({ count : newCount })
-              updatedAttachments.push({
-                name : 'Marriage Certificate ' + count
-              })
-              this.setState({ spouseAttachments : updatedAttachments })
-                }
-              }
-            />
-          </div>
-          <MultipleAttachments
-            count = { count }
-            countFunc = { (count) => this.setState({ count }) }
-            placeholder = { 'Form Attachments' }
-            fileArray = { spouseAttachments }
-            setFile = { (spouseAttachmentsArray) =>
-                this.setState({ spouseAttachmentsArray })
-            }
-          />
-          <center>
-          <div className = { 'grid-global-columns-x3' }>
-            <div></div>
-            <div>
-              {
-                editMode ?
-                <div className = { 'grid-global' }>
-                  <GenericButton
-                    className = { 'global-button spouse-employment-button' }
-                    text = { 'Delete' }
-                    onClick = { () => this.deleteFunction() }
-                    />
-                  <GenericButton
-                    className = { 'global-button spouse-employment-button' }
-                    text = { 'Edit' }
-                    onClick = { () => this.saveFunction() }
-                    />
-                </div>
-                  :
-                <GenericButton
-                  className = { 'global-button spouse-employment-button' }
-                  text = { 'Save' }
-                  onClick = { () => this.saveFunction() }
-                  />
-              }
+              <Progress
+                type = { 'circle' }
+                height = { 65 }
+                width = { 65 }
+                percent = { percentage } />
             </div>
-          </div>
-          </center>
+            :
+            <div className = { 'percentage-grid' }>
+              <div>
+                <div className = { 'text-align-left' }>
+                  <GenericButton
+                    className = { 'global-button profile-button-small' }
+                    text = { 'Back to Profile' }
+                    onClick = { () =>
+                      this.props.history.push('/settings')
+                    }
+                  />
+                </div>
+                <br/>
+                <h2 className = { 'header-margin-default text-align-left' }>Adding of Spouse</h2>
+              </div>
+              <div></div>
+            </div>
+          }
+          {
+            enabledLoader ?
+            <center className={ 'circular-loader-center' }>
+              <br/>
+              <h2>Please wait while we we&#39;re retrieving spouse information</h2>
+              <CircularLoader show={ enabledLoader }/>
+            </center> :
+            <div>
+              <div>
+                <div>
+                  <GenericInput
+                    text = { 'First Name' }
+                    value = { firstName }
+                    maxLength = { 30 }
+                    errorMessage = { firstName ? '' : firstNameErrorMessage }
+                    onChange = { (e) => this.firstNameValidate(e.target.value) }
+                    />
+                  <GenericInput
+                    text = { 'Middle Name' }
+                    value = { middleName }
+                    maxLength = { 20 }
+                    errorMessage = { middleName ? '' : middleNameErrorMessage }
+                    onChange = { (e) => this.middleNameValidate(e.target.value) }
+                    />
+                  <GenericInput
+                    text = { 'Last Name' }
+                    value = { lastName }
+                    maxLength = { 20 }
+                    errorMessage = { lastName ? '' : lastNameErrorMessage }
+                    onChange = { (e) => this.lastNameValidate(e.target.value) }
+                    />
+                  <GenericInput
+                    text = { 'Occupation' }
+                    value = { occupationName }
+                    errorMessage = { occupationName ? '' : occupationNameErrorMessage }
+                    onChange = { (e) => this.occupationNameValidate(e.target.value) }
+                    />
+                  <GenericInput
+                    text = { 'Contact Number' }
+                    value = { contact }
+                    maxLength = { 11 }
+                    errorMessage = { contact ? '' : contactNumberErrorMessage }
+                    onChange = { (e) => this.contactNumberValidate(e.target.value) }
+                    />
+                  <div className = { 'grid-global' }>
+                    <GenericInput
+                      text = { 'Gender' }
+                      value = { gender }
+                      readOnly
+                      maxLength = { 12 }
+                      errorMessage = { gender ? '' : genderErrorMessage }
+                      onClick = { () => this.setState({ showGenderModal : true }) }
+                      />
+                    <DatePicker
+                      selected = { birthDate ? moment(birthDate) : '' }
+                      maxDate = { moment() }
+                      text = { 'Birth Date' }
+                      readOnly
+                      errorMessage = { birthDate ? '' : birthDateErrorMessage }
+                      hint = { '(eg. MM/DD/YYYY)' }
+                      onChange = { (e) => this.dateFunc(e) }
+                      />
+                  </div>
+
+                  <div className = { 'grid-global' } >
+                    <GenericInput
+                      text = { 'Blood Type' }
+                      value = { bloodTypeName }
+                      readOnly
+                      errorMessage = { bloodTypeName ? '' : bloodTypeErrorMessage }
+                      onClick = { () => this.setState({ showBloodTypeModal : true }) }
+                      />
+                    <div className = { 'status-margin text-align-center' }>
+                      <GenericInput
+                        value = { statusName  }
+                        text = { 'Status' }
+                        readOnly
+                        errorMessage = { statusName ? '' : statusNameErrorMessage }
+                        onClick = { () => this.setState({ showStatusModal : true }) }
+                        />
+                    </div>
+                  </div>
+                  <div className = { 'grid-global-rows' }>
+                    <div>
+                      <Checkbox
+                        checked = { hospitalization }
+                        label = { 'Hospitalization Plan' }
+                        onChange = { () => this.setState({  hospitalization : hospitalization === 1 ? 0 : 1  }) }
+                        />
+                      <br/>
+                    </div>
+                    <div>
+                      <Checkbox
+                        checked = { groupPlan }
+                        label = { 'Group Life Insurance' }
+                        onChange = { () => this.setState({ groupPlan : groupPlan === 1 ? 0 : 1 }) }
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div>
+                {
+                  spouseData &&
+                 <div>
+                   {
+                       enabledAttachmentsLoader ?
+                       <center>
+                         <br/>
+                         <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                         <br/>
+                         <CircularLoader show = { enabledAttachmentsLoader } />
+                         <br/>
+                       </center>
+                       :
+                       <div>
+                         {
+                           attachments.length !== 0 &&
+                           <PreEmploymentViewAttachmentsComponent
+                             title = { 'Spouse' }
+                             file = { attachments }
+                             onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+
+                         }
+                       </div>
+                   }
+                 </div>
+                }
+              </div>
+              <br/>
+              <div className = { 'text-align-right' }>
+                <GenericButton
+                  text = { 'Add Atttachments' }
+                  onClick = { () => {
+                  const updatedAttachments = [...spouseAttachments]
+                  let newCount = count + 1
+                  this.setState({ count : newCount })
+                  updatedAttachments.push({
+                    name : 'Marriage Certificate ' + count
+                  })
+                  this.setState({ spouseAttachments : updatedAttachments })
+                    }
+                  }
+                />
+              </div>
+              <MultipleAttachments
+                count = { count }
+                countFunc = { (count) => this.setState({ count }) }
+                placeholder = { 'Form Attachments' }
+                fileArray = { spouseAttachments }
+                setFile = { (spouseAttachmentsArray) =>
+                    this.setState({ spouseAttachmentsArray })
+                }
+              />
+              <center>
+              <div className = { 'grid-global-columns-x3' }>
+                <div></div>
+                <div>
+                  {
+                    editMode ?
+                    <div className = { 'grid-global' }>
+                      <GenericButton
+                        className = { 'global-button spouse-employment-button' }
+                        text = { 'Delete' }
+                        onClick = { () => this.deleteFunction() }
+                        />
+                      <GenericButton
+                        className = { 'global-button spouse-employment-button' }
+                        text = { 'Edit' }
+                        onClick = { () => this.saveFunction() }
+                        />
+                    </div>
+                      :
+                    <GenericButton
+                      className = { 'global-button spouse-employment-button' }
+                      text = { 'Save' }
+                      onClick = { () => this.saveFunction() }
+                      />
+                  }
+                </div>
+              </div>
+              </center>
+            </div>
+          }
         </div>
-      }
+        <div></div>
+      </div>
     </div>
     )
   }

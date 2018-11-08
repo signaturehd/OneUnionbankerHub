@@ -6,6 +6,9 @@ import AddLaptopLeaseInteractor from
 
 import AddLaptopLeaseParam from '../../../domain/param/AddLaptopLeaseParam'
 
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
+
 let storedAmount = '', storedTerms = '', storedColor = '', storedDeliveryOption = '', storedFile
 
 export default class LaptopLeasePresenter {
@@ -25,6 +28,7 @@ export default class LaptopLeasePresenter {
 
   setAmount (amount) {
     storedAmount = amount
+    console.log(amount)
     this.view.setAmount(amount)
   }
 
@@ -35,7 +39,6 @@ export default class LaptopLeasePresenter {
 
   setFile (file) {
     storedFile = file
-    this.view.setFile(file)
   }
 
   setDeliveryOption (deliveryOption) {
@@ -75,16 +78,58 @@ export default class LaptopLeasePresenter {
     })
   }
 
-  addLaptopLease () {
-    this.view.showCircularLoader()
-    this.addLaptopLeaseInteractor.execute(AddLaptopLeaseParam(storedColor, storedAmount, storedTerms, storedDeliveryOption, storedFile))
-      .subscribe(data => {
-        this.view.noticeOfUndertaking(data)
-        this.view.hideCircularLoader()
-      }, e => {
-        this.view.hideCircularLoader()
+  validateSubmission () {
+    store.dispatch(NotifyActions.resetNotify())
+    if (storedAmount === '' || storedAmount < 1) {
+       store.dispatch(NotifyActions.addNotify({
+          title: 'Laptop Lease',
+          message : 'Estimated Cost must be greater than 0',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (storedColor === '') {
+      store.dispatch(NotifyActions.addNotify({
+         title: 'Laptop Lease',
+         message : 'Please specify the color of laptop',
+         type : 'warning',
+         duration : 2000
+       })
+     )
+   } else if (storedTerms === '') {
+     store.dispatch(NotifyActions.addNotify({
+        title: 'Laptop Lease',
+        message : 'Please specify your payment method',
+        type : 'warning',
+        duration : 2000
       })
+    )
+  } else if (storedDeliveryOption === '') {
+    store.dispatch(NotifyActions.addNotify({
+       title: 'Laptop Lease',
+       message : 'Please choose the destination of item',
+       type : 'warning',
+       duration : 2000
+     })
+   )
+  } else {
+      this.view.validateInput()
+    }
   }
 
-
+  addLaptopLease () {
+    this.view.showCircularLoader()
+    this.addLaptopLeaseInteractor.execute(AddLaptopLeaseParam(
+      storedColor,
+      storedAmount,
+      storedTerms,
+      storedDeliveryOption,
+      storedFile))
+    .subscribe(data => {
+    this.view.noticeOfUndertaking(data)
+    this.view.hideCircularLoader()
+    }, e => {
+    this.view.hideCircularLoader()
+    })
+  }
 }

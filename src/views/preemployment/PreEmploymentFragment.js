@@ -62,6 +62,8 @@ import IsChildrenConfirmModal
   from './modals/IsChildrenConfirmModal'
 import NoticeResponseModal
   from '../notice/NoticeResponseModal'
+import IsSkipOptionModal
+  from './modals/IsSkipOptionModal'
 
 import {
   Modal,
@@ -94,6 +96,8 @@ function  PreEmploymentFragments (props)  {
   const educationData = props.educationData
   const educationPresenter = props.educationPresenter
   const reloadPreEmploymentForm = props.reloadPreEmploymentForm
+  const authorizationArray = props.authorizationArray
+  const bspArray = props.bspArray
 
   if (pageNumber === 0) {
     return <AffirmationDocumentFragment
@@ -152,11 +156,14 @@ function  PreEmploymentFragments (props)  {
       />
   } else if (pageNumber === 8) {
     return <AuthorizationBackgroundCheckFragment
+      authorizationArray = { authorizationArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       />
   }else if (pageNumber === 9) {
     return <BspCertificationFragment
+      bspArray = { bspArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       reloadPreEmploymentForm = { reloadPreEmploymentForm }
@@ -254,13 +261,16 @@ class PreEmploymentFragment extends BaseMVPView {
       showPagibigLoanModal : false,
       showMarriedConfirmModal : false,
       showChildrenConfirmModal : false,
+      showSkipOptionModal : false,
+      messageStatus : null,
       hideSubmitButton : true,
+      showViewComponent : false,
       preEmploymentData : [],
       characterReferenceData : [],
       educationData : [],
+      preEmploymentList : [],
       preEmpPage  : 0,
       percentage : 0,
-      messageStatus : null,
       notice : '',
     }
   }
@@ -271,16 +281,13 @@ class PreEmploymentFragment extends BaseMVPView {
     this.presenter.getCharacterReference()
     this.presenter.getEmployeeSchool()
     this.presenter.getParents()
-   try {
-     this.presenter.getPreEmploymentMessageStatus()
-   } catch (e) {
-    console.log(e)
-   }
+    this.presenter.getPreEmploymentMessageStatus()
+    this.presenter.getMedicalAppointment()
   }
 
   /* Validate if Preemployment message is display */
   showMessageStatus (messageStatus) {
-    this.setState({ messageStatus })    
+    this.setState({ messageStatus })
   }
 
   reloadPreEmploymentForm() {
@@ -303,6 +310,11 @@ class PreEmploymentFragment extends BaseMVPView {
   /* Character Reference */
   showCharacterReferenceMap (characterReferenceData) {
     this.setState({ characterReferenceData })
+  }
+
+  /* PreEmployment Lit */
+  showPreEmploymentList (preEmploymentList) {
+    this.setState({ preEmploymentList })
   }
 
   /* Education */
@@ -349,12 +361,67 @@ class PreEmploymentFragment extends BaseMVPView {
 
   incrementPage () {
     const index = this.state.preEmpPage + 1
+
     if(index === 1) {
       this.setState({ showFinancialObligationModal : true })
-      // const index1 = this.state.preEmpPage + 17
+      // const index1 = this.state.preEmpPage + 16
       // this.setState({ preEmpPage : index1 })
+    } else if (index === 3) {
+      this.getFormData(1).map((resp) => {
+        if(resp.status === 2) {
+          this.setState({ preEmpPage : index })
+        } else {
+          this.setState({ showSkipOptionModal : true })
+        }
+      })
+    } else if (index === 4) {
+      this.getFormData(2).map((resp) => {
+        if(resp.status === 2) {
+          this.setState({ preEmpPage : index })
+        } else {
+          this.setState({ showSkipOptionModal : true })
+        }
+      })
+    } else if (index === 5) {
+      if(this.state.educationData.length > 0) {
+        this.setState({ preEmpPage : index })
+      } else {
+        this.setState({ showSkipOptionModal : true })
+      }
+    } else if (index === 7) {
+      if(this.state.characterReferenceData.length > 0) {
+        this.setState({ preEmpPage : index })
+      } else {
+        this.setState({ showSkipOptionModal : true })
+      }
+    } else if (index === 8) {
+      this.getFormData(6).map((resp) => {
+        if(resp.status === 2) {
+          this.setState({ preEmpPage : index })
+        } else {
+          this.setState({ showSkipOptionModal : true })
+        }
+      })
     } else if (index === 11) {
       this.setState({ showTaxPayerIdentificationModal : true })
+    } else if (index === 12) {
+      this.setState({ preEmpPage : index + 1 })
+    } else if (index === 13) {
+      this.getFormData(12).map((resp) => {
+        if(resp.status === 2) {
+          this.setState({ preEmpPage : index })
+        } else {
+          this.setState({ showSkipOptionModal : true })
+        }
+      })
+    } else if (index === 14) {
+      this.getFormData(13).map((resp) => {
+        if(resp.status === 2) {
+          this.setState({ preEmpPage : index })
+        } else {
+          this.setState({ showSkipOptionModal : true })
+        }
+      })
     } else if (index === 15) {
       this.setState({ showPagibigLoanModal : true })
     } else if (index === 17) {
@@ -362,7 +429,7 @@ class PreEmploymentFragment extends BaseMVPView {
     } else if (index === 18) {
       this.setState({ showChildrenConfirmModal : true })
     } else if (index === 21) {
-      this.props.onBoardingSkipPage (7)
+      this.props.onBoardingSkipPage (5)
       this.props.history.push('/')
       this.setState({ hideSubmitButton : false })
     } else {
@@ -376,6 +443,8 @@ class PreEmploymentFragment extends BaseMVPView {
       this.setState({ preEmpPage : index - 1 })
     } else if (index === 11) {
       this.setState({ preEmpPage : index - 1 })
+    } else if (index === 12) {
+      this.setState({ showTaxPayerIdentificationModal : true })
     } else if (index === 15) {
       this.setState({ preEmpPage : index - 1 })
     } else if (index === 17) {
@@ -399,6 +468,7 @@ class PreEmploymentFragment extends BaseMVPView {
       checkPEUndertaking,
       onClose,
       onBoardingSkipPage,
+      preEmploymentStatus
     } = this.props
 
     const {
@@ -418,209 +488,326 @@ class PreEmploymentFragment extends BaseMVPView {
       educationData,
       percentage,
       messageStatus,
-      notice
+      notice,
+      showSkipOptionModal,
+      preEmploymentList,
+      showViewComponent
     } = this.state
 
     return(
       <div>
       { super.render() }
-      {
-      showSkipMessage &&
-        <Modal>
-          <h2 className = { 'font-weight-bold' }>Skip</h2>
-          <h2>Do you want to skip pre-employment process? You can still updates this on 1UHub > Drawer > Pre-Employment.</h2>
-          <div className = { 'grid-global' }>
-            <GenericButton
-              onClick = { () => this.setState({ showSkipMessage : false }) }
-              text = { 'No' }
-              />
-            <GenericButton
-              onClick = { () => {
-                onBoardingSkipPage (7)
-                this.props.history.push('/')
-                }
-              }
-              text = { 'Yes' }
-              />
-          </div>
-        </Modal>
-      }
-      {
-        showNoticeResponseModal &&
-        <NoticeResponseModal 
-          noticeResponse = { notice && notice } 
-          onClose = { () => this.setState({ showNoticeResponseModal : false }) }
-        />
-      }
-      {
-        showFinancialObligationModal &&
-        <IsFinancialObilgationConfirmModal
-          onSendPageNumberToView = { (res) => {
-          this.onSendPageNumberToView(res)
-          this.setState({ showFinancialObligationModal : false })
-        } }
-        />
-      }
-      {
-        showTaxPayerIdentificationModal &&
-        <IsTaxPayerConfirmModal
-          onSendPageNumberToView = { (res) => {
-          this.onSendPageNumberToView(res)
-          this.setState({ showTaxPayerIdentificationModal : false })
-        } }
-        />
-      }
-      {
-        showPagibigLoanModal &&
-        <IsPagIbigLoanConfirmModal
-          onSendPageNumberToView = { (res) => {
-          this.onSendPageNumberToView(res)
-          this.setState({ showPagibigLoanModal : false })
-        } }
-        />
-      }
-      {
-        showMarriedConfirmModal &&
-        <IsMarriedConfirmModal
-          onSendPageNumberToView = { (res) => {
-          this.onSendPageNumberToView(res)
-          this.setState({ showMarriedConfirmModal : false })
-          }}
-          showChildrenConfirmModalFunc = { (
-            showChildrenConfirmModal,
-            showMarriedConfirmModal) =>
-            this.setState({
-              showChildrenConfirmModal,
-              showMarriedConfirmModal
-            })
-          }
-        />
-      }
-      {
-        showChildrenConfirmModal &&
-        <IsChildrenConfirmModal
-          onSendPageNumberToView = { (res) => {
-          this.onSendPageNumberToView(res)
-          this.setState({ showChildrenConfirmModal : false })
-        } }
-        />
-      }
-      {
-        messageStatus && messageStatus.hasRead !== true &&
-        <Modal
-          width = { 50 }>
-          {
-            // <div className = { 'pre-container' }>
-            //   <div className = { 'pre-env' }>
-            //     <label for = { 'open-env' }>
-            //       <input
-            //         type='checkbox'
-            //         id='open-env' />
-            //       <label
-            //         className = { 'pre-top' }
-            //         for = { 'open-env' }>
-            //       </label>
-            //       <div className = { 'pre-content' }>
-            //       </div>
-            //       <div className = { 'pre-rest' }></div>
-            //     </label>
-            //   </div>
-            // </div>
-          }
-          <div>
-            <center>
-              <h2 className = { 'unionbank-color font-weight-bold font-size-18px' }>Welcome to Unionbank!</h2>
-            </center>
-            <br/>
-            <center>
-              <h2 className = { 'font-size-16px font-size-normal' } >Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it&#39;s your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
-              <br/>
-              <br/>
-              <h2 className = { 'font-size-16px font-size-normal' }>We&#39;re stoked to have you onboard, UnionBanker!</h2>
-            </center>
-          </div>
-          <br/>
-          <center className = { 'open-env' } >
-            <GenericButton
-              className = { 'pre-emp-setup-button' }
-              text = { 'SETUP MY ACCOUNT' }
-              onClick = { () =>
-                {
-                  this.setState({ messageStatus : false })
-                  this.presenter.postPreEmploymentMessageStatus(1)
-                }
-              }
-           />
-          </center>
-        </Modal>
-      }
-      <div className={ 'preemployment-container' }>
-        <div></div>
-        <div>
-          {
-            enabledLoader ?
-            <center className = { 'circular-loader-center' }>
-              <CircularLoader show = { true }/>
-            </center>
-            :
-            <div>
-              <div className = { 'text-align-right' }>
-                <GenericButton
-                  className = { 'global-button pre-employment-button' }
-                  text = { 'Skip' }
-                  onClick = { () =>
-                    this.skipPage()
+        {
+        showSkipMessage &&
+          <Modal>
+            <h2 className = { 'font-weight-bold' }>Skip</h2>
+            <h2>Do you want to skip pre-employment process? You can still updates this on 1UHub > Drawer > Pre-Employment.</h2>
+            <div className = { 'grid-global' }>
+              <GenericButton
+                onClick = { () => this.setState({ showSkipMessage : false }) }
+                text = { 'No' }
+                />
+              <GenericButton
+                onClick = { () => {
+                  onBoardingSkipPage (7)
+                  this.props.history.push('/preemployment')
+                  this.setState({ showSkipMessage : false })
                   }
-                />
-              </div>
-              <br/>
-               <PreEmploymentFragments
-                biographicalArray = { this.getFormData(1) }
-                birthCertifArray = { this.getFormData(2) }
-                educationVerificationForm = { this.getFormData(3) }
-                nbiArray = { this.getFormData(6) }
-                sssArray = { this.getFormData(10) }
-                tinArray = { this.getFormData(11) }
-                bir1902Array = { this.getFormData(12) }
-                philHealthArray = { this.getFormData(13) }
-                pagibigArray = { this.getFormData(14) }
-                personnelArray = { this.getFormData(15) }
-                pagibigLoanArray = { this.getFormData(16) }
-                preEmpPage = { preEmpPage }
-                percentage = { percentage }
-                reloadPreEmploymentForm = { () => this.reloadPreEmploymentForm() }
-                characterReferencePresenter = { () => this.presenter.getCharacterReference() }
-                characterReferenceData = { characterReferenceData }
-                educationPresenter = { () => this.presenter.getEmployeeSchool() }
-                educationData = { educationData }
-                onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
-                />
-              <br/>
-              <div className = { 'grid-global ' }>
-                {
-                  preEmpPage !== 0 ?
-                  <GenericButton
-                    className = { 'global-button' }
-                    text = { 'Previous' }
-                    onClick = { () => this.decerementPage() } /> :
-                  <div></div>
                 }
-                {
-                  hideSubmitButton ?
-                  <GenericButton
-                    className = { 'preemp-next-button' }
-                    text = { preEmpPage === 20 ? 'Finish' : 'Next' }
-                    onClick = { () => this.incrementPage() } />
-                    :
-                  <div></div>
-                }
-              </div>
+                text = { 'Yes' }
+                />
             </div>
+          </Modal>
+        }
+        {
+          showSkipOptionModal &&
+          <IsSkipOptionModal
+            preEmpPage = { preEmpPage }
+            onCloseOption = { (preEmpPage) => this.setState({ preEmpPage, showSkipOptionModal : false }) }
+          />
+        }
+        {
+          showNoticeResponseModal &&
+          <NoticeResponseModal
+            noticeResponse = { notice && notice }
+            onClose = { () => this.setState({ showNoticeResponseModal : false }) }
+          />
+        }
+        {
+          showFinancialObligationModal &&
+          <IsFinancialObilgationConfirmModal
+            onSendPageNumberToView = { (res) => {
+            this.onSendPageNumberToView(res)
+            this.setState({ showFinancialObligationModal : false })
+          } }
+          />
+        }
+        {
+          showTaxPayerIdentificationModal &&
+          <IsTaxPayerConfirmModal
+            onSendPageNumberToView = { (res) => {
+            this.onSendPageNumberToView(res)
+            this.setState({ showTaxPayerIdentificationModal : false })
+          } }
+          />
+        }
+        {
+          showPagibigLoanModal &&
+          <IsPagIbigLoanConfirmModal
+            onSendPageNumberToView = { (res) => {
+            this.onSendPageNumberToView(res)
+            this.setState({ showPagibigLoanModal : false })
+          } }
+          />
+        }
+        {
+          showMarriedConfirmModal &&
+          <IsMarriedConfirmModal
+            onSendPageNumberToView = { (res) => {
+            this.onSendPageNumberToView(res)
+            this.setState({ showMarriedConfirmModal : false })
+            }}
+            showChildrenConfirmModalFunc = { (
+              showChildrenConfirmModal,
+              showMarriedConfirmModal) =>
+              this.setState({
+                showChildrenConfirmModal,
+                showMarriedConfirmModal
+              })
             }
-        </div>
-        <div></div>
+          />
+        }
+        {
+          showChildrenConfirmModal &&
+          <IsChildrenConfirmModal
+            onSendPageNumberToView = { (res) => {
+            this.onSendPageNumberToView(res)
+            this.setState({ showChildrenConfirmModal : false })
+          } }
+          />
+        }
+        {
+          messageStatus && messageStatus.hasRead !== true &&
+          <Modal
+            width = { 50 }>
+            {
+              // <div className = { 'pre-container' }>
+              //   <div className = { 'pre-env' }>
+              //     <label for = { 'open-env' }>
+              //       <input
+              //         type='checkbox'
+              //         id='open-env' />
+              //       <label
+              //         className = { 'pre-top' }
+              //         for = { 'open-env' }>
+              //       </label>
+              //       <div className = { 'pre-content' }>
+              //       </div>
+              //       <div className = { 'pre-rest' }></div>
+              //     </label>
+              //   </div>
+              // </div>
+            }
+            <div>
+              <center>
+                <h2 className = { 'unionbank-color font-weight-bold font-size-18px' }>Welcome to Unionbank!</h2>
+              </center>
+              <br/>
+              <center>
+                <h2 className = { 'font-size-16px font-size-normal' } >Your journey as an individual with a higher purpose now begins. It is in our DNA to be bold, smart, agile and driven. Now, it&#39;s your turn to take the lead, set the bar, rewrite the rules, and seize bold opportunities. Unleash your inner potential and hustle like a boss as you thrive in our guild. Driven by our vision, together, let us own the future. </h2>
+                <br/>
+                <br/>
+                <h2 className = { 'font-size-16px font-size-normal' }>We&#39;re stoked to have you onboard, UnionBanker!</h2>
+              </center>
+            </div>
+            <br/>
+            <center className = { 'open-env' } >
+              <GenericButton
+                className = { 'pre-emp-setup-button' }
+                text = { 'SETUP MY ACCOUNT' }
+                onClick = { () =>
+                  {
+                    this.setState({ messageStatus : false })
+                    this.presenter.postPreEmploymentMessageStatus(1)
+                  }
+                }
+             />
+            </center>
+          </Modal>
+        }
+        {
+          preEmploymentStatus === 7 ?
+          <div>
+            <div className={ 'preemployment-container' }>
+              <div></div>
+              <div>
+                {
+                  !showViewComponent &&
+                  <div>
+                    <div className = { 'percentage-grid' }>
+                      <div>
+                        <h2 className={ 'font-size-30px text-align-left' }>List of Pre-Employment Requirements</h2>
+                        <br/>
+                        <h4></h4>
+                      </div>
+                      <div></div>
+                    </div>
+                    {
+                      preEmploymentList.map((resp, key) =>
+                        <Card
+                          className = { 'pre-employment-card-list cursor-pointer' }
+                          onClick = { () => this.setState({ preEmpPage: resp.id, showViewComponent: true }) }
+                          key = { key }>
+                          { resp.name }
+                        </Card>
+                      )
+                    }
+                  </div>
+                }
+                {
+                  showViewComponent &&
+                  <div>
+                    <div className = { 'grid-global' }>
+                      <div className = { 'text-align-left' }>
+                        <GenericButton
+                          className = { 'global-button pre-employment-button' }
+                          text = { 'Back to list' }
+                          onClick = { () =>
+                            this.setState({ showViewComponent : false })
+                          }
+                        />
+                      </div>
+                      <div className = { 'text-align-right' }>
+                        <GenericButton
+                          className = { 'global-button pre-employment-button' }
+                          text = { 'Skip' }
+                          onClick = { () =>
+                            this.skipPage()
+                          }
+                        />
+                      </div>
+                    </div>
+                    <br/>
+                     <PreEmploymentFragments
+                      biographicalArray = { this.getFormData(1) }
+                      birthCertifArray = { this.getFormData(2) }
+                      educationVerificationForm = { this.getFormData(3) }
+                      nbiArray = { this.getFormData(6) }
+                      authorizationArray = { this.getFormData(7) }
+                      bspArray = { this.getFormData(8) }
+                      sssArray = { this.getFormData(10) }
+                      tinArray = { this.getFormData(11) }
+                      bir1902Array = { this.getFormData(12) }
+                      philHealthArray = { this.getFormData(13) }
+                      pagibigArray = { this.getFormData(14) }
+                      personnelArray = { this.getFormData(15) }
+                      pagibigLoanArray = { this.getFormData(16) }
+                      preEmpPage = { preEmpPage }
+                      percentage = { percentage }
+                      reloadPreEmploymentForm = { () => this.reloadPreEmploymentForm() }
+                      characterReferencePresenter = { () => this.presenter.getCharacterReference() }
+                      characterReferenceData = { characterReferenceData }
+                      educationPresenter = { () => this.presenter.getEmployeeSchool() }
+                      educationData = { educationData }
+                      onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
+                      />
+                    <br/>
+                    <div className = { 'grid-global ' }>
+                      {
+                        preEmpPage !== 0 ?
+                        <GenericButton
+                          className = { 'global-button' }
+                          text = { 'Previous' }
+                          onClick = { () => this.decerementPage() } /> :
+                        <div></div>
+                      }
+                      {
+                        hideSubmitButton ?
+                        <GenericButton
+                          className = { 'preemp-next-button' }
+                          text = { preEmpPage === 20 ? 'Finish' : 'Next' }
+                          onClick = { () => this.incrementPage() } />
+                          :
+                        <div></div>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+              <div></div>
+            </div>
+          </div>
+          :
+          <div className={ 'preemployment-container' }>
+            <div></div>
+            <div>
+              {
+                enabledLoader ?
+                <center className = { 'circular-loader-center' }>
+                  <CircularLoader show = { true }/>
+                </center>
+                :
+                <div>
+                  <div className = { 'text-align-right' }>
+                    <GenericButton
+                      className = { 'global-button pre-employment-button' }
+                      text = { 'Skip' }
+                      onClick = { () =>
+                        this.skipPage()
+                      }
+                    />
+                  </div>
+                  <br/>
+                   <PreEmploymentFragments
+                    biographicalArray = { this.getFormData(1) }
+                    birthCertifArray = { this.getFormData(2) }
+                    educationVerificationForm = { this.getFormData(3) }
+                    nbiArray = { this.getFormData(6) }
+                    authorizationArray = { this.getFormData(7) }
+                    bspArray = { this.getFormData(8) }
+                    sssArray = { this.getFormData(10) }
+                    tinArray = { this.getFormData(11) }
+                    bir1902Array = { this.getFormData(12) }
+                    philHealthArray = { this.getFormData(13) }
+                    pagibigArray = { this.getFormData(14) }
+                    personnelArray = { this.getFormData(15) }
+                    pagibigLoanArray = { this.getFormData(16) }
+                    preEmpPage = { preEmpPage }
+                    percentage = { percentage }
+                    reloadPreEmploymentForm = { () => this.reloadPreEmploymentForm() }
+                    characterReferencePresenter = { () => this.presenter.getCharacterReference() }
+                    characterReferenceData = { characterReferenceData }
+                    educationPresenter = { () => this.presenter.getEmployeeSchool() }
+                    educationData = { educationData }
+                    onSendPageNumberToView = { (preEmpPage) => this.onSendPageNumberToView(preEmpPage) }
+                    />
+                  <br/>
+                  <div className = { 'grid-global ' }>
+                    {
+                      preEmpPage !== 0 ?
+                      <GenericButton
+                        className = { 'global-button' }
+                        text = { 'Previous' }
+                        onClick = { () => this.decerementPage() } /> :
+                      <div></div>
+                    }
+                    {
+                      hideSubmitButton ?
+                      <GenericButton
+                        className = { 'preemp-next-button' }
+                        text = { preEmpPage === 20 ? 'Finish' : 'Next' }
+                        onClick = { () => this.incrementPage() } />
+                        :
+                      <div></div>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+            <div></div>
+          </div>
+        }
       </div>
-    </div>
     )
   }
 }

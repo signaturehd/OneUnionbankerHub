@@ -21,6 +21,7 @@ export default class SSSPresenter {
   }
 
   getOnboardingAttachments (attachments) {
+    store.dispatch(NotifyActions.resetNotify())
     this.view.showCircularLoader()
     this.getOnboardingAttachmentsInteractor.execute(attachments)
     .subscribe(data => {
@@ -41,15 +42,17 @@ export default class SSSPresenter {
   }
 
   getEmployeeSSS () {
+    store.dispatch(NotifyActions.resetNotify())
     this.getEmployeeSSSInteractor.execute()
     .subscribe(data => {
       this.view.showEmployeeSSSData(data)
     }, error => {
-
+      store.dispatch(NotifyActions.resetNotify())
     })
   }
 
   saveEmployeeSSS (sssInput) {
+    store.dispatch(NotifyActions.resetNotify())
     this.view.showDocumentLoader()
     this.addEmployeeSSSInteractor.execute(employeeSSSParam(sssInput))
     .subscribe(data => {
@@ -58,10 +61,12 @@ export default class SSSPresenter {
     }, error => {
       this.view.hideDocumentLoader()
       this.view.noticeResponseResp(error)
+      store.dispatch(NotifyActions.resetNotify())
     })
   }
 
   uploadEmployeeSSS (sssId, sssAttachment) {
+    store.dispatch(NotifyActions.resetNotify())
     this.view.showDocumentLoader()
     this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(sssId, sssAttachment))
     .subscribe(data => {
@@ -71,6 +76,7 @@ export default class SSSPresenter {
     }, error => {
       this.view.hideDocumentLoader()
       this.view.noticeResponseResp(error)
+      store.dispatch(NotifyActions.resetNotify())
     })
   }
 

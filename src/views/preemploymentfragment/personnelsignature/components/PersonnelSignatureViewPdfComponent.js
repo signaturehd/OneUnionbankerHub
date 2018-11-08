@@ -62,7 +62,7 @@ PersonnelSignatureViewPdfComponent.propTypes = {
   title : PropTypes.string,
 }
 PersonnelSignatureViewPdfComponent.defaultProps = {
-  title : 'Pag-IBIG MDR Form'
+  title : 'Personnel Signature Form'
 }
 
 export default PersonnelSignatureViewPdfComponent

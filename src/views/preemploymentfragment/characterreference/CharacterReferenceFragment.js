@@ -25,6 +25,7 @@ import store from '../../../store'
 
 import CharacterReferenceAddFormModal from './modals/CharacterReferenceAddFormModal'
 import MullptipleCardComponent from './components/CharacterReferenceMultipleCardComponent'
+import CharacterReferenceCardViewComponent from './components/CharacterReferenceCardViewComponent'
 
 import NoticeResponseModal from '../../notice/NoticeResponseModal'
 
@@ -35,9 +36,11 @@ class CharacterReferenceFragment extends BaseMVPView {
     super(props)
     this.state = {
       showCharacterReferenceModal : false,
+      showPdfViewComponent : false,
       showOccupationModal : false,
       showNoticeResponse : false,
       enabledLoader : false,
+      enabledLoaderPdfModal : false,
       occupationId : 0,
       occupationName : '',
       addressText: '',
@@ -75,6 +78,7 @@ class CharacterReferenceFragment extends BaseMVPView {
       editMode : false,
       selectedId : '',
       noticeResponse : '',
+      pdfFile: '',
     }
   }
 
@@ -96,6 +100,11 @@ class CharacterReferenceFragment extends BaseMVPView {
 
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
+  }
+
+
+  showPdfFileView (pdfFile ) {
+    this.setState({ pdfFile , showPdfViewComponent : true })
   }
 
   /* Error Message Method */
@@ -259,7 +268,8 @@ class CharacterReferenceFragment extends BaseMVPView {
       districtText,
       townText,
       cityText,
-      editMode
+      editMode,
+      pdfFile
     } = this.state
 
     const {
@@ -331,6 +341,8 @@ class CharacterReferenceFragment extends BaseMVPView {
       companyNameTextErrorMessage : '',
       floorText : '',
       floorTextErrorMessage : '',
+      cityText : '',
+      cityTextErrorMessage : '',
       buildingNameText : '',
       buildingNameTextErrorMessage : '',
       barangayText : '',
@@ -405,12 +417,27 @@ class CharacterReferenceFragment extends BaseMVPView {
     this.presenter.deleteCharacterReference(id)
   }
 
+  onCheckedPdf () {
+    this.setState({ enabledLoaderPdfModal : true })
+    this.presenter.getCharacterReferenceForm()
+  }
+
+  showPdfFileUrl (pdfFileUrl) {
+    let url = pdfFileUrl.url + ''
+      this.presenter.getOnBoardingAttachments(url)
+  }
+
+  hideDocumentLoader () {
+    this.setState({ enabledLoaderPdfModal : false })
+  }
+
   render() {
     const {
       percentage
     } = this.props
 
     const {
+      enabledLoaderPdfModal,
       showCharacterReferenceModal,
       enabledLoader,
       showOccupationModal,
@@ -449,9 +476,10 @@ class CharacterReferenceFragment extends BaseMVPView {
       cityText,
       cityTextErrorMessage,
       editMode,
-      noticeResponse
+      noticeResponse,
+      showPdfViewComponent,
+      pdfFile
     } = this.state
-
 
     const {
       characterReferenceData
@@ -468,7 +496,26 @@ class CharacterReferenceFragment extends BaseMVPView {
             this.setState({ showNoticeResponse : false })
             this.props.reloadPreEmploymentForm()
           }}
-          />
+        />
+      }
+      {
+        enabledLoaderPdfModal &&
+        <Modal>
+          <div>
+            <center>
+              <br/>
+              {
+                showPdfViewComponent ?
+
+                <h2>Please wait while we we&#39;re retrieving the documents</h2> :
+                <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+              }
+              <br/>
+              <CircularLoader show = { enabledLoaderPdfModal }/>
+              <br/>
+            </center>
+          </div>
+        </Modal>
       }
       {
         showCharacterReferenceModal &&
@@ -565,12 +612,31 @@ class CharacterReferenceFragment extends BaseMVPView {
           </div>
         <br/>
       </div>
+      <Card
+        onClick = { () =>
+          this.onCheckedPdf()
+        }
+        className = { 'educ-card' }>
+        <div className = { 'educ-grid-x2' }>
+          <h2>Character Reference Form</h2>
+          <div>
+            <span className = { 'educ-icon educ-seemore-button' }/>
+          </div>
+        </div>
+      </Card>
+      {
+        showPdfViewComponent &&
+        <CharacterReferenceCardViewComponent
+          pdfFile = { pdfFile && pdfFile }
+          onClose = { () => this.setState({ showPdfViewComponent: false }) }
+        />
+      }
       <div>
         <div className = { 'grid-global' } >
           <h2 className = { 'font-weight-bold' }>Character Reference</h2>
-          <div className = { 'text-align-end' }>
+          <div className = { 'text-align-right' }>
             <GenericButton
-              text = { 'ADD' }
+              text = { 'Add Character Reference' }
               onClick = { () => this.setState({ showCharacterReferenceModal : true }) }
             />
           </div>

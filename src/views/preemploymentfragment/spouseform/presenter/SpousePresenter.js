@@ -93,13 +93,13 @@ export default class SpousePresenter {
   }
 
   getOnboardingAttachments (attachments) {
-    this.view.showCircularLoader()
+    this.view.showAttachmentsCircularLoader()
     this.getOnboardingAttachmentsInteractor.execute(attachments)
     .subscribe(data => {
-      this.view.hideCircularLoader()
+      this.view.hideAttachmentsCircularLoader()
       this.view.showAttachmentsFileView(data)
     }, error => {
-      this.view.hideCircularLoader()
+      this.view.hideAttachmentsCircularLoader()
     })
   }
 
@@ -139,6 +139,16 @@ export default class SpousePresenter {
     spouseId,
     spouseAttachmentsArray
   ) {
+
+    let validateAttachments = false
+    spouseAttachmentsArray && spouseAttachmentsArray.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
+
     if(firstName === '') {
       this.view.firstNameErrorMessageFunc('First Name field is required')
     } else if(middleName === '') {
@@ -157,7 +167,31 @@ export default class SpousePresenter {
       this.view.bloodTypeErrorMessageFunc('Please specify your blood type')
     } else if (status === '') {
       this.view.statusNameErrorMessageFunc('Please specify spouse status')
-    }  else {
+    } else if (!spouseAttachmentsArray.length) {
+       store.dispatch(NotifyActions.resetNotify())
+       store.dispatch(NotifyActions.addNotify({
+          title : 'Warning' ,
+          message : 'Attachments is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (validateAttachments) {
+      store.dispatch(NotifyActions.resetNotify())
+      spouseAttachmentsArray && spouseAttachmentsArray.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'Warning' ,
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 2000
+             })
+           )
+          }
+        }
+      )
+     } else {
        this.view.showCircularLoader()
        this.postSpouseInteractor.execute(addSpouseForm(
          firstName,
@@ -177,6 +211,7 @@ export default class SpousePresenter {
        .subscribe(data => {
          this.view.hideCircularLoader()
          this.view.noticeResponseFunc(data, true)
+         this.getSpouse()
        }, error => {
          this.view.hideCircularLoader()
          this.view.reload()

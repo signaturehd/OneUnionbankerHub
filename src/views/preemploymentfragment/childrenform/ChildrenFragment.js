@@ -37,6 +37,7 @@ class ChildrenFragment extends BaseMVPView {
       statusObject : [],
       genderObject : [],
       attachments : [],
+      attachmentFileObject : [],
       defaultAttachmentsArray : [{
         name : 'Birth Certificate'
       }],
@@ -84,9 +85,23 @@ class ChildrenFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.onSendPageNumberToView(18)
+    if(this.props.reuse) {
+    } else {
+      this.props.onSendPageNumberToView(18)
+    }
     this.presenter.getObjectData()
     this.presenter.getChildren()
+  }
+
+  showRetrieveAttachments (file, name, base64) {
+    let arrayNew = [...this.state.attachmentFileObject]
+    const objectFile = {
+      file,
+      name,
+      base64
+    }
+    arrayNew.push(objectFile)
+    this.setState({ attachmentFileObject : arrayNew })
   }
 
   showCircularLoader () {
@@ -215,6 +230,9 @@ class ChildrenFragment extends BaseMVPView {
       hospitalization : '',
       groupPlan : '',
       attachments: [],
+      defaultAttachmentsArray : [{
+        name : 'Birth Certificate'
+      }],
     })
   }
 
@@ -234,12 +252,13 @@ class ChildrenFragment extends BaseMVPView {
       hospitalization,
       groupPlan,
       editMode,
-      defaultAttachmentsArray
+      defaultAttachmentsArray,
+      attachmentFileObject
     } = this.state
 
     let gender = genderId === 'M' ? 'M' : 'F'
 
-    if(editMode) {
+    if (editMode) {
       this.presenter.putChildren(
         childrenId,
         firstName,
@@ -253,7 +272,8 @@ class ChildrenFragment extends BaseMVPView {
         bloodTypeName,
         hospitalization,
         groupPlan,
-        defaultAttachmentsArray
+        defaultAttachmentsArray,
+        attachmentFileObject
       )
       this.setState({ showEditModeModal : false })
       this.editForm()
@@ -288,6 +308,7 @@ class ChildrenFragment extends BaseMVPView {
     } = this.props
 
     const {
+      attachmentFileObject,
       childrenData,
       bloodObject,
       statusObject,
@@ -340,7 +361,7 @@ class ChildrenFragment extends BaseMVPView {
 
     return(
     <div>
-    { super.render() }
+      { super.render() }
       {
         showNoticeResponse &&
         <NoticeResponse
@@ -457,65 +478,89 @@ class ChildrenFragment extends BaseMVPView {
         }
         />
       }
-      <div>
-        <br/>
-        <div className = { 'percentage-grid' }>
-          <div>
-          <h2 className = { 'header-margin-default text-align-left' }>Children Form</h2>
-          <h2>Fill up children form.</h2>
+      <div className = { `${ this.props.reuse ? 'preemployment-container' : '' }` }>
+        <div></div>
+        <div>
+          <br/>
+          {
+            !this.props.reuse ?
+            <div className = { 'percentage-grid' }>
+              <div>
+                <h2 className = { 'header-margin-default text-align-left' }>Children Form</h2>
+                <h2>Fill up children form.</h2>
+              </div>
+              <Progress
+                type = { 'circle' }
+                height = { 65 }
+                width = { 65 }
+                percent = { percentage } />
+            </div>
+            :
+            <div className = { 'percentage-grid' }>
+              <div>
+                <div className = { 'text-align-left' }>
+                  <GenericButton
+                    className = { 'global-button profile-button-small' }
+                    text = { 'Back to Profile' }
+                    onClick = { () =>
+                      this.props.history.push('/settings')
+                    }
+                  />
+                </div>
+                <br/>
+                <h2 className = { 'header-margin-default text-align-left' }>Adding of Children</h2>
+              </div>
+              <div></div>
+            </div>
+          }
+          <br/>
+          <div className = { 'grid-global' }>
+            <div></div>
+            <div className = { 'text-align-right' }>
+              <GenericButton
+                text = { 'Add' }
+                onClick  = { () => this.setState({ showEditModeModal : true }) }
+              />
+            </div>
           </div>
-          <Progress
-            type = { 'circle' }
-            height = { 65 }
-            width = { 65 }
-            percent = { percentage } />
+          <br/>
+          {
+            enabledLoader ?
+            <center>
+              <br/>
+              <h2>Please wait while we we&#39;re retrieving your children record/s </h2>
+              <br/>
+              <CircularLoader show = { enabledLoader }/>
+              <br/>
+            </center>
+            :
+            <ChildrenMultipleCardComponent
+              childrenData = { childrenData }
+              onDeleteModeProperty = { (e) => this.presenter.removeChildren(e) }
+              onEditModeProperty = { (e) => {
+                this.setState({ editMode: true })
+                this.editForm(e)
+              } }
+              index = { index }
+              />
+          }
+          <br/>
+          <button
+            type = { 'button' }
+            className = { `viewmore tooltip ${ isVisible }` }
+            onClick = {
+              () => {
+                if(index === childrenData.length)
+                  this.setState({ index : 4, viewMoreText : 'View more' })
+                else
+                  this.setState({ index : childrenData.length, viewMoreText : 'View less' })
+              }
+            }>
+            <img src={ require('../../../images/icons/horizontal.png') } />
+            <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+          </button>
         </div>
-        <br/>
-        <div className = { 'grid-global' }>
-          <div></div>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-              text = { 'Add' }
-              onClick  = { () => this.setState({ showEditModeModal : true }) }
-            />
-          </div>
-        </div>
-        <br/>
-        {
-          enabledLoader ?
-          <center>
-            <br/>
-            <h2>Please wait while we we&#39;re retrieving your children record/s </h2>
-            <br/>
-            <CircularLoader show = { enabledLoader }/>
-            <br/>
-          </center>
-          :
-          <ChildrenMultipleCardComponent
-            childrenData = { childrenData }
-            onDeleteModeProperty = { (e) => this.presenter.removeChildren(e) }
-            onEditModeProperty = { (e) => {
-              this.setState({ editMode: true })
-              this.editForm(e)
-            } }
-            index = { index }
-            />
-        }
-        <br/>
-        <button
-          type = { 'button' }
-          className = { `viewmore tooltip ${ isVisible }` }
-          onClick = {
-            () => {
-              if(index === childrenData.length)
-                this.setState({ index : 4, viewMoreText : 'View more' })
-              else
-                this.setState({ index : childrenData.length, viewMoreText : 'View less' })
-            }
-          }>
-          <img src={ require('../../../images/icons/horizontal.png') } />
-          <span className={ 'tooltiptext' }>{ viewMoreText }</span>
-        </button>
+        <div></div>
       </div>
     </div>
     )
@@ -530,4 +575,4 @@ ChildrenFragment.propTypes = {
 ChildrenFragment.defaultProps = {
 }
 
-export default ConnectView(ChildrenFragment, Presenter )
+export default ConnectView(ChildrenFragment, Presenter)

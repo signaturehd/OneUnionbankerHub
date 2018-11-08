@@ -14,14 +14,41 @@ class PostEmploymentBIR2316Fragment extends Component {
     super(props)
   }
 
+  componentDidMount () {
+    this.props.subtitle('Please download and fill-up the Bereau of Internal Revenue(BIR) 2316 Form then attach the document.')
+    this.props.title('Bereau of Internal Revenue (BIR) Form 2316.')
+  }
+
   render () {
     const {
-      pageId
+      pageId,
     } = this.props
 
     return (
       <div>
-        test 2
+        <div className = { 'postemployment-grid-card' }>
+          <Card
+            onClick = { () => {
+              this.onCheckedPdf('/2018-10-15/12345-BSP Biographical Data-1539596592662.pdf')
+              this.setState({ showPdfViewComponent : true  })
+              }
+            }
+            className = { 'postemployment-card' }>
+            <div className = { 'postemployment-grid-x2' }>
+              <h2>Download BIR 2316 Form</h2>
+              <div>
+                <span className = { 'postemployment-icon postemployment-seemore-button' }/>
+              </div>
+            </div>
+          </Card>
+          {
+            // showPdfViewComponent &&
+            // <BiographicalViewerComponent
+            //   pdfFile = { pdfFile }
+            //   onClose = { () => this.setState({ showPdfViewComponent: false }) }
+            // />
+          }
+        </div>
       </div>
     )
   }

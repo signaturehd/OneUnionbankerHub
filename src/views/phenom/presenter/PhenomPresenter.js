@@ -1,6 +1,9 @@
 import GetPhenomDiscountsInteractor from '../../../domain/interactor/phenom/GetPhenomDiscountsInteractor'
 import GetPhenomDetailsInteractor from '../../../domain/interactor/phenom/GetPhenomDetailsInteractor'
 import AddCheckedStatusIsHeartInteractor from '../../../domain/interactor/phenom/AddCheckedStatusIsHeartInteractor'
+
+let phenomData = []
+
 export default class PhenomPresenter {
   constructor (container) {
     this.getPhenomDiscountsInteractor =
@@ -10,7 +13,7 @@ export default class PhenomPresenter {
     this.addCheckedStatusIsHeartInteractor =
       new AddCheckedStatusIsHeartInteractor(container.get('HRBenefitsClient'))
 
-    this.getTransactionImage = container.get('FileClient')
+    this.getPhenomImage = container.get('FileClient')
   }
 
   setView(view) {
@@ -20,12 +23,18 @@ export default class PhenomPresenter {
   getPhenomDiscounts () {
     this.view.showCircularLoader(true)
     this.getPhenomDiscountsInteractor.execute()
-    .subscribe(data => {
-      this.view.showCircularLoader(false)
-      this.view.showPhenomDiscountList(data)
-    }, error => {
-      this.view.showCircularLoader(false)
-    })
+      .subscribe(resp => {
+          this.view.showPhenomDiscountList(resp)
+          this.view.showCircularLoader()
+        }, e => {
+          this.view.showCircularLoader()
+      })
+    // .subscribe(data => {
+    //   this.view.showCircularLoader(false)
+    //   this.view.showPhenomDiscountList(data)
+    // }, error => {
+    //   this.view.showCircularLoader(false)
+    // })
   }
 
   getPhenomDiscountNoLoading () {

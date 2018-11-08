@@ -89,7 +89,7 @@ class ChildrenModal extends Component {
         isDismisable = { true }
         onClose = { onClose }>
         <center>
-          <h2>Children { editMode ? 'Update' : 'Submit' } Form</h2>
+          <h2>Child Form</h2>
         </center>
         <br/>
         {
@@ -249,7 +249,7 @@ class ChildrenModal extends Component {
                   {
                     attachments.length !==0 &&
                     <PreEmploymentViewAttachmentsComponent
-                      title = { 'Birth Certificate Attachments' }
+                      title = { 'Birth Certificate' }
                       file = { attachments }
                       onClick = { (viewFile) => this.props.viewAttachments(viewFile)  }/>
                   }

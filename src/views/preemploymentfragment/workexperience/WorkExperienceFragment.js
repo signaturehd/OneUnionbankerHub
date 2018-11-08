@@ -515,7 +515,7 @@ class WorkExperienceFragment extends BaseMVPView {
           :
           <div>
             {
-              workExperienceCardHolder !==0 ?
+              workExperienceCardHolder ===0 ?
               <div>
                 <br/>
                 <center>

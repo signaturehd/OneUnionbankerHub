@@ -44,13 +44,23 @@ export default class HRBenefitsClient {
 
   /* Update Profile */
 
-  updateDescription (token, description) {
+  updateDescription (token, emailAddress) {
     return this.service.updateDescription(token, description)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateEmailAddress (token, emailAddress) {
+    return this.service.updateEmailAddress(token, emailAddress)
       .pipe(ServiceErrorOperator())
   }
 
   updateAddress (token, address, file) {
     return this.service.updateAddress(token, address, file)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateContactNumber (token, number) {
+    return this.service.updateContactNumber(token, number)
       .pipe(ServiceErrorOperator())
   }
 
@@ -60,6 +70,24 @@ export default class HRBenefitsClient {
     return this.service.getDevices(token)
       .pipe(ServiceErrorOperator())
   }
+
+  /* Reset Password */
+
+  requestEmailVerification (token, empId, date) {
+    return this.service.requestEmailVerification(token, empId, date)
+      .pipe(ServiceErrorOperator())
+  }
+
+  requestOtpVerification (token, otp) {
+    return this.service.requestOtpVerification(token, otp)
+      .pipe(ServiceErrorOperator())
+  }
+
+  requestNewPassword (token, newPassword, confirmPassword, otp, employeeId, birtDate) {
+    return this.service.requestNewPassword(token, newPassword, confirmPassword, otp, employeeId, birtDate)
+      .pipe(ServiceErrorOperator)
+  }
+
 
   /* Session */
   setToken (token) {
@@ -794,6 +822,36 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getPhenomImage (token, file) {
+    return this.service.getPhenomImage(token, file)
+      .pipe(ServiceErrorOperator())
+      .flatMap(resp =>
+        Observable.create(observer => {
+          const reader = new FileReader()
+          reader.onerror = err => observer.error(err)
+          reader.onabort = err => observer.error(err)
+          reader.onload = () => observer.next(reader.result)
+          reader.onloadend = () => observer.complete()
+          reader.readAsDataURL(resp)
+        })
+      )
+  }
+
+  getVendorImage (token, file) {
+    return this.service.getVendorImage(token, file)
+      .pipe(ServiceErrorOperator())
+      .flatMap(resp =>
+        Observable.create(observer => {
+          const reader = new FileReader()
+          reader.onerror = err => observer.error(err)
+          reader.onabort = err => observer.error(err)
+          reader.onload = () => observer.next(reader.result)
+          reader.onloadend = () => observer.complete()
+          reader.readAsDataURL(resp)
+        })
+      )
+  }
+
   /* Leave Filing  */
   addLeaveFiling (token, leaveFilingParam) {
     return this.service.addLeaveFiling(token, leaveFilingParam)
@@ -837,11 +895,11 @@ export default class HRBenefitsClient {
   getPreEmploymentMessageStatus (token) {
     return this.service.getPreEmploymentMessageStatus (token)
     .pipe(ServiceErrorOperator())
-  } 
-  
+  }
+
   postPreEmploymentMessageStatus (token, id) {
     return this.service.postPreEmploymentMessageStatus (token, id)
-      .pipe(ServiceErrorOperator()) 
+      .pipe(ServiceErrorOperator())
   }
 
 
@@ -984,6 +1042,11 @@ export default class HRBenefitsClient {
 
   getCharacterReference (token) {
     return this.service.getCharacterReference(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getCharacterReferenceForm (token) {
+    return this.service.getCharacterReferenceForm(token)
       .pipe(ServiceErrorOperator())
   }
 
@@ -1142,6 +1205,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  removeSiblings (token, id) {
+    return this.service.removeSiblings(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
   removeFinancial (token, id) {
     return this.service.removeFinancial(token, id)
       .pipe(ServiceErrorOperator())
@@ -1214,10 +1282,107 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Travel */
+
+  getAreaData (token, pageNumber, find) {
+    return this.service.getAreaData(token, pageNumber, find)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getTravels (token, statusId) {
+    return this.service.getTravels(token, statusId)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getApproval (token) {
+    return this.service.getApproval(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addRequestOneWay (
+    token,
+    requestParam,
+    ) {
+    return this.service.addRequestOneWay(
+      token,
+      requestParam,
+    )
+    .pipe(ServiceErrorOperator())
+  }
+
+  addRequestRoundTrip (
+    token,
+    requestParam,
+    ) {
+    return this.service.addRequestRoundTrip(
+      token,
+      requestParam,
+    )
+    .pipe(ServiceErrorOperator())
+  }
+
+  addBookFlight (
+    token,
+    bookParam,
+    ) {
+    return this.service.addBookFlight(
+      token,
+      bookParam,
+    )
+    .pipe(ServiceErrorOperator())
+  }
+
+  addLiquidation (
+    token,
+    liquidationParam,
+    ) {
+    return this.service.addLiquidation(
+      token,
+      liquidationParam,
+    )
+    .pipe(ServiceErrorOperator())
+  }
+
+  addApproval (
+    token,
+    approvalParam,
+    ) {
+    return this.service.addApproval(
+      token,
+      approvalParam,
+    )
+    .pipe(ServiceErrorOperator())
+  }
+
   /* News isHeart */
 
   addNewsIsHeart (token, id, isHeart) {
     return this.service.addNewsIsHeart(token, id, isHeart)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Events Budget */
+
+  validateEventsBudget (token) {
+    return this.service.validateEventsBudget(token)
+      .pipe(ServiceErrorOperator())
+  }
+  /* News isHeart */
+
+  addEventsBudget (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    addEventParam
+  ) {
+    return this.service.addEventsBudget(
+      token,
+      accountToken,
+      accountNo,
+      releasingCenter,
+      addEventParam
+    )
       .pipe(ServiceErrorOperator())
   }
 

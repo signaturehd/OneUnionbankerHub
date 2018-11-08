@@ -284,7 +284,7 @@ class CharacterReferenceAddFormModal extends Component {
             text = { 'Email' }
             value = { emailText }
             maxLength = { 30 }
-            errorMessage = { emailText ? '' :  emailTextErrorMessage }
+            errorMessage = { emailTextErrorMessage }
             onChange = { (e) => emailTextFunc(e.target.value) }
           />
           <GenericInput

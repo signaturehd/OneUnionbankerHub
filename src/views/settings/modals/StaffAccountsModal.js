@@ -12,8 +12,9 @@ import {
   SingleInputModal
 } from '../../../ub-components/'
 
-import StaffAccountCardComponent from '../components/StaffAccountCardComponent'
 import './styles/staffAccountModal.css'
+
+import * as func from '../functions/SettingFunctions'
 
 class StaffAccountsModal extends Component {
 
@@ -21,9 +22,9 @@ class StaffAccountsModal extends Component {
     super(props)
     this.state={
       isDismisable : true,
-      showConfirmationModal : false,
       showTypeModal : false,
       showCapacityModal : false,
+      showConfirmationModal : false,
       employeeName : '',
       selectedAccountNumber : '',
       sequence : '',
@@ -75,7 +76,18 @@ class StaffAccountsModal extends Component {
   }
 
   componentDidMount () {
-      this.props.getForConfirmation()
+    this.props.getForConfirmation()
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if(nextProps.showSuccessModal === true) {
+      this.setState({
+        accountNumber: '',
+        accountType: '',
+        accountCapacity : '',
+        accountRemarks: ''
+      })
+    }
   }
 
   confirmationModal (showConfirmationModal, employeeName, selectedAccountNumber, sequence) {
@@ -105,6 +117,11 @@ class StaffAccountsModal extends Component {
     return ret
   }
 
+  validateInputNumber (number) {
+    const validate = func.checkedValidateInputNumber(number)
+    this.setState({ accountNumber : validate })
+  }
+
   render () {
     const {
       onClose,
@@ -114,6 +131,9 @@ class StaffAccountsModal extends Component {
       onUpdateStaffAccounts,
       hideStaffAccountModalFunc ,
       enabledStaffLoader,
+      staffResponseMessage,
+      showSuccessModal,
+      name,
     }=this.props
 
     const {
@@ -129,23 +149,32 @@ class StaffAccountsModal extends Component {
      showCapacityModal,
      accountRemarks,
      isDismisable,
-     showConfirmationModal,
      enabledLoader,
      employeeName,
      selectedAccountNumber,
      sequence,
-     showAddComponent
+     showAddComponent,
+     showConfirmationModal
     }=this.state
-
-    const {
-      name
-    } = this.props
 
     return (
       <Modal
         isDismisable = { isDismisable }
         onClose = { onClose }
         >
+        {
+          showSuccessModal &&
+          <Modal>
+            <center>
+              <h2>{ staffResponseMessage }</h2>
+              <br/>
+              <GenericButton
+                text = { 'Ok' }
+                onClick = { () => this.props.onCloseStaffResponse() }
+                />
+            </center>
+          </Modal>
+        }
         {
           showConfirmationModal &&
           <Modal>
@@ -159,10 +188,9 @@ class StaffAccountsModal extends Component {
                   />
                 <GenericButton
                   text = { 'Yes' }
-                  onClick = { () =>
-                    {
-                      onUpdateStaffAccounts(employeeName, selectedAccountNumber, sequence)
-                      this.setState({ showConfirmationModal : false })
+                  onClick = { () => {
+                    onUpdateStaffAccounts(employeeName, selectedAccountNumber, sequence)
+                    this.setState({ showConfirmationModal : false })
                     }
                   }
                 />
@@ -212,8 +240,10 @@ class StaffAccountsModal extends Component {
                     text = { 'Account Number' }
                     maxLength = { 12 }
                     value = { accountNumber }
-                    type = { 'number' }
-                    onChange = { (e) => this.setState({ accountNumber : e.target.value }) }
+                    hint = { '(e.g 109350022082)' }
+                    onChange = { (e) =>
+                      this.validateInputNumber(e.target.value)
+                     }
                     />
                   <GenericInput
                     text = { 'Account Type' }
@@ -240,15 +270,15 @@ class StaffAccountsModal extends Component {
                   <GenericButton
                     text = { 'Save' }
                     onClick = { () => {
+                      this.setState({ showAddComponent : false })
                       onClickEmployeeConfirmation(
                         name,
                         accountNumber,
                         accountTypeCode,
                         accountCapacityCode,
                         accountRemarks,
-                      )
-                      this.setState({ showAddComponent : false })
-                    } }
+                      )}
+                    }
                     />
                 </div>
                 <br/>

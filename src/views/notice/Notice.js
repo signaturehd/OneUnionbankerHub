@@ -99,63 +99,18 @@ class Notice extends BaseMVPView {
             <br/>
             <GenericButton text = {'Disagree'} className = { 'notice-button-modal notice-disagree' }
               onClick = { () => {
-                this.setState({ showCancelCofirmation : true  })
+                this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true })
+                this.isAgree(noticeResponse.transactionId.toString(), 0, benefitId)
                 }
               }
             />
             <GenericButton text = {'Agree'} className = { 'notice-button-modal notice-agree' }
-              onClick = { () =>
-                  this.setState({ showValidatedCofirmation : true  })
+              onClick = { () => {
+                this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true  })
+                this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId)
+              }
               }
             />
-          {
-            showCancelCofirmation &&
-            <Modal
-              >
-              <center>
-                <h4> By not confirming, your application will not proceed. Are you sure you want to cancel ? </h4>
-                <br/>
-                <div className={ 'grid-global' }>
-                  <GenericButton
-                    text={ 'No' }
-                    onClick={ () => this.setState({ showCancelCofirmation : false }) }/>
-                  <GenericButton
-                    text={ 'Yes' }
-                    onClick={
-                      () => {
-                        this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true })
-                        this.isAgree(noticeResponse.transactionId.toString(), 0, benefitId)
-                      }
-                    }
-                    />
-                </div>
-              </center>
-            </Modal>
-          }
-          {
-            showValidatedCofirmation &&
-            <Modal
-              onClose = { () => this.setState({ showValidatedCofirmation: false }) }
-              isDismisable = { true }
-              >
-              <center>
-                <h4> Are you sure you want to Submit your form ? </h4>
-                <div className = { 'grid-global' }>
-                  <GenericButton
-                    text = { 'No' }
-                    onClick = { () => this.setState({ showValidatedCofirmation : false }) }/>
-                  <GenericButton
-                    text = { 'Yes' }
-                    onClick = { () => {
-                      this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true  })
-                      this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId)
-                      }
-                    }
-                    />
-                </div>
-              </center>
-            </Modal>
-          }
           </center>
         </div>
       }

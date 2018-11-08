@@ -40,12 +40,17 @@ class ParentFragment extends BaseMVPView {
       siblingDetails : [],
       bloodObject: [],
       statusObject : [],
+      relationshipObject: [],
+      siblingsObject: [],
       genderObject : [],
       showNoticeResponse : false,
       editMode : false,
       showBloodTypeModal : false,
       showStatusModal : false,
       showEditModeModal : false,
+      showRelationShipModal : false,
+      enabledParentLoader : false,
+      enabledSiblingsLoader : false,
       showGenderModal : false,
       isParentOrSiblings : null,
       index : 4,
@@ -80,7 +85,10 @@ class ParentFragment extends BaseMVPView {
 
   /* Implementation */
   componentDidMount () {
-    this.props.onSendPageNumberToView(19)
+    if(this.props.reuse) {
+    } else {
+      this.props.onSendPageNumberToView(19)
+    }
     this.presenter.getParents()
     this.presenter.getSiblings()
     this.presenter.getObjectData()
@@ -88,6 +96,14 @@ class ParentFragment extends BaseMVPView {
 
   showParentDetails (parentDetails) {
     this.setState({ parentDetails })
+  }
+
+  showParentRelationship (relationshipObject) {
+     this.setState({ relationshipObject })
+  }
+
+  showSiblingRelationship (siblingsObject) {
+     this.setState({ siblingsObject })
   }
 
   showSiblingDetails (siblingDetails) {
@@ -110,16 +126,20 @@ class ParentFragment extends BaseMVPView {
     this.setState({ statusObject })
   }
 
-  circularLoader (enabledLoader) {
-    this.setState({ enabledLoader })
+  showParentCircularLoader () {
+    this.setState({ enabledParentLoader : true })
   }
 
-  showCircularLoader () {
-    this.setState({ enabledLoader : true })
+  hideParentCircularLoader () {
+    this.setState({ enabledParentLoader : false })
   }
 
-  hideCircularLoader () {
-    this.setState({ enabledLoader : false })
+  showSiblingsCircularLoader () {
+    this.setState({ enabledSiblingsLoader : true })
+  }
+
+  hideSiblingsCircularLoader () {
+    this.setState({ enabledSiblingsLoader : false })
   }
 
   /* Validation */
@@ -158,6 +178,42 @@ class ParentFragment extends BaseMVPView {
     this.setState({ relationship : validate })
   }
 
+  showFirsNameErrorMessage (firstNameErrorMessage) {
+    this.setState({ firstNameErrorMessage })
+  }
+
+  showMiddleNameErrorMessage (middleNameErrorMessage) {
+    this.setState({ middleNameErrorMessage })
+  }
+
+  showLastNameErrorMessage (lastNameErrorMessage) {
+    this.setState({ lastNameErrorMessage })
+  }
+
+  showOccupationErrorMessage (occupationNameErrorMessage) {
+    this.setState({ occupationNameErrorMessage })
+  }
+
+  showContactErrorMessage (contactNumberErrorMessage) {
+    this.setState({ contactNumberErrorMessage })
+  }
+
+  showRelationshipErrorMessage (relationshipErrorMessage) {
+    this.setState({ relationshipErrorMessage })
+  }
+
+  showStatusErrorMessage (statusNameErrorMessage) {
+    this.setState({ statusNameErrorMessage })
+  }
+
+  showGenderErrorMessage (genderErrorMessage) {
+    this.setState({ genderErrorMessage })
+  }
+
+  showBloodTypeErrorMessage (bloodTypeErrorMessage) {
+    this.setState({ bloodTypeErrorMessage })
+  }
+
   /*edit mode*/
 
   editForm (selectedCard, isParentOrSiblings, editMode) {
@@ -179,7 +235,7 @@ class ParentFragment extends BaseMVPView {
       parentId : nullChecker.id,
       relationship : nullChecker.relationship,
       statusId : nullChecker.status,
-      statusName : nullChecker.status === 1 ? 'Deceased' : 'Living',
+      statusName : nullChecker.status === 0 ? 'Living' : 'Deceased',
       hospitalization : nullChecker.healthHospitalizationPlan,
       groupPlan : nullChecker.groupLifeInsurance,
     })
@@ -203,7 +259,6 @@ class ParentFragment extends BaseMVPView {
       isParentOrSiblings
     } = this.state
     const gender = genderId === 'M' ? 'M' : 'F'
-    this.setState({ showEditModeModal : false })
     if(isParentOrSiblings) {
       this.presenter.updateParentForm(
         parentId,
@@ -217,10 +272,9 @@ class ParentFragment extends BaseMVPView {
         occupationName,
         birthDate,
         bloodTypeName,
-        hospitalization,
+        hospitalization ? hospitalization : 0,
         groupPlan,
       )
-      this.resetValue()
     } else {
       this.presenter.updateSiblingsForm(
         parentId,
@@ -234,10 +288,9 @@ class ParentFragment extends BaseMVPView {
         occupationName,
         birthDate,
         bloodTypeName,
-        hospitalization,
+        hospitalization ? hospitalization : 0,
         groupPlan,
       )
-      this.resetValue()
     }
   }
 
@@ -261,7 +314,7 @@ class ParentFragment extends BaseMVPView {
       isParentOrSiblings
     } = this.state
     const gender = genderId === 'M' ? 'M' : 'F'
-    this.setState({ showEditModeModal : false })
+
     if(isParentOrSiblings) {
       this.presenter.addParentForm(
         parentId,
@@ -275,7 +328,7 @@ class ParentFragment extends BaseMVPView {
         occupationName,
         birthDate,
         bloodTypeName,
-        hospitalization,
+        hospitalization ? hospitalization : 0,
         groupPlan,
       )
     } else {
@@ -291,7 +344,7 @@ class ParentFragment extends BaseMVPView {
         occupationName,
         birthDate,
         bloodTypeName,
-        hospitalization,
+        hospitalization ? hospitalization : 0,
         groupPlan,
       )
     }
@@ -321,6 +374,20 @@ class ParentFragment extends BaseMVPView {
     })
   }
 
+  /* Delete Education */
+
+  onDeletePropertyFunc (id, isParent) {
+    if(isParent) {
+      this.presenter.removeParents(id)
+    } else {
+      this.presenter.removeSiblings(id)
+    }
+  }
+
+  setModal () {
+    this.setState({ showEditModeModal : false  })
+  }
+
   render() {
     const {
       history,
@@ -334,7 +401,8 @@ class ParentFragment extends BaseMVPView {
       bloodObject,
       statusObject,
       genderObject,
-      enabledLoader,
+      enabledParentLoader,
+      enabledSiblingsLoader,
       lastName,
       firstName,
       middleName,
@@ -364,11 +432,14 @@ class ParentFragment extends BaseMVPView {
       showStatusModal,
       showBloodTypeModal,
       showEditModeModal,
-      showGenderModal,
+      showRelationShipModal,
       isParentOrSiblings,
       hospitalization,
       groupPlan,
-      editMode
+      editMode,
+      relationshipObject,
+      siblingsObject,
+      showGenderModal
     } = this.state
 
     const isVisible = (siblingDetails && siblingDetails.length > 4) ? '' : 'hide'
@@ -389,14 +460,18 @@ class ParentFragment extends BaseMVPView {
         {
           showEditModeModal &&
           <ParentModal
+            showGenderModal = { showGenderModal }
+            relationshipObject = { relationshipObject }
+            siblingsObject = { siblingsObject }
             editMode = { editMode }
             isParentOrSiblings = { isParentOrSiblings }
             showStatusModal = { showStatusModal }
             showBloodTypeModal = { showBloodTypeModal }
-            showGenderModal = { showGenderModal }
+            showRelationShipModal = { showRelationShipModal }
             bloodObject = { bloodObject }
             statusObject = { statusObject }
             genderObject = { genderObject }
+            genderCodeFunc = { (e) => this.setState({ showGenderModal : e }) }
             firstNameFunc = { (e) => this.firstNameValidate(e) }
             lastNameFunc = { (e) => this.lastNameValidate(e) }
             middleNameFunc = { (e) => this.middleNameValidate(e) }
@@ -408,7 +483,7 @@ class ParentFragment extends BaseMVPView {
             statusNameFunc = { (showStatusModal) => this.setState({ showStatusModal }) }
             groupPlanFunc = { () => this.setState({ groupPlan : groupPlan === 1 ? 0 : 1 }) }
             hospitalizationFunc = { () => this.setState({ hospitalization : hospitalization === 1 ? 0 : 1 }) }
-            genderFunc = { (showGenderModal) => this.setState({ showGenderModal }) }
+            relationshipFunc = { (showRelationShipModal) => this.setState({ showRelationShipModal }) }
             lastName = { lastName }
             firstName = { firstName }
             middleName = { middleName }
@@ -433,9 +508,14 @@ class ParentFragment extends BaseMVPView {
             occupationNameErrorMessage = { occupationNameErrorMessage }
             contactNumberErrorMessage = { contactNumberErrorMessage }
             bloodTypeErrorMessage = { bloodTypeErrorMessage }
-            onClose = { () => this.setState({ showEditModeModal : false }) }
+            onClose = { () => {
+              this.setState({ showEditModeModal : false })
+              this.resetValue()
+            } }
             editFormSubmission = { () => this.updateForm() }
             saveFormSubmission = { () => this.addForm() }
+            selectedGenderFunc = { (genderId, gender, showGenderModal, showGenderErrorMessage) =>
+              this.setState({ genderId, gender, showGenderModal, showGenderErrorMessage  }) }
             selectedStatusFunc = {
             (
               statusId,
@@ -458,123 +538,182 @@ class ParentFragment extends BaseMVPView {
                 bloodTypeErrorMessage
               })
             }
-            selectedGenderFunc = { (
-              genderId,
-              gender,
-              showGenderModal,
-              genderErrorMessage
+            selectedRelationshipFunc = { (
+              id,
+              relationship,
+              showRelationShipModal,
+              relationshipErrorMessage
             ) => this.setState({
-              genderId : genderId === 0 ? 'M' : 'F',
-              gender : gender === 'Male' ? 'Male' : 'Female',
-              showGenderModal,
-              genderErrorMessage
+              genderId : id === 0 ? 'M' : 'F',
+              gender: id === 0 ? 'Male' : 'Female',
+              relationship,
+              showRelationShipModal,
+              relationshipErrorMessage
             })
           }
           />
         }
-        <div className = { 'percentage-grid' }>
+        <div className = { `${ this.props.reuse ? 'preemployment-container' : '' }` }>
+          <div></div>
           <div>
-            <h2 className={ 'header-margin-default text-align-left' }>Parent Form</h2>
-            <h2>Fill up the form.</h2>
+            {
+              !this.props.reuse ?
+              <div className = { 'percentage-grid' }>
+                <div>
+                  <h2 className={ 'header-margin-default text-align-left' }>Parent Form</h2>
+                  <h2>Fill up the form.</h2>
+                  <br/>
+                </div>
+                <Progress
+                  type = { 'circle' }
+                  height = { 65 }
+                  width = { 65 }
+                  percent = { percentage } />
+              </div>
+              :
+              <div className = { 'percentage-grid' }>
+                <div>
+                  <div className = { 'text-align-left' }>
+                    <GenericButton
+                      className = { 'global-button profile-button-small' }
+                      text = { 'Back to Profile' }
+                      onClick = { () =>
+                        this.props.history.push('/settings')
+                      }
+                    />
+                  </div>
+                  <br/>
+                  <h2 className = { 'header-margin-default text-align-left' }>Adding of Siblings</h2>
+                </div>
+                <div></div>
+              </div>
+            }
             <br/>
-          </div>
-          <Progress
-            type = { 'circle' }
-            height = { 65 }
-            width = { 65 }
-            percent = { percentage } />
-        </div>
-        <br/>
-        <Line/>
-        <br/>
-        <div>
-          {
-            parentDetails.length === 2 ?
-            <h2 className = { 'font-weight-bold' }>Parent</h2>
-            :
-            <div className = { 'grid-global' }>
-              <h2 className = { 'font-weight-bold' }>Parent</h2>
+            <Line/>
+            <br/>
+            {
+              !this.props.reuse &&
+              <div>
+                {
+                  parentDetails.length === 2 ?
+                  <h2 className = { 'font-weight-bold' }>Parent</h2>
+                  :
+                  <div className = { 'grid-global' }>
+                    <h2 className = { 'font-weight-bold' }>Parent</h2>
+                    {
+                      !enabledParentLoader &&
+                      <div className = { 'text-align-right' }>
+                      <GenericButton
+                        className = { 'employment-button global-button' }
+                        text = { 'Add Mother' }
+                        onClick = { () =>
+                          this.setState({
+                            showEditModeModal : true,
+                            isParentOrSiblings : true
+                          })
+                          }
+                        />
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            }
+            <br/>
+            <div>
               {
-                !enabledLoader &&
+                !this.props.reuse &&
+                <div>
+                  {
+                    enabledParentLoader  ?
+                    <center>
+                      <br/>
+                      <br/>
+                        <h2>Please wait while we we&#39;re updating your information.</h2>
+                      <br/>
+                      <CircularLoader show = { enabledParentLoader }/>
+                      <br/>
+                    </center>
+                    :
+                    <div>
+                    {
+                      parentDetails.length !== 0 &&
+                      <ParentComponent
+                        parentDetails = { parentDetails }
+                        onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
+                        onDeleteProperty = { (id, parentTrue) => this.onDeletePropertyFunc(id, parentTrue) }
+                        />
+                    }
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+            <br/>
+            <Line/>
+            <br/>
+            <div className = { 'grid-global' }>
+              <h2 className = { 'font-weight-bold' }>Siblings</h2>
+              {
+                !enabledSiblingsLoader &&
                 <div className = { 'text-align-right' }>
                   <GenericButton
-                    text = { 'Add' }
-                    onClick = { () => this.setState({ showEditModeModal : true }) }
+                    className = { 'employment-button global-button' }
+                    text = { 'Add Siblings' }
+                    onClick = { () =>
+                      this.setState({
+                        showEditModeModal : true,
+                        isParentOrSiblings : false
+                      })
+                    }
                   />
                 </div>
               }
             </div>
-          }
-        </div>
-        <br/>
-        {
-          enabledLoader  ?
-          <center>
             <br/>
-            <CircularLoader show = { enabledLoader }/>
-            <br/>
-          </center>
-          :
-          <div>
             {
-              parentDetails.length !== 0 &&
-              <ParentComponent
-                parentDetails = { parentDetails }
-                onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
-                />
-            }
-          </div>
-        }
-        <br/>
-        <div className = { 'grid-global' }>
-          <h2 className = { 'font-weight-bold' }>Siblings</h2>
-          {
-            !enabledLoader &&
-            <div className = { 'text-align-right' }>
-              <GenericButton
-                text = { 'Add' }
-                onClick = { () => this.setState({ showEditModeModal : true }) }
-              />
-            </div>
-          }
-        </div>
-        <br/>
-        {
-          enabledLoader  ?
-          <center>
-            <br/>
-            <CircularLoader show = { enabledLoader }/>
-            <br/>
-          </center>
-          :
-          <div>
-            {
-              siblingDetails.length !== 0 &&
+              enabledSiblingsLoader  ?
+              <center>
+                <br/>
+                <br/>
+                  <h2>Please wait while we we&#39;re updating your information.</h2>
+                <br/>
+                <CircularLoader show = { enabledSiblingsLoader }/>
+                <br/>
+              </center>
+              :
               <div>
-                <SiblingComponent
-                  siblingDetails = { siblingDetails }
-                  onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
-                  index = { index }
-                  />
-                  <br/>
-                <button
-                  type = { 'button' }
-                  className = { `viewmore tooltip ${ isVisible }` }
-                  onClick = {
-                    () => {
-                      if(index === siblingDetails.length)
-                        this.setState({ index : 4, viewMoreText : 'View more' })
-                      else
-                        this.setState({ index : siblingDetails.length, viewMoreText : 'View less' })
-                    }
-                  }>
-                  <img src={ require('../../../images/icons/horizontal.png') } />
-                  <span className={ 'tooltiptext' }>{ viewMoreText }</span>
-                </button>
+                {
+                  siblingDetails.length !== 0 &&
+                  <div>
+                    <SiblingComponent
+                      siblingDetails = { siblingDetails }
+                      onEditModeProperty = { (e, e1, e2) => this.editForm(e, e1, e2) }
+                      onDeleteProperty = { (id, parentTrue) => this.onDeletePropertyFunc(id, parentTrue) }
+                      index = { index }
+                      />
+                      <br/>
+                    <button
+                      type = { 'button' }
+                      className = { `viewmore tooltip ${ isVisible }` }
+                      onClick = {
+                        () => {
+                          if(index === siblingDetails.length)
+                            this.setState({ index : 4, viewMoreText : 'View more' })
+                          else
+                            this.setState({ index : siblingDetails.length, viewMoreText : 'View less' })
+                        }
+                      }>
+                      <img src={ require('../../../images/icons/horizontal.png') } />
+                      <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+                    </button>
+                  </div>
+                }
               </div>
             }
           </div>
-        }
+          <div></div>
+        </div>
       </div>
     )
   }

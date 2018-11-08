@@ -22,6 +22,8 @@ class ParentModal extends Component {
     const {
       editMode,
       genderObject,
+      relationshipObject,
+      siblingsObject,
       bloodObject,
       statusObject,
       firstNameFunc,
@@ -58,18 +60,20 @@ class ParentModal extends Component {
       onClose,
       showStatusModal,
       showBloodTypeModal,
-      showGenderModal,
+      showRelationShipModal,
       isParentOrSiblings,
       selectedBloodTypeFunc,
       selectedStatusFunc,
-      selectedGenderFunc,
+      selectedRelationshipFunc,
       birthDateFunc,
       relationshipNameFunc,
-      genderFunc,
+      relationshipFunc,
       hospitalizationFunc,
       groupPlanFunc,
+      selectedGenderFunc,
       saveFormSubmission,
       editFormSubmission,
+      showGenderModal
     } = this.props
 
     return (
@@ -96,6 +100,22 @@ class ParentModal extends Component {
           />
         }
         {
+          showGenderModal &&
+          <SingleInputModal
+            label = { 'Select Gender' }
+            inputArray = { genderObject }
+            selectedArray = { (genderId, gender) =>
+              selectedGenderFunc(
+                genderId,
+                gender,
+                false,
+                ''
+              )
+            }
+            onClose = { () => bloodTypeFunc(false) }
+          />
+        }
+        {
           showStatusModal &&
 
           <SingleInputModal
@@ -113,20 +133,23 @@ class ParentModal extends Component {
           />
         }
         {
-          showGenderModal &&
+          showRelationShipModal &&
 
           <SingleInputModal
-            label = { 'Gender' }
-            inputArray = { genderObject }
-            selectedArray = { (genderCode, gender) =>
-              selectedGenderFunc(
-                genderCode,
-                gender,
-                false,
-                ''
-              )
+            label = { 'Relationship' }
+            inputArray = { isParentOrSiblings ? relationshipObject : siblingsObject }
+            selectedArray = { (id, relationship) =>
+              {
+                selectedRelationshipFunc(
+                  id,
+                  relationship,
+                  false,
+                  ''
+                )
+                relationshipNameFunc (relationship)
+              }
             }
-            onClose = { () => genderFunc(false) }
+            onClose = { () => relationshipFunc(false) }
           />
         }
         <div>
@@ -156,6 +179,7 @@ class ParentModal extends Component {
               text = { 'Birth Date' }
               maxDate = {  moment() }
               hint = { '(eg. MM/DD/YYYY)' }
+              readOnly
               selected = { birthDate && moment(birthDate) }
               onChange = { (e)  =>
                 birthDateFunc(e.format('MM/DD/YYYY'))
@@ -174,27 +198,41 @@ class ParentModal extends Component {
               errorMessage = { contact ? '' : contactNumberErrorMessage }
               onChange = { (e) => contactNumberFunc(e.target.value) }
               />
-            <div className = { 'grid-global' } >
-              <GenericInput
-                value = { relationship  }
-                text = { 'Relationship' }
-                errorMessage = { relationship ? '' : relationshipErrorMessage }
-                onChange = { () => relationshipNameFunc(true) }
-                />
+            {
+              isParentOrSiblings ?
+              <div className = { 'grid-global' } >
+                <GenericInput
+                  value = { relationship  }
+                  text = { 'Relationship' }
+                  errorMessage = { relationship ? '' : relationshipErrorMessage }
+                  onClick = { () => relationshipFunc(true) }
+                  />
+                <GenericInput
+                  value = { statusName  }
+                  text = { 'Status' }
+                  errorMessage = { statusName ? '' : statusNameErrorMessage }
+                  onClick = { () => statusNameFunc(true) }
+                  />
+              </div>
+              :
               <GenericInput
                 value = { statusName  }
                 text = { 'Status' }
                 errorMessage = { statusName ? '' : statusNameErrorMessage }
                 onClick = { () => statusNameFunc(true) }
                 />
-            </div>
+            }
             <div className = { 'grid-global' } >
-              <GenericInput
-                value = { gender  }
-                text = { 'Gender' }
-                errorMessage = { gender ? '' : genderErrorMessage }
-                onClick = { () => genderFunc(true) }
-                />
+              {
+                !isParentOrSiblings &&
+                <GenericInput
+                  value = { gender  }
+                  text = { 'Gender' }
+                  readOnly
+                  errorMessage = { gender ? '' : genderErrorMessage }
+                  onClick = { () => genderCodeFunc(true) }
+                  />
+              }
               <GenericInput
                 text = { 'Blood Type' }
                 value = { bloodTypeName }

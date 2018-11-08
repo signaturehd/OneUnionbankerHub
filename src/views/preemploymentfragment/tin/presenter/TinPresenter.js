@@ -24,11 +24,12 @@ export default class TinPresenter {
     .subscribe(data => {
       this.view.showEmployeeTinData(data)
     }, error => {
-
+      store.dispatch(NotifyActions.resetNotify())
     })
   }
 
   saveEmployeeTin (tinInput) {
+    store.dispatch(NotifyActions.resetNotify())
     this.view.showDocumentLoader()
     this.addEmployeeTinInteractor.execute(employeeTinParam(tinInput))
     .subscribe(data => {
@@ -36,10 +37,12 @@ export default class TinPresenter {
       this.view.noticeResponseResp(data)
     }, error => {
       this.view.hideDocumentLoader()
+      store.dispatch(NotifyActions.resetNotify())
     })
   }
 
   uploadEmployeeTin (tinId, tinAttachment) {
+    store.dispatch(NotifyActions.resetNotify())
     this.view.showDocumentLoader()
     this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(tinId, tinAttachment))
     .subscribe(data => {
@@ -48,6 +51,7 @@ export default class TinPresenter {
       this.view.setTinAttachments()
     }, error => {
       this.view.hideDocumentLoader()
+      store.dispatch(NotifyActions.resetNotify())
     })
   }
 

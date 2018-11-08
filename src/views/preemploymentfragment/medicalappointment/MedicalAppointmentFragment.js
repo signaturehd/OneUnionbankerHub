@@ -8,12 +8,11 @@ import {
   GenericButton,
   CircularLoader,
   GenericInput,
-  SingleInputModal,
   Card,
   Line,
   DatePicker,
   Checkbox,
-  MultipleAttachments,
+  Modal
 } from '../../../ub-components/'
 
 import { RequiredValidation } from '../../../utils/validate/'
@@ -38,6 +37,7 @@ class MedicalAppointmentFragment extends BaseMVPView {
       alternativeDate : '',
       noticeResponse : '',
       showNoticeResponseModal : false,
+      enabledLoader : false,
     }
   }
 
@@ -50,13 +50,21 @@ class MedicalAppointmentFragment extends BaseMVPView {
   showMedicalAppointment (medicalAppointmentData) {
     this.setState({ medicalAppointmentData })
     this.setState({
-      preferredDate : moment(medicalAppointmentData.preferredDate),
-      alternativeDate : moment(medicalAppointmentData.alternativeDate),
+      preferredDate : medicalAppointmentData.preferredDate,
+      alternativeDate : medicalAppointmentData.alternativeDate,
     })
   }
 
   showMedicalAppointmentProcedure (medicalAppointmentProcedureData) {
     this.setState({ medicalAppointmentProcedureData })
+  }
+
+  showCircularLoader () {
+    this.setState({ enabledLoader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ enabledLoader : false })
   }
 
   saveFunction (id) {
@@ -81,7 +89,8 @@ class MedicalAppointmentFragment extends BaseMVPView {
       alternativeDate,
       medicalAppointmentProcedureData,
       showNoticeResponseModal,
-      noticeResponse
+      noticeResponse,
+      enabledLoader
     } = this.state
 
     const {
@@ -102,85 +111,101 @@ class MedicalAppointmentFragment extends BaseMVPView {
         } }
         />
     }
-      <div className = { 'percentage-grid' }>
-        <div>
-          <h2 className={ 'header-margin-default text-align-left' }>Medical Scheduling Form</h2>
-          <h2>Please fill up the form below by choosing your preferred clinic, packages, and date to complete the transaction.</h2>
-        <br/>
-        </div>
-        <Progress
-          type = { 'circle' }
-          height = { 65 }
-          width = { 65 }
-          percent = { percentage } />
-        </div>
+    {
+      enabledLoader ?
+      <Modal>
+        <center>
+          <br/>
+            <CircularLoader show = { enabledLoader } />
+          <br/>
+          <h2>Please wait...</h2>
+          <br/>
+        </center>
+      </Modal>
+      :
       <div>
+        <div className = { 'percentage-grid' }>
+          <div>
+            <h2 className={ 'header-margin-default text-align-left' }>Medical Appointment</h2>
+            <h2>Please fill up the form below by choosing your preferred clinic, packages, and date to complete the transaction.</h2>
+          <br/>
+          </div>
+          <Progress
+            type = { 'circle' }
+            height = { 65 }
+            width = { 65 }
+            percent = { percentage } />
+          </div>
         <div>
           <div>
-            <div className = { 'grid-global' }>
-              <GenericInput
-                text = { 'Clinic' }
-                value = { `St. Luke's Medical Center - Global City` }
-                disabled = { true }
-                maxLength = { 30 }
-                />
-              <GenericInput
-                text = { 'Package' }
-                value = { medicalAppointmentProcedureData.package }
-                disabled = { true }
-                maxLength = { 20 }
-                />
-            </div>
-            <DatePicker
-              text = { 'Preferred Schedule' }
-              minDate = {  moment() }
-              hint = { '(eg. MM/DD/YYYY)' }
-              selected = { preferredDate }
-              onChange = { (e)  =>
-                this.setState({
-                  preferredDate:  moment(e).format('MM/DD/YYYY')
-                  })
-               }
-              />
-            <DatePicker
-              text = { 'Alternative Schedule' }
-              minDate = {  moment() }
-              hint = { '(eg. MM/DD/YYYY)' }
-              selected = { alternativeDate }
-              onChange = { (e)  =>
-                this.setState({ alternativeDate : e })
-               }
-              />
-            <br/>
-            <Line/>
-            <br/>
             <div>
-              <h2>Package Procedures</h2>
-              <h4 className = { 'font-weight-lighter font-size-16px' }>Procedures that are marked with asterisk(*) are required.</h4>
+              <div className = { 'grid-global' }>
+                <GenericInput
+                  text = { 'Clinic' }
+                  value = { `St. Luke's Medical Center - Global City` }
+                  disabled = { true }
+                  maxLength = { 30 }
+                  />
+                <GenericInput
+                  text = { 'Package' }
+                  value = { medicalAppointmentProcedureData.package }
+                  disabled = { true }
+                  maxLength = { 20 }
+                  />
+              </div>
+              <DatePicker
+                text = { 'Preferred Schedule' }
+                minDate = {  moment() }
+                readOnly
+                hint = { '(eg. MM/DD/YYYY)' }
+                selected = { preferredDate ? moment(preferredDate) : '' }
+                onChange = { (e)  =>
+                  this.setState({ preferredDate: e })
+                 }
+                />
+              <DatePicker
+                text = { 'Alternative Schedule' }
+                minDate = {  moment() }
+                readOnly
+                hint = { '(eg. MM/DD/YYYY)' }
+                dateFormat = { 'MM/DD/YYYY' }
+                selected = { alternativeDate ? moment(alternativeDate) : '' }
+                onChange = { (e)  =>
+                  this.setState({ alternativeDate : e })
+                 }
+                />
               <br/>
-              {
-                medicalAppointmentProcedureData &&
-                medicalAppointmentProcedureData.procedures &&
-                medicalAppointmentProcedureData.procedures.map((resp, key) =>
-                  <div
-                    className = { 'font-size-14px' }
-                    key = { key }>
-                    { resp }
-                  </div>
-                )
-              }
+              <Line/>
+              <br/>
+              <div>
+                <h2>Package Procedures</h2>
+                <h4 className = { 'font-weight-lighter font-size-16px' }>Procedures that are marked with asterisk(*) are required.</h4>
+                <br/>
+                {
+                  medicalAppointmentProcedureData &&
+                  medicalAppointmentProcedureData.procedures &&
+                  medicalAppointmentProcedureData.procedures.map((resp, key) =>
+                    <div
+                      className = { 'font-size-14px' }
+                      key = { key }>
+                      { resp }
+                    </div>
+                  )
+                }
+              </div>
             </div>
           </div>
+          <br/>
+          <center>
+            <GenericButton
+              className = { 'global-button' }
+              text = { 'Submit' }
+              onClick = { () => this.saveFunction(medicalAppointmentProcedureData.id) }
+              />
+          </center>
         </div>
-        <br/>
-        <center>
-          <GenericButton
-            className = { 'global-button' }
-            text = { 'Submit' }
-            onClick = { () => this.saveFunction(medicalAppointmentProcedureData.id) }
-            />
-        </center>
       </div>
+    }
     </div>
     )
   }

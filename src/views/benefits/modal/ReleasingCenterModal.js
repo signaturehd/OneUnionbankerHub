@@ -17,7 +17,6 @@ class ReleasingCenterModal extends Component {
     const {
       onClose,
       onSubmit,
-      isDismisable,
       type,
       placeholder,
       onClick,
@@ -26,7 +25,8 @@ class ReleasingCenterModal extends Component {
 
     return (
       <Modal
-        isDismisable = {isDismisable}>
+        onClose = { onClose }
+        isDismisable = {true}>
         <div>
         {
           releasingCenters ?
