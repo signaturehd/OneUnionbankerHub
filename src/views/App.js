@@ -40,7 +40,7 @@ class App extends BaseMVPView {
     this.presenter.checkLogin()
   }
 
-  componentDidCatch(error, info) {
+  componentDidCatch (error, info) {
     console.log(info, error)
   }
 
