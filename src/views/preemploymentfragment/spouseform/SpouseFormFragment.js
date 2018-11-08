@@ -255,7 +255,9 @@ class SpouseFormFragment extends BaseMVPView {
           hospitalization,
           groupPlan,
           spouseId,
-          spouseAttachmentsArray)
+          spouseAttachmentsArray,
+          attachments,
+        )
       } else {
         this.presenter.postSpouseForm(
           firstName,
