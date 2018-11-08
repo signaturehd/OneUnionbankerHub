@@ -13,11 +13,6 @@ class EventsBudgetAttendeesComponent extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProp) {
-    this.setState({ employeeHasRecord : nextProp.employee.hasRecord })
-    this.setState({ employeeId : nextProp.employee.id })
-  }
-
   checkEmployeeCheck (hasRecord) {
 
     if(hasRecord) {
@@ -49,7 +44,7 @@ class EventsBudgetAttendeesComponent extends Component {
       <div
         onClick = { () => {
           this.setState({ employeeHasRecord: employeeHasRecord !== true ? true: false })
-          this.onChangeData(employeeHasRecord !== true ? true: false, employeeId)
+          this.onChangeData(this.props.employee.hasRecord !== true ? true : false, this.props.employee.id)
         } }
         key2 = { key2 }
         className = { 'events-employees-column-3 cursor-pointer' }>

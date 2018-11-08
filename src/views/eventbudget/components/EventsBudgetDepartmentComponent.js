@@ -22,10 +22,6 @@ class EventsBudgetDepartmentComponent extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProp) {
-    this.setState({ attendeesLength : nextProp.attend.employees.length })
-  }
-
   render () {
     const {
       attend,
@@ -75,7 +71,9 @@ class EventsBudgetDepartmentComponent extends Component {
                   employee = { employee }
                   employeeLength = { attend.employees.length }
                   key2 = { key2 }
-                  checkIdIfHasLogin = { (e, e1) => checkIdIfHasLoginFunc(e, e1) }
+                  checkIdIfHasLogin = { (e, e1) => {
+                     checkIdIfHasLoginFunc(e, e1)
+                  } }
                 />
               )
             }
