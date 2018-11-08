@@ -15,6 +15,11 @@ import {
 
 import NoticeResponse from '../notice/NoticeResponseModal'
 
+import { connect } from 'react-redux'
+
+import store from '../../store'
+import { NotifyActions } from '../../actions'
+
 import './styles/reset.css'
 
 class ResetPasswordFragment extends BaseMVPView {
@@ -139,7 +144,8 @@ class ResetPasswordFragment extends BaseMVPView {
 
     const {
       idReplace,
-      history
+      history,
+      notify,
     } = this.props
 
     return (
@@ -262,9 +268,29 @@ class ResetPasswordFragment extends BaseMVPView {
             </center>
           </div>
         }
+        <div className = { 'notify-container' }>
+        {
+          notify &&
+          notify.map((notify, i) => (
+            <Notify
+              onClick = { () => {
+                store.dispatch(NotifyActions.removeNotify(i))
+              }}
+              key = { i }
+              title = { notify.title }
+              message = { notify.message }
+              type = { notify.type }
+                  />
+          ))
+        }
+        </div>
       </Card>
     )
   }
 }
 
-export default ConnectView(ResetPasswordFragment, Presenter)
+const mapStateToProps = state => ({
+  notify : state.notify.notify
+})
+
+export default ConnectView(connect(mapStateToProps)(ResetPasswordFragment), Presenter)

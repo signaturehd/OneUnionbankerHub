@@ -108,9 +108,9 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  requestNewPassword (token, newPassword, confirmPassword, otp, employeeId, birtDate) {
-    return this.service.requestNewPassword(token, newPassword, confirmPassword, otp, employeeId, birtDate)
-      .pipe(ServiceErrorOperator)
+  requestNewPassword (token, newPassword, confirmPassword, otp) {
+    return this.service.requestNewPassword(token, newPassword, confirmPassword, otp)
+      .pipe(ServiceErrorOperator())
   }
 
 
