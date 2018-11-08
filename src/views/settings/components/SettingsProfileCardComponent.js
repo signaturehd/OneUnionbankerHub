@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card, Line, FloatingActionButton } from '../../../ub-components/'
+import { Card, Line, FloatingActionButton, MultipleAttachments, Modal, GenericButton } from '../../../ub-components/'
 import SettingsProfileDescriptions from './SettingsProfileDescriptions'
 import SettingsProfilePersonalInfoComponent from './SettingsProfilePersonalInfoComponent'
 import SettingsContactInfoComponent from './SettingsContactInfoComponent'
@@ -59,9 +59,23 @@ class SettingsProfileCardComponent extends Component {
       enabledStaffLoader,
       staffResponseMessage,
       showSuccessModal,
-      showEditDependentModalFunc
+      showEditDependentModalFunc,
+      showProfilePhoto,
+      profileAttachments
     } = this.props
 
+    const style = {
+      backgroundImage : `url(${profile && profile.profileImage})`,
+      backgroundRepeat : 'no-repeat',
+      backgroundSize: 'cover',
+      height: 'unset',
+      backgroundPosition: 'center',
+      boxShadow: 'inset 0px 0px 0px 0px #ffffff',
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+      borderRadius: '50%',
+    }
 
     let genderPartial
     if (profile.gender === 'M') {
@@ -129,14 +143,44 @@ class SettingsProfileCardComponent extends Component {
             onClose = { () => showDevicesModalFunc(false) }
             />
         }
+        {
+          showProfilePhoto &&
+          <Modal
+            onClose = { () =>  changeProfilePhoto (false) }
+            isDismisable = { true }>
+            <MultipleAttachments
+              count = { 1 }
+              countFunc = { () => {} }
+              placeholder = { 'Profile Photo Attachments' }
+              fileArray = { profileAttachments }
+              setFile = { (profileAttachments) =>
+                  this.props.setAttachmentsPhoto(profileAttachments)
+              }
+              />
+              <br/>
+            <center>
+              <GenericButton
+                className = { 'profile-button-small' }
+                text = { 'Save' }
+                onClick = { () => this.props.uploadAttachments() }
+              />
+            </center>
+          </Modal>
+        }
         <div>
           <Card className={ 'profile-settings-card-view' }>
             <div className={ 'profile-banner' }>
               <div className={ 'profile-picture-card' }>
                 <div>
-                  <div className = { 'profile-picture' }>
-                    <h2 className = { 'profile-initial-text' }>{ splitUserInitial }</h2>
-                  </div>
+                  {
+                    profile && profile.profileImage ?
+                    <img
+                      onClick = { () => this.props.changeProfilePhoto(true) }
+                      style = { style }/> :
+                    <div className = { 'profile-picture' }>
+                      <h2 className = { 'profile-initial-text' }>{ splitUserInitial }</h2>
+                    </div>
+                  }
                 </div>
               </div>
             </div>
@@ -203,6 +247,7 @@ class SettingsProfileCardComponent extends Component {
                 accountNumber={ accountNumber }
                 profile={ profile && profile}
                 updateAddressFunc = { (e, e1) => this.props.updateAddressOption(e, e1) }
+                onUpdateCivilStatusFunc = { (e) => this.props.onUpdateCivilStatus(e) }
                 lineManager={ lineManager && lineManager.fullName }
                 rank={ rank && rank.rank }
               />

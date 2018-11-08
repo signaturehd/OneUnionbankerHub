@@ -37,30 +37,26 @@ export default class HRBenefitsService {
 
   /* Updated Profile */
 
-
-  updateDescription (token, emailAddress) {
-    const objectParam = {
-      email : emailAddress
-    }
-    return this.apiClient.put('v1/profile/description', objectParam,{
+  updateDescription (token, description) {
+    return this.accountClient.put('v1/profile/description', {
+      description
+    },{
       headers : { token }
     })
   }
 
-  updateEmailAddress (token, description) {
-    const objectParam = {
-      description : description
-    }
-    return this.apiClient.put('v1/profile/email', objectParam,{
+  updateEmailAddress (token, emailAddress) {
+    return this.apiClient.put('v1/profile/email', {
+      emailAddress
+    },{
       headers : { token }
     })
   }
 
-  updateContactNumber(token, number) {
-    const objectParam = {
-      mobileNumber : number
-    }
-    return this.apiClient.put('v1/profile/mobile', objectParam,{
+  updateContactNumber(token, mobileNumber) {
+    return this.accountClient.put('v1/profile/mobile', {
+      mobileNumber
+    },{
       headers : { token }
     })
   }
@@ -81,6 +77,36 @@ export default class HRBenefitsService {
     formData.append('body', JSON.stringify(objectParam))
     return this.apiClient.put('v1/profile/address', formData, {
       headers : { token }
+    })
+  }
+
+  updateProfilePicture (token, image) {
+    const formData = new FormData()
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    console.log(image)
+    image.map((resp, key) =>
+      formData.append('file', resp.file)
+    )
+    return this.accountClient.put('v1/employees/profile/image', formData, {
+      headers : { token }
+    })
+  }
+
+  updateCivilStatus (token, civilStatus) {
+    return this.apiClient.put('v1/profile/civil-status', {
+      civilStatus
+    }, {
+      headers : { token }
+    })
+  }
+
+  getProfilePicture (token, file) {
+    return this.fileClient.get('v1/uploads?folder=attachments', {
+      headers : {
+        token,
+        file : file
+      },
+      responseType : 'blob'
     })
   }
 
@@ -113,13 +139,10 @@ export default class HRBenefitsService {
     })
   }
 
-  requestNewPassword (token, newPassword, otp, employeeId, birtDate) {
+  requestNewPassword (token, newPassword, otp) {
     const objectParam = {
       otp: otp,
       password: newPassword,
-      employeeNo: employeeId,
-      birthDate: birtDate,
-      token: token,
     }
     return this.apiClient.post('v1/password/reset', objectParam, {
       headers : { token }
