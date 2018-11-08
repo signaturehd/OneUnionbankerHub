@@ -155,7 +155,7 @@ class EventsBudgetFragment extends BaseMVPView {
       benefitId,
       preferredDate
     } = this.state
-    console.log(storedListId)
+
     return (
       <div>
         { super.render() }
