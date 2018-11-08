@@ -5,6 +5,7 @@ export default (
   departureTime,
   returnTime,
   valueAddedTax,
+  travelGroupId,
   attachmentsData) => ({
     requestId,
     totalCostOfFlight,
@@ -12,5 +13,6 @@ export default (
     departureTime,
     returnTime,
     valueAddedTax,
+    travelGroupId,
     attachmentsData
   })

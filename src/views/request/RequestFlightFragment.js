@@ -94,7 +94,7 @@ class RequestFlightFragment extends BaseMVPView {
   }
 
   departureDateFunc (date) {
-    this.setState({ departureDate : date.format('MM-DD-YYYY') })
+    this.setState({ departureDate : date.format('YYYY-MM-DD') })
   }
 
   departureTimeFunc (departureTime) {
@@ -114,7 +114,7 @@ class RequestFlightFragment extends BaseMVPView {
   }
 
   returnDateFunc (date) {
-    this.setState({ returnDate : date.format('MM-DD-YYYY') })
+    this.setState({ returnDate : date.format('YYYY-MM-DD') })
   }
 
   returnTimeFunc (returnTime) {
@@ -289,6 +289,7 @@ class RequestFlightFragment extends BaseMVPView {
           submitLoader ?
           <Modal>
             <center>
+              <h2>Please wait...</h2>
               <CircularLoader show = { submitLoader }/>
             </center>
           </Modal>

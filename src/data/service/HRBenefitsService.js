@@ -2003,7 +2003,13 @@ export default class HRBenefitsService {
   }
 
   getTravels (token, statusId) {
-    return this.apiClient.get(`v1/travels?status=${statusId}`, {
+    return this.apiClient.get(`v1/travels${ statusId ? `?status=${statusId}` : ''}`, {
+      headers : { token }
+    })
+  }
+
+  getTravelGroup (token) {
+    return this.apiClient.get(`v1/travels/groups`, {
       headers : { token }
     })
   }
@@ -2064,6 +2070,7 @@ export default class HRBenefitsService {
         serviceCharge: bookParam.totalServiceCharge,
         VAT: bookParam.valueAddedTax
       },
+      groupHeadId: bookParam.travelGroupId,
       departureTime : bookParam.departureTime,
       returnTime: bookParam.returnTime
     }

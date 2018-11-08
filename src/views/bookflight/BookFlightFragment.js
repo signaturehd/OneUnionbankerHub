@@ -38,6 +38,7 @@ class BookFlightFragment extends BaseMVPView {
       showForm: false,
       ticketMode : false,
       isDomestic : false,
+      showTravelGroup : false,
       noticeResponse : '',
       requestId : '',
       purposeName : '',
@@ -54,6 +55,9 @@ class BookFlightFragment extends BaseMVPView {
       totalServiceCharge : '0',
       valueAddedTax : '0',
       bookflightArray : [],
+      travelGroupArray : [],
+      travelGroupId : '',
+      travelGroup : '',
       attachmentsData : [{ name : 'Flight Quatation Attachment' }],
       attachmentsData2 : [{ name : 'Flight Quatation Attachment' },
       { name : 'ERB Email Attachment' }]
@@ -61,11 +65,16 @@ class BookFlightFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    // this.presenter.getTravels()
+    this.presenter.getTravels()
+    this.presenter.getTravelGroup()
   }
 
   getTravels(bookflightArray) {
     this.setState({ bookflightArray })
+  }
+
+  getTravelGroup(travelGroupArray) {
+    this.setState({ travelGroupArray })
   }
 
   departureTimeFunc (departureTime) {
@@ -75,10 +84,6 @@ class BookFlightFragment extends BaseMVPView {
   returnTimeFunc (returnTime) {
     this.setState({ returnTime })
   }
-
-  // totalAmountFunc(totalAmount) {
-  //   this.setState({ totalAmount })
-  // }
 
   totalCostOfFlightFunc(totalCostOfFlight) {
     this.setState({ totalCostOfFlight })
@@ -90,6 +95,20 @@ class BookFlightFragment extends BaseMVPView {
 
   valueAddedTaxFunc(valueAddedTax) {
     this.setState({ valueAddedTax })
+  }
+
+  travelGroupArrayFunc () {
+    const { travelGroupArray } = this.state
+    const newArray = []
+    travelGroupArray.map((resp,key) => {
+        const object = {
+          id : resp.id,
+          name : resp.firstName + resp.middleName + resp.lastName
+        }
+        newArray.push(object)
+      }
+    )
+    return newArray
   }
 
   hideCircularLoader () {
@@ -139,6 +158,7 @@ class BookFlightFragment extends BaseMVPView {
       returnTime,
       isDomestic,
       valueAddedTax,
+      travelGroupId,
       attachmentsData,
       attachmentsData2
     } = this.state
@@ -151,6 +171,7 @@ class BookFlightFragment extends BaseMVPView {
       departureTime,
       returnTime,
       valueAddedTax,
+      travelGroupId,
       attachmentsData
     )
     :
@@ -161,6 +182,7 @@ class BookFlightFragment extends BaseMVPView {
       departureTime,
       returnTime,
       valueAddedTax,
+      travelGroupId,
       attachmentsData2
     )
   }
@@ -177,6 +199,7 @@ class BookFlightFragment extends BaseMVPView {
       showForm,
       showNoticeResponseModal,
       noticeResponse,
+      showTravelGroup,
       ticketMode,
       isDomestic,
       departureOrigin,
@@ -194,13 +217,18 @@ class BookFlightFragment extends BaseMVPView {
       totalServiceCharge,
       valueAddedTax,
       bookflightArray,
+      travelGroupArray,
+      travelGroupId,
+      travelGroup,
       attachmentsData,
       attachmentsData2
     } = this.state
 
     const { percentage } = this.props
-    const depDate = moment(departureDate).format('MMMM DD, YYYY')
-    const retDate = moment(returnDate).format('MMMM DD, YYYY')
+    const dDateSplit = departureDate && departureDate.split('Z')
+    const rDateSplit = returnDate && returnDate.split('Z')
+    const depDate = moment(dDateSplit[0]).format('MMMM DD, YYYY')
+    const retDate = moment(rDateSplit[0]).format('MMMM DD, YYYY')
     const totalAmount = (parseFloat(totalCostOfFlight) + parseFloat(totalServiceCharge) + parseFloat(valueAddedTax))
     return (
       <div>
@@ -255,13 +283,32 @@ class BookFlightFragment extends BaseMVPView {
             rturn = { rturn }
             departureDate = { depDate }
             departureTime = { departureTime }
+            departureTimeFunc = { (e) => this.departureTimeFunc(e) }
             returnDate = { retDate }
             returnTime = { returnTime }
+            returnTimeFunc = { (e) => this.returnTimeFunc(e) }
             totalCostOfFlight = { totalCostOfFlight }
+            totalCostOfFlightFunc = { (e) => this.totalCostOfFlightFunc(e) }
             totalServiceCharge = { totalServiceCharge }
-            valueAddedTax = {valueAddedTax }
+            totalServiceChargeFunc = { (e) => this.totalServiceChargeFunc(e) }
+            valueAddedTax = { valueAddedTax }
+            valueAddedTaxFunc = { (e) => this.valueAddedTaxFunc(e) }
             totalAmount = { totalAmount }
             bookflightArray = { bookflightArray }
+            travelGroupArray = { this.travelGroupArrayFunc() }
+            showTravelGroup = { showTravelGroup }
+            travelGroupId = { travelGroupId }
+            travelGroup = { travelGroup }
+            showTravelGroupFunc = { () => this.setState({ showTravelGroup : true }) }
+            travelGroupHeadFunc = { (travelGroupId, travelGroup) =>
+              this.setState({
+                travelGroupId,
+                travelGroup,
+                showTravelGroup : false
+              })
+            }
+            onClose = { () => this.setState({ showTravelGroup : false }) }
+
             attachmentsData = { attachmentsData }
             attachmentsData2 = { attachmentsData2 }
             submitFunc = { () => this.submit() }
@@ -286,9 +333,6 @@ class BookFlightFragment extends BaseMVPView {
                 returnTime,
                 rturn,
                 purposeName,
-                totalCostOfFlight,
-                totalServiceCharge,
-                valueAddedTax,
                 isDomestic
               ) => this.setState({
                 requestId,
@@ -302,9 +346,6 @@ class BookFlightFragment extends BaseMVPView {
                 returnTime,
                 rturn,
                 purposeName,
-                totalCostOfFlight,
-                totalServiceCharge,
-                valueAddedTax,
                 isDomestic,
                 showForm : true }) }
               cardDataHolder = { bookflightArray }/>
