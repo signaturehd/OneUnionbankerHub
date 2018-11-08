@@ -22,6 +22,9 @@ class SideBar extends Component {
       tempPreEmployment,
       splitUserInitial
     } = this.props
+
+    console.log(profile)
+
   const modules =
   [
     {
@@ -103,15 +106,35 @@ class SideBar extends Component {
       className: 'logout-icon'
     },
   ]
+
+  const style = {
+    backgroundImage : `url(${profile && profile.profileImage})`,
+    backgroundRepeat : 'no-repeat',
+    backgroundSize: 'cover',
+    height: 'unset',
+    backgroundPosition: 'center',
+    boxShadow: 'inset 0px 0px 0px 0px #ffffff',
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    borderRadius: '50%',
+  }
+
   return (
     <div className = { '_sidebar-overlay' }>
       <ul className = { '_link-list ul' }>
         <div className = { 'sidebar-profile-body' }>
           <div className={ 'sidebar-picture-card' }>
             <div>
-              <div className = { 'sidebar-picture' }>
-                <h2 className = { 'sidebar-initial-text' }>{ splitUserInitial }</h2>
-              </div>
+              {
+                profile && profile.profileImage ?
+                <img style = { style }/>
+                :
+                <div className = { 'sidebar-picture' }>
+                  <h2 className = { 'sidebar-initial-text' }>{ splitUserInitial }</h2>
+                </div>
+
+              }
             </div>
           </div>
         </div>
@@ -182,20 +205,46 @@ class SideBar extends Component {
             :
             <div>
             {
-              modules.map((d, idx) =>
-              d.id !== 11 &&
-              d.id !== 1 &&
-              <div key = { idx }>
-                <li
-                  className = { `_text-link ${selected === d.id && 'active'}` }
-                  onClick = { d.action }>
-                  <a key = { idx }
-                    className =
-                    { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
-                    { d.title }
-                </li>
+              tempPreEmployment === 3 ||
+              tempPreEmployment === 4 ||
+              tempPreEmployment === 5 ?
+              <div>
+                {
+                  modules.map((d, idx) =>
+                  d.id !== 11 &&
+                  d.id !== 1 &&
+                  <div key = { idx }>
+                    <li
+                      className = { `_text-link ${selected === d.id && 'active'}` }
+                      onClick = { d.action }>
+                      <a key = { idx }
+                        className =
+                        { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                        { d.title }
+                    </li>
+                  </div>
+                  )
+                }
               </div>
-              )
+              :
+              <div>
+                {
+                  modules.map((d, idx) =>
+                  d.id !== 12 &&
+                  d.id !== 1 &&
+                  <div key = { idx }>
+                    <li
+                      className = { `_text-link ${selected === d.id && 'active'}` }
+                      onClick = { d.action }>
+                      <a key = { idx }
+                        className =
+                        { ` sidebar-icon ${d.className} ${selected === d.id && 'active'}`}/>
+                        { d.title }
+                    </li>
+                  </div>
+                  )
+                }
+              </div>
             }
             </div>
           }

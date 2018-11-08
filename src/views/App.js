@@ -40,6 +40,10 @@ class App extends BaseMVPView {
     this.presenter.checkLogin()
   }
 
+  componentDidCatch(error, info) {
+    console.log(info, error)
+  }
+
   isLogin (isLogin) {
     this.setState({ isLogin })
   }
@@ -49,16 +53,16 @@ class App extends BaseMVPView {
     return (
       <div>
         <Switch>
-          <Route exact path = '/' render={props => {
+          <Route
+            path = '/reset/:token'
+            render = { props => <ResetPasswordView  { ...props }/> }/>
+          <Route path = '/' render={props => {
             if (this.state.isLogin) {
               return <NavigationView  { ...props } />
             }
-              return (<LoginView { ...props } />)
+            return (<LoginView { ...props } />)
           }} />
-        <Route path = '/downloadPhenom' />
-        <Route
-          path = '/reset/:token'
-          render = { props => <ResetPasswordView  { ...props }/> }/>
+
       </Switch>
       </div>
     )

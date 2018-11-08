@@ -32,9 +32,9 @@ class VaccineRequisitionDetailsFragment extends Component {
         <div></div>
           <Card>
             <div className={ 'transaction-details-container' }>
-              <div className = { 'transaction-banner transaction-medical-scheduling' }>
+              <div className = { 'transaction-banner transaction-vaccine' }>
                 <div className={ 'transaction-banner-card' }>
-                  <div>
+                  <div className = { 'text-align-left' }>
                     <h1 className = { 'transaction-details-name font-weight-normal'}>
                       { benefitType }
                     </h1>
@@ -56,18 +56,18 @@ class VaccineRequisitionDetailsFragment extends Component {
                   </div>
                 </div>
               </div>
-              <div>
-                <VaccineRequisitionDetailComponent
-                  details = { details }
-                  viewTransactions = { (resp) => viewTransactions(resp) }
-                  onClickAgreements = { (resp) => agreementsMethod(resp) }
-                />
-              </div>
             </div>
             <br/>
+            <div>
+              <VaccineRequisitionDetailComponent
+                details = { details }
+                viewTransactions = { (resp) => viewTransactions(resp) }
+                onClickAgreements = { (resp) => agreementsMethod(resp) }
+              />
+            </div>
           </Card>
-          <div></div>
-        </div>
+        <div></div>
+      </div>
     )
   }
 }

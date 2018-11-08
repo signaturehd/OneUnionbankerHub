@@ -12,6 +12,8 @@ import {
   Line
 } from '../../../ub-components/'
 
+import { format } from '../../../utils/numberUtils'
+
 import LaptopBrandModal from '../modals/LaptopBrandModal'
 
 class LaptopLeaseCardComponent extends Component {
@@ -51,27 +53,27 @@ class LaptopLeaseCardComponent extends Component {
 
             <div className = { 'grid-global' }>
               <GenericInput
-                placeholder = { 'Amount' }
+                placeholder = { 'Estimated Cost' }
                 errorMessage = { '' }
                 onChange ={ (e) => setAmount(e.target.value) }
-                text = { 'Amount' }
+                text = { 'Estimated Cost' }
                 disabled = { showEditMode }
                 value = { amount }
-                maxLength = { 7 }
+                maxLength = { 6 }
                 />
               <GenericInput
-                placeholder = { 'Color' }
+                placeholder = { 'Colour Family' }
                 errorMessage = { '' }
                 disabled = { showEditMode }
-                text = { 'Color' }
+                text = { 'Colour Family' }
                 onChange = { (e) => setColor(e.target.value) }
                 value = { color }
                 />
               <GenericInput
-                placeholder = { 'Terms' }
+                placeholder = { 'Payment Terms' }
                 errorMessage = { '' }
                 disabled = { showEditMode }
-                text = { 'Terms' }
+                text = { 'Payment Terms' }
                 readOnly
                 onClick = { () => showTerms() }
                 value = { terms }
@@ -86,7 +88,7 @@ class LaptopLeaseCardComponent extends Component {
               />
             </div>
               <MultipleFileUploader
-                placeholder = { 'Form Attachments' }
+                placeholder = { 'Required Attachments' }
                 fileArray = { laptopLeaseAttachment }
                 disabled = { showEditMode }
                 setFile = { (updatedFile) => setAttachments(updatedFile) }

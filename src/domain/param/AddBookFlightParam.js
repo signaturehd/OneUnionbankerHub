@@ -4,13 +4,13 @@ export default (
   totalServiceCharge,
   departureTime,
   returnTime,
-  isDomestic,
+  valueAddedTax,
   attachmentsData) => ({
     requestId,
     totalCostOfFlight,
     totalServiceCharge,
     departureTime,
     returnTime,
-    isDomestic,
+    valueAddedTax,
     attachmentsData
   })

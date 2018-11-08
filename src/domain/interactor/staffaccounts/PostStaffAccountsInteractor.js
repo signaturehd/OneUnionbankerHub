@@ -3,10 +3,7 @@ export default class PostStaffAccountsInteractor {
     this.client = client
   }
 
-  execute (addStaffAccounts) {
-    return this.client.addStaffAccounts(
-      this.client.getToken(),
-      this.client.getAccountNumber(),
-      addStaffAccounts)
+  execute (staffAccountsParam) {
+    return this.client.addStaffAccounts(this.client.getToken(), staffAccountsParam)
   }
 }

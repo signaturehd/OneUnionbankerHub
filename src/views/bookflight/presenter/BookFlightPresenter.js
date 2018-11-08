@@ -30,25 +30,25 @@ export default class BookFlightPresenter {
     totalServiceCharge,
     departureTime,
     returnTime,
-    isDomestic,
+    valueAddedTax,
     attachmentsData
   ) {
-    this.view.showCircularLoader()
+    this.view.showSubmitLoader()
     this.addBookFlightInteractor.execute(bookParam(
       requestId,
       totalCostOfFlight,
       totalServiceCharge,
       departureTime,
       returnTime,
-      isDomestic,
+      valueAddedTax,
       attachmentsData
     ))
       .subscribe(travel => {
-          this.view.hideCircularLoader()
-          this.view.noticeResponse()
+          this.view.hideSubmitLoader()
+          this.view.noticeResponse(travel)
           this.view.resetValue()
         }, e => {
-          this.view.hideCircularLoader()
+          this.view.hideSubmitLoader()
           // TODO prompt generic error
       })
   }

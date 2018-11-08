@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Switch, Route } from 'react-router-dom'
 
 import BaseMVPView from '../../common/base/BaseMVPView'
 import ConnectView from '../../../utils/ConnectView'
@@ -16,7 +15,11 @@ import {
 
 import { RequiredValidation } from '../../../utils/validate/'
 
+import FinancialObligationModal from './modals/FinancialObligationModal'
+import FinancialObligationMultipleCardComponent from './components/FinancialObligationMultipleCardComponent'
 import Presenter from './presenter/FinancialObligationPresenter'
+
+import * as func from './functions/FinancialFunction'
 
 import { Progress } from 'react-sweet-progress'
 
@@ -32,6 +35,7 @@ class FinancialObligationFragment extends BaseMVPView {
       enabledLoader : false,
       showFinanceStatusErrorMessage : '',
       statusId: '',
+      financeId: '',
       statusName: '',
       bankNameInstitution : '',
       natureObligation: '',
@@ -40,12 +44,20 @@ class FinancialObligationFragment extends BaseMVPView {
       natureObligationErrorMessage: '',
       amountErrorMessage: '',
       statusNameErrorMessage: '',
+      noticeResponse: '',
+      showFinanceModal : false,
+      showFinancialFormModal : false,
+      editMode : false,
+      financeDetailsHolder : [],
+      index : 4,
+      viewMoreText : 'View more',
     }
   }
 
   componentDidMount () {
     this.props.onSendPageNumberToView(1)
     this.presenter.getFinancialStatus()
+    this.presenter.getFinancialDetails()
   }
 
   circularLoader (enabledLoader) {
@@ -68,6 +80,25 @@ class FinancialObligationFragment extends BaseMVPView {
     this.setState({ financeStatus })
   }
 
+  showFinanceDetails (financeDetailsHolder) {
+    this.setState({ financeDetailsHolder })
+  }
+
+  noticeResponseFunc (noticeResponse) {
+    this.setState({ showFinanceModal : true })
+    this.setState({ noticeResponse })
+  }
+
+  natureObligationValidate (validate) {
+    const isValid = func.checkedValidateText(validate)
+    this.setState({ natureObligation : isValid })
+  }
+
+  bankNameInstitutionValidate (validate) {
+    const isValid = func.checkedValidateText(validate)
+    this.setState({ bankNameInstitution : isValid })
+  }
+
   submitForm () {
     const {
       bankNameInstitution,
@@ -78,7 +109,9 @@ class FinancialObligationFragment extends BaseMVPView {
       bankNameInstitutionErrorMessage,
       natureObligationErrorMessage,
       amountErrorMessage,
-      statusNameErrorMessage
+      statusNameErrorMessage,
+      financeId,
+      editMode
     } = this.state
 
     if (!this.validator(bankNameInstitution)) {
@@ -89,12 +122,45 @@ class FinancialObligationFragment extends BaseMVPView {
       this.setState({ amountErrorMessage : 'Amount field is required'  })
     } else if (!this.validator(statusName)) {
       this.setState({ statusNameErrorMessage : 'Status field is required' })
+    } else {
+      if(editMode) {
+        this.presenter.putFinancialStatus(
+          bankNameInstitution,
+          natureObligation,
+          amount,
+          statusId,
+          financeId
+        )
+        this.resetValue()
+      } else {
+        this.presenter.addFinancialStatus(
+          bankNameInstitution,
+          natureObligation,
+          amount,
+          statusId,
+          financeId)
+          this.resetValue()
+      }
     }
-    this.presenter.addFinancialStatus(
-      bankNameInstitution,
-      natureObligation,
-      amount,
-      statusId)
+  }
+
+  resetValue() {
+    this.setState({ showFinancialFormModal : false })
+    this.setState({
+      bankNameInstitution : '',
+      natureObligation : '',
+      amount : '',
+      statusId : '',
+      statusName : '',
+      fiananceId : '',
+      editMode: false,
+    })
+  }
+
+  /* Delete Financial */
+
+  onDeleteProperty (id) {
+    this.presenter.removeFinancial(id)
   }
 
   render() {
@@ -103,53 +169,110 @@ class FinancialObligationFragment extends BaseMVPView {
       checkPEUndertaking,
       percentage
     } = this.props
+
     const {
       enabledLoader,
       financeStatus,
+      financeDetailsHolder,
       statusId,
       statusName,
-      showFinanceStatusModal,
-      showFinanceStatusErrorMessage,
       bankNameInstitution,
       natureObligation,
       amount,
+      showFinanceStatusModal,
       bankNameInstitutionErrorMessage,
       natureObligationErrorMessage,
       amountErrorMessage,
-      statusNameErrorMessage
+      statusNameErrorMessage,
+      showFinanceStatusErrorMessage,
+      noticeResponse,
+      showFinanceModal,
+      showFinancialFormModal,
+      index,
+      viewMoreText,
+      financeId,
+      editMode
     } = this.state
+
+    const isVisible = (financeDetailsHolder && financeDetailsHolder.length > 4) ? '' : 'hide'
 
     return(
     <div>
     { super.render() }
       {
-        showFinanceStatusModal &&
-        <SingleInputModal
-          label = { 'Finance Status' }
-          inputArray = { financeStatus && financeStatus }
-          selectedArray = { (statusId, statusName) =>
+        showFinanceModal &&
+        <Modal>
+          <center>
+            <h2>{ noticeResponse }</h2>
+            <br/>
+            <GenericButton
+              onClick = { () => {
+                this.setState({ showFinanceModal : false })
+                this.props.reloadPreEmploymentForm()
+              } }
+              text = { 'Ok' }
+              />
+          </center>
+        </Modal>
+      }
+      {
+        showFinancialFormModal &&
+        <FinancialObligationModal
+          natureObligationFunc = { (natureObligation) =>  this.natureObligationValidate(natureObligation) }
+          statusName = { statusName }
+          bankNameInstitution = { bankNameInstitution }
+          natureObligation = { natureObligation }
+          amount = { amount }
+          bankNameInstitutionFunc = { (bankNameInstitution) => this.bankNameInstitutionValidate(bankNameInstitution) }
+          amountFunc = { (amount) => this.setState({ amount }) }
+          submitForm = { () => this.submitForm() }
+          onClose = { () => this.resetValue() }
+          bankNameInstitutionErrorMessage = { bankNameInstitutionErrorMessage }
+          natureObligationErrorMessage = { natureObligationErrorMessage }
+          amountErrorMessage = { amountErrorMessage }
+          statusNameErrorMessage = { statusNameErrorMessage }
+          showFinanceStatusModal = { showFinanceStatusModal }
+          showFinanceStatusErrorMessage = { showFinanceStatusErrorMessage }
+          financeStatus = { financeStatus }
+          showFinanceStatusModalFunc = { (showFinanceStatusModal) => this.setState({ showFinanceStatusModal : false })}
+          statusNameFunc = { () => this.setState({ showFinanceStatusModal : true })}
+          editMode = { editMode }
+          financeStatusFunc = { (
+            statusId,
+            statusName,
+            showFinanceStatusModal,
+            showFinanceStatusErrorMessage
+          ) =>
             this.setState({
               statusId,
               statusName,
-              showFinanceStatusModal : false,
-              showFinanceStatusErrorMessage : ''
-            })
-          }
-        onClose = { () => this.setState({ showFinanceStatusModal : false }) }
-        />
+              showFinanceStatusModal,
+              showFinanceStatusErrorMessage,
+            }) }
+          />
       }
       <div>
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-          <h2 className={ 'header-margin-default text-align-left' }>Financial Obligation</h2>
-          <h2>Fill up the form</h2>
+          <h2 className={ 'header-margin-default text-align-left' }>Financial Obligations</h2>
+          <h2>Below is the list of your financial obligations.</h2>
           </div>
           <Progress
             type = { 'circle' }
-            height = { 100 }
-            width = { 100 }
-            percent={ percentage } />
+            height = { 65 }
+            width = { 65 }
+            percent = { percentage } />
+        </div>
+        <br/>
+        <div className = { 'grid-global' }>
+          <div></div>
+          <div className = { 'text-align-right' }>
+            <GenericButton
+              text = { 'Add Financial Obligation' }
+              onClick = { () => this.setState({ showFinancialFormModal : true }) }
+              />
+          </div>
         </div>
         <br/>
         {
@@ -159,38 +282,45 @@ class FinancialObligationFragment extends BaseMVPView {
           </center>
           :
           <div>
-            <GenericInput
-              text = { 'Name of the Bank/ Financial Institution' }
-              value = { bankNameInstitution }
-              onChange = { (e) => this.setState({ bankNameInstitution: e.target.value }) }
-              errorMessage = { bankNameInstitution ? '' : bankNameInstitutionErrorMessage }
+            <FinancialObligationMultipleCardComponent
+              index = { index }
+              financeDetailsHolder = { financeDetailsHolder }
+              onDeleteProperty = { (id) => this.onDeleteProperty(id)  }
+              onEditModeProperty = { (
+                financeId,
+                bankNameInstitution,
+                natureObligation,
+                amount,
+                statusName,
+                showFinancialFormModal,
+                editMode
+              ) => this.setState({
+                financeId,
+                bankNameInstitution,
+                natureObligation,
+                amount,
+                statusName : statusName === 1 ? 'Current' : 'Past' ,
+                statusId : statusName,
+                showFinancialFormModal,
+                editMode
+                })
+              }
               />
-            <GenericInput
-              text = { 'Nature of Obligation' }
-              value = { natureObligation }
-              onChange = { (e) => this.setState({ natureObligation : e.target.value }) }
-              errorMessage = { natureObligation ? '' : natureObligationErrorMessage }
-              />
-            <GenericInput
-              text = { 'Amount' }
-              value = { amount }
-              type = { 'number' }
-              onChange = { (e) => this.setState({ amount : e.target.value }) }
-              errorMessage = { amount ? '' : amountErrorMessage }
-              />
-            <GenericInput
-              text = { 'Status' }
-              value = { statusName }
-              onClick = { () => this.setState({ showFinanceStatusModal : true }) }
-              errorMessage = { statusName ? '' : statusNameErrorMessage }
-              />
-            <center>
-              <GenericButton
-                className = { 'global-button' }
-                text = { 'Save' }
-                onClick = { () => this.submitForm() }
-                />
-            </center>
+            <br/>
+            <button
+              type = { 'button' }
+              className = { `viewmore tooltip ${ isVisible }` }
+              onClick = {
+                () => {
+                  if(index === financeDetailsHolder.length)
+                    this.setState({ index : 4, viewMoreText : 'View more' })
+                  else
+                    this.setState({ index : financeDetailsHolder.length, viewMoreText : 'View less' })
+                }
+              }>
+              <img src={ require('../../../images/icons/horizontal.png') } />
+              <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+            </button>
           </div>
         }
       </div>
@@ -207,4 +337,4 @@ FinancialObligationFragment.propTypes = {
 FinancialObligationFragment.defaultProps = {
 }
 
-export default ConnectView(FinancialObligationFragment, Presenter)
+export default ConnectView(FinancialObligationFragment, Presenter )

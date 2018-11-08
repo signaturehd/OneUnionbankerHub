@@ -1,3 +1,27 @@
+.device-grid {
+  display: grid;
+  grid-template-columns:  .1fr 1fr;
+  padding : 10px;
+  column-gap: 2%;
+}
+
+.device-green {
+  color : green;
+}
+
+.device-red {
+  color : red;
+}
+
+.devices-alignment {
+  margin-top: 10px;
+}
+
+.device-information-grid {
+  display: grid;
+  grid-template-columns: .3fr 1fr;
+}
+
 .contact-info-grid {
   display: grid;
   grid-template-rows: 1fr;
@@ -30,6 +54,22 @@
   height: 40px;
   width: 40px;
   background-repeat: no-repeat;
+}
+
+
+.profile-address-grid-x2 {
+  display: grid;
+  grid-template-columns: .9fr .05fr;
+}
+
+.profile-update-address-grid{
+  display: grid;
+  grid-template-columns: 1fr .09fr;
+  column-gap: 2%;
+}
+
+.alignment-center {
+  align-self: center;
 }
 
 .employeeMobileNumber {

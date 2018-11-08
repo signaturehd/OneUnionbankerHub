@@ -74,6 +74,12 @@ p {
   background-color: #ff8a00;
 }
 
+.profile-button-small {
+  min-width: 100px;
+  height: 30px;
+  border-radius: 50px;
+}
+
 @media (max-width: 768px) {
   .header-margin-default {
     display: flex;
@@ -219,8 +225,26 @@ p {
   text-align: justify;
 }
 
+.text-align-end {
+  text-align: end;
+}
+
 .cursor-pointer {
   cursor: pointer;
+}
+
+.align-items-center{
+  align-items: center;
+}
+
+/* flaot position */
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
 }
 
 /* Default color */
@@ -250,6 +274,12 @@ p {
 .grid-global-columns-x3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 2%;
+}
+
+.grid-global-columns-x4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   column-gap: 2%;
 }
 
@@ -324,5 +354,40 @@ p {
 /**/
 .close-button-global {
   margin: auto;
+  padding-top: 10px;
   cursor: pointer;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.hide {
+  display: none!important;
+}
+
+.viewmore {
+  padding: 2px 0 2px 0;
+  width: 100%;
+  cursor: pointer;
+  border: 0;
 }

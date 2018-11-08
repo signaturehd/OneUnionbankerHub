@@ -5,4 +5,5 @@ export default class GetEmployeeTinInteractor {
 
   execute () {
     return this.client.getEmployeeTin(this.client.getToken())
+  }
 }

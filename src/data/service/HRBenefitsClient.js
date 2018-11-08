@@ -10,7 +10,7 @@ export default class HRBenefitsClient {
     this.fileProvider = fileProvider
   }
 
-  /* User */
+/* User */
   // HTTP status code
   login (loginParam) {
     return this.service.login(loginParam)
@@ -42,10 +42,54 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Update Profile */
+
   updateDescription (token, description) {
     return this.service.updateDescription(token, description)
       .pipe(ServiceErrorOperator())
   }
+
+  updateEmailAddress (token, emailAddress) {
+    return this.service.updateEmailAddress(token, emailAddress)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateAddress (token, address, file) {
+    return this.service.updateAddress(token, address, file)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateContactNumber (token, number) {
+    return this.service.updateContactNumber(token, number)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateProfilePicture (token, image) {
+    return this.service.updateProfilePicture(token, image)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateCivilStatus (token, civilStatus) {
+    return this.service.updateCivilStatus(token, civilStatus)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getProfilePicture (token, file) {
+    return this.service.getProfilePicture(token, file)
+      .pipe(ServiceErrorOperator())
+      .flatMap(resp =>
+        Observable.create(observer => {
+          const reader = new FileReader()
+          reader.onerror = err => observer.error(err)
+          reader.onabort = err => observer.error(err)
+          reader.onload = () => observer.next(reader.result)
+          reader.onloadend = () => observer.complete()
+          reader.readAsDataURL(resp)
+        })
+      )
+  }
+
+  /* Get Devices */
 
   getDevices (token) {
     return this.service.getDevices(token)
@@ -649,16 +693,10 @@ export default class HRBenefitsClient {
 
   addMedicalScheduling (
     token,
-    accounToken,
-    accountNumber,
-    releasingCenter,
     addMedicalSchedulingParam
   ) {
     return this.service.addMedicalScheduling (
       token,
-      accounToken,
-      accountNumber,
-      releasingCenter,
       addMedicalSchedulingParam)
     .pipe(ServiceErrorOperator())
   }
@@ -867,16 +905,74 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addStaffAccounts (token, accountNumber, staffAccountsParam) {
-    return this.service.addStaffAccounts(token, accountNumber, staffAccountsParam)
+  addStaffAccounts (token, staffAccountsParam) {
+    return this.service.addStaffAccounts(token, staffAccountsParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateStaffAccounts (token, staffAccountsParam) {
+    return this.service.updateStaffAccounts(token, staffAccountsParam)
       .pipe(ServiceErrorOperator())
   }
 
   /* Pre Employment */
 
+  getPreEmploymentMessageStatus (token) {
+    return this.service.getPreEmploymentMessageStatus (token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  postPreEmploymentMessageStatus (token, id) {
+    return this.service.postPreEmploymentMessageStatus (token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+
+  getPreEmploymentStatus (token) {
+    return this.service.getPreEmploymentStatus (token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPreEmploymentAffirmationId (token, affirmId, affirmPage) {
+    return this.service.getPreEmploymentAffirmationId(token, affirmId, affirmPage)
+      .pipe(ServiceErrorOperator())
+  }
+
   postAffirmPreEmploymentUndertaking (token) {
     return this.service.postAffirmPreEmploymentUndertaking(token)
       .pipe(ServiceErrorOperator())
+  }
+
+  getOnBoardingDocument (token, link) {
+    return this.service.getOnBoardingDocument(token, link)
+    .pipe(ServiceErrorOperator())
+    .flatMap(resp =>
+      Observable.create(observer => {
+        const reader = new FileReader()
+        reader.onerror = err => observer.error(err)
+        reader.onabort = err => observer.error(err)
+        reader.onload = () => observer.next(reader.result)
+        reader.onloadend = () => observer.complete()
+
+        reader.readAsDataURL(resp)
+      }
+    ))
+  }
+
+  getOnBoardingAttachments (token, file) {
+    return this.service.getOnBoardingAttachments(token, file)
+    .pipe(ServiceErrorOperator())
+    .flatMap(resp =>
+      Observable.create(observer => {
+        const reader = new FileReader()
+        reader.onerror = err => observer.error(err)
+        reader.onabort = err => observer.error(err)
+        reader.onload = () => observer.next(reader.result)
+        reader.onloadend = () => observer.complete()
+
+        reader.readAsDataURL(resp)
+      }
+    ))
   }
 
   getAffirmationsStatus (token) {
@@ -889,8 +985,18 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getFinancialDetails (token) {
+    return this.service.getFinancialDetails(token)
+      .pipe(ServiceErrorOperator())
+  }
+
   addFinancialStatus (token, financialStatusParam) {
     return this.service.addFinancialStatus(token, financialStatusParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  putFinancialStatus (token, financialStatusParam) {
+    return this.service.putFinancialStatus(token, financialStatusParam)
       .pipe(ServiceErrorOperator())
   }
 
@@ -899,8 +1005,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  createEmployeeTin () {
-    return this.service.createEmployeeTin(token)
+  addEmployeeTin (token, employeeTinParam) {
+    return this.service.addEmployeeTin(token, employeeTinParam)
       .pipe(ServiceErrorOperator())
   }
 
@@ -909,9 +1015,256 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  addEmployeeSSS (token, employeeSSSParam) {
+    return this.service.addEmployeeSSS(token, employeeSSSParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPreEmploymentForm (token) {
+    return this.service.getPreEmploymentForm(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  postEnrollPinAffirmationsEmployment (token, pin) {
+    return this.service.postEnrollPinAffirmationsEmployment(token, pin)
+      .pipe(ServiceErrorOperator())
+  }
+
+  postEnrollPinAffirmationsPolicy (token, pin) {
+    return this.service.postEnrollPinAffirmationsPolicy(token, pin)
+      .pipe(ServiceErrorOperator())
+  }
+
+  postEnrollPinAffirmationsConfidential (token, pin) {
+    return this.service.postEnrollPinAffirmationsConfidential(token, pin)
+      .pipe(ServiceErrorOperator())
+  }
+
+  postEnrollPinAffirmationsSecrecy (token, pin) {
+    return this.service.postEnrollPinAffirmationsSecrecy(token, pin)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getWorkExperience (token) {
+    return this.service.getWorkExperience(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getWorkExperienceForm (token) {
+    return this.service.getWorkExperienceForm(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addWorkExperience (token, workExperienceParam) {
+    return this.service.addWorkExperience(token, workExperienceParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addEmployeeRequirement (token, requirementParam) {
+    return this.service.addEmployeeRequirement(token, requirementParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getCharacterReference (token) {
+    return this.service.getCharacterReference(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getCharacterReferenceForm (token) {
+    return this.service.getCharacterReferenceForm(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  deleteCharacterReference (token, id) {
+    return this.service.deleteCharacterReference(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  postCharacterReference (token, postCharacterReferenceParam) {
+    return this.service.postCharacterReference(token, postCharacterReferenceParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  putCharacterReference (token, putCharacterReferenceParam) {
+    return this.service.putCharacterReference(token, putCharacterReferenceParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   getEmployeeSchool (token) {
     return this.service.getEmployeeSchool(token)
       .pipe(ServiceErrorOperator())
+  }
+
+  getSchoolRecordVerificationForm (token) {
+    return this.service.getSchoolRecordVerificationForm(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getSchoolData (token, pageNumber, find) {
+    return this.service.getSchoolData(token, pageNumber, find)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addEducationSchool(token, educationParam) {
+    return this.service.addEducationSchool(token, educationParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  putWorkExperience (token, workExperienceParam) {
+    return this.service.putWorkExperience(token, workExperienceParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  putEducationSchool(token, educationParam) {
+    return this.service.putEducationSchool(token, educationParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getSpouse (token) {
+    return this.service.getSpouse(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  postSpouseForm (token, spouseFormParam) {
+    return this.service.postSpouseForm(token, spouseFormParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  putSpouseForm (token, spouseFormParam) {
+    return this.service.putSpouseForm(token, spouseFormParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getChildren (token) {
+    return this.service.getChildren(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  postChildren (token, childrenParam) {
+    return this.service.postChildren(token, childrenParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  putChildren (token, childrenParam) {
+    return this.service.putChildren(token, childrenParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addPagibigLoan (token, pagibigParam) {
+    return this.service.addPagibigLoan(token, pagibigParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPagibiLoanDeduction (token) {
+    return this.service.getPagibiLoanDeduction(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMedicalAppointment (token) {
+    return this.service.getMedicalAppointment(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getMedicalAppointmentProcedures (token) {
+    return this.service.getMedicalAppointmentProcedures(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateMedicalAppointment (token, date, date2, id) {
+    return this.service.updateMedicalAppointment(token, date, date2, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getParents (token) {
+    return this.service.getParents(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateParentForm (token, parentsParam) {
+    return this.service.updateParentForm(token, parentsParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addParentForm (token, parentsParam) {
+    return this.service.addParentForm(token, parentsParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getSiblings (token) {
+    return this.service.getSiblings(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  updateSiblingsForm (token, siblingsParam) {
+    return this.service.updateSiblingsForm(token, siblingsParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addSiblingsForm (token, siblingsParam) {
+    return this.service.addSiblingsForm(token, siblingsParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  removeWorkExperience (token, id) {
+    return this.service.removeWorkExperience(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  removeSchool (token, id) {
+    return this.service.removeSchool(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  removeSpouse (token, id) {
+    return this.service.removeSpouse(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  removeChildren (token, id) {
+    return this.service.removeChildren(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  removeParents (token, id) {
+    return this.service.removeParents(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  removeSiblings (token, id) {
+    return this.service.removeSiblings(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  removeFinancial (token, id) {
+    return this.service.removeFinancial(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /*  Post Employment */
+
+  getPostEmployment (token) {
+    return this.service.getPostEmployment(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addPostRequirement (token, requirementsParam) {
+    return this.service.addPostRequirement(token, requirementParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Vaccines Requisitions */
+
+
+  validateVaccine (token) {
+    return this.service.validateVaccine(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Devices */
+
+  getEmployeeDevice (token) {
+    return this.service.getEmployeeDevice(token)
+    .pipe(ServiceErrorOperator())
   }
 
   /* Vaccines Requisitions */
@@ -1030,6 +1383,31 @@ export default class HRBenefitsClient {
 
   addNewsIsHeart (token, id, isHeart) {
     return this.service.addNewsIsHeart(token, id, isHeart)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* Events Budget */
+
+  validateEventsBudget (token) {
+    return this.service.validateEventsBudget(token)
+      .pipe(ServiceErrorOperator())
+  }
+  /* News isHeart */
+
+  addEventsBudget (
+    token,
+    accountToken,
+    accountNo,
+    releasingCenter,
+    addEventParam
+  ) {
+    return this.service.addEventsBudget(
+      token,
+      accountToken,
+      accountNo,
+      releasingCenter,
+      addEventParam
+    )
       .pipe(ServiceErrorOperator())
   }
 

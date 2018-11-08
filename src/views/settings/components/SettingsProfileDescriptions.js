@@ -54,6 +54,7 @@ class SettingsProfileDescriptions extends Component {
                 value = { descriptionText }
                 />
               <GenericButton
+                className = { 'profile-button-small' }
                 onClick = { () => onUpdateDescription() }
                 text = { 'Update' }
                 />

@@ -20,15 +20,46 @@ class LaptopLeaseDetailCardComponent extends Component {
       onClickAttachments,
       claimLaptopLease
      } = this.props
-
      const transactionID = details.transactionId
      const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
      const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
      const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details)
+     const brand = TransactionPersonalFunction.checkedBrand(details.details)
+     const colorFamily = TransactionPersonalFunction.checkedColorFamily(details.details)
+     const estimatedCost = TransactionPersonalFunction.checkedEstimatedCost(details.details)
+     const deliveryType = TransactionPersonalFunction.checkedDeliveryType(details.details)
+     const releasingCenter = TransactionPersonalFunction.checkedReleasingCenter(details.details)
 
     return (
       <div className = { 'transaction-component-details-form' }>
         <div>
+          <div className = { 'transaction-icons-details-grid' }>
+            <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+            <div>
+              <h2>
+                { `Brand: ${brand}`}
+              </h2>
+              <br/>
+            </div>
+          </div>
+           <div className = { 'transaction-icons-details-grid' }>
+            <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+            <div>
+              <h2>
+                { `Color Family: ${colorFamily}`}
+              </h2>
+              <br/>
+            </div>
+          </div>
+           <div className = { 'transaction-icons-details-grid' }>
+            <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+            <div>
+              <h2>
+                { `Estimated Cost: ${estimatedCost}`}
+              </h2>
+              <br/>
+            </div>
+          </div>
           <div className = { 'transaction-icons-details-grid' }>
             <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
             <div>
@@ -42,7 +73,7 @@ class LaptopLeaseDetailCardComponent extends Component {
             <span className = { ' transaction-card-icon-settings global-icons-referenceNumber' }></span>
             <div>
               <h2>
-                { referenceNumber }
+                {`Reference Number: ${referenceNumber}`  }
               </h2>
               <br/>
             </div>
@@ -51,7 +82,25 @@ class LaptopLeaseDetailCardComponent extends Component {
             <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
             <div>
               <h2>
-                { acccountNumber }
+                { `Account Number: ${acccountNumber}` }
+              </h2>
+              <br/>
+            </div>
+          </div>
+           <div className = { 'transaction-icons-details-grid' }>
+            <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+            <div>
+              <h2>
+                { `Releasing Center: ${releasingCenter}`}
+              </h2>
+              <br/>
+            </div>
+          </div>
+           <div className = { 'transaction-icons-details-grid' }>
+            <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+            <div>
+              <h2>
+                { `Delivery Type: ${deliveryType}`}
               </h2>
               <br/>
             </div>
@@ -88,13 +137,18 @@ class LaptopLeaseDetailCardComponent extends Component {
             <br/>
           </div>
           <div>
-            <br/>
-            <GenericButton
-              className = { 'transaction-details-button' }
-              text = { 'Claim' }
-              onClick = { () => claimLaptopLease(transactionID) }
-            />
-            <br/>
+            {
+              details.status.id == 18 &&
+              <div>
+                <br/>
+                <GenericButton
+                  className = { 'transaction-details-button' }
+                  text = { 'Claim' }
+                  onClick = { () => claimLaptopLease(transactionID) }
+                />
+                <br/>
+              </div>
+            }
           </div>
         </div>
 

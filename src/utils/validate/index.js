@@ -7,11 +7,13 @@ import RequiredNumberValidation from './RequiredNumberValidation'
 import RequiredDecimalValidation from './RequiredDecimalValidation'
 import MoneyValidation from './MoneyValidation'
 import MinMaxNumberValidation from './MinMaxNumberValidation'
+import RequiredEmailValidation from './RequiredEmailValidation'
 import Validator from './Validator'
 
 export {
   RequiredValidation,
   MobileNumberValidation,
+  RequiredEmailValidation,
   MinMaxValidation,
   RequiredSymbolValidation,
   RequiredAlphabetValidation,

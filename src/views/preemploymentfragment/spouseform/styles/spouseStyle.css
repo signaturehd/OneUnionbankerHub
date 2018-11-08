@@ -1,0 +1,14 @@
+.status-margin {
+	margin-top: 1px;
+}
+
+.gender-margin {
+	margin-top: 20px;
+}
+
+
+.spouse-employment-button {
+  min-width: 100px;
+  height: 30px;
+  border-radius: 50px;
+}
