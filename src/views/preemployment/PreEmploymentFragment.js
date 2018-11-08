@@ -96,6 +96,8 @@ function  PreEmploymentFragments (props)  {
   const educationData = props.educationData
   const educationPresenter = props.educationPresenter
   const reloadPreEmploymentForm = props.reloadPreEmploymentForm
+  const authorizationArray = props.authorizationArray
+  const bspArray = props.bspArray
 
   if (pageNumber === 0) {
     return <AffirmationDocumentFragment
@@ -154,11 +156,14 @@ function  PreEmploymentFragments (props)  {
       />
   } else if (pageNumber === 8) {
     return <AuthorizationBackgroundCheckFragment
+      authorizationArray = { authorizationArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
+      reloadPreEmploymentForm = { reloadPreEmploymentForm }
       />
   }else if (pageNumber === 9) {
     return <BspCertificationFragment
+      bspArray = { bspArray }
       percentage = { percentage }
       onSendPageNumberToView = { onSendPageNumberToView }
       reloadPreEmploymentForm = { reloadPreEmploymentForm }
@@ -688,6 +693,8 @@ class PreEmploymentFragment extends BaseMVPView {
                       birthCertifArray = { this.getFormData(2) }
                       educationVerificationForm = { this.getFormData(3) }
                       nbiArray = { this.getFormData(6) }
+                      authorizationArray = { this.getFormData(7) }
+                      bspArray = { this.getFormData(8) }
                       sssArray = { this.getFormData(10) }
                       tinArray = { this.getFormData(11) }
                       bir1902Array = { this.getFormData(12) }
@@ -756,6 +763,8 @@ class PreEmploymentFragment extends BaseMVPView {
                     birthCertifArray = { this.getFormData(2) }
                     educationVerificationForm = { this.getFormData(3) }
                     nbiArray = { this.getFormData(6) }
+                    authorizationArray = { this.getFormData(7) }
+                    bspArray = { this.getFormData(8) }
                     sssArray = { this.getFormData(10) }
                     tinArray = { this.getFormData(11) }
                     bir1902Array = { this.getFormData(12) }
