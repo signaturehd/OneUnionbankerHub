@@ -143,7 +143,6 @@ export default class HRBenefitsService {
     const objectParam = {
       otp: otp,
       password: newPassword,
-      token,
     }
     return this.apiClient.post('v1/password/reset', objectParam, {
       headers : { token }
