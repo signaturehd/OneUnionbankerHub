@@ -2,6 +2,7 @@ import AddRequirementInteractor from '../../../domain/interactor/postemployment/
 import GetPostEmploymentInteractor from '../../../domain/interactor/postemployment/postemployment/GetPostEmploymentInteractor'
 import GetOnboardingAttachmentsInteractor from '../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
 import GetOnboardingPdfInteractor from '../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
+import employeeRequirementParam from '../../../domain/param/AddEmployeeRequirementParam'
 
 import { NotifyActions } from '../../../actions'
 import store from '../../../store'
@@ -52,6 +53,7 @@ export default class PostEmploymentPresenter {
     })
   }
 
+
   getOnboardingAttachments (attachments) {
     store.dispatch(NotifyActions.resetNotify())
     this.view.showCircularLoader()
@@ -64,12 +66,14 @@ export default class PostEmploymentPresenter {
     })
   }
 
-  addRequirement (id) {
-    this.addRequirementInteractor.execute()
+  addRequirement (id, attachments) {
+    this.view.showDocumentLoader()
+    this.addRequirementInteractor.execute(employeeRequirementParam(id, attachments))
     .subscribe(data => {
-
-      }, e => {
-
+      this.view.hideDocumentLoader()
+      this.view.noticeResponseResp(data)
+    }, error => {
+      this.view.hideDocumentLoader()
     })
   }
 

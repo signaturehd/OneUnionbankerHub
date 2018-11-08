@@ -22,7 +22,6 @@ class PostEmploymetBIR1905Fragment extends Component {
     super(props)
     this.state = {
       showPdfViewComponent : false,
-      enabledLoader : false,
       birDataFormData : false,
     }
   }
@@ -30,7 +29,7 @@ class PostEmploymetBIR1905Fragment extends Component {
   componentDidMount () {
     this.props.subtitle('Please download and fill-up the Bereau of Internal Revenue(BIR) 1905 Form then attach the document.')
     this.props.title('Bereau of Internal Revenue (BIR) Form 1905.')
-    // this.checkAttachments()
+    this.checkAttachments()
   }
 
   onCheckedPdf (link) {
@@ -41,12 +40,7 @@ class PostEmploymetBIR1905Fragment extends Component {
     const {
       bir1905Array
     } = this.props
-    console.log('test ' + bir1905Array)
     this.props.getSelectedAttachments(bir1905Array)
-  }
-
-  submitForm (id) {
-
   }
 
   render () {
@@ -56,15 +50,14 @@ class PostEmploymetBIR1905Fragment extends Component {
       pageId,
       bir1905Array,
       attachmentsData,
-      count
+      enabledLoader,
+      count,
+      attachments
     } = this.props
 
     const {
-      enabledLoader,
       showPdfViewComponent,
     } = this.state
-    console.log(bir1905Array)
-    console.log(attachmentsData)
 
     return (
       <div>
@@ -126,7 +119,13 @@ class PostEmploymetBIR1905Fragment extends Component {
                   <div className = { 'text-align-right' }>
                     <GenericButton
                       text = { 'Add Attachments' }
-                      onClick = { () => this.props.addAttachmentsFunc(attachmentsData, count) }
+                      onClick = { () => {
+                        try {
+                          this.props.addAttachmentsFunc(attachmentsData, count)
+                        } catch (e) {
+                          console.log(e)
+                        }
+                      } }
                       />
                   </div>
                 }
@@ -178,7 +177,7 @@ class PostEmploymetBIR1905Fragment extends Component {
                     <br/>
                     <MultipleAttachments
                       count = { count }
-                      countFunc = { (count) => this.setState({ count }) }
+                      countFunc = { (count) => this.props.countFunc(count) }
                       placeholder = { '' }
                       fileArray = { attachmentsData }
                       setFile = { (attachmentsData) =>
@@ -189,8 +188,7 @@ class PostEmploymetBIR1905Fragment extends Component {
                       <GenericButton
                       text = { 'Upload' }
                       onClick = { () => {
-                        // this.setState({ enabledLoader : true })
-                        // this.submitForm(status.id)
+                        this.props.submitForm(status.id)
                       }
                     }/>
                     </center>

@@ -15,6 +15,7 @@ import './styles/postEmploymentStyle.css'
 import { Progress } from 'react-sweet-progress'
 
 import PostEmploymentComponent from './components/PostEmploymentComponent'
+import ResponseModal from '../notice/NoticeResponseModal'
 
 class PostEmploymentFragment extends BaseMVPView {
   constructor (props) {
@@ -33,14 +34,25 @@ class PostEmploymentFragment extends BaseMVPView {
       count : 2,
       attachments : [],
       attachmentsData : [{
-        name : 'BIR 1905'
+        name : 'Form'
       }],
+      showNoticeResponseModal : false,
+      noticeResponse : '',
     }
   }
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
     this.presenter.getPostEmployment()
+  }
+
+  submitForm (id) {
+    const {
+      attachmentsData
+    } = this.state
+
+    this.presenter.addRequirement(id, attachmentsData)
+    this.setState({ enabledLoader : false })
   }
 
   showPercentageOfPreEmployment (postEmp) {
@@ -112,12 +124,16 @@ class PostEmploymentFragment extends BaseMVPView {
     this.setState({ attachments : arrayNew })
   }
 
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse , showNoticeResponseModal : true})
+  }
+
   addAttachmentsFunc (attachment, tempCount) {
     const attachmentTemp = [...attachment]
     let newCount = tempCount + 1
     this.setState({ count : newCount })
     attachmentTemp.push({
-      name : 'BIR 1905 Form ' + tempCount
+      name : 'Form' + tempCount
     })
     this.setState({ attachmentsData : attachmentTemp })
   }
@@ -136,7 +152,9 @@ class PostEmploymentFragment extends BaseMVPView {
       pdfFile,
       count,
       attachments,
-      attachmentsData
+      attachmentsData,
+      showNoticeResponseModal,
+      noticeResponse,
     } = this.state
 
     const arrayCard = [{
@@ -147,11 +165,21 @@ class PostEmploymentFragment extends BaseMVPView {
       name : 'Bureau of Internal Revenue(BIR) Form 2316',
     }, {
       id: 3,
-      name : 'Certificate of Employment Attachment',
+      name : 'Certificate of Employment',
     }]
 
     return (
       <div className={ 'postemployment-container' }>
+        {
+          showNoticeResponseModal &&
+          <ResponseModal
+            onClose={ () => {
+              this.setState({ showNoticeResponseModal : false})
+              this.presenter.getPostEmployment()
+            }}
+            noticeResponse={ noticeResponse }
+          />
+        }
         <div></div>
         <div>
           <div className = { 'percentage-grid' }>
@@ -195,6 +223,7 @@ class PostEmploymentFragment extends BaseMVPView {
               <PostEmploymentComponent
                 pdfFile = { pdfFile }
                 count = { count }
+                attachments = { attachments }
                 attachmentsData = { attachmentsData }
                 enabledLoaderPdfModal = { enabledLoaderPdfModal }
                 enabledLoader = { enabledLoader }
@@ -204,9 +233,20 @@ class PostEmploymentFragment extends BaseMVPView {
                 bir1905Array = { this.getFormData(1) }
                 bir2316Array = { this.getFormData(2) }
                 pageId = { pageId }
+                countFunc = { (count) => this.setState({ count }) }
                 addAttachmentsFunc = { (data, tempCount) => this.addAttachmentsFunc(data, tempCount)  }
                 getOnBoardingDocument = { (link) => this.presenter.getOnBoardingDocument(link) }
                 getSelectedAttachments = { (resp) => this.presenter.getSelectedAttachments(resp) }
+                submitForm = { (id) => {
+                  {
+                    try {
+                      this.setState({ enabledLoader : true })
+                      this.submitForm(id)
+                    } catch (e) {
+                      console.log(e)
+                    }
+                  }
+                } }
                 />
             </div>
           }

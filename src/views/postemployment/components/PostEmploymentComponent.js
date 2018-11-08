@@ -27,12 +27,16 @@ function PostEmploymentFragments(props) {
   const pdfFile = props.pdfFile
   const attachmentsData = props.attachmentsData
   const addAttachmentsFunc = props.addAttachmentsFunc
+  const attachments = props.attachments
   const count = props.count
+  const countFunc = props.countFunc
+  const submitForm = props.submitForm
 
   if(page === 1) {
     return <PostEmploymetBIR1905Fragment
       enabledLoaderPdfModal = { enabledLoaderPdfModal }
       pdfFile = { pdfFile }
+      submitForm = { (id) => submitForm(id) }
       attachmentsData = { attachmentsData }
       page = { page }
       count = { count }
@@ -40,28 +44,50 @@ function PostEmploymentFragments(props) {
       title = { (resp) => title(resp) }
       percentage = { percentage }
       bir1905Array = { bir1905Array }
+      attachments = { attachments }
       enabledLoader = { enabledLoader }
       getSelectedAttachments = { (resp) => getSelectedAttachments(resp) }
       getOnBoardingDocument = { (link) => setOnBoardingDocument(link)  }
-      addAttachmentsFunc = { () => addAttachmentsFunc() }
+      addAttachmentsFunc = { (data, count) => addAttachmentsFunc(data, count) }
+      countFunc = { () => countFunc() }
       />
   } else if (page === 2) {
     return <PostEmploymentBIR2316Fragment
+      enabledLoaderPdfModal = { enabledLoaderPdfModal }
+      pdfFile = { pdfFile }
+      submitForm = { (id) => submitForm(id) }
+      attachmentsData = { attachmentsData }
       page = { page }
+      count = { count }
       subtitle = { (resp) => subtitle(resp) }
       title = { (resp) => title(resp) }
       percentage = { percentage }
       bir2316Array = { bir2316Array }
+      attachments = { attachments }
       enabledLoader = { enabledLoader }
+      getSelectedAttachments = { (resp) => getSelectedAttachments(resp) }
+      getOnBoardingDocument = { (link) => setOnBoardingDocument(link)  }
+      addAttachmentsFunc = { (data, count) => addAttachmentsFunc(data, count) }
+      countFunc = { () => countFunc() }
     />
   } else if (page === 3) {
     return <PostEmploymentCEAFragment
+      enabledLoaderPdfModal = { enabledLoaderPdfModal }
+      pdfFile = { pdfFile }
+      submitForm = { (id) => submitForm(id) }
+      attachmentsData = { attachmentsData }
       page = { page }
+      count = { count }
       subtitle = { (resp) => subtitle(resp) }
       title = { (resp) => title(resp) }
       percentage = { percentage }
       certificateArray = { certificateArray }
+      attachments = { attachments }
       enabledLoader = { enabledLoader }
+      getSelectedAttachments = { (resp) => getSelectedAttachments(resp) }
+      getOnBoardingDocument = { (link) => setOnBoardingDocument(link)  }
+      addAttachmentsFunc = { (data, count) => addAttachmentsFunc(data, count) }
+      countFunc = { () => countFunc() }
     />
   }
 }
@@ -84,7 +110,8 @@ class PostEmploymentComponent extends Component {
       enabledLoaderPdfModal,
       pdfFile,
       attachmentsData,
-      count
+      count,
+      attachments
     } = this.props
 
     return (
@@ -101,7 +128,9 @@ class PostEmploymentComponent extends Component {
           bir2316Array = { bir2316Array }
           certificateArray = { certificateArray }
           bir1905Array = { bir1905Array }
+          attachments = { attachments }
           attachmentsData = { attachmentsData }
+          submitForm = { (id) => this.props.submitForm(id) }
           addAttachmentsFunc = { (data, count) => this.props.addAttachmentsFunc(data, count) }
           getSelectedAttachments = { (resp) => this.props.getSelectedAttachments(resp) }
           setOnBoardingDocument = { (link) => this.props.getOnBoardingDocument(link) }

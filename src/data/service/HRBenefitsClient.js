@@ -1247,8 +1247,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  addPostRequirement (token, requirementsParam) {
-    return this.service.addPostRequirement(token, requirementParam)
+  addPostRequirement (token, employeeParam) {
+    return this.service.addPostRequirement(token, employeeParam)
       .pipe(ServiceErrorOperator())
   }
 
