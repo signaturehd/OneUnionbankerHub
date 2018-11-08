@@ -16,17 +16,15 @@ import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
 class PostEmploymetBIR1905Fragment extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      showPdfViewComponent : false,
+    }
   }
 
   componentDidMount () {
     this.props.subtitle('Please download and fill-up the Bereau of Internal Revenue(BIR) 1905 Form then attach the document.')
     this.props.title('Bereau of Internal Revenue (BIR) Form 1905.')
-    try {
     this.checkAttachments()
-
-  } catch (e) {
-    console.log(e)
-  }
   }
 
   checkAttachments () {
@@ -41,6 +39,10 @@ class PostEmploymetBIR1905Fragment extends Component {
     const {
       pageId,
     } = this.props
+
+    const {
+      showPdfViewComponent,
+    } = this.state
 
     return (
       <div>
@@ -59,12 +61,11 @@ class PostEmploymetBIR1905Fragment extends Component {
               </div>
             </div>
           </Card>
-          {
-            // showPdfViewComponent &&
-            // <BiographicalViewerComponent
-            //   pdfFile = { pdfFile }
-            //   onClose = { () => this.setState({ showPdfViewComponent: false }) }
-            // />
+            showPdfViewComponent &&
+            <BiographicalViewerComponent
+              pdfFile = { pdfFile }
+              onClose = { () => this.setState({ showPdfViewComponent: false }) }
+            />
           }
         </div>
       </div>
