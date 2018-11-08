@@ -8,6 +8,14 @@ import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/pr
 import store from '../../../../store'
 import { NotifyActions } from '../../../../actions'
 
+// Convert base64 to file object
+function urltoFile(url, filename, fileType){
+  return (fetch(url)
+   .then((resp) => {return resp.arrayBuffer()})
+   .then((base64) => {return new File([base64], filename, {type:fileType})})
+  )
+}
+
 let bloodObjectParam = [
  {
    id : 0,
@@ -92,10 +100,32 @@ export default class SpousePresenter {
     this.view.showBloodType(bloodObjectParam)
   }
 
+
+  checkFileType (file) {
+    const str = file.split(';')
+    const strImage = str[0].replace(/^data:/, '')
+
+    return strImage
+  }
+
+  generateRandomName (resp) {
+    const name = Math.random().toString(36).substring(2, 18)
+    let fileExtension = this.checkFileType(resp).split('/')
+    fileExtension = fileExtension[fileExtension.length - 1]
+    return name + '.' + fileExtension
+  }
+
+
   getOnboardingAttachments (attachments) {
     this.view.showAttachmentsCircularLoader()
     this.getOnboardingAttachmentsInteractor.execute(attachments)
     .subscribe(data => {
+      const name = data && this.generateRandomName(data)
+      const type = data && this.checkFileType(data)
+      urltoFile(data, name, type)
+      .then((file) => {
+        this.view.showRetrieveAttachments(file, name, data)
+      })
       this.view.hideAttachmentsCircularLoader()
       this.view.showAttachmentsFileView(data)
     }, error => {
@@ -232,31 +262,71 @@ export default class SpousePresenter {
     healthHospitalizationPlan,
     groupLifeInsurance,
     spouseId,
-    spouseAttachmentsArray
+    spouseAttachmentsArray,
+    attachments
   ) {
-    this.view.showCircularLoader()
-    this.putSpouseInteractor.execute(addSpouseForm(
-      firstName,
-      middleName,
-      lastName,
-      birthDate,
-      occupation,
-      contact,
-      status,
-      gender,
-      bloodType,
-      healthHospitalizationPlan,
-      groupLifeInsurance,
-      spouseId,
-      spouseAttachmentsArray
-    ))
-    .subscribe(data => {
-      this.view.hideCircularLoader()
-      this.getSpouse()
-      this.view.noticeResponseFunc(data, true)
-    }, error => {
-      this.view.hideCircularLoader()
-      this.view.reload()
-    })
+    console.log(attachments)
+    let validateAttachments = false
+    spouseAttachmentsArray && spouseAttachmentsArray.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
+    try {
+      if(validateAttachments) {
+        this.view.showCircularLoader()
+        this.putSpouseInteractor.execute(addSpouseForm(
+          firstName,
+          middleName,
+          lastName,
+          birthDate,
+          occupation,
+          contact,
+          status,
+          gender,
+          bloodType,
+          healthHospitalizationPlan,
+          groupLifeInsurance,
+          spouseId,
+          spouseAttachmentsArray,
+        ))
+        .subscribe(data => {
+          this.view.hideCircularLoader()
+          this.view.noticeResponseFunc(data, true)
+        }, error => {
+          this.view.hideCircularLoader()
+          this.view.reload()
+        })
+      } else {
+        console.log('test')
+        this.view.showCircularLoader()
+        this.putSpouseInteractor.execute(addSpouseForm(
+          firstName,
+          middleName,
+          lastName,
+          birthDate,
+          occupation,
+          contact,
+          status,
+          gender,
+          bloodType,
+          healthHospitalizationPlan,
+          groupLifeInsurance,
+          spouseId,
+          attachments
+        ))
+        .subscribe(data => {
+          this.view.hideCircularLoader()
+          this.view.noticeResponseFunc(data, true)
+        }, error => {
+          this.view.hideCircularLoader()
+          this.view.reload()
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
