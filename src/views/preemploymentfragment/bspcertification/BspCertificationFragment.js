@@ -66,7 +66,7 @@ class BspCertificationFragment extends BaseMVPView {
       {
         id: 0,
         title: 'Banko Sentral ng Pilipinas(BSP) Certificate',
-        link: '/2018-11-07/12345-BSP Certification-1539624445855.pdf',
+        link: '/2018-10-30/12345-BSP Certification-1539624445855.pdf',
       }
     ]
     return(

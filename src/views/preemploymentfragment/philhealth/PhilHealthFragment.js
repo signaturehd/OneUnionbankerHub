@@ -194,7 +194,7 @@ class PhilHealthFragment extends BaseMVPView {
           <Card
             className = { 'ph-card' }
             onClick = { () => {
-              this.onCheckedPdf('/2018-11-07/12345-PhilHealth Form-1538123169079.pdf')
+              this.onCheckedPdf('/2018-10-30/12345-PhilHealth Form-1538123169079.pdf')
               this.setState({ showPdfViewComponent : true  })
               }
             }>
