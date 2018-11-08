@@ -16,20 +16,6 @@ class LaptopLeaseOtherDetailCardComponent extends Component {
   render () {
   const { detailsLaptopLease } = this.props
 
-  console.log(detailsLaptopLease.LaptopLeaseDetails.Brand,
-detailsLaptopLease.LaptopLeaseDetails.ColorFamily,
-detailsLaptopLease.LaptopLeaseDetails.DeliveryType,
-detailsLaptopLease.LaptopLeaseDetails.EstimatedCost,
-detailsLaptopLease.LaptopLeaseDetails.GraphicsCard,
-detailsLaptopLease.LaptopLeaseDetails.HardDriveCapacity,
-detailsLaptopLease.LaptopLeaseDetails.Model,
-detailsLaptopLease.LaptopLeaseDetails.OperatingSystem,
-detailsLaptopLease.LaptopLeaseDetails.ProcessorType,
-detailsLaptopLease.LaptopLeaseDetails.ScreenSize,
-detailsLaptopLease.LaptopLeaseDetails.SystemMemory,
-detailsLaptopLease.LaptopLeaseDetails.Term,
-)
-
   return (
     <div  className = { 'transaction-component-otherdetails-form' }>
       <div>
