@@ -60,7 +60,6 @@ export default class SSSPresenter {
       this.view.noticeResponseResp(data)
     }, error => {
       this.view.hideDocumentLoader()
-      this.view.noticeResponseResp(error)
       store.dispatch(NotifyActions.resetNotify())
     })
   }
@@ -75,7 +74,6 @@ export default class SSSPresenter {
       this.view.setSSSAttachments()
     }, error => {
       this.view.hideDocumentLoader()
-      this.view.noticeResponseResp(error)
       store.dispatch(NotifyActions.resetNotify())
     })
   }

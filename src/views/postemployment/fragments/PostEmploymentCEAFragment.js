@@ -6,86 +6,163 @@ import {
   GenericButton,
   CircularLoader,
   Card,
+  Line ,
   MultipleAttachments
 }  from '../../../ub-components/'
 
+import ResponseModal from '../../notice/NoticeResponseModal'
+
+import PostEmploymentViewComponent from '../components/PostEmploymentViewComponent'
+
+import PreEmploymentViewAttachmentsComponent from '../../preemployment/components/PreEmploymentViewAttachmentsComponent'
+import ViewAttachmentModal from '../../preemployment/modals/ViewAttachmentModal'
 
 class PostEmploymentCEAFragment extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      ceaAttachments: [{
-        name : 'Certificate of Employment'
-      }],
-      count : 2,
+      showPdfViewComponent : false,
+      birDataFormData : false,
     }
-    this.addAttachmentsFunc = this.addAttachmentsFunc.bind(this)
   }
 
   componentDidMount () {
     this.props.subtitle('Please attach your Certificate of Employment.')
     this.props.title('Certificate of Employment')
+    this.checkAttachments()
   }
 
-  addAttachmentsFunc () {
-    const attachmentTemp = [...this.state.ceaAttachments]
-    let newCount = this.state.count + 1
-    this.setState({ count : newCount })
-    attachmentTemp.push({
-      name : 'Certificate of Employment ' + this.state.count
-    })
-    this.setState({ ceaAttachments : attachmentTemp })
+  checkAttachments () {
+    const {
+      certificateArray
+    } = this.props
+    this.props.getSelectedAttachments(certificateArray)
   }
+
 
   render () {
     const {
+      enabledLoaderPdfModal,
+      pdfFile,
       pageId,
+      bir2316Array,
+      attachmentsData,
+      enabledLoader,
+      count,
+      attachments,
+      certificateArray
     } = this.props
 
     const {
-      count,
-      ceaAttachments,
+      showPdfViewComponent,
     } = this.state
 
     return (
       <div>
-        <br/>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-              text = { 'Add Attachments' }
-              onClick = { () => this.addAttachmentsFunc() }
-              />
-          </div>
-          <div>
-            <h4>
-              Certificate of Employment Attachments
-            </h4>
-            <br/>
-            <MultipleAttachments
-              count = { count }
-              countFunc = { (count) => this.setState({ count }) }
-              placeholder = { '' }
-              fileArray = { ceaAttachments }
-              setFile = { (ceaAttachments) =>
-                  this.setState({ ceaAttachments })
-              }
-            />
-            <center>
-              <GenericButton
-                text = { 'Upload' }
-                onClick = { () => {
-              }
-            }/>
-            </center>
-          </div>
-
+        <div className = { 'postemployment-grid-card' }>
           {
-            // showPdfViewComponent &&
-            // <BiographicalViewerComponent
-            //   pdfFile = { pdfFile }
-            //   onClose = { () => this.setState({ showPdfViewComponent: false }) }
-            // />
+            enabledLoaderPdfModal &&
+            <Modal>
+              <div>
+                <center>
+                  <br/>
+                  {
+                    showPdfViewComponent ?
+
+                    <h2>Please wait while we we&#39;re retrieving the documents</h2> :
+                    <h2>Please wait while we we&#39;re validating your submitted documents</h2>
+                  }
+                  <br/>
+                  <CircularLoader show = { enabledLoaderPdfModal }/>
+                  <br/>
+                </center>
+              </div>
+            </Modal>
           }
+
+        </div>
+          {
+              certificateArray.map((status) =>
+              <div>
+                {
+                  status.status === 1  &&
+                  <div className = { 'text-align-right' }>
+                    <GenericButton
+                      text = { 'Add Attachments' }
+                      onClick = { () =>
+                          this.props.addAttachmentsFunc(attachmentsData, count)
+                      }
+                      />
+                  </div>
+                }
+                {
+                  status.status === 2 ?
+                  attachments.length !== certificateArray.length &&
+                    enabledLoader ?
+                    <center>
+                      <br/>
+                      <h2>Please wait while we we&#39;re retrieving your documents </h2>
+                      <br/>
+                      <CircularLoader show = { enabledLoader } />
+                      <br/>
+                    </center>
+                    :
+                    <PreEmploymentViewAttachmentsComponent
+                      title = { 'Certificate of Employment ' }
+                      file = { attachments }
+                      onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
+                    :
+                    <div></div>
+                }
+                {
+                  status.status === 2 &&
+                  <div>
+                  <center>
+                    <h4 className = { 'font-size-14px font-weight-lighter' }>
+                      Your documents has been submitted for confirmation.
+                    </h4>
+                  </center>
+                  </div>
+                }
+                {
+                  status.status === 4 &&
+                  <div>
+                  <center>
+                    <h4 className = { 'font-size-14px font-weight-lighter' }>
+                      Your documents are verified.
+                    </h4>
+                  </center>
+                  </div>
+                }
+                {
+                  status.status === 1 &&
+                  <div>
+                    <h4>
+                      BIR 2316 Attachments
+                    </h4>
+                    <br/>
+                    <MultipleAttachments
+                      count = { count }
+                      countFunc = { (count) => this.props.countFunc(count) }
+                      placeholder = { '' }
+                      fileArray = { attachmentsData }
+                      setFile = { (attachmentsData) =>
+                          this.setState({ attachmentsData })
+                      }
+                    />
+                    <center>
+                      <GenericButton
+                      text = { 'Upload' }
+                      onClick = { () => {
+                        this.props.submitForm(status.id)
+                      }
+                    }/>
+                    </center>
+                  </div>
+                }
+              </div>
+              )
+           }
       </div>
     )
   }
