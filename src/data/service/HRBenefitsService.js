@@ -54,7 +54,8 @@ export default class HRBenefitsService {
   }
 
   updateContactNumber(token, mobileNumber) {
-    return this.accountClient.put('v1/profile/mobile', {
+    console.log('service')
+    return this.apiClient.put('v1/profile/mobile', {
       mobileNumber
     },{
       headers : { token }

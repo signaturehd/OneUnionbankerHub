@@ -19,8 +19,12 @@ class SettingsContactInfoComponent extends Component {
     super(props)
     this.state = {
       updateEmail : false,
+      updateContact : false,
       emailText : '',
-      emailTextErrorMessage: ''
+      emailTextErrorMessage: '',
+      contactNo : '',
+      contactNoErrorMessage: '',
+      defaultNumber : '09'
     }
   }
 
@@ -30,18 +34,28 @@ class SettingsContactInfoComponent extends Component {
 
     if(!validateEmail(email)) {
       this.setState({ emailTextErrorMessage : 'Please enter valid email' })
-    } else if (extension[1] !== 'unionbankph.com') {
-      this.setState({ emailTextErrorMessage : 'Invalid format.\n(e.g sample@unionbankph.com)' })
+    } else if (extension[1] !== 'unionbankph.com' && extension[1] !== 'mercury.unionbankph.com') {
+      this.setState({ emailTextErrorMessage : 'Invalid format.' })
     }else {
       this.setState({ emailTextErrorMessage : '' })
       this.props.onUpdateEmailAddressFunc(this.state.emailText)
-
       this.setState({ updateEmail: false })
     }
   }
 
   checkNumber () {
-
+    const { defaultNumber, contactNo } = this.state
+    const { onUpdateMobileNumberFunc } = this.props
+    const contactNumber = defaultNumber + contactNo
+    if(contactNumber === '09') {
+      this.setState({ contactNoErrorMessage : 'Please enter contact number' })
+    } else if (contactNumber.length !== 11) {
+      this.setState({ contactNoErrorMessage : 'Contact number must be 11 characters.' })
+    } else {
+      onUpdateMobileNumberFunc(contactNumber)
+      this.setState({ contactNoErrorMessage : '' })
+      this.setState({ updateContact: false })
+    }
   }
 
   render () {
@@ -49,13 +63,18 @@ class SettingsContactInfoComponent extends Component {
       profileEmail,
       profileName,
       profileNumber,
-      onUpdateEmailAddressFunc
+      onUpdateEmailAddressFunc,
+      onUpdateMobileNumberFunc
     } = this.props
 
     const {
       updateEmail,
+      updateContact,
       emailText,
       emailTextErrorMessage,
+      contactNo,
+      contactNoErrorMessage,
+      defaultNumber
     } = this.state
 
     return (
@@ -69,10 +88,11 @@ class SettingsContactInfoComponent extends Component {
                 {
                   updateEmail ?
 
-                  <div className = { 'profile-grid-description align-items-center' }>
+                  <div className = { 'align-items-center' }>
                     <GenericInput
                       errorMessage = { emailTextErrorMessage }
-                      text = { 'Enter Email Address' }
+                      hint = { 'Enter Email Address' }
+                      text = { '(e.g sample@unionbankph.com/@mercury.unionbankph.com)' }
                       onChange = { (e) =>
                         this.setState({ emailText : e.target.value })
                       }
@@ -107,19 +127,64 @@ class SettingsContactInfoComponent extends Component {
                 }
               </div>
               <br/>
-              <div className={ 'contact-number-grid' }>
-                <div>
-                  <span className={ 'contact-icon-settings employeeMobileNumber' }/>
-                </div>
-                <div className={ 'contact-info-grid-row' }>
-                  <div className={ 'font-size-17px contact-title' }>
-                    <h2>Mobile Number</h2>
+              {
+                  updateContact ?
+                  <div className = { 'profile-grid-contact align-items-center' }>
+                    <div>
+                      <GenericInput
+                        text = { 'Enter' }
+                        type = { 'number' }
+                        value = { defaultNumber }
+                        disabled = { true }
+                      />
+                    </div>
+                    <div>
+                      <GenericInput
+                        errorMessage = { contactNoErrorMessage }
+                        text = { 'Contact Number' }
+                        type = { 'number' }
+                        hint = { 'e.g 09123456789' }
+                        maxLength = { 10 }
+                        onChange = { (e) => {
+                            const contactNumber = defaultNumber + e.target.value
+                            this.setState({ contactNo : e.target.value })
+                            contactNumber.length !== 11 ?
+                            this.setState({ contactNoErrorMessage : 'It must be 11 characters.' })
+                            :
+                            this.setState({ contactNoErrorMessage : '' })
+                          }
+                        }
+                        value = { contactNo }
+                      />
+                    </div>
+                    <div>
+                      <GenericButton
+                        className = { 'align-items-center global-button profile-button-small' }
+                        onClick = { () => this.checkNumber() }
+                        text = { 'Update' }
+                      />
+                    </div>
                   </div>
-                  <div className={ 'font-size-16px' }>
-                    <a>+{ profileNumber ? profileNumber : '(Not Yet Provided)' }</a>
+                  :
+                  <div className={ 'contact-number-grid' }>
+                    <div>
+                      <span className={ 'contact-icon-settings employeeMobileNumber' }/>
+                    </div>
+                    <div className = { 'profile-address-grid-x2' } >
+                    <div className={ 'contact-info-grid-row' }>
+                      <div className={ 'font-size-17px contact-title' }>
+                        <h2>Mobile Number</h2>
+                      </div>
+                      <div className={ 'font-size-16px' }>
+                        <a>+{ profileNumber ? profileNumber : '(Not Yet Provided)' }</a>
+                      </div>
+                    </div>
+                    <span
+                      onClick = { () => this.setState({ updateContact : true }) }
+                      className = { 'alignment-center profile-icon-settings editIconImage' }/>
+                    </div>
                   </div>
-                </div>
-              </div>
+                }
             </div>
           </div>
           <div></div>
