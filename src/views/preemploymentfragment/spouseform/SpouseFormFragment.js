@@ -33,6 +33,9 @@ import * as validate from './functions/SpouseFunctions'
 
 import moment from 'moment'
 
+let arrayNew = []
+let arrayNewAttachments = []
+
 class SpouseFormFragment extends BaseMVPView {
   constructor(props) {
     super(props)
@@ -84,6 +87,7 @@ class SpouseFormFragment extends BaseMVPView {
       bloodTypeErrorMessage: '',
       noticeResponse: '',
       viewFile: '',
+      attachmentFileObject: []
     }
   }
 
@@ -159,8 +163,20 @@ class SpouseFormFragment extends BaseMVPView {
     this.setState({ spouseData  })
   }
 
+
+  showRetrieveAttachments (file, name, base64) {
+    arrayNew = [...this.state.attachmentFileObject]
+    const objectFile = {
+      file,
+      name,
+      base64
+    }
+    arrayNew.push(objectFile)
+    this.setState({ attachmentFileObject : arrayNew })
+  }
+
   showAttachmentsFileView (data) {
-    let arrayNew = [...this.state.attachments]
+    arrayNewAttachments = [...this.state.attachments]
     const objectArray = {
       file : data
     }
@@ -239,7 +255,8 @@ class SpouseFormFragment extends BaseMVPView {
       hospitalization,
       groupPlan,
       spouseId,
-      spouseAttachmentsArray
+      spouseAttachmentsArray,
+      attachmentFileObject
     } = this.state
       if(editMode) {
         this.presenter.putSpouseForm(
@@ -256,7 +273,7 @@ class SpouseFormFragment extends BaseMVPView {
           groupPlan,
           spouseId,
           spouseAttachmentsArray,
-          attachments,
+          attachmentFileObject,
         )
       } else {
         this.presenter.postSpouseForm(
@@ -360,6 +377,7 @@ class SpouseFormFragment extends BaseMVPView {
       groupPlan,
       viewFile,
       enabledAttachmentsLoader,
+      attachmentFileObject
     } = this.state
 
   return(
@@ -372,7 +390,14 @@ class SpouseFormFragment extends BaseMVPView {
         noticeResponse = { noticeResponse }
         onClose = { () => {
           this.props.reloadPreEmploymentForm()
-          this.setState({ showNoticeResponseModal: false }) }
+          this.presenter.getSpouse()
+          arrayNewAttachments = []
+          arrayNew = []
+          this.setState({
+            attachments : [],
+            attachmentFileObject : [],
+            spouseAttachmentsArray : [],
+            showNoticeResponseModal: false }) }
         }
       />
     }
@@ -586,12 +611,12 @@ class SpouseFormFragment extends BaseMVPView {
                        :
                        <div>
                          {
+                           attachments &&
                            attachments.length !== 0 &&
                            <PreEmploymentViewAttachmentsComponent
                              title = { 'Spouse' }
                              file = { attachments }
                              onClick = { (viewFile) => this.setState({ viewFile, showViewModal : true }) }/>
-
                          }
                        </div>
                    }

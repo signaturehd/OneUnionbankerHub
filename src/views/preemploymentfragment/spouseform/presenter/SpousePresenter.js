@@ -265,6 +265,7 @@ export default class SpousePresenter {
     spouseAttachmentsArray,
     attachments
   ) {
+    console.log(attachments)
     let validateAttachments = false
     spouseAttachmentsArray && spouseAttachmentsArray.map(
       (attachment, key) => {
@@ -273,56 +274,59 @@ export default class SpousePresenter {
         }
       }
     )
-    if(!validateAttachments) {
-      this.view.showCircularLoader()
-      this.putSpouseInteractor.execute(addSpouseForm(
-        firstName,
-        middleName,
-        lastName,
-        birthDate,
-        occupation,
-        contact,
-        status,
-        gender,
-        bloodType,
-        healthHospitalizationPlan,
-        groupLifeInsurance,
-        spouseId,
-        spouseAttachmentsArray
-      ))
-      .subscribe(data => {
-        this.view.hideCircularLoader()
-        this.getSpouse()
-        this.view.noticeResponseFunc(data, true)
-      }, error => {
-        this.view.hideCircularLoader()
-        this.view.reload()
-      })
-    } else {
-      this.view.showCircularLoader()
-      this.putSpouseInteractor.execute(addSpouseForm(
-        firstName,
-        middleName,
-        lastName,
-        birthDate,
-        occupation,
-        contact,
-        status,
-        gender,
-        bloodType,
-        healthHospitalizationPlan,
-        groupLifeInsurance,
-        spouseId,
-        attachments
-      ))
-      .subscribe(data => {
-        this.view.hideCircularLoader()
-        this.getSpouse()
-        this.view.noticeResponseFunc(data, true)
-      }, error => {
-        this.view.hideCircularLoader()
-        this.view.reload()
-      })
+    try {
+      if(validateAttachments) {
+        this.view.showCircularLoader()
+        this.putSpouseInteractor.execute(addSpouseForm(
+          firstName,
+          middleName,
+          lastName,
+          birthDate,
+          occupation,
+          contact,
+          status,
+          gender,
+          bloodType,
+          healthHospitalizationPlan,
+          groupLifeInsurance,
+          spouseId,
+          spouseAttachmentsArray,
+        ))
+        .subscribe(data => {
+          this.view.hideCircularLoader()
+          this.view.noticeResponseFunc(data, true)
+        }, error => {
+          this.view.hideCircularLoader()
+          this.view.reload()
+        })
+      } else {
+        console.log('test')
+        this.view.showCircularLoader()
+        this.putSpouseInteractor.execute(addSpouseForm(
+          firstName,
+          middleName,
+          lastName,
+          birthDate,
+          occupation,
+          contact,
+          status,
+          gender,
+          bloodType,
+          healthHospitalizationPlan,
+          groupLifeInsurance,
+          spouseId,
+          attachments
+        ))
+        .subscribe(data => {
+          this.view.hideCircularLoader()
+          this.view.noticeResponseFunc(data, true)
+        }, error => {
+          this.view.hideCircularLoader()
+          this.view.reload()
+        })
+      }
+    } catch (e) {
+      console.log(e)
     }
   }
 }
