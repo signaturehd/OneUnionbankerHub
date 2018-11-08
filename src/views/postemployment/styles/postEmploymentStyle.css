@@ -3,6 +3,11 @@
   grid-template-columns: .15fr 1fr .15fr;
 }
 
+.postemployment-document-padding {
+  padding-left : 20px;
+  padding-right : 20px;
+}
+
 .postemployment-grid-card {
   display: grid;
   grid-template-rows: 1fr;

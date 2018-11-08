@@ -5,9 +5,9 @@ import {
   Modal,
   GenericButton,
   CircularLoader
-}  from '../../../../ub-components/'
+}  from '../../../ub-components/'
 
-import './styles/bioComponentStyle.css'
+import '../styles/postEmploymentStyle.css'
 
 class PostEmploymentViewComponent extends Component {
   constructor (props) {
