@@ -54,7 +54,8 @@ export default class HRBenefitsService {
   }
 
   updateContactNumber(token, mobileNumber) {
-    return this.accountClient.put('v1/profile/mobile', {
+    console.log('service')
+    return this.apiClient.put('v1/profile/mobile', {
       mobileNumber
     },{
       headers : { token }
@@ -141,7 +142,6 @@ export default class HRBenefitsService {
 
   requestNewPassword (token, newPassword, otp) {
     const objectParam = {
-      otp: otp,
       password: newPassword,
     }
     return this.apiClient.post('v1/password/reset', objectParam, {
@@ -1922,13 +1922,13 @@ export default class HRBenefitsService {
     })
   }
 
-  addPostRequirement (token, requirementParam) {
+  addPostRequirement (token, employeeParam) {
     const formData = new FormData()
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     const objectParam = {
-      documentType : requirementParam.documentId
+      documentType : employeeParam.documentId
     }
-    requirementParam.attachments.map((resp) =>
+    employeeParam.attachments.map((resp) =>
       (
         formData.append(resp.name.replace('/', '-'), resp.file)
       )

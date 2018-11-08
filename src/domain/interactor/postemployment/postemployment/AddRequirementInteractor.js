@@ -3,7 +3,7 @@ export default class AddRequirementInteractor {
     this.client = client
   }
 
-  execute (requirementParam) {
-    return this.client.addPostRequirement(this.client.getToken(), requirementParam)
+  execute (id, attachments) {
+    return this.client.addPostRequirement(this.client.getToken(), id, attachments)
   }
 }

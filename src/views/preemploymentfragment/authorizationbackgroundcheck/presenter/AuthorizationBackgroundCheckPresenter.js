@@ -1,9 +1,15 @@
-
+import { NotifyActions } from '../../../../actions'
+import store from '../../../../store'
 import GetOnboardingPdfInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingPdfInteractor'
+import GetOnboardingAttachmentsInteractor from '../../../../domain/interactor/preemployment/preemployment/GetOnboardingAttachmentsInteractor'
+import AddEmploymentRequirementInteractor from '../../../../domain/interactor/preemployment/requirement/AddEmploymentRequirementInteractor'
+import employeeRequirementParam from '../../../../domain/param/AddEmployeeRequirementParam'
 
 export default class AuthorizationBackgroundCheckPresenter {
   constructor (container) {
     this.getOnboardingPdfInteractor = new GetOnboardingPdfInteractor(container.get('HRBenefitsClient'))
+    this.getOnboardingAttachmentsInteractor = new GetOnboardingAttachmentsInteractor(container.get('HRBenefitsClient'))
+    this.addEmployeeRequirementInteractor = new AddEmploymentRequirementInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -19,6 +25,38 @@ export default class AuthorizationBackgroundCheckPresenter {
     }, error => {
       this.view.hideDocumentLoader()
     })
+  }
+
+  addAuthorizationData (authId, authAttachment) {
+    this.view.showDocumentLoader()
+    this.addEmployeeRequirementInteractor.execute(employeeRequirementParam(authId, authAttachment))
+    .subscribe(data => {
+      this.view.hideDocumentLoader()
+      this.view.noticeResponseResp(data)
+    }, error => {
+      this.view.hideDocumentLoader()
+      this.view.noticeResponseResp(error)
+    })
+  }
+
+  getOnboardingAttachments (attachments) {
+    this.view.showCircularLoader()
+    this.getOnboardingAttachmentsInteractor.execute(attachments)
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.showAttachmentsFileView(data)
+    }, error => {
+      store.dispatch(NotifyActions.resetNotify())
+      this.view.hideCircularLoader()
+    })
+  }
+
+  getSelectedAttachments (array) {
+    array.map((resp, key) =>
+      resp.url.map((resp1) =>
+        this.getOnboardingAttachments(resp1)
+      )
+    )
   }
 
 }
