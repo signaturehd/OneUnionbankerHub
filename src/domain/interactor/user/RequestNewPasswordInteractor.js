@@ -3,7 +3,7 @@ export default class RequestNewPasswordInteractor {
     this.client = client
   }
 
-  execute (token, newPassword, confirmPassword, otp) {
-    return this.client.requestNewPassword(token, newPassword, confirmPassword, otp)
+  execute (token, newPassword, otp) {
+    return this.client.requestNewPassword(token, newPassword, otp)
   }
 }
