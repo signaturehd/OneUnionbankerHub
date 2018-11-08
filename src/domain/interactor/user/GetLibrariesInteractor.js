@@ -9,7 +9,7 @@ export default class GetLibrariesInteractor {
     return this.client.profile(this.client.getToken())
       .do(data => this.client.setProfile(data))
       .do(profile => {
-          if (profile.employee.image !== '') {            
+          if (profile.employee.image !== '') {
             this.client.getProfilePicture(this.client.getToken(), profile.employee.image)
             .map(data => {
               const updatedProfile = profile
