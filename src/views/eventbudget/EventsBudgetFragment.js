@@ -212,11 +212,23 @@ class EventsBudgetFragment extends BaseMVPView {
                 {
                   let newArrayList = [...storedListId]
                   let isBoolean = hasRecord !== true ? true : false
-                  if(hasRecord) {
-                    this.setState({ amountText : amountText + 500  })
-                    newArrayList.push(id)
-                    this.setState({ storedListId : newArrayList  })
+
+                  let isExisting = false
+                  for (var i in newArrayList) {
+                    if (newArrayList[i] === id) {
+                      isExisting = true
+                      break
+                    }
                   }
+
+                  if (isExisting) {
+                    newArrayList.splice(i, 1)
+                  } else {
+                    newArrayList.push(id)
+                  }
+
+                  this.setState({ amountText : newArrayList.length * 500 })
+                  this.setState({ storedListId : newArrayList })
                 }
               }
               preferredDate = { preferredDate }

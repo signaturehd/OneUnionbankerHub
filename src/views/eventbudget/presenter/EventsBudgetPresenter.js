@@ -90,6 +90,7 @@ export default class EventsBudgetPresenter {
   }
 
   addEventsBudget (storedListId) {
+    console.log(storedListId)
     const newArrayId = storedListId
     const uniArr = [...(new Set(newArrayId))]
     if(storedVenueText === '') {
