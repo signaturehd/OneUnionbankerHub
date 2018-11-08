@@ -49,7 +49,7 @@ class SiblingComponent extends Component {
                     </h2>
                     <h2 className = { 'font-size-12px font-weight-lighter' }>
                       {
-                        functions.checkGender(resp.gender)
+                        functions.checkGender(resp.relationship)
                       }
                     </h2>
                     <h2 className = { 'font-size-14px font-weight-normal' }>
