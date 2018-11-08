@@ -1922,13 +1922,13 @@ export default class HRBenefitsService {
     })
   }
 
-  addPostRequirement (token, requirementParam) {
+  addPostRequirement (token, employeeParam) {
     const formData = new FormData()
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     const objectParam = {
-      documentType : requirementParam.documentId
+      documentType : employeeParam.documentId
     }
-    requirementParam.attachments.map((resp) =>
+    employeeParam.attachments.map((resp) =>
       (
         formData.append(resp.name.replace('/', '-'), resp.file)
       )
