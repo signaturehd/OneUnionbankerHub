@@ -143,6 +143,7 @@ class ResetPasswordFragment extends BaseMVPView {
 
     return (
       <Card className = {'login-form'}>
+        { super.render() }
         {
           showNoticeResponseModal &&
           <NoticeResponse
