@@ -33,7 +33,6 @@ export default class PersonnelSignaturePresenter {
       this.view.noticeResponseResp(data)
     }, error => {
       this.view.hideCircularLoader()
-      this.view.noticeResponseResp(error)
     })
   }
 
