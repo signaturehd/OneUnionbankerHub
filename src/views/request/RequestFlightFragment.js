@@ -289,6 +289,7 @@ class RequestFlightFragment extends BaseMVPView {
           submitLoader ?
           <Modal>
             <center>
+              <h2>Please wait...</h2>
               <CircularLoader show = { submitLoader }/>
             </center>
           </Modal>
