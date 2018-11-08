@@ -28,6 +28,9 @@ import * as func from './functions/ChildrenFunctions'
 import "react-sweet-progress/lib/style.css"
 import './styles/childrenStyle.css'
 
+let arrayNew = []
+let arrayNewAttachments = []
+
 class ChildrenFragment extends BaseMVPView {
   constructor(props) {
     super(props)
@@ -94,7 +97,7 @@ class ChildrenFragment extends BaseMVPView {
   }
 
   showRetrieveAttachments (file, name, base64) {
-    let arrayNew = [...this.state.attachmentFileObject]
+    arrayNew = [...this.state.attachmentFileObject]
     const objectFile = {
       file,
       name,
@@ -177,12 +180,12 @@ class ChildrenFragment extends BaseMVPView {
   }
 
   showAttachmentsFileView (data) {
-    let arrayNew = [...this.state.attachments]
+    arrayNewAttachments = [...this.state.attachments]
     const objectArray = {
       file : data
     }
-    arrayNew.push(objectArray)
-    this.setState({ attachments : arrayNew })
+    arrayNewAttachments.push(objectArray)
+    this.setState({ attachments : arrayNewAttachments })
   }
 
   /*edit mode*/
@@ -367,8 +370,16 @@ class ChildrenFragment extends BaseMVPView {
         <NoticeResponse
           noticeResponse = { noticeResponse }
           onClose = { () => {
+            arrayNewAttachments = []
+            arrayNew = []
             this.props.reloadPreEmploymentForm()
-            this.setState({ showNoticeResponse : false })
+            this.setState({
+              showNoticeResponse : false,
+              attachmentFileObject : [],
+              defaultAttachmentsArray : [{
+                name : 'Birth Certificate'
+              }],
+            })
           } }
         />
       }
