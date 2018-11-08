@@ -25,7 +25,7 @@ class MyLearningView extends BaseMVPView {
   }
 
   render () {
-    const { history } = this.props
+    const { history, profile } = this.props
     const { accountNumber, showAccountNumberModal } = this.state
     const mylearning = [{
       id: 0 ,

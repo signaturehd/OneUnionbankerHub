@@ -34,7 +34,7 @@ class LaptopLeaseDetailCardComponent extends Component {
       <div className = { 'transaction-component-details-form' }>
         <div>
           <div className = { 'transaction-icons-details-grid' }>
-            <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+            <span className = { 'transaction-card-icon-settings ' }></span>
             <div>
               <h2>
                 { `Brand: ${brand}`}
@@ -43,7 +43,7 @@ class LaptopLeaseDetailCardComponent extends Component {
             </div>
           </div>
            <div className = { 'transaction-icons-details-grid' }>
-            <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+            <span className = { 'transaction-card-icon-settings ' }></span>
             <div>
               <h2>
                 { `Color Family: ${colorFamily}`}
@@ -52,7 +52,7 @@ class LaptopLeaseDetailCardComponent extends Component {
             </div>
           </div>
            <div className = { 'transaction-icons-details-grid' }>
-            <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+            <span className = { 'transaction-card-icon-settings ' }></span>
             <div>
               <h2>
                 { `Estimated Cost: ${estimatedCost}`}
@@ -61,7 +61,7 @@ class LaptopLeaseDetailCardComponent extends Component {
             </div>
           </div>
           <div className = { 'transaction-icons-details-grid' }>
-            <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+            <span className = { 'transaction-card-icon-settings ' }></span>
             <div>
               <h2>
                 { dateFilled }
@@ -78,26 +78,26 @@ class LaptopLeaseDetailCardComponent extends Component {
               <br/>
             </div>
           </div>
-          <div className = { 'transaction-icons-details-grid' }>
-            <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
-            <div>
-              <h2>
-                { `Account Number: ${acccountNumber}` }
-              </h2>
-              <br/>
-            </div>
-          </div>
+          // <div className = { 'transaction-icons-details-grid' }>
+          //   <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
+          //   <div>
+          //     <h2>
+          //       { `Account Number: ${acccountNumber}` }
+          //     </h2>
+          //     <br/>
+          //   </div>
+          // </div>
+          //  <div className = { 'transaction-icons-details-grid' }>
+          //   <span className = { 'transaction-card-icon-settings ' }></span>
+          //   <div>
+          //     <h2>
+          //       { `Releasing Center: ${releasingCenter}`}
+          //     </h2>
+          //     <br/>
+          //   </div>
+          // </div>
            <div className = { 'transaction-icons-details-grid' }>
-            <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
-            <div>
-              <h2>
-                { `Releasing Center: ${releasingCenter}`}
-              </h2>
-              <br/>
-            </div>
-          </div>
-           <div className = { 'transaction-icons-details-grid' }>
-            <span className = { 'transaction-card-icon-settings global-icons-calendar ' }></span>
+            <span className = { 'transaction-card-icon-settings ' }></span>
             <div>
               <h2>
                 { `Delivery Type: ${deliveryType}`}

@@ -99,7 +99,7 @@ class EventsBudgetFormComponent extends Component {
           <GenericInput
             text = { 'Amount' }
             onChange = { (e) => amountTextFunc(e.target.value) }
-            value = { amountText ? amountText : format(events && events.amount)  }
+            value = { amountText }
           />
         <div className = { 'grid-global' }>
 
@@ -107,7 +107,8 @@ class EventsBudgetFormComponent extends Component {
           <DatePicker
             selected = { venue && venue.targetDate ? moment(venue.targetDate) : moment(preferredDate) }
             onChange = { (e) => dateFunc(e) }
-            minDate = { moment() }
+            minDate = { events && moment(events.startDate) }
+            maxDate = { events && moment(events.endDate) }
             readOnly
             dateFormat = { 'MM/DD/YYYY' }
             text = { 'Events Date' }

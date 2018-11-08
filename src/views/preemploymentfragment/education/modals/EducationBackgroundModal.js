@@ -41,7 +41,20 @@ class EducationBackgroundModal extends Component {
       return 'Doctorate'
     } else if (id === 3) {
       return 'Vocational'
-    } 
+    }
+  }
+
+  checkDegreeText (id) {
+    console.log(id)
+    if(id.toLowerCase() === 'bachelors') {
+      return 'Bachelors'
+    } else if (id.toLowerCase() === 'masteral') {
+      return 'Masteral'
+    } else if (id.toLowerCase() === 'doctorate') {
+      return 'Doctorate'
+    } else if (id.toLowerCase() === 'vocational') {
+      return 'Vocational'
+    }
   }
 
   render () {
@@ -175,7 +188,7 @@ class EducationBackgroundModal extends Component {
           errorMessage = { studentNoErrorMessage }/>
         <GenericInput
           text = { 'Degree' }
-          value = { this.checkDegree(degreeId) }
+          value = { this.checkDegreeText(degree) }
           readOnly
           onChange = { (e) => degreeFunc(e.target.value) }
           onClick = { () => showDegreeFunc(true) }
