@@ -23,8 +23,6 @@ class SideBar extends Component {
       splitUserInitial
     } = this.props
 
-    console.log(profile)
-
   const modules =
   [
     {

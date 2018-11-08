@@ -169,6 +169,7 @@ export default class SettingsPresenter {
        this.getProfile()
      }, error => {
        this.view.hideCircularLoader()
+       store.dispatch(NotifyActions.resetNotify())
      })
    }
 

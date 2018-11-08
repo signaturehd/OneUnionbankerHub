@@ -223,9 +223,6 @@ class SettingsProfilePersonalInfoComponent extends Component {
                             </a>
                             </div>
                           </div>
-                          <span
-                            onClick = { () => this.setState({ updateCivilStatus : true }) }
-                            className = { 'alignment-center profile-icon-settings editIconImage' }/>
                         </div>
                       </div>
                     }
