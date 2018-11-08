@@ -32,6 +32,11 @@ class PostEmploymentBIR2316Fragment extends Component {
     this.checkAttachments()
   }
 
+
+  onCheckedPdf (link) {
+    this.props.getOnBoardingDocument(link)
+  }
+
   checkAttachments () {
     const {
       bir2316Array

@@ -63,7 +63,7 @@ PostEmploymentViewComponent.propTypes = {
   bioTitle : PropTypes.bool,
 }
 PostEmploymentViewComponent.defaultProps = {
-  bioTitle : 'Biographical Data Form'
+  bioTitle : ''
 }
 
 export default PostEmploymentViewComponent
