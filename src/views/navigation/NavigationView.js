@@ -110,7 +110,7 @@ class NavigationView extends BaseMVPView {
       tempPreEmploymentModal: false,
       hasFilledOut: '',
       preEmploymentStatus: null,
-      isLineManager : null
+      isLineManager : false
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -199,7 +199,6 @@ class NavigationView extends BaseMVPView {
   }
 
   isLineManagerData (isLineManager) {
-    console.log(isLineManager)
     this.setState({ isLineManager })
   }
 

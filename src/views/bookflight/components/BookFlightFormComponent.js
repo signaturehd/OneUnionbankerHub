@@ -10,6 +10,7 @@ import {
   GenericButton,
   GenericInput,
   MultipleAttachments,
+  SingleInputModal,
   Modal
 }  from '../../../ub-components/'
 import moment from 'moment'
@@ -36,16 +37,28 @@ class BookFlightFormComponent extends Component {
       rturn,
       departureDate,
       departureTime,
+      departureTimeFunc,
       returnDate,
       returnTime,
+      returnTimeFunc,
       totalCostOfFlight,
+      totalCostOfFlightFunc,
       totalServiceCharge,
+      totalServiceChargeFunc,
       valueAddedTax,
+      valueAddedTaxFunc,
       totalAmount,
       bookflightArray,
+      travelGroupArray,
+      showTravelGroupFunc,
+      showTravelGroup,
+      travelGroupId,
+      travelGroup,
+      travelGroupHeadFunc,
+      onClose,
       attachmentsData,
       attachmentsData2,
-      submitFunc
+      submitFunc,
     } = this.props
 
     const depTime = departureDate + " " + departureTime
@@ -87,6 +100,17 @@ class BookFlightFormComponent extends Component {
           }
         </Card>
         <br/>
+        {
+          showTravelGroup &&
+          <SingleInputModal
+            label = { 'Group Heads' }
+            inputArray = { travelGroupArray }
+            selectedArray = { (travelGroupId, travelGroup) =>
+              travelGroupHeadFunc(travelGroupId, travelGroup)
+            }
+            onClose = { () => onClose() }
+          />
+        }
         <div className = { 'grid-global' }>
           <div>
           <h2>DEPARTURE</h2>
@@ -94,7 +118,7 @@ class BookFlightFormComponent extends Component {
             text = { departureDate }
             type = { 'time' }
             value = { departureTime }
-            onChange = { (e) => this.departureTimeFunc(e.target.value) }
+            onChange = { (e) => departureTimeFunc(e.target.value) }
           />
           </div>
           {
@@ -105,7 +129,7 @@ class BookFlightFormComponent extends Component {
             text = { returnDate }
             type = { 'time' }
             value = { returnTime }
-            onChange = { (e) => this.returnTimeFunc(e.target.value) }
+            onChange = { (e) => returnTimeFunc(e.target.value) }
             />
             </div>
           }
@@ -116,21 +140,29 @@ class BookFlightFormComponent extends Component {
               text = { 'Total Cost of Flight' }
               type = { 'number' }
               value = { totalCostOfFlight == 0 ? '' : totalCostOfFlight }
-              onChange = { (e) => this.totalCostOfFlightFunc(e.target.value) }
+              onChange = { (e) => totalCostOfFlightFunc(e.target.value) }
             />
             <GenericInput
               text = { 'Total Service Charge' }
               type = { 'number' }
               value = { totalServiceCharge == 0 ? '' : totalServiceCharge }
-              onChange = { (e) => this.totalServiceChargeFunc(e.target.value) }
+              onChange = { (e) => totalServiceChargeFunc(e.target.value) }
             />
+            {
+              totalAmount >= '50000' &&
+              <GenericInput
+                text = { 'Group Heads' }
+                value = { travelGroup }
+                onClick = { () => showTravelGroupFunc() }
+              />
+            }
           </div>
           <div>
             <GenericInput
               text = { 'Value-Added Tax' }
               type = { 'number' }
               value = { valueAddedTax == 0 ? '' : valueAddedTax }
-              onChange = { (e) => this.valueAddedTaxFunc(e.target.value) }
+              onChange = { (e) => valueAddedTaxFunc(e.target.value) }
             />
             <GenericInput
               text = { 'Total Amount' }

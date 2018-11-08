@@ -1319,6 +1319,11 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  getTravelGroup (token) {
+    return this.service.getTravelGroup(token)
+    .pipe(ServiceErrorOperator())
+  }
+
   getApproval (token) {
     return this.service.getApproval(token)
     .pipe(ServiceErrorOperator())
