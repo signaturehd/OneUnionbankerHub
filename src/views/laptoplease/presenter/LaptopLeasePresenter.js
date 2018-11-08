@@ -28,7 +28,6 @@ export default class LaptopLeasePresenter {
 
   setAmount (amount) {
     storedAmount = amount
-    console.log(amount)
     this.view.setAmount(amount)
   }
 

@@ -37,70 +37,7 @@ class LaptopLeaseDetailCardComponent extends Component {
             <span className = { 'transaction-card-icon-settings ' }></span>
             <div>
               <h2>
-                { `Brand: ${brand}`}
-              </h2>
-              <br/>
-            </div>
-          </div>
-           <div className = { 'transaction-icons-details-grid' }>
-            <span className = { 'transaction-card-icon-settings ' }></span>
-            <div>
-              <h2>
-                { `Color Family: ${colorFamily}`}
-              </h2>
-              <br/>
-            </div>
-          </div>
-           <div className = { 'transaction-icons-details-grid' }>
-            <span className = { 'transaction-card-icon-settings ' }></span>
-            <div>
-              <h2>
-                { `Estimated Cost: ${estimatedCost}`}
-              </h2>
-              <br/>
-            </div>
-          </div>
-          <div className = { 'transaction-icons-details-grid' }>
-            <span className = { 'transaction-card-icon-settings ' }></span>
-            <div>
-              <h2>
                 { dateFilled }
-              </h2>
-              <br/>
-            </div>
-          </div>
-          <div className = { 'transaction-icons-details-grid' }>
-            <span className = { ' transaction-card-icon-settings global-icons-referenceNumber' }></span>
-            <div>
-              <h2>
-                {`Reference Number: ${referenceNumber}`  }
-              </h2>
-              <br/>
-            </div>
-          </div>
-          // <div className = { 'transaction-icons-details-grid' }>
-          //   <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
-          //   <div>
-          //     <h2>
-          //       { `Account Number: ${acccountNumber}` }
-          //     </h2>
-          //     <br/>
-          //   </div>
-          // </div>
-          //  <div className = { 'transaction-icons-details-grid' }>
-          //   <span className = { 'transaction-card-icon-settings ' }></span>
-          //   <div>
-          //     <h2>
-          //       { `Releasing Center: ${releasingCenter}`}
-          //     </h2>
-          //     <br/>
-          //   </div>
-          // </div>
-           <div className = { 'transaction-icons-details-grid' }>
-            <span className = { 'transaction-card-icon-settings ' }></span>
-            <div>
-              <h2>
-                { `Delivery Type: ${deliveryType}`}
               </h2>
               <br/>
             </div>
