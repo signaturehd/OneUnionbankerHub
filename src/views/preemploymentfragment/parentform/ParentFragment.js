@@ -230,8 +230,8 @@ class ParentFragment extends BaseMVPView {
       birthDate : nullChecker.birthDate,
       occupationName : nullChecker.occupation,
       contact : nullChecker.contactNumber,
-      gender : nullChecker.gender === 'M' ? 'Male' : 'Female',
-      genderId : nullChecker.gender === 'M' ? 'M' : 'F',
+      gender : nullChecker.relationship === 'Brother' ? 'Male' : 'Female',
+      genderId : nullChecker.relationship === 'Brother' ? 'M' : 'F',
       parentId : nullChecker.id,
       relationship : nullChecker.relationship,
       statusId : nullChecker.status,
@@ -258,14 +258,16 @@ class ParentFragment extends BaseMVPView {
       groupPlan,
       isParentOrSiblings
     } = this.state
-    const gender = genderId === 'M' ? 'M' : 'F'
+
+    const gender = genderId === 0 ? 'M' : 'F'
+
     if(isParentOrSiblings) {
       this.presenter.updateParentForm(
         parentId,
         firstName,
         lastName,
         middleName,
-        gender,
+        genderId,
         relationship,
         statusId,
         contact,
@@ -321,7 +323,7 @@ class ParentFragment extends BaseMVPView {
         firstName,
         lastName,
         middleName,
-        gender,
+        genderId,
         relationship,
         statusId,
         contact,
