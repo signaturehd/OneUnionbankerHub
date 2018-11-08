@@ -182,6 +182,7 @@ class TravelFragment extends BaseMVPView {
       </div>
     </div>
   )
+
   return (
     <div>
       <div>

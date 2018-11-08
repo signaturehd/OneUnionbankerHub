@@ -124,7 +124,10 @@ class NavigationView extends BaseMVPView {
   }
 
   showProfile (profile) {
-    this.setState({ profile })
+    this.setState({
+      profile : profile.employee,
+      isLineManager: profile.isLineManager
+    })
   }
 
   showCircularLoader () {
@@ -196,10 +199,6 @@ class NavigationView extends BaseMVPView {
 
   isHasCOC (profileHasCOC) {
     this.setState({ profileHasCOC })
-  }
-
-  isLineManagerData (isLineManager) {
-    this.setState({ isLineManager })
   }
 
   relogin () {
