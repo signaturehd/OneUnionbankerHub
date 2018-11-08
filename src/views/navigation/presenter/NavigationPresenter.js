@@ -44,11 +44,10 @@ export default class NavigationPresenter {
   getLibraries () {
     this.view.showLoading()
     this.getLibrariesInteractor.execute()
-     .do(profile => this.view.showProfile(profile.employee))
+     .do(profile => this.view.showProfile(profile))
      .do(profile => this.view.showPinIsValid(profile.hasPIN))
      .do(profile => this.view.isHasCOC(profile.hasCOC))
      .do(profile => this.view.hasFilledOutFunc(profile.hasFilledOut))
-     .do(profile => this.view.isLineManagerData(profile.isLineManager))
       .subscribe(resp => {
         this.view.hideLoading()
       }, error => {

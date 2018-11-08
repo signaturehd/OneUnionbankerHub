@@ -31,7 +31,7 @@ export default class RequestFlightPresenter {
 
   getTravels () {
     this.view.showCircularLoader()
-    this.getTravelsInteractor.execute(6)
+    this.getTravelsInteractor.execute(0)
       .subscribe(travel => {
           this.view.hideCircularLoader()
           this.view.getTravels(travel)
@@ -74,6 +74,7 @@ export default class RequestFlightPresenter {
           this.view.hideSubmitLoader()
           this.view.noticeResponse(req)
           this.view.resetValue()
+          this.getTravels()
         }, e => {
           this.view.hideSubmitLoader()
           // TODO prompt generic error
@@ -91,6 +92,7 @@ export default class RequestFlightPresenter {
           this.view.hideSubmitLoader()
           this.view.noticeResponse(req)
           this.view.resetValue()
+          this.getTravels()
         }, e => {
           this.view.hideSubmitLoader()
           // TODO prompt generic error
