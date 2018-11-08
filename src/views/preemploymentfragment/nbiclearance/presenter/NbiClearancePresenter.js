@@ -23,7 +23,6 @@ export default class NbiClearancePresenter {
       this.view.noticeResponseResp(data)
     }, error => {
       this.view.hideCircularLoader()
-      this.view.noticeResponseResp(error.message)
     })
   }
 
