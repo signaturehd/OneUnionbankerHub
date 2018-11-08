@@ -148,6 +148,7 @@ export default class PreEmploymentPresenter {
   }
 
   postPreEmploymentMessageStatus (status) {
+    store.dispatch(NotifyActions.resetNotify())
     this.postPreEmploymentMessageInteractor.execute(status)
     .subscribe(data => {
       this.view.noticeReponseModal(data)
@@ -191,6 +192,7 @@ export default class PreEmploymentPresenter {
   }
 
   getPreEmploymentForm () {
+    store.dispatch(NotifyActions.resetNotify())
     this.view.showCircularLoader()
     this.preEmploymentFormInteractor.execute()
     .subscribe(
