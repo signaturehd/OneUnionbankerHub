@@ -315,7 +315,7 @@ class ParentFragment extends BaseMVPView {
       groupPlan,
       isParentOrSiblings
     } = this.state
-    const gender = genderId === 'M' ? 'M' : 'F'
+    const gender = genderId === 0 ? 'M' : 'F'
 
     if(isParentOrSiblings) {
       this.presenter.addParentForm(
