@@ -446,6 +446,7 @@ class ParentFragment extends BaseMVPView {
 
     const isVisible = (siblingDetails && siblingDetails.length > 4) ? '' : 'hide'
 
+
     return (
       <div>
       { super.render() }
@@ -607,7 +608,7 @@ class ParentFragment extends BaseMVPView {
                       <div className = { 'text-align-right' }>
                       <GenericButton
                         className = { 'employment-button global-button' }
-                        text = { 'Add Mother' }
+                        text = { 'Add Parent' }
                         onClick = { () =>
                           this.setState({
                             showEditModeModal : true,
