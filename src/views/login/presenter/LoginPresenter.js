@@ -24,7 +24,7 @@ export default class LoginPresenter {
     .subscribe(
       data => {
         this.view.enabledButton()
-        this.view.onLoginSuccess()
+        this.view.onLoginSuccess(data.message)
       },
       error => {
         this.view.onLoginError(error)

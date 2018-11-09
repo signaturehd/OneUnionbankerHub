@@ -44,14 +44,18 @@ export default class NavigationPresenter {
   getLibraries () {
     this.view.showLoading()
     this.getLibrariesInteractor.execute()
-     .do(profile => this.view.showProfile(profile))
-     .do(profile => this.view.showPinIsValid(profile.hasPIN))
-     .do(profile => this.view.isHasCOC(profile.hasCOC))
-     .do(profile => this.view.hasFilledOutFunc(profile.hasFilledOut))
       .subscribe(resp => {
+        this.view.showProfile(profile)
+        this.view.showPinIsValid(profile.hasPIN)
+        this.view.isHasCOC(profile.hasCOC)
+        this.view.hasFilledOutFunc(profile.hasFilledOut)
         this.view.hideLoading()
-      }, error => {
+      }, e => {
         this.view.hideLoading()
+        this.view.showProfile(e.message)
+        this.view.showPinIsValid(e.message.hasPIN)
+        this.view.isHasCOC(e.message.hasCOC)
+        this.view.hasFilledOutFunc(e.message.hasFilledOut)
         // TODO prompt generic error
       }
     )

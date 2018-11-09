@@ -315,7 +315,7 @@ class ParentFragment extends BaseMVPView {
       groupPlan,
       isParentOrSiblings
     } = this.state
-    const gender = genderId === 'M' ? 'M' : 'F'
+    const gender = genderId === 0 ? 'M' : 'F'
 
     if(isParentOrSiblings) {
       this.presenter.addParentForm(
@@ -445,6 +445,7 @@ class ParentFragment extends BaseMVPView {
     } = this.state
 
     const isVisible = (siblingDetails && siblingDetails.length > 4) ? '' : 'hide'
+
 
     return (
       <div>
@@ -607,7 +608,7 @@ class ParentFragment extends BaseMVPView {
                       <div className = { 'text-align-right' }>
                       <GenericButton
                         className = { 'employment-button global-button' }
-                        text = { 'Add Mother' }
+                        text = { 'Add Parent' }
                         onClick = { () =>
                           this.setState({
                             showEditModeModal : true,

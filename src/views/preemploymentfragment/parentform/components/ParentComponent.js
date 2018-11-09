@@ -55,7 +55,7 @@ class ParentComponent extends Component {
                     </h2>
                     <h2 className = { 'font-size-10px font-weight-lighter' }>
                       {
-                        functions.checkGender(resp.gender)
+                        functions.checkGender(resp.relationship)
                       }
                     </h2>
                   </div>

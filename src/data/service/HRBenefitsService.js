@@ -1623,8 +1623,8 @@ export default class HRBenefitsService {
         occupation: spouseFormParam.occupation,
         status: spouseFormParam.status,
         gender : spouseFormParam.gender,
-        healthHospitalizationPlan : spouseFormParam.healthHospitalizationPlan,
-        groupLifeInsurance: spouseFormParam.groupLifeInsurance,
+        healthHospitalizationPlan : spouseFormParam.healthHospitalizationPlan ? 1 : 0,
+        groupLifeInsurance: spouseFormParam.groupLifeInsurance ? 1 : 0  ,
         bloodType : spouseFormParam.bloodType,
         contactNumber: spouseFormParam.contact,
     }
@@ -1632,7 +1632,7 @@ export default class HRBenefitsService {
 
     spouseFormParam.spouseAttachmentsArray &&
     spouseFormParam.spouseAttachmentsArray.map((resp, key) =>
-      formData.append(resp.name, resp.file)
+      formData.append('marriage-certificate' + ((key - 1) == 0 ? '' : (key - 1)) , resp.file)
     )
     formData.append('body', JSON.stringify(objectParam))
     return this.onboardingClient.post('v1/employees/spouse', formData, {
@@ -2076,7 +2076,7 @@ export default class HRBenefitsService {
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     bookParam.attachmentsData &&
     bookParam.attachmentsData.map((resp, key) =>(
-      formData.append('attachment', resp.file)
+      formData.append('attachment' + key , resp.file)
     ))
     formData.append('body', JSON.stringify(object))
     return this.apiClient.post('v1/travels/book',  formData, {

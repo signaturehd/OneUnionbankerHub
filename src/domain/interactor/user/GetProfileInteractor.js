@@ -1,3 +1,5 @@
+import NoPictureException from '../../common/exception/ServerError'
+
 export default class GetProfileInteractor {
   constructor (client) {
     this.client = client
@@ -5,15 +7,21 @@ export default class GetProfileInteractor {
 
   execute () {
     return this.client.profile(this.client.getToken())
-      .flatMap(profile =>
-        this.client.getProfilePicture(this.client.getToken(), profile.employee.image)
-        .map(data => {
-          const updatedProfile = profile
-          updatedProfile.employee.profileImage = data
-          return updatedProfile
-        })
+      .flatMap(profile => {
+          if (profile.employee.image) {
+            return this.client.getProfilePicture(this.client.getToken(), profile.employee.image)
+            .map(data => {
+              const updatedProfile = profile
+              updatedProfile.employee.profileImage = data
+              return updatedProfile
+            })
+            .do(data => this.client.setProfile(data))
+          } else {
+            this.client.setProfile(profile)
+            throw new NoPictureException(profile)
+          }
+        }
       )
-      .do(data => this.client.setProfile(data))
       .do(profileResp => this.client.setAccountNumber(profileResp.accountNumber))
   }
 }
