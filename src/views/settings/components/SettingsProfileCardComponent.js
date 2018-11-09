@@ -61,7 +61,8 @@ class SettingsProfileCardComponent extends Component {
       showSuccessModal,
       showEditDependentModalFunc,
       showProfilePhoto,
-      profileAttachments
+      profileAttachments,
+      changeProfilePhoto
     } = this.props
 
     const style = {
@@ -175,9 +176,9 @@ class SettingsProfileCardComponent extends Component {
                   {
                     profile && profile.profileImage ?
                     <img
-                      onClick = { () => this.props.changeProfilePhoto(true) }
+                      onClick = { () => changeProfilePhoto(true) }
                       style = { style }/> :
-                    <div className = { 'profile-picture' }>
+                    <div className = { 'profile-picture' } onClick = { () => changeProfilePhoto(true) }>
                       <h2 className = { 'profile-initial-text' }>{ splitUserInitial }</h2>
                     </div>
                   }
