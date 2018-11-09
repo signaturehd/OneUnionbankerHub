@@ -124,7 +124,6 @@ class NavigationView extends BaseMVPView {
   }
 
   showProfile (profile) {
-    console.log(profile)
     this.setState({
       profile : profile.employee,
       isLineManager: profile.isLineManager

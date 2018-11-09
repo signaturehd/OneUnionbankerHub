@@ -53,6 +53,7 @@ class OtpModal extends BaseMVPView {
       text,
       disableSubmit,
       disableResend,
+      otpMessage
     } = this.state
 
     return (
@@ -74,7 +75,7 @@ class OtpModal extends BaseMVPView {
                 <span className = { 'security-icon security-icon-settings' }/>
                   <br/>
               </div>
-              <h2 className = { 'font-size-12px' }>You will receive a One-Time Password (OTP) on your registered mobile number</h2>
+              <h2 className = { 'font-size-12px' }>{ otpMessage && otpMessage }</h2>
             </div>
             <br/>
             <GenericInput
