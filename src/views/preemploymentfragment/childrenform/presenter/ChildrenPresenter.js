@@ -194,7 +194,7 @@ export default class ChildrenPresenter {
       bloodTypeName,
       hospitalization,
       groupPlan,
-      validateAttachments ? defaultAttachmentsArray : attachmentFileObject
+      validateAttachments ? attachmentFileObject : defaultAttachmentsArray
     ))
     .subscribe(data => {
       this.view.hideCircularLoader()

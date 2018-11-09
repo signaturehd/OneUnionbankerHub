@@ -14,8 +14,8 @@ export function checkedDateFilled (birthDate) {
 }
 
 
-export function checkGender (gender) {
-	if(gender === 'M') {
+export function checkGender (relationship) {
+	if(relationship === 'Brother') {
 	  return 'Male'
 	} else {
 	  return 'Female'
