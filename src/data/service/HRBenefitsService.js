@@ -2076,7 +2076,7 @@ export default class HRBenefitsService {
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     bookParam.attachmentsData &&
     bookParam.attachmentsData.map((resp, key) =>(
-      formData.append('attachment', resp.file)
+      formData.append('attachment' + key , resp.file)
     ))
     formData.append('body', JSON.stringify(object))
     return this.apiClient.post('v1/travels/book',  formData, {
