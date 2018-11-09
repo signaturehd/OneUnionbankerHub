@@ -24,8 +24,6 @@ class ParentComponent extends Component {
       onDeleteProperty
     } = this.props
 
-    console.log(parentDetails)
-
     return (
       <div>
         {
