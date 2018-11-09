@@ -51,7 +51,6 @@ export default class NavigationPresenter {
         this.view.hasFilledOutFunc(profile.hasFilledOut)
         this.view.hideLoading()
       }, e => {
-        console.log(e)
         this.view.hideLoading()
         this.view.showProfile(e.message)
         this.view.showPinIsValid(e.message.hasPIN)
