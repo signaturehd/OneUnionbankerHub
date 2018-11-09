@@ -118,8 +118,6 @@ class SideBar extends Component {
     borderRadius: '50%',
   }
 
-  console.log(profile)
-
   return (
     <div className = { '_sidebar-overlay' }>
       <ul className = { '_link-list ul' }>

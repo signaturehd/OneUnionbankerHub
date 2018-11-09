@@ -45,16 +45,22 @@ export default class SettingsPresenter {
     this.view.showLoading()
 
     this.getProfileInteractor.execute()
-    .do(profile => this.view.showProfileBackground(profile))
-     .do(profile => this.view.showProfile(profile.employee))
-     .do(profile => this.view.showRank(profile.employee.rank))
-     .do(profile => this.view.showLineManager(profile.employee.lineManager))
      .subscribe(profile => {
-      this.view.hideLoading()
-      this.view.showProfileDependent(profile.dependents)
-      this.view.showAccountNumber(profile.accountNumber)
+        this.view.hideLoading()
+        this.view.showProfileBackground(profile.message)
+        this.view.showProfile(profile.message.employee)
+        this.view.showRank(profile.message.rank)
+        this.view.showLineManager(profile.message.employee.lineManager)
+        this.view.showProfileDependent(profile.dependents)
+        this.view.showAccountNumber(profile.accountNumber)
      }, e => {
-      this.view.hideLoading()
+        this.view.hideLoading()
+        this.view.showProfileBackground(e.message)
+        this.view.showProfile(e.message.employee)
+        this.view.showRank(e.message.rank)
+        this.view.showLineManager(e.message.employee.lineManager)
+        this.view.showProfileDependent(e.message.dependents)
+        this.view.showAccountNumber(e.message.accountNumber)
       // TODO prompt generic error
     })
    }
