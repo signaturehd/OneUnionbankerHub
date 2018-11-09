@@ -16,9 +16,9 @@ export default class GetLibrariesInteractor {
               updatedProfile.employee.profileImage = data
               return updatedProfile
             })
+            .do(data => this.client.setProfile(data))
           }
         }
       )
-      .do(data => this.client.setProfile(data))
   }
 }
