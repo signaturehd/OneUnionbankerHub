@@ -17,16 +17,19 @@ class PreEmploymentViewAttachmentsComponent extends Component {
 
   extensionFunc(file) {
     let bool = false
-    let extension = file && file.split(';')
+    if (typeof file == 'string') {
+      let extension = file && file.split(';')
 
-    extension[0] == 'data:image/png' ||
-    extension[0] == 'data:image/jpg' ||
-    extension[0] == 'data:image/jpeg' ?
-    bool = true
-    :
-    bool = false
-
-    return bool
+      extension[0] == 'data:image/png' ||
+      extension[0] == 'data:image/jpg' ||
+      extension[0] == 'data:image/jpeg' ?
+      bool = true
+      :
+      bool = false
+      return bool
+    } else {
+      return bool
+    }
   }
 
   render () {
