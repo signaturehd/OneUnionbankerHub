@@ -209,7 +209,8 @@ class LoginView extends BaseMVPView {
       usernameId,
       birthDate,
       showEmailMessageModal,
-      emailSuccessMessage
+      emailSuccessMessage,
+      otpMessage
     } = this.state
 
     const {
