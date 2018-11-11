@@ -15,12 +15,12 @@ export default class GetLibrariesInteractor {
               updatedProfile.employee.profileImage = data
               return updatedProfile
             })
-            .do(data => this.client.setProfile(data))
           } else {
             this.client.setProfile(profile)
             throw new NoPictureException(profile)
           }
         }
       )
+      .do(data => this.client.setProfile(data))
   }
 }
