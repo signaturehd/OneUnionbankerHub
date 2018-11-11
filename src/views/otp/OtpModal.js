@@ -46,6 +46,7 @@ class OtpModal extends BaseMVPView {
       transactionType,
       username,
       onClose,
+      otpMessage
     } = this.props
 
     const {
@@ -53,7 +54,6 @@ class OtpModal extends BaseMVPView {
       text,
       disableSubmit,
       disableResend,
-      otpMessage
     } = this.state
 
     return (
