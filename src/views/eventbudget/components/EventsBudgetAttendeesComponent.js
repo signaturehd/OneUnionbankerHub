@@ -44,7 +44,7 @@ class EventsBudgetAttendeesComponent extends Component {
       <div
         onClick = { () => {
           this.setState({ employeeHasRecord: employeeHasRecord !== true ? true: false })
-          this.onChangeData(this.props.employee.hasRecord !== true ? true : false, this.props.employee.id)
+          this.onChangeData(employee.hasRecord !== true ? true : false, employee.id)
         } }
         key2 = { key2 }
         className = { 'events-employees-column-3 cursor-pointer' }>
@@ -59,7 +59,7 @@ class EventsBudgetAttendeesComponent extends Component {
           <br/>
         </div>
         <span
-          className = { `events-check events-icon-${ this.checkEmployeeCheck(employeeHasRecord) }` }/>
+          className = { `events-check events-icon-${ this.checkEmployeeCheck(employee.hasRecord) }` }/>
       </div>
     )
   }
