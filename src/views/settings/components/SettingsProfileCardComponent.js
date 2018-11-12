@@ -216,7 +216,7 @@ class SettingsProfileCardComponent extends Component {
                   onClick = { () => showDevicesModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
-                    <span className={ 'profile-icon-settings pinlock-icon' }/>
+                    <span className={ 'profile-icon-settings devices' }/>
                   </div>
                   <div>
                     <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
@@ -233,11 +233,24 @@ class SettingsProfileCardComponent extends Component {
                     <h5
                       onClick={ () => showDependentModalFunc(true) }
                       className={ 'profile-margin-label profile-cursor-pointer' }>
-                      { 'See dependents list'  }
+                      { 'See dependents'  }
                     </h5>
                     <span
                       onClick = { () => showEditDependentModalFunc(true) }
                       className = { 'profile-icon-settings editIconImage' }/>
+                  </div>
+                </div>
+                <div
+                  className={ 'profile-information-view-right' }>
+                  <div >
+                    <span className={ 'profile-icon-settings line-manager' }/>
+                  </div>
+                  <div>
+                    <h5
+                      onClick={ () => showStaffAccountsModalFunc(true) }
+                      className={ 'profile-margin-label profile-cursor-pointer' }>
+                      { 'See Staff Accounts'  }
+                    </h5>
                   </div>
                 </div>
               </div>

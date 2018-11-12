@@ -148,7 +148,7 @@ class CodeOfConductFragment extends BaseMVPView {
               autocomplete = { 'off' }
               value = { pin }
               onChange = { (e) => this.validateInputPin(e.target.value) }
-              text = { 'Password' }
+              text = { 'Pin Code' }
               type = { 'password' }
               maxLength = { 5 }
               inputProps = { 'pin-label' }
@@ -157,6 +157,7 @@ class CodeOfConductFragment extends BaseMVPView {
             <br/>
             <GenericButton
               type = { 'button' }
+              className = { 'global-button' }
               text = { 'Submit' }
               disabled = { (String(pin).length < 5) }
               onClick = {
