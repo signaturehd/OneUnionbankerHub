@@ -1,4 +1,4 @@
-import { ProfileActions } from '../../../actions'
+import { ProfileActions, LoginActions } from '../../../actions'
 import store from '../../../store'
 
 export default class LogoutInteractor {
@@ -10,6 +10,7 @@ export default class LogoutInteractor {
     return this.client.logout(this.client.getToken())
       .do(data => {
           store.dispatch(ProfileActions.setProfilePicture(null))
+          store.dispatch(LoginActions.showReloginModal(false))
         })
       .do(resp => this.client.setToken(''))
       .do(resp => this.client.setInitialToken(''))
