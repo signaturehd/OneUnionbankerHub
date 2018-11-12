@@ -20,7 +20,8 @@ class SideBar extends Component {
       logout,
       profile,
       tempPreEmployment,
-      splitUserInitial
+      splitUserInitial,
+      profileImage
     } = this.props
 
   const modules =
@@ -106,7 +107,7 @@ class SideBar extends Component {
   ]
 
   const style = {
-    backgroundImage : `url(${profile && profile.profileImage})`,
+    backgroundImage : `url(${profileImage && profileImage})`,
     backgroundRepeat : 'no-repeat',
     backgroundSize: 'cover',
     height: 'unset',
@@ -125,7 +126,7 @@ class SideBar extends Component {
           <div className={ 'sidebar-picture-card' }>
             <div>
               {
-                profile && profile.profileImage ?
+                profileImage && profileImage ?
                 <img style = { style }/>
                 :
                 <div className = { 'sidebar-picture' }>

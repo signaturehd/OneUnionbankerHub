@@ -1,3 +1,6 @@
+import { ProfileActions } from '../../../actions'
+import store from '../../../store'
+
 export default class RelogInInteractor {
   constructor (client) {
     this.client = client
@@ -9,5 +12,6 @@ export default class RelogInInteractor {
      this.client.setProfile('')
      this.client.setAccountNumber('')
      this.client.setReleasingCenter('')
+     store.dispatch(ProfileCtions.setProfilePicture(null))
   }
 }

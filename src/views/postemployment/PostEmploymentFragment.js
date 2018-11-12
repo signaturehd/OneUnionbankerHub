@@ -42,7 +42,7 @@ class PostEmploymentFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.setSelectedNavigation(1)
+    this.props.setSelectedNavigation(12)
     this.presenter.getPostEmployment()
   }
 

@@ -31,7 +31,10 @@ class BaseView extends Component {
 
   render () {
     const { loader } = this.state
-    const { notify } = this.props
+    const {
+      notify,
+    } = this.props
+
     return (
       <div>
         <Loader show = { loader }/>

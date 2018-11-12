@@ -1,4 +1,6 @@
 import NoPictureException from '../../common/exception/ServerError'
+import { ProfileActions } from '../../../actions'
+import store from '../../../store'
 
 export default class GetLibrariesInteractor {
   constructor (client) {
@@ -11,16 +13,15 @@ export default class GetLibrariesInteractor {
           if (profile.employee.image) {
             return this.client.getProfilePicture(this.client.getToken(), profile.employee.image)
             .map(data => {
-              const updatedProfile = profile
-              updatedProfile.employee.profileImage = data
-              return updatedProfile
+              store.dispatch(ProfileActions.setProfilePicture(data))
+              return profile
             })
-            .do(data => this.client.setProfile(data))
           } else {
             this.client.setProfile(profile)
             throw new NoPictureException(profile)
           }
         }
       )
+      .do(data => this.client.setProfile(data))
   }
 }

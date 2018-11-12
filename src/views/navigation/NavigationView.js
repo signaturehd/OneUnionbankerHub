@@ -228,12 +228,13 @@ class NavigationView extends BaseMVPView {
       isLineManager
     } = this.state
 
-    const { history, login } = this.props
+    const { history, login, profilePicture } = this.props
     const style = {
       show: {
         display : displayShow
       }
     }
+
     const locationPath = history.location.pathname
     const name = profile && profile.fullname
     let initials = []
@@ -255,6 +256,7 @@ class NavigationView extends BaseMVPView {
     })
 
     splitUserInitial = initials[0] + initials[initials.length - 1]
+
     return (
       <div className = { 'navigation-body-div' }>
         { super.render() }
@@ -452,6 +454,7 @@ class NavigationView extends BaseMVPView {
               logout = { () => this.setState({ showLogoutModal : true }) }
               selected={ selected }
               profile = { profile }
+              profileImage = { profilePicture }
               history = { this.props.history } >
              </SideBar>
           </aside>
@@ -467,6 +470,7 @@ NavigationView.propTypes = {
 
 const mapStateToProps = state => ({
   login : state.login,
+  profilePicture: state.profile,
   notify : state.notify.notify,
 })
 

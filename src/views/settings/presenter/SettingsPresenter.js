@@ -46,13 +46,18 @@ export default class SettingsPresenter {
 
     this.getProfileInteractor.execute()
      .subscribe(profile => {
-        this.view.hideLoading()
-        this.view.showProfileBackground(profile.message)
-        this.view.showProfile(profile.message.employee)
-        this.view.showRank(profile.message.rank)
-        this.view.showLineManager(profile.message.employee.lineManager)
-        this.view.showProfileDependent(profile.dependents)
-        this.view.showAccountNumber(profile.accountNumber)
+       console.log(profile)
+       try {
+         this.view.hideLoading()
+         this.view.showProfileBackground(profile)
+         this.view.showProfile(profile.employee)
+         this.view.showRank(profile.rank)
+         this.view.showLineManager(profile.employee.lineManager)
+         this.view.showProfileDependent(profile.dependents)
+         this.view.showAccountNumber(profile.accountNumber)
+       } catch (e) {
+         console.log(e)
+       }
      }, e => {
         this.view.hideLoading()
         this.view.showProfileBackground(e.message)

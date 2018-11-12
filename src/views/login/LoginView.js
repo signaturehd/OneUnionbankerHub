@@ -209,7 +209,8 @@ class LoginView extends BaseMVPView {
       usernameId,
       birthDate,
       showEmailMessageModal,
-      emailSuccessMessage
+      emailSuccessMessage,
+      otpMessage
     } = this.state
 
     const {
@@ -249,7 +250,7 @@ class LoginView extends BaseMVPView {
             show = { showOtpModal }
             onClose = { () => this.setState({ showOtpModal : false }) }
             parent = { this }
-            message = { otpMessage }
+            otpMessage = { otpMessage }
             username = { username }
             sendTerms = { (accepted, terms) => this.setState({ showTermsAndCondition : !accepted, showOtpModal : false, terms }) }
             transactionType = { 2 } /> // TODO, move this static '2' to proper file on domain
