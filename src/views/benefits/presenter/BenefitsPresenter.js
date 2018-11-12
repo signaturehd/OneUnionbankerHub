@@ -67,7 +67,6 @@ export default class BenefitsPresenter {
   }
 
   getAccountNumber () {
-    console.log(this.getAccountNumberInteractor.execute())
     const accountNumberPrefill = this.getAccountNumberInteractor.execute()
       this.view.showAccountNumberPrefill(accountNumberPrefill)
   }

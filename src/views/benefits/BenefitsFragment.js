@@ -61,7 +61,6 @@ class BenefitsFragment extends BaseMVPView {
   }
 
   showAccountNumberPrefill (accountNumber) {
-    console.log(accountNumber)
     this.setState({ accountNumber })
   }
 
