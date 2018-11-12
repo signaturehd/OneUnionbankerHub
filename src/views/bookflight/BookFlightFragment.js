@@ -229,7 +229,7 @@ class BookFlightFragment extends BaseMVPView {
     const rDateSplit = returnDate && returnDate.split('Z')
     const depDate = moment(dDateSplit[0]).format('MMMM DD, YYYY')
     const retDate = moment(rDateSplit[0]).format('MMMM DD, YYYY')
-    const totalAmount = (parseFloat(totalCostOfFlight) + parseFloat(totalServiceCharge) + parseFloat(valueAddedTax))
+    const totalAmount = (parseFloat(totalCostOfFlight.replace (/,/g, "")) + parseFloat(totalServiceCharge.replace (/,/g, "")) + parseFloat(valueAddedTax.replace (/,/g, "")))
     return (
       <div>
         {
