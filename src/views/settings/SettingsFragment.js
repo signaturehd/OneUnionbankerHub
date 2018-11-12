@@ -79,7 +79,7 @@ class SettingsFragment extends BaseMVPView {
   }
 
   noticeResponseModal (noticeResponse) {
-    this.setState({ noticeResponse, noticeResponseModal : true })
+    this.setState({ noticeResponse, noticeResponseModal : true, enabledLoader: false })
   }
 
   noticeResponseModalStaff (staffResponseMessage) {
@@ -188,7 +188,7 @@ class SettingsFragment extends BaseMVPView {
         <SettingsProfileCardComponent
            profileAttachments = { profileAttachments }
            uploadAttachments = { () => {
-               this.setState({ showProfilePhoto : false })
+               this.setState({ showProfilePhoto : false, enabledLoader: true })
                this.presenter.updateProfilePicture(profileAttachments)
            } }
            profileImage = { profileImage }

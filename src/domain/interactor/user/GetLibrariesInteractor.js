@@ -18,6 +18,7 @@ export default class GetLibrariesInteractor {
             })
           } else {
             this.client.setProfile(profile)
+            this.client.setAccountNumber(profile.accountNumber)
             throw new NoPictureException(profile)
           }
         }
