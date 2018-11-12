@@ -35,6 +35,10 @@ import moment from 'moment'
 
 let id = 0
 
+let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+let indexCount = 0
+
 class CalamityFragment extends BaseMVPView {
 
   constructor(props) {
@@ -59,7 +63,10 @@ class CalamityFragment extends BaseMVPView {
       attachmentDefaultArray: [],
       attachmentsData: [],
       calamityType: [],
-      defaultDamageProperty: [],
+      defaultDamageProperty: [{
+          name: `${'Damage Property ' + letters.charAt(indexCount) + '' + 1}`
+        }
+      ],
       damagePropertyCardHolder : [],
       calamityId: '',
       calamityName: '',
@@ -107,10 +114,6 @@ class CalamityFragment extends BaseMVPView {
 
   showAttachmentsMap (attachmentsData) {
     this.setState({ attachmentsData })
-  }
-
-  showDamagePropertyAttachments (defaultDamageProperty) {
-    this.setState({ defaultDamageProperty })
   }
 
   setFileAttachments (attachmentArray) {
@@ -279,10 +282,10 @@ class CalamityFragment extends BaseMVPView {
       editedId,
       showEditSubmitButton,
     }=this.state
-
+    console.log(indexCount)
     const defaultDamagePropertyStatic = [
       {
-        name: 'Damage Property ' + count
+        name: `${ 'Damage Property' + ' ' + letters.charAt(indexCount) + '' + count}`
       }
     ]
 
@@ -400,7 +403,7 @@ class CalamityFragment extends BaseMVPView {
             let newCount = count + 1
             this.setState({ count : newCount })
             updatedAttachments.push({
-              name : 'Damage Property ' + count
+              name : `${ 'Damage Property ' +  letters.charAt(indexCount) + '' + count}`
             })
             this.setState({ defaultDamageProperty : updatedAttachments })
             }
@@ -489,15 +492,19 @@ class CalamityFragment extends BaseMVPView {
           preferredDate = { preferredDate }
           handleChangeDate = { (resp) => this.changeDate(resp) }
           requestCalamityTypeFunc = { (resp) => this.showCalamityTypeModal(resp) }
-          onShowPropertyFormModalFunc = { () => this.setState({
-            property : '',
-            propertyDesc : '',
-            propertyType : '',
-            acquisitionValue : '',
-            estimatedCost : '',
-            defaultDamageProperty : defaultDamageProperty,
-            showPropertyModal : true,
-            updateMode : false,})
+          onShowPropertyFormModalFunc = { () => {
+            this.setState({
+             property : '',
+             propertyDesc : '',
+             propertyType : '',
+             acquisitionValue : '',
+             estimatedCost : '',
+             defaultDamageProperty : defaultDamageProperty,
+             showPropertyModal : true,
+             updateMode : false,
+             })
+             indexCount = indexCount + 1
+            }
           }
           setAttachmentDefaultyFunc = { (attachmentDefaultArray) => this.setFileAttachments(attachmentDefaultArray) }
           setCardHolderDefaultyFunc = { (damagePropertyCardHolder) => this.setState({ damagePropertyCardHolder }) }
