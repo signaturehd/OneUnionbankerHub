@@ -8,6 +8,7 @@ import { Card, GenericButton } from '../../../../ub-components'
 import Rating from 'react-rating'
 
 import staticImage from '../../../../images/education_bg.jpg'
+import staticBookImage from '../../../../images/icons/book_placeholder.png'
 import './styles/bookCardComponent.css'
 
 class BookBorrowedCard extends Component {
@@ -24,7 +25,7 @@ class BookBorrowedCard extends Component {
     const { rating } = this.state
     const  styles = {
       cardHeader : {
-        background :`rgba(0,0,0,0.5) url('${detail.imageUrl}')`,
+        background :`rgba(0,0,0,0.5) url('${detail.imageUrl ? detail.imageUrl : staticBookImage}')`,
         backgroundSize : 'cover',
         backgroundRepeat : 'no-repeat'
       }
