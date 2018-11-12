@@ -100,6 +100,9 @@ class ComputerLoanFragment extends BaseMVPView {
 
   setModeOfLoan (modeOfLoan) {
     this.setState({ modeOfLoan })
+    if(modeOfLoan.length === 1) {
+      this.setState({ modeOfLoanLabel : 'New Loan', modeOfLoanId: 1  })
+    }
   }
 
   showValidate (validateLoanType) {
@@ -250,6 +253,7 @@ class ComputerLoanFragment extends BaseMVPView {
       }
     )
 
+    store.dispatch(NotifyActions.resetNotify())
     if (review) {
       this.setState({showConfirmationModal : true})
     } else {
