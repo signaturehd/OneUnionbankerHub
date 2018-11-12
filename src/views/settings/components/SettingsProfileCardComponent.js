@@ -62,11 +62,12 @@ class SettingsProfileCardComponent extends Component {
       showEditDependentModalFunc,
       showProfilePhoto,
       profileAttachments,
-      changeProfilePhoto
+      changeProfilePhoto,
+      profileImage
     } = this.props
 
     const style = {
-      backgroundImage : `url(${profile && profile.profileImage})`,
+      backgroundImage : `url(${profileImage && profileImage})`,
       backgroundRepeat : 'no-repeat',
       backgroundSize: 'cover',
       height: 'unset',
@@ -174,7 +175,7 @@ class SettingsProfileCardComponent extends Component {
               <div className={ 'profile-picture-card' }>
                 <div>
                   {
-                    profile && profile.profileImage ?
+                    profileImage && profileImage ?
                     <img
                       onClick = { () => changeProfilePhoto(true) }
                       style = { style }/> :

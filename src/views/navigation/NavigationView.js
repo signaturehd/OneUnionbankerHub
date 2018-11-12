@@ -421,6 +421,7 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/settings' render = { props =>
                     <SettingsFragment { ...props }
+                      profileImage = { profilePicture }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mylearning' render = { props =>
                     <MyLearningView { ...props }

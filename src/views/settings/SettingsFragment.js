@@ -154,7 +154,11 @@ class SettingsFragment extends BaseMVPView {
       showEditDependents,
       showProfilePhoto,
       profileAttachments
-    }=this.state
+    } = this.state
+
+    const {
+      profileImage
+    } = this.props
 
     return (
       <div className={ 'profile-container' }>
@@ -187,6 +191,7 @@ class SettingsFragment extends BaseMVPView {
                this.setState({ showProfilePhoto : false })
                this.presenter.updateProfilePicture(profileAttachments)
            } }
+           profileImage = { profileImage }
            setAttachmentsPhoto = { (profileAttachments) => this.setState({ profileAttachments }) }
            changeProfilePhoto = { (showProfilePhoto) => this.setState({ showProfilePhoto }) }
            showProfilePhoto = { showProfilePhoto }
