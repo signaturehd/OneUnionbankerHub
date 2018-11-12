@@ -8,13 +8,14 @@ export default class LogoutInteractor {
 
   execute () {
     return this.client.logout(this.client.getToken())
+      .do(data => {
+          store.dispatch(ProfileActions.setProfilePicture(null))
+        })
       .do(resp => this.client.setToken(''))
       .do(resp => this.client.setInitialToken(''))
       .do(resp => this.client.setProfile(''))
       .do(resp => this.client.setAccountNumber(''))
       .do(resp => this.client.setReleasingCenter(''))
-      .do(data => {
-        store.dispatch(ProfileCtions.setProfilePicture(null))
-      })
+
   }
 }
