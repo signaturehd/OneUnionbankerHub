@@ -173,14 +173,23 @@ class SettingsProfileCardComponent extends Component {
           <Card className={ 'profile-settings-card-view' }>
             <div className={ 'profile-banner' }>
               <div className={ 'profile-picture-card' }>
-                <div>
+                <div className = 'profilePicture' >
                   {
                     profileImage && profileImage ?
-                    <img
-                      onClick = { () => changeProfilePhoto(true) }
-                      style = { style }/> :
-                    <div className = { 'profile-picture' } onClick = { () => changeProfilePhoto(true) }>
+                    <div style ={{
+                      height : '100%',
+                      width :  '100%'
+                    }}>
+                      <div
+                        onClick = { () => changeProfilePhoto(true) }
+                        style = { style }>
+                      </div>
+                      <small className = { 'profilePictureLabel' }>Edit Picture</small>
+                    </div>
+                     :
+                    <div className = { 'profile-picture profilePicture' } onClick = { () => changeProfilePhoto(true) }>
                       <h2 className = { 'profile-initial-text' }>{ splitUserInitial }</h2>
+                      <small className = { 'profilePictureLabel' }>Edit Picture</small>
                     </div>
                   }
                 </div>
