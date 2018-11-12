@@ -78,7 +78,7 @@ class SettingsProfileCardComponent extends Component {
       width: '100%',
       height: '100%',
       objectFit: 'cover',
-      borderRadius: '50%',
+      borderRadius: 50,
     }
 
     let genderPartial
@@ -180,7 +180,8 @@ class SettingsProfileCardComponent extends Component {
                     profileImage && profileImage ?
                     <div style ={{
                       height : '100%',
-                      width :  '100%'
+                      width :  '100%',
+                      borderRadius: '50%'
                     }}>
                       <ExifOrientationImg
                         src = { profileImage && profileImage }

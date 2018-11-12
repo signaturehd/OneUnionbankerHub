@@ -116,7 +116,7 @@ class SideBar extends Component {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
-    borderRadius: '50%',
+    borderRadius: 50,
   }
 
   return (
@@ -129,7 +129,6 @@ class SideBar extends Component {
               onClick = { () => history.push('/settings') }>
               {
                 profileImage && profileImage ?
-
                 <ExifOrientationImg src = { profileImage && profileImage } style = { style }/>
                 :
                 <div className = { 'sidebar-picture' }>
