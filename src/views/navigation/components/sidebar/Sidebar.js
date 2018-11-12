@@ -124,7 +124,9 @@ class SideBar extends Component {
       <ul className = { '_link-list ul' }>
         <div className = { 'sidebar-profile-body' }>
           <div className={ 'sidebar-picture-card' }>
-            <div>
+            <div
+              className = { 'cursor-pointer' }
+              onClick = { () => history.push('/settings') }>
               {
                 profileImage && profileImage ?
 

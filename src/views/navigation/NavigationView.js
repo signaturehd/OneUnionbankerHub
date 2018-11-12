@@ -450,7 +450,7 @@ class NavigationView extends BaseMVPView {
               selected={ selected }
               profile = { profile }
               profileImage = { profilePicture }
-              history = { this.props.history } >
+              history = { history } >
              </SideBar>
           </aside>
         </div>
