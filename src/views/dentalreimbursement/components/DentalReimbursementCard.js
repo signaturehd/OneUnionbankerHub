@@ -68,7 +68,7 @@ submission (e) {
       }
     }
   )
-
+  store.dispatch(NotifyActions.resetNotify())
   if (!this.validator(officialReceiptDate)) {
     store.dispatch(NotifyActions.addNotify({
        title : 'My Benefits' ,

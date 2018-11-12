@@ -25,6 +25,7 @@ export default class DentalReimbursementPresenter {
   }
 
   getDentalReimbursement () {
+    store.dispatch(NotifyActions.resetNotify())
     this.view.showCircularLoader()
     this.getDentalReimbursementInteractor.execute()
   .map(dentalreimbursement =>
