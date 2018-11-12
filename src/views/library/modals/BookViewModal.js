@@ -4,7 +4,7 @@ import { GenericButton, Modal } from '../../../ub-components/'
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import Rating from 'react-rating'
 import './styles/bookModal.css'
-import staticImage from '../../../images/education_bg.jpg'
+import staticImage from '../../../images/icons/book_placeholder.png'
 import moment from 'moment'
 
 class BookViewModal extends Component {
@@ -17,7 +17,6 @@ class BookViewModal extends Component {
     }
   }
 
-
   render () {
     const {
       onClose,
@@ -26,6 +25,7 @@ class BookViewModal extends Component {
       reserveBook,
       booksCommentList
     } = this.props
+
     const {
       rating,
       comment,
@@ -33,8 +33,8 @@ class BookViewModal extends Component {
     } = this.state
 
     const style = {
-      background : `rgba(0,0,0,0.5) url(${staticImage}) no-repeat center center`,
-      backgroundSize : '450px 200px',
+      background : `rgba(0,0,0,0.5) url(${details.imageUrl ? details.imageUrl : staticImage}) no-repeat center center`,
+      backgroundSize : '200px 200px',
       width: '-webkit-fill-available',
     }
 

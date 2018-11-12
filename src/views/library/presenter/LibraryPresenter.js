@@ -54,32 +54,32 @@ export default class LibraryPresenter {
   getBooksRecommended (pageNumber, find, isEditorsPick) {
     this.getRecommendationInteractor.execute(pageNumber, find, isEditorsPick)
     .do(books => this.view.showRecommendation(books.bookList, books.totalCount))
-    .flatMap(books =>
-      books.bookList.map((resp) =>
-        Observable.from(resp.imageUrl)
-        .flatMap(attachment =>
-          this.getTransactionImage.get('v1/uploads?folder=attachments', {
-            headers: {
-              token: resp.token,
-              file: attachment,
-            },
-            responseType : 'blob'
-          })
-        )
-        .flatMap(resp =>
-          Observable.create(observer => {
-            const reader = new FileReader()
-            reader.onerror = err => observer.error(err)
-            reader.onabort = err => observer.error(err)
-            reader.onload = () => observer.next(reader.result)
-            reader.onloadend = () => observer.complete()
-
-            reader.readAsDataURL(resp.data)
-          })
-        )
-        .toArray()
-      )
-    )
+    // .flatMap(books =>
+    //   books.bookList.map((resp) =>
+    //     Observable.from(resp.imageUrl)
+    //     .flatMap(attachment =>
+    //       this.getTransactionImage.get('v1/uploads?folder=attachments', {
+    //         headers: {
+    //           token: resp.token,
+    //           file: attachment,
+    //         },
+    //         responseType : 'blob'
+    //       })
+    //     )
+    //     .flatMap(resp =>
+    //       Observable.create(observer => {
+    //         const reader = new FileReader()
+    //         reader.onerror = err => observer.error(err)
+    //         reader.onabort = err => observer.error(err)
+    //         reader.onload = () => observer.next(reader.result)
+    //         reader.onloadend = () => observer.complete()
+    //
+    //         reader.readAsDataURL(resp.data)
+    //       })
+    //     )
+    //     .toArray()
+    //   )
+    // )
     .subscribe(books => {
     }, error => {
     })
