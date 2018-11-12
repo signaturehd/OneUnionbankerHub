@@ -102,13 +102,34 @@ export default class LaptopLeasePresenter {
           duration : 2000
         })
       )
+    } else if (!storedLaptopBrand) {
+        store.dispatch(NotifyActions.addNotify({
+            message : 'Laptop Brand is Required',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+    } else if (!storedLaptopModel){
+        store.dispatch(NotifyActions.addNotify({
+          message : 'Laptop Model is Required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (!storedScreenSize){
+        store.dispatch(NotifyActions.addNotify({
+          message : 'Laptop Screen Size is Required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
     } else if (storedColor === '') {
-      store.dispatch(NotifyActions.addNotify({
-         title: 'Laptop Lease',
-         message : 'Please specify the color of laptop',
-         type : 'warning',
-         duration : 2000
-       })
+    store.dispatch(NotifyActions.addNotify({
+       title: 'Laptop Lease',
+       message : 'Please specify the color of laptop',
+       type : 'warning',
+       duration : 2000
+     })
      )
    } else if (storedTerms === '') {
      store.dispatch(NotifyActions.addNotify({
@@ -132,21 +153,21 @@ export default class LaptopLeasePresenter {
   }
 
   addLaptopLease () {
-    this.view.showCircularLoader()
-    this.addLaptopLeaseInteractor.execute(AddLaptopLeaseParam(
-      storedLaptopBrand,
-      storedLaptopModel,
-      storedScreenSize,
-      storedColor,
-      storedAmount,
-      storedTerms,
-      storedDeliveryOption,
-      storedFile))
-    .subscribe(data => {
-    this.view.noticeOfUndertaking(data)
-    this.view.hideCircularLoader()
-    }, e => {
-    this.view.hideCircularLoader()
-    })
-  }
+          this.view.showCircularLoader()
+          this.addLaptopLeaseInteractor.execute(AddLaptopLeaseParam(
+            storedLaptopBrand,
+            storedLaptopModel,
+            storedScreenSize,
+            storedColor,
+            storedAmount,
+            storedTerms,
+            storedDeliveryOption,
+            storedFile))
+          .subscribe(data => {
+          this.view.noticeOfUndertaking(data)
+          this.view.hideCircularLoader()
+          }, e => {
+          this.view.hideCircularLoader()
+          })
+    }
 }
