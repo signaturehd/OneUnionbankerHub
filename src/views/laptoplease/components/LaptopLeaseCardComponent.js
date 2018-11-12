@@ -39,7 +39,13 @@ class LaptopLeaseCardComponent extends Component {
       deliveryOptionName,
       showLaptopDeliveryOption,
       laptopLeaseAttachment,
-      setAttachments
+      setAttachments,
+      laptopBrand,
+      laptopModel,
+      screenSize,
+      setLaptopBrand,
+      setLaptopModel,
+      setScreenSize,
     } = this.props
 
     return (
@@ -52,6 +58,34 @@ class LaptopLeaseCardComponent extends Component {
             <div className={ 'car-form-card-body' }>
 
             <div className = { 'grid-global' }>
+              <GenericInput
+                placeholder = { 'Laptop Brand' }
+                errorMessage = { '' }
+                onChange ={ (e) => setLaptopBrand(e.target.value) }
+                text = { 'Laptop Brand' }
+                disabled = { showEditMode }
+                value = { laptopBrand }
+                maxLength = { 15 }
+                />
+              <GenericInput
+                placeholder = { 'Laptop Model' }
+                errorMessage = { '' }
+                disabled = { showEditMode }
+                text = { 'Laptop Model' }
+                onChange = { (e) => setLaptopModel(e.target.value) }
+                value = { laptopModel }
+                />
+
+              <GenericInput
+                placeholder = { 'Screen Size' }
+                errorMessage = { '' }
+                onChange ={ (e) => setScreenSize(e.target.value) }
+                text = { 'Screen Size' }
+                disabled = { showEditMode }
+                value = { screenSize }
+                maxLength = { 6 }
+                />
+
               <GenericInput
                 placeholder = { 'Estimated Cost' }
                 errorMessage = { '' }

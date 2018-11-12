@@ -89,6 +89,18 @@ class LaptopLeaseFragment extends BaseMVPView {
     this.setState({ color })
   }
 
+  setLaptopBrand (laptopBrand) {
+    this.setState({ laptopBrand })
+  }
+
+  setLaptopModel (laptopModel) {
+    this.setState({ laptopModel })
+  }
+
+  setScreenSize (screenSize) {
+    this.setState({ screenSize })
+  }
+
   setDeliveryOption (deliveryOption) {
     this.setState({ deliveryOption })
   }
@@ -162,7 +174,10 @@ class LaptopLeaseFragment extends BaseMVPView {
       showTermsSelection,
       termsId,
       termsName,
-      noticeResponse
+      noticeResponse,
+      laptopBrand,
+      laptopModel,
+      screenSize,
     } = this.state
 
     const { history }=this.props
@@ -268,6 +283,9 @@ class LaptopLeaseFragment extends BaseMVPView {
               showEditMode = { showEditMode }
               setAmount = { (resp) => this.presenter.setAmount(controller.checkedAmount(resp)) }
               setColor = { (resp) =>  this.presenter.setColor(controller.checkedValidateAlphabet(resp)) }
+              setLaptopBrand = { resp => this.presenter.setLaptopBrand(resp) }
+              setLaptopModel = { resp => this.presenter.setLaptopModel(resp) }
+              setScreenSize = { resp => this.presenter.setScreenSize(resp) }
               showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
               showTerms = { () => this.setState({ showTermsSelection: true }) }
               deliveryOptionName = { deliveryOptionName }
@@ -275,6 +293,9 @@ class LaptopLeaseFragment extends BaseMVPView {
               amount = { amount }
               color = { color }
               terms = { termsName }
+              laptopBrand = { laptopBrand }
+              laptopModel = { laptopModel }
+              screenSize = { screenSize }
               setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
               onContinue={ () => this.presenter.validateSubmission() }
               onEdit = { () => this.setState({ showEditMode : false })  }

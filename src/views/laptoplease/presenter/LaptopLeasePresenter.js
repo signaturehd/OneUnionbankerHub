@@ -9,7 +9,7 @@ import AddLaptopLeaseParam from '../../../domain/param/AddLaptopLeaseParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
-let storedAmount = '', storedTerms = '', storedColor = '', storedDeliveryOption = '', storedFile
+let storedAmount = '', storedTerms = '', storedColor = '', storedDeliveryOption = '', storedLaptopBrand = '', storedLaptopModel = '', storedScreenSize = '', storedFile
 
 export default class LaptopLeasePresenter {
   constructor (container) {
@@ -34,6 +34,21 @@ export default class LaptopLeasePresenter {
   setTerms (terms) {
     storedTerms = terms
     this.view.setTerms(terms)
+  }
+
+  setLaptopBrand (laptopBrand) {
+    storedLaptopBrand = laptopBrand
+    this.view.setLaptopBrand(laptopBrand)
+  }
+
+  setLaptopModel (laptopModel) {
+    storedLaptopModel = laptopModel
+    this.view.setLaptopModel(laptopModel)
+  }
+
+  setScreenSize (screenSize) {
+    storedScreenSize = screenSize
+    this.view.setScreenSize(screenSize)
   }
 
   setFile (file) {
@@ -119,6 +134,9 @@ export default class LaptopLeasePresenter {
   addLaptopLease () {
     this.view.showCircularLoader()
     this.addLaptopLeaseInteractor.execute(AddLaptopLeaseParam(
+      storedLaptopBrand,
+      storedLaptopModel,
+      storedScreenSize,
       storedColor,
       storedAmount,
       storedTerms,
