@@ -38,7 +38,7 @@ export default class HRBenefitsService {
   /* Updated Profile */
 
   updateDescription (token, description) {
-    return this.accountClient.put('v1/profile/description', {
+    return this.apiClient.put('v1/profile/description', {
       description
     },{
       headers : { token }
