@@ -16,6 +16,8 @@ import ExperienceFragment from '../../common/fragments/ProfileFragments/Experien
 import CertificateFragment from '../../common/fragments/ProfileFragments/CertificateFragment'
 import EducationFragment from '../../common/fragments/ProfileFragments/EducationFragment'
 
+import ExifOrientationImg  from 'react-exif-orientation-img'
+
 import './styles/profileSettings.css'
 
 class SettingsProfileCardComponent extends Component {
@@ -180,10 +182,11 @@ class SettingsProfileCardComponent extends Component {
                       height : '100%',
                       width :  '100%'
                     }}>
-                      <div
+                      <ExifOrientationImg
+                        src = { profileImage && profileImage }
                         onClick = { () => changeProfilePhoto(true) }
-                        style = { style }>
-                      </div>
+                        style = { style }
+                      />
                       <small className = { 'profilePictureLabel' }>Edit Picture</small>
                     </div>
                      :

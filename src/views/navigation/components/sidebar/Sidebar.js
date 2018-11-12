@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './styles/sidebar.css'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import ExifOrientationImg  from 'react-exif-orientation-img'
 import { Line } from '../../../../ub-components'
 class SideBar extends Component {
   constructor (props) {
@@ -107,7 +108,6 @@ class SideBar extends Component {
   ]
 
   const style = {
-    backgroundImage : `url(${profileImage && profileImage})`,
     backgroundRepeat : 'no-repeat',
     backgroundSize: 'cover',
     height: 'unset',
@@ -127,7 +127,8 @@ class SideBar extends Component {
             <div>
               {
                 profileImage && profileImage ?
-                <img style = { style }/>
+
+                <ExifOrientationImg src = { profileImage && profileImage } style = { style }/>
                 :
                 <div className = { 'sidebar-picture' }>
                   <h2 className = { 'sidebar-initial-text' }>{ splitUserInitial }</h2>
