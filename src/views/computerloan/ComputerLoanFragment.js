@@ -252,6 +252,7 @@ class ComputerLoanFragment extends BaseMVPView {
         }
       }
     )
+    console.log(supplier)
 
     store.dispatch(NotifyActions.resetNotify())
     if (review) {
@@ -513,6 +514,7 @@ class ComputerLoanFragment extends BaseMVPView {
               desiredAmount = { desiredAmount }
               desiredAmountFunc  = { (desiredAmount) => this.validateInputAmount(desiredAmount) }
               onClick = { () => this.submitForm() }
+              supplier = { supplier }
               supplierName = { (supplier) => this.supplierFunc(supplier) }
               status = { status }
               review = { review }
