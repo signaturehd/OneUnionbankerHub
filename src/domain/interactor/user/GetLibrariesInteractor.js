@@ -23,5 +23,6 @@ export default class GetLibrariesInteractor {
         }
       )
       .do(data => this.client.setProfile(data))
+      .do(data => this.client.setAccountNumber(data.accountNumber))
   }
 }
