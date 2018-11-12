@@ -922,7 +922,7 @@ export default class HRBenefitsService {
   /* Outpatient Reimbursement */
 
   validateOutPatientReimbursement (token) {
-    return this.apiClient.get('v1/outpatient/validate?type=1', {
+    return this.apiClient.get('v1/outpatient/validate', {
       headers: { token }
     })
   }
