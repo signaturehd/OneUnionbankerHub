@@ -60,9 +60,6 @@ import CalamityFragment from '../calamity/CalamityFragment'
 /* Payslip*/
 import Payslip from '../payslip/PayslipFragment'
 
-import OnboardingView from '../onboarding/OnboardingView'
-import Carousel from '../carousel/Carousel'
-
 /* Pre Employment */
 import PreEmploymentFragment from '../preemployment/PreEmploymentFragment'
 import AddingDependentsFragment
@@ -429,9 +426,6 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/feedback' render = { props =>
                     <FeedbackFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/onboard' render = { props =>
-                    <OnboardingView { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mycompliance' render = { props =>
                     <ComplianceFragment { ...props }

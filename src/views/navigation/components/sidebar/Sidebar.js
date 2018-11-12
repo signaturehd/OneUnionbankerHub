@@ -210,8 +210,12 @@ class SideBar extends Component {
               <div>
                 {
                   modules.map((d, idx) =>
-                  d.id !== 11 &&
                   d.id !== 1 &&
+                  d.id !== 4 &&
+                  d.id !== 8 &&
+                  d.id !== 9 &&
+                  d.id !== 11 &&
+                  d.id !== 13 &&
                   <div key = { idx }>
                     <li
                       className = { `_text-link ${selected === d.id && 'active'}` }
@@ -229,8 +233,12 @@ class SideBar extends Component {
               <div>
                 {
                   modules.map((d, idx) =>
-                  d.id !== 12 &&
                   d.id !== 1 &&
+                  d.id !== 4 &&
+                  d.id !== 8 &&
+                  d.id !== 9 &&
+                  d.id !== 12 &&
+                  d.id !== 13 &&
                   <div key = { idx }>
                     <li
                       className = { `_text-link ${selected === d.id && 'active'}` }

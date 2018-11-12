@@ -162,6 +162,7 @@ class LoginView extends BaseMVPView {
   }
 
   proceedToValidation (user, pass) {
+    store.dispatch(NotifyActions.resetNotify())
     if(!new RequiredValidation().isValid(user)) {
       store.dispatch(NotifyActions.resetNotify())
       store.dispatch(NotifyActions.addNotify({
@@ -357,7 +358,10 @@ class LoginView extends BaseMVPView {
             </div>
               :
             <div>
-              <img className = { 'login-logo' } src = { require('../../images/drawer/1uhub_halloween_logo.jpg')} />
+              {
+                // <img className = { 'login-logo' } src = { require('../../images/drawer/1uhub_halloween_logo.jpg')} />
+              }
+              <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
                 <br/>
                 <GenericInput
                   onChange = { e =>
