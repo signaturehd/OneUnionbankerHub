@@ -322,19 +322,19 @@ class LoginView extends BaseMVPView {
                   <br/>
                   <br/>
                   {
-                    objectValue.map((resp, key) =>
-                    (
-                    <div>
-                      <Card
-                        className = { 'login-help-grid cursor-pointer' }
-                        key = { key }
-                        onClick = { () => this.setState({ componentId : resp.id, showLoginComponent : true }) }
-                        >
-                        <h2 className = { 'text-align-left' }>{ resp.name }</h2>
-                        <span className = { 'login-icon login-seemore-button' }/>
-                      </Card>
-                    </div>
-                      )
+                    objectValue.map((resp, key) => {
+                      resp.id !== 1 &&
+                      <div>
+                        <Card
+                          className = { 'login-help-grid cursor-pointer' }
+                          key = { key }
+                          onClick = { () => this.setState({ componentId : resp.id, showLoginComponent : true }) }
+                          >
+                          <h2 className = { 'text-align-left' }>{ resp.name }</h2>
+                          <span className = { 'login-icon login-seemore-button' }/>
+                        </Card>
+                      </div>
+                      }
                     )
                   }
                   <br/>
