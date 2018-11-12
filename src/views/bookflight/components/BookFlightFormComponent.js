@@ -166,7 +166,7 @@ class BookFlightFormComponent extends Component {
             />
             <GenericInput
               text = { 'Total Amount' }
-              disbled = { true }
+              disabled = { true }
               value = { totalAmount }
             />
           </div>
