@@ -20,7 +20,8 @@ import {
  import { NotifyActions } from '../../../actions'
 
  import { RequiredValidation, Validator, MoneyValidation } from '../../../utils/validate'
-import moment from 'moment'
+ import moment from 'moment'
+ import { format } from '../../../utils/numberUtils.js'
 
 class DentalReimbursementCard extends Component {
   constructor (props) {
@@ -245,7 +246,7 @@ render () {
               <div key={ key } className = { 'dentalreimbursement-grid-procedure' }>
                 <GenericInput
                   disabled = { showEditMode }
-                  text = { procedure.name }
+                  text = { procedure.name + ' (Php ' + `${ format(procedure.limit) })` }
                   onChange = { (e) => {
                     const updatedProcedures = [...selectedProcedures]
                     updatedProcedures[key].amount = parseInt(e.target.value) || 0
