@@ -1972,6 +1972,9 @@ export default class HRBenefitsService {
      laptopLeaseParam) {
    const formData = new FormData()
    const object = {
+     brand: laptopLeaseParam.brand,
+     model: laptopLeaseParam.model,
+     screenSize: laptopLeaseParam.screenSize,
      color: laptopLeaseParam.color,
      term: laptopLeaseParam.terms,
      estimatedCost : laptopLeaseParam.estimatedAmount,
