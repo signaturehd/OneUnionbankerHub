@@ -98,7 +98,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
   }
 
   setModeOfLoan (modeOfLoan) {
-    this.setState({ modeOfLoan })
+    this.setState({ modeOfLoan, modeOfLoanLabel : 'New Loan', modeOfLoanId: 1 })
   }
 
   showValidate (validateLoanType) {
@@ -212,7 +212,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
     this.presenter.addLoan(
       dealer,
       desiredAmount,
-      modeOfLoanId,
+      modeOfLoanId ? modeOfLoanId : 1,
       4,
       purposeOfAvailmentLabel,
       termsValue,
@@ -241,6 +241,7 @@ class MotorcycleLoanFragment extends BaseMVPView {
         }
       }
     )
+    store.dispatch(NotifyActions.resetNotify())
     if (review) {
       this.setState({showConfirmationModal : true})
     } else {
