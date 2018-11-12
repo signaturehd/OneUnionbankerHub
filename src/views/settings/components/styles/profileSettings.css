@@ -1,6 +1,6 @@
 .edit-dependents-grid {
   display: grid;
-  grid-template-columns: .4fr .2fr;
+  grid-template-columns:.65fr .2fr;
 }
 
 /* Icon settings */

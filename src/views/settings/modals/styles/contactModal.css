@@ -176,3 +176,11 @@
 .pinlock-icon-black {
   background-image: url('../../../../images/icons/pinsecurityiconblack.png');
 }
+
+.devices {
+  background-image: url('../../../../images/icons/MobileNumber.png');
+}
+
+.line-manager {
+  background-image: url('../../../../images/icons/LineManagerOrange.png');
+}
