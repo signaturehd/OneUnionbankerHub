@@ -14,9 +14,7 @@ export default class GetLibrariesInteractor {
             return this.client.getProfilePicture(this.client.getToken(), profile.employee.image)
             .map(data => {
               store.dispatch(ProfileActions.setProfilePicture(data))
-              const updatedProfile = profile
-              updatedProfile.employee.profileImage = data
-              return updatedProfile
+              return profile
             })
           } else {
             this.client.setProfile(profile)

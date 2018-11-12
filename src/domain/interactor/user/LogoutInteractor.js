@@ -1,3 +1,6 @@
+import { ProfileActions } from '../../../actions'
+import store from '../../../store'
+
 export default class LogoutInteractor {
   constructor (client) {
     this.client = client
@@ -10,5 +13,8 @@ export default class LogoutInteractor {
       .do(resp => this.client.setProfile(''))
       .do(resp => this.client.setAccountNumber(''))
       .do(resp => this.client.setReleasingCenter(''))
+      .do(data => {
+        store.dispatch(ProfileCtions.setProfilePicture(null))
+      })
   }
 }

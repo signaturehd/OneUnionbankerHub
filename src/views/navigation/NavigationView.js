@@ -118,10 +118,6 @@ class NavigationView extends BaseMVPView {
     this.callLogout = this.callLogout.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
-  }
-
   setDisplay (sideBar, topBar) {
     this.setState ({ displayShow : sideBar })
     this.setState({ displayNavIcon : topBar })
@@ -238,8 +234,6 @@ class NavigationView extends BaseMVPView {
         display : displayShow
       }
     }
-
-    console.log(profilePicture)
 
     const locationPath = history.location.pathname
     const name = profile && profile.fullname
@@ -460,6 +454,7 @@ class NavigationView extends BaseMVPView {
               logout = { () => this.setState({ showLogoutModal : true }) }
               selected={ selected }
               profile = { profile }
+              profileImage = { profilePicture }
               history = { this.props.history } >
              </SideBar>
           </aside>

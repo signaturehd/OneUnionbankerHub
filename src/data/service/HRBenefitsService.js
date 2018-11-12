@@ -54,7 +54,6 @@ export default class HRBenefitsService {
   }
 
   updateContactNumber(token, mobileNumber) {
-    console.log('service')
     return this.apiClient.put('v1/profile/mobile', {
       mobileNumber
     },{
@@ -84,7 +83,6 @@ export default class HRBenefitsService {
   updateProfilePicture (token, image) {
     const formData = new FormData()
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
-    console.log(image)
     image.map((resp, key) =>
       formData.append('file', resp.file)
     )
