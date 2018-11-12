@@ -11,18 +11,12 @@ class MedicalFragment extends Component {
     this.state = {
       showConfirmationModal : false,
       checkedpath : '',
-      showOutpatientModalUnAvailable: false
     }
     this.onCheckedProceed = this.onCheckedProceed.bind(this)
-    this.onCheckedOutpatient = this.onCheckedOutpatient.bind(this)
   }
 
   navigate () {
       this.props.history.push('/mybenefits/benefits')
-  }
-
-  onCheckedOutpatient () {
-    this.setState({ showOutpatientModalUnAvailable : true })
   }
 
   onCheckedProceed (path) {
@@ -34,7 +28,6 @@ class MedicalFragment extends Component {
     const {
       showConfirmationModal,
       checkedpath,
-      showOutpatientModalUnAvailable
     } =this.state
 
     const benefitsOptions = [{
@@ -137,19 +130,6 @@ class MedicalFragment extends Component {
 
     return (
       <div>
-        {
-          showOutpatientModalUnAvailable &&
-          <Modal>
-            <center>
-              <h2>Outpatient Reimbursement is still under development. Please come back in the next few days to avail of this benefit. Thank you!</h2>
-              <br/>
-              <GenericButton
-                text = { 'Ok' }
-                onClick = { () => this.setState({ showOutpatientModalUnAvailable : false }) }
-                />
-          </center>
-          </Modal>
-        }
         <Switch>
           <Route exact path = '/mybenefits/benefits/medical'  render = { MedicalHome } />
         </Switch>

@@ -907,9 +907,6 @@ export default class HRBenefitsService {
 
   addMedicalScheduling (
     token,
-    accounToken,
-    accountNumber,
-    releasingCenter,
     addMedicalSchedulingParam
   ) {
     const medicalSchedulingObject = {
