@@ -143,14 +143,14 @@ class TravelFragment extends BaseMVPView {
       },
       {
         id: 1 ,
-        styleName: 'travel-option-cards-1 travel-option-default font-weight-bold',
+        styleName: 'travel-option-cards-2 travel-option-default font-weight-bold',
         title: 'Book Flight',
         path: '/mytravel/travel/book',
         subTitle: ''
       },
       {
         id: 2 ,
-        styleName: 'travel-option-cards-1 travel-option-default font-weight-bold',
+        styleName: 'travel-option-cards-3 travel-option-default font-weight-bold',
         title: 'Liquidation My Flight',
         path: '/mytravel/travel/liquidation',
         subTitle: ''
