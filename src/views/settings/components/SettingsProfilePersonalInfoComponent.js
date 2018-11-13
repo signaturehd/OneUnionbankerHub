@@ -247,9 +247,11 @@ class SettingsProfilePersonalInfoComponent extends Component {
                               </a>
                             </div>
                           </div>
-                          <span
-                            onClick = { () => this.setState({ updateAddress : true }) }
-                            className = { 'alignment-center profile-icon-settings editIconImage' }/>
+                          {
+                            // <span
+                            // onClick = { () => this.setState({ updateAddress : true }) }
+                            // className = { 'alignment-center profile-icon-settings editIconImage' }/>                            
+                          }
                         </div>
                       </div> :
                     <Modal
