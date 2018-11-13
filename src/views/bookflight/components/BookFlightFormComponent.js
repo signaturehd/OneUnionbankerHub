@@ -167,7 +167,7 @@ class BookFlightFormComponent extends Component {
             <GenericInput
               text = { 'Total Amount' }
               disabled = { true }
-              value = { totalAmount }
+              value = { totalAmount.toLocaleString() }
             />
           </div>
         </div>
