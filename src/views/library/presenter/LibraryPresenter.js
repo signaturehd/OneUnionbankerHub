@@ -75,7 +75,6 @@ export default class LibraryPresenter {
     //         reader.onloadend = () => observer.complete()
     //
     //         reader.readAsDataURL(resp.data)
-    //         console.log(reader)
     //       })
     //     )
     //     .toArray()

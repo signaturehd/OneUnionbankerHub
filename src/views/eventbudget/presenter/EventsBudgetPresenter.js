@@ -85,6 +85,7 @@ export default class EventsBudgetPresenter {
   }
 
   validateEventsBudget () {
+    store.dispatch(NotifyActions.resetNotify())
     this.view.showCircularLoader()
     this.validateEventsBudgetInteractor.execute()
     .subscribe(data => {
@@ -92,6 +93,7 @@ export default class EventsBudgetPresenter {
       storedAmountPerEmployee = data.events.amount
       this.view.hideCircularLoader()
     }, error => {
+      this.view.navigate()
       this.view.hideCircularLoader()
     })
   }

@@ -13,7 +13,7 @@ import UpdateContactNumberInteractor from '../../../domain/interactor/account/Up
 import UpdateProfilePictureInteractor from '../../../domain/interactor/account/UpdateProfilePictureInteractor'
 import UpdateCivilStatusInteractor from '../../../domain/interactor/account/UpdateCivilStatusInteractor'
 
-import { NotifyActions } from '../../../actions'
+import { NotifyActions, ProfileActions } from '../../../actions'
 import store from '../../../store'
 
 import addStaffAcountsParam from '../../../domain/param/AddStaffAcountsParam'
@@ -233,13 +233,14 @@ export default class SettingsPresenter {
    }
 
    updateProfilePicture (image) {
+    store.dispatch(ProfileActions.setProfilePicture(null))
     this.updateProfilePictureInteractor.execute(image)
-     .subscribe(data => {
-       this.view.noticeResponseModal(data.message)
-       this.getProfile()
-     }, error => {
-      store.dispatch(NotifyActions.resetNotify())
-     })
+      .subscribe(data => {
+        this.view.noticeResponseModal(data.message)
+        this.getProfile()
+      }, error => {
+        store.dispatch(NotifyActions.resetNotify())
+      })
    }
 
    updateCivilStatus (civilStatus) {

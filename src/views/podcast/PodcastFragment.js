@@ -99,7 +99,9 @@ class PodcastFragment extends BaseMVPView {
       <div>
         { super.render() }
         <Modal>
-          <h2>Under Development</h2>
+          <center>
+            <h2>Under Development</h2>
+          </center>
           <br/>
           <center>
             <h4>We’re sorry to inform you that Podcasts on One UnionBanker Hub will be available in the future releases. Apologies for the inconvenience.</h4>

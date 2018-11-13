@@ -98,6 +98,9 @@ class SalaryLoanFragment extends BaseMVPView {
 
   setModeOfLoan (modeOfLoan) {
     this.setState({ modeOfLoan })
+    if(modeOfLoan.length === 1) {
+      this.setState({ modeOfLoanLabel : 'New Loan', modeOfLoanId: 1  })
+    }
   }
 
   showValidate (validateLoanType) {

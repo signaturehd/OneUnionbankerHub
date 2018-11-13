@@ -16,6 +16,8 @@ import ExperienceFragment from '../../common/fragments/ProfileFragments/Experien
 import CertificateFragment from '../../common/fragments/ProfileFragments/CertificateFragment'
 import EducationFragment from '../../common/fragments/ProfileFragments/EducationFragment'
 
+import ExifOrientationImg  from 'react-exif-orientation-img'
+
 import './styles/profileSettings.css'
 
 class SettingsProfileCardComponent extends Component {
@@ -62,11 +64,12 @@ class SettingsProfileCardComponent extends Component {
       showEditDependentModalFunc,
       showProfilePhoto,
       profileAttachments,
-      changeProfilePhoto
+      changeProfilePhoto,
+      profileImage
     } = this.props
 
     const style = {
-      backgroundImage : `url(${profile && profile.profileImage})`,
+      backgroundImage : `url(${profileImage && profileImage})`,
       backgroundRepeat : 'no-repeat',
       backgroundSize: 'cover',
       height: 'unset',
@@ -75,7 +78,7 @@ class SettingsProfileCardComponent extends Component {
       width: '100%',
       height: '100%',
       objectFit: 'cover',
-      borderRadius: '50%',
+      borderRadius: 50,
     }
 
     let genderPartial
@@ -172,14 +175,25 @@ class SettingsProfileCardComponent extends Component {
           <Card className={ 'profile-settings-card-view' }>
             <div className={ 'profile-banner' }>
               <div className={ 'profile-picture-card' }>
-                <div>
+                <div className = 'profilePicture' >
                   {
-                    profile && profile.profileImage ?
-                    <img
-                      onClick = { () => changeProfilePhoto(true) }
-                      style = { style }/> :
-                    <div className = { 'profile-picture' } onClick = { () => changeProfilePhoto(true) }>
+                    profileImage && profileImage ?
+                    <div style ={{
+                      height : '100%',
+                      width :  '100%',
+                      borderRadius: '50%'
+                    }}>
+                      <ExifOrientationImg
+                        src = { profileImage && profileImage }
+                        onClick = { () => changeProfilePhoto(true) }
+                        style = { style }
+                      />
+                      <small className = { 'profilePictureLabel' }>Edit Picture</small>
+                    </div>
+                     :
+                    <div className = { 'profile-picture profilePicture' } onClick = { () => changeProfilePhoto(true) }>
                       <h2 className = { 'profile-initial-text' }>{ splitUserInitial }</h2>
+                      <small className = { 'profilePictureLabel' }>Edit Picture</small>
                     </div>
                   }
                 </div>
@@ -215,7 +229,7 @@ class SettingsProfileCardComponent extends Component {
                   onClick = { () => showDevicesModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
-                    <span className={ 'profile-icon-settings pinlock-icon' }/>
+                    <span className={ 'profile-icon-settings devices' }/>
                   </div>
                   <div>
                     <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
@@ -232,11 +246,24 @@ class SettingsProfileCardComponent extends Component {
                     <h5
                       onClick={ () => showDependentModalFunc(true) }
                       className={ 'profile-margin-label profile-cursor-pointer' }>
-                      { 'See dependents list'  }
+                      { 'See dependents'  }
                     </h5>
                     <span
                       onClick = { () => showEditDependentModalFunc(true) }
                       className = { 'profile-icon-settings editIconImage' }/>
+                  </div>
+                </div>
+                <div
+                  className={ 'profile-information-view-right' }>
+                  <div >
+                    <span className={ 'profile-icon-settings line-manager' }/>
+                  </div>
+                  <div>
+                    <h5
+                      onClick={ () => showStaffAccountsModalFunc(true) }
+                      className={ 'profile-margin-label profile-cursor-pointer' }>
+                      { 'See Staff Accounts'  }
+                    </h5>
                   </div>
                 </div>
               </div>

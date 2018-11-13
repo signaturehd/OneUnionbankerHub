@@ -38,7 +38,7 @@ export default class HRBenefitsService {
   /* Updated Profile */
 
   updateDescription (token, description) {
-    return this.accountClient.put('v1/profile/description', {
+    return this.apiClient.put('v1/profile/description', {
       description
     },{
       headers : { token }
@@ -907,9 +907,6 @@ export default class HRBenefitsService {
 
   addMedicalScheduling (
     token,
-    accounToken,
-    accountNumber,
-    releasingCenter,
     addMedicalSchedulingParam
   ) {
     const medicalSchedulingObject = {
@@ -925,7 +922,7 @@ export default class HRBenefitsService {
   /* Outpatient Reimbursement */
 
   validateOutPatientReimbursement (token) {
-    return this.apiClient.get('v1/outpatient/validate?type=1', {
+    return this.apiClient.get('v1/outpatient/validate', {
       headers: { token }
     })
   }
@@ -1975,6 +1972,9 @@ export default class HRBenefitsService {
      laptopLeaseParam) {
    const formData = new FormData()
    const object = {
+     brand: laptopLeaseParam.brand,
+     model: laptopLeaseParam.model,
+     screenSize: laptopLeaseParam.screenSize,
      color: laptopLeaseParam.color,
      term: laptopLeaseParam.terms,
      estimatedCost : laptopLeaseParam.estimatedAmount,

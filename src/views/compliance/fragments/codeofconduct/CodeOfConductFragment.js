@@ -56,7 +56,7 @@ class CodeOfConductFragment extends BaseMVPView {
    } else if (String(pin).length < 5) {
       store.dispatch(NotifyActions.addNotify({
          title : 'Code of Conduct' ,
-         message : 'Please enter your 5-digits code',
+         message : 'Please enter your 5-digit code',
          type : 'warning',
          duration : 2000
        })
@@ -148,15 +148,16 @@ class CodeOfConductFragment extends BaseMVPView {
               autocomplete = { 'off' }
               value = { pin }
               onChange = { (e) => this.validateInputPin(e.target.value) }
-              text = { 'Password' }
+              text = { 'Pin Code' }
               type = { 'password' }
               maxLength = { 5 }
               inputProps = { 'pin-label' }
             />
-            <p className={ 'pin-label font-12' }>Please enter your 5-digits code</p>
+            <p className={ 'pin-label font-12' }>Please enter your 5-digit code</p>
             <br/>
             <GenericButton
               type = { 'button' }
+              className = { 'global-button' }
               text = { 'Submit' }
               disabled = { (String(pin).length < 5) }
               onClick = {

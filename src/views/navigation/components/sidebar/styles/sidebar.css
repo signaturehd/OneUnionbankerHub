@@ -183,6 +183,7 @@ ul {
   font-size: 12px;
   display: block;
   font-weight: bold;
+  padding: 0px 10px 0px 10px;
   opacity: .4;
   text-align: center;
 }

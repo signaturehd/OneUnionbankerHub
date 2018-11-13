@@ -11,18 +11,12 @@ class MedicalFragment extends Component {
     this.state = {
       showConfirmationModal : false,
       checkedpath : '',
-      showOutpatientModalUnAvailable: false
     }
     this.onCheckedProceed = this.onCheckedProceed.bind(this)
-    this.onCheckedOutpatient = this.onCheckedOutpatient.bind(this)
   }
 
   navigate () {
       this.props.history.push('/mybenefits/benefits')
-  }
-
-  onCheckedOutpatient () {
-    this.setState({ showOutpatientModalUnAvailable : true })
   }
 
   onCheckedProceed (path) {
@@ -34,43 +28,42 @@ class MedicalFragment extends Component {
     const {
       showConfirmationModal,
       checkedpath,
-      showOutpatientModalUnAvailable
     } =this.state
 
     const benefitsOptions = [{
       id: 1,
-      styleName: 'medical-cards-1 medical-option-default',
+      styleName: 'medical-cards-2 medical-option-default',
       title: 'Dental Loa Issuance',
       path: '/mybenefits/benefits/medical/loa/dental',
     }, {
       id: 2,
-      styleName: 'medical-cards-1 medical-option-default',
+      styleName: 'medical-cards-3 medical-option-default',
       title: 'Dental Reimbursement',
       path: '/mybenefits/benefits/medical/reimbursement/dental',
     }, {
       id: 6,
-      styleName: 'medical-cards-1 medical-option-default',
+      styleName: 'medical-cards-4 medical-option-default',
       title: 'Maternity Assistance',
       path: '/mybenefits/benefits/medical/assistance/maternity',
     }, {
       id: 4,
-      styleName: 'medical-cards-1 medical-option-default',
+      styleName: 'medical-cards-5 medical-option-default',
       title: 'Medical Scheduling',
       path: '/mybenefits/benefits/medical/scheduling',
     }, {
       id: 3,
-      styleName: 'medical-cards-1 medical-option-default',
+      styleName: 'medical-cards-6 medical-option-default',
       title: 'Optical Reimbursement',
       path: '/mybenefits/benefits/medical/optical',
     }, {
       id: 5,
-      styleName: 'medical-cards-1 medical-option-default',
+      styleName: 'medical-cards-7 medical-option-default',
       title: 'Outpatient Reimbursement',
       path: '/mybenefits/benefits/medical/reimbursement/outpatient',
     },
     {
       id: 7,
-      styleName: 'medical-cards-1 medical-option-default',
+      styleName: 'medical-cards-8 medical-option-default',
       title: 'Vaccine Requisition',
       path: '/mybenefits/benefits/medical/vaccine',
     }
@@ -137,19 +130,6 @@ class MedicalFragment extends Component {
 
     return (
       <div>
-        {
-          showOutpatientModalUnAvailable &&
-          <Modal>
-            <center>
-              <h2>Outpatient Reimbursement is still under development. Please come back in the next few days to avail of this benefit. Thank you!</h2>
-              <br/>
-              <GenericButton
-                text = { 'Ok' }
-                onClick = { () => this.setState({ showOutpatientModalUnAvailable : false }) }
-                />
-          </center>
-          </Modal>
-        }
         <Switch>
           <Route exact path = '/mybenefits/benefits/medical'  render = { MedicalHome } />
         </Switch>

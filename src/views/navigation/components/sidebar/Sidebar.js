@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './styles/sidebar.css'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import ExifOrientationImg  from 'react-exif-orientation-img'
 import { Line } from '../../../../ub-components'
 class SideBar extends Component {
   constructor (props) {
@@ -107,7 +108,6 @@ class SideBar extends Component {
   ]
 
   const style = {
-    backgroundImage : `url(${profileImage && profileImage})`,
     backgroundRepeat : 'no-repeat',
     backgroundSize: 'cover',
     height: 'unset',
@@ -116,7 +116,7 @@ class SideBar extends Component {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
-    borderRadius: '50%',
+    borderRadius: 50,
   }
 
   return (
@@ -124,10 +124,12 @@ class SideBar extends Component {
       <ul className = { '_link-list ul' }>
         <div className = { 'sidebar-profile-body' }>
           <div className={ 'sidebar-picture-card' }>
-            <div>
+            <div
+              className = { 'cursor-pointer' }
+              onClick = { () => history.push('/settings') }>
               {
                 profileImage && profileImage ?
-                <img style = { style }/>
+                <ExifOrientationImg src = { profileImage && profileImage } style = { style }/>
                 :
                 <div className = { 'sidebar-picture' }>
                   <h2 className = { 'sidebar-initial-text' }>{ splitUserInitial }</h2>
@@ -210,8 +212,12 @@ class SideBar extends Component {
               <div>
                 {
                   modules.map((d, idx) =>
-                  d.id !== 11 &&
                   d.id !== 1 &&
+                  d.id !== 4 &&
+                  d.id !== 8 &&
+                  d.id !== 9 &&
+                  d.id !== 11 &&
+                  d.id !== 13 &&
                   <div key = { idx }>
                     <li
                       className = { `_text-link ${selected === d.id && 'active'}` }
@@ -229,8 +235,12 @@ class SideBar extends Component {
               <div>
                 {
                   modules.map((d, idx) =>
-                  d.id !== 12 &&
                   d.id !== 1 &&
+                  d.id !== 4 &&
+                  d.id !== 8 &&
+                  d.id !== 9 &&
+                  d.id !== 12 &&
+                  d.id !== 13 &&
                   <div key = { idx }>
                     <li
                       className = { `_text-link ${selected === d.id && 'active'}` }

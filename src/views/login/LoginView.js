@@ -162,6 +162,7 @@ class LoginView extends BaseMVPView {
   }
 
   proceedToValidation (user, pass) {
+    store.dispatch(NotifyActions.resetNotify())
     if(!new RequiredValidation().isValid(user)) {
       store.dispatch(NotifyActions.resetNotify())
       store.dispatch(NotifyActions.addNotify({
@@ -219,17 +220,14 @@ class LoginView extends BaseMVPView {
     } = this.props
 
     let version = 5
-    let majorVersion = 10
-    let minorVersion = 2
+    let majorVersion = 0
+    let minorVersion = 0
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     const objectValue = [{
       id : 0,
       name : 'I forgot my password'
-    }, {
-      id : 1,
-      name : 'I want to unlock my profile'
-    },{
+    }, ,{
       id : 2,
       name : 'What is my 1UHub user ID?'
     }, {
@@ -320,22 +318,24 @@ class LoginView extends BaseMVPView {
                   </div>
                   <br/>
                   <br/>
-                  {
-                    objectValue.map((resp, key) =>
-                    (
-                    <div>
-                      <Card
-                        className = { 'login-help-grid cursor-pointer' }
-                        key = { key }
-                        onClick = { () => this.setState({ componentId : resp.id, showLoginComponent : true }) }
-                        >
-                        <h2 className = { 'text-align-left' }>{ resp.name }</h2>
-                        <span className = { 'login-icon login-seemore-button' }/>
-                      </Card>
-                    </div>
+                  <div>
+                    {
+                      objectValue.map((resp, key) =>
+                        (
+                          <div>
+                            <Card
+                              className = { 'login-help-grid cursor-pointer' }
+                              key = { key }
+                              onClick = { () => this.setState({ componentId : resp.id, showLoginComponent : true }) }
+                              >
+                              <h2 className = { 'text-align-left' }>{ resp.name }</h2>
+                              <span className = { 'login-icon login-seemore-button' }/>
+                            </Card>
+                          </div>
+                        )
                       )
-                    )
-                  }
+                    }
+                  </div>
                   <br/>
                   <br/>
                   {
@@ -357,7 +357,10 @@ class LoginView extends BaseMVPView {
             </div>
               :
             <div>
-              <img className = { 'login-logo' } src = { require('../../images/drawer/1uhub_halloween_logo.jpg')} />
+              {
+                // <img className = { 'login-logo' } src = { require('../../images/drawer/1uhub_halloween_logo.jpg')} />
+              }
+              <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
                 <br/>
                 <GenericInput
                   onChange = { e =>
