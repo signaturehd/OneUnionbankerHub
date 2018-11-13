@@ -136,22 +136,22 @@ class TravelFragment extends BaseMVPView {
     const travelOptions = [
       {
         id: 0 ,
-        styleName: 'travel-option-cards-1 travel-option-default font-weight-bold',
+        styleName: 'travel-option-cards-3 travel-option-default font-weight-bold',
         title: 'Request Flight Quotation',
         path: '/mytravel/travel/request',
         subTitle: ''
       },
       {
         id: 1 ,
-        styleName: 'travel-option-cards-2 travel-option-default font-weight-bold',
+        styleName: 'travel-option-cards-1 travel-option-default font-weight-bold',
         title: 'Book Flight',
         path: '/mytravel/travel/book',
         subTitle: ''
       },
       {
         id: 2 ,
-        styleName: 'travel-option-cards-3 travel-option-default font-weight-bold',
-        title: 'Liquidation My Flight',
+        styleName: 'travel-option-cards-2 travel-option-default font-weight-bold',
+        title: 'Liquidate My Flight',
         path: '/mytravel/travel/liquidation',
         subTitle: ''
       }

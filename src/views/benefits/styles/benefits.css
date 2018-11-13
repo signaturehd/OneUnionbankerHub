@@ -143,6 +143,10 @@ label:hover {
   background-image: url('../../../images/icons/LAPTOP LEASE V2.png');
 }
 
+.benefits-option-cards-8 {
+    background-image: url('../../../images/icons/Events Budget Request.png')
+}
+
 .benefits-option-default {
   background-repeat: no-repeat;
   background-size: cover;
