@@ -10,22 +10,22 @@ export default class GetAffirmationStatusInteractor {
         {
           id: 1,
           title: 'Pre-Employment Undertaking',
-          link: '/2018-10-30/12345-Pre-employment Undertaking-1536641036614.pdf',
+          link: '/2018-11-07/12345-Pre-employment Undertaking-1536641036614.pdf',
           nodeStatus : resp.preEmploymentUndertaking,
         },{
           id: 2,
           title: 'Acceptable Use of IT Resource Policy',
-          link: '/2018-10-30/12345-Acceptable Use of IT Resource Policy-1536640939395.pdf',
+          link: '/2018-11-07/12345-Acceptable Use of IT Resource Policy-1536640939395.pdf',
           nodeStatus: resp.itResource,
         },{
           id: 3,
           title: 'Undertaking of Confidentiality',
-          link: '/2018-10-30/12345-Undertaking on Confidentiality-1536641093668.pdf',
+          link: '/2018-11-07/12345-Undertaking on Confidentiality-1536641093668.pdf',
           nodeStatus: resp.confidentiality,
         },{
           id: 4,
           title: 'Law of Security of Bank Deposits',
-          link: '/2018-10-30/12345-Law on Secrecy of Bank Deposits-1536640999233.pdf',
+          link: '/2018-11-07/12345-Law on Secrecy of Bank Deposits-1536640999233.pdf',
           nodeStatus: resp.bankSecrecy,
         },
       ]
