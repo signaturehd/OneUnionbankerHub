@@ -101,6 +101,8 @@ class MyLearningView extends BaseMVPView {
             <LibraryView { ...props } /> } />
           <Route path = '/mylearning/books/history' render = { props =>
             <LibraryView { ...props } /> } />
+          <Route path = '/mylearning/books/all' render = { props =>
+            <LibraryView { ...props } /> } />
           <Route path = '/mylearning' render = { MyLearning } />
         </Switch>
       </div>

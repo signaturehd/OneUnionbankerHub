@@ -155,6 +155,11 @@ class LaptopLeaseFragment extends BaseMVPView {
     this.setState({ showEditMode : true })
   }
 
+  checkNonDigitRegex (word) {
+    let nonDigitRegex = /\D+/g
+    return word.replace(nonDigitRegex, '')
+  }
+
   render () {
     const {
       terms,
@@ -285,7 +290,7 @@ class LaptopLeaseFragment extends BaseMVPView {
               setColor = { (resp) =>  this.presenter.setColor(controller.checkedValidateAlphabet(resp)) }
               setLaptopBrand = { resp => this.presenter.setLaptopBrand(resp) }
               setLaptopModel = { resp => this.presenter.setLaptopModel(resp) }
-              setScreenSize = { resp => this.presenter.setScreenSize(resp) }
+              setScreenSize = { resp => this.presenter.setScreenSize( this.checkNonDigitRegex(resp)) }
               showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
               showTerms = { () => this.setState({ showTermsSelection: true }) }
               deliveryOptionName = { deliveryOptionName }

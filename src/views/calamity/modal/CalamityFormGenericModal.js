@@ -271,7 +271,7 @@ class CalamityFormGenericModal extends Component {
             <div>
             <h4>
               <br/>
-              Proof of Damage Attachments
+              Proof of Damage
             </h4>
             <MultipleAttachments
               count = { count }
