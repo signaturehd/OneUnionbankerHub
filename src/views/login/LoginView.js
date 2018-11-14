@@ -185,7 +185,7 @@ class LoginView extends BaseMVPView {
         title : 'Login Credentials',
         message : 'Employee ID is required ' + Math.floor(Math.random() * 100),
         type: 'warning',
-        duration : 2000,
+        duration : 10000,
       })
     )
     } else if (!new RequiredValidation().isValid(pass)) {
