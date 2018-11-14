@@ -22,8 +22,6 @@ class BaseView extends Component {
       notify
     } = nextProps
 
-    console.log(notify)
-
     notify &&
     notify[notify.length - 1] &&
     notify[notify.length - 1].duration &&
