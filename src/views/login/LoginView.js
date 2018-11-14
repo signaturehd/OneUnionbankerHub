@@ -38,20 +38,24 @@ function LoginComponent (props) {
   const onCheckUserName = props.onCheckUserName
   const onChageBirthDate = props.onChageBirthDate
   const birthDate = props.birthDate
-  const requestEmailFunc = props.requestEmailFunc
+  const resetPassword = props.resetPassword
   const usernameId = props.usernameId
   const showEmailMessageModal = props.showEmailMessageModal
   const emailSuccessMessage = props.emailSuccessMessage
   const onCloseSuccessModal = props.onCloseSuccessModal
+  const setConfirmPassword = props.setConfirmPassword
+  const setNewPassword = props.setNewPassword
   if(id === 0) {
     return <LoginForgotPasswordComponent
       idReplace = { () => idReplace() }
       history = { history }
       emailSuccessMessage = { emailSuccessMessage }
       usernameId = { usernameId }
-      requestEmailFunc = { () => requestEmailFunc() }
+      resetPassword = { () => resetPassword() }
       onCloseSuccessModal = { () => onCloseSuccessModal() }
       birthDate = { birthDate }
+      setNewPassword = { (newPassword) => setNewPassword(newPassword) }
+      setConfirmPassword = { (confirmPassword) => setConfirmPassword(confirmPassword) }
       onCheckUserName = { (e) => onCheckUserName(e) }
       onChageBirthDate = { (e) => onChageBirthDate(e) }
       showEmailMessageModal = { showEmailMessageModal }
@@ -162,18 +166,15 @@ class LoginView extends BaseMVPView {
   }
 
   proceedToValidation (user, pass) {
-    store.dispatch(NotifyActions.resetNotify())
     if(!new RequiredValidation().isValid(user)) {
-      store.dispatch(NotifyActions.resetNotify())
       store.dispatch(NotifyActions.addNotify({
         title : 'Login Credentials',
-        message : 'Employee ID is required',
+        message : 'Employee ID is required ' + Math.floor(Math.random() * 100),
         type: 'warning',
         duration : 2000,
       })
     )
     } else if (!new RequiredValidation().isValid(pass)) {
-        store.dispatch(NotifyActions.resetNotify())
         store.dispatch(NotifyActions.addNotify({
           title : 'Login Credentials',
           message : 'Password is required',
@@ -221,7 +222,7 @@ class LoginView extends BaseMVPView {
 
     let version = 5
     let majorVersion = 0
-    let minorVersion = 0
+    let minorVersion = 2
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     const objectValue = [{
@@ -288,11 +289,11 @@ class LoginView extends BaseMVPView {
                       birthDate = { birthDate }
                       onCheckUserName = { (usernameId) => this.setState({ usernameId }) }
                       hisptory = { history }
+                      setConfirmPassword = { (confirmPassword) => this.setState({ confirmPassword }) }
+                      setNewPassword = { (newPassword) => this.setState({ newPassword }) }
                       usernameId = { usernameId }
                       onChageBirthDate = { (birthDate) => this.setState({ birthDate }) }
-                      requestEmailFunc = { () =>
-                         this.presenter.requestEmailVerification(usernameId, birthDate)
-                       }
+                      resetPassword = { () => this.presenter.resetPassword() }
                       onCloseSuccessModal = { () => {
                         this.setState({ showEmailMessageModal : false, showHelpDeskComponent : false })
                         history.push('/')
@@ -442,23 +443,6 @@ class LoginView extends BaseMVPView {
             </div>
           }
         </Card>
-
-        <div className = { 'notify-container' }>
-        {
-          notify &&
-          notify.map((notify, i) => (
-            <Notify
-              onClick = { () => {
-                store.dispatch(NotifyActions.removeNotify(i))
-              }}
-              key = { i }
-              title = { notify.title }
-              message = { notify.message }
-              type = { notify.type }
-                  />
-          ))
-        }
-        </div>
     </div>
     )
   }

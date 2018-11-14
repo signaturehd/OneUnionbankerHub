@@ -119,6 +119,14 @@ export default class HRBenefitsService {
 
 
   /* Reset Password */
+  resetOtp (resetOtpParam) {
+    return this.apiClient.post('v1/otp', resetOtpParam)
+  }
+
+  resetPassword (resetPasswordParam) {
+    return this.apiClient.post('v1/password/reset', resetPasswordParam)
+  }
+
   requestEmailVerification (token, empId, date) {
     const objectParam = {
       employeeNumber: empId,

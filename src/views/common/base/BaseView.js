@@ -11,6 +11,7 @@ class BaseView extends Component {
     super(props)
     this.state = {
       loader : false,
+      notifyState : [],
     }
     this.showLoading = this.showLoading.bind(this)
     this.hideLoading = this.hideLoading.bind(this)
@@ -34,6 +35,10 @@ class BaseView extends Component {
     const {
       notify,
     } = this.props
+    // notifyState &&
+    // notifyState.map((notifs, key) => {
+    //   setTimeout(() => {store.dispatch(NotifyActions.removeNotifyDuration)}, notifs.duration)
+    // })
 
     return (
       <div>
@@ -49,7 +54,7 @@ class BaseView extends Component {
               }}
               key = { i }
               title = { notify.title }
-              message = { notify.message }
+              message = { notify.message + ' ' + i }
               type = { notify.type }
             />
           ))

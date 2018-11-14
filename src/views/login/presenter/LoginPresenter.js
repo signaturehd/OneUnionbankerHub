@@ -18,7 +18,6 @@ export default class LoginPresenter {
   }
 
   login (username, password, disabled) {
-    store.dispatch(NotifyActions.resetNotify())
     this.view.disabledButton()
     this.loginInteractor.execute(LoginParam(username, password))
     .subscribe(
