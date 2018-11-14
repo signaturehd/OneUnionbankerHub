@@ -306,16 +306,12 @@ class LoginView extends BaseMVPView {
               <GenericButton
                 text = { 'Submit' }
                 onClick = { () => {
-                  try {
                     this.presenter.requestNewPassword(
                       requiredOtp,
                       moment(birthDate).format('MM/DD/YYYY'),
                       usernameId,
                       confirmNewPassword)
                     this.setState({ showResetModal : false })
-                  } catch(e) {
-                    console.log(e)
-                  }
                   }
                 }
                />
