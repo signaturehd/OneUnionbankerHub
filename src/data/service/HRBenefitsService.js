@@ -119,12 +119,20 @@ export default class HRBenefitsService {
 
 
   /* Reset Password */
+  resetOtp (resetOtpParam) {
+    return this.apiClient.post('v1/otp', resetOtpParam)
+  }
+
+  resetPassword (resetPasswordParam) {
+    return this.apiClient.post('v1/password/reset', resetPasswordParam)
+  }
+
   requestEmailVerification (token, empId, date) {
     const objectParam = {
       employeeNumber: empId,
       birthDate : date,
     }
-    return this.apiClient.post('v1/password/reset/email', objectParam, {
+    return this.apiClient.post('v1/password/otp', objectParam, {
       headers : { token }
     })
   }
@@ -138,9 +146,12 @@ export default class HRBenefitsService {
     })
   }
 
-  requestNewPassword (token, newPassword, otp) {
+  requestNewPassword (token, otp, date, empId, password) {
     const objectParam = {
-      password: newPassword,
+      password: password,
+      employeeNo: empId,
+      birthDate : date,
+      otp: otp,
     }
     return this.apiClient.post('v1/password/reset', objectParam, {
       headers : { token }

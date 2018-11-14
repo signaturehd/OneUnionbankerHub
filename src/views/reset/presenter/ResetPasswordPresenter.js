@@ -28,19 +28,19 @@ export default class ResetPasswordPresenter {
   }
 
   requestNewPassword (token, newPass, confirmPass, otp) {
-    if(newPass === '') {
-      this.view.showNewPassErrorMessage('Please check the fields')
-    } else if (confirmPass ==='') {
-      this.view.showConfirmPassErrorMessage('Please check the fields')
-    } else {
-      this.view.showPasswordCircularLoader()
-      this.requestNewPasswordInteractor.execute(token, newPass, otp)
-      .subscribe(data => {
-        this.view.hidePasswordCircularLoader()
-        this.view.showPasswordResponse(data, true)
-      }, error => {
-        this.view.hidePasswordCircularLoader()
-      })
-    }
+    // if(newPass === '') {
+    //   this.view.showNewPassErrorMessage('Please check the fields')
+    // } else if (confirmPass ==='') {
+    //   this.view.showConfirmPassErrorMessage('Please check the fields')
+    // } else {
+    //   this.view.showPasswordCircularLoader()
+    //   this.requestNewPasswordInteractor.execute(token, newPass, otp)
+    //   .subscribe(data => {
+    //     this.view.hidePasswordCircularLoader()
+    //     this.view.showPasswordResponse(data, true)
+    //   }, error => {
+    //     this.view.hidePasswordCircularLoader()
+    //   })
+    // }
   }
 }

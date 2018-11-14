@@ -199,7 +199,7 @@ class Bir1902FormFragment extends BaseMVPView {
         <div className = { 'bir-grid-card' }>
           <Card
             onClick = { () => {
-              this.onCheckedPdf('/2018-10-30/12345-BIR Form-1538123091552.pdf')
+              this.onCheckedPdf('/2018-11-07/12345-BIR Form-1538123091552.pdf')
               this.setState({ showPdfViewComponent : true  })
               }
             }

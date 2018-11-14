@@ -179,9 +179,11 @@ class SettingsContactInfoComponent extends Component {
                         <a>+{ profileNumber ? profileNumber : '(Not Yet Provided)' }</a>
                       </div>
                     </div>
-                    <span
-                      onClick = { () => this.setState({ updateContact : true }) }
-                      className = { 'alignment-center profile-icon-settings editIconImage' }/>
+                    {
+                      // <span
+                      //   onClick = { () => this.setState({ updateContact : true }) }
+                      //   className = { 'alignment-center profile-icon-settings editIconImage' }/>
+                    }
                     </div>
                   </div>
                 }

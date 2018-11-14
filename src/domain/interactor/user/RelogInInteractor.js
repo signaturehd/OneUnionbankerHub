@@ -1,4 +1,4 @@
-import { ProfileActions } from '../../../actions'
+import { ProfileActions, LoginActions } from '../../../actions'
 import store from '../../../store'
 
 export default class RelogInInteractor {
@@ -13,5 +13,6 @@ export default class RelogInInteractor {
      this.client.setAccountNumber('')
      this.client.setReleasingCenter('')
      store.dispatch(ProfileCtions.setProfilePicture(null))
+     store.dispatch(LoginActions.showReloginModal(false))
   }
 }

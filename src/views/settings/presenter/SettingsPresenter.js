@@ -46,7 +46,6 @@ export default class SettingsPresenter {
 
     this.getProfileInteractor.execute()
      .subscribe(profile => {
-       console.log(profile)
        try {
          this.view.hideLoading()
          this.view.showProfileBackground(profile)

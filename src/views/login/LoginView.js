@@ -12,10 +12,12 @@ import {
   Card,
   CircularLoader,
   Notify,
-  GenericInput
+  GenericInput,
+  Modal
 } from '../../ub-components'
 
 import './styles/login.css'
+import moment  from 'moment'
 
 import OtpModal from '../otp/OtpModal'
 import TermsModal from '../termsandcondition/TermsModal'
@@ -38,20 +40,31 @@ function LoginComponent (props) {
   const onCheckUserName = props.onCheckUserName
   const onChageBirthDate = props.onChageBirthDate
   const birthDate = props.birthDate
-  const requestEmailFunc = props.requestEmailFunc
+  const resetPassword = props.resetPassword
   const usernameId = props.usernameId
   const showEmailMessageModal = props.showEmailMessageModal
   const emailSuccessMessage = props.emailSuccessMessage
   const onCloseSuccessModal = props.onCloseSuccessModal
+  const setConfirmPassword = props.setConfirmPassword
+  const setNewPassword = props.setNewPassword
+  const requestEmailFunc = props.requestEmailFunc
+  const newPassword = props.newPassword
+  const confirmNewPassword = props.confirmNewPassword
+
   if(id === 0) {
     return <LoginForgotPasswordComponent
+      confirmNewPassword = { confirmNewPassword }
+      newPassword = { newPassword }
+      requestEmailFunc = { () => requestEmailFunc() }
       idReplace = { () => idReplace() }
       history = { history }
       emailSuccessMessage = { emailSuccessMessage }
       usernameId = { usernameId }
-      requestEmailFunc = { () => requestEmailFunc() }
+      resetPassword = { () => resetPassword() }
       onCloseSuccessModal = { () => onCloseSuccessModal() }
       birthDate = { birthDate }
+      setNewPassword = { (newPassword) => setNewPassword(newPassword) }
+      setConfirmPassword = { (confirmPassword) => setConfirmPassword(confirmPassword) }
       onCheckUserName = { (e) => onCheckUserName(e) }
       onChageBirthDate = { (e) => onChageBirthDate(e) }
       showEmailMessageModal = { showEmailMessageModal }
@@ -84,17 +97,22 @@ class LoginView extends BaseMVPView {
       showOtpModal: false,
       showHelpDeskComponent: false,
       showLoginComponent: false,
-      newPassword: false,
-      confirmNewPassword: false,
       disabled : false,
       showEmailMessageModal : false,
+      showResetModal : false,
       resetLoader : false,
+      showRequestOtpModal : false,
+      resetSuccessMessageModal : false,
       username: '',
+      newPassword: '',
+      confirmNewPassword: '',
       password: '',
       componentId: '',
       usernameId: '',
       birthDate: '',
       emailSuccessMessage: '',
+      resetSuccessMessage: '',
+      requiredOtp: '',
       type: 'password',
       status : 'hide',
       terms : null,
@@ -162,18 +180,15 @@ class LoginView extends BaseMVPView {
   }
 
   proceedToValidation (user, pass) {
-    store.dispatch(NotifyActions.resetNotify())
     if(!new RequiredValidation().isValid(user)) {
-      store.dispatch(NotifyActions.resetNotify())
       store.dispatch(NotifyActions.addNotify({
         title : 'Login Credentials',
-        message : 'Employee ID is required',
+        message : 'Employee ID is required ' + Math.floor(Math.random() * 100),
         type: 'warning',
-        duration : 2000,
+        duration : 10000,
       })
     )
     } else if (!new RequiredValidation().isValid(pass)) {
-        store.dispatch(NotifyActions.resetNotify())
         store.dispatch(NotifyActions.addNotify({
           title : 'Login Credentials',
           message : 'Password is required',
@@ -187,8 +202,16 @@ class LoginView extends BaseMVPView {
     }
   }
 
+  showGetOtpModal (successMessage) {
+    this.setState({ successMessage, showResetModal : true })
+  }
+
   showNotificationMessage (emailSuccessMessage) {
     this.setState({ emailSuccessMessage, showEmailMessageModal : true })
+  }
+
+  hideHelpDeskComponent (resetSuccessMessage) {
+    this.setState({ resetSuccessMessage, resetSuccessMessageModal : true, showHelpDeskComponent : false })
   }
 
   render () {
@@ -210,8 +233,13 @@ class LoginView extends BaseMVPView {
       usernameId,
       birthDate,
       showEmailMessageModal,
+      showResetModal,
       emailSuccessMessage,
-      otpMessage
+      otpMessage,
+      showRequestOtpModal,
+      requiredOtp,
+      resetSuccessMessage,
+      resetSuccessMessageModal,
     } = this.state
 
     const {
@@ -221,7 +249,7 @@ class LoginView extends BaseMVPView {
 
     let version = 5
     let majorVersion = 0
-    let minorVersion = 0
+    let minorVersion = 2
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     const objectValue = [{
@@ -241,6 +269,56 @@ class LoginView extends BaseMVPView {
     return (
       <div>
         { super.render() }
+        {
+          resetSuccessMessageModal &&
+          <Modal>
+            <center>
+              <br/>
+              <h2>{ resetSuccessMessage && resetSuccessMessage.message }</h2>
+              <br/>
+              <GenericButton
+                text = { 'Ok' }
+                onClick = { () => this.setState({ resetSuccessMessageModal : false }) }
+                />
+            </center>
+          </Modal>
+        }
+        {
+          showResetModal &&
+          <Modal>
+            <center>
+              <div className = { 'grid-global-row' }>
+                <div>
+                  <span className = { 'security-icon security-icon-settings' }/>
+                    <br/>
+                </div>
+                <h2 className = { 'font-size-12px' }>You will receive a One-Time Password (OTP) on your registered mobile number</h2>
+              </div>
+              <br/>
+              <GenericInput
+                hint = "OTP"
+                className = { 'center-text' }
+                maxLength = {6}
+                onChange={ (e) => this.setState({ requiredOtp: e.target.value }) }
+                errorMessage = { 'Please enter your 6-digit code' }
+              />
+              <br/>
+              <GenericButton
+                text = { 'Submit' }
+                onClick = { () => {
+                    this.presenter.requestNewPassword(
+                      requiredOtp,
+                      moment(birthDate).format('MM/DD/YYYY'),
+                      usernameId,
+                      confirmNewPassword)
+                    this.setState({ showResetModal : false })
+                  }
+                }
+               />
+             <br/>
+          </center>
+        </Modal>
+        }
         {
           // TODO properly show otp modal as 'modal', not by just swapping views lol
           showOtpModal &&
@@ -281,6 +359,7 @@ class LoginView extends BaseMVPView {
                     </center>
                     :
                     <LoginComponent
+                      requestEmailFunc = { () => this.presenter.requestEmailVerification(usernameId, birthDate) }
                       emailSuccessMessage = { emailSuccessMessage }
                       showEmailMessageModal = { showEmailMessageModal }
                       idReplace = { () => this.setState({ showLoginComponent : false }) }
@@ -288,11 +367,13 @@ class LoginView extends BaseMVPView {
                       birthDate = { birthDate }
                       onCheckUserName = { (usernameId) => this.setState({ usernameId }) }
                       hisptory = { history }
+                      setConfirmPassword = { (confirmNewPassword) => this.setState({ confirmNewPassword }) }
+                      setNewPassword = { (newPassword) => this.setState({ newPassword }) }
                       usernameId = { usernameId }
+                      newPassword = { newPassword }
+                      confirmNewPassword = { confirmNewPassword }
                       onChageBirthDate = { (birthDate) => this.setState({ birthDate }) }
-                      requestEmailFunc = { () =>
-                         this.presenter.requestEmailVerification(usernameId, birthDate)
-                       }
+                      resetPassword = { () => this.presenter.resetPassword() }
                       onCloseSuccessModal = { () => {
                         this.setState({ showEmailMessageModal : false, showHelpDeskComponent : false })
                         history.push('/')
@@ -442,23 +523,6 @@ class LoginView extends BaseMVPView {
             </div>
           }
         </Card>
-
-        <div className = { 'notify-container' }>
-        {
-          notify &&
-          notify.map((notify, i) => (
-            <Notify
-              onClick = { () => {
-                store.dispatch(NotifyActions.removeNotify(i))
-              }}
-              key = { i }
-              title = { notify.title }
-              message = { notify.message }
-              type = { notify.type }
-                  />
-          ))
-        }
-        </div>
     </div>
     )
   }
