@@ -49,6 +49,7 @@ class SettingsProfileDescriptions extends Component {
             descriptionEditMode ?
             <div className = { 'profile-grid-description' }>
               <GenericInput
+                type = { 'textarea' }
                 text = { 'Add Description' }
                 onChange = { (e) => descriptionTextFunc(e.target.value) }
                 value = { descriptionText }
