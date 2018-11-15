@@ -50,6 +50,7 @@ function LoginComponent (props) {
   const requestEmailFunc = props.requestEmailFunc
   const newPassword = props.newPassword
   const confirmNewPassword = props.confirmNewPassword
+  const requestUnlockFunc = props.requestUnlockFunc
 
   if(id === 0) {
     return <LoginForgotPasswordComponent
@@ -72,8 +73,17 @@ function LoginComponent (props) {
   } else if (id === 1) {
     return <LoginGuideUnlockProfileFragment
       idReplace = { () => idReplace() }
+      onCheckUserName = { (e) => onCheckUserName(e) }
+      onChageBirthDate = { (e) => onChageBirthDate(e) }
+      requestUnlockFunc = { () => requestUnlockFunc() }
+      birthDate = { birthDate }
+      usernameId = { usernameId }
       />
   } else if (id === 2) {
+    return <LoginUserIdGuideComponent
+      idReplace = { () => idReplace() }
+      />
+  } else if (id === 1) {
     return <LoginUserIdGuideComponent
       idReplace = { () => idReplace() }
       />
@@ -211,7 +221,14 @@ class LoginView extends BaseMVPView {
   }
 
   hideHelpDeskComponent (resetSuccessMessage) {
-    this.setState({ resetSuccessMessage, resetSuccessMessageModal : true, showHelpDeskComponent : false })
+    this.setState({
+      resetSuccessMessage,
+      resetSuccessMessageModal : true,
+      showHelpDeskComponent : false,
+      showLoginComponent : false,
+      birthDate: '',
+      usernameId: ''
+    })
   }
 
   render () {
@@ -255,7 +272,10 @@ class LoginView extends BaseMVPView {
     const objectValue = [{
       id : 0,
       name : 'I forgot my password'
-    }, ,{
+    } ,{
+      id : 1,
+      name : 'I want to Unlock my Profile'
+    } ,{
       id : 2,
       name : 'What is my 1UHub user ID?'
     }, {
@@ -360,6 +380,9 @@ class LoginView extends BaseMVPView {
                     :
                     <LoginComponent
                       requestEmailFunc = { () => this.presenter.requestEmailVerification(usernameId, birthDate) }
+                      requestUnlockFunc = { () =>
+                        this.presenter.requestUnlockPin(usernameId, birthDate)
+                      }
                       emailSuccessMessage = { emailSuccessMessage }
                       showEmailMessageModal = { showEmailMessageModal }
                       idReplace = { () => this.setState({ showLoginComponent : false }) }
