@@ -18,6 +18,8 @@ import {
   FloatingActionButton
 } from '../../ub-components/'
 
+import MyGoalsComponent from '../mygoals/components/MyGoalsComponent'
+
 import ResponseModal from '../notice/NoticeResponseModal'
 
 import { format } from '../../utils/numberUtils'
@@ -33,7 +35,21 @@ class MyGoalsFragment extends BaseMVPView {
     this.state = {
       enabledLoader : false,
       showNoticeResponseModal : false,
-      noticeResponse : ''
+      noticeResponse : '',
+      goalsArray : [
+        {
+          id: 1
+        },
+        {
+          id: 2
+        },
+        {
+          id: 3
+        },
+        {
+          id: 4
+        }
+      ]
     }
   }
 
@@ -61,7 +77,8 @@ class MyGoalsFragment extends BaseMVPView {
     const {
       enabledLoader,
       showNoticeResponseModal,
-      noticeResponse
+      noticeResponse,
+      goalsArray
     } = this.state
 
     return (
@@ -103,22 +120,11 @@ class MyGoalsFragment extends BaseMVPView {
         <br/>
         <Line/>
         <br/>
-        <div className = { 'grid-main' }>
-          <div className = { 'padding-5px' }>
-            <Card>
-              <div className = { 'grid-global' }>
-                <div>
-                  <h2>qwertyuiop</h2>
-                  <h2>qwertyuiop</h2>
-                </div>
-                <div>
-                  <h2>qwertyuiop</h2>
-                  <h2>qwertyuiop</h2>
-                </div>
-              </div>
-            </Card>
-          </div>
-        </div>
+            {
+              goalsArray.length !== 0 &&
+              <MyGoalsComponent
+              cardHolder = { goalsArray }/>
+            }
       </div>
     )
   }
