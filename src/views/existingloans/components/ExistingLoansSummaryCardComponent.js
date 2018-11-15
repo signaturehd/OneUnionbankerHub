@@ -20,6 +20,8 @@ class ExistingLoansSummaryCardComponent extends Component {
 
   computePercentage (balance) {
     let totalAmount = this.props.totalAmount
+    let principalAmount = this.props.principalAmount
+    // const percentage = (balance / principalAmount) * 100
     const percentage = (balance / totalAmount) * 100
 
     return parseInt(percentage)
@@ -33,7 +35,8 @@ class ExistingLoansSummaryCardComponent extends Component {
       balance,
       totalAmount ,
       promissoryNote,
-      date
+      date,
+      principalAmount
     } = this.props
 
     const convertBalance = MyExistitngLoansFunctions.checkedDesiredAmount(balance)
@@ -73,6 +76,10 @@ class ExistingLoansSummaryCardComponent extends Component {
             <div  className = { 'font-weight-bold font-size-12px existingloans-progressbar' }>
               <br/>
               <br/>
+              {
+                // <Progress
+                //   percent = { this.computePercentage(resp.balance, resp.principalAmount) } />
+              }
               <Progress
                 percent = { this.computePercentage(resp.balance) } />
             </div>

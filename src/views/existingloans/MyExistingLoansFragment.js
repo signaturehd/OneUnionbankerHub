@@ -95,7 +95,7 @@ class MyExistingLoansFragment extends BaseMVPView {
                     </h2>
                     <br/>
                     <h2>
-                      Outstanding Balance
+                      Total Outstanding Balance
                     </h2>
                     <h2>
                       { moment().format('DD MMM YYYY') }
