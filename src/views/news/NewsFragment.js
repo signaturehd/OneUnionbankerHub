@@ -11,7 +11,13 @@ import NewsCardComponent from './components/NewsCardComponent/NewsCardComponent'
 import NewsHeadlinesCardComponent from './components/NewsCardComponent/NewsHeadlinesCardComponent'
 import NewsModalComponent from './modals/NewsModalComponent'
 
-import { CircularLoader, GenericInput, Line, Card } from '../../ub-components'
+import {
+  CircularLoader,
+  GenericInput,
+  Line,
+  Card,
+  SkeletalLoader,
+} from '../../ub-components'
 
 import './styles/newsStyles.css'
 
@@ -85,12 +91,15 @@ class NewsFragment extends BaseMVPView {
         <br/>
         <div>
           {
-            showLoader ?
-            <div className = {'news-loader'} >
-              <center>
-                <CircularLoader show = {true} />
-              </center>
-            </div>   :
+            !showLoader ?
+            <div>
+              <SkeletalLoader
+                width = { 400 }
+                height = { 150 }
+                shapeBox = { !showLoader }
+                />
+            </div>
+            :
             <div>
             {
             newsList &&
