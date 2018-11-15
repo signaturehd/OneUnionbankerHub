@@ -78,14 +78,17 @@ import PostEmploymentFragment from '../postemployment/PostEmploymentFragment'
 import LaptopLeaseFragment from '../laptoplease/LaptopLeaseFragment'
 
 /* Event Budget Requisition */
-
 import EventsBudgetFragment from '../eventbudget/EventsBudgetFragment'
+
 /* Travel */
 import TravelFragment from '../travel/TravelFragment'
 import RequestFlightFragment from '../request/RequestFlightFragment'
 import BookFlightFragment from '../bookflight/BookFlightFragment'
 import LiquidationFragment from '../liquidation/LiquidationFragment'
 import ApprovalFragment from '../approval/ApprovalFragment'
+
+/* Goals */
+import MyGoalsFragment from '../mygoals/MyGoalsFragment'
 
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
@@ -422,6 +425,10 @@ class NavigationView extends BaseMVPView {
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/mylearning' render = { props =>
                     <MyLearningView { ...props }
+                      profile = { profile }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mygoals' render = { props =>
+                    <MyGoalsFragment { ...props }
                       profile = { profile }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
                   <Route path = '/feedback' render = { props =>
