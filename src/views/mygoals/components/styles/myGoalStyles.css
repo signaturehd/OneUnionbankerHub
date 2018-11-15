@@ -67,3 +67,15 @@
 .icon-edit-img {
   background-image: url('../../../../images/icons/baseline_edit_black_18dp.png')
 }
+
+/* Form style */
+
+.goal-container {
+  max-width: 100%;
+}
+
+.goal-grid-column-x3 {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  column-gap: 2%;
+}

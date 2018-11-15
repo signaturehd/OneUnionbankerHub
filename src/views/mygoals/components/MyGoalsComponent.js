@@ -34,10 +34,6 @@ class MyGoalsComponent extends Component {
 
   }
 
-  noticeResponse (noticeResponse) {
-    this.setState({ noticeResponse, showNoticeResponseModal : true })
-  }
-
   navigate () {
     this.props.history.push('/mylearning')
   }
