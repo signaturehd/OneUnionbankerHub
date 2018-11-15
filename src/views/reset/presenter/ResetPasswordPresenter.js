@@ -12,13 +12,14 @@ export default class ResetPasswordPresenter {
     this.view = view
   }
 
-  requestOtpVerification () {
+  requestOtpVerification (token) {
     this.view.showCircularLoader()
-    this.requestOtpVerificationInteractor.execute()
+    this.requestOtpVerificationInteractor.execute(token)
     .subscribe(data => {
       this.view.showOtpResponse(data.message)
       this.view.hideCircularLoader()
     }, error => {
+      this.view.hideCircularLoader()
     })
   }
 }

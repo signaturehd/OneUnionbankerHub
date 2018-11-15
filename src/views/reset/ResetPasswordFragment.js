@@ -7,7 +7,8 @@ import BaseMVPView from '../common/base/BaseMVPView'
 
 import {
   Card,
-  CircularLoader
+  CircularLoader,
+  GenericButton
 } from '../../ub-components/'
 
 import NoticeResponse from '../notice/NoticeResponseModal'
@@ -43,11 +44,11 @@ class ResetPasswordFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.presenter.requestOtpVerification()
     const {
       token
     } = this.props.match.params
     this.setState({ token : token })
+    this.presenter.requestOtpVerification(token)
   }
 
   render () {
@@ -84,11 +85,19 @@ class ResetPasswordFragment extends BaseMVPView {
                 className = { 'back-arrow' }></i>
               <div></div>
             </div>
-            <br/>
             <div className = { 'circular-loader-center' }>
+              <br/>
+              <center>
+                <span  className = { 'upload-success-icon security-icon-settings' }/>
+              </center>
               <h2>Successfully  Unlocked Account Pin</h2>
               <br/>
               <h2>{ successMessage }</h2>
+              <GenericButton
+                className = { 'profile-button-small' }
+                onClick = { () => history.push('/') }
+                text = { 'Ok' }
+                />
             </div>
           </div>
         }

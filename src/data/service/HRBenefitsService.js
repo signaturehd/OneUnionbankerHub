@@ -139,7 +139,7 @@ export default class HRBenefitsService {
 
   requestOtpVerification (token) {
     const objectParam = {
-      token,
+      token: token,
     }
     return this.apiClient.post('v1/account/unlock/email', objectParam, {
       headers : { token }
