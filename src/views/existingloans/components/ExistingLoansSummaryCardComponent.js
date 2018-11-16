@@ -21,7 +21,6 @@ class ExistingLoansSummaryCardComponent extends Component {
   computePercentage (balance, principal) {
     let totalAmount = this.props.totalAmount
     const percentage = (balance / principal) * 100
-    // const percentage = (balance / totalAmount) * 100
 
     return parseInt(percentage)
   }
