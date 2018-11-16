@@ -329,7 +329,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
         title : 'Maternity Assistance',
         type : 'warning',
         message : 'Please provide all required attachments',
-        duration: 2000,
+        duration: 4000,
       })
     )
     } else if (validateAttachments) {
@@ -437,7 +437,7 @@ class MaternityAssistanceFragment extends BaseMVPView {
         title : 'Maternity Assistance',
         type : 'warning',
         message : `The total of Delivery & Miscarriage must not exceed to the count of Pregnancy(${ noPregnancyText })`,
-        duration: 2000,
+        duration: 4000,
         })
       )
     } else {

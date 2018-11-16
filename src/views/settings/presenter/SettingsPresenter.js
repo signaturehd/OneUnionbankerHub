@@ -120,21 +120,21 @@ export default class SettingsPresenter {
          title: 'Staff Accounts',
          message : 'Please input valid account number and must be atleast 12 digit',
          type: 'warning',
-         duration: 2000
+         duration: 4000
        }))
      } else if (type === '') {
        store.dispatch(NotifyActions.addNotify({
          title: 'Staff Accounts',
          message : 'Please select the type of account',
          type: 'warning',
-         duration: 2000
+         duration: 4000
        }))
      } else if (capacity === '') {
        store.dispatch(NotifyActions.addNotify({
          title: 'Staff Accounts',
          message : 'Please select the capacity of account',
          type: 'warning',
-         duration: 2000
+         duration: 4000
        }))
      } else {
        this.view.staffCircularLoader(true)
