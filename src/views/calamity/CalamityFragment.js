@@ -170,7 +170,7 @@ class CalamityFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Type of Calamity is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     } else if (date === null || date === '') {
@@ -178,7 +178,7 @@ class CalamityFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Date of Occurence is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     } else if (damageProperty === null || !damageProperty.length) {
@@ -186,7 +186,7 @@ class CalamityFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Damage Property is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }else if (!attachmentArray.length) {
