@@ -18,7 +18,8 @@ import {
   FloatingActionButton
 } from '../../ub-components/'
 
-import MyGoalsComponent from '../mygoals/components/MyGoalsComponent'
+import RequestedGoalsComponent from '../mygoals/components/RequestedGoalsComponent'
+import ApprovedGoalsComponent from '../mygoals/components/ApprovedGoalsComponent'
 import MyGoalsFormComponent from '../mygoals/components/MyGoalsFormComponent'
 
 import ResponseModal from '../notice/NoticeResponseModal'
@@ -38,21 +39,34 @@ class MyGoalsFragment extends BaseMVPView {
       showNoticeResponseModal : false,
       showForm : false,
       showPriorityModal : false,
+      goalTitle : '',
+      description : '',
+      startDate : '',
+      dueDate : '',
       priorityId : '',
       priorityName : '',
       noticeResponse : '',
       goalsArray : [
         {
-          id: 1
+          "goal": "Goal title 1",
+          "description": "this is a test description",
+          "startDate": "11/16/2018",
+          "dueDate": "12/17/2018",
+          "priority": "1"
         },
         {
-          id: 2
+          "goal": "Goal title 2",
+          "description": "this is a test description",
+          "startDate": "04/16/2018",
+          "dueDate": "06/17/2018",
+          "priority": "2"
         },
         {
-          id: 3
-        },
-        {
-          id: 4
+          "goal": "Goal title 3",
+          "description": "this is a test description",
+          "startDate": "02/16/2018",
+          "dueDate": "03/17/2018",
+          "priority": "3"
         }
       ],
       priorityArray : [
@@ -92,6 +106,40 @@ class MyGoalsFragment extends BaseMVPView {
     this.props.history.push('/mylearning')
   }
 
+  goalTitleFunc (goalTitle) {
+    this.setState({ goalTitle })
+  }
+
+  descriptionFunc (description) {
+    this.setState({ description })
+  }
+
+  startDateFunc (startDate) {
+    this.setState({ startDate })
+  }
+
+  dueDateFunc (dueDate) {
+    this.setState({ dueDate })
+  }
+
+  priorityFunc(priority) {
+    let lmh = ''
+    if(priority === '1') {
+      lmh = 'Low'
+    } else if (priority === '2') {
+      lmh = 'Medium'
+    } else if (priority === '3') {
+      lmh = 'High'
+    } else {
+      lmh = 'Priority not set'
+    }
+    return lmh
+  }
+
+  submit() {
+
+  }
+
   render () {
     const {
       enabledLoader,
@@ -101,6 +149,10 @@ class MyGoalsFragment extends BaseMVPView {
       showForm,
       showPriorityModal,
       priorityArray,
+      goalTitle,
+      description,
+      startDate,
+      dueDate,
       priorityId,
       priorityName
     } = this.state
@@ -168,14 +220,25 @@ class MyGoalsFragment extends BaseMVPView {
             {
               showForm ?
               <MyGoalsFormComponent
+                onCancel = { () => this.setState({ showForm : false }) }
+                submit = { () => this.submit() }
+                goalTitle = { goalTitle }
+                goalTitleFunc = { (resp) => this.goalTitleFunc(resp) }
+                description = { description }
+                descriptionFunc = { (resp) => this.descriptionFunc(resp) }
+                startDate = { startDate }
+                startDateFunc = { (resp) => this.startDateFunc(resp) }
+                dueDate = { dueDate }
+                dueDateFunc = { (resp) => this.dueDateFunc(resp) }
                 priorityName = { priorityName }
                 showPriorityModal = { showPriorityModal }
                 showPriorityModalFunc = { () => this.setState({ showPriorityModal : true }) }
               />
               :
               goalsArray.length !== 0 &&
-              <MyGoalsComponent
-              cardHolder = { goalsArray }/>
+              <RequestedGoalsComponent
+              cardHolder = { goalsArray }
+              priorityFunc = { (resp) => this.priorityFunc(resp) }/>
             }
       </div>
     )

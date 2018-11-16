@@ -36,6 +36,18 @@
   color: #ffffff;
 }
 
+.color-Low {
+  color: #008f00;
+}
+
+.color-Medium {
+  color: #105080;
+}
+
+.color-High {
+  color: #ff0000;
+}
+
 .margin-5px {
   margin: 5px 5px 5px 5px;
 }
@@ -65,6 +77,7 @@
 }
 
 .icon-edit-img {
+  margin-top: 5px;
   background-image: url('../../../../images/icons/baseline_edit_black_18dp.png')
 }
 

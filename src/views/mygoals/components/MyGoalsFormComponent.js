@@ -37,11 +37,17 @@ class MyGoalsFormComponent extends Component {
   render () {
     const {
       goalTitle,
+      goalTitleFunc,
       description,
+      descriptionFunc,
       startDate,
+      startDateFunc,
       dueDate,
+      dueDateFunc,
       priorityName,
-      showPriorityModalFunc
+      showPriorityModalFunc,
+      onCancel,
+      submit
     } = this.props
 
     return (
@@ -52,20 +58,25 @@ class MyGoalsFormComponent extends Component {
             <GenericInput
               text = { 'Goal Title' }
               value = { goalTitle }
+              onChange = { (e) => goalTitleFunc(e.target.value) }
             />
             <GenericInput
               text = { 'Description' }
               type = { 'textarea' }
               value = { description }
+              onChange = { (e) => descriptionFunc(e.target.value) }
             />
             <div className = { 'grid-global' }>
               <DatePicker
                 text = { 'Start Date' }
-                selected = { startDate }
+                selected = { startDate && moment(startDate) }
+                onChange = { (e) => startDateFunc(e) }
               />
               <DatePicker
                 text = { 'Due Date' }
-                selected = { dueDate }
+                selected = { dueDate && moment(dueDate) }
+                onChange = { (e) => dueDateFunc(e) }
+                minLength = { moment(startDate) }
               />
             </div>
             <GenericInput
@@ -73,6 +84,16 @@ class MyGoalsFormComponent extends Component {
               value = { priorityName }
               onClick = { () => showPriorityModalFunc() }
             />
+            <div className = { 'grid-global' }>
+              <GenericButton
+                text = { 'Cancel' }
+                onClick = { () => onCancel() }
+              />
+              <GenericButton
+                text = { 'Submit' }
+                onClick = { () => submit() }
+              />
+            </div>
           </div>
           <div></div>
         </div>

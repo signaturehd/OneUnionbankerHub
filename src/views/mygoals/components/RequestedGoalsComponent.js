@@ -24,7 +24,7 @@ import moment from 'moment'
 import { Progress } from 'react-sweet-progress'
 import './styles/myGoalStyles.css'
 
-class MyGoalsComponent extends Component {
+class RequestedGoalsComponent extends Component {
 
   constructor(props) {
     super(props)
@@ -39,16 +39,16 @@ class MyGoalsComponent extends Component {
   }
 
   render () {
-    const { cardHolder } = this.props
+    const { cardHolder, priorityFunc } = this.props
     return (
       <div className = { 'grid-main padding-5px' }>
       {
-        cardHolder.map((resp) =>
+        cardHolder.map((resp, key) =>
           <Card className = { 'margin-5px' }>
             <div className = { 'grid-card-row' }>
 
               <div className = { 'grid-card-x2 header-color border-radius-top' }>
-                <h2 className = { 'margin-10px text-align-left font-size-16px font-weight-bold color-white' }>Goal Title</h2>
+                <h2 className = { 'margin-10px text-align-left font-size-16px font-weight-bold color-white' }>{ resp.goal }</h2>
                 <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-lighter unionbank-color' }>Personal</h2>
               </div>
 
@@ -56,9 +56,8 @@ class MyGoalsComponent extends Component {
                 <div className = { 'grid-div-row' }>
                   <div></div>
                   <div>
-                    <h2 className = { 'margin-10px text-align-left font-size-14px font-weight-lighter' }>Description description description...</h2>
-                    <h2 className = { 'margin-10px text-align-left font-size-14px font-weight-lighter' }>Nov 15, 2018 to Dec 15, 2018</h2>
-                    <h2 className = { 'margin-10px text-align-left font-size-14px font-weight-bold' }>High</h2>
+                    <h2 className = { 'margin-10px text-align-left font-size-14px font-weight-lighter' }>{ resp.description.substr(0,30) }...</h2>
+                    <h2 className = { 'margin-10px text-align-left font-size-14px font-weight-lighter' }>{ moment(resp.startDate).format('MMM DD, YYYY') } to { moment(resp.dueDate).format('MMM DD, YYYY') }</h2>
                   </div>
                   <div></div>
                 </div>
@@ -66,11 +65,7 @@ class MyGoalsComponent extends Component {
                 <div className = { 'grid-div-row' }>
                   <div></div>
                   <div className = { 'margin-10px text-align-right' }>
-                    <Progress
-                      type = { 'circle' }
-                      height = { 65 }
-                      width = { 65 }
-                      percent = { 80 }/>
+
                   </div>
                   <div></div>
                 </div>
@@ -80,7 +75,7 @@ class MyGoalsComponent extends Component {
                 <Line/>
                 <div className = { 'grid-footer-column margin-5px' }>
                   <div>
-                    <span className = { 'icon-check icon-check-img' }/>
+                    <h2 className = { `margin-5px text-align-center font-size-12px font-weight-bold color-${priorityFunc(resp.priority)}` }>{ priorityFunc(resp.priority) }</h2>
                   </div>
                   <div></div>
                   <div>
@@ -98,8 +93,8 @@ class MyGoalsComponent extends Component {
   }
 }
 
-MyGoalsComponent.propTypes = {
+RequestedGoalsComponent.propTypes = {
   onSendPageNumberToView : PropTypes.func
 }
 
-export default MyGoalsComponent
+export default RequestedGoalsComponent
