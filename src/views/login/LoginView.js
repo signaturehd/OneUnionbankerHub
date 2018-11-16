@@ -265,8 +265,8 @@ class LoginView extends BaseMVPView {
     } = this.props
 
     let version = 5
-    let majorVersion = 0
-    let minorVersion = 2
+    let majorVersion = 10
+    let minorVersion = 3
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     const objectValue = [{
