@@ -21,6 +21,36 @@ import {
 
 import './styles/newsStyles.css'
 
+let staticCount = [1,2,3]
+
+function LoadLoader (props) {
+  const showLoader = props.showLoader
+  return (
+    <div className = { 'padding news-facebook-loader-grid' }>
+      <SkeletalLoader
+        boxSizeObject = {{
+          width : 200,
+          height: 150,
+        }}
+        shapeBox = { showLoader }
+        />
+      <div>
+        <SkeletalLoader
+          titleSizeObject = {{
+            width: 20,
+            height: 2,
+          }}
+          shapeTitle = { showLoader }
+          />
+        <br/>
+        <SkeletalLoader
+          showCodeComponent = { true }
+          />
+      </div>
+    </div>
+  )
+}
+
 class NewsFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -90,59 +120,65 @@ class NewsFragment extends BaseMVPView {
         <Line/>
         <br/>
         <div>
+        <div>
           {
-            !showLoader ?
-            <div>
-              <SkeletalLoader
-                width = { 400 }
-                height = { 150 }
-                shapeBox = { !showLoader }
-                />
-            </div>
-            :
-            <div>
-            {
-            newsList &&
-            newsList.map((news, i) =>
-              news.status === 1 &&
-                <div>
-                  <NewsHeadlinesCardComponent
-                    key = { i }
-                    news = { news }
-                    onClick = { details =>
-                      this.setState({ details, show: true })
-                    }
-                    />
-                  </div>
-                )
-              }
-              <br/>
-              <Card className = { 'news-feature-stories' }>
-                <h2 className = { 'unionbank-color font-size-30px font-weight-bold' }>Featured Stories</h2>
-                <br/>
-                <br/>
-                {
-                  newsList &&
-                  newsList.map((news, i) =>
-                  news.status !== 1 &&
-                  <div>
-                    <NewsCardComponent
-                      key={ i }
-                      news = { news }
-                      onClick = { details =>
-                        this.setState({ details, show: true })
-                      }
-                      onChangeHeart = { (id, isHeart) => this.presenter.addNewsIsHeart(id, isHeart) }
-                    />
-                    <br/>
-                    <Line/>
-                    <br/>
-                  </div>
-                    )
+          newsList &&
+          newsList.map((news, i) =>
+            news.status === 1 &&
+              <div>
+                <NewsHeadlinesCardComponent
+                  key = { i }
+                  news = { news }
+                  onClick = { details =>
+                    this.setState({ details, show: true })
                   }
-              </Card>
-            </div>
-          }
+                  />
+                </div>
+              )
+            }
+            <br/>
+            <Card className = { 'news-feature-stories' }>
+              <h2 className = { 'unionbank-color font-size-30px font-weight-bold' }>Featured Stories</h2>
+              <br/>
+              <br/>
+              <div>
+                {
+                  showLoader ?
+                  <div>
+                    {
+                      staticCount.map(resp =>
+                        <LoadLoader
+                          showLoader = { showLoader }
+                       />
+                      )
+                    }
+                  </div>
+                  :
+                  <div>
+                    {
+                      newsList &&
+                      newsList.map((news, i) =>
+                      news.status !== 1 &&
+                      <div>
+                        <NewsCardComponent
+                          key={ i }
+                          news = { news }
+                          onClick = { details =>
+                            this.setState({ details, show: true })
+                          }
+                          onChangeHeart = { (id, isHeart) => this.presenter.addNewsIsHeart(id, isHeart) }
+                        />
+                        <br/>
+                        <Line/>
+                        <br/>
+                      </div>
+                        )
+                      }
+                  </div>
+                }
+              </div>
+            </Card>
+          </div>
         </div>
       </div>
     )

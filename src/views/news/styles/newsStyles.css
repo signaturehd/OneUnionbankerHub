@@ -5,6 +5,12 @@
   vertical-align: middle;
 }
 
+.news-facebook-loader-grid {
+  display: grid;
+  grid-template-columns: .5fr 1fr;
+  column-gap: 2%;
+}
+
 .news-header {
   color: #ff8a00;
   font-weight: 600;
