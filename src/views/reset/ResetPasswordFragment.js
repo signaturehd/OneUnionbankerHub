@@ -6,11 +6,9 @@ import Presenter from './presenter/ResetPasswordPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 
 import {
-  GenericInput,
-  GenericButton,
   Card,
-  Modal,
-  CircularLoader
+  CircularLoader,
+  GenericButton
 } from '../../ub-components/'
 
 import NoticeResponse from '../notice/NoticeResponseModal'
@@ -27,25 +25,22 @@ class ResetPasswordFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-      username: '',
-      newPassword: '',
-      confirmNewPassword: '',
-      type : 'password',
-      status : 'hide',
-      type2 : 'password',
-      status2 : 'hide',
-      otp : '',
-      showRequestOtpModal : true,
-      enabledLoader : false,
-      showNoticeResponseModal : false,
-      showPasswordNoticeResponseModal : false,
-      otpData : '',
-      passwordResetLoader: false,
-      confirmPasswordErrorMessage: '',
-      newPasswordErrorMessage: '',
+      token: '',
+      successMessage: '',
+      loader: false,
     }
-    this.showHidePassword = this.showHidePassword.bind(this)
-    this.showHideConfirmPassword = this.showHideConfirmPassword.bind(this)
+  }
+
+  showOtpResponse (successMessage) {
+    this.setState({ successMessage })
+  }
+
+  showCircularLoader () {
+    this.setState({ loader : true })
+  }
+
+  hideCircularLoader () {
+    this.setState({ loader : false })
   }
 
   componentDidMount () {
@@ -53,93 +48,14 @@ class ResetPasswordFragment extends BaseMVPView {
       token
     } = this.props.match.params
     this.setState({ token : token })
-  }
-
-  showOtpResponse (otpData, showRequestOtpModal, showNoticeResponseModal) {
-    this.setState({ otpData, showRequestOtpModal, showNoticeResponseModal })
-  }
-
-  showPasswordResponse (otpData, showPasswordNoticeResponseModal) {
-    this.setState({ otpData, showPasswordNoticeResponseModal })
-  }
-
-  showCircularLoader () {
-    this.setState({ enabledLoader : true })
-  }
-
-  hideCircularLoader () {
-    this.setState({ enabledLoader : false })
-  }
-
-  showPasswordCircularLoader () {
-    this.setState({ passwordResetLoader : true })
-  }
-
-  hidePasswordCircularLoader () {
-    this.setState({ passwordResetLoader : false })
-  }
-
-  showConfirmPassErrorMessage (confirmPasswordErrorMessage) {
-    this.setState({ confirmPasswordErrorMessage })
-  }
-
-  showNewassErrorMessage (newPasswordErrorMessage) {
-    this.setState({ newPasswordErrorMessage })
-  }
-
-  showHidePassword (e) {
-    e.preventDefault()
-    e.stopPropagation()
-
-    if(this.state.status === 'hide') {
-      this.setState({
-        status : 'show',
-        type: this.state.type === 'input' ? 'password' : 'input'
-      })
-    } else if (this.state.status === 'show') {
-      this.setState({
-        status : 'hide',
-        type: this.state.type === 'password' ? 'input' : 'password'
-      })
-    }
-  }
-
-  showHideConfirmPassword (e) {
-    e.preventDefault()
-    e.stopPropagation()
-
-    if(this.state.status2 === 'hide') {
-      this.setState({
-        status2 : 'show',
-        type2: this.state.type2 === 'input' ? 'password' : 'input'
-      })
-    } else if (this.state.status2 === 'show') {
-      this.setState({
-        status2 : 'hide',
-        type2: this.state.type2 === 'password' ? 'input' : 'password'
-      })
-    }
+    this.presenter.requestOtpVerification(token)
   }
 
   render () {
     const {
-      username,
-      newPassword,
-      confirmNewPassword,
-      type,
-      status,
-      type2,
-      status2,
-      otp,
-      showRequestOtpModal,
-      enabledLoader,
-      otpData,
       token,
-      showNoticeResponseModal,
-      showPasswordNoticeResponseModal,
-      passwordResetLoader,
-      newPasswordErrorMessage,
-      confirmPasswordErrorMessage,
+      successMessage,
+      loader
     } = this.state
 
     const {
@@ -152,138 +68,39 @@ class ResetPasswordFragment extends BaseMVPView {
       <Card className = {'login-form'}>
         { super.render() }
         {
-          showNoticeResponseModal &&
-          <NoticeResponse
-            noticeResponse = { otpData }
-            onClose = { () =>
-             this.setState({ showNoticeResponseModal : false })
-            }
-            />
-        }
-        {
-          showPasswordNoticeResponseModal &&
-          <NoticeResponse
-            noticeResponse = { otpData }
-            onClose = { () => {
-              this.setState({ showPasswordNoticeResponseModal : false })
-              history.push('/')
-              }
-            }
-            />
-        }
-        {
-          showRequestOtpModal &&
-          <Modal>
-            {
-              enabledLoader ?
-              <center>
-                <br/>
-                  <h2>Please wait while we we&#39;re validating the OTP</h2>
-                <br/>
-                  <CircularLoader show = { enabledLoader }/>
-                <br/>
-              </center> :
-              <center>
-                <div className = { 'grid-global-row' }>
-                  <div>
-                    <span className = { 'security-icon security-icon-settings' }/>
-                      <br/>
-                  </div>
-                  <h2 className = { 'font-size-12px' }>You will receive a One-Time Password (OTP) on your registered mobile number</h2>
-                </div>
-                <br/>
-                <GenericInput
-                  hint = "OTP"
-                  className = { 'center-text' }
-                  maxLength = {6}
-                  onChange={ e => this.setState({ otp: e.target.value }) }
-                  errorMessage = { 'Please enter your 6-digit code' }
-                />
-                <br/>
-                <GenericButton
-                  text = { 'Submit' }
-                  onClick={ () =>
-                    this.presenter.requestOtpVerification(token, otp)
-                  }
-                 />
-              <br/>
-            </center>
-            }
-          </Modal>
-        }
-        {
-          passwordResetLoader ?
+          loader ?
 
-          <center>
-            <br/><br/><br/><br/>
-            <h2>Please wait while we we&#39;re updating your credentials</h2>
+          <center className = { 'circular-loader-center' }>
+            <h2>Please wait...</h2>
             <br/>
-            <CircularLoader show = { passwordResetLoader }/>
-            <br/>
-          </center> :
+            <CircularLoader show = { true }/>
+          </center>
+          :
           <div>
             <br/>
             <div
               className = { 'login-back-icon-grid cursor-pointer' }>
               <i
-                onClick = { () => idReplace() }
+                onClick = { () => history.push('/') }
                 className = { 'back-arrow' }></i>
               <div></div>
             </div>
-            <br/>
-            <h2>Recover Password</h2>
-            <br/>
-            <br/>
-            <GenericInput
-              onChange = { e =>
-                this.setState({ newPassword: e.target.value }) }
-              text = { 'New Password' }
-              type = { type }
-              errorMessage = { newPasswordErrorMessage }
-              className = { 'password__input' }/>
-            <span
-              className = { `password_icon password_${ status }` }
-              onClick = { this.showHidePassword }>
-              { type === 'input' ? '' : ''}
-            </span>
-            <GenericInput
-              onChange = { e =>
-                this.setState({ confirmNewPassword: e.target.value }) }
-              text = { 'Confirm New Password' }
-              type = { type2 }
-              errorMessage = { confirmPasswordErrorMessage }
-              className = { 'password__input' }/>
-            <span
-              className = { `password_icon password_${ status2 }` }
-              onClick = { this.showHideConfirmPassword }>
-              { type2 === 'input' ? '' : ''}
-            </span>
-            <br/>
-            <br/>
-            <center>
+            <div className = { 'circular-loader-center' }>
+              <br/>
+              <center>
+                <span  className = { 'upload-success-icon security-icon-settings' }/>
+              </center>
+              <h2>Successfully  Unlocked Account Pin</h2>
+              <br/>
+              <h2>{ successMessage }</h2>
               <GenericButton
-                text = { 'Submit' }
-                onClick = { () => this.presenter.requestNewPassword(token, newPassword, confirmNewPassword, otp) }
+                className = { 'profile-button-small' }
+                onClick = { () => history.push('/') }
+                text = { 'Ok' }
                 />
-            </center>
+            </div>
           </div>
         }
-        <div className = { 'notify-container' }>
-        {
-          notify &&
-          notify.map((notify, i) => (
-            <Notify
-              onClick = { () => {
-                store.dispatch(NotifyActions.removeNotify(i))
-              }}
-              key = { i }
-              title = { notify.title }
-              message = { notify.message }
-              type = { notify.type }
-                  />
-          ))
-        }
-        </div>
       </Card>
     )
   }
