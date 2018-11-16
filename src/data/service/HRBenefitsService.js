@@ -132,25 +132,38 @@ export default class HRBenefitsService {
       employeeNumber: empId,
       birthDate : date,
     }
-    return this.apiClient.post('v1/password/reset/email', objectParam, {
+    return this.apiClient.post('v1/password/otp', objectParam, {
       headers : { token }
     })
   }
 
-  requestOtpVerification (token, otp) {
+  requestOtpVerification (token) {
     const objectParam = {
-      otp : otp
+      token: token,
     }
-    return this.apiClient.post('v1/password/email/otp', objectParam, {
+    return this.apiClient.post('v1/account/unlock/email', objectParam, {
       headers : { token }
     })
   }
 
-  requestNewPassword (token, newPassword, otp) {
+  requestNewPassword (token, otp, date, empId, password) {
     const objectParam = {
-      password: newPassword,
+      password: password,
+      employeeNo: empId,
+      birthDate : date,
+      otp: otp,
     }
     return this.apiClient.post('v1/password/reset', objectParam, {
+      headers : { token }
+    })
+  }
+
+  requestUnlockPin (token, empId, date) {
+    const objectParam = {
+      employeeNumber: empId,
+      birthDate: date,
+    }
+    return this.apiClient.post('v1/account/unlock', objectParam, {
       headers : { token }
     })
   }

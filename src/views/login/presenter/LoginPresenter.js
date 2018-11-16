@@ -1,6 +1,8 @@
 import LoginInteractor from '../../../domain/interactor/user/LoginInteractor'
 import RequestEmailVerificationInteractor from '../../../domain/interactor/user/RequestEmailVerificationInteractor'
 import LoginParam from '../../../domain/param/LoginParam'
+import RequestNewPasswordInteractor from '../../../domain/interactor/user/RequestNewPasswordInteractor'
+import RequestUnlockPinInteractor from '../../../domain/interactor/user/RequestUnlockPinInteractor'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
@@ -11,6 +13,8 @@ export default class LoginPresenter {
   constructor (container) {
     this.loginInteractor = new LoginInteractor(container.get('HRBenefitsClient'))
     this.requestEmailVerificationInteractor = new RequestEmailVerificationInteractor(container.get('HRBenefitsClient'))
+    this.requestNewPasswordInteractor = new RequestNewPasswordInteractor(container.get('HRBenefitsClient'))
+    this.requestUnlockPinInteractor = new RequestUnlockPinInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -31,12 +35,42 @@ export default class LoginPresenter {
     )
   }
 
+  /* Unlock Profile */
+
+  requestUnlockPin (empId, date) {
+    console.log(empId, date)
+    this.view.showResetLoader()
+    this.requestUnlockPinInteractor.execute (empId, moment(date).format('YYYY-MM-DD'))
+    .subscribe(data => {
+      this.view.hideResetLoader()
+      this.view.hideHelpDeskComponent(data)
+    }, error => {
+      this.view.hideResetLoader()
+    })
+  }
+
+  /* Request OTP for reseting password */
+
   requestEmailVerification (empId, date) {
     this.view.showResetLoader()
     this.requestEmailVerificationInteractor.execute(empId, moment(date).format('YYYY-MM-DD'))
     .subscribe(data => {
       this.view.hideResetLoader()
-      this.view.showNotificationMessage(data)
+      this.view.showGetOtpModal(data)
+    }, error => {
+      this.view.hideResetLoader()
+      this.view.showGetOtpModal(error)
+    })
+  }
+
+  /* Reset Old Password */
+
+  requestNewPassword (otp, date, empId, password) {
+    this.view.showResetLoader()
+    this.requestNewPasswordInteractor.execute(otp, date, empId, password)
+    .subscribe(data => {
+      this.view.hideResetLoader()
+      this.view.hideHelpDeskComponent(data)
     }, error => {
       this.view.hideResetLoader()
     })

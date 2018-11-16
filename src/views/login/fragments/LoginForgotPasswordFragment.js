@@ -64,8 +64,6 @@ class LoginForgotPasswordFragment extends Component {
 
   render () {
     const {
-      newPassword,
-      confirmNewPassword,
       type,
       status,
       type2,
@@ -83,7 +81,9 @@ class LoginForgotPasswordFragment extends Component {
       onCloseSuccessModal,
       emailSuccessMessage,
       setNewPassword,
-      setConfirmPassword
+      setConfirmPassword,
+      newPassword,
+      confirmNewPassword,
     } = this.props
 
     return (
@@ -104,7 +104,9 @@ class LoginForgotPasswordFragment extends Component {
           <div></div>
         </div>
         <br/>
-        <h2>Reset Password</h2>
+          <h2 className = { 'font-size-18px text-align-center font-weight-bold' }>
+            Recover Password
+          </h2>
         <br/>
         <br/>
           <GenericInput
@@ -124,6 +126,7 @@ class LoginForgotPasswordFragment extends Component {
             onChange = { e => setNewPassword(e.target.value) }
             text = { 'New Password' }
             type = { type }
+            value = { newPassword }
             className = { 'password__input' }/>
           <span
             className = { `password_icon password_${ status }` }
@@ -131,6 +134,7 @@ class LoginForgotPasswordFragment extends Component {
             { type === 'text' ? '' : ''}
           </span>
           <GenericInput
+            value = { confirmNewPassword }
             onChange = { e => setConfirmPassword(e.target.value) }
             text = { 'Confirm New Password' }
             type = { type2 }

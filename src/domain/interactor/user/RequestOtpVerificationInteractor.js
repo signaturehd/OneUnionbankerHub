@@ -3,7 +3,7 @@ export default class RequestOtpVerificationInteractor {
     this.client = client
   }
 
-  execute (token, otp) {
-    return this.client.requestOtpVerification(token, otp)
+  execute (token) {
+    return this.client.requestOtpVerification(token)
   }
 }
