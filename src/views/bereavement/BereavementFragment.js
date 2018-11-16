@@ -210,7 +210,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Dependent field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -219,7 +219,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Deceased Date field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -228,7 +228,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Funeral Date field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -237,7 +237,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Funeral Home field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -246,7 +246,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Funeral Address field is required and atleast 15 characters',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -255,7 +255,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Funeral Region field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -264,7 +264,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Funeral Province field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -273,7 +273,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Funeral City field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -282,7 +282,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Interment Date field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -291,7 +291,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Memorial Park field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -300,7 +300,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Memorial Address field is required and atleast 15 characters',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -309,7 +309,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Memorial Region field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -318,7 +318,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Memorial Province field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -327,7 +327,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Memorial City field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }else if (!attachmentData.length) {
@@ -389,7 +389,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Dependent field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -398,7 +398,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Deceased Date field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -407,7 +407,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Funeral Date field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -416,7 +416,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Funeral Home field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -425,7 +425,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Funeral Address field is required  and atleast 15 characters',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -434,7 +434,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Funeral Region field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -443,7 +443,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Funeral Province field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -452,7 +452,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Funeral City field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -461,7 +461,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Interment Date field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -470,7 +470,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Memorial Park field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -479,7 +479,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Memorial Address field is required and atleast 15 characters',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -488,7 +488,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Memorial Region field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -497,7 +497,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Memorial Province field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
@@ -506,7 +506,7 @@ class BereavementFragment extends BaseMVPView {
           title: 'My Benefits',
           message: 'Memorial City field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     } else {

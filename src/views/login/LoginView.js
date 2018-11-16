@@ -183,7 +183,7 @@ class LoginView extends BaseMVPView {
     if(!new RequiredValidation().isValid(user)) {
       store.dispatch(NotifyActions.addNotify({
         title : 'Login Credentials',
-        message : 'Employee ID is required ' + Math.floor(Math.random() * 100),
+        message : 'Employee ID is required ',
         type: 'warning',
         duration : 10000,
       })
@@ -248,8 +248,8 @@ class LoginView extends BaseMVPView {
     } = this.props
 
     let version = 5
-    let majorVersion = 0
-    let minorVersion = 2
+    let majorVersion = 1
+    let minorVersion = 0
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     const objectValue = [{
