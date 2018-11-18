@@ -1,6 +1,7 @@
 import NewsInteractor from '../../../domain/interactor/news/NewsInteractor'
 import moment from 'moment'
 import AddCheckedStatusIsHeartInteractor from '../../../domain/interactor/news/AddCheckedStatusIsHeartInteractor'
+import { Observable } from 'rxjs'
 
 export default class NewsPresenter {
     constructor (container) {
@@ -8,7 +9,7 @@ export default class NewsPresenter {
 
       this.addCheckedStatusIsHeartInteractor =
         new AddCheckedStatusIsHeartInteractor(container.get('HRBenefitsClient'))
-}
+    }
 
     setView (view) {
       this.view = view
@@ -16,6 +17,7 @@ export default class NewsPresenter {
 
     getNews () {
       this.getNewsInteractor.execute()
+      .do(data => console.log(data))
       .map(resp1 => {
         let dateArray = []
         let dateArrayList = []
@@ -61,23 +63,26 @@ export default class NewsPresenter {
         //   }
         // })
         resp1.map((resp) => {
-        dateArray.push({
-          id: resp.id,
-          date : resp.date,
-          details : resp.details,
-          imageUrl : resp.imageUrl,
-          linkUrl : resp.articleUrl,
-          subtitle: resp.subtitle,
-          title: resp.title,
-          isHeart: resp.isHeart,
-          total: resp.totalLikes,
-          status: 0,
+          dateArray.push({
+            id: resp.id,
+            date : resp.date,
+            details : resp.details,
+            imageUrl : resp.imageUrl,
+            linkUrl : resp.articleUrl,
+            subtitle: resp.subtitle,
+            title: resp.title,
+            isHeart: resp.isHeart,
+            total: resp.totalLikes,
+            status: 0,
+          })
         })
-        }
-      )
-      this.view.showNews(dateArray)
-    })
-      .subscribe()
+        this.view.showNews(dateArray)
+      })
+
+      .subscribe(attachments => {
+      }, error => {
+
+      })
     }
 
     getNewsNoLoading () {
@@ -91,7 +96,7 @@ export default class NewsPresenter {
     addNewsIsHeart (id, isHeart) {
       this.addCheckedStatusIsHeartInteractor.execute(id, isHeart === 0 ? 1 : 0)
       .subscribe(data => {
-        this.getNewsNoLoading()
+        this.getNews()
       }, error => {
       })
     }

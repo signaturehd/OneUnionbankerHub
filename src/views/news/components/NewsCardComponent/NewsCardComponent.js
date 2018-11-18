@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card, GenericButton } from '../../../../ub-components/'
+import { Card, GenericButton, SkeletalLoader } from '../../../../ub-components/'
 import moment from 'moment'
 import { FaEye } from 'react-icons/lib/fa/'
 import './styles/newsCardComponent.css'
@@ -34,15 +34,27 @@ class NewsCardComponent extends Component {
       backgroundSize: 'cover',
       height: 'unset',
       backgroundPosition: 'center',
+      borderRadius: '15px',
     }
     const detailsFiltered = news && news.details.substr(0, 200)
 
     return (
       <Card className = { 'news-card' }>
-        <div
-          style = { style }
-          className = {'news-body'} >
-        </div>
+        {
+          news.imageUrl.includes('/2018-') ?
+          <SkeletalLoader
+            boxSizeObject = {{
+              width : 200,
+              height: 150,
+            }}
+            shapeBox = { true }
+            />
+          :
+          <div
+            style = { style }
+            className = {'news-body'} >
+          </div>
+        }
         <div className = { 'news-details-card' }>
           <div className = { 'news-grid' }>
             <h2 className = { 'unionbank-color font-weight-bold font-size-22px' }>{ news.title }</h2>
@@ -65,7 +77,7 @@ class NewsCardComponent extends Component {
             <GenericButton
               onClick = { () =>
                 this.openLink() }
-              className = { 'news-view-details-button' }
+              className = { 'news-view-details-button profile-button-small cursor-pointer global-button' }
               text = { 'Read More' }
               />
           </div>
