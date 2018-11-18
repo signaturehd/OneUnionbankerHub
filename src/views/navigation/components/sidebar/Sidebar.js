@@ -188,6 +188,10 @@ class SideBar extends Component {
             <div>
             {
               modules.map((d, idx) =>
+              d.id !== 2 &&
+              d.id !== 3 &&
+              d.id !== 6 &&
+              d.id !== 7 &&
               d.id !== 12 &&
               d.id !== 11 &&
               <div key = { idx }>
@@ -266,7 +270,7 @@ class SideBar extends Component {
 }
 SideBar.propTypes = {
   onClick : PropTypes.func,
-  splitUserInitial : PropTypes.func,
+  splitUserInitial : PropTypes.number,
   selected: PropTypes.number,
   onNavigationClick: PropTypes.func,
   history : PropTypes.object,

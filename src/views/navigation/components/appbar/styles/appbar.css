@@ -5,6 +5,203 @@
   text-align: right;
 }
 
+.appbar-icon-grid {
+  display: grid;
+  grid-template-columns: .15fr 1fr;
+  padding: 5px 5px 5px 15px;
+}
+
+div.appbar-submenu {
+  position: absolute;
+  z-index: 100;
+  width: 325px;
+  display: none;
+  margin-right: 25px;
+  padding: 42px 0 5px;
+  border-radius: 6px;
+  right: 0;
+}
+
+div.appbar-submenu:hover {
+  position: absolute;
+  z-index: 100;
+  width: 325px;
+  display: block;
+  margin-right: 25px;
+  padding: 42px 0 5px;
+  border-radius: 6px;
+  right: 0;
+}
+
+.appbar-icon {
+  height: 24px;
+  width: 30px;
+  -webkit-mask-size: auto 100%;
+  -webkit-mask-repeat: no-repeat;
+  background-color: #00000087;
+  margin: auto;
+}
+
+.appbar-logout-icon {
+  -webkit-mask-image: url('../../../../../images/LOGOUT.png');
+  mask-image: url('../../../../../images/LOGOUT.png');
+}
+
+.newsfeed-icon {
+  -webkit-mask-image: url('../../../../../images/drawer/News.png');
+  mask-image: url('../../../../../images/drawer/News.png');
+}
+
+.appbar-benefits-icon {
+  -webkit-mask-image: url('../../../../../images/drawer/Benefit.png');
+  mask-image: url('../../../../../images/drawer/Benefit.png');
+}
+
+.travel-icon {
+  -webkit-mask-image: url('../../../../../images/drawer/mytravel.png');
+  mask-image: url('../../../../../images/drawer/mytravel.png');
+}
+
+.appbar-faqs-icon {
+  -webkit-mask-image: url('../../../../../images/drawer/faqs.png');
+  mask-image: url('../../../../../images/drawer/faqs.png');
+}
+
+.appbar-settings-icon {
+  -webkit-mask-image: url('../../../../../images/My Profile.png');
+  mask-image: url('../../../../../images/My Profile.png');
+}
+
+.appbar-feedback-icon {
+  -webkit-mask-image: url('../../../../../images/Feedback.png');
+  mask-image: url('../../../../../images/Feedback.png');
+}
+
+.appbar-background-menu {
+  background-image: url('../../../../../images/ubp-bg.png');
+  width: auto;
+  height: auto;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.appbar-grid-submenu-info {
+  display: grid;
+  grid-template-rows: .3fr 1fr .3fr;
+}
+
+.appbar-welcome-name {
+  font-size: 23px;
+  color: #fff;
+  font-weight: bold;
+  margin: auto auto 0 auto;
+}
+
+.appbar-welcome-position {
+  font-size: 13px;
+  color: #fff;
+  font-weight: normal;
+}
+
+.appbar-welcome-email {
+  color: #fff;
+  font-size: 13px;
+  font-weight: lighter;
+}
+
+.appbar-grid-info {
+  display: grid;
+  grid-template-columns: .59fr 1fr;
+  column-gap: 2%;
+  padding: 0 5px 0 5px;
+}
+
+.appbar-row-info {
+  display: grid;
+  grid-template-rows: .5fr .5fr;
+}
+
+.appbar-submenu-profile-circle {
+  width: auto;
+  height: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  -webkit-border-radius: 99em;
+  -moz-border-radius: 99em;
+  border-radius: 99em;
+  border: 5px solid #fff;
+  box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3);
+  vertical-align: middle;
+}
+
+.appbar-list a {
+  color: #555555;
+  display: block;
+  font-weight: bold;
+  padding: 10px 5px 10px 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+  text-align: left;
+}
+
+.appbar-list a:hover{
+  color: #ff8a00;
+  text-decoration: none;
+}
+
+.appbar-triangle {
+  list-style: none;
+  font-size: 11px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  background: #fff;
+  padding: 0px 0 10px 0;
+  border-radius: 5px 5px 5px 5px;
+  margin: 21px 0 0 0;
+}
+
+.appbar-triangle:before {
+  content: '';
+  display: inline-block;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #230000;
+  border-bottom-color: #ff6300;
+  position: absolute;
+  /* color: #520000; */
+  top: 54px;
+  left: 290px;
+}
+
+.appbar-name {
+  margin: auto;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
+
+.appbar-logo-circle {
+  width: 45px;
+  height: 44px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  -webkit-border-radius: 99em;
+  -moz-border-radius: 99em;
+  border-radius: 99em;
+  border: 0px solid #fff;
+  box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3);
+  vertical-align: middle;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin-right: 30px;
+}
+
 .icon-header {
   text-align: left;
   display: grid;
@@ -12,10 +209,17 @@
 }
 
 ._img-ub-logo {
-  height: 20px;
-  margin-top: 4%;
-  margin-left: 21px;
+  /* height: 20px; */
+  margin: auto;
+  /* margin-top: 4%; */
+  /* margin-left: 21px; */
   width: auto;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  /* right: 0; */
+  top: 0;
+  margin-left: 40px;
 }
 
 ._img-ub-profile {
@@ -43,7 +247,14 @@
     margin: 2% 5% 0 0;
   }
   ._img-ub-logo {
-    margin: 2.5% 0 0 9%;
+    /* margin: 2.5% 0 0 9%; */
+    margin: auto;
+    width: auto;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
   }
 
 }
@@ -52,7 +263,14 @@
   margin: 3% 5% 0 0;
   }
   ._img-ub-logo {
-    margin: 5% 5% 0 0;
+    /* margin: 5% 5% 0 0; */
+    margin: auto;
+    width: auto;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
   }
 }
 @media screen and (max-width: 450px) {

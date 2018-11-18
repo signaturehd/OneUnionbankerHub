@@ -8,8 +8,8 @@ import './styles/appbar.css'
 class DrawerAppBar extends Component {
   constructor (props) {
     super(props)
-    this.onToggleShow = this.onToggleShow.bind(this)
   }
+
   onToggleShow () {
     if (this.props.displayShow === 'none') {
       this.props.hide()
@@ -18,13 +18,24 @@ class DrawerAppBar extends Component {
     }
   }
 
+  onToggleShowChangeDisplay () {
+    if (this.props.profileDisplay === 'none') {
+      this.props.onHideChangeDisplay()
+    } else if (this.props.profileDisplay === 'block') {
+      this.props.onShowChangeDisplay()
+    }
+  }
+
   render () {
     const {
-      onClick,
       displayNavIcon,
       onToggleShow,
       displayShow,
-      onCallWizard
+      onCallWizard,
+      history,
+      logout,
+      onChangeDisplay,
+      profileDisplay,
     } = this.props
 
     const style = {
@@ -32,14 +43,12 @@ class DrawerAppBar extends Component {
         display : displayNavIcon,
         width: 'auto',
         margin: '10px',
-      },
-      navBar: {
+    }, navBar: {
         width: '35px',
         margin: '10px',
         display: 'block',
         height: '35px',
-      },
-      infoLogo: {
+    }, infoLogo: {
         width: '25px',
         margin: '20px',
         display: 'block',
@@ -47,19 +56,92 @@ class DrawerAppBar extends Component {
       }
     }
 
+    let appBarList = [{
+      id: 0,
+      name: 'My Personal Information',
+      imageStyle : 'settings',
+      action : () => history.push('/settings'),
+    },{
+      id: 0,
+      name: 'FAQs',
+      imageStyle : 'faqs',
+      action : () => history.push('/faqs'),
+    },{
+      id: 0,
+      name: 'Feedback',
+      imageStyle : 'feedback',
+      action : () => history.push('/feedback'),
+    },{
+      id: 0,
+      name: 'Logout',
+      imageStyle : 'logout',
+      action : () => logout()
+    }]
+console.log(profileDisplay)
     return (
       <AppBar>
         <div id={ 'drawer-header' }>
           <div className = {'icon-header'}>
-            <img
-              style={ style.show }
-              src={ require('../../../../images/menu.png')}
-              className = {'_img-ub-profile'}
-              onClick = { this.onToggleShow }/>
-            <img
-              style={ style.navbar }
-              src={ require('../../../../images/union-logo.png') }
-              className={'_img-ub-logo'}/>
+            <div>
+              <img
+                style={ style.show }
+                src={ require('../../../../images/menu.png')}
+                className = {'_img-ub-profile'}
+                onClick = { () => this.onToggleShow() }/>
+              <img
+                style={ style.navbar }
+                src={ require('../../../../images/union-logo.png') }
+                className={'_img-ub-logo'}/>
+            </div>
+            <div>
+            <div className = {  'cursor-pointer' }>
+              <img
+                onClick = { () => this.onToggleShowChangeDisplay() }
+                src = { require('../../../../images/profile-picture.png') }
+                className = { 'appbar-logo-circle' }/>
+                <div
+                  style = {{ display : profileDisplay }}
+                  className = { 'appbar-submenu' }>
+                  <ul className = { 'appbar-triangle' }>
+                    <li className = { 'appbar-list' }>
+                      <div className = { 'appbar-background-menu' }>
+                        <div className = { 'appbar-grid-submenu-info' }>
+                          <div></div>
+                          <div className = { 'appbar-grid-info ' }>
+                            <div className= { 'text-align-center' }>
+                              <img
+                              src = { require('../../../../images/profile-picture.png') }
+                              className = { 'appbar-submenu-profile-circle' }/>
+                            </div>
+                            <div className = { 'appbar-row-info' }>
+                              <h2 className = { 'appbar-welcome-name' }>Hi, Mark</h2>
+                              <h2 className = { 'appbar-welcome-position' }>System Architect at UnionBank Phil.</h2>
+                            </div>
+                          </div>
+                          <div></div>
+                        </div>
+                      </div>
+                    </li>
+                    {
+                      appBarList.map((resp, key) => (
+                        <li
+                          onClick = { () => resp.action() }
+                          key = { key }
+                          className = { 'appbar-list' }>
+                          <div className = { 'appbar-icon-grid' }>
+                            <span
+                              className = { `appbar-${ resp.imageStyle }-icon appbar-icon` }/>
+                            <a>
+                              { resp.name }
+                            </a>
+                          </div>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </AppBar>
@@ -68,9 +150,10 @@ class DrawerAppBar extends Component {
 }
 
 DrawerAppBar.propTypes = {
-  onClick : PropTypes.func,
+  onChangeDisplay : PropTypes.func,
   displayNavIcon: PropTypes.string,
-  onToggleShow : PropTypes.string,
+  onToggleShow : PropTypes.func,
+  onProfileDisplayShow : PropTypes.func,
   displayShow : PropTypes.string,
   onCallWizard : PropTypes.func,
 }
