@@ -333,6 +333,16 @@ export default class HRBenefitsService {
     })
   }
 
+  getNewsImage (token, file) {
+    return this.fileClient.get('v1/uploads?folder=news', {
+      headers : {
+        token,
+        file : file
+      },
+      responseType : 'blob'
+    })
+  }
+
 
  /* Podcasts */
   getPodcasts (token) {
