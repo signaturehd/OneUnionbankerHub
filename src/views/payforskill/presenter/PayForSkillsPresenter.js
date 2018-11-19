@@ -1,3 +1,5 @@
+import GetProgrmsInteractor from '../../../domain/interactor/pay/GetProgramsInteractor'
+
 export default class PayForSkillsPresnter {
   constructer (container) {
 
@@ -7,5 +9,9 @@ export default class PayForSkillsPresnter {
     this.view = view
   }
 
+  getPrograms () {
+    this.view.showLoadng()
+
+  }
 
 }
