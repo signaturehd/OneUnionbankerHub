@@ -10,6 +10,7 @@ import PodcastFragment from '../podcast/PodcastFragment'
 import PodcastPlayerFragment from '../podcastplayer/PodcastPlayerFragment'
 import LibraryView from '../library/LibraryFragment'
 import TrainingFragment from '../trainings/TrainingFragment'
+import PayForSkillsFragment from '../payforskill/PayForSkillsFragment'
 
 import { InputModal, Card, GenericButton } from '../../ub-components'
 
@@ -41,6 +42,11 @@ class MyLearningView extends BaseMVPView {
       id: 2 ,
       styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
       title: 'Enroll to Training',
+      path: '/mylearning/trainings',
+    }, {
+      id: 4 ,
+      styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
+      title: 'Pay For Learning',
       path: '/mylearning/trainings',
     }]
     const MyLearning = () => (
@@ -91,6 +97,8 @@ class MyLearningView extends BaseMVPView {
     return (
       <div>
         <Switch>
+          <Route path = '/mylearning/pay/skills' render = { props =>
+            <PayForSkillsFragment { ...props } /> } />
           <Route path = '/mylearning/trainings' render = { props =>
             <TrainingFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts' render = { props =>
