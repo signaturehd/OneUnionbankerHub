@@ -149,6 +149,7 @@ class NavigationView extends BaseMVPView {
   showPreemploymentStatus (data) {
     const status = data && data.id
     const statusName = data && data.status
+    console.log(status)
     this.setState({ preEmploymentStatus : status })
 
     if(status === 1 || status === 2) {
