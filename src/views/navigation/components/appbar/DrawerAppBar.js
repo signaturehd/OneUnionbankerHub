@@ -5,9 +5,27 @@ import { AppBar } from '../../../../ub-components'
 
 import './styles/appbar.css'
 
+let display = true
+
 class DrawerAppBar extends Component {
   constructor (props) {
     super(props)
+  }
+
+  componentDidMount () {
+    const mediaQuery = window.matchMedia('(min-width: 1239px)')
+      if (mediaQuery.matches) {
+        display = true
+      } else {
+        display = false
+      }
+        mediaQuery.addListener(mq => {
+      if (mq.matches) {
+        display = true
+      } else {
+        display = false
+      }
+    })
   }
 
   onToggleShow () {
@@ -59,24 +77,48 @@ class DrawerAppBar extends Component {
 
     let appBarList = [{
       id: 0,
+      imageStyle: 'news',
+      name: 'News Feed',
+      action : () => history.push('/'),
+    }, {
+      id: 1,
+      name: 'Phenom Prime',
+      imageStyle: 'phenom',
+      action : () => history.push('/phenom'),
+    }, {
+      id: 0,
       name: 'My Personal Information',
       imageStyle : 'settings',
       action : () => history.push('/settings'),
     },{
-      id: 0,
+      id: 1,
       name: 'FAQs',
       imageStyle : 'faqs',
       action : () => history.push('/faqs'),
     },{
-      id: 0,
+      id: 2,
       name: 'Feedback',
       imageStyle : 'feedback',
       action : () => history.push('/feedback'),
     },{
-      id: 0,
+      id: 3,
       name: 'Logout',
       imageStyle : 'logout',
       action : () => logout()
+    }]
+
+    let appbarMenuOption = [{
+      id: 0,
+      imageStyle: 'news',
+      name: 'News Feed',
+      style : 'appbar-default-menu',
+      action : () => history.push('/'),
+    },{
+      id: 1,
+      name: 'Phenom Prime',
+      imageStyle: 'phenom',
+      style : 'appbar-default-menu',
+      action : () => history.push('/phenom'),
     }]
 
     return (
@@ -95,10 +137,26 @@ class DrawerAppBar extends Component {
                 className={'_img-ub-logo'}/>
             </div>
             <div className = { 'appbar-menu-text-grid' }>
-              <div>
-                <h2>News Feed</h2>
-                <h2>My Benefits</h2>
-              </div>
+            <div></div>
+              {
+                display &&
+                <div className = { 'appbar-menu-option' }>
+                  {
+                      appbarMenuOption.map((resp, key) => (
+                      <div className = { 'appbar-menu-icon-grid' }>
+                        <span
+                          className = { `appbar-${ resp.imageStyle }-icon appbar-icon` }/>
+                        <h2
+                          onClick = { () => resp.action() }
+                          key = { key }
+                          className = { `${ resp.style }` }>
+                          { resp.name }
+                        </h2>
+                      </div>
+                    ))
+                  }
+                </div>
+              }
               <div className = {  'cursor-pointer' }>
                 {
                   profileImage ?
@@ -119,6 +177,7 @@ class DrawerAppBar extends Component {
                     <li className = { 'appbar-list' }>
                       <div className = { 'appbar-background-menu' }>
                         <div className = { 'appbar-grid-submenu-info' }>
+                          <div></div>
                           <div></div>
                           <div className = { 'appbar-grid-info ' }>
                             <div className= { 'text-align-center' }>
@@ -143,20 +202,21 @@ class DrawerAppBar extends Component {
                       </div>
                     </li>
                     {
-                      appBarList.map((resp, key) => (
-                        <li
-                          onClick = { () => resp.action() }
-                          key = { key }
-                          className = { 'appbar-list' }>
-                          <div className = { 'appbar-icon-grid' }>
-                            <span
-                              className = { `appbar-${ resp.imageStyle }-icon appbar-icon` }/>
-                            <a>
-                              { resp.name }
-                            </a>
-                          </div>
-                        </li>
-                      ))
+                      appBarList.map((resp, key) => {
+                        display &&
+                          <li
+                            onClick = { () => resp.action() }
+                            key = { key }
+                            className = { 'appbar-list' }>
+                            <div className = { 'appbar-icon-grid' }>
+                              <span
+                                className = { `appbar-${ resp.imageStyle }-icon appbar-icon` }/>
+                              <a>
+                                { resp.name }
+                              </a>
+                            </div>
+                          </li>
+                      })
                     }
                   </ul>
                 </div>

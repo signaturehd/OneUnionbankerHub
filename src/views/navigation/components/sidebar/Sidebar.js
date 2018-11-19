@@ -188,10 +188,12 @@ class SideBar extends Component {
             <div>
             {
               modules.map((d, idx) =>
+              d.id !== 0 &&
               d.id !== 2 &&
               d.id !== 3 &&
               d.id !== 6 &&
               d.id !== 7 &&
+              d.id !== 10 &&
               d.id !== 12 &&
               d.id !== 11 &&
               <div key = { idx }>
@@ -234,10 +236,12 @@ class SideBar extends Component {
               <div>
                 {
                   modules.map((d, idx) =>
+                  d.id !== 0 &&
                   d.id !== 1 &&
                   d.id !== 4 &&
                   d.id !== 8 &&
                   d.id !== 9 &&
+                  d.id !== 10 &&
                   d.id !== 12 &&
                   d.id !== 13 &&
                   <div key = { idx }>
