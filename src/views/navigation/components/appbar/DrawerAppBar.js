@@ -36,6 +36,7 @@ class DrawerAppBar extends Component {
       logout,
       onChangeDisplay,
       profileDisplay,
+      profileImage,
     } = this.props
 
     const style = {
@@ -77,7 +78,7 @@ class DrawerAppBar extends Component {
       imageStyle : 'logout',
       action : () => logout()
     }]
-console.log(profileDisplay)
+
     return (
       <AppBar>
         <div id={ 'drawer-header' }>
@@ -93,12 +94,24 @@ console.log(profileDisplay)
                 src={ require('../../../../images/union-logo.png') }
                 className={'_img-ub-logo'}/>
             </div>
-            <div>
-            <div className = {  'cursor-pointer' }>
-              <img
-                onClick = { () => this.onToggleShowChangeDisplay() }
-                src = { require('../../../../images/profile-picture.png') }
-                className = { 'appbar-logo-circle' }/>
+            <div className = { 'appbar-menu-text-grid' }>
+              <div>
+                <h2>News Feed</h2>
+                <h2>My Benefits</h2>
+              </div>
+              <div className = {  'cursor-pointer' }>
+                {
+                  profileImage ?
+                  <img
+                    onClick = { () => this.onToggleShowChangeDisplay() }
+                    src = { profileImage }
+                    className = { 'appbar-logo-circle' }/>
+                  :
+                  <img
+                    onClick = { () => this.onToggleShowChangeDisplay() }
+                    src = { require('../../../../images/profile-picture.png') }
+                    className = { 'appbar-logo-circle' }/>
+                }
                 <div
                   style = {{ display : profileDisplay }}
                   className = { 'appbar-submenu' }>
@@ -109,9 +122,16 @@ console.log(profileDisplay)
                           <div></div>
                           <div className = { 'appbar-grid-info ' }>
                             <div className= { 'text-align-center' }>
-                              <img
-                              src = { require('../../../../images/profile-picture.png') }
-                              className = { 'appbar-submenu-profile-circle' }/>
+                              {
+                                profileImage ?
+                                <img
+                                  src = { profileImage }
+                                  className = { 'appbar-submenu-profile-circle' }/>
+                                :
+                                <img
+                                  src = { require('../../../../images/profile-picture.png') }
+                                  className = { 'appbar-submenu-profile-circle' }/>
+                              }
                             </div>
                             <div className = { 'appbar-row-info' }>
                               <h2 className = { 'appbar-welcome-name' }>Hi, Mark</h2>

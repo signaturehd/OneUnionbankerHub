@@ -11,6 +11,12 @@
   padding: 5px 5px 5px 15px;
 }
 
+.appbar-menu-text-grid {
+  display: grid;
+  height: 57px;
+  grid-template-columns: 1fr .5fr;
+}
+
 div.appbar-submenu {
   position: absolute;
   z-index: 100;

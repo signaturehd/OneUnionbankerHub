@@ -261,6 +261,7 @@ class NavigationView extends BaseMVPView {
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
             history = { history }
+            profileImage = { profilePicture }
             displayNavIcon = { displayNavIcon }
             profileDisplay = { profileDisplay }
             displayShow = { displayShow }
