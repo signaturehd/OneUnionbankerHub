@@ -65,7 +65,7 @@ class ApprovedGoalsComponent extends Component {
                 <div className = { 'grid-div-row' }>
                   <div></div>
                   <div className = { 'margin-10px text-align-right' }>
-
+                  
                   </div>
                   <div></div>
                 </div>

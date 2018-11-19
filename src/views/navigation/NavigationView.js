@@ -89,6 +89,8 @@ import ApprovalFragment from '../approval/ApprovalFragment'
 
 /* Goals */
 import MyGoalsFragment from '../mygoals/MyGoalsFragment'
+import RequestedGoalsComponent from '../mygoals/components/RequestedGoalsComponent'
+import ApprovedGoalsComponent from '../mygoals/components/ApprovedGoalsComponent'
 
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
@@ -427,10 +429,19 @@ class NavigationView extends BaseMVPView {
                     <MyLearningView { ...props }
                       profile = { profile }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/mygoals' render = { props =>
-                    <MyGoalsFragment { ...props }
+                  <Route path = '/mylearning/mygoals/approved' render = { props =>
+                    <ApprovedGoalsComponent { ...props }
                       profile = { profile }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mylearning/mygoals/request' render = { props =>
+                    <RequestedGoalsComponent { ...props }
+                      profile = { profile }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mylearning/mygoals' render = { props =>
+                    <MyGoalsFragment { ...props }
+                      profile = { profile }
+                      setSelectedNavigation = { this.setSelectedNavigation }
+                      isLineManager = { isLineManager } /> } />
                   <Route path = '/feedback' render = { props =>
                     <FeedbackFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />

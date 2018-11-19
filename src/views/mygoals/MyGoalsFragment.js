@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Switch, Route, createBrowserHistory } from 'react-router-dom'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
@@ -39,6 +40,7 @@ class MyGoalsFragment extends BaseMVPView {
       showNoticeResponseModal : false,
       showForm : false,
       showPriorityModal : false,
+      showGoalTypeModal : false,
       goalTitle : '',
       description : '',
       startDate : '',
@@ -46,29 +48,9 @@ class MyGoalsFragment extends BaseMVPView {
       priorityId : '',
       priorityName : '',
       noticeResponse : '',
-      goalsArray : [
-        {
-          "goal": "Goal title 1",
-          "description": "this is a test description",
-          "startDate": "11/16/2018",
-          "dueDate": "12/17/2018",
-          "priority": "1"
-        },
-        {
-          "goal": "Goal title 2",
-          "description": "this is a test description",
-          "startDate": "04/16/2018",
-          "dueDate": "06/17/2018",
-          "priority": "2"
-        },
-        {
-          "goal": "Goal title 3",
-          "description": "this is a test description",
-          "startDate": "02/16/2018",
-          "dueDate": "03/17/2018",
-          "priority": "3"
-        }
-      ],
+      goalTypeId : '',
+      goalType : '',
+      goalsArray : [],
       priorityArray : [
         {
           id: 1,
@@ -82,12 +64,26 @@ class MyGoalsFragment extends BaseMVPView {
           id: 3,
           name: 'High'
         }
+      ],
+      goalTypeArray : [
+        {
+          id: 1,
+          name: 'Performance'
+        },
+        {
+          id: 2,
+          name: 'Developemental'
+        }
       ]
     }
   }
 
   componentDidMount() {
+    this.presenter.getGoals()
+  }
 
+  getRequestedGoals(goalsArray) {
+    this.setState({ goalsArray })
   }
 
   noticeResponse (noticeResponse) {
@@ -124,11 +120,11 @@ class MyGoalsFragment extends BaseMVPView {
 
   priorityFunc(priority) {
     let lmh = ''
-    if(priority === '1') {
+    if(priority === 1) {
       lmh = 'Low'
-    } else if (priority === '2') {
+    } else if (priority === 2) {
       lmh = 'Medium'
-    } else if (priority === '3') {
+    } else if (priority === 3) {
       lmh = 'High'
     } else {
       lmh = 'Priority not set'
@@ -136,11 +132,41 @@ class MyGoalsFragment extends BaseMVPView {
     return lmh
   }
 
-  submit() {
+  onSubmit() {
+    const {
+      goalTitle,
+      description,
+      startDate,
+      dueDate,
+      priorityId,
+      goalTypeId
+    } = this.state
+    this.presenter.addRequestedGoals (
+      goalTitle,
+      description,
+      moment(startDate).format('YYYY-MM-DD'),
+      moment(dueDate).format('YYYY-MM-DD'),
+      priorityId,
+      goalTypeId
+    )
+  }
 
+  resetValue() {
+    this.setState({
+      goalTitle: '',
+      description: '',
+      startDate: '',
+      dueDate: '',
+      priorityId: '',
+      priorityName: '',
+      goalTypeId: '',
+      goalType: '',
+      showForm: false
+    })
   }
 
   render () {
+    const { isLineManager } = this.props
     const {
       enabledLoader,
       showNoticeResponseModal,
@@ -148,13 +174,17 @@ class MyGoalsFragment extends BaseMVPView {
       goalsArray,
       showForm,
       showPriorityModal,
+      showGoalTypeModal,
       priorityArray,
       goalTitle,
       description,
       startDate,
       dueDate,
       priorityId,
-      priorityName
+      priorityName,
+      goalTypeId,
+      goalType,
+      goalTypeArray
     } = this.state
 
     return (
@@ -171,6 +201,7 @@ class MyGoalsFragment extends BaseMVPView {
           showNoticeResponseModal &&
           <ResponseModal
             onClose={ () => {
+              this.resetValue(),
               this.setState({ showNoticeResponseModal : false })
             }}
             noticeResponse={ noticeResponse }
@@ -190,6 +221,20 @@ class MyGoalsFragment extends BaseMVPView {
             onClose = { () => this.setState({ showPriorityModal: false }) }
           />
         }
+        {
+          showGoalTypeModal &&
+          <SingleInputModal
+            label = { 'Select Priority' }
+            inputArray = { goalTypeArray }
+            selectedArray = { (goalTypeId, goalType) => this.setState({
+                goalTypeId,
+                goalType,
+                showGoalTypeModal: false
+              })
+            }
+            onClose = { () => this.setState({ showGoalTypeModal: false }) }
+          />
+        }
         <div className = { 'grid-container' }>
           <div className={ 'header-margin-container' }>
             <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) }></i>
@@ -199,9 +244,48 @@ class MyGoalsFragment extends BaseMVPView {
               <h2 className={ 'header-margin-default text-align-left' }>My Goals</h2>
               <div className = { 'grid-global' }>
                 <h2 className={ 'font-size-16px text-align-left' }>Descriptionnnnn description description description</h2>
+              </div>
+            </div>
+            {
+              !showForm ?
+              <div className = { 'tabs-container' }>
+              <input
+                className = { 'input-tab' }
+                id = { 'tab1' }
+                type = { 'radio' }
+                name = { 'tabs' }
+                defaultChecked = { true }
+                onClick = { () => this.props.history.push('/mylearning/mygoals/request') }/>
+              <label className = { 'travel-icon-tab' } htmlFor='tab1'>Individual Goals</label>
+
+              <label>
+                  <input
+                    className = { 'input-tab' }
+                    id = { 'tab2' }
+                    type = { 'radio' }
+                    name = { 'tabs' }
+                    onClick = { () => this.props.history.push('/mylearning/mygoals/approved') }/>
+                  <label className = { 'travel-icon-tab' } htmlFor='tab2'>Team Goals</label>
+              </label>
+              <section id='content1'>
+                <Switch>
+                  <Route exact path='/mygoals/request/RequestedGoalsComponent'
+                    render={ props => <RequestedGoalsFragment { ...props } /> }/>
+                  <Route exact path='/mygoals/approved/ApprovedGoalsComponent'
+                    render={ props => <ApprovedGoalsFragment { ...props } /> }/>
+                 </Switch>
+              </section>
+              <div className = { 'grid-filter margin-left' }>
+                <div>
+                  <GenericInput
+                  text = { 'Filter' }
+                  />
+                </div>
+                <div></div>
                 {
                   !showForm &&
                   <div className = { 'text-align-right margin-right' }>
+                    <br/>
                     <GenericButton
                       text = { 'ADD GOAL' }
                       className = { 'global-button profile-button-small' }
@@ -210,36 +294,35 @@ class MyGoalsFragment extends BaseMVPView {
                   </div>
                 }
               </div>
+              {
+                goalsArray.length !== 0 &&
+                <RequestedGoalsComponent
+                  cardHolder = { goalsArray }
+                  priorityFunc = { (resp) => this.priorityFunc(resp) }/>
+              }
             </div>
-
+            :
+            <MyGoalsFormComponent
+            onCancel = { () => this.setState({ showForm : false }) }
+            onSubmit = { () => this.onSubmit() }
+            goalTitle = { goalTitle }
+            goalTitleFunc = { (resp) => this.goalTitleFunc(resp) }
+            description = { description }
+            descriptionFunc = { (resp) => this.descriptionFunc(resp) }
+            startDate = { startDate }
+            startDateFunc = { (resp) => this.startDateFunc(resp) }
+            dueDate = { dueDate }
+            dueDateFunc = { (resp) => this.dueDateFunc(resp) }
+            priorityName = { priorityName }
+            goalType = { goalType }
+            showPriorityModal = { showPriorityModal }
+            showPriorityModalFunc = { () => this.setState({ showPriorityModal : true }) }
+            showGoalTypeModal = { showGoalTypeModal }
+            showGoalTypeModalFunc = { () => this.setState({ showGoalTypeModal : true }) }
+            />
+          }
           </div>
         </div>
-        <br/>
-        <Line/>
-        <br/>
-            {
-              showForm ?
-              <MyGoalsFormComponent
-                onCancel = { () => this.setState({ showForm : false }) }
-                submit = { () => this.submit() }
-                goalTitle = { goalTitle }
-                goalTitleFunc = { (resp) => this.goalTitleFunc(resp) }
-                description = { description }
-                descriptionFunc = { (resp) => this.descriptionFunc(resp) }
-                startDate = { startDate }
-                startDateFunc = { (resp) => this.startDateFunc(resp) }
-                dueDate = { dueDate }
-                dueDateFunc = { (resp) => this.dueDateFunc(resp) }
-                priorityName = { priorityName }
-                showPriorityModal = { showPriorityModal }
-                showPriorityModalFunc = { () => this.setState({ showPriorityModal : true }) }
-              />
-              :
-              goalsArray.length !== 0 &&
-              <RequestedGoalsComponent
-              cardHolder = { goalsArray }
-              priorityFunc = { (resp) => this.priorityFunc(resp) }/>
-            }
       </div>
     )
   }

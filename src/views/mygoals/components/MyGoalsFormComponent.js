@@ -46,26 +46,33 @@ class MyGoalsFormComponent extends Component {
       dueDateFunc,
       priorityName,
       showPriorityModalFunc,
+      goalType,
+      showGoalTypeModal,
+      showGoalTypeModalFunc,
       onCancel,
-      submit
+      onSubmit
     } = this.props
 
     return (
       <div className = { 'goal-container' }>
+        <br/>
+        <Line/>
+        <br/>
         <div className = { 'goal-grid-column-x3' }>
           <div></div>
           <div>
-            <GenericInput
-              text = { 'Goal Title' }
-              value = { goalTitle }
-              onChange = { (e) => goalTitleFunc(e.target.value) }
-            />
-            <GenericInput
-              text = { 'Description' }
-              type = { 'textarea' }
-              value = { description }
-              onChange = { (e) => descriptionFunc(e.target.value) }
-            />
+            <div className = { 'grid-global' }>
+              <GenericInput
+                text = { 'Goal Title' }
+                value = { goalTitle }
+                onChange = { (e) => goalTitleFunc(e.target.value) }
+              />
+              <GenericInput
+                text = { 'Goal Type' }
+                value = { goalType }
+                onClick = { () => showGoalTypeModalFunc() }
+              />
+            </div>
             <div className = { 'grid-global' }>
               <DatePicker
                 text = { 'Start Date' }
@@ -76,14 +83,22 @@ class MyGoalsFormComponent extends Component {
                 text = { 'Due Date' }
                 selected = { dueDate && moment(dueDate) }
                 onChange = { (e) => dueDateFunc(e) }
-                minLength = { moment(startDate) }
+                minDate = { startDate }
               />
             </div>
-            <GenericInput
-              text = { 'Priority' }
-              value = { priorityName }
-              onClick = { () => showPriorityModalFunc() }
-            />
+            <div className = { 'grid-global' }>
+              <GenericInput
+                text = { 'Description' }
+                value = { description }
+                type = { 'textarea' }
+                onChange = { (e) => descriptionFunc(e.target.value) }
+              />
+              <GenericInput
+                text = { 'Priority' }
+                value = { priorityName }
+                onClick = { () => showPriorityModalFunc() }
+              />
+            </div>
             <div className = { 'grid-global' }>
               <GenericButton
                 text = { 'Cancel' }
@@ -91,7 +106,7 @@ class MyGoalsFormComponent extends Component {
               />
               <GenericButton
                 text = { 'Submit' }
-                onClick = { () => submit() }
+                onClick = { () => onSubmit() }
               />
             </div>
           </div>
