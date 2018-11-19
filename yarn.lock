@@ -5152,7 +5152,8 @@ react-calendar@^2.14.0:
 
 react-content-loader@^3.2.0:
   version "3.2.0"
-  resolved "http://registry.npm.taobao.org/react-content-loader/download/react-content-loader-3.2.0.tgz#39a6a035a5dddc2270432c1df7950e37f179dcf2"
+  resolved "https://registry.yarnpkg.com/react-content-loader/-/react-content-loader-3.2.0.tgz#39a6a035a5dddc2270432c1df7950e37f179dcf2"
+  integrity sha512-1+wg2rhUD8s1HNUIODKXrQC2nb8Iu/KKJJgt7KW8vPEP3+8vvzkmYkVdlZk302qypmS8DsGHoZTgjw3SD+EhBw==
 
 react-date-picker@^6.10.1:
   version "6.10.1"
