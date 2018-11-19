@@ -1,6 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import {
+  GenericInput,
+  GenericButton,
+  DatePicker
+} from '../../../ub-components/'
+
+import moment from 'moment'
+
 class LoginGuideUnlockProfileFragment extends Component {
 
   constructor (props) {
@@ -9,35 +17,53 @@ class LoginGuideUnlockProfileFragment extends Component {
 
   render () {
     const {
-      idReplace
+      idReplace,
+      requestUnlockFunc,
+      usernameId,
+      birthDate,
+      onCheckUserName,
+      onChageBirthDate
     } = this.props
 
     return (
       <div>
         <br/>
+        <div
+          className = { 'text-align-left unionbank-color cursor-pointer' }
+          >
+          <i
+            onClick = { () => idReplace() }
+            className = { 'back-arrow' }></i>
+        </div>
         <br/>
         <br/>
-        <br/>
-        <br/>
-        <h2 className = { 'font-size-24px text-align-left font-weight-bold' }>
-          I want to unlock my profile
+        <h2 className = { 'font-size-18px text-align-center font-weight-bold' }>
+          Unlock Account Activity
         </h2>
         <br/>
-        <h4 className = { 'text-align-left font-weight-normal font-size-20px' }>
-          Thank you for your interest in using the One Unionbanker Hub! Your user ID is equivalent to your employee ID.
-        </h4>
+        <br/>
+        <GenericInput
+          value = { usernameId }
+          onChange = { e => onCheckUserName(e.target.value) }
+          text = { 'Employee ID' }
+          type = { 'text' }
+          />
+        <DatePicker
+          text = { 'Birth Date' }
+          hint = { '(e.g mm/dd/yyyy)' }
+          selected = { birthDate ? moment(birthDate) : '' }
+          maxDate = { moment() }
+          dateFormat = { 'MM/DD/YYYY' }
+          onChange = { (e) => onChageBirthDate(e) }
+          />
         <br/>
         <br/>
         <br/>
         <center>
-          <div
-            className = { 'unionbank-color cursor-pointer' }
-            >
-            <i
-              onClick = { () => idReplace() }
-              className = { 'back-arrow' }></i>
-            <b onClick = { () => idReplace() }>Go Back</b>
-          </div>
+          <GenericButton
+            text = { 'Submit' }
+            onClick = { () => requestUnlockFunc() }
+            />
         </center>
       </div>
     )
@@ -45,6 +71,8 @@ class LoginGuideUnlockProfileFragment extends Component {
 }
 
 LoginGuideUnlockProfileFragment.propTypes = {
+  requestUnlockPin : PropTypes.func,
+  employeeId: PropTypes.string,
 }
 
 export default LoginGuideUnlockProfileFragment

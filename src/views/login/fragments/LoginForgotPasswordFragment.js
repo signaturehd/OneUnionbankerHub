@@ -104,7 +104,9 @@ class LoginForgotPasswordFragment extends Component {
           <div></div>
         </div>
         <br/>
-        <h2>Reset Password</h2>
+          <h2 className = { 'font-size-18px text-align-center font-weight-bold' }>
+            Recover Password
+          </h2>
         <br/>
         <br/>
           <GenericInput

@@ -62,7 +62,7 @@ class BaseView extends Component {
               }}
               key = { i }
               title = { notify.title }
-              message = { notify.message + ' ' + i }
+              message = { notify.message }
               type = { notify.type }
             />
           ))
