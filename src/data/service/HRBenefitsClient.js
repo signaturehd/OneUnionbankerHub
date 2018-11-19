@@ -1420,4 +1420,10 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  // Pay For Skills 
+
+  getPrograms (token) {
+    return this.service.getPrograms(token)
+      .pipe(ServiceErrorOperator)
+  }
 }

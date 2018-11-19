@@ -47,7 +47,7 @@ class MyLearningView extends BaseMVPView {
       id: 4 ,
       styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
       title: 'Pay For Learning',
-      path: '/mylearning/trainings',
+      path: '/mylearning/pay/skills',
     }]
     const MyLearning = () => (
       <div className = { 'mylearning-container' }>
