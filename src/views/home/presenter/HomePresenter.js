@@ -9,6 +9,7 @@ export default class HomePresenter {
   }
 
   getCheckGreetingsStatus () {
+    const dateNow = moment()
     console.log(dateNow)
   }
 }
