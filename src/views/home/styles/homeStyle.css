@@ -1,0 +1,13 @@
+.home-margin-top {
+  margin-top: 16px;
+}
+
+.home-fragment-view {
+  display: grid;
+  grid-template-columns: .2fr 1fr .2fr;
+}
+
+.home-grid-fragment {
+  display: grid;
+  grid-template-rows: .02fr auto auto;
+}

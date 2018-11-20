@@ -14,22 +14,69 @@ import {
   SkeletalLoader,
 } from '../../ub-components'
 
+import HomeGreetingsComponent from './components/HomeGreetingsComponent'
+
+//News Fragment
+import NewsFragment from '../news/NewsFragment'
+//Phenom Fragment
+import Phenom from '../phenom/PhenomFragment'
+
 import './styles/homeStyle.css'
 
 class HomeFragment extends BaseMVPView {
   constructor (props) {
     super(props)
+    this.state = {
+      greetingsMessage : '',
+      employeeName  : '',
+    }
   }
 
   componentDidMount () {
     this.presenter.getCheckGreetingsStatus()
+    this.presenter.getProfile()
     this.props.setSelectedNavigation(0)
   }
 
-  render () {
-    return (
-      <div className = 'container'>
+  showGreetingsMessage (greetingsMessage) {
+    this.setState({ greetingsMessage })
+  }
 
+  showProfileName (employeeName ) {
+    this.setState({ employeeName })
+  }
+
+  render () {
+    const {
+      greetingsMessage,
+      employeeName
+    } = this.state
+
+    return (
+      <div className = { 'home-fragment-view' }>
+        <div></div>
+        <div className = { 'home-grid-fragment' }>
+          <div>
+            <HomeGreetingsComponent
+              greetingsMessage = { greetingsMessage }
+              employeeName  = { employeeName  }
+            />
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+          </div>
+          <div>
+            <NewsFragment />
+          </div>
+          <div className = { 'container' }>
+            <br/>
+            <br/>
+            <h2 className={ 'header-margin-default text-align-left news-header' }> Phenom Prime </h2>
+            <h2>We &#39;ve got these special deals, Just for U!</h2>
+          </div>
+        </div>
+        <div></div>
       </div>
     )
   }

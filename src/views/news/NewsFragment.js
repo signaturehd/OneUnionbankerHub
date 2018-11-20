@@ -105,7 +105,6 @@ class NewsFragment extends BaseMVPView {
           <div>
             <h2 className={ 'header-margin-default text-align-left news-header' }>News Feed</h2>
             <h2>Be in the loop. Check out what&#39;s new below.</h2>
-            <br/>
           </div>
           <div></div>
           <GenericInput
@@ -117,7 +116,6 @@ class NewsFragment extends BaseMVPView {
             value = { searchString }
             onChange = { this.updateSearch } />
         </div>
-        <Line/>
         <br/>
         <div>
         <div>

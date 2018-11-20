@@ -74,11 +74,6 @@ class DrawerAppBar extends Component {
     }
 
     let appBarList = [{
-      id: 0,
-      imageStyle: 'news',
-      name: 'News Feed',
-      action : () => history.push('/'),
-    }, {
       id: 1,
       name: 'Phenom Prime',
       imageStyle: 'phenom',
