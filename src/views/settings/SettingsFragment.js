@@ -6,8 +6,15 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/SettingsPresenter'
 
 import SettingsProfileCardComponent from './components/SettingsProfileCardComponent'
+import RequestOtpModal from './modals/RequestOtpModal'
 
-import { Card, Modal, GenericButton, CircularLoader } from '../../ub-components/'
+import {
+  Card,
+  Modal,
+  GenericButton,
+  CircularLoader,
+  GenericInput
+} from '../../ub-components/'
 
 class SettingsFragment extends BaseMVPView {
 
@@ -39,9 +46,20 @@ class SettingsFragment extends BaseMVPView {
      enabledStaffLoader : false,
      showSuccessModal : false,
      showProfilePhoto : false,
+     showPinComponent : false,
+     showChangePinComponent : false,
+     showUnlockPinComponent : false,
+     showNewPin : true,
+     showPinSettingsComponent : true,
+     showResetModal : false,
+     uniqueOldPIN: '',
+     uniqueNewPIN: '',
      noticeResponse : '',
      descriptionText : '',
      staffResponseMessage : '',
+     requiredOtp : '',
+     newCode : '',
+     requiredNewPin  : '',
      profileBackground : [],
      showEditDependents: '',
      profileAttachments : [{
@@ -85,6 +103,10 @@ class SettingsFragment extends BaseMVPView {
   noticeResponseModalStaff (staffResponseMessage) {
     this.setState({ staffResponseMessage })
     this.setState({ showSuccessModal : true })
+  }
+
+  showResetModalFunc(showResetModal) {
+    this.setState({ showResetModal })
   }
 
   showProfileDependent (profileDependent) {
@@ -153,7 +175,18 @@ class SettingsFragment extends BaseMVPView {
       showSuccessModal,
       showEditDependents,
       showProfilePhoto,
-      profileAttachments
+      showPinComponent,
+      profileAttachments,
+      uniqueOldPIN,
+      uniqueNewPIN,
+      showChangePinComponent,
+      showUnlockPinComponent,
+      showPinSettingsComponent,
+      showResetModal,
+      requiredOtp,
+      newCode,
+      showNewPin,
+      requiredNewPin
     } = this.state
 
     const {
@@ -163,6 +196,20 @@ class SettingsFragment extends BaseMVPView {
     return (
       <div className={ 'profile-container' }>
         { super.render() }
+        {
+          showResetModal &&
+          <RequestOtpModal
+            onClose = { () => this.setState({ showResetModal : false }) }
+            enabledLoader = { enabledLoader }
+            showNewPin = { showNewPin }
+            requiredOtp = { requiredOtp }
+            requiredNewPin = { requiredNewPin }
+            requiredOtpFunc = { (requiredOtp) => this.setState({ requiredOtp }) }
+            requiredNewPinFunc = { (requiredNewPin) => this.setState({ requiredNewPin }) }
+            submitFunction = { () => this.presenter.requestUnlockPin(requiredOtp, requiredNewPin) }
+            showNewPinFunc = { (showNewPin) => this.setState({ showNewPin }) }
+          />
+        }
         {
           enabledLoader ?
           <Modal>
@@ -186,12 +233,30 @@ class SettingsFragment extends BaseMVPView {
         }
 
         <SettingsProfileCardComponent
+           showPinSettingsComponent = { showPinSettingsComponent }
+           showPinComponent = { showPinComponent }
            profileAttachments = { profileAttachments }
            uploadAttachments = { () => {
                this.setState({ showProfilePhoto : false, enabledLoader: true })
                this.presenter.updateProfilePicture(profileAttachments)
            } }
+           uniqueOldPIN = { uniqueOldPIN }
+           uniqueNewPIN = { uniqueNewPIN }
+           uniqueOldPINFunc = { (uniqueOldPIN) => this.setState({ uniqueOldPIN }) }
+           uniqueNewPINFunc = { (uniqueNewPIN) => this.setState({ uniqueNewPIN }) }
            profileImage = { profileImage }
+           showChangePinComponent = { showChangePinComponent }
+           showUnlockPinComponent = { showUnlockPinComponent }
+           showPinComponentFunc = { (showPinComponent) => this.setState({ showPinComponent }) }
+           showPinSettingsComponentFunc = { (showPinSettingsComponent) =>
+             this.setState({ showPinSettingsComponent })
+           }
+           showChangePinComponentFunc = { (showChangePinComponent) =>
+             this.setState({ showChangePinComponent })
+           }
+           showUnlockPinComponentFunc = { () =>
+             this.presenter.getRequestPinOtp()
+           }
            setAttachmentsPhoto = { (profileAttachments) => this.setState({ profileAttachments }) }
            changeProfilePhoto = { (showProfilePhoto) => this.setState({ showProfilePhoto }) }
            showProfilePhoto = { showProfilePhoto }

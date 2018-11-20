@@ -277,9 +277,6 @@ class LoginView extends BaseMVPView {
       id : 0,
       name : 'I forgot my password'
     } ,{
-      id : 1,
-      name : 'I want to Unlock my Profile'
-    } ,{
       id : 2,
       name : 'What is my 1UHub user ID?'
     }, {

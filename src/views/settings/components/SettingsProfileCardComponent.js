@@ -5,6 +5,7 @@ import { Card, Line, FloatingActionButton, MultipleAttachments, Modal, GenericBu
 import SettingsProfileDescriptions from './SettingsProfileDescriptions'
 import SettingsProfilePersonalInfoComponent from './SettingsProfilePersonalInfoComponent'
 import SettingsContactInfoComponent from './SettingsContactInfoComponent'
+import SettingsPinCardComponent from './SettingsPinCardComponent'
 
 import DependentsModal from '../modals/DependentsModal'
 import StaffAccountsModal from '../modals/StaffAccountsModal'
@@ -65,7 +66,19 @@ class SettingsProfileCardComponent extends Component {
       showProfilePhoto,
       profileAttachments,
       changeProfilePhoto,
-      profileImage
+      profileImage,
+      showPinComponent,
+      showChangePinComponent,
+      showUnlockPinComponent,
+      showChangePinComponentFunc,
+      showUnlockPinComponentFunc,
+      uniqueNewPIN,
+      uniqueOldPIN,
+      uniqueNewPINFunc,
+      uniqueOldPINFunc,
+      showPinSettingsComponent,
+      showPinSettingsComponentFunc,
+      showPinComponentFunc,
     } = this.props
 
     const style = {
@@ -214,18 +227,6 @@ class SettingsProfileCardComponent extends Component {
               </div>
               <div className = { 'profile-information-modal-view' }>
                 <div
-                  onClick={ () => showChangePINModalFunc(true) }
-                  className={ 'profile-information-view-right' }>
-                  <div>
-                    <span className={ 'profile-icon-settings pinlock-icon' }/>
-                  </div>
-                  <div>
-                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
-                      { 'Change PIN'  }
-                    </h5>
-                  </div>
-                </div>
-                <div
                   onClick = { () => showDevicesModalFunc(true) }
                   className={ 'profile-information-view-right' }>
                   <div>
@@ -266,11 +267,43 @@ class SettingsProfileCardComponent extends Component {
                     </h5>
                   </div>
                 </div>
+                <div
+                  onClick={ () =>
+                    showPinComponentFunc(true)
+                  }
+                  className={ 'profile-information-view-right' }>
+                  <div>
+                    <span className={ 'profile-icon-settings pinlock-icon' }/>
+                  </div>
+                  <div>
+                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
+                      { 'PIN Settings'  }
+                    </h5>
+                  </div>
+                </div>
               </div>
             </div>
             <div className={ 'profile-padding' }>
               <br/><Line/><br/>
             </div>
+            {
+              showPinComponent ?
+              <SettingsPinCardComponent
+                showPinSettingsComponent = { showPinSettingsComponent }
+                uniqueNewPIN = { uniqueNewPIN }
+                uniqueOldPIN = { uniqueOldPIN }
+                enabledLoader = { enabledLoader }
+                showPinComponentFunc = { (e) => showPinComponentFunc(e) }
+                showPinSettingsComponentFunc = { (e) => showPinSettingsComponentFunc(e) }
+                onSubmitPinCode = { (uniqueOldPIN, uniqueNewPIN) => changePinSendToFragment(uniqueOldPIN, uniqueNewPIN) }
+                showChangePinComponent = { showChangePinComponent }
+                showUnlockPinComponent = { showUnlockPinComponent }
+                uniqueNewPINFunc = { (e) => uniqueNewPINFunc(e) }
+                uniqueOldPINFunc = { (e) => uniqueOldPINFunc(e) }
+                showChangePinComponentFunc = { (e) => showChangePinComponentFunc(e) }
+                showUnlockPinComponentFunc = { () => showUnlockPinComponentFunc() }
+              />
+                :
               <SettingsProfilePersonalInfoComponent
                 accountNumber={ accountNumber }
                 profile={ profile && profile}
@@ -279,6 +312,7 @@ class SettingsProfileCardComponent extends Component {
                 lineManager={ lineManager && lineManager.fullName }
                 rank={ rank && rank.rank }
               />
+            }
             <div className={ 'profile-padding' }>
               <br/><Line/><br/>
             </div>
