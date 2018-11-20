@@ -7,6 +7,7 @@ import Presenter from './presenter/NavigationPresenter'
 /* Modules Fragment */
 import BenefitsFragment from '../benefits/BenefitsFragment'
 import NewsFragment from '../news/NewsFragment'
+import HomeFragment from '../home/HomeFragment'
 import FaqFragment from '../faq/FaqFragment'
 import SettingsFragment from '../settings/SettingsFragment'
 import PodcastFragment from '../podcast/PodcastFragment'
@@ -267,6 +268,7 @@ class NavigationView extends BaseMVPView {
             displayShow = { displayShow }
             hide = { () => this.setState({ displayShow : 'block' })}
             show = { () => this.setState({ displayShow : 'none' }) }
+            profileDisplayFunc = { (profileDisplay) => this.setState({ profileDisplay }) }
             onHideChangeDisplay = { () => this.setState({ profileDisplay : 'block' }) }
             onShowChangeDisplay = { () => this.setState({ profileDisplay : 'none' }) }
             onCallWizard = { () => this.callWizard() }
@@ -303,7 +305,7 @@ class NavigationView extends BaseMVPView {
             <Drawer>
               <Switch>
                 <Route exact path = '/' render = {props =>
-                  <NewsFragment { ...props }
+                  <HomeFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> }/>
                 <Route path = '/postemployment' render = { props =>
                   <PostEmploymentFragment { ...props }

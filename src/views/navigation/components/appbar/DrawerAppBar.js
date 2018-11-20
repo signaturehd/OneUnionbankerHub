@@ -37,11 +37,9 @@ class DrawerAppBar extends Component {
   }
 
   onToggleShowChangeDisplay () {
-    if (this.props.profileDisplay === 'none') {
-      this.props.onHideChangeDisplay()
-    } else if (this.props.profileDisplay === 'block') {
-      this.props.onShowChangeDisplay()
-    }
+    console.log('click ')
+    console.log(this.props.profileDisplay === 'none'? 'block' : 'none')
+    this.props.profileDisplayFunc(this.props.profileDisplay !== 'none'? 'none' : 'block')
   }
 
   render () {
@@ -107,20 +105,6 @@ class DrawerAppBar extends Component {
       action : () => logout()
     }]
 
-    let appbarMenuOption = [{
-      id: 0,
-      imageStyle: 'news',
-      name: 'News Feed',
-      style : 'appbar-default-menu',
-      action : () => history.push('/'),
-    },{
-      id: 1,
-      name: 'Phenom Prime',
-      imageStyle: 'phenom',
-      style : 'appbar-default-menu',
-      action : () => history.push('/phenom'),
-    }]
-
     return (
       <AppBar>
         <div id={ 'drawer-header' }>
@@ -138,25 +122,6 @@ class DrawerAppBar extends Component {
             </div>
             <div className = { 'appbar-menu-text-grid' }>
             <div></div>
-              {
-                display &&
-                <div className = { 'appbar-menu-option' }>
-                  {
-                      appbarMenuOption.map((resp, key) => (
-                      <div className = { 'appbar-menu-icon-grid' }>
-                        <span
-                          className = { `appbar-${ resp.imageStyle }-icon appbar-icon` }/>
-                        <h2
-                          onClick = { () => resp.action() }
-                          key = { key }
-                          className = { `${ resp.style }` }>
-                          { resp.name }
-                        </h2>
-                      </div>
-                    ))
-                  }
-                </div>
-              }
               <div className = {  'cursor-pointer' }>
                 {
                   profileImage ?
@@ -171,13 +136,12 @@ class DrawerAppBar extends Component {
                     className = { 'appbar-logo-circle' }/>
                 }
                 <div
-                  style = {{ display : profileDisplay }}
+                  style = {{ display : profileDisplay && profileDisplay }}
                   className = { 'appbar-submenu' }>
                   <ul className = { 'appbar-triangle' }>
                     <li className = { 'appbar-list' }>
                       <div className = { 'appbar-background-menu' }>
                         <div className = { 'appbar-grid-submenu-info' }>
-                          <div></div>
                           <div></div>
                           <div className = { 'appbar-grid-info ' }>
                             <div className= { 'text-align-center' }>
@@ -202,21 +166,20 @@ class DrawerAppBar extends Component {
                       </div>
                     </li>
                     {
-                      appBarList.map((resp, key) => {
-                        display &&
-                          <li
-                            onClick = { () => resp.action() }
-                            key = { key }
-                            className = { 'appbar-list' }>
-                            <div className = { 'appbar-icon-grid' }>
-                              <span
-                                className = { `appbar-${ resp.imageStyle }-icon appbar-icon` }/>
-                              <a>
-                                { resp.name }
-                              </a>
-                            </div>
-                          </li>
-                      })
+                      appBarList.map((resp, key) =>
+                        <li
+                          onClick = { () => resp.action() }
+                          key = { key }
+                          className = { 'appbar-list' }>
+                          <div className = { 'appbar-icon-grid' }>
+                            <span
+                              className = { `appbar-${ resp.imageStyle }-icon appbar-icon` }/>
+                            <a>
+                              { resp.name }
+                            </a>
+                          </div>
+                        </li>
+                      )
                     }
                   </ul>
                 </div>

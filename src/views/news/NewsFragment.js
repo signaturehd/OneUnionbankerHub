@@ -65,7 +65,7 @@ class NewsFragment extends BaseMVPView {
 
   componentDidMount () {
       this.presenter.getNews()
-      this.props.setSelectedNavigation(0)
+      // this.props.setSelectedNavigation(0)
       setTimeout(() => this.setState({ showLoader : false }), 3000)
   }
 
