@@ -37,7 +37,7 @@ class NewsCardComponent extends Component {
       borderRadius: '15px',
     }
     const detailsFiltered = news && news.details.substr(0, 30)
-
+    console.log()
     return (
       <Card
         className = { 'home-card-view' }>
@@ -58,7 +58,11 @@ class NewsCardComponent extends Component {
         </div>
         <div className = { 'home-card-padding' }>
           <h2 className = { 'unionbank-color font-size-18px font-weight-bold' }>{ news.title }</h2>
-          <h2 className = { 'font-size-12px font-weight-normal' }>June 1 2018</h2>
+          <h2 className = { 'font-size-12px font-weight-normal' }>
+            {
+              news.date && moment(news.date).format('MMMM DD, YYYY')
+            }
+          </h2>
           <br/>
           <p className = { 'font-size-15px font-weight-normal' }>
             { detailsFiltered }...
