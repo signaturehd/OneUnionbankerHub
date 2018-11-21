@@ -1427,4 +1427,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* My Goals */
+
+  getGoals (token) {
+    return this.service.getGoals(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addRequestedGoals (token, requestedGoalsParam) {
+
+    return this.service.addRequestedGoals(token, requestedGoalsParam)
+    .pipe(ServiceErrorOperator())
+  }
 }
