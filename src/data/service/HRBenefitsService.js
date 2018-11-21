@@ -117,6 +117,17 @@ export default class HRBenefitsService {
     })
   }
 
+  /* Unlock my account */
+
+  requestUnlockAccount (token, empId, date) {
+    const objectParam = {
+      employeeNumber: empId,
+      birthDate : date,
+    }
+    return this.apiClient.post('v1/account/unlock', objectParam, {
+      headers : { token }
+    })
+  }
 
   /* Reset Password */
   resetOtp (resetOtpParam) {

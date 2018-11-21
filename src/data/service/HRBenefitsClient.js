@@ -96,6 +96,14 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Unlock Account */
+
+  requestUnlockAccount (token, empId, date) {
+    console.log(empId, date)
+    return this.service.requestUnlockAccount(token, empId, date)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Reset Password */
 
   requestEmailVerification (token, empId, date) {
@@ -1427,4 +1435,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* My Goals */
+
+  getGoals (token) {
+    return this.service.getGoals(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addRequestedGoals (token, requestedGoalsParam) {
+
+    return this.service.addRequestedGoals(token, requestedGoalsParam)
+    .pipe(ServiceErrorOperator())
+  }
 }
