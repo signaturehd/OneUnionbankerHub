@@ -14,7 +14,8 @@
 .news-header {
   color: #ff8a00;
   font-weight: 600;
-  font-size: 50px;
+  font-size: 30px;
+  margin-bottom: 10px;
 }
 
 .news-feature-stories {

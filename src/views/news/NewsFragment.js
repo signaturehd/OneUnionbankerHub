@@ -103,8 +103,8 @@ class NewsFragment extends BaseMVPView {
         }
         <div className = { 'news-grid-header' }>
           <div>
-            <h2 className={ 'header-margin-default text-align-left news-header' }>News Feed</h2>
-            <h2>Be in the loop. Check out what&#39;s new below.</h2>
+            <h2 className={ 'text-align-left news-header' }>News Feed</h2>
+            <h2 className = { 'font-size-14px' }>Be in the loop. Check out what&#39;s new below.</h2>
           </div>
           <div></div>
           <GenericInput
@@ -136,7 +136,7 @@ class NewsFragment extends BaseMVPView {
             }
             <br/>
             <Card className = { 'news-feature-stories' }>
-              <h2 className = { 'unionbank-color font-size-30px font-weight-bold' }>Featured Stories</h2>
+              <h2 className = { 'unionbank-color font-size-26px font-weight-bold' }>Featured Stories</h2>
               <br/>
               <br/>
               <div>

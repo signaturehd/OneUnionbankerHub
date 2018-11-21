@@ -4,10 +4,20 @@
 
 .home-fragment-view {
   display: grid;
-  grid-template-columns: .2fr 1fr .2fr;
+  grid-template-columns: .1fr 1fr .1fr;
 }
 
 .home-grid-fragment {
   display: grid;
   grid-template-rows: .02fr auto auto;
+}
+
+//test
+.home-card-view {
+  width: 320px;
+  grid-template-rows: 1fr 1fr .1fr;
+  display: grid;
+  min-width: 320px;
+  height: 330px;
+  min-height: 330px;
 }

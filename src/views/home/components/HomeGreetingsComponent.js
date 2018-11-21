@@ -20,7 +20,7 @@ class HomeGreetingsComponent extends Component {
         <div className = { '' }>
           <br/>
           <h2 className = { 'font-weight-lighter font-size-14px' }>
-            { greetingsMessage } <b>{', ' + employeeName ? employeeName+'!' : '' }</b>
+            { greetingsMessage+', ' } <b>{employeeName ? employeeName+'!' : '' }</b>
           </h2>
           <h4 className = { 'font-size-25px font-weight-bold home-margin-top' }>
             What do you want to do today?
