@@ -73,12 +73,26 @@ export default class SettingsPresenter {
     })
    }
 
-   getDevices () {
+   getDevices (showDevicesModal) {
+     this.view.showCircularLoader()
      store.dispatch(NotifyActions.resetNotify())
      this.getDevicesInteractor.execute()
      .subscribe(data => {
-       this.view.showDevicesData(data)
+       this.view.hideCircularLoader()
+       this.view.showDevicesData(data, showDevicesModal)
      }, error => {
+       this.view.hideCircularLoader()
+       store.dispatch(NotifyActions.resetNotify())
+       error && error.errorResp &&
+       error.errorResp.errors.map((resp) => {
+         store.dispatch(NotifyActions.addNotify({
+             title: 'PIN Security',
+             message : `${ resp.message }`,
+             type : 'success',
+             duration : 2000
+           })
+         )
+       })
      })
    }
 

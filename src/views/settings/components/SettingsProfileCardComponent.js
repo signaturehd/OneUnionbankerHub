@@ -227,18 +227,6 @@ class SettingsProfileCardComponent extends Component {
               </div>
               <div className = { 'profile-information-modal-view' }>
                 <div
-                  onClick = { () => showDevicesModalFunc(true) }
-                  className={ 'profile-information-view-right' }>
-                  <div>
-                    <span className={ 'profile-icon-settings devices' }/>
-                  </div>
-                  <div>
-                    <h5 className={ 'profile-margin-label profile-cursor-pointer' }>
-                      { 'Registered Devices'  }
-                    </h5>
-                  </div>
-                </div>
-                <div
                   className={ 'profile-information-view-right' }>
                   <div >
                     <span className={ 'profile-icon-settings employeeDependent' }/>
@@ -302,6 +290,7 @@ class SettingsProfileCardComponent extends Component {
                 uniqueOldPINFunc = { (e) => uniqueOldPINFunc(e) }
                 showChangePinComponentFunc = { (e) => showChangePinComponentFunc(e) }
                 showUnlockPinComponentFunc = { () => showUnlockPinComponentFunc() }
+                showRegisteredDevicesFunc = { () => showDevicesModalFunc(true) }
               />
                 :
               <SettingsProfilePersonalInfoComponent

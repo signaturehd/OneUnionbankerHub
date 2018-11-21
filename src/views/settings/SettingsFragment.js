@@ -136,8 +136,8 @@ class SettingsFragment extends BaseMVPView {
     this.presenter.putEnrollPin(objectPINParam)
   }
 
-  showDevicesData (devices) {
-    this.setState({ devices })
+  showDevicesData (devices, showDevicesModal) {
+    this.setState({ devices, showDevicesModal })
   }
 
   updateDescription () {
@@ -317,8 +317,7 @@ class SettingsFragment extends BaseMVPView {
            descriptionTextFunc = { (descriptionText) => this.setState({ descriptionText }) }
            onUpdateDescription = { () => this.updateDescription() }
            showDevicesModalFunc = { (showDevicesModal) => {
-             this.presenter.getDevices()
-             this.setState({ showDevicesModal })
+             this.presenter.getDevices(showDevicesModal)
            }
           }
           updateAddressOption = { (address, attachments) => this.presenter.updateAddress(address, attachments) }

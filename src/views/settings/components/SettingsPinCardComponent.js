@@ -31,7 +31,8 @@ class SettingsPinCardComponent extends Component {
       showPinSettingsComponentFunc,
       showPinComponentFunc,
       uniqueOldPINFunc,
-      uniqueNewPINFunc
+      uniqueNewPINFunc,
+      showRegisteredDevicesFunc
     } = this.props
 
     return (
@@ -60,26 +61,37 @@ class SettingsPinCardComponent extends Component {
               {
                 showPinSettingsComponent &&
                 <div>
-                  <div className = { 'text-align-center grid-global-rows' }>
-                    <Card
-                      className = { 'pin-settings-grid cursor-pointer' }
-                      onClick = { () => {
-                          showChangePinComponentFunc(true)
-                          showPinSettingsComponentFunc(false)
-                      }}
-                      >
-                      <h2 className = { 'text-align-left' }>I want to Change my Account PIN</h2>
-                      <span className = { 'login-icon login-seemore-button' }/>
-                    </Card>
-                    <Card
-                      className = { 'login-help-grid cursor-pointer' }
-                      onClick = { () =>
-                        showUnlockPinComponentFunc()
-                      }
-                      >
-                      <h2 className = { 'text-align-left' }>I want to Unlock my Account PIN</h2>
-                      <span className = { 'login-icon login-seemore-button' }/>
-                    </Card>
+                  <div
+                    className = { 'pin-settings-grid cursor-pointer' }
+                    onClick = { () => {
+                        showChangePinComponentFunc(true)
+                        showPinSettingsComponentFunc(false)
+                    }}
+                    >
+                    <h2 className = { 'text-align-left' }>Update PIN</h2>
+                    <h2 className = { 'text-align-left font-size-12px font-weight-lighter' }>Click here to update your digital signature.</h2>
+                  </div>
+                  <br/>
+                  <div
+                    className = { 'in-settings-grid cursor-pointer' }
+                    onClick = { () =>
+                      showUnlockPinComponentFunc()
+                    }
+                    >
+                    <h2 className = { 'text-align-left' }>Forgot PIN</h2>
+                    <h2 className = { 'text-align-left font-size-12px font-weight-lighter' }>
+                      Click here if you forgot your pin.</h2>
+                  </div>
+                  <br/>
+                  <div
+                    className = { 'in-settings-grid cursor-pointer' }
+                    onClick = { () =>
+                      showRegisteredDevicesFunc()
+                    }
+                    >
+                    <h2 className = { 'text-align-left' }>Registered Devices</h2>
+                    <h2 className = { 'text-align-left font-size-12px font-weight-lighter' }>
+                      List of your devices registered with your fingerprint.</h2>
                   </div>
                   <center>
                     <br/>
