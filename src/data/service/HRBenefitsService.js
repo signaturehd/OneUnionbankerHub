@@ -2210,4 +2210,15 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  updateGoals (token, goalId, dueDate) {
+    const objectParam = {
+      id: goalId,
+      endDate: dueDate
+    }
+
+    return this.apiClient.put('v1/goals/personal', objectParam, {
+      headers : { token }
+    })
+  }
 }

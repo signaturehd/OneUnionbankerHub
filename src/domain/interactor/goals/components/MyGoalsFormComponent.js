@@ -89,7 +89,7 @@ class MyGoalsFormComponent extends Component {
                 text = { 'Due Date' }
                 selected = { dueDate && moment(dueDate) }
                 onChange = { (e) => dueDateFunc(e) }
-                minDate = { moment(startDate) }
+                minDate = { startDate }
                 dateFormat = { 'MM/DD/YYYY' }
               />
             </div>

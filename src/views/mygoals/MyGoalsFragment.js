@@ -41,6 +41,8 @@ class MyGoalsFragment extends BaseMVPView {
       showForm : false,
       showPriorityModal : false,
       showGoalTypeModal : false,
+      editMode : false,
+      goalId : '',
       goalTitle : '',
       description : '',
       startDate : '',
@@ -151,6 +153,14 @@ class MyGoalsFragment extends BaseMVPView {
     )
   }
 
+  onEdit() {
+    const { goalId, dueDate } = this.state
+    this.presenter.updateGoals (
+      goalId,
+      moment(dueDate).format('YYYY-MM-DD')
+    )
+  }
+
   resetValue() {
     this.setState({
       goalTitle: '',
@@ -175,7 +185,9 @@ class MyGoalsFragment extends BaseMVPView {
       showForm,
       showPriorityModal,
       showGoalTypeModal,
+      editMode,
       priorityArray,
+      goalId,
       goalTitle,
       description,
       startDate,
@@ -298,12 +310,36 @@ class MyGoalsFragment extends BaseMVPView {
                 goalsArray.length !== 0 &&
                 <RequestedGoalsComponent
                   cardHolder = { goalsArray }
-                  priorityFunc = { (resp) => this.priorityFunc(resp) }/>
+                  priorityFunc = { (resp) => this.priorityFunc(resp) }
+                  onEditFormFunc = { (
+                    goalId,
+                    goalTitle,
+                    description,
+                    startDate,
+                    dueDate,
+                    priorityName,
+                    editMode,
+                    showForm
+                  ) => this.setState({
+                    goalId,
+                    goalTitle,
+                    description,
+                    startDate,
+                    dueDate,
+                    priorityName,
+                    editMode,
+                    showForm
+                   }) }
+                  />
               }
             </div>
             :
             <MyGoalsFormComponent
-            onCancel = { () => this.setState({ showForm : false }) }
+            onCancel = { () => {
+                this.setState({ showForm : false })
+                this.resetValue()
+              }
+            }
             onSubmit = { () => this.onSubmit() }
             goalTitle = { goalTitle }
             goalTitleFunc = { (resp) => this.goalTitleFunc(resp) }
@@ -319,6 +355,8 @@ class MyGoalsFragment extends BaseMVPView {
             showPriorityModalFunc = { () => this.setState({ showPriorityModal : true }) }
             showGoalTypeModal = { showGoalTypeModal }
             showGoalTypeModalFunc = { () => this.setState({ showGoalTypeModal : true }) }
+            editMode = { editMode }
+            onEdit = { () => this.onEdit() }
             />
           }
             <FloatingActionButton
