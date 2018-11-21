@@ -37,8 +37,12 @@ export default class NavigationPresenter {
   }
 
   relogin () {
-    this.relogInInteractor.execute()
-    store.dispatch(LoginActions.showReloginModal(false))
+    try {
+      this.relogInInteractor.execute()
+      store.dispatch(LoginActions.showReloginModal(false))
+    } catch(e) {
+      console.log(e)
+    }
   }
 
   getLibraries () {
@@ -49,7 +53,7 @@ export default class NavigationPresenter {
           this.view.showProfile(resp)
           this.view.showPinIsValid(resp.hasPIN)
           this.view.isHasCOC(resp.hasCOC)
-          this.view.hideLoading()          
+          this.view.hideLoading()
         } catch (e) {
           console.log(e)
         }
