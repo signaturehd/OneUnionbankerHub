@@ -49,7 +49,7 @@ export default class NavigationPresenter {
           this.view.showProfile(resp)
           this.view.showPinIsValid(resp.hasPIN)
           this.view.isHasCOC(resp.hasCOC)
-          this.view.hideLoading()          
+          this.view.hideLoading()
         } catch (e) {
           console.log(e)
         }

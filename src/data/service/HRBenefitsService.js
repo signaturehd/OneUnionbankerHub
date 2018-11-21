@@ -2185,4 +2185,29 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* My Goals */
+
+  getGoals (token) {
+    return this.apiClient.get('v1/goals', {
+      headers: { token }
+    })
+  }
+
+  addRequestedGoals (
+    token,
+    requestedGoalsParam) {
+    const objectParam = {
+      title: requestedGoalsParam.goalTitle,
+      description: requestedGoalsParam.description,
+      startDate: requestedGoalsParam.startDate,
+      endDate: requestedGoalsParam.dueDate,
+      priority: requestedGoalsParam.priorityId,
+      goalType: requestedGoalsParam.goalTypeId
+    }
+
+    return this.apiClient.post('v1/goals/personnal', objectParam, {
+      headers : { token }
+    })
+  }
 }
