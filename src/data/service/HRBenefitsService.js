@@ -158,12 +158,21 @@ export default class HRBenefitsService {
     })
   }
 
-  requestUnlockPin (token, empId, date) {
+
+  /* Unlock PIN Get and Post*/
+
+  getRequestPinOtp (token) {
+    return this.apiClient.get('v1/pin/otp', {
+      headers : { token }
+    })
+  }
+
+  requestUnlockPin (token, otp, newCode) {
     const objectParam = {
-      employeeNumber: empId,
-      birthDate: date,
+      otp,
+      newCode,
     }
-    return this.apiClient.post('v1/account/unlock', objectParam, {
+    return this.apiClient.post('v1/pin/reset', objectParam, {
       headers : { token }
     })
   }

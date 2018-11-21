@@ -2,8 +2,10 @@ import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInte
 import GenericPutNewCodeInteractor from '../../../domain/interactor/pinCode/GenericPutNewCodeInteractor'
 import GetForConfirmationInteractor from '../../../domain/interactor/staffaccounts/GetForConfirmationInteractor'
 import GetDevicesInteractor from '../../../domain/interactor/account/GetDevicesInteractor'
+import GetRequestOtpUnlockInteractor from '../../../domain/interactor/user/GetRequestOtpUnlockInteractor'
 
 import PostStaffAccountsInteractor from '../../../domain/interactor/staffaccounts/PostStaffAccountsInteractor'
+import RequestUnlockPinInteractor from '../../../domain/interactor/user/RequestUnlockPinInteractor'
 
 import UpdateStaffAccountsInteractor from '../../../domain/interactor/staffaccounts/UpdateStaffAccountsInteractor'
 import UpdateDescriptionInteractor from '../../../domain/interactor/account/UpdateDescriptionInteractor'
@@ -24,8 +26,10 @@ export default class SettingsPresenter {
     this.genericPutNewCodeInteractor = new GenericPutNewCodeInteractor(container.get('HRBenefitsClient'))
     this.getForConfirmationInteractor = new GetForConfirmationInteractor(container.get('HRBenefitsClient'))
     this.getDevicesInteractor = new GetDevicesInteractor(container.get('HRBenefitsClient'))
+    this.getRequestOtpUnlockInteractor = new GetRequestOtpUnlockInteractor(container.get('HRBenefitsClient'))
 
     this.postStaffAccountsInteractor = new PostStaffAccountsInteractor(container.get('HRBenefitsClient'))
+    this.requestUnlockPinInteractor = new RequestUnlockPinInteractor(container.get('HRBenefitsClient'))
 
     this.updateStaffAccountsInteractor = new UpdateStaffAccountsInteractor(container.get('HRBenefitsClient'))
     this.updateDescriptionInteractor = new UpdateDescriptionInteractor(container.get('HRBenefitsClient'))
@@ -69,12 +73,26 @@ export default class SettingsPresenter {
     })
    }
 
-   getDevices () {
+   getDevices (showDevicesModal) {
+     this.view.showCircularLoader()
      store.dispatch(NotifyActions.resetNotify())
      this.getDevicesInteractor.execute()
      .subscribe(data => {
-       this.view.showDevicesData(data)
+       this.view.hideCircularLoader()
+       this.view.showDevicesData(data, showDevicesModal)
      }, error => {
+       this.view.hideCircularLoader()
+       store.dispatch(NotifyActions.resetNotify())
+       error && error.errorResp &&
+       error.errorResp.errors.map((resp) => {
+         store.dispatch(NotifyActions.addNotify({
+             title: 'PIN Security',
+             message : `${ resp.message }`,
+             type : 'success',
+             duration : 2000
+           })
+         )
+       })
      })
    }
 
@@ -252,6 +270,62 @@ export default class SettingsPresenter {
      }, error => {
        this.view.hideCircularLoader()
       store.dispatch(NotifyActions.resetNotify())
+     })
+   }
+
+   requestUnlockPin (otp, newCode) {
+     this.view.showCircularLoader()
+     this.requestUnlockPinInteractor.execute (otp, newCode)
+     .subscribe(data => {
+       store.dispatch(NotifyActions.addNotify({
+         title: 'PIN Security',
+         message : data.message,
+         type: 'success',
+         duration: 5000
+       }))
+       this.view.showResetModalFunc(false)
+       this.view.hideCircularLoader()
+     }, error => {
+       this.view.hideCircularLoader()
+       store.dispatch(NotifyActions.resetNotify())
+       error && error.errorResp &&
+       error.errorResp.errors.map((resp) => {
+         store.dispatch(NotifyActions.addNotify({
+             title: 'PIN Security',
+             message : `${ resp.message }`,
+             type : 'success',
+             duration : 2000
+           })
+         )
+       })
+     })
+   }
+
+   getRequestPinOtp () {
+     this.view.showCircularLoader()
+     this.getRequestOtpUnlockInteractor.execute ()
+     .subscribe(data => {
+       this.view.hideCircularLoader()
+       store.dispatch(NotifyActions.addNotify({
+         title: 'PIN Security',
+         message : data.message,
+         type: 'success',
+         duration: 5000
+       }))
+      this.view.showResetModalFunc(true)
+     }, error => {
+       this.view.hideCircularLoader()
+       store.dispatch(NotifyActions.resetNotify())
+       error && error.errorResp &&
+       error.errorResp.errors.map((resp) => {
+         store.dispatch(NotifyActions.addNotify({
+             title: 'PIN Security',
+             message : `${ resp.message }`,
+             type : 'success',
+             duration : 2000
+           })
+         )
+       })
      })
    }
  }

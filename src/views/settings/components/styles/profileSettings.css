@@ -12,6 +12,16 @@
   font-size: 12px;
 }
 
+.pin-settings-card-grid {
+  display : grid;
+  grid-template-columns: .2fr 1fr .2fr;
+}
+
+.pin-settings-grid {
+  display: grid;
+  grid-template-rows: .3fr .05fr;
+}
+
 .profilePicture:hover .profilePictureLabel {
   bottom: 10px;
 }

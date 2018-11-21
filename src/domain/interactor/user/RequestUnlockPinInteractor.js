@@ -3,7 +3,7 @@ export default class RequestUnlockPinInteractor {
     this.client = client
   }
 
-  execute (empId, date) {
-    return this.client.requestUnlockPin(this.client.getToken(), empId, date)
+  execute (otp, newCode) {
+    return this.client.requestUnlockPin(this.client.getToken(), otp, newCode)
   }
 }
