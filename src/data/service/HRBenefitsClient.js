@@ -1427,6 +1427,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  // Pay For Skills
+
+  getPrograms (token) {
+    return this.service.getPrograms(token)
+      .pipe(ServiceErrorOperator)
   /* My Goals */
 
   getGoals (token) {
@@ -1435,7 +1440,6 @@ export default class HRBenefitsClient {
   }
 
   addRequestedGoals (token, requestedGoalsParam) {
-
     return this.service.addRequestedGoals(token, requestedGoalsParam)
     .pipe(ServiceErrorOperator())
   }
