@@ -20,7 +20,12 @@
 
 .news-like-grid {
   display: grid;
-  grid-template-rows: .5fr .005fr;
+  align-items: center;
+  margin: auto;
+  grid-template-columns: .1fr 1fr;
+  /* align-content: center; */
+  text-align: left;
+  padding: 5px 0px 0px 0px;
 }
 
 .news-icon-size {
@@ -99,4 +104,34 @@
 .news-grid {
   display: grid;
   grid-template-columns: 3fr .10fr;
+}
+
+
+.home-card-view {
+  width: 315px;
+  grid-template-rows: .8fr 1fr .15fr;
+  display: grid;
+  min-width: 320px;
+  min-height: 380px;
+}
+
+.home-card-padding {
+  padding: 10px;
+}
+
+.home-test-background {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  height: 180px;
+  width: 100%;
+  transition: all .3s;
+  transform-origin: 0% 0%;
+}
+
+.home-test-background img {
+  max-width: 100%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  height: 100%;
+  width: 100%;
 }

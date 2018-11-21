@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card, GenericButton, SkeletalLoader } from '../../../../ub-components/'
+import { Card, GenericButton, SkeletalLoader, Line } from '../../../../ub-components/'
 import moment from 'moment'
 import { FaEye } from 'react-icons/lib/fa/'
 import './styles/newsCardComponent.css'
@@ -36,28 +36,45 @@ class NewsCardComponent extends Component {
       backgroundPosition: 'center',
       borderRadius: '15px',
     }
-    const detailsFiltered = news && news.details.substr(0, 200)
+    const detailsFiltered = news && news.details.substr(0, 30)
 
     return (
-      <Card className = { 'news-card' }>
-        {
-          news.imageUrl.includes('/2018-') ?
-          <SkeletalLoader
-            boxSizeObject = {{
-              width : 200,
-              height: 150,
-            }}
-            shapeBox = { true }
-            />
-          :
-          <div
-            style = { style }
-            className = {'news-body'} >
-          </div>
-        }
-        <div className = { 'news-details-card' }>
-          <div className = { 'news-grid' }>
-            <h2 className = { 'unionbank-color font-weight-bold font-size-22px' }>{ news.title }</h2>
+      <Card
+        className = { 'home-card-view' }>
+        <div className = { 'home-test-background' }>
+          {
+            news.imageUrl.includes('/2018-') ?
+            <SkeletalLoader
+              boxSizeObject = {{
+                width : 200,
+                height: 105,
+              }}
+              shapeBox = { true }
+              />
+            :
+            <img
+              src={ news.imageUrl }/>
+          }
+        </div>
+        <div className = { 'home-card-padding' }>
+          <h2 className = { 'unionbank-color font-size-18px font-weight-bold' }>{ news.title }</h2>
+          <h2 className = { 'font-size-12px font-weight-normal' }>June 1 2018</h2>
+          <br/>
+          <p className = { 'font-size-15px font-weight-normal' }>
+            { detailsFiltered }...
+          </p>
+          <br/>
+          <center>
+            <GenericButton
+              className = { 'global-button profile-button-small' }
+              text= { 'Read More' }
+              onClick = { () =>
+                this.openLink() }
+              />
+          </center>
+        </div>
+        <div className = { ' home-card-padding text-align-left' }>
+          <Line/>
             <div className = { 'news-like-grid' }>
               <h2
                 className = { 'cursor-pointer' }
@@ -67,21 +84,8 @@ class NewsCardComponent extends Component {
                 }
               }
               className = { (parseInt(isHeartActive) !== 1 ? 'news-status-icon' : 'news-heart-icon') + ' news-icon' }/>
-              <h2 className = { 'unionbank-color font-size-12px text-align-center' }>{ news && news.total }</h2>
+            <h2 className = { 'unionbank-color font-size-16px text-align-left' }>{ news && news.total }</h2>
             </div>
-          </div>
-          <br/>
-          <h2 className= { 'news-limit-text font-size-16px font-weight-lighter text-align-justify' }>{ detailsFiltered } ...</h2>
-          <br/>
-          <div className = { 'text-align-right' }>
-            <GenericButton
-              onClick = { () =>
-                this.openLink() }
-              className = { 'news-view-details-button profile-button-small cursor-pointer global-button' }
-              text = { 'Read More' }
-              />
-          </div>
-          <br/>
         </div>
       </Card>
     )

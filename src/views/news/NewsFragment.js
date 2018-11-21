@@ -135,10 +135,7 @@ class NewsFragment extends BaseMVPView {
               )
             }
             <br/>
-            <Card className = { 'news-feature-stories' }>
-              <h2 className = { 'unionbank-color font-size-26px font-weight-bold' }>Featured Stories</h2>
-              <br/>
-              <br/>
+            <div className = { 'news-feature-stories' }>
               <div>
                 {
                   showLoader ?
@@ -152,7 +149,7 @@ class NewsFragment extends BaseMVPView {
                     }
                   </div>
                   :
-                  <div>
+                  <div className = { 'grid-global-columns-x3' }>
                     {
                       newsList &&
                       newsList.map((news, i) =>
@@ -167,15 +164,13 @@ class NewsFragment extends BaseMVPView {
                           onChangeHeart = { (id, isHeart) => this.presenter.addNewsIsHeart(id, isHeart) }
                         />
                         <br/>
-                        <Line/>
-                        <br/>
                       </div>
                         )
                       }
                   </div>
                 }
               </div>
-            </Card>
+            </div>
           </div>
         </div>
       </div>
