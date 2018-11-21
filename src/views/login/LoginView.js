@@ -268,17 +268,14 @@ class LoginView extends BaseMVPView {
 
     /* UAT */
 
-    let version = 5
-    let majorVersion = 10
-    let minorVersion = 3
+    let version = 6
+    let majorVersion = 0
+    let minorVersion = 0
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     const objectValue = [{
       id : 0,
       name : 'I forgot my password'
-    } ,{
-      id : 1,
-      name : 'I want to Unlock my Profile'
     } ,{
       id : 2,
       name : 'What is my 1UHub user ID?'

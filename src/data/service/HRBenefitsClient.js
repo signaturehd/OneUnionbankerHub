@@ -113,8 +113,15 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  requestUnlockPin (token, empId, date) {
-    return this.service.requestUnlockPin(token, empId, date)
+  /*  Unlock Get and Post PIN */
+
+  getRequestPinOtp (token) {
+    return this.service.getRequestPinOtp(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  requestUnlockPin (token, otp, newCode) {
+    return this.service.requestUnlockPin(token, otp, newCode)
       .pipe(ServiceErrorOperator())
   }
 
