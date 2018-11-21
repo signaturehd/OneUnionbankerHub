@@ -28,6 +28,11 @@
   grid-template-columns: .1fr 1fr .1fr;
 }
 
+.header-column {
+  display: grid;
+  grid-template-columns: 2fr .5fr;
+}
+
 .header-color {
   background-color: #424242;
 }
@@ -65,6 +70,11 @@
   border-top-right-radius: 5px;
 }
 
+.icon-column {
+  display: grid;
+  grid-template-columns: .3fr 1fr;
+}
+
 .icon-check {
   background-size: contain;
   cursor: pointer;
@@ -81,10 +91,23 @@
   background-image: url('../../../../images/icons/ic_check_green_500_24dp.png')
 }
 
+.icon-cross-img {
+  margin-left: 15px;
+  background-image: url('../../../../images/icons/ic_close_red_500_24dp.png')
+}
+
 .icon-edit-img {
   margin-top: 5px;
   margin-left: 15px;
   background-image: url('../../../../images/icons/baseline_edit_black_18dp.png')
+}
+
+.icon-comment-img {
+  background-image: url('../../../../images/icons/ic_comment.png')
+}
+
+.icon-taskcompleted-img {
+  background-image: url('../../../../images/icons/ic_transaction_otp_verfication.png')
 }
 
 /* Form style */

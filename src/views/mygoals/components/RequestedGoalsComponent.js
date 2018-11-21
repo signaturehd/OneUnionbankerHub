@@ -46,9 +46,17 @@ class RequestedGoalsComponent extends Component {
         cardHolder.map((resp, key) =>
           <Card className = { 'margin-10px' }>
             <div className = { 'grid-card-row' }>
-
-              <div className = { 'header-color border-radius-top' }>
+              <div className = { 'header-column header-color border-radius-top' }>
                 <h2 className = { 'margin-10px text-align-left font-size-20px font-weight-bold color-white' }>{ resp.title }</h2>
+                {
+                  resp.approvalStatus === 2 ?
+                  <h2 className = { 'margin-10px text-align-right font-size-14px font-weight-bold color-white header-column' }>Approved<span className = { 'icon-check icon-check-img' }/></h2>
+                  :
+                    resp.approvalStatus === 3 ?
+                    <h2 className = { 'margin-10px text-align-right font-size-14px font-weight-bold color-white header-column' }>Rejected<span className = { 'icon-check icon-cross-img' }/></h2>
+                    :
+                    <h2 className = { 'margin-10px text-align-right font-size-14px font-weight-bold color-white' }>Requested</h2>
+                }
               </div>
 
               <div className = { 'grid-card-x2 padding-15px' }>
@@ -64,8 +72,13 @@ class RequestedGoalsComponent extends Component {
                       className = { 'margin-5px' }
                     />
                   </div>
-                  <div>
-                    <h2 className = { 'margin-5px text-align-left font-size-16px font-weight-lighter' }>ICON          ICON</h2>
+                  <div className = { 'grid-global' }>
+                    <div className = { 'icon-column' }>
+                      <h2 className = { 'margin-5px text-align-left font-size-16px font-weight-lighter' }><span className = { 'icon-check icon-comment-img' }/>2/5</h2>
+                      <h2 className = { 'margin-5px text-align-left font-size-16px font-weight-lighter' }><span className = { 'icon-check icon-taskcompleted-img' }/>5/10</h2>
+                    </div>
+                    <div>
+                    </div>
                   </div>
                 </div>
 
@@ -85,7 +98,6 @@ class RequestedGoalsComponent extends Component {
                 <Line/>
                 <div className = { 'grid-footer-column margin-5px' }>
                   <div>
-                    <span className = { 'icon-check icon-check-img' }/>
                   </div>
                   <div>
                   </div>

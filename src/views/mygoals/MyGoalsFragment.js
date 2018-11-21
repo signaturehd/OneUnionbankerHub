@@ -321,6 +321,10 @@ class MyGoalsFragment extends BaseMVPView {
             showGoalTypeModalFunc = { () => this.setState({ showGoalTypeModal : true }) }
             />
           }
+            <FloatingActionButton
+              onClick = { () => this.setState({ showRequestModal : true })
+              }
+            />
           </div>
         </div>
       </div>
