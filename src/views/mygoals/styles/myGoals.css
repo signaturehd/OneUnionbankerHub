@@ -1,0 +1,17 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: .1fr 3fr;
+}
+
+.margin-right {
+  margin-right: 40px;
+}
+
+.margin-left {
+  margin-left: 20px;
+}
+
+.grid-filter {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+}
