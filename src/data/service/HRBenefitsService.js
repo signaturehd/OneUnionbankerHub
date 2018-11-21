@@ -137,11 +137,11 @@ export default class HRBenefitsService {
     })
   }
 
-  requestOtpVerification (token, otp) {
+  requestOtpVerification (token) {
     const objectParam = {
-      otp : otp
+      token: token,
     }
-    return this.apiClient.post('v1/password/email/otp', objectParam, {
+    return this.apiClient.post('v1/account/unlock/email', objectParam, {
       headers : { token }
     })
   }
@@ -154,6 +154,25 @@ export default class HRBenefitsService {
       otp: otp,
     }
     return this.apiClient.post('v1/password/reset', objectParam, {
+      headers : { token }
+    })
+  }
+
+
+  /* Unlock PIN Get and Post*/
+
+  getRequestPinOtp (token) {
+    return this.apiClient.get('v1/pin/otp', {
+      headers : { token }
+    })
+  }
+
+  requestUnlockPin (token, otp, newCode) {
+    const objectParam = {
+      otp,
+      newCode,
+    }
+    return this.apiClient.post('v1/pin/reset', objectParam, {
       headers : { token }
     })
   }
@@ -2163,6 +2182,31 @@ export default class HRBenefitsService {
       attendees: addEventParam.attendees,
     }
     return this.apiClient.post('v1/events/submit', objectParam, {
+      headers : { token }
+    })
+  }
+
+  /* My Goals */
+
+  getGoals (token) {
+    return this.apiClient.get('v1/goals', {
+      headers: { token }
+    })
+  }
+
+  addRequestedGoals (
+    token,
+    requestedGoalsParam) {
+    const objectParam = {
+      title: requestedGoalsParam.goalTitle,
+      description: requestedGoalsParam.description,
+      startDate: requestedGoalsParam.startDate,
+      endDate: requestedGoalsParam.dueDate,
+      priority: requestedGoalsParam.priorityId,
+      goalType: requestedGoalsParam.goalTypeId
+    }
+
+    return this.apiClient.post('v1/goals/personnal', objectParam, {
       headers : { token }
     })
   }

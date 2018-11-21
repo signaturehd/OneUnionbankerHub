@@ -18,9 +18,9 @@ class ExistingLoansSummaryCardComponent extends Component {
     super(props)
   }
 
-  computePercentage (balance) {
+  computePercentage (balance, principal) {
     let totalAmount = this.props.totalAmount
-    const percentage = (balance / totalAmount) * 100
+    const percentage = (balance / principal) * 100
 
     return parseInt(percentage)
   }
@@ -33,7 +33,8 @@ class ExistingLoansSummaryCardComponent extends Component {
       balance,
       totalAmount ,
       promissoryNote,
-      date
+      date,
+      principalAmount
     } = this.props
 
     const convertBalance = MyExistitngLoansFunctions.checkedDesiredAmount(balance)
@@ -67,19 +68,23 @@ class ExistingLoansSummaryCardComponent extends Component {
               <div className = { 'font-weight-lighter font-size-12px' }>{ resp.amortization }</div>
             </div>
             <div className = { 'existing-loans-grid-label' }>
-              <div  className = { 'font-weight-bold font-size-12px' }>Principal Amount</div>
+              <div  className = { 'font-weight-bold font-size-12px' }>Outstanding Balance</div>
               <div className = { 'font-weight-lighter font-size-12px' }>&#8369; { format(resp.balance) }</div>
             </div>
             <div  className = { 'font-weight-bold font-size-12px existingloans-progressbar' }>
               <br/>
               <br/>
               <Progress
-                percent = { this.computePercentage(resp.balance) } />
+                percent = { this.computePercentage(resp.balance, resp.principal) } />
+              {
+                // <Progress
+                //   percent = { this.computePercentage(resp.balance) } />
+              }
             </div>
             <div className = { 'existing-loans-grid-label' }>
-              <div  className = { 'font-weight-bold font-size-12px' }>Outstanding Balance</div>
+              <div  className = { 'font-weight-bold font-size-12px' }>Principal Amount</div>
               <div className = { 'font-weight-lighter font-size-12px' }>
-                &#8369; { format(totalAmount) }
+                &#8369; { format(resp.principal) }
               </div>
             </div>
           </Card>

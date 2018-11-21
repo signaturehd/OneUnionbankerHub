@@ -103,8 +103,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  requestOtpVerification (token, otp) {
-    return this.service.requestOtpVerification(token, otp)
+  requestOtpVerification (token) {
+    return this.service.requestOtpVerification(token)
       .pipe(ServiceErrorOperator())
   }
 
@@ -113,6 +113,17 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /*  Unlock Get and Post PIN */
+
+  getRequestPinOtp (token) {
+    return this.service.getRequestPinOtp(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  requestUnlockPin (token, otp, newCode) {
+    return this.service.requestUnlockPin(token, otp, newCode)
+      .pipe(ServiceErrorOperator())
+  }
 
   /* Session */
   setToken (token) {
@@ -1416,4 +1427,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* My Goals */
+
+  getGoals (token) {
+    return this.service.getGoals(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addRequestedGoals (token, requestedGoalsParam) {
+
+    return this.service.addRequestedGoals(token, requestedGoalsParam)
+    .pipe(ServiceErrorOperator())
+  }
 }

@@ -59,7 +59,8 @@ class OtpModal extends BaseMVPView {
     return (
 
       <Modal
-          onClose = {onClose}
+          onClose = { onClose }
+          isDismisable = { true }
         >
         {
           disableSubmit || disableResend ?
