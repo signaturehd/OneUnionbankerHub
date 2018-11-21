@@ -1428,7 +1428,6 @@ export default class HRBenefitsClient {
   }
 
   addRequestedGoals (token, requestedGoalsParam) {
-    console.log('client')
 
     return this.service.addRequestedGoals(token, requestedGoalsParam)
     .pipe(ServiceErrorOperator())

@@ -2196,7 +2196,6 @@ export default class HRBenefitsService {
       priority: requestedGoalsParam.priorityId,
       goalType: requestedGoalsParam.goalTypeId
     }
-    console.log('service')
 
     return this.apiClient.post('v1/goals/personnal', objectParam, {
       headers : { token }
