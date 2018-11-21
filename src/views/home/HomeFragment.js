@@ -34,7 +34,7 @@ class HomeFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    // this.presenter.getCheckGreetingsStatus()
+    this.presenter.getCheckGreetingsStatus()
     this.presenter.getProfile()
     this.props.setSelectedNavigation(0)
   }

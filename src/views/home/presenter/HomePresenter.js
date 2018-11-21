@@ -23,9 +23,9 @@ export default class HomePresenter {
     const dateNow = moment().format('H')
     if(dateNow <= 11) {
       this.view.showGreetingsMessage(morning)
-    } else if (hour <= 17) {
+    } else if (dateNow <= 17) {
       this.view.showGreetingsMessage(afternoon)
-    } else if (hour <= 23) {
+    } else if (dateNow <= 23) {
       this.view.showGreetingsMessage(evening)
     }
   }
