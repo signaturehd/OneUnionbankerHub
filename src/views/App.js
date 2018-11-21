@@ -54,7 +54,7 @@ class App extends BaseMVPView {
       <div>
         <Switch>
           <Route
-            path = '/reset/:token'
+            path = '/:token'
             render = { props => <ResetPasswordView  { ...props }/> }/>
           <Route path = '/' render={props => {
             if (this.state.isLogin) {
