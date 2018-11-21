@@ -11,13 +11,3 @@
   display: grid;
   grid-template-rows: .02fr auto auto;
 }
-
-//test
-.home-card-view {
-  width: 320px;
-  grid-template-rows: 1fr 1fr .1fr;
-  display: grid;
-  min-width: 320px;
-  height: 330px;
-  min-height: 330px;
-}
