@@ -96,6 +96,14 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Unlock Account */
+
+  requestUnlockAccount (token, empId, date) {
+    console.log(empId, date)
+    return this.service.requestUnlockAccount(token, empId, date)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Reset Password */
 
   requestEmailVerification (token, empId, date) {

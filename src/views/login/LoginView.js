@@ -277,6 +277,9 @@ class LoginView extends BaseMVPView {
       id : 0,
       name : 'I forgot my password'
     } ,{
+      id : 1,
+      name : 'I want to Unlock my Account'
+    }, {
       id : 2,
       name : 'What is my 1UHub user ID?'
     }, {
@@ -382,7 +385,7 @@ class LoginView extends BaseMVPView {
                     <LoginComponent
                       requestEmailFunc = { () => this.presenter.requestEmailVerification(usernameId, birthDate) }
                       requestUnlockFunc = { () =>
-                        this.presenter.requestUnlockPin(usernameId, birthDate)
+                        this.presenter.requestUnlockAccount(usernameId, birthDate)
                       }
                       emailSuccessMessage = { emailSuccessMessage }
                       showEmailMessageModal = { showEmailMessageModal }

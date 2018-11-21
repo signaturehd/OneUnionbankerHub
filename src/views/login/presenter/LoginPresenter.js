@@ -3,6 +3,7 @@ import RequestEmailVerificationInteractor from '../../../domain/interactor/user/
 import LoginParam from '../../../domain/param/LoginParam'
 import RequestNewPasswordInteractor from '../../../domain/interactor/user/RequestNewPasswordInteractor'
 import RequestUnlockPinInteractor from '../../../domain/interactor/user/RequestUnlockPinInteractor'
+import RequestUnlockAccountInteractor from '../../../domain/interactor/user/RequestUnlockAccountInteractor'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
@@ -15,6 +16,7 @@ export default class LoginPresenter {
     this.requestEmailVerificationInteractor = new RequestEmailVerificationInteractor(container.get('HRBenefitsClient'))
     this.requestNewPasswordInteractor = new RequestNewPasswordInteractor(container.get('HRBenefitsClient'))
     this.requestUnlockPinInteractor = new RequestUnlockPinInteractor(container.get('HRBenefitsClient'))
+    this.requestUnlockAccountInteractor = new RequestUnlockAccountInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -38,9 +40,21 @@ export default class LoginPresenter {
   /* Unlock Profile */
 
   requestUnlockPin (empId, date) {
-    console.log(empId, date)
     this.view.showResetLoader()
     this.requestUnlockPinInteractor.execute (empId, moment(date).format('YYYY-MM-DD'))
+    .subscribe(data => {
+      this.view.hideResetLoader()
+      this.view.hideHelpDeskComponent(data)
+    }, error => {
+      this.view.hideResetLoader()
+    })
+  }
+
+  /* Unlock my Account */
+
+  requestUnlockAccount (empId, date) {
+    this.view.showResetLoader()
+    this.requestUnlockAccountInteractor.execute(empId, moment(date).format('YYYY-MM-DD'))
     .subscribe(data => {
       this.view.hideResetLoader()
       this.view.hideHelpDeskComponent(data)
@@ -56,7 +70,7 @@ export default class LoginPresenter {
     this.requestEmailVerificationInteractor.execute(empId, moment(date).format('YYYY-MM-DD'))
     .subscribe(data => {
       this.view.hideResetLoader()
-      this.view.showGetOtpModal(data)
+      this.view.showNotificationMessage(data.message)
     }, error => {
       this.view.hideResetLoader()
       this.view.showGetOtpModal(error)
