@@ -28,10 +28,18 @@ class ApprovedGoalsComponent extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      index: 1,
+      viewMoreText : ''
+    }
   }
 
-  componentDidMount() {
-
+  viewMoreFunc(cardHolder) {
+    cardHolder.map((resp, key) =>
+      {
+        console.log(resp.goalDetails.length)
+      }
+    )
   }
 
   navigate () {
@@ -39,22 +47,28 @@ class ApprovedGoalsComponent extends Component {
   }
 
   render () {
-    const { cardHolder, priorityFunc, showApprovalFormFunc } = this.props
+    const { cardHolder, employeeName, imageUrl, priorityFunc, showApprovalFormFunc } = this.props
+    const { index, viewMoreText } = this.state
+
+    const isVisible = (cardHolder && cardHolder.length > 1) ? '' : 'hide'
+
     return (
       <div className = { 'grid-main padding-5px' }>
-      {
-        cardHolder.map((resp, key) =>
         <div>
-          <div className = { 'employee-row' }>
-            <img src = { `${resp.imageUrl}` } width = { '50px' } height = { '50px' }/>
-            <h2>{resp.name}</h2>
+          <div className = { 'employee-column' }>
+            <img src = { require('../../../images/1uhub.png') } width = { '100px' } height = { '100px' }/>
+            <div className = { 'employee-row' }>
+              <h2></h2>
+              <h2 className = { 'margin-10px text-align-left font-size-18px font-weight-lighter' }>{employeeName}</h2>
+              <h2></h2>
+            </div>
           </div>
           {
-            resp.goalDetails.map((details, key) =>
+            cardHolder.slice(0, index).map((details, key) =>
 
               <Card className = { 'margin-10px' }
                 onClick = { () => showApprovalFormFunc(
-                  resp.name,
+                  employeeName,
                   details.id,
                   details.title,
                   details.approvalStatus,
@@ -117,10 +131,22 @@ class ApprovedGoalsComponent extends Component {
               </Card>
             )
           }
+          <button
+            type = { 'button' }
+            className = { `viewmore tooltip ${ isVisible }` }
+            onClick = {
+              () => {
+                if(index === cardHolder.length)
+                  this.setState({ index : 1, viewMoreText : 'View more' })
+                else
+                  this.setState({ index : cardHolder.length, viewMoreText : 'View less' })
+              }
+            }>
+            <img src={ require('../../../images/icons/horizontal.png') } />
+            <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+          </button>
           <Line/>
         </div>
-        )
-      }
       </div>
     )
   }

@@ -1,6 +1,11 @@
+.employee-column {
+  display: grid;
+  grid-template-columns: .1fr 1fr;
+}
+
 .employee-row {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
 }
 
 .grid-main {

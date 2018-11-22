@@ -235,6 +235,7 @@ class MyGoalsFragment extends BaseMVPView {
       rejectedRemarks,
       showRejectRemarksModal
     } = this.state
+
     return (
       <div>
         {
@@ -304,7 +305,7 @@ class MyGoalsFragment extends BaseMVPView {
                 name = { 'tabs' }
                 defaultChecked = { true }
                 onClick = { () => {
-                    this.setState({ forApproval : false })
+                    this.setState({ showApprovalForm : false })
                     this.props.history.push('/mylearning/mygoals/request')
                   }
                 }/>
@@ -316,7 +317,11 @@ class MyGoalsFragment extends BaseMVPView {
                     id = { 'tab2' }
                     type = { 'radio' }
                     name = { 'tabs' }
-                    onClick = { () => this.props.history.push('/mylearning/mygoals/team') }/>
+                    onClick = { () => {
+                        this.setState({ showApprovalForm : false })
+                        this.props.history.push('/mylearning/mygoals/team')
+                      }
+                    }/>
                   <label className = { 'travel-icon-tab' } htmlFor='tab2'>Team Goals</label>
               </label>
 
@@ -416,35 +421,43 @@ class MyGoalsFragment extends BaseMVPView {
                   onClose = { () => this.setState({ showRejectRemarksModal: false }) }
                 />
                 :
-                <ApprovedGoalsComponent
-                  cardHolder = { approvalArray }
-                  priorityFunc = { (resp) => this.priorityFunc(resp) }
-                  showApprovalFormFunc = {
-                    (
-                      employeeName,
-                      goalId,
-                      goalTitle,
-                      approvalStatus,
-                      description,
-                      priorityId,
-                      startDate,
-                      dueDate,
-                      goalTypeId
-                    ) =>
-                    this.setState ({
-                      employeeName,
-                      goalId,
-                      goalTitle,
-                      approvalStatus,
-                      description,
-                      priorityId,
-                      startDate,
-                      dueDate,
-                      goalTypeId,
-                      showApprovalForm : true
-                    })
-                  }
-                />
+                  approvalArray.length !== 0 &&
+                  approvalArray.map((resp, key) =>
+
+                  <ApprovedGoalsComponent
+                    employeeName = { resp.name }
+                    imageUrl = { resp.imageUrl }
+                    cardHolder = { resp.goalDetails }
+                    priorityFunc = { (resp) => this.priorityFunc(resp) }
+                    showApprovalFormFunc = {
+                      (
+                        employeeName,
+                        goalId,
+                        goalTitle,
+                        approvalStatus,
+                        description,
+                        priorityId,
+                        startDate,
+                        dueDate,
+                        goalTypeId
+                      ) =>
+                      this.setState ({
+                        employeeName,
+                        goalId,
+                        goalTitle,
+                        approvalStatus,
+                        description,
+                        priorityId,
+                        startDate,
+                        dueDate,
+                        goalTypeId,
+                        showApprovalForm : true
+                      })
+                    }
+                  />
+
+                  )
+
               }
             </div>
             :
