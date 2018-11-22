@@ -4,7 +4,7 @@
 
 .home-fragment-view {
   display: grid;
-  grid-template-columns: .1fr 1fr .1fr;
+  grid-template-columns: .05fr 1fr .05fr;
 }
 
 .home-grid-fragment {

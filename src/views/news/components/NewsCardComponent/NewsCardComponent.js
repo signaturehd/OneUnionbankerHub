@@ -25,71 +25,65 @@ class NewsCardComponent extends Component {
       news,
       onClick ,
       imageUrl,
-      onChangeHeart
+      onChangeHeart,
+      key
     } = this.props
 
     const style = {
-      backgroundImage : `url(${news.imageUrl})`,
-      backgroundRepeat : 'no-repeat',
-      backgroundSize: 'cover',
-      height: 'unset',
-      backgroundPosition: 'center',
-      borderRadius: '15px',
+      iconNews : {
+        backgroundImage : `url(${news.imageUrl})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        height: '100%',
+        margin: '0px auto',
+        width: '100%',
+        borderRadius: '5px 5px 0px 0px',
+      }
     }
     const detailsFiltered = news && news.details.substr(0, 30)
-    console.log()
+
     return (
       <Card
-        className = { 'home-card-view' }>
-        <div className = { 'home-test-background' }>
-          {
-            news.imageUrl.includes('/2018-') ?
-            <SkeletalLoader
-              boxSizeObject = {{
-                width : 200,
-                height: 105,
-              }}
-              shapeBox = { true }
-              />
-            :
-            <img
-              src={ news.imageUrl }/>
-          }
-        </div>
-        <div className = { 'home-card-padding' }>
-          <h2 className = { 'unionbank-color font-size-18px font-weight-bold' }>{ news.title }</h2>
-          <h2 className = { 'font-size-12px font-weight-normal' }>
-            {
-              news.date && moment(news.date).format('MMMM DD, YYYY')
-            }
-          </h2>
-          <br/>
-          <p className = { 'font-size-15px font-weight-normal' }>
-            { detailsFiltered }...
-          </p>
-          <br/>
-          <center>
-            <GenericButton
-              className = { 'global-button profile-button-small' }
-              text= { 'Read More' }
-              onClick = { () =>
-                this.openLink() }
-              />
-          </center>
-        </div>
-        <div className = { ' home-card-padding text-align-left' }>
-          <Line/>
-            <div className = { 'news-like-grid' }>
-              <h2
-                className = { 'cursor-pointer' }
-                onClick = { () => {
-                  this.setState({ isHeartActive : isHeartActive === 0 ? 1 : 0  })
-                  onChangeHeart(news.id, news.isHeart)
-                }
+        key = { key }
+        className = { 'news-list-card' }>
+        <div className = { 'home-card-view' }>
+          <span
+            style = { style.iconNews }/>
+          <div className = { 'home-card-padding' }>
+            <h2 className = { 'unionbank-color font-size-18px font-weight-bold' }>{ news.title }</h2>
+            <h2 className = { 'font-size-12px font-weight-normal' }>
+              {
+                news.date && moment(news.date).format('MMMM DD, YYYY')
               }
-              className = { (parseInt(isHeartActive) !== 1 ? 'news-status-icon' : 'news-heart-icon') + ' news-icon' }/>
-            <h2 className = { 'unionbank-color font-size-16px text-align-left' }>{ news && news.total }</h2>
-            </div>
+            </h2>
+            <br/>
+            <p className = { 'font-size-15px font-weight-normal' }>
+              'awdawdaw awdaw...'
+            </p>
+            <br/>
+            <center>
+              <GenericButton
+                className = { 'global-button profile-button-small' }
+                text= { 'Read More' }
+                onClick = { () =>
+                  this.openLink() }
+                />
+            </center>
+          </div>
+          <div className = { ' home-card-padding text-align-left' }>
+            <Line/>
+              <div className = { 'news-like-grid' }>
+                <h2
+                  className = { 'cursor-pointer' }
+                  onClick = { () => {
+                    this.setState({ isHeartActive : isHeartActive === 0 ? 1 : 0  })
+                    onChangeHeart(news.id, news.isHeart)
+                  }
+                }
+                className = { (parseInt(isHeartActive) !== 1 ? 'news-status-icon' : 'news-heart-icon') + ' news-icon' }/>
+              <h2 className = { 'unionbank-color font-size-16px text-align-left' }>{ news && news.total }</h2>
+              </div>
+          </div>
         </div>
       </Card>
     )

@@ -301,12 +301,8 @@
   ._img-ub-profile {
     margin: 7% 5% 0 0;
   }
-._img-ub-logo {
-    margin: 7% 0 0 0%;
-    width: 155px;
-    height: 19px;
-  }
-}@media screen and (max-width: 400px) {
+}
+@media screen and (max-width: 400px) {
   ._img-ub-profile {
     margin: 8% 5% 0 0;
   }

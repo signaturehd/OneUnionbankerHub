@@ -225,7 +225,7 @@ class NavigationView extends BaseMVPView {
       preEmploymentStatus,
       isLineManager,
     } = this.state
-
+    
     const { history, login, profilePicture } = this.props
     const style = {
       show: {

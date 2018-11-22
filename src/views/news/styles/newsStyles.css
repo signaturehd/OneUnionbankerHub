@@ -42,13 +42,19 @@
   margin: 25px auto;
 }
 
-.container {
-  padding-left: 5%;
-  padding-right: 5%;
-  padding-top: 1%
-}
-
 .news-grid-header {
   display: grid;
   grid-template-columns: 1fr .5fr 1fr;
+}
+
+@media screen and (max-width: 768px) {
+  .news-grid-header {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+.news-scrolling-grid {
+  display: grid;
+  grid-template-rows: 1fr .2fr;
 }
