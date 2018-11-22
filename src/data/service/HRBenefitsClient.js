@@ -1423,7 +1423,7 @@ export default class HRBenefitsClient {
     return this.service.addNewsIsHeart(token, id, isHeart)
       .pipe(ServiceErrorOperator())
   }
-  
+
   /* Events Budget */
 
   validateEventsBudget (token) {

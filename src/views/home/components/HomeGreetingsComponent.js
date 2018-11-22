@@ -22,7 +22,7 @@ class HomeGreetingsComponent extends Component {
           { greetingsMessage+', ' } <b>{employeeName ? employeeName+'!' : '' }</b>
         </h2>
         <h4 className = { 'font-size-25px font-weight-bold home-margin-top' }>
-          What do you want to do today?
+          What can I help you with?
         </h4>
       </center>
     )

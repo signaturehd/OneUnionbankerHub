@@ -40,7 +40,10 @@ class NewsCardComponent extends Component {
         borderRadius: '5px 5px 0px 0px',
       }
     }
-    const detailsFiltered = news && news.details.substr(0, 30)
+    const detailsFiltered = news && news.details.substr(0, 70)
+    const titleFiltered = news && news.title.substr(0, 25)
+    const newDetails = detailsFiltered.length < 70  ? detailsFiltered: detailsFiltered+ '...'
+    const newTitle = detailsFiltered.length < 25  ? titleFiltered : titleFiltered + '...'
 
     return (
       <Card
@@ -50,17 +53,19 @@ class NewsCardComponent extends Component {
           <span
             style = { style.iconNews }/>
           <div className = { 'home-card-padding' }>
-            <h2 className = { 'unionbank-color font-size-18px font-weight-bold' }>{ news.title }</h2>
-            <h2 className = { 'font-size-12px font-weight-normal' }>
-              {
-                news.date && moment(news.date).format('MMMM DD, YYYY')
-              }
-            </h2>
-            <br/>
-            <p className = { 'font-size-15px font-weight-normal' }>
-              'awdawdaw awdaw...'
-            </p>
-            <br/>
+            <div className = { 'news-details-size' }>
+              <h2 className = { 'unionbank-color font-size-16px font-weight-bold  news-details' }>{ newTitle }</h2>
+              <h2 className = { 'font-size-12px font-weight-normal' }>
+                {
+                  news.date && moment(news.date).format('MMMM DD, YYYY')
+                }
+              </h2>
+              <br/>
+              <p className = { 'font-size-14px font-weight-normal news-details' }>
+                { newDetails }
+              </p>
+              <br/>
+            </div>
             <center>
               <GenericButton
                 className = { 'global-button profile-button-small' }

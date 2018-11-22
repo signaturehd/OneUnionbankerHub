@@ -6,9 +6,18 @@
 }
 
 .news-facebook-loader-grid {
+  grid-template-rows: 180px 220px;
   display: grid;
-  grid-template-columns: .5fr 1fr;
-  column-gap: 2%;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.news-scrolling-wrapper .news-facebook-card {
+  min-height: 150px;
+  margin-left: 15px;
+  box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.3);
+  margin-right: 10px;
+  max-width: 320px;
 }
 
 .news-header {
@@ -45,6 +54,7 @@
 .news-grid-header {
   display: grid;
   grid-template-columns: 1fr .5fr 1fr;
+  padding-left: 10px;
 }
 
 @media screen and (max-width: 768px) {
@@ -57,4 +67,9 @@
 .news-scrolling-grid {
   display: grid;
   grid-template-rows: 1fr .2fr;
+}
+
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
 }

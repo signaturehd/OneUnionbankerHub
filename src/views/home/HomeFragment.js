@@ -64,8 +64,6 @@ class HomeFragment extends BaseMVPView {
             />
             <br/>
             <br/>
-            <br/>
-            <br/>
           </div>
           <div>
             <NewsFragment />
