@@ -99,7 +99,6 @@ export default class HRBenefitsClient {
   /* Unlock Account */
 
   requestUnlockAccount (token, empId, date) {
-    console.log(empId, date)
     return this.service.requestUnlockAccount(token, empId, date)
       .pipe(ServiceErrorOperator())
   }
