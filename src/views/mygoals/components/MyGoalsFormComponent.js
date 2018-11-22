@@ -84,12 +84,13 @@ class MyGoalsFormComponent extends Component {
                 onChange = { (e) => startDateFunc(e) }
                 disabled = { editMode }
                 dateFormat = { 'MM/DD/YYYY' }
+                minDate = { moment() }
               />
               <DatePicker
                 text = { 'Due Date' }
                 selected = { dueDate && moment(dueDate) }
                 onChange = { (e) => dueDateFunc(e) }
-                minDate = { moment(startDate) }
+                minDate = { startDate ? moment(startDate) : moment() }
                 dateFormat = { 'MM/DD/YYYY' }
               />
             </div>

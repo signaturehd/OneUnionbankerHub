@@ -19,6 +19,7 @@ import {
   FloatingActionButton
 } from '../../ub-components/'
 
+import GoalApprovalFormComponent from '../mygoals/components/GoalApprovalFormComponent'
 import RequestedGoalsComponent from '../mygoals/components/RequestedGoalsComponent'
 import ApprovedGoalsComponent from '../mygoals/components/ApprovedGoalsComponent'
 import MyGoalsFormComponent from '../mygoals/components/MyGoalsFormComponent'
@@ -42,6 +43,10 @@ class MyGoalsFragment extends BaseMVPView {
       showPriorityModal : false,
       showGoalTypeModal : false,
       editMode : false,
+      forApproval : false,
+      showApprovalForm : false,
+      showRejectRemarksModal : false,
+      employeeName: '',
       goalId : '',
       goalTitle : '',
       description : '',
@@ -52,7 +57,10 @@ class MyGoalsFragment extends BaseMVPView {
       noticeResponse : '',
       goalTypeId : '',
       goalType : '',
+      approvalStatus: '',
+      rejectedRemarks: '',
       goalsArray : [],
+      approvalArray : [],
       priorityArray : [
         {
           id: 1,
@@ -82,10 +90,15 @@ class MyGoalsFragment extends BaseMVPView {
 
   componentDidMount() {
     this.presenter.getGoals()
+    this.presenter.getForApprovalGoals()
   }
 
   getRequestedGoals(goalsArray) {
     this.setState({ goalsArray })
+  }
+
+  getForApprovalGoals(approvalArray) {
+    this.setState({ approvalArray })
   }
 
   noticeResponse (noticeResponse) {
@@ -161,6 +174,21 @@ class MyGoalsFragment extends BaseMVPView {
     )
   }
 
+  onApprovalSubmit(goalId, isApprove, rejectedRemarks) {
+    isApprove ?
+    this.presenter.approveGoal(
+      goalId,
+      isApprove,
+      ''
+    )
+    :
+    this.presenter.approveGoal(
+      goalId,
+      isApprove,
+      rejectedRemarks
+    )
+  }
+
   resetValue() {
     this.setState({
       goalTitle: '',
@@ -171,7 +199,9 @@ class MyGoalsFragment extends BaseMVPView {
       priorityName: '',
       goalTypeId: '',
       goalType: '',
-      showForm: false
+      rejectedRemarks: '',
+      showForm: false,
+      showApprovalForm : false
     })
   }
 
@@ -182,11 +212,15 @@ class MyGoalsFragment extends BaseMVPView {
       showNoticeResponseModal,
       noticeResponse,
       goalsArray,
+      approvalArray,
       showForm,
       showPriorityModal,
       showGoalTypeModal,
       editMode,
+      forApproval,
+      showApprovalForm,
       priorityArray,
+      employeeName,
       goalId,
       goalTitle,
       description,
@@ -196,9 +230,11 @@ class MyGoalsFragment extends BaseMVPView {
       priorityName,
       goalTypeId,
       goalType,
-      goalTypeArray
+      goalTypeArray,
+      approvalStatus,
+      rejectedRemarks,
+      showRejectRemarksModal
     } = this.state
-
     return (
       <div>
         {
@@ -216,7 +252,7 @@ class MyGoalsFragment extends BaseMVPView {
               this.resetValue(),
               this.setState({ showNoticeResponseModal : false })
             }}
-            noticeResponse={ noticeResponse }
+            noticeResponse={ noticeResponse ? noticeResponse : 'You have successfully Approved this Goal Request.' }
           />
         }
         {
@@ -255,7 +291,7 @@ class MyGoalsFragment extends BaseMVPView {
             <div>
               <h2 className={ 'header-margin-default text-align-left' }>My Goals</h2>
               <div className = { 'grid-global' }>
-                <h2 className={ 'font-size-16px text-align-left' }>Descriptionnnnn description description description</h2>
+                <h2 className={ 'font-size-16px text-align-left' }>Below are the list of your goals</h2>
               </div>
             </div>
             {
@@ -267,7 +303,11 @@ class MyGoalsFragment extends BaseMVPView {
                 type = { 'radio' }
                 name = { 'tabs' }
                 defaultChecked = { true }
-                onClick = { () => this.props.history.push('/mylearning/mygoals/request') }/>
+                onClick = { () => {
+                    this.setState({ forApproval : false })
+                    this.props.history.push('/mylearning/mygoals/request')
+                  }
+                }/>
               <label className = { 'travel-icon-tab' } htmlFor='tab1'>Individual Goals</label>
 
               <label>
@@ -276,37 +316,58 @@ class MyGoalsFragment extends BaseMVPView {
                     id = { 'tab2' }
                     type = { 'radio' }
                     name = { 'tabs' }
-                    onClick = { () => this.props.history.push('/mylearning/mygoals/approved') }/>
+                    onClick = { () => this.props.history.push('/mylearning/mygoals/team') }/>
                   <label className = { 'travel-icon-tab' } htmlFor='tab2'>Team Goals</label>
               </label>
+
+              {
+                !isLineManager &&
+                <label>
+                  <input
+                    className = { 'input-tab' }
+                    id = { 'tab3' }
+                    type = { 'radio' }
+                    name = { 'tabs' }
+                    onClick = { () => {
+                        this.setState({ forApproval : true })
+                        this.props.history.push('/mylearning/mygoals/approved')
+                      }
+                    }/>
+                  <label className = { 'travel-icon-tab' } htmlFor='tab3'>For Approval</label>
+                </label>
+              }
               <section id='content1'>
                 <Switch>
                   <Route exact path='/mygoals/request/RequestedGoalsComponent'
-                    render={ props => <RequestedGoalsFragment { ...props } /> }/>
+                    render={ props => <RequestedGoalsComponent { ...props } /> }/>
                   <Route exact path='/mygoals/approved/ApprovedGoalsComponent'
-                    render={ props => <ApprovedGoalsFragment { ...props } /> }/>
+                    render={ props => <ApprovedGoalsComponent { ...props } /> }/>
                  </Switch>
               </section>
-              <div className = { 'grid-filter margin-left' }>
-                <div>
-                  <GenericInput
-                  text = { 'Filter' }
-                  />
-                </div>
-                <div></div>
-                {
-                  !showForm &&
-                  <div className = { 'text-align-right margin-right' }>
-                    <br/>
-                    <GenericButton
-                      text = { 'ADD GOAL' }
-                      className = { 'global-button profile-button-small' }
-                      onClick = { () => this.setState({ showForm: true }) }
+              {
+                !showApprovalForm &&
+                <div className = { 'grid-filter margin-left' }>
+                  <div>
+                    <GenericInput
+                    text = { 'Filter' }
                     />
                   </div>
-                }
-              </div>
+                  <div></div>
+                  {
+                    !showForm &&
+                    <div className = { 'text-align-right margin-right' }>
+                      <br/>
+                      <GenericButton
+                        text = { 'ADD GOAL' }
+                        className = { 'global-button profile-button-small' }
+                        onClick = { () => this.setState({ showForm: true }) }
+                      />
+                    </div>
+                  }
+                </div>
+              }
               {
+                !forApproval ?
                 goalsArray.length !== 0 &&
                 <RequestedGoalsComponent
                   cardHolder = { goalsArray }
@@ -331,6 +392,59 @@ class MyGoalsFragment extends BaseMVPView {
                     showForm
                    }) }
                   />
+                :
+                showApprovalForm ?
+                <GoalApprovalFormComponent
+                  employeeName = { employeeName }
+                  goalId = { goalId }
+                  goalTitle = { goalTitle }
+                  approvalStatus = { approvalStatus }
+                  description = { description }
+                  priorityId = { priorityId }
+                  startDate = { startDate }
+                  dueDate = { dueDate }
+                  goalTypeId = { goalTypeId }
+                  rejectedRemarks = { rejectedRemarks }
+                  showRejectRemarksModal = { showRejectRemarksModal }
+                  showRejectRemarksFunc = { () => this.setState({ showRejectRemarksModal : true }) }
+                  rejectedRemarksFunc = { (resp) => this.setState({ rejectedRemarks: resp }) }
+                  onApprovalSubmit = { (goalId, isApproved, rejectedRemarks) => {
+                      this.onApprovalSubmit(goalId, isApproved, rejectedRemarks)
+                      this.resetValue()
+                    }
+                  }
+                  onClose = { () => this.setState({ showRejectRemarksModal: false }) }
+                />
+                :
+                <ApprovedGoalsComponent
+                  cardHolder = { approvalArray }
+                  priorityFunc = { (resp) => this.priorityFunc(resp) }
+                  showApprovalFormFunc = {
+                    (
+                      employeeName,
+                      goalId,
+                      goalTitle,
+                      approvalStatus,
+                      description,
+                      priorityId,
+                      startDate,
+                      dueDate,
+                      goalTypeId
+                    ) =>
+                    this.setState ({
+                      employeeName,
+                      goalId,
+                      goalTitle,
+                      approvalStatus,
+                      description,
+                      priorityId,
+                      startDate,
+                      dueDate,
+                      goalTypeId,
+                      showApprovalForm : true
+                    })
+                  }
+                />
               }
             </div>
             :

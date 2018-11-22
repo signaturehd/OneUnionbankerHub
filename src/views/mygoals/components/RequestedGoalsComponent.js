@@ -84,7 +84,7 @@ class RequestedGoalsComponent extends Component {
 
                 <div className = { 'grid-div-row' }>
                   <div>
-                    <h2 className = { 'margin-5px text-align-right font-size-20px font-weight-lighter unionbank-color' }>Personnal</h2>
+                    <h2 className = { 'margin-5px text-align-right font-size-20px font-weight-lighter unionbank-color' }>Personal</h2>
                     <h2 className = { `margin-5px text-align-right font-size-18px font-weight-bold color-${priorityFunc(resp.priority)}` }>{ priorityFunc(resp.priority) }</h2>
                   </div>
                   <div></div>

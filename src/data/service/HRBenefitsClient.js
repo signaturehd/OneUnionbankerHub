@@ -1443,4 +1443,14 @@ export default class HRBenefitsClient {
     return this.service.updateGoals(token, goalId, dueDate)
     .pipe(ServiceErrorOperator())
   }
+
+  getForApprovalGoals (token) {
+    return this.service.getForApprovalGoals(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  approveGoal (token, goalId, isApprove, rejectedRemarks) {
+    return this.service.approveGoal(token, goalId, isApprove, rejectedRemarks)
+    .pipe(ServiceErrorOperator())
+  }
 }
