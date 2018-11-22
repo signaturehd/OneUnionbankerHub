@@ -34,14 +34,6 @@ class ApprovedGoalsComponent extends Component {
     }
   }
 
-  viewMoreFunc(cardHolder) {
-    cardHolder.map((resp, key) =>
-      {
-        console.log(resp.goalDetails.length)
-      }
-    )
-  }
-
   navigate () {
     this.props.history.push('/mylearning')
   }
