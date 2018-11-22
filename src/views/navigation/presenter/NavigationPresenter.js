@@ -37,26 +37,18 @@ export default class NavigationPresenter {
   }
 
   relogin () {
-    try {
       this.relogInInteractor.execute()
       store.dispatch(LoginActions.showReloginModal(false))
-    } catch(e) {
-      console.log(e)
-    }
   }
 
   getLibraries () {
     this.view.showLoading()
     this.getLibrariesInteractor.execute()
       .subscribe(resp => {
-        try {
           this.view.showProfile(resp)
           this.view.showPinIsValid(resp.hasPIN)
           this.view.isHasCOC(resp.hasCOC)
           this.view.hideLoading()
-        } catch (e) {
-          console.log(e)
-        }
       }, e => {
         this.view.hideLoading()
         this.view.showProfile(e.message)
