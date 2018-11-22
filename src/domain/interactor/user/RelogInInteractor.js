@@ -12,7 +12,7 @@ export default class RelogInInteractor {
      this.client.setProfile('')
      this.client.setAccountNumber('')
      this.client.setReleasingCenter('')
-     store.dispatch(ProfileCtions.setProfilePicture(null))
+     store.dispatch(ProfileActions.setProfilePicture(null))
      store.dispatch(LoginActions.showReloginModal(false))
   }
 }
