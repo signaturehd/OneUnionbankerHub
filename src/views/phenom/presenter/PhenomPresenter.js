@@ -3,7 +3,6 @@ import GetPhenomDetailsInteractor from '../../../domain/interactor/phenom/GetPhe
 import AddCheckedStatusIsHeartInteractor from '../../../domain/interactor/phenom/AddCheckedStatusIsHeartInteractor'
 
 let phenomData = []
-
 export default class PhenomPresenter {
   constructor (container) {
     this.getPhenomDiscountsInteractor =
@@ -24,8 +23,17 @@ export default class PhenomPresenter {
     this.view.showCircularLoader(true)
     this.getPhenomDiscountsInteractor.execute()
       .subscribe(resp => {
-          this.view.showPhenomDiscountList(resp)
-          this.view.showCircularLoader()
+          try {
+            console.log(resp)
+            phenomData.push(resp)
+            console.log(phenomData)
+          } catch(e) {
+            console.log(e)
+          }
+          if (phenomData.length !== 0) {
+            this.view.showPhenomDiscountList(phenomData)
+            this.view.showCircularLoader()
+          }
         }, e => {
           this.view.showCircularLoader()
       })
