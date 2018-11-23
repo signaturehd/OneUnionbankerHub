@@ -18,8 +18,7 @@ import {
   FloatingActionButton
 } from '../../ub-components/'
 
-import ApprovalComponent from './components/ApprovalComponent'
-import ApprovalFormComponent from './components/ApprovalFormComponent'
+import RequestCoachFormFragment from './components/RequestCoachFormFragment'
 
 import ResponseModal from '../notice/NoticeResponseModal'
 
@@ -27,7 +26,7 @@ import { format } from '../../utils/numberUtils'
 import moment from 'moment'
 
 import { Progress } from 'react-sweet-progress'
-import './styles/approvalStyles.css'
+import './styles/requestCoachStyles.css'
 
 class RequestCoachFragment extends BaseMVPView {
 
@@ -35,39 +34,15 @@ class RequestCoachFragment extends BaseMVPView {
     super(props)
     this.state = {
       enabledLoader : false,
-      submitLoader : false,
-      showForm : false,
-      showRejectRemarksModal : false,
       showNoticeResponseModal : false,
-      noticeResponse : '',
-      requestId : '',
-      firstName : '',
-      middleName : '',
-      lastName : '',
-      referenceNumber : '',
-      departureOrigin : '',
-      departureDestination : '',
-      departureDate : '',
-      departureTime : '',
-      departureRemarks : '',
-      returnOrigin : '',
-      returnDestination : '',
-      returnDate : '',
-      returnTime : '',
-      returnRemarks : '',
-      rejectedRemarks : '',
-      flightMode : '',
-      purposeName : '',
-      approvalArray : []
+      noticeResponse: '',
+      description : '',
+      preferredDate : '',
+      preferredTime : ''
     }
   }
 
   componentDidMount() {
-    this.presenter.getApproval()
-  }
-
-  getApproval(approvalArray) {
-    this.setState({ approvalArray })
   }
 
   noticeResponse (noticeResponse) {
@@ -97,16 +72,8 @@ class RequestCoachFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
-  hideSubmitLoader () {
-    this.setState({ submitLoader : false })
-  }
-
-  showSubmitLoader () {
-    this.setState({ submitLoader : true })
-  }
-
   navigate () {
-    this.props.history.push('/mytravel/travel')
+    this.props.history.push('/mylearning/mygoals')
   }
 
   noticeResponse (noticeResponse) {
@@ -118,39 +85,20 @@ class RequestCoachFragment extends BaseMVPView {
 
   resetValue () {
     this.setState({
-      requestId : '',
-      rejectedRemarks : '',
-      showRejectRemarksModal : false
+      description : '',
+      preferredTime : '',
+      preferredDate : ''
     })
   }
 
   render () {
     const {
       enabledLoader,
-      submitLoader,
       showNoticeResponseModal,
-      showRejectRemarksModal,
       noticeResponse,
-      approvalArray,
-      requestId,
-      firstName,
-      middleName,
-      lastName,
-      referenceNumber,
-      departureOrigin,
-      departureDestination,
-      departureDate,
-      departureTime,
-      departureRemarks,
-      returnOrigin,
-      returnDestination,
-      returnDate,
-      returnTime,
-      returnRemarks,
-      rejectedRemarks,
-      flightMode,
-      purposeName,
-      showForm
+      description,
+      preferredDate,
+      preferredTime
     } = this.state
 
     const { percentage } = this.props
@@ -161,17 +109,17 @@ class RequestCoachFragment extends BaseMVPView {
           showNoticeResponseModal &&
           <ResponseModal
             onClose={ () => {
-              this.setState({ showNoticeResponseModal : false, showForm : false })
+              this.setState({ showNoticeResponseModal : false })
             }}
             noticeResponse={ noticeResponse }
           />
         }
         {
-          submitLoader &&
+          enabledLoader &&
           <Modal>
             <center>
               <h2>Please wait...</h2>
-              <CircularLoader show = { submitLoader } />
+              <CircularLoader show = { enabledLoader } />
             </center>
           </Modal>
         }
@@ -184,104 +132,25 @@ class RequestCoachFragment extends BaseMVPView {
         <br/>
         <div className = { 'percentage-grid' }>
           <div>
-            <h2 className={ 'font-size-30px text-align-left' }>Travel Approvals</h2>
+            <h2 className={ 'font-size-30px text-align-left' }>Request For Coaching</h2>
             <br/>
-            <h4>Below are the list travels for approval.</h4>
+            <h4></h4>
           </div>
         </div>
         <br/>
         <br/>
         <Line />
         <br/>
-        {
-          showForm ?
-          <ApprovalFormComponent
-          requestId = { requestId }
-          firstName = { firstName }
-          middleName = { middleName }
-          lastName = { lastName }
-          referenceNumber = { referenceNumber }
-          departureOrigin = { departureOrigin }
-          departureDestination = { departureDestination }
-          departureDate = { departureDate }
-          departureTime = { departureTime }
-          departureRemarks = { departureRemarks }
-          returnOrigin = { returnOrigin }
-          returnDestination = { returnDestination }
-          returnDate = { returnDate }
-          returnTime = { returnTime }
-          showRejectRemarksModal = { showRejectRemarksModal }
-          showRejectRemarksFunc = { () => this.setState({ showRejectRemarksModal : true }) }
-          onClose = { () => this.setState({ showRejectRemarksModal : false }) }
-          rejectedRemarks = { rejectedRemarks }
-          rejectedRemarksFunc = { (rejectedRemarks) =>
-            this.setState({ rejectedRemarks }) }
-          returnRemarks = { returnRemarks }
-          flightMode = { flightMode }
-          purposeName = { purposeName }
-          submit = { (requestId, isApprove, rejectedRemarks) =>
-            this.submit(requestId, isApprove, rejectedRemarks) }
+          <RequestCoachFormFragment
+
           />
-        :
-            enabledLoader ?
-              <center>
-                <CircularLoader show = { enabledLoader }/>
-              </center>
-            :
-              approvalArray.length !==0 ?
-                <ApprovalComponent
-                  cardDataHolder = { approvalArray }
-                  showFormFunc = { (
-                    requestId,
-                    firstName,
-                    middleName,
-                    lastName,
-                    referenceNumber,
-                    departureOrigin,
-                    departureDestination,
-                    departureDate,
-                    departureTime,
-                    departureRemarks,
-                    returnOrigin,
-                    returnDestination,
-                    returnDate,
-                    returnTime,
-                    returnRemarks,
-                    flightMode,
-                    purposeName
-                  ) => this.setState({
-                    requestId,
-                    firstName,
-                    middleName,
-                    lastName,
-                    referenceNumber,
-                    departureOrigin,
-                    departureDestination,
-                    departureDate,
-                    departureTime,
-                    departureRemarks,
-                    returnOrigin,
-                    returnDestination,
-                    returnDate,
-                    returnTime,
-                    returnRemarks,
-                    flightMode,
-                    purposeName,
-                    showForm : true
-                  })
-                }/>
-              :
-              <center>
-                <h2>No records</h2>
-              </center>
-            }
       </div>
     )
   }
 }
 
-ApprovalFragment.propTypes = {
+RequestCoachFragment.propTypes = {
   onSendPageNumberToView : PropTypes.func
 }
 
-export default ConnectView(ApprovalFragment, Presenter )
+export default ConnectView(RequestCoachFragment, Presenter )
