@@ -221,7 +221,7 @@ class EventsBudgetFragment extends BaseMVPView {
                   let isBoolean = hasRecord !== true ? true : false
 
                   let isExisting = false
-                  for (var i in newArrayList) {
+                  for (let i in newArrayList) {
                     if (newArrayList[i] === id) {
                       isExisting = true
                       break

@@ -53,9 +53,9 @@ class EventsBudgetDepartmentComponent extends Component {
             </h2>
             <Checkbox
               value = { true }
-              checked = { true }
+              checked = { isSelectedDepartment }
               onChange = { e => {
-                this.setState({ isSelectedDepartment : isSelectedDepartment !==true ? true : false } )
+                this.setState({ isSelectedDepartment : isSelectedDepartment !== true ? true : false } )
               } }
            />
           </div>
@@ -68,6 +68,7 @@ class EventsBudgetDepartmentComponent extends Component {
             {
               return (
                 <EventsBudgetAttendeesComponent
+                  isSelectedDepartment = { isSelectedDepartment }
                   employee = { employee }
                   employeeLength = { attend.employees.length }
                   key2 = { key2 }

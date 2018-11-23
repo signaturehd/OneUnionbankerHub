@@ -37,8 +37,10 @@ class EventsBudgetAttendeesComponent extends Component {
     const {
       key2,
       employee,
-      checkIdIfHasLogin
+      checkIdIfHasLogin,
+      isSelectedDepartment
     } = this.props
+    console.log(isSelectedDepartment)
 
     return (
       <div
@@ -59,7 +61,10 @@ class EventsBudgetAttendeesComponent extends Component {
           <br/>
         </div>
         <span
-          className = { `events-check events-icon-${ this.checkEmployeeCheck(employee.hasRecord) }` }/>
+          className = { `events-check events-icon-${
+            isSelectedDepartment ?
+            this.checkEmployeeCheck(isSelectedDepartment) :
+            this.checkEmployeeCheck(employeeHasRecord) }` }/>
       </div>
     )
   }
