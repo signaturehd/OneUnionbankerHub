@@ -104,13 +104,7 @@ class PhenomFragment extends BaseMVPView {
               />
               :
               <div className = { 'phenom-container-component' }>
-                <div>
-                  <div>
-                    <h2 className={ 'header-margin-default text-align-left' }> Phenom Prime </h2>
-                    <h2>We &#39;ve got these special deals, Just for U!</h2>
-                    <br/>
-                  </div>
-                </div>
+                <div></div>
                 <div className = { 'phenom-container-grid' }>
                   {
                     phenomDataList.map((resp, key) =>

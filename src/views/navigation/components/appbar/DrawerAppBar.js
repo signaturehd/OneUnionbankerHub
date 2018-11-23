@@ -76,11 +76,6 @@ class DrawerAppBar extends Component {
     }
 
     let appBarList = [{
-      id: 1,
-      name: 'Phenom Prime',
-      imageStyle: 'phenom',
-      action : () => history.push('/phenom'),
-    }, {
       id: 0,
       name: 'My Personal Information',
       imageStyle : 'settings',
@@ -154,8 +149,8 @@ class DrawerAppBar extends Component {
                               }
                             </div>
                             <div className = { 'appbar-row-info' }>
-                              <h2 className = { 'appbar-welcome-name' }>Hi, { firstName }</h2>
-                              <h2 className = { 'appbar-welcome-position' }>{ profillePosition }</h2>
+                              <h2 className = { 'appbar-welcome-name' }>Hi, { firstName ? firstName : 'Test' }</h2>
+                              <h2 className = { 'appbar-welcome-position' }>{ profillePosition ? profillePosition : 'Test Position' }</h2>
                             </div>
                           </div>
                           <div></div>

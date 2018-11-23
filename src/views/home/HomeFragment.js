@@ -70,6 +70,13 @@ class HomeFragment extends BaseMVPView {
           </div>
           <div className = { 'container' }>
             <br/>
+              <div>
+                <div>
+                  <h2 className={ 'phenoms-header' }> Phenom Prime </h2>
+                  <h2 className = { 'font-size-14px' }>We &#39;ve got these special deals, Just for U!</h2>
+                  <br/>
+                </div>
+              </div>
             <br/>
             <Phenom />
             <br/>

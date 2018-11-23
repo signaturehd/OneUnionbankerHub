@@ -34,6 +34,12 @@ class SideBar extends Component {
       className: 'newsfeed-icon'
     },
     {
+      id: 10 ,
+      title: 'Phenom Prime',
+      action: () => history.push('/phenom'),
+      className: 'phenom-sidebar-icon'
+    },
+    {
       id: 11 ,
       title: 'Pre-Employment',
       action: () => history.push('/preemployment'),
@@ -74,12 +80,6 @@ class SideBar extends Component {
       title: 'My Compliance',
       action: () => history.push('/mycompliance'),
       className: 'compliance-icon'
-    },
-    {
-      id: 10 ,
-      title: 'Phenom Prime',
-      action: () => history.push('/phenom'),
-      className: 'phenom-sidebar-icon'
     },
     {
       id: 3 ,
@@ -188,12 +188,10 @@ class SideBar extends Component {
             <div>
             {
               modules.map((d, idx) =>
-              d.id !== 0 &&
               d.id !== 2 &&
               d.id !== 3 &&
               d.id !== 6 &&
               d.id !== 7 &&
-              d.id !== 10 &&
               d.id !== 12 &&
               d.id !== 11 &&
               <div key = { idx }>
@@ -236,12 +234,10 @@ class SideBar extends Component {
               <div>
                 {
                   modules.map((d, idx) =>
-                  d.id !== 0 &&
                   d.id !== 1 &&
                   d.id !== 4 &&
                   d.id !== 8 &&
                   d.id !== 9 &&
-                  d.id !== 10 &&
                   d.id !== 12 &&
                   d.id !== 13 &&
                   <div key = { idx }>

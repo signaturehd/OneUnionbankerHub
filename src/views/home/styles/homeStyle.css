@@ -11,3 +11,10 @@
   display: grid;
   grid-template-rows: .02fr auto auto;
 }
+
+.phenoms-header {
+  color: #ff8a00;
+  font-weight: 600;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
