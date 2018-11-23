@@ -47,10 +47,12 @@ class MyGoalsFormComponent extends Component {
       priorityName,
       showPriorityModalFunc,
       goalType,
+      editMode,
       showGoalTypeModal,
       showGoalTypeModalFunc,
       onCancel,
-      onSubmit
+      onSubmit,
+      onEdit
     } = this.props
 
     return (
@@ -66,11 +68,13 @@ class MyGoalsFormComponent extends Component {
                 text = { 'Goal Title' }
                 value = { goalTitle }
                 onChange = { (e) => goalTitleFunc(e.target.value) }
+                disabled = { editMode }
               />
               <GenericInput
                 text = { 'Goal Type' }
                 value = { goalType }
                 onClick = { () => showGoalTypeModalFunc() }
+                disabled = { editMode }
               />
             </div>
             <div className = { 'grid-global' }>
@@ -78,12 +82,16 @@ class MyGoalsFormComponent extends Component {
                 text = { 'Start Date' }
                 selected = { startDate && moment(startDate) }
                 onChange = { (e) => startDateFunc(e) }
+                disabled = { editMode }
+                dateFormat = { 'MM/DD/YYYY' }
+                minDate = { moment() }
               />
               <DatePicker
                 text = { 'Due Date' }
                 selected = { dueDate && moment(dueDate) }
                 onChange = { (e) => dueDateFunc(e) }
-                minDate = { startDate }
+                minDate = { startDate ? moment(startDate) : moment() }
+                dateFormat = { 'MM/DD/YYYY' }
               />
             </div>
             <div className = { 'grid-global' }>
@@ -92,11 +100,13 @@ class MyGoalsFormComponent extends Component {
                 value = { description }
                 type = { 'textarea' }
                 onChange = { (e) => descriptionFunc(e.target.value) }
+                disabled = { editMode }
               />
               <GenericInput
                 text = { 'Priority' }
                 value = { priorityName }
                 onClick = { () => showPriorityModalFunc() }
+                disabled = { editMode }
               />
             </div>
             <div className = { 'grid-global' }>
@@ -105,8 +115,14 @@ class MyGoalsFormComponent extends Component {
                 onClick = { () => onCancel() }
               />
               <GenericButton
-                text = { 'Submit' }
-                onClick = { () => onSubmit() }
+                text = { editMode ? 'Update' : 'Submit' }
+                onClick = { () => {
+                    editMode ?
+                    onEdit()
+                    :
+                    onSubmit()
+                  }
+                }
               />
             </div>
           </div>

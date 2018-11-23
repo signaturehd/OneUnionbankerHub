@@ -2214,10 +2214,39 @@ export default class HRBenefitsService {
       startDate: requestedGoalsParam.startDate,
       endDate: requestedGoalsParam.dueDate,
       priority: requestedGoalsParam.priorityId,
-      goalType: requestedGoalsParam.goalTypeId
+      type: requestedGoalsParam.goalTypeId
     }
 
-    return this.apiClient.post('v1/goals/personnal', objectParam, {
+    return this.apiClient.post('v1/goals/personal', objectParam, {
+      headers : { token }
+    })
+  }
+
+  updateGoals (token, goalId, dueDate) {
+    const objectParam = {
+      id: goalId,
+      endDate: dueDate
+    }
+
+    return this.apiClient.put('v1/goals/personal', objectParam, {
+      headers : { token }
+    })
+  }
+
+  getForApprovalGoals (token) {
+    return this.apiClient.get('v1/goals/reports', {
+      headers: { token }
+    })
+  }
+
+  approveGoal (token, goalId, isApprove, rejectedRemarks) {
+    const objectParam = {
+      id: goalId,
+      status: isApprove,
+      remarks: rejectedRemarks
+    }
+
+    return this.apiClient.post('v1/goals/approval', objectParam, {
       headers : { token }
     })
   }
