@@ -225,7 +225,7 @@ class NavigationView extends BaseMVPView {
       preEmploymentStatus,
       isLineManager,
     } = this.state
-    
+
     const { history, login, profilePicture } = this.props
     const style = {
       show: {
@@ -254,7 +254,6 @@ class NavigationView extends BaseMVPView {
     })
 
     splitUserInitial = initials[0] + initials[initials.length - 1]
-
     return (
       <div
         className = { 'navigation-body-div' }>
@@ -355,111 +354,102 @@ class NavigationView extends BaseMVPView {
                 <Route path = '/mybenefits/benefits/medical/loa/dental' render = { props =>
                   <DentalLoaView { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                <Route path = '/mybenefits/benefits/medical/scheduling' render = { props =>
-                  <MedicalSchedulingFragment { ...props }
-                  setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                <Route path = '/mybenefits/benefits/medical/reimbursement/outpatient' render = { props =>
-                  <OutPatientReimbursementFragment { ...props }
-                  setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                <Route path = '/mybenefits/benefits/medical/assistance/maternity' render = { props =>
-                  <MaternityAssistanceFragment { ...props }
-                  setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                <Route path = '/mybenefits/benefits/medical/vaccine' render = { props =>
-                  <VaccineFragment { ...props }
-                  setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                <Route path = '/mybenefits/benefits/loans/housingassistance' render = { props =>
-                  <HousingAssistanceFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mybenefits/benefits/carlease/new' render = { props =>
-                  <CarLeaseNewFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mybenefits/benefits/carlease/old' render = { props =>
-                  <CarLeaseOldFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mybenefits/benefits/laptoplease' render = { props =>
-                  <LaptopLeaseFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mybenefits/benefits/loans/emergency' render = { props =>
-                  <EmergencyLoanFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mybenefits/benefits/loans/salary' render = { props =>
-                  <SalaryLoanFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mybenefits/benefits/loans/motorcycle' render = { props =>
-                  <MotorcycleLoanFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mybenefits/benefits/loans/computer' render = { props =>
-                  <ComputerLoanFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mybenefits/benefits/bereavement/:type' render = { props =>
-                  <BereavementFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mybenefits/benefits/calamity' render = { props =>
-                  <CalamityFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/mybenefits/benefits/eventbudgetrequisition' render = { props =>
-                  <EventsBudgetFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mybenefits' render = { props =>
-                  <BenefitsFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mytravel/travel/request' render = { props =>
-                  <RequestFlightFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mytravel/travel/book' render = { props =>
-                  <BookFlightFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mytravel/travel/liquidation' render = { props =>
-                  <LiquidationFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mytravel/approval' render = { props =>
-                  <ApprovalFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mytravel' render = { props =>
-                  <TravelFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation }
-                    isLineManager = { isLineManager } /> } />
-                <Route path = '/payslip' render = { props =>
-                  <Payslip { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/faqs' render = { props =>
-                  <FaqFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/settings' render = { props =>
-                  <SettingsFragment { ...props }
-                    profileImage = { profilePicture }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mylearning' render = { props =>
-                  <MyLearningView { ...props }
-                    profile = { profile }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mylearning/mygoals/approved' render = { props =>
-                  <ApprovedGoalsComponent { ...props }
-                    profile = { profile }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mylearning/mygoals/request' render = { props =>
-                  <RequestedGoalsComponent { ...props }
-                    profile = { profile }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mylearning/mygoals' render = { props =>
-                  <MyGoalsFragment { ...props }
-                    profile = { profile }
-                    setSelectedNavigation = { this.setSelectedNavigation }
-                    isLineManager = { isLineManager } /> } />
-                <Route path = '/feedback' render = { props =>
-                  <FeedbackFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/mycompliance' render = { props =>
-                  <ComplianceFragment { ...props }
-                    profileHasCOC = { profileHasCOC }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/phenom' render = { props =>
-                  <PhenomFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/phenom' render = { props =>
-                  <PhenomFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-              </Switch>
+                  <Route path = '/mybenefits/benefits/loans/housingassistance' render = { props =>
+                    <HousingAssistanceFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/carlease/new' render = { props =>
+                    <CarLeaseNewFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/carlease/old' render = { props =>
+                    <CarLeaseOldFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/laptoplease' render = { props =>
+                    <LaptopLeaseFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/loans/emergency' render = { props =>
+                    <EmergencyLoanFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/loans/salary' render = { props =>
+                    <SalaryLoanFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/loans/motorcycle' render = { props =>
+                    <MotorcycleLoanFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/loans/computer' render = { props =>
+                    <ComputerLoanFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/bereavement/:type' render = { props =>
+                    <BereavementFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/calamity' render = { props =>
+                    <CalamityFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                    <Route path = '/mybenefits/benefits/eventbudgetrequisition' render = { props =>
+                    <EventsBudgetFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits' render = { props =>
+                    <BenefitsFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel/travel/request' render = { props =>
+                    <RequestFlightFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel/travel/book' render = { props =>
+                    <BookFlightFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel/travel/liquidation' render = { props =>
+                    <LiquidationFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel/approval' render = { props =>
+                    <ApprovalFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mytravel' render = { props =>
+                    <TravelFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation }
+                      isLineManager = { isLineManager } /> } />
+                  <Route path = '/payslip' render = { props =>
+                    <Payslip { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/faqs' render = { props =>
+                    <FaqFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/settings' render = { props =>
+                    <SettingsFragment { ...props }
+                      profileImage = { profilePicture }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mylearning' render = { props =>
+                    <MyLearningView { ...props }
+                      profile = { profile }
+                      setSelectedNavigation = { this.setSelectedNavigation }
+                      isLineManager = { isLineManager } /> } />
+                  <Route path = '/mylearning/mygoals/approved' render = { props =>
+                    <ApprovedGoalsComponent { ...props }
+                      profile = { profile }
+                      setSelectedNavigation = { this.setSelectedNavigation }
+                      isLineManager = { isLineManager } /> } />
+                  <Route path = '/mylearning/mygoals/request' render = { props =>
+                    <RequestedGoalsComponent { ...props }
+                      profile = { profile }
+                      setSelectedNavigation = { this.setSelectedNavigation }
+                      isLineManager = { isLineManager } /> } />
+                  <Route path = '/mylearning/mygoals' render = { props =>
+                    <MyGoalsFragment { ...props }
+                      profile = { profile }
+                      setSelectedNavigation = { this.setSelectedNavigation }
+                      isLineManager = { isLineManager } /> } />
+                  <Route path = '/feedback' render = { props =>
+                    <FeedbackFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mycompliance' render = { props =>
+                    <ComplianceFragment { ...props }
+                      profileHasCOC = { profileHasCOC }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/phenom' render = { props =>
+                    <PhenomFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/phenom' render = { props =>
+                    <PhenomFragment { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+               </Switch>
             </Drawer>
           </main>
           <aside
