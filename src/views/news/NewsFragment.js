@@ -112,7 +112,7 @@ class NewsFragment extends BaseMVPView {
           <div className = { 'news-scrolling-wrapper' }>
             {
               staticCount.map((resp) => (
-                <LoadLoader  showLoader = {showLoader}/>
+                <LoadLoader  showLoader = { showLoader }/>
               ))
             }
           </div>

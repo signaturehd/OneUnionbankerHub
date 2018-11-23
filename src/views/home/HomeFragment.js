@@ -71,8 +71,7 @@ class HomeFragment extends BaseMVPView {
           <div className = { 'container' }>
             <br/>
             <br/>
-            <h2 className={ 'header-margin-default text-align-left news-header' }> Phenom Prime </h2>
-            <h2>We &#39;ve got these special deals, Just for U!</h2>
+            <Phenom />
             <br/>
           </div>
         </div>

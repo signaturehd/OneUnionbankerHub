@@ -16,12 +16,11 @@ class NewsLoaderComponent extends Component {
     return (
       <Card
         className = { 'news-list-card' }>
-        <br/>
         <div className = { 'home-card-view' }>
           <SkeletalLoader
             boxSizeObject = {{
               width : 200,
-              height: 110,
+              height: 120,
             }}
             shapeBox = { showLoader }
             />

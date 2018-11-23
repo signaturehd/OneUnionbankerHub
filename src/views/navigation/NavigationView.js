@@ -107,7 +107,8 @@ class NavigationView extends BaseMVPView {
       hasFilledOut: '',
       preEmploymentStatus: null,
       isLineManager : false,
-      profileDisplay : 'none'
+      profileDisplay : 'none',
+      profillePosition: '',
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -123,7 +124,8 @@ class NavigationView extends BaseMVPView {
   showProfile (profile) {
     this.setState({
       profile : profile.employee,
-      isLineManager: profile.isLineManager
+      isLineManager: profile.isLineManager,
+      profillePosition: profile.employee.position,
     })
   }
 
@@ -224,6 +226,7 @@ class NavigationView extends BaseMVPView {
       hasFilledOut,
       preEmploymentStatus,
       isLineManager,
+      profillePosition
     } = this.state
 
     const { history, login, profilePicture } = this.props
@@ -252,7 +255,8 @@ class NavigationView extends BaseMVPView {
         }
       }
     })
-
+    const fullName = name && name.split(' ')
+    let firstName = fullName && fullName[0]
     splitUserInitial = initials[0] + initials[initials.length - 1]
     return (
       <div
@@ -260,6 +264,8 @@ class NavigationView extends BaseMVPView {
         { super.render() }
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
+            profillePosition = { profillePosition }
+            firstName = { firstName }
             history = { history }
             profileImage = { profilePicture }
             displayNavIcon = { displayNavIcon }

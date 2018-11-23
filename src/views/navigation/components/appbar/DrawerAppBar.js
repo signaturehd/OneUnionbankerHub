@@ -53,6 +53,8 @@ class DrawerAppBar extends Component {
       onChangeDisplay,
       profileDisplay,
       profileImage,
+      firstName,
+      profillePosition
     } = this.props
 
     const style = {
@@ -152,8 +154,8 @@ class DrawerAppBar extends Component {
                               }
                             </div>
                             <div className = { 'appbar-row-info' }>
-                              <h2 className = { 'appbar-welcome-name' }>Hi, Mark</h2>
-                              <h2 className = { 'appbar-welcome-position' }>System Architect at UnionBank Phil.</h2>
+                              <h2 className = { 'appbar-welcome-name' }>Hi, { firstName }</h2>
+                              <h2 className = { 'appbar-welcome-position' }>{ profillePosition }</h2>
                             </div>
                           </div>
                           <div></div>

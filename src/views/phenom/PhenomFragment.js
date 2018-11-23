@@ -32,7 +32,7 @@ class PhenomFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.setSelectedNavigation(10)
+    // this.props.setSelectedNavigation(10)
     this.presenter.getPhenomDiscounts()
   }
 

@@ -115,14 +115,14 @@
 }
 
 .appbar-welcome-name {
-  font-size: 23px;
+  font-size: 14px;
   color: #fff;
   font-weight: bold;
   margin: auto auto 0 auto;
 }
 
 .appbar-welcome-position {
-  font-size: 13px;
+  font-size: 11px;
   color: #fff;
   font-weight: normal;
 }
