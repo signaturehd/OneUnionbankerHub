@@ -17,7 +17,6 @@ export default class NewsPresenter {
 
     getNews () {
       this.getNewsInteractor.execute()
-      .do(data => console.log(data))
       .map(resp1 => {
         let dateArray = []
         let dateArrayList = []

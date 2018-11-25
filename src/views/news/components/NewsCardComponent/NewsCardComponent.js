@@ -76,18 +76,18 @@ class NewsCardComponent extends Component {
             </center>
           </div>
           <div className = { ' home-card-padding text-align-left' }>
-            <Line/>
-              <div className = { 'news-like-grid' }>
-                <h2
-                  className = { 'cursor-pointer' }
-                  onClick = { () => {
-                    this.setState({ isHeartActive : isHeartActive === 0 ? 1 : 0  })
-                    onChangeHeart(news.id, news.isHeart)
-                  }
+            <div className = { 'news-like-grid' }>
+              <div></div>
+              <h2
+                className = { 'cursor-pointer' }
+                onClick = { () => {
+                  this.setState({ isHeartActive : isHeartActive === 0 ? 1 : 0  })
+                  onChangeHeart(news.id, news.isHeart)
                 }
-                className = { (parseInt(isHeartActive) !== 1 ? 'news-status-icon' : 'news-heart-icon') + ' news-icon' }/>
-              <h2 className = { 'unionbank-color font-size-16px text-align-left' }>{ news && news.total }</h2>
-              </div>
+              }
+              className = { (parseInt(isHeartActive) !== 1 ? 'news-status-icon' : 'news-heart-icon') + ' news-icon' }/>
+              <h2 className = { 'unionbank-color font-size-12px text-align-left' }>{ news && news.total } Likes</h2>
+            </div>
           </div>
         </div>
       </Card>

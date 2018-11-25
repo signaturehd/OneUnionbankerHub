@@ -36,6 +36,7 @@ class NewsLoaderComponent extends Component {
           <div className = { ' home-card-padding text-align-left' }>
             <Line/>
               <div className = { 'news-like-grid' }>
+              <div></div>
                 <h2
                   className = { 'cursor-pointer' }
                   onClick = { () => {
@@ -44,7 +45,7 @@ class NewsLoaderComponent extends Component {
                   }
                 }
                 className = { 'news-status-icon news-icon' }/>
-              <h2 className = { 'unionbank-color font-size-16px text-align-left' }>{ 0 }</h2>
+              <h2 className = { 'unionbank-color font-size-12px text-align-left' }>{ 0 } Likes</h2>
               </div>
           </div>
         </div>

@@ -24,7 +24,7 @@
   display: grid;
   align-items: center;
   margin: auto;
-  grid-template-columns: .1fr 1fr;
+  grid-template-columns: 1fr .1fr .15fr;
   /* align-content: center; */
   text-align: left;
   padding: 5px 0px 0px 0px;
@@ -127,11 +127,18 @@
 }
 
 .news-scrolling-wrapper {
-  -webkit-overflow-scrolling: touch;
+  /* -webkit-overflow-scrolling: touch;
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
+  padding: 5px 0px 0px 0px; */
+  -webkit-overflow-scrolling: touch;
+  /* overflow-x: scroll; */
+  overflow: auto;
+  white-space: nowrap;
+  height: 100%;
   padding: 5px 0px 0px 0px;
+  width: 100%;
 }
 
 .news-scrolling-wrapper .news-list-card {

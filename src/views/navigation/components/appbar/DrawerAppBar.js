@@ -5,27 +5,9 @@ import { AppBar } from '../../../../ub-components'
 
 import './styles/appbar.css'
 
-let display = true
-
 class DrawerAppBar extends Component {
   constructor (props) {
     super(props)
-  }
-
-  componentDidMount () {
-    const mediaQuery = window.matchMedia('(min-width: 1239px)')
-      if (mediaQuery.matches) {
-        display = true
-      } else {
-        display = false
-      }
-        mediaQuery.addListener(mq => {
-      if (mq.matches) {
-        display = true
-      } else {
-        display = false
-      }
-    })
   }
 
   onToggleShow () {
@@ -72,6 +54,11 @@ class DrawerAppBar extends Component {
         margin: '20px',
         display: 'block',
         height: '25px',
+      }, navList : {
+        display: displayNavIcon !== 'block'? 'grid' :'none' ,
+        gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
+        margin: 'auto',
+        alignItems: 'center',
       }
     }
 
@@ -97,6 +84,48 @@ class DrawerAppBar extends Component {
       action : () => logout()
     }]
 
+    let navBarList = [{
+      id: 0,
+      name: 'News Feed',
+      imageStyle : 'news',
+      action : () => history.push('/'),
+    },{
+      id: 1,
+      name: 'Phenom Prime',
+      imageStyle : 'phenom',
+      action : () => history.push('/phenom'),
+    },{
+      id: 2,
+      name: 'My Travel',
+      imageStyle : 'travel',
+      action : () => history.push('/travel'),
+    },{
+      id: 3,
+      name: 'My Learning',
+      imageStyle : 'learning',
+      action : () => history.push('/mylearning')
+    },{
+      id: 4,
+      name: 'My Benefits',
+      imageStyle : 'benefits',
+      action : () => history.push('/mybenefits')
+    },{
+      id: 6,
+      name: 'My Goals',
+      imageStyle : 'compliance',
+      action : () => history.push('/mycompliance')
+    },{
+      id: 5,
+      name: 'My Pay',
+      imageStyle : 'payslip',
+      action : () => history.push('/payslip')
+    },{
+      id: 5,
+      name: 'My Compliance',
+      imageStyle : 'compliance',
+      action : () => history.push('/mycompliance')
+    }]
+
     return (
       <AppBar>
         <div id={ 'drawer-header' }>
@@ -111,6 +140,25 @@ class DrawerAppBar extends Component {
                 style={ style.navbar }
                 src={ require('../../../../images/union-logo.png') }
                 className={'_img-ub-logo'}/>
+            </div>
+            <div
+              style = { style.navList }>
+              {
+                navBarList.map((resp, key) => (
+                  <div
+                    onClick = { () => resp.action() }
+                    key = { key }
+                    className = { 'appbar-default-menu' }>
+                    <div className = { 'appbar-navbar-icon-grid' }>
+                      <span
+                        className = { `appbar-${ resp.imageStyle }-icon appbar-icon` }/>
+                      <a>
+                        { resp.name }
+                      </a>
+                    </div>
+                  </div>
+                ))
+              }
             </div>
             <div className = { 'appbar-menu-text-grid' }>
             <div></div>

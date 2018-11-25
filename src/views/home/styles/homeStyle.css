@@ -4,12 +4,12 @@
 
 .home-fragment-view {
   display: grid;
-  grid-template-columns: .05fr 1fr .05fr;
+  grid-template-columns: .01fr 1fr .01fr;
 }
 
 .home-grid-fragment {
   display: grid;
-  grid-template-rows: .02fr auto auto;
+  grid-template-rows: auto auto;
 }
 
 .phenoms-header {

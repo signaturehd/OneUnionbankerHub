@@ -91,6 +91,7 @@ import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
 import CommonPinEnrollmentModal from './modal/CommonPinEnrollmentModal'
 
+
 class NavigationView extends BaseMVPView {
   constructor (props) {
     super (props)
@@ -169,19 +170,31 @@ class NavigationView extends BaseMVPView {
 
     this.presenter.getPreEmploymentStatus()
     this.presenter.getLibraries()
-    const mediaQuery = window.matchMedia('(min-width: 1201px)')
+    const mediaQuery = window.matchMedia('(min-width: 1300px)')
       if (mediaQuery.matches) {
-        this.setDisplay('block', 'none')
+        this.setDisplay('none', 'none')
       } else {
         this.setDisplay('none', 'block')
       }
         mediaQuery.addListener(mq => {
       if (mq.matches) {
-        this.setDisplay('block', 'none')
+        this.setDisplay('none', 'none')
       } else {
         this.setDisplay('none', 'block')
       }
     })
+    this.checkWidthNavigation()
+  }
+
+  checkWidthNavigation() {
+    const width = document.body.offsetWidth
+    if(width <= 768) {
+      this.setState({ storeWidth : width - 100 })
+    } else if (width >= 1600) {
+      this.setState({ storeWidth : width - 170 })
+    } else {
+      this.setState({ storeWidth : width - 200 })
+    }
   }
 
   setSelectedNavigation (id) {
@@ -226,7 +239,8 @@ class NavigationView extends BaseMVPView {
       hasFilledOut,
       preEmploymentStatus,
       isLineManager,
-      profillePosition
+      profillePosition,
+      storeWidth
     } = this.state
 
     const { history, login, profilePicture } = this.props
@@ -310,7 +324,9 @@ class NavigationView extends BaseMVPView {
             <Drawer>
               <Switch>
                 <Route exact path = '/' render = {props =>
-                  <HomeFragment { ...props }
+                  <HomeFragment
+                    storeWidth = { storeWidth }
+                    { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> }/>
                 <Route path = '/postemployment' render = { props =>
                   <PostEmploymentFragment { ...props }

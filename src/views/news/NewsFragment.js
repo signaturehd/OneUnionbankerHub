@@ -22,9 +22,9 @@ import {
 
 import './styles/newsStyles.css'
 
-let staticCount = [1,2,3]
+let staticCount = [1,2,3,4,5,6,7,8,9,10]
 
-let storeWidth = 0
+let setNewsSlider
 
 class NewsFragment extends BaseMVPView {
   constructor (props) {
@@ -39,15 +39,13 @@ class NewsFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-      this.presenter.getNews()
+    this.presenter.getNews()
       // this.props.setSelectedNavigation(0)
-      setTimeout(() => this.setState({ showLoader : false }), 3000)
-      const width = document.body.offsetWidth
-      if(width <= 768) {
-        storeWidth = width - 100
-      } else {
-        storeWidth = width - 200 - 100
-      }
+    setTimeout(() => this.setState({ showLoader : false }), 3000)
+  }
+
+  scrollTest () {
+    setNewsSlider = setInterval(() => { window.scrollBy(100, 0) }, 5000);
   }
 
   updateSearch (e) {
@@ -66,6 +64,10 @@ class NewsFragment extends BaseMVPView {
       showLoader,
       searchString,
     } = this.state
+
+    const {
+      storeWidth
+    } = this.props
 
     const style = {
       newsWidth : {
@@ -131,9 +133,16 @@ class NewsFragment extends BaseMVPView {
                     }
                     onChangeHeart = { (id, isHeart) => this.presenter.addNewsIsHeart(id, isHeart) }
                   />
-                  )
-                }
+                )
+              }
             </div>
+            <div className = { 'news-slider-nav' }>
+          		<a href="#slide-1">1</a>
+          		<a href="#slide-2">2</a>
+          		<a href="#slide-3">3</a>
+          		<a href="#slide-4">4</a>
+          		<a href="#slide-5">5</a>
+          	</div>
           </div>
         }
 

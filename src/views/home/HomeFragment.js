@@ -52,32 +52,21 @@ class HomeFragment extends BaseMVPView {
       greetingsMessage,
       employeeName
     } = this.state
+    
+    const {
+      storeWidth
+    } = this.props
 
     return (
       <div className = { 'home-fragment-view' }>
         <div></div>
         <div className = { 'home-grid-fragment' }>
           <div>
-            <HomeGreetingsComponent
-              greetingsMessage = { greetingsMessage }
-              employeeName  = { employeeName  }
+            <NewsFragment
+              storeWidth = { storeWidth }
             />
-            <br/>
-            <br/>
-          </div>
-          <div>
-            <NewsFragment />
           </div>
           <div className = { 'container' }>
-            <br/>
-              <div>
-                <div>
-                  <h2 className={ 'phenoms-header' }> Phenom Prime </h2>
-                  <h2 className = { 'font-size-14px' }>We &#39;ve got these special deals, Just for U!</h2>
-                  <br/>
-                </div>
-              </div>
-            <br/>
             <Phenom />
             <br/>
           </div>

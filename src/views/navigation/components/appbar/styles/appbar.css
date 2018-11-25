@@ -5,17 +5,14 @@
   text-align: right;
 }
 
-.appbar-menu-option {
-  display: inline-flex;
-  margin: auto;
-  text-align: left;
-}
-
 .appbar-default-menu {
   font-weight: bold;
   cursor: pointer;
   color: #787878;
-  font-size: 13.5px;
+  font-size: 14px;
+  /* align-items: center; */
+  /* align-content: center; */
+  text-align: center;
 }
 
 .appbar-default-menu:hover {
@@ -33,6 +30,11 @@
   display: grid;
   grid-template-columns: .15fr 1fr;
   padding: 5px 5px 5px 15px;
+}
+
+.appbar-navbar-icon-grid {
+  display: grid;
+  grid-template-columns:  1fr;
 }
 
 .appbar-menu-text-grid {
@@ -76,7 +78,7 @@
   mask-image: url('../../../../../images/drawer/Benefit.png');
 }
 
-.travel-icon {
+.appbar-travel-icon {
   -webkit-mask-image: url('../../../../../images/drawer/mytravel.png');
   mask-image: url('../../../../../images/drawer/mytravel.png');
 }
@@ -99,6 +101,20 @@
 .appbar-phenom-icon {
   -webkit-mask-image: url('../../../../../images/icons/Phenom Prime - Grey.png');
   mask-image: url('../../../../../images/icons/Phenom Prime - Grey.png');
+}
+
+.appbar-payslip-icon {
+  -webkit-mask-image: url('../../../../../images/icons/ic_payslip.png');
+  mask-image: url('../../../../../images/icons/ic_payslip.png');
+}
+.appbar-compliance-icon {
+  -webkit-mask-image: url('../../../../../images/icons/drawer_compliance.png');
+  mask-image: url('../../../../../images/icons/drawer_compliance.png');
+}
+
+.appbar-learning-icon {
+  -webkit-mask-image: url('../../../../../images/My ELearning.png');
+  mask-image: url('../../../../../images/My ELearning.png');
 }
 
 .appbar-background-menu {
@@ -229,7 +245,7 @@
 .icon-header {
   text-align: left;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: .3fr 1fr .08fr;
 }
 
 ._img-ub-logo {
@@ -263,13 +279,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 1201px) {
-  ._img-ub-profile {
-    width: 40px;
-    height: 40px;
-    position: sticky;
-    margin: 2% 5% 0 0;
-  }
+@media screen and (max-width: 1300px) {
   ._img-ub-logo {
     /* margin: 2.5% 0 0 9%; */
     margin: auto;
