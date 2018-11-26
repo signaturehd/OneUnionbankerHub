@@ -142,7 +142,6 @@ class EventsBudgetFragment extends BaseMVPView {
   }
 
   storeArray (arrayValue) {
-    console.log(arrayValue)
     const {
       storedListId
     } = this.state
@@ -150,7 +149,6 @@ class EventsBudgetFragment extends BaseMVPView {
       let storedValueArray = storedListId.map((item) => item)
       let newArrayAttendees = [...arrayValue]
       arrayValue.map((arrayVal, key) => {
-        console.log(arrayVal)
         if (storedValueArray.includes(arrayVal)) {
           newArrayAttendees.splice(0, 1)
         } else {
@@ -159,7 +157,6 @@ class EventsBudgetFragment extends BaseMVPView {
       })
       this.presenter.setAttendees(newArrayAttendees)
     } catch (e) {
-      console.log(e)
     }
   }
 

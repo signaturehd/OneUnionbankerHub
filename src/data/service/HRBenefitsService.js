@@ -2202,9 +2202,9 @@ export default class HRBenefitsService {
     const objectParam = {
       benefitId : id
     }
-    formData.append('uuid',  Math.floor(Math.random()*90000) + 10000)
+    formData.append('uuid',  Math.floor(Math.random()*90000) + 100)
     attachments && attachments.map((resp, key) => {
-      formData.append(resp.name, resp.file)
+      formData.append(resp.name + ' ' + Math.floor(Math.random()*100), resp.file)
     })
     formData.append('body', JSON.stringify(objectParam))
     return this.apiClient.post('v1/events/receipt', formData, {

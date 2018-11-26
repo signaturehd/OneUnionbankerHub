@@ -183,7 +183,7 @@ export default class TransactionPersonalDetailsPresenter {
             title : 'Laptop Lease Confirmation',
             message : `You've successfully Confirmed the Laptop Lease`,
             type : 'success',
-            duration : 2000
+            duration : 5000
          })
         )
       }, e => {
@@ -192,7 +192,6 @@ export default class TransactionPersonalDetailsPresenter {
   }
 
   uploadEventsBudgetReceipt (id, uploadEventsBudgetReceipt) {
-    this.view.hideCircularLoader()
     let validateAttachments = false
     uploadEventsBudgetReceipt && uploadEventsBudgetReceipt.map(
       (attachment, key) => {
@@ -209,7 +208,7 @@ export default class TransactionPersonalDetailsPresenter {
                title : 'My Benefits',
                message : attachment.name + ' is required',
                type : 'warning',
-               duration : 2000
+               duration : 5000
              })
            )
            this.view.showCircularLoader()
@@ -217,19 +216,20 @@ export default class TransactionPersonalDetailsPresenter {
         }
       )
      } else {
+        this.view.hideCircularLoader()
         this.uploadEventsBudgetReceiptInteractor.execute(id, uploadEventsBudgetReceipt)
         .subscribe(data => {
-          this.getTransactionDetails(transactionId)
           this.view.showCircularLoader()
           store.dispatch(NotifyActions.addNotify({
               title : 'Success',
               message : data.message,
               type : 'success',
-              duration : 2000
+              duration : 5000
            })
           )
+          this.getTransactionDetails(id)
         }, error => {
-            this.view.showCircularLoader()
+          this.view.showCircularLoader()
       })
     }
   }

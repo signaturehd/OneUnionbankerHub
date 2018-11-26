@@ -131,16 +131,12 @@ class EventsBudgetFormComponent extends Component {
           />
 
           <br/>
-          <div className = { 'grid-global' }>
+          <center>
             <GenericButton
               text = { 'Continue' }
               onClick = { () => submitPresenter() }
             />
-            <GenericButton
-              text = { 'Edit' }
-              onClick = { () => this.presenter.addEventsBudget() }
-            />
-          </div>
+        </center>
         </div>
         <div></div>
         </div>

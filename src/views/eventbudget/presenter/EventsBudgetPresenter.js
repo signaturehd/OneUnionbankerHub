@@ -88,9 +88,19 @@ export default class EventsBudgetPresenter {
     this.view.showCircularLoader()
     this.validateEventsBudgetInteractor.execute()
     .subscribe(data => {
+      this.view.hideCircularLoader()
+      data.attendees.map((resp) =>{
+        resp.employees.map((empResp) => {
+          const hasRecord = [...storedId]
+          if(empResp.hasRecord === true) {
+            hasRecord.push(empResp.id)
+            storedId = hasRecord
+          }
+        })
+      })
+      this.setAttendees(storedId)
       this.view.showEventBudget(data, storedBenefitId)
       storedAmountPerEmployee = data.events.amount
-      this.view.hideCircularLoader()
     }, error => {
       this.view.navigate()
       this.view.hideCircularLoader()
