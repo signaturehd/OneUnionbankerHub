@@ -52,7 +52,9 @@ class EventsBudgetFormComponent extends Component {
       dateFunc,
       dateErrorMessage,
       endDate,
-      startDate
+      startDate,
+      existingIds,
+      selectAll,
     } = this.props
 
 
@@ -121,7 +123,9 @@ class EventsBudgetFormComponent extends Component {
             viewMoreText = { viewMoreText }
             viewMore = { viewMore }
             viewLess = { viewLess }
+            existingIds = { existingIds }
             eventBudgetData = { eventBudgetData }
+            selectAll = { selectAll }
             checkIdIfHasLogin = { (e, e1) =>
             {  checkIdIfHasLogin(e, e1)} }
           />

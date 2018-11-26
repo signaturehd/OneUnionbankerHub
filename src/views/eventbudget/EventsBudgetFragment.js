@@ -36,6 +36,7 @@ class EventsBudgetFragment extends BaseMVPView {
     super(props)
     this.state = {
       storedListId : [],
+      storedList: [],
       eventBudgetData : [],
       enabledLoader : false,
       index : null,
@@ -47,6 +48,7 @@ class EventsBudgetFragment extends BaseMVPView {
       showNoticeResponseModal: false, /* Display Notice Response Modal*/
       showNoticeResponseApprovalModal : false,/* Display Notice Approval Response Modal*/
     }
+    this.storeArray = this.storeArray.bind(this)
   }
 
   /* Implementation */
@@ -139,6 +141,28 @@ class EventsBudgetFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/')
   }
 
+  storeArray (arrayValue) {
+    console.log(arrayValue)
+    const {
+      storedListId
+    } = this.state
+    try {
+      let storedValueArray = storedListId.map((item) => item)
+      let newArrayAttendees = [...arrayValue]
+      arrayValue.map((arrayVal, key) => {
+        console.log(arrayVal)
+        if (storedValueArray.includes(arrayVal)) {
+          newArrayAttendees.splice(0, 1)
+        } else {
+          newArrayAttendees.push(arrayVal)
+        }
+      })
+      this.presenter.setAttendees(newArrayAttendees)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   render () {
     const {
       storedListId,
@@ -160,7 +184,8 @@ class EventsBudgetFragment extends BaseMVPView {
       showBenefitFeedbackModal,
       response,
       benefitId,
-      preferredDate
+      preferredDate,
+      storedList
     } = this.state
 
     return (
@@ -215,26 +240,27 @@ class EventsBudgetFragment extends BaseMVPView {
             </h2>
             <br/>
             <EventsBudgetFormComponent
+              existingIds = { storedListId }
               checkIdIfHasLogin = { (hasRecord, id) =>
                 {
-                  let newArrayList = [...storedListId]
-                  let isBoolean = hasRecord !== true ? true : false
-
-                  let isExisting = false
-                  for (var i in newArrayList) {
-                    if (newArrayList[i] === id) {
-                      isExisting = true
-                      break
+                  if (typeof id == 'number') {
+                    let newArrayList = [...storedListId]
+                    let isExisting = false
+                    for (var i in newArrayList) {
+                      if (newArrayList[i] === id) {
+                        isExisting = true
+                        break
+                      }
                     }
-                  }
-
-                  if (isExisting) {
-                    newArrayList.splice(i, 1)
+                    if (isExisting) {
+                      newArrayList.splice(i, 1)
+                    } else {
+                      newArrayList.push(id)
+                    }
+                    this.presenter.setAttendees(newArrayList)
                   } else {
-                    newArrayList.push(id)
+                    this.storeArray(id)
                   }
-
-                  this.presenter.setAttendees(newArrayList)
                 }
               }
               preferredDate = { preferredDate }

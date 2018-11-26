@@ -12,14 +12,34 @@ import './styles/eventsComponentStyle.css'
 
 import EventsBudgetAttendeesComponent from './EventsBudgetAttendeesComponent'
 
+let idList = []
+
 class EventsBudgetDepartmentComponent extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isSelectedDepartment : null,
-      attendeesLength : null,
-      selectedId : [],
+      isSelectedDepartment : false,
     }
+
+    this.selectAll = this.selectAll.bind(this)
+  }
+
+  selectAll (isSelectedDepartment, attend) {
+    const {
+      checkIdIfHasLoginFunc,
+      existingIds
+    } = this.props
+
+    this.setState({ isSelectedDepartment })
+    if (isSelectedDepartment) {
+      for (let i = 0; i < attend.length; i++) {
+        idList.push(attend[i].id)
+        // checkIdIfHasLoginFunc(isSelectedDepartment, attendies.id)
+      }
+    } else {
+      idList = []
+    }
+    checkIdIfHasLoginFunc(isSelectedDepartment, idList)
   }
 
   render () {
@@ -29,12 +49,11 @@ class EventsBudgetDepartmentComponent extends Component {
       event,
       check,
       checkIdIfHasLoginFunc,
+      existingIds,
     } = this.props
 
     const {
       isSelectedDepartment,
-      attendeesLength,
-      selectedId,
     } = this.state
 
     return (
@@ -51,33 +70,29 @@ class EventsBudgetDepartmentComponent extends Component {
             <h2 className = { 'text-align-self unionbank-color font-weight-bold font-size-16px text-align-center' }>
               { attend.department }
             </h2>
-            <Checkbox
-              value = { true }
-              checked = { true }
-              onChange = { e => {
-                this.setState({ isSelectedDepartment : isSelectedDepartment !==true ? true : false } )
-              } }
-           />
+            <br/>
+            {
+             //  attend.employees.length > 1 &&
+             //  <Checkbox
+             //    value = { true }
+             //    checked = { isSelectedDepartment }
+             //    onChange = { e => this.selectAll(!isSelectedDepartment, attend.employees) }
+             // />
+            }
           </div>
           <Line/>
         </div>
         <div>
-          <br/>
           {
-            attend && attend.employees.map((employee, key2) =>
-            {
-              return (
-                <EventsBudgetAttendeesComponent
-                  employee = { employee }
-                  employeeLength = { attend.employees.length }
-                  key2 = { key2 }
-                  checkIdIfHasLogin = { (e, e1) => {
-                     checkIdIfHasLoginFunc(e, e1)
-                  } }
-                />
-              )
-            }
-            )
+            attend &&
+            <EventsBudgetAttendeesComponent
+              attendies = { attend }
+              isSelectedDepartment = { isSelectedDepartment }
+              checkIdIfHasLogin = { (e, e1) => {
+                 checkIdIfHasLoginFunc(e, e1)
+              } }
+              existingIds = { existingIds }
+            />
           }
         </div>
       </Card>
