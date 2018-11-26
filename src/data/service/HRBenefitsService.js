@@ -2210,10 +2210,17 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
   // Pay For Skills
 
-  getPrograms (token) {
+  apiClient (token) {
     return this.apiClient.get('v1/skills/programs', {
+      headers : { token }
+    })
+  }
+
+  getPaySkillsList (token, id) {
+    return this.apiClient.get('v1/skills/programs', id, {
       headers : { token }
     })
   }

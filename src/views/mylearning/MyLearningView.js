@@ -51,7 +51,7 @@ class MyLearningView extends BaseMVPView {
       path: '/mylearning/mygoals/request',
       id: 4 ,
       styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
-      title: 'Pay For Learning',
+      title: 'Apply For Pay For Skills',
       path: '/mylearning/pay/skills',
     }]
     const MyLearning = () => (

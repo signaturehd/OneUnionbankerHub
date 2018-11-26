@@ -4,6 +4,6 @@ export default class GetProgramsInteractor {
   }
 
   execute () {
-    return this.client.getPrograms(this.client.getToken())
+    return this.client.getPaySkills(this.client.getToken())
   }
 }

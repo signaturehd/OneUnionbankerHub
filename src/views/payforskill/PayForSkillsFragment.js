@@ -12,7 +12,7 @@ class PayForSkillsFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    // this.presenter.getPrograms()
+    this.presenter.getPaySkills()
   }
 
   setPrograms (programs) {

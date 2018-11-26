@@ -1,22 +1,42 @@
-import GetProgrmsInteractor from '../../../domain/interactor/pay/GetProgramsInteractor'
+import GetProgramsInteractor from '../../../domain/interactor/pay/GetProgramsInteractor'
 
-export default class PayForSkillsPresnter {
+let storedDateOfCompletion = '', storedProgram = '', storedAccreditingBody = '', storedAttachments = []
+
+export default class PayForSkillsPresenter {
   constructer (container) {
-    this.getProgramInteractor = new GetProgramsInteractor(container.get('HRBenefitsClient'))
+    this.getProgramsInteractor = new GetProgramsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
   }
 
-  getPrograms () {
-    // this.view.showLoadng()
-    this.getProgramInteractor.execute()
+  setStoredDateOfCompletion (data) {
+    storedDateOfCompletion = data
+  }
+
+  setStoredProgram (data) {
+    storedProgram = data
+  }
+
+  setStoredAccreditingBody (data) {
+    storedAccreditingBody = data
+  }
+
+  setStoredAttachments (data) {
+    storedAttachments = data
+  }
+
+  getPaySkills () {
+    try {
+      this.getProgramsInteractor.execute()
       .subscribe(data => {
         console.log(data)
       }, e => {
         console.log(e)
       })
+    } catch (e) {
+      console.log(e)
+    }
   }
-
 }

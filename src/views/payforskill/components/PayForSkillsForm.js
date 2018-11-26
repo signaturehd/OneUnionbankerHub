@@ -7,9 +7,10 @@ import {
   DatePicker,
   GenericButton,
   Line,
-  MultipleFileUploader,
+  MultipleAttachments,
 } from '../../../ub-components/'
 
+import moment from 'moment'
 import './styles/PayForskillsComponentStyle.css'
 
 class PayForSkillsForm extends Component {
@@ -20,7 +21,8 @@ class PayForSkillsForm extends Component {
   render () {
 
   	const {
-      showEditMode
+      showEditMode,
+      dateOfCompletion,
   	} = this.props
 
     return (
@@ -28,34 +30,31 @@ class PayForSkillsForm extends Component {
         <div className = { 'payforskills-grid-column-2' }>
           <div></div>
           <div className={ 'payforskills-form-payforskillsd' }>
+            <h4 className = { 'font-size-20px font-weight-bold' }>Pay for Skills Form</h4>
+            <br/>
             <Line/>
             <br/>
             <div className={ 'payforskills-form-payforskillsd-body' }>
-
-            <div className = { 'grid-global' }>
               <GenericInput
-                placeholder = { 'Laptop Brand' }
                 errorMessage = { '' }
-                text = { 'Laptop Brand' }
+                text = { 'Program' }
                 disabled = { showEditMode }
                 maxLength = { 15 }
                 />
-              <GenericInput
-                placeholder = { 'Laptop Model' }
+              <DatePicker
+                selected = { '' }
+                readOnly
+                disabled = { '' }
+                onChange = { () => {} }
+                maxDate = { moment() }
+                text = { 'Date of Completion' }
                 errorMessage = { '' }
-                disabled = { showEditMode }
-                text = { 'Laptop Model' }
                 />
-            </div>
-            <GenericInput
-              placeholder = { 'Screen Size' }
-              errorMessage = { '' }
-              text = { 'Screen Size' }
-              disabled = { showEditMode }
-              maxLength = { 6 }
-            />
-              <MultipleFileUploader
-                placeholder = { 'Required Attachments' }
+              <h2 className = { 'text-align-left' }>Form Attachments</h2>
+              <br/>
+              <MultipleAttachments
+                placeholder = { '' }
+                fileArray = { '' }
                 disabled = { showEditMode }
               />
               <br/>
@@ -68,32 +67,32 @@ class PayForSkillsForm extends Component {
               }
               <br/>
               {
-                showEditMode ?
-                <div className = { 'grid-global' }>
-                  <GenericButton
-                    text={ 'Edit' }
-                    type = { 'button' }
-                    onClick={ () => onEdit() }
-                    className={ 'payforskillsview-submit' } />
-                  <GenericButton
-                    text={ 'Submit' }
-                    type = { 'button' }
-                    onClick={ () => onSubmit() }
-                    className={ 'payforskillsview-submit' } />
-                </div>
-                :
+              showEditMode ?
+              <div className = { 'grid-global' }>
                 <GenericButton
-                  text={ 'Continue' }
-                  onClick={ () =>
-                    onContinue()
-                    }
+                  text={ 'Edit' }
+                  type = { 'button' }
+                  onClick={ () => onEdit() }
                   className={ 'payforskillsview-submit' } />
+                <GenericButton
+                  text={ 'Submit' }
+                  type = { 'button' }
+                  onClick={ () => onSubmit() }
+                  className={ 'payforskillsview-submit' } />
+              </div>
+              :
+              <GenericButton
+                text={ 'Continue' }
+                onClick={ () =>
+                  onContinue()
+                  }
+                className={ 'payforskillsview-submit' } />
               }
             </div>
           </div>
-          <div></div>
-        </div>
+        <div></div>
       </div>
+    </div>
     )
   }
 }
