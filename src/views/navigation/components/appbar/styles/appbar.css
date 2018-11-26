@@ -245,7 +245,7 @@
 .icon-header {
   text-align: left;
   display: grid;
-  grid-template-columns: .3fr 1fr .08fr;
+  grid-template-columns: .3fr 1fr .09fr;
 }
 
 ._img-ub-logo {

@@ -193,7 +193,7 @@ class NavigationView extends BaseMVPView {
     } else if (width >= 1600) {
       this.setState({ storeWidth : width - 170 })
     } else {
-      this.setState({ storeWidth : width - 200 })
+      this.setState({ storeWidth : width - 140 })
     }
   }
 
