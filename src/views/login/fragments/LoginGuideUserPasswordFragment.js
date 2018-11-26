@@ -24,7 +24,7 @@ class LoginGuideUserPasswordFragment extends Component {
         </h2>
         <br/>
         <h4 className = { 'text-align-left font-weight-normal font-size-20px' }>
-          Thank you for your interest in using the One Unionbanker Hub! Your user ID is equivalent to your employee ID.
+          Thank you for your interest in using the One Unionbanker Hub! Your password is equivalent to your employee ID.
         </h4>
         <br/>
         <br/>
