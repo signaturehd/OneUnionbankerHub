@@ -1438,6 +1438,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  submitPaySkills (token, bodyParam) {
+    return this.service.submitPaySkills(token, bodyParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* My Goals */
   getGoals (token) {
     return this.service.getGoals(token)

@@ -23,8 +23,15 @@ class PayForSkillsForm extends Component {
   	const {
       showEditMode,
       dateOfCompletion,
+      dateOfCompletionFunc,
+      showProgramsModalFunc,
+      showAccreditationModalFunc,
+      accrediting,
+      accreditingBody,
+      programs,
+      programsBody
   	} = this.props
-
+    console.log(dateOfCompletion)
     return (
       <div className = {'payforskills-container'} >
         <div className = { 'payforskills-grid-column-2' }>
@@ -39,16 +46,25 @@ class PayForSkillsForm extends Component {
                 errorMessage = { '' }
                 text = { 'Program' }
                 disabled = { showEditMode }
-                maxLength = { 15 }
+                readOnly
+                value = { programsBody && programsBody.programs }
+                onClick = { () => showProgramsModalFunc() }
                 />
               <DatePicker
-                selected = { '' }
-                readOnly
-                disabled = { '' }
-                onChange = { () => {} }
-                maxDate = { moment() }
+                selected = { dateOfCompletion }
+                formatDate = { 'MM/DD/YYYY' }
+                onChange = { (e) => dateOfCompletionFunc(e) }
+                minDate = { moment() }
                 text = { 'Date of Completion' }
                 errorMessage = { '' }
+                />
+              <GenericInput
+                errorMessage = { '' }
+                text = { 'Accrediting Body' }
+                disabled = { showEditMode }
+                readOnly
+                value = { accreditingBody && accreditingBody.accre }
+                onClick = { () => showAccreditationModalFunc() }
                 />
               <h2 className = { 'text-align-left' }>Form Attachments</h2>
               <br/>
