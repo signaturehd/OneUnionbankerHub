@@ -2257,7 +2257,7 @@ export default class HRBenefitsService {
       date: requestCoachParam.preferredDate,
       time: requestCoachParam.preferredTime
     }
-console.log('service')
+
     return this.apiClient.post('v1/coach', objectParam, {
       headers : { token }
     })

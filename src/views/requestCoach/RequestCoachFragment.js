@@ -49,21 +49,6 @@ class RequestCoachFragment extends BaseMVPView {
     this.setState({ noticeResponse, showNoticeResponseModal : true })
   }
 
-  submit (requestId, isApprove, rejectedRemarks) {
-    isApprove ?
-    this.presenter.addApproval(
-      requestId,
-      isApprove,
-      ''
-    )
-    :
-    this.presenter.addApproval(
-      requestId,
-      isApprove,
-      rejectedRemarks
-    )
-  }
-
   hideCircularLoader () {
     this.setState({ enabledLoader : false })
   }

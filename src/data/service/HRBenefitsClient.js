@@ -1462,7 +1462,6 @@ export default class HRBenefitsClient {
   }
 
   requestCoach (token, requestCoachParam) {
-    console.log('client')
     return this.service.requestCoach(token, requestCoachParam)
     .pipe(ServiceErrorOperator())
   }

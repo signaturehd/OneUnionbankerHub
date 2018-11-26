@@ -1,4 +1,3 @@
-import GetRequestedGoalsInteractor from '../../../domain/interactor/goals/GetRequestedGoalsInteractor'
 import GetForApprovalGoalsInteractor from '../../../domain/interactor/goals/GetForApprovalGoalsInteractor'
 import AddRequestedGoalsInteractor from '../../../domain/interactor/goals/AddRequestedGoalsInteractor'
 import UpdateGoalsInteractor from '../../../domain/interactor/goals/UpdateGoalsInteractor'
@@ -8,7 +7,6 @@ import store from '../../../store'
 
 export default class MyGoalsPresenter {
   constructor (container) {
-    this.getRequestedGoalsInteractor = new GetRequestedGoalsInteractor(container.get('HRBenefitsClient'))
     this.getForApprovalGoalsInteractor = new GetForApprovalGoalsInteractor(container.get('HRBenefitsClient'))
     this.addRequestedGoalsInteractor = new AddRequestedGoalsInteractor(container.get('HRBenefitsClient'))
     this.updateGoalsInteractor = new UpdateGoalsInteractor(container.get('HRBenefitsClient'))
@@ -17,15 +15,6 @@ export default class MyGoalsPresenter {
 
   setView (view) {
     this.view = view
-  }
-
-  getGoals () {
-    this.getRequestedGoalsInteractor.execute()
-    .subscribe(data => {
-      this.view.getRequestedGoals(data)
-      }, error => {
-        store.dispatch(NotifyActions.resetNotify())
-    })
   }
 
   getForApprovalGoals () {

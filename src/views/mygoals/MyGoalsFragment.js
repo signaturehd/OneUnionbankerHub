@@ -20,7 +20,7 @@ import {
 } from '../../ub-components/'
 
 import GoalApprovalFormComponent from '../mygoals/components/GoalApprovalFormComponent'
-import RequestedGoalsComponent from '../mygoals/components/RequestedGoalsComponent'
+import RequestedGoalsFragment from '../requestedgoals/RequestedGoalsFragment'
 import ApprovedGoalsComponent from '../mygoals/components/ApprovedGoalsComponent'
 import MyGoalsFormComponent from '../mygoals/components/MyGoalsFormComponent'
 import RequestCoachFragment from '../requestCoach/RequestCoachFragment'
@@ -91,12 +91,7 @@ class MyGoalsFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    this.presenter.getGoals()
     this.presenter.getForApprovalGoals()
-  }
-
-  getRequestedGoals(goalsArray) {
-    this.setState({ goalsArray })
   }
 
   getForApprovalGoals(approvalArray) {
@@ -133,20 +128,6 @@ class MyGoalsFragment extends BaseMVPView {
 
   dueDateFunc (dueDate) {
     this.setState({ dueDate })
-  }
-
-  priorityFunc(priority) {
-    let lmh = ''
-    if(priority === 1) {
-      lmh = 'Low'
-    } else if (priority === 2) {
-      lmh = 'Medium'
-    } else if (priority === 3) {
-      lmh = 'High'
-    } else {
-      lmh = 'Priority not set'
-    }
-    return lmh
   }
 
   onSubmit() {
@@ -358,58 +339,10 @@ class MyGoalsFragment extends BaseMVPView {
                       render={ props => <ApprovedGoalsComponent { ...props } /> }/>
                    </Switch>
                 </section>
-                {
-                  !showApprovalForm &&
-                  <div className = { 'grid-filter margin-left' }>
-                    <div>
-                      <GenericInput
-                      text = { 'Filter' }
-                      />
-                    </div>
-                    <div></div>
-                    {
-                      !showForm &&
-                      <div className = { 'text-align-right margin-right grid-global' }>
-                        <GenericButton
-                          text = { 'Add Goal' }
-                          className = { 'global-button' }
-                          onClick = { () => this.setState({ showForm: true }) }
-                        />
-                        <GenericButton
-                          text = { 'Request for Coaching' }
-                          className = { 'global-button' }
-                          onClick = { () => this.setState({ showRequestCoachForm : true })}
-                        />
-                      </div>
-                    }
-                  </div>
-                }
+
                 {
                   !forApproval ?
-                  goalsArray.length !== 0 &&
-                  <RequestedGoalsComponent
-                    cardHolder = { goalsArray }
-                    priorityFunc = { (resp) => this.priorityFunc(resp) }
-                    onEditFormFunc = { (
-                      goalId,
-                      goalTitle,
-                      description,
-                      startDate,
-                      dueDate,
-                      priorityName,
-                      editMode,
-                      showForm
-                    ) => this.setState({
-                      goalId,
-                      goalTitle,
-                      description,
-                      startDate,
-                      dueDate,
-                      priorityName,
-                      editMode,
-                      showForm
-                     }) }
-                    />
+                  <RequestedGoalsFragment/>
                   :
                   showApprovalForm ?
                   <GoalApprovalFormComponent

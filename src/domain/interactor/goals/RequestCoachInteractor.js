@@ -4,7 +4,6 @@ export default class RequestCoachInteractor {
   }
 
   execute (requestCoachParam) {
-    console.log('interactor')
     return this.client.requestCoach(this.client.getToken(), requestCoachParam)
   }
 }
