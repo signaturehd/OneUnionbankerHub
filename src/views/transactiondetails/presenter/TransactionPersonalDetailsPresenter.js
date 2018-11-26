@@ -7,6 +7,7 @@ import PostNewCarConfirmationInteractor from '../../../domain/interactor/transac
 import PostNewPaymentInteractor from '../../../domain/interactor/transactions/PostNewPaymentInteractor'
 import PostNewReleasingInteractor from '../../../domain/interactor/transactions/PostNewReleasingInteractor'
 import ConfirmLaptopLeaseInteractor from '../../../domain/interactor/transactions/ConfirmLaptopLeaseInteractor'
+import UploadEventsBudgetReceiptInteractor from '../../../domain/interactor/eventsbudget/UploadEventsBudgetReceiptInteractor'
 
 import leasesCarConfirm from '../../../domain/param/AddCarLeaseConfirmationParam'
 import leasesCarLeaseReleasingParam from '../../../domain/param/AddCarLeaseReleasingParam'
@@ -38,6 +39,9 @@ export default class TransactionPersonalDetailsPresenter {
 
     this.confirmLaptopLeaseInteractor =
       new ConfirmLaptopLeaseInteractor(container.get('HRBenefitsClient'))
+
+    this.uploadEventsBudgetReceiptInteractor =
+      new UploadEventsBudgetReceiptInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -185,6 +189,49 @@ export default class TransactionPersonalDetailsPresenter {
       }, e => {
         this.view.showCircularLoader()
       })
+  }
+
+  uploadEventsBudgetReceipt (id, uploadEventsBudgetReceipt) {
+    this.view.hideCircularLoader()
+    let validateAttachments = false
+    uploadEventsBudgetReceipt && uploadEventsBudgetReceipt.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
+    if (validateAttachments) {
+      uploadEventsBudgetReceipt && uploadEventsBudgetReceipt.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'My Benefits',
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 2000
+             })
+           )
+           this.view.showCircularLoader()
+          }
+        }
+      )
+     } else {
+        this.uploadEventsBudgetReceiptInteractor.execute(id, uploadEventsBudgetReceipt)
+        .subscribe(data => {
+          this.getTransactionDetails(transactionId)
+          this.view.showCircularLoader()
+          store.dispatch(NotifyActions.addNotify({
+              title : 'Success',
+              message : data.message,
+              type : 'success',
+              duration : 2000
+           })
+          )
+        }, error => {
+            this.view.showCircularLoader()
+      })
+    }
   }
 
 }

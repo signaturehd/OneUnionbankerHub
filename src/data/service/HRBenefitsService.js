@@ -2196,4 +2196,19 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  uploadEventsBudgetReceipt (token, id, attachments) {
+    const formData = new FormData()
+    const objectParam = {
+      benefitId : id
+    }
+    formData.append('uuid',  Math.floor(Math.random()*90000) + 10000)
+    attachments && attachments.map((resp, key) => {
+      formData.append(resp.name, resp.file)
+    })
+    formData.append('body', JSON.stringify(objectParam))
+    return this.apiClient.post('v1/events/receipt', formData, {
+      headers : { token }
+    })
+  }
 }

@@ -79,7 +79,6 @@ export default class EventsBudgetPresenter {
 
   setAttendees (updatedAttendees) {
     storedId = updatedAttendees
-
     this.view.showAttendees(storedId)
     this.view.showAmount(storedId.length * storedAmountPerEmployee)
   }
