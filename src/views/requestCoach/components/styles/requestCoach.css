@@ -8,7 +8,7 @@
 
 .card-grid {
   display: grid;
-  grid-template-columns: .8fr 3fr .8fr;
+  grid-template-columns: 3fr .8fr .8fr;
   max-width: 100%;
   margin: auto;
 }

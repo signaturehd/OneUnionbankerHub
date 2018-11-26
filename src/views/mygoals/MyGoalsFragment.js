@@ -289,7 +289,9 @@ class MyGoalsFragment extends BaseMVPView {
         }
         {
           showRequestCoachForm ?
-          <RequestCoachFragment/>
+          <RequestCoachFragment
+          onClose = { () => this.setState({ showRequestCoachForm: false }) }
+          />
           :
           <div className = { 'grid-container' }>
             <div className={ 'header-margin-container' }>
@@ -367,12 +369,16 @@ class MyGoalsFragment extends BaseMVPView {
                     <div></div>
                     {
                       !showForm &&
-                      <div className = { 'text-align-right margin-right' }>
-                        <br/>
+                      <div className = { 'text-align-right margin-right grid-global' }>
                         <GenericButton
-                          text = { 'ADD GOAL' }
-                          className = { 'global-button profile-button-small' }
+                          text = { 'Add Goal' }
+                          className = { 'global-button' }
                           onClick = { () => this.setState({ showForm: true }) }
+                        />
+                        <GenericButton
+                          text = { 'Request for Coaching' }
+                          className = { 'global-button' }
+                          onClick = { () => this.setState({ showRequestCoachForm : true })}
                         />
                       </div>
                     }
@@ -493,10 +499,6 @@ class MyGoalsFragment extends BaseMVPView {
               onEdit = { () => this.onEdit() }
               />
             }
-              <FloatingActionButton
-                onClick = { () => this.setState({ showRequestCoachForm : true })
-                }
-              />
             </div>
           </div>
         }

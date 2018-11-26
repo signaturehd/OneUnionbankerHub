@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 
-import Presenter from './presenter/ApprovalPresenter'
+import Presenter from './presenter/RequestCoachPresenter'
 
 import {
   Modal,
@@ -83,6 +83,20 @@ class RequestCoachFragment extends BaseMVPView {
     })
   }
 
+  onSubmit() {
+    const {
+      description,
+      preferredDate,
+      preferredTime
+    } = this.state
+
+    this.presenter.requestCoach(
+      description,
+      moment(preferredDate).format('YYYY-MM-DD'),
+      preferredTime
+    )
+  }
+
   resetValue () {
     this.setState({
       description : '',
@@ -101,7 +115,7 @@ class RequestCoachFragment extends BaseMVPView {
       preferredTime
     } = this.state
 
-    const { percentage } = this.props
+    const { onClose } = this.props
     return (
       <div>
         { super.render() }
@@ -110,6 +124,7 @@ class RequestCoachFragment extends BaseMVPView {
           <ResponseModal
             onClose={ () => {
               this.setState({ showNoticeResponseModal : false })
+              onClose()
             }}
             noticeResponse={ noticeResponse }
           />
@@ -126,7 +141,7 @@ class RequestCoachFragment extends BaseMVPView {
         <div>
           <i
           className={ 'back-arrow' }
-          onClick={ () => this.navigate() }>
+          onClick={ () => onClose() }>
           </i>
         </div>
         <br/>
@@ -142,7 +157,14 @@ class RequestCoachFragment extends BaseMVPView {
         <Line />
         <br/>
           <RequestCoachFormFragment
-
+          description = { description }
+          descriptionFunc = { (description) => this.setState({ description }) }
+          preferredDate = { preferredDate }
+          preferredDateFunc = { (preferredDate) => this.setState({ preferredDate }) }
+          preferredTime = { preferredTime }
+          preferredTimeFunc = { (preferredTime) => this.setState({ preferredTime }) }
+          onClose = { () => onClose() }
+          onSubmit = { () => this.onSubmit() }
           />
       </div>
     )

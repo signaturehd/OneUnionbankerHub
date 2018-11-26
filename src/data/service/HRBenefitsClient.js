@@ -1460,4 +1460,10 @@ export default class HRBenefitsClient {
     return this.service.approveGoal(token, goalId, isApprove, rejectedRemarks)
     .pipe(ServiceErrorOperator())
   }
+
+  requestCoach (token, requestCoachParam) {
+    console.log('client')
+    return this.service.requestCoach(token, requestCoachParam)
+    .pipe(ServiceErrorOperator())
+  }
 }

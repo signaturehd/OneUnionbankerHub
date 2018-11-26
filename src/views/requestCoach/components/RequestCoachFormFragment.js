@@ -16,27 +16,47 @@ class RequestCoachFormFragment extends Component {
   render () {
     const {
       cardDataHolder,
-      showFormFunc
+      showFormFunc,
+      description,
+      descriptionFunc,
+      preferredDate,
+      preferredDateFunc,
+      preferredTime,
+      preferredTimeFunc,
+      onClose,
+      onSubmit
     } = this.props
     return (
       <div className = { 'card-grid' }>
-        <div></div>
         <div>
           <DatePicker
-          text = { 'Preferred Date' }/>
+          text = { 'Preferred Date' }
+          selected = { preferredDate && moment(preferredDate) }
+          onChange = { (e) => preferredDateFunc(e) }
+          minDate = { moment() }
+          />
           <GenericInput
           text = { 'Preferred Time' }
-          type = { 'time' }/>
+          type = { 'time' }
+          value = { preferredTime }
+          onChange = { (e) => preferredTimeFunc(e.target.value) }
+          />
           <GenericInput
           text = { 'Description' }
-          type = { 'textarea' }/>
+          type = { 'textarea' }
+          value = { description }
+          onChange = { (e) => descriptionFunc(e.target.value) }
+          />
           <div className = { 'grid-global' }>
             <GenericButton
-            text = { 'Cancel' }/>
+            text = { 'Cancel' }
+            onClick = { () => onClose() }/>
             <GenericButton
-            text = { 'Submit' }/>
+            text = { 'Submit' }
+            onClick = { () => onSubmit() }/>
           </div>
         </div>
+        <div></div>
         <div></div>
       </div>
     )
