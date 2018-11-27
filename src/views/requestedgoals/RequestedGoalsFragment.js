@@ -44,6 +44,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       startDate: '',
       dueDate: '',
       priorityName: '',
+      approvalStatus : '',
       goalsArray : [
         {
           description: "Test Description",
@@ -141,6 +142,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       startDate,
       dueDate,
       priorityName,
+      approvalStatus,
       goalsArray
     } = this.state
 
@@ -187,29 +189,66 @@ class RequestedGoalsFragment extends BaseMVPView {
             />
           </div>
         </div>
-        <RequestedGoalsComponent
-          cardHolder = { goalsArray }
-          priorityFunc = { (resp) => this.priorityFunc(resp) }
-          onEditFormFunc = { (
-            goalId,
-            goalTitle,
-            description,
-            startDate,
-            dueDate,
-            priorityName,
-            editMode,
-            showForm
-          ) => this.setState({
-            goalId,
-            goalTitle,
-            description,
-            startDate,
-            dueDate,
-            priorityName,
-            editMode,
-            showForm
-           }) }
+        <div className = { 'grid-main' }>
+          <RequestedGoalsComponent
+            cardHolder = { goalsArray }
+            priorityFunc = { (resp) => this.priorityFunc(resp) }
+            onSelected = { (
+              goalId,
+              goalTitle,
+              description,
+              startDate,
+              dueDate,
+              priorityName,
+              approvalStatus
+            ) => this.setState({
+              goalId,
+              goalTitle,
+              description,
+              startDate,
+              dueDate,
+              priorityName,
+              approvalStatus
+             }) }
           />
+          <div className = { 'padding-15' }>
+            <Card className = { 'padding-15' }>
+              <div className = { 'grid-percentage' }>
+                <div>
+                  <h2 className = { `margin-5px text-align-left font-size-18px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
+                  <h2 className = { 'margin-5px text-align-left font-size-16px font-weight-lighter' }><span className = { 'icon-check icon-comment-img' }/>2/5</h2>
+                  <h2 className = { 'margin-5px text-align-left font-size-16px font-weight-lighter' }><span className = { 'icon-check icon-taskcompleted-img' }/>5/10</h2>
+                </div>
+                <div className = { 'text-align-center padding-10px' }>
+                  <Progress
+                    type = { 'circle' }
+                    height = { 100 }
+                    width = { 100 }
+                    percent = { 80 } />
+                </div>
+                <div>
+                  {
+                    approvalStatus === 2 ?
+                    <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold header-column' }>Approved<span className = { 'icon-check icon-check-img' }/></h2>
+                    :
+                      approvalStatus === 3 ?
+                      <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold header-column' }>Rejected<span className = { 'icon-check icon-cross-img' }/></h2>
+                      :
+                      <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold' }>{ approvalStatus ? 'Requested' : 'Status' }</h2>
+                  }
+                </div>
+              </div>
+              <br/>
+              <Line/>
+              <br/>
+              <div className = { 'padding-15' }>
+                <h2 className = { 'font-weight-bold text-align-left font-size-20px' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
+                <br/>
+                <h2 className = { 'font-weight-lighter text-align-left font-size-16px' }>{ description ? description : 'Goals allow you to create effective objectives for yourself or employees.' }</h2>
+              </div>
+            </Card>
+          </div>
+        </div>
       </div>
     )
   }

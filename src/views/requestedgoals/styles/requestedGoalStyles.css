@@ -1,15 +1,51 @@
-.approval-container {
-  max-width: 100%;
-}
-
-.approval-grid-option {
+.grid-main {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 2%;
+  grid-template-columns: 3fr 2fr;
 }
 
-.approval-form-card {
-  max-width: 100%;
-  padding: 20px 5px 20px 5px;
-  margin: auto;
+.grid-container {
+  display: grid;
+  grid-template-columns: .1fr 3fr;
+}
+
+.margin-auto {
+  marign : auto;
+}
+
+.margin-right {
+  margin-right: 40px;
+}
+
+.margin-left {
+  margin-left: 20px;
+}
+
+.padding-10px {
+  padding: 10px;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.grid-filter {
+  display: grid;
+  grid-template-columns: 1fr .5fr 1fr;
+}
+
+.grid-percentage {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.color-Low {
+  color: #dddd00;
+}
+
+.color-Medium {
+  color: #ff8a00;
+}
+
+.color-High {
+  color: #ff0000;
 }

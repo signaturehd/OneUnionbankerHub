@@ -130,6 +130,20 @@ class MyGoalsFragment extends BaseMVPView {
     this.setState({ dueDate })
   }
 
+  priorityFunc(priority) {
+    let lmh = ''
+    if(priority === 1) {
+      lmh = 'Low'
+    } else if (priority === 2) {
+      lmh = 'Medium'
+    } else if (priority === 3) {
+      lmh = 'High'
+    } else {
+      lmh = 'Priority not set'
+    }
+    return lmh
+  }
+
   onSubmit() {
     const {
       goalTitle,
