@@ -9,6 +9,17 @@
   margin: auto;
 }
 
+.payskills-card {
+  display:grid;
+  grid-template-columns: .3fr 1fr;
+  padding: 20px;
+}
+
+.payforskills-card-list {
+  padding: 0px 50px 30px 50px;
+  margin: auto;
+}
+
 .payforskills-form-review {
   display: grid;
   grid-template-columns: 1fr 1fr;

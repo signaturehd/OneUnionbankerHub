@@ -3,112 +3,70 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import {
-  GenericInput,
-  DatePicker,
-  GenericButton,
   Line,
-  MultipleFileUploader,
+  Card
 } from '../../../ub-components/'
 
 import './styles/PayForskillsComponentStyle.css'
 
-class PayForSkillsForm extends Component {
+import moment from 'moment'
+
+class PayForSkillsListComponent extends Component {
   constructor (props) {
     super(props)
   }
 
+  getDateFormat (date) {
+    const newDate = date.replace('Z','')
+
+    return moment(newDate).format('dddd, MMMM DD, YYYY')
+  }
+
   render () {
-
   	const {
-      showEditMode,
-      dateOfCompletion,
-
+      payForSkillsList
   	} = this.props
 
     return (
       <div className = {'payforskills-container'} >
-        <div className = { 'payforskills-grid-column-2' }>
-          <div></div>
-          <div className={ 'payforskills-form-payforskillsd' }>
-            <h4 className = { 'font-size-20px font-weight-bold' }>Pay for Skills Form</h4>
+        <div className = { 'payforskills-card-list' }>
+          <div>
+            <h2 className = { 'header-margin-default text-align-left' }>Pay For Skills</h2>
+            <h2>List of your skill list in one place.</h2>
             <br/>
-            <Line/>
-            <br/>
-            <div className={ 'payforskills-form-payforskillsd-body' }>
-
-            <div className = { 'grid-global' }>
-              <GenericInput
-                placeholder = { 'Program' }
-                errorMessage = { '' }
-                text = { 'Laptop Brand' }
-                disabled = { showEditMode }
-                maxLength = { 15 }
-                />
-                <DatePicker
-                  selected = { preferredDate }
-                  readOnly
-                  disabled = { showEditSubmitButton }
-                  onChange = { (e) => dateFunc(e) }
-                  maxDate = { moment() }
-                  text = { 'Official Receipt Date' }
-                  errorMessage = { dateErrorMessage }
-                  />
-              <GenericInput
-                placeholder = { 'Laptop Model' }
-                errorMessage = { '' }
-                disabled = { showEditMode }
-                text = { 'Laptop Model' }
-                />
-            </div>
-            <GenericInput
-              placeholder = { 'Screen Size' }
-              errorMessage = { '' }
-              text = { 'Screen Size' }
-              disabled = { showEditMode }
-              maxLength = { 6 }
-            />
-              <MultipleFileUploader
-                placeholder = { 'Required Attachments' }
-                disabled = { showEditMode }
-              />
-              <br/>
-              <Line/>
+            <div className = { 'grid-global-columns-x3' }>
               {
-                showEditMode &&
-                <center>
-                  <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
-                </center>
-              }
-              <br/>
-              {
-                showEditMode ?
-                <div className = { 'grid-global' }>
-                  <GenericButton
-                    text={ 'Edit' }
-                    type = { 'button' }
-                    onClick={ () => onEdit() }
-                    className={ 'payforskillsview-submit' } />
-                  <GenericButton
-                    text={ 'Submit' }
-                    type = { 'button' }
-                    onClick={ () => onSubmit() }
-                    className={ 'payforskillsview-submit' } />
-                </div>
-                :
-                <GenericButton
-                  text={ 'Continue' }
-                  onClick={ () =>
-                    onContinue()
-                    }
-                  className={ 'payforskillsview-submit' } />
+                payForSkillsList &&
+                payForSkillsList.map((skill, key) => (
+                  <Card
+                    className = { 'payskills-card' }
+                    key = { key }>
+                    <span className = { 'payskills-icon' } />
+                    <div>
+                      <h4 className = { 'font-size-18px font-weight-bold unionbank-color' }>{ skill.program ? skill.program.program : '(No Information)' }</h4>
+                      {
+                        skill.accreditingBodyId.id === 21 ?
+                        <h4 className = { 'font-size-13px font-weight-normal' }>
+                          { skill.accreditingBodyId ? skill.accreditingBodyId.accreditingBody + ', '+ skill.others : '(No Information)' }
+                        </h4>
+                        :
+                        <h4 className = { 'font-size-13px font-weight-normal' }>
+                          { skill.accreditingBodyId ? skill.accreditingBodyId.accreditingBody : '(No Information)' }
+                        </h4>
+                      }
+                      <br/>
+                      <h4 className = { 'font-size-12px font-weight-normal' }>{ skill.dateOfCompletion ? this.getDateFormat(skill.dateOfCompletion) : '(No Information)' }</h4>
+                      <h4 className = { 'font-size-12px font-weight-bold' }>{ skill.status ? skill.status.status : '(No Information)' }</h4>
+                    </div>
+                  </Card>
+                ))
               }
             </div>
           </div>
-          <div></div>
         </div>
       </div>
     )
   }
 }
 
-export default PayForSkillsForm
+export default PayForSkillsListComponent

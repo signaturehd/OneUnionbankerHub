@@ -10,6 +10,7 @@ import {
 } from '../../ub-components/'
 
 import PayForSkillsForm from './components/PayForSkillsForm'
+import PayForSkillsListComponent from './components/PayForSkillsListComponent'
 
 class PayForSkillsFragment extends BaseMVPView {
   constructor (props) {
@@ -27,6 +28,7 @@ class PayForSkillsFragment extends BaseMVPView {
 
   componentDidMount () {
     this.presenter.getPaySkills()
+    this.presenter.getPaySkillsList()
   }
 
   setPrograms (programs) {
@@ -57,6 +59,10 @@ class PayForSkillsFragment extends BaseMVPView {
     this.setState({ attachmentsArray })
   }
 
+  setPayForSkillsList (payForSkillsList) {
+    this.setState({ payForSkillsList })
+  }
+
   setEditable (showEditMode) {
     this.setState({ showEditMode })
   }
@@ -76,6 +82,7 @@ class PayForSkillsFragment extends BaseMVPView {
       enabledLoader,
       dateOfCompletion,
       attachmentsArray,
+      payForSkillsList,
       showEditMode
     } = this.state
 
@@ -124,45 +131,55 @@ class PayForSkillsFragment extends BaseMVPView {
             />
             <h2>Please wait...</h2>
         </center> :
+        <div>
+        {
+          payForSkillsList && payForSkillsList.length !== 0 ?
 
-        <PayForSkillsForm
-          showEditMode = { showEditMode }
-          attachmentsArray = { attachmentsArray }
-          onContinue = { () => this.presenter.validateInput() }
-          onEdit = { (e) => {
-            if(e) {
-              this.presenter.submitPaySkills()
-            } else {
-               this.setState({ showEditMode : e })
+          <PayForSkillsListComponent
+            payForSkillsList = { payForSkillsList }
+          />
+          :
+          <PayForSkillsForm
+            showEditMode = { showEditMode }
+            attachmentsArray = { attachmentsArray }
+            onContinue = { () => this.presenter.validateInput() }
+            onEdit = { (e) => {
+              if(e) {
+                this.presenter.submitPaySkills()
+              } else {
+                 this.setState({ showEditMode : e })
+              }
+            } }
+            programs = { programs }
+            programsBody = { programsBody }
+            accreditingBody = { accreditingBody }
+            accrediting = { accrediting }
+            dateOfCompletion = { dateOfCompletion }
+            addAttachmentsFunc = { () => {
+              const newFileArray = [...attachmentsArray]
+              const objectParam = {
+                name : 'Pay For Skills Attachment'
+              }
+              newFileArray.push(objectParam)
+              this.presenter.setStoredAttachments(newFileArray)
+            } }
+            attachmentsNewValueFunc = { (respFile) =>
+              {
+                console.log(respFile)
+                this.presenter.setStoredAttachments(respFile)
+              }
             }
-          } }
-          programs = { programs }
-          programsBody = { programsBody }
-          accreditingBody = { accreditingBody }
-          accrediting = { accrediting }
-          dateOfCompletion = { dateOfCompletion }
-          addAttachmentsFunc = { () => {
-            const newFileArray = [...attachmentsArray]
-            const objectParam = {
-              name : 'Pay For Skills Attachment'
+            dateOfCompletionFunc = { (e) =>
+              this.presenter.setStoredDateOfCompletion(e)
             }
-            newFileArray.push(objectParam)
-            this.presenter.setStoredAttachments(newFileArray)
-          } }
-          attachmentsNewValueFunc = { (respFile) =>
-            {
-              console.log(respFile)
-              this.presenter.setStoredAttachments(respFile)
-            }
-          }
-          dateOfCompletionFunc = { (e) =>
-            this.presenter.setStoredDateOfCompletion(e)
-          }
-          showProgramsModalFunc = { () =>
-            this.setState({ showProgramsModal : true }) }
-          showAccreditationModalFunc = { () =>
-            this.setState({ showAccreditationModal : true }) }
-        />
+            showProgramsModalFunc = { () =>
+              this.setState({ showProgramsModal : true }) }
+            showAccreditationModalFunc = { () =>
+              this.setState({ showAccreditationModal : true }) }
+          />
+        }
+        </div>
+
         }
       </div>
     )
