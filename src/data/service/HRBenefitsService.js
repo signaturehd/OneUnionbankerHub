@@ -2276,4 +2276,13 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  /* Certificaqte of Employment */
+
+  getGenerictCoeType (token, type) {
+    return this.apiClient.get(`v1/coe/libraries?type=${ type }`, null, {
+      headers : { token }
+    })
+  }
+
 }

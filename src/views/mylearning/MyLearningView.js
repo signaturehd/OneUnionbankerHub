@@ -12,6 +12,7 @@ import LibraryView from '../library/LibraryFragment'
 import TrainingFragment from '../trainings/TrainingFragment'
 import MyGoalsFragment from '../mygoals/MyGoalsFragment'
 import PayForSkillsFragment from '../payforskill/PayForSkillsFragment'
+import CertificateOfEmploymentFragment from '../coe/CertificateOfEmploymentFragment'
 
 import { InputModal, Card, GenericButton } from '../../ub-components'
 
@@ -54,7 +55,13 @@ class MyLearningView extends BaseMVPView {
       styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
       title: 'Apply For Pay For Skills',
       path: '/mylearning/pay/skills',
+    }, {
+      id: 5 ,
+      styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
+      title: 'Apply For Certificate Of Employment',
+      path: '/mylearning/coe',
     }]
+    
     const MyLearning = () => (
       <div className = { 'mylearning-container' }>
         <div>
@@ -107,6 +114,8 @@ class MyLearningView extends BaseMVPView {
             <MyGoalsFragment { ...props } /> } />
           <Route path = '/mylearning/pay/skills' render = { props =>
             <PayForSkillsFragment { ...props } /> } />
+          <Route path = '/mylearning/coe' render = { props =>
+            <CertificateOfEmploymentFragment { ...props } /> } />
           <Route path = '/mylearning/trainings' render = { props =>
             <TrainingFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts' render = { props =>
