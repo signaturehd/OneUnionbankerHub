@@ -49,6 +49,7 @@ class MyLearningView extends BaseMVPView {
       styleName: 'mylearning-cards-4 mylearning-option-default font-weight-bold',
       title: 'My Goals',
       path: '/mylearning/mygoals/request',
+    }, {
       id: 4 ,
       styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
       title: 'Apply For Pay For Skills',

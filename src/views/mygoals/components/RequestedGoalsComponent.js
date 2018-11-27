@@ -39,7 +39,7 @@ class RequestedGoalsComponent extends Component {
   }
 
   render () {
-    const { cardHolder, priorityFunc } = this.props
+    const { cardHolder, priorityFunc, onEditFormFunc } = this.props
     return (
       <div className = { 'grid-main padding-15px' }>
       {
@@ -47,7 +47,7 @@ class RequestedGoalsComponent extends Component {
           <Card className = { 'margin-10px' }>
             <div className = { 'grid-card-row' }>
               <div className = { 'header-column header-color border-radius-top' }>
-                <h2 className = { 'margin-10px text-align-left font-size-20px font-weight-bold color-white' }>{ resp.title }</h2>
+                <h2 className = { 'margin-10px text-align-left font-size-18px font-weight-bold color-white' }>{ resp.title }</h2>
                 {
                   resp.approvalStatus === 2 ?
                   <h2 className = { 'margin-10px text-align-right font-size-14px font-weight-bold color-white header-column' }>Approved<span className = { 'icon-check icon-check-img' }/></h2>
@@ -84,7 +84,7 @@ class RequestedGoalsComponent extends Component {
 
                 <div className = { 'grid-div-row' }>
                   <div>
-                    <h2 className = { 'margin-5px text-align-right font-size-20px font-weight-lighter unionbank-color' }>Personnal</h2>
+                    <h2 className = { 'margin-5px text-align-right font-size-20px font-weight-lighter unionbank-color' }>Personal</h2>
                     <h2 className = { `margin-5px text-align-right font-size-18px font-weight-bold color-${priorityFunc(resp.priority)}` }>{ priorityFunc(resp.priority) }</h2>
                   </div>
                   <div></div>
@@ -102,7 +102,18 @@ class RequestedGoalsComponent extends Component {
                   <div>
                   </div>
                   <div>
-                    <span className = { 'icon-check icon-edit-img' }/>
+                    <span
+                    className = { 'icon-check icon-edit-img' }
+                    onClick = { () => onEditFormFunc(
+                      resp.id,
+                      resp.title,
+                      resp.description,
+                      resp.startDate,
+                      resp.endDate,
+                      priorityFunc(resp.priority),
+                      true,
+                      true
+                    ) }/>
                   </div>
                 </div>
               </div>

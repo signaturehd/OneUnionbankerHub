@@ -258,7 +258,6 @@ class NavigationView extends BaseMVPView {
     })
 
     splitUserInitial = initials[0] + initials[initials.length - 1]
-
     return (
       <div className = { 'navigation-body-div' }>
         { super.render() }
@@ -428,15 +427,18 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mylearning' render = { props =>
                     <MyLearningView { ...props }
                       profile = { profile }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                      setSelectedNavigation = { this.setSelectedNavigation }
+                      isLineManager = { isLineManager } /> } />
                   <Route path = '/mylearning/mygoals/approved' render = { props =>
                     <ApprovedGoalsComponent { ...props }
                       profile = { profile }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                      setSelectedNavigation = { this.setSelectedNavigation }
+                      isLineManager = { isLineManager } /> } />
                   <Route path = '/mylearning/mygoals/request' render = { props =>
                     <RequestedGoalsComponent { ...props }
                       profile = { profile }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                      setSelectedNavigation = { this.setSelectedNavigation }
+                      isLineManager = { isLineManager } /> } />
                   <Route path = '/mylearning/mygoals' render = { props =>
                     <MyGoalsFragment { ...props }
                       profile = { profile }

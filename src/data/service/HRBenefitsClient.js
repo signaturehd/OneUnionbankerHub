@@ -96,6 +96,13 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  /* Unlock Account */
+
+  requestUnlockAccount (token, empId, date) {
+    return this.service.requestUnlockAccount(token, empId, date)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Reset Password */
 
   requestEmailVerification (token, empId, date) {
@@ -1451,6 +1458,21 @@ export default class HRBenefitsClient {
 
   addRequestedGoals (token, requestedGoalsParam) {
     return this.service.addRequestedGoals(token, requestedGoalsParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  updateGoals (token, goalId, dueDate) {
+    return this.service.updateGoals(token, goalId, dueDate)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getForApprovalGoals (token) {
+    return this.service.getForApprovalGoals(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  approveGoal (token, goalId, isApprove, rejectedRemarks) {
+    return this.service.approveGoal(token, goalId, isApprove, rejectedRemarks)
     .pipe(ServiceErrorOperator())
   }
 }

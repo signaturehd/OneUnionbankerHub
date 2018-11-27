@@ -264,19 +264,22 @@ class LoginView extends BaseMVPView {
       history
     } = this.props
 
-    /* Prod Version 5.1.0 */
+    /* Prod Version 5.1.1 */
 
-    /* UAT */
+    /* UAT 6.0.0*/
 
     let version = 6
     let majorVersion = 0
-    let minorVersion = 0
+    let minorVersion = 1
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     const objectValue = [{
       id : 0,
       name : 'I forgot my password'
     } ,{
+      id : 1,
+      name : 'I want to Unlock my Account'
+    }, {
       id : 2,
       name : 'What is my 1UHub user ID?'
     }, {
@@ -382,7 +385,7 @@ class LoginView extends BaseMVPView {
                     <LoginComponent
                       requestEmailFunc = { () => this.presenter.requestEmailVerification(usernameId, birthDate) }
                       requestUnlockFunc = { () =>
-                        this.presenter.requestUnlockPin(usernameId, birthDate)
+                        this.presenter.requestUnlockAccount(usernameId, birthDate)
                       }
                       emailSuccessMessage = { emailSuccessMessage }
                       showEmailMessageModal = { showEmailMessageModal }
