@@ -1434,22 +1434,6 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  // Pay For Skills
-  getPaySkills (token) {
-    return this.service.getPaySkills(token)
-      .pipe(ServiceErrorOperator())
-  }
-
-  getPaySkillsList (token, id) {
-    return this.service.getPaySkillsList(token, id)
-      .pipe(ServiceErrorOperator())
-  }
-
-  submitPaySkills (token, bodyParam) {
-    return this.service.submitPaySkills(token, bodyParam)
-      .pipe(ServiceErrorOperator())
-  }
-
   /* My Goals */
   getGoals (token) {
     return this.service.getGoals(token)
@@ -1474,5 +1458,22 @@ export default class HRBenefitsClient {
   approveGoal (token, goalId, isApprove, rejectedRemarks) {
     return this.service.approveGoal(token, goalId, isApprove, rejectedRemarks)
     .pipe(ServiceErrorOperator())
+  }
+
+  // Pay For Skills
+
+  getPaySkills (token) {
+    return this.service.getPaySkills(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPaySkillsList (token) {
+    return this.service.getPaySkillsList(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  submitPaySkills (token, bodyParam) {
+    return this.service.submitPaySkills(token, bodyParam)
+      .pipe(ServiceErrorOperator())
   }
 }
