@@ -2250,4 +2250,30 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  // Pay For Skills
+
+  getPaySkills (token) {
+    return this.apiClient.get('v1/skills/programs', {
+      headers : { token }
+    })
+  }
+
+  getPaySkillsList (token, id) {
+    return this.apiClient.get('v1/skills/programs', id, {
+      headers : { token }
+    })
+  }
+
+  submitPaySkills (token, bodyParam) {
+    const formData = new FormData()
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    formData.append('body', JSON.stringify(bodyParam.body))
+    bodyParam && bodyParam.attachments.map((resp) => (
+      formData.append(resp.name + ' ' + Math.floor(Math.random()*100) + 100 , resp.file)
+    ))
+    return this.apiClient.post('v1/skills/submit', formData, {
+      headers : { token }
+    })
+  }
 }
