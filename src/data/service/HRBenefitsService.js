@@ -2251,16 +2251,6 @@ export default class HRBenefitsService {
     })
   }
 
-<<<<<<< HEAD
-  requestCoach (token, requestCoachParam) {
-    const objectParam = {
-      description: requestCoachParam.description,
-      date: requestCoachParam.preferredDate,
-      time: requestCoachParam.preferredTime
-    }
-
-    return this.apiClient.post('v1/coach', objectParam, {
-=======
   // Pay For Skills
 
   getPaySkills (token) {
@@ -2283,7 +2273,18 @@ export default class HRBenefitsService {
       formData.append(resp.name + ' ' + Math.floor(Math.random()*100) + 100 , resp.file)
     ))
     return this.apiClient.post('v1/skills/submit', formData, {
->>>>>>> ec26078dfd4f1b20b34d41772fbad95d4c7a3207
+      headers : { token }
+    })
+  }
+
+  requestCoach (token, requestCoachParam) {
+    const objectParam = {
+      description: requestCoachParam.description,
+      date: requestCoachParam.preferredDate,
+      time: requestCoachParam.preferredTime
+    }
+
+    return this.apiClient.post('v1/coach', objectParam, {
       headers : { token }
     })
   }
