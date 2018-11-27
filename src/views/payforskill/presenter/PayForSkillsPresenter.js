@@ -29,7 +29,6 @@ export default class PayForSkillsPresenter {
   }
 
   setStoredAttachments (data) {
-    console.log(storedAttachments)
     storedAttachments = data
     this.view.setAttachmentsArray(data)
   }
@@ -66,8 +65,6 @@ export default class PayForSkillsPresenter {
         }
       }
     )
-
-    console.log(storedProgramObject)
 
     if(storedProgramObject === '') {
       store.dispatch(NotifyActions.addNotify({
