@@ -27,7 +27,7 @@ class MyLearningView extends BaseMVPView {
   }
 
   render () {
-    const { history, profile } = this.props
+    const { history, profile, isLineManager } = this.props
     const { accountNumber, showAccountNumberModal } = this.state
     const mylearning = [{
       id: 0 ,
@@ -48,7 +48,7 @@ class MyLearningView extends BaseMVPView {
       id: 3 ,
       styleName: 'mylearning-cards-4 mylearning-option-default font-weight-bold',
       title: 'My Goals',
-      path: '/mylearning/mygoals/request',
+      path: '/mylearning/mygoals',
     }, {
       id: 4 ,
       styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
@@ -104,7 +104,8 @@ class MyLearningView extends BaseMVPView {
       <div>
         <Switch>
           <Route path = '/mylearning/mygoals' render = { props =>
-            <MyGoalsFragment { ...props } /> } />
+            <MyGoalsFragment { ...props }
+            isLineManager = { isLineManager } /> } />
           <Route path = '/mylearning/pay/skills' render = { props =>
             <PayForSkillsFragment { ...props } /> } />
           <Route path = '/mylearning/trainings' render = { props =>

@@ -27,7 +27,7 @@ class RequestCoachFormFragment extends Component {
       onSubmit
     } = this.props
     return (
-      <div className = { 'card-grid' }>
+      <div className = { 'card-grid-column' }>
         <div>
           <DatePicker
           text = { 'Preferred Date' }

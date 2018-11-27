@@ -28,6 +28,12 @@
   height: 100%;
 }
 
+.div-fixed {
+  z-index: 99;
+  width: 30%;
+  height: 100%;
+}
+
 .grid-filter {
   display: grid;
   grid-template-columns: 1fr .5fr 1fr;

@@ -254,34 +254,7 @@ class MyGoalsFragment extends BaseMVPView {
             noticeResponse={ noticeResponse ? noticeResponse : 'You have successfully Approved this Goal Request.' }
           />
         }
-        {
-          showPriorityModal &&
-          <SingleInputModal
-            label = { 'Select Priority' }
-            inputArray = { priorityArray }
-            selectedArray = { (priorityId, priorityName) => this.setState({
-                priorityId,
-                priorityName,
-                showPriorityModal: false
-              })
-            }
-            onClose = { () => this.setState({ showPriorityModal: false }) }
-          />
-        }
-        {
-          showGoalTypeModal &&
-          <SingleInputModal
-            label = { 'Select Priority' }
-            inputArray = { goalTypeArray }
-            selectedArray = { (goalTypeId, goalType) => this.setState({
-                goalTypeId,
-                goalType,
-                showGoalTypeModal: false
-              })
-            }
-            onClose = { () => this.setState({ showGoalTypeModal: false }) }
-          />
-        }
+
         {
           showRequestCoachForm ?
           <RequestCoachFragment
@@ -330,7 +303,7 @@ class MyGoalsFragment extends BaseMVPView {
                 </label>
 
                 {
-                  !isLineManager &&
+                  isLineManager &&
                   <label>
                     <input
                       className = { 'input-tab' }
@@ -356,7 +329,9 @@ class MyGoalsFragment extends BaseMVPView {
 
                 {
                   !forApproval ?
-                  <RequestedGoalsFragment/>
+                  <RequestedGoalsFragment
+                  showRequestCoachForm = { showRequestCoachForm }
+                  showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
                   :
                   showApprovalForm ?
                   <GoalApprovalFormComponent

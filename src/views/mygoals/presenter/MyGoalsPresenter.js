@@ -4,6 +4,7 @@ import UpdateGoalsInteractor from '../../../domain/interactor/goals/UpdateGoalsI
 import ApproveGoalsInteractor from '../../../domain/interactor/goals/ApproveGoalsInteractor'
 import requestedGoalsParam from '../../../domain/param/AddRequestedGoalsParam'
 import store from '../../../store'
+import { NotifyActions } from '../../../actions'
 
 export default class MyGoalsPresenter {
   constructor (container) {
