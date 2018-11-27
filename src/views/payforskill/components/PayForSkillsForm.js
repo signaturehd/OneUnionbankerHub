@@ -26,12 +26,17 @@ class PayForSkillsForm extends Component {
       dateOfCompletionFunc,
       showProgramsModalFunc,
       showAccreditationModalFunc,
+      addAttachmentsFunc,
       accrediting,
       accreditingBody,
       programs,
-      programsBody
+      programsBody,
+      attachmentsArray,
+      attachmentsNewValueFunc,
+      onContinue,
+      onEdit
   	} = this.props
-    console.log(dateOfCompletion)
+
     return (
       <div className = {'payforskills-container'} >
         <div className = { 'payforskills-grid-column-2' }>
@@ -54,7 +59,8 @@ class PayForSkillsForm extends Component {
                 selected = { dateOfCompletion }
                 formatDate = { 'MM/DD/YYYY' }
                 onChange = { (e) => dateOfCompletionFunc(e) }
-                minDate = { moment() }
+                minDate = { moment().subtract(3, 'months') }
+                maxDate = { moment() }
                 text = { 'Date of Completion' }
                 errorMessage = { '' }
                 />
@@ -66,13 +72,29 @@ class PayForSkillsForm extends Component {
                 value = { accreditingBody && accreditingBody.accre }
                 onClick = { () => showAccreditationModalFunc() }
                 />
-              <h2 className = { 'text-align-left' }>Form Attachments</h2>
               <br/>
-              <MultipleAttachments
-                placeholder = { '' }
-                fileArray = { '' }
-                disabled = { showEditMode }
-              />
+              <div className = { 'grid-global' }>
+                <h2 className = { 'text-align-left' }>Form Attachments</h2>
+                <div className = { 'text-align-right' }>
+                  <GenericButton
+                    className = { 'profile-button-small' }
+                    onClick = { () => addAttachmentsFunc() }
+                    text = { 'Add Attachments' }
+                  />
+                </div>
+              </div>
+              <br/>
+              {
+                attachmentsArray.length !== 0  &&
+                <MultipleAttachments
+                  count = { 0 }
+                  countFunc = { () => {} }
+                  placeholder = { '' }
+                  fileArray = { attachmentsArray }
+                  disabled = { false }
+                  setFile = { (respFile) => attachmentsNewValueFunc(respFile) }
+                />
+              }
               <br/>
               <Line/>
               {
@@ -88,21 +110,24 @@ class PayForSkillsForm extends Component {
                 <GenericButton
                   text={ 'Edit' }
                   type = { 'button' }
-                  onClick={ () => onEdit() }
+                  onClick={ () => onEdit(false) }
                   className={ 'payforskillsview-submit' } />
                 <GenericButton
                   text={ 'Submit' }
                   type = { 'button' }
-                  onClick={ () => onSubmit() }
+                  onClick={ () => onEdit(true) }
                   className={ 'payforskillsview-submit' } />
               </div>
               :
-              <GenericButton
-                text={ 'Continue' }
-                onClick={ () =>
-                  onContinue()
+
+              <center>
+                <GenericButton
+                  text={ 'Continue' }
+                  onClick={ () =>
+                    onContinue()
                   }
-                className={ 'payforskillsview-submit' } />
+                  className={ 'payforskillsview-submit' } />
+              </center>
               }
             </div>
           </div>

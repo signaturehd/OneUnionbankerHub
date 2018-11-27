@@ -4,6 +4,6 @@ export default class AddPaySkillsInteractor {
   }
 
   execute (bodyParam) {
-    return this.client.getPaySkillsList(this.client.getToken(), bodyParam)
+    return this.client.submitPaySkills(this.client.getToken(), bodyParam)
   }
 }

@@ -2270,7 +2270,7 @@ export default class HRBenefitsService {
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     formData.append('body', JSON.stringify(bodyParam.body))
     formData.append(bodyParam.attachments[0].name, bodyParam.attachments[0].file)
-    return this.apiClient.post('v1/skills/submit/', formData, {
+    return this.apiClient.post('v1/skills/submit', formData, {
       headers : { token }
     })
   }

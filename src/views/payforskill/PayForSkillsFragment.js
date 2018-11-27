@@ -16,8 +16,12 @@ class PayForSkillsFragment extends BaseMVPView {
     super(props)
     this.state = {
       showProgramsModal : false,
+      showEditMode : false,
       showAccreditationModal : false,
-      enabledLoader : false
+      enabledLoader : false,
+      attachmentsArray: [{
+        name: 'Pay For Skills Attachment'
+      }]
     }
   }
 
@@ -49,6 +53,18 @@ class PayForSkillsFragment extends BaseMVPView {
     this.setState({ dateOfCompletion })
   }
 
+  setAttachmentsArray (attachmentsArray) {
+    this.setState({ attachmentsArray })
+  }
+
+  setEditable (showEditMode) {
+    this.setState({ showEditMode })
+  }
+
+  navigateLearning () {
+    this.props.history.push('/mylearning')
+  }
+
   render () {
     const {
       accrediting,
@@ -58,7 +74,9 @@ class PayForSkillsFragment extends BaseMVPView {
       showProgramsModal,
       showAccreditationModal,
       enabledLoader,
-      dateOfCompletion
+      dateOfCompletion,
+      attachmentsArray,
+      showEditMode
     } = this.state
 
     return (
@@ -100,18 +118,43 @@ class PayForSkillsFragment extends BaseMVPView {
         }
         {
           enabledLoader ?
-          <center>
+          <center className = { 'circular-loader-center' }>
             <CircularLoader
               show = { enabledLoader }
             />
+            <h2>Please wait...</h2>
         </center> :
 
         <PayForSkillsForm
+          showEditMode = { showEditMode }
+          attachmentsArray = { attachmentsArray }
+          onContinue = { () => this.presenter.validateInput() }
+          onEdit = { (e) => {
+            if(e) {
+              this.presenter.submitPaySkills()
+            } else {
+               this.setState({ showEditMode : e })
+            }
+          } }
           programs = { programs }
           programsBody = { programsBody }
           accreditingBody = { accreditingBody }
           accrediting = { accrediting }
           dateOfCompletion = { dateOfCompletion }
+          addAttachmentsFunc = { () => {
+            const newFileArray = [...attachmentsArray]
+            const objectParam = {
+              name : 'Pay For Skills Attachment'
+            }
+            newFileArray.push(objectParam)
+            this.presenter.setStoredAttachments(newFileArray)
+          } }
+          attachmentsNewValueFunc = { (respFile) =>
+            {
+              console.log(respFile)
+              this.presenter.setStoredAttachments(respFile)
+            }
+          }
           dateOfCompletionFunc = { (e) =>
             this.presenter.setStoredDateOfCompletion(e)
           }
