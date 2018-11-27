@@ -2269,7 +2269,9 @@ export default class HRBenefitsService {
     const formData = new FormData()
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     formData.append('body', JSON.stringify(bodyParam.body))
-    formData.append(bodyParam.attachments[0].name, bodyParam.attachments[0].file)
+    bodyParam && bodyParam.attachments.map((resp) => (
+      formData.append(resp.name + ' ' + Math.floor(Math.random()*100) + 100 , resp.file)
+    ))
     return this.apiClient.post('v1/skills/submit', formData, {
       headers : { token }
     })
