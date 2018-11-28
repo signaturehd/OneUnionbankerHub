@@ -6,7 +6,8 @@ import Presenter from './presenter/PayForSkillsPresenter'
 
 import {
   SingleInputModal,
-  CircularLoader
+  CircularLoader,
+  FloatingActionButton
 } from '../../ub-components/'
 
 import PayForSkillsForm from './components/PayForSkillsForm'
@@ -20,6 +21,7 @@ class PayForSkillsFragment extends BaseMVPView {
       showEditMode : false,
       showAccreditationModal : false,
       enabledLoader : false,
+      showAddingPaySkillsComponent : false,
       attachmentsArray: [{
         name: 'Pay For Skills Attachment'
       }]
@@ -71,6 +73,12 @@ class PayForSkillsFragment extends BaseMVPView {
     this.props.history.push('/mylearning')
   }
 
+  checkListIfNull () {
+    if(this.state.payForSkillsList && this.state.payForSkillsList.length !== 0) {
+      this.setState({ showAddingPaySkillsComponent : false })
+    }
+  }
+
   render () {
     const {
       accrediting,
@@ -83,7 +91,8 @@ class PayForSkillsFragment extends BaseMVPView {
       dateOfCompletion,
       attachmentsArray,
       payForSkillsList,
-      showEditMode
+      showEditMode,
+      showAddingPaySkillsComponent
     } = this.state
 
     return (
@@ -133,8 +142,7 @@ class PayForSkillsFragment extends BaseMVPView {
         </center> :
         <div>
         {
-          payForSkillsList && payForSkillsList.length !== 0 ?
-
+          showAddingPaySkillsComponent ?
           <PayForSkillsListComponent
             payForSkillsList = { payForSkillsList }
           />
@@ -176,7 +184,14 @@ class PayForSkillsFragment extends BaseMVPView {
           />
         }
         </div>
-
+        }
+        {
+          !showAddingPaySkillsComponent &&
+          <FloatingActionButton
+            text = { '+' }
+            onClick = { () => this.setState({ showAddingPaySkillsComponent : true })
+            }
+          />
         }
       </div>
     )

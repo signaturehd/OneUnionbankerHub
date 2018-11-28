@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import {
   Line,
-  Card
+  Card,
 } from '../../../ub-components/'
 
 import './styles/PayForskillsComponentStyle.css'
