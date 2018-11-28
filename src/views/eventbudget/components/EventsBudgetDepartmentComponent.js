@@ -24,22 +24,33 @@ class EventsBudgetDepartmentComponent extends Component {
     this.selectAll = this.selectAll.bind(this)
   }
 
+  componentDidMount () {
+    idList = this.props.existingIds
+  }
+
   selectAll (isSelectedDepartment, attend) {
     const {
       checkIdIfHasLoginFunc,
       existingIds
     } = this.props
-
+    let existingIdsArray = existingIds.map((item) => item)
     this.setState({ isSelectedDepartment })
     if (isSelectedDepartment) {
-      for (let i = 0; i < attend.length; i++) {
-        idList.push(attend[i].id)
-        // checkIdIfHasLoginFunc(isSelectedDepartment, attendies.id)
-      }
+      attend.map((attendees, key) => {
+        if (existingIds.includes(attendees.id)) {
+          idList.push(attendees.id)
+        }
+      })
     } else {
+      attend.map((attendees, key) => {
+        // if (existingIdsArray.includes(attendees.id)) {
+        //   idList.splice(0, 1)
+        // }
+      })
+
+      checkIdIfHasLoginFunc(isSelectedDepartment, idList)
       idList = []
     }
-    checkIdIfHasLoginFunc(isSelectedDepartment, idList)
   }
 
   render () {
@@ -70,14 +81,13 @@ class EventsBudgetDepartmentComponent extends Component {
             <h2 className = { 'text-align-self unionbank-color font-weight-bold font-size-16px text-align-center' }>
               { attend.department }
             </h2>
-            <br/>
             {
-             //  attend.employees.length > 1 &&
-             //  <Checkbox
-             //    value = { true }
-             //    checked = { isSelectedDepartment }
-             //    onChange = { e => this.selectAll(!isSelectedDepartment, attend.employees) }
-             // />
+              // attend.employees.length > 1 &&
+              // <Checkbox
+              //   value = { true }
+              //   checked = { isSelectedDepartment }
+              //   onChange = { e => this.selectAll(!isSelectedDepartment, attend.employees) }
+              // />
             }
           </div>
           <Line/>
