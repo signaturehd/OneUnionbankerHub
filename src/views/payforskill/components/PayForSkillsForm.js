@@ -64,6 +64,7 @@ class PayForSkillsForm extends Component {
                 minDate = { moment().subtract(3, 'months') }
                 maxDate = { moment() }
                 text = { 'Date of Completion' }
+                disabled = { showEditMode }
                 errorMessage = { '' }
                 />
               {
