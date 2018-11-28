@@ -22,7 +22,7 @@ import moment from 'moment'
 import { Progress } from 'react-sweet-progress'
 import './styles/requestedGoal.css'
 
-class RequestedGoalsComponent extends Component {
+class TasksListComponent extends Component {
 
   constructor(props) {
     super(props)
@@ -37,7 +37,7 @@ class RequestedGoalsComponent extends Component {
   }
 
   render () {
-    const { cardHolder, priorityFunc, onSelected } = this.props
+    const { cardHolder, onEdit } = this.props
     return (
       <div className = { 'padding-15px' }>
       {
@@ -105,8 +105,8 @@ class RequestedGoalsComponent extends Component {
   }
 }
 
-RequestedGoalsComponent.propTypes = {
+TasksListComponent.propTypes = {
   onSendPageNumberToView : PropTypes.func
 }
 
-export default RequestedGoalsComponent
+export default TasksListComponent

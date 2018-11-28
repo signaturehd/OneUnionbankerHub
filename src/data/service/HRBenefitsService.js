@@ -2263,6 +2263,23 @@ export default class HRBenefitsService {
     })
   }
 
+  addGoalTask (token, goalId, taskDescription) {
+    const objectParam = {
+      id: goalId,
+      description: taskDescription
+    }
+
+    return this.apiClient.post('v1/goals/tasks', objectParam, {
+      headers : { token }
+    })
+  }
+
+  getGoalTask (token, goalId) {
+    return this.apiClient.get(`v1/goals/tasks?goalId=${goalId}`, {
+      headers: { token }
+    })
+  }
+
   // Pay For Skills
 
   getPaySkills (token) {

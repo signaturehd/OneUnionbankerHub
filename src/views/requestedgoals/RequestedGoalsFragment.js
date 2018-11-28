@@ -20,6 +20,7 @@ import {
 
 import RequestedGoalsComponent from './components/RequestedGoalsComponent'
 import AddGoalsFormComponent from './components/AddGoalsFormComponent'
+import TasksListComponent from './components/TasksListComponent'
 import RequestCoachFragment from '../requestCoach/RequestCoachFragment'
 
 import ResponseModal from '../notice/NoticeResponseModal'
@@ -36,77 +37,51 @@ class RequestedGoalsFragment extends BaseMVPView {
     super(props)
     this.state = {
       enabledLoader : false,
+      submitLoader: false,
       showNoticeResponseModal : false,
       editMode: false,
       showForm: false,
       noticeResponse: '',
       showPriorityModal : false,
       showGoalTypeModal : false,
+      addTask: false,
+      taskDescription: '',
       goalId: '',
       goalTitle: '',
+      goalTitleErrorMessage: '',
       description: '',
+      descriptionErrorMessage: '',
       startDate: '',
+      startDateErrorMessage: '',
       dueDate: '',
+      dueDateErrorMessage: '',
+      priorityId: '',
       priorityName: '',
+      priorityErrorMessage: '',
       approvalStatus : '',
       goalTypeId : '',
       goalType : '',
+      goalTypeErrorMessage : '',
+      taskArray: [],
       goalsArray : [
         {
-          description: "Test Description Test Description Test DescriptionTest Description Test Description",
-          endDate: "2019-11-24",
-          forDeletion: false,
-          id: 84,
-          isArchive: false,
-          priority: 3,
-          startDate: "2018-11-24",
-          title: "Sample Title",
-          type: 2
-        },
-        {
-          description: "Test Description",
-          endDate: "2019-11-24",
-          forDeletion: false,
-          id: 84,
-          isArchive: false,
-          priority: 3,
-          startDate: "2018-11-24",
-          title: "Sample Title",
-          type: 2
-        },
-        {
-          description: "Test Description",
-          endDate: "2019-11-24",
-          forDeletion: false,
-          id: 84,
-          isArchive: false,
-          priority: 3,
-          startDate: "2018-11-24",
-          title: "Sample Title",
-          type: 2
-        },
-        {
-          description: "Test Description",
-          endDate: "2019-11-24",
-          forDeletion: false,
-          id: 84,
-          isArchive: false,
-          priority: 3,
-          startDate: "2018-11-24",
-          title: "Sample Title",
-          type: 2
-        },
-        {
-          description: "Test Description",
-          endDate: "2019-11-24",
-          forDeletion: false,
-          id: 84,
-          isArchive: false,
-          priority: 3,
-          startDate: "2018-11-24",
-          title: "Sample Title",
-          type: 2
-        }
+          "id": 4,
+          "title": "test goal title 1",
+          "description": "this is a test description",
+          "startDate": "11/15/2018",
+          "endDate": "11/16/2018",
+          "priority": 1,
+          "status": 1
+          },
+          {
+          "id": 5,
+          "title": "test goal title 1",
+          "description": "this is a test description",
+          "startDate": "11/15/2018",
+          "endDate": "11/16/2018",
+          "priority": 1,
+          "status": 1
+          }
       ],
       priorityArray : [
         {
@@ -171,6 +146,14 @@ class RequestedGoalsFragment extends BaseMVPView {
     this.setState({ enabledLoader : true })
   }
 
+  hideSubmitLoader () {
+    this.setState({ submitLoader : false })
+  }
+
+  showSubmitLoader () {
+    this.setState({ submitLoader : true })
+  }
+
   navigate () {
     this.props.history.push('/mylearning/mygoals')
   }
@@ -198,6 +181,10 @@ class RequestedGoalsFragment extends BaseMVPView {
     this.setState({ dueDate })
   }
 
+  taskDescriptionFunc (taskDescription) {
+    this.setState({ taskDescription })
+  }
+
   priorityFunc(priority) {
     let lmh = ''
     if(priority === 1) {
@@ -221,14 +208,35 @@ class RequestedGoalsFragment extends BaseMVPView {
       priorityId,
       goalTypeId
     } = this.state
-    this.presenter.addRequestedGoals (
-      goalTitle,
-      description,
-      moment(startDate).format('YYYY-MM-DD'),
-      moment(dueDate).format('YYYY-MM-DD'),
-      priorityId,
-      goalTypeId
-    )
+
+    if(!goalTitle) {
+      this.setState({ goalTitleErrorMessage: 'Required field' })
+    } else if (!description) {
+      this.setState({ descriptionErrorMessage: 'Required field' })
+    } else if (!startDate) {
+      this.setState({ startDateErrorMessage: 'Required field' })
+    } else if (!dueDate) {
+      this.setState({ dueDateErrorMessage: 'Required field' })
+    } else if (!priorityId) {
+      this.setState({ priorityErrorMessage: 'Required field' })
+    } else if (!goalTypeId) {
+      this.setState({ goalTypeErrorMessage: 'Required field' })
+    }
+    else {
+      this.presenter.addRequestedGoals (
+        goalTitle,
+        description,
+        moment(startDate).format('YYYY-MM-DD'),
+        moment(dueDate).format('YYYY-MM-DD'),
+        priorityId,
+        goalTypeId
+      )
+    }
+  }
+
+  submitTask() {
+    const { goalId, taskDescription } = this.state
+    this.presenter.addGoalTask(goalId, taskDescription)
   }
 
   scrollFunction () {
@@ -262,21 +270,32 @@ class RequestedGoalsFragment extends BaseMVPView {
   render () {
     const {
       enabledLoader,
+      submitLoader,
       showNoticeResponseModal,
       noticeResponse,
+      addTask,
       editMode,
       showForm,
       showPriorityModal,
       showGoalTypeModal,
+      taskDescription,
       goalId,
       goalTitle,
+      goalTitleErrorMessage,
       description,
+      descriptionErrorMessage,
       startDate,
+      startDateErrorMessage,
       dueDate,
+      dueDateErrorMessage,
+      priorityId,
       priorityName,
+      priorityErrorMessage,
       goalTypeId,
       goalType,
+      goalTypeErrorMessage,
       approvalStatus,
+      taskArray,
       goalsArray,
       priorityArray,
       goalTypeArray
@@ -297,11 +316,11 @@ class RequestedGoalsFragment extends BaseMVPView {
           />
         }
         {
-          enabledLoader &&
+          submitLoader &&
           <Modal>
             <center>
               <h2>Please wait...</h2>
-              <CircularLoader show = { enabledLoader } />
+              <CircularLoader show = { submitLoader } />
             </center>
           </Modal>
         }
@@ -343,6 +362,7 @@ class RequestedGoalsFragment extends BaseMVPView {
               }
               onSubmit = { () => this.onSubmit() }
               goalTitle = { goalTitle }
+              goalTitleErrorMessage = { goalTitleErrorMessage }
               goalTitleFunc = { (resp) => this.goalTitleFunc(resp) }
               description = { description }
               descriptionFunc = { (resp) => this.descriptionFunc(resp) }
@@ -383,30 +403,46 @@ class RequestedGoalsFragment extends BaseMVPView {
             </div>
             <div className = { 'grid-main' }>
               <div>
-              <RequestedGoalsComponent
-                cardHolder = { goalsArray }
-                priorityFunc = { (resp) => this.priorityFunc(resp) }
-                onSelected = { (
-                  goalId,
-                  goalTitle,
-                  description,
-                  startDate,
-                  dueDate,
-                  priorityName,
-                  approvalStatus
-                ) => this.setState({
-                  goalId,
-                  goalTitle,
-                  description,
-                  startDate,
-                  dueDate,
-                  priorityName,
-                  approvalStatus
-                 }) }
-              />
+              {
+                enabledLoader ?
+                <center>
+                  <CircularLoader show = { enabledLoader }/>
+                </center>
+                :
+                goalsArray.length !== 0 ?
+                <RequestedGoalsComponent
+                  cardHolder = { goalsArray }
+                  priorityFunc = { (resp) => this.priorityFunc(resp) }
+                  onSelected = { (
+                    goalId,
+                    goalTitle,
+                    description,
+                    startDate,
+                    dueDate,
+                    priorityName,
+                    approvalStatus,
+                    goalTypeId
+                  ) => {
+                    this.setState({
+                      goalId,
+                      goalTitle,
+                      description,
+                      startDate,
+                      dueDate,
+                      priorityName,
+                      approvalStatus,
+                      goalTypeId
+                     })
+                    this.presenter.getGoalTask(goalId)
+                  }
+                 }
+                />
+                :
+                <center><h2>No record</h2></center>
+              }
               </div>
-              <div ref = { 'main-div' } className = { 'padding-15' }>
-                <Card className = { 'padding-15' }>
+              <div ref = { 'main-div' } className = { 'padding-10px' }>
+                <Card className = { 'padding-10px' }>
                   <div className = { 'grid-percentage' }>
                     <div>
                       <h2 className = { `margin-5px text-align-left font-size-18px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
@@ -434,11 +470,72 @@ class RequestedGoalsFragment extends BaseMVPView {
                   </div>
                   <br/>
                   <Line/>
-                  <br/>
-                  <div className = { 'padding-15' }>
-                    <h2 className = { 'font-weight-bold text-align-left font-size-20px' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
-                    <br/>
+                  <div className = { 'padding-10px' }>
+                    <div className = { 'header-column' }>
+                      <h2 className = { 'font-weight-bold text-align-left font-size-20px' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
+                      <h2 className = { 'grid-global' }>
+                      <h2></h2>
+                      {
+                        goalTitle &&
+                        <span
+                          className = { 'icon-check icon-edit-img' }
+                          onClick = { () => this.setState({ showForm: true, editMode: true }) }
+                        />
+                      }
+                      </h2>
+                    </div>
                     <h2 className = { 'font-weight-lighter text-align-left font-size-16px' }>{ description ? description : 'Goals allow you to create effective objectives for yourself or employees.' }</h2>
+                  </div>
+                  <br/>
+                  <Line/>
+                  <div className = { 'padding-10px' }>
+                    <div className = { 'header-column' }>
+                      <h2 className = { 'font-weight-bold text-align-left font-size-20px' }>Tasks</h2>
+                      <h2 className = { 'grid-global' }>
+                      <h2></h2>
+                      {
+                        goalTitle &&
+                        <span
+                          className = { 'icon-check icon-add-img' }
+                          onClick = { () => this.setState({ addTask: true }) }
+                        />
+                      }
+                      </h2>
+                    </div>
+                    {
+                      addTask &&
+                      <div>
+                        <GenericInput
+                          text = { 'Task description' }
+                          value = { taskDescription }
+                          onChange = { (e) => this.taskDescriptionFunc(e.target.value) }
+                          type = { 'textarea' }
+                        />
+                        <div className = { 'grid-global' }>
+                          <GenericButton
+                            text = { 'Cancel' }
+                            onClick = { () => this.setState({ addTask: false, taskDescription: '' }) }
+                          />
+                          <GenericButton
+                            text = { 'Submit' }
+                            onClick = { () => this.submitTask() }
+                          />
+                        </div>
+                      </div>
+                    }
+                    {
+                      taskArray.length !== 0 ?
+                      <TasksListComponent
+                        cardHolder = { taskArray }
+                        onEdit = { (taskDescription) => this.setState({
+                          taskDescription,
+                          addTask: true
+                        }) }
+                      />
+                      :
+                      !addTask &&
+                      <h2 className = { 'text-align-center font-weight-lighter font-size-14px' }>No task</h2>
+                    }
                   </div>
                 </Card>
               </div>

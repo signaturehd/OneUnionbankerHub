@@ -272,8 +272,6 @@ class MyGoalsFragment extends BaseMVPView {
                   <h2 className={ 'font-size-16px text-align-left' }>Below are the list of your goals</h2>
                 </div>
               </div>
-              {
-                !showForm ?
                 <div className = { 'tabs-container' }>
                 <input
                   className = { 'input-tab' }
@@ -320,8 +318,8 @@ class MyGoalsFragment extends BaseMVPView {
                 }
                 <section id='content1'>
                   <Switch>
-                    <Route exact path='/mygoals/request/RequestedGoalsComponent'
-                      render={ props => <RequestedGoalsComponent { ...props } /> }/>
+                    <Route exact path='/mygoals/request/RequestedGoalsFragment'
+                      render={ props => <RequestedGoalsFragment { ...props } /> }/>
                     <Route exact path='/mygoals/approved/ApprovedGoalsComponent'
                       render={ props => <ApprovedGoalsComponent { ...props } /> }/>
                    </Switch>
@@ -395,32 +393,6 @@ class MyGoalsFragment extends BaseMVPView {
 
                 }
               </div>
-              :
-              <MyGoalsFormComponent
-              onCancel = { () => {
-                  this.setState({ showForm : false })
-                  this.resetValue()
-                }
-              }
-              onSubmit = { () => this.onSubmit() }
-              goalTitle = { goalTitle }
-              goalTitleFunc = { (resp) => this.goalTitleFunc(resp) }
-              description = { description }
-              descriptionFunc = { (resp) => this.descriptionFunc(resp) }
-              startDate = { startDate }
-              startDateFunc = { (resp) => this.startDateFunc(resp) }
-              dueDate = { dueDate }
-              dueDateFunc = { (resp) => this.dueDateFunc(resp) }
-              priorityName = { priorityName }
-              goalType = { goalType }
-              showPriorityModal = { showPriorityModal }
-              showPriorityModalFunc = { () => this.setState({ showPriorityModal : true }) }
-              showGoalTypeModal = { showGoalTypeModal }
-              showGoalTypeModalFunc = { () => this.setState({ showGoalTypeModal : true }) }
-              editMode = { editMode }
-              onEdit = { () => this.onEdit() }
-              />
-            }
             </div>
           </div>
         }

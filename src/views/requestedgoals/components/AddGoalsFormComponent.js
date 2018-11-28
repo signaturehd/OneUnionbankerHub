@@ -31,6 +31,7 @@ class AddGoalsFormComponent extends Component {
   render () {
     const {
       goalTitle,
+      goalTitleErrorMessage,
       goalTitleFunc,
       description,
       descriptionFunc,
@@ -60,6 +61,7 @@ class AddGoalsFormComponent extends Component {
                 value = { goalTitle }
                 onChange = { (e) => goalTitleFunc(e.target.value) }
                 disabled = { editMode }
+                errorMessage = { goalTitleErrorMessage }
               />
               <GenericInput
                 text = { 'Goal Type' }

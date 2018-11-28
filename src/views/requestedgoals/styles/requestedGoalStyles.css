@@ -55,3 +55,16 @@
 .color-High {
   color: #ff0000;
 }
+
+.icon-edit-img {
+  background-image: url('../../../images/icons/baseline_edit_black_18dp.png')
+}
+
+.icon-add-img {
+  background-image: url('../../../images/icons/icons-add-36.png')
+}
+
+.header-column {
+  display: grid;
+  grid-template-columns: 2fr .5fr;
+}

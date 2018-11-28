@@ -1480,4 +1480,14 @@ export default class HRBenefitsClient {
     return this.service.requestCoach(token, requestCoachParam)
     .pipe(ServiceErrorOperator())
   }
+
+  addGoalTask (token, goalId, taskDescription) {
+    return this.service.addGoalTask(token,  goalId, taskDescription)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getGoalTask (token, goalId) {
+    return this.service.getGoalTask(token,  goalId)
+    .pipe(ServiceErrorOperator())
+  }
 }
