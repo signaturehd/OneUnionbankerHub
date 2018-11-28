@@ -24,7 +24,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.presenter.getPaySkills()
+    this.presenter.getPurposeCoeType()
   }
 
   setTypeOfCoe (typeOfCoe) {

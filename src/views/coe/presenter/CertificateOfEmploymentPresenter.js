@@ -1,8 +1,6 @@
 /* GET */
-import GetProgramsInteractor from '../../../domain/interactor/pay/GetProgramsInteractor'
-import GetGenerictCoeTypeInteractor from '../../../domain/interactor/coe/GetGenerictCoeTypeInteractor'
+import GetPurposeCoeTypeInteractor from '../../../domain/interactor/coe/GetPurposeCoeTypeInteractor'
 /* POST */
-import AddPaySkillsInteractor from '../../../domain/interactor/pay/AddPaySkillsInteractor'
 
 /* Param */
 import AddCoeParam from '../../../domain/param/AddPaySkillsParam'
@@ -16,9 +14,7 @@ let storedTypeOFCoeObject = '', storedPurposeObject = '', storedVisaObject = ''
 
 export default class CertificateOfEmploymentPresenter {
   constructor (container) {
-    this.getProgramsInteractor = new GetProgramsInteractor(container.get('HRBenefitsClient'))
-    this.addPaySkillsInteractor = new AddPaySkillsInteractor(container.get('HRBenefitsClient'))
-    this.getGenerictCoeTypeInteractor = new GetGenerictCoeTypeInteractor(container.get('HRBenefitsClient'))
+    this.getPurposeCoeTypeInteractor = new GetPurposeCoeTypeInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -40,9 +36,9 @@ export default class CertificateOfEmploymentPresenter {
     this.view.setPurposeBody(data)
   }
 
-  getPaySkills () {
+  getPurposeCoeType () {
     this.view.checkLoader(true)
-    this.getProgramsInteractor.execute()
+    this.getPurposeCoeTypeInteractor.execute('purpose')
     .subscribe(data => {
       this.view.checkLoader(false)
       this.view.setPurpose('')
@@ -53,22 +49,9 @@ export default class CertificateOfEmploymentPresenter {
     })
   }
 
-  getCoePurpose () {
+  getCoeCountry () {
     this.view.checkLoader(true)
-    this.getGenerictCoeTypeInteractor.execute('purpose')
-    .subscribe(data => {
-      this.view.checkLoader(false)
-      this.view.setPurpose('')
-      this.view.setTypeOfCoe('')
-      this.view.setVisa('')
-    }, error => {
-      this.view.checkLoader(false)
-    })
-  }
-
-  getCoePurpose () {
-    this.view.checkLoader(true)
-    this.getGenerictCoeTypeInteractor.execute('country')
+    this.getPurposeCoeTypeInteractor.execute('country')
     .subscribe(data => {
       this.view.checkLoader(false)
       this.view.setPurpose('')
