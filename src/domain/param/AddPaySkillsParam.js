@@ -1,8 +1,9 @@
-export default (programId, dateOfCompletion, accreditingBodyId, attachments) => ({
+export default (programId, dateOfCompletion, accreditingBodyId, others, attachments) => ({
   body : {
     programId,
     dateOfCompletion,
-    accreditingBodyId
+    accreditingBodyId,
+    others,
   },
   attachments
 })
