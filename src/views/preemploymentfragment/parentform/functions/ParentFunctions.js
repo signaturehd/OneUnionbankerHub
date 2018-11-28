@@ -23,7 +23,7 @@ export function checkGender (relationship) {
 }
 
 export function checkStatus (status) {
-	if(status === 0) {
+	if(status === 0 || status === null) {
 	  return 'Living'
 	} else {
 	  return 'Deceased'

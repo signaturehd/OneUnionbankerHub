@@ -595,7 +595,6 @@ class ParentFragment extends BaseMVPView {
             <Line/>
             <br/>
             {
-              !this.props.reuse &&
               <div>
                 {
                   parentDetails.length === 2 ?
@@ -625,7 +624,6 @@ class ParentFragment extends BaseMVPView {
             <br/>
             <div>
               {
-                !this.props.reuse &&
                 <div>
                   {
                     enabledParentLoader  ?
