@@ -25,6 +25,8 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
 
   componentDidMount () {
     this.presenter.getPurposeCoeType()
+    this.presenter.getCoeSalary()
+    this.presenter.getCountryCoeType()
   }
 
   setTypeOfCoe (typeOfCoe) {
@@ -41,13 +43,13 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
 
   setTypeOfCoeBody (typeOfCoeBody) {
     this.setState({ typeOfCoeBody })
-  }
+  }v
 
   setPurposeBody (purposeBody) {
     this.setState({ purposeBody })
   }
 
-  setVisaseBody (visaBody) {
+  setVisaBody (visaBody) {
     this.setState({ visaBody })
   }
 
@@ -84,7 +86,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
         {
           showTypeModal &&
           <SingleInputModal
-            label = { 'Please select Type Of Certificate of Employment' }
+            label = { 'Please select type Of COE' }
             inputArray = { typeOfCoe}
             selectedArray = { (id, type) => {
               const objectParam = {
@@ -101,9 +103,9 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
         {
           showPurposeModal &&
           <SingleInputModal
-            label = { 'Please select Purpose' }
+            label = { 'Please select type of Purpose' }
             inputArray = { purpose }
-            selectedArray = { (id, accre) => {
+            selectedArray = { (id, purpose) => {
               const objectParam = {
                 id : id,
                 purpose : purpose,
@@ -118,8 +120,8 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
         {
           showVisaModal &&
           <SingleInputModal
-            label = { 'Please select VISA' }
-            inputArray = { purpose }
+            label = { 'Please select Country' }
+            inputArray = { visa }
             selectedArray = { (id, visa) => {
               const objectParam = {
                 id : id,
@@ -134,11 +136,11 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
         }
         {
           enabledLoader ?
-          <center className = { 'circular-loader-center' }>
-            <CircularLoader
-              show = { enabledLoader }
-            />
-            <h2>Please wait...</h2>
+        <center className = { 'circular-loader-center' }>
+          <CircularLoader
+            show = { enabledLoader }
+          />
+          <h2>Please wait...</h2>
         </center> :
 
         <CertificateOfEmploymentFormComponent

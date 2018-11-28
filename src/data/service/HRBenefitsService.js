@@ -1,9 +1,10 @@
 export default class HRBenefitsService {
-  constructor (apiClient, accountClient, fileClient, onboardingClient) {
+  constructor (apiClient, accountClient, fileClient, onboardingClient, coeClient) {
     this.apiClient = apiClient
     this.accountClient = accountClient
     this.fileClient = fileClient
     this.onboardingClient = onboardingClient
+    this.coeClient = coeClient
   }
 
   /* user */
@@ -2279,8 +2280,14 @@ export default class HRBenefitsService {
 
   /* Certificaqte of Employment */
 
-  getPurposeCoeType (token, type) {
-    return this.apiClient.get(`v1/coe/libraries?type=${ type }`, null, {
+  getPurposeCoeType (token, data) {
+    return this.coeClient.get(`v1/coe/libraries?type=${ data }`, null, {
+      headers : { token }
+    })
+  }
+
+  getCountryCoeType (token, data) {
+    return this.coeClient.get(`v1/coe/libraries?type=${ data }`, null, {
       headers : { token }
     })
   }

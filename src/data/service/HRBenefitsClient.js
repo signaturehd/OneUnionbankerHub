@@ -1480,8 +1480,13 @@ export default class HRBenefitsClient {
 
   /* Certificaqte of Employment */
 
-  getPurposeCoeType (token, type) {
-    return this.service.getPurposeCoeType(token, type)
+  getPurposeCoeType (token, data) {
+    return this.service.getPurposeCoeType(token, data)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getCountryCoeType (token, data) {
+    return this.service.getCountryCoeType(token, data)
     .pipe(ServiceErrorOperator())
   }
 }

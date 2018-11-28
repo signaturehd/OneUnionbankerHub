@@ -52,7 +52,7 @@ class CertificateOfEmploymentFormComponent extends Component {
                 text = { 'Type of Certificate of Employment' }
                 disabled = { showEditMode }
                 readOnly
-                value = { typeOfCoeBody && typeOfCoeBody.programs }
+                value = { typeOfCoeBody && typeOfCoeBody.type }
                 onClick = { () => showTypeModalFunc() }
                 />
               <GenericInput
@@ -63,14 +63,18 @@ class CertificateOfEmploymentFormComponent extends Component {
                 value = { purposeBody && purposeBody.purpose }
                 onClick = { () => showPurposeModalFunc() }
                 />
-              <GenericInput
-                errorMessage = { '' }
-                text = { 'VISA' }
-                disabled = { showEditMode }
-                readOnly
-                value = { visaBody && visaBody.visa }
-                onClick = { () => showVisaModalFunc() }
-                />
+              {
+                purposeBody &&
+                purposeBody.id === 37 &&
+                <GenericInput
+                  errorMessage = { '' }
+                  text = { 'VISA' }
+                  disabled = { showEditMode }
+                  readOnly
+                  value = { visaBody && visaBody.visa }
+                  onClick = { () => showVisaModalFunc() }
+                  />
+              }
               <br/>
               <Line/>
               {
