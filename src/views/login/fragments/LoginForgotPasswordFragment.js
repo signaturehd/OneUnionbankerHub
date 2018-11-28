@@ -105,7 +105,7 @@ class LoginForgotPasswordFragment extends Component {
         </div>
         <br/>
           <h2 className = { 'font-size-18px text-align-center font-weight-bold' }>
-            Forgot Passsword
+            Forget Passsword
           </h2>
         <br/>
         <br/>
