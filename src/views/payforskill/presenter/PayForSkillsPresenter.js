@@ -13,76 +13,7 @@ import moment from 'moment'
 
 /* Variables */
 let storedDateOfCompletion = '', storedProgramObject = '', storedAttachments = [], storedAccreditationObject = ''
-let dummyData = [
-   {
-      "id":15,
-      "status":{
-         "id":31,
-         "status":"For Review"
-      },
-      "program":{
-         "id":1,
-         "program":"BrM Certification"
-      },
-      "dateOfCompletion":"2018-11-27Z",
-      "accreditingBodyId":{
-         "id":1,
-         "accreditingBody":"UnionBank of the Philippines"
-      },
-      "others":""
-   },
-   {
-      "id":16,
-      "status":{
-         "id":31,
-         "status":"For Review"
-      },
-      "program":{
-         "id":2,
-         "program":"Certified in the Governance of Enterprise IT (CGEIT)"
-      },
-      "dateOfCompletion":"2018-11-27Z",
-      "accreditingBodyId":{
-         "id":2,
-         "accreditingBody":"ISACA"
-      },
-      "others":""
-   },
-   {
-      "id":25,
-      "status":{
-         "id":31,
-         "status":"For Review"
-      },
-      "program":{
-         "id":20,
-         "program":"Treasury Certification Program"
-      },
-      "dateOfCompletion":"2018-11-02Z",
-      "accreditingBodyId":{
-         "id":20,
-         "accreditingBody":"Ateneo BAP Institute of Banking"
-      },
-      "others":""
-   },
-   {
-      "id":24,
-      "status":{
-         "id":31,
-         "status":"For Review"
-      },
-      "program":{
-         "id":20,
-         "program":"Treasury Certification Program"
-      },
-      "dateOfCompletion":"2018-11-02Z",
-      "accreditingBodyId":{
-         "id":21,
-         "accreditingBody":"Others"
-      },
-      "others":"PayForSkillsForTesting"
-   }
-]
+
 export default class PayForSkillsPresenter {
   constructor (container) {
     this.getProgramsInteractor = new GetProgramsInteractor(container.get('HRBenefitsClient'))
@@ -202,6 +133,7 @@ export default class PayForSkillsPresenter {
       storedProgramObject.id,
       moment(storedDateOfCompletion).format('YYYY-MM-DD'),
       storedAccreditationObject.id,
+      storedAccreditationObject.id === 21 ? storedAccreditationObject.accre : '',
       storedAttachments
     ))
     .subscribe(data => {

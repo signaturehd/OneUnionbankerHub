@@ -123,7 +123,7 @@ class PayForSkillsFragment extends BaseMVPView {
             selectedArray = { (id, accre) => {
               const objectParam = {
                 id : id,
-                accre : accre,
+                accre : id === 21 ? '' : accre,
               }
               this.presenter.setStoredAccreditationObject(objectParam)
               this.setState({  showAccreditationModal: false })
@@ -142,7 +142,7 @@ class PayForSkillsFragment extends BaseMVPView {
         </center> :
         <div>
         {
-          showAddingPaySkillsComponent ?
+          !showAddingPaySkillsComponent ?
           <PayForSkillsListComponent
             payForSkillsList = { payForSkillsList }
           />
@@ -163,6 +163,18 @@ class PayForSkillsFragment extends BaseMVPView {
             accreditingBody = { accreditingBody }
             accrediting = { accrediting }
             dateOfCompletion = { dateOfCompletion }
+            onBackToList = { (showAddingPaySkillsComponent) => {
+              this.presenter.setStoredDateOfCompletion('')
+              this.presenter.setStoredAccreditationObject('')
+              this.setState({ showAddingPaySkillsComponent })
+            } }
+            onChangeAccreditationModalFunc = { (e, e1) => {
+              const objectParam = {
+                id : e,
+                accre : e1,
+              }
+              this.presenter.setStoredAccreditationObject(objectParam)
+            } }
             addAttachmentsFunc = { () => {
               const newFileArray = [...attachmentsArray]
               const objectParam = {

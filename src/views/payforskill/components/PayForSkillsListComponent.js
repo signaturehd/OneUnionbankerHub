@@ -44,22 +44,30 @@ class PayForSkillsListComponent extends Component {
                     <div className = { 'payskills-date-grid' }>
                       <div className = { 'payskills-card-grid' }>
                         <div className = { 'text-align-right' }>
-                          <h4 className = { 'font-size-16px font-weight-bold' }>
+                          <h4 className = { 'font-size-15px font-weight-normal' }>
                             { skill.status ? skill.status.status : '(No Information)' }
                           </h4>
                         </div>
                         <div>
+                          <br/>
                           <h4 className = { 'font-size-18px font-weight-bold unionbank-color' }>
-                            { skill.program ? skill.program.program : '(No Information)' }
+                            { skill.program &&
+                              skill.program.name ?
+                              skill.program.name :
+                              '(No Information)' }
                           </h4>
                           {
-                            skill.accreditingBodyId.id === 21 ?
+                            skill.accreditingBody.id === 21 ?
                             <h4 className = { 'font-size-13px font-weight-normal' }>
                               { skill.others ? skill.others : '(No Information)' }
                             </h4>
                             :
                             <h4 className = { 'font-size-13px font-weight-normal' }>
-                              { skill.accreditingBodyId ? skill.accreditingBodyId.accreditingBody : '(No Information)' }
+                              {
+                                skill.accreditingBody &&
+                                skill.accreditingBody.name ?
+                                skill.accreditingBody.name :
+                                '(No Information)' }
                             </h4>
                           }
                         </div>
