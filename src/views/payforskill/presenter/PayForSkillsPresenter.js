@@ -128,7 +128,6 @@ export default class PayForSkillsPresenter {
 
   getPaySkillsList () {
     this.view.checkLoader(true)
-    this.view.setPayForSkillsList(dummyData)
     this.getPaySkillsListInteractor.execute()
     .subscribe(data => {
       this.view.setPayForSkillsList(data)
