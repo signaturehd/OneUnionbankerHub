@@ -1,5 +1,6 @@
 /* GET */
 import GetProgramsInteractor from '../../../domain/interactor/pay/GetProgramsInteractor'
+import GetPaySkillsListInteractor from '../../../domain/interactor/pay/GetPaySkillsListInteractor'
 /* POST */
 import AddPaySkillsInteractor from '../../../domain/interactor/pay/AddPaySkillsInteractor'
 
@@ -16,6 +17,7 @@ let storedDateOfCompletion = '', storedProgramObject = '', storedAttachments = [
 export default class PayForSkillsPresenter {
   constructor (container) {
     this.getProgramsInteractor = new GetProgramsInteractor(container.get('HRBenefitsClient'))
+    this.getPaySkillsListInteractor = new GetPaySkillsListInteractor(container.get('HRBenefitsClient'))
     this.addPaySkillsInteractor = new AddPaySkillsInteractor(container.get('HRBenefitsClient'))
   }
 
@@ -50,6 +52,16 @@ export default class PayForSkillsPresenter {
       this.view.checkLoader(false)
       this.view.setAccrediting(data.accreditingBody)
       this.view.setPrograms(data.program)
+    }, error => {
+      this.view.checkLoader(false)
+    })
+  }
+
+  getPaySkillsList () {
+    this.view.checkLoader(true)
+    this.getPaySkillsListInteractor.execute()
+    .subscribe(data => {
+      this.view.setPayForSkillsList(data)
     }, error => {
       this.view.checkLoader(false)
     })
@@ -121,6 +133,7 @@ export default class PayForSkillsPresenter {
       storedProgramObject.id,
       moment(storedDateOfCompletion).format('YYYY-MM-DD'),
       storedAccreditationObject.id,
+      storedAccreditationObject.id === 21 ? storedAccreditationObject.accre : '',
       storedAttachments
     ))
     .subscribe(data => {

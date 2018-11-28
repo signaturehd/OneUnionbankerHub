@@ -34,7 +34,9 @@ class PayForSkillsForm extends Component {
       attachmentsArray,
       attachmentsNewValueFunc,
       onContinue,
-      onEdit
+      onEdit,
+      onChangeAccreditationModalFunc,
+      onBackToList
   	} = this.props
 
     return (
@@ -62,16 +64,37 @@ class PayForSkillsForm extends Component {
                 minDate = { moment().subtract(3, 'months') }
                 maxDate = { moment() }
                 text = { 'Date of Completion' }
-                errorMessage = { '' }
-                />
-              <GenericInput
-                errorMessage = { '' }
-                text = { 'Accrediting Body' }
                 disabled = { showEditMode }
-                readOnly
-                value = { accreditingBody && accreditingBody.accre }
-                onClick = { () => showAccreditationModalFunc() }
+                errorMessage = { '' }
                 />
+              {
+                accreditingBody && accreditingBody.id === 21 ?
+                <GenericInput
+                  errorMessage = { '' }
+                  text = { 'Accrediting Body' }
+                  disabled = { showEditMode }
+                  errorMessage = {
+                    accreditingBody &&
+                    accreditingBody.accre ?
+                    '' :
+                    'Please specify if others' }
+                  value = { accreditingBody && accreditingBody.accre }
+                  onChange = { (e) =>
+                  onChangeAccreditationModalFunc(
+                    accreditingBody && accreditingBody.id,
+                    e.target.value)
+                  }
+                />
+                :
+                <GenericInput
+                  errorMessage = { '' }
+                  text = { 'Accrediting Body' }
+                  disabled = { showEditMode }
+                  readOnly
+                  value = { accreditingBody && accreditingBody.accre }
+                  onClick = { () => showAccreditationModalFunc() }
+                />
+              }
               <br/>
               <div className = { 'grid-global' }>
                 <h2 className = { 'text-align-left' }>Form Attachments</h2>
@@ -119,15 +142,19 @@ class PayForSkillsForm extends Component {
                   className={ 'payforskillsview-submit' } />
               </div>
               :
-
-              <center>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text={ 'Back to List' }
+                  type = { 'button' }
+                  onClick={ () => onBackToList(false) }
+                  className={ 'payforskillsview-submit' } />
                 <GenericButton
                   text={ 'Continue' }
                   onClick={ () =>
                     onContinue()
                   }
                   className={ 'payforskillsview-submit' } />
-              </center>
+              </div>
               }
             </div>
           </div>
