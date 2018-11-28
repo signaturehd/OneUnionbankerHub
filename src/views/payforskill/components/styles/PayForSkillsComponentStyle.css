@@ -3,6 +3,11 @@
   max-width: 100%;
 }
 
+.payskills-date-grid {
+  display: grid;
+  grid-template-rows: 1fr .3fr;
+}
+
 .payforskills-form-card {
   max-width: 100%;
   padding: 20px 5px 20px 5px;
@@ -10,9 +15,13 @@
 }
 
 .payskills-card {
+  padding: 10px;
+  min-height: 150px;
+}
+
+.payskills-card-grid {
   display:grid;
-  grid-template-columns: .3fr 1fr;
-  padding: 20px;
+  grid-template-rows: .3fr 1fr;
 }
 
 .payforskills-card-list {

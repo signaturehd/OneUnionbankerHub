@@ -164,10 +164,7 @@ class PayForSkillsFragment extends BaseMVPView {
               this.presenter.setStoredAttachments(newFileArray)
             } }
             attachmentsNewValueFunc = { (respFile) =>
-              {
-                console.log(respFile)
-                this.presenter.setStoredAttachments(respFile)
-              }
+              this.presenter.setStoredAttachments(respFile)
             }
             dateOfCompletionFunc = { (e) =>
               this.presenter.setStoredDateOfCompletion(e)
