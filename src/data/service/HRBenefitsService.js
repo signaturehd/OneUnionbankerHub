@@ -2222,13 +2222,14 @@ export default class HRBenefitsService {
     })
   }
 
-  updateGoals (token, goalId, dueDate) {
+  updateGoals (token, goalId, startDate, dueDate) {
     const objectParam = {
       id: goalId,
+      startDate: startDate,
       endDate: dueDate
     }
 
-    return this.apiClient.put('v1/goals/personal', objectParam, {
+    return this.apiClient.put(`v1/goals/personal/${goalId}`, objectParam, {
       headers : { token }
     })
   }
@@ -2277,6 +2278,17 @@ export default class HRBenefitsService {
   getGoalTask (token, goalId) {
     return this.apiClient.get(`v1/goals/tasks?goalId=${goalId}`, {
       headers: { token }
+    })
+  }
+
+  addGoalComment (token, goalId, goalComment) {
+    const objectParam = {
+      id: goalId,
+      description: goalComment
+    }
+
+    return this.apiClient.post('v1/goals/comments', objectParam, {
+      headers : { token }
     })
   }
 

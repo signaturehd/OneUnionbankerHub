@@ -45,15 +45,15 @@
 }
 
 .color-Low {
-  color: #dddd00;
+  color: #4CAF50;
 }
 
 .color-Medium {
-  color: #ff8a00;
+  color: #FF8A00;
 }
 
 .color-High {
-  color: #ff0000;
+  color: #ff3333;
 }
 
 .icon-edit-img {
@@ -66,5 +66,5 @@
 
 .header-column {
   display: grid;
-  grid-template-columns: 2fr .5fr;
+  grid-template-columns: 2fr 1fr;
 }

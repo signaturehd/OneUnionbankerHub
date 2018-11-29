@@ -71,11 +71,12 @@ class RequestedGoalsComponent extends Component {
                 <div>
                   {
                     resp.approvalStatus === 2 ?
-                    <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold header-column' }>Approved<span className = { 'icon-check icon-check-img' }/></h2>
+                    <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold color-Low' }>Approved</h2>
                     :
                       resp.approvalStatus === 3 ?
-                      <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold header-column' }>Rejected<span className = { 'icon-check icon-cross-img' }/></h2>
+                      <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold color-High' }>Rejected</h2>
                       :
+                      resp.approvalStatus === 1 &&
                       <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold' }>Requested</h2>
                   }
                   <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-lighter unionbank-color' }>Personal</h2>

@@ -105,11 +105,6 @@
   margin: auto;
 }
 
-.icon-check-img {
-  margin-left: 15px;
-  background-image: url('../../../../images/icons/ic_check_green_500_24dp.png')
-}
-
 .icon-cross-img {
   margin-left: 15px;
   background-image: url('../../../../images/icons/ic_close_red_500_24dp.png')

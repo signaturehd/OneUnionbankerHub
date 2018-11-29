@@ -38,6 +38,7 @@ class RequestedGoalsFragment extends BaseMVPView {
     this.state = {
       enabledLoader : false,
       submitLoader: false,
+      taskLoader: false,
       showNoticeResponseModal : false,
       editMode: false,
       showForm: false,
@@ -45,7 +46,11 @@ class RequestedGoalsFragment extends BaseMVPView {
       showPriorityModal : false,
       showGoalTypeModal : false,
       addTask: false,
+      addComment: false,
       taskDescription: '',
+      taskDescriptionErrorMessage: '',
+      goalComment: '',
+      goalCommentErrorMessage: '',
       goalId: '',
       goalTitle: '',
       goalTitleErrorMessage: '',
@@ -63,26 +68,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       goalType : '',
       goalTypeErrorMessage : '',
       taskArray: [],
-      goalsArray : [
-        {
-          "id": 4,
-          "title": "test goal title 1",
-          "description": "this is a test description",
-          "startDate": "11/15/2018",
-          "endDate": "11/16/2018",
-          "priority": 1,
-          "status": 1
-          },
-          {
-          "id": 5,
-          "title": "test goal title 1",
-          "description": "this is a test description",
-          "startDate": "11/15/2018",
-          "endDate": "11/16/2018",
-          "priority": 1,
-          "status": 1
-          }
-      ],
+      goalsArray : [],
       priorityArray : [
         {
           id: 1,
@@ -111,12 +97,16 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    // this.presenter.getGoals()
+    this.presenter.getGoals()
     // this.scrollFunction()
   }
 
   getRequestedGoals(goalsArray) {
     this.setState({ goalsArray })
+  }
+
+  getTasklist (taskArray) {
+    this.setState({ taskArray })
   }
 
   noticeResponse (noticeResponse) {
@@ -154,6 +144,14 @@ class RequestedGoalsFragment extends BaseMVPView {
     this.setState({ submitLoader : true })
   }
 
+  hideTaskLoader () {
+    this.setState({ taskLoader : false })
+  }
+
+  showTaskLoader () {
+    this.setState({ taskLoader : true })
+  }
+
   navigate () {
     this.props.history.push('/mylearning/mygoals')
   }
@@ -183,6 +181,10 @@ class RequestedGoalsFragment extends BaseMVPView {
 
   taskDescriptionFunc (taskDescription) {
     this.setState({ taskDescription })
+  }
+
+  goalCommentFunc (goalComment) {
+    this.setState({ goalComment })
   }
 
   priorityFunc(priority) {
@@ -234,9 +236,40 @@ class RequestedGoalsFragment extends BaseMVPView {
     }
   }
 
+  onEdit() {
+    const { goalId, startDate, dueDate } = this.state
+
+    if(!startDate) {
+      this.setState({ startDateErrorMessage: 'Required field' })
+    } else if (!dueDate) {
+      this.setState({ dueDateErrorMessage: 'Required field' })
+    } else {
+      this.presenter.updateGoals (
+        goalId,
+        moment(startDate).format('YYYY-MM-DD'),
+        moment(dueDate).format('YYYY-MM-DD')
+      )
+    }
+  }
+
   submitTask() {
     const { goalId, taskDescription } = this.state
-    this.presenter.addGoalTask(goalId, taskDescription)
+    if(!taskDescription) {
+      this.setState({ taskDescriptionErrorMessage: 'Required field' })
+    }
+    else {
+      this.presenter.addGoalTask(goalId, taskDescription)
+    }
+  }
+
+  submitComment() {
+    const { goalId, goalComment } = this.state
+    if(!goalComment) {
+      this.setState({ goalCommentErrorMessage: 'Required field' })
+    }
+    else {
+      this.presenter.addGoalComment(goalId, goalComment)
+    }
   }
 
   scrollFunction () {
@@ -254,14 +287,27 @@ class RequestedGoalsFragment extends BaseMVPView {
   resetValue () {
     this.setState({
       goalTitle: '',
+      goalTitleErrorMessage: '',
       description: '',
+      descriptionErrorMessage: '',
       startDate: '',
+      startDateErrorMessage: '',
       dueDate: '',
+      dueDateErrorMessage: '',
       priorityId: '',
       priorityName: '',
+      priorityErrorMessage: '',
       goalTypeId: '',
       goalType: '',
+      goalTypeErrorMessage: '',
       rejectedRemarks: '',
+      taskDescription: '',
+      taskDescriptionErrorMessage: '',
+      goalComment: '',
+      goalCommentErrorMessage: '',
+      addTask: false,
+      addComment: false,
+      editMode: false,
       showForm: false,
       showApprovalForm : false
     })
@@ -271,14 +317,19 @@ class RequestedGoalsFragment extends BaseMVPView {
     const {
       enabledLoader,
       submitLoader,
+      taskLoader,
       showNoticeResponseModal,
       noticeResponse,
       addTask,
+      addComment,
       editMode,
       showForm,
       showPriorityModal,
       showGoalTypeModal,
       taskDescription,
+      taskDescriptionErrorMessage,
+      goalComment,
+      goalCommentErrorMessage,
       goalId,
       goalTitle,
       goalTitleErrorMessage,
@@ -311,6 +362,7 @@ class RequestedGoalsFragment extends BaseMVPView {
             onClose={ () => {
               this.setState({ showNoticeResponseModal : false })
               onClose()
+              this.resetValue()
             }}
             noticeResponse={ noticeResponse }
           />
@@ -459,10 +511,10 @@ class RequestedGoalsFragment extends BaseMVPView {
                     <div>
                       {
                         approvalStatus === 2 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold header-column' }>Approved<span className = { 'icon-check icon-check-img' }/></h2>
+                        <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold color-Low' }>Approved</h2>
                         :
                           approvalStatus === 3 ?
-                          <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold header-column' }>Rejected<span className = { 'icon-check icon-cross-img' }/></h2>
+                          <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold color-High' }>Rejected</h2>
                           :
                           <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold' }>{ approvalStatus ? 'Requested' : 'Status' }</h2>
                       }
@@ -476,7 +528,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                       <h2 className = { 'grid-global' }>
                       <h2></h2>
                       {
-                        goalTitle &&
+                        goalId &&
                         <span
                           className = { 'icon-check icon-edit-img' }
                           onClick = { () => this.setState({ showForm: true, editMode: true }) }
@@ -486,57 +538,113 @@ class RequestedGoalsFragment extends BaseMVPView {
                     </div>
                     <h2 className = { 'font-weight-lighter text-align-left font-size-16px' }>{ description ? description : 'Goals allow you to create effective objectives for yourself or employees.' }</h2>
                   </div>
-                  <br/>
-                  <Line/>
-                  <div className = { 'padding-10px' }>
-                    <div className = { 'header-column' }>
-                      <h2 className = { 'font-weight-bold text-align-left font-size-20px' }>Tasks</h2>
-                      <h2 className = { 'grid-global' }>
-                      <h2></h2>
-                      {
-                        goalTitle &&
-                        <span
-                          className = { 'icon-check icon-add-img' }
-                          onClick = { () => this.setState({ addTask: true }) }
-                        />
-                      }
-                      </h2>
-                    </div>
-                    {
-                      addTask &&
-                      <div>
-                        <GenericInput
-                          text = { 'Task description' }
-                          value = { taskDescription }
-                          onChange = { (e) => this.taskDescriptionFunc(e.target.value) }
-                          type = { 'textarea' }
-                        />
-                        <div className = { 'grid-global' }>
-                          <GenericButton
-                            text = { 'Cancel' }
-                            onClick = { () => this.setState({ addTask: false, taskDescription: '' }) }
+                  {
+                    approvalStatus === 2 &&
+                    <div>
+                    <br/>
+                    <Line/>
+                    <div className = { 'padding-10px' }>
+                      <div className = { 'header-column' }>
+                        <h2 className = { 'font-weight-bold text-align-left font-size-20px' }>Tasks</h2>
+                        <h2 className = { 'grid-global' }>
+                        <h2></h2>
+                        {
+                          goalId &&
+                          <span
+                            className = { 'icon-check icon-add-img' }
+                            onClick = { () => this.setState({ addTask: true }) }
                           />
-                          <GenericButton
-                            text = { 'Submit' }
-                            onClick = { () => this.submitTask() }
-                          />
-                        </div>
+                        }
+                        </h2>
                       </div>
-                    }
-                    {
-                      taskArray.length !== 0 ?
-                      <TasksListComponent
-                        cardHolder = { taskArray }
-                        onEdit = { (taskDescription) => this.setState({
-                          taskDescription,
-                          addTask: true
-                        }) }
-                      />
-                      :
-                      !addTask &&
-                      <h2 className = { 'text-align-center font-weight-lighter font-size-14px' }>No task</h2>
-                    }
-                  </div>
+                      {
+                        addTask &&
+                        <div>
+                          <GenericInput
+                            text = { 'Task description' }
+                            value = { taskDescription }
+                            onChange = { (e) => this.taskDescriptionFunc(e.target.value) }
+                            type = { 'textarea' }
+                            errorMessage = { taskDescriptionErrorMessage }
+                          />
+                          <div className = { 'grid-global' }>
+                            <GenericButton
+                              text = { 'Cancel' }
+                              className = { 'profile-button-small' }
+                              onClick = { () => this.setState({ addTask: false, taskDescription: '' }) }
+                            />
+                            <GenericButton
+                              text = { 'Submit' }
+                              className = { 'profile-button-small' }
+                              onClick = { () => this.submitTask() }
+                            />
+                          </div>
+                          <br/>
+                          <Line/>
+                          <br/>
+                        </div>
+                      }
+                      {
+                        taskLoader ?
+                        <center>
+                          <CircularLoader show = { taskLoader }/>
+                        </center>
+                        :
+                        taskArray.length !== 0 ?
+                          <TasksListComponent
+                            cardHolder = { taskArray }
+                            onEdit = { (taskDescription) => this.setState({
+                              taskDescription,
+                              addTask: true
+                            }) }
+                          />
+                        :
+                        !addTask &&
+                        <h2 className = { 'text-align-center font-weight-lighter font-size-14px' }>No task</h2>
+                      }
+                    </div>
+                    <Line/>
+                    <div className = { 'padding-10px' }>
+                      <div className = { 'header-column' }>
+                        <h2 className = { 'font-weight-bold text-align-left font-size-20px' }>Comments</h2>
+                        <h2 className = { 'grid-global' }>
+                        <h2></h2>
+                        {
+                          goalId &&
+                          <span
+                            className = { 'icon-check icon-add-img' }
+                            onClick = { () => this.setState({ addComment: true }) }
+                          />
+                        }
+                        </h2>
+                      </div>
+                      {
+                        addComment &&
+                        <div>
+                          <GenericInput
+                            text = { 'Comment' }
+                            value = { goalComment }
+                            onChange = { (e) => this.goalCommentFunc(e.target.value) }
+                            type = { 'textarea' }
+                            errorMessage = { goalCommentErrorMessage }
+                          />
+                          <div className = { 'grid-global' }>
+                            <GenericButton
+                              text = { 'Cancel' }
+                              className = { 'profile-button-small' }
+                              onClick = { () => this.setState({ addComment: false, goalComment: '' }) }
+                            />
+                            <GenericButton
+                              text = { 'Submit' }
+                              className = { 'profile-button-small' }
+                              onClick = { () => this.submitComment() }
+                            />
+                          </div>
+                        </div>
+                      }
+                      </div>
+                    </div>
+                  }
                 </Card>
               </div>
             </div>

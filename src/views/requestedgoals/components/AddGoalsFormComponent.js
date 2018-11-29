@@ -75,7 +75,6 @@ class AddGoalsFormComponent extends Component {
                 text = { 'Start Date' }
                 selected = { startDate && moment(startDate) }
                 onChange = { (e) => startDateFunc(e) }
-                disabled = { editMode }
                 dateFormat = { 'MM/DD/YYYY' }
                 minDate = { moment() }
               />
