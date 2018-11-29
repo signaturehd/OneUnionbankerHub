@@ -11,6 +11,7 @@ import PodcastPlayerFragment from '../podcastplayer/PodcastPlayerFragment'
 import LibraryView from '../library/LibraryFragment'
 import TrainingFragment from '../trainings/TrainingFragment'
 import MyGoalsFragment from '../mygoals/MyGoalsFragment'
+import PayForSkillsFragment from '../payforskill/PayForSkillsFragment'
 
 import { InputModal, Card, GenericButton } from '../../ub-components'
 
@@ -26,7 +27,7 @@ class MyLearningView extends BaseMVPView {
   }
 
   render () {
-    const { history, profile, isLineManager } = this.props
+    const { history, profile } = this.props
     const { accountNumber, showAccountNumberModal } = this.state
     const mylearning = [{
       id: 0 ,
@@ -47,7 +48,12 @@ class MyLearningView extends BaseMVPView {
       id: 3 ,
       styleName: 'mylearning-cards-4 mylearning-option-default font-weight-bold',
       title: 'My Goals',
-      path: '/mylearning/mygoals',
+      path: '/mylearning/mygoals/request',
+    }, {
+      id: 4 ,
+      styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
+      title: 'Apply For Pay For Skills',
+      path: '/mylearning/pay/skills',
     }]
     const MyLearning = () => (
       <div className = { 'mylearning-container' }>
@@ -99,6 +105,8 @@ class MyLearningView extends BaseMVPView {
         <Switch>
           <Route path = '/mylearning/mygoals' render = { props =>
             <MyGoalsFragment { ...props } /> } />
+          <Route path = '/mylearning/pay/skills' render = { props =>
+            <PayForSkillsFragment { ...props } /> } />
           <Route path = '/mylearning/trainings' render = { props =>
             <TrainingFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts' render = { props =>
