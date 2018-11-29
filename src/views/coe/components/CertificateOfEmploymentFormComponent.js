@@ -42,7 +42,7 @@ class CertificateOfEmploymentFormComponent extends Component {
         <div className = { 'coe-grid-column-2' }>
           <div></div>
           <div className={ 'coe-form-coed' }>
-            <h4 className = { 'font-size-20px font-weight-bold' }>Certificate of Employment Form</h4>
+            <h4 className = { 'font-size-24px font-weight-bold' }>Certificate of Employment Form</h4>
             <br/>
             <Line/>
             <br/>

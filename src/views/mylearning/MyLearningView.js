@@ -58,10 +58,10 @@ class MyLearningView extends BaseMVPView {
     }, {
       id: 5 ,
       styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
-      title: 'Apply For Certificate Of Employment',
+      title: 'Certificate Of Employment',
       path: '/mylearning/coe',
     }]
-    
+
     const MyLearning = () => (
       <div className = { 'mylearning-container' }>
         <div>

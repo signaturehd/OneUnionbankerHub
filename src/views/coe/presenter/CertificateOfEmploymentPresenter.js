@@ -2,9 +2,9 @@
 import GetPurposeCoeTypeInteractor from '../../../domain/interactor/coe/GetPurposeCoeTypeInteractor'
 import GetCountryCoeTypeInteractor from '../../../domain/interactor/coe/GetCountryCoeTypeInteractor'
 /* POST */
-
+import AddCertificateOfEmploymentInteractor from '../../../domain/interactor/coe/AddCertificateOfEmploymentInteractor'
 /* Param */
-import AddCoeParam from '../../../domain/param/AddPaySkillsParam'
+import AddCoeParam from '../../../domain/param/AddCoeParam'
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
@@ -12,6 +12,7 @@ import moment from 'moment'
 
 /* Variables */
 let storedTypeOFCoeObject = '', storedPurposeObject = '', storedVisaObject = ''
+let storedApprovedVLFrom = '', storedApprovedVLTo = ''
 
 let withSalary = [
   {
@@ -27,6 +28,7 @@ export default class CertificateOfEmploymentPresenter {
   constructor (container) {
     this.getPurposeCoeTypeInteractor = new GetPurposeCoeTypeInteractor(container.get('HRBenefitsClient'))
     this.getCountryCoeTypeInteractor = new GetCountryCoeTypeInteractor(container.get('HRBenefitsClient'))
+    this.addCertificateOfEmploymentInteractor = new AddCertificateOfEmploymentInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -114,24 +116,25 @@ export default class CertificateOfEmploymentPresenter {
         this.view.setEditable(true)
       }
     } else {
+      console.log(storedPurposeObject)
       if(storedTypeOFCoeObject === '') {
         store.dispatch(NotifyActions.addNotify({
           title: 'Certificate of Employment',
-          message : 'Please select the type of Certificate of Employment',
+          message : 'Please select the type of COE',
           type: 'warning',
           duration: 5000,
         }))
       } else if(storedPurposeObject === '') {
         store.dispatch(NotifyActions.addNotify({
           title: 'Certificate of Employment',
-          message : 'Please select Purpose',
+          message : 'Please select your purpose',
           type: 'warning',
           duration: 5000,
         }))
       } else if(storedVisaObject === '') {
         store.dispatch(NotifyActions.addNotify({
           title: 'Certificate of Employment',
-          message : 'Please select the VISA',
+          message : 'Please select VISA',
           type: 'warning',
           duration: 5000,
         }))
@@ -143,11 +146,12 @@ export default class CertificateOfEmploymentPresenter {
 
   submitCoe () {
     this.view.checkLoader(true)
-    this.addPaySkillsInteractor.execute(AddCoeParam(
-      storedTypeOFCoeObject.id,
-      moment(storedDateOfCompletion).format('YYYY-MM-DD'),
+    this.addCertificateOfEmploymentInteractor.execute(AddCoeParam(
       storedPurposeObject.id,
-      storedAttachments
+      storedVisaObject.id,
+      storedTypeOFCoeObject.id,
+      storedApprovedVLFrom,
+      storedApprovedVLTo,
     ))
     .subscribe(data => {
       this.view.checkLoader(false)
