@@ -259,21 +259,34 @@ p {
   column-gap: 2%;
 }
 
+.grid-global-columns-x3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 2%;
+}
+
+@media screen and (max-width: 1024px) {
+  .grid-global-columns-x3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .grid-global {
     display: grid;
     grid-template-columns: 1fr;
   }
+
+  .grid-global-columns-x3 {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }
+
 .grid-global-rows {
   display: grid;
   grid-template-rows: 1fr 1fr;
-  column-gap: 2%;
-}
-
-.grid-global-columns-x3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   column-gap: 2%;
 }
 

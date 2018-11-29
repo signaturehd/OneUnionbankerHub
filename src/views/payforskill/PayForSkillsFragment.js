@@ -6,10 +6,12 @@ import Presenter from './presenter/PayForSkillsPresenter'
 
 import {
   SingleInputModal,
-  CircularLoader
+  CircularLoader,
+  FloatingActionButton
 } from '../../ub-components/'
 
 import PayForSkillsForm from './components/PayForSkillsForm'
+import PayForSkillsListComponent from './components/PayForSkillsListComponent'
 
 class PayForSkillsFragment extends BaseMVPView {
   constructor (props) {
@@ -19,6 +21,7 @@ class PayForSkillsFragment extends BaseMVPView {
       showEditMode : false,
       showAccreditationModal : false,
       enabledLoader : false,
+      showAddingPaySkillsComponent : false,
       attachmentsArray: [{
         name: 'Pay For Skills Attachment'
       }]
@@ -27,6 +30,7 @@ class PayForSkillsFragment extends BaseMVPView {
 
   componentDidMount () {
     this.presenter.getPaySkills()
+    this.presenter.getPaySkillsList()
   }
 
   setPrograms (programs) {
@@ -57,12 +61,22 @@ class PayForSkillsFragment extends BaseMVPView {
     this.setState({ attachmentsArray })
   }
 
+  setPayForSkillsList (payForSkillsList) {
+    this.setState({ payForSkillsList })
+  }
+
   setEditable (showEditMode) {
     this.setState({ showEditMode })
   }
 
   navigateLearning () {
     this.props.history.push('/mylearning')
+  }
+
+  checkListIfNull () {
+    if(this.state.payForSkillsList && this.state.payForSkillsList.length !== 0) {
+      this.setState({ showAddingPaySkillsComponent : false })
+    }
   }
 
   render () {
@@ -76,7 +90,9 @@ class PayForSkillsFragment extends BaseMVPView {
       enabledLoader,
       dateOfCompletion,
       attachmentsArray,
-      showEditMode
+      payForSkillsList,
+      showEditMode,
+      showAddingPaySkillsComponent
     } = this.state
 
     return (
@@ -107,7 +123,7 @@ class PayForSkillsFragment extends BaseMVPView {
             selectedArray = { (id, accre) => {
               const objectParam = {
                 id : id,
-                accre : accre,
+                accre : id === 21 ? '' : accre,
               }
               this.presenter.setStoredAccreditationObject(objectParam)
               this.setState({  showAccreditationModal: false })
@@ -124,45 +140,70 @@ class PayForSkillsFragment extends BaseMVPView {
             />
             <h2>Please wait...</h2>
         </center> :
-
-        <PayForSkillsForm
-          showEditMode = { showEditMode }
-          attachmentsArray = { attachmentsArray }
-          onContinue = { () => this.presenter.validateInput() }
-          onEdit = { (e) => {
-            if(e) {
-              this.presenter.submitPaySkills()
-            } else {
-               this.setState({ showEditMode : e })
-            }
-          } }
-          programs = { programs }
-          programsBody = { programsBody }
-          accreditingBody = { accreditingBody }
-          accrediting = { accrediting }
-          dateOfCompletion = { dateOfCompletion }
-          addAttachmentsFunc = { () => {
-            const newFileArray = [...attachmentsArray]
-            const objectParam = {
-              name : 'Pay For Skills Attachment'
-            }
-            newFileArray.push(objectParam)
-            this.presenter.setStoredAttachments(newFileArray)
-          } }
-          attachmentsNewValueFunc = { (respFile) =>
-            {
-              console.log(respFile)
+        <div>
+        {
+          !showAddingPaySkillsComponent ?
+          <PayForSkillsListComponent
+            payForSkillsList = { payForSkillsList }
+          />
+          :
+          <PayForSkillsForm
+            showEditMode = { showEditMode }
+            attachmentsArray = { attachmentsArray }
+            onContinue = { () => this.presenter.validateInput() }
+            onEdit = { (e) => {
+              if(e) {
+                this.presenter.submitPaySkills()
+              } else {
+                 this.setState({ showEditMode : e })
+              }
+            } }
+            programs = { programs }
+            programsBody = { programsBody }
+            accreditingBody = { accreditingBody }
+            accrediting = { accrediting }
+            dateOfCompletion = { dateOfCompletion }
+            onBackToList = { (showAddingPaySkillsComponent) => {
+              this.presenter.setStoredDateOfCompletion('')
+              this.presenter.setStoredAccreditationObject('')
+              this.setState({ showAddingPaySkillsComponent })
+            } }
+            onChangeAccreditationModalFunc = { (e, e1) => {
+              const objectParam = {
+                id : e,
+                accre : e1,
+              }
+              this.presenter.setStoredAccreditationObject(objectParam)
+            } }
+            addAttachmentsFunc = { () => {
+              const newFileArray = [...attachmentsArray]
+              const objectParam = {
+                name : 'Pay For Skills Attachment'
+              }
+              newFileArray.push(objectParam)
+              this.presenter.setStoredAttachments(newFileArray)
+            } }
+            attachmentsNewValueFunc = { (respFile) =>
               this.presenter.setStoredAttachments(respFile)
             }
-          }
-          dateOfCompletionFunc = { (e) =>
-            this.presenter.setStoredDateOfCompletion(e)
-          }
-          showProgramsModalFunc = { () =>
-            this.setState({ showProgramsModal : true }) }
-          showAccreditationModalFunc = { () =>
-            this.setState({ showAccreditationModal : true }) }
-        />
+            dateOfCompletionFunc = { (e) =>
+              this.presenter.setStoredDateOfCompletion(e)
+            }
+            showProgramsModalFunc = { () =>
+              this.setState({ showProgramsModal : true }) }
+            showAccreditationModalFunc = { () =>
+              this.setState({ showAccreditationModal : true }) }
+          />
+        }
+        </div>
+        }
+        {
+          !showAddingPaySkillsComponent &&
+          <FloatingActionButton
+            text = { '+' }
+            onClick = { () => this.setState({ showAddingPaySkillsComponent : true })
+            }
+          />
         }
       </div>
     )
