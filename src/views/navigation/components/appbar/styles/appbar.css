@@ -53,68 +53,94 @@
   right: 0;
 }
 
+.appbar-grid-icon-center {
+  display: grid;
+  grid-template-columns: .3fr 1fr .3fr;
+}
+
 .appbar-icon {
-  height: 24px;
-  width: 30px;
-  -webkit-mask-size: auto 100%;
-  -webkit-mask-repeat: no-repeat;
-  background-color: #00000087;
+  height: 35px;
+  width: -webkit-fill-available;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   margin: auto;
 }
 
+.default {
+  color: #00000087;
+}
+
+.defaultactive {
+  color: #ff8a00;
+}
 
 .appbar-news-icon {
-  -webkit-mask-image: url('../../../../../images/drawer/News.png');
-  mask-image: url('../../../../../images/drawer/News.png');
-  }
+  background-image: url('../../../../../images/NAVIGATION BAR/HOME - Grey.png');
+}
+
+.appbar-news-iconactive {
+  background-image: url('../../../../../images/NAVIGATION BAR/HOME - Orange.png');
+}
 
 .appbar-logout-icon {
-  -webkit-mask-image: url('../../../../../images/LOGOUT.png');
   mask-image: url('../../../../../images/LOGOUT.png');
 }
 
 .appbar-benefits-icon {
-  -webkit-mask-image: url('../../../../../images/drawer/Benefit.png');
-  mask-image: url('../../../../../images/drawer/Benefit.png');
+  background-image: url('../../../../../images/SIDE MENU/My Benefits - Grey.png');
+}
+
+.appbar-benefits-iconactive {
+  background-image: url('../../../../../images/SIDE MENU/My Benefits - Orange.png');
 }
 
 .appbar-travel-icon {
-  -webkit-mask-image: url('../../../../../images/drawer/mytravel.png');
-  mask-image: url('../../../../../images/drawer/mytravel.png');
+  background-image: url('../../../../../images/SIDE MENU/My Travel - Grey.png');
+}
+
+.appbar-travel-iconactive {
+  background-image: url('../../../../../images/SIDE MENU/My Travel - Orange.png');
 }
 
 .appbar-faqs-icon {
-  -webkit-mask-image: url('../../../../../images/drawer/faqs.png');
-  mask-image: url('../../../../../images/drawer/faqs.png');
+  background-image: url('../../../../../images/drawer/faqs.png');
 }
 
 .appbar-settings-icon {
-  -webkit-mask-image: url('../../../../../images/My Profile.png');
-  mask-image: url('../../../../../images/My Profile.png');
+  background-image: url('../../../../../images/My Profile.png');
 }
 
 .appbar-feedback-icon {
-  -webkit-mask-image: url('../../../../../images/Feedback.png');
-  mask-image: url('../../../../../images/Feedback.png');
+  background-image: url('../../../../../images/Feedback.png');
 }
 
 .appbar-phenom-icon {
-  -webkit-mask-image: url('../../../../../images/icons/Phenom Prime - Grey.png');
-  mask-image: url('../../../../../images/icons/Phenom Prime - Grey.png');
+  background-image: url('../../../../../images/SIDE MENU/PHENOM - Grey.png');
 }
 
-.appbar-payslip-icon {
-  -webkit-mask-image: url('../../../../../images/icons/ic_payslip.png');
-  mask-image: url('../../../../../images/icons/ic_payslip.png');
+.appbar-phenom-iconactive {
+  background-image: url('../../../../../images/SIDE MENU/PHENOM - Orange.png');
 }
+
+.appbar-pay-icon {
+  background-image: url('../../../../../images/SIDE MENU/My Pay - Grey.png');
+}
+
+.appbar-pay-iconactive {
+  background-image: url('../../../../../images/SIDE MENU/My Pay - Orange.png');
+}
+
 .appbar-compliance-icon {
-  -webkit-mask-image: url('../../../../../images/icons/drawer_compliance.png');
-  mask-image: url('../../../../../images/icons/drawer_compliance.png');
+  background-image: url('../../../../../images/icons/drawer_compliance.png');
 }
 
 .appbar-learning-icon {
-  -webkit-mask-image: url('../../../../../images/My ELearning.png');
-  mask-image: url('../../../../../images/My ELearning.png');
+  background-image: url('../../../../../images/SIDE MENU/My Learning - Grey.png');
+}
+
+.appbar-learning-iconactive {
+  background-image: url('../../../../../images/SIDE MENU/My Learning - Orange.png');
 }
 
 .appbar-background-menu {

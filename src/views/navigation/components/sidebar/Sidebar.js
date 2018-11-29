@@ -29,7 +29,7 @@ class SideBar extends Component {
   [
     {
       id: 0 ,
-      title: 'News Feed',
+      title: 'Home',
       action: () => history.push('/'),
       className: 'newsfeed-icon'
     },
@@ -73,6 +73,12 @@ class SideBar extends Component {
       id: 8 ,
       title: 'My Pay',
       action: () => history.push('/payslip'),
+      className: 'payslip-icon'
+    },
+    {
+      id: 14 ,
+      title: 'My Goals',
+      action: () => history.push('/mygoals'),
       className: 'payslip-icon'
     },
     {

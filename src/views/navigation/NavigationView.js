@@ -278,6 +278,7 @@ class NavigationView extends BaseMVPView {
         { super.render() }
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
+            selected={ selected }
             profillePosition = { profillePosition }
             firstName = { firstName }
             history = { history }

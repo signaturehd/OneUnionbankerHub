@@ -36,7 +36,8 @@ class DrawerAppBar extends Component {
       profileDisplay,
       profileImage,
       firstName,
-      profillePosition
+      profillePosition,
+      selected
     } = this.props
 
     const style = {
@@ -86,41 +87,41 @@ class DrawerAppBar extends Component {
 
     let navBarList = [{
       id: 0,
-      name: 'News Feed',
+      name: 'Home',
       imageStyle : 'news',
       action : () => history.push('/'),
     },{
-      id: 1,
+      id: 10,
       name: 'Phenom Prime',
       imageStyle : 'phenom',
       action : () => history.push('/phenom'),
     },{
-      id: 2,
+      id: 13,
       name: 'My Travel',
       imageStyle : 'travel',
-      action : () => history.push('/travel'),
+      action : () => history.push('/mytravel'),
     },{
-      id: 3,
+      id: 4,
       name: 'My Learning',
       imageStyle : 'learning',
       action : () => history.push('/mylearning')
     },{
-      id: 4,
+      id: 1,
       name: 'My Benefits',
       imageStyle : 'benefits',
       action : () => history.push('/mybenefits')
     },{
-      id: 6,
+      id: 8,
+      name: 'My Pay',
+      imageStyle : 'pay',
+      action : () => history.push('/payslip')
+    },{
+      id: 14,
       name: 'My Goals',
       imageStyle : 'compliance',
       action : () => history.push('/mycompliance')
     },{
-      id: 5,
-      name: 'My Pay',
-      imageStyle : 'payslip',
-      action : () => history.push('/payslip')
-    },{
-      id: 5,
+      id: 9,
       name: 'My Compliance',
       imageStyle : 'compliance',
       action : () => history.push('/mycompliance')
@@ -149,13 +150,17 @@ class DrawerAppBar extends Component {
                     onClick = { () => resp.action() }
                     key = { key }
                     className = { 'appbar-default-menu' }>
-                    <div className = { 'appbar-navbar-icon-grid' }>
-                      <span
-                        className = { `appbar-${ resp.imageStyle }-icon appbar-icon` }/>
-                      <a>
+                    <center className = { 'appbar-navbar-icon-grid' }>
+                      <div className = { 'appbar-grid-icon-center' }>
+                        <div></div>
+                        <span
+                          className = { `appbar-${ resp.imageStyle }-icon${ selected === resp.id ? 'active' : '' } appbar-icon` }/>
+                        <div></div>
+                      </div>
+                      <a className = { `font-size-11px default${ selected === resp.id ? 'active' : '' }` }>
                         { resp.name }
                       </a>
-                    </div>
+                    </center>
                   </div>
                 ))
               }
