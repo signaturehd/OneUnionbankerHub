@@ -2292,4 +2292,10 @@ export default class HRBenefitsService {
     })
   }
 
+  submitCoe (token, bodyParam) {
+    return this.coeClient.post(`v1/coe`, bodyParam.body, {
+      headers : { token }
+    })
+  }
+
 }

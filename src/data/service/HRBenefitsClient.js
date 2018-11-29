@@ -1489,4 +1489,9 @@ export default class HRBenefitsClient {
     return this.service.getCountryCoeType(token, data)
     .pipe(ServiceErrorOperator())
   }
+
+  submitCoe (token, bodyParam) {
+    return this.service.submitCoe(token, bodyParam)
+    .pipe(ServiceErrorOperator())
+  }
 }
