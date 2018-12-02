@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 1fr auto;
   /* float: right; */
+  height: 100%;
   text-align: right;
 }
 
@@ -39,7 +40,7 @@
 
 .appbar-menu-text-grid {
   display: grid;
-  height: 57px;
+  height: 65px;
   grid-template-columns: 1fr .3fr;
 }
 
@@ -67,8 +68,30 @@
   margin: auto;
 }
 
+.appbar-icon {
+  height: 35px;
+  width: -webkit-fill-available;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: auto;
+}
+
+.appbar-menu-icon {
+  height: 25px;
+  width: -webkit-fill-available;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: auto;
+}
+
 .default {
   color: #00000087;
+}
+
+.default:hover {
+  color: #ff8a00;
 }
 
 .defaultactive {
@@ -77,70 +100,128 @@
 
 .appbar-news-icon {
   background-image: url('../../../../../images/NAVIGATION BAR/HOME - Grey.png');
+  background-position: center;
+}
+
+.appbar-news-icon:hover {
+  background-image: url('../../../../../images/NAVIGATION BAR/HOME - Orange.png');
+  background-position: center;
 }
 
 .appbar-news-iconactive {
+  background-position: center;
   background-image: url('../../../../../images/NAVIGATION BAR/HOME - Orange.png');
 }
 
 .appbar-logout-icon {
-  mask-image: url('../../../../../images/LOGOUT.png');
+  background-image: url('../../../../../images/SIDE MENU/Logout - Orange.png');
+  background-position: center;
+}
+
+.appbar-logout-icon:hover {
+  background-image: url('../../../../../images/SIDE MENU/Logout - Grey.png');
+  background-position: center;
+}
+
+.appbar-logout-iconactive {
+  background-image: url('../../../../../images/SIDE MENU/Logout - Orange.png');
+  background-position: center;
 }
 
 .appbar-benefits-icon {
   background-image: url('../../../../../images/SIDE MENU/My Benefits - Grey.png');
+  background-position: center;
+}
+
+.appbar-benefits-icon:hover {
+  background-image: url('../../../../../images/SIDE MENU/My Benefits - Orange.png');
+  background-position: center;
 }
 
 .appbar-benefits-iconactive {
   background-image: url('../../../../../images/SIDE MENU/My Benefits - Orange.png');
+  background-position: center;
 }
 
 .appbar-travel-icon {
   background-image: url('../../../../../images/SIDE MENU/My Travel - Grey.png');
+  background-position: center;
+}
+
+.appbar-travel-icon:hover {
+  background-image: url('../../../../../images/SIDE MENU/My Travel - Orange.png');
+  background-position: center;
 }
 
 .appbar-travel-iconactive {
   background-image: url('../../../../../images/SIDE MENU/My Travel - Orange.png');
+  background-position: center;
 }
 
 .appbar-faqs-icon {
   background-image: url('../../../../../images/drawer/faqs.png');
+  background-position: center;
 }
 
 .appbar-settings-icon {
   background-image: url('../../../../../images/My Profile.png');
+  background-position: center;
 }
 
 .appbar-feedback-icon {
   background-image: url('../../../../../images/Feedback.png');
+  background-position: center;
+  background-position: center;
 }
 
 .appbar-phenom-icon {
   background-image: url('../../../../../images/SIDE MENU/PHENOM - Grey.png');
+  background-position: center;
 }
 
 .appbar-phenom-iconactive {
   background-image: url('../../../../../images/SIDE MENU/PHENOM - Orange.png');
+  background-position: center;
 }
 
 .appbar-pay-icon {
   background-image: url('../../../../../images/SIDE MENU/My Pay - Grey.png');
+  background-position: center;
+}
+
+.appbar-pay-icon:hover {
+  background-image: url('../../../../../images/SIDE MENU/My Pay - Orange.png');
+  background-position: center;
 }
 
 .appbar-pay-iconactive {
   background-image: url('../../../../../images/SIDE MENU/My Pay - Orange.png');
+  background-position: center;
 }
 
 .appbar-compliance-icon {
-  background-image: url('../../../../../images/icons/drawer_compliance.png');
+  background-image: url('../../../../../images/SIDE MENU/My Compliance - Grey.png');
+  background-position: center;
+}
+
+.appbar-compliance-icon:hover {
+  background-image: url('../../../../../images/SIDE MENU/My Compliance - Orange.png');
+  background-position: center;
 }
 
 .appbar-learning-icon {
   background-image: url('../../../../../images/SIDE MENU/My Learning - Grey.png');
+  background-position: center;
+}
+
+.appbar-learning-icon:hover {
+  background-image: url('../../../../../images/SIDE MENU/My Learning - Orange.png');
+  background-position: center;
 }
 
 .appbar-learning-iconactive {
   background-image: url('../../../../../images/SIDE MENU/My Learning - Orange.png');
+  background-position: center;
 }
 
 .appbar-background-menu {
@@ -271,6 +352,7 @@
 .icon-header {
   text-align: left;
   display: grid;
+  height: 65px;
   grid-template-columns: .3fr 1fr .09fr;
 }
 
@@ -291,7 +373,7 @@
 ._img-ub-profile {
   width: auto;
   display: flex;
-  height: 20px;
+  height: 50px;
   width: auto;
   margin-top: 2%;
 }

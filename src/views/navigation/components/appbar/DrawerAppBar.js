@@ -58,7 +58,7 @@ class DrawerAppBar extends Component {
       }, navList : {
         display: displayNavIcon !== 'block'? 'grid' :'none' ,
         gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-        margin: 'auto',
+        paddingTop: '6px',
         alignItems: 'center',
       }
     }
@@ -218,7 +218,7 @@ class DrawerAppBar extends Component {
                           className = { 'appbar-list' }>
                           <div className = { 'appbar-icon-grid' }>
                             <span
-                              className = { `appbar-${ resp.imageStyle }-icon appbar-icon` }/>
+                              className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
                             <a>
                               { resp.name }
                             </a>
