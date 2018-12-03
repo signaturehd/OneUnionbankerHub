@@ -23,7 +23,7 @@ class PayForSkillsFragment extends BaseMVPView {
       enabledLoader : false,
       showAddingPaySkillsComponent : false,
       attachmentsArray: [{
-        name: 'Pay For Skills Attachment'
+        name: 'Certificate Of Completion'
       }]
     }
   }

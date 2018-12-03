@@ -1,11 +1,12 @@
-
 .login-logo {
   display: block;
   width: 100px;
+  border-style: solid;
   margin: 30px auto;
-  box-shadow: 0 5px 10px -7px #333333;
+  border-color: #ff8a00;
   border-radius: 50%;
 }
+
 .text {
   width: 100%;
 }
