@@ -1,8 +1,8 @@
-export default (purpose, country, coeType) => ({
+export default (purpose, country, type) => ({
   body : {
     purpose,
     country : country ? country : '',
-    coeType,
+    type,
     approvedVLFrom: '',
     approvedVLTo: '',
   }
