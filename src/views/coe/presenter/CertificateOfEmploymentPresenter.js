@@ -150,8 +150,6 @@ export default class CertificateOfEmploymentPresenter {
       storedPurposeObject.id,
       storedVisaObject.id,
       storedTypeOFCoeObject.id,
-      storedApprovedVLFrom,
-      storedApprovedVLTo,
     ))
     .subscribe(data => {
       this.view.checkLoader(false)

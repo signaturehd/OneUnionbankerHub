@@ -43,7 +43,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
 
   setTypeOfCoeBody (typeOfCoeBody) {
     this.setState({ typeOfCoeBody })
-  }v
+  }
 
   setPurposeBody (purposeBody) {
     this.setState({ purposeBody })
@@ -148,7 +148,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
           onContinue = { () => this.presenter.validateInput() }
           onEdit = { (e) => {
             if(e) {
-              this.presenter.submitPaySkills()
+              this.presenter.submitCoe()
             } else {
                this.setState({ showEditMode : e })
             }
