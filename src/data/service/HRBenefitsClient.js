@@ -1475,6 +1475,7 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+
   // Pay For Skills
 
   getPaySkills (token) {
@@ -1482,13 +1483,30 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getPaySkillsList (token) {
-    return this.service.getPaySkillsList(token)
+  getPaySkillsList (token, id) {
+    return this.service.getPaySkillsList(token, id)
       .pipe(ServiceErrorOperator())
   }
 
   submitPaySkills (token, bodyParam) {
     return this.service.submitPaySkills(token, bodyParam)
       .pipe(ServiceErrorOperator())
+  }
+
+  /* Certificaqte of Employment */
+
+  getPurposeCoeType (token, data) {
+    return this.service.getPurposeCoeType(token, data)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getCountryCoeType (token, data) {
+    return this.service.getCountryCoeType(token, data)
+    .pipe(ServiceErrorOperator())
+  }
+
+  submitCoe (token, bodyParam) {
+    return this.service.submitCoe(token, bodyParam)
+    .pipe(ServiceErrorOperator())
   }
 }
