@@ -1508,4 +1508,21 @@ export default class HRBenefitsClient {
     return this.service.getGoalComment(token, goalId, pageNumber, pageItem)
     .pipe(ServiceErrorOperator())
   }
+
+  /* Certificaqte of Employment */
+
+  getPurposeCoeType (token, data) {
+    return this.service.getPurposeCoeType(token, data)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getCountryCoeType (token, data) {
+    return this.service.getCountryCoeType(token, data)
+    .pipe(ServiceErrorOperator())
+  }
+
+  submitCoe (token, bodyParam) {
+    return this.service.submitCoe(token, bodyParam)
+    .pipe(ServiceErrorOperator())
+  }
 }

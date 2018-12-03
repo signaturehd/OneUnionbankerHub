@@ -47,7 +47,17 @@ export default container => {
     })
   )
 
-  container.singleton('HRBenefitsService', HRBenefitsService, ['ApiClient', 'AccountClient', 'FileClient', 'OnboardingClient'])
+  container.singleton('RootClient',
+    new Rxios({
+      baseURL: ROOT_URL,
+      headers: {
+        'X-IBM-Client-Id': CLIENT_ID,
+        'X-IBM-Client-Secret': CLIENT_SECRET,
+      },
+    })
+  )
+
+  container.singleton('HRBenefitsService', HRBenefitsService, ['ApiClient', 'AccountClient', 'FileClient', 'OnboardingClient', 'RootClient'])
   container.singleton('HRBenefitsClient', HRBenefitsClient, ['HRBenefitsService', 'SessionProvider', 'FileClient', 'AccountClient'])
 
   return container

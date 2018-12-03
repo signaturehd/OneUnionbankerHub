@@ -44,7 +44,7 @@ class PayForSkillsForm extends Component {
         <div className = { 'payforskills-grid-column-2' }>
           <div></div>
           <div className={ 'payforskills-form-payforskillsd' }>
-            <h4 className = { 'font-size-20px font-weight-bold' }>Pay for Skills Form</h4>
+            <h4 className = { 'font-size-24px font-weight-bold' }>Pay for Skills Form</h4>
             <br/>
             <Line/>
             <br/>
