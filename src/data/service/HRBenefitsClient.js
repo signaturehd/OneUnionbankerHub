@@ -167,6 +167,14 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getAccountNumber()
   }
 
+  setPreEmploymentStatus (preEmploymentStatus) {
+    this.sessionProvider.setPreEmploymentStatus(preEmploymentStatus)
+  }
+
+  getStatus () {
+    return this.sessionProvider.getPreEmploymentStatus()
+  }
+
   /* Set Selected Releasing Center*/
   setReleasingCenter (releasingCenter) {
     this.sessionProvider.setReleasingCenter(releasingCenter)
