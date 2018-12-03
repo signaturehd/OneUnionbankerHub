@@ -5,5 +5,8 @@ export default class GetForApprovalGoalsInteractor {
 
   execute () {
     return this.client.getForApprovalGoals(this.client.getToken())
+      .do(data => {
+        console.log(data)
+      })
   }
 }

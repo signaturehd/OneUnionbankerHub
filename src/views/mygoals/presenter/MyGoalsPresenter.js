@@ -21,7 +21,7 @@ export default class MyGoalsPresenter {
   getForApprovalGoals () {
     this.getForApprovalGoalsInteractor.execute()
     .subscribe(data => {
-      this.view.getForApprovalGoals(data)
+        this.view.getForApprovalGoals(data)
       }, error => {
         store.dispatch(NotifyActions.resetNotify())
     })

@@ -120,6 +120,32 @@ class NavigationView extends BaseMVPView {
     this.callLogout = this.callLogout.bind(this)
   }
 
+  componentWillReceiveProps () {
+    this.presenter.getPreEmploymentStatus()
+  }
+
+  componentDidMount () {
+    const {
+      preEmploymentStatus
+    } = this.state
+    store.dispatch(NotifyActions.resetNotify())
+    this.presenter.getPreEmploymentStatus()
+    this.presenter.getLibraries()
+    const mediaQuery = window.matchMedia('(min-width: 1201px)')
+      if (mediaQuery.matches) {
+        this.setDisplay('block', 'none')
+      } else {
+        this.setDisplay('none', 'block')
+      }
+        mediaQuery.addListener(mq => {
+      if (mq.matches) {
+        this.setDisplay('block', 'none')
+      } else {
+        this.setDisplay('none', 'block')
+      }
+    })
+  }
+
   setDisplay (sideBar, topBar) {
     this.setState ({ displayShow : sideBar })
     this.setState({ displayNavIcon : topBar })
@@ -158,33 +184,9 @@ class NavigationView extends BaseMVPView {
 
     if(status === 1 || status === 2) {
       this.props.history.push('/preemployment')
-    } else if (status === null || status === 6) {
-      this.props.history.push('/')
     } else if (status === 3 || status === 4 || status === 5) {
       this.props.history.push('/postemployment')
     }
-  }
-
-  componentDidMount () {
-    const {
-      preEmploymentStatus
-    } = this.state
-    store.dispatch(NotifyActions.resetNotify())
-    this.presenter.getPreEmploymentStatus()
-    this.presenter.getLibraries()
-    const mediaQuery = window.matchMedia('(min-width: 1201px)')
-      if (mediaQuery.matches) {
-        this.setDisplay('block', 'none')
-      } else {
-        this.setDisplay('none', 'block')
-      }
-        mediaQuery.addListener(mq => {
-      if (mq.matches) {
-        this.setDisplay('block', 'none')
-      } else {
-        this.setDisplay('none', 'block')
-      }
-    })
   }
 
   setSelectedNavigation (id) {
