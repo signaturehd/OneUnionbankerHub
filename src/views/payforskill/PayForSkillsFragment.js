@@ -24,7 +24,11 @@ class PayForSkillsFragment extends BaseMVPView {
       showAddingPaySkillsComponent : false,
       attachmentsArray: [{
         name: 'Certificate Of Completion'
-      }]
+      }],
+      posDraft : [],
+      posReview : [],
+      posApproved : [],
+      posReject : [],
     }
   }
 
