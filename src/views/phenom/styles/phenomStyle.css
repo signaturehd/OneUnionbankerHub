@@ -6,7 +6,6 @@
 }
 
 .phenom-grid-header{
-  display: grid;
-  grid-template-columns: 1fr .5fr 1fr;
+  margin-bottom: 20px;
   padding-left: 10px;
 }

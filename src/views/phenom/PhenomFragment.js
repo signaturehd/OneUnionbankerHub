@@ -75,8 +75,9 @@ class PhenomFragment extends BaseMVPView {
     const {
       setSelectedNavigation,
       selected,
+      homePreview
     } = this.props
-
+    console.log(homePreview)
     return (
       <div className = { 'phenom-fragment' }>
         {
@@ -112,28 +113,54 @@ class PhenomFragment extends BaseMVPView {
                   <div></div>
                   <div></div>
                 </div>
-                <div className = { 'phenom-container-grid' }>
-                  {
-                    phenomDataList.map((resp, key) =>
-                    <PhenomCardComponent
-                      key = { key }
-                      selectedDetails = { resp }
-                      vendor = { resp.vendor }
-                      id = { resp.id }
-                      rewardImage = { resp.rewardImageBlob }
-                      startDate = { resp.startDate }
-                      endDate = { resp.endDate }
-                      isHeart = { resp.isHeart }
-                      onClick = { (selectedDetails) => {
-                          this.presenter.getPhenomSelectedDiscounts(resp.id)
-                          this.setState({ showPhenomCardDetails : true })
+                {
+                  homePreview ?
+                  <div className = { 'phenom-container-grid' }>
+                    {
+                      phenomDataList.slice(0, 4).map((resp, key) =>
+                      <PhenomCardComponent
+                        key = { key }
+                        selectedDetails = { resp }
+                        vendor = { resp.vendor }
+                        id = { resp.id }
+                        rewardImage = { resp.rewardImageBlob }
+                        startDate = { resp.startDate }
+                        endDate = { resp.endDate }
+                        isHeart = { resp.isHeart }
+                        onClick = { (selectedDetails) => {
+                            this.presenter.getPhenomSelectedDiscounts(resp.id)
+                            this.setState({ showPhenomCardDetails : true })
+                          }
                         }
-                      }
-                      onChangeHeart = { (id, isHeart) => this.presenter.addPhenomIsHeart(id, isHeart) }
-                      />
-                    )
-                  }
-                </div>
+                        onChangeHeart = { (id, isHeart) => this.presenter.addPhenomIsHeart(id, isHeart) }
+                        />
+                      )
+                    }
+                  </div>
+                  :
+                  <div className = { 'phenom-container-grid' }>
+                    {
+                      phenomDataList.map((resp, key) =>
+                      <PhenomCardComponent
+                        key = { key }
+                        selectedDetails = { resp }
+                        vendor = { resp.vendor }
+                        id = { resp.id }
+                        rewardImage = { resp.rewardImageBlob }
+                        startDate = { resp.startDate }
+                        endDate = { resp.endDate }
+                        isHeart = { resp.isHeart }
+                        onClick = { (selectedDetails) => {
+                            this.presenter.getPhenomSelectedDiscounts(resp.id)
+                            this.setState({ showPhenomCardDetails : true })
+                          }
+                        }
+                        onChangeHeart = { (id, isHeart) => this.presenter.addPhenomIsHeart(id, isHeart) }
+                        />
+                      )
+                    }
+                  </div>
+                }
               </div>
             }
          </div>
