@@ -30,6 +30,7 @@ class HomeFragment extends BaseMVPView {
     this.state = {
       greetingsMessage : '',
       employeeName  : '',
+      homePreview  : false,
     }
   }
 
@@ -37,6 +38,7 @@ class HomeFragment extends BaseMVPView {
     this.presenter.getCheckGreetingsStatus()
     this.presenter.getProfile()
     this.props.setSelectedNavigation(0)
+    this.setState({ homePreview : true })
   }
 
   showGreetingsMessage (greetingsMessage) {
@@ -50,9 +52,10 @@ class HomeFragment extends BaseMVPView {
   render () {
     const {
       greetingsMessage,
-      employeeName
+      employeeName,
+      homePreview
     } = this.state
-    
+
     const {
       storeWidth
     } = this.props
@@ -67,7 +70,9 @@ class HomeFragment extends BaseMVPView {
             />
           </div>
           <div className = { 'container' }>
-            <Phenom />
+            <Phenom
+              homePreview = { homePreview }
+             />
             <br/>
           </div>
         </div>
