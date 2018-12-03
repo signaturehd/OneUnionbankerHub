@@ -2292,6 +2292,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getGoalComment (token, goalId, pageNumber, pageItem) {
+    return this.apiClient.get(`v1/goals/comments?pageNumber=${pageNumber}&pageItem=${pageItem}&goalId=${goalId}`, {
+      headers: { token }
+    })
+  }
+
   // Pay For Skills
 
   getPaySkills (token) {

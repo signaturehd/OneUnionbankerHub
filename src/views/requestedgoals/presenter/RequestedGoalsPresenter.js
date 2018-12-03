@@ -1,5 +1,6 @@
 import GetRequestedGoalsInteractor from '../../../domain/interactor/goals/GetRequestedGoalsInteractor'
 import GetGoalTaskInteractor from '../../../domain/interactor/goals/GetGoalTaskInteractor'
+import GetGoalCommentInteractor from '../../../domain/interactor/goals/GetGoalCommentInteractor'
 import UpdateGoalsInteractor from '../../../domain/interactor/goals/UpdateGoalsInteractor'
 import AddRequestedGoalsInteractor from '../../../domain/interactor/goals/AddRequestedGoalsInteractor'
 import AddGoalTaskInteractor from '../../../domain/interactor/goals/AddGoalTaskInteractor'
@@ -12,6 +13,7 @@ export default class RequestCoachPresenter {
   constructor (container) {
     this.getRequestedGoalsInteractor = new GetRequestedGoalsInteractor(container.get('HRBenefitsClient'))
     this.getGoalTaskInteractor = new GetGoalTaskInteractor(container.get('HRBenefitsClient'))
+    this.getGoalCommentInteractor = new GetGoalCommentInteractor(container.get('HRBenefitsClient'))
     this.updateGoalsInteractor = new UpdateGoalsInteractor(container.get('HRBenefitsClient'))
     this.addRequestedGoalsInteractor = new AddRequestedGoalsInteractor(container.get('HRBenefitsClient'))
     this.addGoalTaskInteractor = new AddGoalTaskInteractor(container.get('HRBenefitsClient'))
@@ -42,6 +44,18 @@ export default class RequestCoachPresenter {
       this.view.getTasklist(data)
       }, error => {
         this.view.hideTaskLoader()
+        store.dispatch(NotifyActions.resetNotify())
+    })
+  }
+
+  getGoalComment (goalId, pageNumber, pageItem) {
+    this.view.showCommentLoader()
+    this.getGoalCommentInteractor.execute(goalId, pageNumber, pageItem)
+    .subscribe(data => {
+      this.view.hideCommentLoader()
+      this.view.getCommentList(data)
+      }, error => {
+        this.view.hideCommentLoader()
         store.dispatch(NotifyActions.resetNotify())
     })
   }
@@ -127,6 +141,7 @@ export default class RequestCoachPresenter {
       data => {
         this.view.hideSubmitLoader()
         this.view.noticeResponse(data)
+        this.getGoalComment(goalId, pageNumber, pageItem)
         this.view.resetValue()
       },
       errors => {

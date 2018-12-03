@@ -39,10 +39,10 @@ class TasksListComponent extends Component {
   render () {
     const { goalId, cardHolder, onEdit } = this.props
     return (
-      <div className = { 'padding-15' }>
+      <div className = { 'padding-15px' }>
       {
         cardHolder.taskDetails.map((resp, key) =>
-          <h2 className = { 'text-align-left font-size-16px font-weight-lighter' }>&#8226; {resp.description}</h2>
+          <h2 className = { 'text-align-left font-size-12px font-weight-lighter' }>&#8226; {resp.description}</h2>
         )
       }
       </div>

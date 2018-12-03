@@ -21,6 +21,7 @@ import {
 import RequestedGoalsComponent from './components/RequestedGoalsComponent'
 import AddGoalsFormComponent from './components/AddGoalsFormComponent'
 import TasksListComponent from './components/TasksListComponent'
+import CommentsListComponent from './components/CommentsListComponent'
 import RequestCoachFragment from '../requestCoach/RequestCoachFragment'
 
 import ResponseModal from '../notice/NoticeResponseModal'
@@ -39,6 +40,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       enabledLoader : false,
       submitLoader: false,
       taskLoader: false,
+      commentLoader: false,
       showNoticeResponseModal : false,
       editMode: false,
       showForm: false,
@@ -46,7 +48,9 @@ class RequestedGoalsFragment extends BaseMVPView {
       showPriorityModal : false,
       showGoalTypeModal : false,
       addTask: false,
-      addComment: false,
+      addComment: true,
+      pageItem: 10,
+      pageNumber: 1,
       taskDescription: '',
       taskDescriptionErrorMessage: '',
       goalComment: '',
@@ -67,6 +71,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       goalTypeId : '',
       goalType : '',
       goalTypeErrorMessage : '',
+      commentArray: [],
       taskArray: [],
       goalsArray : [],
       priorityArray : [
@@ -107,6 +112,10 @@ class RequestedGoalsFragment extends BaseMVPView {
 
   getTasklist (taskArray) {
     this.setState({ taskArray })
+  }
+
+  getCommentList (commentArray) {
+      this.setState({ commentArray })
   }
 
   noticeResponse (noticeResponse) {
@@ -152,6 +161,15 @@ class RequestedGoalsFragment extends BaseMVPView {
     this.setState({ taskLoader : true })
   }
 
+
+  hideCommentLoader () {
+    this.setState({ commentLoader : false })
+  }
+
+  showCommentLoader () {
+    this.setState({ commentLoader : true })
+  }
+
   navigate () {
     this.props.history.push('/mylearning/mygoals')
   }
@@ -184,7 +202,12 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   goalCommentFunc (goalComment) {
-    this.setState({ goalComment })
+    if(!goalComment) {
+      this.setState({ addComment: true, goalComment })
+    }
+    else {
+      this.setState({ addComment: false, goalComment })
+    }
   }
 
   priorityFunc(priority) {
@@ -268,7 +291,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       this.setState({ goalCommentErrorMessage: 'Required field' })
     }
     else {
-      this.presenter.addGoalComment(goalId, goalComment)
+      this.presenter.addGoalComment(goalId, goalComment, pageNumber, pageItem)
     }
   }
 
@@ -318,6 +341,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       enabledLoader,
       submitLoader,
       taskLoader,
+      commentLoader,
       showNoticeResponseModal,
       noticeResponse,
       addTask,
@@ -326,6 +350,8 @@ class RequestedGoalsFragment extends BaseMVPView {
       showForm,
       showPriorityModal,
       showGoalTypeModal,
+      pageNumber,
+      pageItem,
       taskDescription,
       taskDescriptionErrorMessage,
       goalComment,
@@ -347,11 +373,12 @@ class RequestedGoalsFragment extends BaseMVPView {
       goalTypeErrorMessage,
       approvalStatus,
       taskArray,
+      commentArray,
       goalsArray,
       priorityArray,
       goalTypeArray
     } = this.state
-
+console.log(addComment)
     const { onClose, showRequestCoachForm, showRequestCoachFunc } = this.props
     return (
       <div>
@@ -486,6 +513,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                       goalTypeId
                      })
                     this.presenter.getGoalTask(goalId)
+                    this.presenter.getGoalComment(goalId, pageNumber, pageItem)
                   }
                  }
                 />
@@ -497,26 +525,30 @@ class RequestedGoalsFragment extends BaseMVPView {
                 <Card className = { 'padding-10px' }>
                   <div className = { 'grid-percentage' }>
                     <div>
-                      <h2 className = { `margin-5px text-align-left font-size-18px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
-                      <h2 className = { 'margin-5px text-align-left font-size-16px font-weight-lighter' }><span className = { 'icon-check icon-comment-img' }/>2/5</h2>
-                      <h2 className = { 'margin-5px text-align-left font-size-16px font-weight-lighter' }><span className = { 'icon-check icon-taskcompleted-img' }/>5/10</h2>
+                      <h2 className = { `margin-5px text-align-left font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
+                      <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }><span className = { 'icon-check icon-comment-img' }/>2/5</h2>
+                      <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }><span className = { 'icon-check icon-taskcompleted-img' }/>5/10</h2>
                     </div>
                     <div className = { 'text-align-center padding-10px' }>
                       <Progress
                         type = { 'circle' }
-                        height = { 100 }
-                        width = { 100 }
+                        height = { 70 }
+                        width = { 70 }
                         percent = { 80 } />
                     </div>
                     <div>
                       {
                         approvalStatus === 2 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold color-Low' }>Approved</h2>
+                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Low' }>Approved</h2>
                         :
                           approvalStatus === 3 ?
-                          <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold color-High' }>Rejected</h2>
+                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
                           :
-                          <h2 className = { 'margin-10px text-align-right font-size-16px font-weight-bold' }>{ approvalStatus ? 'Requested' : 'Status' }</h2>
+                          approvalStatus === 1 ?
+                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold' }>Requested</h2>
+                          :
+                          approvalStatus === 4 &&
+                          <h2 className = { 'text-align-center font-size-12px font-weight-bold' }>Update for approval</h2>
                       }
                     </div>
                   </div>
@@ -524,7 +556,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                   <Line/>
                   <div className = { 'padding-10px' }>
                     <div className = { 'header-column' }>
-                      <h2 className = { 'font-weight-bold text-align-left font-size-20px' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
+                      <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
                       <h2 className = { 'grid-global' }>
                       <h2></h2>
                       {
@@ -536,7 +568,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                       }
                       </h2>
                     </div>
-                    <h2 className = { 'font-weight-lighter text-align-left font-size-16px' }>{ description ? description : 'Goals allow you to create effective objectives for yourself or employees.' }</h2>
+                    <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ description ? description : 'Goals allow you to create effective objectives for yourself or employees.' }</h2>
                   </div>
                   {
                     approvalStatus === 2 &&
@@ -545,7 +577,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                     <Line/>
                     <div className = { 'padding-10px' }>
                       <div className = { 'header-column' }>
-                        <h2 className = { 'font-weight-bold text-align-left font-size-20px' }>Tasks</h2>
+                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Tasks</h2>
                         <h2 className = { 'grid-global' }>
                         <h2></h2>
                         {
@@ -606,42 +638,35 @@ class RequestedGoalsFragment extends BaseMVPView {
                     <Line/>
                     <div className = { 'padding-10px' }>
                       <div className = { 'header-column' }>
-                        <h2 className = { 'font-weight-bold text-align-left font-size-20px' }>Comments</h2>
-                        <h2 className = { 'grid-global' }>
-                        <h2></h2>
-                        {
-                          goalId &&
-                          <span
-                            className = { 'icon-check icon-add-img' }
-                            onClick = { () => this.setState({ addComment: true }) }
-                          />
-                        }
-                        </h2>
+                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Comments</h2>
                       </div>
                       {
-                        addComment &&
-                        <div>
-                          <GenericInput
-                            text = { 'Comment' }
-                            value = { goalComment }
-                            onChange = { (e) => this.goalCommentFunc(e.target.value) }
-                            type = { 'textarea' }
-                            errorMessage = { goalCommentErrorMessage }
-                          />
-                          <div className = { 'grid-global' }>
-                            <GenericButton
-                              text = { 'Cancel' }
-                              className = { 'profile-button-small' }
-                              onClick = { () => this.setState({ addComment: false, goalComment: '' }) }
-                            />
-                            <GenericButton
-                              text = { 'Submit' }
-                              className = { 'profile-button-small' }
-                              onClick = { () => this.submitComment() }
-                            />
-                          </div>
-                        </div>
+                        commentLoader ?
+                        <center>
+                        <CircularLoader show = { commentLoader }/>
+                        </center>
+                        :
+                        commentArray.length !==0 ?
+                        <CommentsListComponent
+                        cardHolder = { commentArray }
+                        />
+                        :
+                        <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
                       }
+                      <br/>
+                      <div className = { 'comment-grid' }>
+                        <GenericInput
+                          text = { 'Write a comment...' }
+                          value = { goalComment }
+                          onChange = { (e) => this.goalCommentFunc(e.target.value) }
+                          errorMessage = { goalCommentErrorMessage }
+                        />
+                        <GenericButton
+                          text = { 'Post' }
+                          className = { 'profile-button-small' }
+                          onClick = { () => this.submitComment() }
+                        />
+                      </div>
                       </div>
                     </div>
                   }

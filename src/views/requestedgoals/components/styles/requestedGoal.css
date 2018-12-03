@@ -84,6 +84,10 @@
   padding : 15px 15px 15px 15px;
 }
 
+.padding-5px {
+  padding : 5px 5px 5px 5px;
+}
+
 .border-radius-top {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -132,4 +136,10 @@
   display: grid;
   grid-template-columns: .1fr 3fr .1fr;
   column-gap: 2%;
+}
+
+/* Comments */
+.comment-border {
+  border-radius: 5px;
+  background-color: #e3e3e3;
 }

@@ -1487,12 +1487,17 @@ export default class HRBenefitsClient {
   }
 
   getGoalTask (token, goalId) {
-    return this.service.getGoalTask(token,  goalId)
+    return this.service.getGoalTask(token, goalId)
     .pipe(ServiceErrorOperator())
   }
 
   addGoalComment (token, goalId, goalComment) {
     return this.service.addGoalComment(token,  goalId, goalComment)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getGoalComment (token, goalId, pageNumber, pageItem) {
+    return this.service.getGoalComment(token, goalId, pageNumber, pageItem)
     .pipe(ServiceErrorOperator())
   }
 }
