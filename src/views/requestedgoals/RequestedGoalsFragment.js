@@ -202,12 +202,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   goalCommentFunc (goalComment) {
-    if(!goalComment) {
-      this.setState({ addComment: true, goalComment })
-    }
-    else {
-      this.setState({ addComment: false, goalComment })
-    }
+    this.setState({ goalComment })
   }
 
   priorityFunc(priority) {

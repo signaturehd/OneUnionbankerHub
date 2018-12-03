@@ -41,7 +41,7 @@ class TasksListComponent extends Component {
     return (
       <div className = { 'padding-15px' }>
       {
-        cardHolder.taskDetails.map((resp, key) =>
+        cardHolder.map((resp, key) =>
           <h2 className = { 'text-align-left font-size-12px font-weight-lighter' }>&#8226; {resp.description}</h2>
         )
       }
