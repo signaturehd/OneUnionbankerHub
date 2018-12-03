@@ -54,7 +54,7 @@ class RequestedGoalsComponent extends Component {
             resp.type
           ) }>
             <div className = { 'padding-15' }>
-              <div className = { 'header-column' }>
+              <div className = { 'header-column-1' }>
                 <div>
                   <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ resp.title }</h2>
                   <Progress
@@ -73,12 +73,12 @@ class RequestedGoalsComponent extends Component {
                       <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
                       :
                       resp.approvalStatus === 1 ?
-                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold' }>Requested</h2>
+                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Requested</h2>
                       :
                       resp.approvalStatus === 4 &&
-                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold' }>Update for approval</h2>
+                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Update for approval</h2>
                   }
-                  <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter' }>Personal</h2>
+                  <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter color-gray' }>Personal</h2>
                 </div>
 
               </div>
@@ -91,7 +91,7 @@ class RequestedGoalsComponent extends Component {
                   </div>
                   <div></div>
                   <div>
-                    <h2 className = { 'text-align-right font-size-11px font-weight-lighter' }>Due: <b>{ moment(resp.endDate).format('MMM DD, YYYY') }</b></h2>
+                    <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Due: <b>{ moment(resp.endDate).format('MMM DD, YYYY') }</b></h2>
                   </div>
                 </div>
               </div>

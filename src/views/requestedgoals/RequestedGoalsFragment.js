@@ -378,7 +378,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       priorityArray,
       goalTypeArray
     } = this.state
-console.log(addComment)
+
     const { onClose, showRequestCoachForm, showRequestCoachFunc } = this.props
     return (
       <div>
@@ -471,7 +471,10 @@ console.log(addComment)
                 <GenericButton
                   text = { 'Add Goal' }
                   className = { 'global-button' }
-                  onClick = { () => this.setState({ showForm: true }) }
+                  onClick = { () => {
+                    this.resetValue()
+                    this.setState({ showForm: true })
+                  } }
                 />
                 <GenericButton
                   text = { 'Request for Coaching' }
@@ -532,8 +535,8 @@ console.log(addComment)
                     <div className = { 'text-align-center padding-10px' }>
                       <Progress
                         type = { 'circle' }
-                        height = { 70 }
-                        width = { 70 }
+                        height = { 80 }
+                        width = { 80 }
                         percent = { 80 } />
                     </div>
                     <div>
@@ -557,8 +560,7 @@ console.log(addComment)
                   <div className = { 'padding-10px' }>
                     <div className = { 'header-column' }>
                       <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
-                      <h2 className = { 'grid-global' }>
-                      <h2></h2>
+                      <h2>
                       {
                         goalId &&
                         <span
@@ -578,8 +580,7 @@ console.log(addComment)
                     <div className = { 'padding-10px' }>
                       <div className = { 'header-column' }>
                         <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Tasks</h2>
-                        <h2 className = { 'grid-global' }>
-                        <h2></h2>
+                        <h2>
                         {
                           goalId &&
                           <span
@@ -656,7 +657,7 @@ console.log(addComment)
                       <br/>
                       <div className = { 'comment-grid' }>
                         <GenericInput
-                          text = { 'Write a comment...' }
+                          text = { 'Write a comment' }
                           value = { goalComment }
                           onChange = { (e) => this.goalCommentFunc(e.target.value) }
                           errorMessage = { goalCommentErrorMessage }

@@ -1,5 +1,6 @@
 .body {
   font-family: 'Roboto', sans-serif;
+  color: #999999;
   }
 
 .grid-main {
@@ -70,7 +71,7 @@
 
 .header-column {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 2fr .1fr;
 }
 
 /* Comment */
