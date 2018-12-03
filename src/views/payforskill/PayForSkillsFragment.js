@@ -70,7 +70,15 @@ class PayForSkillsFragment extends BaseMVPView {
   }
 
   navigateLearning () {
-    this.props.history.push('/mylearning')
+    this.setState({
+      showAddingPaySkillsComponent : false,
+      programsBody : '',
+      attachmentsArray: [{
+        name: 'Pay For Skills Attachment'
+      }],
+      accreditingBody: '',
+      dateOfCompletion: '',
+    })
   }
 
   checkListIfNull () {

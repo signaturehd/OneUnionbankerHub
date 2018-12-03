@@ -146,6 +146,10 @@ export default class PayForSkillsPresenter {
        })
      )
      this.view.navigateLearning()
+     storedProgramObject = ''
+     storedDateOfCompletion = ''
+     storedAccreditationObject = ''
+     storedAccreditationObject = ''
     }, error => {
       this.view.checkLoader(false)
     })

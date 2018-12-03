@@ -44,7 +44,7 @@ class PayForSkillsForm extends Component {
         <div className = { 'payforskills-grid-column-2' }>
           <div></div>
           <div className={ 'payforskills-form-payforskillsd' }>
-            <h4 className = { 'font-size-20px font-weight-bold' }>Pay for Skills Form</h4>
+            <h4 className = { 'font-size-24px font-weight-bold' }>Pay for Skills Form</h4>
             <br/>
             <Line/>
             <br/>
@@ -99,11 +99,14 @@ class PayForSkillsForm extends Component {
               <div className = { 'grid-global' }>
                 <h2 className = { 'text-align-left' }>Form Attachments</h2>
                 <div className = { 'text-align-right' }>
-                  <GenericButton
-                    className = { 'profile-button-small' }
-                    onClick = { () => addAttachmentsFunc() }
-                    text = { 'Add Attachments' }
-                  />
+                  {
+                    !showEditMode &&
+                    <GenericButton
+                      className = { 'profile-button-small' }
+                      onClick = { () => addAttachmentsFunc() }
+                      text = { 'Add Attachments' }
+                    />
+                  }
                 </div>
               </div>
               <br/>
@@ -114,7 +117,7 @@ class PayForSkillsForm extends Component {
                   countFunc = { () => {} }
                   placeholder = { '' }
                   fileArray = { attachmentsArray }
-                  disabled = { false }
+                  disabled = { showEditMode }
                   setFile = { (respFile) => attachmentsNewValueFunc(respFile) }
                 />
               }
