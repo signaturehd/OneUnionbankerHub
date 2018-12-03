@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card, GenericButton, SkeletalLoader, Line } from '../../../../ub-components/'
+import { Card, GenericButton } from '../../../../ub-components/'
 import moment from 'moment'
 import { FaEye } from 'react-icons/lib/fa/'
 import './styles/newsCardComponent.css'
@@ -25,59 +25,28 @@ class NewsCardComponent extends Component {
       news,
       onClick ,
       imageUrl,
-      onChangeHeart,
-      key
+      onChangeHeart
     } = this.props
 
     const style = {
-      iconNews : {
-        backgroundImage : `url(${news.imageUrl})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        height: '100%',
-        margin: '0px auto',
-        width: '100%',
-        borderRadius: '5px 5px 0px 0px',
-      }
+      backgroundImage : `url(${news.imageUrl})`,
+      backgroundRepeat : 'no-repeat',
+      backgroundSize: 'cover',
+      height: 'unset',
+      backgroundPosition: 'center',
     }
-    const detailsFiltered = news && news.details.substr(0, 70)
-    const titleFiltered = news && news.title.substr(0, 25)
-    const newDetails = detailsFiltered.length < 70  ? detailsFiltered: detailsFiltered+ '...'
-    const newTitle = detailsFiltered.length < 25  ? titleFiltered : titleFiltered + '...'
+    const detailsFiltered = news && news.details.substr(0, 200)
 
     return (
-      <Card
-        key = { key }
-        className = { 'news-list-card' }>
-        <div className = { 'home-card-view' }>
-          <span
-            style = { style.iconNews }/>
-          <div className = { 'home-card-padding' }>
-            <div className = { 'news-details-size' }>
-              <h2 className = { 'unionbank-color font-size-16px font-weight-bold  news-details' }>{ newTitle }</h2>
-              <h2 className = { 'font-size-12px font-weight-normal' }>
-                {
-                  news.date && moment(news.date).format('MMMM DD, YYYY')
-                }
-              </h2>
-              <br/>
-              <p className = { 'font-size-14px font-weight-normal news-details' }>
-                { newDetails }
-              </p>
-              <br/>
-            </div>
-            <center>
-              <GenericButton
-                className = { 'global-button profile-button-small' }
-                text= { 'Read More' }
-                onClick = { () =>
-                  this.openLink() }
-                />
-            </center>
-          </div>
-          <div className = { ' home-card-padding text-align-left' }>
+      <Card className = { 'news-card' }>
+        <div
+          style = { style }
+          className = {'news-body'} >
+        </div>
+        <div className = { 'news-details-card' }>
+          <div className = { 'news-grid' }>
+            <h2 className = { 'unionbank-color font-weight-bold font-size-22px' }>{ news.title }</h2>
             <div className = { 'news-like-grid' }>
-              <div></div>
               <h2
                 className = { 'cursor-pointer' }
                 onClick = { () => {
@@ -86,9 +55,21 @@ class NewsCardComponent extends Component {
                 }
               }
               className = { (parseInt(isHeartActive) !== 1 ? 'news-status-icon' : 'news-heart-icon') + ' news-icon' }/>
-              <h2 className = { 'unionbank-color font-size-12px text-align-left' }>{ news && news.total } Likes</h2>
+              <h2 className = { 'unionbank-color font-size-12px text-align-center' }>{ news && news.total }</h2>
             </div>
           </div>
+          <br/>
+          <h2 className= { 'news-limit-text font-size-16px font-weight-lighter text-align-justify' }>{ detailsFiltered } ...</h2>
+          <br/>
+          <div className = { 'text-align-right' }>
+            <GenericButton
+              onClick = { () =>
+                this.openLink() }
+              className = { 'news-view-details-button' }
+              text = { 'Read More' }
+              />
+          </div>
+          <br/>
         </div>
       </Card>
     )

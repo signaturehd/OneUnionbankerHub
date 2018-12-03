@@ -8,23 +8,12 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectPartial from '../../utils/ConnectPartial'
 
 import NewsCardComponent from './components/NewsCardComponent/NewsCardComponent'
-import LoadLoader from './components/NewsLoaderComponent'
 import NewsHeadlinesCardComponent from './components/NewsCardComponent/NewsHeadlinesCardComponent'
 import NewsModalComponent from './modals/NewsModalComponent'
 
-import {
-  CircularLoader,
-  GenericInput,
-  GenericButton,
-  Line,
-  Card,
-} from '../../ub-components'
+import { CircularLoader, GenericInput, Line, Card } from '../../ub-components'
 
 import './styles/newsStyles.css'
-
-let staticCount = [1,2,3,4,5,6,7,8,9,10]
-
-let setNewsSlider
 
 class NewsFragment extends BaseMVPView {
   constructor (props) {
@@ -39,13 +28,8 @@ class NewsFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.presenter.getNews()
-      // this.props.setSelectedNavigation(0)
-    setTimeout(() => this.setState({ showLoader : false }), 3000)
-  }
-
-  scrollTest () {
-    setNewsSlider = setInterval(() => { window.scrollBy(100, 0) }, 5000);
+      this.presenter.getNews()
+      setTimeout(() => this.setState({ showLoader : false }), 3000)
   }
 
   updateSearch (e) {
@@ -65,16 +49,6 @@ class NewsFragment extends BaseMVPView {
       searchString,
     } = this.state
 
-    const {
-      storeWidth
-    } = this.props
-
-    const style = {
-      newsWidth : {
-        width: `${ storeWidth }px`,
-      }
-    }
-
     let newsList = news
     const search = searchString.trim().toLowerCase()
     if (search.length > 0) {
@@ -82,7 +56,7 @@ class NewsFragment extends BaseMVPView {
     }
 
     return (
-      <div className = {'container'}>
+      <div className = 'container'>
         {
           show &&
           <NewsModalComponent
@@ -92,60 +66,72 @@ class NewsFragment extends BaseMVPView {
         }
         <div className = { 'news-grid-header' }>
           <div>
-            <h2 className={ 'text-align-left news-header' }>News Feed</h2>
-            <h2 className = { 'font-size-14px' }>Be in the loop. Check out what&#39;s new below.</h2>
+            <h2 className={ 'header-margin-default text-align-left news-header' }>News Feed</h2>
+            <h2>Be in the loop. Check out what&#39;s new below.</h2>
+            <br/>
           </div>
           <div></div>
-          {
-            // <GenericInput
-            //   type = { 'text' }
-            //   className = { 'newsSearchBar' }
-            //   refCallback = { 'search' }
-            //   type = { 'text' }
-            //   hint = { 'Search News' }
-            //   value = { searchString }
-            //   onChange = { this.updateSearch } />
-          }
-          <div></div>
+          <GenericInput
+            type = { 'text' }
+            className = { 'newsSearchBar' }
+            refCallback = { 'search' }
+            type = { 'text' }
+            hint = { 'Search News' }
+            value = { searchString }
+            onChange = { this.updateSearch } />
         </div>
         <br/>
-        {
-          showLoader ?
-          <div className = { 'news-scrolling-wrapper' }>
+        <div>
+          {
+            showLoader ?
+            <div className = {'news-loader'} >
+              <center>
+                <CircularLoader show = {true} />
+              </center>
+            </div>   :
+            <div>
             {
-              staticCount.map((resp) => (
-                <LoadLoader  showLoader = { showLoader }/>
-              ))
-            }
-          </div>
-          :
-          <div style = { style.newsWidth }>
-            <div className = { 'news-scrolling-wrapper' }>
-              {
-                newsList &&
-                newsList.map((news, i) =>
-                news.status !== 1 &&
-                  <NewsCardComponent
-                    key={ news.id }
+            newsList &&
+            newsList.map((news, i) =>
+              news.status === 1 &&
+                <div>
+                  <NewsHeadlinesCardComponent
+                    key = { i }
                     news = { news }
                     onClick = { details =>
                       this.setState({ details, show: true })
                     }
-                    onChangeHeart = { (id, isHeart) => this.presenter.addNewsIsHeart(id, isHeart) }
-                  />
+                    />
+                  </div>
                 )
               }
+              <Card className = { 'news-feature-stories' }>
+                <h2 className = { 'unionbank-color font-size-25px font-weight-bold' }>Featured Stories</h2>
+                <br/>
+                <br/>
+                {
+                  newsList &&
+                  newsList.map((news, i) =>
+                  news.status !== 1 &&
+                  <div>
+                    <NewsCardComponent
+                      key={ i }
+                      news = { news }
+                      onClick = { details =>
+                        this.setState({ details, show: true })
+                      }
+                      onChangeHeart = { (id, isHeart) => this.presenter.addNewsIsHeart(id, isHeart) }
+                    />
+                    <br/>
+                    <Line/>
+                    <br/>
+                  </div>
+                    )
+                  }
+              </Card>
             </div>
-            <div className = { 'news-slider-nav' }>
-          		<a href="#slide-1">1</a>
-          		<a href="#slide-2">2</a>
-          		<a href="#slide-3">3</a>
-          		<a href="#slide-4">4</a>
-          		<a href="#slide-5">5</a>
-          	</div>
-          </div>
-        }
-
+          }
+        </div>
       </div>
     )
   }
