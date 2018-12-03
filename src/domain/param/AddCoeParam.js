@@ -3,5 +3,7 @@ export default (purpose, country, coeType) => ({
     purpose,
     country,
     coeType,
+    approvedVLFrom: '',
+    approvedVLTo: '',
   }
 })
