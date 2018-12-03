@@ -65,12 +65,38 @@ class PayForSkillsFragment extends BaseMVPView {
     this.setState({ attachmentsArray })
   }
 
+  setEditable (showEditMode) {
+    this.setState({ showEditMode })
+  }
+
+  /* Status */
+
   setPayForSkillsList (payForSkillsList) {
     this.setState({ payForSkillsList })
   }
 
-  setEditable (showEditMode) {
-    this.setState({ showEditMode })
+  showPayForSkillsDraft (data) {
+    const newObject = [...this.state.posDraft]
+    newObject.push(data)
+    this.setState({ posDraft : newObject })
+  }
+
+  showPayForSkillsReview (data) {
+    const newObject = [...this.state.posReview]
+    newObject.push(data)
+    this.setState({ posReview : newObject })
+  }
+
+  showPayForSkillsReject (data) {
+    const newObject = [...this.state.posReject]
+    newObject.push(data)
+    this.setState({ posReject : newObject })
+  }
+
+  showPayForSkillsApproved (data) {
+    const newObject = [...this.state.posApproved]
+    newObject.push(data)
+    this.setState({ posApproved : newObject })
   }
 
   navigateLearning () {
@@ -104,7 +130,11 @@ class PayForSkillsFragment extends BaseMVPView {
       attachmentsArray,
       payForSkillsList,
       showEditMode,
-      showAddingPaySkillsComponent
+      showAddingPaySkillsComponent,
+      posDraft,
+      posReview,
+      posApproved,
+      posReject,
     } = this.state
 
     return (
@@ -144,19 +174,16 @@ class PayForSkillsFragment extends BaseMVPView {
             onClose = { () => this.setState({ showAccreditationModal: false }) }
           />
         }
-        {
-          enabledLoader ?
-          <center className = { 'circular-loader-center' }>
-            <CircularLoader
-              show = { enabledLoader }
-            />
-            <h2>Please wait...</h2>
-        </center> :
+
         <div>
         {
           !showAddingPaySkillsComponent ?
           <PayForSkillsListComponent
-            payForSkillsList = { payForSkillsList }
+            posDraft = { posDraft }
+            posReview = { posReview }
+            posApproved = { posApproved }
+            posReject = { posReject }
+            enabledLoader = { enabledLoader }
           />
           :
           <PayForSkillsForm
@@ -208,7 +235,6 @@ class PayForSkillsFragment extends BaseMVPView {
           />
         }
         </div>
-        }
         {
           !showAddingPaySkillsComponent &&
           <FloatingActionButton

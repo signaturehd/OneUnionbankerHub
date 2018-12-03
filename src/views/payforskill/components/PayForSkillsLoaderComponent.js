@@ -15,11 +15,11 @@ class PayForSkillsLoaderComponent extends Component {
     super(props)
   }
 
-  const = {
-    enabledLoader
-  } = this.props
-
   render () {
+
+    const {
+      enabledLoader
+    } = this.props
 
     return (
       <div className = { 'grid-global-columns-x3' }>

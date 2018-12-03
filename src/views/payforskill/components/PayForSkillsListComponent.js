@@ -58,7 +58,9 @@ class PayForSkillsListComponent extends Component {
               {
                 enabledLoader ?
 
-                <LoaderComponent /> :
+                <LoaderComponent
+                  enabledLoader = { enabledLoader }
+                /> :
                 <div className = { 'grid-global-columns-x3' }>
                   <SkillCard
                     array = { posReview }
@@ -72,7 +74,9 @@ class PayForSkillsListComponent extends Component {
               {
                 enabledLoader ?
 
-                <LoaderComponent /> :
+                <LoaderComponent
+                  enabledLoader = { enabledLoader }
+                /> :
                 <SkillCard
                   array = { posDraft }
                 />
