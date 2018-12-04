@@ -398,7 +398,6 @@ class RequestedGoalsFragment extends BaseMVPView {
           <ResponseModal
             onClose={ () => {
               this.setState({ showNoticeResponseModal : false })
-              onClose()
               this.resetValue()
             }}
             noticeResponse={ noticeResponse }
@@ -461,6 +460,7 @@ class RequestedGoalsFragment extends BaseMVPView {
               dueDateFunc = { (resp) => this.dueDateFunc(resp) }
               priorityName = { priorityName }
               goalType = { goalType }
+              goalTypeId = { goalTypeId }
               showPriorityModal = { showPriorityModal }
               showPriorityModalFunc = { () => this.setState({ showPriorityModal : true }) }
               showGoalTypeModal = { showGoalTypeModal }

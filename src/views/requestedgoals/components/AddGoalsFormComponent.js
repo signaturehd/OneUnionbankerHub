@@ -42,6 +42,7 @@ class AddGoalsFormComponent extends Component {
       priorityName,
       showPriorityModalFunc,
       goalType,
+      goalTypeId,
       editMode,
       showGoalTypeModal,
       showGoalTypeModalFunc,
@@ -65,9 +66,10 @@ class AddGoalsFormComponent extends Component {
               />
               <GenericInput
                 text = { 'Goal Type' }
-                value = { goalType }
+                value = { goalType ? goalType : goalTypeId===1 ? 'Performance' : goalTypeId==2 ? 'Developemental' : goalType }
                 onClick = { () => showGoalTypeModalFunc() }
                 disabled = { editMode }
+                errorMessage = { goalTypeErrorMessage }
               />
             </div>
             <div className = { 'grid-global' }>
@@ -77,6 +79,7 @@ class AddGoalsFormComponent extends Component {
                 onChange = { (e) => startDateFunc(e) }
                 dateFormat = { 'MM/DD/YYYY' }
                 minDate = { moment() }
+                errorMessage = { startDateErrorMessage }
               />
               <DatePicker
                 text = { 'Due Date' }
@@ -84,6 +87,7 @@ class AddGoalsFormComponent extends Component {
                 onChange = { (e) => dueDateFunc(e) }
                 minDate = { startDate ? moment(startDate) : moment() }
                 dateFormat = { 'MM/DD/YYYY' }
+                errorMessage = { dueDateErrorMessage }
               />
             </div>
             <div className = { 'grid-global' }>
@@ -93,12 +97,14 @@ class AddGoalsFormComponent extends Component {
                 type = { 'textarea' }
                 onChange = { (e) => descriptionFunc(e.target.value) }
                 disabled = { editMode }
+                errorMessage = { descriptionErrorMessage }
               />
               <GenericInput
                 text = { 'Priority' }
                 value = { priorityName }
                 onClick = { () => showPriorityModalFunc() }
                 disabled = { editMode }
+                errorMessage = { priorityErrorMessage }
               />
             </div>
             <div className = { 'grid-global' }>
