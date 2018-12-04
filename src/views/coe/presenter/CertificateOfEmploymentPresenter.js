@@ -149,7 +149,7 @@ export default class CertificateOfEmploymentPresenter {
     this.addCertificateOfEmploymentInteractor.execute(AddCoeParam(
       storedPurposeObject.id,
       storedVisaObject.id,
-      storedTypeOFCoeObject.id,
+      storedTypeOFCoeObject.type,
     ))
     .subscribe(data => {
       this.view.checkLoader(false)
