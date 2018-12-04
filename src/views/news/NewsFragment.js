@@ -29,7 +29,6 @@ class NewsFragment extends BaseMVPView {
 
   componentDidMount () {
       this.presenter.getNews()
-      this.props.setSelectedNavigation(0)
       setTimeout(() => this.setState({ showLoader : false }), 3000)
   }
 
@@ -81,7 +80,6 @@ class NewsFragment extends BaseMVPView {
             value = { searchString }
             onChange = { this.updateSearch } />
         </div>
-        <Line/>
         <br/>
         <div>
           {
@@ -107,9 +105,8 @@ class NewsFragment extends BaseMVPView {
                   </div>
                 )
               }
-              <br/>
               <Card className = { 'news-feature-stories' }>
-                <h2 className = { 'unionbank-color font-size-30px font-weight-bold' }>Featured Stories</h2>
+                <h2 className = { 'unionbank-color font-size-25px font-weight-bold' }>Featured Stories</h2>
                 <br/>
                 <br/>
                 {
