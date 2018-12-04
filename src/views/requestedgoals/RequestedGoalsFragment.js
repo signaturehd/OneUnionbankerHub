@@ -51,6 +51,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       addComment: true,
       onEditTask: false,
       onEditComment: false,
+      showDeleteModal: false,
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
@@ -336,9 +337,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       addComment: false,
       editMode: false,
       showForm: false,
-      showApprovalForm : false,
-      taskArray: [],
-      commentArray: []
+      showApprovalForm : false
     })
   }
 
@@ -359,6 +358,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       showForm,
       showPriorityModal,
       showGoalTypeModal,
+      showDeleteModal,
       isCompleted,
       pageNumber,
       pageItem,
@@ -439,6 +439,24 @@ class RequestedGoalsFragment extends BaseMVPView {
             }
             onClose = { () => this.setState({ showGoalTypeModal: false }) }
           />
+        }
+        {
+          showDeleteModal &&
+          <Modal>
+            <center>
+              <h2>Are you sure you want to delete this goal?</h2>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'No' }
+                  onClick = { () => this.setState({ showDeleteModal: false }) }
+                />
+                <GenericButton
+                  text = { 'Yes' }
+                  onClick = { () => this.presenter.deleteGoal(goalId) }
+                />
+              </div>
+            </center>
+          </Modal>
         }
         {
           showForm ?
@@ -529,6 +547,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                     this.presenter.getGoalComment(goalId, pageNumber, pageItem)
                   }
                  }
+                 onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
                 />
                 :
                 <center><h2>No record</h2></center>
@@ -536,6 +555,12 @@ class RequestedGoalsFragment extends BaseMVPView {
               </div>
               <div ref = { 'main-div' } className = { 'padding-10px' }>
                 <Card className = { 'padding-10px' }>
+                  {
+                    // <div className = { 'header-column' }>
+                    //   <span/>
+                    //   <span className = { 'icon-check icon-delete-img' }/>
+                    // </div>
+                  }
                   <div className = { 'grid-percentage' }>
                     <div>
                       <h2 className = { `margin-5px text-align-left font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
@@ -561,7 +586,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                           <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold' }>Requested</h2>
                           :
                           approvalStatus === 4 &&
-                          <h2 className = { 'text-align-center font-size-12px font-weight-bold' }>Update for approval</h2>
+                          <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Update for approval</h2>
                       }
                     </div>
                   </div>

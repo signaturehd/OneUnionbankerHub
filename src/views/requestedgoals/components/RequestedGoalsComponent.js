@@ -37,7 +37,7 @@ class RequestedGoalsComponent extends Component {
   }
 
   render () {
-    const { cardHolder, priorityFunc, onSelected } = this.props
+    const { cardHolder, priorityFunc, onSelected, onDeleted } = this.props
     return (
       <div className = { 'padding-15px' }>
       {
@@ -54,6 +54,10 @@ class RequestedGoalsComponent extends Component {
             resp.type
           ) }>
             <div className = { 'padding-15' }>
+              <div className = { 'header-column' }>
+                <span/>
+                <span className = { 'icon-check icon-delete-img' } onClick = { () => onDeleted(resp.id) }/>
+              </div>
               <div className = { 'header-column-1' }>
                 <div>
                   <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ resp.title }</h2>

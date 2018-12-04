@@ -2337,6 +2337,12 @@ export default class HRBenefitsService {
     })
   }
 
+  deleteGoal(token, goalId) {
+    return this.apiClient.put(`v1/goals/personal/${goalId}?isArchived=1`, objectParam, {
+      headers : { token }
+    })
+  }
+
   // Pay For Skills
 
   getPaySkills (token) {

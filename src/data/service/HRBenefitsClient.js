@@ -1534,6 +1534,11 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  deleteGoal (token, goalId) {
+    return this.service.deleteGoal(token, goalId)
+    .pipe(ServiceErrorOperator())
+  }
+
   /* Certificaqte of Employment */
 
   getPurposeCoeType (token, data) {

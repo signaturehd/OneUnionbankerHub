@@ -281,7 +281,7 @@ class MyGoalsFragment extends BaseMVPView {
                   defaultChecked = { true }
                   onClick = { () => {
                       this.setState({ showApprovalForm : false })
-                      this.props.history.push('/mylearning/mygoals/request')
+                      this.props.history.push('/mygoals/request')
                     }
                   }/>
                 <label className = { 'travel-icon-tab' } htmlFor='tab1'>Individual Goals</label>
@@ -294,7 +294,7 @@ class MyGoalsFragment extends BaseMVPView {
                       name = { 'tabs' }
                       onClick = { () => {
                           this.setState({ showApprovalForm : false })
-                          this.props.history.push('/mylearning/mygoals/team')
+                          this.props.history.push('/mygoals/team')
                         }
                       }/>
                     <label className = { 'travel-icon-tab' } htmlFor='tab2'>Team Goals</label>
@@ -310,7 +310,7 @@ class MyGoalsFragment extends BaseMVPView {
                       name = { 'tabs' }
                       onClick = { () => {
                           this.setState({ forApproval : true })
-                          this.props.history.push('/mylearning/mygoals/approved')
+                          this.props.history.push('/mygoals/approved')
                         }
                       }/>
                     <label className = { 'travel-icon-tab' } htmlFor='tab3'>For Approval</label>

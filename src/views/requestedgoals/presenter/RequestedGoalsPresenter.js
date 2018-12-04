@@ -7,6 +7,7 @@ import UpdateGoalCommentInteractor from '../../../domain/interactor/goals/Update
 import AddRequestedGoalsInteractor from '../../../domain/interactor/goals/AddRequestedGoalsInteractor'
 import AddGoalTaskInteractor from '../../../domain/interactor/goals/AddGoalTaskInteractor'
 import AddGoalCommentInteractor from '../../../domain/interactor/goals/AddGoalCommentInteractor'
+import DeleteGoalsInteractor from '../../../domain/interactor/goals/DeleteGoalsInteractor'
 import requestedGoalsParam from '../../../domain/param/AddRequestedGoalsParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
@@ -24,6 +25,8 @@ export default class RequestCoachPresenter {
     this.addRequestedGoalsInteractor = new AddRequestedGoalsInteractor(container.get('HRBenefitsClient'))
     this.addGoalTaskInteractor = new AddGoalTaskInteractor(container.get('HRBenefitsClient'))
     this.addGoalCommentInteractor = new AddGoalCommentInteractor(container.get('HRBenefitsClient'))
+    this.deleteGoalsInteractor = new DeleteGoalsInteractor(container.get('HRBenefitsClient'))
+
   }
 
   setView (view) {
@@ -217,6 +220,21 @@ export default class RequestCoachPresenter {
       },
       errors => {
         this.view.hideSubmitLoader()
+      }
+    )
+  }
+
+  deleteGoal (goalId) {
+    this.view.showCircularLoader()
+    this.deleteGoalsInteractor.execute(goalId)
+    .subscribe(
+      data => {
+        this.view.hideCircularLoader()
+        this.getGoals()
+        this.view.noticeResponse(data)
+      },
+      errors => {
+        this.view.hideCircularLoader()
       }
     )
   }

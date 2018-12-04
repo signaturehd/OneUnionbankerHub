@@ -58,6 +58,11 @@
   grid-template-columns: 2fr .8fr;
 }
 
+.delete-column {
+  display: grid;
+  grid-template-columns: 1fr .1fr;
+}
+
 .header-color {
   background-color: #424242;
 }
@@ -134,6 +139,10 @@
 
 .icon-taskcompleted-img {
   background-image: url('../../../../images/icons/ic_transaction_otp_verfication.png')
+}
+
+.icon-delete-img {
+  background-image: url('../../../../images/icons/baseline_delete_black_18dp.png')
 }
 
 /* Form style */
