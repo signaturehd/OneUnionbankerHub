@@ -19,11 +19,6 @@
   min-height: 150px;
 }
 
-.payskills-card-grid {
-  display:grid;
-  grid-template-rows: .3fr 1fr;
-}
-
 .payforskills-card-list {
   padding: 0px 50px 30px 50px;
   margin: auto;
