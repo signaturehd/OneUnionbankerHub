@@ -2309,6 +2309,28 @@ export default class HRBenefitsService {
     })
   }
 
+  updateGoalTask(token, goalId, taskDescription, isCompleted) {
+    const objectParam = {
+      goalId: goalId,
+      description: taskDescription,
+      isCompleted: isCompleted
+    }
+
+    return this.apiClient.put(`v1/goals/tasks/${goalId}`, objectParam, {
+      headers : { token }
+    })
+  }
+
+  updateGoalComment(token, commentId, goalComment) {
+    const objectParam = {
+      description: goalComment
+    }
+
+    return this.apiClient.put(`v1/goals/comments/${commentId}`, objectParam, {
+      headers : { token }
+    })
+  }
+
   // Pay For Skills
 
   getPaySkills (token) {

@@ -1524,6 +1524,16 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  updateGoalTask (token, goalId, taskDescription, isCompleted) {
+    return this.service.updateGoalTask(token,  goalId, taskDescription, isCompleted)
+    .pipe(ServiceErrorOperator())
+  }
+
+  updateGoalComment (token, commentId, goalComment) {
+    return this.service.updateGoalComment(token, commentId, goalComment)
+    .pipe(ServiceErrorOperator())
+  }
+
   /* Certificaqte of Employment */
 
   getPurposeCoeType (token, data) {

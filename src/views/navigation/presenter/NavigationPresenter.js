@@ -95,7 +95,7 @@ export default class NavigationPresenter {
 
   getPreEmploymentStatus () {
     if (this.getStatusInteractor.execute()) {
-      this.view.showPreemploymentStatus(JSON.parse(this.getStatusInteractor.execute()))
+      this.view.showPreemploymentStatus(this.getStatusInteractor.execute())
     } else {
       this.getPreEmploymentStatusInteractor.execute()
     }

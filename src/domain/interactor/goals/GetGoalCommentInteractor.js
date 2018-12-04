@@ -5,8 +5,5 @@ export default class GetGoalCommentInteractor {
 
   execute (goalId, pageNumber, pageItem) {
     return this.client.getGoalComment(this.client.getToken(), goalId, pageNumber, pageItem)
-      .do(data => {
-        console.log(data);
-      })
   }
 }

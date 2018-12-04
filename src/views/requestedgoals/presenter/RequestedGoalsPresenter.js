@@ -2,6 +2,8 @@ import GetRequestedGoalsInteractor from '../../../domain/interactor/goals/GetReq
 import GetGoalTaskInteractor from '../../../domain/interactor/goals/GetGoalTaskInteractor'
 import GetGoalCommentInteractor from '../../../domain/interactor/goals/GetGoalCommentInteractor'
 import UpdateGoalsInteractor from '../../../domain/interactor/goals/UpdateGoalsInteractor'
+import UpdateGoalTaskInteractor from '../../../domain/interactor/goals/UpdateGoalTaskInteractor'
+import UpdateGoalCommentInteractor from '../../../domain/interactor/goals/UpdateGoalCommentInteractor'
 import AddRequestedGoalsInteractor from '../../../domain/interactor/goals/AddRequestedGoalsInteractor'
 import AddGoalTaskInteractor from '../../../domain/interactor/goals/AddGoalTaskInteractor'
 import AddGoalCommentInteractor from '../../../domain/interactor/goals/AddGoalCommentInteractor'
@@ -15,6 +17,8 @@ export default class RequestCoachPresenter {
     this.getGoalTaskInteractor = new GetGoalTaskInteractor(container.get('HRBenefitsClient'))
     this.getGoalCommentInteractor = new GetGoalCommentInteractor(container.get('HRBenefitsClient'))
     this.updateGoalsInteractor = new UpdateGoalsInteractor(container.get('HRBenefitsClient'))
+    this.updateGoalTaskInteractor = new UpdateGoalTaskInteractor(container.get('HRBenefitsClient'))
+    this.updateGoalCommentInteractor = new UpdateGoalCommentInteractor(container.get('HRBenefitsClient'))
     this.addRequestedGoalsInteractor = new AddRequestedGoalsInteractor(container.get('HRBenefitsClient'))
     this.addGoalTaskInteractor = new AddGoalTaskInteractor(container.get('HRBenefitsClient'))
     this.addGoalCommentInteractor = new AddGoalCommentInteractor(container.get('HRBenefitsClient'))
@@ -128,6 +132,30 @@ export default class RequestCoachPresenter {
     )
   }
 
+  updateGoalTask (
+    goalId,
+    taskDescription,
+    isCompleted
+  ){
+    this.view.showSubmitLoader()
+    this.updateGoalTaskInteractor.execute(
+      goalId,
+      taskDescription,
+      isCompleted
+    )
+    .subscribe(
+      data => {
+        this.view.hideSubmitLoader()
+        this.view.noticeResponse(data)
+        this.getGoalTask(goalId)
+        this.view.resetValue()
+      },
+      errors => {
+        this.view.hideSubmitLoader()
+      }
+    )
+  }
+
   addGoalComment (
     goalId,
     goalComment
@@ -135,6 +163,31 @@ export default class RequestCoachPresenter {
     this.view.showSubmitLoader()
     this.addGoalCommentInteractor.execute(
       goalId,
+      goalComment
+    )
+    .subscribe(
+      data => {
+        this.view.hideSubmitLoader()
+        this.view.noticeResponse(data)
+        this.getGoalComment(goalId, pageNumber, pageItem)
+        this.view.resetValue()
+      },
+      errors => {
+        this.view.hideSubmitLoader()
+      }
+    )
+  }
+
+  updateGoalComment (
+    goalId,
+    pageNumber,
+    pageItem,
+    commentId,
+    goalComment
+  ){
+    this.view.showSubmitLoader()
+    this.updateGoalCommentInteractor.execute(
+      commentId,
       goalComment
     )
     .subscribe(

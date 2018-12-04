@@ -49,12 +49,16 @@ class RequestedGoalsFragment extends BaseMVPView {
       showGoalTypeModal : false,
       addTask: false,
       addComment: true,
+      onEditTask: false,
+      onEditComment: false,
+      isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
       taskDescription: '',
       taskDescriptionErrorMessage: '',
       goalComment: '',
       goalCommentErrorMessage: '',
+      goalEditComment: '',
       goalId: '',
       goalTitle: '',
       goalTitleErrorMessage: '',
@@ -271,11 +275,14 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   submitTask() {
-    const { goalId, taskDescription } = this.state
+    const { goalId, taskDescription, onEditTask, isCompleted } = this.state
     if(!taskDescription) {
       this.setState({ taskDescriptionErrorMessage: 'Required field' })
     }
     else {
+      onEditTask ?
+      this.presenter.updateGoalTask(goalId, taskDescription, isCompleted)
+      :
       this.presenter.addGoalTask(goalId, taskDescription)
     }
   }
@@ -304,6 +311,7 @@ class RequestedGoalsFragment extends BaseMVPView {
 
   resetValue () {
     this.setState({
+      goalId: '',
       goalTitle: '',
       goalTitleErrorMessage: '',
       description: '',
@@ -323,11 +331,14 @@ class RequestedGoalsFragment extends BaseMVPView {
       taskDescriptionErrorMessage: '',
       goalComment: '',
       goalCommentErrorMessage: '',
+      approvalStatus: '',
       addTask: false,
       addComment: false,
       editMode: false,
       showForm: false,
-      showApprovalForm : false
+      showApprovalForm : false,
+      taskArray: [],
+      commentArray: []
     })
   }
 
@@ -341,10 +352,14 @@ class RequestedGoalsFragment extends BaseMVPView {
       noticeResponse,
       addTask,
       addComment,
+      onEditTask,
+      onEditComment,
+      goalEditComment,
       editMode,
       showForm,
       showPriorityModal,
       showGoalTypeModal,
+      isCompleted,
       pageNumber,
       pageItem,
       taskDescription,
@@ -574,7 +589,10 @@ class RequestedGoalsFragment extends BaseMVPView {
                     <Line/>
                     <div className = { 'padding-10px' }>
                       <div className = { 'header-column' }>
-                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Tasks</h2>
+                        <div>
+                          <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Tasks</h2>
+                          <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>Enter the activities that would help you achieve your goal (Be Specific).</h2>
+                        </div>
                         <h2>
                         {
                           goalId &&
@@ -599,10 +617,10 @@ class RequestedGoalsFragment extends BaseMVPView {
                             <GenericButton
                               text = { 'Cancel' }
                               className = { 'profile-button-small' }
-                              onClick = { () => this.setState({ addTask: false, taskDescription: '' }) }
+                              onClick = { () => this.setState({ onEditTask: false, addTask: false, taskDescription: '' }) }
                             />
                             <GenericButton
-                              text = { 'Submit' }
+                              text = { onEditTask ? 'Update' : 'Submit' }
                               className = { 'profile-button-small' }
                               onClick = { () => this.submitTask() }
                             />
@@ -621,9 +639,11 @@ class RequestedGoalsFragment extends BaseMVPView {
                         taskArray.length !== 0 ?
                           <TasksListComponent
                             cardHolder = { taskArray }
-                            onEdit = { (taskDescription) => this.setState({
+                            onEdit = { (taskDescription, isCompleted) => this.setState({
                               taskDescription,
-                              addTask: true
+                              isCompleted,
+                              addTask: true,
+                              onEditTask: true
                             }) }
                           />
                         :
@@ -634,7 +654,11 @@ class RequestedGoalsFragment extends BaseMVPView {
                     <Line/>
                     <div className = { 'padding-10px' }>
                       <div className = { 'header-column' }>
-                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Comments</h2>
+                        <div>
+                          <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Comments</h2>
+                          <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>You can add any notes or updates for this goal.</h2>
+                        </div>
+                        <br/>
                       </div>
                       {
                         commentLoader ?
@@ -643,9 +667,17 @@ class RequestedGoalsFragment extends BaseMVPView {
                         </center>
                         :
                         commentArray.length !==0 ?
-                        <CommentsListComponent
-                        cardHolder = { commentArray }
-                        />
+                          commentArray.commentDetails.map((resp, key) =>(
+                            <CommentsListComponent
+                            cardHolder = { resp }
+                            commentId = { resp.id }
+                            goalComment = { resp.description }
+                            employeeName = { resp.employeeName }
+                            updateComment = { (commentId, goalEditComment) =>
+                              this.presenter.updateGoalComment(goalId, pageNumber, pageItem, commentId, goalEditComment) }
+                            />
+                          )
+                          )
                         :
                         <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
                       }
