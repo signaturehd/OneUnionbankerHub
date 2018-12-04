@@ -65,7 +65,7 @@ p {
 .header-margin-default {
   align-items: center;
   margin-bottom: 20px;
-  font-size: 35px;
+  font-size: 30px;
   text-align: center;
 }
 
@@ -299,6 +299,23 @@ p {
 .grid-global-row-x3 {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
+  column-gap: 2%;
+}
+
+@media screen and (max-width: 768px) {
+  .grid-global {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .grid-global-columns-x3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-bottom : 10px;
+  }
+}
+.grid-global-rows {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
   column-gap: 2%;
 }
 

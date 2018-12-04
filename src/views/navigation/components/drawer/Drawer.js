@@ -8,8 +8,13 @@ class Drawer extends Component {
     super (props)
   }
   render () {
+    const {
+      onClick
+    } = this.props
     return (
-      <div className = { '_main-content' }>
+      <div
+        onClick = { onClick }
+        className = { '_main-content' }>
           {
             this.props.children
           }

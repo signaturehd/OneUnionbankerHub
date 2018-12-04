@@ -352,6 +352,21 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getNewsImage (token, file) {
+    return this.service.getNewsImage(token, file)
+    .pipe(ServiceErrorOperator())
+    .flatMap(resp =>
+      Observable.create(observer => {
+        const reader = new FileReader()
+        reader.onerror = err => observer.error(err)
+        reader.onabort = err => observer.error(err)
+        reader.onload = () => observer.next(reader.result)
+        reader.onloadend = () => observer.complete()
+        reader.readAsDataURL(resp)
+      })
+    )
+  }
+
   /* Transactions Personal */
   getTransactionsPersonal (token) {
     return this.service.getTransactionsPersonal(token)

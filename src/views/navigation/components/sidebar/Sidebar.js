@@ -29,9 +29,15 @@ class SideBar extends Component {
   [
     {
       id: 0 ,
-      title: 'News Feed',
+      title: 'Home',
       action: () => history.push('/'),
       className: 'newsfeed-icon'
+    },
+    {
+      id: 10 ,
+      title: 'Phenom Prime',
+      action: () => history.push('/phenom'),
+      className: 'phenom-sidebar-icon'
     },
     {
       id: 11 ,
@@ -70,16 +76,16 @@ class SideBar extends Component {
       className: 'payslip-icon'
     },
     {
+      id: 14 ,
+      title: 'My Goals',
+      action: () => history.push('/mygoals'),
+      className: 'payslip-icon'
+    },
+    {
       id: 9 ,
       title: 'My Compliance',
       action: () => history.push('/mycompliance'),
       className: 'compliance-icon'
-    },
-    {
-      id: 10 ,
-      title: 'Phenom Prime',
-      action: () => history.push('/phenom'),
-      className: 'phenom-sidebar-icon'
     },
     {
       id: 3 ,
@@ -188,6 +194,10 @@ class SideBar extends Component {
             <div>
             {
               modules.map((d, idx) =>
+              d.id !== 2 &&
+              d.id !== 3 &&
+              d.id !== 6 &&
+              d.id !== 7 &&
               d.id !== 12 &&
               d.id !== 11 &&
               <div key = { idx }>
@@ -261,7 +271,7 @@ class SideBar extends Component {
 }
 SideBar.propTypes = {
   onClick : PropTypes.func,
-  splitUserInitial : PropTypes.func,
+  splitUserInitial : PropTypes.number,
   selected: PropTypes.number,
   onNavigationClick: PropTypes.func,
   history : PropTypes.object,

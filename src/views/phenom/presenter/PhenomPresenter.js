@@ -24,6 +24,7 @@ export default class PhenomPresenter {
     this.getPhenomDiscountsInteractor.execute()
       .subscribe(resp => {
           phenomData.push(resp)
+          console.log(phenomData)
           if (phenomData.length !== 0) {
             this.view.showPhenomDiscountList(phenomData)
             this.view.showCircularLoader()
