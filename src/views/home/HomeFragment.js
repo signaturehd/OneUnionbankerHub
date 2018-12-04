@@ -69,7 +69,7 @@ class HomeFragment extends BaseMVPView {
               storeWidth = { storeWidth }
             />
           </div>
-          <div className = { 'container' }>
+          <div>
             <Phenom
               homePreview = { homePreview }
              />

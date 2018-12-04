@@ -18,3 +18,10 @@
   font-size: 30px;
   margin-bottom: 10px;
 }
+
+@media screen and (max-width: 768px) {
+  .home-grid-fragment {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
