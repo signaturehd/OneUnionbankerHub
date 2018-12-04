@@ -77,7 +77,7 @@ class PhenomFragment extends BaseMVPView {
       selected,
       homePreview
     } = this.props
-    console.log(homePreview)
+
     return (
       <div className = { 'phenom-fragment' }>
         {
@@ -107,8 +107,8 @@ class PhenomFragment extends BaseMVPView {
               <div className = { 'phenom-container-component' }>
                 <div className =  { 'phenom-grid-header' }>
                   <div>
-                    <h2 className={ 'phenoms-header' }> Phenom Prime </h2>
-                    <h2 className = { 'font-size-14px' }>We &#39;ve got these special deals, Just for U!</h2>
+                    <h2 className={ 'phenoms-header header-margin-default text-align-left unionbank-color' }> Phenom Prime </h2>
+                    <h2>We &#39;ve got these special deals, Just for U!</h2>
                   </div>
                   <div></div>
                   <div></div>

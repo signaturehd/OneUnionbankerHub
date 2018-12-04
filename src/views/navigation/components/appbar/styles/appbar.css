@@ -414,6 +414,26 @@
     right: 0;
     top: 0;
   }
+
+  .appbar-logo-circle {
+    width: 45px;
+    height: 44px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-border-radius: 99em;
+    -moz-border-radius: 99em;
+    border-radius: 99em;
+    border: 0px solid #fff;
+    box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3);
+    vertical-align: middle;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    margin-left: 20px;
+  }
 }
 @media screen and (max-width: 450px) {
   ._img-ub-profile {

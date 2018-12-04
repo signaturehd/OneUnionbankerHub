@@ -19,8 +19,6 @@ class DrawerAppBar extends Component {
   }
 
   onToggleShowChangeDisplay () {
-    console.log('click ')
-    console.log(this.props.profileDisplay === 'none'? 'block' : 'none')
     this.props.profileDisplayFunc(this.props.profileDisplay !== 'none'? 'none' : 'block')
   }
 
@@ -132,11 +130,13 @@ class DrawerAppBar extends Component {
         <div id={ 'drawer-header' }>
           <div className = {'icon-header'}>
             <div>
-              <img
-                style={ style.show }
-                src={ require('../../../../images/menu.png')}
-                className = {'_img-ub-profile'}
-                onClick = { () => this.onToggleShow() }/>
+              {
+                // <img
+                //   style={ style.show }
+                //   src={ require('../../../../images/menu.png')}
+                //   className = {'_img-ub-profile'}
+                //   onClick = { () => this.onToggleShow() }/>
+              }
               <img
                 style={ style.navbar }
                 src={ require('../../../../images/union-logo.png') }
@@ -171,12 +171,24 @@ class DrawerAppBar extends Component {
                 {
                   profileImage ?
                   <img
-                    onClick = { () => this.onToggleShowChangeDisplay() }
+                    onClick = { () => {
+                      if(displayNavIcon === 'block') {
+                        this.onToggleShow()
+                      } else {
+                        this.onToggleShowChangeDisplay()
+                      }
+                    }}
                     src = { profileImage }
                     className = { 'appbar-logo-circle' }/>
                   :
                   <img
-                    onClick = { () => this.onToggleShowChangeDisplay() }
+                    onClick = { () => {
+                      if(displayNavIcon === 'block') {
+                        this.onToggleShow()
+                      } else {
+                        this.onToggleShowChangeDisplay()
+                      }
+                    }}
                     src = { require('../../../../images/profile-picture.png') }
                     className = { 'appbar-logo-circle' }/>
                 }
