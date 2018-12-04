@@ -81,12 +81,9 @@ export default class NewsPresenter {
           // })
           // }
         // )
-        console.log(dateArray)
         this.view.showNews(dateArray)
       } catch (e) {
-        console.log(e)
       }
-
       })
       .subscribe()
     }
