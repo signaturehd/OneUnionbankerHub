@@ -32,7 +32,6 @@ class PhenomFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    // this.props.setSelectedNavigation(10)
     this.presenter.getPhenomDiscounts()
   }
 
@@ -75,7 +74,9 @@ class PhenomFragment extends BaseMVPView {
     const {
       setSelectedNavigation,
       selected,
-      homePreview
+      homePreview,
+      history,
+      homePreviewFunc
     } = this.props
 
     return (
@@ -136,6 +137,19 @@ class PhenomFragment extends BaseMVPView {
                         />
                       )
                     }
+                    <br/>
+                    <button
+                      type = { 'button' }
+                      className = { `viewmore tooltip` }
+                      onClick = { () => {
+                            history.push('/phenom')
+                            setSelectedNavigation(10)
+                            homePreviewFunc(false)
+                          }
+                        }>
+                      <img src={ require('../../images/icons/horizontal.png') } />
+                      <span className={ 'tooltiptext' }>View More</span>
+                    </button>
                   </div>
                   :
                   <div className = { 'phenom-container-grid' }>

@@ -57,7 +57,9 @@ class HomeFragment extends BaseMVPView {
     } = this.state
 
     const {
-      storeWidth
+      storeWidth,
+      history,
+      setSelectedNavigation
     } = this.props
 
     return (
@@ -71,7 +73,10 @@ class HomeFragment extends BaseMVPView {
           </div>
           <div>
             <Phenom
+              history = { history }
+              setSelectedNavigation = { (e) => setSelectedNavigation(e) }
               homePreview = { homePreview }
+              homePreviewFunc = { (homePreview) => this.setState({ homePreview }) }
              />
             <br/>
           </div>
