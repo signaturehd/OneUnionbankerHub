@@ -2310,15 +2310,21 @@ export default class HRBenefitsService {
   }
 
   updateGoalTask(token, goalId, taskDescription, isCompleted) {
-    const objectParam = {
-      goalId: goalId,
-      description: taskDescription,
-      isCompleted: isCompleted
+    let updateGoal
+    if (taskDescription) {
+      updateGoal = this.apiClient.put(`v1/goals/tasks/${goalId}`, {
+        description: taskDescription
+      }, {
+        headers : { token }
+      })
+    } else if (isCompleted !== null) {
+      updateGoal = this.apiClient.post(`v1/goals/tasks/${goalId}`, {
+        isCompleted
+      }, {
+        headers : { token }
+      })
     }
-
-    return this.apiClient.put(`v1/goals/tasks/${goalId}`, objectParam, {
-      headers : { token }
-    })
+    return updateGoal
   }
 
   updateGoalComment(token, commentId, goalComment) {

@@ -37,14 +37,15 @@ class TasksListComponent extends Component {
   }
 
   render () {
-    const { goalId, cardHolder, onEdit } = this.props
+    const { goalId, cardHolder, onEdit, changeTask } = this.props
     return (
       <div>
       {
         cardHolder.map((resp, key) =>
           <div className={ 'comment-border margin-5px padding-5px employee-column' }>
             <Checkbox
-            checked = { resp.isCompleted }
+              checked = { resp.isCompleted }
+              onChange = { () => changeTask(resp.id , !resp.isCompleted) }
             />
             <h2 className = { 'text-align-left font-size-12px font-weight-lighter cursor-pointer' }
             onClick = { () => onEdit(resp.description, resp.isCompleted) }>{resp.description}</h2>

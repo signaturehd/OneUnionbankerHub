@@ -115,6 +115,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   getTasklist (taskArray) {
+    console.log(taskArray);
     this.setState({ taskArray })
   }
 
@@ -331,7 +332,6 @@ class RequestedGoalsFragment extends BaseMVPView {
       taskDescriptionErrorMessage: '',
       goalComment: '',
       goalCommentErrorMessage: '',
-      approvalStatus: '',
       addTask: false,
       addComment: false,
       editMode: false,
@@ -645,6 +645,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                               addTask: true,
                               onEditTask: true
                             }) }
+                            changeTask = { (taskId, isCompleted) => this.presenter.updateGoalTask(taskId, null, isCompleted)  }
                           />
                         :
                         !addTask &&
