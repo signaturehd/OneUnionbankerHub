@@ -57,11 +57,47 @@ export default class PayForSkillsPresenter {
     })
   }
 
+  // 31 - For Review 32 - Approved 33 - Reject
+
+  getObjectConfigure (data) {
+    const objectParam = {
+      accreditingBody : {
+        id : data.accreditingBody.id,
+        name : data.accreditingBody.name,
+      },
+      id : data.id ? data.id : '',
+      others :  data.others,
+      dateOfCompletion : data.dateOfCompletion,
+      program : {
+        id : data.program.id,
+        name : data.program.name,
+      }
+    }
+    return objectParam
+  }
+
   getPaySkillsList () {
     this.view.checkLoader(true)
     this.getPaySkillsListInteractor.execute()
+    .do((data) => this.view.setPayForSkillsList(data))
+    .map((resp) => {
+      resp && resp.map((data) => {
+        try {
+          if(data.status.id === 1) {
+            this.view.showPayForSkillsDraft(this.getObjectConfigure(data))
+          } else if (data.status.id === 31) {
+            this.view.showPayForSkillsReview(this.getObjectConfigure(data))
+          } else if (data.status.id === 32) {
+            this.view.showPayForSkillsApproved(this.getObjectConfigure(data))
+          } else if (data.status.id === 33) {
+            this.view.showPayForSkillsReject(this.getObjectConfigure(data))
+          }
+        } catch (e) {
+        }
+      })
+    })
     .subscribe(data => {
-      this.view.setPayForSkillsList(data)
+      this.view.checkLoader(false)
     }, error => {
       this.view.checkLoader(false)
     })
@@ -146,6 +182,10 @@ export default class PayForSkillsPresenter {
        })
      )
      this.view.navigateLearning()
+     storedProgramObject = ''
+     storedDateOfCompletion = ''
+     storedAccreditationObject = ''
+     storedAccreditationObject = ''
     }, error => {
       this.view.checkLoader(false)
     })
