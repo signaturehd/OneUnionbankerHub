@@ -199,8 +199,23 @@
   background-position: center;
 }
 
+.appbar-goals-icon {
+  background-image: url('../../../../../images/SIDE MENU/Goals - Grey.png');
+  background-position: center;
+}
+
+.appbar-goals-iconactive {
+  background-image: url('../../../../../images/SIDE MENU/Goals - Orange.png');
+  background-position: center;
+}
+
 .appbar-compliance-icon {
   background-image: url('../../../../../images/SIDE MENU/My Compliance - Grey.png');
+  background-position: center;
+}
+
+.appbar-compliance-iconactive {
+  background-image: url('../../../../../images/SIDE MENU/My Compliance - Orange.png');
   background-position: center;
 }
 
