@@ -168,7 +168,6 @@ export default class RequestCoachPresenter {
         }
       )
     } catch (e) {
-      console.log(e);
     }
 
   }
@@ -240,7 +239,6 @@ export default class RequestCoachPresenter {
         }
       )
     } catch (e) {
-      console.log(e)
     }
   }
 }
