@@ -157,7 +157,7 @@ export default class CertificateOfEmploymentPresenter {
          title : 'Successfully Added',
          message : data.message,
          type : 'success',
-         duration : 5000
+         duration : 7000
        })
      )
      this.view.navigateLearning()
