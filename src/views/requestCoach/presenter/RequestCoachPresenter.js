@@ -13,7 +13,6 @@ export default class RequestCoachPresenter {
     description,
     preferredDate,
     preferredTime) {
-      console.log('presenter')
     this.view.showCircularLoader()
     this.requestCoachInteractor.execute(requestCoachParam(
       description,
