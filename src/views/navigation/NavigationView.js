@@ -86,6 +86,9 @@ import BookFlightFragment from '../bookflight/BookFlightFragment'
 import LiquidationFragment from '../liquidation/LiquidationFragment'
 import ApprovalFragment from '../approval/ApprovalFragment'
 
+/* Certificate of Employment*/
+import CertificateOfEmploymentFragment from '../coe/CertificateOfEmploymentFragment'
+
 /* Goals */
 import MyGoalsFragment from '../mygoals/MyGoalsFragment'
 import RequestedGoalsFragment from '../requestedgoals/RequestedGoalsFragment'
@@ -437,6 +440,8 @@ class NavigationView extends BaseMVPView {
                   <TravelFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation }
                     isLineManager = { isLineManager } /> } />
+                <Route path = '/coe' render = { props =>
+                  <CertificateOfEmploymentFragment { ...props } /> } />
                 <Route path = '/payslip' render = { props =>
                   <Payslip { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
