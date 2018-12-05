@@ -38,8 +38,8 @@ class PayForSkillsListComponent extends Component {
             <h2>List of your skill list in one place.</h2>
             <br/>
             {
-              payForSkillsList && payForSkillsList.length !== 0 &&
-              <center>
+              payForSkillsList === undefined &&
+              <center className = { 'circular-loader-center' }>
                 <h2>
                   No Records.
                 </h2>
