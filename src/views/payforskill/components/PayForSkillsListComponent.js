@@ -49,7 +49,7 @@ class PayForSkillsListComponent extends Component {
               posApproved && posApproved.length !== 0 &&
               <div>
                 <h2
-                  className = { 'font-weight-bold font-size-16px' }>For Approval ...</h2>
+                  className = { 'font-weight-bold font-size-16px' }>Approved ...</h2>
                 <br/>
                 {
                   enabledLoader ?
