@@ -222,6 +222,7 @@ class PayForSkillsFragment extends BaseMVPView {
                   this.presenter.setStoredDateOfCompletion('')
                   this.presenter.setStoredAccreditationObject('')
                   this.presenter.setStoredProgramObject('')
+                  this.presenter.setStoredOthers('')
                   this.setState({
                     showAddingPaySkillsComponent,
                     attachmentsArray: [{
