@@ -269,7 +269,7 @@ class LoginView extends BaseMVPView {
     /* UAT 6.0.1*/
 
     let version = 5
-    let majorVersion = 5
+    let majorVersion = 6
     let minorVersion = 1
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 

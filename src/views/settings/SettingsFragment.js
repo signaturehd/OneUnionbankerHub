@@ -7,6 +7,7 @@ import Presenter from './presenter/SettingsPresenter'
 
 import SettingsProfileCardComponent from './components/SettingsProfileCardComponent'
 import RequestOtpModal from './modals/RequestOtpModal'
+import * as controller from './functions/SettingFunctions'
 
 import {
   Card,
@@ -148,6 +149,10 @@ class SettingsFragment extends BaseMVPView {
     this.setState({ descriptionEditMode : false })
   }
 
+  requiredNewPinValidate (data) {
+    this.setState({ requiredNewPin :  controller.checkedValidateInputNumber(data) })
+  }
+
   render () {
     const {
       lineManager,
@@ -205,7 +210,9 @@ class SettingsFragment extends BaseMVPView {
             requiredOtp = { requiredOtp }
             requiredNewPin = { requiredNewPin }
             requiredOtpFunc = { (requiredOtp) => this.setState({ requiredOtp }) }
-            requiredNewPinFunc = { (requiredNewPin) => this.setState({ requiredNewPin }) }
+            requiredNewPinFunc = { (e) =>
+              this.requiredNewPinValidate(e)
+            }
             submitFunction = { () => this.presenter.requestUnlockPin(requiredOtp, requiredNewPin) }
             showNewPinFunc = { (showNewPin) => this.setState({ showNewPin }) }
           />
@@ -270,7 +277,7 @@ class SettingsFragment extends BaseMVPView {
            descriptionEditMode = { descriptionEditMode }
            descriptionText = { descriptionText }
            accountNumber = { accountNumber }
-           profile={ profile }
+           profile={ profile && profile }
            lineManager={ lineManager }
            profileDependent={ profileDependent }
            enabledStaffLoader = { enabledStaffLoader }
