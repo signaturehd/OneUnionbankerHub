@@ -13,6 +13,7 @@ import moment from 'moment'
 
 /* Variables */
 let storedDateOfCompletion = '', storedProgramObject = '', storedAttachments = [], storedAccreditationObject = ''
+let storedOthers = ''
 
 export default class PayForSkillsPresenter {
   constructor (container) {
@@ -43,6 +44,11 @@ export default class PayForSkillsPresenter {
   setStoredAccreditationObject (data) {
     storedAccreditationObject = data
     this.view.setAccreditingBody(data)
+  }
+
+  setStoredOthers (data) {
+    storedOthers = data
+    this.view.setStoredOthers(data)
   }
 
   getPaySkills () {
@@ -169,7 +175,7 @@ export default class PayForSkillsPresenter {
       storedProgramObject.id,
       moment(storedDateOfCompletion).format('YYYY-MM-DD'),
       storedAccreditationObject.id,
-      storedAccreditationObject.id === 21 ? storedAccreditationObject.accre : '',
+      storedOthers,
       storedAttachments
     ))
     .subscribe(data => {

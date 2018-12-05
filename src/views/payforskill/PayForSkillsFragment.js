@@ -99,6 +99,10 @@ class PayForSkillsFragment extends BaseMVPView {
     this.setState({ posApproved : newObject })
   }
 
+  setStoredOthers (others) {
+    this.setState({ others })
+  }
+
   navigateLearning () {
     this.setState({
       showAddingPaySkillsComponent : false,
@@ -109,6 +113,7 @@ class PayForSkillsFragment extends BaseMVPView {
       accreditingBody: '',
       dateOfCompletion: '',
     })
+    this.presenter.getPaySkillsList()
   }
 
   checkListIfNull () {
@@ -135,6 +140,7 @@ class PayForSkillsFragment extends BaseMVPView {
       posReview,
       posApproved,
       posReject,
+      others
     } = this.state
 
     return (
@@ -165,7 +171,7 @@ class PayForSkillsFragment extends BaseMVPView {
             selectedArray = { (id, accre) => {
               const objectParam = {
                 id : id,
-                accre : id === 21 ? '' : accre,
+                accre : accre,
               }
               this.presenter.setStoredAccreditationObject(objectParam)
               this.setState({  showAccreditationModal: false })
@@ -182,57 +188,76 @@ class PayForSkillsFragment extends BaseMVPView {
             posDraft = { posDraft }
             posReview = { posReview }
             posApproved = { posApproved }
+            payForSkillsList = { payForSkillsList }
             posReject = { posReject }
             enabledLoader = { enabledLoader }
           />
           :
-          <PayForSkillsForm
-            showEditMode = { showEditMode }
-            attachmentsArray = { attachmentsArray }
-            onContinue = { () => this.presenter.validateInput() }
-            onEdit = { (e) => {
-              if(e) {
-                this.presenter.submitPaySkills()
-              } else {
-                 this.setState({ showEditMode : e })
-              }
-            } }
-            programs = { programs }
-            programsBody = { programsBody }
-            accreditingBody = { accreditingBody }
-            accrediting = { accrediting }
-            dateOfCompletion = { dateOfCompletion }
-            onBackToList = { (showAddingPaySkillsComponent) => {
-              this.presenter.setStoredDateOfCompletion('')
-              this.presenter.setStoredAccreditationObject('')
-              this.setState({ showAddingPaySkillsComponent })
-            } }
-            onChangeAccreditationModalFunc = { (e, e1) => {
-              const objectParam = {
-                id : e,
-                accre : e1,
-              }
-              this.presenter.setStoredAccreditationObject(objectParam)
-            } }
-            addAttachmentsFunc = { () => {
-              const newFileArray = [...attachmentsArray]
-              const objectParam = {
-                name : 'Pay For Skills Attachment'
-              }
-              newFileArray.push(objectParam)
-              this.presenter.setStoredAttachments(newFileArray)
-            } }
-            attachmentsNewValueFunc = { (respFile) =>
-              this.presenter.setStoredAttachments(respFile)
+          <div>
+            {
+              enabledLoader ?
+
+              <center className = { 'circular-loader-center' }>
+                <h2>Please wait...</h2>
+                <CircularLoader show = { enabledLoader }/>
+              </center> :
+              <PayForSkillsForm
+                others = { others }
+                showEditMode = { showEditMode }
+                attachmentsArray = { attachmentsArray }
+                onContinue = { () => this.presenter.validateInput() }
+                onEdit = { (e) => {
+                  if(e) {
+                    this.presenter.submitPaySkills()
+                  } else {
+                     this.setState({ showEditMode : e })
+                  }
+                } }
+                programs = { programs }
+                programsBody = { programsBody }
+                accreditingBody = { accreditingBody }
+                accrediting = { accrediting }
+                dateOfCompletion = { dateOfCompletion }
+                onBackToList = { (showAddingPaySkillsComponent) => {
+                  this.presenter.setStoredDateOfCompletion('')
+                  this.presenter.setStoredAccreditationObject('')
+                  this.presenter.setStoredProgramObject('')
+                  this.setState({
+                    showAddingPaySkillsComponent,
+                    attachmentsArray: [{
+                      name: 'Certificate Of Completion'
+                    }]
+                  })
+                } }
+                onChangeOthersFunc = { (others) => this.presenter.setStoredOthers(others) }
+                onChangeAccreditationModalFunc = { (e, e1) => {
+                  const objectParam = {
+                    id : e,
+                    accre : e1,
+                  }
+                  this.presenter.setStoredAccreditationObject(objectParam)
+                } }
+                addAttachmentsFunc = { () => {
+                  const newFileArray = [...attachmentsArray]
+                  const objectParam = {
+                    name : 'Certificate Of Completion'
+                  }
+                  newFileArray.push(objectParam)
+                  this.presenter.setStoredAttachments(newFileArray)
+                } }
+                attachmentsNewValueFunc = { (respFile) =>
+                  this.presenter.setStoredAttachments(respFile)
+                }
+                dateOfCompletionFunc = { (e) =>
+                  this.presenter.setStoredDateOfCompletion(e)
+                }
+                showProgramsModalFunc = { () =>
+                  this.setState({ showProgramsModal : true }) }
+                showAccreditationModalFunc = { () =>
+                  this.setState({ showAccreditationModal : true }) }
+              />
             }
-            dateOfCompletionFunc = { (e) =>
-              this.presenter.setStoredDateOfCompletion(e)
-            }
-            showProgramsModalFunc = { () =>
-              this.setState({ showProgramsModal : true }) }
-            showAccreditationModalFunc = { () =>
-              this.setState({ showAccreditationModal : true }) }
-          />
+          </div>
         }
         </div>
         {

@@ -38,6 +38,14 @@ class PayForSkillsListComponent extends Component {
             <h2>List of your skill list in one place.</h2>
             <br/>
             {
+              payForSkillsList === undefined &&
+              <center className = { 'circular-loader-center' }>
+                <h2>
+                  No Records.
+                </h2>
+              </center>
+            }
+            {
               posApproved && posApproved.length !== 0 &&
               <div>
                 <h2
@@ -89,23 +97,6 @@ class PayForSkillsListComponent extends Component {
                   /> :
                   <SkillCard
                     array = { posDraft }
-                  />
-                }
-              </div>
-            }
-            {
-              posReject && posReject.length !== 0 &&
-              <div>
-                <h2 className = { 'font-weight-bold font-size-16px' }>For Reject ...</h2>
-                <br/>
-                {
-                  enabledLoader ?
-
-                  <LoaderComponent
-                    enabledLoader = { enabledLoader }
-                  /> :
-                  <SkillCard
-                    array = { posReject }
                   />
                 }
               </div>
