@@ -101,23 +101,6 @@ class PayForSkillsListComponent extends Component {
                 }
               </div>
             }
-            {
-              posReject && posReject.length !== 0 &&
-              <div>
-                <h2 className = { 'font-weight-bold font-size-16px' }>For Reject ...</h2>
-                <br/>
-                {
-                  enabledLoader ?
-
-                  <LoaderComponent
-                    enabledLoader = { enabledLoader }
-                  /> :
-                  <SkillCard
-                    array = { posReject }
-                  />
-                }
-              </div>
-            }
           </div>
         </div>
       </div>
