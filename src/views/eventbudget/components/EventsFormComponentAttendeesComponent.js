@@ -76,10 +76,10 @@ class EventsFormComponentAttendeesComponent extends Component {
                 const setDepartmentKey = key
                 return (
                   <EventsBudgetDepartmentComponent
+                    showEditSubmitButton = { showEditSubmitButton }
                     existingIds = { existingIds }
                     setDepartmentKey = { setDepartmentKey }
                     attend = { attend }
-                    showEditSubmitButton = { showEditSubmitButton }
                     key = { key }
                     checkIdIfHasLoginFunc = { (e, e1) => {
                         checkIdIfHasLogin(e, e1)

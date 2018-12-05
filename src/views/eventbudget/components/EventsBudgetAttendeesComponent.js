@@ -3,6 +3,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './styles/eventsComponentStyle.css'
 
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
+
 class EventsBudgetAttendeesComponent extends Component {
   constructor (props) {
     super(props)
@@ -33,6 +36,13 @@ class EventsBudgetAttendeesComponent extends Component {
                     if(!showEditSubmitButton) {
                       checkIdIfHasLogin(!employee.hasRecord, employee.id)
                     } else {
+                      store.dispatch(NotifyActions.addNotify({
+                          title: 'Events Budget',
+                          message : 'Please click "Edit" to add attendees',
+                          type : 'warning',
+                          duration : 2000
+                        })
+                      )
                     }
                   } }
                   key = { key }

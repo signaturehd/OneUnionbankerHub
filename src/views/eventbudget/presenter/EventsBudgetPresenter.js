@@ -159,6 +159,7 @@ export default class EventsBudgetPresenter {
   }
 
   addEventsBudget (storedListId) {
+    console.log(storedDate)
     const newArrayId = storedListId
     const uniArr = [...(new Set(newArrayId))]
     this.view.showCircularLoader()
@@ -170,7 +171,7 @@ export default class EventsBudgetPresenter {
         storedRegionText,
         storedProvinceText,
         storedCityText,
-        moment(storedDate).format('YYYY-MM-DD'),
+        storedDate ?  moment(storedDate).format('YYYY-MM-DD'): moment().format('YYYY-MM-DD'),
         uniArr,
       )
     )
@@ -179,7 +180,6 @@ export default class EventsBudgetPresenter {
       this.view.noticeOfUndertaking(true)
       this.view.noticeOfUndertakingForm(data)
       storedId = []
-      this.view.setEditableForm(false)
     }, error => {
       this.view.hideCircularLoader()
     })

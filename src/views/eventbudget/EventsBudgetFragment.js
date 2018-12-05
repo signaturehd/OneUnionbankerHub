@@ -71,8 +71,9 @@ class EventsBudgetFragment extends BaseMVPView {
     this.presenter.setProvince(eventsNullChecker && eventBudgetData.venue.province)
     this.presenter.setRegion(eventsNullChecker && eventBudgetData.venue.region)
     this.presenter.setCity(eventsNullChecker && eventBudgetData.venue.city)
-    this.presenter.setDateFunc(venueNullChecker && eventBudgetData.venue.targetDate  ? eventBudgetData.venue.targetDate : '' )
+    this.presenter.setDateFunc(venueNullChecker && eventBudgetData.venue.targetDate  ? eventBudgetData.venue.targetDate : '')
     this.setState({ eventBudgetData })
+
   }
 
   showCircularLoader () {

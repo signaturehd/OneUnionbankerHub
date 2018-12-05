@@ -80,31 +80,31 @@ class EventsBudgetFormComponent extends Component {
             text = { 'Venue Name' }
             onChange = { (e) => venueTextFunc(e.target.value) }
             value = { venueText }
-            disabled = { venueText ? true : false }
+            disabled = { showEditSubmitButton }
           />
           <GenericInput
             text = { 'Address' }
             onChange = { (e) => addressTextFunc(e.target.value) }
             value = { addressText }
-            disabled = { addressText ? true : false }
+            disabled = { showEditSubmitButton }
           />
           <GenericInput
             text = { 'Region' }
             onChange = { (e) => regionTextFunc(e.target.value) }
             value = { regionText }
-            disabled = { regionText ? true : false }
+            disabled = { showEditSubmitButton }
           />
           <GenericInput
             text = { 'Province' }
             onChange = { (e) => provinceTextFunc(e.target.value) }
             value = { provinceText }
-            disabled = { provinceText ? true : false }
+            disabled = { showEditSubmitButton }
           />
           <GenericInput
             text = { 'City' }
             onChange = { (e) => cityTextFunc(e.target.value) }
             value = { cityText }
-            disabled = { cityText ? true : false }
+            disabled = { showEditSubmitButton }
           />
           <GenericInput
             text = { 'Amount' }
@@ -115,19 +115,19 @@ class EventsBudgetFormComponent extends Component {
 
         </div>
           <DatePicker
-            selected = { venue && venue.targetDate ? moment(venue.targetDate) : moment(preferredDate) }
+            selected = { preferredDate ? moment(preferredDate) : moment() }
             onChange = { (e) => dateFunc(e) }
             minDate = { events && moment(events.startDate) }
             maxDate = { events && moment(events.endDate) }
-            disabled = {  venue && venue.targetDate ? true : false }
+            disabled = { showEditSubmitButton }
             readOnly
             dateFormat = { 'MM/DD/YYYY' }
             text = { 'Events Date' }
             errorMessage = { dateErrorMessage }
             />
           <Attendees
-            showEditSubmitButton = { showEditSubmitButton }
             index = { index }
+            showEditSubmitButton = { showEditSubmitButton }
             viewMoreText = { viewMoreText }
             viewMore = { viewMore }
             viewLess = { viewLess }
