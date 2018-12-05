@@ -226,16 +226,21 @@ export default class RequestCoachPresenter {
 
   deleteGoal (goalId) {
     this.view.showCircularLoader()
-    this.deleteGoalsInteractor.execute(goalId)
-    .subscribe(
-      data => {
-        this.view.hideCircularLoader()
-        this.getGoals()
-        this.view.noticeResponse(data)
-      },
-      errors => {
-        this.view.hideCircularLoader()
-      }
-    )
+    try {
+      this.deleteGoalsInteractor.execute(goalId)
+      .subscribe(
+        data => {
+          this.view.hideCircularLoader()
+          this.getGoals()
+          this.view.noticeResponse(data)
+        },
+        errors => {
+          console.log(errors)
+          this.view.hideCircularLoader()
+        }
+      )
+    } catch (e) {
+      console.log(e)
+    }
   }
 }

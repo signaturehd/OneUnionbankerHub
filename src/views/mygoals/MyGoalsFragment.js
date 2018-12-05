@@ -281,7 +281,7 @@ class MyGoalsFragment extends BaseMVPView {
                   defaultChecked = { true }
                   onClick = { () => {
                       this.setState({ showApprovalForm : false })
-                      this.props.history.push('/mygoals/request')
+                      this.props.history.push('/mygoals')
                     }
                   }/>
                 <label className = { 'travel-icon-tab' } htmlFor='tab1'>Individual Goals</label>

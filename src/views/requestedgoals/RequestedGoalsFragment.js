@@ -452,7 +452,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                 />
                 <GenericButton
                   text = { 'Yes' }
-                  onClick = { () => this.presenter.deleteGoal(goalId) }
+                  onClick = { () => {this.presenter.deleteGoal(goalId), this.setState({ showDeleteModal: false })} }
                 />
               </div>
             </center>

@@ -1536,7 +1536,7 @@ export default class HRBenefitsClient {
 
   deleteGoal (token, goalId) {
     return this.service.deleteGoal(token, goalId)
-    .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator())
   }
 
   /* Certificaqte of Employment */
