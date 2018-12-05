@@ -352,7 +352,7 @@
 .icon-header {
   text-align: left;
   display: grid;
-  height: 65px;
+  height: 100%;
   grid-template-columns: .3fr 1fr .09fr;
 }
 
