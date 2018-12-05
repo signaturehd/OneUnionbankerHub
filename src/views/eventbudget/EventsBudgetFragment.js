@@ -47,6 +47,7 @@ class EventsBudgetFragment extends BaseMVPView {
       showBenefitFeedbackModal : false,  /* Display Feedback Modal*/
       showNoticeResponseModal: false, /* Display Notice Response Modal*/
       showNoticeResponseApprovalModal : false,/* Display Notice Approval Response Modal*/
+      showEditSubmitButton : false,
     }
     this.storeArray = this.storeArray.bind(this)
   }
@@ -70,7 +71,7 @@ class EventsBudgetFragment extends BaseMVPView {
     this.presenter.setProvince(eventsNullChecker && eventBudgetData.venue.province)
     this.presenter.setRegion(eventsNullChecker && eventBudgetData.venue.region)
     this.presenter.setCity(eventsNullChecker && eventBudgetData.venue.city)
-    this.presenter.setDateFunc(eventsNullChecker && eventBudgetData.events.targetDate)
+    this.presenter.setDateFunc(venueNullChecker && eventBudgetData.venue.targetDate  ? eventBudgetData.venue.targetDate : '' )
     this.setState({ eventBudgetData })
   }
 
@@ -141,6 +142,10 @@ class EventsBudgetFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/')
   }
 
+  setEditableForm (showEditSubmitButton) {
+    this.setState({ showEditSubmitButton })
+  }
+
   storeArray (arrayValue) {
     const {
       storedListId
@@ -182,7 +187,8 @@ class EventsBudgetFragment extends BaseMVPView {
       response,
       benefitId,
       preferredDate,
-      storedList
+      storedList,
+      showEditSubmitButton
     } = this.state
 
     return (
@@ -261,7 +267,7 @@ class EventsBudgetFragment extends BaseMVPView {
                 }
               }
               preferredDate = { preferredDate }
-              dateFunc = { (preferredDate) => this.presenter.setDateFunc(preferredDate) }
+              dateFunc = { (e) => this.presenter.setDateFunc(e) }
               celebrationText = { celebrationText }
               celebrationTextFunc = { (e) => this.presenter.setCelebration(validate.checkedValidateAlphabet(e)) }
               venueText = { venueText }
@@ -283,9 +289,14 @@ class EventsBudgetFragment extends BaseMVPView {
               viewMoreText = { viewMoreText }
               viewMore = { () => this.setState({ index : eventBudgetData.attendees.length, viewMoreText : 'Hide Attendees' }) }
               viewLess = { () => this.setState({ index : 0, viewMoreText : 'Show Attendees' }) }
+              validatePresenter = { () =>
+                this.presenter.validationEventsBudget(storedListId)
+              }
               submitPresenter = { () =>
                 this.presenter.addEventsBudget(storedListId)
               }
+              setEditable = { () => this.setEditableForm(false) }
+              showEditSubmitButton = { showEditSubmitButton }
             />
           </div>
           }

@@ -14,6 +14,7 @@ class EventsBudgetAttendeesComponent extends Component {
       attendies,
       existingIds,
       isSelectedDepartment,
+      showEditSubmitButton
     } = this.props
 
     let existingIdsArray = existingIds.map((item) => item)
@@ -29,7 +30,10 @@ class EventsBudgetAttendeesComponent extends Component {
                 !employee.hasRecord &&
                 <div
                   onClick = { () => {
-                    checkIdIfHasLogin(!employee.hasRecord, employee.id)
+                    if(!showEditSubmitButton) {
+                      checkIdIfHasLogin(!employee.hasRecord, employee.id)
+                    } else {
+                    }
                   } }
                   key = { key }
                   className = { 'events-employees-column-3 cursor-pointer' }>

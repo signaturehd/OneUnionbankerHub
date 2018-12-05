@@ -46,7 +46,8 @@ class EventsFormComponentAttendeesComponent extends Component {
       isDepartmentSelected,
       departmentSelectedFunc,
       checkIdIfHasLogin,
-      existingIds
+      existingIds,
+      showEditSubmitButton
     } = this.props
 
     const isVisible = (eventBudgetData && eventBudgetData.attendees && eventBudgetData.attendees.length > 4) ? '' : 'hide'
@@ -78,6 +79,7 @@ class EventsFormComponentAttendeesComponent extends Component {
                     existingIds = { existingIds }
                     setDepartmentKey = { setDepartmentKey }
                     attend = { attend }
+                    showEditSubmitButton = { showEditSubmitButton }
                     key = { key }
                     checkIdIfHasLoginFunc = { (e, e1) => {
                         checkIdIfHasLogin(e, e1)

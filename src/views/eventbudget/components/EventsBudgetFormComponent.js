@@ -48,6 +48,7 @@ class EventsBudgetFormComponent extends Component {
       events,
       venue,
       submitPresenter,
+      validatePresenter,
       preferredDate,
       dateFunc,
       dateErrorMessage,
@@ -55,6 +56,8 @@ class EventsBudgetFormComponent extends Component {
       startDate,
       existingIds,
       selectAll,
+      showEditSubmitButton,
+      setEditable
     } = this.props
 
 
@@ -77,26 +80,31 @@ class EventsBudgetFormComponent extends Component {
             text = { 'Venue Name' }
             onChange = { (e) => venueTextFunc(e.target.value) }
             value = { venueText }
+            disabled = { venueText ? true : false }
           />
           <GenericInput
             text = { 'Address' }
             onChange = { (e) => addressTextFunc(e.target.value) }
             value = { addressText }
+            disabled = { addressText ? true : false }
           />
           <GenericInput
             text = { 'Region' }
             onChange = { (e) => regionTextFunc(e.target.value) }
             value = { regionText }
+            disabled = { regionText ? true : false }
           />
           <GenericInput
             text = { 'Province' }
             onChange = { (e) => provinceTextFunc(e.target.value) }
             value = { provinceText }
+            disabled = { provinceText ? true : false }
           />
           <GenericInput
             text = { 'City' }
             onChange = { (e) => cityTextFunc(e.target.value) }
             value = { cityText }
+            disabled = { cityText ? true : false }
           />
           <GenericInput
             text = { 'Amount' }
@@ -111,14 +119,14 @@ class EventsBudgetFormComponent extends Component {
             onChange = { (e) => dateFunc(e) }
             minDate = { events && moment(events.startDate) }
             maxDate = { events && moment(events.endDate) }
+            disabled = {  venue && venue.targetDate ? true : false }
             readOnly
             dateFormat = { 'MM/DD/YYYY' }
             text = { 'Events Date' }
             errorMessage = { dateErrorMessage }
             />
-          <br/>
-
           <Attendees
+            showEditSubmitButton = { showEditSubmitButton }
             index = { index }
             viewMoreText = { viewMoreText }
             viewMore = { viewMore }
@@ -129,14 +137,34 @@ class EventsBudgetFormComponent extends Component {
             checkIdIfHasLogin = { (e, e1) =>
             {  checkIdIfHasLogin(e, e1)} }
           />
-
           <br/>
+          <Line/>
+          {
+            showEditSubmitButton &&
+            <center>
+              <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
+            </center>
+          }
           <center>
-            <GenericButton
-              text = { 'Continue' }
-              onClick = { () => submitPresenter() }
-            />
-        </center>
+            {
+              showEditSubmitButton ?
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'Edit' }
+                  onClick = { () => setEditable() }
+                />
+                <GenericButton
+                  text = { 'Submit' }
+                  onClick = { () => submitPresenter() }
+                />
+              </div>
+              :
+              <GenericButton
+                text = { 'Continue' }
+                onClick = { () => validatePresenter() }
+              />
+            }
+          </center>
         </div>
         <div></div>
         </div>

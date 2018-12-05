@@ -74,7 +74,7 @@ export default class EventsBudgetPresenter {
 
   setDateFunc (preferredDate) {
     storedDate = preferredDate
-    this.view.setDateFunc(storedDate)
+    this.view.setDateFunc(preferredDate)
   }
 
   setAttendees (updatedAttendees) {
@@ -107,9 +107,7 @@ export default class EventsBudgetPresenter {
     })
   }
 
-  addEventsBudget (storedListId) {
-    const newArrayId = storedListId
-    const uniArr = [...(new Set(newArrayId))]
+  validationEventsBudget (storedListId) {
     if(storedVenueText === '') {
       store.dispatch(NotifyActions.resetNotify())
       store.dispatch(NotifyActions.addNotify({
@@ -156,26 +154,34 @@ export default class EventsBudgetPresenter {
         })
       )
     } else {
-      this.view.showCircularLoader()
-      this.addEventsBudgetInteractor.execute(
-        addEventsBudgetParam(
-          storedRequestId,
-          storedVenueText,
-          storedAddressText,
-          storedRegionText,
-          storedProvinceText,
-          storedCityText,
-          moment(storedDate).format('YYYY-MM-DD'),
-          uniArr,
-        )
-      )
-      .subscribe(data => {
-        this.view.hideCircularLoader()
-        this.view.noticeOfUndertaking(true)
-        this.view.noticeOfUndertakingForm(data)
-      }, error => {
-        this.view.hideCircularLoader()
-      })
+      this.view.setEditableForm(true)
     }
+  }
+
+  addEventsBudget (storedListId) {
+    const newArrayId = storedListId
+    const uniArr = [...(new Set(newArrayId))]
+    this.view.showCircularLoader()
+    this.addEventsBudgetInteractor.execute(
+      addEventsBudgetParam(
+        storedRequestId,
+        storedVenueText,
+        storedAddressText,
+        storedRegionText,
+        storedProvinceText,
+        storedCityText,
+        moment(storedDate).format('YYYY-MM-DD'),
+        uniArr,
+      )
+    )
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.noticeOfUndertaking(true)
+      this.view.noticeOfUndertakingForm(data)
+      storedId = []
+      this.view.setEditableForm(false)
+    }, error => {
+      this.view.hideCircularLoader()
+    })
   }
 }
