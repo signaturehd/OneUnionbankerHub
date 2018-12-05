@@ -5,5 +5,10 @@ export default class GetPreEmploymentStatusInteractor {
 
   execute () {
     return this.client.getPreEmploymentStatus(this.client.getToken())
+      .subscribe(preEmploymentStatus => {
+        this.client.setPreEmploymentStatus(preEmploymentStatus)
+      }, e => {
+        this.client.setPreEmploymentStatus({id: 6, status: 'regular'})        
+      })
   }
 }

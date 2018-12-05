@@ -167,6 +167,14 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getAccountNumber()
   }
 
+  setPreEmploymentStatus (preEmploymentStatus) {
+    this.sessionProvider.setPreEmploymentStatus(preEmploymentStatus)
+  }
+
+  getStatus () {
+    return this.sessionProvider.getPreEmploymentStatus()
+  }
+
   /* Set Selected Releasing Center*/
   setReleasingCenter (releasingCenter) {
     this.sessionProvider.setReleasingCenter(releasingCenter)
@@ -1449,6 +1457,22 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  // Pay For Skills
+  getPaySkills (token) {
+    return this.service.getPaySkills(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getPaySkillsList (token, id) {
+    return this.service.getPaySkillsList(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  submitPaySkills (token, bodyParam) {
+    return this.service.submitPaySkills(token, bodyParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* My Goals */
   getGoals (token) {
     return this.service.getGoals(token)
@@ -1460,8 +1484,8 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  updateGoals (token, goalId, dueDate) {
-    return this.service.updateGoals(token, goalId, dueDate)
+  updateGoals (token, goalId, startDate, dueDate) {
+    return this.service.updateGoals(token, goalId, startDate, dueDate)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1475,21 +1499,43 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-
-  // Pay For Skills
-
-  getPaySkills (token) {
-    return this.service.getPaySkills(token)
-      .pipe(ServiceErrorOperator())
+  requestCoach (token, requestCoachParam) {
+    return this.service.requestCoach(token, requestCoachParam)
+    .pipe(ServiceErrorOperator())
   }
 
-  getPaySkillsList (token, id) {
-    return this.service.getPaySkillsList(token, id)
-      .pipe(ServiceErrorOperator())
+  addGoalTask (token, goalId, taskDescription) {
+    return this.service.addGoalTask(token,  goalId, taskDescription)
+    .pipe(ServiceErrorOperator())
   }
 
-  submitPaySkills (token, bodyParam) {
-    return this.service.submitPaySkills(token, bodyParam)
+  getGoalTask (token, goalId) {
+    return this.service.getGoalTask(token, goalId)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addGoalComment (token, goalId, goalComment) {
+    return this.service.addGoalComment(token,  goalId, goalComment)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getGoalComment (token, goalId, pageNumber, pageItem) {
+    return this.service.getGoalComment(token, goalId, pageNumber, pageItem)
+    .pipe(ServiceErrorOperator())
+  }
+
+  updateGoalTask (token, goalId, taskDescription, isCompleted) {
+    return this.service.updateGoalTask(token,  goalId, taskDescription, isCompleted)
+    .pipe(ServiceErrorOperator())
+  }
+
+  updateGoalComment (token, commentId, goalComment) {
+    return this.service.updateGoalComment(token, commentId, goalComment)
+    .pipe(ServiceErrorOperator())
+  }
+
+  deleteGoal (token, goalId) {
+    return this.service.deleteGoal(token, goalId)
       .pipe(ServiceErrorOperator())
   }
 
