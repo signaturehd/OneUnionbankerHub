@@ -128,6 +128,10 @@ class LiquidationFragment extends BaseMVPView {
     )
   }
 
+  navigate () {
+    this.props.history.push('/mytravel/travel')
+  }
+
   render () {
     const {
       enabledLoader,
@@ -257,6 +261,12 @@ class LiquidationFragment extends BaseMVPView {
         }
         <div className = { 'percentage-grid' }>
           <div>
+            <i
+              className={ 'back-arrow' }
+              onClick={ () => this.navigate() }>
+            </i>
+            <br/>
+            <br/>
             <h2 className={ 'font-size-30px text-align-left' }>List of Flights for liquidation</h2>
             <br/>
             <h4>Below are the list of your flights that are requested for liquidation</h4>
