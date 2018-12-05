@@ -234,7 +234,6 @@ export default class RequestCoachPresenter {
           this.view.noticeResponse(data)
         },
         errors => {
-          console.log(errors)
           this.view.hideCircularLoader()
         }
       )
