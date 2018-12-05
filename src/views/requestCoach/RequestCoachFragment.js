@@ -123,20 +123,12 @@ class RequestCoachFragment extends BaseMVPView {
             </center>
           </Modal>
         }
-        <div>
-          <i
-          className={ 'back-arrow' }
-          onClick={ () => onClose() }>
-          </i>
-        </div>
-        <br/>
-        <div className = { 'percentage-grid' }>
-          <div>
-            <h2 className={ 'font-size-30px text-align-left' }>Request For Coaching</h2>
-            <br/>
-            <h4></h4>
+
+          
+          <h2 className={ 'header-margin-default text-align-left' }>Request For Coaching</h2>
+          <div className = { 'grid-global' }>
+            <h2 className={ 'font-size-16px text-align-left' }>Write a short message to your line manager about the help you need.</h2>
           </div>
-        </div>
         <br/>
         <br/>
         <Line />

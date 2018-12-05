@@ -471,13 +471,18 @@ class RequestedGoalsFragment extends BaseMVPView {
               goalTitleFunc = { (resp) => this.goalTitleFunc(resp) }
               description = { description }
               descriptionFunc = { (resp) => this.descriptionFunc(resp) }
+              descriptionErrorMessage = { descriptionErrorMessage }
               startDate = { startDate }
               startDateFunc = { (resp) => this.startDateFunc(resp) }
+              startDateErrorMessage = { startDateErrorMessage }
               dueDate = { dueDate }
               dueDateFunc = { (resp) => this.dueDateFunc(resp) }
+              dueDateErrorMessage = { dueDateErrorMessage }
               priorityName = { priorityName }
+              priorityErrorMessage = { priorityErrorMessage }
               goalType = { goalType }
               goalTypeId = { goalTypeId }
+              goalTypeErrorMessage = { goalTypeErrorMessage }
               showPriorityModal = { showPriorityModal }
               showPriorityModalFunc = { () => this.setState({ showPriorityModal : true }) }
               showGoalTypeModal = { showGoalTypeModal }
@@ -489,6 +494,7 @@ class RequestedGoalsFragment extends BaseMVPView {
           <div>
             <div className = { 'grid-filter margin-left' }>
               <div>
+              <br/>
                 <GenericInput
                 text = { 'Filter' }
                 />
@@ -584,8 +590,12 @@ class RequestedGoalsFragment extends BaseMVPView {
                           approvalStatus === 1 ?
                           <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold' }>Requested</h2>
                           :
-                          approvalStatus === 4 &&
+                          approvalStatus === 4 ?
                           <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Update for approval</h2>
+                          :
+                          approvalStatus === 5 &&
+                          <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Deletion for approval</h2>
+
                       }
                     </div>
                   </div>
