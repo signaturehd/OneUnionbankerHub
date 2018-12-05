@@ -116,7 +116,6 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   getTasklist (taskArray) {
-    console.log(taskArray);
     this.setState({ taskArray })
   }
 
