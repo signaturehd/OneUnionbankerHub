@@ -38,6 +38,14 @@ class PayForSkillsListComponent extends Component {
             <h2>List of your skill list in one place.</h2>
             <br/>
             {
+              payForSkillsList && payForSkillsList.length !== 0 &&
+              <center>
+                <h2>
+                  No Records.
+                </h2>
+              </center>
+            }
+            {
               posApproved && posApproved.length !== 0 &&
               <div>
                 <h2

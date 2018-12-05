@@ -45,7 +45,7 @@ class PayForSkillsComponent extends Component {
                 </h4>
                 <br/>
                 {
-                  skill.accreditingBody.id === 21 ?
+                  skill.accreditingBody.name.toLowerCase()  === 'others' ?
                   <h4 className = { 'font-size-13px font-weight-normal' }>
                     { skill.others ? skill.others : '(No Information)' }
                   </h4>

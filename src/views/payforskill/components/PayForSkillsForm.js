@@ -36,7 +36,9 @@ class PayForSkillsForm extends Component {
       onContinue,
       onEdit,
       onChangeAccreditationModalFunc,
-      onBackToList
+      onBackToList,
+      others,
+      onChangeOthersFunc
   	} = this.props
 
     return (
@@ -67,32 +69,26 @@ class PayForSkillsForm extends Component {
                 disabled = { showEditMode }
                 errorMessage = { '' }
                 />
+
+              <GenericInput
+                errorMessage = { '' }
+                text = { 'Accrediting Body' }
+                disabled = { showEditMode }
+                readOnly
+                value = { accreditingBody && accreditingBody.accre }
+                onClick = { () => showAccreditationModalFunc() }
+              />
               {
-                accreditingBody && accreditingBody.id === 21 ?
+                accreditingBody && accreditingBody.accre.toLowerCase() === 'others' &&
                 <GenericInput
                   errorMessage = { '' }
-                  text = { 'Accrediting Body' }
+                  text = { `(Please specify if Others)`  }
                   disabled = { showEditMode }
-                  errorMessage = {
-                    accreditingBody &&
-                    accreditingBody.accre ?
-                    '' :
-                    'Please specify if others' }
-                  value = { accreditingBody && accreditingBody.accre }
+                  errorMessage = { '' }
+                  value = { others }
                   onChange = { (e) =>
-                  onChangeAccreditationModalFunc(
-                    accreditingBody && accreditingBody.id,
-                    e.target.value)
+                  onChangeOthersFunc(e.target.value)
                   }
-                />
-                :
-                <GenericInput
-                  errorMessage = { '' }
-                  text = { 'Accrediting Body' }
-                  disabled = { showEditMode }
-                  readOnly
-                  value = { accreditingBody && accreditingBody.accre }
-                  onClick = { () => showAccreditationModalFunc() }
                 />
               }
               <br/>
