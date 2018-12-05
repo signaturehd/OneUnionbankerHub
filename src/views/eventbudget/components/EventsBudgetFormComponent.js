@@ -47,7 +47,6 @@ class EventsBudgetFormComponent extends Component {
       eventBudgetData,
       events,
       venue,
-      submitPresenter,
       validatePresenter,
       preferredDate,
       dateFunc,
@@ -127,7 +126,6 @@ class EventsBudgetFormComponent extends Component {
             />
           <Attendees
             index = { index }
-            showEditSubmitButton = { showEditSubmitButton }
             viewMoreText = { viewMoreText }
             viewMore = { viewMore }
             viewLess = { viewLess }
@@ -139,31 +137,14 @@ class EventsBudgetFormComponent extends Component {
           />
           <br/>
           <Line/>
-          {
-            showEditSubmitButton &&
-            <center>
-              <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
-            </center>
-          }
           <center>
-            {
-              showEditSubmitButton ?
-              <div className = { 'grid-global' }>
-                <GenericButton
-                  text = { 'Edit' }
-                  onClick = { () => setEditable() }
-                />
-                <GenericButton
-                  text = { 'Submit' }
-                  onClick = { () => submitPresenter() }
-                />
-              </div>
-              :
-              <GenericButton
-                text = { 'Continue' }
-                onClick = { () => validatePresenter() }
-              />
-            }
+            <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
+          </center>
+          <center>
+            <GenericButton
+              text = { 'Submit' }
+              onClick = { () => validatePresenter() }
+            />
           </center>
         </div>
         <div></div>

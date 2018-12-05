@@ -74,6 +74,17 @@ class EventsBudgetFragment extends BaseMVPView {
     this.presenter.setDateFunc(venueNullChecker && eventBudgetData.venue.targetDate  ? eventBudgetData.venue.targetDate : '')
     this.setState({ eventBudgetData })
 
+    if(
+      eventBudgetData.events.name !== '' &&
+      eventBudgetData.venue.name !== '' &&
+      eventBudgetData.venue.address !== '' &&
+      eventBudgetData.venue.province !== '' &&
+      eventBudgetData.venue.region !== '' &&
+      eventBudgetData.venue.city !== '' &&
+      eventBudgetData.venue.targetDate !== ''
+    ) {
+      this.setEditableForm(true)
+    }
   }
 
   showCircularLoader () {
@@ -292,9 +303,6 @@ class EventsBudgetFragment extends BaseMVPView {
               viewLess = { () => this.setState({ index : 0, viewMoreText : 'Show Attendees' }) }
               validatePresenter = { () =>
                 this.presenter.validationEventsBudget(storedListId)
-              }
-              submitPresenter = { () =>
-                this.presenter.addEventsBudget(storedListId)
               }
               setEditable = { () => this.setEditableForm(false) }
               showEditSubmitButton = { showEditSubmitButton }

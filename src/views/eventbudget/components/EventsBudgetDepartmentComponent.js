@@ -61,7 +61,6 @@ class EventsBudgetDepartmentComponent extends Component {
       check,
       checkIdIfHasLoginFunc,
       existingIds,
-      showEditSubmitButton
     } = this.props
 
     const {
@@ -98,7 +97,6 @@ class EventsBudgetDepartmentComponent extends Component {
             attend &&
             <EventsBudgetAttendeesComponent
               attendies = { attend }
-              showEditSubmitButton = { showEditSubmitButton }
               isSelectedDepartment = { isSelectedDepartment }
               checkIdIfHasLogin = { (e, e1) => {
                  checkIdIfHasLoginFunc(e, e1)

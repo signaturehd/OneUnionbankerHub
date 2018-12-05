@@ -3,9 +3,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './styles/eventsComponentStyle.css'
 
-import store from '../../../store'
-import { NotifyActions } from '../../../actions'
-
 class EventsBudgetAttendeesComponent extends Component {
   constructor (props) {
     super(props)
@@ -17,7 +14,6 @@ class EventsBudgetAttendeesComponent extends Component {
       attendies,
       existingIds,
       isSelectedDepartment,
-      showEditSubmitButton
     } = this.props
 
     let existingIdsArray = existingIds.map((item) => item)
@@ -32,19 +28,9 @@ class EventsBudgetAttendeesComponent extends Component {
               {
                 !employee.hasRecord &&
                 <div
-                  onClick = { () => {
-                    if(!showEditSubmitButton) {
+                  onClick = { () =>
                       checkIdIfHasLogin(!employee.hasRecord, employee.id)
-                    } else {
-                      store.dispatch(NotifyActions.addNotify({
-                          title: 'Events Budget',
-                          message : 'Please click "Edit" to add attendees',
-                          type : 'warning',
-                          duration : 2000
-                        })
-                      )
-                    }
-                  } }
+                  }
                   key = { key }
                   className = { 'events-employees-column-3 cursor-pointer' }>
                   <span className = { 'events-icon events-user-icon' }/>

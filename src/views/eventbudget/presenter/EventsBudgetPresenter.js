@@ -154,12 +154,11 @@ export default class EventsBudgetPresenter {
         })
       )
     } else {
-      this.view.setEditableForm(true)
+      this.addEventsBudget(storedListId)
     }
   }
 
   addEventsBudget (storedListId) {
-    console.log(storedDate)
     const newArrayId = storedListId
     const uniArr = [...(new Set(newArrayId))]
     this.view.showCircularLoader()

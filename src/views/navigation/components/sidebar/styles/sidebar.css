@@ -4,6 +4,7 @@
   top: 0;
   overflow-y: auto;
   width: auto;
+  padding-top: 20px;
   box-shadow: 0 1px 4px 0 rgba(255, 255, 255, 0.5);
 }
 ._text-link {

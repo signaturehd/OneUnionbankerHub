@@ -3,6 +3,7 @@
   grid-template-columns: 1fr auto;
   /* float: right; */
   text-align: right;
+  height: 100%;
 }
 
 .icon-header {
