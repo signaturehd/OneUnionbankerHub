@@ -46,20 +46,10 @@ class MyLearningView extends BaseMVPView {
       title: 'Enroll to Training',
       path: '/mylearning/trainings',
     }, {
-      id: 3 ,
-      styleName: 'mylearning-cards-4 mylearning-option-default font-weight-bold',
-      title: 'My Goals',
-      path: '/mylearning/mygoals',
-    }, {
       id: 4 ,
       styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
       title: 'Apply For Pay For Skills',
       path: '/mylearning/pay/skills',
-    }, {
-      id: 5 ,
-      styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
-      title: 'Certificate Of Employment',
-      path: '/mylearning/coe',
     }]
 
     const MyLearning = () => (
@@ -115,8 +105,6 @@ class MyLearningView extends BaseMVPView {
             isLineManager = { isLineManager } /> } />
           <Route path = '/mylearning/pay/skills' render = { props =>
             <PayForSkillsFragment { ...props } /> } />
-          <Route path = '/mylearning/coe' render = { props =>
-            <CertificateOfEmploymentFragment { ...props } /> } />
           <Route path = '/mylearning/trainings' render = { props =>
             <TrainingFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts' render = { props =>

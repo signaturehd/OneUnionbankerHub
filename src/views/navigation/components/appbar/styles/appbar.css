@@ -103,14 +103,14 @@
   background-position: center;
 }
 
-.appbar-news-icon:hover {
-  background-image: url('../../../../../images/NAVIGATION BAR/HOME - Orange.png');
-  background-position: center;
-}
-
 .appbar-news-iconactive {
   background-position: center;
   background-image: url('../../../../../images/NAVIGATION BAR/HOME - Orange.png');
+}
+
+.appbar-news-icon:hover {
+  background-image: url('../../../../../images/NAVIGATION BAR/HOME - Orange.png');
+  background-position: center;
 }
 
 .appbar-logout-icon {
@@ -159,18 +159,22 @@
 }
 
 .appbar-faqs-icon {
-  background-image: url('../../../../../images/drawer/faqs.png');
+  background-image: url('../../../../../images/SIDE MENU/FAQs - Orange.png');
   background-position: center;
 }
 
 .appbar-settings-icon {
-  background-image: url('../../../../../images/My Profile.png');
+  background-image: url('../../../../../images/SIDE MENU/My Personal Information - Orange.png');
   background-position: center;
 }
 
 .appbar-feedback-icon {
-  background-image: url('../../../../../images/Feedback.png');
+  background-image: url('../../../../../images/SIDE MENU/Feedback - Grey.png');
   background-position: center;
+}
+
+.appbar-feedback-iconactive {
+  background-image: url('../../../../../images/SIDE MENU/Feedback - Orange.png');
   background-position: center;
 }
 
@@ -199,8 +203,28 @@
   background-position: center;
 }
 
+.appbar-goals-icon {
+  background-image: url('../../../../../images/SIDE MENU/Goals - Orange.png');
+  background-position: center;
+}
+
+.appbar-goals-iconactive {
+  background-image: url('../../../../../images/SIDE MENU/Goals - Orange.png');
+  background-position: center;
+}
+
 .appbar-compliance-icon {
-  background-image: url('../../../../../images/SIDE MENU/My Compliance - Grey.png');
+  background-image: url('../../../../../images/SIDE MENU/My Compliance - Orange.png');
+  background-position: center;
+}
+
+.appbar-coe-icon {
+  background-image: url('../../../../../images/SIDE MENU/COE - Orange.png');
+  background-position: center;
+}
+
+.appbar-compliance-iconactive {
+  background-image: url('../../../../../images/SIDE MENU/My Compliance - Orange.png');
   background-position: center;
 }
 
@@ -210,7 +234,7 @@
 }
 
 .appbar-learning-icon {
-  background-image: url('../../../../../images/SIDE MENU/My Learning - Grey.png');
+  background-image: url('../../../../../images/SIDE MENU/My Learning - Orange.png');
   background-position: center;
 }
 
@@ -352,7 +376,7 @@
 .icon-header {
   text-align: left;
   display: grid;
-  height: 65px;
+  height: 100%;
   grid-template-columns: .3fr 1fr .09fr;
 }
 

@@ -77,7 +77,7 @@ class SideBar extends Component {
     },
     {
       id: 14 ,
-      title: 'My Goals',
+      title: 'My Goals & Performance',
       action: () => history.push('/mygoals'),
       className: 'payslip-icon'
     },
