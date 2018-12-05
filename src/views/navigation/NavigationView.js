@@ -86,6 +86,11 @@ import BookFlightFragment from '../bookflight/BookFlightFragment'
 import LiquidationFragment from '../liquidation/LiquidationFragment'
 import ApprovalFragment from '../approval/ApprovalFragment'
 
+/* Goals */
+import MyGoalsFragment from '../mygoals/MyGoalsFragment'
+import RequestedGoalsFragment from '../requestedgoals/RequestedGoalsFragment'
+import ApprovedGoalsComponent from '../mygoals/components/ApprovedGoalsComponent'
+
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
@@ -442,23 +447,20 @@ class NavigationView extends BaseMVPView {
                   <Route path = '/mylearning' render = { props =>
                     <MyLearningView { ...props }
                       profile = { profile }
-                      setSelectedNavigation = { this.setSelectedNavigation }
-                      isLineManager = { isLineManager } /> } />
-                  <Route path = '/mylearning/mygoals/approved' render = { props =>
+                      setSelectedNavigation = { this.setSelectedNavigation }/> } />
+                  <Route path = '/mygoals/approved' render = { props =>
                     <ApprovedGoalsComponent { ...props }
                       profile = { profile }
-                      setSelectedNavigation = { this.setSelectedNavigation }
-                      isLineManager = { isLineManager } /> } />
-                  <Route path = '/mylearning/mygoals/request' render = { props =>
-                    <RequestedGoalsComponent { ...props }
+                      setSelectedNavigation = { this.setSelectedNavigation }/> } />
+                  <Route path = '/mygoals/request' render = { props =>
+                    <RequestedGoalsFragment { ...props }
                       profile = { profile }
-                      setSelectedNavigation = { this.setSelectedNavigation }
-                      isLineManager = { isLineManager } /> } />
-                  <Route path = '/mylearning/mygoals' render = { props =>
+                      setSelectedNavigation = { this.setSelectedNavigation }/> } />
+                  <Route path = '/mygoals' render = { props =>
                     <MyGoalsFragment { ...props }
                       profile = { profile }
                       setSelectedNavigation = { this.setSelectedNavigation }
-                      isLineManager = { isLineManager } /> } />
+                      isLineManager = { isLineManager }/> } />
                   <Route path = '/feedback' render = { props =>
                     <FeedbackFragment { ...props }
                       setSelectedNavigation = { this.setSelectedNavigation } /> } />

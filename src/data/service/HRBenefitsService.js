@@ -2233,13 +2233,14 @@ export default class HRBenefitsService {
     })
   }
 
-  updateGoals (token, goalId, dueDate) {
+  updateGoals (token, goalId, startDate, dueDate) {
     const objectParam = {
       id: goalId,
+      startDate: startDate,
       endDate: dueDate
     }
 
-    return this.apiClient.put('v1/goals/personal', objectParam, {
+    return this.apiClient.put(`v1/goals/personal/${goalId}`, objectParam, {
       headers : { token }
     })
   }
@@ -2258,6 +2259,86 @@ export default class HRBenefitsService {
     }
 
     return this.apiClient.post('v1/goals/approval', objectParam, {
+      headers : { token }
+    })
+  }
+
+  requestCoach (token, requestCoachParam) {
+    const objectParam = {
+      description: requestCoachParam.description,
+      date: requestCoachParam.preferredDate,
+      time: requestCoachParam.preferredTime
+    }
+
+    return this.apiClient.post('v1/coach', objectParam, {
+      headers : { token }
+    })
+  }
+
+  addGoalTask (token, goalId, taskDescription) {
+    const objectParam = {
+      id: goalId,
+      description: taskDescription
+    }
+
+    return this.apiClient.post('v1/goals/tasks', objectParam, {
+      headers : { token }
+    })
+  }
+
+  getGoalTask (token, goalId) {
+    return this.apiClient.get(`v1/goals/tasks?goalId=${goalId}`, {
+      headers: { token }
+    })
+  }
+
+  addGoalComment (token, goalId, goalComment) {
+    const objectParam = {
+      id: goalId,
+      description: goalComment
+    }
+
+    return this.apiClient.post('v1/goals/comments', objectParam, {
+      headers : { token }
+    })
+  }
+
+  getGoalComment (token, goalId, pageNumber, pageItem) {
+    return this.apiClient.get(`v1/goals/comments?pageNumber=${pageNumber}&pageItem=${pageItem}&goalId=${goalId}`, {
+      headers: { token }
+    })
+  }
+
+  updateGoalTask(token, goalId, taskDescription, isCompleted) {
+    let updateGoal
+    if (taskDescription) {
+      updateGoal = this.apiClient.put(`v1/goals/tasks/${goalId}`, {
+        description: taskDescription
+      }, {
+        headers : { token }
+      })
+    } else if (isCompleted !== null) {
+      updateGoal = this.apiClient.post(`v1/goals/tasks/${goalId}`, {
+        isCompleted
+      }, {
+        headers : { token }
+      })
+    }
+    return updateGoal
+  }
+
+  updateGoalComment(token, commentId, goalComment) {
+    const objectParam = {
+      description: goalComment
+    }
+
+    return this.apiClient.put(`v1/goals/comments/${commentId}`, objectParam, {
+      headers : { token }
+    })
+  }
+
+  deleteGoal(token, goalId) {
+    return this.apiClient.delete(`v1/goals/personal/${goalId}?isArchived=1`, {
       headers : { token }
     })
   }

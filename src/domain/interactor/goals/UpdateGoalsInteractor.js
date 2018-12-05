@@ -3,7 +3,7 @@ export default class UpdateGoalsInteractor {
     this.client = client
   }
 
-  execute (goalId, dueDate) {
-    return this.client.updateGoals(this.client.getToken(), goalId, dueDate)
+  execute (goalId, startDate, dueDate) {
+    return this.client.updateGoals(this.client.getToken(), goalId, startDate, dueDate)
   }
 }
