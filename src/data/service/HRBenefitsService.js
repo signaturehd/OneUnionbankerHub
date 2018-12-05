@@ -2338,7 +2338,6 @@ export default class HRBenefitsService {
   }
 
   deleteGoal(token, goalId) {
-    console.log(token)
     return this.apiClient.delete(`v1/goals/personal/${goalId}?isArchived=1`, {
       headers : { token }
     })
