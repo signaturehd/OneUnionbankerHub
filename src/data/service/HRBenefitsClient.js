@@ -1539,6 +1539,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  deleteTask (token, taskId) {
+    return this.service.deleteTask(token, taskId)
+      .pipe(ServiceErrorOperator())
+  }
+
+  deleteComment (token, commentId) {
+    return this.service.deleteComment(token, commentId)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Certificaqte of Employment */
 
   getPurposeCoeType (token, data) {

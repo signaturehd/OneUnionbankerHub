@@ -2343,6 +2343,18 @@ export default class HRBenefitsService {
     })
   }
 
+  deleteTask(token, taskId) {
+    return this.apiClient.delete(`v1/goals/tasks/${taskId}?isArchived=1`, {
+      headers : { token }
+    })
+  }
+
+  deleteComment(token, commentId) {
+    return this.apiClient.delete(`v1/goals/comments/${commentId}?isArchived=1`, {
+      headers : { token }
+    })
+  }
+
   // Pay For Skills
 
   getPaySkills (token) {
