@@ -71,6 +71,7 @@ class CommentsListComponent extends Component {
               deleteCommentMode ?
               <center>
                 <h2>Are you sure you want to delete this comment?</h2>
+                <br/>
                 <div className = { 'grid-global' }>
                   <GenericButton
                     text = { 'No' }
@@ -91,6 +92,7 @@ class CommentsListComponent extends Component {
               :
               <center>
                 <h2>Select action</h2>
+                <br/>
                 <div className = { 'grid-global' }>
                   <GenericButton
                     text = { 'Edit' }
@@ -137,6 +139,9 @@ class CommentsListComponent extends Component {
                 } }
               />
             </div>
+            <br/>
+            <Line/>
+            <br/>
             </div>
             :
             <div className={ 'comment-border margin-5px padding-5px' } onClick = { () => this.setState({ showCommentOption: true, goalEditComment: goalComment }) }>

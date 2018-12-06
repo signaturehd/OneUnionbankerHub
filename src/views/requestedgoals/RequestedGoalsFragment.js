@@ -475,6 +475,7 @@ class RequestedGoalsFragment extends BaseMVPView {
               deleteTask ?
               <center>
                 <h2>Are you sure you want to delete this task?</h2>
+                <br/>
                 <div className = { 'grid-global' }>
                   <GenericButton
                     text = { 'No' }
@@ -495,6 +496,7 @@ class RequestedGoalsFragment extends BaseMVPView {
               :
               <center>
                 <h2>Select action</h2>
+                <br/>
                 <div className = { 'grid-global' }>
                   <GenericButton
                     text = { 'Edit' }
