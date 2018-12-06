@@ -52,9 +52,14 @@ class RequestedGoalsFragment extends BaseMVPView {
       onEditTask: false,
       onEditComment: false,
       showDeleteModal: false,
+      showTaskOption: false,
+      deleteTask: false,
+      showCommentOption: false,
+      deleteComment: false,
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
+      taskId: '',
       taskDescription: '',
       taskDescriptionErrorMessage: '',
       goalComment: '',
@@ -81,16 +86,16 @@ class RequestedGoalsFragment extends BaseMVPView {
       goalsArray : [],
       priorityArray : [
         {
-          id: 1,
-          name: 'Low'
+          id: 3,
+          name: 'High'
         },
         {
           id: 2,
           name: 'Medium'
         },
         {
-          id: 3,
-          name: 'High'
+          id: 1,
+          name: 'Low'
         }
       ],
       goalTypeArray : [
@@ -121,10 +126,6 @@ class RequestedGoalsFragment extends BaseMVPView {
 
   getCommentList (commentArray) {
       this.setState({ commentArray })
-  }
-
-  noticeResponse (noticeResponse) {
-    this.setState({ noticeResponse, showNoticeResponseModal : true })
   }
 
   submit (requestId, isApprove, rejectedRemarks) {
@@ -176,7 +177,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   navigate () {
-    this.props.history.push('/mylearning/mygoals')
+    this.props.history.push('/mygoals')
   }
 
   noticeResponse (noticeResponse) {
@@ -276,25 +277,28 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   submitTask() {
-    const { goalId, taskDescription, onEditTask, isCompleted } = this.state
+    const { goalId, taskId, taskDescription, onEditTask, isCompleted } = this.state
     if(!taskDescription) {
       this.setState({ taskDescriptionErrorMessage: 'Required field' })
     }
     else {
       onEditTask ?
-      this.presenter.updateGoalTask(goalId, taskDescription, isCompleted)
+      this.presenter.updateGoalTask(goalId, taskId, taskDescription, isCompleted)
       :
       this.presenter.addGoalTask(goalId, taskDescription)
+      this.setState({ addTask:false })
     }
   }
 
   submitComment() {
-    const { goalId, goalComment } = this.state
+    const { goalId, goalComment, pageNumber, pageItem } = this.state
     if(!goalComment) {
       this.setState({ goalCommentErrorMessage: 'Required field' })
     }
     else {
       this.presenter.addGoalComment(goalId, goalComment, pageNumber, pageItem)
+      this.setState({ goalComment: '', goalCommentErrorMessage: '' })
+
     }
   }
 
@@ -328,6 +332,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       goalType: '',
       goalTypeErrorMessage: '',
       rejectedRemarks: '',
+      taskId: '',
       taskDescription: '',
       taskDescriptionErrorMessage: '',
       goalComment: '',
@@ -336,7 +341,9 @@ class RequestedGoalsFragment extends BaseMVPView {
       addComment: false,
       editMode: false,
       showForm: false,
-      showApprovalForm : false
+      showApprovalForm : false,
+      showTaskOption: false,
+      showCommentOption: false
     })
   }
 
@@ -348,6 +355,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       commentLoader,
       showNoticeResponseModal,
       noticeResponse,
+      deleteTask,
       addTask,
       addComment,
       onEditTask,
@@ -358,9 +366,13 @@ class RequestedGoalsFragment extends BaseMVPView {
       showPriorityModal,
       showGoalTypeModal,
       showDeleteModal,
+      showTaskOption,
+      showCommentOption,
+      deleteComment,
       isCompleted,
       pageNumber,
       pageItem,
+      taskId,
       taskDescription,
       taskDescriptionErrorMessage,
       goalComment,
@@ -397,7 +409,6 @@ class RequestedGoalsFragment extends BaseMVPView {
           <ResponseModal
             onClose={ () => {
               this.setState({ showNoticeResponseModal : false })
-              this.resetValue()
             }}
             noticeResponse={ noticeResponse }
           />
@@ -458,6 +469,98 @@ class RequestedGoalsFragment extends BaseMVPView {
           </Modal>
         }
         {
+          showTaskOption &&
+          <Modal isDismissable = { true } onClose = { () => this.setState({ showTaskOption: false }) }>
+            {
+              deleteTask ?
+              <center>
+                <h2>Are you sure you want to delete this task?</h2>
+                <div className = { 'grid-global' }>
+                  <GenericButton
+                    text = { 'No' }
+                    onClick = { () => this.setState({ deleteTask: false, showTaskOption: false }) }
+                    className = { 'profile-button-small' }
+                  />
+                  <GenericButton
+                    text = { 'Yes' }
+                    className = { 'profile-button-small' }
+                    onClick = { () => {
+                        this.presenter.deleteTask(taskId, goalId),
+                        this.setState({ taskDescription: '', deleteTask: false, showTaskOption: false })
+                      }
+                    }
+                  />
+                </div>
+              </center>
+              :
+              <center>
+                <h2>Select action</h2>
+                <div className = { 'grid-global' }>
+                  <GenericButton
+                    text = { 'Edit' }
+                    onClick = { () => this.setState({
+                    addTask: true,
+                    onEditTask: true,
+                    showTaskOption: false }) }
+                    className = { 'profile-button-small' }
+                  />
+                  <GenericButton
+                    text = { 'Delete' }
+                    className = { 'profile-button-small' }
+                    onClick = { () => this.setState({ deleteTask: true }) }
+                  />
+                </div>
+              </center>
+            }
+          </Modal>
+        }
+        {
+          showCommentOption &&
+          <Modal isDismissable = { true } onClose = { () => this.setState({ showCommentOption: false }) }>
+            {
+              deleteComment ?
+              <center>
+                <h2>Are you sure you want to delete this comment?</h2>
+                <div className = { 'grid-global' }>
+                  <GenericButton
+                    text = { 'No' }
+                    onClick = { () => this.setState({ deleteComment: false, showCommentOption: false }) }
+                    className = { 'profile-button-small' }
+                  />
+                  <GenericButton
+                    text = { 'Yes' }
+                    className = { 'profile-button-small' }
+                    onClick = { () => {
+                        this.presenter.deleteComment(commentId, goalId, pageNumber, pageItem),
+                        this.setState({ goalComment: '', deleteComment: false, showCommentOption: false })
+                      }
+                    }
+                  />
+                </div>
+              </center>
+              :
+              <center>
+                <h2>Select action</h2>
+                <div className = { 'grid-global' }>
+                  <GenericButton
+                    text = { 'Edit' }
+                    onClick = { () => this.setState({
+                    addComment: true,
+                    onEditComment: true,
+                    showCommentOption: false }) }
+                    className = { 'profile-button-small' }
+                  />
+                  <GenericButton
+                    text = { 'Delete' }
+                    className = { 'profile-button-small' }
+                    onClick = { () => this.setState({ deleteComment: true }) }
+                  />
+                </div>
+              </center>
+            }
+          </Modal>
+        }
+        {
           showForm ?
             <AddGoalsFormComponent
               onCancel = { () => {
@@ -471,13 +574,18 @@ class RequestedGoalsFragment extends BaseMVPView {
               goalTitleFunc = { (resp) => this.goalTitleFunc(resp) }
               description = { description }
               descriptionFunc = { (resp) => this.descriptionFunc(resp) }
+              descriptionErrorMessage = { descriptionErrorMessage }
               startDate = { startDate }
               startDateFunc = { (resp) => this.startDateFunc(resp) }
+              startDateErrorMessage = { startDateErrorMessage }
               dueDate = { dueDate }
               dueDateFunc = { (resp) => this.dueDateFunc(resp) }
+              dueDateErrorMessage = { dueDateErrorMessage }
               priorityName = { priorityName }
+              priorityErrorMessage = { priorityErrorMessage }
               goalType = { goalType }
               goalTypeId = { goalTypeId }
+              goalTypeErrorMessage = { goalTypeErrorMessage }
               showPriorityModal = { showPriorityModal }
               showPriorityModalFunc = { () => this.setState({ showPriorityModal : true }) }
               showGoalTypeModal = { showGoalTypeModal }
@@ -489,6 +597,7 @@ class RequestedGoalsFragment extends BaseMVPView {
           <div>
             <div className = { 'grid-filter margin-left' }>
               <div>
+              <br/>
                 <GenericInput
                 text = { 'Filter' }
                 />
@@ -584,8 +693,12 @@ class RequestedGoalsFragment extends BaseMVPView {
                           approvalStatus === 1 ?
                           <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold' }>Requested</h2>
                           :
-                          approvalStatus === 4 &&
+                          approvalStatus === 4 ?
                           <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Update for approval</h2>
+                          :
+                          approvalStatus === 5 &&
+                          <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Deletion for approval</h2>
+
                       }
                     </div>
                   </div>
@@ -663,11 +776,11 @@ class RequestedGoalsFragment extends BaseMVPView {
                         taskArray.length !== 0 ?
                           <TasksListComponent
                             cardHolder = { taskArray }
-                            onEdit = { (taskDescription, isCompleted) => this.setState({
+                            onSelected = { (taskId, taskDescription, isCompleted) => this.setState({
+                              taskId,
                               taskDescription,
                               isCompleted,
-                              addTask: true,
-                              onEditTask: true
+                              showTaskOption: true
                             }) }
                             changeTask = { (taskId, isCompleted) => this.presenter.updateGoalTask(taskId, null, isCompleted)  }
                           />
@@ -680,7 +793,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                     <div className = { 'padding-10px' }>
                       <div className = { 'header-column' }>
                         <div>
-                          <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Comments</h2>
+                          <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Reviews</h2>
                           <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>You can add any notes or updates for this goal.</h2>
                         </div>
                         <br/>

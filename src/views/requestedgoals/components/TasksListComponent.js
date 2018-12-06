@@ -37,7 +37,7 @@ class TasksListComponent extends Component {
   }
 
   render () {
-    const { goalId, cardHolder, onEdit, changeTask } = this.props
+    const { goalId, cardHolder, onSelected, changeTask } = this.props
     return (
       <div>
       {
@@ -48,7 +48,7 @@ class TasksListComponent extends Component {
               onChange = { () => changeTask(resp.id , !resp.isCompleted) }
             />
             <h2 className = { 'text-align-left font-size-12px font-weight-lighter cursor-pointer' }
-            onClick = { () => onEdit(resp.description, resp.isCompleted) }>{resp.description}</h2>
+            onClick = { () => onSelected(resp.id, resp.description, resp.isCompleted) }>{resp.description}</h2>
           </div>
         )
       }
