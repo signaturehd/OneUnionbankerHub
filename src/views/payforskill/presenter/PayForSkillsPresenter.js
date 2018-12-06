@@ -192,6 +192,8 @@ export default class PayForSkillsPresenter {
      storedDateOfCompletion = ''
      storedAccreditationObject = ''
      storedAccreditationObject = ''
+     storedOthers = ''
+     this.view.setEditable(false)
     }, error => {
       this.view.checkLoader(false)
     })
