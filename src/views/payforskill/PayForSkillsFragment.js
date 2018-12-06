@@ -6,6 +6,7 @@ import Presenter from './presenter/PayForSkillsPresenter'
 
 import {
   SingleInputModal,
+  MultipleInputModal,
   CircularLoader,
   FloatingActionButton
 } from '../../ub-components/'
@@ -150,19 +151,28 @@ class PayForSkillsFragment extends BaseMVPView {
           showProgramsModal &&
           <SingleInputModal
             label = { 'Please select Programs' }
+            selectedArray = { () => {} }
             inputArray = { programs }
-            selectedArray = { (id, programs) => {
-              const objectParam = {
-                id : id,
-                programs : programs,
+            multipleContentArray = { (resp) => {
+              try {
+                const objectParam = {
+                  id : resp.id,
+                  amount: resp.amount,
+                  accreditingBodyId : resp.accreditingBodyId,
+                  programs : resp.name,
+                  remark: resp.remark,
+                }
+                this.presenter.setStoredProgramObject(objectParam)
+                this.setState({  showProgramsModal: false })
+              } catch(e) {
+                console.log(e)
               }
-              this.presenter.setStoredProgramObject(objectParam)
-              this.setState({  showProgramsModal: false })
               }
             }
             onClose = { () => this.setState({ showProgramsModal: false }) }
           />
         }
+
         {
           showAccreditationModal &&
           <SingleInputModal
@@ -202,6 +212,7 @@ class PayForSkillsFragment extends BaseMVPView {
                 <CircularLoader show = { enabledLoader }/>
               </center> :
               <PayForSkillsForm
+                accrediting
                 others = { others }
                 showEditMode = { showEditMode }
                 attachmentsArray = { attachmentsArray }

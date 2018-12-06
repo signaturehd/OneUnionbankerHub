@@ -18,6 +18,16 @@ class PayForSkillsForm extends Component {
     super(props)
   }
 
+  checkAccreditingBodyId (data, id) {
+    let name = ''
+    data.map((resp) => {
+      if(id === resp.id) {
+        name = resp.name
+      }
+    })
+     return name
+  }
+
   render () {
 
   	const {
@@ -73,13 +83,14 @@ class PayForSkillsForm extends Component {
               <GenericInput
                 errorMessage = { '' }
                 text = { 'Accrediting Body' }
-                disabled = { showEditMode }
-                readOnly
-                value = { accreditingBody && accreditingBody.accre }
-                onClick = { () => showAccreditationModalFunc() }
+                disabled = { true }
+                value = { this.checkAccreditingBodyId(accrediting && accrediting, programsBody && programsBody.accreditingBodyId) }
+                onClick = { () => {
+                  // showAccreditationModalFunc()
+                } }
               />
               {
-                accreditingBody && accreditingBody.accre.toLowerCase() === 'others' &&
+                this.checkAccreditingBodyId(accrediting && accrediting, programsBody && programsBody.accreditingBodyId).toLowerCase() === 'others' &&
                 <GenericInput
                   errorMessage = { '' }
                   text = { `(Please specify if Others)`  }
