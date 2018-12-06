@@ -194,7 +194,7 @@ class DrawerAppBar extends Component {
                         this.onToggleShowChangeDisplay()
                       }
                     }}
-                    src = { require('../../../../images/profile-picture.png') }
+                    src = { require('../../../../images/WEB and LOGO/1UHub Logo_Gotham_2.png') }
                     className = { 'appbar-logo-circle' }/>
                 }
                 <div
@@ -214,7 +214,7 @@ class DrawerAppBar extends Component {
                                   className = { 'appbar-submenu-profile-circle' }/>
                                 :
                                 <img
-                                  src = { require('../../../../images/profile-picture.png') }
+                                  src = { require('../../../../images/WEB and LOGO/1UHub Logo_Gotham_2.png') }
                                   className = { 'appbar-submenu-profile-circle' }/>
                               }
                             </div>

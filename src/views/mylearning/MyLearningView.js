@@ -53,49 +53,54 @@ class MyLearningView extends BaseMVPView {
     }]
 
     const MyLearning = () => (
-      <div className = { 'mylearning-container' }>
-        <div>
-          <h2 className={ 'header-margin-default text-align-left' }> My Learning </h2>
-          <h2> How would you want to develop yourself today? </h2>
-        </div>
-        {
-          showAccountNumberModal &&
-            <InputModal
-              isDismisable = { true }
-              onClose = { () => this.setState({ showAccountNumberModal : false }) }
-              onChange = { e => this.setState({ accountNumber: e.target.value }) }
-              placeholder = { 'Account Number' }
-              type = { 'text' }
-              onSubmit = { e => {
-                  e.preventDefault()
-                  this.presenter.validateAccountNumber(accountNumber)
-                }
-              }
-          />
-        }
-        <div className = { 'mylearning-adjustment' }>
-        <div className = { 'mylearning-card-container' }>
+      <div className = { 'default-body-grid' }>
+        <div></div>
+        <div className = { 'mylearning-container' }>
+          <div>
+            <h2 className={ 'header-margin-default text-align-left' }> My Learning </h2>
+            <h2> How would you want to develop yourself today? </h2>
+          </div>
           {
-          mylearning.map((value, idx) => (
-            <Card
-              className = { 'mylearning-card' }
-              onClick={ () =>
-                history.push(value.path)
-              }
-              key={ idx }>
-              <div className = { 'mylearning-column-grid' }>
-                <div
-                  className={ value.styleName }
-                  text={ value.title } >
-                </div>
-                <p className={ 'mylearning-option-cards font-weight-bold' }>{ value.title }</p>
-              </div>
-            </Card>
-          ))
+            showAccountNumberModal &&
+              <InputModal
+                isDismisable = { true }
+                onClose = { () => this.setState({ showAccountNumberModal : false }) }
+                onChange = { e => this.setState({ accountNumber: e.target.value }) }
+                placeholder = { 'Account Number' }
+                type = { 'text' }
+                onSubmit = { e => {
+                    e.preventDefault()
+                    this.presenter.validateAccountNumber(accountNumber)
+                  }
+                }
+            />
           }
+          <div className = { 'mylearning-adjustment' }>
+          <div className = { 'mylearning-card-container' }>
+            {
+            mylearning.map((value, idx) => (
+              <Card
+                className = { 'mylearning-card' }
+                onClick={ () =>
+                  history.push(value.path)
+                }
+                key={ idx }>
+                <div className = { 'mylearning-column-grid' }>
+                  <div
+                    className={ value.styleName }
+                    text={ value.title } >
+                  </div>
+                  <p className={ 'mylearning-option-cards font-weight-bold' }>{ value.title }</p>
+                </div>
+              </Card>
+            ))
+            }
+            </div>
+          </div>
         </div>
+        <div></div>
       </div>
-    </div>)
+    )
 
     return (
       <div>
