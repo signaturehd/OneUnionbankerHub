@@ -28,25 +28,31 @@ class RequestCoachFormFragment extends Component {
     } = this.props
     return (
       <div className = { 'card-grid-column' }>
+        <div></div>
         <div>
-          <DatePicker
-          text = { 'Preferred Date' }
-          selected = { preferredDate && moment(preferredDate) }
-          onChange = { (e) => preferredDateFunc(e) }
-          minDate = { moment() }
-          />
-          <GenericInput
-          text = { 'Preferred Time' }
-          type = { 'time' }
-          value = { preferredTime }
-          onChange = { (e) => preferredTimeFunc(e.target.value) }
-          />
-          <GenericInput
-          text = { 'Description' }
-          type = { 'textarea' }
-          value = { description }
-          onChange = { (e) => descriptionFunc(e.target.value) }
-          />
+          <div className = { 'grid-global' }>
+            <DatePicker
+            text = { 'Preferred Date' }
+            selected = { preferredDate && moment(preferredDate) }
+            onChange = { (e) => preferredDateFunc(e) }
+            minDate = { moment() }
+            />
+            <GenericInput
+            text = { 'Preferred Time' }
+            type = { 'time' }
+            value = { preferredTime }
+            onChange = { (e) => preferredTimeFunc(e.target.value) }
+            />
+          </div>
+          <div className = { 'grid-global' }>
+            <GenericInput
+            text = { 'Description' }
+            type = { 'textarea' }
+            value = { description }
+            onChange = { (e) => descriptionFunc(e.target.value) }
+            />
+            <div></div>
+          </div>
           <div className = { 'grid-global' }>
             <GenericButton
             text = { 'Cancel' }
@@ -56,7 +62,6 @@ class RequestCoachFormFragment extends Component {
             onClick = { () => onSubmit() }/>
           </div>
         </div>
-        <div></div>
         <div></div>
       </div>
     )
