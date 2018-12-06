@@ -67,10 +67,10 @@ class DrawerAppBar extends Component {
       imageStyle : 'settings',
       action : () => history.push('/settings'),
     },{
-      id: 4,
-      name: 'My Learning',
-      imageStyle : 'learning',
-      action : () => history.push('/mylearning'),
+      id: 13,
+      name: 'My Travel',
+      imageStyle : 'travel',
+      action : () => history.push('/mytravel'),
     },{
       id: 14,
       name: 'My Goals & Performance',
@@ -119,10 +119,10 @@ class DrawerAppBar extends Component {
       imageStyle : 'phenom',
       action : () => history.push('/phenom'),
     },{
-      id: 13,
-      name: 'My Travel',
-      imageStyle : 'travel',
-      action : () => history.push('/mytravel'),
+      id: 4,
+      name: 'My Learning',
+      imageStyle : 'learning',
+      action : () => history.push('/mylearning'),
     },{
       id: 6,
       name: 'Feedback',
