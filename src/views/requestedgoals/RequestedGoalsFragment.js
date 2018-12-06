@@ -515,52 +515,6 @@ class RequestedGoalsFragment extends BaseMVPView {
           </Modal>
         }
         {
-          showCommentOption &&
-          <Modal isDismissable = { true } onClose = { () => this.setState({ showCommentOption: false }) }>
-            {
-              deleteComment ?
-              <center>
-                <h2>Are you sure you want to delete this comment?</h2>
-                <div className = { 'grid-global' }>
-                  <GenericButton
-                    text = { 'No' }
-                    onClick = { () => this.setState({ deleteComment: false, showCommentOption: false }) }
-                    className = { 'profile-button-small' }
-                  />
-                  <GenericButton
-                    text = { 'Yes' }
-                    className = { 'profile-button-small' }
-                    onClick = { () => {
-                        this.presenter.deleteComment(commentId, goalId, pageNumber, pageItem),
-                        this.setState({ goalComment: '', deleteComment: false, showCommentOption: false })
-                      }
-                    }
-                  />
-                </div>
-              </center>
-              :
-              <center>
-                <h2>Select action</h2>
-                <div className = { 'grid-global' }>
-                  <GenericButton
-                    text = { 'Edit' }
-                    onClick = { () => this.setState({
-                    addComment: true,
-                    onEditComment: true,
-                    showCommentOption: false }) }
-                    className = { 'profile-button-small' }
-                  />
-                  <GenericButton
-                    text = { 'Delete' }
-                    className = { 'profile-button-small' }
-                    onClick = { () => this.setState({ deleteComment: true }) }
-                  />
-                </div>
-              </center>
-            }
-          </Modal>
-        }
-        {
           showForm ?
             <AddGoalsFormComponent
               onCancel = { () => {
@@ -811,8 +765,11 @@ class RequestedGoalsFragment extends BaseMVPView {
                             commentId = { resp.id }
                             goalComment = { resp.description }
                             employeeName = { resp.employeeName }
+                            goalId = { goalId }
                             updateComment = { (commentId, goalEditComment) =>
                               this.presenter.updateGoalComment(goalId, pageNumber, pageItem, commentId, goalEditComment) }
+                            deleteCommentFunc = { (commentId, goalId) =>
+                              this.presenter.deleteComment(commentId, goalId, pageNumber, pageItem) }
                             />
                           )
                           )
