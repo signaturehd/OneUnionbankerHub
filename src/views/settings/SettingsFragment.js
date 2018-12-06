@@ -107,7 +107,12 @@ class SettingsFragment extends BaseMVPView {
   }
 
   showResetModalFunc(showResetModal) {
-    this.setState({ showResetModal })
+    this.setState({
+      showResetModal,
+      showNewPin : true,
+      requiredOtp : '',
+      requiredNewPin : ''
+    })
   }
 
   showProfileDependent (profileDependent) {

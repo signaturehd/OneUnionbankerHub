@@ -95,7 +95,7 @@ class SettingsProfileCardComponent extends Component {
     }
 
     let genderPartial
-    if (profile.gender === 'M') {
+    if (profile && profile.gender === 'M') {
       genderPartial='Male'
     } else {
       genderPartial='Female'
