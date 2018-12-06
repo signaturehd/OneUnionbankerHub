@@ -35,7 +35,7 @@ class GoalApprovalFormComponent extends Component {
   }
 
   navigate () {
-    this.props.history.push('/mylearning')
+    this.props.history.push('/mygoals')
   }
 
   render () {
