@@ -50,8 +50,8 @@ class LiquidationFormComponent extends Component {
       travelGroup,
       travelGroupHeadFunc,
       attachmentsData,
-      attachmentsData2,
       submitFunc,
+      attachmentsDataFunc,
 
       onClose,
       ticketMode,
@@ -153,14 +153,6 @@ class LiquidationFormComponent extends Component {
               type = { 'number' }
               value = { format(liquidationServiceCharge) }
             />
-            {
-              totalAmount >= '50000' &&
-              <GenericInput
-                text = { 'Group Heads' }
-                value = { travelGroup }
-                onClick = { () => showTravelGroupFunc() }
-              />
-            }
           </div>
           <div>
             <GenericInput
@@ -193,8 +185,8 @@ class LiquidationFormComponent extends Component {
           ticketMode === 1 ?
           <MultipleAttachments
             placeholder = { 'Form Attachments' }
-            fileArray = { attachmentsData }
-            setFile = { (attachmentsData) => this.setState(attachmentsData) }
+            fileArray = { attachmentsData  }
+            setFile = { (attachmentsData) => attachmentsDataFunc(attachmentsData) }
           />
           :
           <GenericInput

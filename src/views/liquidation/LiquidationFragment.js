@@ -262,7 +262,15 @@ class LiquidationFragment extends BaseMVPView {
                 showFormModal ?
                 <div>
                   <LiquidationFormComponent
-                    backToList = { () => this.setState({ showFormModal : false }) }
+                    backToList = { () => this.setState({
+                      showFormModal : false,
+                      attachmentsData :
+                      [{ name : 'Flight Quatation Attachment' },
+                      { name : 'ERB Email Attachment' }],
+                      orNumber : '',
+                      orDate : '',
+                      ticketReasons : ''
+                    }) }
                     costTicket = { costTicket }
 
                     costServiceCharge = { costServiceCharge }
@@ -295,6 +303,20 @@ class LiquidationFragment extends BaseMVPView {
                     orNumber = { orNumber }
                     orNumberFunc = { (e) => this.orNumberFunc(e) }
                     ticketReasonsFunc = { (e) => this.ticketReasonsFunc(e) }
+                    attachmentsDataFunc = { (attachmentsData) => this.setState({ attachmentsData }) }
+                    submitFunc = { () => {
+                      try {
+                        this.presenter.addLiquidation(
+                          requestId,
+                          ticketMode,
+                          ticketReasons,
+                          attachmentsData,
+                          moment(orDate).format('MM/DD/YYYY'), 
+                          orNumber)
+                      } catch(e) {
+                        console.log(e)
+                      }
+                    }}
                   />
                 </div>
                 :

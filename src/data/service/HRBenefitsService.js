@@ -2141,7 +2141,9 @@ export default class HRBenefitsService {
     const object = {
       requestId: liquidationParam.requestId,
       isTicketUsed: liquidationParam.ticketMode,
-      remarks : liquidationParam.whyTicketUsed
+      remarks : liquidationParam.whyTicketUsed,
+      orDate : liquidationParam.orDate,
+      orNumber : liquidationParam.orNumber,
     }
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     liquidationParam.attachmentsData &&
