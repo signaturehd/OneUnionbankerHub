@@ -2,9 +2,13 @@ export default (
   requestId,
   ticketMode,
   whyTicketUsed,
-  attachmentsData) => ({
+  attachmentsData,
+  orDate,
+  orNumber) => ({
     requestId,
     ticketMode,
     whyTicketUsed,
-    attachmentsData
+    attachmentsData,
+    orDate,
+    orNumber
 })

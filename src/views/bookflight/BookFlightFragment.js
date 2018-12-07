@@ -231,129 +231,132 @@ class BookFlightFragment extends BaseMVPView {
     const retDate = moment(rDateSplit[0]).format('MMMM DD, YYYY')
     const totalAmount = (parseFloat(totalCostOfFlight.replace (/,/g, "")) + parseFloat(totalServiceCharge.replace (/,/g, "")) + parseFloat(valueAddedTax.replace (/,/g, "")))
     return (
-      <div>
-        {
-          submitLoader ?
-          <Modal>
-            <center>
-              <h2>Please wait...</h2>
-              <CircularLoader show = { submitLoader }/>
-            </center>
-          </Modal>
-          :
-          showNoticeResponseModal &&
-          <ResponseModal
-            onClose={ () => {
-              this.setState({ showNoticeResponseModal : false, showForm : false })
-            }}
-            noticeResponse={ noticeResponse }
-          />
-        }
-        <i
-          className={ 'back-arrow' }
-          onClick={ () => this.navigate() }>
-        </i>
-        <br/>
-        <br/>
-        <div className = { 'percentage-grid' }>
-          <div>
-            <h2 className={ 'font-size-30px text-align-left' }>List of Booked Flights</h2>
-            <br/>
-            <h4>Below are the list of your booked flights.</h4>
-          </div>
-        </div>
-        <br/>
-        <br/>
-        <Line />
-        <br/>
-        {
-          showForm ?
-          <BookFlightFormComponent
-            showTicketModal = { showTicketModal }
-            showNoticeResponseModal = { showNoticeResponseModal }
-            noticeResponse = { noticeResponse }
-            ticketMode = { ticketMode }
-            isDomestic = { isDomestic }
-            departureOrigin = { departureOrigin }
-            departureDestination = { departureDestination }
-            returnOrigin = { returnOrigin }
-            returnDestination = { returnDestination }
-            requestId = { requestId }
-            purposeName = { purposeName }
-            rturn = { rturn }
-            departureDate = { depDate }
-            departureTime = { departureTime }
-            departureTimeFunc = { (e) => this.departureTimeFunc(e) }
-            returnDate = { retDate }
-            returnTime = { returnTime }
-            returnTimeFunc = { (e) => this.returnTimeFunc(e) }
-            totalCostOfFlight = { totalCostOfFlight }
-            totalCostOfFlightFunc = { (e) => this.totalCostOfFlightFunc(e) }
-            totalServiceCharge = { totalServiceCharge }
-            totalServiceChargeFunc = { (e) => this.totalServiceChargeFunc(e) }
-            valueAddedTax = { valueAddedTax }
-            valueAddedTaxFunc = { (e) => this.valueAddedTaxFunc(e) }
-            totalAmount = { totalAmount }
-            bookflightArray = { bookflightArray }
-            travelGroupArray = { this.travelGroupArrayFunc() }
-            showTravelGroup = { showTravelGroup }
-            travelGroupId = { travelGroupId }
-            travelGroup = { travelGroup }
-            showTravelGroupFunc = { () => this.setState({ showTravelGroup : true }) }
-            travelGroupHeadFunc = { (travelGroupId, travelGroup) =>
-              this.setState({
-                travelGroupId,
-                travelGroup,
-                showTravelGroup : false
-              })
-            }
-            onClose = { () => this.setState({ showTravelGroup : false }) }
-
-            attachmentsData = { attachmentsData }
-            attachmentsData2 = { attachmentsData2 }
-            submitFunc = { () => this.submit() }
-          />
-          :
-          enabledLoader ?
-          <center>
-            <CircularLoader show = { enabledLoader }/>
-          </center>
-          :
-          bookflightArray.length !==0 ?
-            <BookFlightComponent
-              showFormFunc = { (
-                requestId,
-                departureOrigin,
-                departureDestination,
-                departureDate,
-                departureTime,
-                returnOrigin,
-                returnDestination,
-                returnDate,
-                returnTime,
-                rturn,
-                purposeName,
-                isDomestic
-              ) => this.setState({
-                requestId,
-                departureOrigin,
-                departureDestination,
-                departureDate,
-                departureTime,
-                returnOrigin,
-                returnDestination,
-                returnDate,
-                returnTime,
-                rturn,
-                purposeName,
-                isDomestic,
-                showForm : true }) }
-              cardDataHolder = { bookflightArray }/>
-              :
+      <div className = { 'default-body-grid' }>
+        <div></div>
+        <div>
+          {
+            submitLoader ?
+            <Modal>
               <center>
-                <h2>No records</h2>
+                <h2>Please wait...</h2>
+                <CircularLoader show = { submitLoader }/>
               </center>
-        }
+            </Modal>
+            :
+            showNoticeResponseModal &&
+            <ResponseModal
+              onClose={ () => {
+                this.setState({ showNoticeResponseModal : false, showForm : false })
+              }}
+              noticeResponse={ noticeResponse }
+            />
+          }
+          <i
+            className={ 'back-arrow' }
+            onClick={ () => this.navigate() }>
+          </i>
+          <br/>
+          <br/>
+          <div className = { 'percentage-grid' }>
+            <div>
+              <h2 className={ 'font-size-30px text-align-left' }>List of Booked Flights</h2>
+              <br/>
+              <h4>Below are the list of your booked flights.</h4>
+            </div>
+          </div>
+          <br/>
+          <Line />
+          <br/>
+          {
+            showForm ?
+            <BookFlightFormComponent
+              showTicketModal = { showTicketModal }
+              showNoticeResponseModal = { showNoticeResponseModal }
+              noticeResponse = { noticeResponse }
+              ticketMode = { ticketMode }
+              isDomestic = { isDomestic }
+              departureOrigin = { departureOrigin }
+              departureDestination = { departureDestination }
+              returnOrigin = { returnOrigin }
+              returnDestination = { returnDestination }
+              requestId = { requestId }
+              purposeName = { purposeName }
+              rturn = { rturn }
+              departureDate = { depDate }
+              departureTime = { departureTime }
+              departureTimeFunc = { (e) => this.departureTimeFunc(e) }
+              returnDate = { retDate }
+              returnTime = { returnTime }
+              returnTimeFunc = { (e) => this.returnTimeFunc(e) }
+              totalCostOfFlight = { totalCostOfFlight }
+              totalCostOfFlightFunc = { (e) => this.totalCostOfFlightFunc(e) }
+              totalServiceCharge = { totalServiceCharge }
+              totalServiceChargeFunc = { (e) => this.totalServiceChargeFunc(e) }
+              valueAddedTax = { valueAddedTax }
+              valueAddedTaxFunc = { (e) => this.valueAddedTaxFunc(e) }
+              totalAmount = { totalAmount }
+              bookflightArray = { bookflightArray }
+              travelGroupArray = { this.travelGroupArrayFunc() }
+              showTravelGroup = { showTravelGroup }
+              travelGroupId = { travelGroupId }
+              travelGroup = { travelGroup }
+              showTravelGroupFunc = { () => this.setState({ showTravelGroup : true }) }
+              travelGroupHeadFunc = { (travelGroupId, travelGroup) =>
+                this.setState({
+                  travelGroupId,
+                  travelGroup,
+                  showTravelGroup : false
+                })
+              }
+              onClose = { () => this.setState({ showTravelGroup : false }) }
+
+              attachmentsData = { attachmentsData }
+              attachmentsData2 = { attachmentsData2 }
+              submitFunc = { () => this.submit() }
+            />
+            :
+            enabledLoader ?
+            <center>
+              <CircularLoader show = { enabledLoader }/>
+            </center>
+            :
+            bookflightArray.length !==0 ?
+              <BookFlightComponent
+                showFormFunc = { (
+                  requestId,
+                  departureOrigin,
+                  departureDestination,
+                  departureDate,
+                  departureTime,
+                  returnOrigin,
+                  returnDestination,
+                  returnDate,
+                  returnTime,
+                  rturn,
+                  purposeName,
+                  isDomestic
+                ) => this.setState({
+                  requestId,
+                  departureOrigin,
+                  departureDestination,
+                  departureDate,
+                  departureTime,
+                  returnOrigin,
+                  returnDestination,
+                  returnDate,
+                  returnTime,
+                  rturn,
+                  purposeName,
+                  isDomestic,
+                  showForm : true }) }
+                cardDataHolder = { bookflightArray }/>
+                :
+                <center>
+                  <h2>No records</h2>
+                </center>
+          }
+        </div>
+        <div></div>
       </div>
     )
   }

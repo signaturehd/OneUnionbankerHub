@@ -261,6 +261,7 @@ export default class RequestCoachPresenter {
   }
 
   deleteComment (commentId, goalId, pageNumber, pageItem) {
+    console.log(commentId, goalId, pageNumber, pageItem)
     this.view.showSubmitLoader()
     try {
       this.deleteCommentInteractor.execute(commentId)
@@ -276,6 +277,7 @@ export default class RequestCoachPresenter {
         }
       )
     } catch (e) {
+      console.log(e);
     }
   }
 }

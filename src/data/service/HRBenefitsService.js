@@ -2141,12 +2141,14 @@ export default class HRBenefitsService {
     const object = {
       requestId: liquidationParam.requestId,
       isTicketUsed: liquidationParam.ticketMode,
-      remarks : liquidationParam.whyTicketUsed
+      remarks : liquidationParam.whyTicketUsed,
+      orDate : liquidationParam.orDate,
+      orNumber : liquidationParam.orNumber,
     }
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     liquidationParam.attachmentsData &&
     liquidationParam.attachmentsData.map((resp, key) =>(
-      formData.append('attachment', resp.file)
+      formData.append('attachment' + Math.floor(Math.random()*90000) + 10000, resp.file)
     ))
     formData.append('body', JSON.stringify(object))
     return this.apiClient.post('v1/travels/liquidate',  formData, {
