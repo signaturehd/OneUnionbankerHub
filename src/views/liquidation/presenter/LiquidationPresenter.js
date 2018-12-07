@@ -28,18 +28,28 @@ export default class LiquidationPresenter {
     requestId,
     ticketMode,
     whyTicketUsed,
-    attachmentsData
+    attachmentsData,
+    orDate,
+    orNumber
   ) {
+    console.log(    requestId,
+        ticketMode,
+        whyTicketUsed,
+        attachmentsData,
+        orDate,
+        orNumber)
     this.view.showCircularLoader()
     this.addLiquidationInteractor.execute(liquidationParam(
       requestId,
       ticketMode,
       whyTicketUsed,
-      attachmentsData
+      attachmentsData,
+      orDate,
+      orNumber
     ))
       .subscribe(travel => {
           this.view.hideCircularLoader()
-          this.view.noticeResponse()
+          this.view.noticeResponse(travel)
         }, e => {
           this.view.hideCircularLoader()
           // TODO prompt generic error
