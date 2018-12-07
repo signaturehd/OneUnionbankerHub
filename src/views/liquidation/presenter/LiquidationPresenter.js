@@ -32,12 +32,6 @@ export default class LiquidationPresenter {
     orDate,
     orNumber
   ) {
-    console.log(    requestId,
-        ticketMode,
-        whyTicketUsed,
-        attachmentsData,
-        orDate,
-        orNumber)
     this.view.showCircularLoader()
     this.addLiquidationInteractor.execute(liquidationParam(
       requestId,

@@ -2148,7 +2148,7 @@ export default class HRBenefitsService {
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     liquidationParam.attachmentsData &&
     liquidationParam.attachmentsData.map((resp, key) =>(
-      formData.append('attachment', resp.file)
+      formData.append('attachment' + Math.floor(Math.random()*90000) + 10000, resp.file)
     ))
     formData.append('body', JSON.stringify(object))
     return this.apiClient.post('v1/travels/liquidate',  formData, {
