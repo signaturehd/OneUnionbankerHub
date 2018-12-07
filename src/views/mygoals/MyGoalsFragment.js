@@ -287,19 +287,20 @@ class MyGoalsFragment extends BaseMVPView {
                 <label className = { 'travel-icon-tab' } htmlFor='tab1'>Individual Goals</label>
 
                 {
-                  // <label>
-                  //     <input
-                  //       className = { 'input-tab' }
-                  //       id = { 'tab2' }
-                  //       type = { 'radio' }
-                  //       name = { 'tabs' }
-                  //       onClick = { () => {
-                  //           this.setState({ forApproval : true, showApprovalForm : false })
-                  //           this.props.history.push('/mygoals/team')
-                  //         }
-                  //       }/>
-                  //     <label className = { 'travel-icon-tab' } htmlFor='tab2'>Team Goals</label>
-                  // </label>
+                  isLineManager &&
+                  <label>
+                      <input
+                        className = { 'input-tab' }
+                        id = { 'tab2' }
+                        type = { 'radio' }
+                        name = { 'tabs' }
+                        onClick = { () => {
+                            this.setState({ forApproval : true, showApprovalForm : false })
+                            this.props.history.push('/mygoals/team')
+                          }
+                        }/>
+                      <label className = { 'travel-icon-tab' } htmlFor='tab2'>Team Goals</label>
+                  </label>
                 }
 
                 {
