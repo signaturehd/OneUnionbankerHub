@@ -42,17 +42,7 @@ class RequestedGoalsComponent extends Component {
       <div className = { 'padding-15px' }>
       {
         cardHolder.map((resp, key) =>
-          <Card className = { 'margin-10px' }
-          onClick = { () => onSelected(
-            resp.id,
-            resp.title,
-            resp.description,
-            resp.startDate,
-            resp.endDate,
-            priorityFunc(resp.priority),
-            resp.approvalStatus,
-            resp.type
-          ) }>
+          <Card className = { 'margin-10px' }>
             <div className = { 'padding-15' }>
               <div className = { 'header-column' }>
                 <span/>
@@ -61,7 +51,17 @@ class RequestedGoalsComponent extends Component {
                   <span className = { 'icon-check icon-delete-img' } onClick = { () => onDeleted(resp.id) }/>
                 }
               </div>
-              <div className = { 'header-column-1' }>
+              <div className = { 'header-column-1 cursor-pointer' } onClick = { () => 
+                onSelected(
+                  resp.id,
+                  resp.title,
+                  resp.description,
+                  resp.startDate,
+                  resp.endDate,
+                  priorityFunc(resp.priority),
+                  resp.approvalStatus,
+                  resp.type
+                ) }>
                 <div>
                   <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ resp.title }</h2>
                   <Progress
