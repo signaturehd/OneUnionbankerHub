@@ -283,7 +283,7 @@ class RequestedGoalsFragment extends BaseMVPView {
     }
     else {
       onEditTask ?
-      this.presenter.updateGoalTask(goalId, taskId, taskDescription, isCompleted)
+      this.presenter.updateGoalTask(taskId, taskDescription, isCompleted)
       :
       this.presenter.addGoalTask(goalId, taskDescription)
       this.setState({ addTask:false })

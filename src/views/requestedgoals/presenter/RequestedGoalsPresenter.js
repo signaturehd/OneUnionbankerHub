@@ -146,7 +146,6 @@ export default class RequestCoachPresenter {
   }
 
   updateGoalTask (
-    goalId,
     taskId,
     taskDescription,
     isCompleted
