@@ -261,12 +261,11 @@ export default class RequestCoachPresenter {
   }
 
   deleteComment (commentId, goalId, pageNumber, pageItem) {
-    console.log(commentId, goalId, pageNumber, pageItem)
     this.view.showSubmitLoader()
     try {
       this.deleteCommentInteractor.execute(commentId)
       .do(data => {
-        this.getGoalComment(goalId, pageNumber, pageItem)
+        this.getGoalComment(storedGoalId, storedPageNumber, storedPageItem)
       })
       .subscribe(
         data => {
