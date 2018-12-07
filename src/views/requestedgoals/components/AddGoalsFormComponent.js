@@ -35,14 +35,19 @@ class AddGoalsFormComponent extends Component {
       goalTitleFunc,
       description,
       descriptionFunc,
+      descriptionErrorMessage,
       startDate,
       startDateFunc,
+      startDateErrorMessage,
       dueDate,
       dueDateFunc,
+      dueDateErrorMessage,
       priorityName,
+      priorityErrorMessage,
       showPriorityModalFunc,
       goalType,
       goalTypeId,
+      goalTypeErrorMessage,
       editMode,
       showGoalTypeModal,
       showGoalTypeModalFunc,
@@ -53,6 +58,7 @@ class AddGoalsFormComponent extends Component {
 
     return (
       <div className = { 'goal-container' }>
+      <br/>
         <div className = { 'goal-grid-column-x3' }>
           <div></div>
           <div>

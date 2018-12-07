@@ -184,50 +184,54 @@ class TravelFragment extends BaseMVPView {
   )
 
   return (
-    <div>
+    <div className = { 'default-body-grid' }>
+      <div></div>
       <div>
         <div>
-          <h2 className={ 'header-margin-default text-align-left' }>My travel</h2>
-          <h2>Where do you want to travel today?</h2>
-          <br/>
+          <div>
+            <h2 className={ 'header-margin-default text-align-left' }>My travel</h2>
+            <h2>Where do you want to travel today?</h2>
+            <br/>
+          </div>
+        </div>
+        <div className = { 'tabs-container' }>
+          <input
+            className = { 'input-tab' }
+            id = { 'tab1' }
+            type = { 'radio' }
+            name = { 'tabs' }
+            defaultChecked = { true }
+            onClick = { () => this.props.history.push('/mytravel/travel') }/>
+          <label className = { 'travel-icon-tab' } htmlFor='tab1'>My Travel</label>
+
+          {
+            isLineManager &&
+            <label>
+              <input
+                className = { 'input-tab' }
+                id = { 'tab2' }
+                type = { 'radio' }
+                name = { 'tabs' }
+                onClick = { () => this.props.history.push('/mytravel/approval') }/>
+              <label className = { 'travel-icon-tab' } htmlFor='tab2'>Approvals</label>
+            </label>
+          }
+
+          <section id='content1'>
+            <Switch>
+              <Route path='/mytravel'
+                render={ myTravel } />
+              <Route exact path='/mytravel/travel/request/RequestFlightFragment'
+                render={ props => <RequestFlightFragment { ...props } /> }/>
+              <Route exact path='/mytravel/travel/book/BookFlightFragment'
+                render={ props => <BookFlightFragment { ...props } /> }/>
+              <Route exact path='/mytravel/travel/liquidation/LiquidationFragment'
+                render={ props => <LiquidationFragment { ...props } /> }/>
+             </Switch>
+          </section>
         </div>
       </div>
-      <div className = { 'tabs-container' }>
-        <input
-          className = { 'input-tab' }
-          id = { 'tab1' }
-          type = { 'radio' }
-          name = { 'tabs' }
-          defaultChecked = { true }
-          onClick = { () => this.props.history.push('/mytravel/travel') }/>
-        <label className = { 'travel-icon-tab' } htmlFor='tab1'>My Travel</label>
-
-        {
-          isLineManager &&
-          <label>
-            <input
-              className = { 'input-tab' }
-              id = { 'tab2' }
-              type = { 'radio' }
-              name = { 'tabs' }
-              onClick = { () => this.props.history.push('/mytravel/approval') }/>
-            <label className = { 'travel-icon-tab' } htmlFor='tab2'>Approvals</label>
-          </label>
-        }
-
-        <section id='content1'>
-          <Switch>
-            <Route path='/mytravel'
-              render={ myTravel } />
-            <Route exact path='/mytravel/travel/request/RequestFlightFragment'
-              render={ props => <RequestFlightFragment { ...props } /> }/>
-            <Route exact path='/mytravel/travel/book/BookFlightFragment'
-              render={ props => <BookFlightFragment { ...props } /> }/>
-            <Route exact path='/mytravel/travel/liquidation/LiquidationFragment'
-              render={ props => <LiquidationFragment { ...props } /> }/>
-           </Switch>
-        </section>
-      </div>
+      <div></div>
     </div>
     )
   }
