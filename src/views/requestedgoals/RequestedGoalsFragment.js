@@ -596,12 +596,6 @@ class RequestedGoalsFragment extends BaseMVPView {
         :
         <div>
           <div className = { 'grid-filter margin-left' }>
-            <div>
-            <br/>
-              <GenericInput
-              text = { 'Filter' }
-              />
-            </div>
             <div></div>
             <div className = { 'text-align-right margin-right grid-global' }>
               <GenericButton

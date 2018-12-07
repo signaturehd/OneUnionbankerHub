@@ -99,28 +99,39 @@ export default class RequestCoachPresenter {
     goalTypeId
   ){
     this.view.showSubmitLoader()
-    this.addRequestedGoalsInteractor.execute(requestedGoalsParam(
-        goalTitle,
-        description,
-        startDate,
-        dueDate,
-        priorityId,
-        goalTypeId
+    if (new  Date(dueDate).getYear() !== new Date(startDAte).getYear()) {
+      this.view.hideSubmitLoader()
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Goals and Performance',
+          message : 'Year for Due Date field must be the same as the Start Date',
+          type : 'success',
+          duration : 3000
+        })
       )
-    )
-    .do(data => {
-      this.getGoals()
-    })
-    .subscribe(
-      data => {
-        this.view.hideSubmitLoader()
-        this.view.noticeResponse(data)
-        this.view.resetValue()
-      },
-      errors => {
-        this.view.hideSubmitLoader()
-      }
-    )
+    } else {
+      this.addRequestedGoalsInteractor.execute(requestedGoalsParam(
+          goalTitle,
+          description,
+          startDate,
+          dueDate,
+          priorityId,
+          goalTypeId
+        )
+      )
+      .do(data => {
+        this.getGoals()
+      })
+      .subscribe (
+        data => {
+          this.view.hideSubmitLoader()
+          this.view.noticeResponse(data)
+          this.view.resetValue()
+        },
+        errors => {
+          this.view.hideSubmitLoader()
+        }
+      )
+    }
   }
 
   addGoalTask (
