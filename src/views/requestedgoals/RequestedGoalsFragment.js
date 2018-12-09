@@ -283,7 +283,7 @@ class RequestedGoalsFragment extends BaseMVPView {
     }
     else {
       onEditTask ?
-      this.presenter.updateGoalTask(goalId, taskId, taskDescription, isCompleted)
+      this.presenter.updateGoalTask(taskId, taskDescription, isCompleted)
       :
       this.presenter.addGoalTask(goalId, taskDescription)
       this.setState({ addTask:false })
@@ -811,6 +811,8 @@ class RequestedGoalsFragment extends BaseMVPView {
                           commentId = { resp.id }
                           goalComment = { resp.description }
                           employeeName = { resp.employeeName }
+                          deleteCommentFunc = { (commentId, goalId) =>
+                            this.presenter.deleteComment(commentId, goalId, pageNumber, pageItem) }
                           updateComment = { (commentId, goalEditComment) =>
                             this.presenter.updateGoalComment(goalId, pageNumber, pageItem, commentId, goalEditComment) }
                           />

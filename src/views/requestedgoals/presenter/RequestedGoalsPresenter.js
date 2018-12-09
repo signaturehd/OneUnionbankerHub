@@ -146,7 +146,6 @@ export default class RequestCoachPresenter {
   }
 
   updateGoalTask (
-    goalId,
     taskId,
     taskDescription,
     isCompleted
@@ -265,7 +264,7 @@ export default class RequestCoachPresenter {
     try {
       this.deleteCommentInteractor.execute(commentId)
       .do(data => {
-        this.getGoalComment(goalId, pageNumber, pageItem)
+        this.getGoalComment(storedGoalId, storedPageNumber, storedPageItem)
       })
       .subscribe(
         data => {
@@ -276,6 +275,7 @@ export default class RequestCoachPresenter {
         }
       )
     } catch (e) {
+      console.log(e);
     }
   }
 }
