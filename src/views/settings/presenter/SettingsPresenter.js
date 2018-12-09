@@ -63,12 +63,12 @@ export default class SettingsPresenter {
        }
      }, e => {
         this.view.hideLoading()
-        this.view.showProfileBackground(e.message)
-        this.view.showProfile(e.message.employee)
-        this.view.showRank(e.message.rank)
-        this.view.showLineManager(e.message.employee.lineManager)
-        this.view.showProfileDependent(e.message.dependents)
-        this.view.showAccountNumber(e.message.accountNumber)
+        this.view.showProfileBackground('')
+        this.view.showProfile('')
+        this.view.showRank('')
+        this.view.showLineManager('')
+        this.view.showProfileDependent('')
+        this.view.showAccountNumber('')
       // TODO prompt generic error
     })
    }

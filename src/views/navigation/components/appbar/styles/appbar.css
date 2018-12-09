@@ -179,7 +179,7 @@
 }
 
 .appbar-phenom-icon {
-  background-image: url('../../../../../images/SIDE MENU/PHENOM - Grey.png');
+  background-image: url('../../../../../images/SIDE MENU/PHENOM - Orange.png');
   background-position: center;
 }
 
@@ -249,16 +249,18 @@
 }
 
 .appbar-background-menu {
-  background-image: url('../../../../../images/ubp-bg.png');
-  width: auto;
-  height: auto;
+  background-image: url('../../../../../images/WEB and LOGO/Orange Wallpaper.jpg');
+  width: 100%;
+  height: 100%;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .appbar-grid-submenu-info {
-  display: grid;
-  grid-template-rows: .3fr 1fr .3fr;
+  margin: auto;
+  padding: 10px 0px;
 }
 
 .appbar-welcome-name {
@@ -282,9 +284,7 @@
 
 .appbar-grid-info {
   display: grid;
-  grid-template-columns: .59fr 1fr;
-  column-gap: 2%;
-  padding: 0 5px 0 5px;
+  grid-template-rows: .2fr 1fr;
 }
 
 .appbar-row-info {
@@ -338,7 +338,7 @@
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-bottom: 10px solid #230000;
-  border-bottom-color: #ff6300;
+  border-bottom-color: #ff8a00;
   position: absolute;
   /* color: #520000; */
   top: 12px;
@@ -377,7 +377,7 @@
   text-align: left;
   display: grid;
   height: 100%;
-  grid-template-columns: .3fr 1fr .09fr;
+  grid-template-columns: .5fr 1fr .1fr;
 }
 
 ._img-ub-logo {

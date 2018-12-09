@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { AppBar } from '../../../../ub-components'
 
+import ExifOrientationImg  from 'react-exif-orientation-img'
+
 import './styles/appbar.css'
+import GreetingMessageComponent from '../GreetingMessageComponent.js'
 
 class DrawerAppBar extends Component {
   constructor (props) {
@@ -55,7 +59,7 @@ class DrawerAppBar extends Component {
         height: '25px',
       }, navList : {
         display: displayNavIcon !== 'block'? 'grid' :'none' ,
-        gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
+        gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
         paddingTop: '6px',
         alignItems: 'center',
       }
@@ -66,6 +70,11 @@ class DrawerAppBar extends Component {
       name: 'My Personal Information',
       imageStyle : 'settings',
       action : () => history.push('/settings'),
+    },,{
+      id: 10,
+      name: 'Phenom Prime',
+      imageStyle : 'phenom',
+      action : () => history.push('/phenom'),
     },{
       id: 13,
       name: 'My Travel',
@@ -102,46 +111,83 @@ class DrawerAppBar extends Component {
       id: 0,
       name: 'Home',
       imageStyle : 'news',
+      imageActive: require('../../../../images/NAVIGATION BAR/HOME - Orange.png'),
+      imageInactive: require('../../../../images/NAVIGATION BAR/HOME - Grey.png'),
       action : () => history.push('/'),
     },{
       id: 1,
       name: 'My Benefits',
       imageStyle : 'benefits',
+      imageActive: require('../../../../images/NAVIGATION BAR/My Benefits - Orange.png'),
+      imageInactive: require('../../../../images/NAVIGATION BAR/My Benefits - Grey.png'),
       action : () => history.push('/mybenefits')
     },{
       id: 8,
       name: 'My Pay',
       imageStyle : 'pay',
+      imageActive: require('../../../../images/NAVIGATION BAR/My Pay - Orange.png'),
+      imageInactive: require('../../../../images/NAVIGATION BAR/My Pay - Grey.png'),
       action : () => history.push('/payslip')
-    },{
-      id: 10,
-      name: 'Phenom Prime',
-      imageStyle : 'phenom',
-      action : () => history.push('/phenom'),
     },{
       id: 4,
       name: 'My Learning',
       imageStyle : 'learning',
+      imageActive: require('../../../../images/NAVIGATION BAR/My Learning - Orange.png'),
+      imageInactive: require('../../../../images/NAVIGATION BAR/My Learning - Grey.png'),
       action : () => history.push('/mylearning'),
     },{
       id: 6,
       name: 'Feedback',
       imageStyle : 'feedback',
+      imageActive: require('../../../../images/NAVIGATION BAR/Feedback - Orange.png'),
+      imageInactive: require('../../../../images/NAVIGATION BAR/Feedback - Grey.png'),
       action : () => history.push('/feedback'),
     }]
+
+    const styleAppIcon = {
+      backgroundImage : `url(${ profileImage ? profileImage : require('../../../../images/WEB and LOGO/1UHub Logo_Gotham_2.png') })`,
+      width: '45px',
+      height: '44px',
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center center',
+      webkitBorderRadius: '99em',
+      mozBorderRadius: '99em',
+      borderRadius: '99em',
+      border: '0px solid #fff',
+      boxShadow: '0 3px 2px rgba(0, 0, 0, 0.3)',
+      verticalAlign: 'middle',
+      margin: 'auto',
+      position: 'absolute',
+      right: '0',
+      bottom: '0',
+      top: '0',
+      marginRight: '30px',
+    }
+
+    const styleAppPopIcon = {
+      backgroundImage : `url(${ profileImage ? profileImage : require('../../../../images/WEB and LOGO/1UHub Logo_Gotham_2.png') })`,
+      boxShadow: '0 3px 2px rgba(0, 0, 0, 0.3)',
+      verticalAlign: 'middle',
+      backgroundRepeat : 'no-repeat',
+      backgroundSize: 'cover',
+      height: 'unset',
+      backgroundPosition: 'center',
+      boxShadow: 'inset 0px 0px 0px 0px #ffffff',
+      width: '100px',
+      height: '100px',
+      objectFit: 'cover',
+      backgroundPosition: 'center',
+      borderRadius: '50%',
+      transform: 'translateY(-100%) rotate(90deg)',
+      transformOrigin: 'left bottom 0px',
+    }
 
     return (
       <AppBar>
         <div id={ 'drawer-header' }>
           <div className = {'icon-header'}>
             <div>
-              {
-                // <img
-                //   style={ style.show }
-                //   src={ require('../../../../images/menu.png')}
-                //   className = {'_img-ub-profile'}
-                //   onClick = { () => this.onToggleShow() }/>
-              }
               <img
                 style={ style.navbar }
                 src={ require('../../../../images/union-logo.png') }
@@ -158,14 +204,15 @@ class DrawerAppBar extends Component {
                     <center className = { 'appbar-navbar-icon-grid' }>
                       <div className = { 'appbar-grid-icon-center' }>
                         <div></div>
-                          {
-                            // <span
-                            // className = { `appbar-${ resp.imageStyle }-icon${ selected === resp.id ? 'active' : '' } appbar-icon` }/>
-                          }
                           <button
                             type = { 'button' }
                             className = { `viewmore tooltip ` }>
-                              <img src={ require('../../../../images/icons/horizontal.png') } />
+                              <img
+                                style = {{
+                                  height : 50,
+                                }}
+                                src={ `${ selected === resp.id ? resp.imageActive : resp.imageInactive }` }
+                              />
                             <span className={ 'tooltiptext' }>{ resp.name }</span>
                           </button>
                         <div></div>
@@ -178,30 +225,31 @@ class DrawerAppBar extends Component {
             <div className = { 'appbar-menu-text-grid' }>
             <div></div>
               <div className = {  'cursor-pointer' }>
-                {
-                  profileImage ?
-                  <img
-                    onClick = { () => {
-                      if(displayNavIcon === 'block') {
-                        this.onToggleShow()
-                      } else {
-                        this.onToggleShowChangeDisplay()
-                      }
-                    }}
-                    src = { profileImage }
-                    className = { 'appbar-logo-circle' }/>
-                  :
-                  <img
-                    onClick = { () => {
-                      if(displayNavIcon === 'block') {
-                        this.onToggleShow()
-                      } else {
-                        this.onToggleShowChangeDisplay()
-                      }
-                    }}
-                    src = { require('../../../../images/WEB and LOGO/1UHub Logo_Gotham_2.png') }
-                    className = { 'appbar-logo-circle' }/>
-                }
+              {
+                profileImage ?
+                <ExifOrientationImg
+                  src = { profileImage}
+                  onClick = { () => {
+                    if(displayNavIcon === 'block') {
+                      this.onToggleShow()
+                    } else {
+                      this.onToggleShowChangeDisplay()
+                    }
+                  }}
+                  style = { styleAppIcon }
+                /> :
+                <img
+                  onClick = { () => {
+                    if(displayNavIcon === 'block') {
+                      this.onToggleShow()
+                    } else {
+                      this.onToggleShowChangeDisplay()
+                    }
+                  }}
+                  src = { require('../../../../images/WEB and LOGO/1UHub Logo_Gotham_2.png') }
+                  className = { 'appbar-logo-circle' }/>
+              }
+
                 <div
                   style = {{ display : profileDisplay && profileDisplay }}
                   className = { 'appbar-submenu' }>
@@ -209,26 +257,24 @@ class DrawerAppBar extends Component {
                     <li className = { 'appbar-list' }>
                       <div className = { 'appbar-background-menu' }>
                         <div className = { 'appbar-grid-submenu-info' }>
-                          <div></div>
                           <div className = { 'appbar-grid-info ' }>
                             <div className= { 'text-align-center' }>
                               {
                                 profileImage ?
-                                <img
+                                <ExifOrientationImg
                                   src = { profileImage }
-                                  className = { 'appbar-submenu-profile-circle' }/>
+                                  style = { styleAppPopIcon }
+                                />
                                 :
                                 <img
                                   src = { require('../../../../images/WEB and LOGO/1UHub Logo_Gotham_2.png') }
                                   className = { 'appbar-submenu-profile-circle' }/>
                               }
                             </div>
-                            <div className = { 'appbar-row-info' }>
-                              <h2 className = { 'appbar-welcome-name' }>Hi, { firstName ? firstName : 'Test' }</h2>
-                              <h2 className = { 'appbar-welcome-position' }>{ profillePosition ? profillePosition : 'Test Position' }</h2>
-                            </div>
+                            <GreetingMessageComponent
+                              firstName = { firstName }
+                            />
                           </div>
-                          <div></div>
                         </div>
                       </div>
                     </li>
