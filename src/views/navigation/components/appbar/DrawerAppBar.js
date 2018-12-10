@@ -92,7 +92,7 @@ class DrawerAppBar extends Component {
       action : () => history.push('/mycompliance'),
     },{
       id: 7,
-      name: 'Certificate Of Employment',
+      name: 'My COE',
       imageStyle : 'coe',
       action : () => history.push('/coe'),
     },{
