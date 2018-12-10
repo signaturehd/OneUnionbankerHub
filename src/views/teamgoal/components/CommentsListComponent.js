@@ -66,7 +66,9 @@ class CommentsListComponent extends Component {
       <div>
         {
           showCommentOption &&
-          <Modal isDismissable = { true } onClose = { () => this.setState({ showCommentOption: false }) }>
+          <Modal
+            isDismisable = { true }
+            onClose = { () => this.setState({ showCommentOption: false }) }>
             {
               deleteCommentMode ?
               <center>

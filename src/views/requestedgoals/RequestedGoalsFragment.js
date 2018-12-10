@@ -502,7 +502,9 @@ class RequestedGoalsFragment extends BaseMVPView {
       }
       {
         showTaskOption &&
-        <Modal isDismissable = { true } onClose = { () => this.setState({ showTaskOption: false }) }>
+        <Modal
+        isDismisable = { true }
+        onClose = { () => this.setState({ showTaskOption: false }) }>
           {
             deleteTask ?
             <center>
@@ -548,7 +550,9 @@ class RequestedGoalsFragment extends BaseMVPView {
       }
       {
         showCommentOption &&
-        <Modal isDismissable = { true } onClose = { () => this.setState({ showCommentOption: false }) }>
+        <Modal
+          isDismisable = { true }
+          onClose = { () => this.setState({ showCommentOption: false }) }>
           {
             deleteComment ?
             <center>
@@ -736,24 +740,35 @@ class RequestedGoalsFragment extends BaseMVPView {
                       width = { 80 }
                       percent = { percentageTask ? percentageTask : 0 } />
                   </div>
-                  <div>
-                    {
-                      approvalStatus === 2 ?
-                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Low' }>Approved</h2>
-                      :
-                        approvalStatus === 3 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
+                  <div className = { 'grid-global-rows text-align-right' }>
+                    <div>
+                      {
+                        goalTypeId === 1 ?
+                        <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>Performance</span></h2>
                         :
-                        approvalStatus === 1 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold' }>Requested</h2>
+                          goalTypeId === 2 &&
+                          <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>Developemental</span></h2>
+                      }
+                    </div>
+                    <div>
+                      {
+                        approvalStatus === 2 ?
+                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Low' }>Approved</h2>
                         :
-                        approvalStatus === 4 ?
-                        <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Update for approval</h2>
-                        :
-                        approvalStatus === 5 &&
-                        <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Deletion for approval</h2>
+                          approvalStatus === 3 ?
+                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
+                          :
+                          approvalStatus === 1 ?
+                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold' }>Requested</h2>
+                          :
+                          approvalStatus === 4 ?
+                          <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Update for approval</h2>
+                          :
+                          approvalStatus === 5 &&
+                          <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Deletion for approval</h2>
 
-                    }
+                      }
+                    </div>
                   </div>
                 </div>
                 <br/>

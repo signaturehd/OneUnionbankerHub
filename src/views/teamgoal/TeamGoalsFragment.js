@@ -172,12 +172,8 @@ class TeamGoalsFragment extends BaseMVPView {
   }
 
 
-  hideCommentLoader () {
-    this.setState({ commentLoader : false })
-  }
-
-  showCommentLoader () {
-    this.setState({ commentLoader : true })
+  checkCommentLoader (commentLoader) {
+    this.setState({ commentLoader })
   }
 
   navigate () {
@@ -302,16 +298,6 @@ class TeamGoalsFragment extends BaseMVPView {
               header.removeClass("div-fixed");
             }
     });
-  }
-
-  taskTotalCount(taskArray) {
-    let count = 0
-    taskArray.map((resp, key) =>
-      resp.isCompleted &&
-      count++
-    )
-
-    return count
   }
 
   resetValue () {
@@ -467,7 +453,9 @@ class TeamGoalsFragment extends BaseMVPView {
       }
       {
         showCommentOption &&
-        <Modal isDismissable = { true } onClose = { () => this.setState({ showCommentOption: false }) }>
+        <Modal
+          isDismisable = { true }
+          onClose = { () => this.setState({ showCommentOption: false }) }>
           {
             deleteComment ?
             <center>
@@ -603,12 +591,10 @@ class TeamGoalsFragment extends BaseMVPView {
                 <div className = { 'grid-percentage' }>
                   <div>
                     <h2 className = { `margin-5px text-align-left font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
-                    {
-                      // <div className = { 'grid-global' }>
-                      //   <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }><span className = { 'icon-check icon-comment-img' }/>{commentArray.totalCount ? commentArray.totalCount : '0'}</h2>
-                      //   <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }><span className = { 'icon-check icon-taskcompleted-img' }/>{this.taskTotalCount(taskArray)}/{taskArray.length}</h2>
-                      // </div>
-                    }
+                    <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }>
+                      <span className = { 'icon-check icon-comment-img text-align-center' }/>{ commentArray && commentArray.totalCount }</h2>
+                    <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }>
+                      <span className = { 'icon-check icon-taskcompleted-img' }/>{ this.checkIfTaskCompleted(taskArray) }/{ taskArray && totalCount }</h2>
                   </div>
                   <div className = { 'text-align-center padding-10px' }>
                     <Progress
@@ -679,11 +665,6 @@ class TeamGoalsFragment extends BaseMVPView {
                       <br/>
                     </div>
                     {
-                      commentLoader ?
-                      <center>
-                      <CircularLoader show = { commentLoader }/>
-                      </center>
-                      :
                       commentArray.length !==0 ?
                         commentArray.commentDetails.map((resp, key) =>(
                           <CommentsListComponent
@@ -702,18 +683,25 @@ class TeamGoalsFragment extends BaseMVPView {
                       <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
                     }
                     <br/>
-                    <div className = { 'comment-grid' }>
+                    <div className = { 'comment-grid align-items-center'}>
                       <GenericInput
                         text = { 'Write a comment' }
                         value = { goalComment }
                         onChange = { (e) => this.goalCommentFunc(e.target.value) }
                         errorMessage = { goalCommentErrorMessage }
                       />
-                      <GenericButton
-                        text = { 'Post' }
-                        className = { 'profile-button-small' }
-                        onClick = { () => this.submitComment() }
-                      />
+                      {
+                        commentLoader ?
+
+                        <center>
+                          <CircularLoader show = { commentLoader }/>
+                        </center> :
+                        <GenericButton
+                          text = { 'Post' }
+                          className = { 'profile-button-small' }
+                          onClick = { () => this.submitComment() }
+                        />
+                      }
                     </div>
                     </div>
                   </div>
