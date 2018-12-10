@@ -29,8 +29,8 @@
 
 .appbar-icon-grid {
   display: grid;
-  grid-template-columns: .15fr 1fr;
-  padding: 5px 5px 5px 15px;
+  grid-template-columns: 0.3fr 1fr;
+  padding: 0px 0px 0px 5px;
 }
 
 .appbar-navbar-icon-grid {
@@ -315,6 +315,7 @@
   text-decoration: none;
   font-size: 14px;
   text-align: left;
+  font-weight: lighter;
 }
 
 .appbar-list a:hover{

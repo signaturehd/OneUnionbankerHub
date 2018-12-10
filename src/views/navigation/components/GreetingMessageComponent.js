@@ -36,12 +36,13 @@ class GreetingMessageComponent extends Component {
     return (
       <center className = { 'unionbank-white-color' }>
         <br/>
-        <h2 className = { 'font-weight-normal font-size-15px' }>
+        <h2 className = { 'font-weight-normal font-size-14px' }>
           { this.getCheckGreetingsStatus()+', ' } <b>{firstName ? firstName+'!' : 'UnionBanker' }</b>
         </h2>
-        <h4 className = { 'font-size-23px font-weight-bold' }>
+        <h4 className = { 'font-size-19px font-weight-bold' }>
           What can I help you with?
         </h4>
+        <br/>
       </center>
     )
   }

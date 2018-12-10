@@ -175,6 +175,7 @@ class DrawerAppBar extends Component {
       backgroundPosition: 'center',
       boxShadow: 'inset 0px 0px 0px 0px #ffffff',
       width: '100px',
+      border: 'solid 2px #fff',
       height: '100px',
       objectFit: 'cover',
       backgroundPosition: 'center',
