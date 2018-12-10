@@ -395,7 +395,7 @@ class TeamGoalsFragment extends BaseMVPView {
       historyArray
     } = this.state
 
-    const { onClose, showRequestCoachForm, showRequestCoachFunc } = this.props
+    const { onClose, showRequestCoachForm, showRequestCoachFunc, employeeNumber } = this.props
 
 
     let totalCount = taskArray && taskArray.length
@@ -670,6 +670,8 @@ class TeamGoalsFragment extends BaseMVPView {
                           <CommentsListComponent
                           cardHolder = { resp }
                           commentId = { resp.id }
+                          employeeNumber = { employeeNumber }
+                          respEmployeeNumber = { resp.employeeNumber }
                           goalComment = { resp.description }
                           employeeName = { resp.employeeName }
                           deleteCommentFunc = { (commentId, goalId) =>

@@ -55,6 +55,8 @@ class CommentsListComponent extends Component {
       goalComment,
       updateComment,
       deleteCommentFunc,
+      employeeNumber,
+      respEmployeeNumber
     } = this.props
 
     const {
@@ -63,7 +65,6 @@ class CommentsListComponent extends Component {
       goalEditComment,
       deleteCommentMode
     } = this.state
-
     return (
       <div>
         {
@@ -97,22 +98,22 @@ class CommentsListComponent extends Component {
               <center>
                 <h2>Select action</h2>
                 <br/>
-                <div className = { 'grid-global' }>
-                  <GenericButton
-                    text = { 'Edit' }
-                    onClick = { () => this.setState({
-                    addComment: true,
-                    onEditComment: true,
-                    showCommentOption: false
-                   }) }
-                    className = { 'profile-button-small' }
-                  />
-                  <GenericButton
-                    text = { 'Delete' }
-                    className = { 'profile-button-small' }
-                    onClick = { () => this.setState({ deleteCommentMode: true }) }
-                  />
-                </div>
+                  <div className = { 'grid-global' }>
+                      <GenericButton
+                        text = { 'Edit' }
+                        onClick = { () => this.setState({
+                        addComment: true,
+                        onEditComment: true,
+                        showCommentOption: false
+                       }) }
+                        className = { 'profile-button-small' }
+                      />
+                    <GenericButton
+                      text = { 'Delete' }
+                      className = { 'profile-button-small' }
+                      onClick = { () => this.setState({ deleteCommentMode: true }) }
+                    />
+                  </div>
               </center>
             }
           </Modal>
@@ -148,7 +149,12 @@ class CommentsListComponent extends Component {
             <br/>
             </div>
             :
-            <div className={ 'comment-border margin-5px padding-5px' } onClick = { () => this.setState({ showCommentOption: true, goalEditComment: goalComment }) }>
+            <div className={ 'comment-border margin-5px padding-5px cursor-pointer' } onClick = { () =>
+              {
+                employeeNumber === respEmployeeNumber &&
+                this.setState({ showCommentOption: true, goalEditComment: goalComment })
+              }
+            }>
               <h2 className = { 'text-align-left font-size-12px font-weight-bold unionbank-color' }>{employeeName}</h2>
               <h2 className = { 'text-align-left font-size-12px font-weight-lighter' }>{goalComment}</h2>
             </div>

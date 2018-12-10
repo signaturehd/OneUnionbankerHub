@@ -205,6 +205,7 @@ class RequestedGoalsFragment extends BaseMVPView {
 
   startDateFunc (startDate) {
     this.setState({ startDate, startDateErrorMessage: '' })
+
   }
 
   dueDateFunc (dueDate) {
@@ -430,8 +431,7 @@ class RequestedGoalsFragment extends BaseMVPView {
     let taskCompleted  = this.checkIfTaskCompleted(taskArray)
     let percentageTask = taskArray && (taskCompleted /totalCount) * 100
 
-
-    const { onClose, showRequestCoachForm, showRequestCoachFunc } = this.props
+    const { onClose, showRequestCoachForm, showRequestCoachFunc, employeeNumber } = this.props
     return (
     <div>
       { super.render() }
@@ -871,6 +871,8 @@ class RequestedGoalsFragment extends BaseMVPView {
                       commentArray.length !==0 ?
                         commentArray.commentDetails.map((resp, key) =>(
                           <CommentsListComponent
+                            employeeNumber = { employeeNumber }
+                            respEmployeeNumber = { resp.employeeNumber }
                             commentLoader = { commentLoader }
                             cardHolder = { resp }
                             commentId = { resp.id }
