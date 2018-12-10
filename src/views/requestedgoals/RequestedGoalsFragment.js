@@ -56,6 +56,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       deleteTask: false,
       showCommentOption: false,
       deleteComment: false,
+      showFilterModal: false,
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
@@ -81,9 +82,25 @@ class RequestedGoalsFragment extends BaseMVPView {
       goalTypeId : '',
       goalType : '',
       goalTypeErrorMessage : '',
+      filterId: '',
+      filterName: '',
       commentArray: [],
       taskArray: [],
       goalsArray : [],
+      filterArray : [
+        {
+          id: 0,
+          name: 'All'
+        },
+        {
+          id: 1,
+          name: 'Requested'
+        },
+        {
+          id: 2,
+          name: 'Approved'
+        }
+      ],
       priorityArray : [
         {
           id: 3,
@@ -286,7 +303,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       this.presenter.updateGoalTask(taskId, taskDescription, isCompleted)
       :
       this.presenter.addGoalTask(goalId, taskDescription)
-      this.setState({ addTask:false })
+      this.setState({ addTask:false, taskDescription: '' })
     }
   }
 
@@ -397,7 +414,11 @@ class RequestedGoalsFragment extends BaseMVPView {
       commentArray,
       goalsArray,
       priorityArray,
-      goalTypeArray
+      goalTypeArray,
+      filterArray,
+      showFilterModal,
+      filterId,
+      filterName,
     } = this.state
 
     const { onClose, showRequestCoachForm, showRequestCoachFunc } = this.props
@@ -561,6 +582,20 @@ class RequestedGoalsFragment extends BaseMVPView {
         </Modal>
       }
       {
+        showFilterModal &&
+        <SingleInputModal
+          label = { 'Select status' }
+          inputArray = { filterArray }
+          selectedArray = { (filterId, filterName) => this.setState({
+              filterId,
+              filterName,
+              showFilterModal: false
+            })
+          }
+          onClose = { () => this.setState({ showFilterModal: false }) }
+        />
+      }
+      {
         showForm ?
           <AddGoalsFormComponent
             onCancel = { () => {
@@ -596,7 +631,17 @@ class RequestedGoalsFragment extends BaseMVPView {
         :
         <div>
           <div className = { 'grid-filter margin-left' }>
-            <div></div>
+            <div className = { 'text-align-left margin-right grid-global' }>
+              <GenericInput
+                text = { 'Filter by status' }
+                className = { 'global-button' }
+                value = { filterName }
+                onClick = { () => {
+                  this.setState({ showFilterModal: true })
+                } }
+              />
+              <div></div>
+            </div>
             <div className = { 'text-align-right margin-right grid-global' }>
               <GenericButton
                 text = { 'Add Goal' }
@@ -623,6 +668,7 @@ class RequestedGoalsFragment extends BaseMVPView {
               :
               goalsArray.length !== 0 ?
               <RequestedGoalsComponent
+                filterId = { filterId }
                 cardHolder = { goalsArray }
                 priorityFunc = { (resp) => this.priorityFunc(resp) }
                 onSelected = { (
