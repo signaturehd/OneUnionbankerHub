@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 
-import Presenter from './presenter/RequestedGoalsPresenter'
+import Presenter from './presenter/TeamGoalsPresenter'
 
 import {
   Modal,
@@ -18,11 +18,11 @@ import {
   FloatingActionButton
 } from '../../ub-components/'
 
-import RequestedGoalsComponent from './components/RequestedGoalsComponent'
+import TeamGoalsComponent from './components/TeamGoalsComponent'
 import AddGoalsFormComponent from './components/AddGoalsFormComponent'
 import TasksListComponent from './components/TasksListComponent'
 import CommentsListComponent from './components/CommentsListComponent'
-import RequestCoachFragment from '../requestCoach/RequestCoachFragment'
+import HistoryListComponent from './components/HistoryListComponent'
 
 import ResponseModal from '../notice/NoticeResponseModal'
 
@@ -30,9 +30,9 @@ import { format } from '../../utils/numberUtils'
 import moment from 'moment'
 
 import { Progress } from 'react-sweet-progress'
-import './styles/requestedGoalStyles.css'
+import './styles/teamGoalStyles.css'
 
-class RequestedGoalsFragment extends BaseMVPView {
+class TeamGoalsFragment extends BaseMVPView {
 
   constructor(props) {
     super(props)
@@ -47,7 +47,6 @@ class RequestedGoalsFragment extends BaseMVPView {
       noticeResponse: '',
       showPriorityModal : false,
       showGoalTypeModal : false,
-      addTask: false,
       addComment: true,
       onEditTask: false,
       onEditComment: false,
@@ -83,7 +82,8 @@ class RequestedGoalsFragment extends BaseMVPView {
       goalTypeErrorMessage : '',
       commentArray: [],
       taskArray: [],
-      goalsArray : [],
+      teamGoalsArray : [],
+      historyArray : [],
       priorityArray : [
         {
           id: 3,
@@ -112,12 +112,12 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    this.presenter.getGoals()
+    this.presenter.getTeamGoals(2)
     // this.scrollFunction()
   }
 
-  getRequestedGoals(goalsArray) {
-    this.setState({ goalsArray })
+  getTeamGoals(teamGoalsArray) {
+    this.setState({ teamGoalsArray })
   }
 
   getTasklist (taskArray) {
@@ -126,6 +126,10 @@ class RequestedGoalsFragment extends BaseMVPView {
 
   getCommentList (commentArray) {
       this.setState({ commentArray })
+  }
+
+  getHistoryList (historyArray) {
+      this.setState({ historyArray })
   }
 
   submit (requestId, isApprove, rejectedRemarks) {
@@ -276,20 +280,6 @@ class RequestedGoalsFragment extends BaseMVPView {
     }
   }
 
-  submitTask() {
-    const { goalId, taskId, taskDescription, onEditTask, isCompleted } = this.state
-    if(!taskDescription) {
-      this.setState({ taskDescriptionErrorMessage: 'Required field' })
-    }
-    else {
-      onEditTask ?
-      this.presenter.updateGoalTask(taskId, taskDescription, isCompleted)
-      :
-      this.presenter.addGoalTask(goalId, taskDescription)
-      this.setState({ addTask:false })
-    }
-  }
-
   submitComment() {
     const { goalId, goalComment, pageNumber, pageItem } = this.state
     if(!goalComment) {
@@ -312,6 +302,16 @@ class RequestedGoalsFragment extends BaseMVPView {
               header.removeClass("div-fixed");
             }
     });
+  }
+
+  taskTotalCount(taskArray) {
+    let count = 0
+    taskArray.map((resp, key) =>
+      resp.isCompleted &&
+      count++
+    )
+
+    return count
   }
 
   resetValue () {
@@ -337,7 +337,6 @@ class RequestedGoalsFragment extends BaseMVPView {
       taskDescriptionErrorMessage: '',
       goalComment: '',
       goalCommentErrorMessage: '',
-      addTask: false,
       addComment: false,
       editMode: false,
       showForm: false,
@@ -356,7 +355,6 @@ class RequestedGoalsFragment extends BaseMVPView {
       showNoticeResponseModal,
       noticeResponse,
       deleteTask,
-      addTask,
       addComment,
       onEditTask,
       onEditComment,
@@ -395,9 +393,10 @@ class RequestedGoalsFragment extends BaseMVPView {
       approvalStatus,
       taskArray,
       commentArray,
-      goalsArray,
+      teamGoalsArray,
       priorityArray,
-      goalTypeArray
+      goalTypeArray,
+      historyArray
     } = this.state
 
     const { onClose, showRequestCoachForm, showRequestCoachFunc } = this.props
@@ -449,70 +448,6 @@ class RequestedGoalsFragment extends BaseMVPView {
           }
           onClose = { () => this.setState({ showGoalTypeModal: false }) }
         />
-      }
-      {
-        showDeleteModal &&
-        <Modal>
-          <center>
-            <h2>Are you sure you want to delete this goal?</h2>
-            <div className = { 'grid-global' }>
-              <GenericButton
-                text = { 'No' }
-                onClick = { () => this.setState({ showDeleteModal: false }) }
-              />
-              <GenericButton
-                text = { 'Yes' }
-                onClick = { () => {this.presenter.deleteGoal(goalId), this.setState({ showDeleteModal: false })} }
-              />
-            </div>
-          </center>
-        </Modal>
-      }
-      {
-        showTaskOption &&
-        <Modal isDismissable = { true } onClose = { () => this.setState({ showTaskOption: false }) }>
-          {
-            deleteTask ?
-            <center>
-              <h2>Are you sure you want to delete this task?</h2>
-              <div className = { 'grid-global' }>
-                <GenericButton
-                  text = { 'No' }
-                  onClick = { () => this.setState({ deleteTask: false, showTaskOption: false }) }
-                  className = { 'profile-button-small' }
-                />
-                <GenericButton
-                  text = { 'Yes' }
-                  className = { 'profile-button-small' }
-                  onClick = { () => {
-                      this.presenter.deleteTask(taskId, goalId),
-                      this.setState({ taskDescription: '', deleteTask: false, showTaskOption: false })
-                    }
-                  }
-                />
-              </div>
-            </center>
-            :
-            <center>
-              <h2>Select action</h2>
-              <div className = { 'grid-global' }>
-                <GenericButton
-                  text = { 'Edit' }
-                  onClick = { () => this.setState({
-                  addTask: true,
-                  onEditTask: true,
-                  showTaskOption: false }) }
-                  className = { 'profile-button-small' }
-                />
-                <GenericButton
-                  text = { 'Delete' }
-                  className = { 'profile-button-small' }
-                  onClick = { () => this.setState({ deleteTask: true }) }
-                />
-              </div>
-            </center>
-          }
-        </Modal>
       }
       {
         showCommentOption &&
@@ -597,20 +532,7 @@ class RequestedGoalsFragment extends BaseMVPView {
         <div>
           <div className = { 'grid-filter margin-left' }>
             <div></div>
-            <div className = { 'text-align-right margin-right grid-global' }>
-              <GenericButton
-                text = { 'Add Goal' }
-                className = { 'global-button' }
-                onClick = { () => {
-                  this.resetValue()
-                  this.setState({ showForm: true })
-                } }
-              />
-              <GenericButton
-                text = { 'Request for Coaching' }
-                className = { 'global-button' }
-                onClick = { () => showRequestCoachFunc(true)}
-              />
+            <div className = { 'text-align-right margin-right' }>
             </div>
           </div>
           <div className = { 'grid-main' }>
@@ -621,21 +543,14 @@ class RequestedGoalsFragment extends BaseMVPView {
                 <CircularLoader show = { enabledLoader }/>
               </center>
               :
-              goalsArray.length !== 0 ?
-              <RequestedGoalsComponent
-                cardHolder = { goalsArray }
-                priorityFunc = { (resp) => this.priorityFunc(resp) }
-                onSelected = { (
-                  goalId,
-                  goalTitle,
-                  description,
-                  startDate,
-                  dueDate,
-                  priorityName,
-                  approvalStatus,
-                  goalTypeId
-                ) => {
-                  this.setState({
+              teamGoalsArray.length !== 0 ?
+              teamGoalsArray.map((resp, key) =>
+                <TeamGoalsComponent
+                  employeeName = { resp.name }
+                  imageUrl = { resp.imageUrl }
+                  cardHolder = { resp.goalDetails }
+                  priorityFunc = { (resp) => this.priorityFunc(resp) }
+                  onSelected = { (
                     goalId,
                     goalTitle,
                     description,
@@ -644,55 +559,51 @@ class RequestedGoalsFragment extends BaseMVPView {
                     priorityName,
                     approvalStatus,
                     goalTypeId
-                   })
-                  this.presenter.getGoalTask(goalId)
-                  this.presenter.getGoalComment(goalId, pageNumber, pageItem)
-                }
-               }
-               onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
-              />
+                  ) => {
+                    this.setState({
+                      goalId,
+                      goalTitle,
+                      description,
+                      startDate,
+                      dueDate,
+                      priorityName,
+                      approvalStatus,
+                      goalTypeId
+                     })
+                    this.presenter.getGoalTask(goalId)
+                    this.presenter.getGoalComment(goalId, pageNumber, pageItem)
+                    this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
+                  }
+                 }
+                 onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
+                />
+              )
               :
               <center><h2>No record</h2></center>
             }
             </div>
             <div ref = { 'main-div' } className = { 'padding-10px' }>
               <Card className = { 'padding-10px' }>
-                {
-                  // <div className = { 'header-column' }>
-                  //   <span/>
-                  //   <span className = { 'icon-check icon-delete-img' }/>
-                  // </div>
-                }
                 <div className = { 'grid-percentage' }>
                   <div>
                     <h2 className = { `margin-5px text-align-left font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
-                    <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }><span className = { 'icon-check icon-comment-img' }/>2/5</h2>
-                    <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }><span className = { 'icon-check icon-taskcompleted-img' }/>5/10</h2>
+                    {
+                      // <div className = { 'grid-global' }>
+                      //   <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }><span className = { 'icon-check icon-comment-img' }/>{commentArray.totalCount ? commentArray.totalCount : '0'}</h2>
+                      //   <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }><span className = { 'icon-check icon-taskcompleted-img' }/>{this.taskTotalCount(taskArray)}/{taskArray.length}</h2>
+                      // </div>
+                    }
                   </div>
                   <div className = { 'text-align-center padding-10px' }>
-                    <Progress
-                      type = { 'circle' }
-                      height = { 80 }
-                      width = { 80 }
-                      percent = { 80 } />
-                  </div>
-                  <div>
-                    {
-                      approvalStatus === 2 ?
-                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Low' }>Approved</h2>
-                      :
-                        approvalStatus === 3 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
-                        :
-                        approvalStatus === 1 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold' }>Requested</h2>
-                        :
-                        approvalStatus === 4 ?
-                        <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Update for approval</h2>
-                        :
-                        approvalStatus === 5 &&
-                        <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Deletion for approval</h2>
 
+                  </div>
+                  <div className = { 'text-align-right' }>
+                    {
+                      goalTypeId === 1 ?
+                      <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>Performance</span></h2>
+                      :
+                        goalTypeId === 2 &&
+                        <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>Developemental</span></h2>
                     }
                   </div>
                 </div>
@@ -701,15 +612,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                 <div className = { 'padding-10px' }>
                   <div className = { 'header-column' }>
                     <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
-                    <h2>
-                    {
-                      goalId &&
-                      <span
-                        className = { 'icon-check icon-edit-img' }
-                        onClick = { () => this.setState({ showForm: true, editMode: true }) }
-                      />
-                    }
-                    </h2>
+                    <h2></h2>
                   </div>
                   <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ description ? description : 'Goals allow you to create effective objectives for yourself or employees.' }</h2>
                 </div>
@@ -724,43 +627,8 @@ class RequestedGoalsFragment extends BaseMVPView {
                         <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Tasks</h2>
                         <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>Enter the activities that would help you achieve your goal (Be Specific).</h2>
                       </div>
-                      <h2>
-                      {
-                        goalId &&
-                        <span
-                          className = { 'icon-check icon-add-img' }
-                          onClick = { () => this.setState({ addTask: true }) }
-                        />
-                      }
-                      </h2>
+                      <h2></h2>
                     </div>
-                    {
-                      addTask &&
-                      <div>
-                        <GenericInput
-                          text = { 'Task description' }
-                          value = { taskDescription }
-                          onChange = { (e) => this.taskDescriptionFunc(e.target.value) }
-                          type = { 'textarea' }
-                          errorMessage = { taskDescriptionErrorMessage }
-                        />
-                        <div className = { 'grid-global' }>
-                          <GenericButton
-                            text = { 'Cancel' }
-                            className = { 'profile-button-small' }
-                            onClick = { () => this.setState({ onEditTask: false, addTask: false, taskDescription: '' }) }
-                          />
-                          <GenericButton
-                            text = { onEditTask ? 'Update' : 'Submit' }
-                            className = { 'profile-button-small' }
-                            onClick = { () => this.submitTask() }
-                          />
-                        </div>
-                        <br/>
-                        <Line/>
-                        <br/>
-                      </div>
-                    }
                     {
                       taskLoader ?
                       <center>
@@ -776,10 +644,8 @@ class RequestedGoalsFragment extends BaseMVPView {
                             isCompleted,
                             showTaskOption: true
                           }) }
-                          changeTask = { (taskId, isCompleted) => this.presenter.updateGoalTask(taskId, null, isCompleted)  }
                         />
                       :
-                      !addTask &&
                       <h2 className = { 'text-align-center font-weight-lighter font-size-14px' }>No task</h2>
                     }
                   </div>
@@ -832,6 +698,23 @@ class RequestedGoalsFragment extends BaseMVPView {
                     </div>
                   </div>
                 }
+                <Line/>
+                <div className = { 'padding-10px' }>
+                  <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Goal History</h2>
+                  {
+                    historyArray.length !==0 ?
+                      historyArray.goalDetails.map((resp, key) =>(
+                        <HistoryListComponent
+                        cardHolder = { resp }
+                        action = { resp.action }
+                        dateTime = { resp.dateTime }
+                        />
+                      )
+                      )
+                    :
+                    <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
+                  }
+                </div>
               </Card>
             </div>
           </div>
@@ -842,8 +725,8 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 }
 
-RequestedGoalsFragment.propTypes = {
+TeamGoalsFragment.propTypes = {
   onSendPageNumberToView : PropTypes.func
 }
 
-export default ConnectView(RequestedGoalsFragment, Presenter )
+export default ConnectView(TeamGoalsFragment, Presenter )
