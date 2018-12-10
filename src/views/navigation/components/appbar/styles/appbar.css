@@ -234,16 +234,16 @@
 }
 
 .appbar-learning-icon {
+  background-image: url('../../../../../images/SIDE MENU/My Learning - Grey.png');
+  background-position: center;
+}
+
+.appbar-learning-iconactive {
   background-image: url('../../../../../images/SIDE MENU/My Learning - Orange.png');
   background-position: center;
 }
 
 .appbar-learning-icon:hover {
-  background-image: url('../../../../../images/SIDE MENU/My Learning - Orange.png');
-  background-position: center;
-}
-
-.appbar-learning-iconactive {
   background-image: url('../../../../../images/SIDE MENU/My Learning - Orange.png');
   background-position: center;
 }

@@ -77,6 +77,11 @@ export default class PayForSkillsPresenter {
       program : {
         id : data.program.id,
         name : data.program.name,
+        amount : data.program.amount,
+        accreditingBodyId: data.program.accreditingBodyId,
+        remark: data.program.remark,
+        id: data.program.id,
+        numberOfAttachment : data.program.numberOfAttachment
       }
     }
     return objectParam
@@ -192,6 +197,8 @@ export default class PayForSkillsPresenter {
      storedDateOfCompletion = ''
      storedAccreditationObject = ''
      storedAccreditationObject = ''
+     storedOthers = ''
+     this.view.setEditable(false)
     }, error => {
       this.view.checkLoader(false)
     })

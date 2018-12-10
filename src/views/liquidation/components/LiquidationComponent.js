@@ -28,9 +28,31 @@ class LiquidationComponent extends Component {
                 showTicketFunc()
                 showFormFunc(
                   resp.id,
+                  resp.liquidation.id,
                   resp.liquidation.cost,
                   resp.liquidation.serviceCharge,
-                  resp.liquidation.reason
+                  resp.liquidation.reason,
+                  resp.liquidation.VAT,
+                  resp.departure.origin.location,
+                  resp.departure.destination.location,
+                  resp.departure.date,
+                  resp.departure.time,
+                  resp.return ? resp.return.origin.location : '',
+                  resp.return ? resp.return.destination.location : '',
+                  resp.return ? resp.return.date : '',
+                  resp.return ? resp.return.time : '',
+                  resp.return ? 'RoundTrip' : 'OneWay',
+                  resp.purpose.name,
+                  resp.return ?
+                  resp.departure.origin.isDomestic &&
+                  resp.departure.destination.isDomestic &&
+                  resp.return.origin.isDomestic &&
+                  resp.return.destination.isDomestic ?
+                    true : false
+                  :
+                  resp.departure.origin.isDomestic &&
+                  resp.departure.destination.isDomestic ?
+                    true : false
                 )
                 }
               }>
@@ -50,25 +72,25 @@ class LiquidationComponent extends Component {
 
                       <div className = { 'liquidation-card-grid-column' }>
                         <div className = { 'align-self-center' }>
-                          <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.departure.origin.location }</h2>
+                          <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.departure.origin.areaCode + ' | ' }  { resp.departure.origin.location }</h2>
                         </div>
                         <div className = { 'align-self-center' }>
                           <h2 className = { 'request-airplane-icon' }></h2>
                         </div>
                         <div className = { 'align-self-center' }>
-                          <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.departure.destination.location }</h2>
+                          <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.departure.destination.areaCode + ' | ' } { resp.departure.destination.location }</h2>
                         </div>
                       </div>
 
                       <div className = { 'liquidation-card-grid-column' }>
                         <div className = { 'align-self-center' }>
-                          <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.return.origin.location }</h2>
+                          <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.return.origin.areaCode + ' | ' } { resp.return.origin.location }</h2>
                         </div>
                         <div className = { 'align-self-center' }>
                           <h2 className = { 'request-airplane-icon' }></h2>
                         </div>
                         <div className = { 'align-self-center' }>
-                          <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.return.destination.location }</h2>
+                          <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.return.destination.areaCode + ' | ' } { resp.return.destination.location }</h2>
                         </div>
                       </div>
                     </div>
@@ -87,13 +109,13 @@ class LiquidationComponent extends Component {
 
                     <div className = { 'liquidation-card-grid-column' }>
                       <div className = { 'align-self-center' }>
-                        <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.departure.origin.location }</h2>
+                        <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.departure.origin.areaCode + ' | ' } { resp.departure.origin.location }</h2>
                       </div>
                       <div className = { 'align-self-center' }>
                         <h2 className = { 'liquidation-airplane-icon' }></h2>
                       </div>
                       <div className = { 'align-self-center' }>
-                        <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.departure.destination.location }</h2>
+                        <h2 className = { 'font-size-16px font-weight-bold' }>{ resp.departure.destination.areaCode + ' | ' } { resp.departure.destination.location }</h2>
                       </div>
                     </div>
 

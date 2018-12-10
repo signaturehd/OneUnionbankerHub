@@ -37,6 +37,7 @@ class PayForSkillsListComponent extends Component {
               className = { 'header-margin-default text-align-left' }>Pay For Skills</h2>
             <h2>List of your skill list in one place.</h2>
             <br/>
+            <br/>
             {
               payForSkillsList === undefined &&
               <center className = { 'circular-loader-center' }>
@@ -45,11 +46,12 @@ class PayForSkillsListComponent extends Component {
                 </h2>
               </center>
             }
+            <br/>
             {
               posApproved && posApproved.length !== 0 &&
               <div>
                 <h2
-                  className = { 'font-weight-bold font-size-16px' }>Approved ...</h2>
+                  className = { 'font-weight-bold font-size-18px' }>Approved ...</h2>
                 <br/>
                 {
                   enabledLoader ?
@@ -68,7 +70,7 @@ class PayForSkillsListComponent extends Component {
             {
               posReview && posReview.length !== 0 &&
               <div>
-                <h2 className = { 'font-weight-bold font-size-16px' }>For Review ...</h2>
+                <h2 className = { 'font-weight-bold font-size-18px' }>For Review ...</h2>
                 <br/>
                 {
                   enabledLoader ?
@@ -87,7 +89,7 @@ class PayForSkillsListComponent extends Component {
             {
               posDraft && posDraft.length !== 0 &&
               <div>
-                <h2 className = { 'font-weight-bold font-size-16px' }>For Draft ...</h2>
+                <h2 className = { 'font-weight-bold font-size-18px' }>Draft ...</h2>
                 <br/>
                 {
                   enabledLoader ?
