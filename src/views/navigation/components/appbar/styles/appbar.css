@@ -29,8 +29,8 @@
 
 .appbar-icon-grid {
   display: grid;
-  grid-template-columns: .15fr 1fr;
-  padding: 5px 5px 5px 15px;
+  grid-template-columns: 0.3fr 1fr;
+  padding: 0px 0px 0px 5px;
 }
 
 .appbar-navbar-icon-grid {
@@ -69,7 +69,7 @@
 }
 
 .appbar-icon {
-  height: 35px;
+  height: 45px;
   width: -webkit-fill-available;
   text-align: center;
   background-repeat: no-repeat;
@@ -129,17 +129,17 @@
 }
 
 .appbar-benefits-icon {
-  background-image: url('../../../../../images/SIDE MENU/My Benefits - Grey.png');
+  background-image: url('../../../../../images/NAVIGATION BAR/My Benefits - Grey.png');
   background-position: center;
 }
 
 .appbar-benefits-icon:hover {
-  background-image: url('../../../../../images/SIDE MENU/My Benefits - Orange.png');
+  background-image: url('../../../../../images/NAVIGATION BAR/My Benefits - Orange.png');
   background-position: center;
 }
 
 .appbar-benefits-iconactive {
-  background-image: url('../../../../../images/SIDE MENU/My Benefits - Orange.png');
+  background-image: url('../../../../../images/NAVIGATION BAR/My Benefits - Orange.png');
   background-position: center;
 }
 
@@ -169,17 +169,17 @@
 }
 
 .appbar-feedback-icon {
-  background-image: url('../../../../../images/SIDE MENU/Feedback - Grey.png');
+  background-image: url('../../../../../images/NAVIGATION BAR/Feedback - Grey.png');
   background-position: center;
 }
 
 .appbar-feedback-iconactive {
-  background-image: url('../../../../../images/SIDE MENU/Feedback - Orange.png');
+  background-image: url('../../../../../images/NAVIGATION BAR/Feedback - Orange.png');
   background-position: center;
 }
 
 .appbar-phenom-icon {
-  background-image: url('../../../../../images/SIDE MENU/PHENOM - Grey.png');
+  background-image: url('../../../../../images/SIDE MENU/PHENOM - Orange.png');
   background-position: center;
 }
 
@@ -249,16 +249,18 @@
 }
 
 .appbar-background-menu {
-  background-image: url('../../../../../images/ubp-bg.png');
-  width: auto;
-  height: auto;
+  background-image: url('../../../../../images/WEB and LOGO/Orange Wallpaper.jpg');
+  width: 100%;
+  height: 100%;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .appbar-grid-submenu-info {
-  display: grid;
-  grid-template-rows: .3fr 1fr .3fr;
+  margin: auto;
+  padding: 10px 0px;
 }
 
 .appbar-welcome-name {
@@ -282,9 +284,7 @@
 
 .appbar-grid-info {
   display: grid;
-  grid-template-columns: .59fr 1fr;
-  column-gap: 2%;
-  padding: 0 5px 0 5px;
+  grid-template-rows: .2fr 1fr;
 }
 
 .appbar-row-info {
@@ -315,6 +315,7 @@
   text-decoration: none;
   font-size: 14px;
   text-align: left;
+  font-weight: lighter;
 }
 
 .appbar-list a:hover{
@@ -338,7 +339,7 @@
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-bottom: 10px solid #230000;
-  border-bottom-color: #ff6300;
+  border-bottom-color: #ff8a00;
   position: absolute;
   /* color: #520000; */
   top: 12px;
@@ -377,7 +378,7 @@
   text-align: left;
   display: grid;
   height: 100%;
-  grid-template-columns: .3fr 1fr .09fr;
+  grid-template-columns: .5fr 1fr .1fr;
 }
 
 ._img-ub-logo {
@@ -510,4 +511,40 @@
 }
 .logout {
   float: right;
+}
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.hide {
+  display: none!important;
+}
+
+.viewmore {
+  padding: 2px 0 2px 0;
+  width: 100%;
+  cursor: pointer;
+  border: 0;
+  outline-style: none;
 }

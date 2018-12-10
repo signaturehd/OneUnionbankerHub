@@ -258,6 +258,10 @@ p {
   color: #ff8a00;
 }
 
+.unionbank-white-color {
+  color: #fff;
+}
+
 .grid-global {
   display: grid;
   grid-template-columns: 1fr 1fr;
