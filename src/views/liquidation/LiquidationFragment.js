@@ -18,11 +18,14 @@ import {
 } from '../../ub-components/'
 
 import LiquidationComponent from './components/LiquidationComponent'
+import LiquidationFormComponent from './components/LiquidationFormComponent'
 import ResponseModal from '../notice/NoticeResponseModal'
 
 import { Progress } from 'react-sweet-progress'
 import './styles/liquidation.css'
 import moment from 'moment'
+
+import * as controller from './functions/LiquidationFunctions.js'
 
 class LiquidationFragment extends BaseMVPView {
 
@@ -36,23 +39,39 @@ class LiquidationFragment extends BaseMVPView {
       ticketMode : 0,
       noticeResponse : '',
       requestId : '',
+      isDomestic  : '',
       dateFlight : '',
       preferredDate : '',
       costTicket : '',
       costServiceCharge : '',
-      totalCostFlight : '',
-      orNumber : '',
-      orDate : '',
       whyTicketUsed : '',
+      departureOrigin  : '',
+      returnOrigin   : '',
+      departureDestination  : '',
+      rturn  : '',
+      returnDate  : '',
+      departureDate  : '',
+      departureTime  : '',
+      returnTime  : '',
+      purposeName : '',
+      returnDestination  : '',
+      totalCostOfFlight : '',
+      totalServiceCharge  : '',
+      totalAmount   : '',
+      valueAddedTax  : '',
+
+      liquidationId : '',
+      liquidationCost : '',
+      liquidationServiceCharge : '',
+      liquidationReason : '',
+      liquidationVAT : '',
       liquidationArray : [],
-      attachmentsData : [
-        {
-          name : 'Ticket Attachment'
-        },
-        {
-          name : 'Invoice Attachment'
-        }
-      ]
+      orDate : '',
+      orNumber: '',
+      orDate : '',
+      ticketReasons : '',
+      attachmentsData : [{ name : 'Flight Quatation Attachment' },
+      { name : 'ERB Email Attachment' }]
     }
   }
 
@@ -80,12 +99,14 @@ class LiquidationFragment extends BaseMVPView {
     this.setState({ costServiceCharge })
   }
 
-  totalCostFlightFunc (totalCostFlight) {
-    this.setState({ totalCostFlight })
+  orNumberFunc (e) {
+    const regex = controller.checkNotSymbol(e)
+    this.setState({ orNumber :  regex })
   }
 
-  orNumberFunc (orNumber) {
-    this.setState({ orNumber })
+  ticketReasonsFunc (e) {
+    const regex = controller.checkNotSymbol(e)
+    this.setState({ ticketReasons :  regex })
   }
 
   orDateFunc (orDate) {
@@ -128,6 +149,10 @@ class LiquidationFragment extends BaseMVPView {
     )
   }
 
+  navigate () {
+    this.props.history.push('/mytravel/travel')
+  }
+
   render () {
     const {
       enabledLoader,
@@ -140,159 +165,215 @@ class LiquidationFragment extends BaseMVPView {
       preferredDate,
       costTicket,
       costServiceCharge,
-      totalCostFlight,
-      orNumber,
-      orDate,
       whyTicketUsed,
+
       liquidationArray,
-      attachmentsData
+      attachmentsData,
+      requestId,
+      liquidationId,
+      liquidationCost,
+      liquidationServiceCharge,
+      liquidationReason,
+      liquidationVAT,
+      orDate,
+      orNumber,
+      ticketReasons,
+
+      isDomestic,
+      departureOrigin,
+      departureDestination,
+      returnOrigin,
+      returnDestination,
+      returnDate,
+      purposeName,
+      rturn ,
+      departureDate,
+      departureTime,
+      returnTime,
     } = this.state
 
     const { percentage } = this.props
 
     return (
-      <div>
-        {
-          showNoticeResponseModal &&
-          <ResponseModal
-            onClose={ () => {
-              this.setState({ showNoticeResponseModal : false })
-            }}
-            noticeResponse={ noticeResponse }
-          />
-        }
-        {
-          showTicketModal &&
-          <Modal
-          isDismisable = { true }
-          onClose = { () => this.setState({ showTicketModal : false }) }>
-            <h2 className = { 'font-size-16px font-weight-bold text-align-center' }>Was the ticket used?</h2>
-            <br/>
-            <div className = { 'grid-global' }>
-              <GenericButton
-                text = { 'No' }
-                onClick = { () => this.setState({
-                  ticketMode : 0,
-                  showFormModal : true,
-                  showTicketModal : false })
-                }
-              />
-              <GenericButton
-                  text = { 'Yes' }
+      <div className = { 'default-body-grid' }>
+        <div></div>
+        <div>
+          {
+            showNoticeResponseModal &&
+            <ResponseModal
+              onClose={ () => {
+                this.setState({ showNoticeResponseModal : false })
+              }}
+              noticeResponse={ noticeResponse }
+            />
+          }
+          {
+            showTicketModal &&
+            <Modal
+            isDismisable = { true }
+            onClose = { () => this.setState({ showTicketModal : false }) }>
+              <h2 className = { 'font-size-16px font-weight-bold text-align-center' }>Was the ticket used?</h2>
+              <br/>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'No' }
                   onClick = { () => this.setState({
-                    ticketMode : 1,
+                    ticketMode : 0,
                     showFormModal : true,
                     showTicketModal : false })
                   }
                 />
+                <GenericButton
+                    text = { 'Yes' }
+                    onClick = { () => this.setState({
+                      ticketMode : 1,
+                      showFormModal : true,
+                      showTicketModal : false })
+                    }
+                  />
+              </div>
+            </Modal>
+          }
+
+          <div className = { 'percentage-grid' }>
+            <div>
+              <i
+                className={ 'back-arrow' }
+                onClick={ () => this.navigate() }>
+              </i>
+              <br/>
+              <br/>
+              <h2 className={ 'font-size-30px text-align-left' }>List of Flights for liquidation</h2>
+              <br/>
+              <h4>Below are the list of your flights that are requested for liquidation</h4>
             </div>
-          </Modal>
-        }
-        {
-          showFormModal &&
-          <Modal
-          isDismisable = { true }
-          onClose = { () => this.setState({ showFormModal : false }) }>
-            <h2 className = { 'font-size-18px font-weight-bold text-align-center' }>Flight Liquidation Form</h2>
-            <br/>
-            <DatePicker
-              text = { 'Date of Flight' }
-              selected = { dateFlight && moment(dateFlight) }
-              onChange = { (e) => this.dateFlightFunc(e) }
-            />
-            <DatePicker
-              text = { 'Preferred Date' }
-              selected = { preferredDate && moment(preferredDate) }
-              onChange = { (e) => this.preferredDateFunc(e) }
-            />
-            <GenericInput
-              text = { 'Cost of Ticket' }
-              type = { 'number' }
-              value = { costTicket }
-              onChange = { (e) => this.costTicketFunc(e.target.value) }
-            />
-            <GenericInput
-              text = { 'Cost of Service Charge' }
-              type = { 'number' }
-              value = { costServiceCharge }
-              onChange = { (e) => this.costServiceChargeFunc(e.target.value) }
-            />
-            <GenericInput
-              text = { 'Total Cost of Flight' }
-              type = { 'number' }
-              value = { totalCostFlight }
-              onChange = { (e) => this.totalCostFlightFunc(e.target.value) }
-            />
-            <GenericInput
-              text = { 'Official Receipt Number' }
-              value = { orNumber }
-              onChange = { (e) => this.orNumberFunc(e.target.value) }
-            />
-            <DatePicker
-              text = { 'Date of Official Receipt' }
-              selected = { orDate && moment(orDate) }
-              onChange = { (e) => this.orDateFunc(e) }
-            />
-            {
-              ticketMode === 1 ?
-              <MultipleAttachments
-                placeholder = { 'Form Attachments' }
-                fileArray = { attachmentsData }
-                setFile = { (attachmentsData) => this.setState(attachmentsData) }
-              />
-              :
-              <GenericInput
-                text = { 'Why the ticket was unused' }
-                value = { whyTicketUsed }
-                onChange = { (e) => this.whyTicketUsedFunc(e.target.value) }
-              />
-            }
-            <center>
-              <GenericButton
-                text = { 'Continue' }
-                onClick = { () => this.submit() }
-              />
-            </center>
-          </Modal>
-        }
-        <div className = { 'percentage-grid' }>
-          <div>
-            <h2 className={ 'font-size-30px text-align-left' }>List of Flights for liquidation</h2>
-            <br/>
-            <h4>Below are the list of your flights that are requested for liquidation</h4>
           </div>
-        </div>
-        <br/>
-        <br/>
-        <Line />
-        <br/>
-            {
-              enabledLoader ?
-              <center>
-                <CircularLoader show = { enabledLoader }/>
-              </center>
-              :
-              liquidationArray.length !==0 ?
-                <LiquidationComponent
-                  showTicketFunc = { () => this.setState({ showTicketModal : true }) }
-                  showFormFunc = { (
-                    requestId,
-                    costTicket,
-                    costServiceCharge,
-                    whyTicketUsed
-                    ) => this.setState({
+          <br/>
+          <Line />
+          <br/>
+          {
+            enabledLoader ?
+            <center>
+              <CircularLoader show = { enabledLoader }/>
+            </center>
+            :
+            <div>
+              {
+                showFormModal ?
+                <div>
+                  <LiquidationFormComponent
+                    backToList = { () => this.setState({
+                      showFormModal : false,
+                      attachmentsData :
+                      [{ name : 'Flight Quatation Attachment' },
+                      { name : 'ERB Email Attachment' }],
+                      orNumber : '',
+                      orDate : '',
+                      ticketReasons : ''
+                    }) }
+                    costTicket = { costTicket }
+
+                    costServiceCharge = { costServiceCharge }
+                    whyTicketUsed = { whyTicketUsed }
+                    showTicketModal = { showTicketModal }
+                    showNoticeResponseModal = { showNoticeResponseModal }
+                    noticeResponse = { noticeResponse }
+                    ticketMode = { ticketMode }
+                    isDomestic = { isDomestic }
+                    departureOrigin = { departureOrigin }
+                    departureDestination = { departureDestination }
+                    returnOrigin = { returnOrigin }
+                    returnDestination = { returnDestination }
+                    requestId = { requestId }
+                    purposeName = { purposeName }
+                    rturn = { rturn }
+                    departureDate = { departureDate }
+                    departureTime = { departureTime }
+                    departureTimeFunc = { (e) => this.departureTimeFunc(e) }
+                    returnDate = { returnDate }
+                    returnTime = { returnTime }
+                    returnTimeFunc = { (e) => this.returnTimeFunc(e) }
+
+                    attachmentsData = { attachmentsData }
+                    liquidationServiceCharge = { liquidationServiceCharge }
+                    liquidationVAT = { liquidationVAT }
+                    liquidationCost = { liquidationCost }
+                    orDate = { orDate }
+                    orDateFunc = { (e) => this.orDateFunc(e) }
+                    orNumber = { orNumber }
+                    orNumberFunc = { (e) => this.orNumberFunc(e) }
+                    ticketReasonsFunc = { (e) => this.ticketReasonsFunc(e) }
+                    attachmentsDataFunc = { (attachmentsData) => this.setState({ attachmentsData }) }
+                    submitFunc = { () => {
+                      try {
+                        this.presenter.addLiquidation(
+                          requestId,
+                          ticketMode,
+                          ticketReasons,
+                          attachmentsData,
+                          moment(orDate).format('MM/DD/YYYY'), 
+                          orNumber)
+                      } catch(e) {
+                        console.log(e)
+                      }
+                    }}
+                  />
+                </div>
+                :
+
+                liquidationArray.length !==0 ?
+                  <LiquidationComponent
+                    showTicketFunc = { () => this.setState({ showTicketModal : true }) }
+                    showFormFunc = { (
                       requestId,
-                      costTicket,
-                      costServiceCharge,
-                      whyTicketUsed
-                    })
-                  }
-                  cardDataHolder = { liquidationArray }/>
-                  :
-                  <center>
-                    <h2>No records</h2>
-                  </center>
-            }
+                      liquidationId,
+                      liquidationCost,
+                      liquidationServiceCharge,
+                      liquidationReason,
+                      liquidationVAT,
+                      departureOrigin,
+                      departureDestination,
+                      departureDate,
+                      departureTime,
+                      returnOrigin,
+                      returnDestination,
+                      returnDate,
+                      returnTime,
+                      rturn,
+                      purposeName,
+                      isDomestic
+                    ) => {
+                      this.setState({
+                        requestId,
+                        liquidationId,
+                        liquidationCost,
+                        liquidationServiceCharge,
+                        liquidationReason,
+                        liquidationVAT,
+                        departureOrigin,
+                        departureDestination,
+                        departureDate,
+                        departureTime,
+                        returnOrigin,
+                        returnDestination,
+                        returnDate,
+                        returnTime,
+                        rturn,
+                        purposeName,
+                        isDomestic
+                      })
+                    }
+                    }
+                    cardDataHolder = { liquidationArray }/>
+                    :
+                <center>
+                  <h2>No records</h2>
+                </center>
+              }
+            </div>
+          }
+        </div>
+        <div></div>
       </div>
     )
   }

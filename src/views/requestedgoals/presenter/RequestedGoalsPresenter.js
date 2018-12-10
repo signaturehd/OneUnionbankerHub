@@ -8,6 +8,8 @@ import AddRequestedGoalsInteractor from '../../../domain/interactor/goals/AddReq
 import AddGoalTaskInteractor from '../../../domain/interactor/goals/AddGoalTaskInteractor'
 import AddGoalCommentInteractor from '../../../domain/interactor/goals/AddGoalCommentInteractor'
 import DeleteGoalsInteractor from '../../../domain/interactor/goals/DeleteGoalsInteractor'
+import DeleteTaskInteractor from '../../../domain/interactor/goals/DeleteTaskInteractor'
+import DeleteCommentInteractor from '../../../domain/interactor/goals/DeleteCommentInteractor'
 import requestedGoalsParam from '../../../domain/param/AddRequestedGoalsParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
@@ -26,7 +28,8 @@ export default class RequestCoachPresenter {
     this.addGoalTaskInteractor = new AddGoalTaskInteractor(container.get('HRBenefitsClient'))
     this.addGoalCommentInteractor = new AddGoalCommentInteractor(container.get('HRBenefitsClient'))
     this.deleteGoalsInteractor = new DeleteGoalsInteractor(container.get('HRBenefitsClient'))
-
+    this.deleteTaskInteractor = new DeleteTaskInteractor(container.get('HRBenefitsClient'))
+    this.deleteCommentInteractor = new DeleteCommentInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -61,13 +64,10 @@ export default class RequestCoachPresenter {
   getGoalComment (goalId, pageNumber, pageItem) {
     storedPageNumber = pageNumber
     storedPageItem = pageItem
-    this.view.showCommentLoader()
     this.getGoalCommentInteractor.execute(goalId, pageNumber, pageItem)
     .subscribe(data => {
-      this.view.hideCommentLoader()
       this.view.getCommentList(data)
       }, error => {
-        this.view.hideCommentLoader()
         store.dispatch(NotifyActions.resetNotify())
     })
   }
@@ -75,11 +75,14 @@ export default class RequestCoachPresenter {
   updateGoals (goalId, startDate, dueDate) {
     this.view.showSubmitLoader()
     this.updateGoalsInteractor.execute(goalId, startDate, dueDate)
+    .do(data => {
+      this.getGoals()
+    })
     .subscribe(
       data => {
         this.view.hideSubmitLoader()
-        this.getGoals()
         this.view.noticeResponse(data)
+        this.view.resetValue()
       },
       errors => {
         this.view.hideSubmitLoader()
@@ -105,10 +108,12 @@ export default class RequestCoachPresenter {
         goalTypeId
       )
     )
+    .do(data => {
+      this.getGoals()
+    })
     .subscribe(
       data => {
         this.view.hideSubmitLoader()
-        this.getGoals()
         this.view.noticeResponse(data)
         this.view.resetValue()
       },
@@ -127,12 +132,12 @@ export default class RequestCoachPresenter {
       goalId,
       taskDescription
     )
+    .do(data => {
+      this.getGoalTask(storedGoalId)
+    })
     .subscribe(
       data => {
         this.view.hideSubmitLoader()
-        this.view.noticeResponse(data)
-        this.getGoalTask(goalId)
-        this.view.resetValue()
       },
       errors => {
         this.view.hideSubmitLoader()
@@ -141,26 +146,22 @@ export default class RequestCoachPresenter {
   }
 
   updateGoalTask (
-    goalId,
+    taskId,
     taskDescription,
     isCompleted
   ){
     this.view.showSubmitLoader()
     try {
       this.updateGoalTaskInteractor.execute(
-        goalId,
+        taskId,
         taskDescription,
         isCompleted
       )
       .do(data => {
         this.getGoalTask(storedGoalId)
       })
-      .do(data => {
-        this.getGoalComment(storedGoalId, storedPageNumber, storedPageItem)
-      })
       .subscribe  (
         data => {
-          this.view.noticeResponse(data)
           this.view.hideSubmitLoader()
         },
         errors => {
@@ -174,9 +175,10 @@ export default class RequestCoachPresenter {
 
   addGoalComment (
     goalId,
-    goalComment
+    goalComment,
+    pageNumber,
+    pageItem
   ){
-    this.view.showSubmitLoader()
     this.addGoalCommentInteractor.execute(
       goalId,
       goalComment
@@ -186,12 +188,8 @@ export default class RequestCoachPresenter {
     })
     .subscribe(
       data => {
-        this.view.hideSubmitLoader()
-        this.view.noticeResponse(data)
-        this.view.resetValue()
       },
       errors => {
-        this.view.hideSubmitLoader()
       }
     )
   }
@@ -215,7 +213,6 @@ export default class RequestCoachPresenter {
       data => {
         this.view.hideSubmitLoader()
         this.view.noticeResponse(data)
-        this.view.resetValue()
       },
       errors => {
         this.view.hideSubmitLoader()
@@ -227,10 +224,12 @@ export default class RequestCoachPresenter {
     this.view.showCircularLoader()
     try {
       this.deleteGoalsInteractor.execute(goalId)
+      .do(data => {
+        this.getGoals()
+      })
       .subscribe(
         data => {
           this.view.hideCircularLoader()
-          this.getGoals()
           this.view.noticeResponse(data)
         },
         errors => {
@@ -238,6 +237,45 @@ export default class RequestCoachPresenter {
         }
       )
     } catch (e) {
+    }
+  }
+
+  deleteTask (taskId, goalId) {
+    this.view.showSubmitLoader()
+    try {
+      this.deleteTaskInteractor.execute(taskId)
+      .do(data => {
+        this.getGoalTask(goalId)
+      })
+      .subscribe(
+        data => {
+          this.view.hideSubmitLoader()
+        },
+        errors => {
+          this.view.hideSubmitLoader()
+        }
+      )
+    } catch (e) {
+    }
+  }
+
+  deleteComment (commentId, goalId, pageNumber, pageItem) {
+    this.view.showSubmitLoader()
+    try {
+      this.deleteCommentInteractor.execute(commentId)
+      .do(data => {
+        this.getGoalComment(storedGoalId, storedPageNumber, storedPageItem)
+      })
+      .subscribe(
+        data => {
+          this.view.hideSubmitLoader()
+        },
+        errors => {
+          this.view.hideSubmitLoader()
+        }
+      )
+    } catch (e) {
+      console.log(e);
     }
   }
 }

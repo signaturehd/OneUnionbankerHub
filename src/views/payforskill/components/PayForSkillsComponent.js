@@ -27,8 +27,6 @@ class PayForSkillsComponent extends Component {
       array,
   	} = this.props
 
-    console.log(array)
-
     return (
       array && array.map((skill, key) =>
         <Card

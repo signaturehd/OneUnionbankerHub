@@ -62,7 +62,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
   }
 
   navigateLearning () {
-    this.props.history.push('/mylearning')
+    this.props.history.push('/')
   }
 
   render () {

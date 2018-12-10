@@ -49,7 +49,7 @@ class CertificateOfEmploymentFormComponent extends Component {
             <div className={ 'coe-form-coed-body' }>
               <GenericInput
                 errorMessage = { '' }
-                text = { 'Type of Certificate of Employment' }
+                text = { 'Type Of Certificate' }
                 disabled = { showEditMode }
                 readOnly
                 value = { typeOfCoeBody && typeOfCoeBody.type }

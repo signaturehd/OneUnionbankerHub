@@ -42,23 +42,26 @@ class RequestedGoalsComponent extends Component {
       <div className = { 'padding-15px' }>
       {
         cardHolder.map((resp, key) =>
-          <Card className = { 'margin-10px' }
-          onClick = { () => onSelected(
-            resp.id,
-            resp.title,
-            resp.description,
-            resp.startDate,
-            resp.endDate,
-            priorityFunc(resp.priority),
-            resp.approvalStatus,
-            resp.type
-          ) }>
+          <Card className = { 'margin-10px' }>
             <div className = { 'padding-15' }>
               <div className = { 'header-column' }>
                 <span/>
-                <span className = { 'icon-check icon-delete-img' } onClick = { () => onDeleted(resp.id) }/>
+                {
+                  resp.approvalStatus !== 5 &&
+                  <span className = { 'icon-check icon-delete-img' } onClick = { () => onDeleted(resp.id) }/>
+                }
               </div>
-              <div className = { 'header-column-1' }>
+              <div className = { 'header-column-1 cursor-pointer' } onClick = { () => 
+                onSelected(
+                  resp.id,
+                  resp.title,
+                  resp.description,
+                  resp.startDate,
+                  resp.endDate,
+                  priorityFunc(resp.priority),
+                  resp.approvalStatus,
+                  resp.type
+                ) }>
                 <div>
                   <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ resp.title }</h2>
                   <Progress
@@ -79,8 +82,11 @@ class RequestedGoalsComponent extends Component {
                       resp.approvalStatus === 1 ?
                       <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Requested</h2>
                       :
-                      resp.approvalStatus === 4 &&
+                      resp.approvalStatus === 4 ?
                       <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Update for approval</h2>
+                      :
+                      resp.approvalStatus === 5 &&
+                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Deletion for approval</h2>
                   }
                   <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter color-gray' }>Personal</h2>
                 </div>

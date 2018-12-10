@@ -52,9 +52,14 @@ class RequestedGoalsFragment extends BaseMVPView {
       onEditTask: false,
       onEditComment: false,
       showDeleteModal: false,
+      showTaskOption: false,
+      deleteTask: false,
+      showCommentOption: false,
+      deleteComment: false,
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
+      taskId: '',
       taskDescription: '',
       taskDescriptionErrorMessage: '',
       goalComment: '',
@@ -81,16 +86,16 @@ class RequestedGoalsFragment extends BaseMVPView {
       goalsArray : [],
       priorityArray : [
         {
-          id: 1,
-          name: 'Low'
+          id: 3,
+          name: 'High'
         },
         {
           id: 2,
           name: 'Medium'
         },
         {
-          id: 3,
-          name: 'High'
+          id: 1,
+          name: 'Low'
         }
       ],
       goalTypeArray : [
@@ -121,10 +126,6 @@ class RequestedGoalsFragment extends BaseMVPView {
 
   getCommentList (commentArray) {
       this.setState({ commentArray })
-  }
-
-  noticeResponse (noticeResponse) {
-    this.setState({ noticeResponse, showNoticeResponseModal : true })
   }
 
   submit (requestId, isApprove, rejectedRemarks) {
@@ -176,7 +177,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   navigate () {
-    this.props.history.push('/mylearning/mygoals')
+    this.props.history.push('/mygoals')
   }
 
   noticeResponse (noticeResponse) {
@@ -276,25 +277,28 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   submitTask() {
-    const { goalId, taskDescription, onEditTask, isCompleted } = this.state
+    const { goalId, taskId, taskDescription, onEditTask, isCompleted } = this.state
     if(!taskDescription) {
       this.setState({ taskDescriptionErrorMessage: 'Required field' })
     }
     else {
       onEditTask ?
-      this.presenter.updateGoalTask(goalId, taskDescription, isCompleted)
+      this.presenter.updateGoalTask(taskId, taskDescription, isCompleted)
       :
       this.presenter.addGoalTask(goalId, taskDescription)
+      this.setState({ addTask:false })
     }
   }
 
   submitComment() {
-    const { goalId, goalComment } = this.state
+    const { goalId, goalComment, pageNumber, pageItem } = this.state
     if(!goalComment) {
       this.setState({ goalCommentErrorMessage: 'Required field' })
     }
     else {
       this.presenter.addGoalComment(goalId, goalComment, pageNumber, pageItem)
+      this.setState({ goalComment: '', goalCommentErrorMessage: '' })
+
     }
   }
 
@@ -328,6 +332,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       goalType: '',
       goalTypeErrorMessage: '',
       rejectedRemarks: '',
+      taskId: '',
       taskDescription: '',
       taskDescriptionErrorMessage: '',
       goalComment: '',
@@ -336,7 +341,9 @@ class RequestedGoalsFragment extends BaseMVPView {
       addComment: false,
       editMode: false,
       showForm: false,
-      showApprovalForm : false
+      showApprovalForm : false,
+      showTaskOption: false,
+      showCommentOption: false
     })
   }
 
@@ -348,6 +355,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       commentLoader,
       showNoticeResponseModal,
       noticeResponse,
+      deleteTask,
       addTask,
       addComment,
       onEditTask,
@@ -358,9 +366,13 @@ class RequestedGoalsFragment extends BaseMVPView {
       showPriorityModal,
       showGoalTypeModal,
       showDeleteModal,
+      showTaskOption,
+      showCommentOption,
+      deleteComment,
       isCompleted,
       pageNumber,
       pageItem,
+      taskId,
       taskDescription,
       taskDescriptionErrorMessage,
       goalComment,
@@ -390,139 +402,246 @@ class RequestedGoalsFragment extends BaseMVPView {
 
     const { onClose, showRequestCoachForm, showRequestCoachFunc } = this.props
     return (
-      <div>
-        { super.render() }
-        {
-          showNoticeResponseModal &&
-          <ResponseModal
-            onClose={ () => {
-              this.setState({ showNoticeResponseModal : false })
-              this.resetValue()
-            }}
-            noticeResponse={ noticeResponse }
-          />
-        }
-        {
-          submitLoader &&
-          <Modal>
+    <div>
+      { super.render() }
+      {
+        showNoticeResponseModal &&
+        <ResponseModal
+          onClose={ () => {
+            this.setState({ showNoticeResponseModal : false })
+          }}
+          noticeResponse={ noticeResponse }
+        />
+      }
+      {
+        submitLoader &&
+        <Modal>
+          <center>
+            <h2>Please wait...</h2>
+            <CircularLoader show = { submitLoader } />
+          </center>
+        </Modal>
+      }
+      {
+        showPriorityModal &&
+        <SingleInputModal
+          label = { 'Select Priority' }
+          inputArray = { priorityArray }
+          selectedArray = { (priorityId, priorityName) => this.setState({
+              priorityId,
+              priorityName,
+              showPriorityModal: false
+            })
+          }
+          onClose = { () => this.setState({ showPriorityModal: false }) }
+        />
+      }
+      {
+        showGoalTypeModal &&
+        <SingleInputModal
+          label = { 'Select Priority' }
+          inputArray = { goalTypeArray }
+          selectedArray = { (goalTypeId, goalType) => this.setState({
+              goalTypeId,
+              goalType,
+              showGoalTypeModal: false
+            })
+          }
+          onClose = { () => this.setState({ showGoalTypeModal: false }) }
+        />
+      }
+      {
+        showDeleteModal &&
+        <Modal>
+          <center>
+            <h2>Are you sure you want to delete this goal?</h2>
+            <div className = { 'grid-global' }>
+              <GenericButton
+                text = { 'No' }
+                onClick = { () => this.setState({ showDeleteModal: false }) }
+              />
+              <GenericButton
+                text = { 'Yes' }
+                onClick = { () => {this.presenter.deleteGoal(goalId), this.setState({ showDeleteModal: false })} }
+              />
+            </div>
+          </center>
+        </Modal>
+      }
+      {
+        showTaskOption &&
+        <Modal isDismissable = { true } onClose = { () => this.setState({ showTaskOption: false }) }>
+          {
+            deleteTask ?
             <center>
-              <h2>Please wait...</h2>
-              <CircularLoader show = { submitLoader } />
-            </center>
-          </Modal>
-        }
-        {
-          showPriorityModal &&
-          <SingleInputModal
-            label = { 'Select Priority' }
-            inputArray = { priorityArray }
-            selectedArray = { (priorityId, priorityName) => this.setState({
-                priorityId,
-                priorityName,
-                showPriorityModal: false
-              })
-            }
-            onClose = { () => this.setState({ showPriorityModal: false }) }
-          />
-        }
-        {
-          showGoalTypeModal &&
-          <SingleInputModal
-            label = { 'Select Priority' }
-            inputArray = { goalTypeArray }
-            selectedArray = { (goalTypeId, goalType) => this.setState({
-                goalTypeId,
-                goalType,
-                showGoalTypeModal: false
-              })
-            }
-            onClose = { () => this.setState({ showGoalTypeModal: false }) }
-          />
-        }
-        {
-          showDeleteModal &&
-          <Modal>
-            <center>
-              <h2>Are you sure you want to delete this goal?</h2>
+              <h2>Are you sure you want to delete this task?</h2>
               <div className = { 'grid-global' }>
                 <GenericButton
                   text = { 'No' }
-                  onClick = { () => this.setState({ showDeleteModal: false }) }
+                  onClick = { () => this.setState({ deleteTask: false, showTaskOption: false }) }
+                  className = { 'profile-button-small' }
                 />
                 <GenericButton
                   text = { 'Yes' }
-                  onClick = { () => {this.presenter.deleteGoal(goalId), this.setState({ showDeleteModal: false })} }
+                  className = { 'profile-button-small' }
+                  onClick = { () => {
+                      this.presenter.deleteTask(taskId, goalId),
+                      this.setState({ taskDescription: '', deleteTask: false, showTaskOption: false })
+                    }
+                  }
                 />
               </div>
             </center>
-          </Modal>
-        }
-        {
-          showForm ?
-            <AddGoalsFormComponent
-              onCancel = { () => {
-                  this.setState({ showForm : false })
-                  this.resetValue()
-                }
-              }
-              onSubmit = { () => this.onSubmit() }
-              goalTitle = { goalTitle }
-              goalTitleErrorMessage = { goalTitleErrorMessage }
-              goalTitleFunc = { (resp) => this.goalTitleFunc(resp) }
-              description = { description }
-              descriptionFunc = { (resp) => this.descriptionFunc(resp) }
-              startDate = { startDate }
-              startDateFunc = { (resp) => this.startDateFunc(resp) }
-              dueDate = { dueDate }
-              dueDateFunc = { (resp) => this.dueDateFunc(resp) }
-              priorityName = { priorityName }
-              goalType = { goalType }
-              goalTypeId = { goalTypeId }
-              showPriorityModal = { showPriorityModal }
-              showPriorityModalFunc = { () => this.setState({ showPriorityModal : true }) }
-              showGoalTypeModal = { showGoalTypeModal }
-              showGoalTypeModalFunc = { () => this.setState({ showGoalTypeModal : true }) }
-              editMode = { editMode }
-              onEdit = { () => this.onEdit() }
-            />
-          :
-          <div>
-            <div className = { 'grid-filter margin-left' }>
-              <div>
-                <GenericInput
-                text = { 'Filter' }
+            :
+            <center>
+              <h2>Select action</h2>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'Edit' }
+                  onClick = { () => this.setState({
+                  addTask: true,
+                  onEditTask: true,
+                  showTaskOption: false }) }
+                  className = { 'profile-button-small' }
+                />
+                <GenericButton
+                  text = { 'Delete' }
+                  className = { 'profile-button-small' }
+                  onClick = { () => this.setState({ deleteTask: true }) }
                 />
               </div>
-              <div></div>
-              <div className = { 'text-align-right margin-right grid-global' }>
+            </center>
+          }
+        </Modal>
+      }
+      {
+        showCommentOption &&
+        <Modal isDismissable = { true } onClose = { () => this.setState({ showCommentOption: false }) }>
+          {
+            deleteComment ?
+            <center>
+              <h2>Are you sure you want to delete this comment?</h2>
+              <div className = { 'grid-global' }>
                 <GenericButton
-                  text = { 'Add Goal' }
-                  className = { 'global-button' }
+                  text = { 'No' }
+                  onClick = { () => this.setState({ deleteComment: false, showCommentOption: false }) }
+                  className = { 'profile-button-small' }
+                />
+                <GenericButton
+                  text = { 'Yes' }
+                  className = { 'profile-button-small' }
                   onClick = { () => {
-                    this.resetValue()
-                    this.setState({ showForm: true })
-                  } }
-                />
-                <GenericButton
-                  text = { 'Request for Coaching' }
-                  className = { 'global-button' }
-                  onClick = { () => showRequestCoachFunc(true)}
+                      this.presenter.deleteComment(commentId, goalId, pageNumber, pageItem),
+                      this.setState({ goalComment: '', deleteComment: false, showCommentOption: false })
+                    }
+                  }
                 />
               </div>
+            </center>
+            :
+            <center>
+              <h2>Select action</h2>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'Edit' }
+                  onClick = { () => this.setState({
+                  addComment: true,
+                  onEditComment: true,
+                  showCommentOption: false }) }
+                  className = { 'profile-button-small' }
+                />
+                <GenericButton
+                  text = { 'Delete' }
+                  className = { 'profile-button-small' }
+                  onClick = { () => this.setState({ deleteComment: true }) }
+                />
+              </div>
+            </center>
+          }
+        </Modal>
+      }
+      {
+        showForm ?
+          <AddGoalsFormComponent
+            onCancel = { () => {
+                this.setState({ showForm : false })
+                this.resetValue()
+              }
+            }
+            onSubmit = { () => this.onSubmit() }
+            goalTitle = { goalTitle }
+            goalTitleErrorMessage = { goalTitleErrorMessage }
+            goalTitleFunc = { (resp) => this.goalTitleFunc(resp) }
+            description = { description }
+            descriptionFunc = { (resp) => this.descriptionFunc(resp) }
+            descriptionErrorMessage = { descriptionErrorMessage }
+            startDate = { startDate }
+            startDateFunc = { (resp) => this.startDateFunc(resp) }
+            startDateErrorMessage = { startDateErrorMessage }
+            dueDate = { dueDate }
+            dueDateFunc = { (resp) => this.dueDateFunc(resp) }
+            dueDateErrorMessage = { dueDateErrorMessage }
+            priorityName = { priorityName }
+            priorityErrorMessage = { priorityErrorMessage }
+            goalType = { goalType }
+            goalTypeId = { goalTypeId }
+            goalTypeErrorMessage = { goalTypeErrorMessage }
+            showPriorityModal = { showPriorityModal }
+            showPriorityModalFunc = { () => this.setState({ showPriorityModal : true }) }
+            showGoalTypeModal = { showGoalTypeModal }
+            showGoalTypeModalFunc = { () => this.setState({ showGoalTypeModal : true }) }
+            editMode = { editMode }
+            onEdit = { () => this.onEdit() }
+          />
+        :
+        <div>
+          <div className = { 'grid-filter margin-left' }>
+            <div>
+            <br/>
+              <GenericInput
+              text = { 'Filter' }
+              />
             </div>
-            <div className = { 'grid-main' }>
-              <div>
-              {
-                enabledLoader ?
-                <center>
-                  <CircularLoader show = { enabledLoader }/>
-                </center>
-                :
-                goalsArray.length !== 0 ?
-                <RequestedGoalsComponent
-                  cardHolder = { goalsArray }
-                  priorityFunc = { (resp) => this.priorityFunc(resp) }
-                  onSelected = { (
+            <div></div>
+            <div className = { 'text-align-right margin-right grid-global' }>
+              <GenericButton
+                text = { 'Add Goal' }
+                className = { 'global-button' }
+                onClick = { () => {
+                  this.resetValue()
+                  this.setState({ showForm: true })
+                } }
+              />
+              <GenericButton
+                text = { 'Request for Coaching' }
+                className = { 'global-button' }
+                onClick = { () => showRequestCoachFunc(true)}
+              />
+            </div>
+          </div>
+          <div className = { 'grid-main' }>
+            <div>
+            {
+              enabledLoader ?
+              <center>
+                <CircularLoader show = { enabledLoader }/>
+              </center>
+              :
+              goalsArray.length !== 0 ?
+              <RequestedGoalsComponent
+                cardHolder = { goalsArray }
+                priorityFunc = { (resp) => this.priorityFunc(resp) }
+                onSelected = { (
+                  goalId,
+                  goalTitle,
+                  description,
+                  startDate,
+                  dueDate,
+                  priorityName,
+                  approvalStatus,
+                  goalTypeId
+                ) => {
+                  this.setState({
                     goalId,
                     goalTitle,
                     description,
@@ -531,204 +650,200 @@ class RequestedGoalsFragment extends BaseMVPView {
                     priorityName,
                     approvalStatus,
                     goalTypeId
-                  ) => {
-                    this.setState({
-                      goalId,
-                      goalTitle,
-                      description,
-                      startDate,
-                      dueDate,
-                      priorityName,
-                      approvalStatus,
-                      goalTypeId
-                     })
-                    this.presenter.getGoalTask(goalId)
-                    this.presenter.getGoalComment(goalId, pageNumber, pageItem)
-                  }
-                 }
-                 onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
-                />
-                :
-                <center><h2>No record</h2></center>
-              }
-              </div>
-              <div ref = { 'main-div' } className = { 'padding-10px' }>
-                <Card className = { 'padding-10px' }>
-                  {
-                    // <div className = { 'header-column' }>
-                    //   <span/>
-                    //   <span className = { 'icon-check icon-delete-img' }/>
-                    // </div>
-                  }
-                  <div className = { 'grid-percentage' }>
-                    <div>
-                      <h2 className = { `margin-5px text-align-left font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
-                      <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }><span className = { 'icon-check icon-comment-img' }/>2/5</h2>
-                      <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }><span className = { 'icon-check icon-taskcompleted-img' }/>5/10</h2>
-                    </div>
-                    <div className = { 'text-align-center padding-10px' }>
-                      <Progress
-                        type = { 'circle' }
-                        height = { 80 }
-                        width = { 80 }
-                        percent = { 80 } />
-                    </div>
-                    <div>
-                      {
-                        approvalStatus === 2 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Low' }>Approved</h2>
-                        :
-                          approvalStatus === 3 ?
-                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
-                          :
-                          approvalStatus === 1 ?
-                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold' }>Requested</h2>
-                          :
-                          approvalStatus === 4 &&
-                          <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Update for approval</h2>
-                      }
-                    </div>
+                   })
+                  this.presenter.getGoalTask(goalId)
+                  this.presenter.getGoalComment(goalId, pageNumber, pageItem)
+                }
+               }
+               onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
+              />
+              :
+              <center><h2>No record</h2></center>
+            }
+            </div>
+            <div ref = { 'main-div' } className = { 'padding-10px' }>
+              <Card className = { 'padding-10px' }>
+                {
+                  // <div className = { 'header-column' }>
+                  //   <span/>
+                  //   <span className = { 'icon-check icon-delete-img' }/>
+                  // </div>
+                }
+                <div className = { 'grid-percentage' }>
+                  <div>
+                    <h2 className = { `margin-5px text-align-left font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
+                    <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }><span className = { 'icon-check icon-comment-img' }/>2/5</h2>
+                    <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }><span className = { 'icon-check icon-taskcompleted-img' }/>5/10</h2>
                   </div>
+                  <div className = { 'text-align-center padding-10px' }>
+                    <Progress
+                      type = { 'circle' }
+                      height = { 80 }
+                      width = { 80 }
+                      percent = { 80 } />
+                  </div>
+                  <div>
+                    {
+                      approvalStatus === 2 ?
+                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Low' }>Approved</h2>
+                      :
+                        approvalStatus === 3 ?
+                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
+                        :
+                        approvalStatus === 1 ?
+                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold' }>Requested</h2>
+                        :
+                        approvalStatus === 4 ?
+                        <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Update for approval</h2>
+                        :
+                        approvalStatus === 5 &&
+                        <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Deletion for approval</h2>
+
+                    }
+                  </div>
+                </div>
+                <br/>
+                <Line/>
+                <div className = { 'padding-10px' }>
+                  <div className = { 'header-column' }>
+                    <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
+                    <h2>
+                    {
+                      goalId &&
+                      <span
+                        className = { 'icon-check icon-edit-img' }
+                        onClick = { () => this.setState({ showForm: true, editMode: true }) }
+                      />
+                    }
+                    </h2>
+                  </div>
+                  <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ description ? description : 'Goals allow you to create effective objectives for yourself or employees.' }</h2>
+                </div>
+                {
+                  approvalStatus === 2 &&
+                  <div>
                   <br/>
                   <Line/>
                   <div className = { 'padding-10px' }>
                     <div className = { 'header-column' }>
-                      <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
+                      <div>
+                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Tasks</h2>
+                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>Enter the activities that would help you achieve your goal (Be Specific).</h2>
+                      </div>
                       <h2>
                       {
                         goalId &&
                         <span
-                          className = { 'icon-check icon-edit-img' }
-                          onClick = { () => this.setState({ showForm: true, editMode: true }) }
+                          className = { 'icon-check icon-add-img' }
+                          onClick = { () => this.setState({ addTask: true }) }
                         />
                       }
                       </h2>
                     </div>
-                    <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ description ? description : 'Goals allow you to create effective objectives for yourself or employees.' }</h2>
-                  </div>
-                  {
-                    approvalStatus === 2 &&
-                    <div>
-                    <br/>
-                    <Line/>
-                    <div className = { 'padding-10px' }>
-                      <div className = { 'header-column' }>
-                        <div>
-                          <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Tasks</h2>
-                          <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>Enter the activities that would help you achieve your goal (Be Specific).</h2>
-                        </div>
-                        <h2>
-                        {
-                          goalId &&
-                          <span
-                            className = { 'icon-check icon-add-img' }
-                            onClick = { () => this.setState({ addTask: true }) }
+                    {
+                      addTask &&
+                      <div>
+                        <GenericInput
+                          text = { 'Task description' }
+                          value = { taskDescription }
+                          onChange = { (e) => this.taskDescriptionFunc(e.target.value) }
+                          type = { 'textarea' }
+                          errorMessage = { taskDescriptionErrorMessage }
+                        />
+                        <div className = { 'grid-global' }>
+                          <GenericButton
+                            text = { 'Cancel' }
+                            className = { 'profile-button-small' }
+                            onClick = { () => this.setState({ onEditTask: false, addTask: false, taskDescription: '' }) }
                           />
-                        }
-                        </h2>
-                      </div>
-                      {
-                        addTask &&
-                        <div>
-                          <GenericInput
-                            text = { 'Task description' }
-                            value = { taskDescription }
-                            onChange = { (e) => this.taskDescriptionFunc(e.target.value) }
-                            type = { 'textarea' }
-                            errorMessage = { taskDescriptionErrorMessage }
+                          <GenericButton
+                            text = { onEditTask ? 'Update' : 'Submit' }
+                            className = { 'profile-button-small' }
+                            onClick = { () => this.submitTask() }
                           />
-                          <div className = { 'grid-global' }>
-                            <GenericButton
-                              text = { 'Cancel' }
-                              className = { 'profile-button-small' }
-                              onClick = { () => this.setState({ onEditTask: false, addTask: false, taskDescription: '' }) }
-                            />
-                            <GenericButton
-                              text = { onEditTask ? 'Update' : 'Submit' }
-                              className = { 'profile-button-small' }
-                              onClick = { () => this.submitTask() }
-                            />
-                          </div>
-                          <br/>
-                          <Line/>
-                          <br/>
-                        </div>
-                      }
-                      {
-                        taskLoader ?
-                        <center>
-                          <CircularLoader show = { taskLoader }/>
-                        </center>
-                        :
-                        taskArray.length !== 0 ?
-                          <TasksListComponent
-                            cardHolder = { taskArray }
-                            onEdit = { (taskDescription, isCompleted) => this.setState({
-                              taskDescription,
-                              isCompleted,
-                              addTask: true,
-                              onEditTask: true
-                            }) }
-                            changeTask = { (taskId, isCompleted) => this.presenter.updateGoalTask(taskId, null, isCompleted)  }
-                          />
-                        :
-                        !addTask &&
-                        <h2 className = { 'text-align-center font-weight-lighter font-size-14px' }>No task</h2>
-                      }
-                    </div>
-                    <Line/>
-                    <div className = { 'padding-10px' }>
-                      <div className = { 'header-column' }>
-                        <div>
-                          <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Comments</h2>
-                          <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>You can add any notes or updates for this goal.</h2>
                         </div>
                         <br/>
+                        <Line/>
+                        <br/>
                       </div>
-                      {
-                        commentLoader ?
-                        <center>
-                        <CircularLoader show = { commentLoader }/>
-                        </center>
-                        :
-                        commentArray.length !==0 ?
-                          commentArray.commentDetails.map((resp, key) =>(
-                            <CommentsListComponent
-                            cardHolder = { resp }
-                            commentId = { resp.id }
-                            goalComment = { resp.description }
-                            employeeName = { resp.employeeName }
-                            updateComment = { (commentId, goalEditComment) =>
-                              this.presenter.updateGoalComment(goalId, pageNumber, pageItem, commentId, goalEditComment) }
-                            />
-                          )
-                          )
-                        :
-                        <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
-                      }
+                    }
+                    {
+                      taskLoader ?
+                      <center>
+                        <CircularLoader show = { taskLoader }/>
+                      </center>
+                      :
+                      taskArray.length !== 0 ?
+                        <TasksListComponent
+                          cardHolder = { taskArray }
+                          onSelected = { (taskId, taskDescription, isCompleted) => this.setState({
+                            taskId,
+                            taskDescription,
+                            isCompleted,
+                            showTaskOption: true
+                          }) }
+                          changeTask = { (taskId, isCompleted) => this.presenter.updateGoalTask(taskId, null, isCompleted)  }
+                        />
+                      :
+                      !addTask &&
+                      <h2 className = { 'text-align-center font-weight-lighter font-size-14px' }>No task</h2>
+                    }
+                  </div>
+                  <Line/>
+                  <div className = { 'padding-10px' }>
+                    <div className = { 'header-column' }>
+                      <div>
+                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Reviews</h2>
+                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>You can add any notes or updates for this goal.</h2>
+                      </div>
                       <br/>
-                      <div className = { 'comment-grid' }>
-                        <GenericInput
-                          text = { 'Write a comment' }
-                          value = { goalComment }
-                          onChange = { (e) => this.goalCommentFunc(e.target.value) }
-                          errorMessage = { goalCommentErrorMessage }
-                        />
-                        <GenericButton
-                          text = { 'Post' }
-                          className = { 'profile-button-small' }
-                          onClick = { () => this.submitComment() }
-                        />
-                      </div>
-                      </div>
                     </div>
-                  }
-                </Card>
-              </div>
+                    {
+                      commentLoader ?
+                      <center>
+                      <CircularLoader show = { commentLoader }/>
+                      </center>
+                      :
+                      commentArray.length !==0 ?
+                        commentArray.commentDetails.map((resp, key) =>(
+                          <CommentsListComponent
+                          cardHolder = { resp }
+                          commentId = { resp.id }
+                          goalComment = { resp.description }
+                          employeeName = { resp.employeeName }
+                          deleteCommentFunc = { (commentId, goalId) =>
+                            this.presenter.deleteComment(commentId, goalId, pageNumber, pageItem) }
+                          updateComment = { (commentId, goalEditComment) =>
+                            this.presenter.updateGoalComment(goalId, pageNumber, pageItem, commentId, goalEditComment) }
+                          />
+                        )
+                        )
+                      :
+                      <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
+                    }
+                    <br/>
+                    <div className = { 'comment-grid' }>
+                      <GenericInput
+                        text = { 'Write a comment' }
+                        value = { goalComment }
+                        onChange = { (e) => this.goalCommentFunc(e.target.value) }
+                        errorMessage = { goalCommentErrorMessage }
+                      />
+                      <GenericButton
+                        text = { 'Post' }
+                        className = { 'profile-button-small' }
+                        onClick = { () => this.submitComment() }
+                      />
+                    </div>
+                    </div>
+                  </div>
+                }
+              </Card>
             </div>
           </div>
-        }
-      </div>
+        </div>
+      }
+    </div>
     )
   }
 }
