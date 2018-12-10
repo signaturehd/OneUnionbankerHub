@@ -149,6 +149,7 @@ class DrawerAppBar extends Component {
       width: '45px',
       height: '44px',
       backgroundSize: 'cover',
+      objectFit: 'cover',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center center',
       webkitBorderRadius: '99em',
