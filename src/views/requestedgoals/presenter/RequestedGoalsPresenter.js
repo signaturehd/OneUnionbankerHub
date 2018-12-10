@@ -179,6 +179,7 @@ export default class RequestCoachPresenter {
     pageNumber,
     pageItem
   ){
+    this.view.showCommentLoader(true)
     this.addGoalCommentInteractor.execute(
       goalId,
       goalComment
@@ -188,8 +189,10 @@ export default class RequestCoachPresenter {
     })
     .subscribe(
       data => {
+        this.view.showCommentLoader(false)
       },
       errors => {
+        this.view.showCommentLoader(false)
       }
     )
   }

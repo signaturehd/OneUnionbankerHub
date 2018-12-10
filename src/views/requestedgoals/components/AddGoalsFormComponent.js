@@ -89,6 +89,7 @@ class AddGoalsFormComponent extends Component {
                 errorMessage = { startDateErrorMessage }
                 minDate = { moment(minimumDate) }
                 maxDate = { moment(maximumDate) }
+                readOnly
               />
               <DatePicker
                 text = { 'Due Date' }
@@ -98,6 +99,7 @@ class AddGoalsFormComponent extends Component {
                 dateFormat = { 'MM/DD/YYYY' }
                 errorMessage = { dueDateErrorMessage }
                 maxDate = { moment(maximumDate) }
+                readOnly
               />
             </div>
             <div className = { 'grid-global' }>

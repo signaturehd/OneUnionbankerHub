@@ -54,7 +54,9 @@ class CommentsListComponent extends Component {
       commentId,
       goalComment,
       updateComment,
-      deleteCommentFunc } = this.props
+      deleteCommentFunc,
+    } = this.props
+
     const {
       onEditComment,
       showCommentOption,

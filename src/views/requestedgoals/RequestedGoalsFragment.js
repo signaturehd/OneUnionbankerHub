@@ -184,15 +184,6 @@ class RequestedGoalsFragment extends BaseMVPView {
     this.setState({ taskLoader : true })
   }
 
-
-  hideCommentLoader () {
-    this.setState({ commentLoader : false })
-  }
-
-  showCommentLoader () {
-    this.setState({ commentLoader : true })
-  }
-
   navigate () {
     this.props.history.push('/mygoals')
   }
@@ -331,6 +322,10 @@ class RequestedGoalsFragment extends BaseMVPView {
     });
   }
 
+  showCommentLoader (commentLoader) {
+    this.setState({ commentLoader })
+  }
+
   resetValue () {
     this.setState({
       goalId: '',
@@ -362,6 +357,16 @@ class RequestedGoalsFragment extends BaseMVPView {
       showTaskOption: false,
       showCommentOption: false
     })
+  }
+
+  checkIfTaskCompleted (task) {
+    let count = 0
+    task && task.map((resp) => {
+      if(resp.isCompleted) {
+        count++
+      }
+    })
+    return count
   }
 
   render () {
@@ -420,6 +425,11 @@ class RequestedGoalsFragment extends BaseMVPView {
       filterId,
       filterName,
     } = this.state
+
+    let totalCount = taskArray && taskArray.length
+    let taskCompleted  = this.checkIfTaskCompleted(taskArray)
+    let percentageTask = taskArray && (taskCompleted /totalCount) * 100
+
 
     const { onClose, showRequestCoachForm, showRequestCoachFunc } = this.props
     return (
@@ -713,15 +723,17 @@ class RequestedGoalsFragment extends BaseMVPView {
                 <div className = { 'grid-percentage' }>
                   <div>
                     <h2 className = { `margin-5px text-align-left font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
-                    <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }><span className = { 'icon-check icon-comment-img' }/>2/5</h2>
-                    <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }><span className = { 'icon-check icon-taskcompleted-img' }/>5/10</h2>
+                    <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }>
+                      <span className = { 'icon-check icon-comment-img text-align-center' }/>{ commentArray && commentArray.totalCount }</h2>
+                    <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }>
+                      <span className = { 'icon-check icon-taskcompleted-img' }/>{ this.checkIfTaskCompleted(taskArray) }/{ taskArray && totalCount }</h2>
                   </div>
                   <div className = { 'text-align-center padding-10px' }>
                     <Progress
                       type = { 'circle' }
                       height = { 80 }
                       width = { 80 }
-                      percent = { 80 } />
+                      percent = { percentageTask ? percentageTask : 0 } />
                   </div>
                   <div>
                     {
@@ -840,22 +852,18 @@ class RequestedGoalsFragment extends BaseMVPView {
                       <br/>
                     </div>
                     {
-                      commentLoader ?
-                      <center>
-                      <CircularLoader show = { commentLoader }/>
-                      </center>
-                      :
                       commentArray.length !==0 ?
                         commentArray.commentDetails.map((resp, key) =>(
                           <CommentsListComponent
-                          cardHolder = { resp }
-                          commentId = { resp.id }
-                          goalComment = { resp.description }
-                          employeeName = { resp.employeeName }
-                          deleteCommentFunc = { (commentId, goalId) =>
-                            this.presenter.deleteComment(commentId, goalId, pageNumber, pageItem) }
-                          updateComment = { (commentId, goalEditComment) =>
-                            this.presenter.updateGoalComment(goalId, pageNumber, pageItem, commentId, goalEditComment) }
+                            commentLoader = { commentLoader }
+                            cardHolder = { resp }
+                            commentId = { resp.id }
+                            goalComment = { resp.description }
+                            employeeName = { resp.employeeName }
+                            deleteCommentFunc = { (commentId, goalId) =>
+                              this.presenter.deleteComment(commentId, goalId, pageNumber, pageItem) }
+                            updateComment = { (commentId, goalEditComment) =>
+                              this.presenter.updateGoalComment(goalId, pageNumber, pageItem, commentId, goalEditComment) }
                           />
                         )
                         )
@@ -863,21 +871,29 @@ class RequestedGoalsFragment extends BaseMVPView {
                       <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
                     }
                     <br/>
-                    <div className = { 'comment-grid' }>
+                    <div className = { 'comment-grid align-items-center' }>
                       <GenericInput
                         text = { 'Write a comment' }
                         value = { goalComment }
                         onChange = { (e) => this.goalCommentFunc(e.target.value) }
                         errorMessage = { goalCommentErrorMessage }
                       />
-                      <GenericButton
-                        text = { 'Post' }
-                        className = { 'profile-button-small' }
-                        onClick = { () => this.submitComment() }
-                      />
-                    </div>
+                      {
+                        commentLoader ?
+
+                        <center>
+                          <CircularLoader  show = { commentLoader }/>
+                        </center>
+                        :
+                        <GenericButton
+                          text = { 'Post' }
+                          className = { 'profile-button-small' }
+                          onClick = { () => this.submitComment() }
+                        />
+                      }
                     </div>
                   </div>
+                </div>
                 }
               </Card>
             </div>
