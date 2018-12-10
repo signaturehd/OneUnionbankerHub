@@ -400,6 +400,12 @@ class TeamGoalsFragment extends BaseMVPView {
     } = this.state
 
     const { onClose, showRequestCoachForm, showRequestCoachFunc } = this.props
+
+
+    let totalCount = taskArray && taskArray.length
+    let taskCompleted  = this.checkIfTaskCompleted(taskArray)
+    let percentageTask = taskArray && (taskCompleted /totalCount) * 100
+
     return (
     <div>
       { super.render() }
@@ -595,7 +601,11 @@ class TeamGoalsFragment extends BaseMVPView {
                     }
                   </div>
                   <div className = { 'text-align-center padding-10px' }>
-
+                    <Progress
+                      type = { 'circle' }
+                      height = { 80 }
+                      width = { 80 }
+                      percent = { percentageTask ? percentageTask : 0 } />
                   </div>
                   <div className = { 'text-align-right' }>
                     {
