@@ -15,8 +15,6 @@ import {
   SkeletalLoader,
 } from '../../ub-components'
 
-import HomeGreetingsComponent from './components/HomeGreetingsComponent'
-
 //News Fragment
 import NewsFragment from '../news/NewsFragment'
 //Phenom Fragment
@@ -35,7 +33,6 @@ class HomeFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.presenter.getCheckGreetingsStatus()
     this.presenter.getProfile()
     this.props.setSelectedNavigation(0)
     this.setState({ homePreview : true })

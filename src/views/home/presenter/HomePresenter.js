@@ -1,4 +1,3 @@
-import moment from 'moment'
 import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInteractor'
 
 export default class HomePresenter {
@@ -14,19 +13,5 @@ export default class HomePresenter {
     this.getProfileInteractor.execute()
      .do(profile => this.view.showProfileName(profile.employee.fullname))
      .subscribe()
-  }
-
-  getCheckGreetingsStatus () {
-    let morning = 'Good Morning'
-    let afternoon = 'Good Afternoon'
-    let evening = 'Good Evening'
-    const dateNow = moment().format('H')
-    if(dateNow <= 11) {
-      this.view.showGreetingsMessage(morning)
-    } else if (dateNow <= 17) {
-      this.view.showGreetingsMessage(afternoon)
-    } else if (dateNow <= 23) {
-      this.view.showGreetingsMessage(evening)
-    }
   }
 }
