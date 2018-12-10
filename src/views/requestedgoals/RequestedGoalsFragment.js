@@ -205,27 +205,27 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   goalTitleFunc (goalTitle) {
-    this.setState({ goalTitle })
+    this.setState({ goalTitle, goalTitleErrorMessage: '' })
   }
 
   descriptionFunc (description) {
-    this.setState({ description })
+    this.setState({ description, descriptionErrorMessage: ''  })
   }
 
   startDateFunc (startDate) {
-    this.setState({ startDate })
+    this.setState({ startDate, startDateErrorMessage: '' })
   }
 
   dueDateFunc (dueDate) {
-    this.setState({ dueDate })
+    this.setState({ dueDate, dueDateErrorMessage: '' })
   }
 
   taskDescriptionFunc (taskDescription) {
-    this.setState({ taskDescription })
+    this.setState({ taskDescription, taskDescriptionErrorMessage: '' })
   }
 
   goalCommentFunc (goalComment) {
-    this.setState({ goalComment })
+    this.setState({ goalComment, goalCommentErrorMessage: '' })
   }
 
   priorityFunc(priority) {
@@ -451,7 +451,8 @@ class RequestedGoalsFragment extends BaseMVPView {
           selectedArray = { (priorityId, priorityName) => this.setState({
               priorityId,
               priorityName,
-              showPriorityModal: false
+              showPriorityModal: false,
+              priorityErrorMessage: ''
             })
           }
           onClose = { () => this.setState({ showPriorityModal: false }) }
