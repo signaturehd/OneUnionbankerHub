@@ -120,51 +120,107 @@ export default class PayForSkillsPresenter {
       }
     )
 
-    if(storedProgramObject === '') {
-      store.dispatch(NotifyActions.addNotify({
-        title: 'Pay For Skills',
-        message : 'Please select programs',
-        type: 'warning',
-        duration: 5000,
-      }))
-    } else if(storedDateOfCompletion === '') {
-      store.dispatch(NotifyActions.addNotify({
-        title: 'Pay For Skills',
-        message : 'Please select Date of Completion',
-        type: 'warning',
-        duration: 5000,
-      }))
-    } else if(storedAccreditationObject === '') {
-      store.dispatch(NotifyActions.addNotify({
-        title: 'Pay For Skills',
-        message : 'Please select Accreditation Body',
-        type: 'warning',
-        duration: 5000,
-      }))
-    }else if (!storedAttachments.length) {
-       store.dispatch(NotifyActions.addNotify({
-          title : 'Pay For Skills' ,
-          message : 'Attachments is required',
-          type : 'warning',
-          duration : 5000
-        })
-      )
-    } else if (validateAttachments) {
-      storedAttachments && storedAttachments.map(
-        (attachment, key) => {
-          if(!attachment.file) {
-            store.dispatch(NotifyActions.addNotify({
-               title : 'My Pay For Skills',
-               message : attachment.name + ' is required',
-               type : 'warning',
-               duration : 5000
-             })
-           )
+    if(storedAccreditationObject && storedAccreditationObject.accre.toLowerCase() !== 'others') {
+      if(storedProgramObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Pay For Skills',
+          message : 'Please select programs',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedDateOfCompletion === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Pay For Skills',
+          message : 'Please select Date of Completion',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedAccreditationObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Pay For Skills',
+          message : 'Please select Accreditation Body',
+          type: 'warning',
+          duration: 5000,
+        }))
+      }else if (!storedAttachments.length) {
+         store.dispatch(NotifyActions.addNotify({
+            title : 'Pay For Skills' ,
+            message : 'Attachments is required',
+            type : 'warning',
+            duration : 5000
+          })
+        )
+      } else if (validateAttachments) {
+        storedAttachments && storedAttachments.map(
+          (attachment, key) => {
+            if(!attachment.file) {
+              store.dispatch(NotifyActions.addNotify({
+                 title : 'My Pay For Skills',
+                 message : attachment.name + ' is required',
+                 type : 'warning',
+                 duration : 5000
+               })
+             )
+            }
           }
-        }
-      )
+        )
+      } else {
+        this.view.setEditable(true)
+      }
     } else {
-      this.view.setEditable(true)
+      if(storedProgramObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Pay For Skills',
+          message : 'Please select programs',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedDateOfCompletion === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Pay For Skills',
+          message : 'Please select Date of Completion',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedAccreditationObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Pay For Skills',
+          message : 'Please select Accreditation Body',
+          type: 'warning',
+          duration: 5000,
+        }))
+      }  else if(storedOthers === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Pay For Skills',
+          message : 'Please Specify if others',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if (!storedAttachments.length) {
+         store.dispatch(NotifyActions.addNotify({
+            title : 'Pay For Skills' ,
+            message : 'Attachments is required',
+            type : 'warning',
+            duration : 5000
+          })
+        )
+      } else if (validateAttachments) {
+        storedAttachments && storedAttachments.map(
+          (attachment, key) => {
+            if(!attachment.file) {
+              store.dispatch(NotifyActions.addNotify({
+                 title : 'My Pay For Skills',
+                 message : attachment.name + ' is required',
+                 type : 'warning',
+                 duration : 5000
+               })
+             )
+            }
+          }
+        )
+      } else {
+        this.view.setEditable(true)
+      }
     }
   }
 
