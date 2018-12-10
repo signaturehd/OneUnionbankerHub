@@ -70,7 +70,7 @@ export default class LoginPresenter {
     this.requestEmailVerificationInteractor.execute(empId, moment(date).format('YYYY-MM-DD'))
     .subscribe(data => {
       this.view.hideResetLoader()
-      this.view.showNotificationMessage(data.message)
+      this.view.showNotificationMessage(data)
     }, error => {
       this.view.hideResetLoader()
       this.view.showGetOtpModal(error)
