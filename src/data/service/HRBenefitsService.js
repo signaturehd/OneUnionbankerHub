@@ -2357,6 +2357,17 @@ export default class HRBenefitsService {
     })
   }
 
+  getTeamGoals (token, status) {
+    return this.apiClient.get(`v1/goals/reports?status=${status}`, {
+      headers: { token }
+    })
+  }
+
+  getGoalsHistory (token, goalId, pageNumber, pageItem) {
+    return this.apiClient.get(`v1/goals/${goalId}/history?pageItem=${pageItem}&pageNumber=${pageNumber}`, {
+      headers: { token }
+    })
+  }
   // Pay For Skills
 
   getPaySkills (token) {

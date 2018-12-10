@@ -24,6 +24,7 @@ import RequestedGoalsFragment from '../requestedgoals/RequestedGoalsFragment'
 import ApprovedGoalsComponent from '../mygoals/components/ApprovedGoalsComponent'
 import MyGoalsFormComponent from '../mygoals/components/MyGoalsFormComponent'
 import RequestCoachFragment from '../requestCoach/RequestCoachFragment'
+import TeamGoalsFragment from '../teamgoal/TeamGoalsFragment'
 
 import ResponseModal from '../notice/NoticeResponseModal'
 
@@ -48,6 +49,7 @@ class MyGoalsFragment extends BaseMVPView {
       showApprovalForm : false,
       showRejectRemarksModal : false,
       showRequestCoachForm : false,
+      showTeamGoal: false,
       employeeName: '',
       goalId : '',
       goalTitle : '',
@@ -231,7 +233,8 @@ class MyGoalsFragment extends BaseMVPView {
       approvalStatus,
       rejectedRemarks,
       showRejectRemarksModal,
-      showRequestCoachForm
+      showRequestCoachForm,
+      showTeamGoal
     } = this.state
 
     return (
@@ -280,7 +283,7 @@ class MyGoalsFragment extends BaseMVPView {
                   name = { 'tabs' }
                   defaultChecked = { true }
                   onClick = { () => {
-                      this.setState({ forApproval : false, showApprovalForm : false })
+                      this.setState({ showTeamGoal: false, forApproval : false, showApprovalForm : false })
                       this.props.history.push('/mygoals/request')
                     }
                   }/>
@@ -295,7 +298,7 @@ class MyGoalsFragment extends BaseMVPView {
                         type = { 'radio' }
                         name = { 'tabs' }
                         onClick = { () => {
-                            this.setState({ forApproval : true, showApprovalForm : false })
+                            this.setState({ showTeamGoal: true, forApproval : false, showApprovalForm : false })
                             this.props.history.push('/mygoals/team')
                           }
                         }/>
@@ -323,6 +326,8 @@ class MyGoalsFragment extends BaseMVPView {
                   <Switch>
                     <Route exact path='/mygoals/request/RequestedGoalsFragment'
                       render={ props => <RequestedGoalsFragment { ...props } /> }/>
+                    <Route exact path='/mygoals/team/TeamGoalsFragment'
+                      render={ props => <TeamGoalsFragment { ...props } /> }/>
                     <Route exact path='/mygoals/approved/ApprovedGoalsComponent'
                       render={ props => <ApprovedGoalsComponent { ...props } /> }/>
                    </Switch>
@@ -330,9 +335,12 @@ class MyGoalsFragment extends BaseMVPView {
 
                 {
                   !forApproval ?
-                  <RequestedGoalsFragment
-                  showRequestCoachForm = { showRequestCoachForm }
-                  showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
+                    showTeamGoal ?
+                    <TeamGoalsFragment/>
+                    :
+                    <RequestedGoalsFragment
+                    showRequestCoachForm = { showRequestCoachForm }
+                    showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
                   :
                   showApprovalForm ?
                   <GoalApprovalFormComponent
