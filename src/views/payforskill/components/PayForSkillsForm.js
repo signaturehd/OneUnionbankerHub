@@ -79,18 +79,23 @@ class PayForSkillsForm extends Component {
                 disabled = { showEditMode }
                 errorMessage = { '' }
                 />
-
               <GenericInput
                 errorMessage = { '' }
                 text = { 'Accrediting Body' }
-                disabled = { true }
-                value = { this.checkAccreditingBodyId(accrediting && accrediting, programsBody && programsBody.accreditingBodyId) }
-                onClick = { () => {
-                  // showAccreditationModalFunc()
-                } }
+                disabled = { showEditMode }
+                value = {
+                  accreditingBody &&
+                  accreditingBody.accre.toLowerCase() === 'others' ?
+                  'Others' :
+                  accreditingBody && accreditingBody.accre
+                }
+                onClick = { () =>
+                  showAccreditationModalFunc()
+                }
               />
               {
-                this.checkAccreditingBodyId(accrediting && accrediting, programsBody && programsBody.accreditingBodyId).toLowerCase() === 'others' &&
+                accreditingBody &&
+                accreditingBody.accre.toLowerCase() === 'others' &&
                 <GenericInput
                   errorMessage = { '' }
                   text = { `(Please specify if Others)`  }
@@ -98,7 +103,7 @@ class PayForSkillsForm extends Component {
                   errorMessage = { '' }
                   value = { others }
                   onChange = { (e) =>
-                  onChangeOthersFunc(e.target.value)
+                      onChangeAccreditationModalFunc(e.target.value)
                   }
                 />
               }

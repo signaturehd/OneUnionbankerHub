@@ -242,12 +242,8 @@ class PayForSkillsFragment extends BaseMVPView {
                   })
                 } }
                 onChangeOthersFunc = { (others) => this.presenter.setStoredOthers(others) }
-                onChangeAccreditationModalFunc = { (e, e1) => {
-                  const objectParam = {
-                    id : e,
-                    accre : e1,
-                  }
-                  this.presenter.setStoredAccreditationObject(objectParam)
+                onChangeAccreditationModalFunc = { (data) => {
+                  this.presenter.setStoredOthers(data)
                 } }
                 addAttachmentsFunc = { () => {
                   const newFileArray = [...attachmentsArray]
