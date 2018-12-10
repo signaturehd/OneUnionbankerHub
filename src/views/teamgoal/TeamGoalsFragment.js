@@ -346,6 +346,16 @@ class TeamGoalsFragment extends BaseMVPView {
     })
   }
 
+  checkIfTaskCompleted (task) {
+    let count = 0
+    task && task.map((resp) => {
+      if(resp.isCompleted) {
+        count++
+      }
+    })
+    return count
+  }
+
   render () {
     const {
       enabledLoader,

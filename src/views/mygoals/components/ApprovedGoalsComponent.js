@@ -157,7 +157,6 @@ class ApprovedGoalsComponent extends Component {
             <img src={ require('../../../images/icons/horizontal.png') } />
             <span className={ 'tooltiptext' }>{ viewMoreText }</span>
           </button>
-          <Line/>
         </div>
         <div>
           <div className = { 'padding-10px' }>
@@ -175,7 +174,6 @@ class ApprovedGoalsComponent extends Component {
                 <h2 className = { 'font-size-12px font-weight-lighter text-align-right' }><span className = { 'border' }>{ goalTypeId ? 'Performance' : goalTypeId ? 'Developemental' : 'x' }</span></h2>
               </div>
             </div>
-            <Line/>
             {
               showRejectRemarksModal &&
               <Modal

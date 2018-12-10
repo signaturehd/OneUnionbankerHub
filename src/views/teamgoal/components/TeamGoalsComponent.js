@@ -137,7 +137,6 @@ class RequestedGoalsComponent extends Component {
             <img src={ require('../../../images/icons/horizontal.png') } />
             <span className={ 'tooltiptext' }>{ viewMoreText }</span>
           </button>
-          <Line/>
         </div>
       }
       </div>
