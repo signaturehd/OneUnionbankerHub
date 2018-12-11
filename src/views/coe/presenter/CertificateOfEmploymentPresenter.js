@@ -160,6 +160,9 @@ export default class CertificateOfEmploymentPresenter {
          duration : 7000
        })
      )
+     storedPurposeObject =''
+     storedTypeOFCoeObject =''
+     storedVisaObject =''
      this.view.navigateLearning()
     }, error => {
       this.view.checkLoader(false)

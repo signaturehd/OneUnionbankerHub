@@ -54,7 +54,10 @@ class CommentsListComponent extends Component {
       commentId,
       goalComment,
       updateComment,
-      deleteCommentFunc } = this.props
+      deleteCommentFunc,
+      employeeNumber,
+      respEmployeeNumber
+     } = this.props
     const {
       onEditComment,
       showCommentOption,
@@ -66,7 +69,9 @@ class CommentsListComponent extends Component {
       <div>
         {
           showCommentOption &&
-          <Modal isDismissable = { true } onClose = { () => this.setState({ showCommentOption: false }) }>
+          <Modal
+            isDismisable = { true }
+            onClose = { () => this.setState({ showCommentOption: false }) }>
             {
               deleteCommentMode ?
               <center>
@@ -93,22 +98,22 @@ class CommentsListComponent extends Component {
               <center>
                 <h2>Select action</h2>
                 <br/>
-                <div className = { 'grid-global' }>
-                  <GenericButton
-                    text = { 'Edit' }
-                    onClick = { () => this.setState({
-                    addComment: true,
-                    onEditComment: true,
-                    showCommentOption: false
-                   }) }
-                    className = { 'profile-button-small' }
-                  />
-                  <GenericButton
-                    text = { 'Delete' }
-                    className = { 'profile-button-small' }
-                    onClick = { () => this.setState({ deleteCommentMode: true }) }
-                  />
-                </div>
+                  <div className = { 'grid-global' }>
+                      <GenericButton
+                        text = { 'Edit' }
+                        onClick = { () => this.setState({
+                        addComment: true,
+                        onEditComment: true,
+                        showCommentOption: false
+                       }) }
+                        className = { 'profile-button-small' }
+                      />
+                    <GenericButton
+                      text = { 'Delete' }
+                      className = { 'profile-button-small' }
+                      onClick = { () => this.setState({ deleteCommentMode: true }) }
+                    />
+                  </div>
               </center>
             }
           </Modal>
@@ -144,7 +149,12 @@ class CommentsListComponent extends Component {
             <br/>
             </div>
             :
-            <div className={ 'comment-border margin-5px padding-5px' } onClick = { () => this.setState({ showCommentOption: true, goalEditComment: goalComment }) }>
+            <div className={ 'comment-border margin-5px padding-5px cursor-pointer' } onClick = { () =>
+              {
+                employeeNumber === respEmployeeNumber &&
+                this.setState({ showCommentOption: true, goalEditComment: goalComment })
+              }
+            }>
               <h2 className = { 'text-align-left font-size-12px font-weight-bold unionbank-color' }>{employeeName}</h2>
               <h2 className = { 'text-align-left font-size-12px font-weight-lighter' }>{goalComment}</h2>
             </div>
