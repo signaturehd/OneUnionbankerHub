@@ -36,6 +36,7 @@ class EventsBudgetFragment extends BaseMVPView {
     super(props)
     this.state = {
       storedListId : [],
+      storedList: [],
       eventBudgetData : [],
       enabledLoader : false,
       index : null,
@@ -46,7 +47,9 @@ class EventsBudgetFragment extends BaseMVPView {
       showBenefitFeedbackModal : false,  /* Display Feedback Modal*/
       showNoticeResponseModal: false, /* Display Notice Response Modal*/
       showNoticeResponseApprovalModal : false,/* Display Notice Approval Response Modal*/
+      showEditSubmitButton : false,
     }
+    this.storeArray = this.storeArray.bind(this)
   }
 
   /* Implementation */
@@ -68,8 +71,20 @@ class EventsBudgetFragment extends BaseMVPView {
     this.presenter.setProvince(eventsNullChecker && eventBudgetData.venue.province)
     this.presenter.setRegion(eventsNullChecker && eventBudgetData.venue.region)
     this.presenter.setCity(eventsNullChecker && eventBudgetData.venue.city)
-    this.presenter.setDateFunc(eventsNullChecker && eventBudgetData.events.targetDate)
+    this.presenter.setDateFunc(venueNullChecker && eventBudgetData.venue.targetDate  ? eventBudgetData.venue.targetDate : '')
     this.setState({ eventBudgetData })
+
+    if(
+      eventBudgetData.events.name !== '' &&
+      eventBudgetData.venue.name !== '' &&
+      eventBudgetData.venue.address !== '' &&
+      eventBudgetData.venue.province !== '' &&
+      eventBudgetData.venue.region !== '' &&
+      eventBudgetData.venue.city !== '' &&
+      eventBudgetData.venue.targetDate !== ''
+    ) {
+      this.setEditableForm(true)
+    }
   }
 
   showCircularLoader () {
@@ -139,6 +154,29 @@ class EventsBudgetFragment extends BaseMVPView {
     this.props.history.push('/mybenefits/benefits/')
   }
 
+  setEditableForm (showEditSubmitButton) {
+    this.setState({ showEditSubmitButton })
+  }
+
+  storeArray (arrayValue) {
+    const {
+      storedListId
+    } = this.state
+    try {
+      let storedValueArray = storedListId.map((item) => item)
+      let newArrayAttendees = [...arrayValue]
+      arrayValue.map((arrayVal, key) => {
+        if (storedValueArray.includes(arrayVal)) {
+          newArrayAttendees.splice(0, 1)
+        } else {
+          newArrayAttendees.push(arrayVal)
+        }
+      })
+      this.presenter.setAttendees(newArrayAttendees)
+    } catch (e) {
+    }
+  }
+
   render () {
     const {
       storedListId,
@@ -160,7 +198,9 @@ class EventsBudgetFragment extends BaseMVPView {
       showBenefitFeedbackModal,
       response,
       benefitId,
-      preferredDate
+      preferredDate,
+      storedList,
+      showEditSubmitButton
     } = this.state
 
     return (
@@ -215,30 +255,31 @@ class EventsBudgetFragment extends BaseMVPView {
             </h2>
             <br/>
             <EventsBudgetFormComponent
+              existingIds = { storedListId }
               checkIdIfHasLogin = { (hasRecord, id) =>
                 {
-                  let newArrayList = [...storedListId]
-                  let isBoolean = hasRecord !== true ? true : false
-
-                  let isExisting = false
-                  for (var i in newArrayList) {
-                    if (newArrayList[i] === id) {
-                      isExisting = true
-                      break
+                  if (typeof id == 'number') {
+                    let newArrayList = [...storedListId]
+                    let isExisting = false
+                    for (var i in newArrayList) {
+                      if (newArrayList[i] === id) {
+                        isExisting = true
+                        break
+                      }
                     }
-                  }
-
-                  if (isExisting) {
-                    newArrayList.splice(i, 1)
+                    if (isExisting) {
+                      newArrayList.splice(i, 1)
+                    } else {
+                      newArrayList.push(id)
+                    }
+                    this.presenter.setAttendees(newArrayList)
                   } else {
-                    newArrayList.push(id)
+                    this.storeArray(id)
                   }
-
-                  this.presenter.setAttendees(newArrayList)
                 }
               }
               preferredDate = { preferredDate }
-              dateFunc = { (preferredDate) => this.presenter.setDateFunc(preferredDate) }
+              dateFunc = { (e) => this.presenter.setDateFunc(e) }
               celebrationText = { celebrationText }
               celebrationTextFunc = { (e) => this.presenter.setCelebration(validate.checkedValidateAlphabet(e)) }
               venueText = { venueText }
@@ -260,9 +301,11 @@ class EventsBudgetFragment extends BaseMVPView {
               viewMoreText = { viewMoreText }
               viewMore = { () => this.setState({ index : eventBudgetData.attendees.length, viewMoreText : 'Hide Attendees' }) }
               viewLess = { () => this.setState({ index : 0, viewMoreText : 'Show Attendees' }) }
-              submitPresenter = { () =>
-                this.presenter.addEventsBudget(storedListId)
+              validatePresenter = { () =>
+                this.presenter.validationEventsBudget(storedListId)
               }
+              setEditable = { () => this.setEditableForm(false) }
+              showEditSubmitButton = { showEditSubmitButton }
             />
           </div>
           }

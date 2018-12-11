@@ -51,6 +51,7 @@ function  TransactionDetails (props)  {
   const confirmmDetails = props.confirmmDetails
   const claimLaptopLease = props.claimLaptopLease
   const viewTransactions = props.viewTransactions
+  const onSubmitEventsReceiptFunc = props.onSubmitEventsReceiptFunc
 
   if (transactionId === 6) {
     return <DentalRDetailsFragment
@@ -175,6 +176,8 @@ function  TransactionDetails (props)  {
     return <EventsBudgetRequisitionDetailsFragment
         attachmentsMethod = { (resp) => attachmentsMethod(resp) }
         agreementsMethod = { (resp) => agreementsMethod(resp) }
+        onSubmitEventsReceiptFunc = { (id, attachmentArray) =>
+          onSubmitEventsReceiptFunc(id, attachmentArray) }
         details = { transactionDetails }
      />
   }else {
@@ -364,6 +367,9 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              attachments = { attachments }
              transactions = { transactions }
              showUploading = { response }
+             onSubmitEventsReceiptFunc = { (id, attachmentArray) =>
+               this.presenter.uploadEventsBudgetReceipt(id, attachmentArray)
+             }
              confirmmDetails = { (transactionId, isConfirm) => this.confirmRelease(transactionId, isConirm) }
              claimLaptopLease = { (transactionId) => this.claimLaptopLease(transactionId) }
              viewTransactions = { (recepients) => this.setState({ recepients, showRecepients: true }) }
