@@ -28,6 +28,15 @@ class AddGoalsFormComponent extends Component {
     super(props)
   }
 
+  checkDateIfLast (startDate) {
+    const presentDate = moment().format('MM/DD/YYYY')
+    if(startDate === presentDate) {
+      return startDate
+    } else {
+      return this.props.dueDate
+    }
+  }
+
   render () {
     const {
       goalTitle,
@@ -83,7 +92,7 @@ class AddGoalsFormComponent extends Component {
             <div className = { 'grid-global' }>
               <DatePicker
                 text = { 'Start Date' }
-                selected = { startDate && moment(startDate) }
+                selected = {  startDate && moment(startDate) }
                 onChange = { (e) => {
                     startDateFunc(e)
                   }
@@ -96,14 +105,14 @@ class AddGoalsFormComponent extends Component {
               />
               <DatePicker
                 text = { 'Due Date' }
-                selected = { dueDate && moment(dueDate) }
+                selected = { this.checkDateIfLast(startDate) }
                 onChange = { (e) => {
                     dueDateFunc(e)
                   }
                 }
                 dateFormat = { 'MM/DD/YYYY' }
                 errorMessage = { dueDateErrorMessage }
-                minDate = { startDate ? moment(startDate) : moment() }
+                minDate = { startDate && moment(startDate) }
                 maxDate = { moment(maximumDate) }
                 readOnly
               />

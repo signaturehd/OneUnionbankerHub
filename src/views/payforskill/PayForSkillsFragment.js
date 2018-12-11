@@ -165,7 +165,6 @@ class PayForSkillsFragment extends BaseMVPView {
                 this.presenter.setStoredProgramObject(objectParam)
                 this.setState({  showProgramsModal: false })
               } catch(e) {
-                console.log(e)
               }
               }
             }
@@ -234,6 +233,7 @@ class PayForSkillsFragment extends BaseMVPView {
                   this.presenter.setStoredAccreditationObject('')
                   this.presenter.setStoredProgramObject('')
                   this.presenter.setStoredOthers('')
+                  this.setEditable(false)
                   this.setState({
                     showAddingPaySkillsComponent,
                     attachmentsArray: [{
