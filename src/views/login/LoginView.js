@@ -264,13 +264,13 @@ class LoginView extends BaseMVPView {
       history
     } = this.props
 
-    /* Prod Version 5.1.1 */
+    /* Prod Version 6.0.0 */
 
-    /* UAT 6.0.0*/
+    /* UAT 6.8.3*/
 
     let version = 6
-    let majorVersion = 8
-    let minorVersion = 3
+    let majorVersion = 0
+    let minorVersion = 0
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     const objectValue = [{
