@@ -38,11 +38,22 @@ class RequestCoachFragment extends BaseMVPView {
       noticeResponse: '',
       description : '',
       preferredDate : '',
-      preferredTime : ''
+      preferredTime : '',
+      preferredTimeErrorMessage: ''
     }
   }
 
-  componentDidMount() {
+  preferredTimeFunc(preferredTime) {
+    const { preferredDate } = this.setState
+    if(moment(preferredDate).format('MM/DD/YYYY') === moment().format('MM/DD/YYYY')) {
+      preferredTime <= moment().format('HH:mm') ?
+        this.setState({ preferredTime, preferredTimeErrorMessage: 'Please select present time.' })
+        :
+        this.setState({ preferredTime, preferredTimeErrorMessage: '' })
+    }
+    else {
+      this.setState({ preferredTime, preferredTimeErrorMessage: '' })
+    }
   }
 
   noticeResponse (noticeResponse) {
@@ -97,7 +108,8 @@ class RequestCoachFragment extends BaseMVPView {
       noticeResponse,
       description,
       preferredDate,
-      preferredTime
+      preferredTime,
+      preferredTimeErrorMessage
     } = this.state
 
     const { onClose } = this.props
@@ -124,7 +136,7 @@ class RequestCoachFragment extends BaseMVPView {
           </Modal>
         }
 
-          
+
           <h2 className={ 'header-margin-default text-align-left' }>Request For Coaching</h2>
           <div className = { 'grid-global' }>
             <h2 className={ 'font-size-16px text-align-left' }>Write a short message to your line manager about the help you need.</h2>
@@ -139,7 +151,8 @@ class RequestCoachFragment extends BaseMVPView {
           preferredDate = { preferredDate }
           preferredDateFunc = { (preferredDate) => this.setState({ preferredDate }) }
           preferredTime = { preferredTime }
-          preferredTimeFunc = { (preferredTime) => this.setState({ preferredTime }) }
+          preferredTimeFunc = { (preferredTime) => this.preferredTimeFunc(preferredTime) }
+          preferredTimeErrorMessage = { preferredTimeErrorMessage }
           onClose = { () => onClose() }
           onSubmit = { () => this.onSubmit() }
           />
