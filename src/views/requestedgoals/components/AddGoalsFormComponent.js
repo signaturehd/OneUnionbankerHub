@@ -37,7 +37,7 @@ class AddGoalsFormComponent extends Component {
       console.log('success')
       return moment(startDate)
     } else {
-      return moment(dueDate).add(1, 'days')
+      return moment(dueDate)
     }
   }
 
