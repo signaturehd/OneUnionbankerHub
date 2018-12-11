@@ -34,7 +34,6 @@ class AddGoalsFormComponent extends Component {
     } = this.props
     const presentDate = moment().format('MM/DD/YYYY')
     if(startDate === presentDate) {
-      console.log('success')
       return moment(startDate)
     } else {
       return moment(dueDate)
