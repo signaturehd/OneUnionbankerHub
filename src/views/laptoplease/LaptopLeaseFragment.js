@@ -21,6 +21,7 @@ import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 // import CarDealerQuotation from './modals/CarDealerQuotationModal'
 
 import FormComponent from './components/LaptopLeaseCardComponent'
+import CardOptionComponent from './components/LaptopLeaseOptionComponent'
 import moment from 'moment'
 import store from '../../store'
 import { NotifyActions } from '../../actions'
@@ -32,6 +33,7 @@ class LaptopLeaseFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
+      cardOptionComponent : true,
       enabledLoader : false,
       showNoticeModal : false,
       showNoticeResponseModal : false,
@@ -72,7 +74,7 @@ class LaptopLeaseFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.validateLaptopLease()
+    // this.presenter.validateLaptopLease()
   }
 
   /* Presenter Functions */
@@ -183,6 +185,8 @@ class LaptopLeaseFragment extends BaseMVPView {
       laptopBrand,
       laptopModel,
       screenSize,
+      getCardOptionId,
+      cardOptionComponent
     } = this.state
 
     const { history }=this.props
@@ -280,32 +284,44 @@ class LaptopLeaseFragment extends BaseMVPView {
           </h2>
         </div>
           {
-            enabledLoader ?
-             <center className={ 'circular-loader-center' }>
-               <CircularLoader show={ this.state.enabledLoader }/>
-             </center> :
-            <FormComponent
-              showEditMode = { showEditMode }
-              setAmount = { (resp) => this.presenter.setAmount(controller.checkedAmount(resp)) }
-              setColor = { (resp) =>  this.presenter.setColor(controller.checkedValidateAlphabet(resp)) }
-              setLaptopBrand = { resp => this.presenter.setLaptopBrand(resp) }
-              setLaptopModel = { resp => this.presenter.setLaptopModel(resp) }
-              setScreenSize = { resp => this.presenter.setScreenSize( this.checkNonDigitRegex(resp)) }
-              showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
-              showTerms = { () => this.setState({ showTermsSelection: true }) }
-              deliveryOptionName = { deliveryOptionName }
-              laptopLeaseAttachment = { laptopLeaseAttachment }
-              amount = { amount }
-              color = { color }
-              terms = { termsName }
-              laptopBrand = { laptopBrand }
-              laptopModel = { laptopModel }
-              screenSize = { screenSize }
-              setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
-              onContinue={ () => this.presenter.validateSubmission() }
-              onEdit = { () => this.setState({ showEditMode : false })  }
-              onSubmit = { () => this.presenter.addLaptopLease()  }
-            />
+            cardOptionComponent ?
+              <CardOptionComponent
+                getCardOptionIdFunc = { (getCardOptionId) => {
+                  this.setState({ getCardOptionId, cardOptionComponent : false })
+                }}
+              />
+            :
+            <div>
+              {
+                enabledLoader ?
+                 <center className={ 'circular-loader-center' }>
+                   <CircularLoader show={ this.state.enabledLoader }/>
+                 </center> :
+                 <FormComponent
+                    getCardOptionId = { getCardOptionId }
+                    showEditMode = { showEditMode }
+                    setAmount = { (resp) => this.presenter.setAmount(controller.checkedAmount(resp)) }
+                    setColor = { (resp) =>  this.presenter.setColor(controller.checkedValidateAlphabet(resp)) }
+                    setLaptopBrand = { resp => this.presenter.setLaptopBrand(resp) }
+                    setLaptopModel = { resp => this.presenter.setLaptopModel(resp) }
+                    setScreenSize = { resp => this.presenter.setScreenSize( this.checkNonDigitRegex(resp)) }
+                    showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
+                    showTerms = { () => this.setState({ showTermsSelection: true }) }
+                    deliveryOptionName = { deliveryOptionName }
+                    laptopLeaseAttachment = { laptopLeaseAttachment }
+                    amount = { amount }
+                    color = { color }
+                    terms = { termsName }
+                    laptopBrand = { laptopBrand }
+                    laptopModel = { laptopModel }
+                    screenSize = { screenSize }
+                    setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
+                    onContinue={ () => this.presenter.validateSubmission() }
+                    onEdit = { () => this.setState({ showEditMode : false })  }
+                    onSubmit = { () => this.presenter.addLaptopLease()  }
+                  />
+              }
+            </div>
           }
       </div>
     )
