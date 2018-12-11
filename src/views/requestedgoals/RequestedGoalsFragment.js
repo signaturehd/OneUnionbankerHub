@@ -22,6 +22,7 @@ import RequestedGoalsComponent from './components/RequestedGoalsComponent'
 import AddGoalsFormComponent from './components/AddGoalsFormComponent'
 import TasksListComponent from './components/TasksListComponent'
 import CommentsListComponent from './components/CommentsListComponent'
+import HistoryListComponent from './components/HistoryListComponent'
 import RequestCoachFragment from '../requestCoach/RequestCoachFragment'
 
 import ResponseModal from '../notice/NoticeResponseModal'
@@ -87,6 +88,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       commentArray: [],
       taskArray: [],
       goalsArray : [],
+      historyArray : [],
       filterArray : [
         {
           id: 0,
@@ -182,6 +184,10 @@ class RequestedGoalsFragment extends BaseMVPView {
 
   showTaskLoader () {
     this.setState({ taskLoader : true })
+  }
+
+  getHistoryList (historyArray) {
+      this.setState({ historyArray })
   }
 
   navigate () {
@@ -425,6 +431,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       showFilterModal,
       filterId,
       filterName,
+      historyArray
     } = this.state
 
     let totalCount = taskArray && taskArray.length
@@ -709,6 +716,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                    })
                   this.presenter.getGoalTask(goalId)
                   this.presenter.getGoalComment(goalId, pageNumber, pageItem)
+                  this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
                 }
                }
                onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
@@ -913,6 +921,23 @@ class RequestedGoalsFragment extends BaseMVPView {
                   </div>
                 </div>
                 }
+                <Line/>
+                <div className = { 'padding-10px' }>
+                  <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Goal History</h2>
+                  {
+                    historyArray.length !==0 ?
+                      historyArray.goalDetails.map((resp, key) =>(
+                        <HistoryListComponent
+                        cardHolder = { resp }
+                        action = { resp.action }
+                        dateTime = { resp.dateTime }
+                        />
+                      )
+                      )
+                    :
+                    <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
+                  }
+                </div>
               </Card>
             </div>
           </div>

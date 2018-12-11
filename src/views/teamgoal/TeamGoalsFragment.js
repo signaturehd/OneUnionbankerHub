@@ -721,7 +721,7 @@ class TeamGoalsFragment extends BaseMVPView {
                       )
                       )
                     :
-                    <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
+                    <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No history</h2>
                   }
                 </div>
               </Card>
