@@ -73,16 +73,16 @@ class RequestOtpModal extends Component {
                   <span className = { 'security-icon security-icon-settings' }/>
                     <br/>
                 </div>
-                <h2 className = { 'font-size-12px' }>Enter your New PIN</h2>
+                <h2 className = { 'font-size-12px' }>Enter your New PIN Code</h2>
               </div>
               <br/>
               <GenericInput
-                hint = "New PIN"
+                hint = "New PIN Code"
                 className = { 'center-text' }
-                maxLength = {6}
+                maxLength = {5}
                 value = { requiredNewPin }
                 onChange={ (e) => requiredNewPinFunc(e.target.value) }
-                errorMessage = { 'Please enter your 6-digit code' }
+                errorMessage = { 'Please enter your 5-digit code' }
               />
               <br/>
               <GenericButton

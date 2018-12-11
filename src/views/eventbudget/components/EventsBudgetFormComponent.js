@@ -47,12 +47,16 @@ class EventsBudgetFormComponent extends Component {
       eventBudgetData,
       events,
       venue,
-      submitPresenter,
+      validatePresenter,
       preferredDate,
       dateFunc,
       dateErrorMessage,
       endDate,
-      startDate
+      startDate,
+      existingIds,
+      selectAll,
+      showEditSubmitButton,
+      setEditable
     } = this.props
 
 
@@ -75,26 +79,31 @@ class EventsBudgetFormComponent extends Component {
             text = { 'Venue Name' }
             onChange = { (e) => venueTextFunc(e.target.value) }
             value = { venueText }
+            disabled = { showEditSubmitButton }
           />
           <GenericInput
             text = { 'Address' }
             onChange = { (e) => addressTextFunc(e.target.value) }
             value = { addressText }
+            disabled = { showEditSubmitButton }
           />
           <GenericInput
             text = { 'Region' }
             onChange = { (e) => regionTextFunc(e.target.value) }
             value = { regionText }
+            disabled = { showEditSubmitButton }
           />
           <GenericInput
             text = { 'Province' }
             onChange = { (e) => provinceTextFunc(e.target.value) }
             value = { provinceText }
+            disabled = { showEditSubmitButton }
           />
           <GenericInput
             text = { 'City' }
             onChange = { (e) => cityTextFunc(e.target.value) }
             value = { cityText }
+            disabled = { showEditSubmitButton }
           />
           <GenericInput
             text = { 'Amount' }
@@ -105,38 +114,38 @@ class EventsBudgetFormComponent extends Component {
 
         </div>
           <DatePicker
-            selected = { venue && venue.targetDate ? moment(venue.targetDate) : moment(preferredDate) }
+            selected = { preferredDate ? moment(preferredDate) : moment() }
             onChange = { (e) => dateFunc(e) }
             minDate = { events && moment(events.startDate) }
             maxDate = { events && moment(events.endDate) }
+            disabled = { showEditSubmitButton }
             readOnly
             dateFormat = { 'MM/DD/YYYY' }
             text = { 'Events Date' }
             errorMessage = { dateErrorMessage }
             />
-          <br/>
-
           <Attendees
             index = { index }
             viewMoreText = { viewMoreText }
             viewMore = { viewMore }
             viewLess = { viewLess }
+            existingIds = { existingIds }
             eventBudgetData = { eventBudgetData }
+            selectAll = { selectAll }
             checkIdIfHasLogin = { (e, e1) =>
             {  checkIdIfHasLogin(e, e1)} }
           />
-
           <br/>
-          <div className = { 'grid-global' }>
+          <Line/>
+          <center>
+            <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
+          </center>
+          <center>
             <GenericButton
-              text = { 'Continue' }
-              onClick = { () => submitPresenter() }
+              text = { 'Submit' }
+              onClick = { () => validatePresenter() }
             />
-            <GenericButton
-              text = { 'Edit' }
-              onClick = { () => this.presenter.addEventsBudget() }
-            />
-          </div>
+          </center>
         </div>
         <div></div>
         </div>

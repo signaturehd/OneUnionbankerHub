@@ -15,6 +15,7 @@ class EventsBudgetOtherDetailCardComponent extends Component {
 
   render () {
     const {
+      onSubmitEventsReceiptFunc,
       details
     } = this.props
     const eventDetails = details && details.EventsBudgetDetails
