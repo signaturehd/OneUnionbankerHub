@@ -401,7 +401,6 @@ class TeamGoalsFragment extends BaseMVPView {
     let totalCount = taskArray && taskArray.length
     let taskCompleted  = this.checkIfTaskCompleted(taskArray)
     let percentageTask = taskArray && (taskCompleted /totalCount) * 100
-
     return (
     <div>
       { super.render() }
@@ -555,6 +554,7 @@ class TeamGoalsFragment extends BaseMVPView {
                   cardHolder = { resp.goalDetails }
                   priorityFunc = { (resp) => this.priorityFunc(resp) }
                   onSelected = { (
+                    details,
                     goalId,
                     goalTitle,
                     description,
@@ -608,8 +608,7 @@ class TeamGoalsFragment extends BaseMVPView {
                       goalTypeId === 1 ?
                       <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>Performance</span></h2>
                       :
-                        goalTypeId === 2 &&
-                        <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>Developemental</span></h2>
+                      <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>Developemental</span></h2>
                     }
                   </div>
                 </div>

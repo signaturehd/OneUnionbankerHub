@@ -171,7 +171,7 @@ class ApprovedGoalsComponent extends Component {
                 <h2 className = { 'font-size-12px font-weight-lighter text-align-left' }>{ description }</h2>
               </div>
               <div>
-                <h2 className = { 'font-size-12px font-weight-lighter text-align-right' }><span className = { 'border' }>{ goalTypeId ? 'Performance' : goalTypeId ? 'Developemental' : 'x' }</span></h2>
+                <h2 className = { 'font-size-12px font-weight-lighter text-align-right' }><span className = { 'border' }>{ goalTypeId ? goalTypeId === 1 ? 'Performance' : 'Developemental' : 'x' }</span></h2>
               </div>
             </div>
             {
