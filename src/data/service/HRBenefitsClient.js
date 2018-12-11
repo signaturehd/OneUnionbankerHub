@@ -1438,7 +1438,11 @@ export default class HRBenefitsClient {
     return this.service.validateEventsBudget(token)
       .pipe(ServiceErrorOperator())
   }
-  /* News isHeart */
+
+  uploadEventsBudgetReceipt (token, id, attachments) {
+    return this.service.uploadEventsBudgetReceipt (token, id, attachments)
+      .pipe(ServiceErrorOperator())
+  }
 
   addEventsBudget (
     token,

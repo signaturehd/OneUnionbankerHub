@@ -334,6 +334,7 @@ class LoginView extends BaseMVPView {
                       requiredOtp,
                       moment(birthDate).format('MM/DD/YYYY'),
                       usernameId,
+                      newPassword,
                       confirmNewPassword)
                     this.setState({ showResetModal : false })
                   }
@@ -383,7 +384,12 @@ class LoginView extends BaseMVPView {
                     </center>
                     :
                     <LoginComponent
-                      requestEmailFunc = { () => this.presenter.requestEmailVerification(usernameId, birthDate) }
+                      requestEmailFunc = { () =>
+                        this.presenter.requestEmailVerification(
+                          usernameId,
+                          birthDate,
+                          newPassword,
+                          confirmNewPassword) }
                       requestUnlockFunc = { () =>
                         this.presenter.requestUnlockAccount(usernameId, birthDate)
                       }
@@ -402,8 +408,7 @@ class LoginView extends BaseMVPView {
                       onChageBirthDate = { (birthDate) => this.setState({ birthDate }) }
                       resetPassword = { () => this.presenter.resetPassword() }
                       onCloseSuccessModal = { () => {
-                        this.setState({ showEmailMessageModal : false, showHelpDeskComponent : false })
-                        history.push('/')
+                        this.setState({ showEmailMessageModal : false, showResetModal : true })
                       } }
                       />
                   }

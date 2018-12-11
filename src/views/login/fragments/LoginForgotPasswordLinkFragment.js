@@ -85,7 +85,7 @@ class LoginForgotPasswordLinkFragment extends Component {
           <div></div>
         </div>
         <br/>
-        <h2>Recover Password</h2>
+        <h2>Forget Password</h2>
         <br/>
         <br/>
         <GenericInput

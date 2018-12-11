@@ -29,7 +29,7 @@ class AddingDependentsFragment extends BaseMVPView {
       action: () => this.props.history.push('/dependentchildren'),
     }, {
       id : 1,
-      name: 'Adding of Dependent Siblings',
+      name: 'Adding of Dependent Parents & Siblings',
       action: () => this.props.history.push('/dependentsiblings'),
     }, {
       id: 2,

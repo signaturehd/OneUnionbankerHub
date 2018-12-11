@@ -74,12 +74,11 @@ export default class EventsBudgetPresenter {
 
   setDateFunc (preferredDate) {
     storedDate = preferredDate
-    this.view.setDateFunc(storedDate)
+    this.view.setDateFunc(preferredDate)
   }
 
   setAttendees (updatedAttendees) {
     storedId = updatedAttendees
-
     this.view.showAttendees(storedId)
     this.view.showAmount(storedId.length * storedAmountPerEmployee)
   }
@@ -89,18 +88,26 @@ export default class EventsBudgetPresenter {
     this.view.showCircularLoader()
     this.validateEventsBudgetInteractor.execute()
     .subscribe(data => {
-      this.view.showEventBudget(data, storedBenefitId)
-      storedAmountPerEmployee = data.events.amount
       this.view.hideCircularLoader()
+      // data.attendees.map((resp) =>{
+      //   resp.employees.map((empResp) => {
+      //     let hasRecord =  storedId.length > 1 ? storedId :  [...storedId]
+      //     if (empResp.hasRecord === true) {
+      //       hasRecord.push(empResp.id)
+      //       storedId = hasRecord
+      //     }
+      //   })
+      // })
+      storedAmountPerEmployee = data.events.amount
+      this.setAttendees(storedId)
+      this.view.showEventBudget(data, storedBenefitId)
     }, error => {
       this.view.navigate()
       this.view.hideCircularLoader()
     })
   }
 
-  addEventsBudget (storedListId) {
-    const newArrayId = storedListId
-    const uniArr = [...(new Set(newArrayId))]
+  validationEventsBudget (storedListId) {
     if(storedVenueText === '') {
       store.dispatch(NotifyActions.resetNotify())
       store.dispatch(NotifyActions.addNotify({
@@ -147,26 +154,33 @@ export default class EventsBudgetPresenter {
         })
       )
     } else {
-      this.view.showCircularLoader()
-      this.addEventsBudgetInteractor.execute(
-        addEventsBudgetParam(
-          storedRequestId,
-          storedVenueText,
-          storedAddressText,
-          storedRegionText,
-          storedProvinceText,
-          storedCityText,
-          moment(storedDate).format('YYYY-MM-DD'),
-          uniArr,
-        )
-      )
-      .subscribe(data => {
-        this.view.hideCircularLoader()
-        this.view.noticeOfUndertaking(true)
-        this.view.noticeOfUndertakingForm(data)
-      }, error => {
-        this.view.hideCircularLoader()
-      })
+      this.addEventsBudget(storedListId)
     }
+  }
+
+  addEventsBudget (storedListId) {
+    const newArrayId = storedListId
+    const uniArr = [...(new Set(newArrayId))]
+    this.view.showCircularLoader()
+    this.addEventsBudgetInteractor.execute(
+      addEventsBudgetParam(
+        storedRequestId,
+        storedVenueText,
+        storedAddressText,
+        storedRegionText,
+        storedProvinceText,
+        storedCityText,
+        storedDate ?  moment(storedDate).format('YYYY-MM-DD'): moment().format('YYYY-MM-DD'),
+        uniArr,
+      )
+    )
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.noticeOfUndertaking(true)
+      this.view.noticeOfUndertakingForm(data)
+      storedId = []
+    }, error => {
+      this.view.hideCircularLoader()
+    })
   }
 }

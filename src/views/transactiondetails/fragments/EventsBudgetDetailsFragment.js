@@ -8,7 +8,7 @@ import './styles/detailsFragment.css'
 
 import * as TransactionDetailsFunction from '../controller/TransactionDetailsFunction'
 
-import EventsBudgetDetailCardComponen from
+import EventsBudgetDetailCardComponent from
   '../../transaction/components/TransactionEventsBudgetComponent/EventsBudgetDetailCardComponent'
 
 class EventsBudgetDetailsFragment extends Component {
@@ -20,6 +20,7 @@ class EventsBudgetDetailsFragment extends Component {
     const {
       attachmentsMethod,
       agreementsMethod,
+      onSubmitEventsReceiptFunc,
       details,
     } = this.props
 
@@ -60,8 +61,10 @@ class EventsBudgetDetailsFragment extends Component {
             </div>
             <br/>
             <div>
-              <EventsBudgetDetailCardComponen
+              <EventsBudgetDetailCardComponent
                 details = { details }
+                onSubmitEventsReceiptFunc = { (transactionID, attachmentArray) =>
+                  onSubmitEventsReceiptFunc(transactionID, attachmentArray) }
                 onClickAttachments = { (resp) => attachmentsMethod(resp) }
                 onClickAgreements = { (resp) => agreementsMethod(resp) }
               />
