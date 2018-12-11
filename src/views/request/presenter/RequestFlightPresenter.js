@@ -1,5 +1,6 @@
 import GetAreaInteractor from '../../../domain/interactor/travel/GetAreaInteractor'
 import GetTravelsInteractor from '../../../domain/interactor/travel/GetTravelsInteractor'
+import GetTravelTrainingInteractor from '../../../domain/interactor/travel/GetTravelTrainingInteractor'
 import AddRequestOneWayInteractor from '../../../domain/interactor/travel/AddRequestOneWayInteractor'
 import AddRequestRoundTripInteractor from '../../../domain/interactor/travel/AddRequestRoundTripInteractor'
 import requestOneWayParam from '../../../domain/param/AddRequestOneWayParam'
@@ -9,6 +10,7 @@ export default class RequestFlightPresenter {
   constructor (container) {
     this.getAreaInteractor = new GetAreaInteractor(container.get('HRBenefitsClient'))
     this.getTravelsInteractor = new GetTravelsInteractor(container.get('HRBenefitsClient'))
+    this.getTravelTrainingInteractor = new GetTravelTrainingInteractor(container.get('HRBenefitsClient'))
     this.addRequestOneWayInteractor = new AddRequestOneWayInteractor(container.get('HRBenefitsClient'))
     this.addRequestRoundTripInteractor = new AddRequestRoundTripInteractor(container.get('HRBenefitsClient'))
   }
@@ -95,6 +97,15 @@ export default class RequestFlightPresenter {
           this.getTravels()
         }, e => {
           this.view.hideSubmitLoader()
+          // TODO prompt generic error
+      })
+  }
+
+  getTravelTraining () {
+    this.getTravelTrainingInteractor.execute()
+      .subscribe(travel => {
+          this.view.getTravelTraining(travel)
+        }, e => {
           // TODO prompt generic error
       })
   }

@@ -2167,6 +2167,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getTravelTraining (token) {
+    return this.apiClient.get('v1/travels/trainings', {
+      headers : { token }
+    })
+  }
+
   /* News isHeart */
 
   addNewsIsHeart (token, id, isHeart) {

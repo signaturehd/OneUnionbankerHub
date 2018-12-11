@@ -1425,6 +1425,11 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  getTravelTraining (token) {
+    return this.service.getTravelTraining(token)
+    .pipe(ServiceErrorOperator())
+  }
+
   /* News isHeart */
 
   addNewsIsHeart (token, id, isHeart) {

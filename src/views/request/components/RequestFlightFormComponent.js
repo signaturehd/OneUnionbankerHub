@@ -85,7 +85,15 @@ class RequestFlightFormComponent extends Component {
       requestFlightArray,
       purposeArray,
       areaArray,
-      submit
+      submit,
+      trainingArray,
+      showTrainingModal,
+      showTrainingModalFunc,
+      trainingId,
+      trainingName,
+      trainingFunc,
+      pleaseSpecify,
+      pleaseSpecifyFunc
     } = this.props
 
     const { percentage } = this.props
@@ -139,6 +147,17 @@ class RequestFlightFormComponent extends Component {
             />
         }
         {
+          showTrainingModal &&
+            <SingleInputModal
+              label = { 'Select the travel training' }
+              inputArray = { trainingArray }
+              selectedArray = { (trainingId, trainingName) =>
+                  trainingFunc(trainingId, trainingName)
+              }
+              onClose = { () => onClose() }
+            />
+        }
+        {
           showAreaModal &&
             <AreaModal
               enabledLoader = { enabledLoader }
@@ -173,6 +192,24 @@ class RequestFlightFormComponent extends Component {
             value = { purposeName }
             onClick = { () => showPurposeModalFunc() }
           />
+          <div className = { 'request-grid-option' }>
+            {
+              purposeName === 'Training' &&
+              <GenericInput
+                text = { 'Travel training' }
+                value = { trainingName }
+                onClick = { () => showTrainingModalFunc() }
+              />
+            }
+            {
+              trainingName === 'Others' &&
+              <GenericInput
+                text = { 'Please specify' }
+                value = { pleaseSpecify }
+                onChange = { (e) => pleaseSpecifyFunc(e.target.value) }
+              />
+            }
+          </div>
           <div className = { 'request-grid-option' }>
             <GenericInput
               text = { 'Origin' }
