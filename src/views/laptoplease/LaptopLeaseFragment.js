@@ -275,10 +275,13 @@ class LaptopLeaseFragment extends BaseMVPView {
           />
         }
         <div>
-          <i
-            className={ 'back-arrow' }
-            onClick={ this.navigate.bind(this) }>
-          </i>
+          {
+            !cardOptionComponent &&
+            <i
+              className={ 'back-arrow' }
+              onClick = { () => this.setState({ cardOptionComponent : true }) }>
+            </i>
+          }
           <h2 className={ 'header-margin-default' }>
             Laptop Lease
           </h2>
