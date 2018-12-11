@@ -43,6 +43,7 @@ class RequestFlightFragment extends BaseMVPView {
       showNoticeResponseModal : false,
       showDepartureTime : false,
       showReturnTime : false,
+      showTrainingModal: false,
       areaSwitch : 0,
       noticeResponse : '',
       typeOfFlight : '',
@@ -66,6 +67,9 @@ class RequestFlightFragment extends BaseMVPView {
       returnRemarks : '',
       pageNumber : 1,
       findArea : '',
+      trainingId : '',
+      trainingName : '',
+      pleaseSpecify: '',
       timeArray : [
         { id: 1, name: 'Morning' },
         { id: 2, name: 'Afternoon' },
@@ -76,13 +80,15 @@ class RequestFlightFragment extends BaseMVPView {
         { id: 1, name: 'Business Meeting' },
         { id: 2, name: 'Training' }
       ],
-      requestFlightArray : []
+      requestFlightArray : [],
+      trainingArray: []
     }
   }
 
   componentDidMount() {
     this.presenter.getAreaData(this.state.pageNumber, this.state.findArea)
     this.presenter.getTravels()
+    this.presenter.getTravelTraining()
   }
 
   departureOriginFunc (departureOrigin) {
@@ -133,6 +139,10 @@ class RequestFlightFragment extends BaseMVPView {
     this.setState({ requestFlightArray })
   }
 
+  getTravelTraining (trainingArray) {
+    this.setState({ trainingArray })
+  }
+
   noticeResponse (noticeResponse) {
     this.setState({ noticeResponse, showNoticeResponseModal : true })
   }
@@ -150,7 +160,8 @@ class RequestFlightFragment extends BaseMVPView {
       returnDate,
       returnTime,
       returnRemarks,
-      typeOfFlight
+      typeOfFlight,
+      trainingArray
     } = this.state
 
     this.presenter.addRequestFlight(
@@ -189,7 +200,10 @@ class RequestFlightFragment extends BaseMVPView {
       returnTime : '',
       returnRemarks : '',
       pageNumber : 1,
-      findArea : ''
+      findArea : '',
+      trainingId: '',
+      trainingName: '',
+      pleaseSpecify: ''
     })
   }
 
@@ -278,7 +292,12 @@ class RequestFlightFragment extends BaseMVPView {
       timeArray,
       requestFlightArray,
       purposeArray,
-      areaArray
+      areaArray,
+      trainingArray,
+      showTrainingModal,
+      trainingId,
+      trainingName,
+      pleaseSpecify
     } = this.state
 
     const { percentage } = this.props
@@ -353,7 +372,8 @@ class RequestFlightFragment extends BaseMVPView {
                   showAreaModal : false,
                   showPurposeModal : false,
                   showDepartureTime : false,
-                  showReturnTime : false
+                  showReturnTime : false,
+                  showTrainingModal: false
                 })
               }
               showPurposeModal = { showPurposeModal }
@@ -413,6 +433,15 @@ class RequestFlightFragment extends BaseMVPView {
               requestFlightArray = { requestFlightArray }
               purposeArray = { purposeArray }
               areaArray = { areaArray }
+              showTrainingModal = { showTrainingModal }
+              showTrainingModalFunc = { () => this.setState({ showTrainingModal: true }) }
+              pleaseSpecify = { pleaseSpecify }
+              pleaseSpecifyFunc = { (pleaseSpecify) => this.setState({ pleaseSpecify }) }
+              trainingId = { trainingId }
+              trainingName = { trainingName }
+              trainingFunc = { (trainingId, trainingName) =>
+                this.setState({ trainingId, trainingName, showTrainingModal: false }) }
+              trainingArray = { trainingArray }
               submit = { () => {
                   this.setState({ showRequestModal : false })
                   this.submit()
