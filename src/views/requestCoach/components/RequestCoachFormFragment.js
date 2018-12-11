@@ -23,6 +23,7 @@ class RequestCoachFormFragment extends Component {
       preferredDateFunc,
       preferredTime,
       preferredTimeFunc,
+      preferredTimeErrorMessage,
       onClose,
       onSubmit
     } = this.props
@@ -46,7 +47,9 @@ class RequestCoachFormFragment extends Component {
               text = { 'Preferred Time' }
               type = { 'time' }
               value = { preferredTime }
+              min = { moment().format('hh:mm:ss A') }
               onChange = { (e) => preferredTimeFunc(e.target.value) }
+              errorMessage = { preferredTimeErrorMessage }
             />
           </div>
           <div className = { 'grid-global' }>
