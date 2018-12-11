@@ -5,6 +5,7 @@ const ACCOUNT_NUMBER = 'ACCOUNT_NUMBER'
 const RELEASING_CENTER = 'RELEASING_CENTER'
 const WIZARD_VALIDATION = 'WIZARD_VALIDATION'
 const PROFILE = 'PROFILE'
+const EMPLOYMENT_STATUS = 'EMPLOYMENT_STATUS'
 
 export default class SessionProvider {
   constructor () {
@@ -66,5 +67,13 @@ export default class SessionProvider {
 
   getProfile () {
     return JSON.parse(this.storage.getItem(PROFILE)) || {}
+  }
+
+  setPreEmploymentStatus (preEmploymentStatus = '') {
+    this.storage.setItem(EMPLOYMENT_STATUS, JSON.stringify(preEmploymentStatus))
+  }
+
+  getPreEmploymentStatus () {
+    return this.storage.getItem(EMPLOYMENT_STATUS) || {}
   }
 }

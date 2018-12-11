@@ -13,13 +13,12 @@ div {
   display: inline-flex;
   overflow: auto;
   position: absolute;
-  top: 57px;
+  top: 75px;
   bottom: 0; }
 .navigation-panels .navigation-panel {
   overflow: auto; }
 .page-boundary {
   position: absolute;
-  height: 57px;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -63,7 +62,7 @@ div {
       display: inline-flex;
       overflow: hidden;
       z-index: 0;
-      top: 57px;
+      top: 75px;
       position: absolute;
       z-index: 0;
       bottom: 0;
@@ -80,7 +79,7 @@ div {
       overflow: hidden;
       position: absolute;
       z-index: 0;
-      top: 57px;
+      top: 75px;
       bottom: 0;
   }
   .navigation-content {

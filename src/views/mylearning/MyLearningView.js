@@ -10,6 +10,9 @@ import PodcastFragment from '../podcast/PodcastFragment'
 import PodcastPlayerFragment from '../podcastplayer/PodcastPlayerFragment'
 import LibraryView from '../library/LibraryFragment'
 import TrainingFragment from '../trainings/TrainingFragment'
+import MyGoalsFragment from '../mygoals/MyGoalsFragment'
+import PayForSkillsFragment from '../payforskill/PayForSkillsFragment'
+import CertificateOfEmploymentFragment from '../coe/CertificateOfEmploymentFragment'
 
 import { InputModal, Card, GenericButton } from '../../ub-components'
 
@@ -25,7 +28,7 @@ class MyLearningView extends BaseMVPView {
   }
 
   render () {
-    const { history, profile } = this.props
+    const { history, profile, isLineManager } = this.props
     const { accountNumber, showAccountNumberModal } = this.state
     const mylearning = [{
       id: 0 ,
@@ -42,55 +45,71 @@ class MyLearningView extends BaseMVPView {
       styleName: 'mylearning-cards-2 mylearning-option-default font-weight-bold',
       title: 'Enroll to Training',
       path: '/mylearning/trainings',
+    }, {
+      id: 4 ,
+      styleName: 'mylearning-cards-4 mylearning-option-default font-weight-bold',
+      title: 'Apply for Pay for Skills',
+      path: '/mylearning/pay/skills',
     }]
+
     const MyLearning = () => (
-      <div className = { 'mylearning-container' }>
-        <div>
-          <h2 className={ 'header-margin-default text-align-left' }> My Learning </h2>
-          <h2> How would you want to develop yourself today? </h2>
-        </div>
-        {
-          showAccountNumberModal &&
-            <InputModal
-              isDismisable = { true }
-              onClose = { () => this.setState({ showAccountNumberModal : false }) }
-              onChange = { e => this.setState({ accountNumber: e.target.value }) }
-              placeholder = { 'Account Number' }
-              type = { 'text' }
-              onSubmit = { e => {
-                  e.preventDefault()
-                  this.presenter.validateAccountNumber(accountNumber)
-                }
-              }
-          />
-        }
-        <div className = { 'mylearning-adjustment' }>
-        <div className = { 'mylearning-card-container' }>
+      <div className = { 'default-body-grid' }>
+        <div></div>
+        <div className = { 'mylearning-container' }>
+          <div>
+            <h2 className={ 'header-margin-default text-align-left' }> My Learning </h2>
+            <h2> How would you want to develop yourself today? </h2>
+          </div>
           {
-          mylearning.map((value, idx) => (
-            <Card
-              className = { 'mylearning-card' }
-              onClick={ () =>
-                history.push(value.path)
-              }
-              key={ idx }>
-              <div className = { 'mylearning-column-grid' }>
-                <div
-                  className={ value.styleName }
-                  text={ value.title } >
-                </div>
-                <p className={ 'mylearning-option-cards font-weight-bold' }>{ value.title }</p>
-              </div>
-            </Card>
-          ))
+            showAccountNumberModal &&
+              <InputModal
+                isDismisable = { true }
+                onClose = { () => this.setState({ showAccountNumberModal : false }) }
+                onChange = { e => this.setState({ accountNumber: e.target.value }) }
+                placeholder = { 'Account Number' }
+                type = { 'text' }
+                onSubmit = { e => {
+                    e.preventDefault()
+                    this.presenter.validateAccountNumber(accountNumber)
+                  }
+                }
+            />
           }
+          <div className = { 'mylearning-adjustment' }>
+          <div className = { 'mylearning-card-container' }>
+            {
+            mylearning.map((value, idx) => (
+              <Card
+                className = { 'mylearning-card' }
+                onClick={ () =>
+                  history.push(value.path)
+                }
+                key={ idx }>
+                <div className = { 'mylearning-column-grid' }>
+                  <div
+                    className={ value.styleName }
+                    text={ value.title } >
+                  </div>
+                  <p className={ 'mylearning-option-cards font-weight-bold' }>{ value.title }</p>
+                </div>
+              </Card>
+            ))
+            }
+            </div>
+          </div>
         </div>
+        <div></div>
       </div>
-    </div>)
+    )
 
     return (
       <div>
         <Switch>
+          <Route path = '/mylearning/mygoals' render = { props =>
+            <MyGoalsFragment { ...props }
+            isLineManager = { isLineManager } /> } />
+          <Route path = '/mylearning/pay/skills' render = { props =>
+            <PayForSkillsFragment { ...props } /> } />
           <Route path = '/mylearning/trainings' render = { props =>
             <TrainingFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts' render = { props =>

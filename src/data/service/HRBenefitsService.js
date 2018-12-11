@@ -1,9 +1,10 @@
 export default class HRBenefitsService {
-  constructor (apiClient, accountClient, fileClient, onboardingClient) {
+  constructor (apiClient, accountClient, fileClient, onboardingClient, rootClient) {
     this.apiClient = apiClient
     this.accountClient = accountClient
     this.fileClient = fileClient
     this.onboardingClient = onboardingClient
+    this.rootClient = rootClient
   }
 
   /* user */
@@ -16,7 +17,7 @@ export default class HRBenefitsService {
   }
 
   otp (otpParam) {
-    return this.apiClient.post('v2/otp', otpParam)
+    return this.apiClient.post('v1/otp', otpParam)
   }
 
   resend (resendOtpParam) {
@@ -350,6 +351,16 @@ export default class HRBenefitsService {
   getNews (token) {
     return this.apiClient.get('v1/news', {
         headers: { token }
+    })
+  }
+
+  getNewsImage (token, file) {
+    return this.fileClient.get('v1/uploads?folder=news', {
+      headers : {
+        token,
+        file : file
+      },
+      responseType : 'blob'
     })
   }
 
@@ -2130,12 +2141,14 @@ export default class HRBenefitsService {
     const object = {
       requestId: liquidationParam.requestId,
       isTicketUsed: liquidationParam.ticketMode,
-      remarks : liquidationParam.whyTicketUsed
+      remarks : liquidationParam.whyTicketUsed,
+      orDate : liquidationParam.orDate,
+      orNumber : liquidationParam.orNumber,
     }
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
     liquidationParam.attachmentsData &&
     liquidationParam.attachmentsData.map((resp, key) =>(
-      formData.append('attachment', resp.file)
+      formData.append('attachment' + Math.floor(Math.random()*90000) + 10000, resp.file)
     ))
     formData.append('body', JSON.stringify(object))
     return this.apiClient.post('v1/travels/liquidate',  formData, {
@@ -2211,4 +2224,208 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+  /* My Goals */
+
+  getGoals (token) {
+    return this.apiClient.get('v1/goals', {
+      headers: { token }
+    })
+  }
+
+  addRequestedGoals (
+    token,
+    requestedGoalsParam) {
+    const objectParam = {
+      title: requestedGoalsParam.goalTitle,
+      description: requestedGoalsParam.description,
+      startDate: requestedGoalsParam.startDate,
+      endDate: requestedGoalsParam.dueDate,
+      priority: requestedGoalsParam.priorityId,
+      type: requestedGoalsParam.goalTypeId
+    }
+
+    return this.apiClient.post('v1/goals/personal', objectParam, {
+      headers : { token }
+    })
+  }
+
+  updateGoals (token, goalId, startDate, dueDate) {
+    const objectParam = {
+      id: goalId,
+      startDate: startDate,
+      endDate: dueDate
+    }
+
+    return this.apiClient.put(`v1/goals/personal/${goalId}`, objectParam, {
+      headers : { token }
+    })
+  }
+
+  getForApprovalGoals (token) {
+    return this.apiClient.get('v1/goals/reports', {
+      headers: { token }
+    })
+  }
+
+  approveGoal (token, goalId, isApprove, rejectedRemarks) {
+    const objectParam = {
+      id: goalId,
+      status: isApprove,
+      remarks: rejectedRemarks
+    }
+
+    return this.apiClient.post('v1/goals/approval', objectParam, {
+      headers : { token }
+    })
+  }
+
+  requestCoach (token, requestCoachParam) {
+    const objectParam = {
+      description: requestCoachParam.description,
+      date: requestCoachParam.preferredDate,
+      time: requestCoachParam.preferredTime
+    }
+
+    return this.apiClient.post('v1/coach', objectParam, {
+      headers : { token }
+    })
+  }
+
+  addGoalTask (token, goalId, taskDescription) {
+    const objectParam = {
+      id: goalId,
+      description: taskDescription
+    }
+
+    return this.apiClient.post('v1/goals/tasks', objectParam, {
+      headers : { token }
+    })
+  }
+
+  getGoalTask (token, goalId) {
+    return this.apiClient.get(`v1/goals/tasks?goalId=${goalId}`, {
+      headers: { token }
+    })
+  }
+
+  addGoalComment (token, goalId, goalComment) {
+    const objectParam = {
+      id: goalId,
+      description: goalComment
+    }
+
+    return this.apiClient.post('v1/goals/comments', objectParam, {
+      headers : { token }
+    })
+  }
+
+  getGoalComment (token, goalId, pageNumber, pageItem) {
+    return this.apiClient.get(`v1/goals/comments?pageNumber=${pageNumber}&pageItem=${pageItem}&goalId=${goalId}`, {
+      headers: { token }
+    })
+  }
+
+  updateGoalTask(token, goalId, taskDescription, isCompleted) {
+    let updateGoal
+    if (taskDescription) {
+      updateGoal = this.apiClient.put(`v1/goals/tasks/${goalId}`, {
+        description: taskDescription
+      }, {
+        headers : { token }
+      })
+    } else if (isCompleted !== null) {
+      updateGoal = this.apiClient.post(`v1/goals/tasks/${goalId}`, {
+        isCompleted
+      }, {
+        headers : { token }
+      })
+    }
+    return updateGoal
+  }
+
+  updateGoalComment(token, commentId, goalComment) {
+    const objectParam = {
+      description: goalComment
+    }
+
+    return this.apiClient.put(`v1/goals/comments/${commentId}`, objectParam, {
+      headers : { token }
+    })
+  }
+
+  deleteGoal(token, goalId) {
+    return this.apiClient.delete(`v1/goals/personal/${goalId}?isArchived=1`, {
+      headers : { token }
+    })
+  }
+
+  deleteTask(token, taskId) {
+    return this.apiClient.delete(`v1/goals/tasks/${taskId}?isArchived=1`, {
+      headers : { token }
+    })
+  }
+
+  deleteComment(token, commentId) {
+    return this.apiClient.delete(`v1/goals/comments/${commentId}?isArchived=1`, {
+      headers : { token }
+    })
+  }
+
+  getTeamGoals (token, status) {
+    return this.apiClient.get(`v1/goals/reports?status=${status}`, {
+      headers: { token }
+    })
+  }
+
+  getGoalsHistory (token, goalId, pageNumber, pageItem) {
+    return this.apiClient.get(`v1/goals/${goalId}/history?pageItem=${pageItem}&pageNumber=${pageNumber}`, {
+      headers: { token }
+    })
+  }
+  // Pay For Skills
+
+  getPaySkills (token) {
+    return this.apiClient.get('v1/skills/programs', {
+      headers : { token }
+    })
+  }
+
+  getPaySkillsList (token) {
+    return this.apiClient.get('v1/skills/details',{
+      headers : { token }
+    })
+  }
+
+  submitPaySkills (token, bodyParam) {
+    const formData = new FormData()
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    formData.append('body', JSON.stringify(bodyParam.body))
+    bodyParam && bodyParam.attachments.map((resp) => (
+      formData.append(resp.name + ' ' + Math.floor(Math.random()*100) + 100 , resp.file)
+    ))
+    return this.apiClient.post('v1/skills/submit', formData, {
+      headers : { token }
+    })
+  }
+
+  /* Certificaqte of Employment */
+
+  getPurposeCoeType (token, data) {
+    return this.rootClient.get(`v1/coe/libraries?type=${ data }`, null, {
+      headers : { token }
+    })
+  }
+
+  getCountryCoeType (token, data) {
+    return this.rootClient.get(`v1/coe/libraries?type=${ data }`, null, {
+      headers : { token }
+    })
+  }
+
+  submitCoe (token, bodyParam) {
+    return this.rootClient.post(`v1/coe`, bodyParam.body, {
+      headers : { token }
+    })
+  }
+
 }

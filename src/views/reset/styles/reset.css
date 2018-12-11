@@ -29,7 +29,7 @@
   display: block;
   width: 100px;
   margin: 30px auto;
-  box-shadow: 0 5px 10px -7px #333333;
+  box-shadow: 0 5px 20px -7px #333333;
   border-radius: 50%;
 }
 .text {

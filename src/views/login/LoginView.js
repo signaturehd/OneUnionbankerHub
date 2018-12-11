@@ -264,13 +264,13 @@ class LoginView extends BaseMVPView {
       history
     } = this.props
 
-    /* Prod Version 5.3.0 */
+    /* Prod Version 5.1.1 */
 
-    /* UAT 6.0.1*/
+    /* UAT 6.0.0*/
 
-    let version = 5
+    let version = 6
     let majorVersion = 8
-    let minorVersion = 0
+    let minorVersion = 2
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     const objectValue = [{
@@ -473,7 +473,7 @@ class LoginView extends BaseMVPView {
               {
                 // <img className = { 'login-logo' } src = { require('../../images/drawer/1uhub_halloween_logo.jpg')} />
               }
-              <img className = { 'login-logo' } src = { require('../../images/profile-picture.png')} />
+              <img className = { 'login-logo' } src = { require('../../images/WEB and LOGO/1uhub_logo_christmas-01.png')} />
                 <br/>
                 <GenericInput
                   onChange = { e =>

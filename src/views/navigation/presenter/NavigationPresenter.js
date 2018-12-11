@@ -7,6 +7,7 @@ import RelogInInteractor from '../../../domain/interactor/user/RelogInInteractor
 import GenericPinCodeInteractor from '../../../domain/interactor/pinCode/GenericPinCodeInteractor'
 
 /* Preemployment Status */
+import GetStatusInteractor from '../../../domain/interactor/preemployment/preemployment/GetStatusInteractor'
 import GetPreEmploymentStatusInteractor from
 '../../../domain/interactor/preemployment/preemployment/GetPreEmploymentStatusInteractor'
 
@@ -20,6 +21,7 @@ export default class NavigationPresenter {
     this.getLibrariesInteractor = new GetLibrariesInteractor(container.get('HRBenefitsClient'))
     // this.getWizardInteractor = new GetWizardInteractor(container.get('HRBenefitsClient'))
     // this.setWizardInteractor = new SetWizardInteractor(container.get('HRBenefitsClient'))
+    this.getStatusInteractor = new GetStatusInteractor(container.get('HRBenefitsClient'))
     this.relogInInteractor = new  RelogInInteractor(container.get('HRBenefitsClient'))
     this.genericPinCodeInteractor = new GenericPinCodeInteractor(container.get('HRBenefitsClient'))
     this.getPreEmploymentStatusInteractor = new GetPreEmploymentStatusInteractor(container.get('HRBenefitsClient'))
@@ -37,26 +39,18 @@ export default class NavigationPresenter {
   }
 
   relogin () {
-    try {
       this.relogInInteractor.execute()
       store.dispatch(LoginActions.showReloginModal(false))
-    } catch(e) {
-      console.log(e)
-    }
   }
 
   getLibraries () {
     this.view.showLoading()
     this.getLibrariesInteractor.execute()
       .subscribe(resp => {
-        try {
           this.view.showProfile(resp)
           this.view.showPinIsValid(resp.hasPIN)
           this.view.isHasCOC(resp.hasCOC)
           this.view.hideLoading()
-        } catch (e) {
-          console.log(e)
-        }
       }, e => {
         this.view.hideLoading()
         this.view.showProfile(e.message)
@@ -100,12 +94,10 @@ export default class NavigationPresenter {
   // 0 or empty string, also hide both and show benefits if employee is regular
 
   getPreEmploymentStatus () {
-    this.getPreEmploymentStatusInteractor.execute()
-    .subscribe(data => {
-      this.view.showPreemploymentStatus(data && data)
-      }, error => {
-        this.view.showPreemploymentStatus(null)
-        store.dispatch(NotifyActions.resetNotify())
-    })
+    if (this.getStatusInteractor.execute()) {
+      this.view.showPreemploymentStatus(this.getStatusInteractor.execute())
+    } else {
+      this.getPreEmploymentStatusInteractor.execute()
+    }
   }
 }

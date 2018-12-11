@@ -132,7 +132,7 @@ class SettingsProfileCardComponent extends Component {
             staffLoader = { staffLoader }
             staffAccounts = { staffAccounts }
             employeeNumber = { profile.employeeNumber }
-            name = { profile.fullname }
+            name = { profile && profile.fullname }
             showSuccessModal = { showSuccessModal }
             getForConfirmation = { () => getForConfirmation() }
             onUpdateStaffAccounts = { (employeeName, selectedAccountNumber, sequence) =>
@@ -215,13 +215,13 @@ class SettingsProfileCardComponent extends Component {
             <div className={ 'profile-information-view' }>
               <div className={ 'profile-padding' }>
                 <h1 className={ 'profile-name' }>
-                  { profile.fullname ? profile.fullname : '(Not Yet Provided)' }
+                  { profile && profile.fullname ? profile.fullname : '(Not Yet Provided)' }
                 </h1>
                 <h2 className={ 'profile-position' }>
-                  { profile.position ? profile.position  : '(Not Yet Provided) '} at UnionBank of the Philippines
+                  { profile && profile.position ? profile.position  : '(Not Yet Provided) '} at UnionBank of the Philippines
                 </h2>
                 <h2 className={ 'profile-margin-label' }>
-                  { profile.address ? profile.address  : '(Not Yet Provided)' }
+                  { profile && profile.address ? profile.address  : '(Not Yet Provided)' }
                 </h2>
                 <br/>
               </div>

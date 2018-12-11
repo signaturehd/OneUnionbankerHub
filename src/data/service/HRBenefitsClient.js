@@ -99,7 +99,6 @@ export default class HRBenefitsClient {
   /* Unlock Account */
 
   requestUnlockAccount (token, empId, date) {
-    console.log(empId, date)
     return this.service.requestUnlockAccount(token, empId, date)
       .pipe(ServiceErrorOperator())
   }
@@ -166,6 +165,14 @@ export default class HRBenefitsClient {
 
   getAccountNumber () {
     return this.sessionProvider.getAccountNumber()
+  }
+
+  setPreEmploymentStatus (preEmploymentStatus) {
+    this.sessionProvider.setPreEmploymentStatus(preEmploymentStatus)
+  }
+
+  getStatus () {
+    return this.sessionProvider.getPreEmploymentStatus()
   }
 
   /* Set Selected Releasing Center*/
@@ -351,6 +358,21 @@ export default class HRBenefitsClient {
   getNews (token) {
     return this.service.getNews(token)
       .pipe(ServiceErrorOperator())
+  }
+
+  getNewsImage (token, file) {
+    return this.service.getNewsImage(token, file)
+    .pipe(ServiceErrorOperator())
+    .flatMap(resp =>
+      Observable.create(observer => {
+        const reader = new FileReader()
+        reader.onerror = err => observer.error(err)
+        reader.onabort = err => observer.error(err)
+        reader.onload = () => observer.next(reader.result)
+        reader.onloadend = () => observer.complete()
+        reader.readAsDataURL(resp)
+      })
+    )
   }
 
   /* Transactions Personal */
@@ -1439,16 +1461,122 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  /* My Goals */
+  // Pay For Skills
+  getPaySkills (token) {
+    return this.service.getPaySkills(token)
+      .pipe(ServiceErrorOperator())
+  }
 
+  getPaySkillsList (token, id) {
+    return this.service.getPaySkillsList(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  submitPaySkills (token, bodyParam) {
+    return this.service.submitPaySkills(token, bodyParam)
+      .pipe(ServiceErrorOperator())
+  }
+
+  /* My Goals */
   getGoals (token) {
     return this.service.getGoals(token)
     .pipe(ServiceErrorOperator())
   }
 
   addRequestedGoals (token, requestedGoalsParam) {
-
     return this.service.addRequestedGoals(token, requestedGoalsParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  updateGoals (token, goalId, startDate, dueDate) {
+    return this.service.updateGoals(token, goalId, startDate, dueDate)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getForApprovalGoals (token) {
+    return this.service.getForApprovalGoals(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  approveGoal (token, goalId, isApprove, rejectedRemarks) {
+    return this.service.approveGoal(token, goalId, isApprove, rejectedRemarks)
+    .pipe(ServiceErrorOperator())
+  }
+
+  requestCoach (token, requestCoachParam) {
+    return this.service.requestCoach(token, requestCoachParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addGoalTask (token, goalId, taskDescription) {
+    return this.service.addGoalTask(token,  goalId, taskDescription)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getGoalTask (token, goalId) {
+    return this.service.getGoalTask(token, goalId)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addGoalComment (token, goalId, goalComment) {
+    return this.service.addGoalComment(token,  goalId, goalComment)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getGoalComment (token, goalId, pageNumber, pageItem) {
+    return this.service.getGoalComment(token, goalId, pageNumber, pageItem)
+    .pipe(ServiceErrorOperator())
+  }
+
+  updateGoalTask (token, goalId, taskDescription, isCompleted) {
+    return this.service.updateGoalTask(token,  goalId, taskDescription, isCompleted)
+    .pipe(ServiceErrorOperator())
+  }
+
+  updateGoalComment (token, commentId, goalComment) {
+    return this.service.updateGoalComment(token, commentId, goalComment)
+    .pipe(ServiceErrorOperator())
+  }
+
+  deleteGoal (token, goalId) {
+    return this.service.deleteGoal(token, goalId)
+      .pipe(ServiceErrorOperator())
+  }
+
+  deleteTask (token, taskId) {
+    return this.service.deleteTask(token, taskId)
+      .pipe(ServiceErrorOperator())
+  }
+
+  deleteComment (token, commentId) {
+    return this.service.deleteComment(token, commentId)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getTeamGoals (token, status) {
+    return this.service.getTeamGoals(token, status)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getGoalsHistory (token, goalId, pageNumber, pageItem) {
+    return this.service.getGoalsHistory(token, goalId, pageNumber, pageItem)
+    .pipe(ServiceErrorOperator())
+  }
+
+  /* Certificaqte of Employment */
+
+  getPurposeCoeType (token, data) {
+    return this.service.getPurposeCoeType(token, data)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getCountryCoeType (token, data) {
+    return this.service.getCountryCoeType(token, data)
+    .pipe(ServiceErrorOperator())
+  }
+
+  submitCoe (token, bodyParam) {
+    return this.service.submitCoe(token, bodyParam)
     .pipe(ServiceErrorOperator())
   }
 }

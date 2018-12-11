@@ -62,10 +62,15 @@ p {
   -webkit-transform: rotate(315deg);
 }
 
+.default-body-grid {
+  display: grid;
+  grid-template-columns: .05fr 1fr .05fr;
+}
+
 .header-margin-default {
   align-items: center;
   margin-bottom: 20px;
-  font-size: 35px;
+  font-size: 30px;
   text-align: center;
 }
 
@@ -253,10 +258,27 @@ p {
   color: #ff8a00;
 }
 
+.unionbank-white-color {
+  color: #fff;
+}
+
 .grid-global {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 2%;
+}
+
+.grid-global-columns-x3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 2%;
+}
+
+@media screen and (max-width: 1024px) {
+  .grid-global-columns-x3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -264,16 +286,16 @@ p {
     display: grid;
     grid-template-columns: 1fr;
   }
+
+  .grid-global-columns-x3 {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }
+
 .grid-global-rows {
   display: grid;
   grid-template-rows: 1fr 1fr;
-  column-gap: 2%;
-}
-
-.grid-global-columns-x3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   column-gap: 2%;
 }
 
@@ -286,6 +308,23 @@ p {
 .grid-global-row-x3 {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
+  column-gap: 2%;
+}
+
+@media screen and (max-width: 768px) {
+  .grid-global {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .grid-global-columns-x3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-bottom : 10px;
+  }
+}
+.grid-global-rows {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
   column-gap: 2%;
 }
 

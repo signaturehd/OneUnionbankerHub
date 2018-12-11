@@ -65,6 +65,20 @@ export default class LoginPresenter {
 
   /* Request OTP for reseting password */
 
+  requestUnlockAccount (empId, date) {
+    this.view.showResetLoader()
+    this.requestUnlockAccountInteractor.execute(empId, moment(date).format('YYYY-MM-DD'))
+    .subscribe(data => {
+      this.view.hideResetLoader()
+      this.view.showNotificationMessage(data)
+      this.view.hideHelpDeskComponent(data)
+    }, error => {
+      this.view.hideResetLoader()
+    })
+  }
+
+  /* Request OTP for reseting password */
+
   requestEmailVerification (empId, date, password1, password2) {
     if (empId === '') {
         store.dispatch(NotifyActions.addNotify({

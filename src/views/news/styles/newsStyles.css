@@ -36,12 +36,10 @@
 }
 
 .container {
-  padding-left: 5%;
-  padding-right: 5%;
-  padding-top: 1%
+  padding-top: 20px;
 }
 
 .news-grid-header {
   display: grid;
-  grid-template-columns: 1fr .5fr 1fr;
+  grid-template-columns: 1fr .3fr 1fr;
 }
