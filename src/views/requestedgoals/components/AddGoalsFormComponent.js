@@ -29,13 +29,18 @@ class AddGoalsFormComponent extends Component {
   }
 
   checkDateIfLast (startDate) {
+    const {
+      dueDate
+    } = this.props
     const presentDate = moment().format('MM/DD/YYYY')
     if(startDate === presentDate) {
-      return startDate
+      console.log('success')
+      return moment(startDate)
     } else {
-      return this.props.dueDate
+      return moment(dueDate).add(1, 'days')
     }
   }
+
 
   render () {
     const {
@@ -105,14 +110,14 @@ class AddGoalsFormComponent extends Component {
               />
               <DatePicker
                 text = { 'Due Date' }
-                selected = { this.checkDateIfLast(startDate) }
+                selected = { dueDate  && moment(dueDate) }
                 onChange = { (e) => {
                     dueDateFunc(e)
                   }
                 }
                 dateFormat = { 'MM/DD/YYYY' }
                 errorMessage = { dueDateErrorMessage }
-                minDate = { startDate && moment(startDate) }
+                minDate = { startDate ? moment(startDate) : this.checkDateIfLast(startDate) }
                 maxDate = { moment(maximumDate) }
                 readOnly
               />
