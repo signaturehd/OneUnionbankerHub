@@ -17,7 +17,7 @@ export default class HRBenefitsService {
   }
 
   otp (otpParam) {
-    return this.apiClient.post('v2/otp', otpParam)
+    return this.apiClient.post('v1/otp', otpParam)
   }
 
   resend (resendOtpParam) {
