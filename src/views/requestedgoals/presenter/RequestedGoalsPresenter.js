@@ -1,6 +1,7 @@
 import GetRequestedGoalsInteractor from '../../../domain/interactor/goals/GetRequestedGoalsInteractor'
 import GetGoalTaskInteractor from '../../../domain/interactor/goals/GetGoalTaskInteractor'
 import GetGoalCommentInteractor from '../../../domain/interactor/goals/GetGoalCommentInteractor'
+import GetGoalHistoryInteractor from '../../../domain/interactor/goals/GetGoalHistoryInteractor'
 import UpdateGoalsInteractor from '../../../domain/interactor/goals/UpdateGoalsInteractor'
 import UpdateGoalTaskInteractor from '../../../domain/interactor/goals/UpdateGoalTaskInteractor'
 import UpdateGoalCommentInteractor from '../../../domain/interactor/goals/UpdateGoalCommentInteractor'
@@ -21,6 +22,7 @@ export default class RequestCoachPresenter {
     this.getRequestedGoalsInteractor = new GetRequestedGoalsInteractor(container.get('HRBenefitsClient'))
     this.getGoalTaskInteractor = new GetGoalTaskInteractor(container.get('HRBenefitsClient'))
     this.getGoalCommentInteractor = new GetGoalCommentInteractor(container.get('HRBenefitsClient'))
+    this.getGoalHistoryInteractor = new GetGoalHistoryInteractor(container.get('HRBenefitsClient'))
     this.updateGoalsInteractor = new UpdateGoalsInteractor(container.get('HRBenefitsClient'))
     this.updateGoalTaskInteractor = new UpdateGoalTaskInteractor(container.get('HRBenefitsClient'))
     this.updateGoalCommentInteractor = new UpdateGoalCommentInteractor(container.get('HRBenefitsClient'))
@@ -280,5 +282,16 @@ export default class RequestCoachPresenter {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  getGoalsHistory (goalId, pageNumber, pageItem) {
+    storedPageNumber = pageNumber
+    storedPageItem = pageItem
+    this.getGoalHistoryInteractor.execute(goalId, pageNumber, pageItem)
+    .subscribe(data => {
+      this.view.getHistoryList(data)
+      }, error => {
+        store.dispatch(NotifyActions.resetNotify())
+    })
   }
 }
