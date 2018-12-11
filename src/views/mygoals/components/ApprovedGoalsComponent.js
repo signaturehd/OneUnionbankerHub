@@ -95,12 +95,14 @@ class ApprovedGoalsComponent extends Component {
                   <div className = { 'header-column-1' }>
                     <div>
                       <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ details.title }</h2>
-                      <Progress
-                        width = { 65 }
-                        height = { 65 }
-                        percent = { 80 }
-                        className = { 'margin-5px' }
-                      />
+                    {
+                      // <Progress
+                      //   width = { 65 }
+                      //   height = { 65 }
+                      //   percent = { 80 }
+                      //   className = { 'margin-5px' }
+                      // />
+                    }
                     </div>
                     <div>
                       {
@@ -155,7 +157,6 @@ class ApprovedGoalsComponent extends Component {
             <img src={ require('../../../images/icons/horizontal.png') } />
             <span className={ 'tooltiptext' }>{ viewMoreText }</span>
           </button>
-          <Line/>
         </div>
         <div>
           <div className = { 'padding-10px' }>
@@ -173,7 +174,6 @@ class ApprovedGoalsComponent extends Component {
                 <h2 className = { 'font-size-12px font-weight-lighter text-align-right' }><span className = { 'border' }>{ goalTypeId ? 'Performance' : goalTypeId ? 'Developemental' : 'x' }</span></h2>
               </div>
             </div>
-            <Line/>
             {
               showRejectRemarksModal &&
               <Modal

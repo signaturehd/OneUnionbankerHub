@@ -84,7 +84,10 @@ class AddGoalsFormComponent extends Component {
               <DatePicker
                 text = { 'Start Date' }
                 selected = { startDate && moment(startDate) }
-                onChange = { (e) => startDateFunc(e) }
+                onChange = { (e) => {
+                    startDateFunc(e)
+                  }
+                }
                 dateFormat = { 'MM/DD/YYYY' }
                 errorMessage = { startDateErrorMessage }
                 minDate = { moment(minimumDate) }
@@ -94,10 +97,13 @@ class AddGoalsFormComponent extends Component {
               <DatePicker
                 text = { 'Due Date' }
                 selected = { dueDate && moment(dueDate) }
-                onChange = { (e) => dueDateFunc(e) }
-                minDate = { startDate ? moment(startDate) : moment() }
+                onChange = { (e) => {
+                    dueDateFunc(e)
+                  }
+                }
                 dateFormat = { 'MM/DD/YYYY' }
                 errorMessage = { dueDateErrorMessage }
+                minDate = { startDate ? moment(startDate) : moment() }
                 maxDate = { moment(maximumDate) }
                 readOnly
               />

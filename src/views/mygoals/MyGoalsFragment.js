@@ -22,7 +22,6 @@ import {
 import GoalApprovalFormComponent from '../mygoals/components/GoalApprovalFormComponent'
 import RequestedGoalsFragment from '../requestedgoals/RequestedGoalsFragment'
 import ApprovedGoalsComponent from '../mygoals/components/ApprovedGoalsComponent'
-import MyGoalsFormComponent from '../mygoals/components/MyGoalsFormComponent'
 import RequestCoachFragment from '../requestCoach/RequestCoachFragment'
 import TeamGoalsFragment from '../teamgoal/TeamGoalsFragment'
 
@@ -205,7 +204,7 @@ class MyGoalsFragment extends BaseMVPView {
   }
 
   render () {
-    const { isLineManager } = this.props
+    const { isLineManager, employeeNumber } = this.props
     const {
       enabledLoader,
       showNoticeResponseModal,
@@ -336,11 +335,14 @@ class MyGoalsFragment extends BaseMVPView {
                 {
                   !forApproval ?
                     showTeamGoal ?
-                    <TeamGoalsFragment/>
+                    <TeamGoalsFragment
+                      employeeNumber = { employeeNumber }
+                    />
                     :
                     <RequestedGoalsFragment
-                    showRequestCoachForm = { showRequestCoachForm }
-                    showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
+                      employeeNumber = { employeeNumber }
+                      showRequestCoachForm = { showRequestCoachForm }
+                      showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
                   :
                   showApprovalForm ?
                   <GoalApprovalFormComponent
