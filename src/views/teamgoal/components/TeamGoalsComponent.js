@@ -62,6 +62,7 @@ class RequestedGoalsComponent extends Component {
 
               <Card className = { 'margin-10px cursor-pointer' }
                 onClick = { () => onSelected(
+                  details,
                   details.id,
                   details.title,
                   details.description,

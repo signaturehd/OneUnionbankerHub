@@ -311,10 +311,9 @@ class LiquidationFragment extends BaseMVPView {
                           ticketMode,
                           ticketReasons,
                           attachmentsData,
-                          moment(orDate).format('MM/DD/YYYY'), 
+                          moment(orDate).format('MM/DD/YYYY'),
                           orNumber)
                       } catch(e) {
-                        console.log(e)
                       }
                     }}
                   />
