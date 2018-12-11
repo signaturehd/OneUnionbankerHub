@@ -22,6 +22,7 @@ import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 
 import FormComponent from './components/LaptopLeaseCardComponent'
 import CardOptionComponent from './components/LaptopLeaseOptionComponent'
+import LaptopLeaseEmpToPurchaseComponent from './components/LaptopLeaseEmpToPurchaseComponent'
 import moment from 'moment'
 import store from '../../store'
 import { NotifyActions } from '../../actions'
@@ -37,37 +38,15 @@ class LaptopLeaseFragment extends BaseMVPView {
       enabledLoader : false,
       showNoticeModal : false,
       showNoticeResponseModal : false,
-      showFileUpload: false,
-      showQuotation: true,
       noticeResponse : null,
       showNoticeResponseModal : false,
       showBenefitFeedbackModal : false,
-      showLaptopBrands: false,
-      showEnterSolRCModal: false,
-      showInsurancePaymentModal: false,
       showEditMode: false,
-      carValidate: [],
-      deliveryData: [],
-      loanType: 15,
-      leaseMode: 1,
-      carBrand: '',
-      carId: '',
       laptopModel: '',
       screenSize: '',
-      primaryColor: '',
-      secondaryColor: '',
       file: [],
-      solRC: '',
-      solId: '',
-      solIdErrorMessage: '',
-      solRCInput: '',
-      insurancePayment: '',
-      insuranceId: '',
-      solRCErrorMessage : '',
-      yearErrorMessage : '',
       attachmentsRequired : [ {name : 'Dealer Quotations'}]
     }
-
   }
 
   /* Life Cycle */
@@ -125,7 +104,6 @@ class LaptopLeaseFragment extends BaseMVPView {
     }
   }
 
-
   /* Notice Response*/
   noticeOfUndertaking (noticeResponse) {
    this.setState({ showNoticeModal : true, noticeResponse })
@@ -133,10 +111,6 @@ class LaptopLeaseFragment extends BaseMVPView {
 
   noticeResponseResp (noticeResponse) {
     this.setState({ noticeResponse })
-  }
-
-  showDeliveryOptions (deliveryData) {
-    this.setState({ deliveryData })
   }
 
   /* Loader*/
@@ -169,6 +143,7 @@ class LaptopLeaseFragment extends BaseMVPView {
       color,
       deliveryOption,
       deliveryOptionList,
+      deliveryOptionName,
       file,
       showDeliveryOptions,
       showNoticeModal,
@@ -176,7 +151,6 @@ class LaptopLeaseFragment extends BaseMVPView {
       showBenefitFeedbackModal,
       enabledLoader,
       showEditMode,
-      deliveryOptionName,
       laptopLeaseAttachment,
       showTermsSelection,
       termsId,
@@ -300,29 +274,42 @@ class LaptopLeaseFragment extends BaseMVPView {
                  <center className={ 'circular-loader-center' }>
                    <CircularLoader show={ this.state.enabledLoader }/>
                  </center> :
-                 <FormComponent
-                    getCardOptionId = { getCardOptionId }
-                    showEditMode = { showEditMode }
-                    setAmount = { (resp) => this.presenter.setAmount(controller.checkedAmount(resp)) }
-                    setColor = { (resp) =>  this.presenter.setColor(controller.checkedValidateAlphabet(resp)) }
-                    setLaptopBrand = { resp => this.presenter.setLaptopBrand(resp) }
-                    setLaptopModel = { resp => this.presenter.setLaptopModel(resp) }
-                    setScreenSize = { resp => this.presenter.setScreenSize( this.checkNonDigitRegex(resp)) }
-                    showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
-                    showTerms = { () => this.setState({ showTermsSelection: true }) }
-                    deliveryOptionName = { deliveryOptionName }
-                    laptopLeaseAttachment = { laptopLeaseAttachment }
-                    amount = { amount }
-                    color = { color }
-                    terms = { termsName }
-                    laptopBrand = { laptopBrand }
-                    laptopModel = { laptopModel }
-                    screenSize = { screenSize }
-                    setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
-                    onContinue={ () => this.presenter.validateSubmission() }
-                    onEdit = { () => this.setState({ showEditMode : false })  }
-                    onSubmit = { () => this.presenter.addLaptopLease()  }
-                  />
+                 <div>
+                   {
+                     getCardOptionId === 0 ?
+                     <FormComponent
+                        getCardOptionId = { getCardOptionId }
+                        showEditMode = { showEditMode }
+                        setAmount = { (resp) => this.presenter.setAmount(controller.checkedAmount(resp)) }
+                        setColor = { (resp) =>  this.presenter.setColor(controller.checkedValidateAlphabet(resp)) }
+                        setLaptopBrand = { resp => this.presenter.setLaptopBrand(resp) }
+                        setLaptopModel = { resp => this.presenter.setLaptopModel(resp) }
+                        setScreenSize = { resp => this.presenter.setScreenSize( this.checkNonDigitRegex(resp)) }
+                        showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
+                        showTerms = { () => this.setState({ showTermsSelection: true }) }
+                        deliveryOptionName = { deliveryOptionName }
+                        laptopLeaseAttachment = { laptopLeaseAttachment }
+                        amount = { amount }
+                        color = { color }
+                        terms = { termsName }
+                        laptopBrand = { laptopBrand }
+                        laptopModel = { laptopModel }
+                        screenSize = { screenSize }
+                        setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
+                        onContinue={ () => this.presenter.validateSubmission() }
+                        onEdit = { () => this.setState({ showEditMode : false })  }
+                        onSubmit = { () => this.presenter.addLaptopLease()  }
+                      />
+                     :
+                     <LaptopLeaseEmpToPurchaseComponent
+                       laptopLeaseAttachment = { laptopLeaseAttachment }
+                       setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
+                       onContinue={ () => this.presenter.validateSubmission() }
+                       onEdit = { () => this.setState({ showEditMode : false })  }
+                       onSubmit = { () => this.presenter.addLaptopLease()  }
+                     />
+                   }
+                 </div>
               }
             </div>
           }

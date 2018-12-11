@@ -24,28 +24,18 @@ class LaptopLeaseCardComponent extends Component {
 
   render () {
     const {
-      setAmount,
-      amount,
-      setColor,
-      color,
-      showTerms,
-      terms,
       showEditMode,
       onSubmit,
       onEdit,
       onContinue,
-      showFileUpload,
-      deliveryOption,
-      deliveryOptionName,
-      showLaptopDeliveryOption,
+      orNumber,
+      orNumberFunc,
+      vendor,
+      vendorFunc,
+      costAquisition,
+      costAquisitionFunc,
       laptopLeaseAttachment,
       setAttachments,
-      laptopBrand,
-      laptopModel,
-      screenSize,
-      setLaptopBrand,
-      setLaptopModel,
-      setScreenSize,
     } = this.props
 
     return (
@@ -56,77 +46,38 @@ class LaptopLeaseCardComponent extends Component {
             <Line/>
             <br/>
             <div className={ 'car-form-card-body' }>
-
-            <div className = { 'grid-global' }>
-              <GenericInput
-                placeholder = { 'Laptop Brand' }
-                errorMessage = { '' }
-                onChange ={ (e) => setLaptopBrand(e.target.value) }
-                text = { 'Laptop Brand' }
-                disabled = { showEditMode }
-                value = { laptopBrand }
-                maxLength = { 15 }
+              <div>
+                <GenericInput
+                  errorMessage = { '' }
+                  onChange ={ (e) => orNumberFunc(e.target.value) }
+                  text = { 'Official Receipt Number' }
+                  disabled = { showEditMode }
+                  value = { orNumber }
+                  maxLength = { 15 }
+                  />
+                <GenericInput
+                  errorMessage = { '' }
+                  onChange ={ (e) => vendorFunc(e.target.value) }
+                  text = { 'Vendor' }
+                  disabled = { showEditMode }
+                  value = { vendor }
+                  maxLength = { 15 }
+                  />
+                <GenericInput
+                  errorMessage = { '' }
+                  onChange ={ (e) => costAquisitionFunc(e.target.value) }
+                  text = { 'Cost of Acquisition' }
+                  disabled = { showEditMode }
+                  value = { costAquisition }
+                  maxLength = { 15 }
+                  />
+              </div>
+                <MultipleFileUploader
+                  placeholder = { 'Required Attachments' }
+                  fileArray = { laptopLeaseAttachment }
+                  disabled = { showEditMode }
+                  setFile = { (updatedFile) => setAttachments(updatedFile) }
                 />
-              <GenericInput
-                placeholder = { 'Laptop Model' }
-                errorMessage = { '' }
-                disabled = { showEditMode }
-                text = { 'Laptop Model' }
-                onChange = { (e) => setLaptopModel(e.target.value) }
-                value = { laptopModel }
-                />
-
-              <GenericInput
-                placeholder = { 'Screen Size' }
-                errorMessage = { '' }
-                onChange ={ (e) => setScreenSize(e.target.value) }
-                text = { 'Screen Size' }
-                disabled = { showEditMode }
-                value = { screenSize }
-                maxLength = { 6 }
-                />
-
-              <GenericInput
-                placeholder = { 'Estimated Cost' }
-                errorMessage = { '' }
-                onChange ={ (e) => setAmount(e.target.value) }
-                text = { 'Estimated Cost' }
-                disabled = { showEditMode }
-                value = { amount }
-                maxLength = { 6 }
-                />
-              <GenericInput
-                placeholder = { 'Colour Family' }
-                errorMessage = { '' }
-                disabled = { showEditMode }
-                text = { 'Colour Family' }
-                onChange = { (e) => setColor(e.target.value) }
-                value = { color }
-                />
-              <GenericInput
-                placeholder = { 'Payment Terms' }
-                errorMessage = { '' }
-                disabled = { showEditMode }
-                text = { 'Payment Terms' }
-                readOnly
-                onClick = { () => showTerms() }
-                value = { terms }
-
-                />
-              <GenericInput
-                value = { deliveryOptionName }
-                disabled = { showEditMode }
-                readOnly
-                onClick = { () => showLaptopDeliveryOption() }
-                text = { 'Delivery Option' }
-              />
-            </div>
-              <MultipleFileUploader
-                placeholder = { 'Required Attachments' }
-                fileArray = { laptopLeaseAttachment }
-                disabled = { showEditMode }
-                setFile = { (updatedFile) => setAttachments(updatedFile) }
-              />
               <br/>
               <Line/>
               {
@@ -172,6 +123,12 @@ LaptopLeaseCardComponent.propTypes = {
   onSubmit: PropTypes.func,
   onEdit: PropTypes.func,
   onContinue: PropTypes.func,
+  vendorFunc: PropTypes.func,
+  vendor: PropTypes.string,
+  orNumber: PropTypes.string,
+  orNumberFunc: PropTypes.func,
+  costAquisition: PropTypes.number,
+  costAquisitionFunc: PropTypes.func,
 }
 
 export default LaptopLeaseCardComponent
