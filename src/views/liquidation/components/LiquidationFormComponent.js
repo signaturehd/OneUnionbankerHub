@@ -150,7 +150,6 @@ class LiquidationFormComponent extends Component {
             />
             <GenericInput
               text = { 'Total Service Charge' }
-              type = { 'number' }
               value = { format(liquidationServiceCharge) }
             />
           </div>
