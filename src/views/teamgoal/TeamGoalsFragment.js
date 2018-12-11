@@ -401,7 +401,6 @@ class TeamGoalsFragment extends BaseMVPView {
     let totalCount = taskArray && taskArray.length
     let taskCompleted  = this.checkIfTaskCompleted(taskArray)
     let percentageTask = taskArray && (taskCompleted /totalCount) * 100
-    console.log(goalTypeId)
     return (
     <div>
       { super.render() }
