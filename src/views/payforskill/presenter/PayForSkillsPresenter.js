@@ -133,7 +133,7 @@ export default class PayForSkillsPresenter {
           type: 'warning',
           duration: 5000,
         }))
-      } else if(storedDateOfCompletion === '') {
+      } else if(storedDateOfCompletion === '' || storedDateOfCompletion === null) {
         store.dispatch(NotifyActions.addNotify({
           title: 'Pay For Skills',
           message : 'Please select Date of Completion',
@@ -180,7 +180,7 @@ export default class PayForSkillsPresenter {
           type: 'warning',
           duration: 5000,
         }))
-      } else if(storedDateOfCompletion === '') {
+      } else if(storedDateOfCompletion === '' || storedDateOfCompletion === null) {
         store.dispatch(NotifyActions.addNotify({
           title: 'Pay For Skills',
           message : 'Please select Date of Completion',

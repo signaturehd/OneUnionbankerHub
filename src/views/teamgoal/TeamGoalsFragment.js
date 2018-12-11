@@ -601,7 +601,7 @@ class TeamGoalsFragment extends BaseMVPView {
                       type = { 'circle' }
                       height = { 80 }
                       width = { 80 }
-                      percent = { percentageTask ? percentageTask : 0 } />
+                      percent = { percentageTask ? parseInt(percentageTask) : 0 } />
                   </div>
                   <div className = { 'text-align-right' }>
                     {
