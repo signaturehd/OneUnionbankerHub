@@ -15,6 +15,11 @@
   mask-image: url('../../../../../images/icons/ic_date_range_grey_500_18dp.png');
 }
 
+.news-body {
+  padding : 50px;
+  cursor:pointer;
+}
+
 .news-limit-text {
 }
 
@@ -53,11 +58,6 @@
   padding: 0px 25px;
 }
 
-.news-body {
-  padding : 50px;
-  cursor:pointer;
-}
-
 .fa-see-more {
   font-size : 25px;
   cursor: pointer;
@@ -73,6 +73,19 @@
 }
 
 
+@media screen and (max-width: 768px) {
+  .news-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    box-shadow: none;
+    border-radius: 25px;
+    border: none;
+  }
+  .news-body {
+    padding: 80px;
+    cursor: pointer;
+}
+}
 .news-heart-icon {
   background-color: #ff4436;
   -webkit-mask-image: url('../../../../../images/heart@2x.png');

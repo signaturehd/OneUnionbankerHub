@@ -120,6 +120,10 @@ export default class MotorcycleLoanPresenter {
   }
 
   getMplValidate () {
+    let dateCompare = '2018-12-14'
+    let currentDate = new Date()
+    dateCompare = new Date(dateCompare)
+
     this.view.showCircularLoader()
     this.getValidateInteractor.execute(MplValidateParam(4))
      .map(resp => {
@@ -178,13 +182,23 @@ export default class MotorcycleLoanPresenter {
         store.dispatch(NotifyActions.resetNotify())
         error && error.errorResp &&
         error.errorResp.errors.map((resp) => {
-          store.dispatch(NotifyActions.addNotify({
-              title: 'Benefits',
-              message : `We're sorry, but right now, you're not yet able to avail of this benefit because of your ${ resp.message }`,
-              type : 'success',
-              duration : 2000
-            })
-          )
+          if(currentDate >= dateCompare) {
+            store.dispatch(NotifyActions.addNotify({
+                title: 'Multi Purpose Loan',
+                message : `We're sorry, but right now, you're not yet able to avail of this benefit because of your ${ resp.message }`,
+                type : 'success',
+                duration : 10000
+              })
+            )
+          } else{
+            store.dispatch(NotifyActions.addNotify({
+                title: 'Multi Purpose Loan',
+                message : resp.message,
+                type : 'success',
+                duration : 10000
+              })
+            )
+          }
         })
         this.view.navigate()
       }
