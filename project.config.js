@@ -23,7 +23,7 @@ module.exports = {
     BASE_URL: JSON.stringify('https://api.unionbankph.com/ubp/prod/hr/benefits/'),
     ACCOUNT_URL: JSON.stringify('https://api.unionbankph.com/ubp/prod/hr/employees/'),
     ONBOARDING_URL: JSON.stringify('https://api.unionbankph.com/ubp/prod/hr/onboarding/'),
-    ROOT_URL: JSON.stringify('https://api-uat.unionbankph.com/ubp/prod/'),
+    ROOT_URL: JSON.stringify('https://api.unionbankph.com/ubp/prod/'),
     CLIENT_ID: JSON.stringify('9c8024b2-24e7-4b90-a7db-69d751fa78ae'),
     CLIENT_SECRET: JSON.stringify('B8rA3uE0iL8tY8mO8gQ4pI0wM3rM3yJ7fD7bA3oC6kU0eH1rQ4'),
   },
