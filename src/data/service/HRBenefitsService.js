@@ -2072,6 +2072,8 @@ export default class HRBenefitsService {
   addRequestOneWay (token, requestParam) {
     const object = {
       purposeId : requestParam.purposeId,
+      training : requestParam.trainingId,
+      others : requestParam.pleaseSpecify,
       departure: {
         origin: requestParam.departureOriginId,
         destination: requestParam.departureDestinationId,
@@ -2088,6 +2090,8 @@ export default class HRBenefitsService {
   addRequestRoundTrip (token, requestParam) {
     const object = {
       purposeId : requestParam.purposeId,
+      training : requestParam.trainingId,
+      others : requestParam.pleaseSpecify,
       departure: {
         origin: requestParam.departureOriginId,
         destination: requestParam.departureDestinationId,
