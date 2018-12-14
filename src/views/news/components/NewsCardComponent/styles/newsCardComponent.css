@@ -31,7 +31,7 @@
 .news-icon-size {
   background-size: contain;
   cursor: pointer;
-  background-color: #ffffff;
+  background-color: #ff8a00;
   display: block;
   height: 30px;
   width: 30px;
@@ -84,7 +84,11 @@
   .news-body {
     padding: 80px;
     cursor: pointer;
-}
+  }
+  .new-grid-headlines {
+    display: grid;
+    grid-template-rows: 1fr .5fr .5fr .5fr;
+  }
 }
 .news-heart-icon {
   background-color: #ff4436;
