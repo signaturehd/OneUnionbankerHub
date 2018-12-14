@@ -92,6 +92,7 @@ class MyGoalsFragment extends BaseMVPView {
   }
 
   componentDidMount() {
+    this.props.setSelectedNavigation(14)
     this.presenter.getForApprovalGoals()
   }
 
