@@ -34,12 +34,6 @@
   font-weight: lighter;
 }
 
-section {
-  display: none;
-  padding: 20px 0 0;
-  border-top: 1px solid #ddd;
-}
-
 .input-tab {
   display: none !important;
 }
@@ -47,7 +41,7 @@ section {
 label {
   display: inline-block;
   margin: 0 0 -1px;
-  padding: 15px 25px;
+  padding: 5px 25px;
   font-weight: 150;
   text-align: center;
   border: 1px solid transparent;
@@ -68,51 +62,12 @@ label:hover {
   cursor: pointer;
 }
 
-.input-tab:checked + label {
-  color: #000;
-  border-bottom: 4px solid #ffa800;
-}
-
 #tab1:checked ~ #content1,
 #tab2:checked ~ #content1,
 #tab3:checked ~ #content1 {
   display: block;
   padding-left: 30px;
   padding-right: 30px;
-}
-
-@media screen and (max-width: 650px) {
-  label {
-    font-size: 0;
-  }
-  label:before {
-    margin: 0;
-    font-size: 18px;
-  }
-  .travel-icon-tab {
-    background: url('../../../images/drawer/Benefit.png') no-repeat center center;
-    background-size: contain;
-    height: auto;
-    width: 30%;
-  }
-  .approval-icon {
-    background: url('../../../images/drawer/approval.png') no-repeat center center;
-    background-size: contain;
-    height: auto;
-    width: 30%;
-  }
-  .transaction-icon-tab {
-    background: url('../../../images/drawer/mytransaction1.png') no-repeat center center;
-    background-size: contain;
-    height: auto;
-    width: 30%;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  label {
-    padding: 15px;
-  }
 }
 
 .travel-option-cards-1 {
