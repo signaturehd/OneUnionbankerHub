@@ -7,14 +7,16 @@ import {
   GenericInput,
   Card,
   GenericButton,
-  GenericFileInput,
   MultipleFileUploader,
-  Line
+  Line,
+  DatePicker
 } from '../../../ub-components/'
 
 import { format } from '../../../utils/numberUtils'
 
 import LaptopBrandModal from '../modals/LaptopBrandModal'
+
+import moment from 'moment'
 
 class LaptopLeaseCardComponent extends Component {
 
@@ -54,6 +56,12 @@ class LaptopLeaseCardComponent extends Component {
                   disabled = { showEditMode }
                   value = { orNumber }
                   maxLength = { 15 }
+                  />
+                <DatePicker
+                  onChange = { () => {} }
+                  selected = { moment() }
+                  errorMessage = { '' }
+                  readOnly
                   />
                 <GenericInput
                   errorMessage = { '' }
