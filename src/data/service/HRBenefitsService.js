@@ -2388,6 +2388,19 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  addRatingGoal (token, ratingParam) {
+    return this.apiClient.post(`v1/goals/${ratingParam.goalId}/rate`, ratingParam.body, {
+      headers: { token }
+    })
+  }
+
+  markAsCompleted (token, markParam) {
+    return this.apiClient.post(`v1/goals/${markParam.goalId}/completion`, ratingParam.body, {
+      headers: { token }
+    })
+  }
+
   // Pay For Skills
 
   getPaySkills (token) {

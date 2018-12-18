@@ -33,6 +33,8 @@ import moment from 'moment'
 import { Progress } from 'react-sweet-progress'
 import './styles/requestedGoalStyles.css'
 
+let percentageTask = 0
+
 class RequestedGoalsFragment extends BaseMVPView {
 
   constructor(props) {
@@ -58,6 +60,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       showCommentOption: false,
       deleteComment: false,
       showFilterModal: false,
+      showMarkAsCompleted: false,
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
@@ -397,6 +400,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       showDeleteModal,
       showTaskOption,
       showCommentOption,
+      showMarkAsCompleted,
       deleteComment,
       isCompleted,
       pageNumber,
@@ -439,6 +443,7 @@ class RequestedGoalsFragment extends BaseMVPView {
     let percentageTask = taskArray && (taskCompleted /totalCount) * 100
 
     const { onClose, showRequestCoachForm, showRequestCoachFunc, employeeNumber } = this.props
+
     return (
     <div>
       { super.render() }
@@ -502,6 +507,25 @@ class RequestedGoalsFragment extends BaseMVPView {
               <GenericButton
                 text = { 'Yes' }
                 onClick = { () => {this.presenter.deleteGoal(goalId), this.setState({ showDeleteModal: false })} }
+              />
+            </div>
+          </center>
+        </Modal>
+      }
+      {
+        percentageTask &&
+        <Modal>
+          <center>
+            <h2>The Goal is completed. Do you want to mark as completed?</h2>
+            <br/>
+            <div className = { 'grid-global' }>
+              <GenericButton
+                text = { 'No' }
+                onClick = { () => this.setState({ showMarkAsCompleted: false }) }
+              />
+              <GenericButton
+                text = { 'Yes' }
+                onClick = { () => this.setState({ showMarkAsCompleted: false }) }
               />
             </div>
           </center>
